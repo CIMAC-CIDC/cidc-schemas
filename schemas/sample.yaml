@@ -1,0 +1,81 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+
+id: sample
+title: Sample
+type: object
+
+description: Any material sample taken from a biological entity for testing, diagnostic,
+  propagation, treatment or research purposes, including a sample obtained from a
+  living organism or taken from the biological object after halting of all its life
+  functions. Biospecimen can contain one or more components including but not limited
+  to cellular molecules, cells, tissues, organs, body fluids, embryos, and body excretory
+  products.
+  
+links:
+  - name: subjects
+    backref: samples
+    label: derived_from
+    target_type: subject
+    multiplicity: many_to_one
+    required: true
+  
+properties:
+  site_sample_id:
+    type: string
+    description:  Sample identifier assigned by the biorepository site.
+  time_point:
+    title: Time Point
+    type: string
+  blood_collection_date:
+    title: Blood Collection Date
+    type: string
+    format: date
+  blood_collection_time:
+    title: Blood Collection Time
+    type: string
+    format: time
+  blood_processing_date:
+    title: Blood Processing Date
+    type: string
+    format: date
+  blood_processing_time:
+    title: Blood Processing Time
+    type: string
+    format: time
+  sample_location:
+    title: Sample Location
+    type: string
+  specimen_type:
+    title: Specimen Type
+    type: string
+    enum:
+    - Core Needle Biopsy
+    - Surgical Resection
+    - Endoscopic Biopsy
+    - Punch Biopsy
+    - Plasma
+    - PBMC
+    - Whole Blood
+    - Stool Sample
+    - Bone Marrow Aspirate
+    - Other
+  specimen_format:
+    title: Specimen Format
+    type: string
+    enum:
+    - FFPE Block
+    - FFPE Scroll
+    - FFPE Core Punch
+    - Unstained Slide
+    - Frozen Tissue
+    - Sodium Heparin Green-Top Tube
+    - Streck Tube
+    - EDTA Tube
+    - Archival FFPE Block
+    - Archival FFPE Slides
+    - Archival FFPE Core Punch
+    - Archival FFPE Scroll
+    - Other
+    - Frozen Stool
+    - DNA-Preserved Stool
+    - Other

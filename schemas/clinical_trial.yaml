@@ -1,0 +1,40 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+
+id: clinical_trial
+title: Clinical Trial
+
+description: >
+  Encapsulates information regarding a clinical trial.
+
+properties:
+    nct_id:
+        type: string
+        description: ClinicalTrials.gov identifier, e.g. NCT03731260.
+    study_id:
+        type: string
+        description: Trial identifier used by sponsor, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier, e.g. E4412 or BLU-285-2203.
+    trial_name:
+      description: Name of clinical trial.
+      type: string
+    trial_description:
+      description: A brief description of the clinical trial.
+      type: string
+    trial_organization:
+      description: Name of the primary organization that oversees the clinical trial, e.g. ECOG-ACRIN, SWOG, etc.
+      type: string
+    assay_list:
+        type: array
+        description:  List of approved assays to be performed on the clinical trial.
+        items:
+            type: string
+            enum: 
+                - Whole Exome Sequencing (WES)
+                - RNASeq
+                - Conventional Immunohistochemistry
+                - Multiplex Immunohistochemistry
+                - Multiplex Immunofluorescence
+                - CyTOF
+                - OLink
+                - NanoString
+                - ELISpot
+                - Multiplexed Ion-Beam Imaging (MIBI)

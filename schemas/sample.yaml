@@ -19,6 +19,9 @@ links:
     required: true
 
 properties:
+  cimac_sample_id:
+    description: CIMAC Sample identifier. 
+    type: string
   site_sample_id:
     description: Sample identifier assigned by the biorepository site. 
     type: string
@@ -43,7 +46,7 @@ properties:
     type: string
     format: time
   sample_location:
-    description: Sample Location.  
+    description: Sample location within the shipping container.
     type: string
   specimen_type:
     description: Type of sample sent.

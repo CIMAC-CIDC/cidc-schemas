@@ -1,0 +1,34 @@
+id: aliquot
+title: Aliquot
+type: object
+
+description: Pertaining to a portion of the whole; any one of two or more samples
+  of something, of the same volume or weight.
+  
+links:
+  - name: samples
+    backref: aliquots
+    label: derived_from
+    target_type: sample
+    multiplicity: many_to_one
+    required: true
+
+properties:
+  cimac_aliquot_id:
+    description: CIMAC aliquot identifier.
+    type: string
+  quantity:
+    description: Quantify of samples shipped.
+    type: integer
+  volume_quantity:
+    description: Volume of sample shipped, e.g. 0.100.
+    type: float
+  volume_units:
+    description: Volume units, e.g. ml.
+    type: string
+  pbmc_aliquoted:
+    description: Site or biobank provides the final number of PBMCs per vial that were frozen.
+    type: float
+  sample_source:
+    description: Indicates the specimen source of the sample shipped. 
+    type: string

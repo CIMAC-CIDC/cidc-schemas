@@ -52,6 +52,7 @@ entity_list = []
 entity_list.append("clinical_trial")
 entity_list.append("subject")
 entity_list.append("sample")
+entity_list.append("aliquot")
 
 for entity in entity_list:
     process(entity, templateEnv)

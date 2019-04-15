@@ -15,23 +15,14 @@ def get_enum_dict(properties):
     enum_dict = {}
     for current_property in properties:
         try:
-            current_property_type = properties[current_property]["type"]
-            if current_property_type == "array":
-                try:
-                    item_list = properties[current_property]["items"]["enum"]
-                    enum_dict[current_property] = item_list
-                except KeyError:
-                    item_list = []
-                    enum_dict[current_property] = item_list
+            item_list = properties[current_property]["enum"]
+            enum_dict[current_property] = item_list
         except KeyError:
-            current_property_type = properties[current_property]["enum"]
-            properties[current_property]["type"] = "enum"
             try:
-                item_list = properties[current_property]["enum"]
+                item_list = properties[current_property]["items"]["enum"]
                 enum_dict[current_property] = item_list
             except KeyError:
-                item_list = []
-                enum_dict[current_property] = item_list
+                enum_dict[current_property] = []
     return enum_dict
 
 # Create HTML for the Specified Entity

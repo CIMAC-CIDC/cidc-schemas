@@ -6,12 +6,9 @@ description: Pertaining to a portion of the whole; any one of two or more sample
   of something, of the same volume or weight.
   
 links:
-  - name: samples
-    backref: aliquots
-    label: derived_from
-    target_type: sample
-    multiplicity: many_to_one
-    required: true
+  - link:
+      cardinality: exactly_one
+      linked_to: sample
 
 properties:
   cimac_aliquot_id:

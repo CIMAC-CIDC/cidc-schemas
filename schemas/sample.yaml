@@ -11,12 +11,9 @@ description: Any material sample taken from a biological entity for testing, dia
   products.
 
 links:
-  - name: subjects
-    backref: samples
-    label: derived_from
-    target_type: subject
-    multiplicity: many_to_one
-    required: true
+  - link:
+      cardinality: exactly_one
+      linked_to: subject
 
 properties:
   cimac_sample_id:

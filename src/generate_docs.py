@@ -53,6 +53,8 @@ entity_list.append("clinical_trial")
 entity_list.append("subject")
 entity_list.append("sample")
 entity_list.append("aliquot")
+entity_list.append("user")
+entity_list.append("artifact")
 
 for entity in entity_list:
     process(entity, templateEnv)

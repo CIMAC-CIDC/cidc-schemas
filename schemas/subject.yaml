@@ -7,12 +7,9 @@ description: >
     The collection of all data related to a specific subject in the context of a specific clinical trial.
   
 links:
-  - name: clinical_trials
-    backref: cases
-    label: derived_from
-    target_type: clinical_trial
-    multiplicity: many_to_one
-    required: true
+  - link:
+      cardinality: exactly_one
+      linked_to: clinical_trial
         
 properties:
     cimac_subject_id:

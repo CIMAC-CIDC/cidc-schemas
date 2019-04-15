@@ -37,7 +37,8 @@
                 Each {{ current_yaml["title"] }} is <b>linked</b> to:
                 <ul>
                     {% for link in current_yaml["links"] %}
-                        <li><a href='{{ link["target_type"]}}.html'>{{ link["target_type"]}}</a></li>
+                        <li>{{ link["link"]["cardinality"]}}
+                            <a href='{{ link["link"]["linked_to"] }}.html'>{{ link["link"]["linked_to"] }}</a></li>
                     {% endfor %}
                 </ul>
             {% endif %}

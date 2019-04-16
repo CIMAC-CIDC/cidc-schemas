@@ -13,7 +13,7 @@ description: Any material sample taken from a biological entity for testing, dia
 links:
   - link:
       cardinality: exactly_one
-      linked_to: subject
+      linked_to: participant
 
 properties:
   cimac_sample_id:

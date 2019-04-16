@@ -1,0 +1,26 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+
+id: participant
+title: Participant
+
+description: >
+    The collection of all data related to a specific participant in the context of a specific clinical trial.
+  
+links:
+  - link:
+      cardinality: exactly_one
+      linked_to: clinical_trial
+        
+properties:
+    cimac_participant_id:
+        type: string
+        description: CIMAC Participant Identifier.
+    trial_participant_id:
+        type: string
+        description: Trial Participant Identifier.
+    arm_id:
+        type: string
+        description: Identifies the trial arm to which the participant belongs.
+    cohort_id:
+        type: string
+        description: Identifies the treatment cohort to which the participant belongs.

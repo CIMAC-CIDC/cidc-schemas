@@ -10,7 +10,7 @@ def get_yaml(file_name):
         except yaml.YAMLError as exc:
             print(exc)
 
-# Exract Enum Lists
+# Extract Enum Lists
 def get_enum_dict(properties):
     enum_dict = {}
     for current_property in properties:
@@ -50,7 +50,7 @@ templateEnv = jinja2.Environment(loader=templateLoader)
 # Create HTML Pages for Each Entity
 entity_list = []
 entity_list.append("clinical_trial")
-entity_list.append("subject")
+entity_list.append("participant")
 entity_list.append("sample")
 entity_list.append("aliquot")
 entity_list.append("user")

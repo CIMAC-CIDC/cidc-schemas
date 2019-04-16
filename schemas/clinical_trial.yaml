@@ -10,9 +10,12 @@ properties:
     nct_id:
         type: string
         description: ClinicalTrials.gov identifier, e.g. NCT03731260.
-    study_id:
+    nci_id:
         type: string
-        description: Trial identifier used by sponsor, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier, e.g. E4412 or BLU-285-2203.
+        description: NCI Trial Identifier.
+    lead_organization_study_id:
+        type: string
+        description: Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier, e.g. E4412 or BLU-285-2203.
     trial_name:
       description: Name of clinical trial.
       type: string

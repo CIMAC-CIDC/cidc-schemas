@@ -12,7 +12,7 @@ links:
 
 properties:
     fastq_type:
-        description: FASTQ File Type
+        description: FASTQ File Type.
         type: string
         enum:
             - FASTQ_NORMAL_1
@@ -23,5 +23,5 @@ properties:
         description:  Batch ID.
         type: integer
     sequencer_model:
-        description:  Sequencer Model, e.g. Illumina HiSeq 2000
+        description:  Sequencer Model, e.g. Illumina HiSeq 2000.
         type: string

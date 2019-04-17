@@ -1,0 +1,99 @@
+id: shipping_core
+description: Core shipping details for a manifest
+type: object
+definitions:
+  address:
+    type: object
+    properties:
+      name:
+        type: string
+      street_address:
+        type: string
+      city:
+        type: string
+      state:
+        type: string
+      email:
+        type: string
+        format: email
+    required:
+    - name
+    - street_address
+    - city
+    - state
+    - email
+properties:
+  manifest_id:
+    description: Filename of the manifest used to ship this sample
+    type: string
+  request:
+    description: Assigns a request identifier (mandatory or optional) for the assay
+    type: string
+    required: true
+  assay_priority:
+    description: Priority of the assay as it appears on the intake form
+    type: string
+    enum:
+    - Assay-1
+    - Assay-2
+    - Assay-3
+    - Assay-4
+    - Assay-5
+    - Assay-6
+    - Assay-7
+    - Assay-8
+    - Assay-9
+    - Assay-10
+    - Assay-11
+    - Assay-12
+    - Assay-13
+    - Assay-14
+    - Assay-15
+    - Other
+  assay_type:
+    description: Assay and sample type used
+    type: string
+  batch_number:
+    description: The number corresponding to the batch sent for this assay
+    type: integer
+  box_number:
+    description: Box identifier for samples, if sample shipment container includes multiple boxes for each sample/assay type
+    type: integer
+  assay_run_number:
+    description: Assay run number for samples received 
+    type: integer
+  courier:
+    description: Courier utilized for shipment
+    type: string
+    enum:
+    - FEDEX
+    - USPS
+    - UPC
+  tracking_number:
+    description: Air bill number assigned to shipment
+    type: integer
+  account_number:
+    description: FedEx account number to pay for shipping if avaialable
+    type: string
+  shipping_condition:
+    description: Type of shippment made 
+    type: string
+    enum:
+    - Frozen (Dry Ice)
+    - Frozen (Dry Shipper)
+    - Ambient (Ice Pack)
+    - Ambient
+    - Other
+  date_shipped:
+    description: Date of shipment
+    type: string
+    format: date-time
+  num_of_samples_shipped:
+    description: Count of specimens distributed by site
+    type: string
+  ship_from:
+    description: Contact information for shipment (person or organization, address, phone number, email address) 
+    "$ref": "#/definitions/address"
+  ship_to:
+    description: Contact information for shipment destination (person or  organzation, address, phone number, email address) 
+    "$ref": "#/definitions/address"

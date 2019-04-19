@@ -1,3 +1,4 @@
 out/*.html
 .DS_Store
 out/deploy.sh
+.vscode

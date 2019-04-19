@@ -1,42 +1,17 @@
 id: shipping_core
+title: Core Shipping Details
 description: Core shipping details for a manifest
 type: object
-definitions:
-  address:
-    type: object
-    properties:
-      name:
-        type: string
-        descriptiom: 'Name of the person. Example: Jane Doe'
-      street_address:
-        type: string
-        descriptiom: 'Street address. Example: 111 Research Blvd'
-      city:
-        type: string
-        descriptiom: 'Name of the city. Example: Washington'
-      state:
-        type: string
-        descriptiom: 'Name of the state. Example: DC'
-      email:
-        type: string
-        descriptiom: 'Email address. Example: janedoe@research.com'
-        format: email
-    required:
-    - name
-    - street_address
-    - city
-    - state
-    - email
 properties:
   manifest_id:
-    description: 'Filename of the manifest used to ship this sample. Example: E4412_PBMC'
+    description: 'Filename of the manifest used to ship this sample. Example: E4412_PBMC.'
     type: string
   request:
-    description: 'Assigns a request identifier (mandatory or optional) for the assay. Example: Requested-Mandatory'
+    description: 'Assigns a request identifier (mandatory or optional) for the assay.'
     type: string
     required: true
   assay_priority:
-    description: 'Priority of the assay as it appears on the intake form. Example: Assay 1'
+    description: 'Priority of the assay as it appears on the intake form.'
     type: string
     enum:
     - Assay-1
@@ -56,32 +31,32 @@ properties:
     - Assay-15
     - Other
   assay_type:
-    description: 'Assay and sample type used. Example: Green-top tube - Plasma (Olink)'
+    description: 'Assay and sample type used. Example: Green-top tube - Plasma (Olink).'
     type: string
   batch_number:
-    description: 'The number corresponding to the batch sent for this assay. Example: Batch 1'
+    description: 'The number corresponding to the batch sent for this assay.'
     type: integer
   box_number:
-    description: 'Box identifier for samples, if sample shipment container includes multiple boxes for each sample/assay type. Example: Box 1'
+    description: 'Box identifier for samples, if sample shipment container includes multiple boxes for each sample/assay type.'
     type: integer
   assay_run_number:
-    description: 'Assay run number for samples received. Example: Run 1' 
+    description: 'Assay run number for samples received.' 
     type: integer
   courier:
-    description: 'Courier utilized for shipment. Example: FedEX'
+    description: 'Courier utilized for shipment.'
     type: string
     enum:
     - FEDEX
     - USPS
     - UPC
   tracking_number:
-    description: 'Air bill number assigned to shipment. Example: 4567788343'
-    type: integer
+    description: 'Air bill number assigned to shipment. Example: 4567788343.'
+    type: string
   account_number:
-    description: 'FedEx account number to pay for shipping if avaialable. Example: 45465732'
+    description: 'Courier account number to pay for shipping if avaialable. Example: 45465732.'
     type: string
   shipping_condition:
-    description: 'Type of shippment made. Example: Ambient (Ice Pack)' 
+    description: 'Type of shippment made.' 
     type: string
     enum:
       - Frozen (Dry Ice)
@@ -90,20 +65,21 @@ properties:
       - Ambient
       - Other
   date_shipped:
-    description: 'Date of shipment. Example: 4/4/15'
+    description: 'Date of shipment.'
     type: string
     format: date-time
   num_of_samples_shipped:
-    description: 'Count of specimens distributed by site. Example: 2'
-    type: string
+    description: 'Count of specimens distributed by site.'
+    type: integer
   num_of_samples_good:
-    description: 'Number of Samples Received in Good Condition. Example: 2'
-    type: string
+    description: 'Number of Samples Received in Good Condition.'
+    type: integer
   num_of_path_report:
-    description: 'Number if pathology report received. Example: 2'
+    description: 'Number if pathology report received.'
+    type: integer
   ship_from:
-    description: 'Contact information for shipment (person or organization, address, phone number, email address)' 
-    "$ref": "#/definitions/address"
+    description: 'Shipping from [free text: person or organization, address, phone number, email address.]' 
+    type: string
   ship_to:
-    description: 'Contact information for shipment destination (person or  organzation, address, phone number, email address)' 
-    "$ref": "#/definitions/address"
+    description: 'Shipping to [free text: person or organization, address, phone number, email address.]' 
+    type: string

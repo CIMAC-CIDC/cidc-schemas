@@ -9,27 +9,25 @@ description: >
 properties:
     nct_id:
         type: string
-        description: 'ClinicalTrials.gov identifier. Example: NCT03731260'
+        description: 'ClinicalTrials.gov identifier. Example: NCT03731260.'
     nci_id:
         type: string
-        description: 'NCI Trial Identifier. Example: NCI22345'
+        description: 'NCI Trial Identifier. Example: NCI22345.'
     lead_organization_study_id:
         type: string
-        description: >
-            'Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID. 
-            This is usually a short identifier. Example: E4412'
+        description: 'Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.'
     trial_name:
-        description: 'Name of clinical trial'
+        description: 'Name of clinical trial.'
         type: string
     trial_description:
         description: 'A brief description of the clinical trial.'
         type: string
     trial_organization:
-        description: 'Name of the primary organization that oversees the clinical trial. Example: ECOG-ACRIN, SWOG, etc'
+        description: 'Name of the primary organization that oversees the clinical trial. Example: ECOG-ACRIN, SWOG, etc.'
         type: string
     assay_list:
         type: array
-        description: 'List of approved assays to be performed on the clinical trial. Example: CyTOF'
+        description: 'List of approved assays to be performed on the clinical trial.'
         items:
             type: string
             enum: 

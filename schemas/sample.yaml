@@ -17,36 +17,36 @@ links:
 
 properties:
   cimac_sample_id:
-    description: 'Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453'
+    description: 'Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.'
     type: string
   site_sample_id:
-    description: 'Sample identifier assigned by the biorepository site. Example: EA123-45' 
+    description: 'Sample identifier assigned by the biorepository site. Example: EA123-45.' 
     type: string
   time_point:
     title: Time Point
-    description: 'Study related collection time point, as described in the protocol intake form. Example: Progression'
+    description: 'Study related collection time point, as described in the protocol intake form. Example: Progression.'
     type: string
   blood_collection_date:
-    description: 'Date of blood collection. Example: 1/18/18'
+    description: 'Date of blood collection.'
     type: string
     format: date
   blood_collection_time:
-    description: 'Time of blood collection. Example: 0600 hours'
+    description: 'Time of blood collection.'
     type: string
     format: time
   blood_processing_date:
-    description: 'Date of blood processing. Example: 1/18/18'
+    description: 'Date of blood processing.'
     type: string
     format: date
   blood_processing_time:
-    description: 'Time of blood processing. Example: 0600 hours' 
+    description: 'Time of blood processing.' 
     type: string
     format: time
   sample_location:
-    description: 'Sample location within the shipping container. Example: A1'
+    description: 'Sample location within the shipping container. Example: A1.'
     type: string
   specimen_type:
-    description: 'Type of sample sent. Example: PBMC'
+    description: 'Type of sample sent.'
     type: string
     enum:
       - Core Needle Biopsy
@@ -60,7 +60,7 @@ properties:
       - Bone Marrow Aspirate
       - Other
   specimen_format:
-    description: 'The format in which the sample was sent. Example: Frozen Tissue'
+    description: 'The format in which the sample was sent.'
     type: string
     enum:
       - FFPE Block

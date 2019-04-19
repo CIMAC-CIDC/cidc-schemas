@@ -57,9 +57,9 @@
         {% for property in sorted_property_list %}
         <tr>
             <td><a name="{{ property }}"></a>{{ property}}</td>
-            <td width=25%>{{ properties[property]["description"]}}</td>
+            <td width=25%>{{ properties[property]["description"].replace("'", "")}}</td>
             <td>
-                &lt;{{ properties[property]["type"]}}&gt;
+                &lt;{{ properties[property]["type"]}}&gt; {{ properties[property]["format"]}}
                 <ul>
                 {% for item in enum_dict[property] %}
                     <li>{{ item }}</li>

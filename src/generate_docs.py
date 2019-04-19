@@ -47,7 +47,7 @@ def processEntity(entity_name, template_env):
 
 # Create HTML for the Specified Manifest
 def processManifest(manifest_name, entity_yaml_set, template_env):
-    file_name = "manifest/%s.yaml" % manifest_name
+    file_name = "manifests/%s.yaml" % manifest_name
     current_yaml = get_yaml(file_name)    
 
     template = template_env.get_template("manifest.html")

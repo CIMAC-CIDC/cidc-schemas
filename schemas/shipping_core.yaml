@@ -1,6 +1,6 @@
 id: shipping_core
 title: Core Shipping Details
-description: Core shipping details for a manifest
+description: Core shipping details for a manifest.
 type: object
 properties:
   manifest_id:

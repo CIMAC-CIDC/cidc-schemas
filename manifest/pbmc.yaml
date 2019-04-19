@@ -3,7 +3,7 @@ title: Shipping manifest for PBMC samples
 type: object
 category: manifest
 description: >
-  Shipping manifest for transferring PBMC samples from a biorepository to a CIMAC lab
+  Shipping / receiving manifest for transferring PBMC samples.
 core_columns:
   - clinical_trial.lead_organization_study_id 
   - shipping_core.manifest_id
@@ -23,7 +23,7 @@ core_columns:
   - shipping_core.num_of_path_report
   - shipping_core.ship_from
   - shipping_core.ship_to
-data_columns:
+shipping_columns:
   - clinical_trial.lead_organization_study_id
   - participant.trial_participant_id
   - participant.cohort_id
@@ -50,6 +50,3 @@ receiving_columns:
   - aliquot.sample_quality_status
   - aliquot.sample_replacement
   - aliquot.sample_status
-
-
-    

@@ -35,85 +35,36 @@
     </div>
 
   <div class="container">
-    <h2>Core Columns</h2>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Description</th>
-            <th>Data Type</th>
-        </tr>
-        </thead>
-        {% for core_column in current_yaml["core_columns"] %}
-          {% set entity_name = core_column.split(".")[0] %}
-          {% set property_name = core_column.split(".")[1] %}
-          {% set description = "Undefined" %}
-          {% if entity_name in entity_yaml_set %}
-            {% if property_name in entity_yaml_set[entity_name]["properties"] %}
-              {% set description = entity_yaml_set[entity_name]["properties"][property_name]["description"] %}
-            {% endif %}
-          {% endif %}
-          <tr>
-              <td><a href="{{ entity_name }}.html#{{ property_name }}">{{ core_column }}</a></td>
-              <td>{{ description }} </td>
-              <td>[Under Construction]</td>
-          </tr>
-        {% endfor %}
-    </table>
-
-    <h2>Shipping Columns</h2>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Description</th>
-            <th>Data Type</th>
-        </tr>
-        </thead>
-        {% for data_column in current_yaml["shipping_columns"] %}
-          {% set entity_name = data_column.split(".")[0] %}
-          {% set property_name = data_column.split(".")[1] %}
-          {% set description = "Undefined" %}
-          {% if entity_name in entity_yaml_set %}
-            {% if property_name in entity_yaml_set[entity_name]["properties"] %}
-              {% set description = entity_yaml_set[entity_name]["properties"][property_name]["description"] %}
-            {% endif %}
-          {% endif %}
-        <tr>
-            <td><a href="{{ entity_name }}.html#{{ property_name }}">{{ data_column }}</a></td>
-            <td>{{ description }} </td>
-            <td>[Under Construction]</td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <h2>Receiving Columns</h2>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Description</th>
-            <th>Data Type</th>
-        </tr>
-        </thead>
-        {% for data_column in current_yaml["receiving_columns"] %}
-          {% set entity_name = data_column.split(".")[0] %}
-          {% set property_name = data_column.split(".")[1] %}
-          {% set description = "Undefined" %}
-          {% if entity_name in entity_yaml_set %}
-            {% if property_name in entity_yaml_set[entity_name]["properties"] %}
-              {% set description = entity_yaml_set[entity_name]["properties"][property_name]["description"] %}
-            {% endif %}
-          {% endif %}
-        <tr>
-            <td><a href="{{ entity_name }}.html#{{ property_name }}">{{ data_column }}</a></td>
-            <td>{{ description }} </td>
-            <td>[Under Construction]</td>
-        </tr>
-        {% endfor %}
-    </table>
-
-  </div> <!-- /container -->
+      {% for data_column in ["core_columns", "shipping_columns", "receiving_columns"] %}
+          <h5>{{ column_descriptions[data_column] }}</h5>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+                <th>Data Type</th>
+            </tr>
+            </thead>
+            {% for core_column in current_yaml[data_column] %}
+              {% set entity_name = core_column.split(".")[0] %}
+              {% set property_name = core_column.split(".")[1] %}
+              {% set current_property = property_dict[property_name] %}
+              <tr>
+                  <td><a href="{{ entity_name }}.html#{{ property_name }}">{{ core_column }}</a></td>
+                  <td>{{ current_property["description"] }} </td>
+                  <td width=40%>
+                      &lt;{{ current_property["type"]}}&gt; {{ current_property["format"]}}
+                      <ul>
+                      {% for item in current_property["enum"] %}
+                          <li>{{ item }}</li>
+                      {% endfor %}
+                      </ul>
+                  </td>
+                </tr>
+            {% endfor %}
+          </table>
+      {% endfor %}
+  </div>
 
 </main>
     

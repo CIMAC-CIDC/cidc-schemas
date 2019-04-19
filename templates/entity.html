@@ -52,21 +52,24 @@
             <th>Property ID</th>
             <th>Description</th>
             <th>Data Type</th>
+            <th>Required/Optional</th>
         </tr>
         </thead>
         {% for property in sorted_property_list %}
+        {% set current_property = property_dict[property] %}
         <tr>
             <td><a name="{{ property }}"></a>{{ property}}</td>
-            <td width=25%>{{ properties[property]["description"].replace("'", "")}}</td>
+            <td width=25%>{{ current_property["description"] }}</td>
             <td>
-                &lt;{{ properties[property]["type"]}}&gt; {{ properties[property]["format"]}}
+                &lt;{{ current_property["type"]}}&gt; {{ current_property["format"]}}
                 <ul>
-                {% for item in enum_dict[property] %}
+                {% for item in current_property["enum"] %}
                     <li>{{ item }}</li>
                 {% endfor %}
                 </ul>
             </td>
-        </tr>
+            <td>{{ current_property["required"]}}</td>
+          </tr>
         {% endfor %}
     </table>
     <!-- Example row of columns -->

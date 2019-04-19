@@ -19,6 +19,7 @@ properties:
   cimac_sample_id:
     description: 'Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.'
     type: string
+    required: true
   site_sample_id:
     description: 'Sample identifier assigned by the biorepository site. Example: EA123-45.' 
     type: string

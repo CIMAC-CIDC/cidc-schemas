@@ -17,65 +17,68 @@ links:
 
 properties:
   cimac_sample_id:
-    description: CIMAC Sample identifier. 
+    description: 'Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453'
     type: string
   site_sample_id:
-    description: Sample identifier assigned by the biorepository site. 
+    description: 'Sample identifier assigned by the biorepository site. Example: EA123-45' 
     type: string
   time_point:
     title: Time Point
-    description: Study related collection time point, as described in the protocol intake form.
+    description: 'Study related collection time point, as described in the protocol intake form. Example: Progression'
     type: string
   blood_collection_date:
-    description: Date of blood collection.
+    description: 'Date of blood collection. Example: 1/18/18'
     type: string
     format: date
   blood_collection_time:
-    description: Time of blood collection.
+    description: 'Time of blood collection. Example: 0600 hours'
     type: string
     format: time
   blood_processing_date:
-    description: Date of blood processing.
+    description: 'Date of blood processing. Example: 1/18/18'
     type: string
     format: date
   blood_processing_time:
-    description: Time of blood processing. 
+    description: 'Time of blood processing. Example: 0600 hours' 
     type: string
     format: time
   sample_location:
-    description: Sample location within the shipping container.
+    description: 'Sample location within the shipping container. Example: A1'
     type: string
   specimen_type:
-    description: Type of sample sent.
+    description: 'Type of sample sent. Example: PBMC'
     type: string
     enum:
-        - Core Needle Biopsy
-        - Surgical Resection
-        - Endoscopic Biopsy
-        - Punch Biopsy
-        - Plasma
-        - PBMC
-        - Whole Blood
-        - Stool Sample
-        - Bone Marrow Aspirate
-        - Other
+      - Core Needle Biopsy
+      - Surgical Resection
+      - Endoscopic Biopsy
+      - Punch Biopsy
+      - Plasma
+      - PBMC
+      - Whole Blood
+      - Stool Sample
+      - Bone Marrow Aspirate
+      - Other
   specimen_format:
-    description: The format in which the sample was sent.
+    description: 'The format in which the sample was sent. Example: Frozen Tissue'
     type: string
     enum:
-        - FFPE Block
-        - FFPE Scroll
-        - FFPE Core Punch
-        - Unstained Slide
-        - Frozen Tissue
-        - Sodium Heparin Green-Top Tube
-        - Streck Tube
-        - EDTA Tube
-        - Archival FFPE Block
-        - Archival FFPE Slides
-        - Archival FFPE Core Punch
-        - Archival FFPE Scroll
-        - Other
-        - Frozen Stool
-        - DNA-Preserved Stool
-        - Other
+      - FFPE Block
+      - FFPE Scroll
+      - FFPE Core Punch
+      - Unstained Slide
+      - Frozen Tissue
+      - Sodium Heparin Green-Top Tube
+      - Streck Tube
+      - EDTA Tube
+      - Archival FFPE Block
+      - Archival FFPE Slides
+      - Archival FFPE Core Punch
+      - Archival FFPE Scroll
+      - Other
+      - Frozen Stool
+      - DNA-Preserved Stool
+      - Other
+
+
+

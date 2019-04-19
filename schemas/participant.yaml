@@ -14,13 +14,48 @@ links:
 properties:
     cimac_participant_id:
         type: string
-        description: CIMAC Participant Identifier.
+        description: 'Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234'
     trial_participant_id:
         type: string
-        description: Trial Participant Identifier.
+        description: 'Trial Participant Identifier. Example: PT123'
     arm_id:
         type: string
-        description: Identifies the trial arm to which the participant belongs.
+        description: 'Identifies the trial arm to which the participant belongs. Example: Arm A'
     cohort_id:
         type: string
-        description: Identifies the treatment cohort to which the participant belongs.
+        description: 'Identifies the treatment cohort to which the participant belongs. Example Cohort A'
+    gender:
+        type: string
+        description: 'Identifies the gender of the participant. Example: Male'   
+        enum:
+            - Male
+            - Female
+            - Not Specified
+            - Other
+    race:
+        type: string
+        description: >
+            'NIH Racial and Ethnic Categories and Definitions for NIH Diversity Programs and for Other Reporting Purposes (NOT-OD-15-089), 
+            Release Date: April 8, 2015. Example: White'
+        enum:
+            - American Indian/Alaska Native
+            - Asian
+            - Black/African American
+            - Native Hawaiian/Pacific Islander
+            - White
+            - Not Reported
+            - Unknown
+            - Other
+    ethnicity:
+        type: string
+        description: >
+            'NIH Racial and Ethnic Categories and Definitions for NIH Diversity Programs and for Other Reporting Purposes (NOT-OD-15-089), 
+            Release Date: April 8, 2015. Example: Non-hispanic'
+        enum:
+            - Hispanic or Latino
+            - Not Hispanic or Latino
+            - Not reported
+            - Unknown
+            - Other
+
+        

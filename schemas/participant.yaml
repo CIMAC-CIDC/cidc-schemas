@@ -23,7 +23,7 @@ properties:
         description: 'Identifies the trial arm to which the participant belongs. Example: Arm A'
     cohort_id:
         type: string
-        description: 'Identifies the treatment cohort to which the participant belongs. Example Cohort A'
+        description: 'Identifies the treatment cohort to which the participant belongs. Example: Cohort A'
     gender:
         type: string
         description: 'Identifies the gender of the participant. Example: Male'   

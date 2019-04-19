@@ -19,6 +19,7 @@ properties:
     trial_participant_id:
         type: string
         description: 'Trial Participant Identifier. Example: PT123.'
+        required: true
     arm_id:
         type: string
         description: 'Identifies the trial arm to which the participant belongs. Example: Arm A.'

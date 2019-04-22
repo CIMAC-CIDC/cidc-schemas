@@ -137,14 +137,14 @@ def generate_template(args):
     #write data columns
     col = 0
     worksheet.set_row(row-2, 36)
-    data_col_range = xl_range(row-2, col, row-2, col + len(manifest['data_columns']) - 1)
+    data_col_range = xl_range(row-2, col, row-2, col + len(manifest['shipping_columns']) - 1)
     worksheet.merge_range(data_col_range, 'To be filled by Biorepository',format_5)
 
-    recieving_col_range = xl_range(row-2, col + len(manifest['data_columns']), row-2, len(manifest['data_columns']) + len(manifest['receiving_columns'])-1)
+    recieving_col_range = xl_range(row-2, col + len(manifest['shipping_columns']), row-2, len(manifest['shipping_columns']) + len(manifest['receiving_columns'])-1)
     worksheet.merge_range(recieving_col_range, 'To be filled by CIMAC lab',format_5)
 
 
-    for data_entity in manifest['data_columns']:
+    for data_entity in manifest['shipping_columns']:
         enum = []
         column = data_entity.split('.')[1].upper()
         des, enum = get_schema_enum(data_entity.split('.')[0], data_entity.split('.')[1])

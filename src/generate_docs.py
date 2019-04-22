@@ -10,35 +10,52 @@ def get_yaml(file_name):
         except yaml.YAMLError as exc:
             print(exc)
 
-# Extract Enum Lists
-def get_enum_dict(properties):
-    enum_dict = {}
+# Extract Properties
+def extract_properties(properties, property_dict):
     for current_property in properties:
+        target_property = {}
+        target_property["description"] = properties[current_property]["description"].replace("'", "")
+        target_property["type"] = properties[current_property]["type"]
+        try:
+            target_property["format"] = properties[current_property]["format"]
+        except KeyError:
+            target_property["format"] = ""
+
+        try:    
+            required_property = properties[current_property]["required"]
+            if required_property == True:
+                required_property = "[Required]"
+            else:
+                required_property = "[Optional]"
+            target_property["required"] = required_property
+        except KeyError:
+            target_property["required"] = "[Optional]"
+
         try:
             item_list = properties[current_property]["enum"]
-            enum_dict[current_property] = item_list
+            target_property["enum"] = item_list
         except KeyError:
             try:
                 item_list = properties[current_property]["items"]["enum"]
-                enum_dict[current_property] = item_list
+                target_property["enum"] = item_list
             except KeyError:
-                enum_dict[current_property] = []
-    return enum_dict
+                target_property["enum"] = []
+        property_dict[current_property] = target_property
 
 # Create HTML for the Specified Entity
-def processEntity(entity_name, template_env):
+def processEntity(entity_name, template_env, property_dict):
     file_name = "schemas/%s.yaml" % entity_name
     current_yaml = get_yaml(file_name)    
 
     properties = current_yaml["properties"]
-    enum_dict = get_enum_dict(properties)
+    extract_properties (properties, property_dict)
     sorted_property_list = sorted(properties)
 
     template = template_env.get_template("entity.html")
     output_text = template.render(current_yaml=current_yaml,
         properties=properties,
         sorted_property_list=sorted_property_list,
-        enum_dict=enum_dict)
+        property_dict=property_dict)
     print ("Creating:  out/%s.html" % entity_name)
     fd = open("out/%s.html" % entity_name, "w")
     fd.write(output_text)
@@ -46,13 +63,15 @@ def processEntity(entity_name, template_env):
     return current_yaml
 
 # Create HTML for the Specified Manifest
-def processManifest(manifest_name, entity_yaml_set, template_env):
+def processManifest(manifest_name, entity_yaml_set, property_dict, column_descriptions, template_env):
     file_name = "manifests/%s.yaml" % manifest_name
     current_yaml = get_yaml(file_name)    
 
     template = template_env.get_template("manifest.html")
     output_text = template.render(current_yaml=current_yaml,
-        entity_yaml_set=entity_yaml_set)
+        entity_yaml_set=entity_yaml_set,
+        property_dict=property_dict,
+        column_descriptions=column_descriptions)
     print ("Creating:  out/%s.html" % manifest_name)
     fd = open("out/%s.html" % manifest_name, "w")
     fd.write(output_text)
@@ -61,6 +80,7 @@ def processManifest(manifest_name, entity_yaml_set, template_env):
 
 templateLoader = jinja2.FileSystemLoader(searchpath="templates/")
 templateEnv = jinja2.Environment(loader=templateLoader)
+property_dict = {}
 
 # Create HTML Pages for Each Entity
 entity_list = []
@@ -74,14 +94,20 @@ entity_list.append("wes_artifact")
 entity_list.append("shipping_core")
 entity_yaml_set = {}
 for entity in entity_list:
-    entity_yaml_set[entity] = (processEntity(entity, templateEnv))
+    entity_yaml_set[entity] = (processEntity(entity, templateEnv, property_dict))
 
 # Create HTML Pages for Each Manifest
+column_descriptions = {}
+column_descriptions["core_columns"] = "Core Columns:  Manifest Header"
+column_descriptions["shipping_columns"] = "Shipping Columns:  Completed by the BioBank"
+column_descriptions["receiving_columns"] = "Receiving Columns:  Completed by the CIMAC"
+
 manifest_list = []
 manifest_list.append("pbmc")
 manifest_yaml_set = {}
 for manifest in manifest_list:
-    manifest_yaml_set[manifest] = processManifest(manifest, entity_yaml_set, templateEnv)
+    manifest_yaml_set[manifest] = processManifest(manifest, entity_yaml_set,
+    property_dict, column_descriptions, templateEnv)
 
 # Create the Index Page
 template = templateEnv.get_template("index.html")

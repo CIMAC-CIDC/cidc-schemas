@@ -58,5 +58,5 @@ properties:
             - Unknown
             - Other
 required:
-    - cimac_participant_id:
-    - trial_participant_id:
+    - cimac_participant_id
+    - trial_participant_id

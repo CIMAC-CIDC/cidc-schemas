@@ -16,7 +16,6 @@ properties:
     lead_organization_study_id:
         type: string
         description: 'Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.'
-        required: true
     trial_name:
         description: 'Name of clinical trial.'
         type: string
@@ -42,3 +41,5 @@ properties:
                 - NanoString
                 - ELISpot
                 - Multiplexed Ion-Beam Imaging (MIBI)
+required:
+    - lead_organization_study_id

@@ -15,11 +15,9 @@ properties:
     cimac_participant_id:
         type: string
         description: 'Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234.'
-        required: true
     trial_participant_id:
         type: string
         description: 'Trial Participant Identifier. Example: PT123.'
-        required: true
     arm_id:
         type: string
         description: 'Identifies the trial arm to which the participant belongs. Example: Arm A.'
@@ -59,3 +57,6 @@ properties:
             - Not reported
             - Unknown
             - Other
+required:
+    - cimac_participant_id:
+    - trial_participant_id:

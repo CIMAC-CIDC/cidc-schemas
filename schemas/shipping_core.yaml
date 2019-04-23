@@ -18,7 +18,6 @@ properties:
   request:
     description: 'Assigns a request identifier (mandatory or optional) for the assay.'
     type: string
-    required: true
   assay_priority:
     description: 'Priority of the assay as it appears on the intake form.'
     type: string
@@ -92,3 +91,5 @@ properties:
   ship_to:
     description: 'Shipping to [free text: person or organization, address, phone number, email address.]' 
     type: string
+required:
+  - request

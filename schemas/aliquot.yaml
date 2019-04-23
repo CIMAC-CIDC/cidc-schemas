@@ -13,7 +13,6 @@ properties:
   cimac_aliquot_id:
     description: 'Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.'
     type: string
-    required: true
   quantity:
     description: 'Quantity of each sample shipped.'
     type: integer
@@ -61,4 +60,5 @@ properties:
       - Sample Exhausted
       - Remainder used for other Assay
       - Other
- 
+required:
+  - cimac_aliquot_id

@@ -87,3 +87,14 @@ properties:
             - BAM
             - MAF
             - Other
+required:
+    - uuid
+    - bucket_url
+    - uploaded_timestamp
+    - file_size_bytes
+    - md5_hash
+    - visible
+    - artifact_category
+    - assay_category
+    - file_type
+

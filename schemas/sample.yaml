@@ -19,11 +19,9 @@ properties:
   cimac_sample_id:
     description: 'Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.'
     type: string
-    required: true
   site_sample_id:
     description: 'Sample identifier assigned by the biorepository site. Example: EA123-45.' 
     type: string
-    required: true
   time_point:
     title: Time Point
     description: 'Study related collection time point, as described in the protocol intake form. Example: Progression.'
@@ -81,6 +79,9 @@ properties:
       - Frozen Stool
       - DNA-Preserved Stool
       - Other
+required:
+  - cimac_sample_id
+  - site_sample_id
 
 
 

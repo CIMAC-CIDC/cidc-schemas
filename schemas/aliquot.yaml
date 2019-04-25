@@ -18,22 +18,22 @@ properties:
     type: integer
   volume_quantity:
     description: 'Volume of sample shipped.'
-    type: float
+    type: number
   volume_units:
     description: 'Volume units. Example: ml.'
     type: string
   pbmc_aliquoted:
     description: 'Site or biobank provides the final number of PBMCs per vial that were frozen.'
-    type: float
+    type: number
   pbmc_recovered: 
     description: 'Receiving site determines number fo PBMCs per vial recovered upon receipt.'
-    type: float
+    type: number
   material_used: 
     description: 'Receiving site indicates how much material was used for assay purposes.'
-    type: float
+    type: number
   material_remaining:
     description: 'Receiving site indicates how much material remains after assay use.'
-    type: float
+    type: number
   sample_source:
     description: 'Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52' 
     type: string

@@ -4,7 +4,6 @@ id: artifact
 title: Artifact
 type: object
 description: Any file artifact associated with a clinical trial.
-
 links:
   - link:
       cardinality: exactly_one
@@ -21,36 +20,28 @@ links:
   - link:
       cardinality: 0_or_N
       linked_to: aliquot
-
 properties:
     uuid:
         description: UUID of artifact.
         type: string
-        required: true
     bucket_url:
         description: URL to artifact within Google Bucket.
         type: string
-        required: true
     uploaded_timestamp:
         description: Timestamp of when artfiact was loaded into the system.
         type: string
-        required: true
     file_size_bytes:
         description: File size in bytes.
         type: integer
-        required: true
     md5_hash:
         description: MD5 Hash of artifact.
         type: string
-        required: true
     visible:
         description: Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.
         type: boolean
-        required: true
     artifact_category:
         description: Artifact category.
         type: string
-        required: true
         enum:
             - Assay Artifact from CIMAC
             - Pipeline Artifact
@@ -59,7 +50,6 @@ properties:
     assay_category:
         description: Assay category.
         type: string
-        required: true
         enum:
             - Whole Exome Sequencing (WES)
             - RNASeq
@@ -76,7 +66,6 @@ properties:
     file_type:
         description: File Type.
         type: string
-        required: true
         enum:
             - FASTA
             - FASTQ

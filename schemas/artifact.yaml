@@ -4,7 +4,6 @@ id: artifact
 title: Artifact
 type: object
 description: Any file artifact associated with a clinical trial.
-
 links:
   - link:
       cardinality: exactly_one
@@ -21,7 +20,6 @@ links:
   - link:
       cardinality: 0_or_N
       linked_to: aliquot
-
 properties:
     uuid:
         description: UUID of artifact.

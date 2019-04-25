@@ -11,7 +11,9 @@ def get_yaml(file_name):
             print(exc)
 
 # Extract Properties
-def extract_properties(properties, property_dict):
+def extract_properties(properties, property_dict, required):
+
+    # loop over properties
     for current_property in properties:
         target_property = {}
         target_property["description"] = properties[current_property]["description"].replace("'", "")
@@ -22,8 +24,7 @@ def extract_properties(properties, property_dict):
             target_property["format"] = ""
 
         try:    
-            required_property = properties[current_property]["required"]
-            if required_property == True:
+            if current_property in required:
                 required_property = "[Required]"
             else:
                 required_property = "[Optional]"
@@ -47,8 +48,13 @@ def processEntity(entity_name, template_env, property_dict):
     file_name = "schemas/%s.yaml" % entity_name
     current_yaml = get_yaml(file_name)    
 
+    # find required properties
+    req_props = {}
+    if 'required' in current_yaml:
+      req_props = current_yaml['required']
+
     properties = current_yaml["properties"]
-    extract_properties (properties, property_dict)
+    extract_properties(properties, property_dict, req_props)
     sorted_property_list = sorted(properties)
 
     template = template_env.get_template("entity.html")
@@ -78,42 +84,47 @@ def processManifest(manifest_name, entity_yaml_set, property_dict, column_descri
     fd.close()
     return current_yaml
 
-templateLoader = jinja2.FileSystemLoader(searchpath="templates/")
-templateEnv = jinja2.Environment(loader=templateLoader)
-property_dict = {}
+def generate_docs():
 
-# Create HTML Pages for Each Entity
-entity_list = []
-entity_list.append("clinical_trial")
-entity_list.append("participant")
-entity_list.append("sample")
-entity_list.append("aliquot")
-entity_list.append("user")
-entity_list.append("artifact")
-entity_list.append("wes_artifact")
-entity_list.append("shipping_core")
-entity_yaml_set = {}
-for entity in entity_list:
-    entity_yaml_set[entity] = (processEntity(entity, templateEnv, property_dict))
+  templateLoader = jinja2.FileSystemLoader(searchpath="templates/")
+  templateEnv = jinja2.Environment(loader=templateLoader)
+  property_dict = {}
 
-# Create HTML Pages for Each Manifest
-column_descriptions = {}
-column_descriptions["core_columns"] = "Core Columns:  Manifest Header"
-column_descriptions["shipping_columns"] = "Shipping Columns:  Completed by the BioBank"
-column_descriptions["receiving_columns"] = "Receiving Columns:  Completed by the CIMAC"
+  # Create HTML Pages for Each Entity
+  entity_list = []
+  entity_list.append("clinical_trial")
+  entity_list.append("participant")
+  entity_list.append("sample")
+  entity_list.append("aliquot")
+  entity_list.append("user")
+  entity_list.append("artifact")
+  entity_list.append("wes_artifact")
+  entity_list.append("shipping_core")
+  entity_yaml_set = {}
+  for entity in entity_list:
+      entity_yaml_set[entity] = (processEntity(entity, templateEnv, property_dict))
 
-manifest_list = []
-manifest_list.append("pbmc")
-manifest_yaml_set = {}
-for manifest in manifest_list:
-    manifest_yaml_set[manifest] = processManifest(manifest, entity_yaml_set,
-    property_dict, column_descriptions, templateEnv)
+  # Create HTML Pages for Each Manifest
+  column_descriptions = {}
+  column_descriptions["core_columns"] = "Core Columns:  Manifest Header"
+  column_descriptions["shipping_columns"] = "Shipping Columns:  Completed by the BioBank"
+  column_descriptions["receiving_columns"] = "Receiving Columns:  Completed by the CIMAC"
 
-# Create the Index Page
-template = templateEnv.get_template("index.html")
-print ("Creating out/index.html")
-outputText = template.render(entity_list=entity_list, entity_yaml_set=entity_yaml_set,
-    manifest_list=manifest_list, manifest_yaml_set=manifest_yaml_set)
-fd = open("out/index.html", "w")
-fd.write(outputText)
-fd.close()
+  manifest_list = []
+  manifest_list.append("pbmc")
+  manifest_yaml_set = {}
+  for manifest in manifest_list:
+      manifest_yaml_set[manifest] = processManifest(manifest, entity_yaml_set,
+      property_dict, column_descriptions, templateEnv)
+
+  # Create the Index Page
+  template = templateEnv.get_template("index.html")
+  print ("Creating out/index.html")
+  outputText = template.render(entity_list=entity_list, entity_yaml_set=entity_yaml_set,
+      manifest_list=manifest_list, manifest_yaml_set=manifest_yaml_set)
+  fd = open("out/index.html", "w")
+  fd.write(outputText)
+  fd.close()
+
+if __name__ == '__main__':
+  generate_docs()

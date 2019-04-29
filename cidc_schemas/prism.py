@@ -33,8 +33,15 @@ def split_manifest(file_path, mapping, coercion):
   doc_header_tups = []
   data_row_tups = []
   headers = []
+  seen_tobefilled = False
+  seen_plusone = False
   for row in sheet.iter_rows():
     
+    # skip explanatory line after seen_tobefileld.
+    if seen_tobefilled and not seen_plusone:
+      seen_plusone = True
+      continue
+
     # get data.
     line = []
     for col in row:
@@ -62,14 +69,13 @@ def split_manifest(file_path, mapping, coercion):
       value = line[1].value
       doc_header_tups.append((key, value))
 
-    # check if all values filled.
-    fail = False
-    for i in range(len(line)):
-      if line[i].value is None:
-        fail = True
+
+    # check if we are in data section
+    if line[0].value == "To be filled by Biorepository":
+      seen_tobefilled = True
 
     # check first if valid
-    if not fail:
+    if seen_tobefilled and seen_plusone:
 
       # check if we are header row
       is_valid = False
@@ -84,6 +90,10 @@ def split_manifest(file_path, mapping, coercion):
   # coerce common data types and make lower-case
   tmp = []
   for k, v in doc_header_tups:
+
+    # sanity check
+    assert k is not None,  "Malformed header section in spreadsheet"
+
     k = k.lower()
     v = coerce_value(coercion, k, v)
     tmp.append((k, v))
@@ -91,6 +101,10 @@ def split_manifest(file_path, mapping, coercion):
 
   tmp = []
   for k, v in data_row_tups:
+
+    # sanity check
+    assert k is not None, "Malformed data rows in spreadsheet"
+      
     k = k.lower()
     v = coerce_value(coercion, k, v)
     tmp.append((k, v))
@@ -153,5 +167,77 @@ def load_schemas():
 
   return schemas, mapping, coercion
 
-  # validate stuff
-  #jsonschema.validate(instance=instance, schema=schema)
+def validate_instance(path_to_manifest):
+  """ validates a given schema"""
+
+  # load schemas
+  schemas, mapping, coercion = load_schemas()
+
+  # split it out into simple tuples.
+  doc_header_tups, data_row_tups = split_manifest(path_to_manifest, mapping, coercion)
+
+  # make the header objects (this is a one object per file)
+  head_objs = {}
+  data_objs = {}
+
+  # look for the appropriate object.
+  for k, v in doc_header_tups:
+
+    # test sanity
+    assert k in mapping, "un-recognized property in header"
+    schema = mapping[k]
+
+    # bootstrap
+    if schema not in head_objs:
+      head_objs[schema] = {}
+
+    # save
+    head_objs[schema][k] = v
+
+  # validate the header objects.
+  for schema_id in head_objs:
+
+    # validate this.
+    try:
+      validate_schema(schemas[schema_id], head_objs[schema_id])
+    except jsonschema.exceptions.ValidationError as e:
+      raise e
+      print("validation error")
+      print(e.validator)
+      print(e.validator_value)
+      print(e.schema)
+      print(e.schema_path)
+      print(e.message)
+
+
+  # look for the appropriate object.
+  for k, v in data_row_tups:
+
+    # test sanity
+    assert k in mapping, "un-recognized property in data"
+    schema = mapping[k]
+
+    # bootstrap
+    if schema not in data_objs:
+      data_objs[schema] = {}
+
+    # save
+    data_objs[schema][k] = v
+
+  # validate the header objects.
+  for schema_id in data_objs:
+
+    # validate this.
+    print(data_objs[schema_id])
+    try:
+      validate_schema(schemas[schema_id], data_objs[schema_id])
+    except jsonschema.exceptions.ValidationError as e:
+      raise e
+      print("validation error")
+      print(e.validator)
+      print(e.validator_value)
+      print(e.schema)
+      print(e.schema_path)
+      print(e.message)
+
+  return head_objs, data_objs

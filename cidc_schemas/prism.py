@@ -5,6 +5,9 @@ import yaml
 import jsonschema
 import urllib
 from openpyxl import load_workbook
+import datetime
+from dateparser import parse
+import strict_rfc3339
 
 SCHEMA_ROOT = "https://raw.githubusercontent.com/CIMAC-CIDC/schemas/testing/schemas"
 SCHAMAS = [ \
@@ -127,7 +130,50 @@ def coerce_value(coercion, k, v):
 def validate_schema(schema, instance):
   """ does json-schema validaiton """
 
-  return jsonschema.validate(instance=instance, schema=schema)
+  return jsonschema.validate(instance=instance, schema=schema, format_checker=jsonschema.FormatChecker())
+
+def _to_dt(x):
+  # get dateitme
+  dt = parse(str(x))
+
+  # convert to timestamp
+  dtts = datetime.datetime.timestamp(dt)
+
+  # convert to json-preferred format.
+  return strict_rfc3339.timestamp_to_rfc3339_utcoffset(dtts)
+
+def _to_d(x):
+  # get dateitme
+  dt = parse(str(x))
+
+  # convert to properly formatted string.
+  return dt.strftime('%Y-%m-%d')
+
+def _to_t(x):
+  # get dateitme
+  dt = parse(str(x))
+
+  # convert to properly formatted string.
+  return dt.strftime('%H:%M:%S')
+
+def determine_coercion(schema, key, coercion):
+  """ determine what coercion funciton to run """
+
+  t = schema['properties'][key]['type']
+  if t == 'string':
+    coercion[key] = str
+    if 'format' in schema['properties'][key]:
+      if schema['properties'][key]['format'] == 'date-time':
+        coercion[key] =  _to_dt
+      elif schema['properties'][key]['format'] == 'date':
+        coercion[key] =  _to_d
+      elif schema['properties'][key]['format'] == 'time':
+        coercion[key] =  _to_t
+  elif t == 'integer':
+    coercion[key] = int
+  elif t == 'number':
+    coercion[key] = float
+
 
 def load_schemas():
 
@@ -154,13 +200,7 @@ def load_schemas():
       assert key not in mapping
 
       # add our own type conversion
-      t = schema['properties'][key]['type']
-      if t == 'string':
-        coercion[key] = str
-      elif t == 'integer':
-        coercion[key] = int
-      elif t == 'number':
-        coercion[key] = float
+      determine_coercion(schema, key, coercion)
 
       # store a lookup.
       mapping[key] = schema_id
@@ -208,7 +248,6 @@ def validate_instance(path_to_manifest):
       print(e.schema)
       print(e.schema_path)
       print(e.message)
-
 
   # look for the appropriate object.
   for k, v in data_row_tups:

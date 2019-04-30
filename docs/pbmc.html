@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    
+<main role="main">
+
+    <div class="container">
+        <p/>
+        <p><a href="index.html">CIDC Data Model</a></p>
+        <h1>Shipping manifest for PBMC samples</h1>
+        <p>
+        <b>Description:</b>  Shipping / receiving manifest for transferring PBMC samples.
+
+        </p>
+    </div>
+
+  <div class="container">
+      
+          <h5>Core Columns:  Manifest Header</h5>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+                <th>Data Type</th>
+            </tr>
+            </thead>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="clinical_trial.html#lead_organization_study_id">clinical_trial.lead_organization_study_id</a></td>
+                  <td>Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#manifest_id">shipping_core.manifest_id</a></td>
+                  <td>Filename of the manifest used to ship this sample. Example: E4412_PBMC. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#request">shipping_core.request</a></td>
+                  <td>Assigns a request identifier (mandatory or optional) for the assay. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#assay_priority">shipping_core.assay_priority</a></td>
+                  <td>Priority of the assay as it appears on the intake form. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                          <li>Assay-1</li>
+                      
+                          <li>Assay-2</li>
+                      
+                          <li>Assay-3</li>
+                      
+                          <li>Assay-4</li>
+                      
+                          <li>Assay-5</li>
+                      
+                          <li>Assay-6</li>
+                      
+                          <li>Assay-7</li>
+                      
+                          <li>Assay-8</li>
+                      
+                          <li>Assay-9</li>
+                      
+                          <li>Assay-10</li>
+                      
+                          <li>Assay-11</li>
+                      
+                          <li>Assay-12</li>
+                      
+                          <li>Assay-13</li>
+                      
+                          <li>Assay-14</li>
+                      
+                          <li>Assay-15</li>
+                      
+                          <li>Other</li>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#assay_type">shipping_core.assay_type</a></td>
+                  <td>Assay and sample type used. Example: Green-top tube - Plasma (Olink). </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#batch_number">shipping_core.batch_number</a></td>
+                  <td>The number corresponding to the batch sent for this assay. </td>
+                  <td width=40%>
+                      &lt;integer&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#box_number">shipping_core.box_number</a></td>
+                  <td>Box identifier for samples, if sample shipment container includes multiple boxes for each sample/assay type. </td>
+                  <td width=40%>
+                      &lt;integer&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#assay_run_number">shipping_core.assay_run_number</a></td>
+                  <td>Assay run number for samples received. </td>
+                  <td width=40%>
+                      &lt;integer&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#courier">shipping_core.courier</a></td>
+                  <td>Courier utilized for shipment. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                          <li>FEDEX</li>
+                      
+                          <li>USPS</li>
+                      
+                          <li>UPC</li>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#tracking_number">shipping_core.tracking_number</a></td>
+                  <td>Air bill number assigned to shipment. Example: 4567788343. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#account_number">shipping_core.account_number</a></td>
+                  <td>Courier account number to pay for shipping if avaialable. Example: 45465732. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#shipping_condition">shipping_core.shipping_condition</a></td>
+                  <td>Type of shippment made. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                          <li>Frozen (Dry Ice)</li>
+                      
+                          <li>Frozen (Dry Shipper)</li>
+                      
+                          <li>Ambient (Ice Pack)</li>
+                      
+                          <li>Ambient</li>
+                      
+                          <li>Other</li>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#date_shipped">shipping_core.date_shipped</a></td>
+                  <td>Date of shipment. </td>
+                  <td width=40%>
+                      &lt;string&gt; date-time
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#num_of_samples_shipped">shipping_core.num_of_samples_shipped</a></td>
+                  <td>Count of specimens distributed by site. </td>
+                  <td width=40%>
+                      &lt;integer&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#num_of_samples_good">shipping_core.num_of_samples_good</a></td>
+                  <td>Number of Samples Received in Good Condition. </td>
+                  <td width=40%>
+                      &lt;integer&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#num_of_path_report">shipping_core.num_of_path_report</a></td>
+                  <td>Number if pathology report received. </td>
+                  <td width=40%>
+                      &lt;integer&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#ship_from">shipping_core.ship_from</a></td>
+                  <td>Shipping from [free text: person or organization, address, phone number, email address.] </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="shipping_core.html#ship_to">shipping_core.ship_to</a></td>
+                  <td>Shipping to [free text: person or organization, address, phone number, email address.] </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+          </table>
+      
+          <h5>Shipping Columns:  Completed by the BioBank</h5>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+                <th>Data Type</th>
+            </tr>
+            </thead>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="clinical_trial.html#lead_organization_study_id">clinical_trial.lead_organization_study_id</a></td>
+                  <td>Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="participant.html#trial_participant_id">participant.trial_participant_id</a></td>
+                  <td>Trial Participant Identifier. Example: PT123. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="participant.html#cohort_id">participant.cohort_id</a></td>
+                  <td>Identifies the treatment cohort to which the participant belongs. Example: Cohort A. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="participant.html#arm_id">participant.arm_id</a></td>
+                  <td>Identifies the trial arm to which the participant belongs. Example: Arm A. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="sample.html#site_sample_id">sample.site_sample_id</a></td>
+                  <td>Sample identifier assigned by the biorepository site. Example: EA123-45. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="sample.html#time_point">sample.time_point</a></td>
+                  <td>Study related collection time point, as described in the protocol intake form. Example: Progression. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="sample.html#blood_collection_date">sample.blood_collection_date</a></td>
+                  <td>Date of blood collection. </td>
+                  <td width=40%>
+                      &lt;string&gt; date
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="sample.html#blood_collection_time">sample.blood_collection_time</a></td>
+                  <td>Time of blood collection. </td>
+                  <td width=40%>
+                      &lt;string&gt; time
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="sample.html#blood_processing_date">sample.blood_processing_date</a></td>
+                  <td>Date of blood processing. </td>
+                  <td width=40%>
+                      &lt;string&gt; date
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="sample.html#blood_processing_time">sample.blood_processing_time</a></td>
+                  <td>Time of blood processing. </td>
+                  <td width=40%>
+                      &lt;string&gt; time
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="sample.html#sample_location">sample.sample_location</a></td>
+                  <td>Sample location within the shipping container. Example: A1. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="sample.html#specimen_type">sample.specimen_type</a></td>
+                  <td>Type of sample sent. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                          <li>Core Needle Biopsy</li>
+                      
+                          <li>Surgical Resection</li>
+                      
+                          <li>Endoscopic Biopsy</li>
+                      
+                          <li>Punch Biopsy</li>
+                      
+                          <li>Plasma</li>
+                      
+                          <li>PBMC</li>
+                      
+                          <li>Whole Blood</li>
+                      
+                          <li>Stool Sample</li>
+                      
+                          <li>Bone Marrow Aspirate</li>
+                      
+                          <li>Other</li>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="sample.html#specimen_format">sample.specimen_format</a></td>
+                  <td>The format in which the sample was sent. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                          <li>FFPE Block</li>
+                      
+                          <li>FFPE Scroll</li>
+                      
+                          <li>FFPE Core Punch</li>
+                      
+                          <li>Unstained Slide</li>
+                      
+                          <li>Frozen Tissue</li>
+                      
+                          <li>Sodium Heparin Green-Top Tube</li>
+                      
+                          <li>Streck Tube</li>
+                      
+                          <li>EDTA Tube</li>
+                      
+                          <li>Archival FFPE Block</li>
+                      
+                          <li>Archival FFPE Slides</li>
+                      
+                          <li>Archival FFPE Core Punch</li>
+                      
+                          <li>Archival FFPE Scroll</li>
+                      
+                          <li>Other</li>
+                      
+                          <li>Frozen Stool</li>
+                      
+                          <li>DNA-Preserved Stool</li>
+                      
+                          <li>Other</li>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="aliquot.html#quantity">aliquot.quantity</a></td>
+                  <td>Quantity of each sample shipped. </td>
+                  <td width=40%>
+                      &lt;integer&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="aliquot.html#volume_quantity">aliquot.volume_quantity</a></td>
+                  <td>Volume of sample shipped. </td>
+                  <td width=40%>
+                      &lt;number&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="aliquot.html#volume_units">aliquot.volume_units</a></td>
+                  <td>Volume units. Example: ml. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="aliquot.html#pbmc_aliquoted">aliquot.pbmc_aliquoted</a></td>
+                  <td>Site or biobank provides the final number of PBMCs per vial that were frozen. </td>
+                  <td width=40%>
+                      &lt;number&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="aliquot.html#sample_source">aliquot.sample_source</a></td>
+                  <td>Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52 </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+          </table>
+      
+          <h5>Receiving Columns:  Completed by the CIMAC</h5>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+                <th>Data Type</th>
+            </tr>
+            </thead>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="aliquot.html#cimac_aliquot_id">aliquot.cimac_aliquot_id</a></td>
+                  <td>Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="aliquot.html#pbmc_recovered">aliquot.pbmc_recovered</a></td>
+                  <td>Receiving site determines number fo PBMCs per vial recovered upon receipt. </td>
+                  <td width=40%>
+                      &lt;number&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="aliquot.html#material_used">aliquot.material_used</a></td>
+                  <td>Receiving site indicates how much material was used for assay purposes. </td>
+                  <td width=40%>
+                      &lt;number&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="aliquot.html#material_remaining">aliquot.material_remaining</a></td>
+                  <td>Receiving site indicates how much material remains after assay use. </td>
+                  <td width=40%>
+                      &lt;number&gt; 
+                      <ul>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="aliquot.html#sample_quality_status">aliquot.sample_quality_status</a></td>
+                  <td>Final status of sample after QC and pathology review. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                          <li>Usable for Assay</li>
+                      
+                          <li>Not Usable for Assay</li>
+                      
+                          <li>Verifying</li>
+                      
+                          <li>Other</li>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="aliquot.html#sample_replacement">aliquot.sample_replacement</a></td>
+                  <td>Status of sample if replacement is/was requested. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                          <li>Replacement Requested</li>
+                      
+                          <li>Replacement Tested</li>
+                      
+                          <li>N/A</li>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+              
+              
+              
+              <tr>
+                  <td><a href="aliquot.html#sample_status">aliquot.sample_status</a></td>
+                  <td>Status of sample used for other assay, exhausted, destroyed, or returned. </td>
+                  <td width=40%>
+                      &lt;string&gt; 
+                      <ul>
+                      
+                          <li>Sample Returned</li>
+                      
+                          <li>Sample Exhausted</li>
+                      
+                          <li>Remainder used for other Assay</li>
+                      
+                          <li>Other</li>
+                      
+                      </ul>
+                  </td>
+                </tr>
+            
+          </table>
+      
+  </div>
+
+</main>
+    
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

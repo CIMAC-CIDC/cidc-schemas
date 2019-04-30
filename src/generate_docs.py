@@ -1,6 +1,8 @@
 import yaml
 import jinja2
 
+DOC_DIR = "docs"
+
 # Get the Specified YAML File
 def get_yaml(file_name):
     with open(file_name, 'r') as stream:
@@ -62,8 +64,8 @@ def processEntity(entity_name, template_env, property_dict):
         properties=properties,
         sorted_property_list=sorted_property_list,
         property_dict=property_dict)
-    print ("Creating:  out/%s.html" % entity_name)
-    fd = open("out/%s.html" % entity_name, "w")
+    print ("Creating:  %s.html" % entity_name)
+    fd = open("%s/%s.html" % (DOC_DIR, entity_name), "w")
     fd.write(output_text)
     fd.close()
     return current_yaml
@@ -78,8 +80,8 @@ def processManifest(manifest_name, entity_yaml_set, property_dict, column_descri
         entity_yaml_set=entity_yaml_set,
         property_dict=property_dict,
         column_descriptions=column_descriptions)
-    print ("Creating:  out/%s.html" % manifest_name)
-    fd = open("out/%s.html" % manifest_name, "w")
+    print ("Creating:  %s.html" % manifest_name)
+    fd = open("%s/%s.html" % (DOC_DIR, manifest_name), "w")
     fd.write(output_text)
     fd.close()
     return current_yaml
@@ -119,10 +121,10 @@ def generate_docs():
 
   # Create the Index Page
   template = templateEnv.get_template("index.html")
-  print ("Creating out/index.html")
+  print ("Creating index.html")
   outputText = template.render(entity_list=entity_list, entity_yaml_set=entity_yaml_set,
       manifest_list=manifest_list, manifest_yaml_set=manifest_yaml_set)
-  fd = open("out/index.html", "w")
+  fd = open("%s/index.html" % DOC_DIR, "w")
   fd.write(outputText)
   fd.close()
 

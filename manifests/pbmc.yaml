@@ -26,9 +26,11 @@ core_columns:
 shipping_columns:
   - clinical_trial.lead_organization_study_id
   - participant.trial_participant_id
+  - participant.cimac_participant_id
   - participant.cohort_id
   - participant.arm_id
   - sample.site_sample_id
+  - sample.cimac_sample_id
   - sample.time_point
   - sample.blood_collection_date
   - sample.blood_collection_time

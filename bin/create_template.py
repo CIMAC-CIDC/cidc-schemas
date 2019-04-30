@@ -70,11 +70,6 @@ def interface():
     parser = parser.parse_args()
     return parser
 
-def load_schema(file_name):
-    with open(file_name, 'r') as stream:
-        schema = yaml.load(stream)
-    return (schema)
-
 def get_schema_enum(entity, property_id):
     schema = load_schema(os.path.join(YAML_PATH, entity+'.yaml'))
     try:

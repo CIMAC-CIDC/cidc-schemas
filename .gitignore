@@ -1,4 +1,5 @@
 # custom ignores
+~*
 out/*.html
 .DS_Store
 out/deploy.sh

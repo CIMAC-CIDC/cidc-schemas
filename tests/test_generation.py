@@ -6,7 +6,7 @@
 import os
 import unittest
 import pytest
-from src import generate_docs
+from bin import generate_docs
 
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
@@ -33,7 +33,7 @@ class TestGeneration(unittest.TestCase):
       num_schema = len(os.listdir(os.path.join(ROOT_DIR, 'schemas')))
       num_manifest = len(os.listdir(os.path.join(ROOT_DIR, 'manifests'))) 
       
-      files = os.listdir(os.path.join(ROOT_DIR, 'out'))
+      files = os.listdir(os.path.join(ROOT_DIR, 'docs'))
       keep = []
       for f in files:
         if f.count("html") > 0:

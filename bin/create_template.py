@@ -2,6 +2,7 @@
 import yaml
 import xlsxwriter
 from xlsxwriter.utility import xl_rowcol_to_cell,xl_range
+from datetime import date, time
 import sys
 import yaml
 import os
@@ -58,7 +59,15 @@ FORMAT5 = {
 }
 
 # Load Schma from YAML
-def load_schema(file_name):
+def load_schema():
+    schema_all = {}
+    for yaml_file in os.listdir(YAML_PATH):
+        with open(os.path.join(YAML_PATH,yaml_file), 'r') as stream:
+            schema = yaml.load(stream)
+            schema_all[schema['id']] = schema
+    return schema_all
+
+def load_manifest(file_name):
 	with open(file_name, 'r') as stream:
 		schema = yaml.load(stream)
 	return (schema)
@@ -70,19 +79,31 @@ def interface():
     parser = parser.parse_args()
     return parser
 
-def get_schema_enum(entity, property_id):
-    schema = load_schema(os.path.join(YAML_PATH, entity+'.yaml'))
+
+def get_schema_des(schema, property_id):
     try:
         des = schema['properties'][property_id]['description']
     except KeyError:
         des = ''
-    if 'enum' in schema['properties'][property_id]:
-        return des, schema['properties'][property_id]['enum']
-    else :
-         return des, []
+    return des
+
+def get_schema_enum(schema, property_id):
+    try:
+        enum = schema['properties'][property_id]['enum']
+    except KeyError:
+        enum = []
+    return enum
+
+def get_schema_format(schema, property_id):
+    try:
+        d_format = schema['properties'][property_id]['format']
+    except KeyError:
+        d_format = ''
+    return d_format
 
 def generate_template(args):
-    manifest = load_schema(args.yaml_file)
+    schema_all = load_schema()
+    manifest = load_manifest(args.yaml_file)
     manifest_file = manifest['id'] + '.xlsx'
     out_file = os.path.join(args.out_dir, manifest['id'] + '.xlsx')
 
@@ -110,11 +131,9 @@ def generate_template(args):
 
     # Iterate over the core data and write it out row by row.
     for core_entity in manifest['core_columns']:
-        enum = []
+
         column = core_entity.split('.')[1].upper()
-        
-        #gets the enums for the dropdown. 
-        des, enum = get_schema_enum( core_entity.split('.')[0],  core_entity.split('.')[1])
+        des, enum, d_format = get_data(core_entity, schema_all)
 
         cell_key = xl_rowcol_to_cell(row, col)
         cell_val = xl_rowcol_to_cell(row, col + 1)
@@ -122,10 +141,15 @@ def generate_template(args):
             worksheet.write_blank(row, col+i, '' , core_format)
 
         worksheet.write(cell_key, column + ":", core_format)
-        # add dropdowns
+        # add dropdowns and datetime checks
         if len(enum) > 0:
-            worksheet.data_validation(cell_val, {'validate': 'list',
-                                    'source': enum})
+            worksheet.data_validation(cell_val, {'validate': 'list', 'source': enum})
+        elif d_format == 'date':
+            validation_string = get_date_validation_str(cell_val)
+            worksheet.data_validation(cell_val, {'validate': 'custom', 'value': validation_string,'error_message':'Please enter date in format mm/dd/yyyy'})
+        elif d_format == 'time':
+            worksheet.data_validation(cell_val, {'validate': 'time','criteria': 'between','minimum': time(0, 0),'maximum': time(23, 59),
+            'error_message':'Please enter time in format hh:mm'})
         row += 1
     row += 3
 
@@ -140,23 +164,31 @@ def generate_template(args):
 
 
     for data_entity in manifest['shipping_columns']:
-        enum = []
         column = data_entity.split('.')[1].upper()
-        des, enum = get_schema_enum(data_entity.split('.')[0], data_entity.split('.')[1])
+        des, enum, d_format = get_data(data_entity, schema_all)
+        
         cell_des = xl_rowcol_to_cell(row-1, col)
         cell_key = xl_rowcol_to_cell(row, col)
         cell_range = xl_range(row+1, col, row+200, col)
+        
         worksheet.write(cell_des, des, data_format)
         worksheet.write(cell_key, column, data_format)
+        
         if len(enum) > 0 :
             worksheet.data_validation(cell_range, {'validate': 'list',
                                     'source': enum})
+        elif d_format == 'date':
+            validation_string = get_date_validation_str(cell_range)
+            worksheet.data_validation(cell_range, {'validate': 'custom', 'value': validation_string,'error_message':'Please enter date in format mm/dd/yyyy'})
+        elif d_format == 'time':
+            worksheet.data_validation(cell_range, {'validate': 'time','criteria': 'between','minimum': time(0, 0),'maximum': time(23, 59),
+            'error_message':'Please enter time in format hh:mm'})
         col += 1
 
     for data_entity in manifest['receiving_columns']:
         enum = []
         column = data_entity.split('.')[1].upper()
-        des, enum = get_schema_enum(data_entity.split('.')[0], data_entity.split('.')[1])
+        des, enum, d_format = get_data(data_entity, schema_all)
         cell_des = xl_rowcol_to_cell(row-1, col)
         cell_key = xl_rowcol_to_cell(row, col)
         cell_range = xl_range(row+1, col, row+200, col)
@@ -165,16 +197,33 @@ def generate_template(args):
         if len(enum) > 0 :
             worksheet.data_validation(cell_range, {'validate': 'list',
                                     'source': enum})
+        elif d_format == 'date':
+            validation_string = get_date_validation_str(cell_range)
+            worksheet.data_validation(cell_range, {'validate': 'custom', 'value': validation_string, 'error_message':'Please enter date in format mm/dd/yyyy'})
+        elif d_format == 'time':
+            worksheet.data_validation(cell_range, {'validate': 'time','criteria': 'between','minimum': time(0, 0),'maximum': time(23, 59),
+            'error_message':'Please enter time in format hh:mm'})
         col += 1
     row += 1
 
-    row += 1
-    
+    row += 1   
+
     #close the workbook
     workbook.close()
+
+def get_data(data_entity, schema_all):
+    entity = schema_all[data_entity.split('.')[0]]
+    property_id = data_entity.split('.')[1]
+    des = get_schema_des(entity,  property_id)
+    enum = get_schema_enum(entity,  property_id)
+    d_format = get_schema_format(entity,  property_id)
+    return des, enum, d_format
+
+def get_date_validation_str(cell):
+    return  '=AND(ISNUMBER(%s),LEFT(CELL("format",%s),1)="D")' %(cell, cell)
+
 
 if __name__ == '__main__':
     args = interface()
     generate_template(args)
 
-    

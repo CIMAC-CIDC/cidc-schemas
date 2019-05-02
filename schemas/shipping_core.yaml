@@ -75,7 +75,7 @@ properties:
   date_shipped:
     description: 'Date of shipment.'
     type: string
-    format: date-time
+    format: date
   num_of_samples_shipped:
     description: 'Count of specimens distributed by site.'
     type: integer

@@ -1,0 +1,14 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+
+id: image
+title: Image
+
+description: >
+  Base information about the aquisition and analysis of a quantitative pathology image
+
+properties:
+    test_id:
+        type: string
+        description: 'test id'
+required:
+    - test_id

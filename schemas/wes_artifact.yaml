@@ -8,20 +8,27 @@ description: Additional properties to describe a Whole Exome Sequencing Artifact
 links:
   - link:
       cardinality: exactly_one
-      linked_to: artifact
+      linked_to: ngs_artifact
 
 properties:
-    fastq_type:
-        description: FASTQ File Type.
+    bait_vendor:
+        description: Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT
         type: string
-        enum:
-            - FASTQ_NORMAL_1
-            - FASTQ_NORMAL_2
-            - FASTQ_TUMOR_1
-            - FASTQ_TUMOR_2
-    batch_id:
-        description:  Batch ID.
-        type: integer
-    sequencer_model:
-        description:  Sequencer Model, e.g. Illumina HiSeq 2000.
+    bait_version:
+        description: The version of the bait set used, e.g. Human All Exon V7
         type: string
+    bait_lot:
+        description: Lot number for the bait set
+        type: string
+    capture_date:
+      description: "Date of the hybrid capture enrichment"
+      type: string
+      format: date
+
+
+
+required:
+  - bait_lot
+  - bait_vendor
+  - bait_version
+  - capture_date

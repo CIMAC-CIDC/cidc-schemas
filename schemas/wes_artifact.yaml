@@ -8,15 +8,9 @@ description: Additional properties to describe a Whole Exome Sequencing Artifact
 links:
   - link:
       cardinality: exactly_one
-      linked_to: artifact
+      linked_to: ngs_artifact
 
 properties:
-    sequencer_platform:
-        description:  Sequencing Platform, eg. Illumina, IonTorrent
-        type: string
-    sequencer_model:
-        description:  Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.
-        type: string
     bait_vendor:
         description: Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT
         type: string
@@ -26,65 +20,15 @@ properties:
     bait_lot:
         description: Lot number for the bait set
         type: string
-    library_kit_vendor:
-        description: Vendor for the library construction kit, e.g. KAPA
-        type: string
-    library_kit_version:
-        description: The version of the library construction kit used, e.g. Hyper Prep
-        type: string
-    library_kit_lot:
-        description: Lot number for the library construction kit
-        type: string
-    paired_end_reads:
-        description: Indicate if the sequencing was performed paired or single ended
-        type: boolean
-    read_length:
-        description: Number of cycles for each sequencing read
-        type: integer
-    library_prep_date:
-      description: 'Date of library construction.'
-      type: string
-      format: date
     capture_date:
       description: "Date of the hybrid capture enrichment"
       type: string
       format: date
-    dna_input_ng:
-      description: "Amount of DNA (in ng) used for library construction"
-      type: integer
-    library_yield_ng:
-      description: "Resulting yield (in ng) from library construction"
-      type: integer
-    average_insert_size:
-      description: "The average insert size for the library"
-      type: integer
-    forward_fastq:
-      description: "Fastq file for the forward read"
-      type: string
-    reverse_fastq:
-      description: "Fastq file for the reverse read"
-      type: string
-    read_group_mapping_file:
-      description: "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes."
-      type: string
+
 
 
 required:
-  - library_kit_lot
   - bait_lot
-  - library_prep_date
-  - capture_date
-  - dna_input_ng
-  - library_yield_ng
-  - average_insert_size
-  - forward_fastq
-  - reverse_fastq
-  - read_group_mapping_file
   - bait_vendor
   - bait_version
-  - library_kit_vendor
-  - library_kit_version
-  - sequencer_platform
-  - sequencer_model
-  - paired_end_reads
-  - read_length
+  - capture_date

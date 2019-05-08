@@ -25,9 +25,22 @@ class RowType(Enum):
 
 
 class ShippingManifest:
+    """
+    A collection of property schemas organized by their relevance to the manifest.
+
+    Attributes:
+        preamble_schemas {OrderedDict} -- entity schemas for rows in the preamble section
+        shipping_schemas {OrderedDict} -- entity schemas for columns in the shipping section
+        receiving_schemas {OrderedDict} -- entity schemas for columns in the receiving section
+    """
+
     def __init__(self, manifest_path: str, schema_paths: List[str]):
         """
-            Load all schemas defining a shipping manifest template.
+        Load all schemas defining a shipping manifest template.
+
+        Arguments:
+            manifest_path {str} -- a path to the yaml manifest config file
+            schema-paths {List[str]} -- a list of paths to relevant schema yaml files
         """
         # Load the manifest file
         with open(manifest_path, 'r') as stream:
@@ -42,16 +55,17 @@ class ShippingManifest:
         self._all_schemas = all_schemas
 
         # Extract schemas for manifest entities in appropriate order
-        self.preamble_schemas: OrderedDict = self._extract_entity_schemas(
+        self.preamble_schemas: OrderedDict = self._extract_section_schemas(
             'core_columns')
-        self.shipping_schemas: OrderedDict = self._extract_entity_schemas(
+        self.shipping_schemas: OrderedDict = self._extract_section_schemas(
             'shipping_columns')
-        self.receiving_schemas: OrderedDict = self._extract_entity_schemas(
+        self.receiving_schemas: OrderedDict = self._extract_section_schemas(
             'receiving_columns')
 
-    def _extract_entity_schemas(self, entity_name: str) -> OrderedDict:
+    def _extract_section_schemas(self, section_name: str) -> OrderedDict:
+        """Collect all entity schemas for a manifest section"""
         schemas: OrderedDict = OrderedDict()
-        for path in self.manifest.get(entity_name, []):
+        for path in self.manifest.get(section_name, []):
             entity, prop = path.split('.')
             maybe_schema = self._extract_entity_schema(entity, prop)
             if maybe_schema:
@@ -59,6 +73,7 @@ class ShippingManifest:
         return schemas
 
     def _extract_entity_schema(self, entity: str, prop: str) -> Optional[dict]:
+        """Try to find a schema for the given entity and property"""
         entity_schema = self._all_schemas.get(entity)
         if not entity_schema:
             logger.warning(
@@ -73,20 +88,29 @@ class ShippingManifest:
 
         return prop_schema
 
-    def to_excel(self, spreadsheet_path: str):
-        XlTemplateWriter(spreadsheet_path, self).write()
+    def to_excel(self, xlsx_path: str):
+        """Write this `ShippingManifest` to an Excel file"""
+        XlTemplateWriter(xlsx_path, self).write()
 
 
 class XlTemplateWriter:
-    """Wrapper for xlsxwriter that can create templates for shipping manifests"""
+    """A wrapper around xlsxwriter that can create templates for shipping manifests"""
 
     # Output config
     DATA_ROWS = 200
     COLUMN_WIDTH_PX = 30
 
-    def __init__(self, path: str, manifest: ShippingManifest):
-        self.path = path
-        self.workbook = xlsxwriter.Workbook(path)
+    def __init__(self, outfile_path: str, manifest: ShippingManifest):
+        """
+        Initialize an Excel template writer. No file is written until
+        `write()` is called.
+
+        Arguments:
+            outfile_path {str} -- desired output path of the resulting xlsx file
+            manifest {ShippingManifest} -- the manifest from which to generate a template
+        """
+        self.path = outfile_path
+        self.workbook = xlsxwriter.Workbook(outfile_path)
         self.mainsheet = self.workbook.add_worksheet()
         self.MAIN_WIDTH = len(manifest.shipping_schemas) + \
             len(manifest.receiving_schemas)
@@ -174,6 +198,11 @@ class XlTemplateWriter:
                                    receiving_width + shipping_width, 'Filled by CIMAC Lab', self.DIRECTIVE_THEME)
 
     def _write_type_annotation(self, row_type: RowType):
+        """
+        Writes a `RowType` to the first column in the current row.
+
+        These annotations are intended to help with parsing spreadsheets.
+        """
         self.mainsheet.write(self.row, 0, row_type.value)
 
     def _write_data_section_type_annotations(self):

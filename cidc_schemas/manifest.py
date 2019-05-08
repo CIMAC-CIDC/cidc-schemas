@@ -101,6 +101,7 @@ class XlTemplateWriter:
         self._init_themes()
 
     def write(self):
+        """Generate the Excel file according to the instance's configuration."""
         if self.already_written:
             logger.warning(
                 f'template already written to {self.path} - aborting write')
@@ -130,6 +131,15 @@ class XlTemplateWriter:
         self._hide_type_annotations()
         self.workbook.close()
         self.already_written = True
+
+    # We can think of the below _write_* functions as "template components".
+    # Template components write to the spreadsheet at the current row/column
+    # location, but *should not* update that location -- only the write orchestration function (above)
+    # should make updates to the current row/column location.
+    #
+    # So, adding a section to the spreadsheet should involve:
+    #  1) Adding a template component function below.
+    #  2) Calling that template component in the appropriate spot in the write orchestrator.
 
     def _write_title(self, title: str):
         self._write_type_annotation(RowType.TITLE)

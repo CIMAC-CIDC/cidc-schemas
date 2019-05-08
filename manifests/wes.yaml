@@ -1,0 +1,30 @@
+id: wes
+title: Metadata file for WES
+type: object
+category: metadata
+description: >
+  Metadata information for whole exome sequencing analysis.
+batch_columns:
+  - artifact.creator
+  - wes_artifact.bait_vendor
+  - wes_artifact.bait_version
+  - wes_artifact.library_kit_vendor
+  - wes_artifact.library_kit_version
+  - wes_artifact.sequencer_platform
+  - wes_artifact.sequencer_model
+  - wes_artifact.paired_end_reads
+  - wes_artifact.read_length
+  - clinical_trial.lead_organization_study_id
+sample_columns:
+  - participant.cimac_participant_id
+  - aliquot.cimac_aliquot_id
+  - wes_artifact.library_kit_lot
+  - wes_artifact.bait_lot
+  - wes_artifact.library_prep_date
+  - wes_artifact.capture_date
+  - wes_artifact.dna_input_ng
+  - wes_artifact.library_yield_ng
+  - wes_artifact.average_insert_size
+  - wes_artifact.forward_fastq
+  - wes_artifact.reverse_fastq
+  - wes_artifact.read_group_mapping_file

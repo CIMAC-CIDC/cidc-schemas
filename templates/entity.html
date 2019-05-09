@@ -28,15 +28,15 @@
     <div class="container">
         <p/>
         <p><a href="index.html">CIDC Data Model</a></p>
-        <h1>{{ current_yaml["title"] }}</h1>
+        <h1>{{ schema["title"] }}</h1>
         <p>
-        <b>Description:</b>  {{ current_yaml["description"] }}
+        <b>Description:</b>  {{ schema["description"] }}
         </p>
         <p>
-            {% if "links" in current_yaml %}
-                Each {{ current_yaml["title"] }} is <b>linked</b> to:
+            {% if "links" in schema %}
+                Each {{ schema["title"] }} is <b>linked</b> to:
                 <ul>
-                    {% for link in current_yaml["links"] %}
+                    {% for link in schema["links"] %}
                         <li>{{ link["link"]["cardinality"]}}
                             <a href='{{ link["link"]["linked_to"] }}.html'>{{ link["link"]["linked_to"] }}</a></li>
                     {% endfor %}

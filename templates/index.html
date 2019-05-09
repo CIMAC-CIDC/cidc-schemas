@@ -48,8 +48,8 @@
             </thead>
             {% for entity_name in entity_list %}
             <tr>
-                <td width=25%><a href='{{ entity_name}}.html'>{{ entity_yaml_set[entity_name]["title"] }}</a></td>
-                <td>{{ entity_yaml_set[entity_name]["description"] }}</td>
+                <td width=25%><a href='{{ entity_name}}.html'>{{ entity_json_set[entity_name]["title"] }}</a></td>
+                <td>{{ entity_json_set[entity_name]["description"] }}</td>
             </tr>
             {% endfor %}
         </table>
@@ -65,8 +65,8 @@
             </thead>
             {% for manifest_name in manifest_list %}
             <tr>
-                <td width=25%><a href='{{ manifest_name}}.html'>{{ manifest_yaml_set[manifest_name]["title"] }}</a></td>
-                <td>{{ manifest_yaml_set[manifest_name]["description"] }}</td>
+                <td width=25%><a href='{{ manifest_name}}.html'>{{ manifest_json_set[manifest_name]["title"] }}</a></td>
+                <td>{{ manifest_json_set[manifest_name]["description"] }}</td>
             </tr>
             {% endfor %}
         </table>

@@ -1,15 +1,15 @@
-import yaml
+import json
 import jinja2
 
 DOC_DIR = "docs"
 
-# Get the Specified YAML File
-def get_yaml(file_name):
+# Get the Specified JSON File
+def get_json(file_name):
     with open(file_name, 'r') as stream:
         try:
-            yaml_doc = yaml.safe_load(stream)
-            return (yaml_doc)
-        except yaml.YAMLError as exc:
+            json_doc = json.load(stream)
+            return (json_doc)
+        except json.JSONDecodeError as exc:
             print(exc)
 
 # Extract Properties
@@ -47,20 +47,20 @@ def extract_properties(properties, property_dict, required):
 
 # Create HTML for the Specified Entity
 def processEntity(entity_name, template_env, property_dict):
-    file_name = "schemas/%s.yaml" % entity_name
-    current_yaml = get_yaml(file_name)    
+    file_name = "schemas/%s.json" % entity_name
+    current_json = get_json(file_name)    
 
     # find required properties
     req_props = {}
-    if 'required' in current_yaml:
-      req_props = current_yaml['required']
+    if 'required' in current_json:
+      req_props = current_json['required']
 
-    properties = current_yaml["properties"]
+    properties = current_json["properties"]
     extract_properties(properties, property_dict, req_props)
     sorted_property_list = sorted(properties)
 
     template = template_env.get_template("entity.html")
-    output_text = template.render(current_yaml=current_yaml,
+    output_text = template.render(schema=current_json,
         properties=properties,
         sorted_property_list=sorted_property_list,
         property_dict=property_dict)
@@ -68,23 +68,23 @@ def processEntity(entity_name, template_env, property_dict):
     fd = open("%s/%s.html" % (DOC_DIR, entity_name), "w")
     fd.write(output_text)
     fd.close()
-    return current_yaml
+    return current_json
 
 # Create HTML for the Specified Manifest
-def processManifest(manifest_name, entity_yaml_set, property_dict, column_descriptions, template_env):
-    file_name = "manifests/%s.yaml" % manifest_name
-    current_yaml = get_yaml(file_name)    
+def processManifest(manifest_name, entity_json_set, property_dict, column_descriptions, template_env):
+    file_name = "manifests/%s.json" % manifest_name
+    current_json = get_json(file_name)    
 
     template = template_env.get_template("manifest.html")
-    output_text = template.render(current_yaml=current_yaml,
-        entity_yaml_set=entity_yaml_set,
+    output_text = template.render(schema=current_json,
+        entity_json_set=entity_json_set,
         property_dict=property_dict,
         column_descriptions=column_descriptions)
     print ("Creating:  %s.html" % manifest_name)
     fd = open("%s/%s.html" % (DOC_DIR, manifest_name), "w")
     fd.write(output_text)
     fd.close()
-    return current_yaml
+    return current_json
 
 def generate_docs():
 
@@ -102,9 +102,9 @@ def generate_docs():
   entity_list.append("artifact")
   entity_list.append("wes_artifact")
   entity_list.append("shipping_core")
-  entity_yaml_set = {}
+  entity_json_set = {}
   for entity in entity_list:
-      entity_yaml_set[entity] = (processEntity(entity, templateEnv, property_dict))
+      entity_json_set[entity] = (processEntity(entity, templateEnv, property_dict))
 
   # Create HTML Pages for Each Manifest
   column_descriptions = {}
@@ -114,16 +114,16 @@ def generate_docs():
 
   manifest_list = []
   manifest_list.append("pbmc")
-  manifest_yaml_set = {}
+  manifest_json_set = {}
   for manifest in manifest_list:
-      manifest_yaml_set[manifest] = processManifest(manifest, entity_yaml_set,
+      manifest_json_set[manifest] = processManifest(manifest, entity_json_set,
       property_dict, column_descriptions, templateEnv)
 
   # Create the Index Page
   template = templateEnv.get_template("index.html")
   print ("Creating index.html")
-  outputText = template.render(entity_list=entity_list, entity_yaml_set=entity_yaml_set,
-      manifest_list=manifest_list, manifest_yaml_set=manifest_yaml_set)
+  outputText = template.render(entity_list=entity_list, entity_json_set=entity_json_set,
+      manifest_list=manifest_list, manifest_json_set=manifest_json_set)
   fd = open("%s/index.html" % DOC_DIR, "w")
   fd.write(outputText)
   fd.close()

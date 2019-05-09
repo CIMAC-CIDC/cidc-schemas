@@ -6,7 +6,7 @@
 import os
 import unittest
 import pytest
-import yaml
+import json
 import jsonschema
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
@@ -25,13 +25,13 @@ class TestSchemas(unittest.TestCase):
     def load_schema(self, path):
       
       with open(path) as fin:
-        schema = yaml.load(fin.read(), Loader=yaml.FullLoader)
+        schema = json.load(fin)
 
       return schema
 
     def validate_schema(self, name):
         # load the schema
-        schema_path = os.path.join(SCHEMA_DIR, '%s.yaml' % name)
+        schema_path = os.path.join(SCHEMA_DIR, '%s.json' % name)
         schema = self.load_schema(schema_path)
 
         # validate this (raises schema error)

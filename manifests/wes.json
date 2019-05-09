@@ -1,0 +1,33 @@
+{
+  "id": "wes",
+  "title": "Metadata file for WES",
+  "type": "object",
+  "category": "metadata",
+  "description": "Metadata information for whole exome sequencing analysis.\n",
+  "batch_columns": [
+    "artifact.creator",
+    "wes_artifact.bait_vendor",
+    "wes_artifact.bait_version",
+    "ngs_artifact.library_kit_vendor",
+    "ngs_artifact.library_kit_version",
+    "ngs_artifact.sequencer_platform",
+    "ngs_artifact.sequencer_model",
+    "ngs_artifact.paired_end_reads",
+    "ngs_artifact.read_length",
+    "clinical_trial.lead_organization_study_id"
+  ],
+  "sample_columns": [
+    "participant.cimac_participant_id",
+    "aliquot.cimac_aliquot_id",
+    "ngs_artifact.library_kit_lot",
+    "wes_artifact.bait_lot",
+    "ngs_artifact.library_prep_date",
+    "wes_artifact.capture_date",
+    "ngs_artifact.dna_input_ng",
+    "ngs_artifact.library_yield_ng",
+    "ngs_artifact.average_insert_size",
+    "ngs_artifact.forward_fastq",
+    "ngs_artifact.reverse_fastq",
+    "ngs_artifact.read_group_mapping_file"
+  ]
+}

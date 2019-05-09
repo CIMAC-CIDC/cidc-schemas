@@ -11,11 +11,11 @@ with open('README.md') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [ ]
+requirements = []
 
-setup_requirements = [ ]
+setup_requirements = []
 
-test_requirements = [ ]
+test_requirements = []
 
 setup(
     author="James Lindsay",
@@ -47,4 +47,7 @@ setup(
     url='https://github.com/CIMAC-CIDC/schemas',
     version='0.1.0',
     zip_safe=False,
+    entry_points={
+        'console_scripts': ['cidc_schemas=cidc_schemas.cli:main']
+    }
 )

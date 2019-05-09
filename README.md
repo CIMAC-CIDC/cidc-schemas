@@ -5,38 +5,62 @@ This repository contains formal defintions of the CIDC metadata model using [jso
 ## View documentation at https://cimac-cidc.github.io/cidc-schemas/
 
 # Running tests
-This repository has unit tests in the *tests* folder. After installing dependencies 
+
+This repository has unit tests in the _tests_ folder. After installing dependencies
 the tests can be run via the command
+
 ```bash
-py.tests --cache-clear tests
+py.test --cache-clear tests
 ```
 
 # Building documentation
+
 The documentation can be built by running the following command
+
 ```bash
 python bin/generate_docs.py
 ```
-This will create the html documents in /docs. If the changes are comitted and pushed 
+
+This will create the html documents in /docs. If the changes are comitted and pushed
 to master this they will be viewable at https://cimac-cidc.github.io/cidc-schemas/
 
-# Create template for manifest
+# Using the Command-Line Interface
 
-1) clone repository
-`git clone THIS-REPO`
+## Install the CLI
 
-2) create virtual environment
+Clone the repository and cd into it
+
 ```bash
-virtualenv ENV-NAME
-. ENV-NAME/bin/activate
-cd schemas
+git clone git@github.com:CIMAC-CIDC/cidc-schemas.git
+cd cidc-schemas
 ```
 
-3) install dependencies
-```
-pip install -r requirements.txt
+Install the `cidc_schemas` package (this adds the `cidc_schemas` CLI to your console)
+
+```bash
+python setup.py install
 ```
 
-3) Run the script
+Run `cidc_schemas --help` to see available options.
+
+If you're making changes to the module and want those changes to be reflected in the CLI without reinstalling the `cidc_schemas` module every time, run
+
+```bash
+python3 -m cidc_schemas.cli [args]
 ```
-python bin/create_template.py -y manifest/pbmc.yaml -o $PWD
+
+## Generate templates
+
+Create a template for a given manifest configuration
+
+```bash
+cidc_schemas generate_template -m manifests/pbmc.yaml -s schemas -o pbmc.xlsx
+```
+
+## Convert between yaml and json
+
+The CLI comes with a little utility for converting between yaml and json files.
+
+```bash
+cidc_schemas convert --to_json <some_yaml_file>
 ```

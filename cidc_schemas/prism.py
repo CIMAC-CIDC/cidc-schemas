@@ -1,22 +1,23 @@
 # -*- coding: utf-8 -*-
 
 """Main module."""
-import yaml
+import os
+import json
 import jsonschema
-import urllib
 from openpyxl import load_workbook
 import datetime
 from dateparser import parse
 import strict_rfc3339
 
-SCHEMA_ROOT = "https://raw.githubusercontent.com/CIMAC-CIDC/schemas/testing/schemas"
-SCHAMAS = [ \
-  "aliquot.yaml", \
-  "artifact.yaml", \
-  "clinical_trial.yaml", \
-  "participant.yaml", \
-  "sample.yaml", \
-  "shipping_core.yaml", \
+ROOT_DIR = os.path.abspath(os.path.join(__file__, "..", ".."))
+SCHEMA_DIR = os.path.abspath(os.path.join(ROOT_DIR, 'schemas'))
+SCHEMAS = [
+  "aliquot.json",
+  "artifact.json",
+  "clinical_trial.json",
+  "participant.json",
+  "sample.json",
+  "shipping_core.json"
 ]
 
 def split_manifest(file_path, mapping, coercion):
@@ -181,13 +182,11 @@ def load_schemas():
   schemas = {}
   mapping = {}
   coercion = {}
-  for x in SCHAMAS:
+  for x in SCHEMAS:
 
     # load the schemas.
-    schema_url = "%s/%s" % (SCHEMA_ROOT, x)
-    x = urllib.request.urlopen(schema_url)
-    txt = x.read()
-    schema = yaml.load(txt, Loader=yaml.FullLoader)
+    with open(os.path.join(SCHEMA_DIR, x), 'r') as stream:
+      schema = json.load(stream)
 
     # save teh id.
     schema_id = schema['id']

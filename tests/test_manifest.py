@@ -37,7 +37,7 @@ def test_shipping_loaded(manifest):
 
 def add_test_entity(manifest):
     manifest.manifest['test_columns'] = ['test_entity.test_property']
-    manifest._all_schemas['test_entity'] = {
+    manifest.schemas['test_entity'] = {
         'properties': {'test_property': 'success'}}
 
 

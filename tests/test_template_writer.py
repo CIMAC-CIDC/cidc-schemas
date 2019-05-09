@@ -1,0 +1,18 @@
+# -*- coding: utf-8 -*-
+
+"""Tests for `cidc_schemas.template_writer` module."""
+
+from cidc_schemas.template_writer import XlTemplateWriter
+
+
+def test_get_validation():
+    enum = XlTemplateWriter._get_validation('A1', {'enum': [1, 2, 3]})
+    assert enum['validate'] == 'list'
+    assert enum['source'] == [1, 2, 3]
+
+    time = XlTemplateWriter._get_validation('A1', {'format': 'time'})
+    assert time['validate'] == 'time'
+
+    date = XlTemplateWriter._get_validation('A1', {'format': 'date'})
+    assert date['validate'] == 'custom'
+    assert date['value'] == XlTemplateWriter._make_date_validation_string('A1')

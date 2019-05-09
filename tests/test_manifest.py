@@ -4,7 +4,7 @@
 
 import os
 import pytest
-from cidc_schemas.manifest import ShippingManifest, XlTemplateWriter
+from cidc_schemas.manifest import ShippingManifest
 
 
 @pytest.fixture
@@ -35,31 +35,19 @@ def test_shipping_loaded(manifest):
     assert specimen_type['enum'] is not None
 
 
-def add_test_entity(manifest):
-    manifest.manifest['test_columns'] = ['test_entity.test_property']
-    manifest.schemas['test_entity'] = {
-        'properties': {'test_property': 'success'}}
+@pytest.fixture
+def tiny_manifest():
+    fake_manifest = {'test_columns': ['test_entity.test_property']}
+    fake_schemas = {'test_entity':  {
+        'properties': {'test_property': 'success'}}}
+    return ShippingManifest(fake_manifest, fake_schemas)
 
 
-def test_extract_entity_schema(manifest):
-    add_test_entity(manifest)
-    assert manifest._extract_entity_schema(
+def test_extract_entity_schema(tiny_manifest):
+    assert tiny_manifest._extract_entity_schema(
         'test_entity', 'test_property') == 'success'
 
 
-def test_extract_section_schemas(manifest):
-    add_test_entity(manifest)
-    assert 'test_property' in manifest._extract_section_schemas('test_columns')
-
-
-def test_get_validation():
-    enum = XlTemplateWriter._get_validation('A1', {'enum': [1, 2, 3]})
-    assert enum['validate'] == 'list'
-    assert enum['source'] == [1, 2, 3]
-
-    time = XlTemplateWriter._get_validation('A1', {'format': 'time'})
-    assert time['validate'] == 'time'
-
-    date = XlTemplateWriter._get_validation('A1', {'format': 'date'})
-    assert date['validate'] == 'custom'
-    assert date['value'] == XlTemplateWriter._make_date_validation_string('A1')
+def test_extract_section_schemas(tiny_manifest):
+    assert 'test_property' in tiny_manifest._extract_section_schemas(
+        'test_columns')

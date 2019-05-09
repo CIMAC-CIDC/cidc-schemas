@@ -1,9 +1,9 @@
-id: pbmc_shipping
-title: Shipping manifest for PBMC samples
+id: tissue_shipping
+title: Shipping manifest for Tissue samples
 type: object
 category: manifest
 description: >
-  Shipping / receiving manifest for transferring PBMC samples.
+  Shipping / receiving manifest for transferring Tissue samples.
 core_columns:
   - clinical_trial.lead_organization_study_id 
   - shipping_core.manifest_id
@@ -32,21 +32,18 @@ shipping_columns:
   - sample.site_sample_id
   - sample.cimac_sample_id
   - sample.time_point
-  - sample.blood_collection_date
-  - sample.blood_collection_time
-  - sample.blood_processing_date
-  - sample.blood_processing_time
   - sample.sample_location
+  - sample.tissue_type_submitted
   - sample.specimen_type
   - sample.specimen_format
   - aliquot.quantity
-  - aliquot.volume_quantity
   - aliquot.units
-  - aliquot.pbmc_aliquoted
-  - aliquot.sample_source
+  - aliquot.material_extracted
+  - aliquot.extracted_concentration
+  - aliquot.extracted_units
+  - aliquot.sample_amount
 receiving_columns:
   - aliquot.cimac_aliquot_id
-  - aliquot.pbmc_recovered
   - aliquot.material_used
   - aliquot.material_remaining
   - aliquot.sample_quality_status

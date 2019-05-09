@@ -19,8 +19,8 @@ properties:
   volume_quantity:
     description: 'Volume of sample shipped.'
     type: number
-  volume_units:
-    description: 'Volume units. Example: ml.'
+  units:
+    description: 'Unit of each sample. Example: ml.'
     type: string
   pbmc_aliquoted:
     description: 'Site or biobank provides the final number of PBMCs per vial that were frozen.'
@@ -60,5 +60,35 @@ properties:
       - Sample Exhausted
       - Remainder used for other Assay
       - Other
+  material_extracted:
+    description: The type of biological material that was extracted from this sample.
+    type: string
+    enum:
+     - DNA
+     - RNA
+     - cfDNA
+     - Other
+  extracted_concentration:
+    description: 'The concentration of biological material that was extracted from this sample.'
+    type: string
+  extracted_units:
+    description: 'The unit of biological material that was extracted from this sample.'
+    type: 'string'
+    enum:
+     - µL
+     - mL
+     - mg
+     - ng
+     - Vials
+     - Slides
+     - Scrolls
+     - Blocks
+     - ng/µL
+     - cells/ml
+     - N/A
+     - Other
+  sample_amount:
+    description: 'The amount of extracted sample shipped. Example: 400 ng'
+    type: 'string'
 required:
   - cimac_aliquot_id

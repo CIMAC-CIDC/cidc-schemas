@@ -79,6 +79,18 @@ properties:
       - Frozen Stool
       - DNA-Preserved Stool
       - Other
+  tissue_type_submitted:
+    description: The type of tissue that was obtained for the study.
+    type: string
+    enum: 
+     - Primary Tumor
+     - Residual Tumor
+     - Recurrence
+     - Metastatic Tumor
+     - Lymph Node
+     - Bone Marrow
+     - Normal Adjacent
+     - Other
 required:
   - cimac_sample_id
   - site_sample_id

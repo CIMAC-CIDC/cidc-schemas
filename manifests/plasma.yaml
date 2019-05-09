@@ -1,9 +1,9 @@
-id: pbmc_shipping
-title: Shipping manifest for PBMC samples
+id: plasma_shipping
+title: Shipping manifest for Plasma samples
 type: object
 category: manifest
 description: >
-  Shipping / receiving manifest for transferring PBMC samples.
+  Shipping / receiving manifest for transferring Plasma samples.
 core_columns:
   - clinical_trial.lead_organization_study_id 
   - shipping_core.manifest_id
@@ -42,13 +42,13 @@ shipping_columns:
   - aliquot.quantity
   - aliquot.volume_quantity
   - aliquot.units
-  - aliquot.pbmc_aliquoted
   - aliquot.sample_source
 receiving_columns:
   - aliquot.cimac_aliquot_id
-  - aliquot.pbmc_recovered
   - aliquot.material_used
   - aliquot.material_remaining
   - aliquot.sample_quality_status
   - aliquot.sample_replacement
   - aliquot.sample_status
+
+    

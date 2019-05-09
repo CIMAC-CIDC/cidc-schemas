@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "user",
+  "title": "User",
+  "type": "object",
+  "description": "Any user of the CIDC platform.",
+  "links": [
+    {
+      "link": {
+        "cardinality": "zero_or_n",
+        "linked_to": "clinical_trial"
+      }
+    }
+  ],
+  "properties": {
+    "user_id": {
+      "description": "User Identifier.",
+      "type": "string"
+    },
+    "google_id": {
+      "description": "User's Google Idenfier.",
+      "type": "string"
+    },
+    "preferred_email_address": {
+      "description": "User's preferred email address.",
+      "type": "string"
+    },
+    "organization": {
+      "description": "Affiliated Organization",
+      "type": "string",
+      "enum": [
+        "National Cancer Institute",
+        "Dana-Farber Cancer Institute (CIDC)",
+        "Dana-Farber Cancer Institute (CIMAC)",
+        "Stanford",
+        "MD Anderson",
+        "Mount Sinai"
+      ]
+    }
+  }
+}

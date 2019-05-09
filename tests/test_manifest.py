@@ -12,11 +12,11 @@ def manifest():
     ROOT_DIR = os.path.abspath('.')
     SCHEMA_DIR = os.path.abspath(os.path.join(ROOT_DIR, 'schemas'))
 
-    manifest_path = os.path.join(ROOT_DIR, 'manifests', 'pbmc.yaml')
+    manifest_path = os.path.join(ROOT_DIR, 'manifests', 'pbmc.json')
     schema_paths = [os.path.join(SCHEMA_DIR, path)
                     for path in os.listdir(SCHEMA_DIR)]
 
-    return ShippingManifest(manifest_path, schema_paths)
+    return ShippingManifest.from_json(manifest_path, schema_paths)
 
 
 def test_manifest_loaded(manifest):
@@ -47,9 +47,9 @@ def test_extract_entity_schema(manifest):
         'test_entity', 'test_property') == 'success'
 
 
-def test_extract_entity_schemas(manifest):
+def test_extract_section_schemas(manifest):
     add_test_entity(manifest)
-    assert 'test_property' in manifest._extract_entity_schemas('test_columns')
+    assert 'test_property' in manifest._extract_section_schemas('test_columns')
 
 
 def test_get_validation():

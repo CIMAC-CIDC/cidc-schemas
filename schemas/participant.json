@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "participant",
+  "title": "Participant",
+  "description": "The collection of all data related to a specific participant in the context of a specific clinical trial.\n",
+  "links": [
+    {
+      "link": {
+        "cardinality": "exactly_one",
+        "linked_to": "clinical_trial"
+      }
+    }
+  ],
+  "properties": {
+    "cimac_participant_id": {
+      "type": "string",
+      "description": "Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234."
+    },
+    "trial_participant_id": {
+      "type": "string",
+      "description": "Trial Participant Identifier. Example: PT123."
+    },
+    "arm_id": {
+      "type": "string",
+      "description": "Identifies the trial arm to which the participant belongs. Example: Arm A."
+    },
+    "cohort_id": {
+      "type": "string",
+      "description": "Identifies the treatment cohort to which the participant belongs. Example: Cohort A."
+    },
+    "gender": {
+      "type": "string",
+      "description": "Identifies the gender of the participant.",
+      "enum": [
+        "Male",
+        "Female",
+        "Not Specified",
+        "Other"
+      ]
+    },
+    "race": {
+      "type": "string",
+      "description": "'NIH Racial and Ethnic Categories and Definitions for NIH Diversity Programs and for Other Reporting Purposes (NOT-OD-15-089),  Release Date: April 8, 2015.'\n",
+      "enum": [
+        "American Indian/Alaska Native",
+        "Asian",
+        "Black/African American",
+        "Native Hawaiian/Pacific Islander",
+        "White",
+        "Not Reported",
+        "Unknown",
+        "Other"
+      ]
+    },
+    "ethnicity": {
+      "type": "string",
+      "description": "'NIH Racial and Ethnic Categories and Definitions for NIH Diversity Programs and for Other Reporting Purposes (NOT-OD-15-089),  Release Date: April 8, 2015.'\n",
+      "enum": [
+        "Hispanic or Latino",
+        "Not Hispanic or Latino",
+        "Not reported",
+        "Unknown",
+        "Other"
+      ]
+    }
+  },
+  "required": [
+    "cimac_participant_id",
+    "trial_participant_id"
+  ]
+}

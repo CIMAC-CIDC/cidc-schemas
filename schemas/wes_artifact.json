@@ -31,10 +31,5 @@
       "format": "date"
     }
   },
-  "required": [
-    "bait_lot",
-    "bait_vendor",
-    "bait_version",
-    "capture_date"
-  ]
+  "required": ["bait_lot", "bait_vendor", "bait_version", "capture_date"]
 }

@@ -51,21 +51,12 @@
     "sample_quality_status": {
       "description": "Final status of sample after QC and pathology review.",
       "type": "string",
-      "enum": [
-        "Usable for Assay",
-        "Not Usable for Assay",
-        "Verifying",
-        "Other"
-      ]
+      "enum": ["Usable for Assay", "Not Usable for Assay", "Verifying", "Other"]
     },
     "sample_replacement": {
       "description": "Status of sample if replacement is/was requested.",
       "type": "string",
-      "enum": [
-        "Replacement Requested",
-        "Replacement Tested",
-        "N/A"
-      ]
+      "enum": ["Replacement Requested", "Replacement Tested", "N/A"]
     },
     "sample_status": {
       "description": "Status of sample used for other assay, exhausted, destroyed, or returned.",
@@ -80,12 +71,7 @@
     "material_extracted": {
       "description": "The type of biological material that was extracted from this sample.",
       "type": "string",
-      "enum": [
-        "DNA",
-        "RNA",
-        "cfDNA",
-        "Other"
-      ]
+      "enum": ["DNA", "RNA", "cfDNA", "Other"]
     },
     "extracted_concentration": {
       "description": "The concentration of biological material that was extracted from this sample.",
@@ -114,7 +100,5 @@
       "type": "string"
     }
   },
-  "required": [
-    "cimac_aliquot_id"
-  ]
+  "required": ["cimac_aliquot_id"]
 }

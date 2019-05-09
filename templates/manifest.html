@@ -28,9 +28,9 @@
     <div class="container">
         <p/>
         <p><a href="index.html">CIDC Data Model</a></p>
-        <h1>{{ current_yaml["title"] }}</h1>
+        <h1>{{ schema["title"] }}</h1>
         <p>
-        <b>Description:</b>  {{ current_yaml["description"] }}
+        <b>Description:</b>  {{ schema["description"] }}
         </p>
     </div>
 
@@ -45,7 +45,7 @@
                 <th>Data Type</th>
             </tr>
             </thead>
-            {% for core_column in current_yaml[data_column] %}
+            {% for core_column in schema[data_column] %}
               {% set entity_name = core_column.split(".")[0] %}
               {% set property_name = core_column.split(".")[1] %}
               {% set current_property = property_dict[property_name] %}

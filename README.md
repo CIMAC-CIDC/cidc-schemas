@@ -1,10 +1,22 @@
 # cidc-schemas
 
-This repository contains formal defintions of the CIDC metadata model using [json-schema](https://json-schema.org/) syntax and vocabulary.
+This repository contains formal definitions of the CIDC metadata model using [json-schema](https://json-schema.org/) syntax and vocabulary.
 
-## View documentation at https://cimac-cidc.github.io/cidc-schemas/
+### View documentation at https://cimac-cidc.github.io/cidc-schemas/
 
-# Running tests
+## Development
+
+### Project Structure
+
+- **`bin/`** - useful scripts for working with the project.
+- **`cidc_schemas/`** - a python module for generating, validating, and reading manifest templates.
+- **`docs/`** - the most recent build of the schema documentation, served at https://cimac-cidc.github.io/cidc-schemas/.
+- **`manifests/`** - manifest template specifications and example Excel files.
+- **`schemas/`** - json specifications defining the CIDC metadata model.
+- **`templates/`** - HTML templates for generating schema documentation
+- **`tests/`** - tests for the `cidc_schemas` module.
+
+### Running tests
 
 This repository has unit tests in the _tests_ folder. After installing dependencies
 the tests can be run via the command
@@ -13,7 +25,7 @@ the tests can be run via the command
 py.test --cache-clear tests
 ```
 
-# Building documentation
+### Building documentation
 
 The documentation can be built by running the following command
 
@@ -24,9 +36,11 @@ python bin/generate_docs.py
 This will create the html documents in /docs. If the changes are comitted and pushed
 to master this they will be viewable at https://cimac-cidc.github.io/cidc-schemas/
 
-# Using the Command-Line Interface
+## Using the Command-Line Interface
 
-## Install the CLI
+This project comes with a command-line interface for performing common operations related to schema and manifest definitions.
+
+### Install the CLI
 
 Clone the repository and cd into it
 
@@ -49,7 +63,7 @@ If you're making changes to the module and want those changes to be reflected in
 python3 -m cidc_schemas.cli [args]
 ```
 
-## Generate templates
+### Generate templates
 
 Create a template for a given manifest configuration
 
@@ -57,7 +71,7 @@ Create a template for a given manifest configuration
 cidc_schemas generate_template -m manifests/pbmc.yaml -s schemas -o pbmc.xlsx
 ```
 
-## Convert between yaml and json
+### Convert between yaml and json
 
 The CLI comes with a little utility for converting between yaml and json files.
 

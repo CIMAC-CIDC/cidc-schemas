@@ -12,7 +12,7 @@ def manifest():
     ROOT_DIR = os.path.abspath('.')
     SCHEMA_DIR = os.path.abspath(os.path.join(ROOT_DIR, 'schemas'))
 
-    manifest_path = os.path.join(ROOT_DIR, 'manifests', 'pbmc.json')
+    manifest_path = os.path.join(ROOT_DIR, 'manifests', 'pbmc', 'pbmc.json')
     schema_paths = [os.path.join(SCHEMA_DIR, path)
                     for path in os.listdir(SCHEMA_DIR)]
 

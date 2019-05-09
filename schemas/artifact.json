@@ -1,0 +1,119 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "artifact",
+  "title": "Artifact",
+  "type": "object",
+  "description": "Any file artifact associated with a clinical trial.",
+  "links": [
+    {
+      "link": {
+        "cardinality": "exactly_one",
+        "linked_to": "clinical_trial"
+      }
+    },
+    {
+      "link": {
+        "cardinality": "exactly_one",
+        "linked_to": "user"
+      }
+    },
+    {
+      "link": {
+        "cardinality": "0_or_N",
+        "linked_to": "subject"
+      }
+    },
+    {
+      "link": {
+        "cardinality": "0_or_N",
+        "linked_to": "sample"
+      }
+    },
+    {
+      "link": {
+        "cardinality": "0_or_N",
+        "linked_to": "aliquot"
+      }
+    }
+  ],
+  "properties": {
+    "uuid": {
+      "description": "UUID of artifact.",
+      "type": "string"
+    },
+    "bucket_url": {
+      "description": "URL to artifact within Google Bucket.",
+      "type": "string"
+    },
+    "uploaded_timestamp": {
+      "description": "Timestamp of when artfiact was loaded into the system.",
+      "type": "string"
+    },
+    "file_size_bytes": {
+      "description": "File size in bytes.",
+      "type": "integer"
+    },
+    "md5_hash": {
+      "description": "MD5 Hash of artifact.",
+      "type": "string"
+    },
+    "visible": {
+      "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+      "type": "boolean"
+    },
+    "artifact_category": {
+      "description": "Artifact category.",
+      "type": "string",
+      "enum": [
+        "Assay Artifact from CIMAC",
+        "Pipeline Artifact",
+        "Manifest File",
+        "Other"
+      ]
+    },
+    "assay_category": {
+      "description": "Assay category.",
+      "type": "string",
+      "enum": [
+        "Whole Exome Sequencing (WES)",
+        "RNASeq",
+        "Conventional Immunohistochemistry",
+        "Multiplex Immunohistochemistry",
+        "Multiplex Immunofluorescence",
+        "CyTOF",
+        "OLink",
+        "NanoString",
+        "ELISpot",
+        "Multiplexed Ion-Beam Imaging (MIBI)",
+        "Other",
+        "None"
+      ]
+    },
+    "file_type": {
+      "description": "File Type.",
+      "type": "string",
+      "enum": [
+        "FASTA",
+        "FASTQ",
+        "TIFF",
+        "TSV",
+        "Excel",
+        "NPX",
+        "BAM",
+        "MAF",
+        "Other"
+      ]
+    }
+  },
+  "required": [
+    "uuid",
+    "bucket_url",
+    "uploaded_timestamp",
+    "file_size_bytes",
+    "md5_hash",
+    "visible",
+    "artifact_category",
+    "assay_category",
+    "file_type"
+  ]
+}

@@ -3,7 +3,7 @@
 """The underlying data representation of a shipping manifest template."""
 
 import logging
-import yaml
+import json
 from datetime import date, time
 from typing import Tuple, List, Dict, Optional
 from enum import Enum
@@ -34,25 +34,17 @@ class ShippingManifest:
         receiving_schemas {OrderedDict} -- entity schemas for columns in the receiving section
     """
 
-    def __init__(self, manifest_path: str, schema_paths: List[str]):
+    def __init__(self, manifest: Dict[str, str], schemas: Dict[str, dict]):
         """
         Load all schemas defining a shipping manifest template.
 
         Arguments:
-            manifest_path {str} -- a path to the yaml manifest config file
-            schema-paths {List[str]} -- a list of paths to relevant schema yaml files
+            manifest {Dict[str, str]} -- a manifest configuration (keys are manifest section names, 
+                                         values are selectors for schemas in that section)
+            schemas {Dict[str, dict]} -- schema configurations (keys are schema ids, values are schemas)
         """
-        # Load the manifest file
-        with open(manifest_path, 'r') as stream:
-            self.manifest: dict = yaml.safe_load(stream)
-
-        #  Load all schemas for entities potentially present in manifest
-        all_schemas = {}
-        for yaml_file in schema_paths:
-            with open(yaml_file, 'r') as stream:
-                schema = yaml.safe_load(stream)
-                all_schemas[schema['id']] = schema
-        self._all_schemas = all_schemas
+        self.manifest = manifest
+        self.schemas = schemas
 
         # Extract schemas for manifest entities in appropriate order
         self.preamble_schemas: OrderedDict = self._extract_section_schemas(
@@ -61,6 +53,28 @@ class ShippingManifest:
             'shipping_columns')
         self.receiving_schemas: OrderedDict = self._extract_section_schemas(
             'receiving_columns')
+
+    @staticmethod
+    def from_json(manifest_path: str, schema_paths: List[str]):
+        """
+        Load a ShippingManifest from files containing json configuration
+
+        Arguments:
+            manifest_path {str} -- path to the manifest config json file
+            schema_paths {str} -- paths to the entity schema config json files
+        """
+        # Load the manifest file
+        with open(manifest_path, 'r') as stream:
+            manifest = json.load(stream)
+
+        #  Load all schemas for entities potentially present in manifest
+        all_schemas = {}
+        for schema_path in schema_paths:
+            with open(schema_path, 'r') as stream:
+                schema = json.load(stream)
+                all_schemas[schema['id']] = schema
+
+        return ShippingManifest(manifest, all_schemas)
 
     def _extract_section_schemas(self, section_name: str) -> OrderedDict:
         """Collect all entity schemas for a manifest section"""
@@ -74,7 +88,7 @@ class ShippingManifest:
 
     def _extract_entity_schema(self, entity: str, prop: str) -> Optional[dict]:
         """Try to find a schema for the given entity and property"""
-        entity_schema = self._all_schemas.get(entity)
+        entity_schema = self.schemas.get(entity)
         if not entity_schema:
             logger.warning(
                 f'no top-level schema found for entity {entity} - skipping')

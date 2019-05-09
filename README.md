@@ -14,11 +14,14 @@ py.test --cache-clear tests
 ```
 
 # Building documentation
+
 The documentation can be built by running the following command
+
 ```bash
 python bin/generate_docs.py
 ```
-This will create the html documents in /docs. If the changes are comitted and pushed 
+
+This will create the html documents in /docs. If the changes are comitted and pushed
 to master this they will be viewable at https://cimac-cidc.github.io/cidc-schemas/
 
 # Using the Command-Line Interface
@@ -26,19 +29,22 @@ to master this they will be viewable at https://cimac-cidc.github.io/cidc-schema
 ## Install the CLI
 
 Clone the repository and cd into it
+
 ```bash
 git clone git@github.com:CIMAC-CIDC/cidc-schemas.git
 cd cidc-schemas
 ```
 
 Install the `cidc_schemas` package (this adds the `cidc_schemas` CLI to your console)
+
 ```bash
 python setup.py install
 ```
 
-Run `cidc_schemas --help` to see available options.   
+Run `cidc_schemas --help` to see available options.
 
 If you're making changes to the module and want those changes to be reflected in the CLI without reinstalling the `cidc_schemas` module every time, run
+
 ```bash
 python3 -m cidc_schemas.cli [args]
 ```
@@ -49,4 +55,12 @@ Create a template for a given manifest configuration
 
 ```bash
 cidc_schemas generate_template -m manifests/pbmc.yaml -s schemas -o pbmc.xlsx
+```
+
+## Convert between yaml and json
+
+The CLI comes with a little utility for converting between yaml and json files.
+
+```bash
+cidc_schemas convert --to_json <some_yaml_file>
 ```

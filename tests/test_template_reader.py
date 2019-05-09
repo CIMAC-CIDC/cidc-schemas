@@ -1,20 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests for `cidc_manifest_reader` package."""
+"""Tests for `cidc_template_reader.template_reader` module."""
 
 import os
-import unittest
 import pytest
 import jsonschema
 from openpyxl import load_workbook
 
-from cidc_schemas import manifest_reader
+from cidc_schemas import template_reader
 
 CUR_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
-def test_datefields(self):
+def test_datefields():
     """ test parsing support for different datetimes """
 
     # create schema
@@ -40,7 +39,7 @@ def test_datefields(self):
     # build coercion functions
     coercion = {}
     for key in schema['properties']:
-        manifest_reader.determine_coercion(schema, key, coercion)
+        template_reader.determine_coercion(schema, key, coercion)
 
     # load the demo workbook and test examples.
     file_path = os.path.join(CUR_DIR, 'data/date_examples.xlsx')
@@ -67,15 +66,15 @@ def test_datefields(self):
         instance[key] = coercion[key](val)
 
     # validate instance
-    manifest_reader.validate_schema(schema, instance)
+    template_reader.validate_schema(schema, instance)
 
 
-def test_pbcm(self):
+def test_pbcm():
     """test static pbmc"""
 
     # test pbmc
     path_to_manifest = os.path.join(CUR_DIR, 'data/pbmc_shipping.xlsx')
-    head_objs, data_objs = manifest_reader.validate_instance(path_to_manifest)
+    head_objs, data_objs = template_reader.validate_instance(path_to_manifest)
 
     assert len(head_objs) > 0, 'header data is missing'
     assert len(data_objs) > 0, 'row data is missing'

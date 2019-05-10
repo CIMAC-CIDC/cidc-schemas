@@ -29,14 +29,32 @@ class TestSchemas(unittest.TestCase):
 
       return schema
 
-    def validate_schema(self, name):
+    def validate_schema(self, name, schema_dir=SCHEMA_DIR):
         # load the schema
-        schema_path = os.path.join(SCHEMA_DIR, '%s.json' % name)
+        schema_path = os.path.join(schema_dir, '%s.json' % name)
         schema = self.load_schema(schema_path)
 
+        # create local resolver
+        resolver = jsonschema.RefResolver(
+          'file:{}'.format(SCHEMA_DIR),     # note this is always root of schemas
+          schema
+        )
+
         # validate this (raises schema error)
-        ival = jsonschema.Draft7Validator(schema=schema)
+        ival = jsonschema.Draft7Validator(schema=schema, resolver=resolver)
         ival.check_schema(schema)
+
+    def test_mif(self):
+        """Test artifact"""
+
+        # for now we manually validate the sub-schemas.
+        self.validate_schema("antibody", schema_dir=os.path.join(SCHEMA_DIR, "assays", "components"))
+        self.validate_schema("image", schema_dir=os.path.join(SCHEMA_DIR, "assays", "components"))
+
+        # finally validate the good ole boy
+        self.validate_schema("mif", schema_dir=os.path.join(SCHEMA_DIR, "assays"))
+        assert False
+
 
     def test_aliquot(self):
         """Test artifact"""

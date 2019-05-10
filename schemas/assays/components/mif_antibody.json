@@ -1,0 +1,48 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"id": "mif_antibody",
+	"title": "Multiplex Immunoflourescence Antibody",
+  "description": "Data specific to antibody prepration on the multiplex immunoflourescence platform.",
+  "allOf": [
+    { 
+      "$ref": "assays/components/antibody.json" 
+    },
+    {
+      "properties": {
+        "fluor_wavelength": {
+          "type": "number"
+        },
+        "primary_ab_dilution": {
+          "type": "string"
+        },
+        "dilutent": {
+          "type": "string"
+        },
+        "fluor_dilution": {
+          "type": "string"
+        },
+        "antigen_retrieval_time": {
+          "type": "string",
+          "format": "time"
+        },
+        "primary_incubation_time": {
+          "type": "string",
+          "format": "time"
+        },
+        "amplification_time": {
+          "type": "string",
+          "format": "time"
+        }
+      }
+    }
+  ],
+	"required": [
+		"flour_wavelength",
+		"primary_ab_dilution",
+    "dilutent",
+    "fluor_dilution",
+    "antigen_retrieval_time",
+    "primary_incubation_time",
+    "amplification_time"
+	]
+}

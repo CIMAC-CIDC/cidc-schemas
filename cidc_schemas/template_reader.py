@@ -1,281 +1,142 @@
 # -*- coding: utf-8 -*-
 
-"""Main module."""
+"""Defines the `XlTemplateReader` class for reading/validating manifests from Excel templates."""
+
 import os
 import json
-import jsonschema
-from openpyxl import load_workbook
-import datetime
-from dateparser import parse
-import strict_rfc3339
+import logging
+from typing import Dict, List, Tuple
 
-ROOT_DIR = os.path.abspath(os.path.join(__file__, "..", ".."))
-SCHEMA_DIR = os.path.abspath(os.path.join(ROOT_DIR, 'schemas'))
-SCHEMAS = [
-  "aliquot.json",
-  "artifact.json",
-  "clinical_trial.json",
-  "participant.json",
-  "sample.json",
-  "shipping_core.json"
-]
+import openpyxl
 
-def split_manifest(file_path, mapping, coercion):
-  """ splits manifest into different objects"""
+from .manifest import ShippingManifest
+from .template_writer import RowType
+from .validation import validate_instance
 
-  # load the workbook
-  wb = load_workbook(file_path)
-  names = wb.sheetnames
-
-  # make sure there are not extra things.
-  assert len(names) == 1
-
-  # get sheet
-  sheet = wb[names[0]]
-
-  # loop over rows
-  doc_header_tups = []
-  data_row_tups = []
-  headers = []
-  seen_tobefilled = False
-  seen_plusone = False
-  for row in sheet.iter_rows():
-    
-    # skip explanatory line after seen_tobefileld.
-    if seen_tobefilled and not seen_plusone:
-      seen_plusone = True
-      continue
-
-    # get data.
-    line = []
-    for col in row:
-      line.append(col)
-
-    # check if we have seen data header row
-    values = []
-    if len(headers) > 0:
-      
-      # get all values
-      for c in line:
-        values.append(c.value)
-
-      # zip the header, values.
-      for h, v in zip(headers, values):
-        data_row_tups.append((h, v))
-
-      # skip rest of logic
-      continue
-
-    # check if its a header: key, value row
-    if line[0].value is not None and line[1].value is not None and line[2].value is None:
-      key = line[0].value
-      key = key.replace(":", "")    # these keys have :, strip that out
-      value = line[1].value
-      doc_header_tups.append((key, value))
+logger = logging.getLogger('cidc_schemas.template_reader')
 
 
-    # check if we are in data section
-    if line[0].value == "To be filled by Biorepository":
-      seen_tobefilled = True
-
-    # check first if valid
-    if seen_tobefilled and seen_plusone:
-
-      # check if we are header row
-      is_valid = False
-      if line[0].value is not None:
-        is_valid = line[0].value.lower() in mapping
-
-      # grab headers
-      if is_valid:
-        for c in line:
-          headers.append(c.value)
-
-  # coerce common data types and make lower-case
-  tmp = []
-  for k, v in doc_header_tups:
-
-    # sanity check
-    assert k is not None,  "Malformed header section in spreadsheet"
-
-    k = k.lower()
-    v = coerce_value(coercion, k, v)
-    tmp.append((k, v))
-  doc_header_tups = tmp
-
-  tmp = []
-  for k, v in data_row_tups:
-
-    # sanity check
-    assert k is not None, "Malformed data rows in spreadsheet"
-      
-    k = k.lower()
-    v = coerce_value(coercion, k, v)
-    tmp.append((k, v))
-  data_row_tups = tmp
-
-  # return doc and data
-  return doc_header_tups, data_row_tups
-
-def coerce_value(coercion, k, v):
-  """ coerces values to type """
-
-  # check if we have a coercer.
-  if k in coercion:
-    try:
-      v = coercion[k](v)
-    except ValueError as e:
-      pass # emit no error, this will fail at normal validation phase
-  return v
-
-def validate_schema(schema, instance):
-  """ does json-schema validaiton """
-
-  return jsonschema.validate(instance=instance, schema=schema, format_checker=jsonschema.FormatChecker())
-
-def _to_dt(x):
-  # get dateitme
-  dt = parse(str(x))
-
-  # convert to timestamp
-  dtts = datetime.datetime.timestamp(dt)
-
-  # convert to json-preferred format.
-  return strict_rfc3339.timestamp_to_rfc3339_utcoffset(dtts)
-
-def _to_d(x):
-  # get dateitme
-  dt = parse(str(x))
-
-  # convert to properly formatted string.
-  return dt.strftime('%Y-%m-%d')
-
-def _to_t(x):
-  # get dateitme
-  dt = parse(str(x))
-
-  # convert to properly formatted string.
-  return dt.strftime('%H:%M:%S')
-
-def determine_coercion(schema, key, coercion):
-  """ determine what coercion funciton to run """
-
-  t = schema['properties'][key]['type']
-  if t == 'string':
-    coercion[key] = str
-    if 'format' in schema['properties'][key]:
-      if schema['properties'][key]['format'] == 'date-time':
-        coercion[key] =  _to_dt
-      elif schema['properties'][key]['format'] == 'date':
-        coercion[key] =  _to_d
-      elif schema['properties'][key]['format'] == 'time':
-        coercion[key] =  _to_t
-  elif t == 'integer':
-    coercion[key] = int
-  elif t == 'number':
-    coercion[key] = float
+# A template row is any tuple whose first member is a RowType
+ManifestRow = Tuple[RowType, ...]
 
 
-def load_schemas():
+class XlTemplateReader:
+    """
+    Reader and validator for Excel manifest templates.
+    """
 
-  # loop over schemas
-  schemas = {}
-  mapping = {}
-  coercion = {}
-  for x in SCHEMAS:
+    def __init__(self, rows: List[ManifestRow]):
+        """
+        Initialize a manifest reader from a list of manifest rows.
 
-    # load the schemas.
-    with open(os.path.join(SCHEMA_DIR, x), 'r') as stream:
-      schema = json.load(stream)
+        Arguments:
+            rows {List[ManifestRow]} -- a list of manifest rows
+        """
+        self.rows = rows
+        self.row_groups = self._group_rows()
 
-    # save teh id.
-    schema_id = schema['id']
-    schemas[schema_id] = schema
+    @staticmethod
+    def from_excel(xlsx_path: str):
+        """
+        Initialize an Excel manifest reader from an excel path.
 
-    # get the properties.
-    for key in schema['properties'].keys():
-      
-      # can't already exist
-      assert key not in mapping
+        Arguments:
+          xlsx_path {str} -- path to the Excel manifest
+        """
 
-      # add our own type conversion
-      determine_coercion(schema, key, coercion)
+        # Load the Excel file
+        workbook = openpyxl.load_workbook(xlsx_path)
 
-      # store a lookup.
-      mapping[key] = schema_id
+        # Extract the first worksheet
+        first_sheet = workbook.sheetnames[0]
+        if len(workbook.sheetnames) > 1:
+            logging.warning(
+                f"Found multiple worksheets in {xlsx_path} - only parsing {first_sheet}")
+        worksheet = workbook[first_sheet]
 
-  return schemas, mapping, coercion
+        rows = worksheet.iter_rows()
+        return XlTemplateReader(rows)
 
-def validate_instance(path_to_manifest):
-  """ validates a given schema"""
+    def _group_rows(self) -> Dict[RowType, List]:
+        """Group rows in a worksheet by their type annotation"""
 
-  # load schemas
-  schemas, mapping, coercion = load_schemas()
+        # Initialize mapping from row types to lists of row content
+        row_groups: Dict[RowType, List] = {
+            row_type: [] for row_type in RowType}
 
-  # split it out into simple tuples.
-  doc_header_tups, data_row_tups = split_manifest(path_to_manifest, mapping, coercion)
+        for row in self.rows:
+            row_type, *content = row
+            row_groups[row_type].append(content)
 
-  # make the header objects (this is a one object per file)
-  head_objs = {}
-  data_objs = {}
+        # There should only be one header row for the data table
+        assert len(row_groups[RowType.HEADER]
+                   ) == 1, f"Expected exactly one header row"
 
-  # look for the appropriate object.
-  for k, v in doc_header_tups:
+        # TODO: enforce more constraints (e.g., if there are data rows,
+        #       there must be a header row)
 
-    # test sanity
-    assert k in mapping, "un-recognized property in header"
-    schema = mapping[k]
+        return row_groups
 
-    # bootstrap
-    if schema not in head_objs:
-      head_objs[schema] = {}
+    @staticmethod
+    def _get_schema(key: str, manifest: ShippingManifest) -> dict:
+        """Try to find a schemas for the given manifest key"""
+        entity_name = key.lower()
 
-    # save
-    head_objs[schema][k] = v
+        property_schemas = {}
+        for prop in manifest.schemas.values():
+            property_schemas = {**property_schemas, **prop['properties']}
 
-  # validate the header objects.
-  for schema_id in head_objs:
+        assert entity_name in property_schemas, f"No schema found for {key}"
 
-    # validate this.
-    try:
-      validate_schema(schemas[schema_id], head_objs[schema_id])
-    except jsonschema.exceptions.ValidationError as e:
-      raise e
-      print("validation error")
-      print(e.validator)
-      print(e.validator_value)
-      print(e.schema)
-      print(e.schema_path)
-      print(e.message)
+        return property_schemas[entity_name]
 
-  # look for the appropriate object.
-  for k, v in data_row_tups:
+    def get_data_schemas(self, manifest: ShippingManifest) -> List[dict]:
+        """Transform data table into a list of entity name + value pairs"""
+        header_row = self.row_groups[RowType.HEADER][0]
+        data_rows = self.row_groups[RowType.DATA]
 
-    # test sanity
-    assert k in mapping, "un-recognized property in data"
-    schema = mapping[k]
+        # Ensure every data row has the right number of entries
+        n_columns = len(header_row)
+        for i, data_row in enumerate(data_rows):
+            n_entries = len(data_row)
+            assert n_entries == n_columns, f"The {i + 1}th data row has too few entries"
 
-    # bootstrap
-    if schema not in data_objs:
-      data_objs[schema] = {}
+        schemas = [self._get_schema(header, manifest) for header in header_row]
+        return schemas
 
-    # save
-    data_objs[schema][k] = v
+    def validate(self, manifest: ShippingManifest) -> bool:
+        """
+        Validate Excel manifest against a manifest template
 
-  # validate the header objects.
-  for schema_id in data_objs:
+        Arguments:
+            manifest {ShippingManifest} -- a manifest object containing the expected structure of the template
+        """
+        all_valid = True
 
-    # validate this.
-    print(data_objs[schema_id])
-    try:
-      validate_schema(schemas[schema_id], data_objs[schema_id])
-    except jsonschema.exceptions.ValidationError as e:
-      raise e
-      print("validation error")
-      print(e.validator)
-      print(e.validator_value)
-      print(e.schema)
-      print(e.schema_path)
-      print(e.message)
+        def kv_error(key, value):
+            return f'value {value} for {key}'
 
-  return head_objs, data_objs
+        # Validate preamble rows
+        for key, value in self.row_groups[RowType.PREAMBLE]:
+            schema = self._get_schema(key, manifest)
+            invalid_reason = validate_instance(value, schema)
+
+            if invalid_reason:
+                all_valid = False
+                logger.error(
+                    f'Header: {kv_error(key, value)}: {invalid_reason}')
+
+        # Validate data rows
+        data_schemas = self.get_data_schemas(manifest)
+        headers = self.row_groups[RowType.HEADER][0]
+        for row, data_row in enumerate(self.row_groups[RowType.DATA]):
+            for col, value in enumerate(data_row):
+                invalid_reason = validate_instance(value, data_schemas[col])
+
+                if invalid_reason:
+                    all_valid = False
+                    err = kv_error(headers[col], value)
+                    logger.error(
+                        f'Data: {err}: {invalid_reason}')
+
+        return all_valid

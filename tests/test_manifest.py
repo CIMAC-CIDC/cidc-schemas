@@ -4,19 +4,8 @@
 
 import os
 import pytest
-from cidc_schemas.manifest import ShippingManifest
 
-
-@pytest.fixture
-def manifest():
-    ROOT_DIR = os.path.abspath('.')
-    SCHEMA_DIR = os.path.abspath(os.path.join(ROOT_DIR, 'schemas'))
-
-    manifest_path = os.path.join(ROOT_DIR, 'manifests', 'pbmc', 'pbmc.json')
-    schema_paths = [os.path.join(SCHEMA_DIR, path)
-                    for path in os.listdir(SCHEMA_DIR)]
-
-    return ShippingManifest.from_json(manifest_path, schema_paths)
+# NOTE: see conftest.py for manifest and tiny_manifest fixture definitions
 
 
 def test_manifest_loaded(manifest):
@@ -35,17 +24,9 @@ def test_shipping_loaded(manifest):
     assert specimen_type['enum'] is not None
 
 
-@pytest.fixture
-def tiny_manifest():
-    fake_manifest = {'test_columns': ['test_entity.test_property']}
-    fake_schemas = {'test_entity':  {
-        'properties': {'test_property': 'success'}}}
-    return ShippingManifest(fake_manifest, fake_schemas)
-
-
 def test_extract_entity_schema(tiny_manifest):
     assert tiny_manifest._extract_entity_schema(
-        'test_entity', 'test_property') == 'success'
+        'test_entity', 'test_property')['id'] == 'success'
 
 
 def test_extract_section_schemas(tiny_manifest):

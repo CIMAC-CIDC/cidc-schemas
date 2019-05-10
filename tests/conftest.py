@@ -1,0 +1,40 @@
+# -*- coding: utf-8 -*-
+
+"""Global test configuration and shared fixtures"""
+
+import os
+
+import pytest
+
+from cidc_schemas.manifest import ShippingManifest
+
+
+@pytest.fixture
+def manifest():
+    ROOT_DIR = os.path.abspath('.')
+    SCHEMA_DIR = os.path.abspath(os.path.join(ROOT_DIR, 'schemas'))
+
+    manifest_path = os.path.join(ROOT_DIR, 'manifests', 'pbmc', 'pbmc.json')
+    schema_paths = [os.path.join(SCHEMA_DIR, path)
+                    for path in os.listdir(SCHEMA_DIR)]
+
+    return ShippingManifest.from_json(manifest_path, schema_paths)
+
+
+@pytest.fixture
+def tiny_manifest():
+    fake_manifest = {'test_columns': [
+        'test_entity.test_property',
+        'test_entity.test_date',
+        'test_entity.test_time'
+    ]}
+    fake_schemas = {
+        'test_entity':  {
+            'properties': {
+                'test_property': {'id': 'success', 'type': 'string'},
+                'test_date': {'type': 'string', 'format': 'date'},
+                'test_time': {'type': 'string', 'format': 'time'}
+            }
+        }
+    }
+    return ShippingManifest(fake_manifest, fake_schemas)

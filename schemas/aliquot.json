@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "Pertaining to a portion (volume or weight) of the whole.",
-  "id": "aliquot",
+  "$id": "aliquot",
   "links": [
     {
       "link": {
@@ -47,11 +47,7 @@
     },
     "sample_replacement": {
       "description": "Status of sample if replacement is/was requested.",
-      "enum": [
-        "Replacement Requested",
-        "Replacement Tested",
-        "N/A"
-      ],
+      "enum": ["Replacement Requested", "Replacement Tested", "N/A"],
       "type": "string"
     },
     "sample_source": {
@@ -77,9 +73,7 @@
       "type": "string"
     }
   },
-  "required": [
-    "cimac_aliquot_id"
-  ],
+  "required": ["cimac_aliquot_id"],
   "title": "Aliquot",
   "type": "object"
 }

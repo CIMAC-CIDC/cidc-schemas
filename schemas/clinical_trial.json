@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "clinical_trial",
+  "$id": "clinical_trial",
   "title": "Clinical Trial",
   "description": "Encapsulates information regarding a clinical trial.\n",
   "properties": {
@@ -48,7 +48,5 @@
       }
     }
   },
-  "required": [
-    "lead_organization_study_id"
-  ]
+  "required": ["lead_organization_study_id"]
 }

@@ -58,7 +58,7 @@ class ShippingManifest:
         for schema_path in schema_paths:
             with open(schema_path, 'r') as stream:
                 schema = json.load(stream)
-                all_schemas[schema['id']] = schema
+                all_schemas[schema['$id']] = schema
 
         return ShippingManifest(manifest, all_schemas)
 

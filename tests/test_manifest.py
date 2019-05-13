@@ -12,8 +12,12 @@ def test_manifest_loaded(pbmc_manifest):
     assert pbmc_manifest.manifest['id'] == 'pbmc_shipping'
 
 
-def test_preamble_loaded(pbmc_manifest):
-    date_shipped = pbmc_manifest.preamble_schemas.get('date_shipped')
+def test_manifest_loaded(manifest):
+    assert manifest.manifest['$id'] == 'pbmc_shipping'
+
+
+def test_preamble_loaded(manifest):
+    date_shipped = manifest.preamble_schemas.get('date_shipped')
     assert date_shipped is not None
     assert date_shipped['format'] == 'date'
 

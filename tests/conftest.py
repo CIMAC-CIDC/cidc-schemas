@@ -22,11 +22,6 @@ def schema_paths():
 
 
 @pytest.fixture()
-def test_data_dir():
-    return os.path.join(ROOT_DIR, "tests/data")
-
-
-@pytest.fixture()
 def manifest_dir():
     return os.path.join(ROOT_DIR, 'manifests')
 
@@ -47,7 +42,7 @@ def tiny_manifest():
     fake_schemas = {
         'test_entity':  {
             'properties': {
-                'test_property': {'id': 'success', 'type': 'string'},
+                'test_property': {'$id': 'success', 'type': 'string'},
                 'test_date': {'type': 'string', 'format': 'date'},
                 'test_time': {'type': 'string', 'format': 'time'}
             }

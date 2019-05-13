@@ -71,7 +71,7 @@ class XlTemplateReader:
                 continue
 
             # If entire row is empty, skip it (this happens at the bottom of the data table, e.g.)
-            if not all(values):
+            if not any(values):
                 continue
 
             # Reassemble parsed row and add to rows

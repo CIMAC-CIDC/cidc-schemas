@@ -48,3 +48,9 @@ def test_invalid_tiny_preamble(tiny_manifest):
 def test_pbmc_validation(pbmc_manifest, manifest_dir):
     pbmc_xlsx_path = os.path.join(manifest_dir, 'pbmc', 'pbmc.xlsx')
     assert pbmc_manifest.validate_excel(pbmc_xlsx_path)
+
+
+def test_pbmc_invalidation(pbmc_manifest, test_data_dir):
+    pbmc_xlsx_path = os.path.join(test_data_dir, 'pbmc_invalid.xlsx')
+    with pytest.raises(ValidationError):
+        pbmc_manifest.validate_excel(pbmc_xlsx_path)

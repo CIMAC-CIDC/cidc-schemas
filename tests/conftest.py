@@ -22,6 +22,11 @@ def schema_paths():
 
 
 @pytest.fixture()
+def test_data_dir():
+    return os.path.join(ROOT_DIR, "tests/data")
+
+
+@pytest.fixture()
 def manifest_dir():
     return os.path.join(ROOT_DIR, 'manifests')
 

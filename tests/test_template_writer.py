@@ -2,7 +2,7 @@
 
 """Tests for `cidc_schemas.template_writer` module."""
 
-from cidc_schemas.template_writer import XlTemplateWriter
+from cidc_schemas.template_writer import XlTemplateWriter, RowType
 
 
 def test_get_validation():
@@ -16,3 +16,9 @@ def test_get_validation():
     date = XlTemplateWriter._get_validation('A1', {'format': 'date'})
     assert date['validate'] == 'custom'
     assert date['value'] == XlTemplateWriter._make_date_validation_string('A1')
+
+
+def test_row_type_from_string():
+    assert RowType.from_string("#t") == RowType.TITLE
+    assert RowType.from_string("t") == None
+    assert RowType.from_string("") == None

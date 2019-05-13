@@ -23,6 +23,13 @@ class RowType(Enum):
     PREAMBLE = "#p"
     DATA = "#d"
 
+    @staticmethod
+    def from_string(maybe_type: str) -> Optional[Enum]:
+        try:
+            return RowType(maybe_type)
+        except ValueError:
+            return None
+
 
 class XlThemes:
     """Data class containing format specifications used in `XlTemplateWriter`"""

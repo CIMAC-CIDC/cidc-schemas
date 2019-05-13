@@ -9,7 +9,7 @@ import jsonschema
 from typing import List
 from openpyxl import load_workbook
 
-from cidc_schemas import template_reader
+from cidc_schemas.template_reader import XlTemplateReader, ValidationError
 from cidc_schemas.template_writer import RowType
 
 
@@ -23,11 +23,11 @@ def test_valid_tiny_validation(tiny_manifest):
         (RowType.DATA, 'foo', '6/12/12', '10:45:61')
     ]
 
-    reader = template_reader.XlTemplateReader(tiny_valid)
+    reader = XlTemplateReader(tiny_valid)
     assert reader.validate(tiny_manifest)
 
 
-def test_invalid_tiny_validation(tiny_manifest):
+def test_invalid_tiny_preamble(tiny_manifest):
     tiny_invalid = [
         (RowType.PREAMBLE, 'test_property', 'foo'),
         (RowType.PREAMBLE, 'test_date', '6foo'),
@@ -37,5 +37,14 @@ def test_invalid_tiny_validation(tiny_manifest):
         (RowType.DATA, 'foo', '6//12', '10:45:61asdf')
     ]
 
-    reader = template_reader.XlTemplateReader(tiny_invalid)
-    assert not reader.validate(tiny_manifest)
+    reader = XlTemplateReader(tiny_invalid)
+
+    with pytest.raises(ValidationError):
+        reader.validate(tiny_manifest)
+
+
+def test_pbmc_validation(pbmc_manifest, manifest_dir):
+    pbmc_xlsx_path = os.path.join(manifest_dir, 'pbmc', 'pbmc.xlsx')
+    populated_manifest = XlTemplateReader.from_excel(
+        pbmc_xlsx_path)
+    assert populated_manifest.validate(pbmc_manifest)

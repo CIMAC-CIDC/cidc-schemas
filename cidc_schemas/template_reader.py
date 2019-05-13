@@ -16,8 +16,12 @@ from .validation import validate_instance
 logger = logging.getLogger('cidc_schemas.template_reader')
 
 
-# A template row is any tuple whose first member is a RowType
+# A manifest row is any tuple whose first member is a RowType
 ManifestRow = Tuple[RowType, ...]
+
+
+class ValidationError(Exception):
+    pass
 
 
 class XlTemplateReader:
@@ -54,7 +58,25 @@ class XlTemplateReader:
                 f"Found multiple worksheets in {xlsx_path} - only parsing {first_sheet}")
         worksheet = workbook[first_sheet]
 
-        rows = worksheet.iter_rows()
+        rows = []
+        for i, row in enumerate(worksheet.iter_rows()):
+            # Convert to string and extract type annotation
+            typ, *values = [col.value for col in row]
+            row_type = RowType.from_string(typ)
+
+            # If no recognized row type found, don't parse this row
+            if not row_type:
+                logger.warning(
+                    f'No recognized row type found in row {i + 1} - skipping')
+                continue
+
+            # If entire row is empty, skip it (this happens at the bottom of the data table, e.g.)
+            if not all(values):
+                continue
+
+            # Reassemble parsed row and add to rows
+            rows.append((row_type, *values))
+
         return XlTemplateReader(rows)
 
     def _group_rows(self) -> Dict[RowType, List]:
@@ -106,37 +128,39 @@ class XlTemplateReader:
 
     def validate(self, manifest: ShippingManifest) -> bool:
         """
-        Validate Excel manifest against a manifest template
+        Validate Excel manifest against a manifest template.
 
         Arguments:
             manifest {ShippingManifest} -- a manifest object containing the expected structure of the template
-        """
-        all_valid = True
 
-        def kv_error(key, value):
-            return f'value {value} for {key}'
+        Returns:
+            {bool} -- True if valid, otherwise raises an exception
+        """
+        invalid_messages = []
 
         # Validate preamble rows
-        for key, value in self.row_groups[RowType.PREAMBLE]:
+        for key, *values in self.row_groups[RowType.PREAMBLE]:
+            value = values[0]
             schema = self._get_schema(key, manifest)
             invalid_reason = validate_instance(value, schema)
 
             if invalid_reason:
-                all_valid = False
-                logger.error(
-                    f'Header: {kv_error(key, value)}: {invalid_reason}')
+                invalid_messages.append(
+                    f'Header, {key}:\t{invalid_reason}')
 
         # Validate data rows
         data_schemas = self.get_data_schemas(manifest)
         headers = self.row_groups[RowType.HEADER][0]
-        for row, data_row in enumerate(self.row_groups[RowType.DATA]):
+        for data_row in self.row_groups[RowType.DATA]:
             for col, value in enumerate(data_row):
                 invalid_reason = validate_instance(value, data_schemas[col])
 
                 if invalid_reason:
-                    all_valid = False
-                    err = kv_error(headers[col], value)
-                    logger.error(
-                        f'Data: {err}: {invalid_reason}')
+                    invalid_messages.append(
+                        f'Data, {headers[col]}:\t{invalid_reason}')
 
-        return all_valid
+        if invalid_messages:
+            feedback = '\n'.join(invalid_messages)
+            raise ValidationError('\n' + feedback)
+
+        return True

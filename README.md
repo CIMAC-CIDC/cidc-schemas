@@ -65,10 +65,18 @@ python3 -m cidc_schemas.cli [args]
 
 ### Generate templates
 
-Create a template for a given manifest configuration
+Create a template for a given manifest configuration.
 
 ```bash
-cidc_schemas generate_template -m manifests/pbmc.yaml -s schemas -o pbmc.xlsx
+cidc_schemas generate_template -m manifests/pbmc/pbmc.yaml -s schemas -o pbmc.xlsx
+```
+
+### Validate filled-out templates
+
+Check that a populated manifest file is valid with respect to a template specification.
+
+```bash
+cidc_schemas validate_template -m manifests/pbmc/pbmc.json -x manifests/pbmc/pbmc.xlsx -s schemas
 ```
 
 ### Convert between yaml and json

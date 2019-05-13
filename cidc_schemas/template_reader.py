@@ -11,7 +11,7 @@ import openpyxl
 
 from .manifest import ShippingManifest
 from .template_writer import RowType
-from .validation import validate_instance
+from .json_validation import validate_instance
 
 logger = logging.getLogger('cidc_schemas.template_reader')
 
@@ -66,7 +66,7 @@ class XlTemplateReader:
 
             # If no recognized row type found, don't parse this row
             if not row_type:
-                logger.warning(
+                logger.info(
                     f'No recognized row type found in row {i + 1} - skipping')
                 continue
 
@@ -134,7 +134,7 @@ class XlTemplateReader:
             manifest {ShippingManifest} -- a manifest object containing the expected structure of the template
 
         Returns:
-            {bool} -- True if valid, otherwise raises an exception
+            {bool} -- True if valid, otherwise raises an exception with validation reporting
         """
         invalid_messages = []
 

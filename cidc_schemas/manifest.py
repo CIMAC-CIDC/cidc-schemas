@@ -93,3 +93,9 @@ class ShippingManifest:
         from .template_writer import XlTemplateWriter
 
         XlTemplateWriter(xlsx_path, self).write()
+
+    def validate_excel(self, xlsx_path: str) -> bool:
+        """Validate the given Excel file against this `ShippingManifest`"""
+        from .template_reader import XlTemplateReader
+
+        return XlTemplateReader.from_excel(xlsx_path).validate(self)

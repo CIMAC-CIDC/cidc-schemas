@@ -45,6 +45,4 @@ def test_invalid_tiny_preamble(tiny_manifest):
 
 def test_pbmc_validation(pbmc_manifest, manifest_dir):
     pbmc_xlsx_path = os.path.join(manifest_dir, 'pbmc', 'pbmc.xlsx')
-    populated_manifest = XlTemplateReader.from_excel(
-        pbmc_xlsx_path)
-    assert populated_manifest.validate(pbmc_manifest)
+    assert pbmc_manifest.validate_excel(pbmc_xlsx_path)

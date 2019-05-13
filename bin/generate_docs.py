@@ -72,7 +72,7 @@ def processEntity(entity_name, template_env, property_dict):
 
 # Create HTML for the Specified Manifest
 def processManifest(manifest_name, entity_json_set, property_dict, column_descriptions, template_env):
-    file_name = "manifests/%s.json" % manifest_name
+    file_name = "manifests/%s/%s.json" % (manifest_name, manifest_name)
     current_json = get_json(file_name)    
 
     template = template_env.get_template("manifest.html")

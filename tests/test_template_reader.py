@@ -12,6 +12,8 @@ from openpyxl import load_workbook
 from cidc_schemas.template_reader import XlTemplateReader, ValidationError
 from cidc_schemas.template_writer import RowType
 
+# NOTE: see conftest.py for pbmc_manifest and tiny_manifest fixture definitions
+
 
 def test_valid_tiny_validation(tiny_manifest):
     tiny_valid = [

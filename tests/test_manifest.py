@@ -5,7 +5,7 @@
 import os
 import pytest
 
-# NOTE: see conftest.py for manifest and tiny_manifest fixture definitions
+# NOTE: see conftest.py for pbmc_manifest and tiny_manifest fixture definitions
 
 
 def test_manifest_loaded(pbmc_manifest):

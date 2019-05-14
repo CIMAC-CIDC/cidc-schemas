@@ -78,6 +78,13 @@ Check that a populated manifest file is valid with respect to a template specifi
 cidc_schemas validate_template -m manifests/pbmc/pbmc.json -x manifests/pbmc/pbmc.xlsx -s schemas
 ```
 
+### Validate JSON schemas
+Check that a JSON schema conforms to the JSON Schema specifications.
+
+```bash
+cidc_schemas validate_schema -s schemas -f schemas/manifests/pbmc.json
+```
+
 ### Convert between yaml and json
 
 The CLI comes with a little utility for converting between yaml and json files.

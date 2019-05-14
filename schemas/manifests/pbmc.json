@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "manifests/pbmc_shipping",
+  "$id": "pbmc_shipping",
   "title": "Shipping manifest for PBMC samples",
   "type": "object",
   "description": "Shipping / receiving manifest for transferring PBMC samples.",
@@ -17,62 +17,104 @@
               "type": "array",
               "items": [
                 {
-                  "$ref": "clinical_trial.json#json#lead_organization_study_id"
+                  "$ref": "clinical_trial.json#properties/lead_organization_study_id"
                 },
-                { "$ref": "clinical_trial.json#json#manifest_id" },
-                { "$ref": "shipping_core.json#request" },
-                { "$ref": "shipping_core.json#assay_priority" },
-                { "$ref": "shipping_core.json#assay_type" },
-                { "$ref": "shipping_core.json#batch_number" },
-                { "$ref": "shipping_core.json#box_number" },
-                { "$ref": "shipping_core.json#assay_run_number" },
-                { "$ref": "shipping_core.json#courier" },
-                { "$ref": "shipping_core.json#tracking_number" },
-                { "$ref": "shipping_core.json#account_number" },
-                { "$ref": "shipping_core.json#shipping_condition" },
-                { "$ref": "shipping_core.json#date_shipped" },
-                { "$ref": "shipping_core.json#num_of_samples_shipped" },
-                { "$ref": "shipping_core.json#num_of_samples_good" },
-                { "$ref": "shipping_core.json#num_of_path_report" },
-                { "$ref": "shipping_core.json#ship_from" },
-                { "$ref": "shipping_core.json#ship_to" }
+                {
+                  "$ref": "shipping_core.json#properties/manifest_id"
+                },
+                { "$ref": "shipping_core.json#properties/request" },
+                {
+                  "$ref": "shipping_core.json#properties/assay_priority"
+                },
+                { "$ref": "shipping_core.json#properties/assay_type" },
+                {
+                  "$ref": "shipping_core.json#properties/batch_number"
+                },
+                { "$ref": "shipping_core.json#properties/box_number" },
+                {
+                  "$ref": "shipping_core.json#properties/assay_run_number"
+                },
+                { "$ref": "shipping_core.json#properties/courier" },
+                {
+                  "$ref": "shipping_core.json#properties/tracking_number"
+                },
+                {
+                  "$ref": "shipping_core.json#properties/account_number"
+                },
+                {
+                  "$ref": "shipping_core.json#properties/shipping_condition"
+                },
+                {
+                  "$ref": "shipping_core.json#properties/date_shipped"
+                },
+                {
+                  "$ref": "shipping_core.json#properties/num_of_samples_shipped"
+                },
+                {
+                  "$ref": "shipping_core.json#properties/num_of_samples_good"
+                },
+                {
+                  "$ref": "shipping_core.json#properties/num_of_path_report"
+                },
+                { "$ref": "shipping_core.json#properties/ship_from" },
+                { "$ref": "shipping_core.json#properties/ship_to" }
               ]
             },
             "shipping_columns": {
               "type": "array",
               "items": [
-                { "$ref": "clinical_trial.json#lead_organization_study_id" },
-                { "$ref": "participant.json#trial_participant_id" },
-                { "$ref": "participant.json#cimac_participant_id" },
-                { "$ref": "participant.json#cohort_id" },
-                { "$ref": "participant.json#arm_id" },
-                { "$ref": "sample.json#site_sample_id" },
-                { "$ref": "sample.json#cimac_sample_id" },
-                { "$ref": "sample.json#time_point" },
-                { "$ref": "sample.json#blood_collection_date" },
-                { "$ref": "sample.json#blood_collection_time" },
-                { "$ref": "sample.json#blood_processing_date" },
-                { "$ref": "sample.json#blood_processing_time" },
-                { "$ref": "sample.json#sample_location" },
-                { "$ref": "sample.json#specimen_type" },
-                { "$ref": "sample.json#specimen_format" },
-                { "$ref": "aliquot.json#quantity" },
-                { "$ref": "aliquot.json#volume_quantity" },
-                { "$ref": "aliquot.json#volume_units" },
-                { "$ref": "aliquot.json#pbmc_aliquoted" },
-                { "$ref": "aliquot.json#sample_source" }
+                {
+                  "$ref": "clinical_trial.json#properties/lead_organization_study_id"
+                },
+                {
+                  "$ref": "participant.json#properties/trial_participant_id"
+                },
+                {
+                  "$ref": "participant.json#properties/cimac_participant_id"
+                },
+                { "$ref": "participant.json#properties/cohort_id" },
+                { "$ref": "participant.json#properties/arm_id" },
+                { "$ref": "sample.json#properties/site_sample_id" },
+                { "$ref": "sample.json#properties/cimac_sample_id" },
+                { "$ref": "sample.json#properties/time_point" },
+                {
+                  "$ref": "sample.json#properties/blood_collection_date"
+                },
+                {
+                  "$ref": "sample.json#properties/blood_collection_time"
+                },
+                {
+                  "$ref": "sample.json#properties/blood_processing_date"
+                },
+                {
+                  "$ref": "sample.json#properties/blood_processing_time"
+                },
+                { "$ref": "sample.json#properties/sample_location" },
+                { "$ref": "sample.json#properties/specimen_type" },
+                { "$ref": "sample.json#properties/specimen_format" },
+                { "$ref": "aliquot.json#properties/quantity" },
+                { "$ref": "aliquot.json#properties/volume_quantity" },
+                { "$ref": "aliquot.json#properties/volume_units" },
+                { "$ref": "aliquot.json#properties/pbmc_aliquoted" },
+                { "$ref": "aliquot.json#properties/sample_source" }
               ]
             },
             "receiving_columns": {
               "type": "array",
               "items": [
-                { "$ref": "aliquot.json#cimac_aliquot_id" },
-                { "$ref": "aliquot.json#pbmc_recovered" },
-                { "$ref": "aliquot.json#material_used" },
-                { "$ref": "aliquot.json#material_remaining" },
-                { "$ref": "aliquot.json#sample_quality_status" },
-                { "$ref": "aliquot.json#sample_replacement" },
-                { "$ref": "aliquot.json#sample_status" }
+                { "$ref": "aliquot.json#properties/cimac_aliquot_id" },
+                { "$ref": "aliquot.json#properties/pbmc_recovered" },
+                { "$ref": "aliquot.json#properties/material_used" },
+                {
+                  "$ref": "aliquot.json#properties/material_remaining"
+                },
+                {
+                  "$ref": "aliquot.json#properties/sample_quality_status"
+                },
+                {
+                  "$ref": "aliquot.json#properties/sample_replacement"
+                },
+                { "$ref": "aliquot.json#properties/sample_status" }
               ]
             }
           }

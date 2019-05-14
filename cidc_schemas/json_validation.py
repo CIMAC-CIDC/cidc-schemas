@@ -2,10 +2,31 @@
 
 """Tools for performing validations based on json schemas"""
 
+import os
 from typing import Optional
 
 import dateparser
 import jsonschema
+import jsonref
+
+SCHEMA_ROOT = os.path.join(os.path.abspath(__file__), '..', '..', 'schemas')
+
+
+def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT) -> dict:
+    """
+    Try to load a valid schema at `schema_path`.
+    """
+    # Load schema with resolved $refs
+    with open(schema_path) as schema_file:
+        schema = jsonref.load(
+            schema_file, base_uri=f'file://{schema_root}/', jsonschema=True)
+
+    # Ensure schema is valid
+    # NOTE: $refs were resolved above, so no need for a RefResolver here
+    validator = jsonschema.Draft7Validator(schema)
+    validator.check_schema(schema)
+
+    return schema
 
 
 def validate_instance(instance: str, schema: dict) -> Optional[str]:
@@ -52,6 +73,8 @@ def convert(fmt: str, value: str) -> str:
         reformatter = _to_date
     elif fmt == 'string':
         reformatter = str
+    elif fmt == 'integer':
+        reformatter = int
     else:
         # If we don't have a specified reformatter, use the identity function
         reformatter = id

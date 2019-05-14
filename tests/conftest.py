@@ -9,23 +9,6 @@ import pytest
 from cidc_schemas.manifest import ShippingManifest
 
 
-ROOT_DIR = os.path.abspath('.')
-
-
-@pytest.fixture
-def schema_paths():
-    SCHEMA_DIR = os.path.abspath(os.path.join(ROOT_DIR, 'schemas'))
-
-    schema_paths = [os.path.join(SCHEMA_DIR, path)
-                    for path in os.listdir(SCHEMA_DIR)]
-    return schema_paths
-
-
-@pytest.fixture()
-def manifest_dir():
-    return os.path.join(ROOT_DIR, 'manifests')
-
-
 @pytest.fixture
 def pbmc_manifest(schema_paths, manifest_dir):
     pbmc_manifest_path = os.path.join(manifest_dir, 'pbmc', 'pbmc.json')

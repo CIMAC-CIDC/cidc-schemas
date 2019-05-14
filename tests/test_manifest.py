@@ -9,11 +9,7 @@ import pytest
 
 
 def test_manifest_loaded(pbmc_manifest):
-    assert pbmc_manifest.manifest['id'] == 'pbmc_shipping'
-
-
-def test_manifest_loaded(manifest):
-    assert manifest.manifest['$id'] == 'pbmc_shipping'
+    assert pbmc_manifest.manifest['$id'] == 'pbmc_shipping'
 
 
 def test_preamble_loaded(manifest):

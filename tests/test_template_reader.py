@@ -12,6 +12,8 @@ from openpyxl import load_workbook
 from cidc_schemas.template_reader import XlTemplateReader, ValidationError
 from cidc_schemas.template_writer import RowType
 
+from .constants import MANIFEST_DIR, TEST_DATA_DIR
+
 # NOTE: see conftest.py for pbmc_manifest and tiny_manifest fixture definitions
 
 
@@ -45,12 +47,12 @@ def test_invalid_tiny_preamble(tiny_manifest):
         reader.validate(tiny_manifest)
 
 
-def test_pbmc_validation(pbmc_manifest, manifest_dir):
-    pbmc_xlsx_path = os.path.join(manifest_dir, 'pbmc', 'pbmc.xlsx')
+def test_pbmc_validation(pbmc_manifest):
+    pbmc_xlsx_path = os.path.join(MANIFEST_DIR, 'pbmc', 'pbmc.xlsx')
     assert pbmc_manifest.validate_excel(pbmc_xlsx_path)
 
 
-def test_pbmc_invalidation(pbmc_manifest, test_data_dir):
-    pbmc_xlsx_path = os.path.join(test_data_dir, 'pbmc_invalid.xlsx')
+def test_pbmc_invalidation(pbmc_manifest):
+    pbmc_xlsx_path = os.path.join(TEST_DATA_DIR, 'pbmc_invalid.xlsx')
     with pytest.raises(ValidationError):
         pbmc_manifest.validate_excel(pbmc_xlsx_path)

@@ -47,7 +47,7 @@ def test_invalid_tiny_preamble(tiny_manifest):
 
     reader = XlTemplateReader(tiny_invalid)
 
-    with pytest.raises(ValidationError) as e:
+    with pytest.raises(ValidationError):
         reader.validate(tiny_manifest)
 
 

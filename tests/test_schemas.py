@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests for `cidc_prism` package."""
+"""Tests for data model schemas."""
 
 import os
 import unittest
@@ -25,4 +25,5 @@ def schema_paths():
 
 @pytest.mark.parametrize("schema_path", schema_paths())
 def test_schema(schema_path):
+    """Ensure the schema file conforms to JSON schema draft 7"""
     assert load_and_validate_schema(schema_path)

@@ -150,7 +150,7 @@ class XlTemplateReader:
         invalid_messages = []
 
         for name, schema in manifest.worksheets.items():
-            errors = self._validate_worksheet(name, schema)
+            errors = self._validate_worksheet(name, schema['properties'])
             invalid_messages.extend(errors)
 
         if invalid_messages:
@@ -182,7 +182,7 @@ class XlTemplateReader:
         if 'data_columns' in ws_schema:
             # Build up flat mapping of data schemas
             flat_data_schemas: Dict[str, dict] = {}
-            for section in ws_schema['data_columns']['items']:
+            for section in ws_schema['data_columns']['properties'].values():
                 flat_data_schemas = {
                     **flat_data_schemas, **section['properties']}
 

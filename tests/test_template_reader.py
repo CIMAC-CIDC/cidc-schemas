@@ -19,7 +19,7 @@ from .constants import MANIFEST_EXAMPLES_DIR, TEST_DATA_DIR
 
 def test_valid_tiny_validation(tiny_manifest):
     tiny_valid = {
-        'FAKE_SHEET': [
+        'TEST_SHEET': [
             (RowType.PREAMBLE, 'test_property', 'foo'),
             (RowType.PREAMBLE, 'test_date', '6/11/12'),
             (RowType.PREAMBLE, 'test_time', '10:44:61'),
@@ -35,7 +35,7 @@ def test_valid_tiny_validation(tiny_manifest):
 
 def test_invalid_tiny_preamble(tiny_manifest):
     tiny_invalid = {
-        'FAKE_SHEET': [
+        'TEST_SHEET': [
             (RowType.PREAMBLE, 'test_property', 'foo'),
             (RowType.PREAMBLE, 'test_date', '6foo'),
             (RowType.PREAMBLE, 'test_time', '10:foo:61'),

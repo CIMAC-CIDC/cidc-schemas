@@ -15,17 +15,14 @@ def test_pbmc_loaded(pbmc_manifest):
 
 
 def test_tiny_loaded(tiny_manifest):
-    assert 'FAKE_SHEET' in tiny_manifest.worksheets
+    assert 'TEST_SHEET' in tiny_manifest.worksheets
 
 
 def test_worksheet_schema_validation():
     def check_validation_error(schema, msg):
         with pytest.raises(AssertionError) as e:
-            ShippingManifest._validate_worksheet(schema)
+            ShippingManifest._validate_worksheet("", schema)
         assert msg in str(e.value)
-
-    no_title = {}
-    check_validation_error(no_title, 'missing "title"')
 
     no_properties = {
         'title': ''

@@ -119,7 +119,8 @@ class XlTemplateWriter:
 
         first_sheet = True
         for name, ws_schema in self.manifest.worksheets.items():
-            self._write_worksheet(name, ws_schema, write_title=first_sheet)
+            self._write_worksheet(
+                name, ws_schema['properties'], write_title=first_sheet)
             first_sheet = False
 
         self.workbook.close()
@@ -138,8 +139,8 @@ class XlTemplateWriter:
 
         data_columns = {}
         if 'data_columns' in schema:
-            data_columns = {subtable['title']: subtable['properties']
-                            for subtable in schema['data_columns']['items']}
+            data_columns = {name: subtable['properties']
+                            for name, subtable in schema['data_columns']['properties'].items()}
             num_data_columns = sum([len(columns)
                                     for columns in data_columns.values()])
             self.MAIN_WIDTH = max(self.MAIN_WIDTH, num_data_columns)

@@ -19,18 +19,19 @@ def pbmc_manifest():
 
 @pytest.fixture
 def tiny_manifest():
+    """A small, valid """
+
     test_property = {'$id': 'success', 'type': 'string'}
     test_date = {'type': 'string', 'format': 'date'}
     test_time = {'type': 'string', 'format': 'time'}
 
-    fake_manifest_schema = {
-        '$id': 'tiny_fake',
-        'title': 'Tiny Fake',
+    tiny_manifest_schema = {
+        '$id': 'tiny_manifest',
+        'title': 'Tiny Manifest',
         'properties': {
             'worksheets': {
-                'items': [
-                    {
-                        'title': 'FAKE_SHEET',
+                'properties': {
+                    'TEST_SHEET': {
                         'properties': {
                             'preamble_rows': {
                                 'properties': {
@@ -40,30 +41,28 @@ def tiny_manifest():
                                 }
                             },
                             'data_columns': {
-                                'items': [
-                                    {
-                                        'title': 'a header for this table',
+                                'properties': {
+                                    'a header for this table': {
                                         'properties': {
                                             'test_property': test_property,
                                             'test_date': test_date,
                                             'test_time': test_time
                                         }
                                     },
-                                    {
-                                        'title': 'a header for this adjacent table',
+                                    'a header for this adjacent table': {
                                         'properties': {
                                             'test_property': test_property,
                                             'test_date': test_date,
                                             'test_time': test_time
                                         }
                                     }
-                                ]
+                                }
                             },
                         }
                     }
-                ]
+                }
             }
         }
     }
 
-    return ShippingManifest(fake_manifest_schema)
+    return ShippingManifest(tiny_manifest_schema)

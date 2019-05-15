@@ -41,22 +41,19 @@ class ShippingManifest:
             'properties'], f'{manifest_id} schema missing "worksheets" property'
         worksheet_schemas = self.manifest['properties']['worksheets']
 
-        assert 'items' in worksheet_schemas, f'{manifest_id}#worksheets schema missing "items" property'
+        assert 'properties' in worksheet_schemas, f'{manifest_id}#worksheets schema missing "properties" property'
 
         worksheets = {}
-        for worksheet in worksheet_schemas['items']:
-            self._validate_worksheet(worksheet)
-            worksheets[worksheet['title']] = worksheet['properties']
+        for name, schema in worksheet_schemas['properties'].items():
+            self._validate_worksheet(name, schema)
+            worksheets[name] = schema
 
         return worksheets
 
     VALID_WS_SECTIONS = set(['preamble_rows', 'data_columns'])
 
     @staticmethod
-    def _validate_worksheet(ws_schema: dict):
-        assert 'title' in ws_schema, 'found worksheet schema missing "title" property'
-
-        ws_title = ws_schema['title']
+    def _validate_worksheet(ws_title: str, ws_schema: dict):
         assert 'properties' in ws_schema, f'worksheet {ws_title} missing "properties" property'
 
         # Ensure all worksheet sections are supported

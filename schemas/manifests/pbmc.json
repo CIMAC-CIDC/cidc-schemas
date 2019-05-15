@@ -4,13 +4,11 @@
   "title": "Shipping manifest for PBMC samples",
   "type": "object",
   "description": "Shipping / receiving manifest for transferring PBMC samples.",
-  "definitions": {},
   "properties": {
     "worksheets": {
-      "type": "array",
-      "items": [
-        {
-          "title": "CORE_DATA",
+      "type": "object",
+      "properties": {
+        "CORE_DATA": {
           "type": "object",
           "properties": {
             "preamble_rows": {
@@ -68,9 +66,8 @@
             },
             "data_columns": {
               "type": "array",
-              "items": [
-                {
-                  "title": "Filled by Biorepository",
+              "properties": {
+                "Filled by Biorepository": {
                   "type": "object",
                   "properties": {
                     "lead organization study id": {
@@ -131,8 +128,7 @@
                     }
                   }
                 },
-                {
-                  "title": "Filled by CIMAC Lab",
+                "Filled by CIMAC Lab": {
                   "type": "array",
                   "properties": {
                     "cimac aliquot id": {
@@ -158,11 +154,11 @@
                     }
                   }
                 }
-              ]
+              }
             }
           }
         }
-      ]
+      }
     }
   }
 }

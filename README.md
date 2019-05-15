@@ -10,8 +10,10 @@ This repository contains formal definitions of the CIDC metadata model using [js
 
 - **`cidc_schemas/`** - a python module for generating, validating, and reading manifest templates.
 - **`docs/`** - the most recent build of the data model documentation, along with templates and scripts for re-generating the documentation.
-- **`manifests/`** - manifest template specifications and example Excel files.
+- **`manifest_examples/`** - example manifest xlsx files.
 - **`schemas/`** - json specifications defining the CIDC metadata model.
+  - `manifests/` - schemas for generating and validating manifest templates.
+  - `assays/` - schemas defining assay data models
 - **`templates/`** - HTML templates for generating schema documentation
 - **`tests/`** - tests for the `cidc_schemas` module.
 
@@ -67,7 +69,7 @@ python3 -m cidc_schemas.cli [args]
 Create a template for a given manifest configuration.
 
 ```bash
-cidc_schemas generate_template -m manifests/pbmc/pbmc.yaml -s schemas -o pbmc.xlsx
+cidc_schemas generate_template -m schemas/manifests/pbmc.json -s schemas -o pbmc.xlsx
 ```
 
 ### Validate filled-out templates
@@ -75,14 +77,14 @@ cidc_schemas generate_template -m manifests/pbmc/pbmc.yaml -s schemas -o pbmc.xl
 Check that a populated manifest file is valid with respect to a template specification.
 
 ```bash
-cidc_schemas validate_template -m manifests/pbmc/pbmc.json -x manifests/pbmc/pbmc.xlsx -s schemas
+cidc_schemas validate_template -m schemas/manifests/pbmc.json -s schemas -x manifest_examples/pbmc.xlsx
 ```
 
 ### Validate JSON schemas
 Check that a JSON schema conforms to the JSON Schema specifications.
 
 ```bash
-cidc_schemas validate_schema -s schemas -f schemas/manifests/pbmc.json
+cidc_schemas validate_schema -s schemas -f schemas/shipping_core.json
 ```
 
 ### Convert between yaml and json

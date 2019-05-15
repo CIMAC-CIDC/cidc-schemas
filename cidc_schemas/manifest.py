@@ -33,7 +33,7 @@ class ShippingManifest:
         self.manifest = manifest
         self.worksheets = self._extract_worksheets()
 
-    def _extract_worksheets(self):
+    def _extract_worksheets(self) -> Dict[str, dict]:
         """Build a mapping from worksheet names to worksheet section schemas"""
 
         manifest_id = self.manifest['$id']

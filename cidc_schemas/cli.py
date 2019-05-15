@@ -63,9 +63,7 @@ def interface() -> argparse.Namespace:
 
 def build_manifest(args: argparse.Namespace) -> ShippingManifest:
     schemas_dir = os.path.abspath(args.schemas_dir)
-    schema_paths = [os.path.join(schemas_dir, path)
-                    for path in os.listdir(schemas_dir)]
-    return ShippingManifest.from_json(args.manifest_file, schema_paths)
+    return ShippingManifest.from_json(args.manifest_file, schemas_dir)
 
 
 def generate_template(args: argparse.Namespace):

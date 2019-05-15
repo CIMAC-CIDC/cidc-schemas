@@ -3,6 +3,7 @@
 """Tools for performing validations based on json schemas"""
 
 import os
+import json
 from typing import Optional
 
 import dateparser
@@ -12,14 +13,21 @@ import jsonref
 SCHEMA_ROOT = os.path.join(os.path.abspath(__file__), '..', '..', 'schemas')
 
 
-def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT) -> dict:
+def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT, titled_refs: bool = False) -> dict:
     """
     Try to load a valid schema at `schema_path`.
     """
+    assert os.path.isabs(
+        schema_root), "schema_root must be an absolute path"
+
+    loader_kwargs = {
+        'base_uri': f'file://{schema_root}/',
+        'jsonschema': True
+    }
+
     # Load schema with resolved $refs
     with open(schema_path) as schema_file:
-        schema = jsonref.load(
-            schema_file, base_uri=f'file://{schema_root}/', jsonschema=True)
+        schema = jsonref.load(schema_file, **loader_kwargs)
 
     # Ensure schema is valid
     # NOTE: $refs were resolved above, so no need for a RefResolver here

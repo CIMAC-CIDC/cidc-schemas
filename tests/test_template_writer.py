@@ -4,6 +4,8 @@
 
 from cidc_schemas.template_writer import XlTemplateWriter, RowType
 
+# TODO: actually write some end-to-end template generation tests
+
 
 def test_get_validation():
     enum = XlTemplateWriter._get_validation('A1', {'enum': [1, 2, 3]})

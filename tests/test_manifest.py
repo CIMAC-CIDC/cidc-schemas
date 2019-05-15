@@ -5,30 +5,37 @@
 import os
 import pytest
 
+from cidc_schemas.manifest import ShippingManifest
+
 # NOTE: see conftest.py for pbmc_manifest and tiny_manifest fixture definitions
 
 
-def test_manifest_loaded(pbmc_manifest):
-    assert pbmc_manifest.manifest['$id'] == 'pbmc_shipping'
+def test_pbmc_loaded(pbmc_manifest):
+    assert 'CORE_DATA' in pbmc_manifest.worksheets
 
 
-def test_preamble_loaded(manifest):
-    date_shipped = manifest.preamble_schemas.get('date_shipped')
-    assert date_shipped is not None
-    assert date_shipped['format'] == 'date'
+def test_tiny_loaded(tiny_manifest):
+    assert 'FAKE_SHEET' in tiny_manifest.worksheets
 
 
-def test_shipping_loaded(pbmc_manifest):
-    specimen_type = pbmc_manifest.shipping_schemas.get('specimen_type')
-    assert specimen_type is not None
-    assert specimen_type['enum'] is not None
+def test_worksheet_schema_validation():
+    def check_validation_error(schema, msg):
+        with pytest.raises(AssertionError) as e:
+            ShippingManifest._validate_worksheet(schema)
+        assert msg in str(e.value)
 
+    no_title = {}
+    check_validation_error(no_title, 'missing "title"')
 
-def test_extract_entity_schema(tiny_manifest):
-    assert tiny_manifest._extract_entity_schema(
-        'test_entity', 'test_property')['id'] == 'success'
+    no_properties = {
+        'title': ''
+    }
+    check_validation_error(no_properties, 'missing "properties"')
 
-
-def test_extract_section_schemas(tiny_manifest):
-    assert 'test_property' in tiny_manifest._extract_section_schemas(
-        'test_columns')
+    unknown_section = {
+        'title': '',
+        'properties': {
+            'unknown_section_name': []
+        }
+    }
+    check_validation_error(unknown_section, 'unknown worksheet sections')

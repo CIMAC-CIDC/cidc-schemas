@@ -92,65 +92,84 @@ class XlThemes:
 class XlTemplateWriter:
     """A wrapper around xlsxwriter that can create templates for shipping manifests"""
 
-    # Output config
-    DATA_ROWS = 200
-    COLUMN_WIDTH_PX = 30
+    _DATA_ROWS = 200
+    _MIN_NUM_COLS = 5
+    _COLUMN_WIDTH_PX = 30
 
-    def __init__(self, outfile_path: str, manifest: ShippingManifest):
+    def __init__(self, data_rows=_DATA_ROWS, min_num_cols=_MIN_NUM_COLS, column_width_px=_COLUMN_WIDTH_PX):
         """
-        Initialize an Excel template writer. No file is written until
-        `write()` is called.
+        Initialize an Excel template writer.
+        """
+        self.DATA_ROWS = data_rows
+        self.MAIN_WIDTH = min_num_cols
+        self.COLUMN_WIDTH_PX = column_width_px
+
+    def write(self, outfile_path: str, manifest: ShippingManifest):
+        """
+        Generate an Excel file for the given manifest.
 
         Arguments:
             outfile_path {str} -- desired output path of the resulting xlsx file
             manifest {ShippingManifest} -- the manifest from which to generate a template
         """
         self.path = outfile_path
-        self.workbook = xlsxwriter.Workbook(outfile_path)
-        self.mainsheet = self.workbook.add_worksheet()
-        self.MAIN_WIDTH = len(manifest.shipping_schemas) + \
-            len(manifest.receiving_schemas)
-
-        self.mainsheet.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
-
         self.manifest = manifest
-        self.row = 0
-        self.col = 1
-        self.already_written = False
-
+        self.workbook = xlsxwriter.Workbook(outfile_path)
         self._init_themes()
 
-    def write(self):
-        """Generate the Excel file according to the instance's configuration."""
-        if self.already_written:
-            logger.warning(
-                f'template already written to {self.path} - aborting write')
-            return
+        first_sheet = True
+        for name, ws_schema in self.manifest.worksheets.items():
+            self._write_worksheet(name, ws_schema, write_title=first_sheet)
+            first_sheet = False
 
-        self._write_title(self.manifest.manifest['title'])
-        self.row += 1
+        self.workbook.close()
+        self.workbook = None
 
-        for entity in self.manifest.preamble_schemas.items():
-            self._write_preamble_row(entity)
+    def _write_worksheet(self, name, schema, write_title=False):
+        """Write content to the given worksheet"""
+        assert self.workbook, "_write_worksheet called without an initialized workbook"
+        assert self.manifest, "_write_worksheet called without an initialize manifest"
+
+        self.worksheet = self.workbook.add_worksheet(name)
+        self.worksheet.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
+
+        self.row = 0
+        self.col = 1
+
+        data_columns = {}
+        if 'data_columns' in schema:
+            data_columns = {subtable['title']: subtable['properties']
+                            for subtable in schema['data_columns']['items']}
+            num_data_columns = sum([len(columns)
+                                    for columns in data_columns.values()])
+            self.MAIN_WIDTH = max(self.MAIN_WIDTH, num_data_columns)
+
+        if write_title:
+            self._write_title(self.manifest.manifest['title'])
             self.row += 1
 
-        # Leave a blank row between preamble and data sections
-        self.row += 1
+        if 'preamble_rows' in schema:
+            for name, schema in schema['preamble_rows']['properties'].items():
+                self._write_preamble_row(name, schema)
+                self.row += 1
 
-        self._write_shipping_receiving_directive()
+            # Leave a blank row between preamble and data sections
+            self.row += 1
+
+        self._write_data_multiheaders(data_columns)
         self.row += 1
 
         self._write_data_section_type_annotations()
 
-        all_data_columns = chain(self.manifest.shipping_schemas.items(
-        ), self.manifest.receiving_schemas.items())
-        for entity in all_data_columns:
-            self._write_data_column(entity)
-            self.col += 1
+        if data_columns:
+            all_columns = {}
+            for section_columns in data_columns.values():
+                all_columns = {**section_columns, **all_columns}
+            for name, schema in all_columns.items():
+                self._write_data_column(name, schema)
+                self.col += 1
 
         self._hide_type_annotations()
-        self.workbook.close()
-        self.already_written = True
 
     # We can think of the below _write_* functions as "template components".
     # Template components write to the spreadsheet at the current row/column
@@ -165,33 +184,34 @@ class XlTemplateWriter:
         self._write_type_annotation(RowType.TITLE)
         preamble_range = xl_range(
             self.row, 1, self.row, self.MAIN_WIDTH)
-        self.mainsheet.merge_range(
+        self.worksheet.merge_range(
             preamble_range, title.upper(), self.TITLE_THEME)
 
-    def _write_preamble_row(self, entity: Tuple[str, dict]):
-        entity_name, entity_schema = entity
+    def _write_preamble_row(self, entity_name: str, entity_schema: dict):
 
         # Write row type and entity name
         self._write_type_annotation(RowType.PREAMBLE)
-        self.mainsheet.write(
+        self.worksheet.write(
             self.row, 1, entity_name.upper(), self.PREAMBLE_THEME)
         self._write_comment(self.row, 1, entity_schema)
 
         # Format value cells
         blank_row = [""] * (self.MAIN_WIDTH - 1)
-        self.mainsheet.write_row(self.row, 2, blank_row, self.PREAMBLE_THEME)
+        self.worksheet.write_row(
+            self.row, 2, blank_row, self.PREAMBLE_THEME)
 
         # Add data validation if appropriate
         value_cell = xl_rowcol_to_cell(self.row, 2)
         self._write_validation(value_cell, entity_schema)
 
-    def _write_shipping_receiving_directive(self):
-        shipping_width = len(self.manifest.shipping_schemas)
-        receiving_width = len(self.manifest.receiving_schemas)
-        self.mainsheet.merge_range(self.row, 1, self.row, shipping_width,
-                                   'Filled by Biorepository', self.DIRECTIVE_THEME)
-        self.mainsheet.merge_range(self.row, shipping_width + 1, self.row,
-                                   receiving_width + shipping_width, 'Filled by CIMAC Lab', self.DIRECTIVE_THEME)
+    def _write_data_multiheaders(self, data_columns: Dict[str, dict]):
+        start_col = 1
+        for section_header, section_values in data_columns.items():
+            section_width = len(section_values)
+            end_col = start_col + section_width - 1
+            self.worksheet.merge_range(self.row, start_col, self.row, end_col,
+                                       section_header, self.DIRECTIVE_THEME)
+            start_col = end_col + 1
 
     def _write_type_annotation(self, row_type: RowType):
         """
@@ -199,16 +219,15 @@ class XlTemplateWriter:
 
         These annotations are intended to help with parsing spreadsheets.
         """
-        self.mainsheet.write(self.row, 0, row_type.value)
+        self.worksheet.write(self.row, 0, row_type.value)
 
     def _write_data_section_type_annotations(self):
         self._write_type_annotation(RowType.HEADER)
         annotations = [RowType.DATA.value] * self.DATA_ROWS
-        self.mainsheet.write_column(self.row + 1, 0, annotations)
+        self.worksheet.write_column(self.row + 1, 0, annotations)
 
-    def _write_data_column(self, entity: Tuple[str, dict]):
-        entity_name, entity_schema = entity
-        self.mainsheet.write(self.row, self.col,
+    def _write_data_column(self, entity_name: str, entity_schema: dict):
+        self.worksheet.write(self.row, self.col,
                              entity_name.upper(), self.HEADER_THEME)
         self._write_comment(self.row, self.col, entity_schema)
 
@@ -219,15 +238,15 @@ class XlTemplateWriter:
 
     def _write_comment(self, row: int, col: int, entity_schema: dict):
         if 'description' in entity_schema:
-            self.mainsheet.write_comment(
+            self.worksheet.write_comment(
                 row, col, entity_schema['description'], self.COMMENT_THEME)
 
     def _write_validation(self, cell: str, entity_schema: dict):
         validation = self._get_validation(cell, entity_schema)
-        validation and self.mainsheet.data_validation(cell, validation)
+        validation and self.worksheet.data_validation(cell, validation)
 
     def _hide_type_annotations(self):
-        self.mainsheet.set_column(0, 0, None, None, {'hidden': True})
+        self.worksheet.set_column(0, 0, None, None, {'hidden': True})
 
     @staticmethod
     def _get_validation(cell: str, property_schema: dict) -> Optional[dict]:

@@ -8,27 +8,60 @@ import pytest
 
 from cidc_schemas.manifest import ShippingManifest
 
+from .constants import SCHEMA_DIR
+
 
 @pytest.fixture
-def pbmc_manifest(schema_paths, manifest_dir):
-    pbmc_manifest_path = os.path.join(manifest_dir, 'pbmc', 'pbmc.json')
-    return ShippingManifest.from_json(pbmc_manifest_path, schema_paths)
+def pbmc_manifest():
+    pbmc_manifest_path = os.path.join(SCHEMA_DIR, 'manifests', 'pbmc.json')
+    return ShippingManifest.from_json(pbmc_manifest_path, SCHEMA_DIR)
 
 
 @pytest.fixture
 def tiny_manifest():
-    fake_manifest = {'test_columns': [
-        'test_entity.test_property',
-        'test_entity.test_date',
-        'test_entity.test_time'
-    ]}
-    fake_schemas = {
-        'test_entity':  {
-            'properties': {
-                'test_property': {'$id': 'success', 'type': 'string'},
-                'test_date': {'type': 'string', 'format': 'date'},
-                'test_time': {'type': 'string', 'format': 'time'}
+    test_property = {'$id': 'success', 'type': 'string'},
+    test_date = {'type': 'string', 'format': 'date'},
+    test_time = {'type': 'string', 'format': 'time'}
+
+    fake_manifest_schema = {
+        '$id': 'tiny_fake',
+        'title': 'Tiny Fake',
+        'properties': {
+            'worksheets': {
+                'items': [
+                    {
+                        'title': 'FAKE_SHEET',
+                        'properties': {
+                            'preamble_rows': [
+                                test_property,
+                                test_date,
+                                test_time
+                            ],
+                            'data_columns': {
+                                'items': [
+                                    {
+                                        'title': 'a header for this table',
+                                        'items': [
+                                            test_property,
+                                            test_date,
+                                            test_time
+                                        ]
+                                    },
+                                    {
+                                        'title': 'a header for this adjacent table',
+                                        'items': [
+                                            test_property,
+                                            test_date,
+                                            test_time
+                                        ]
+                                    }
+                                ]
+                            },
+                        }
+                    }
+                ]
             }
         }
     }
-    return ShippingManifest(fake_manifest, fake_schemas)
+
+    return ShippingManifest(fake_manifest_schema)

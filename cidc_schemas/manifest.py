@@ -7,92 +7,84 @@ import json
 from typing import List, Optional, Dict
 from collections import OrderedDict
 
+import jsonref
+
+from .json_validation import load_and_validate_schema
+
 logger = logging.getLogger('cidc_schemas.manifest')
 
 
 class ShippingManifest:
     """
-    A collection of property schemas organized by their relevance to the manifest.
+    Configuration describing a manifest template
 
-    Attributes:
-        preamble_schemas {OrderedDict} -- entity schemas for rows in the preamble section
-        shipping_schemas {OrderedDict} -- entity schemas for columns in the shipping section
-        receiving_schemas {OrderedDict} -- entity schemas for columns in the receiving section
+    Properties:
+        manifest {dict} -- a validated manifest JSON schema
+        worksheets {Dict[str, dict]} -- a mapping from worksheet names to worksheet schemas
     """
 
-    def __init__(self, manifest: Dict[str, str], schemas: Dict[str, dict]):
+    def __init__(self, manifest: dict):
         """
         Load all schemas defining a shipping manifest template.
 
         Arguments:
-            manifest {Dict[str, str]} -- a manifest configuration (keys are manifest section names, 
-                                         values are selectors for schemas in that section)
-            schemas {Dict[str, dict]} -- schema configurations (keys are schema ids, values are schemas)
+            manifest {dict} -- a valid JSON schema describing a manifest
         """
         self.manifest = manifest
-        self.schemas = schemas
+        self.worksheets = self._extract_worksheets()
 
-        # Extract schemas for manifest entities in appropriate order
-        self.preamble_schemas: OrderedDict = self._extract_section_schemas(
-            'core_columns')
-        self.shipping_schemas: OrderedDict = self._extract_section_schemas(
-            'shipping_columns')
-        self.receiving_schemas: OrderedDict = self._extract_section_schemas(
-            'receiving_columns')
+    def _extract_worksheets(self):
+        """Build a mapping from worksheet names to worksheet section schemas"""
+
+        manifest_id = self.manifest['$id']
+        assert 'worksheets' in self.manifest[
+            'properties'], f'{manifest_id} schema missing "worksheets" property'
+        worksheet_schemas = self.manifest['properties']['worksheets']
+
+        assert 'items' in worksheet_schemas, f'{manifest_id}#worksheets schema missing "items" property'
+
+        worksheets = {}
+        for worksheet in worksheet_schemas['items']:
+            self._validate_worksheet(worksheet)
+            worksheets[worksheet['title']] = worksheet['properties']
+
+        return worksheets
+
+    VALID_WS_SECTIONS = set(['preamble_rows', 'data_columns'])
 
     @staticmethod
-    def from_json(manifest_path: str, schema_paths: List[str]):
+    def _validate_worksheet(ws_schema: dict):
+        assert 'title' in ws_schema, 'found worksheet schema missing "title" property'
+
+        ws_title = ws_schema['title']
+        assert 'properties' in ws_schema, f'worksheet {ws_title} missing "properties" property'
+
+        # Ensure all worksheet sections are supported
+        ws_sections = set(ws_schema['properties'].keys())
+        unknown_props = ws_sections.difference(
+            ShippingManifest.VALID_WS_SECTIONS)
+        assert not unknown_props, \
+            f'unknown worksheet sections {unknown_props} - only {ShippingManifest.VALID_WS_SECTIONS} supported'
+
+    @staticmethod
+    def from_json(manifest_schema_path: str, schema_root: str):
         """
-        Load a ShippingManifest from files containing json configuration
+        Load a ShippingManifest from a manifest schema.
 
         Arguments:
-            manifest_path {str} -- path to the manifest config json file
-            schema_paths {str} -- paths to the entity schema config json files
+            manifest_schema_path {str} -- path to the manifest schema file
+            schema_root {str} -- path to the directory where all schemas are stored
         """
-        # Load the manifest file
-        with open(manifest_path, 'r') as stream:
-            manifest = json.load(stream)
+        manifest = load_and_validate_schema(
+            manifest_schema_path, schema_root)
 
-        #  Load all schemas for entities potentially present in manifest
-        all_schemas = {}
-        for schema_path in schema_paths:
-            with open(schema_path, 'r') as stream:
-                schema = json.load(stream)
-                all_schemas[schema['$id']] = schema
-
-        return ShippingManifest(manifest, all_schemas)
-
-    def _extract_section_schemas(self, section_name: str) -> OrderedDict:
-        """Collect all entity schemas for a manifest section"""
-        schemas: OrderedDict = OrderedDict()
-        for path in self.manifest.get(section_name, []):
-            entity, prop = path.split('.')
-            maybe_schema = self._extract_entity_schema(entity, prop)
-            if maybe_schema:
-                schemas[prop] = maybe_schema
-        return schemas
-
-    def _extract_entity_schema(self, entity: str, prop: str) -> Optional[dict]:
-        """Try to find a schema for the given entity and property"""
-        entity_schema = self.schemas.get(entity)
-        if not entity_schema:
-            logger.warning(
-                f'no top-level schema found for entity {entity} - skipping')
-            return None
-
-        prop_schema = entity_schema.get('properties', {}).get(prop)
-        if not prop_schema:
-            logger.warning(
-                f'no property schema found for {entity}.{prop} - skipping')
-            return None
-
-        return prop_schema
+        return ShippingManifest(manifest)
 
     def to_excel(self, xlsx_path: str):
         """Write this `ShippingManifest` to an Excel file"""
         from .template_writer import XlTemplateWriter
 
-        XlTemplateWriter(xlsx_path, self).write()
+        XlTemplateWriter().write(xlsx_path, self)
 
     def validate_excel(self, xlsx_path: str) -> bool:
         """Validate the given Excel file against this `ShippingManifest`"""

@@ -32,7 +32,7 @@ To build the documentation, run the following command:
 python docs/generate_docs.py
 ```
 
-This will output the generated html documents in `docs/site`. If the updated docs are pushed up and merged
+This will output the generated html documents in `docs/docs`. If the updated docs are pushed up and merged
 into master, they will be viewable at https://cimac-cidc.github.io/cidc-schemas/.
 
 ## Using the Command-Line Interface

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Defines the `XlTemplateWriter` class for writing `ShippingManifest`s to Excel templates."""
+"""Defines the `XlTemplateWriter` class for writing `Template`s to Excel templates."""
 
 import logging
 from typing import Tuple, Dict, Optional
@@ -11,7 +11,7 @@ from datetime import date, time
 import xlsxwriter
 from xlsxwriter.utility import xl_rowcol_to_cell, xl_range
 
-from .manifest import ShippingManifest
+from .template import Template
 
 logger = logging.getLogger('cidc_schemas.template_writer')
 
@@ -90,7 +90,7 @@ class XlThemes:
 
 
 class XlTemplateWriter:
-    """A wrapper around xlsxwriter that can create templates for shipping manifests"""
+    """A wrapper around xlsxwriter that can create Excel templates from template schemas"""
 
     _DATA_ROWS = 200
     _MIN_NUM_COLS = 5
@@ -104,21 +104,21 @@ class XlTemplateWriter:
         self.MAIN_WIDTH = min_num_cols
         self.COLUMN_WIDTH_PX = column_width_px
 
-    def write(self, outfile_path: str, manifest: ShippingManifest):
+    def write(self, outfile_path: str, template: Template):
         """
-        Generate an Excel file for the given manifest.
+        Generate an Excel file for the given template.
 
         Arguments:
             outfile_path {str} -- desired output path of the resulting xlsx file
-            manifest {ShippingManifest} -- the manifest from which to generate a template
+            template {Template} -- the template configuration from which to generate an Excel file
         """
         self.path = outfile_path
-        self.manifest = manifest
+        self.template = template
         self.workbook = xlsxwriter.Workbook(outfile_path)
         self._init_themes()
 
         first_sheet = True
-        for name, ws_schema in self.manifest.worksheets.items():
+        for name, ws_schema in self.template.worksheets.items():
             self._write_worksheet(
                 name, ws_schema, write_title=first_sheet)
             first_sheet = False
@@ -129,7 +129,7 @@ class XlTemplateWriter:
     def _write_worksheet(self, name, schema, write_title=False):
         """Write content to the given worksheet"""
         assert self.workbook, "_write_worksheet called without an initialized workbook"
-        assert self.manifest, "_write_worksheet called without an initialize manifest"
+        assert self.template, "_write_worksheet called without an initialized template"
 
         self.worksheet = self.workbook.add_worksheet(name)
         self.worksheet.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
@@ -146,7 +146,7 @@ class XlTemplateWriter:
             self.MAIN_WIDTH = max(self.MAIN_WIDTH, num_data_columns)
 
         if write_title:
-            self._write_title(self.manifest.manifest['title'])
+            self._write_title(self.template.template_schema['title'])
             self.row += 1
 
         if 'preamble_rows' in schema:

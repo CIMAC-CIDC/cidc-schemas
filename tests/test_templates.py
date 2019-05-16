@@ -1,41 +1,41 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests for manifest/assay template schemas."""
+"""Tests for template/assay template schemas."""
 
 import os
 import pytest
 
 from cidc_schemas.json_validation import load_and_validate_schema
-from cidc_schemas.manifest import ShippingManifest
+from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader
 
-from .constants import ROOT_DIR, SCHEMA_DIR, MANIFEST_EXAMPLES_DIR
+from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR
 
 
 def template_paths():
     """
-    Get the path to every manifest in the schemas/manifests directory
+    Get the path to every template schema in the schemas/templates directory
     and their corresponding xlsx example file. 
     """
-    manifest_schema_dir = os.path.join(SCHEMA_DIR, 'manifests')
+    template_schema_dir = os.path.join(SCHEMA_DIR, 'templates')
 
-    manifest_paths = []
+    template_paths = []
 
-    # Collect manifest schemas
-    for root, _, files in os.walk(manifest_schema_dir):
+    # Collect template schemas
+    for root, _, files in os.walk(template_schema_dir):
         for f in files:
-            manifest_paths.append(os.path.join(root, f))
+            template_paths.append(os.path.join(root, f))
 
-    # Collect manifest xlsx examples
-    for i, schema_path in enumerate(manifest_paths):
+    # Collect template xlsx examples
+    for i, schema_path in enumerate(template_paths):
         name = os.path.basename(schema_path).rsplit('.', 1)[0]
         xlsx = f'{name}.xlsx'
-        xlsx_path = os.path.join(MANIFEST_EXAMPLES_DIR, xlsx)
-        manifest_paths[i] = (schema_path, xlsx_path)
+        xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, xlsx)
+        template_paths[i] = (schema_path, xlsx_path)
 
-    return manifest_paths
+    return template_paths
 
 
 @pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
@@ -46,10 +46,10 @@ def test_template(schema_path, xlsx_path, tmpdir):
     (TODO: maybe we can check if validations are present?)
     """
 
-    # Load the manifest and write it to a temporary file
-    manifest = ShippingManifest.from_json(schema_path, SCHEMA_DIR)
+    # Load the template and write it to a temporary file
+    template = Template.from_json(schema_path, SCHEMA_DIR)
     p = tmpdir.join('test_output.xlsx')
-    manifest.to_excel(p)
+    template.to_excel(p)
     generated_template = XlTemplateReader.from_excel(p)
 
     # Ensure the xlsx file actually exists

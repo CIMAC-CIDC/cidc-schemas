@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Defines the `XlTemplateReader` class for reading/validating manifests from Excel templates."""
+"""Defines the `XlTemplateReader` class for reading/validating templates from Excel templates."""
 
 import os
 import json
@@ -9,15 +9,15 @@ from typing import Dict, List, Tuple
 
 import openpyxl
 
-from .manifest import ShippingManifest
+from .template import Template
 from .template_writer import RowType
 from .json_validation import validate_instance
 
 logger = logging.getLogger('cidc_schemas.template_reader')
 
 
-# A manifest row is any tuple whose first member is a RowType
-ManifestRow = Tuple[RowType, ...]
+# A template row is any tuple whose first member is a RowType
+TemplateRow = Tuple[RowType, ...]
 
 # A mapping from RowType to a list of rows with that type
 RowGroup = Dict[RowType, list]
@@ -29,15 +29,15 @@ class ValidationError(Exception):
 
 class XlTemplateReader:
     """
-    Reader and validator for Excel manifest templates.
+    Reader and validator for Excel templates.
     """
 
-    def __init__(self, template: Dict[str, List[ManifestRow]]):
+    def __init__(self, template: Dict[str, List[TemplateRow]]):
         """
-        Initialize a manifest reader.
+        Initialize a template reader.
 
         Arguments:
-            template {Dict[str, List[ManifestRow]]} -- a mapping from worksheet names to worksheet rows
+            template {Dict[str, List[TemplateRow]]} -- a mapping from worksheet names to worksheet rows
         """
         self.template = template
 
@@ -47,10 +47,10 @@ class XlTemplateReader:
     @staticmethod
     def from_excel(xlsx_path: str):
         """
-        Initialize an Excel manifest reader from an excel path.
+        Initialize an Excel template reader from an excel path.
 
         Arguments:
-          xlsx_path {str} -- path to the Excel manifest
+          xlsx_path {str} -- path to the Excel template
         """
 
         # Load the Excel file
@@ -117,7 +117,7 @@ class XlTemplateReader:
 
     @staticmethod
     def _get_schema(key: str, schema: Dict[str, dict]) -> dict:
-        """Try to find a schemas for the given manifest key"""
+        """Try to find a schemas for the given template key"""
         entity_name = key.lower()
         assert entity_name in schema, f"No schema found for {key}"
         return schema[entity_name]
@@ -137,19 +137,19 @@ class XlTemplateReader:
                    for header in header_row]
         return schemas
 
-    def validate(self, manifest: ShippingManifest) -> bool:
+    def validate(self, template: Template) -> bool:
         """
-        Validate Excel manifest against a manifest template.
+        Validate a populated Excel template against a template schema.
 
         Arguments:
-            manifest {ShippingManifest} -- a manifest object containing the expected structure of the template
+            template {Template} -- a template object containing the expected structure of the template
 
         Returns:
             {bool} -- True if valid, otherwise raises an exception with validation reporting
         """
         invalid_messages = []
 
-        for name, schema in manifest.worksheets.items():
+        for name, schema in template.worksheets.items():
             errors = self._validate_worksheet(name, schema)
             invalid_messages.extend(errors)
 

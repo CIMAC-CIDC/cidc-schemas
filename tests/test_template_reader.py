@@ -12,12 +12,12 @@ from openpyxl import load_workbook
 from cidc_schemas.template_reader import XlTemplateReader, ValidationError
 from cidc_schemas.template_writer import RowType
 
-from .constants import MANIFEST_EXAMPLES_DIR, TEST_DATA_DIR
+from .constants import TEMPLATE_EXAMPLES_DIR, TEST_DATA_DIR
 
-# NOTE: see conftest.py for pbmc_manifest and tiny_manifest fixture definitions
+# NOTE: see conftest.py for pbmc_template and tiny_template fixture definitions
 
 
-def test_valid_tiny(tiny_manifest):
+def test_valid_tiny(tiny_template):
     """Test that a known-valid spreadsheet is considered valid"""
     tiny_valid = {
         'TEST_SHEET': [
@@ -31,10 +31,10 @@ def test_valid_tiny(tiny_manifest):
     }
 
     reader = XlTemplateReader(tiny_valid)
-    assert reader.validate(tiny_manifest)
+    assert reader.validate(tiny_template)
 
 
-def test_invalid_tiny(tiny_manifest):
+def test_invalid_tiny(tiny_template):
     """Test that a known-invalid spreadsheet is considered invalid"""
     tiny_invalid = {
         'TEST_SHEET': [
@@ -50,17 +50,17 @@ def test_invalid_tiny(tiny_manifest):
     reader = XlTemplateReader(tiny_invalid)
 
     with pytest.raises(ValidationError):
-        reader.validate(tiny_manifest)
+        reader.validate(tiny_template)
 
 
-def test_pbmc_validation(pbmc_manifest):
+def test_pbmc_validation(pbmc_template):
     """Test that the provided pbmc shipping manifest is valid"""
-    pbmc_xlsx_path = os.path.join(MANIFEST_EXAMPLES_DIR, 'pbmc.xlsx')
-    assert pbmc_manifest.validate_excel(pbmc_xlsx_path)
+    pbmc_xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, 'pbmc.xlsx')
+    assert pbmc_template.validate_excel(pbmc_xlsx_path)
 
 
-def test_pbmc_invalidation(pbmc_manifest):
+def test_pbmc_invalidation(pbmc_template):
     """Test that a deliberately invalid pbmc shipping manifest is invalid"""
     pbmc_xlsx_path = os.path.join(TEST_DATA_DIR, 'pbmc_invalid.xlsx')
     with pytest.raises(ValidationError):
-        pbmc_manifest.validate_excel(pbmc_xlsx_path)
+        pbmc_template.validate_excel(pbmc_xlsx_path)

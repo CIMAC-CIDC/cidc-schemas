@@ -6,19 +6,19 @@ import os
 
 import pytest
 
-from cidc_schemas.manifest import ShippingManifest
+from cidc_schemas.template import Template
 
 from .constants import SCHEMA_DIR
 
 
 @pytest.fixture
-def pbmc_manifest():
-    pbmc_manifest_path = os.path.join(SCHEMA_DIR, 'manifests', 'pbmc.json')
-    return ShippingManifest.from_json(pbmc_manifest_path, SCHEMA_DIR)
+def pbmc_template():
+    pbmc_template_path = os.path.join(SCHEMA_DIR, 'templates', 'pbmc.json')
+    return Template.from_json(pbmc_template_path, SCHEMA_DIR)
 
 
 @pytest.fixture
-def tiny_manifest():
+def tiny_template():
     """A small, valid """
 
     test_property = {'$id': 'success', 'type': 'string'}
@@ -30,8 +30,8 @@ def tiny_manifest():
         'test_time': test_time
     }
 
-    tiny_manifest_schema = {
-        '$id': 'tiny_manifest',
+    tiny_template_schema = {
+        '$id': 'tiny_template',
         'title': 'Tiny Manifest',
         'properties': {
             'worksheets': {
@@ -46,4 +46,4 @@ def tiny_manifest():
         }
     }
 
-    return ShippingManifest(tiny_manifest_schema)
+    return Template(tiny_template_schema)

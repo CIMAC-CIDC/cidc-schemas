@@ -8,13 +8,12 @@ This repository contains formal definitions of the CIDC metadata model using [js
 
 ### Project Structure
 
-- **`cidc_schemas/`** - a python module for generating, validating, and reading manifest templates.
+- **`cidc_schemas/`** - a python module for generating, validating, and reading manifest and assay templates.
 - **`docs/`** - the most recent build of the data model documentation, along with templates and scripts for re-generating the documentation.
-- **`manifest_examples/`** - example populated Excel files for template specifications in `schemas/manifests`.
+- **`template_examples/`** - example populated Excel files for template specifications in `schemas/templates`.
 - **`schemas/`** - json specifications defining the CIDC metadata model.
-  - `manifests/` - schemas for generating and validating manifest templates.
+  - `templates/` - schemas for generating and validating manifest and assay templates.
   - `assays/` - schemas defining assay data models
-- **`templates/`** - HTML templates for generating schema documentation
 - **`tests/`** - tests for the `cidc_schemas` module.
 
 ### Running tests
@@ -39,7 +38,7 @@ into master, they will be viewable at https://cimac-cidc.github.io/cidc-schemas/
 
 ## Using the Command-Line Interface
 
-This project comes with a command-line interface for performing common operations related to schema and manifest definitions.
+This project comes with a command-line interface for validating schemas and generating/validating assay and manifest templates.
 
 ### Install the CLI
 
@@ -66,18 +65,18 @@ python3 -m cidc_schemas.cli [args]
 
 ### Generate templates
 
-Create a template for a given manifest configuration.
+Create a template for a given template configuration.
 
 ```bash
-cidc_schemas generate_template -m schemas/manifests/pbmc.json -s schemas -o pbmc.xlsx
+cidc_schemas generate_template -m schemas/templates/pbmc.json -s schemas -o pbmc.xlsx
 ```
 
 ### Validate filled-out templates
 
-Check that a populated manifest file is valid with respect to a template specification.
+Check that a populated template file is valid with respect to a template specification.
 
 ```bash
-cidc_schemas validate_template -m schemas/manifests/pbmc.json -s schemas -x manifest_examples/pbmc.xlsx
+cidc_schemas validate_template -m schemas/templates/pbmc.json -s schemas -x template_examples/pbmc.xlsx
 ```
 
 ### Validate JSON schemas
@@ -100,8 +99,8 @@ cidc_schemas convert --to_json <some_yaml_file>
 ### Workflow
 
 A new manifest or assay template has been "added" to the repository once these three things are true:
-* A file `schemas/manifests/<TEMPLATE NAME>.json` exists specifying the template schema.
-* A file `manifest_examples/<TEMPLATE NAME>.xlsx` exists containing a populated example Excel template corresponding to the template schema.
+* A file `schemas/templates/<TEMPLATE NAME>.json` exists specifying the template schema.
+* A file `template_examples/<TEMPLATE NAME>.xlsx` exists containing a populated example Excel template corresponding to the template schema.
 * Running `pytest tests/test_templates.py` generates no errors related to this template.
 
 Here's the recommended workflow for achieving those three things:
@@ -110,17 +109,17 @@ Here's the recommended workflow for achieving those three things:
    ```bash
     git checkout -b <YOUR BRANCH NAME>
    ```
-2) On this branch, create a new template schema called `<TEMPLATE NAME>.json` in the `schemas/manifests` directory. See the template schema structure section below for guidance.
+2) On this branch, create a new template schema called `<TEMPLATE NAME>.json` in the `schemas/templates` directory. See the template schema structure section below for guidance.
 3) Use the CLI to generate an empty Excel template from your schema, and visually verify that the generated template accords with your expectations. Iteratively edit the schema and regenerate the Excel template until you are satisfied.
-4) Fill out the generated Excel template with some valid sample values, and place that file in `manifest_examples` with the name `<TEMPLATE NAME>.xlsx`.
+4) Fill out the generated Excel template with some valid sample values, and place that file in `template_examples` with the name `<TEMPLATE NAME>.xlsx`.
     - **Note**: by this point, you should have created two files: 
-        1) `schemas/manifests/<TEMPLATE NAME>.json`
-        2) `manifest_examples/<TEMPLATE NAME>.xlsx`
+        1) `schemas/templates/<TEMPLATE NAME>.json`
+        2) `template_examples/<TEMPLATE NAME>.xlsx`
 5) Ensure that `pytest tests/test_templates.py` raises no errors related to this template.
 6) Commit and push your changes.
    ```bash
     # Add the two files you've created
-    git add schemas/manifests/<TEMPLATE NAME>.json manifest_examples/<TEMPLATE NAME>.xlsx
+    git add schemas/templates/<TEMPLATE NAME>.json template_examples/<TEMPLATE NAME>.xlsx
     git commit -m "Added template for <TEMPLATE NAME>"
     git push -u origin <YOUR BRANCH NAME>
    ```

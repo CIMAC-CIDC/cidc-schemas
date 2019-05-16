@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""The underlying data representation of a shipping manifest template."""
+"""The underlying data representation of an assay or shipping manifest template."""
 
 import logging
 import json
@@ -11,35 +11,35 @@ import jsonref
 
 from .json_validation import load_and_validate_schema
 
-logger = logging.getLogger('cidc_schemas.manifest')
+logger = logging.getLogger('cidc_schemas.template')
 
 
-class ShippingManifest:
+class Template:
     """
-    Configuration describing a manifest template
+    Configuration describing a manifest or assay template
 
     Properties:
-        manifest {dict} -- a validated manifest JSON schema
+        template_schema {dict} -- a validated template JSON schema
         worksheets {Dict[str, dict]} -- a mapping from worksheet names to worksheet schemas
     """
 
-    def __init__(self, manifest: dict):
+    def __init__(self, template_schema: dict):
         """
-        Load all schemas defining a shipping manifest template.
+        Load the schema defining a manifest or assay template.
 
         Arguments:
-            manifest {dict} -- a valid JSON schema describing a manifest
+            template_schema {dict} -- a valid JSON schema describing a template
         """
-        self.manifest = manifest
+        self.template_schema = template_schema
         self.worksheets = self._extract_worksheets()
 
     def _extract_worksheets(self) -> Dict[str, dict]:
         """Build a mapping from worksheet names to worksheet section schemas"""
 
-        manifest_id = self.manifest['$id']
-        assert 'worksheets' in self.manifest[
-            'properties'], f'{manifest_id} schema missing "worksheets" property'
-        worksheet_schemas = self.manifest['properties']['worksheets']
+        template_id = self.template_schema['$id']
+        assert 'worksheets' in self.template_schema[
+            'properties'], f'{template_id} schema missing "worksheets" property'
+        worksheet_schemas = self.template_schema['properties']['worksheets']
 
         worksheets = {}
         for name, schema in worksheet_schemas.items():
@@ -56,32 +56,35 @@ class ShippingManifest:
         # Ensure all worksheet sections are supported
         ws_sections = set(ws_schema.keys())
         unknown_props = ws_sections.difference(
-            ShippingManifest.VALID_WS_SECTIONS)
+            Template.VALID_WS_SECTIONS)
         assert not unknown_props, \
-            f'unknown worksheet sections {unknown_props} - only {ShippingManifest.VALID_WS_SECTIONS} supported'
+            f'unknown worksheet sections {unknown_props} - only {Template.VALID_WS_SECTIONS} supported'
 
     @staticmethod
-    def from_json(manifest_schema_path: str, schema_root: str):
+    def from_json(template_schema_path: str, schema_root: str):
         """
-        Load a ShippingManifest from a manifest schema.
+        Load a Template from a template schema.
 
         Arguments:
-            manifest_schema_path {str} -- path to the manifest schema file
+            template_schema_path {str} -- path to the template schema file
             schema_root {str} -- path to the directory where all schemas are stored
         """
-        manifest = load_and_validate_schema(
-            manifest_schema_path, schema_root)
+        template_schema = load_and_validate_schema(
+            template_schema_path, schema_root)
 
-        return ShippingManifest(manifest)
+        return Template(template_schema)
 
     def to_excel(self, xlsx_path: str):
-        """Write this `ShippingManifest` to an Excel file"""
+        """Write this `Template` to an Excel file"""
         from .template_writer import XlTemplateWriter
 
         XlTemplateWriter().write(xlsx_path, self)
 
     def validate_excel(self, xlsx_path: str) -> bool:
-        """Validate the given Excel file against this `ShippingManifest`"""
+        """Validate the given Excel file against this `Template`"""
         from .template_reader import XlTemplateReader
 
         return XlTemplateReader.from_excel(xlsx_path).validate(self)
+
+
+Template

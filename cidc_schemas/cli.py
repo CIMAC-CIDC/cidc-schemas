@@ -3,7 +3,7 @@ import argparse
 from typing import List
 
 from . import util
-from .manifest import ShippingManifest
+from .template import Template
 from .json_validation import load_and_validate_schema
 
 
@@ -61,9 +61,9 @@ def interface() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def build_manifest(args: argparse.Namespace) -> ShippingManifest:
+def build_manifest(args: argparse.Namespace) -> Template:
     schemas_dir = os.path.abspath(args.schemas_dir)
-    return ShippingManifest.from_json(args.manifest_file, schemas_dir)
+    return Template.from_json(args.manifest_file, schemas_dir)
 
 
 def generate_template(args: argparse.Namespace):

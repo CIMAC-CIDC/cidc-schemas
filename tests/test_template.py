@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
 
-"""Tests for `cidc_schemas.manifest` module."""
+"""Tests for `cidc_schemas.template` module."""
 
 import os
 import pytest
 
-from cidc_schemas.manifest import ShippingManifest
+from cidc_schemas.template import Template
 
-# NOTE: see conftest.py for pbmc_manifest and tiny_manifest fixture definitions
+# NOTE: see conftest.py for pbmc_template and tiny_template fixture definitions
 
 
-def test_pbmc_loaded(pbmc_manifest):
+def test_pbmc_loaded(pbmc_template):
     """Smoke test to ensure worksheets loaded from pbmc template"""
-    assert 'CORE_DATA' in pbmc_manifest.worksheets
+    assert 'CORE_DATA' in pbmc_template.worksheets
 
 
-def test_tiny_loaded(tiny_manifest):
+def test_tiny_loaded(tiny_template):
     """Smoke test to ensure worksheets loaded from tiny template"""
-    assert 'TEST_SHEET' in tiny_manifest.worksheets
+    assert 'TEST_SHEET' in tiny_template.worksheets
 
 
 def test_worksheet_validation():
@@ -25,7 +25,7 @@ def test_worksheet_validation():
 
     def check_validation_error(schema, msg):
         with pytest.raises(AssertionError) as e:
-            ShippingManifest._validate_worksheet("", schema)
+            Template._validate_worksheet("", schema)
         assert msg in str(e.value)
 
     unknown_section = {

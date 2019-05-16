@@ -80,9 +80,9 @@ def convert(fmt: str, value: str) -> str:
     elif fmt == 'date':
         reformatter = _to_date
     elif fmt == 'string':
-        reformatter = lambda n: n and str(n)
+        def reformatter(n): return n and str(n)
     elif fmt == 'integer':
-        reformatter = lambda n: n and int(n)
+        def reformatter(n): return n and int(n)
     else:
         # If we don't have a specified reformatter, use the identity function
         reformatter = id

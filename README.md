@@ -10,7 +10,7 @@ This repository contains formal definitions of the CIDC metadata model using [js
 
 - **`cidc_schemas/`** - a python module for generating, validating, and reading manifest templates.
 - **`docs/`** - the most recent build of the data model documentation, along with templates and scripts for re-generating the documentation.
-- **`manifest_examples/`** - example manifest xlsx files.
+- **`manifest_examples/`** - example populated Excel files for template specifications in `schemas/manifests`.
 - **`schemas/`** - json specifications defining the CIDC metadata model.
   - `manifests/` - schemas for generating and validating manifest templates.
   - `assays/` - schemas defining assay data models
@@ -93,4 +93,38 @@ The CLI comes with a little utility for converting between yaml and json files.
 
 ```bash
 cidc_schemas convert --to_json <some_yaml_file>
+```
+
+## Creating New Templates
+
+### Template Schema Structure
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": <title appearing at top of every worksheet>,
+  "properties": {
+    "worksheets": {
+      <worksheet name>: {
+        "preamble_rows": {
+          <row key>: <value schema>,
+          <row key>: <value schema>,
+          ...
+        },
+        "data_columns": {
+          <table name>: {
+            <row key>: <value schema>,
+            <row key>: <value schema>,
+            ...
+          },
+          <table name>: {
+            ...
+          },
+          ...
+        }
+      },
+      <worksheet name>: {...}
+    }
+  }
+}
 ```

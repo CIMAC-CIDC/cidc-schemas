@@ -20,17 +20,13 @@ def test_tiny_loaded(tiny_manifest):
     assert 'TEST_SHEET' in tiny_manifest.worksheets
 
 
-def test_worksheet_schema_validation():
+def test_worksheet_validation():
     """Check validation errors on invalid worksheets"""
 
     def check_validation_error(schema, msg):
         with pytest.raises(AssertionError) as e:
             ShippingManifest._validate_worksheet("", schema)
         assert msg in str(e.value)
-
-    no_properties = {
-    }
-    check_validation_error(no_properties, 'missing "properties"')
 
     unknown_section = {
         'title': '',
@@ -39,3 +35,5 @@ def test_worksheet_schema_validation():
         }
     }
     check_validation_error(unknown_section, 'unknown worksheet sections')
+
+    # TODO: do we need any other worksheet-level validations?

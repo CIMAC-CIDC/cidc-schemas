@@ -150,7 +150,7 @@ class XlTemplateReader:
         invalid_messages = []
 
         for name, schema in manifest.worksheets.items():
-            errors = self._validate_worksheet(name, schema['properties'])
+            errors = self._validate_worksheet(name, schema)
             invalid_messages.extend(errors)
 
         if invalid_messages:
@@ -169,7 +169,7 @@ class XlTemplateReader:
 
         if 'preamble_rows' in ws_schema:
             # Validate preamble rows
-            preamble_schemas = ws_schema['preamble_rows']['properties']
+            preamble_schemas = ws_schema['preamble_rows']
             for key, *values in row_groups[RowType.PREAMBLE]:
                 value = values[0]
                 schema = self._get_schema(key, preamble_schemas)
@@ -182,9 +182,9 @@ class XlTemplateReader:
         if 'data_columns' in ws_schema:
             # Build up flat mapping of data schemas
             flat_data_schemas: Dict[str, dict] = {}
-            for section in ws_schema['data_columns']['properties'].values():
+            for section in ws_schema['data_columns'].values():
                 flat_data_schemas = {
-                    **flat_data_schemas, **section['properties']}
+                    **flat_data_schemas, **section}
 
             data_schemas = self._get_data_schemas(
                 row_groups, flat_data_schemas)

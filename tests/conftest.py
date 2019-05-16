@@ -24,43 +24,24 @@ def tiny_manifest():
     test_property = {'$id': 'success', 'type': 'string'}
     test_date = {'type': 'string', 'format': 'date'}
     test_time = {'type': 'string', 'format': 'time'}
+    test_fields = {
+        'test_property': test_property,
+        'test_date': test_date,
+        'test_time': test_time
+    }
 
     tiny_manifest_schema = {
         '$id': 'tiny_manifest',
         'title': 'Tiny Manifest',
         'properties': {
             'worksheets': {
-                'properties': {
-                    'TEST_SHEET': {
-                        'properties': {
-                            'preamble_rows': {
-                                'properties': {
-                                    'test_property': test_property,
-                                    'test_date': test_date,
-                                    'test_time': test_time
-                                }
-                            },
-                            'data_columns': {
-                                'properties': {
-                                    'a header for this table': {
-                                        'properties': {
-                                            'test_property': test_property,
-                                            'test_date': test_date,
-                                            'test_time': test_time
-                                        }
-                                    },
-                                    'a header for this adjacent table': {
-                                        'properties': {
-                                            'test_property': test_property,
-                                            'test_date': test_date,
-                                            'test_time': test_time
-                                        }
-                                    }
-                                }
-                            },
-                        }
+                'TEST_SHEET': {
+                    'preamble_rows': test_fields,
+                    'data_columns': {
+                        'first table': test_fields,
+                        'another table': test_fields
                     }
-                }
+                },
             }
         }
     }

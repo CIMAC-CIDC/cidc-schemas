@@ -120,7 +120,7 @@ class XlTemplateWriter:
         first_sheet = True
         for name, ws_schema in self.manifest.worksheets.items():
             self._write_worksheet(
-                name, ws_schema['properties'], write_title=first_sheet)
+                name, ws_schema, write_title=first_sheet)
             first_sheet = False
 
         self.workbook.close()
@@ -139,8 +139,8 @@ class XlTemplateWriter:
 
         data_columns = {}
         if 'data_columns' in schema:
-            data_columns = {name: subtable['properties']
-                            for name, subtable in schema['data_columns']['properties'].items()}
+            data_columns = {name: subtable
+                            for name, subtable in schema['data_columns'].items()}
             num_data_columns = sum([len(columns)
                                     for columns in data_columns.values()])
             self.MAIN_WIDTH = max(self.MAIN_WIDTH, num_data_columns)
@@ -150,7 +150,7 @@ class XlTemplateWriter:
             self.row += 1
 
         if 'preamble_rows' in schema:
-            for name, schema in schema['preamble_rows']['properties'].items():
+            for name, schema in schema['preamble_rows'].items():
                 self._write_preamble_row(name, schema)
                 self.row += 1
 
@@ -163,12 +163,10 @@ class XlTemplateWriter:
         self._write_data_section_type_annotations()
 
         if data_columns:
-            all_columns = {}
             for section_columns in data_columns.values():
-                all_columns = {**section_columns, **all_columns}
-            for name, schema in all_columns.items():
-                self._write_data_column(name, schema)
-                self.col += 1
+                for name, schema in section_columns.items():
+                    self._write_data_column(name, schema)
+                    self.col += 1
 
         self._hide_type_annotations()
 
@@ -210,8 +208,12 @@ class XlTemplateWriter:
         for section_header, section_values in data_columns.items():
             section_width = len(section_values)
             end_col = start_col + section_width - 1
-            self.worksheet.merge_range(self.row, start_col, self.row, end_col,
-                                       section_header, self.DIRECTIVE_THEME)
+            if end_col - start_col > 1:
+                self.worksheet.merge_range(self.row, start_col, self.row, end_col,
+                                           section_header, self.DIRECTIVE_THEME)
+            else:
+                self.worksheet.write(self.row, start_col,
+                                     section_header, self.DIRECTIVE_THEME)
             start_col = end_col + 1
 
     def _write_type_annotation(self, row_type: RowType):

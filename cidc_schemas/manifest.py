@@ -41,23 +41,20 @@ class ShippingManifest:
             'properties'], f'{manifest_id} schema missing "worksheets" property'
         worksheet_schemas = self.manifest['properties']['worksheets']
 
-        assert 'properties' in worksheet_schemas, f'{manifest_id}#worksheets schema missing "properties" property'
-
         worksheets = {}
-        for name, schema in worksheet_schemas['properties'].items():
+        for name, schema in worksheet_schemas.items():
             self._validate_worksheet(name, schema)
             worksheets[name] = schema
 
         return worksheets
 
+    # XlTemplateReader only knows how to format these types of sections
     VALID_WS_SECTIONS = set(['preamble_rows', 'data_columns'])
 
     @staticmethod
     def _validate_worksheet(ws_title: str, ws_schema: dict):
-        assert 'properties' in ws_schema, f'worksheet {ws_title} missing "properties" property'
-
         # Ensure all worksheet sections are supported
-        ws_sections = set(ws_schema['properties'].keys())
+        ws_sections = set(ws_schema.keys())
         unknown_props = ws_sections.difference(
             ShippingManifest.VALID_WS_SECTIONS)
         assert not unknown_props, \

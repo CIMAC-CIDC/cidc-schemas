@@ -8,10 +8,7 @@ import unittest
 import pytest
 from docs import generate_docs
 
-
-ROOT_DIR = os.path.abspath(os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), '..'))
-SCHEMA_DIR = os.path.abspath(os.path.join(ROOT_DIR, 'schemas'))
+from .constants import ROOT_DIR
 
 
 @pytest.mark.skip("waiting on updates for manifest/assay template schema documentation generation")

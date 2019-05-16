@@ -6,6 +6,8 @@ from cidc_schemas.template_writer import XlTemplateWriter, RowType
 
 
 def test_get_validation():
+    """Test validation information extraction for template fields"""
+
     enum = XlTemplateWriter._get_validation('A1', {'enum': [1, 2, 3]})
     assert enum['validate'] == 'list'
     assert enum['source'] == [1, 2, 3]
@@ -19,6 +21,8 @@ def test_get_validation():
 
 
 def test_row_type_from_string():
+    """Test RowType extraction from parsed strings"""
+
     assert RowType.from_string("#t") == RowType.TITLE
     assert RowType.from_string("t") == None
     assert RowType.from_string("") == None

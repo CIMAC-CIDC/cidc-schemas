@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "participant",
+  "$id": "participant",
   "title": "Participant",
   "description": "The collection of all data related to a specific participant in the context of a specific clinical trial.\n",
   "links": [
@@ -31,12 +31,7 @@
     "gender": {
       "type": "string",
       "description": "Identifies the gender of the participant.",
-      "enum": [
-        "Male",
-        "Female",
-        "Not Specified",
-        "Other"
-      ]
+      "enum": ["Male", "Female", "Not Specified", "Other"]
     },
     "race": {
       "type": "string",
@@ -64,8 +59,5 @@
       ]
     }
   },
-  "required": [
-    "cimac_participant_id",
-    "trial_participant_id"
-  ]
+  "required": ["cimac_participant_id", "trial_participant_id"]
 }

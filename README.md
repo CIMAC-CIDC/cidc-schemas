@@ -12,7 +12,6 @@ This repository contains formal definitions of the CIDC metadata model using [js
 - **`docs/`** - the most recent build of the data model documentation, along with templates and scripts for re-generating the documentation.
 - **`manifests/`** - manifest template specifications and example Excel files.
 - **`schemas/`** - json specifications defining the CIDC metadata model.
-- **`templates/`** - HTML templates for generating schema documentation
 - **`tests/`** - tests for the `cidc_schemas` module.
 
 ### Running tests

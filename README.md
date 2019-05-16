@@ -8,9 +8,8 @@ This repository contains formal definitions of the CIDC metadata model using [js
 
 ### Project Structure
 
-- **`bin/`** - useful scripts for working with the project.
 - **`cidc_schemas/`** - a python module for generating, validating, and reading manifest templates.
-- **`docs/`** - the most recent build of the schema documentation, served at https://cimac-cidc.github.io/cidc-schemas/.
+- **`docs/`** - the most recent build of the data model documentation, along with templates and scripts for re-generating the documentation.
 - **`manifests/`** - manifest template specifications and example Excel files.
 - **`schemas/`** - json specifications defining the CIDC metadata model.
 - **`templates/`** - HTML templates for generating schema documentation
@@ -27,14 +26,14 @@ py.test --cache-clear tests
 
 ### Building documentation
 
-The documentation can be built by running the following command
+To build the documentation, run the following command:
 
 ```bash
-python bin/generate_docs.py
+python docs/generate_docs.py
 ```
 
-This will create the html documents in /docs. If the changes are comitted and pushed
-to master this they will be viewable at https://cimac-cidc.github.io/cidc-schemas/
+This will output the generated html documents in `docs/site`. If the updated docs are pushed up and merged
+into master, they will be viewable at https://cimac-cidc.github.io/cidc-schemas/.
 
 ## Using the Command-Line Interface
 

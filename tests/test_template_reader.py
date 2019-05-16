@@ -17,7 +17,8 @@ from .constants import MANIFEST_EXAMPLES_DIR, TEST_DATA_DIR
 # NOTE: see conftest.py for pbmc_manifest and tiny_manifest fixture definitions
 
 
-def test_valid_tiny_validation(tiny_manifest):
+def test_valid_tiny(tiny_manifest):
+    """Test that a known-valid spreadsheet is considered valid"""
     tiny_valid = {
         'TEST_SHEET': [
             (RowType.PREAMBLE, 'test_property', 'foo'),
@@ -33,7 +34,8 @@ def test_valid_tiny_validation(tiny_manifest):
     assert reader.validate(tiny_manifest)
 
 
-def test_invalid_tiny_preamble(tiny_manifest):
+def test_invalid_tiny(tiny_manifest):
+    """Test that a known-invalid spreadsheet is considered invalid"""
     tiny_invalid = {
         'TEST_SHEET': [
             (RowType.PREAMBLE, 'test_property', 'foo'),
@@ -52,11 +54,13 @@ def test_invalid_tiny_preamble(tiny_manifest):
 
 
 def test_pbmc_validation(pbmc_manifest):
+    """Test that the provided pbmc shipping manifest is valid"""
     pbmc_xlsx_path = os.path.join(MANIFEST_EXAMPLES_DIR, 'pbmc.xlsx')
     assert pbmc_manifest.validate_excel(pbmc_xlsx_path)
 
 
 def test_pbmc_invalidation(pbmc_manifest):
+    """Test that a deliberately invalid pbmc shipping manifest is invalid"""
     pbmc_xlsx_path = os.path.join(TEST_DATA_DIR, 'pbmc_invalid.xlsx')
     with pytest.raises(ValidationError):
         pbmc_manifest.validate_excel(pbmc_xlsx_path)

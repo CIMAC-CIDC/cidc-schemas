@@ -11,21 +11,24 @@ from cidc_schemas.manifest import ShippingManifest
 
 
 def test_pbmc_loaded(pbmc_manifest):
+    """Smoke test to ensure worksheets loaded from pbmc template"""
     assert 'CORE_DATA' in pbmc_manifest.worksheets
 
 
 def test_tiny_loaded(tiny_manifest):
+    """Smoke test to ensure worksheets loaded from tiny template"""
     assert 'TEST_SHEET' in tiny_manifest.worksheets
 
 
 def test_worksheet_schema_validation():
+    """Check validation errors on invalid worksheets"""
+
     def check_validation_error(schema, msg):
         with pytest.raises(AssertionError) as e:
             ShippingManifest._validate_worksheet("", schema)
         assert msg in str(e.value)
 
     no_properties = {
-        'title': ''
     }
     check_validation_error(no_properties, 'missing "properties"')
 

@@ -1,5 +1,6 @@
 {
-  "id": "aliquot",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$id": "aliquot",
   "title": "Aliquot",
   "type": "object",
   "description": "Pertaining to a portion (volume or weight) of the whole.",

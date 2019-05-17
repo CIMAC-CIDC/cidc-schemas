@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "artifact",
+  "$id": "artifact",
   "title": "Artifact",
   "type": "object",
   "description": "Any file artifact associated with a clinical trial.",

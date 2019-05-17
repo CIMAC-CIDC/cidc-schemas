@@ -6,14 +6,12 @@
 import os
 import unittest
 import pytest
-from bin import generate_docs
+from docs import generate_docs
+
+from .constants import ROOT_DIR
 
 
-ROOT_DIR = os.path.abspath(os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), '..'))
-SCHEMA_DIR = os.path.abspath(os.path.join(ROOT_DIR, 'schemas'))
-
-
+@pytest.mark.skip("waiting on updates for manifest/assay template schema documentation generation")
 def test_doc_generation():
     # a smoke test that just asserts the number of html files is 1 + # schemas
 

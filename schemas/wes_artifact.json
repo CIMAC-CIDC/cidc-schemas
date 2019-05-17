@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "wes_artifact",
+  "$id": "wes_artifact",
   "title": "Whole Exome Sequencing Artifact",
   "type": "object",
   "description": "Additional properties to describe a Whole Exome Sequencing Artifact.",

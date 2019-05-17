@@ -163,7 +163,6 @@ class XlTemplateReader:
         """Validate rows in a worksheet, returning a list of validation error messages."""
 
         invalid_messages = []
-        logger.warning(self.grouped_rows)
         assert worksheet_name in self.grouped_rows, f'No worksheet found with name {worksheet_name}'
         row_groups = self.grouped_rows[worksheet_name]
 

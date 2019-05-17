@@ -10,10 +10,11 @@ import dateparser
 import jsonschema
 import jsonref
 
-SCHEMA_ROOT = os.path.join(os.path.abspath(__file__), '..', '..', 'schemas')
+SCHEMA_ROOT = os.path.join(os.path.dirname(
+    os.path.abspath(__file__)), '..', 'schemas')
 
 
-def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT, titled_refs: bool = False) -> dict:
+def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT) -> dict:
     """
     Try to load a valid schema at `schema_path`.
     """

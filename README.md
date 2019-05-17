@@ -134,7 +134,7 @@ The current template generator can create empty Excel workbooks with arbitrarily
 **Note**: Either of these sections can be omitted from a given worksheet.
 
 The template generator expects JSON schemas with the following structure:
-```json
+```
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": <title appearing at top of every worksheet>,

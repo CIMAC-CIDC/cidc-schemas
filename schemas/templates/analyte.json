@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "analyte_shipping",
+  "title": "Shipping manifest for Analyte",
+  "type": "object",
+  "category": "manifest",
+  "description": "Shipping / receiving manifest for transferring Aanlyte.\n",
+  "properties": {
+    "worksheets": {
+      "Tissue": {
+        "preamble_rows": {
+          "lead organization study id": {
+            "$ref": "clinical_trial.json#properties/lead_organization_study_id"
+          },
+          "manifest id": {
+            "$ref": "shipping_core.json#properties/manifest_id"
+          },
+          "request": { "$ref": "shipping_core.json#properties/request" },
+          "assay priority": {
+            "$ref": "shipping_core.json#properties/assay_priority"
+          },
+          "assay type": { "$ref": "shipping_core.json#properties/assay_type" },
+          "batch number": {
+            "$ref": "shipping_core.json#properties/batch_number"
+          },
+          "box number": { "$ref": "shipping_core.json#properties/box_number" },
+          "assay run number": {
+            "$ref": "shipping_core.json#properties/assay_run_number"
+          },
+          "courier": { "$ref": "shipping_core.json#properties/courier" },
+          "tracking number": {
+            "$ref": "shipping_core.json#properties/tracking_number"
+          },
+          "account number": {
+            "$ref": "shipping_core.json#properties/account_number"
+          },
+          "shipping condition": {
+            "$ref": "shipping_core.json#properties/shipping_condition"
+          },
+          "date shipped": {
+            "$ref": "shipping_core.json#properties/date_shipped"
+          },
+          "num of samples shipped": {
+            "$ref": "shipping_core.json#properties/num_of_samples_shipped"
+          },
+          "num of samples good": {
+            "$ref": "shipping_core.json#properties/num_of_samples_good"
+          },
+          "num of path report": {
+            "$ref": "shipping_core.json#properties/num_of_path_report"
+          },
+          "ship from": { "$ref": "shipping_core.json#properties/ship_from" },
+          "ship to": { "$ref": "shipping_core.json#properties/ship_to" }
+        },
+        "data_columns": {
+          "Filled by Biorepository": {
+            "lead organization study id": {
+              "$ref": "clinical_trial.json#properties/lead_organization_study_id"
+            },
+            "trial participant id": {
+              "$ref": "participant.json#properties/trial_participant_id"
+            },
+            "cimac participant id": {
+              "$ref": "participant.json#properties/cimac_participant_id"
+            },
+            "cohort id": { "$ref": "participant.json#properties/cohort_id" },
+            "arm id": { "$ref": "participant.json#properties/arm_id" },
+            "site sample id": {
+              "$ref": "sample.json#properties/site_sample_id"
+            },
+            "cimac sample id": {
+              "$ref": "sample.json#properties/cimac_sample_id"
+            },
+            "time point": { "$ref": "sample.json#properties/time_point" },
+            "sample location": {
+              "$ref": "sample.json#properties/sample_location"
+            },
+            "tissue type submitted": {
+              "$ref": "sample.json#properties/tissue_type_submitted"
+            },
+            "specimen type": { "$ref": "sample.json#properties/specimen_type" },
+            "specimen format": {
+              "$ref": "sample.json#properties/specimen_format"
+            },
+            "quantity": { "$ref": "aliquot.json#properties/quantity" },
+            "units": { "$ref": "aliquot.json#properties/units" },
+            "material extracted": {
+              "$ref": "aliquot.json#properties/material_extracted"
+            },
+            "extracted concentration": {
+              "$ref": "aliquot.json#properties/extracted_concentration"
+            },
+            "extracted units": {
+              "$ref": "aliquot.json#properties/units"
+            },
+            "sample amount": { "$ref": "aliquot.json#properties/sample_amount" }
+          },
+          "Filled by CIMAC Lab": {
+            "cimac aliquot id": {
+              "$ref": "aliquot.json#properties/cimac_aliquot_id"
+            },
+            "material used": {
+              "$ref": "aliquot.json#properties/material_used"
+            },
+            "material remaining": {
+              "$ref": "aliquot.json#properties/material_remaining"
+            },
+            "sample quality status": {
+              "$ref": "aliquot.json#properties/sample_quality_status"
+            },
+            "sample replacement": {
+              "$ref": "aliquot.json#properties/sample_replacement"
+            },
+            "sample status": { "$ref": "aliquot.json#properties/sample_status" }
+          }
+        }
+      }
+    }
+  }
+}

@@ -87,6 +87,17 @@
         "Other"
       ]
     },
+    "specimen_analyte":{
+      "description": "",
+      "type": "string",
+      "enum": [
+        "H&E slide",
+        "Unstained slide",
+        "DNA",
+        "RNA",
+        "Protein Lysate"
+      ]
+    },
     "tissue_type_submitted": {
       "description": "The type of tissue that was obtained for the study.",
       "type": "string",

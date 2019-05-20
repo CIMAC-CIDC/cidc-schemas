@@ -1,10 +1,10 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "tissue_shipping",
-  "title": "Shipping manifest for Tissue samples",
+  "$id": "analyte_shipping",
+  "title": "Shipping manifest for H&E slides",
   "type": "object",
   "category": "manifest",
-  "description": "Shipping / receiving manifest for transferring Tissue samples.\n",
+  "description": "Shipping / receiving manifest for transferring H&E slides.\n",
   "properties": {
     "worksheets": {
       "Tissue": {
@@ -82,36 +82,37 @@
             "specimen format": {
               "$ref": "sample.json#properties/specimen_format"
             },
+            "specimen analyte": {
+              "$ref": "sample.json#properties/specimen_analyte"
+            },
             "quantity": { "$ref": "aliquot.json#properties/quantity" },
-            "units": { "$ref": "aliquot.json#properties/units" },
-            "material extracted": {
-              "$ref": "aliquot.json#properties/material_extracted"
-            },
-            "extracted concentration": {
-              "$ref": "aliquot.json#properties/extracted_concentration"
-            },
-            "extracted units": {
-              "$ref": "aliquot.json#properties/extracted_units"
-            },
-            "sample amount": { "$ref": "aliquot.json#properties/sample_amount" }
+            "units": { "$ref": "aliquot.json#properties/units" }
           },
           "Filled by CIMAC Lab": {
             "cimac aliquot id": {
               "$ref": "aliquot.json#properties/cimac_aliquot_id"
             },
-            "material used": {
-              "$ref": "aliquot.json#properties/material_used"
+            "lymphocyte influx": {
+              "$ref": "aliquot.json#properties/lymphocyte_influx"
             },
-            "material remaining": {
-              "$ref": "aliquot.json#properties/material_remaining"
+            "viable stroma percent area": {
+              "$ref": "aliquot.json#properties/viable_stroma_percent_area"
+            },
+            "viable tumor percent area": {
+              "$ref": "aliquot.json#properties/viable_tumor_percent_area"
+            },
+            "necrosis percent area": {
+              "$ref": "aliquot.json#properties/necrosis_percent_area"
+            },
+            "fibrosis percent area": {
+              "$ref": "aliquot.json#properties/fibrosis_percent_area"
             },
             "sample quality status": {
               "$ref": "aliquot.json#properties/sample_quality_status"
             },
             "sample replacement": {
               "$ref": "aliquot.json#properties/sample_replacement"
-            },
-            "sample status": { "$ref": "aliquot.json#properties/sample_status" }
+            }
           }
         }
       }

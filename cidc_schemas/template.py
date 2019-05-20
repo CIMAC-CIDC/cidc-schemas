@@ -7,8 +7,6 @@ import json
 from typing import List, Optional, Dict
 from collections import OrderedDict
 
-import jsonref
-
 from .json_validation import load_and_validate_schema
 
 logger = logging.getLogger('cidc_schemas.template')

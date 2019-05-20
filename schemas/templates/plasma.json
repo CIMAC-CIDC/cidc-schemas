@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "pbmc_shipping",
-  "title": "Shipping manifest for PBMC samples",
+  "$id": "plasma_shipping",
+  "title": "Shipping manifest for Plasma samples",
   "type": "object",
   "category": "manifest",
-  "description": "Shipping / receiving manifest for transferring PBMC samples.\n",
+  "description": "Shipping / receiving manifest for transferring Plasma samples.\n",
   "properties": {
     "worksheets": {
-      "PBMCs": {
+      "Plasma": {
         "preamble_rows": {
           "lead organization study id": {
             "$ref": "clinical_trial.json#properties/lead_organization_study_id"
@@ -96,17 +96,11 @@
               "$ref": "aliquot.json#properties/volume_quantity"
             },
             "units": { "$ref": "aliquot.json#properties/units" },
-            "pbmc aliquoted": {
-              "$ref": "aliquot.json#properties/pbmc_aliquoted"
-            },
             "sample source": { "$ref": "aliquot.json#properties/sample_source" }
           },
           "Filled by CIMAC Lab": {
             "cimac aliquot id": {
               "$ref": "aliquot.json#properties/cimac_aliquot_id"
-            },
-            "pbmc recovered": {
-              "$ref": "aliquot.json#properties/pbmc_recovered"
             },
             "material used": {
               "$ref": "aliquot.json#properties/material_used"

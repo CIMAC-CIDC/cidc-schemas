@@ -1,7 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "Pertaining to a portion (volume or weight) of the whole.",
   "$id": "aliquot",
+  "title": "Aliquot",
+  "type": "object",
+  "description": "Pertaining to a portion (volume or weight) of the whole.",
   "links": [
     {
       "link": {
@@ -15,12 +17,12 @@
       "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
       "type": "string"
     },
-    "material_remaining": {
-      "description": "Receiving site indicates how much material remains after assay use.",
-      "type": "number"
+    "quantity": {
+      "description": "Quantity of each sample shipped.",
+      "type": "integer"
     },
-    "material_used": {
-      "description": "Receiving site indicates how much material was used for assay purposes.",
+    "volume_quantity": {
+      "description": "Volume of sample shipped.",
       "type": "number"
     },
     "pbmc_aliquoted": {
@@ -31,49 +33,90 @@
       "description": "Receiving site determines number fo PBMCs per vial recovered upon receipt.",
       "type": "number"
     },
-    "quantity": {
-      "description": "Quantity of each sample shipped.",
-      "type": "integer"
+    "material_used": {
+      "description": "Receiving site indicates how much material was used for assay purposes.",
+      "type": "number"
     },
-    "sample_quality_status": {
-      "description": "Final status of sample after QC and pathology review.",
-      "enum": [
-        "Usable for Assay",
-        "Not Usable for Assay",
-        "Verifying",
-        "Other"
-      ],
-      "type": "string"
-    },
-    "sample_replacement": {
-      "description": "Status of sample if replacement is/was requested.",
-      "enum": ["Replacement Requested", "Replacement Tested", "N/A"],
-      "type": "string"
+    "material_remaining": {
+      "description": "Receiving site indicates how much material remains after assay use.",
+      "type": "number"
     },
     "sample_source": {
       "description": "Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52",
       "type": "string"
     },
+    "sample_quality_status": {
+      "description": "Final status of sample after QC and pathology review.",
+      "type": "string",
+      "enum": ["Usable for Assay", "Not Usable for Assay", "Verifying", "Other"]
+    },
+    "sample_replacement": {
+      "description": "Status of sample if replacement is/was requested.",
+      "type": "string",
+      "enum": ["Replacement Requested", "Replacement Tested", "N/A"]
+    },
     "sample_status": {
       "description": "Status of sample used for other assay, exhausted, destroyed, or returned.",
+      "type": "string",
       "enum": [
         "Sample Returned",
         "Sample Exhausted",
         "Remainder used for other Assay",
-        "Other"
-      ],
+        "Other",
+        "Sample Leftover"
+      ]
+    },
+    "material_extracted": {
+      "description": "The type of biological material that was extracted from this sample.",
+      "type": "string",
+      "enum": ["DNA", "RNA", "cfDNA", "Other"]
+    },
+    "extracted_concentration": {
+      "description": "The concentration of biological material that was extracted from this sample.",
       "type": "string"
     },
-    "volume_quantity": {
-      "description": "Volume of sample shipped.",
+    "units": {
+      "description": "The unit of biological material from this sample.",
+      "type": "string",
+      "enum": [
+        "\u00b5L",
+        "mL",
+        "mg",
+        "ng",
+        "Vials",
+        "Slides",
+        "Scrolls",
+        "Blocks",
+        "ng/\u00b5L",
+        "cells/ml",
+        "N/A",
+        "Other"
+      ]
+    },
+    "sample_amount": {
+      "description": "The amount of extracted sample shipped. Example: 400 ng",
+      "type": "string"
+    },
+    "lymphocyte_influx": {
+      "description": "Extent of lymphocytic infiltration into the tumor stroma or surrounding environment. Example: 2",
+      "type": "string"
+    },
+    "viable_stroma_percent_area": {
+      "description": "Percent area of viable tissue . Example: 10",
+      "type": "string"
+    },
+    "viable_tumor_percent_area": {
+      "description": "Percent area that contains viable tumor cells . Example: 60",
       "type": "number"
     },
-    "volume_units": {
-      "description": "Volume units. Example: ml.",
-      "type": "string"
+    "necrosis_percent_area": {
+      "description": "Percent area of necrotic tissue . Example: 5",
+      "type": "number"
+    },
+    "fibrosis_percent_area": {
+      "description": "Percent area of fibrotic area. Example: 15",
+      "type": "number"
     }
   },
-  "required": ["cimac_aliquot_id"],
-  "title": "Aliquot",
-  "type": "object"
+  "required": ["cimac_aliquot_id"]
 }

@@ -118,8 +118,8 @@ class XlTemplateReader:
     @staticmethod
     def _get_schema(key: str, schema: Dict[str, dict]) -> dict:
         """Try to find a schemas for the given template key"""
-        entity_name = key.lower()
-        assert entity_name in schema, f"No schema found for {key}"
+        entity_name = Template._process_fieldname(key)
+        assert entity_name in schema, f"No schema found for \"{entity_name}\""
         return schema[entity_name]
 
     def _get_data_schemas(self, row_groups, data_schemas: Dict[str, dict]) -> List[dict]:

@@ -60,6 +60,9 @@ def test_template(schema_path, xlsx_path, tmpdir):
     # Check that both templates have the same fields
     compare_templates(schema_path, generated_template, reference_template)
 
+    # Validate the Excel template
+    assert reference_template.validate(template)
+
 
 def compare_templates(schema_path: str, generated: XlTemplateReader, reference: XlTemplateReader):
     """Compare a generated template to a reference template."""

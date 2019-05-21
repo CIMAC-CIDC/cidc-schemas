@@ -56,13 +56,6 @@ class XlTemplateReader:
         # Load the Excel file
         workbook = openpyxl.load_workbook(xlsx_path)
 
-        # Extract the first worksheet
-        first_sheet = workbook.sheetnames[0]
-        if len(workbook.sheetnames) > 1:
-            logging.warning(
-                f"Found multiple worksheets in {xlsx_path} - only parsing {first_sheet}")
-        worksheet = workbook[first_sheet]
-
         template = {}
         for worksheet_name in workbook.sheetnames:
             worksheet = workbook[worksheet_name]
@@ -134,7 +127,7 @@ class XlTemplateReader:
             assert n_entries == n_columns, f"The {i + 1}th data row has too few entries"
 
         schemas = [self._get_schema(header, data_schemas)
-                   for header in header_row]
+                   for header in header_row if header]
         return schemas
 
     def validate(self, template: Template) -> bool:

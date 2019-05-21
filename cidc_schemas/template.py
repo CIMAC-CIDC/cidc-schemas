@@ -42,9 +42,22 @@ class Template:
         worksheets = {}
         for name, schema in worksheet_schemas.items():
             self._validate_worksheet(name, schema)
-            worksheets[name] = schema
+
+            # Process field names to ensure we can match on them later
+            processed_schema = {}
+            for section in schema.values():
+                for field_name, field_schema in section.items():
+                    field_name_proc = self._process_fieldname(field_name)
+                    processed_schema[field_name_proc] = field_schema
+
+            worksheets[name] = processed_schema
 
         return worksheets
+
+    @staticmethod
+    def _process_fieldname(name: str) -> str:
+        """Convert field name to lowercase to ease matching"""
+        return name.lower()
 
     # XlTemplateReader only knows how to format these types of sections
     VALID_WS_SECTIONS = set(['preamble_rows', 'data_columns'])

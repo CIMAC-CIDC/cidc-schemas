@@ -4,7 +4,7 @@
   "title": "Multiplex Immunoflourescence Antibody",
   "description": "Data specific to antibody prepration on the multiplex immunoflourescence platform.",
   "definitions": {
-    "custom_properties": {
+    "mif_properties": {
       "type": "object",
       "properties": {
         "fluor_wavelength": {
@@ -39,11 +39,11 @@
       "$ref": "assays/components/antibody.json"
     },
     {
-      "$ref": "#definitions/custom_properties"
+      "$ref": "#definitions/mif_properties"
     }
   ],
   "required": [
-    "flour_wavelength",
+    "fluor_wavelength",
     "primary_ab_dilution",
     "dilutent",
     "fluor_dilution",

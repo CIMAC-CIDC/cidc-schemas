@@ -4,6 +4,28 @@
   "title": "MIF",
   "description": "Base information about the aquisition and analysis of a quantitative pathology image\n",
   "definitions": {
+    "data_properties": {
+      "type": "object",
+      "properties": {
+        "internal_slide_id": {
+          "type": "string"
+        },
+        "staining_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "imaging_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "project_inform_folder": {
+          "type": "string"
+        },
+        "exported_data_folder": {
+          "type": "string"
+        }
+      }
+    },
     "data_row": {
       "type": "object",
       "allOf": [
@@ -11,25 +33,7 @@
           "$ref": "assays/components/identifiers.json"
         },
         {
-          "properties": {
-            "internal_slide_id": {
-              "type": "string"
-            },
-            "staining_date": {
-              "type": "string",
-              "format": "date"
-            },
-            "imaging_date": {
-              "type": "string",
-              "format": "date"
-            },
-            "project_inform_folder": {
-              "type": "string"
-            },
-            "exported_data_folder": {
-              "type": "string"
-            }
-          }
+          "$ref": "#definitions/data_properties"
         }
       ]
     }

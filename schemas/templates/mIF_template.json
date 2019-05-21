@@ -1,5 +1,6 @@
 {
     "$schema":"http://json-schema.org/draft-07/schema#",
+    "$id":"mIF",
     "title":"Metadata file for mIF",
     "description":"Metadata information for multiplex immunoflouresence(mIF).",
     "properties":{
@@ -29,7 +30,7 @@
                         },
                     "protocol name":{"$ref":"assays/components/image.json#properties/protocol_name"}
                         },
-                        "antibody columns":{
+                        "data_columns":{
                             "Samples":{
                                 "Antibody":{
                                     "$ref":"assays/components/antibody.json#properties/antibody"
@@ -50,31 +51,37 @@
                                     "$ref":"assays/components/antibody.json#properties/staining_order"
                                 },    
                                 "Fluor Wavelength":{
-                                    "$ref":"assays/components/mif_antibody.json#properties/fluor_wavelength"    
+                                    "$ref":"assays/components/mif_antibody.json#allOf/1/properties/fluor_wavelength"    
                                 },
                                 "Primary ab Dilution":{
-                                    "$ref":"assays/components/mif_antibody.json#properties/primary_ab_dilution"
+                                    "$ref":"assays/components/mif_antibody.json#allOf/1/properties/primary_ab_dilution"
                                 },
                                 "Dilutent":{
-                                    "$ref":"assays/components/mif_antibody.json#properties/dilutent"
+                                    "$ref":"assays/components/mif_antibody.json#allOf/1/properties/dilutent"
                                 },
                                 "Fluor dilution":{
-                                    "$ref":"assays/components/mif_antibody.json#properties/fluor_dilution"
+                                    "$ref":"assays/components/mif_antibody.json#allOf/1/properties/fluor_dilution"
                                 },
                                 "Antigen Retrieval Time":{
-                                    "$ref":"assays/components/mif_antibody.json#properties/antigen_retrieval_time"
+                                    "$ref":"assays/components/mif_antibody.json#allOf/1/properties/antigen_retrieval_time"
                                 },
                                 "Primary Incubation Time":{
-                                    "$ref":"assays/components/mif_antibody.json#properties/primary_incubation_time"
+                                    "$ref":"assays/components/mif_antibody.json#allOf/1/properties/primary_incubation_time"
                                 },
                                 "Amplification Time":{
-                                    "$ref":"assays/components/mif_antibody.json#properties/amplification_time"
+                                    "$ref":"assays/components/mif_antibody.json#allOf/1/properties/amplification_time"
                                 }
                             }
                         } 
 
                     }
                 },
+                "Data":{
+                    "preamble rows":{
+                        "lead organization study id":{
+                            "$ref":"clinical_trial.json#properties/lead_organization_study_id"
+                                }
+                            },
                 "data_columns":{
                     "Samples": {
                         "cimac particpant id":{
@@ -84,31 +91,29 @@
                             "$ref":"sample.json#properties/cimac_sample_id"
                                 },
                         "internal slide id":{
-                            "$ref":"assays/mif.json#properties/internal_slide_id"
+                            "$ref":"assays/mif.json#allOf/1/properties/data/items/0/allOf/1/properties/internal_slide_id"
                                 },
                         "time point":{
-                            "$ref":"assays/mif.json#properties/time_point"
+                            "$ref":"sample.json#properties/time_point"
                                 },
                         "staining date":{
-                            "$ref":"assays/mif.json#properties/staining_date"
+                            "$ref":"assays/mif.json#allOf/1/properties/data/items/0/allOf/1/properties/staining_date"
                                 },
                         "imaging date":{
-                            "$ref":"assays/mif.json#properties/imaging_date"
-                                },
-                        "imaging status":{
-                            "$ref":"assays/mif.json#properties/imaging_status"
+                            "$ref":"assays/mif.json#allOf/1/properties/data/items/0/allOf/1/properties/imaging_date"
                                 },
                         "project inform folder": { 
-                            "$ref":"assays/mif.json#properties/project_inform_folder"
+                            "$ref":"assays/mif.json#allOf/1/properties/data/items/0/allOf/1/properties/project_inform_folder"
                                 },
                         "exported_data_folder":{
-                            "$ref":"assays/mif.json#properties/exported_data_folder"
+                            "$ref":"assays/mif.json#allOf/1/properties/data/items/0/allOf/1/properties/exported_data_folder"
                             }
                         }
                     }
                 }
+            }
 
-            }   
+        }   
         
     
     

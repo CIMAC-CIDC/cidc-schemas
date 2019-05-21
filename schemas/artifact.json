@@ -7,36 +7,16 @@
   "links": [
     {
       "link": {
-        "cardinality": "exactly_one",
-        "linked_to": "clinical_trial"
-      }
-    },
-    {
-      "link": {
-        "cardinality": "exactly_one",
-        "linked_to": "user"
-      }
-    },
-    {
-      "link": {
-        "cardinality": "0_or_N",
-        "linked_to": "subject"
-      }
-    },
-    {
-      "link": {
-        "cardinality": "0_or_N",
-        "linked_to": "sample"
-      }
-    },
-    {
-      "link": {
         "cardinality": "0_or_N",
         "linked_to": "aliquot"
       }
     }
   ],
   "properties": {
+    "creator": {
+      "description": "The name of the center that created this artificat",
+      "type": "string"
+    },
     "uuid": {
       "description": "UUID of artifact.",
       "type": "string"

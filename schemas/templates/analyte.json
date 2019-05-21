@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "pbmc_shipping",
-  "title": "Shipping manifest for PBMC samples",
+  "$id": "analyte_shipping",
+  "title": "Shipping manifest for Analyte",
   "type": "object",
   "category": "manifest",
-  "description": "Shipping / receiving manifest for transferring PBMC samples.\n",
+  "description": "Shipping / receiving manifest for transferring Aanlyte.\n",
   "properties": {
     "worksheets": {
-      "PBMCs": {
+      "Tissue": {
         "preamble_rows": {
           "lead organization study id": {
             "$ref": "clinical_trial.json#properties/lead_organization_study_id"
@@ -72,41 +72,32 @@
               "$ref": "sample.json#properties/cimac_sample_id"
             },
             "time point": { "$ref": "sample.json#properties/time_point" },
-            "blood collection date": {
-              "$ref": "sample.json#properties/blood_collection_date"
-            },
-            "blood collection time": {
-              "$ref": "sample.json#properties/blood_collection_time"
-            },
-            "blood processing date": {
-              "$ref": "sample.json#properties/blood_processing_date"
-            },
-            "blood processing time": {
-              "$ref": "sample.json#properties/blood_processing_time"
-            },
             "sample location": {
               "$ref": "sample.json#properties/sample_location"
+            },
+            "tissue type submitted": {
+              "$ref": "sample.json#properties/tissue_type_submitted"
             },
             "specimen type": { "$ref": "sample.json#properties/specimen_type" },
             "specimen format": {
               "$ref": "sample.json#properties/specimen_format"
             },
             "quantity": { "$ref": "aliquot.json#properties/quantity" },
-            "volume quantity": {
-              "$ref": "aliquot.json#properties/volume_quantity"
-            },
             "units": { "$ref": "aliquot.json#properties/units" },
-            "pbmc aliquoted": {
-              "$ref": "aliquot.json#properties/pbmc_aliquoted"
+            "material extracted": {
+              "$ref": "aliquot.json#properties/material_extracted"
             },
-            "sample source": { "$ref": "aliquot.json#properties/sample_source" }
+            "extracted concentration": {
+              "$ref": "aliquot.json#properties/extracted_concentration"
+            },
+            "extracted units": {
+              "$ref": "aliquot.json#properties/units"
+            },
+            "sample amount": { "$ref": "aliquot.json#properties/sample_amount" }
           },
           "Filled by CIMAC Lab": {
             "cimac aliquot id": {
               "$ref": "aliquot.json#properties/cimac_aliquot_id"
-            },
-            "pbmc recovered": {
-              "$ref": "aliquot.json#properties/pbmc_recovered"
             },
             "material used": {
               "$ref": "aliquot.json#properties/material_used"

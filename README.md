@@ -137,7 +137,10 @@ The template generator expects JSON schemas with the following structure:
 ```
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+<<<<<<< HEAD
+=======
   "$id": <a unique id for this template>,
+>>>>>>> master
   "title": <title appearing at top of every worksheet>,
   "description": <a statement about this template to appear in documentation>
   "properties": {

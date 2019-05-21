@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "pbmc_shipping",
-  "title": "Shipping manifest for PBMC samples",
+  "$id": "analyte_shipping",
+  "title": "Shipping manifest for H&E slides",
   "type": "object",
   "category": "manifest",
-  "description": "Shipping / receiving manifest for transferring PBMC samples.\n",
+  "description": "Shipping / receiving manifest for transferring H&E slides.\n",
   "properties": {
     "worksheets": {
-      "PBMCs": {
+      "Tissue": {
         "preamble_rows": {
           "lead organization study id": {
             "$ref": "clinical_trial.json#properties/lead_organization_study_id"
@@ -72,55 +72,47 @@
               "$ref": "sample.json#properties/cimac_sample_id"
             },
             "time point": { "$ref": "sample.json#properties/time_point" },
-            "blood collection date": {
-              "$ref": "sample.json#properties/blood_collection_date"
-            },
-            "blood collection time": {
-              "$ref": "sample.json#properties/blood_collection_time"
-            },
-            "blood processing date": {
-              "$ref": "sample.json#properties/blood_processing_date"
-            },
-            "blood processing time": {
-              "$ref": "sample.json#properties/blood_processing_time"
-            },
             "sample location": {
               "$ref": "sample.json#properties/sample_location"
+            },
+            "tissue type submitted": {
+              "$ref": "sample.json#properties/tissue_type_submitted"
             },
             "specimen type": { "$ref": "sample.json#properties/specimen_type" },
             "specimen format": {
               "$ref": "sample.json#properties/specimen_format"
             },
+            "specimen analyte": {
+              "$ref": "sample.json#properties/specimen_analyte"
+            },
             "quantity": { "$ref": "aliquot.json#properties/quantity" },
-            "volume quantity": {
-              "$ref": "aliquot.json#properties/volume_quantity"
-            },
-            "units": { "$ref": "aliquot.json#properties/units" },
-            "pbmc aliquoted": {
-              "$ref": "aliquot.json#properties/pbmc_aliquoted"
-            },
-            "sample source": { "$ref": "aliquot.json#properties/sample_source" }
+            "units": { "$ref": "aliquot.json#properties/units" }
           },
           "Filled by CIMAC Lab": {
             "cimac aliquot id": {
               "$ref": "aliquot.json#properties/cimac_aliquot_id"
             },
-            "pbmc recovered": {
-              "$ref": "aliquot.json#properties/pbmc_recovered"
+            "lymphocyte influx": {
+              "$ref": "aliquot.json#properties/lymphocyte_influx"
             },
-            "material used": {
-              "$ref": "aliquot.json#properties/material_used"
+            "viable stroma percent area": {
+              "$ref": "aliquot.json#properties/viable_stroma_percent_area"
             },
-            "material remaining": {
-              "$ref": "aliquot.json#properties/material_remaining"
+            "viable tumor percent area": {
+              "$ref": "aliquot.json#properties/viable_tumor_percent_area"
+            },
+            "necrosis percent area": {
+              "$ref": "aliquot.json#properties/necrosis_percent_area"
+            },
+            "fibrosis percent area": {
+              "$ref": "aliquot.json#properties/fibrosis_percent_area"
             },
             "sample quality status": {
               "$ref": "aliquot.json#properties/sample_quality_status"
             },
             "sample replacement": {
               "$ref": "aliquot.json#properties/sample_replacement"
-            },
-            "sample status": { "$ref": "aliquot.json#properties/sample_status" }
+            }
           }
         }
       }

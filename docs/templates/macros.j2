@@ -1,0 +1,58 @@
+{% macro header(schema) -%}
+{# Generate the section to put at the top of an entity's page #}
+    <div class="container">
+        <p>
+            <a href="index.html">CIDC Data Model</a>
+        </p>
+        <h1>{{ schema["title"] }}</h1>
+        <p>
+            <b>Description:</b>  {{ schema["description"] }}
+        </p>
+        {% if "links" in schema %}
+        <p>
+            Each {{ schema["title"] }} is <b>linked</b> to:
+            <ul>
+                {% for link in schema["links"] %}
+                    <li>{{ link["link"]["cardinality"]}}
+                        <a href='{{ link["link"]["linked_to"] }}.html'>{{ link["link"]["linked_to"] }}</a></li>
+                {% endfor %}
+            </ul>
+        </p>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro properties_table(schema) -%}
+  <div class="container">
+    <h1>Properties</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Required/Optional</th>
+        </tr>
+        </thead>
+        {% for property in sorted_property_list %}
+        {% set current_property = property_dict[property] %}
+        <tr>
+            <td><a name="{{ property }}"></a>{{ property}}</td>
+            <td width=25%>{{ current_property["description"] }}</td>
+            <td>
+                &lt;{{ current_property["type"]}}&gt; {{ current_property["format"]}}
+                <ul>
+                {% for item in current_property["enum"] %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+                </ul>
+            </td>
+            <td>{{ current_property["required"]}}</td>
+          </tr>
+        {% endfor %}
+    </table>
+{% endmacro %}
+
+{% macro definitions_table(schema) -%}
+    {# create a definitions section #}
+{% endmacro %}

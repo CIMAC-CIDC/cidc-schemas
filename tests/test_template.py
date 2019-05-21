@@ -12,7 +12,7 @@ from cidc_schemas.template import Template
 
 def test_pbmc_loaded(pbmc_template):
     """Smoke test to ensure worksheets loaded from pbmc template"""
-    assert 'CORE_DATA' in pbmc_template.worksheets
+    assert 'PBMCs' in pbmc_template.worksheets
 
 
 def test_tiny_loaded(tiny_template):

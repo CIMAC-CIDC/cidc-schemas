@@ -4,11 +4,11 @@
 
 import os
 import json
+import collections
 from typing import Optional
 
 import dateparser
 import jsonschema
-import jsonref
 
 SCHEMA_ROOT = os.path.join(os.path.dirname(
     os.path.abspath(__file__)), '..', 'schemas')
@@ -21,14 +21,11 @@ def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT) -
     assert os.path.isabs(
         schema_root), "schema_root must be an absolute path"
 
-    loader_kwargs = {
-        'base_uri': f'file://{schema_root}/',
-        'jsonschema': True
-    }
-
     # Load schema with resolved $refs
     with open(schema_path) as schema_file:
-        schema = jsonref.load(schema_file, **loader_kwargs)
+        base_uri = f'file://{schema_root}/'
+        json_spec = json.load(schema_file)
+        schema = _resolve_refs(base_uri, json_spec)
 
     # Ensure schema is valid
     # NOTE: $refs were resolved above, so no need for a RefResolver here
@@ -36,6 +33,31 @@ def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT) -
     validator.check_schema(schema)
 
     return schema
+
+
+def _resolve_refs(base_uri: str, json_spec: dict):
+    """
+    Resolve JSON references in `json_spec` relative to `base_uri`,
+    return `json_spec` with all references inlined.
+    """
+    resolver = jsonschema.RefResolver(base_uri, json_spec)
+
+    def _do_resolve(node):
+        if '$ref' in node:
+            # We found a ref, so return it
+            with resolver.resolving(node['$ref']) as resolved:
+                return resolved
+        elif isinstance(node, collections.Mapping):
+            # Look for all refs in this mapping
+            for k, v in node.items():
+                node[k] = _do_resolve(v)
+        elif isinstance(node, (list, tuple)):
+            # Look for all refs in this list
+            for i in range(len(node)):
+                node[i] = _do_resolve(node[i])
+        return node
+
+    return _do_resolve(json_spec)
 
 
 def validate_instance(instance: str, schema: dict) -> Optional[str]:

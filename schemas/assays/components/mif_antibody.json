@@ -37,7 +37,7 @@
     }
   ],
 	"required": [
-		"flour_wavelength",
+		"fluor_wavelength",
 		"primary_ab_dilution",
     "dilutent",
     "fluor_dilution",

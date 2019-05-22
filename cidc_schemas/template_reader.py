@@ -113,9 +113,6 @@ class XlTemplateReader:
             row_type, *content = row
             row_groups[row_type].append(content)
 
-        n_headers = len(row_groups.get(RowType.HEADER, []))
-        assert n_headers == 1, f"Expected no more than one header row for data table"
-
         return row_groups
 
     @staticmethod
@@ -134,7 +131,7 @@ class XlTemplateReader:
         n_columns = len(header_row)
         for i, data_row in enumerate(data_rows):
             n_entries = len(data_row)
-            assert n_entries == n_columns, f"The {i + 1}th data row has too few entries"
+            assert n_entries == n_columns, f"The {i + 1}th data row has the wrong number of entries"
 
         schemas = [self._get_schema(header, data_schemas)
                    for header in header_row if header]
@@ -188,11 +185,16 @@ class XlTemplateReader:
                 flat_data_schemas = {
                     **flat_data_schemas, **section}
 
+            # Validate data rows
+            n_headers = len(row_groups[RowType.HEADER])
+            assert n_headers == 1, f"Exactly one header row expected, but found {n_headers}"
+            headers = row_groups[RowType.HEADER][0]
+            assert all(
+                headers), f"Found an empty header cell at index {headers.index(None)}"
+
             data_schemas = self._get_data_schemas(
                 row_groups, flat_data_schemas)
 
-            # Validate data rows
-            headers = row_groups[RowType.HEADER][0]
             for data_row in row_groups[RowType.DATA]:
                 for col, value in enumerate(data_row):
                     invalid_reason = validate_instance(

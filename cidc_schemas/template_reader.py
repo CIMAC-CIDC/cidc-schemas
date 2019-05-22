@@ -113,12 +113,8 @@ class XlTemplateReader:
             row_type, *content = row
             row_groups[row_type].append(content)
 
-        # There should only be one header row for the data table
-        assert len(row_groups[RowType.HEADER]
-                   ) == 1, f"Expected exactly one header row"
-
-        # TODO: enforce more constraints (e.g., if there are data rows,
-        #       there must be a header row)
+        n_headers = len(row_groups.get(RowType.HEADER, []))
+        assert n_headers == 1, f"Expected no more than one header row for data table"
 
         return row_groups
 

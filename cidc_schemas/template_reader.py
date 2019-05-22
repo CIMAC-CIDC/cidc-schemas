@@ -5,6 +5,7 @@
 import os
 import json
 import logging
+from itertools import dropwhile
 from typing import Dict, List, Tuple
 
 import openpyxl
@@ -60,6 +61,7 @@ class XlTemplateReader:
         for worksheet_name in workbook.sheetnames:
             worksheet = workbook[worksheet_name]
             rows = []
+            header_width = 0
             for i, row in enumerate(worksheet.iter_rows()):
                 # Convert to string and extract type annotation
                 typ, *values = [col.value for col in row]
@@ -74,6 +76,18 @@ class XlTemplateReader:
                 # If entire row is empty, skip it (this happens at the bottom of the data table, e.g.)
                 if not any(values):
                     continue
+
+                # Filter empty cells from the end of the header row
+                if row_type == RowType.HEADER:
+                    rev_values = values[::-1]
+                    clean = list(dropwhile(lambda v: v is None, rev_values))
+                    values = clean[::-1]
+                    header_width = len(values)
+
+                # Filter empty cells from the end of a data row
+                if row_type == RowType.DATA:
+                    assert header_width, "Encountered data row before header row"
+                    values = values[:header_width]
 
                 # Reassemble parsed row and add to rows
                 rows.append((row_type, *values))

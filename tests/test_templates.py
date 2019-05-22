@@ -41,9 +41,8 @@ def template_paths():
 @pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
 def test_template(schema_path, xlsx_path, tmpdir):
     """
-    Ensure the template schema generates a spreadsheet that looks like the given example.
-    This does NOT check that appropriate validations are present in the generated worksheet.
-    (TODO: maybe we can check if validations are present?)
+    Ensure the template schema generates a spreadsheet that looks like the given example,
+    and check that the template example is valid.
     """
 
     # Load the template and write it to a temporary file
@@ -59,6 +58,9 @@ def test_template(schema_path, xlsx_path, tmpdir):
 
     # Check that both templates have the same fields
     compare_templates(schema_path, generated_template, reference_template)
+
+    # Validate the Excel template
+    assert reference_template.validate(template)
 
 
 def compare_templates(schema_path: str, generated: XlTemplateReader, reference: XlTemplateReader):

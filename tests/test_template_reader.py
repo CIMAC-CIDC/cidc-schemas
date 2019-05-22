@@ -17,7 +17,7 @@ from .constants import TEMPLATE_EXAMPLES_DIR, TEST_DATA_DIR
 # NOTE: see conftest.py for pbmc_template and tiny_template fixture definitions
 
 
-def test_valid_tiny(tiny_template):
+def test_valid(tiny_template):
     """Test that a known-valid spreadsheet is considered valid"""
     tiny_valid = {
         'TEST_SHEET': [
@@ -34,7 +34,68 @@ def test_valid_tiny(tiny_template):
     assert reader.validate(tiny_template)
 
 
-def test_invalid_tiny(tiny_template):
+def test_valid_from_excel(tiny_template):
+    """Test that the reader can load from a small xlsx file"""
+    tiny_xlsx = os.path.join(TEST_DATA_DIR, 'tiny_manifest.xlsx')
+    reader = XlTemplateReader.from_excel(tiny_xlsx)
+    assert reader.validate(tiny_template)
+
+
+def search_error_message(workbook, template, error, msg_fragment):
+    reader = XlTemplateReader(workbook)
+    with pytest.raises(error) as e:
+        reader.validate(template)
+
+    assert msg_fragment in str(e.value)
+
+
+def test_missing_headers(tiny_template):
+    """Test that a spreadsheet with empty headers raises an assertion error"""
+    tiny_missing = {
+        'TEST_SHEET': [
+            (RowType.HEADER, 'test_property', None, 'test_time'),
+        ]
+    }
+
+    search_error_message(tiny_missing, tiny_template,
+                         AssertionError, 'empty header cell')
+
+
+def test_wrong_number_of_headers(tiny_template):
+    """Test that a spreadsheet with multiple or no headers raises an assertion error"""
+    tiny_double = {
+        'TEST_SHEET': [
+            (RowType.HEADER, 'test_property', 'test_date', 'test_time'),
+            (RowType.HEADER, 'test_property', 'test_date', 'test_time'),
+        ]
+    }
+
+    tiny_no_headers = {
+        'TEST_SHEET': [
+            (RowType.DATA, 1, 2, 3)
+        ]
+    }
+
+    search_error_message(tiny_double, tiny_template,
+                         AssertionError, 'one header row expected')
+
+    search_error_message(tiny_no_headers, tiny_template,
+                         AssertionError, 'one header row expected')
+
+
+def test_missing_schema(tiny_template):
+    """Test that a spreadsheet with an unknown property raises an assertion error"""
+    tiny_missing = {
+        'TEST_SHEET': [
+            (RowType.PREAMBLE, 'missing_property', 'foo'),
+        ]
+    }
+
+    search_error_message(tiny_missing, tiny_template,
+                         AssertionError, 'No schema found')
+
+
+def test_invalid(tiny_template):
     """Test that a known-invalid spreadsheet is considered invalid"""
     tiny_invalid = {
         'TEST_SHEET': [
@@ -47,10 +108,8 @@ def test_invalid_tiny(tiny_template):
         ]
     }
 
-    reader = XlTemplateReader(tiny_invalid)
-
-    with pytest.raises(ValidationError):
-        reader.validate(tiny_template)
+    search_error_message(tiny_invalid, tiny_template,
+                         ValidationError, '')
 
 
 def test_pbmc_validation(pbmc_template):

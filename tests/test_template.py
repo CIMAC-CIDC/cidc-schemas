@@ -37,3 +37,33 @@ def test_worksheet_validation():
     check_validation_error(unknown_section, 'unknown worksheet sections')
 
     # TODO: do we need any other worksheet-level validations?
+
+
+def test_worksheet_processing():
+    """Ensure that worksheet schemas are processed as expected"""
+    worksheet = {
+        "preamble_rows": {
+            # should be converted to lowercase
+            "aAa": {}
+        },
+        "data_columns": {
+            # shouldn't be converted to lowercase
+            "One": {
+                # should be converted to lowercase
+                "BbB": {}
+            }
+        }
+    }
+
+    target = {
+        "preamble_rows": {
+            "aaa": {}
+        },
+        "data_columns": {
+            "One": {
+                "bbb": {}
+            }
+        }
+    }
+
+    assert Template._process_worksheet(worksheet) == target

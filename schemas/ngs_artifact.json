@@ -35,7 +35,8 @@
     },
     "paired_end_reads": {
       "description": "Indicate if the sequencing was performed paired or single ended",
-      "type": "boolean"
+      "type": "string",
+      "enum": ["Paired", "Single"]
     },
     "read_length": {
       "description": "Number of cycles for each sequencing read",

@@ -34,6 +34,13 @@ def test_valid_tiny(tiny_template):
     assert reader.validate(tiny_template)
 
 
+def test_valid_tiny_from_excel(tiny_template):
+    """Test that the reader can load from a small xlsx file"""
+    tiny_xlsx = os.path.join(TEST_DATA_DIR, 'tiny_manifest.xlsx')
+    reader = XlTemplateReader.from_excel(tiny_xlsx)
+    assert reader.validate(tiny_template)
+
+
 def test_invalid_tiny(tiny_template):
     """Test that a known-invalid spreadsheet is considered invalid"""
     tiny_invalid = {

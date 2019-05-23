@@ -16,6 +16,9 @@
           "staining platform": {
             "$ref": "assays/components/image.json#properties/staining_platform"
           },
+          "autostainer model": {
+            "$ref": "assays/components/image.json#properties/autostainer_model"
+          },
           "image analysis software": {
             "$ref": "assays/components/image.json#properties/image_analysis_software"
           },

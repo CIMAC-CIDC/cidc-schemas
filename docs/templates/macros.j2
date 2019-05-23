@@ -1,4 +1,4 @@
-{% macro header(schema) -%}
+{% macro header(schema, scope, required) -%}
 {# Generate the section to put at the top of an entity's page #}
     <div class="container">
         <p>
@@ -14,17 +14,22 @@
             <ul>
                 {% for link in schema["links"] %}
                     <li>{{ link["link"]["cardinality"]}}
-                        <a href='{{ link["link"]["linked_to"] }}.html'>{{ link["link"]["linked_to"] }}</a></li>
+                        <a href='{{scope}}.{{ link["link"]["linked_to"] }}.html'>{{ link["link"]["linked_to"] }}</a></li>
                 {% endfor %}
             </ul>
         </p>
         {% endif %}
+        {% if 'definitions' in schema %}
+            <h4>Definitions</h4>
+            {% for def_name, def_schema in schema['definitions'].items() %}
+                <h5>{{ def_name }}</h5>
+                {{ properties_table(def_schema['properties'], required) }}
+            {% endfor %}
+        {% endif %}
     </div>
-{% endmacro %}
+{%- endmacro %}
 
-{% macro properties_table(schema) -%}
-  <div class="container">
-    <h1>Properties</h1>
+{% macro properties_table(schema, required) -%}
     <table class="table table-striped">
         <thead>
         <tr>
@@ -34,25 +39,34 @@
             <th>Required/Optional</th>
         </tr>
         </thead>
-        {% for property in sorted_property_list %}
-        {% set current_property = property_dict[property] %}
-        <tr>
-            <td><a name="{{ property }}"></a>{{ property}}</td>
-            <td width=25%>{{ current_property["description"] }}</td>
-            <td>
-                &lt;{{ current_property["type"]}}&gt; {{ current_property["format"]}}
-                <ul>
-                {% for item in current_property["enum"] %}
-                    <li>{{ item }}</li>
-                {% endfor %}
-                </ul>
-            </td>
-            <td>{{ current_property["required"]}}</td>
-          </tr>
+        {% for prop_name, prop_schema in schema.items() %}
+            <tr>
+                <td><a name="{{ prop_name }}"></a>{{ prop_name }}</td>
+                <td width=25%>{{ prop_schema["description"] }}</td>
+                <td>
+                    {% if "type" in prop_schema %}
+                        &lt;{{ prop_schema["type"]}}&gt; {{ prop_schema["format"]}}
+                        <ul>
+                        {% for item in prop_schema["enum"] %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% elif "url" in prop_schema %}
+                        <a href="schemas.{{ prop_schema['url'] }}">{{ prop_schema['url'].replace('.html', '') }}</a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if prop_name in required %}
+                        required
+                    {% else %}
+                        optional
+                    {% endif %}
+                </td>
+            </tr>
         {% endfor %}
     </table>
-{% endmacro %}
+{%- endmacro %}
 
 {% macro definitions_table(schema) -%}
     {# create a definitions section #}
-{% endmacro %}
+{%- endmacro %}

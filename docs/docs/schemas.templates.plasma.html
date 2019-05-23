@@ -1,0 +1,744 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CIDC Schemas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main role="main">
+      
+
+  
+    <div class="container">
+        <p>
+            <a href="index.html">CIDC Data Model</a>
+        </p>
+        <h1>Shipping manifest for Plasma samples</h1>
+        <p>
+            <b>Description:</b>  Shipping / receiving manifest for transferring Plasma samples.
+
+        </p>
+        
+        
+    </div>
+
+  <div class="container">
+    
+      <h2>Plasma</h2>
+  
+    <h3>Preamble Rows</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Required/Optional</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td><a name="lead organization study id"></a>lead organization study id</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.clinical_trial.html#lead_organization_study_id">clinical_trial#lead_organization_study_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="manifest id"></a>manifest id</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#manifest_id">shipping_core#manifest_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="request"></a>request</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#request">shipping_core#request</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="assay priority"></a>assay priority</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#assay_priority">shipping_core#assay_priority</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="assay type"></a>assay type</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#assay_type">shipping_core#assay_type</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="batch number"></a>batch number</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#batch_number">shipping_core#batch_number</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="box number"></a>box number</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#box_number">shipping_core#box_number</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="assay run number"></a>assay run number</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#assay_run_number">shipping_core#assay_run_number</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="courier"></a>courier</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#courier">shipping_core#courier</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="tracking number"></a>tracking number</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#tracking_number">shipping_core#tracking_number</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="account number"></a>account number</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#account_number">shipping_core#account_number</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="shipping condition"></a>shipping condition</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#shipping_condition">shipping_core#shipping_condition</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="date shipped"></a>date shipped</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#date_shipped">shipping_core#date_shipped</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="num of samples shipped"></a>num of samples shipped</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#num_of_samples_shipped">shipping_core#num_of_samples_shipped</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="num of samples good"></a>num of samples good</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#num_of_samples_good">shipping_core#num_of_samples_good</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="num of path report"></a>num of path report</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#num_of_path_report">shipping_core#num_of_path_report</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="ship from"></a>ship from</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#ship_from">shipping_core#ship_from</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="ship to"></a>ship to</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.shipping_core.html#ship_to">shipping_core#ship_to</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+    </table>
+  
+  
+    <h3>Data Columns</h3>
+    
+      <h4>Filled by Biorepository</h4>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Required/Optional</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td><a name="lead organization study id"></a>lead organization study id</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.clinical_trial.html#lead_organization_study_id">clinical_trial#lead_organization_study_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="trial participant id"></a>trial participant id</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.participant.html#trial_participant_id">participant#trial_participant_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="cimac participant id"></a>cimac participant id</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.participant.html#cimac_participant_id">participant#cimac_participant_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="cohort id"></a>cohort id</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.participant.html#cohort_id">participant#cohort_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="arm id"></a>arm id</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.participant.html#arm_id">participant#arm_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="site sample id"></a>site sample id</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.sample.html#site_sample_id">sample#site_sample_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="cimac sample id"></a>cimac sample id</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.sample.html#cimac_sample_id">sample#cimac_sample_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="time point"></a>time point</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.sample.html#time_point">sample#time_point</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="blood collection date"></a>blood collection date</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.sample.html#blood_collection_date">sample#blood_collection_date</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="blood collection time"></a>blood collection time</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.sample.html#blood_collection_time">sample#blood_collection_time</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="blood processing date"></a>blood processing date</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.sample.html#blood_processing_date">sample#blood_processing_date</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="blood processing time"></a>blood processing time</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.sample.html#blood_processing_time">sample#blood_processing_time</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="sample location"></a>sample location</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.sample.html#sample_location">sample#sample_location</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="specimen type"></a>specimen type</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.sample.html#specimen_type">sample#specimen_type</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="specimen format"></a>specimen format</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.sample.html#specimen_format">sample#specimen_format</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="quantity"></a>quantity</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.aliquot.html#quantity">aliquot#quantity</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="volume quantity"></a>volume quantity</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.aliquot.html#volume_quantity">aliquot#volume_quantity</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="units"></a>units</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.aliquot.html#units">aliquot#units</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="sample source"></a>sample source</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.aliquot.html#sample_source">aliquot#sample_source</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+    </table>
+    
+      <h4>Filled by CIMAC Lab</h4>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Required/Optional</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td><a name="cimac aliquot id"></a>cimac aliquot id</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.aliquot.html#cimac_aliquot_id">aliquot#cimac_aliquot_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="material used"></a>material used</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.aliquot.html#material_used">aliquot#material_used</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="material remaining"></a>material remaining</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.aliquot.html#material_remaining">aliquot#material_remaining</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="sample quality status"></a>sample quality status</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.aliquot.html#sample_quality_status">aliquot#sample_quality_status</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="sample replacement"></a>sample replacement</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.aliquot.html#sample_replacement">aliquot#sample_replacement</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="sample status"></a>sample status</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.aliquot.html#sample_status">aliquot#sample_status</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+    </table>
+    
+  
+    
+  </div>
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+    

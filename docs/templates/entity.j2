@@ -2,38 +2,10 @@
 {% extends "base.j2" %}
 {% block content %}
 
-  {{ macros.header(schema) }}
-
+  {{ macros.header(schema, scope) }}
 
   <div class="container">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Property ID</th>
-            <th>Description</th>
-            <th>Data Type</th>
-            <th>Required/Optional</th>
-        </tr>
-        </thead>
-        {% for property in sorted_property_list %}
-        {% set current_property = property_dict[property] %}
-        <tr>
-            <td><a name="{{ property }}"></a>{{ property}}</td>
-            <td width=25%>{{ current_property["description"] }}</td>
-            <td>
-                &lt;{{ current_property["type"]}}&gt; {{ current_property["format"]}}
-                <ul>
-                {% for item in current_property["enum"] %}
-                    <li>{{ item }}</li>
-                {% endfor %}
-                </ul>
-            </td>
-            <td>{{ current_property["required"]}}</td>
-          </tr>
-        {% endfor %}
-    </table>
-    <!-- Example row of columns -->
-
-  </div> <!-- /container -->
+    {{ macros.properties_table(schema['properties'], schema['required'])}}
+  </div>
 
 {% endblock %}

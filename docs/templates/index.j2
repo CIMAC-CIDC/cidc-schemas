@@ -10,41 +10,25 @@
             Draft 0.1 of the CIDC Data Model.
         </div>
 
+        {% for dirname, schemas in schema_directories.items() %}
+            <h5>{{ dirname }}</h5>
+            <p>
 
-        <h5>Core Entities</h5>
-        <p>
-
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Entity</th>
-                <th>Description</th>
-            </tr>
-            </thead>
-            {% for entity_name in entity_list %}
-            <tr>
-                <td width=25%><a href='{{ entity_name}}.html'>{{ entity_json_set[entity_name]["title"] }}</a></td>
-                <td>{{ entity_json_set[entity_name]["description"] }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-
-        <h5>Shipping/Receiving Manifests</h5>
-        <p>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Entity</th>
-                <th>Description</th>
-            </tr>
-            </thead>
-            {% for manifest_name in manifest_list %}
-            <tr>
-                <td width=25%><a href='{{ manifest_name}}.html'>{{ manifest_json_set[manifest_name]["title"] }}</a></td>
-                <td>{{ manifest_json_set[manifest_name]["description"] }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Entity</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                {% for entity_path, entity_schema in schemas.items() %}
+                <tr>
+                    <td width=25%><a href='{{ dirname }}.{{ entity_path }}'>{{ entity_schema["title"] }}</a></td>
+                    <td>{{ entity_schema["description"] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endfor %}
     </div>
 
 {% endblock %}

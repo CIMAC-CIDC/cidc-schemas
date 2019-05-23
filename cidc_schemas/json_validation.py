@@ -5,7 +5,7 @@
 import os
 import json
 import collections
-from typing import Optional
+from typing import Optional, List, Callable
 
 import dateparser
 import jsonschema
@@ -14,9 +14,10 @@ SCHEMA_ROOT = os.path.join(os.path.dirname(
     os.path.abspath(__file__)), '..', 'schemas')
 
 
-def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT, titled_refs: bool = False) -> dict:
+def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT, on_refs: Optional[Callable] = None) -> dict:
     """
-    Try to load a valid schema at `schema_path`.
+    Try to load a valid schema at `schema_path`. If an `on_refs` function is supplied,
+    call that on all refs in the schema, rather than resolving the refs.
     """
     assert os.path.isabs(
         schema_root), "schema_root must be an absolute path"
@@ -25,7 +26,10 @@ def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT, t
     with open(schema_path) as schema_file:
         base_uri = f'file://{schema_root}/'
         json_spec = json.load(schema_file)
-        schema = _resolve_refs(base_uri, json_spec)
+        if on_refs:
+            schema = _map_refs(json_spec, on_refs)
+        else:
+            schema = _resolve_refs(base_uri, json_spec)
 
     # Ensure schema is valid
     # NOTE: $refs were resolved above, so no need for a RefResolver here
@@ -35,29 +39,37 @@ def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT, t
     return schema
 
 
-def _resolve_refs(base_uri: str, json_spec: dict):
+def _map_refs(node: dict, fn: Callable):
+    """
+    Apply `fn` to all refs in node, returning node with refs replaced
+    with results of the function call
+    """
+    if isinstance(node, collections.Mapping) and '$ref' in node:
+        # We found a ref, so return it
+        return fn(node['$ref'])
+    elif isinstance(node, collections.Mapping):
+        # Look for all refs in this mapping
+        for k, v in node.items():
+            node[k] = _map_refs(v, fn)
+    elif isinstance(node, (list, tuple)):
+        # Look for all refs in this list
+        for i in range(len(node)):
+            node[i] = _map_refs(node[i], fn)
+    return node
+
+
+def _resolve_refs(base_uri: str, json_spec: dict) -> dict:
     """
     Resolve JSON references in `json_spec` relative to `base_uri`,
     return `json_spec` with all references inlined.
     """
     resolver = jsonschema.RefResolver(base_uri, json_spec)
 
-    def _do_resolve(node):
-        if isinstance(node, collections.Mapping) and '$ref' in node:
-            # We found a ref, so return it
-            with resolver.resolving(node['$ref']) as resolved:
-                return resolved
-        elif isinstance(node, collections.Mapping):
-            # Look for all refs in this mapping
-            for k, v in node.items():
-                node[k] = _do_resolve(v)
-        elif isinstance(node, (list, tuple)):
-            # Look for all refs in this list
-            for i in range(len(node)):
-                node[i] = _do_resolve(node[i])
-        return node
+    def _do_resolve(ref):
+        with resolver.resolving(ref) as resolved:
+            return resolved
 
-    return _do_resolve(json_spec)
+    return _map_refs(json_spec, _do_resolve)
 
 
 def validate_instance(instance: str, schema: dict, required: bool) -> Optional[str]:

@@ -87,28 +87,25 @@
         },
         "data_columns": {
           "Samples": {
-            "cimac_particpant_id": {
+            "cimac particpant id": {
               "$ref": "participant.json#properties/cimac_participant_id"
             },
-            "cimac_sample_id": {
+            "cimac sample id": {
               "$ref": "sample.json#properties/cimac_sample_id"
             },
-            "internal_slide_id": {
+            "internal slide id": {
               "$ref": "assays/mif.json#definitions/data_properties/properties/internal_slide_id"
             },
-            "time_point": {
-              "$ref": "assays/components/identifiers.json#properties/time_point"
+            "time point": {
+              "$ref": "sample.json#properties/time_point"
             },
-            "staining_date": {
+            "staining date": {
               "$ref": "assays/mif.json#definitions/data_properties/properties/staining_date"
             },
-            "imaging_date": {
+            "imaging date": {
               "$ref": "assays/mif.json#definitions/data_properties/properties/imaging_date"
             },
-            "imaging_status": {
-              "$ref": "assays/mif.json#definitions/data_properties/properties/imaging_status"
-            },
-            "project_inform_folder": {
+            "project inform folder": {
               "$ref": "assays/mif.json#definitions/data_properties/properties/project_inform_folder"
             },
             "exported_data_folder": {

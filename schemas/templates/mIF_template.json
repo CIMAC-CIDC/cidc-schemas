@@ -17,7 +17,7 @@
             "$ref": "assays/components/image.json#properties/staining_platform"
           },
           "autostainer model": {
-            "$ref": "assay/components/image.json#properties/autostainer_model"
+            "$ref": "assays/components/image.json#properties/autostainer_model"
           },
           "image analysis software": {
             "$ref": "assays/components/image.json#properties/image_analysis_software"
@@ -87,28 +87,28 @@
         },
         "data_columns": {
           "Samples": {
-            "cimac particpant id": {
+            "cimac_particpant_id": {
               "$ref": "participant.json#properties/cimac_participant_id"
             },
-            "cimac sample id": {
+            "cimac_sample_id": {
               "$ref": "sample.json#properties/cimac_sample_id"
             },
-            "internal slide id": {
+            "internal_slide_id": {
               "$ref": "assays/mif.json#definitions/data_properties/properties/internal_slide_id"
             },
-            "time point": {
-              "$ref": "assay/components/identifiers.json#properties/time_point"
+            "time_point": {
+              "$ref": "assays/components/identifiers.json#properties/time_point"
             },
-            "staining date": {
+            "staining_date": {
               "$ref": "assays/mif.json#definitions/data_properties/properties/staining_date"
             },
-            "imaging date": {
+            "imaging_date": {
               "$ref": "assays/mif.json#definitions/data_properties/properties/imaging_date"
             },
-            "imaging status": {
+            "imaging_status": {
               "$ref": "assays/mif.json#definitions/data_properties/properties/imaging_status"
             },
-            "project inform folder": {
+            "project_inform_folder": {
               "$ref": "assays/mif.json#definitions/data_properties/properties/project_inform_folder"
             },
             "exported_data_folder": {

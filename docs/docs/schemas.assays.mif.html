@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Clinical Trial</h1>
+        <h1>MIF</h1>
         <p>
-            <b>Description:</b>  Encapsulates information regarding a clinical trial.
+            <b>Description:</b>  Base information about the aquisition and analysis of a quantitative pathology image
 
         </p>
         
@@ -42,6 +42,68 @@
   <div class="container">
     <h3>Properties</h3>
     
+        
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Schema</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Required/Optional</th>
+        </tr>
+        </thead>
+        
+            
+            
+            <tr>
+                <td><a name="(anonymous)"></a>(anonymous)</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.assays.components.image.html">assays.components.image</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            
+            
+            <tr>
+                <td><a name="(anonymous)"></a>(anonymous)</td>
+                <td width=25%></td>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+    </table>
+
+    
+        <h4>Definitions</h4>
+        
+            <h5>data_properties</h5>
+            
         
         
     
@@ -59,8 +121,8 @@
             
             
             <tr>
-                <td><a name="nct_id"></a>nct_id</td>
-                <td width=25%>ClinicalTrials.gov identifier. Example: NCT03731260.</td>
+                <td><a name="internal_slide_id"></a>internal_slide_id</td>
+                <td width=25%></td>
                 <td>
                     
                         &lt;string&gt; 
@@ -79,8 +141,48 @@
             
             
             <tr>
-                <td><a name="nci_id"></a>nci_id</td>
-                <td width=25%>NCI Trial Identifier. Example: NCI22345.</td>
+                <td><a name="staining_date"></a>staining_date</td>
+                <td width=25%></td>
+                <td>
+                    
+                        &lt;string&gt; date
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            
+            
+            <tr>
+                <td><a name="imaging_date"></a>imaging_date</td>
+                <td width=25%></td>
+                <td>
+                    
+                        &lt;string&gt; date
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            
+            
+            <tr>
+                <td><a name="project_inform_folder"></a>project_inform_folder</td>
+                <td width=25%></td>
                 <td>
                     
                         &lt;string&gt; 
@@ -99,91 +201,11 @@
             
             
             <tr>
-                <td><a name="lead_organization_study_id"></a>lead_organization_study_id</td>
-                <td width=25%>Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.</td>
+                <td><a name="exported_data_folder"></a>exported_data_folder</td>
+                <td width=25%></td>
                 <td>
                     
                         &lt;string&gt; 
-                        <ul>
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
-        
-            
-            
-            <tr>
-                <td><a name="trial_name"></a>trial_name</td>
-                <td width=25%>Name of clinical trial.</td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            
-            
-            <tr>
-                <td><a name="trial_description"></a>trial_description</td>
-                <td width=25%>A brief description of the clinical trial.</td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            
-            
-            <tr>
-                <td><a name="trial_organization"></a>trial_organization</td>
-                <td width=25%>Name of the primary organization that oversees the clinical trial. Example: ECOG-ACRIN, SWOG, etc.</td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            
-            
-            <tr>
-                <td><a name="assay_list"></a>assay_list</td>
-                <td width=25%>List of approved assays to be performed on the clinical trial.</td>
-                <td>
-                    
-                        &lt;array&gt; 
                         <ul>
                         
                         </ul>
@@ -197,7 +219,68 @@
             </tr>
         
     </table>
+        
+            <h5>data_row</h5>
+            
+        
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+    
 
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Schema</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Required/Optional</th>
+        </tr>
+        </thead>
+        
+            
+            
+            <tr>
+                <td><a name="(anonymous)"></a>(anonymous)</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.assays.components.identifiers.html">assays.components.identifiers</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            
+            
+            <tr>
+                <td><a name="(anonymous)"></a>(anonymous)</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.#data_properties">#data_properties</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+    </table>
+        
     
   </div>
 

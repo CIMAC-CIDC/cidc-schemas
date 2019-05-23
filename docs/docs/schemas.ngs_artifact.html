@@ -41,15 +41,23 @@
             <ul>
                 
                     <li>exactly_one
-                        <a href='schemas.artifact.html'>artifact</a></li>
+                        <a href='schemas.artifact.html'>
+                            artifact
+                        </a>
+                    </li>
                 
             </ul>
         </p>
         
-        
     </div>
 
   <div class="container">
+    <h3>Properties</h3>
+    
+        
+        
+    
+
     <table class="table table-striped">
         <thead>
         <tr>
@@ -60,6 +68,8 @@
         </tr>
         </thead>
         
+            
+            
             <tr>
                 <td><a name="sequencer_platform"></a>sequencer_platform</td>
                 <td width=25%>Sequencing Platform, eg. Illumina, IonTorrent</td>
@@ -78,6 +88,8 @@
                 </td>
             </tr>
         
+            
+            
             <tr>
                 <td><a name="sequencer_model"></a>sequencer_model</td>
                 <td width=25%>Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.</td>
@@ -96,6 +108,8 @@
                 </td>
             </tr>
         
+            
+            
             <tr>
                 <td><a name="library_kit_vendor"></a>library_kit_vendor</td>
                 <td width=25%>Vendor for the library construction kit, e.g. KAPA</td>
@@ -114,6 +128,8 @@
                 </td>
             </tr>
         
+            
+            
             <tr>
                 <td><a name="library_kit_version"></a>library_kit_version</td>
                 <td width=25%>The version of the library construction kit used, e.g. Hyper Prep</td>
@@ -132,6 +148,8 @@
                 </td>
             </tr>
         
+            
+            
             <tr>
                 <td><a name="library_kit_lot"></a>library_kit_lot</td>
                 <td width=25%>Lot number for the library construction kit</td>
@@ -150,13 +168,19 @@
                 </td>
             </tr>
         
+            
+            
             <tr>
                 <td><a name="paired_end_reads"></a>paired_end_reads</td>
                 <td width=25%>Indicate if the sequencing was performed paired or single ended</td>
                 <td>
                     
-                        &lt;boolean&gt; 
+                        &lt;string&gt; 
                         <ul>
+                        
+                            <li>Paired</li>
+                        
+                            <li>Single</li>
                         
                         </ul>
                     
@@ -168,6 +192,8 @@
                 </td>
             </tr>
         
+            
+            
             <tr>
                 <td><a name="read_length"></a>read_length</td>
                 <td width=25%>Number of cycles for each sequencing read</td>
@@ -186,6 +212,8 @@
                 </td>
             </tr>
         
+            
+            
             <tr>
                 <td><a name="library_prep_date"></a>library_prep_date</td>
                 <td width=25%>Date of library construction.</td>
@@ -204,6 +232,8 @@
                 </td>
             </tr>
         
+            
+            
             <tr>
                 <td><a name="dna_input_ng"></a>dna_input_ng</td>
                 <td width=25%>Amount of DNA (in ng) used for library construction</td>
@@ -222,6 +252,8 @@
                 </td>
             </tr>
         
+            
+            
             <tr>
                 <td><a name="library_yield_ng"></a>library_yield_ng</td>
                 <td width=25%>Resulting yield (in ng) from library construction</td>
@@ -240,6 +272,8 @@
                 </td>
             </tr>
         
+            
+            
             <tr>
                 <td><a name="average_insert_size"></a>average_insert_size</td>
                 <td width=25%>The average insert size for the library</td>
@@ -258,6 +292,8 @@
                 </td>
             </tr>
         
+            
+            
             <tr>
                 <td><a name="forward_fastq"></a>forward_fastq</td>
                 <td width=25%>Fastq file for the forward read</td>
@@ -276,6 +312,8 @@
                 </td>
             </tr>
         
+            
+            
             <tr>
                 <td><a name="reverse_fastq"></a>reverse_fastq</td>
                 <td width=25%>Fastq file for the reverse read</td>
@@ -294,6 +332,8 @@
                 </td>
             </tr>
         
+            
+            
             <tr>
                 <td><a name="read_group_mapping_file"></a>read_group_mapping_file</td>
                 <td width=25%>Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.</td>
@@ -313,6 +353,8 @@
             </tr>
         
     </table>
+
+    
   </div>
 
 

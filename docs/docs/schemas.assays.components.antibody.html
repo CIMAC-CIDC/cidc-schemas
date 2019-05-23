@@ -31,22 +31,10 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Whole Exome Sequencing Artifact</h1>
+        <h1>Antibody</h1>
         <p>
-            <b>Description:</b>  Additional properties to describe a Whole Exome Sequencing Artifact.
-        </p>
-        
-        <p>
-            Each Whole Exome Sequencing Artifact is <b>linked</b> to:
-            <ul>
-                
-                    <li>exactly_one
-                        <a href='schemas.ngs_artifact.html'>
-                            ngs_artifact
-                        </a>
-                    </li>
-                
-            </ul>
+            <b>Description:</b>  Common information about an antibody used in a number of immune-oncology assays
+
         </p>
         
     </div>
@@ -71,8 +59,8 @@
             
             
             <tr>
-                <td><a name="bait_vendor"></a>bait_vendor</td>
-                <td width=25%>Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT</td>
+                <td><a name="antibody"></a>antibody</td>
+                <td width=25%></td>
                 <td>
                     
                         &lt;string&gt; 
@@ -91,8 +79,8 @@
             
             
             <tr>
-                <td><a name="bait_version"></a>bait_version</td>
-                <td width=25%>The version of the bait set used, e.g. Human All Exon V7</td>
+                <td><a name="clone"></a>clone</td>
+                <td width=25%></td>
                 <td>
                     
                         &lt;string&gt; 
@@ -111,8 +99,8 @@
             
             
             <tr>
-                <td><a name="bait_lot"></a>bait_lot</td>
-                <td width=25%>Lot number for the bait set</td>
+                <td><a name="company"></a>company</td>
+                <td width=25%></td>
                 <td>
                     
                         &lt;string&gt; 
@@ -131,11 +119,51 @@
             
             
             <tr>
-                <td><a name="capture_date"></a>capture_date</td>
-                <td width=25%>Date of the hybrid capture enrichment</td>
+                <td><a name="cat_num"></a>cat_num</td>
+                <td width=25%></td>
                 <td>
                     
-                        &lt;string&gt; date
+                        &lt;string&gt; 
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        required
+                    
+                </td>
+            </tr>
+        
+            
+            
+            <tr>
+                <td><a name="lot_num"></a>lot_num</td>
+                <td width=25%></td>
+                <td>
+                    
+                        &lt;string&gt; 
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        required
+                    
+                </td>
+            </tr>
+        
+            
+            
+            <tr>
+                <td><a name="staining_order"></a>staining_order</td>
+                <td width=25%></td>
+                <td>
+                    
+                        &lt;number&gt; 
                         <ul>
                         
                         </ul>

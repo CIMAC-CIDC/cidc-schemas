@@ -31,10 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Clinical Trial</h1>
+        <h1>Multiplex Immunoflourescence Antibody</h1>
         <p>
-            <b>Description:</b>  Encapsulates information regarding a clinical trial.
-
+            <b>Description:</b>  Data specific to antibody prepration on the multiplex immunoflourescence platform.
         </p>
         
     </div>
@@ -42,6 +41,70 @@
   <div class="container">
     <h3>Properties</h3>
     
+        
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Schema</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Required/Optional</th>
+        </tr>
+        </thead>
+        
+            
+            
+            <tr>
+                <td><a name="(anonymous)"></a>(anonymous)</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.assays.components.antibody.html">assays.components.antibody</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            
+            
+            <tr>
+                <td><a name="(anonymous)"></a>(anonymous)</td>
+                <td width=25%></td>
+                <td>
+                    
+                        <a href="schemas.#mif_properties">#mif_properties</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+    </table>
+
+    
+        <h4>Definitions</h4>
+        
+            <h5>mif_properties</h5>
+            
         
         
     
@@ -59,11 +122,11 @@
             
             
             <tr>
-                <td><a name="nct_id"></a>nct_id</td>
-                <td width=25%>ClinicalTrials.gov identifier. Example: NCT03731260.</td>
+                <td><a name="fluor_wavelength"></a>fluor_wavelength</td>
+                <td width=25%></td>
                 <td>
                     
-                        &lt;string&gt; 
+                        &lt;number&gt; 
                         <ul>
                         
                         </ul>
@@ -71,7 +134,7 @@
                 </td>
                 <td>
                     
-                        optional
+                        required
                     
                 </td>
             </tr>
@@ -79,28 +142,8 @@
             
             
             <tr>
-                <td><a name="nci_id"></a>nci_id</td>
-                <td width=25%>NCI Trial Identifier. Example: NCI22345.</td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            
-            
-            <tr>
-                <td><a name="lead_organization_study_id"></a>lead_organization_study_id</td>
-                <td width=25%>Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.</td>
+                <td><a name="primary_ab_dilution"></a>primary_ab_dilution</td>
+                <td width=25%></td>
                 <td>
                     
                         &lt;string&gt; 
@@ -119,8 +162,8 @@
             
             
             <tr>
-                <td><a name="trial_name"></a>trial_name</td>
-                <td width=25%>Name of clinical trial.</td>
+                <td><a name="dilutent"></a>dilutent</td>
+                <td width=25%></td>
                 <td>
                     
                         &lt;string&gt; 
@@ -131,7 +174,7 @@
                 </td>
                 <td>
                     
-                        optional
+                        required
                     
                 </td>
             </tr>
@@ -139,8 +182,8 @@
             
             
             <tr>
-                <td><a name="trial_description"></a>trial_description</td>
-                <td width=25%>A brief description of the clinical trial.</td>
+                <td><a name="fluor_dilution"></a>fluor_dilution</td>
+                <td width=25%></td>
                 <td>
                     
                         &lt;string&gt; 
@@ -151,7 +194,7 @@
                 </td>
                 <td>
                     
-                        optional
+                        required
                     
                 </td>
             </tr>
@@ -159,11 +202,11 @@
             
             
             <tr>
-                <td><a name="trial_organization"></a>trial_organization</td>
-                <td width=25%>Name of the primary organization that oversees the clinical trial. Example: ECOG-ACRIN, SWOG, etc.</td>
+                <td><a name="antigen_retrieval_time"></a>antigen_retrieval_time</td>
+                <td width=25%></td>
                 <td>
                     
-                        &lt;string&gt; 
+                        &lt;string&gt; time
                         <ul>
                         
                         </ul>
@@ -171,7 +214,7 @@
                 </td>
                 <td>
                     
-                        optional
+                        required
                     
                 </td>
             </tr>
@@ -179,11 +222,11 @@
             
             
             <tr>
-                <td><a name="assay_list"></a>assay_list</td>
-                <td width=25%>List of approved assays to be performed on the clinical trial.</td>
+                <td><a name="primary_incubation_time"></a>primary_incubation_time</td>
+                <td width=25%></td>
                 <td>
                     
-                        &lt;array&gt; 
+                        &lt;string&gt; time
                         <ul>
                         
                         </ul>
@@ -191,13 +234,33 @@
                 </td>
                 <td>
                     
-                        optional
+                        required
+                    
+                </td>
+            </tr>
+        
+            
+            
+            <tr>
+                <td><a name="amplification_time"></a>amplification_time</td>
+                <td width=25%></td>
+                <td>
+                    
+                        &lt;string&gt; time
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        required
                     
                 </td>
             </tr>
         
     </table>
-
+        
     
   </div>
 

@@ -31,19 +31,19 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Metadata file for WES</h1>
+        <h1>Image</h1>
         <p>
-            <b>Description:</b>  Metadata information for whole exome sequencing analysis.
+            <b>Description:</b>  Base information about the aquisition and analysis of a quantitative pathology image
 
         </p>
         
     </div>
 
   <div class="container">
+    <h3>Properties</h3>
     
-      <h2>WES</h2>
-  
-    <h3>Preamble Rows</h3>
+        
+        
     
 
     <table class="table table-striped">
@@ -56,12 +56,75 @@
         </tr>
         </thead>
         
+            
+            
+            <tr>
+                <td><a name="cimac_participant_id"></a>cimac_participant_id</td>
+                <td width=25%></td>
+                <td>
+                    
+                        &lt;string&gt; 
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            
+            
+            <tr>
+                <td><a name="cimac_sample_id"></a>cimac_sample_id</td>
+                <td width=25%></td>
+                <td>
+                    
+                        &lt;string&gt; 
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            
+            
+            <tr>
+                <td><a name="time_point"></a>time_point</td>
+                <td width=25%></td>
+                <td>
+                    
+                        &lt;string&gt; 
+                        <ul>
+                        
+                            <li>PRE</li>
+                        
+                            <li>POST</li>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
     </table>
-  
-    
-    
+
     
   </div>
+
 
     </main>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

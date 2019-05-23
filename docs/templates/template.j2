@@ -6,8 +6,7 @@
   {% if 'preamble_rows' in schema %}
     <h3>Preamble Rows</h3>
     {{ macros.properties_table(schema['preamble_rows'], required) }}
-  {% endif %}
-  {% if 'data_columns' in schema %}
+  {% elif 'data_columns' in schema %}
     <h3>Data Columns</h3>
     {% for table_name, table_schema in schema['data_columns'].items() %}
       <h4>{{ table_name }}</h4>
@@ -24,5 +23,7 @@
     {% for name, worksheet_schema in schema['properties']['worksheets'].items() %}
       {{ worksheet_tables(name, worksheet_schema, schema['required']) }}
     {% endfor %}
+    
+    {{ macros.definitions_table(schema, schema['required'])}}
   </div>
 {% endblock %}

@@ -5,7 +5,10 @@
   {{ macros.header(schema, scope) }}
 
   <div class="container">
-    {{ macros.properties_table(schema['properties'], schema['required'])}}
+    <h3>Properties</h3>
+    {{ macros.properties_table(schema, schema['required'])}}
+
+    {{ macros.definitions_table(schema, schema['required'])}}
   </div>
 
 {% endblock %}

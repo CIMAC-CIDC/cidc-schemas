@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "rna_expression_artifact",
+  "title": "RNA Gene Expression Artifact",
+  "type": "object",
+  "description": "Additional properties to describe a RNA Artifact for expression analysis.",
+  "allOf": [{ "$ref": "ngs_artifact" }],
+  "properties": {
+    "enrichment_method": {
+      "description": "Method used for enriching for mRNA",
+      "type": "string",
+      "enum": [
+        "PolyA capture",
+        "Transcriptome capture",
+        "Ribo minus"
+      ]
+    },
+    "enrichment_vendor_kit": {
+      "description": "Vendor for the kit used for enrichment, e.g. Twist, Agilent, IDT",
+      "type": "string",
+      "enum": [
+       "Illumina - TruSeq Stranded PolyA mRNA",
+        "Agilent",
+        "Twist",
+        "IDT",
+        "NEB",
+        "Broad - Exome Baits"
+      ]
+    },
+    "enrichment_lot": {
+      "description": "Lot number for the enrichment kit",
+      "type": "string"
+    },
+    "capture_date": {
+      "description": "Date of the hybrid capture enrichment",
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": ["bait_lot", "bait_vendor", "bait_version", "capture_date"]
+}

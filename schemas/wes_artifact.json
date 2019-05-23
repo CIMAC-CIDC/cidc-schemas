@@ -4,24 +4,19 @@
   "title": "Whole Exome Sequencing Artifact",
   "type": "object",
   "description": "Additional properties to describe a Whole Exome Sequencing Artifact.",
-  "links": [
-    {
-      "link": {
-        "cardinality": "exactly_one",
-        "linked_to": "ngs_artifact"
-      }
-    }
-  ],
+  "allOf": [{ "$ref": "ngs_artifact" }],
   "properties": {
-    "bait_vendor": {
+    "enrichment_vendor_kit": {
       "description": "Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT",
-      "type": "string"
+      "type": "string",
+      "enum": [
+       "Agilent - Human All Exon V7",
+        "Twist",
+        "IDT",
+        "NEB"
+      ]
     },
-    "bait_version": {
-      "description": "The version of the bait set used, e.g. Human All Exon V7",
-      "type": "string"
-    },
-    "bait_lot": {
+    "enrichment_vendor_lot": {
       "description": "Lot number for the bait set",
       "type": "string"
     },

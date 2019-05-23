@@ -1,10 +1,10 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "wes",
-  "title": "Metadata file for WES",
+  "$id": "rna_expression",
+  "title": "Metadata file for RNA expression",
   "type": "object",
   "category": "metadata",
-  "description": "Metadata information for whole exome sequencing analysis.\n",
+  "description": "Metadata information for rna expression analysis.\n",
   "properties": {
     "worksheets": {
       "WES": {
@@ -12,8 +12,11 @@
           "creator": {
             "$ref": "artifact.json#properties/creator"
           },
+          "enrichment method": {
+            "$ref": "rna_expression_artifact.json#properties/enrichment_method"
+          },
           "enrichment kit": {
-            "$ref": "wes_artifact.json#properties/enrichment_vendor_kit"
+            "$ref": "rna_expression_artifact.json#properties/enrichment_vendor_kit"
           },
           "library kit vendor": {
             "$ref": "ngs_artifact.json#properties/library_vendor_kit"
@@ -46,13 +49,13 @@
               "$ref": "ngs_artifact.json#properties/library_kit_lot"
             },
             "enrichment lot": {
-              "$ref": "wes_artifact.json#properties/enrichment_vendor_lot"
+              "$ref": "rna_expression_artifact.json#properties/enrichment_vendor_lot"
             },
             "library prep date": {
               "$ref": "ngs_artifact.json#properties/library_prep_date"
             },
             "capture date": {
-              "$ref": "wes_artifact.json#properties/capture_date"
+              "$ref": "rna_expression_artifact.json#properties/capture_date"
             },
             "dna input ng": {
               "$ref": "ngs_artifact.json#properties/input_ng"

@@ -14,20 +14,22 @@
   ],
   "properties": {
     "sequencer_platform": {
-      "description": "Sequencing Platform, eg. Illumina, IonTorrent",
-      "type": "string"
-    },
-    "sequencer_model": {
       "description": "Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.",
-      "type": "string"
+      "type": "string",
+      "enum": [
+        "Illumina - HiSeq 2500",
+        "Illumina - HiSeq 3000",
+        "Illumina - NextSeq 550",
+        "Illumina - HiSeq 4000",
+        "Illumina - NovaSeq 6000"
+      ]
     },
-    "library_kit_vendor": {
+    "library_vendor_kit": {
       "description": "Vendor for the library construction kit, e.g. KAPA",
-      "type": "string"
-    },
-    "library_kit_version": {
-      "description": "The version of the library construction kit used, e.g. Hyper Prep",
-      "type": "string"
+      "type": "string",
+      "enum": [
+        "KAPA - Hyper Prep"
+      ]
     },
     "library_kit_lot": {
       "description": "Lot number for the library construction kit",
@@ -40,51 +42,59 @@
     },
     "read_length": {
       "description": "Number of cycles for each sequencing read",
-      "type": "integer"
+      "type": "integer",
+      "exclusiveMinimum" : 0,
+      "maximum" : 200
     },
     "library_prep_date": {
       "description": "Date of library construction.",
       "type": "string",
       "format": "date"
     },
-    "dna_input_ng": {
-      "description": "Amount of DNA (in ng) used for library construction",
-      "type": "integer"
+    "input_ng": {
+      "description": "Amount of DNA/RNA (in ng) used for library construction",
+      "type": "integer",
+      "exclusiveMinimum" : 0,
+      "maximum" : 1000
     },
     "library_yield_ng": {
       "description": "Resulting yield (in ng) from library construction",
-      "type": "integer"
+      "type": "integer",
+      "exclusiveMinimum" : 0,
+      "maximum" : 2000
     },
     "average_insert_size": {
       "description": "The average insert size for the library",
-      "type": "integer"
+      "type": "integer",
+      "exclusiveMinimum" : 0,
+      "maximum" : 1000
     },
     "forward_fastq": {
-      "description": "Fastq file for the forward read",
-      "type": "string"
+      "description": "Fastq file for the forward reads",
+      "type": "string",
+      "pattern": "^gs://.+$"
     },
     "reverse_fastq": {
-      "description": "Fastq file for the reverse read",
-      "type": "string"
+      "description": "Fastq file for the reverse reads",
+      "type": "string",
+      "pattern": "^gs://.+$"
     },
     "read_group_mapping_file": {
       "description": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
-      "type": "string"
+      "type": "string",
+      "pattern": "^gs://.+$"
     }
   },
   "required": [
     "library_kit_lot",
     "library_prep_date",
-    "dna_input_ng",
+    "input_ng",
     "library_yield_ng",
     "average_insert_size",
     "forward_fastq",
-    "reverse_fastq",
     "read_group_mapping_file",
-    "library_kit_vendor",
-    "library_kit_version",
+    "library_vendor_kit",
     "sequencer_platform",
-    "sequencer_model",
     "paired_end_reads",
     "read_length"
   ]

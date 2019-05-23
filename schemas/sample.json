@@ -111,6 +111,15 @@
         "Normal Adjacent",
         "Other"
       ]
+    },
+    "genomic_source": {
+      "description": "The type of material submitted - tumor/normal/etc",
+      "type": "string",
+      "enum": [
+        "Tumor",
+        "Normal",
+        "Metastasis"
+      ]
     }
   },
   "required": ["cimac_sample_id", "site_sample_id"]

@@ -149,8 +149,11 @@ class XlTemplateReader:
         """
         invalid_messages = []
 
+        required = template.template_schema.get('required', [])
+        logger.warning(required)
+
         for name, schema in template.worksheets.items():
-            errors = self._validate_worksheet(name, schema)
+            errors = self._validate_worksheet(name, schema, required)
             invalid_messages.extend(errors)
 
         if invalid_messages:
@@ -159,7 +162,7 @@ class XlTemplateReader:
 
         return True
 
-    def _validate_worksheet(self, worksheet_name: str, ws_schema: dict) -> List[str]:
+    def _validate_worksheet(self, worksheet_name: str, ws_schema: dict, required: List[str]) -> List[str]:
         """Validate rows in a worksheet, returning a list of validation error messages."""
 
         invalid_messages = []
@@ -172,7 +175,8 @@ class XlTemplateReader:
             for key, *values in row_groups[RowType.PREAMBLE]:
                 value = values[0]
                 schema = self._get_schema(key, preamble_schemas)
-                invalid_reason = validate_instance(value, schema)
+                is_required = key in required
+                invalid_reason = validate_instance(value, schema, is_required)
 
                 if invalid_reason:
                     invalid_messages.append(
@@ -197,8 +201,9 @@ class XlTemplateReader:
 
             for data_row in row_groups[RowType.DATA]:
                 for col, value in enumerate(data_row):
+                    is_required = headers[col] in required
                     invalid_reason = validate_instance(
-                        value, data_schemas[col])
+                        value, data_schemas[col], is_required)
 
                     if invalid_reason:
                         invalid_messages.append(

@@ -12,6 +12,9 @@
           "creator": {
             "$ref": "artifact.json#properties/creator"
           },
+          "enrichment method": {
+            "$ref": "rna_expression_artifact.json#properties/enrichment_method"
+          },
           "enrichment kit": {
             "$ref": "rna_expression_artifact.json#properties/enrichment_vendor_kit"
           },
@@ -38,6 +41,9 @@
             },
             "cimac aliquot id": {
               "$ref": "aliquot.json#properties/cimac_aliquot_id"
+            },
+            "genomic source": {
+              "$ref": "sample.json#properties/genomic_source"
             },
             "library kit lot": {
               "$ref": "ngs_artifact.json#properties/library_kit_lot"

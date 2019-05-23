@@ -4,7 +4,7 @@
   "title": "RNA Gene Expression Artifact",
   "type": "object",
   "description": "Additional properties to describe a RNA Artifact for expression analysis.",
-  "allOf": [{ "$ref": "ngs_artifact" }],
+  "allOf": [{ "$ref": "ngs_artifact.json" }],
   "properties": {
     "enrichment_method": {
       "description": "Method used for enriching for mRNA",

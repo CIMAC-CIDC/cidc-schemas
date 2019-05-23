@@ -60,13 +60,20 @@ def _resolve_refs(base_uri: str, json_spec: dict):
     return _do_resolve(json_spec)
 
 
-def validate_instance(instance: str, schema: dict) -> Optional[str]:
+def validate_instance(instance: str, schema: dict, required: bool) -> Optional[str]:
     """
     Validate a data instance against a JSON schema.
 
     Returns None if `instance` is valid, otherwise returns reason for invalidity.
     """
     try:
+        if not instance:
+            if required:
+                raise jsonschema.ValidationError(
+                    'found empty value for required field')
+            else:
+                return None
+
         instance = convert(schema.get('format') or schema['type'], instance)
 
         jsonschema.validate(

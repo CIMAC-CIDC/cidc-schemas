@@ -51,14 +51,32 @@ def search_error_message(workbook, template, error, msg_fragment):
 
 def test_missing_headers(tiny_template):
     """Test that a spreadsheet with empty headers raises an assertion error"""
-    tiny_missing = {
+    tiny_missing_header = {
         'TEST_SHEET': [
             (RowType.HEADER, 'test_property', None, 'test_time'),
         ]
     }
 
-    search_error_message(tiny_missing, tiny_template,
+    search_error_message(tiny_missing_header, tiny_template,
                          AssertionError, 'empty header cell')
+
+
+def test_missing_required_value(tiny_template):
+    """Test that spreadsheet with a missing value marked required raises an assertion error"""
+    tiny_missing_value = {
+        'TEST_SHEET': [
+            (RowType.HEADER, 'test_property', 'test_date', 'test_time'),
+            (RowType.DATA, None, '6/11/12', '10:44:61'),
+        ]
+    }
+
+    # tiny_template has no required fields, so this should be valid
+    assert XlTemplateReader(tiny_missing_value).validate(tiny_template)
+
+    # add a required field
+    tiny_template.template_schema['required'] = ['test_property']
+    search_error_message(tiny_missing_value,
+                         tiny_template, ValidationError, 'empty value for required field')
 
 
 def test_wrong_number_of_headers(tiny_template):

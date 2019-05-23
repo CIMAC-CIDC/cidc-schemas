@@ -18,6 +18,10 @@
           "type": "string",
           "format": "date"
         },
+        "imaging_status": {
+          "type": "string",
+          "enum": ["Yes", "No"]
+        },
         "project_inform_folder": {
           "type": "string"
         },

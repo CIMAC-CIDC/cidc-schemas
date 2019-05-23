@@ -127,10 +127,10 @@
               "$ref": "assays/micsss.json#definitions/data_properties/properties/internal_slide_id"
             },
             "time_point": {
-              "$ref": "assays/components/identifier.json#properties/time_point"
+              "$ref": "assays/components/identifiers.json#properties/time_point"
             },
             "protocol_name": {
-              "$ref": "assays/micsss.json#definitions/data_properties/properties/protcol_name"
+              "$ref": "assays/micsss.json#definitions/data_properties/properties/protocol_name"
             },
             "staining_date": {
               "$ref": "assays/micsss.json#definitions/data_properties/properties/staining_date"

@@ -20,8 +20,7 @@
           "type": "string"
         },
         "isotype": {
-          "type": "string",
-          "format": "time"
+          "type": "string"
         },
         "primary_antibody_dilution": {
           "type": "string"

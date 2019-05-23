@@ -1,7 +1,10 @@
+import os
 import json
 import jinja2
 
-DOC_DIR = "docs"
+DOCS_DIR =os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.join(DOCS_DIR, '..')
+SITE_DIR = os.path.join(DOCS_DIR, "site")
 
 # Get the Specified JSON File
 def get_json(file_name):
@@ -47,7 +50,7 @@ def extract_properties(properties, property_dict, required):
 
 # Create HTML for the Specified Entity
 def processEntity(entity_name, template_env, property_dict):
-    file_name = "schemas/%s.json" % entity_name
+    file_name = os.path.join(ROOT_DIR, "schemas", "%s.json" % entity_name)
     current_json = get_json(file_name)    
 
     # find required properties
@@ -65,14 +68,14 @@ def processEntity(entity_name, template_env, property_dict):
         sorted_property_list=sorted_property_list,
         property_dict=property_dict)
     print ("Creating:  %s.html" % entity_name)
-    fd = open("%s/%s.html" % (DOC_DIR, entity_name), "w")
+    fd = open("%s/%s.html" % (SITE_DIR, entity_name), "w")
     fd.write(output_text)
     fd.close()
     return current_json
 
 # Create HTML for the Specified Manifest
 def processManifest(manifest_name, entity_json_set, property_dict, column_descriptions, template_env):
-    file_name = "manifests/%s.json" % manifest_name
+    file_name = os.path.join("manifests", manifest_name, "%s.json" % manifest_name)
     current_json = get_json(file_name)    
 
     template = template_env.get_template("manifest.html")
@@ -81,14 +84,14 @@ def processManifest(manifest_name, entity_json_set, property_dict, column_descri
         property_dict=property_dict,
         column_descriptions=column_descriptions)
     print ("Creating:  %s.html" % manifest_name)
-    fd = open("%s/%s.html" % (DOC_DIR, manifest_name), "w")
+    fd = open("%s/%s.html" % (SITE_DIR, manifest_name), "w")
     fd.write(output_text)
     fd.close()
     return current_json
 
 def generate_docs():
 
-  templateLoader = jinja2.FileSystemLoader(searchpath="templates/")
+  templateLoader = jinja2.FileSystemLoader(os.path.join(DOCS_DIR, "templates"))
   templateEnv = jinja2.Environment(loader=templateLoader)
   property_dict = {}
 
@@ -124,7 +127,7 @@ def generate_docs():
   print ("Creating index.html")
   outputText = template.render(entity_list=entity_list, entity_json_set=entity_json_set,
       manifest_list=manifest_list, manifest_json_set=manifest_json_set)
-  fd = open("%s/index.html" % DOC_DIR, "w")
+  fd = open("%s/index.html" % SITE_DIR, "w")
   fd.write(outputText)
   fd.close()
 

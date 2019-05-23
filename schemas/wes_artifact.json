@@ -1,10 +1,10 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "wes_artifact",
+  "$id": "wes_artifact",
   "title": "Whole Exome Sequencing Artifact",
   "type": "object",
   "description": "Additional properties to describe a Whole Exome Sequencing Artifact.",
-  "allOf": [{ "$ref": "ngs_artifact" }],
+  "allOf": [{ "$ref": "ngs_artifact.json" }],
   "properties": {
     "enrichment_vendor_kit": {
       "description": "Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT",
@@ -26,5 +26,5 @@
       "format": "date"
     }
   },
-  "required": ["bait_lot", "bait_vendor", "bait_version", "capture_date"]
+  "required": ["enrichment_vendor_kit", "enrichment_vendor_lot", "capture_date"]
 }

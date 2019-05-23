@@ -1,5 +1,6 @@
 {
-  "id": "aliquot",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$id": "aliquot",
   "title": "Aliquot",
   "type": "object",
   "description": "Pertaining to a portion (volume or weight) of the whole.",
@@ -23,10 +24,6 @@
     "volume_quantity": {
       "description": "Volume of sample shipped.",
       "type": "number"
-    },
-    "units": {
-      "description": "Unit of each sample. Example: ml.",
-      "type": "string"
     },
     "pbmc_aliquoted": {
       "description": "Site or biobank provides the final number of PBMCs per vial that were frozen.",
@@ -65,7 +62,8 @@
         "Sample Returned",
         "Sample Exhausted",
         "Remainder used for other Assay",
-        "Other"
+        "Other",
+        "Sample Leftover"
       ]
     },
     "material_extracted": {
@@ -77,8 +75,8 @@
       "description": "The concentration of biological material that was extracted from this sample.",
       "type": "string"
     },
-    "extracted_units": {
-      "description": "The unit of biological material that was extracted from this sample.",
+    "units": {
+      "description": "The unit of biological material from this sample.",
       "type": "string",
       "enum": [
         "\u00b5L",
@@ -98,6 +96,26 @@
     "sample_amount": {
       "description": "The amount of extracted sample shipped. Example: 400 ng",
       "type": "string"
+    },
+    "lymphocyte_influx": {
+      "description": "Extent of lymphocytic infiltration into the tumor stroma or surrounding environment. Example: 2",
+      "type": "string"
+    },
+    "viable_stroma_percent_area": {
+      "description": "Percent area of viable tissue . Example: 10",
+      "type": "string"
+    },
+    "viable_tumor_percent_area": {
+      "description": "Percent area that contains viable tumor cells . Example: 60",
+      "type": "number"
+    },
+    "necrosis_percent_area": {
+      "description": "Percent area of necrotic tissue . Example: 5",
+      "type": "number"
+    },
+    "fibrosis_percent_area": {
+      "description": "Percent area of fibrotic area. Example: 15",
+      "type": "number"
     }
   },
   "required": ["cimac_aliquot_id"]

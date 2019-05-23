@@ -27,7 +27,7 @@
         "Broad - Exome Baits"
       ]
     },
-    "enrichment_lot": {
+    "enrichment_vendor_lot": {
       "description": "Lot number for the enrichment kit",
       "type": "string"
     },
@@ -37,5 +37,5 @@
       "format": "date"
     }
   },
-  "required": ["bait_lot", "bait_vendor", "bait_version", "capture_date"]
+  "required": ["enrichment_method", "enrichment_vendor_kit", "enrichment_vendor_lot", "capture_date"]
 }

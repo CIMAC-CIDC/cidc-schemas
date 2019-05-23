@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "user",
+  "$id": "user",
   "title": "User",
   "type": "object",
   "description": "Any user of the CIDC platform.",

@@ -24,7 +24,7 @@
         "Illumina - NovaSeq 6000"
       ]
     },
-    "library_kit_vendor": {
+    "library_vendor_kit": {
       "description": "Vendor for the library construction kit, e.g. KAPA",
       "type": "string",
       "enum": [
@@ -35,13 +35,10 @@
       "description": "Lot number for the library construction kit",
       "type": "string"
     },
-    "single_or_paired_reads": {
+    "paired_end_reads": {
       "description": "Indicate if the sequencing was performed paired or single ended",
       "type": "string",
-      "enum": [
-        "Single End",
-        "Paired End"
-      ]
+      "enum": ["Paired", "Single"]
     },
     "read_length": {
       "description": "Number of cycles for each sequencing read",
@@ -75,32 +72,29 @@
     "forward_fastq": {
       "description": "Fastq file for the forward reads",
       "type": "string",
-      "pattern": "^gs:\\\\.+$"
+      "pattern": "^gs://.+$"
     },
     "reverse_fastq": {
       "description": "Fastq file for the reverse reads",
       "type": "string",
-      "pattern": "^gs:\\\\.+$"
+      "pattern": "^gs://.+$"
     },
     "read_group_mapping_file": {
       "description": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
       "type": "string",
-      "pattern": "^gs:\\\\.+$"
+      "pattern": "^gs://.+$"
     }
   },
   "required": [
     "library_kit_lot",
     "library_prep_date",
-    "dna_input_ng",
+    "input_ng",
     "library_yield_ng",
     "average_insert_size",
     "forward_fastq",
-    "reverse_fastq",
     "read_group_mapping_file",
-    "library_kit_vendor",
-    "library_kit_version",
+    "library_vendor_kit",
     "sequencer_platform",
-    "sequencer_model",
     "paired_end_reads",
     "read_length"
   ]

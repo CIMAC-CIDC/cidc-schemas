@@ -1,5 +1,5 @@
 {
-  "id": "shipping_core",
+  "$id": "shipping_core",
   "title": "Core Shipping Details",
   "description": "Core shipping details for a manifest.",
   "type": "object",
@@ -67,11 +67,7 @@
     "courier": {
       "description": "Courier utilized for shipment.",
       "type": "string",
-      "enum": [
-        "FEDEX",
-        "USPS",
-        "UPC"
-      ]
+      "enum": ["FEDEX", "USPS", "UPC"]
     },
     "tracking_number": {
       "description": "Air bill number assigned to shipment. Example: 4567788343.",
@@ -118,7 +114,5 @@
       "type": "string"
     }
   },
-  "required": [
-    "request"
-  ]
+  "required": ["request"]
 }

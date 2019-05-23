@@ -43,7 +43,7 @@ def _resolve_refs(base_uri: str, json_spec: dict):
     resolver = jsonschema.RefResolver(base_uri, json_spec)
 
     def _do_resolve(node):
-        if '$ref' in node:
+        if isinstance(node, collections.Mapping) and '$ref' in node:
             # We found a ref, so return it
             with resolver.resolving(node['$ref']) as resolved:
                 return resolved

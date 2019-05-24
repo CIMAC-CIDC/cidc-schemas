@@ -27,9 +27,10 @@ py.test --cache-clear tests
 
 ### Building documentation
 
-To build the documentation, run the following command:
+To build the documentation, run the following commands:
 
 ```bash
+python setup.py install # install helpers from the cidc_schemas library
 python docs/generate_docs.py
 ```
 

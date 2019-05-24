@@ -45,42 +45,11 @@ def load_schemas() -> dict:
     return schemas
 
 
-def extract_properties(properties, property_dict, required):
-    """Extract Properties"""
+def generate_docs(out_directory: str = HTML_DIR):
+    """
+    Generate documentation based on the schemas found in `SCHEMAS_DIR`.
+    """
 
-    # loop over properties
-    for current_property in properties:
-        target_property = {}
-        target_property["description"] = properties[current_property]["description"].replace(
-            "'", "")
-        target_property["type"] = properties[current_property]["type"]
-        try:
-            target_property["format"] = properties[current_property]["format"]
-        except KeyError:
-            target_property["format"] = ""
-
-        try:
-            if current_property in required:
-                required_property = "[Required]"
-            else:
-                required_property = "[Optional]"
-            target_property["required"] = required_property
-        except KeyError:
-            target_property["required"] = "[Optional]"
-
-        try:
-            item_list = properties[current_property]["enum"]
-            target_property["enum"] = item_list
-        except KeyError:
-            try:
-                item_list = properties[current_property]["items"]["enum"]
-                target_property["enum"] = item_list
-            except KeyError:
-                target_property["enum"] = []
-        property_dict[current_property] = target_property
-
-
-def generate_docs():
     templateLoader = jinja2.FileSystemLoader(TEMPLATES_DIR)
     templateEnv = jinja2.Environment(loader=templateLoader)
 
@@ -88,7 +57,7 @@ def generate_docs():
     schemas = load_schemas()
     index_template = templateEnv.get_template('index.j2')
     index_html = index_template.render(schema_directories=schemas)
-    with open(os.path.join(HTML_DIR, 'index.html'), 'w') as f:
+    with open(os.path.join(out_directory, 'index.html'), 'w') as f:
         f.write(index_html)
 
     entity_template = templateEnv.get_template('entity.j2')
@@ -106,7 +75,7 @@ def generate_docs():
             entity_html = template.render(
                 name=name, schema=schema, scope=directory)
             file_name = f'{directory}.{name}'
-            with open(os.path.join(HTML_DIR, file_name), 'w') as f:
+            with open(os.path.join(out_directory, file_name), 'w') as f:
                 f.write(entity_html)
 
 

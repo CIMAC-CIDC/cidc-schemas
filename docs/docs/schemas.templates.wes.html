@@ -1,0 +1,435 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CIDC Schemas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main role="main">
+      
+
+  
+    <div class="container">
+        <p>
+            <a href="index.html">CIDC Data Model</a>
+        </p>
+        <h1>Metadata file for WES</h1>
+        <p>
+            <b>Description:</b>  Metadata information for whole exome sequencing analysis.
+
+        </p>
+        
+    </div>
+
+  <div class="container">
+    
+      <h3>Worksheet - WES</h3>
+  
+    <h4>Preamble Rows</h4>
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Required/Optional</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td><a name="creator"></a>creator</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.artifact.html#creator">artifact#creator</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="enrichment kit"></a>enrichment kit</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.wes_artifact.html#enrichment_vendor_kit">wes_artifact#enrichment_vendor_kit</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="library kit vendor"></a>library kit vendor</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.ngs_artifact.html#library_vendor_kit">ngs_artifact#library_vendor_kit</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="sequencer platform"></a>sequencer platform</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.ngs_artifact.html#sequencer_platform">ngs_artifact#sequencer_platform</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="paired end reads"></a>paired end reads</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.ngs_artifact.html#paired_end_reads">ngs_artifact#paired_end_reads</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="read length"></a>read length</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.ngs_artifact.html#read_length">ngs_artifact#read_length</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="lead organization study id"></a>lead organization study id</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.clinical_trial.html#lead_organization_study_id">clinical_trial#lead_organization_study_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+    </table>
+  
+  
+    <h4>Data Columns</h4>
+    
+      <h5 class="text-muted">Samples</h4>
+      
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Required/Optional</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td><a name="cimac participant id"></a>cimac participant id</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.participant.html#cimac_participant_id">participant#cimac_participant_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="cimac aliquot id"></a>cimac aliquot id</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.aliquot.html#cimac_aliquot_id">aliquot#cimac_aliquot_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="genomic source"></a>genomic source</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.sample.html#genomic_source">sample#genomic_source</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="library kit lot"></a>library kit lot</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.ngs_artifact.html#library_kit_lot">ngs_artifact#library_kit_lot</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="enrichment lot"></a>enrichment lot</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.wes_artifact.html#enrichment_vendor_lot">wes_artifact#enrichment_vendor_lot</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="library prep date"></a>library prep date</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.ngs_artifact.html#library_prep_date">ngs_artifact#library_prep_date</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="capture date"></a>capture date</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.wes_artifact.html#capture_date">wes_artifact#capture_date</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="dna input ng"></a>dna input ng</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.ngs_artifact.html#input_ng">ngs_artifact#input_ng</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="library yield ng"></a>library yield ng</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.ngs_artifact.html#library_yield_ng">ngs_artifact#library_yield_ng</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="average insert size"></a>average insert size</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.ngs_artifact.html#average_insert_size">ngs_artifact#average_insert_size</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="forward fastq"></a>forward fastq</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.ngs_artifact.html#forward_fastq">ngs_artifact#forward_fastq</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="reverse fastq"></a>reverse fastq</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.ngs_artifact.html#reverse_fastq">ngs_artifact#reverse_fastq</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="read group mapping file"></a>read group mapping file</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="schemas.ngs_artifact.html#read_group_mapping_file">ngs_artifact#read_group_mapping_file</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+    </table>
+    
+  
+    
+    
+    
+  </div>
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+    

@@ -114,6 +114,3 @@ class Template:
         from .template_reader import XlTemplateReader
 
         return XlTemplateReader.from_excel(xlsx_path).validate(self)
-
-
-Template

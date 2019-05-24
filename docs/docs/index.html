@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title></title>
+    <title>CIDC Schemas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -22,11 +22,10 @@
     </style>
   </head>
   <body>
-    
-<main role="main">
+    <main role="main">
+      
 
     <div class="container">
-        <p/>
         <p>CIDC Data Model</p>
 
         <h1>CIDC Data Model</h1>
@@ -35,87 +34,211 @@
             Draft 0.1 of the CIDC Data Model.
         </div>
 
+        
+            <h5>Schemas</h5>
+            <p>
 
-        <h5>Core Entities</h5>
-        <p>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Entity</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                
+                <tr>
+                    <td width=25%><a href='schemas.aliquot.html'>Aliquot</a></td>
+                    <td>Pertaining to a portion (volume or weight) of the whole.</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.rna_expression_artifact.html'>RNA Gene Expression Artifact</a></td>
+                    <td>Additional properties to describe a RNA Artifact for expression analysis.</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.wes_artifact.html'>Whole Exome Sequencing Artifact</a></td>
+                    <td>Additional properties to describe a Whole Exome Sequencing Artifact.</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.shipping_core.html'>Core Shipping Details</a></td>
+                    <td>Core shipping details for a manifest.</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.olink_artifact.html'>olink Artifact</a></td>
+                    <td>Additional properties to describe a olink Artifact.</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.ngs_artifact.html'>NGS Sequencing Artifact</a></td>
+                    <td>Additional properties to describe a NGS Sequencing Artifact.</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.user.html'>User</a></td>
+                    <td>Any user of the CIDC platform.</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.sample.html'>Sample</a></td>
+                    <td>Any material sample taken from a biological entity for testing, diagnostic, propagation, treatment or research purposes, including a sample obtained from a living organism or taken from the biological object after halting of all its life functions. Biospecimen can contain one or more components including but not limited to cellular molecules, cells, tissues, organs, body fluids, embryos, and body excretory products.</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.clinical_trial.html'>Clinical Trial</a></td>
+                    <td>Encapsulates information regarding a clinical trial.
+</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.image.html'>Image</a></td>
+                    <td>Base information about the aquisition and analysis of a quantitative pathology image
+</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.participant.html'>Participant</a></td>
+                    <td>The collection of all data related to a specific participant in the context of a specific clinical trial.
+</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.artifact.html'>Artifact</a></td>
+                    <td>Any file artifact associated with a clinical trial.</td>
+                </tr>
+                
+            </table>
+        
+            <h5>Schemas > Assays</h5>
+            <p>
 
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Entity</th>
-                <th>Description</th>
-            </tr>
-            </thead>
-            
-            <tr>
-                <td width=25%><a href='clinical_trial.html'>Clinical Trial</a></td>
-                <td>Encapsulates information regarding a clinical trial.
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Entity</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                
+                <tr>
+                    <td width=25%><a href='schemas.assays.mif.html'>MIF</a></td>
+                    <td>Base information about the aquisition and analysis of a quantitative pathology image
 </td>
-            </tr>
-            
-            <tr>
-                <td width=25%><a href='participant.html'>Participant</a></td>
-                <td>The collection of all data related to a specific participant in the context of a specific clinical trial.
-</td>
-            </tr>
-            
-            <tr>
-                <td width=25%><a href='sample.html'>Sample</a></td>
-                <td>Any material sample taken from a biological entity for testing, diagnostic, propagation, treatment or research purposes, including a sample obtained from a living organism or taken from the biological object after halting of all its life functions. Biospecimen can contain one or more components including but not limited to cellular molecules, cells, tissues, organs, body fluids, embryos, and body excretory products.</td>
-            </tr>
-            
-            <tr>
-                <td width=25%><a href='aliquot.html'>Aliquot</a></td>
-                <td>Pertaining to a portion (volume or weight) of the whole.</td>
-            </tr>
-            
-            <tr>
-                <td width=25%><a href='user.html'>User</a></td>
-                <td>Any user of the CIDC platform.</td>
-            </tr>
-            
-            <tr>
-                <td width=25%><a href='artifact.html'>Artifact</a></td>
-                <td>Any file artifact associated with a clinical trial.</td>
-            </tr>
-            
-            <tr>
-                <td width=25%><a href='wes_artifact.html'>Whole Exome Sequencing Artifact</a></td>
-                <td>Additional properties to describe a Whole Exome Sequencing Artifact.</td>
-            </tr>
-            
-            <tr>
-                <td width=25%><a href='shipping_core.html'>Core Shipping Details</a></td>
-                <td>Core shipping details for a manifest.</td>
-            </tr>
-            
-        </table>
+                </tr>
+                
+            </table>
+        
+            <h5>Schemas > Assays > Components</h5>
+            <p>
 
-        <h5>Shipping/Receiving Manifests</h5>
-        <p>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Entity</th>
-                <th>Description</th>
-            </tr>
-            </thead>
-            
-            <tr>
-                <td width=25%><a href='pbmc.html'>Shipping manifest for PBMC samples</a></td>
-                <td>Shipping / receiving manifest for transferring PBMC samples.
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Entity</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                
+                <tr>
+                    <td width=25%><a href='schemas.assays.components.antibody.html'>Antibody</a></td>
+                    <td>Common information about an antibody used in a number of immune-oncology assays
 </td>
-            </tr>
-            
-        </table>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.assays.components.image.html'>Image</a></td>
+                    <td>Base information about the aquisition and analysis of a quantitative pathology image
+</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.assays.components.identifiers.html'>Image</a></td>
+                    <td>Base information about the aquisition and analysis of a quantitative pathology image
+</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.assays.components.mif_antibody.html'>Multiplex Immunoflourescence Antibody</a></td>
+                    <td>Data specific to antibody prepration on the multiplex immunoflourescence platform.</td>
+                </tr>
+                
+            </table>
+        
+            <h5>Schemas > Templates</h5>
+            <p>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Entity</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                
+                <tr>
+                    <td width=25%><a href='schemas.templates.wes.html'>Metadata file for WES</a></td>
+                    <td>Metadata information for whole exome sequencing analysis.
+</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.templates.olink.html'>Metadata file for olink</a></td>
+                    <td>Metadata information for olink analysis.
+</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.templates.rna_expression.html'>Metadata file for RNA expression</a></td>
+                    <td>Metadata information for rna expression analysis.
+</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.templates.plasma.html'>Shipping manifest for Plasma samples</a></td>
+                    <td>Shipping / receiving manifest for transferring Plasma samples.
+</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.templates.hne.html'>Shipping manifest for H&E slides</a></td>
+                    <td>Shipping / receiving manifest for transferring H&E slides.
+</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.templates.analyte.html'>Shipping manifest for Analyte</a></td>
+                    <td>Shipping / receiving manifest for transferring Aanlyte.
+</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.templates.whole_blood.html'>Shipping manifest for Whole Blood</a></td>
+                    <td>Shipping / receiving manifest for transferring Whole Blood.
+</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.templates.pbmc.html'>Shipping manifest for PBMC samples</a></td>
+                    <td>Shipping / receiving manifest for transferring PBMC samples.
+</td>
+                </tr>
+                
+                <tr>
+                    <td width=25%><a href='schemas.templates.mIF_template.html'>Metadata file for mIF</a></td>
+                    <td>Metadata information for multiplex immunoflouresence(mIF).</td>
+                </tr>
+                
+            </table>
+        
     </div>
-</main>
 
-   
-    
-    
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>
+    

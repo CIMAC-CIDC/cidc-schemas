@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CIDC Schemas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main role="main">
+      
+
+  
+    <div class="container">
+        <p>
+            <a href="index.html">CIDC Data Model</a>
+        </p>
+        <h1>Clinical Trial</h1>
+        <p>
+            <b>Description:</b>  Encapsulates information regarding a clinical trial.
+
+        </p>
+        
+    </div>
+
+  <div class="container">
+    <h3>Properties</h3>
+    
+        
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Required/Optional</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td><a name="nct_id"></a>nct_id</td>
+                <td width=25%>
+                    ClinicalTrials.gov identifier. Example: NCT03731260.
+                </td>
+                <td>
+                    
+                        &lt;string&gt; 
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="nci_id"></a>nci_id</td>
+                <td width=25%>
+                    NCI Trial Identifier. Example: NCI22345.
+                </td>
+                <td>
+                    
+                        &lt;string&gt; 
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="lead_organization_study_id"></a>lead_organization_study_id</td>
+                <td width=25%>
+                    Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+                </td>
+                <td>
+                    
+                        &lt;string&gt; 
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        required
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="trial_name"></a>trial_name</td>
+                <td width=25%>
+                    Name of clinical trial.
+                </td>
+                <td>
+                    
+                        &lt;string&gt; 
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="trial_description"></a>trial_description</td>
+                <td width=25%>
+                    A brief description of the clinical trial.
+                </td>
+                <td>
+                    
+                        &lt;string&gt; 
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="trial_organization"></a>trial_organization</td>
+                <td width=25%>
+                    Name of the primary organization that oversees the clinical trial. Example: ECOG-ACRIN, SWOG, etc.
+                </td>
+                <td>
+                    
+                        &lt;string&gt; 
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="assay_list"></a>assay_list</td>
+                <td width=25%>
+                    List of approved assays to be performed on the clinical trial.
+                </td>
+                <td>
+                    
+                        &lt;array&gt; 
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+    </table>
+
+    
+  </div>
+
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+    

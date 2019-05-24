@@ -1,0 +1,14 @@
+{% import "macros.j2" as macros %}
+{% extends "base.j2" %}
+{% block content %}
+
+  {{ macros.header(schema, scope) }}
+
+  <div class="container">
+    <h3>Properties</h3>
+    {{ macros.properties_table(schema, schema['required'])}}
+
+    {{ macros.definitions_table(schema, schema['required'])}}
+  </div>
+
+{% endblock %}

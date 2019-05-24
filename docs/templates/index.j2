@@ -1,0 +1,34 @@
+{% extends "base.j2" %}
+{% block content %}
+
+    <div class="container">
+        <p>CIDC Data Model</p>
+
+        <h1>CIDC Data Model</h1>
+
+        <div class="alert alert-primary" role="alert">
+            Draft 0.1 of the CIDC Data Model.
+        </div>
+
+        {% for dirname, schemas in schema_directories.items() %}
+            <h5>{{ dirname.replace('.', ' > ').title() }}</h5>
+            <p>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Entity</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                {% for entity_path, entity_schema in schemas.items() %}
+                <tr>
+                    <td width=25%><a href='{{ dirname }}.{{ entity_path }}'>{{ entity_schema["title"] }}</a></td>
+                    <td>{{ entity_schema["description"] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endfor %}
+    </div>
+
+{% endblock %}

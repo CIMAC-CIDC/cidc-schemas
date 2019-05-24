@@ -1,0 +1,30 @@
+{% import "macros.j2" as macros %}
+{% extends "base.j2" %}
+
+{% macro worksheet_tables(name, schema, required) -%}
+  <h3>Worksheet - {{name}}</h3>
+  {% if 'preamble_rows' in schema %}
+    <h4>Preamble Rows</h4>
+    {{ macros.properties_table(schema['preamble_rows'], required) }}
+  {% endif %}
+  {% if 'data_columns' in schema %}
+    <h4>Data Columns</h4>
+    {% for table_name, table_schema in schema['data_columns'].items() %}
+      <h5 class="text-muted">{{ table_name }}</h4>
+      {{ macros.properties_table(table_schema, required) }}
+    {% endfor %}
+  {% endif %}
+{%- endmacro %}
+
+{% block content %}
+
+  {{ macros.header(schema) }}
+
+  <div class="container">
+    {% for name, worksheet_schema in schema['properties']['worksheets'].items() %}
+      {{ worksheet_tables(name, worksheet_schema, schema['required']) }}
+    {% endfor %}
+    
+    {{ macros.definitions_table(schema, schema['required'])}}
+  </div>
+{% endblock %}

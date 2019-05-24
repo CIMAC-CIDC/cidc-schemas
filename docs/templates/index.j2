@@ -11,7 +11,7 @@
         </div>
 
         {% for dirname, schemas in schema_directories.items() %}
-            <h5>{{ dirname }}</h5>
+            <h5>{{ dirname.replace('.', ' > ').title() }}</h5>
             <p>
 
             <table class="table table-striped">

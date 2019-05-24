@@ -2,14 +2,15 @@
 {% extends "base.j2" %}
 
 {% macro worksheet_tables(name, schema, required) -%}
-  <h2>{{name}}</h2>
+  <h3>Worksheet - {{name}}</h3>
   {% if 'preamble_rows' in schema %}
-    <h3>Preamble Rows</h3>
+    <h4>Preamble Rows</h4>
     {{ macros.properties_table(schema['preamble_rows'], required) }}
-  {% elif 'data_columns' in schema %}
-    <h3>Data Columns</h3>
+  {% endif %}
+  {% if 'data_columns' in schema %}
+    <h4>Data Columns</h4>
     {% for table_name, table_schema in schema['data_columns'].items() %}
-      <h4>{{ table_name }}</h4>
+      <h5 class="text-muted">{{ table_name }}</h4>
       {{ macros.properties_table(table_schema, required) }}
     {% endfor %}
   {% endif %}

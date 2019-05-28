@@ -1,13 +1,16 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "mif",
-  "title": "MIF",
+  "$id": "micsss",
+  "title": "MICSSS",
   "description": "Base information about the aquisition and analysis of a quantitative pathology image\n",
   "definitions": {
     "data_properties": {
       "type": "object",
       "properties": {
         "internal_slide_id": {
+          "type": "string"
+        },
+        "protocol_name": {
           "type": "string"
         },
         "staining_date": {
@@ -22,7 +25,7 @@
           "type": "string",
           "enum": ["Yes", "No"]
         },
-        "project_inform_folder": {
+        "project_qupath_folder": {
           "type": "string"
         },
         "exported_data_folder": {
@@ -51,7 +54,7 @@
         "antibody": {
           "type": "array",
           "items": {
-            "$ref": "assays/components/mif_antibody.json"
+            "$ref": "assays/components/micsss_antibody.json"
           }
         },
         "data": {

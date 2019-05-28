@@ -29,6 +29,9 @@
           },
           "lead organization study id": {
             "$ref": "clinical_trial.json#properties/lead_organization_study_id"
+          },
+          "Email address" : {
+            "$ref": "user.json#properties/preferred_email_address"
           }
         },
         "data_columns": {

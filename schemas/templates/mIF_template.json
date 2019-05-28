@@ -16,6 +16,9 @@
           "staining platform": {
             "$ref": "assays/components/image.json#properties/staining_platform"
           },
+          "autostainer model": {
+            "$ref": "assays/components/image.json#properties/autostainer_model"
+          },
           "image analysis software": {
             "$ref": "assays/components/image.json#properties/image_analysis_software"
           },
@@ -101,6 +104,9 @@
             },
             "imaging date": {
               "$ref": "assays/mif.json#definitions/data_properties/properties/imaging_date"
+            },
+            "imaging status": {
+              "$ref": "assays/mif.json#definitions/data_properties/properties/imaging_status"
             },
             "project inform folder": {
               "$ref": "assays/mif.json#definitions/data_properties/properties/project_inform_folder"

@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "image",
+  "title": "Image",
+  "description": "Base information about the aquisition and analysis of a quantitative pathology image\n",
+  "properties": {
+    "creator": {
+      "$ref": "user.json"
+    },
+    "slide_scanner_model": {
+      "type": "string",
+      "enum": ["Vectra 2.0", "Hamamatsu"]
+    },
+    "staining_platform": {
+      "type": "string",
+      "enum": ["auto", "manual"]
+    },
+    "autostainer_model": {
+      "type": "string"
+    },
+    "image_analysis_software": {
+      "type": "string",
+      "enum": ["InForm", "QuPath"]
+    },
+    "image_analysis_software_version": {
+      "type": "string"
+    },
+    "cell_segmentation_model": {
+      "type": "string",
+      "enum": ["proprietary", "watershed"]
+    },
+    "positive_cell_detection": {
+      "type": "string",
+      "enum": ["proprietary", "random forest classifier"]
+    },
+    "protocol_name": {
+      "type": "string"
+    }
+  },
+  "required": ["creator", "protocol_name"]
+}

@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "micsss_antibody",
+  "title": "Multiplexed immunohistochemical consecutive staining on single slide",
+  "description": "Data specific to antibody prepration on the multiplex immunohistochemical platform\n",
+  "definitions": {
+    "micsss_properties": {
+      "type": "object",
+      "properties": {
+        "primary_antibody_block": {
+          "type": "string"
+        },
+        "postPrimary_linker_block": {
+          "type": "string"
+        },
+        "secondary_antibody_block": {
+          "type": "string"
+        },
+        "species": {
+          "type": "string"
+        },
+        "isotype": {
+          "type": "string"
+        },
+        "primary_antibody_dilution": {
+          "type": "string"
+        },
+        "primary_antibody_incubation_time": {
+          "type": "string",
+          "format": "time"
+        },
+        "primary_antibody_incubation_temp": {
+          "type": "string"
+        },
+        "secondary_antibody": {
+          "type": "string"
+        },
+        "company": {
+          "type": "string"
+        },
+        "cat_num": {
+          "type": "number"
+        },
+        "lot_num": {
+          "type": "number"
+        },
+        "secondary_antibody_dilution": {
+          "type": "string"
+        },
+        "secondary_antibody_incubation_time": {
+          "type": "string",
+          "format": "time"
+        },
+        "ar_reagent": {
+          "type": "string"
+        },
+        "ar_ph": {
+          "type": "string"
+        },
+        "ar_incubation_time": {
+          "type": "string",
+          "format": "time"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "assays/components/antibody.json"
+    },
+    {
+      "$ref": "#definitions/micsss_properties"
+    }
+  ],
+  "required": [
+    "primary_antibody_block",
+    "postPrimary_linker_block",
+    "secondary_antibody_block",
+    "species",
+    "isotype",
+    "primary_antibody_dilution",
+    "primary_antibody_incubation_time",
+    "primary_antibody_incubation_temp",
+    "secondary_antibody",
+    "company",
+    "cat_num",
+    "lot_num",
+    "secondary_antibody_dilution",
+    "secondary_antibody_incubation_time",
+    "ar_reagent",
+    "ar_ph",
+    "ar_incubation_time"
+  ]
+}

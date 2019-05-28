@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "micsss",
+  "title": "MICSSS",
+  "description": "Base information about the aquisition and analysis of a quantitative pathology image\n",
+  "definitions": {
+    "data_properties": {
+      "type": "object",
+      "properties": {
+        "internal_slide_id": {
+          "type": "string"
+        },
+        "protocol_name": {
+          "type": "string"
+        },
+        "staining_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "imaging_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "imaging_status": {
+          "type": "string",
+          "enum": ["Yes", "No"]
+        },
+        "project_qupath_folder": {
+          "type": "string"
+        },
+        "exported_data_folder": {
+          "type": "string"
+        }
+      }
+    },
+    "data_row": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "assays/components/identifiers.json"
+        },
+        {
+          "$ref": "#definitions/data_properties"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "assays/components/image.json"
+    },
+    {
+      "properties": {
+        "antibody": {
+          "type": "array",
+          "items": {
+            "$ref": "assays/components/micsss_antibody.json"
+          }
+        },
+        "data": {
+          "type": "array",
+          "items": { "$ref": "#definitions/data_row" }
+        }
+      }
+    }
+  ],
+  "required": []
+}

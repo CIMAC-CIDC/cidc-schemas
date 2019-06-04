@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "assay_core",
+  "title": "Assay Core",
+  "type": "object",
+  "description": "Main properties of the assay experiment template",
+  "links": [
+    {
+      "link": {
+        "cardinality": "exactly_one",
+        "linked_to": "artifact"
+      }
+    }
+  ],
+  "properties": {
+    "assay_creator": {
+      "type": "string"
+    },
+    "assay_creator_preferred_email": {
+      "type": "string"
+    },
+    "uploader": {
+      "type": "string"
+    }
+  },
+  "required": ["uploader"]
+}

@@ -22,10 +22,10 @@
             "$ref": "assays/assay_core.json#properties/uploader"
           },
           "artifact_category": {
-            "$ref": "artifact.json#properties/artifact_category"
+            "$ref": "artifacts/artifact.json#properties/artifact_category"
           },
           "assay_category": {
-            "$ref": "artifact.json#properties/assay_category"
+            "$ref": "artifacts/artifact.json#properties/assay_category"
           }
         },
         "data_columns": {

@@ -4,7 +4,7 @@
   "title": "RNA Gene Expression Assay",
   "type": "object",
   "description": "Additional properties to describe a RNA Experiment for expression analysis.",
-  "allOf": [{ "$ref": "ngs_artifact.json" }],
+  "allOf": [{ "$ref": "assays/ngs_assay.json" }],
   "properties": {
     "enrichment_method": {
       "description": "Method used for enriching for mRNA",

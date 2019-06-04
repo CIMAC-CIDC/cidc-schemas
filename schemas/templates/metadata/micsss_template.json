@@ -10,6 +10,15 @@
           "lead organization study id": {
             "$ref": "clinical_trial.json#properties/lead_organization_study_id"
           },
+          "assay creator": {
+            "$ref": "assays/assay_core.json#properties/assay_creator"
+          },
+          "Email address": {
+            "$ref": "assays/assay_core.json#properties/assay_creator_preferred_email"
+          },
+          "uploader": {
+            "$ref": "assays/assay_core.json#properties/uploader"
+          },
           "slide scanner model": {
             "$ref": "assays/components/image.json#properties/slide_scanner_model"
           },

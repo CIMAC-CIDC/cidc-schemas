@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "wes",
+  "title": "Metadata file for WES",
+  "type": "object",
+  "category": "metadata",
+  "description": "Metadata information for whole exome sequencing analysis.\n",
+  "properties": {
+    "worksheets": {
+      "WES": {
+        "preamble_rows": {
+          "creator": {
+            "$ref": "artifact.json#properties/creator"
+          },
+          "enrichment kit": {
+            "$ref": "wes_artifact.json#properties/enrichment_vendor_kit"
+          },
+          "library kit vendor": {
+            "$ref": "ngs_artifact.json#properties/library_vendor_kit"
+          },
+          "sequencer platform": {
+            "$ref": "ngs_artifact.json#properties/sequencer_platform"
+          },
+          "paired end reads": {
+            "$ref": "ngs_artifact.json#properties/paired_end_reads"
+          },
+          "read length": {
+            "$ref": "ngs_artifact.json#properties/read_length"
+          },
+          "lead organization study id": {
+            "$ref": "clinical_trial.json#properties/lead_organization_study_id"
+          },
+          "Email address" : {
+            "$ref": "user.json#properties/preferred_email_address"
+          }
+        },
+        "data_columns": {
+          "Samples": {
+            "cimac participant id": {
+              "$ref": "participant.json#properties/cimac_participant_id"
+            },
+            "cimac aliquot id": {
+              "$ref": "aliquot.json#properties/cimac_aliquot_id"
+            },
+            "genomic source": {
+              "$ref": "sample.json#properties/genomic_source"
+            },
+            "library kit lot": {
+              "$ref": "ngs_artifact.json#properties/library_kit_lot"
+            },
+            "enrichment lot": {
+              "$ref": "wes_artifact.json#properties/enrichment_vendor_lot"
+            },
+            "library prep date": {
+              "$ref": "ngs_artifact.json#properties/library_prep_date"
+            },
+            "capture date": {
+              "$ref": "wes_artifact.json#properties/capture_date"
+            },
+            "dna input ng": {
+              "$ref": "ngs_artifact.json#properties/input_ng"
+            },
+            "library yield ng": {
+              "$ref": "ngs_artifact.json#properties/library_yield_ng"
+            },
+            "average insert size": {
+              "$ref": "ngs_artifact.json#properties/average_insert_size"
+            },
+            "forward fastq": {
+              "$ref": "ngs_artifact.json#properties/forward_fastq"
+            },
+            "reverse fastq": {
+              "$ref": "ngs_artifact.json#properties/reverse_fastq"
+            },
+            "read group mapping file": {
+              "$ref": "ngs_artifact.json#properties/read_group_mapping_file"
+            }
+          }
+        }
+      }
+    }
+  }
+}

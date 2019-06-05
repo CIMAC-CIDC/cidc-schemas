@@ -52,22 +52,7 @@
       ]
     },
     "assay_category": {
-      "description": "Assay category.",
-      "type": "string",
-      "enum": [
-        "Whole Exome Sequencing (WES)",
-        "RNASeq",
-        "Conventional Immunohistochemistry",
-        "Multiplex Immunohistochemistry",
-        "Multiplex Immunofluorescence",
-        "CyTOF",
-        "OLink",
-        "NanoString",
-        "ELISpot",
-        "Multiplexed Ion-Beam Imaging (MIBI)",
-        "Other",
-        "None"
-      ]
+      "$ref": "assays/components/assay_core.json#properties/assay_category"
     },
     "file_type": {
       "description": "File Type.",

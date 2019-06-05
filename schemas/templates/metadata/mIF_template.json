@@ -13,9 +13,6 @@
           "assay creator": {
             "$ref": "assays/components/assay_core.json#properties/assay_creator"
           },
-          "Email address": {
-            "$ref": "assays/components/assay_core.json#properties/assay_creator_preferred_email"
-          },
           "uploader": {
             "$ref": "assays/components/assay_core.json#properties/uploader"
           },

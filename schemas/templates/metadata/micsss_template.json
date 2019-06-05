@@ -130,7 +130,7 @@
               "$ref": "sample.json#properties/cimac_sample_id"
             },
             "internal_slide_id": {
-              "$ref": "assays/micsss_assay.json#definitions/data_properties/properties/internal_slide_id"
+              "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/internal_slide_id"
             },
             "time_point": {
               "$ref": "sample.json#properties/time_point"

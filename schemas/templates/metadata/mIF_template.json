@@ -105,6 +105,9 @@
             "time point": {
               "$ref": "sample.json#properties/time_point"
             },
+            "protocol_name": {
+              "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/protocol_name"
+            },
             "staining date": {
               "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/staining_date"
             },

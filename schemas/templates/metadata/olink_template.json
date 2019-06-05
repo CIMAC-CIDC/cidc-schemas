@@ -15,17 +15,11 @@
           "assay creator": {
             "$ref": "assays/components/assay_core.json#properties/assay_creator"
           },
-          "Email address": {
-            "$ref": "assays/components/assay_core.json#properties/assay_creator_preferred_email"
-          },
-          "uploader": {
-            "$ref": "assays/components/assay_core.json#properties/uploader"
+          "assay category": {
+            "$ref": "assays/components/assay_core.json#properties/assay_category"
           },
           "artifact_category": {
             "$ref": "artifacts/artifact.json#properties/artifact_category"
-          },
-          "assay_category": {
-            "$ref": "artifacts/artifact.json#properties/assay_category"
           }
         },
         "data_columns": {
@@ -36,49 +30,49 @@
             "filetype": {
               "$ref": "assays/olink_assay.json#properties/filetype"
             },
-            "run_date": {
+            "run date": {
               "$ref": "assays/olink_assay.json#properties/run_date"
             },
-            "run_time": {
+            "run time": {
               "$ref": "assays/olink_assay.json#properties/run_time"
             },
             "instrument": {
               "$ref": "assays/olink_assay.json#properties/instrument"
             },
-            "fludigm_application_version": {
+            "fludigm application version": {
               "$ref": "assays/olink_assay.json#properties/fludigm_application_version"
             },
-            "fludigm_application_build": {
+            "fludigm application build": {
               "$ref": "assays/olink_assay.json#properties/fludigm_application_build"
             },
-            "chip_barcode": {
+            "chip barcode": {
               "$ref": "assays/olink_assay.json#properties/chip_barcode"
             },
-            "probe_type": {
+            "probe type": {
               "$ref": "assays/olink_assay.json#properties/probe_type"
             },
-            "passive_reference": {
+            "passive reference": {
               "$ref": "assays/olink_assay.json#properties/passive_reference"
             },
-            "quality_threshold": {
+            "quality threshold": {
               "$ref": "assays/olink_assay.json#properties/quality_threshold"
             },
-            "baseline_correction": {
+            "baseline correction": {
               "$ref": "assays/olink_assay.json#properties/baseline_correction"
             },
             "panel": {
               "$ref": "assays/olink_assay.json#properties/panel"
             },
-            "number_of_sample": {
+            "number of sample": {
               "$ref": "assays/olink_assay.json#properties/number_of_sample"
             },
-            "number_of_sample_failed": {
+            "number of sample failed": {
               "$ref": "assays/olink_assay.json#properties/number_of_sample_failed"
             },
-            "npx_manager_version": {
+            "npx manager version": {
               "$ref": "assays/olink_assay.json#properties/npx_manager_version"
             },
-            "assay_panel_lot": {
+            "assay panel lot": {
               "$ref": "assays/olink_assay.json#properties/assay_panel_lot"
             }
           }

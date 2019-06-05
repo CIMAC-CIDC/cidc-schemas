@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "$id": "olink_assay",
-  "title": "olink Assay",
+  "title": "OLink Assay",
   "type": "object",
-  "description": "Additional properties to describe an olink Experiment.",
+  "description": "High-throughput multiplexed assays for protein biomarker discovery",
   "links": [
     {
       "link": {

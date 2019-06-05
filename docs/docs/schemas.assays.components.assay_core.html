@@ -31,9 +31,22 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Whole Exome Sequencing Assay</h1>
+        <h1>Assay Core</h1>
         <p>
-            <b>Description:</b>  Whole Exome Sequencing Assay
+            <b>Description:</b>  Main properties of the assay experiment template
+        </p>
+        
+        <p>
+            Each Assay Core is <b>linked</b> to:
+            <ul>
+                
+                    <li>exactly_one
+                        <a href='schemas.assays.components.artifact.html'>
+                            artifact
+                        </a>
+                    </li>
+                
+            </ul>
         </p>
         
     </div>
@@ -56,37 +69,9 @@
         </thead>
         
             <tr>
-                <td><a name="enrichment_vendor_kit"></a>enrichment_vendor_kit</td>
+                <td><a name="assay_creator"></a>assay_creator</td>
                 <td width=25%>
-                    Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT
-                </td>
-                <td>
                     
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>Agilent - Human All Exon V7</li>
-                        
-                            <li>Twist</li>
-                        
-                            <li>IDT</li>
-                        
-                            <li>NEB</li>
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td><a name="enrichment_vendor_lot"></a>enrichment_vendor_lot</td>
-                <td width=25%>
-                    Lot number for the bait set
                 </td>
                 <td>
                     
@@ -98,19 +83,39 @@
                 </td>
                 <td>
                     
-                        required
+                        optional
                     
                 </td>
             </tr>
         
             <tr>
-                <td><a name="capture_date"></a>capture_date</td>
+                <td><a name="assay_creator_preferred_email"></a>assay_creator_preferred_email</td>
                 <td width=25%>
-                    Date of the hybrid capture enrichment
+                    
                 </td>
                 <td>
                     
-                        &lt;string&gt; date
+                        &lt;string&gt; 
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="uploader"></a>uploader</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        &lt;string&gt; 
                         <ul>
                         
                         </ul>

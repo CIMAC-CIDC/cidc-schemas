@@ -13,28 +13,28 @@
             "$ref": "clinical_trial.json#properties/lead_organization_study_id"
           },
           "assay creator": {
-            "$ref": "assays/assay_core.json#properties/assay_creator"
+            "$ref": "assays/components/assay_core.json#properties/assay_creator"
           },
           "Email address": {
-            "$ref": "assays/assay_core.json#properties/assay_creator_preferred_email"
+            "$ref": "assays/components/assay_core.json#properties/assay_creator_preferred_email"
           },
           "uploader": {
-            "$ref": "assays/assay_core.json#properties/uploader"
+            "$ref": "assays/components/assay_core.json#properties/uploader"
           },
           "enrichment kit": {
-            "$ref": "assays/ngs_assay.json#properties/enrichment_vendor_kit"
+            "$ref": "assays/components/ngs.json#properties/enrichment_vendor_kit"
           },
           "library kit vendor": {
-            "$ref": "assays/ngs_assay.json#properties/library_vendor_kit"
+            "$ref": "assays/components/ngs.json#properties/library_vendor_kit"
           },
           "sequencer platform": {
-            "$ref": "assays/ngs_assay.json#properties/sequencer_platform"
+            "$ref": "assays/components/ngs.json#properties/sequencer_platform"
           },
           "paired end reads": {
-            "$ref": "assays/ngs_assay.json#properties/paired_end_reads"
+            "$ref": "assays/components/ngs.json#properties/paired_end_reads"
           },
           "read length": {
-            "$ref": "assays/ngs_assay.json#properties/read_length"
+            "$ref": "assays/components/ngs.json#properties/read_length"
           }
         },
         "data_columns": {
@@ -49,34 +49,34 @@
               "$ref": "sample.json#properties/genomic_source"
             },
             "library kit lot": {
-              "$ref": "assays/ngs_assay.json#properties/library_kit_lot"
+              "$ref": "assays/components/ngs.json#properties/library_kit_lot"
             },
             "enrichment lot": {
-              "$ref": "assays/ngs_assay.json#properties/enrichment_vendor_lot"
+              "$ref": "assays/components/ngs.json#properties/enrichment_vendor_lot"
             },
             "library prep date": {
-              "$ref": "assays/ngs_assay.json#properties/library_prep_date"
+              "$ref": "assays/components/ngs.json#properties/library_prep_date"
             },
             "capture date": {
-              "$ref": "assays/ngs_assay.json#properties/capture_date"
+              "$ref": "assays/components/ngs.json#properties/capture_date"
             },
             "dna input ng": {
-              "$ref": "assays/ngs_assay.json#properties/input_ng"
+              "$ref": "assays/components/ngs.json#properties/input_ng"
             },
             "library yield ng": {
-              "$ref": "assays/ngs_assay.json#properties/library_yield_ng"
+              "$ref": "assays/components/ngs.json#properties/library_yield_ng"
             },
             "average insert size": {
-              "$ref": "assays/ngs_assay.json#properties/average_insert_size"
+              "$ref": "assays/components/ngs.json#properties/average_insert_size"
             },
             "forward fastq": {
-              "$ref": "assays/ngs_assay.json#properties/forward_fastq"
+              "$ref": "assays/components/ngs.json#properties/forward_fastq"
             },
             "reverse fastq": {
-              "$ref": "assays/ngs_assay.json#properties/reverse_fastq"
+              "$ref": "assays/components/ngs.json#properties/reverse_fastq"
             },
             "read group mapping file": {
-              "$ref": "assays/ngs_assay.json#properties/read_group_mapping_file"
+              "$ref": "assays/components/ngs.json#properties/read_group_mapping_file"
             }
           }
         }

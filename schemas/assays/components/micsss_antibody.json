@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "id": "micsss_antibody",
-  "title": "Multiplexed immunohistochemical consecutive staining on single slide",
+  "title": "MICSSS antibody",
   "description": "Data specific to antibody prepration on the multiplex immunohistochemical platform\n",
   "definitions": {
     "micsss_properties": {

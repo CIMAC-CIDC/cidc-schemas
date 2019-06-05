@@ -15,8 +15,8 @@
           "assay creator": {
             "$ref": "assays/components/assay_core.json#properties/assay_creator"
           },
-          "uploader": {
-            "$ref": "assays/components/assay_core.json#properties/uploader"
+          "assay category": {
+            "$ref": "assays/components/assay_core.json#properties/assay_category"
           },
           "enrichment kit": {
             "$ref": "assays/components/ngs.json#properties/enrichment_vendor_kit"

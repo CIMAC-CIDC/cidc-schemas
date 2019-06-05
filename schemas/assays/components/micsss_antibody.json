@@ -35,13 +35,13 @@
         "secondary_antibody": {
           "type": "string"
         },
-        "company": {
+        "secondary_company": {
           "type": "string"
         },
-        "cat_num": {
+        "secondary_cat_num": {
           "type": "number"
         },
-        "lot_num": {
+        "secondary_lot_num": {
           "type": "number"
         },
         "secondary_antibody_dilution": {

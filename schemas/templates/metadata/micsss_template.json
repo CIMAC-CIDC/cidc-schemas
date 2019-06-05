@@ -13,8 +13,8 @@
           "assay creator": {
             "$ref": "assays/components/assay_core.json#properties/assay_creator"
           },
-          "uploader": {
-            "$ref": "assays/components/assay_core.json#properties/uploader"
+          "assay category": {
+            "$ref": "assays/components/assay_core.json#properties/assay_category"
           },
           "slide scanner model": {
             "$ref": "assays/components/image.json#properties/slide_scanner_model"
@@ -88,14 +88,14 @@
             "S. Antibody": {
               "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/secondary_antibody"
             },
-            "Company": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/company"
+            "S. Company": {
+              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/secondary_company"
             },
-            "Cat #": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/cat_num"
+            "S. Cat #": {
+              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/secondary_cat_num"
             },
-            "Lot #": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/lot_num"
+            "S. Lot #": {
+              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/secondary_lot_num"
             },
             "S. Antibody Dilution": {
               "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/secondary_antibody_dilution"

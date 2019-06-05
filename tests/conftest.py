@@ -13,7 +13,7 @@ from .constants import SCHEMA_DIR
 
 @pytest.fixture
 def pbmc_template():
-    pbmc_template_path = os.path.join(SCHEMA_DIR, 'templates', 'pbmc.json')
+    pbmc_template_path = os.path.join(SCHEMA_DIR, 'templates', 'pbmc_template.json')
     return Template.from_json(pbmc_template_path, SCHEMA_DIR)
 
 

@@ -10,6 +10,15 @@
           "lead organization study id": {
             "$ref": "clinical_trial.json#properties/lead_organization_study_id"
           },
+          "assay creator": {
+            "$ref": "assays/assay_core.json#properties/assay_creator"
+          },
+          "Email address": {
+            "$ref": "assays/assay_core.json#properties/assay_creator_preferred_email"
+          },
+          "uploader": {
+            "$ref": "assays/assay_core.json#properties/uploader"
+          },
           "slide scanner model": {
             "$ref": "assays/components/image.json#properties/slide_scanner_model"
           },
@@ -124,28 +133,28 @@
               "$ref": "sample.json#properties/cimac_sample_id"
             },
             "internal_slide_id": {
-              "$ref": "assays/micsss.json#definitions/data_properties/properties/internal_slide_id"
+              "$ref": "assays/micsss_assay.json#definitions/data_properties/properties/internal_slide_id"
             },
             "time_point": {
-              "$ref": "assays/components/identifiers.json#properties/time_point"
+              "$ref": "sample.json#properties/time_point"
             },
             "protocol_name": {
-              "$ref": "assays/micsss.json#definitions/data_properties/properties/protocol_name"
+              "$ref": "assays/micsss_assay.json#definitions/data_properties/properties/protocol_name"
             },
             "staining_date": {
-              "$ref": "assays/micsss.json#definitions/data_properties/properties/staining_date"
+              "$ref": "assays/micsss_assay.json#definitions/data_properties/properties/staining_date"
             },
             "imaging_date": {
-              "$ref": "assays/micsss.json#definitions/data_properties/properties/imaging_date"
+              "$ref": "assays/micsss_assay.json#definitions/data_properties/properties/imaging_date"
             },
             "imaging_status": {
-              "$ref": "assays/micsss.json#definitions/data_properties/properties/imaging_status"
+              "$ref": "assays/micsss_assay.json#definitions/data_properties/properties/imaging_status"
             },
             "project_qupath_folder": {
-              "$ref": "assays/micsss.json#definitions/data_properties/properties/project_qupath_folder"
+              "$ref": "assays/micsss_assay.json#definitions/data_properties/properties/project_qupath_folder"
             },
             "exported_data_folder": {
-              "$ref": "assays/micsss.json#definitions/data_properties/properties/exported_data_folder"
+              "$ref": "assays/micsss_assay.json#definitions/data_properties/properties/exported_data_folder"
             }
           }
         }

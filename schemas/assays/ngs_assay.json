@@ -1,9 +1,9 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "ngs_artifact",
-  "title": "NGS Sequencing Artifact",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "ngs_assay",
+  "title": "NGS Sequencing Assay",
   "type": "object",
-  "description": "Additional properties to describe a NGS Sequencing Artifact.",
+  "description": "Additional properties to describe a NGS Sequencing Experiment.",
   "links": [
     {
       "link": {
@@ -27,9 +27,7 @@
     "library_vendor_kit": {
       "description": "Vendor for the library construction kit, e.g. KAPA",
       "type": "string",
-      "enum": [
-        "KAPA - Hyper Prep"
-      ]
+      "enum": ["KAPA - Hyper Prep"]
     },
     "library_kit_lot": {
       "description": "Lot number for the library construction kit",
@@ -43,8 +41,8 @@
     "read_length": {
       "description": "Number of cycles for each sequencing read",
       "type": "integer",
-      "exclusiveMinimum" : 0,
-      "maximum" : 200
+      "exclusiveMinimum": 0,
+      "maximum": 200
     },
     "library_prep_date": {
       "description": "Date of library construction.",
@@ -54,20 +52,20 @@
     "input_ng": {
       "description": "Amount of DNA/RNA (in ng) used for library construction",
       "type": "integer",
-      "exclusiveMinimum" : 0,
-      "maximum" : 1000
+      "exclusiveMinimum": 0,
+      "maximum": 1000
     },
     "library_yield_ng": {
       "description": "Resulting yield (in ng) from library construction",
       "type": "integer",
-      "exclusiveMinimum" : 0,
-      "maximum" : 2000
+      "exclusiveMinimum": 0,
+      "maximum": 2000
     },
     "average_insert_size": {
       "description": "The average insert size for the library",
       "type": "integer",
-      "exclusiveMinimum" : 0,
-      "maximum" : 1000
+      "exclusiveMinimum": 0,
+      "maximum": 1000
     },
     "forward_fastq": {
       "description": "Fastq file for the forward reads",
@@ -83,6 +81,32 @@
       "description": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
       "type": "string",
       "pattern": "^gs://.+$"
+    },
+    "enrichment_method": {
+      "description": "Method used for enriching for mRNA",
+      "type": "string",
+      "enum": ["PolyA capture", "Transcriptome capture", "Ribo minus"]
+    },
+    "enrichment_vendor_kit": {
+      "description": "Vendor for the kit used for enrichment, e.g. Twist, Agilent, IDT",
+      "type": "string",
+      "enum": [
+        "Illumina - TruSeq Stranded PolyA mRNA",
+        "Agilent",
+        "Twist",
+        "IDT",
+        "NEB",
+        "Broad - Exome Baits"
+      ]
+    },
+    "enrichment_vendor_lot": {
+      "description": "Lot number for the enrichment kit",
+      "type": "string"
+    },
+    "capture_date": {
+      "description": "Date of the hybrid capture enrichment",
+      "type": "string",
+      "format": "date"
     }
   },
   "required": [

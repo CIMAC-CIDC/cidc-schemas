@@ -1,10 +1,10 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "rna_expression_artifact",
-  "title": "RNA Gene Expression Artifact",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "rna_expression_assay",
+  "title": "RNA Gene Expression Assay",
   "type": "object",
-  "description": "Additional properties to describe a RNA Artifact for expression analysis.",
-  "allOf": [{ "$ref": "ngs_artifact.json" }],
+  "description": "Additional properties to describe a RNA assay for expression analysis.",
+  "allOf": [{ "$ref": "assays/ngs_assay.json" }],
   "properties": {
     "enrichment_method": {
       "description": "Method used for enriching for mRNA",

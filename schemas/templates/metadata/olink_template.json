@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "olink",
+  "title": "Metadata file for olink",
+  "type": "object",
+  "category": "metadata",
+  "description": "Metadata information for olink analysis.\n",
+  "properties": {
+    "worksheets": {
+      "olink": {
+        "preamble_rows": {
+          "lead organization study id": {
+            "$ref": "clinical_trial.json#properties/lead_organization_study_id"
+          },
+          "assay creator": {
+            "$ref": "assays/assay_core.json#properties/assay_creator"
+          },
+          "Email address": {
+            "$ref": "assays/assay_core.json#properties/assay_creator_preferred_email"
+          },
+          "uploader": {
+            "$ref": "assays/assay_core.json#properties/uploader"
+          },
+          "artifact_category": {
+            "$ref": "artifacts/artifact.json#properties/artifact_category"
+          },
+          "assay_category": {
+            "$ref": "artifacts/artifact.json#properties/assay_category"
+          }
+        },
+        "data_columns": {
+          "Olink Assay details": {
+            "assay_prefix": {
+              "$ref": "assays/olink_assay.json#properties/assay_prefix"
+            },
+            "filetype": {
+              "$ref": "assays/olink_assay.json#properties/filetype"
+            },
+            "run_date": {
+              "$ref": "assays/olink_assay.json#properties/run_date"
+            },
+            "run_time": {
+              "$ref": "assays/olink_assay.json#properties/run_time"
+            },
+            "instrument": {
+              "$ref": "assays/olink_assay.json#properties/instrument"
+            },
+            "fludigm_application_version": {
+              "$ref": "assays/olink_assay.json#properties/fludigm_application_version"
+            },
+            "fludigm_application_build": {
+              "$ref": "assays/olink_assay.json#properties/fludigm_application_build"
+            },
+            "chip_barcode": {
+              "$ref": "assays/olink_assay.json#properties/chip_barcode"
+            },
+            "probe_type": {
+              "$ref": "assays/olink_assay.json#properties/probe_type"
+            },
+            "passive_reference": {
+              "$ref": "assays/olink_assay.json#properties/passive_reference"
+            },
+            "quality_threshold": {
+              "$ref": "assays/olink_assay.json#properties/quality_threshold"
+            },
+            "baseline_correction": {
+              "$ref": "assays/olink_assay.json#properties/baseline_correction"
+            },
+            "panel": {
+              "$ref": "assays/olink_assay.json#properties/panel"
+            },
+            "number_of_sample": {
+              "$ref": "assays/olink_assay.json#properties/number_of_sample"
+            },
+            "number_of_sample_failed": {
+              "$ref": "assays/olink_assay.json#properties/number_of_sample_failed"
+            },
+            "npx_manager_version": {
+              "$ref": "assays/olink_assay.json#properties/npx_manager_version"
+            },
+            "assay_panel_lot": {
+              "$ref": "assays/olink_assay.json#properties/assay_panel_lot"
+            }
+          }
+        }
+      }
+    }
+  }
+}

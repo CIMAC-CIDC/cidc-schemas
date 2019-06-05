@@ -19,7 +19,7 @@
             "$ref": "assays/components/assay_core.json#properties/assay_category"
           },
           "artifact_category": {
-            "$ref": "artifacts/artifact.json#properties/artifact_category"
+            "$ref": "artifacts/artifact_core.json#properties/artifact_category"
           }
         },
         "data_columns": {

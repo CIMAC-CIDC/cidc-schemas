@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "id": "ngs_artifact",
-  "title": "NGS Sequencing Artifact",
+  "id": "ngs_assay",
+  "title": "NGS Sequencing Assay",
   "type": "object",
-  "description": "Additional properties to describe a NGS Sequencing Artifact.",
+  "description": "Additional properties to describe a NGS Sequencing Experiment.",
   "links": [
     {
       "link": {
@@ -81,6 +81,32 @@
       "description": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
       "type": "string",
       "pattern": "^gs://.+$"
+    },
+    "enrichment_method": {
+      "description": "Method used for enriching for mRNA",
+      "type": "string",
+      "enum": ["PolyA capture", "Transcriptome capture", "Ribo minus"]
+    },
+    "enrichment_vendor_kit": {
+      "description": "Vendor for the kit used for enrichment, e.g. Twist, Agilent, IDT",
+      "type": "string",
+      "enum": [
+        "Illumina - TruSeq Stranded PolyA mRNA",
+        "Agilent",
+        "Twist",
+        "IDT",
+        "NEB",
+        "Broad - Exome Baits"
+      ]
+    },
+    "enrichment_vendor_lot": {
+      "description": "Lot number for the enrichment kit",
+      "type": "string"
+    },
+    "capture_date": {
+      "description": "Date of the hybrid capture enrichment",
+      "type": "string",
+      "format": "date"
     }
   },
   "required": [

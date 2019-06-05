@@ -132,7 +132,7 @@ def test_invalid(tiny_template):
 
 def test_pbmc_validation(pbmc_template):
     """Test that the provided pbmc shipping manifest is valid"""
-    pbmc_xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, 'pbmc.xlsx')
+    pbmc_xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, 'pbmc_template.xlsx')
     assert pbmc_template.validate_excel(pbmc_xlsx_path)
 
 

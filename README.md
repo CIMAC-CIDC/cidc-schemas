@@ -77,10 +77,11 @@ cidc_schemas generate_template -m schemas/templates/pbmc.json -s schemas -o pbmc
 Check that a populated template file is valid with respect to a template specification.
 
 ```bash
-cidc_schemas validate_template -m schemas/templates/pbmc.json -s schemas -x template_examples/pbmc.xlsx
+cidc_schemas validate_template -m schemas/templates/pbmc.json -s schemas -x template_examples/pbmc_template.xlsx
 ```
 
 ### Validate JSON schemas
+
 Check that a JSON schema conforms to the JSON Schema specifications.
 
 ```bash
@@ -100,41 +101,45 @@ cidc_schemas convert --to_json <some_yaml_file>
 ### Workflow
 
 A new manifest or assay template has been "added" to the repository once these three things are true:
-* A file `schemas/templates/<TEMPLATE NAME>.json` exists specifying the template schema.
-* A file `template_examples/<TEMPLATE NAME>.xlsx` exists containing a populated example Excel template corresponding to the template schema.
-* Running `pytest tests/test_templates.py` generates no errors related to this template.
+
+- A file `schemas/templates/<TEMPLATE NAME>.json` exists specifying the template schema.
+- A file `template_examples/<TEMPLATE NAME>.xlsx` exists containing a populated example Excel template corresponding to the template schema.
+- Running `pytest tests/test_templates.py` generates no errors related to this template.
 
 Here's the recommended workflow for achieving those three things:
 
-1) Create a new git branch and switch to it (naming your branch something like `template-dev-<TEMPLATE NAME>`):
+1. Create a new git branch and switch to it (naming your branch something like `template-dev-<TEMPLATE NAME>`):
    ```bash
     git checkout -b <YOUR BRANCH NAME>
    ```
-2) On this branch, create a new template schema called `<TEMPLATE NAME>.json` in the `schemas/templates` directory. See the template schema structure section below for guidance.
-3) Use the CLI to generate an empty Excel template from your schema, and visually verify that the generated template accords with your expectations. Iteratively edit the schema and regenerate the Excel template until you are satisfied.
-4) Fill out the generated Excel template with some valid sample values, and place that file in `template_examples` with the name `<TEMPLATE NAME>.xlsx`.
-    - **Note**: by this point, you should have created two files: 
-        1) `schemas/templates/<TEMPLATE NAME>.json`
-        2) `template_examples/<TEMPLATE NAME>.xlsx`
-5) Ensure that `pytest tests/test_templates.py` raises no errors related to this template.
-6) Commit and push your changes.
+2. On this branch, create a new template schema called `<TEMPLATE NAME>.json` in the `schemas/templates` directory. See the template schema structure section below for guidance.
+3. Use the CLI to generate an empty Excel template from your schema, and visually verify that the generated template accords with your expectations. Iteratively edit the schema and regenerate the Excel template until you are satisfied.
+4. Fill out the generated Excel template with some valid sample values, and place that file in `template_examples` with the name `<TEMPLATE NAME>.xlsx`.
+   - **Note**: by this point, you should have created two files:
+     1. `schemas/templates/<TEMPLATE NAME>.json`
+     2. `template_examples/<TEMPLATE NAME>.xlsx`
+5. Ensure that `pytest tests/test_templates.py` raises no errors related to this template.
+6. Commit and push your changes.
    ```bash
     # Add the two files you've created
     git add schemas/templates/<TEMPLATE NAME>.json template_examples/<TEMPLATE NAME>.xlsx
     git commit -m "Added template for <TEMPLATE NAME>"
     git push -u origin <YOUR BRANCH NAME>
    ```
-7) Navigate to GitHub and create a pull request. Get feedback on your template.
-8) Once your pull request is approved, merge your changes into master. All done!
+7. Navigate to GitHub and create a pull request. Get feedback on your template.
+8. Once your pull request is approved, merge your changes into master. All done!
 
 ### Template Schema Structure
+
 The current template generator can create empty Excel workbooks with arbitrarily many worksheets in them from JSON schemas. Every worksheet in the template has the same high level structure made up of two sections:
-1) **`preamble_rows`**: a set of key-value rows appearing at the top of the worksheet. This is a good place to have template users input data that applies to, e.g., the entire batch of samples.
-2) **`data_columns`**: a data table that appears below `preamble_rows` in each worksheet, containing data headers with columns beneath them with multiple data entries for each header. Data columns are grouped into subtables, where a set of column headers will have one shared header above them (e.g., the shared header "Filled by Biorepository" should appear above all data columns that the biorepository will fill out). This is a good place to have template users input data that will be different for, e.g., each sample.    
+
+1. **`preamble_rows`**: a set of key-value rows appearing at the top of the worksheet. This is a good place to have template users input data that applies to, e.g., the entire batch of samples.
+2. **`data_columns`**: a data table that appears below `preamble_rows` in each worksheet, containing data headers with columns beneath them with multiple data entries for each header. Data columns are grouped into subtables, where a set of column headers will have one shared header above them (e.g., the shared header "Filled by Biorepository" should appear above all data columns that the biorepository will fill out). This is a good place to have template users input data that will be different for, e.g., each sample.
 
 **Note**: Either of these sections can be omitted from a given worksheet.
 
 The template generator expects JSON schemas with the following structure:
+
 ```
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -166,8 +171,10 @@ The template generator expects JSON schemas with the following structure:
   }
 }
 ```
+
 Template elements:
-* **`<worksheet name>`**: the name for the worksheet as it will appear in Excel.
-* **`<field name>`**: a human-readable label for a template field as it should appear in the spreadsheet. In the preamble section, these will be row keys. In the data section, these will be column headers.
-* **`<value schema>`**: a reference to a property in another JSON schema in the data model, or a custom JSON schema. The `<value schema>`'s `"type"` and `"format"` properties will be used for cell data validation in the generated Excel spreadsheet.
-* **`<subtable header>`**: A shared header that appears in a merged cell above the data column headers specified as properties of this subtable. `<subtable header>`s are only valid as a property of the `"data_columns"` section of the template schema.
+
+- **`<worksheet name>`**: the name for the worksheet as it will appear in Excel.
+- **`<field name>`**: a human-readable label for a template field as it should appear in the spreadsheet. In the preamble section, these will be row keys. In the data section, these will be column headers.
+- **`<value schema>`**: a reference to a property in another JSON schema in the data model, or a custom JSON schema. The `<value schema>`'s `"type"` and `"format"` properties will be used for cell data validation in the generated Excel spreadsheet.
+- **`<subtable header>`**: A shared header that appears in a merged cell above the data column headers specified as properties of this subtable. `<subtable header>`s are only valid as a property of the `"data_columns"` section of the template schema.

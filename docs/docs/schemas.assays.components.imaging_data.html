@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>mIF Assay</h1>
+        <h1>Imaging Data</h1>
         <p>
-            <b>Description:</b>  Multiplex immunoflourescence
+            <b>Description:</b>  Shared schema for experiments involving the use of imaging data
         </p>
         
     </div>
@@ -142,7 +142,7 @@
         </thead>
         
             <tr>
-                <td><a name="project_inform_folder"></a>project_inform_folder</td>
+                <td><a name="internal_slide_id"></a>internal_slide_id</td>
                 <td width=25%>
                     
                 </td>
@@ -162,7 +162,7 @@
             </tr>
         
             <tr>
-                <td><a name="mif_exported_data_folder"></a>mif_exported_data_folder</td>
+                <td><a name="protocol_name"></a>protocol_name</td>
                 <td width=25%>
                     
                 </td>
@@ -170,6 +170,70 @@
                     
                         &lt;string&gt; 
                         <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="staining_date"></a>staining_date</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        &lt;string&gt; date
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="imaging_date"></a>imaging_date</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        &lt;string&gt; date
+                        <ul>
+                        
+                        </ul>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="imaging_status"></a>imaging_status</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        &lt;string&gt; 
+                        <ul>
+                        
+                            <li>Yes</li>
+                        
+                            <li>No</li>
                         
                         </ul>
                     

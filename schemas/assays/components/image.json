@@ -4,9 +4,6 @@
   "title": "Image",
   "description": "Base information about the aquisition and analysis of a quantitative pathology image\n",
   "properties": {
-    "creator": {
-      "$ref": "user.json"
-    },
     "slide_scanner_model": {
       "type": "string",
       "enum": ["Vectra 2.0", "Hamamatsu"]

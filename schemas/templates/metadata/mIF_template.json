@@ -100,25 +100,28 @@
               "$ref": "sample.json#properties/cimac_sample_id"
             },
             "internal slide id": {
-              "$ref": "assays/mif_assay.json#definitions/data_properties/properties/internal_slide_id"
+              "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/internal_slide_id"
             },
             "time point": {
               "$ref": "sample.json#properties/time_point"
             },
+            "protocol_name": {
+              "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/protocol_name"
+            },
             "staining date": {
-              "$ref": "assays/mif_assay.json#definitions/data_properties/properties/staining_date"
+              "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/staining_date"
             },
             "imaging date": {
-              "$ref": "assays/mif_assay.json#definitions/data_properties/properties/imaging_date"
+              "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/imaging_date"
             },
             "imaging status": {
-              "$ref": "assays/mif_assay.json#definitions/data_properties/properties/imaging_status"
+              "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/imaging_status"
             },
             "project inform folder": {
               "$ref": "assays/mif_assay.json#definitions/data_properties/properties/project_inform_folder"
             },
             "exported_data_folder": {
-              "$ref": "assays/mif_assay.json#definitions/data_properties/properties/exported_data_folder"
+              "$ref": "assays/mif_assay.json#definitions/data_properties/properties/mif_exported_data_folder"
             }
           }
         }

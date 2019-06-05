@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "micsss",
-  "title": "MICSSS",
-  "description": "Base information about the aquisition and analysis of a quantitative pathology image\n",
+  "title": "MICSSS Assay",
+  "description": "Multiplexed immunohistochemical consecutive staining on single slide",
   "definitions": {
     "data_properties": {
       "type": "object",
@@ -36,9 +36,6 @@
     "data_row": {
       "type": "object",
       "allOf": [
-        {
-          "$ref": "assays/components/identifiers.json"
-        },
         {
           "$ref": "#definitions/data_properties"
         }

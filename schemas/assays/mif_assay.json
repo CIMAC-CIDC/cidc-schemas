@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "mif",
-  "title": "MIF",
-  "description": "Base information about the aquisition and analysis of a quantitative pathology image\n",
+  "title": "mIF Assay",
+  "description": "Multiplex immunoflourescence",
   "definitions": {
     "data_properties": {
       "type": "object",
@@ -33,9 +33,6 @@
     "data_row": {
       "type": "object",
       "allOf": [
-        {
-          "$ref": "assays/components/identifiers.json"
-        },
         {
           "$ref": "#definitions/data_properties"
         }

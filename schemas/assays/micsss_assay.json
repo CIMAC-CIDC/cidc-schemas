@@ -7,28 +7,10 @@
     "data_properties": {
       "type": "object",
       "properties": {
-        "internal_slide_id": {
-          "type": "string"
-        },
-        "protocol_name": {
-          "type": "string"
-        },
-        "staining_date": {
-          "type": "string",
-          "format": "date"
-        },
-        "imaging_date": {
-          "type": "string",
-          "format": "date"
-        },
-        "imaging_status": {
-          "type": "string",
-          "enum": ["Yes", "No"]
-        },
         "project_qupath_folder": {
           "type": "string"
         },
-        "exported_data_folder": {
+        "micsss_exported_data_folder": {
           "type": "string"
         }
       }

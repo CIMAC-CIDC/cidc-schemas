@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "cytof",
+  "title": "CYTOF Run",
+  "description": "Base information about the aquisition and analysis CYTOF data\n",
+  "definitions": {
+    "data_properties": {
+      "type": "object",
+      "properties": {
+        "processed_fcs_filename":{
+          "type": "string"
+        },
+        "source_fcs_filenames":{
+          "type": "string"
+        },
+        "concatonation_version":{
+          "type": "string"
+        },
+        "normalization_version":{
+          "type": "string"
+        },
+        "beads_removed":{
+          "type": "string",
+          "enum": [
+            "Y",
+            "N"
+          ]
+        },
+        "staining_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "batch_id": {
+          "type": "string"
+        },
+        "debarcoding_protocol": {
+          "type": "string"
+        },
+        "debarcoding_key": {
+          "type": "string"
+        }
+      }
+    },
+    "data_row": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "assays/components/identifiers.json"
+        },
+        {
+          "$ref": "#definitions/data_properties"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "assays/cytof/cytof_platform.json"
+    },
+    {
+      "$ref": "assays/cytof/cytof_panel.json"
+    },
+    {
+      "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#definitions/data_row" }
+        }
+      }
+    }
+  ],
+  "required": []
+}

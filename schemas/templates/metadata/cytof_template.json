@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "CYTOF",
+  "title": "Metadata file for CYTOF",
+  "description": "Metadata information for mass-cytometry (CYTOF).",
+  "properties": {
+    "worksheets": {
+      "Data Acquisition": {
+        "preamble_rows": {
+          "creator": {"$ref":"artifact.json#properties/creator"},
+          "lead organization study id": {
+            "$ref": "clinical_trial.json#properties/lead_organization_study_id"
+          },
+          "artifact_category":{
+            "$ref":"artifact.json#properties/artifact_category"
+          },
+          "assay_category":{
+            "$ref":"artifact.json#properties/assay_category"
+          },
+          "panel name": {
+            "$ref": "assays/cytof/cytof_panel.json#properties/panel_name"
+          }
+        },
+        "data_columns": {
+          "Runs": {
+            "original fcs filename(s)": {
+              "$ref": "assays/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/original_fcs_filenames"
+            },
+            "date of acquisition": {
+              "$ref": "assays/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/date_of_acquisition"
+            },
+            "instrument": {
+              "$ref": "assays/cytof/cytof_platform.json#properties/instrument"
+            },
+            "injector": {
+              "$ref": "assays/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/injector"
+            },
+            "acquisition_buffer": {
+              "$ref": "assays/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/acquisition_buffer"
+            },
+            "batch_id": {
+              "$ref": "assays/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/batch_id"
+            }
+          }
+        }
+      },
+      "Data Preprocessing": {
+        "data_columns": {
+          "Samples": {
+            "cimac particpant id": {
+              "$ref": "participant.json#properties/cimac_participant_id"
+            },
+            "cimac sample id": {
+              "$ref": "sample.json#properties/cimac_sample_id"
+            },
+            "time point": {
+              "$ref": "sample.json#properties/time_point"
+            },
+            "processed fcs filename": {
+              "$ref": "assays/cytof/cytof.json#definitions/data_properties/properties/processed_fcs_filename"
+            },
+            "source fcs filenames": {
+              "$ref": "assays/cytof/cytof.json#definitions/data_properties/properties/source_fcs_filenames"
+            },
+            "concatonation version": {
+              "$ref": "assays/cytof/cytof.json#definitions/data_properties/properties/concatonation_version"
+            },
+            "normalization version": {
+              "$ref": "assays/cytof/cytof.json#definitions/data_properties/properties/normalization_version"
+            },
+            "beads removed": {
+              "$ref": "assays/cytof/cytof.json#definitions/data_properties/properties/beads_removed"
+            },
+            "debarcoding protocol": {
+              "$ref": "assays/cytof/cytof.json#definitions/data_properties/properties/debarcoding_protocol"
+            },
+            "debarcoding key": {
+              "$ref": "assays/cytof/cytof.json#definitions/data_properties/properties/debarcoding_key"
+            },
+            "batch id": {
+              "$ref": "assays/cytof/cytof.json#definitions/data_properties/properties/batch_id"
+            }
+          }
+        }
+      },
+      "Antibody Information": {
+        "data_columns": {
+          "Samples": {
+            "target": {
+              "$ref": "assays/components/antibody.json#properties/antibody"
+            },
+            "clone": {
+              "$ref": "assays/components/antibody.json#properties/clone"
+            },
+            "antibody company": {
+              "$ref": "assays/components/antibody.json#properties/company"
+            },
+            "catalog number": {
+              "$ref": "assays/components/antibody.json#properties/cat_num"
+            },
+            "lot number": {
+              "$ref": "assays/components/antibody.json#properties/lot_num"
+            },
+            "isotope": {
+              "$ref": "assays/cytof/cytof_antibody.json#definitions/cytof_antibody/properties/isotope"
+            }
+          }
+        }
+      }
+
+    }
+  }
+}

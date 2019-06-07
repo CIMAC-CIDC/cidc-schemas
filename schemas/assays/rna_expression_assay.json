@@ -9,17 +9,13 @@
     "enrichment_method": {
       "description": "Method used for enriching for mRNA",
       "type": "string",
-      "enum": [
-        "PolyA capture",
-        "Transcriptome capture",
-        "Ribo minus"
-      ]
+      "enum": ["PolyA capture", "Transcriptome capture", "Ribo minus"]
     },
     "enrichment_vendor_kit": {
       "description": "Vendor for the kit used for enrichment, e.g. Twist, Agilent, IDT",
       "type": "string",
       "enum": [
-       "Illumina - TruSeq Stranded PolyA mRNA",
+        "Illumina - TruSeq Stranded PolyA mRNA",
         "Agilent",
         "Twist",
         "IDT",
@@ -37,5 +33,33 @@
       "format": "date"
     }
   },
-  "required": ["enrichment_method", "enrichment_vendor_kit", "enrichment_vendor_lot", "capture_date"]
+  "data": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "cimac_sample_id": {
+          "ref": "sample.cimac_sample_id.json#properties/cimac_sample_id"
+        },
+        "cimac_aliquot_id": {
+          "ref": "sample.cimac_aliquot_id#properties/cimac_aliquot_id"
+        },
+        "fastq_f": {
+          "$ref": "artifacts/artifact_core.json#properties/uuid"
+        },
+        "fastq_r": {
+          "$ref": "artifacts/artifact_core.json#properties/uuid"
+        },
+        "read_group": {
+          "$ref": "artifacts/artifact_core.json#properties/uuid"
+        }
+      }
+    }
+  },
+  "required": [
+    "enrichment_method",
+    "enrichment_vendor_kit",
+    "enrichment_vendor_lot",
+    "capture_date"
+  ]
 }

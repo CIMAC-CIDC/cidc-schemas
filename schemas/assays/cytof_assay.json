@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "cytof",
+  "title": "CYTOF Run",
+  "description": "Base information about the aquisition and analysis CYTOF data\n",
+  "definitions": {
+    "data_properties": {
+      "type": "object",
+      "properties": {
+        "processed_fcs_filename": {
+          "type": "string"
+        },
+        "source_fcs_filenames": {
+          "type": "string"
+        },
+        "concatonation_version": {
+          "type": "string"
+        },
+        "normalization_version": {
+          "type": "string"
+        },
+        "beads_removed": {
+          "type": "string",
+          "enum": ["Y", "N"]
+        },
+        "staining_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "batch_id": {
+          "type": "string"
+        },
+        "debarcoding_protocol": {
+          "type": "string"
+        },
+        "debarcoding_key": {
+          "type": "string"
+        }
+      }
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "cimac_sample_id": {
+            "ref": "sample.cimac_sample_id.json#properties/cimac_sample_id"
+          },
+          "cimac_aliquot_id": {
+            "ref": "sample.cimac_aliquot_id#properties/cimac_aliquot_id"
+          },
+          "processed_fcs": {
+            "$ref": "artifacts/artifact_core.json#properties/uuid"
+          },
+          "source_fcs": {
+            "$ref": "artifacts/artifact_core.json#properties/uuid"
+          }
+        }
+      }
+    },
+    "data_row": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#definitions/data_properties"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "assays/components/cytof_platform.json"
+    },
+    {
+      "$ref": "assays/components/cytof_panel.json"
+    },
+    {
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": { "$ref": "#definitions/data_row" }
+        }
+      }
+    }
+  ],
+  "required": []
+}

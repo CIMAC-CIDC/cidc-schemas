@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "cytof_platform",
+  "title": "CYTOF Platform",
+  "description": "Basic information about the instrumentation used in a CYTOF experiment\n",
+  "properties": {
+        "instrument": {
+          "type": "string"
+        }
+  },
+  "required": [
+    "instrument"
+  ]
+}

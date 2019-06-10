@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "cytof_panel",
+  "title": "CYTOF Panel",
+  "description": "Base information about the aquisition and analysis of a CYTOF data\n",
+  "properties": {
+    "creator": {
+      "$ref": "user.json"
+    },
+    "panel_name": {
+      "type": "string"
+    },
+    "cytof_antibodies": {
+      "type": "array",
+      "items": { "$ref": "assays/components/cytof_antibody.json" }
+    }
+  },
+  "required": ["creator", "panel_name"]
+}

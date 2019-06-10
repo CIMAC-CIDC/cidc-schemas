@@ -28,7 +28,7 @@
   },
   "allOf": [
     {
-      "$ref": "assays/cytof/cytof_platform.json"
+      "$ref": "assays/components/cytof/cytof_platform.json"
     },
     {
       "$ref": "#definitions/cytof_acquisition"

@@ -12,11 +12,11 @@
           },
           "cytof_antibodies": {
               "type":"array",
-              "items":{"$ref":"assays/cytof/cytof_antibody.json"}
+              "items":{"$ref":"assays/components/cytof/cytof_antibody.json"}
           }
     },
 	"required": [
-        "creator",
+    "creator",
 		"panel_name"
 	]
 }

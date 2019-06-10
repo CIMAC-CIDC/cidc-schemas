@@ -7,39 +7,41 @@
     "worksheets": {
       "Data Acquisition": {
         "preamble_rows": {
-          "creator": {"$ref":"artifacts/artifact_core.json#properties/artifact_creator"},
           "lead organization study id": {
             "$ref": "clinical_trial.json#properties/lead_organization_study_id"
           },
-          "artifact_category":{
-            "$ref":"artifacts/artifact_core.json#properties/artifact_category"
+          "assay creator": {
+            "$ref": "assays/components/assay_core.json#properties/assay_creator"
           },
           "assay_category":{
             "$ref":"artifacts/artifact_core.json#properties/assay_category"
           },
+          "artifact_category": {
+            "$ref": "artifacts/artifact_core.json#properties/artifact_category"
+          },
           "panel name": {
-            "$ref": "assays/cytof/cytof_panel.json#properties/panel_name"
+            "$ref": "assays/components/cytof/cytof_panel.json#properties/panel_name"
           }
         },
         "data_columns": {
           "Runs": {
             "original fcs filename(s)": {
-              "$ref": "assays/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/original_fcs_filenames"
+              "$ref": "assays/components/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/original_fcs_filenames"
             },
             "date of acquisition": {
-              "$ref": "assays/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/date_of_acquisition"
+              "$ref": "assays/components/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/date_of_acquisition"
             },
             "instrument": {
-              "$ref": "assays/cytof/cytof_platform.json#properties/instrument"
+              "$ref": "assays/components/cytof/cytof_platform.json#properties/instrument"
             },
             "injector": {
-              "$ref": "assays/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/injector"
+              "$ref": "assays/components/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/injector"
             },
             "acquisition_buffer": {
-              "$ref": "assays/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/acquisition_buffer"
+              "$ref": "assays/components/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/acquisition_buffer"
             },
             "batch_id": {
-              "$ref": "assays/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/batch_id"
+              "$ref": "assays/components/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/batch_id"
             }
           }
         }
@@ -57,28 +59,28 @@
               "$ref": "sample.json#properties/time_point"
             },
             "processed fcs filename": {
-              "$ref": "assays/cytof/cytof.json#definitions/data_properties/properties/processed_fcs_filename"
+              "$ref": "assays/cytof_assay.json#definitions/data_properties/properties/processed_fcs_filename"
             },
             "source fcs filenames": {
-              "$ref": "assays/cytof/cytof.json#definitions/data_properties/properties/source_fcs_filenames"
+              "$ref": "assays/cytof_assay.json#definitions/data_properties/properties/source_fcs_filenames"
             },
             "concatonation version": {
-              "$ref": "assays/cytof/cytof.json#definitions/data_properties/properties/concatonation_version"
+              "$ref": "assays/cytof_assay.json#definitions/data_properties/properties/concatonation_version"
             },
             "normalization version": {
-              "$ref": "assays/cytof/cytof.json#definitions/data_properties/properties/normalization_version"
+              "$ref": "assays/cytof_assay.json#definitions/data_properties/properties/normalization_version"
             },
             "beads removed": {
-              "$ref": "assays/cytof/cytof.json#definitions/data_properties/properties/beads_removed"
+              "$ref": "assays/cytof_assay.json#definitions/data_properties/properties/beads_removed"
             },
             "debarcoding protocol": {
-              "$ref": "assays/cytof/cytof.json#definitions/data_properties/properties/debarcoding_protocol"
+              "$ref": "assays/cytof_assay.json#definitions/data_properties/properties/debarcoding_protocol"
             },
             "debarcoding key": {
-              "$ref": "assays/cytof/cytof.json#definitions/data_properties/properties/debarcoding_key"
+              "$ref": "assays/cytof_assay.json#definitions/data_properties/properties/debarcoding_key"
             },
             "batch id": {
-              "$ref": "assays/cytof/cytof.json#definitions/data_properties/properties/batch_id"
+              "$ref": "assays/cytof_assay.json#definitions/data_properties/properties/batch_id"
             }
           }
         }
@@ -102,7 +104,7 @@
               "$ref": "assays/components/antibody.json#properties/lot_num"
             },
             "isotope": {
-              "$ref": "assays/cytof/cytof_antibody.json#definitions/cytof_antibody/properties/isotope"
+              "$ref": "assays/components/cytof/cytof_antibody.json#definitions/cytof_antibody/properties/isotope"
             }
           }
         }

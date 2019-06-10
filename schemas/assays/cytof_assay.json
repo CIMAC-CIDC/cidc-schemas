@@ -52,10 +52,10 @@
   },
   "allOf": [
     {
-      "$ref": "assays/cytof/cytof_platform.json"
+      "$ref": "assays/components/cytof/cytof_platform.json"
     },
     {
-      "$ref": "assays/cytof/cytof_panel.json"
+      "$ref": "assays/components/cytof/cytof_panel.json"
     },
     {
       "properties": {

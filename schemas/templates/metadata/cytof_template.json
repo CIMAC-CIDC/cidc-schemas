@@ -13,10 +13,10 @@
           "assay creator": {
             "$ref": "assays/components/assay_core.json#properties/assay_creator"
           },
-          "assay_category":{
-            "$ref":"artifacts/artifact_core.json#properties/assay_category"
+          "assay category":{
+            "$ref": "assays/components/assay_core.json#properties/assay_category"
           },
-          "artifact_category": {
+          "artifact category": {
             "$ref": "artifacts/artifact_core.json#properties/artifact_category"
           },
           "panel name": {

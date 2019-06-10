@@ -4,31 +4,32 @@
   "title": "CYTOF Acquisition",
   "description": "Data specific to the run of a CyTOF batch.",
   "definitions": {
-    "cytof_acquisition":{
-      "properties":{
-          "original_fcs_filenames":{
-            "type":"string"          },
-          "date_of_acquisition":{
-            "type":"string"
-          },
-          "instrument":{
-            "type":"string"
-          },
-          "injector":{
-            "type":"string"
-          },
-          "acquisition_buffer":{
-            "type":"string"
-          },
-          "batch_id":{
-            "type":"string"
-          }
+    "cytof_acquisition": {
+      "properties": {
+        "original_fcs_filenames": {
+          "type": "string"
+        },
+        "date_of_acquisition": {
+          "type": "string"
+        },
+        "instrument": {
+          "type": "string"
+        },
+        "injector": {
+          "type": "string"
+        },
+        "acquisition_buffer": {
+          "type": "string"
+        },
+        "batch_id": {
+          "type": "string"
+        }
       }
     }
   },
   "allOf": [
     {
-      "$ref": "assays/components/cytof/cytof_platform.json"
+      "$ref": "assays/components/cytof_platform.json"
     },
     {
       "$ref": "#definitions/cytof_acquisition"

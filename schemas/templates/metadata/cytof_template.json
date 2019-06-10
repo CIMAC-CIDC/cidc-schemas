@@ -7,15 +7,15 @@
     "worksheets": {
       "Data Acquisition": {
         "preamble_rows": {
-          "creator": {"$ref":"artifact.json#properties/creator"},
+          "creator": {"$ref":"artifacts/artifact_core.json#properties/artifact_creator"},
           "lead organization study id": {
             "$ref": "clinical_trial.json#properties/lead_organization_study_id"
           },
           "artifact_category":{
-            "$ref":"artifact.json#properties/artifact_category"
+            "$ref":"artifacts/artifact_core.json#properties/artifact_category"
           },
           "assay_category":{
-            "$ref":"artifact.json#properties/assay_category"
+            "$ref":"artifacts/artifact_core.json#properties/assay_category"
           },
           "panel name": {
             "$ref": "assays/cytof/cytof_panel.json#properties/panel_name"

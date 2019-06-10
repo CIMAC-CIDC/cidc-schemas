@@ -45,9 +45,6 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "assays/components/identifiers.json"
-        },
-        {
           "$ref": "#definitions/data_properties"
         }
       ]

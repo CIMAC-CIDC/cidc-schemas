@@ -13,35 +13,35 @@
           "assay creator": {
             "$ref": "assays/components/assay_core.json#properties/assay_creator"
           },
-          "assay category":{
+          "assay category": {
             "$ref": "assays/components/assay_core.json#properties/assay_category"
           },
           "artifact category": {
             "$ref": "artifacts/artifact_core.json#properties/artifact_category"
           },
           "panel name": {
-            "$ref": "assays/components/cytof/cytof_panel.json#properties/panel_name"
+            "$ref": "assays/components/cytof_panel.json#properties/panel_name"
           }
         },
         "data_columns": {
           "Runs": {
             "original fcs filename(s)": {
-              "$ref": "assays/components/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/original_fcs_filenames"
+              "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/original_fcs_filenames"
             },
             "date of acquisition": {
-              "$ref": "assays/components/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/date_of_acquisition"
+              "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/date_of_acquisition"
             },
             "instrument": {
-              "$ref": "assays/components/cytof/cytof_platform.json#properties/instrument"
+              "$ref": "assays/components/cytof_platform.json#properties/instrument"
             },
             "injector": {
-              "$ref": "assays/components/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/injector"
+              "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/injector"
             },
             "acquisition_buffer": {
-              "$ref": "assays/components/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/acquisition_buffer"
+              "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/acquisition_buffer"
             },
             "batch_id": {
-              "$ref": "assays/components/cytof/cytof_acquisition.json#definitions/cytof_acquisition/properties/batch_id"
+              "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/batch_id"
             }
           }
         }
@@ -104,12 +104,11 @@
               "$ref": "assays/components/antibody.json#properties/lot_num"
             },
             "isotope": {
-              "$ref": "assays/components/cytof/cytof_antibody.json#definitions/cytof_antibody/properties/isotope"
+              "$ref": "assays/components/cytof_antibody.json#definitions/cytof_antibody/properties/isotope"
             }
           }
         }
       }
-
     }
   }
 }

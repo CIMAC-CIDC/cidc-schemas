@@ -47,11 +47,6 @@
         }
       },
       "Data Preprocessing": {
-        "preamble_rows": {
-          "lead organization study id": {
-            "$ref": "clinical_trial.json#properties/lead_organization_study_id"
-          }
-        },
         "data_columns": {
           "Samples": {
             "cimac particpant id": {
@@ -91,11 +86,6 @@
         }
       },
       "Antibody Information": {
-        "preamble_rows": {
-          "lead organization study id": {
-            "$ref": "clinical_trial.json#properties/lead_organization_study_id"
-          }
-        },
         "data_columns": {
           "Samples": {
             "target": {

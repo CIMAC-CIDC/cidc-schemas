@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "cytof",
   "title": "CYTOF Run",
+  "type": "object",
   "description": "Base information about the aquisition and analysis CYTOF data\n",
   "definitions": {
     "data_properties": {

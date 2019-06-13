@@ -1,5 +1,7 @@
 # cidc-schemas
 
+[![Build Status](https://travis-ci.org/CIMAC-CIDC/cidc-schemas.svg?branch=master)](https://travis-ci.org/CIMAC-CIDC/cidc-schemas)
+
 This repository contains formal definitions of the CIDC metadata model using [json-schema](https://json-schema.org/) syntax and vocabulary.
 
 ### View documentation at https://cimac-cidc.github.io/cidc-schemas/

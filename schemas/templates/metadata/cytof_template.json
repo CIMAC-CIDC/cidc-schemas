@@ -37,10 +37,10 @@
             "injector": {
               "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/injector"
             },
-            "acquisition_buffer": {
+            "acquisition buffer": {
               "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/acquisition_buffer"
             },
-            "batch_id": {
+            "batch id": {
               "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/batch_id"
             }
           }

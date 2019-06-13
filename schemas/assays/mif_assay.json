@@ -15,16 +15,16 @@
         }
       }
     },
-    "data": {
+    "files": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
           "cimac_sample_id": {
-            "ref": "sample.cimac_sample_id.json#properties/cimac_sample_id"
+            "ref": "sample.json#properties/cimac_sample_id"
           },
           "cimac_aliquot_id": {
-            "ref": "sample.cimac_aliquot_id#properties/cimac_aliquot_id"
+            "ref": "sample.json#properties/cimac_aliquot_id"
           },
           "whole_slide_image": {
             "$ref": "artifacts/artifact_core.json#properties/uuid"

@@ -44,10 +44,10 @@
         "type": "object",
         "properties": {
           "cimac_sample_id": {
-            "ref": "sample.json#properties/cimac_sample_id"
+            "$ref": "sample.json#properties/cimac_sample_id"
           },
           "cimac_aliquot_id": {
-            "ref": "sample.json#properties/cimac_aliquot_id"
+            "$ref": "sample.json#properties/cimac_aliquot_id"
           },
           "processed_fcs": {
             "$ref": "artifacts/artifact_core.json#properties/uuid"

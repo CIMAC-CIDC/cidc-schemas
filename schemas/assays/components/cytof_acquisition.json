@@ -23,6 +23,15 @@
         },
         "batch_id": {
           "type": "string"
+        },
+        "average_event_per_second":{
+          "type": "number"
+        },
+        "run_time":{
+          "type":"string"
+        },
+        "notes":{
+          "type": "string"
         }
       }
     }

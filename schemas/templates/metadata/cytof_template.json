@@ -42,6 +42,15 @@
             },
             "batch_id": {
               "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/batch_id"
+            },
+            "average_event_per_second": {
+              "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/average_event_per_second"
+            },
+            "run_time": {
+              "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/run_time"
+            },
+            "notes": {
+              "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/notes"
             }
           }
         }
@@ -105,6 +114,12 @@
             },
             "isotope": {
               "$ref": "assays/components/cytof_antibody.json#definitions/cytof_antibody/properties/isotope"
+            },
+            "dilution": {
+              "$ref": "assays/components/cytof_antibody.json#definitions/cytof_antibody/properties/dilution"
+            },
+            "stain_type": {
+              "$ref": "assays/components/cytof_antibody.json#definitions/cytof_antibody/properties/stain_type"
             }
           }
         }

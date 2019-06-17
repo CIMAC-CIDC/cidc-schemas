@@ -8,6 +8,13 @@
       "properties":{
           "isotope":{
             "type":"string"
+          },
+          "dilution":{
+            "type": "string"
+          },
+          "stain_type":{
+            "type" : "string",
+            "enum": ["Surface Stain", "Intracellular"]
           }
       }
     }

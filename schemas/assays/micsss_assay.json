@@ -36,13 +36,13 @@
             "$ref": "artifacts/csv_artifact.json"
           },
           "binary_seg_map": {
-            "$ref": "artifacts/image_artifact"
+            "$ref": "artifacts/image_artifact.json"
           },
           "cell_seg_data": {
             "$ref": "artifacts/csv_artifact.json"
           },
           "cell_seg_data_summary": {
-            "$ref": "artifacts/csv_artifact"
+            "$ref": "artifacts/csv_artifact.json"
           },
           "phenotype_map": {
             "$ref": "artifacts/image_artifact.json"

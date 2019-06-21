@@ -21,25 +21,25 @@
       "format": "date"
     }
   },
-  "data": {
+  "files": {
     "type": "array",
     "items": {
       "type": "object",
       "properties": {
         "cimac_sample_id": {
-          "ref": "sample.cimac_sample_id.json#properties/cimac_sample_id"
+          "ref": "sample.json#properties/cimac_sample_id"
         },
         "cimac_aliquot_id": {
-          "ref": "sample.cimac_aliquot_id#properties/cimac_aliquot_id"
+          "ref": "aliquot.json#properties/cimac_aliquot_id"
         },
         "fastq_f": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
+          "$ref": "artifacts/fastq_artifact.json#definitions/properties/data_properties"
         },
         "fastq_r": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
+          "$ref": "artifacts/fastq_artifact.json#definitions/properties/data_properties"
         },
         "read_group": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
+          "$ref": "artifacts/csv_artifact.json#definitions/properties/data_properties"
         }
       }
     }

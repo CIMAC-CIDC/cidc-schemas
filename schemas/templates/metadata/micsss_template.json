@@ -123,34 +123,34 @@
         },
         "data_columns": {
           "Samples": {
-            "cimac_particpant_id": {
+            "cimac particpant id": {
               "$ref": "participant.json#properties/cimac_participant_id"
             },
-            "cimac_sample_id": {
+            "cimac sample id": {
               "$ref": "sample.json#properties/cimac_sample_id"
             },
-            "internal_slide_id": {
+            "internal slide id": {
               "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/internal_slide_id"
             },
-            "time_point": {
+            "time point": {
               "$ref": "sample.json#properties/time_point"
             },
-            "protocol_name": {
+            "protocol name": {
               "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/protocol_name"
             },
-            "staining_date": {
+            "staining date": {
               "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/staining_date"
             },
-            "imaging_date": {
+            "imaging date": {
               "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/imaging_date"
             },
-            "imaging_status": {
+            "imaging status": {
               "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/imaging_status"
             },
-            "project_qupath_folder": {
+            "project qupath folder": {
               "$ref": "assays/micsss_assay.json#definitions/data_properties/properties/project_qupath_folder"
             },
-            "exported_data_folder": {
+            "exported data folder": {
               "$ref": "assays/micsss_assay.json#definitions/data_properties/properties/micsss_exported_data_folder"
             }
           }

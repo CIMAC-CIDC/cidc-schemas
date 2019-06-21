@@ -37,16 +37,16 @@
             "injector": {
               "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/injector"
             },
-            "acquisition_buffer": {
+            "acquisition buffer": {
               "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/acquisition_buffer"
             },
-            "batch_id": {
+            "batch id": {
               "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/batch_id"
             },
-            "average_event_per_second": {
+            "average event per second": {
               "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/average_event_per_second"
             },
-            "run_time": {
+            "run time": {
               "$ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/run_time"
             },
             "notes": {
@@ -118,7 +118,7 @@
             "dilution": {
               "$ref": "assays/components/cytof_antibody.json#definitions/cytof_antibody/properties/dilution"
             },
-            "stain_type": {
+            "stain type": {
               "$ref": "assays/components/cytof_antibody.json#definitions/cytof_antibody/properties/stain_type"
             }
           }

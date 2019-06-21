@@ -15,40 +15,40 @@
         }
       }
     },
-    "data": {
+    "files": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
           "cimac_sample_id": {
-            "ref": "sample.cimac_sample_id.json#properties/cimac_sample_id"
+            "ref": "sample.json#properties/cimac_sample_id"
           },
           "cimac_aliquot_id": {
-            "ref": "sample.cimac_aliquot_id#properties/cimac_aliquot_id"
+            "ref": "aliquot.json#properties/cimac_aliquot_id"
           },
           "composite_image": {
-            "$ref": "artifacts/artifact_core.json#properties/uuid"
+            "$ref": "artifacts/image_artifact.json#definitions/properties/data_properties"
           },
           "component_data": {
-            "$ref": "artifacts/artifact_core.json#properties/uuid"
+            "$ref": "artifacts/image_artifact.json#definitions/properties/data_properties"
           },
           "output_summary": {
-            "$ref": "artifacts/artifact_core.json#properties/uuid"
+            "$ref": "artifacts/csv_artifact.json#definitions/properties/data_properties"
           },
           "binary_seg_map": {
-            "$ref": "artifacts/artifact_core.json#properties/uuid"
+            "$ref": "artifacts/image_artifact.json#definitions/properties/data_properties"
           },
           "cell_seg_data": {
-            "$ref": "artifacts/artifact_core.json#properties/uuid"
+            "$ref": "artifacts/csv_artifact.json#definitions/properties/data_properties"
           },
           "cell_seg_data_summary": {
-            "$ref": "artifacts/artifact_core.json#properties/uuid"
+            "$ref": "artifacts/csv_artifact.json#definitions/properties/data_properties"
           },
           "phenotype_map": {
-            "$ref": "artifacts/artifact_core.json#properties/uuid"
+            "$ref": "artifacts/image_artifact.json#definitions/properties/data_properties"
           },
           "region_seg_map": {
-            "$ref": "artifacts/artifact_core.json#properties/uuid"
+            "$ref": "artifacts/image_artifact.json#definitions/properties/data_properties"
           }
         }
       }

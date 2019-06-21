@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "binary_artifact",
+  "title": "Binary Artifact",
+  "description": "Information about files that include any binary artifacts",
+  "definitions": {
+    "data_properties": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object"
+        }
+      }
+    },
+    "data_row": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#definitions/data_properties"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "arifacts/artifact_core.json"
+    },
+    {
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": { "$ref": "#definitions/data_row" }
+        }
+      }
+    }
+  ],
+  "required": []
+}

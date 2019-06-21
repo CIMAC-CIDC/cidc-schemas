@@ -18,13 +18,13 @@
           "assay category": {
             "$ref": "assays/components/assay_core.json#properties/assay_category"
           },
-          "artifact_category": {
+          "artifact category": {
             "$ref": "artifacts/artifact_core.json#properties/artifact_category"
           }
         },
         "data_columns": {
           "Olink Assay details": {
-            "assay_prefix": {
+            "assay prefix": {
               "$ref": "assays/olink_assay.json#properties/assay_prefix"
             },
             "filetype": {

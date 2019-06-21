@@ -105,7 +105,7 @@
             "time point": {
               "$ref": "sample.json#properties/time_point"
             },
-            "protocol_name": {
+            "protocol name": {
               "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/protocol_name"
             },
             "staining date": {
@@ -120,7 +120,7 @@
             "project inform folder": {
               "$ref": "assays/mif_assay.json#definitions/data_properties/properties/project_inform_folder"
             },
-            "exported_data_folder": {
+            "exported data folder": {
               "$ref": "assays/mif_assay.json#definitions/data_properties/properties/mif_exported_data_folder"
             }
           }

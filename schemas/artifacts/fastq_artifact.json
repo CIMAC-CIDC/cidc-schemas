@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fastq_artifact",
+  "title": "FastQ Artifact",
+  "description": "Information about files that include any FastQ artifacts",
+  "definitions": {
+    "data_properties": {
+      "type": "object",
+      "properties": {
+        "tumor": {
+          "type": "integer"
+        }
+      }
+    },
+    "data_row": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#definitions/data_properties"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "arifacts/artifact_core.json"
+    },
+    {
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": { "$ref": "#definitions/data_row" }
+        }
+      }
+    }
+  ],
+  "required": []
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "image_artifact",
+  "title": "Image Artifact",
+  "description": "Information about files that include any image artifacts",
+  "definitions": {
+    "data_properties": {
+      "type": "object",
+      "properties": {
+        "height_pixel": {
+          "type": "integer"
+        },
+        "width_pixel": {
+          "type": "integer"
+        },
+        "num_channels": {
+          "type": "integer"
+        }
+      }
+    },
+    "data_row": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#definitions/data_properties"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "arifacts/artifact_core.json"
+    },
+    {
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": { "$ref": "#definitions/data_row" }
+        }
+      }
+    }
+  ],
+  "required": []
+}

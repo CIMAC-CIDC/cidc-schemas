@@ -85,25 +85,25 @@
       "type": "number"
     }
   },
-  "data": {
+  "files": {
     "type": "array",
     "items": {
       "type": "object",
       "properties": {
         "cimac_sample_id": {
-          "ref": "sample.cimac_sample_id.json#properties/cimac_sample_id"
+          "ref": "sample.json#properties/cimac_sample_id"
         },
         "cimac_aliquot_id": {
-          "ref": "sample.cimac_aliquot_id#properties/cimac_aliquot_id"
+          "ref": "aliquot.json#properties/cimac_aliquot_id"
         },
         "assay_npx": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
+          "$ref": "artifacts/text_artifact.json#definitions/properties/data_properties"
         },
         "assay_raw_ct": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
+          "$ref": "artifacts/text_artifact.json#definitions/properties/data_properties"
         },
         "study_npx": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
+          "$ref": "artifacts/text_artifact.json#definitions/properties/data_properties"
         }
       }
     }

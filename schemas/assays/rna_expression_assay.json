@@ -45,13 +45,13 @@
           "ref": "aliquot.json#properties/cimac_aliquot_id"
         },
         "fastq_f": {
-          "$ref": "artifacts/fastq_artifact.json#definitions/properties/data_properties"
+          "$ref": "artifacts/fastq_artifact.json"
         },
         "fastq_r": {
-          "$ref": "artifacts/fastq_artifact.json#definitions/properties/data_properties"
+          "$ref": "artifacts/fastq_artifact.json"
         },
         "read_group": {
-          "$ref": "artifacts/csv_artifact.json#definitions/properties/data_properties"
+          "$ref": "artifacts/csv_artifact.json"
         }
       }
     }

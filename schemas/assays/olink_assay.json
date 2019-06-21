@@ -97,13 +97,13 @@
           "ref": "aliquot.json#properties/cimac_aliquot_id"
         },
         "assay_npx": {
-          "$ref": "artifacts/text_artifact.json#definitions/properties/data_properties"
+          "$ref": "artifacts/text_artifact.json"
         },
         "assay_raw_ct": {
-          "$ref": "artifacts/text_artifact.json#definitions/properties/data_properties"
+          "$ref": "artifacts/text_artifact.json"
         },
         "study_npx": {
-          "$ref": "artifacts/text_artifact.json#definitions/properties/data_properties"
+          "$ref": "artifacts/text_artifact.json"
         }
       }
     }

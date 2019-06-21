@@ -29,7 +29,7 @@
   },
   "allOf": [
     {
-      "$ref": "arifacts/artifact_core.json"
+      "$ref": "artifacts/artifact_core.json"
     },
     {
       "properties": {

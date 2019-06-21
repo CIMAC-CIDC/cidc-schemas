@@ -27,28 +27,28 @@
             "ref": "aliquot.json#properties/cimac_aliquot_id"
           },
           "composite_image": {
-            "$ref": "artifacts/image_artifact.json#definitions/properties/data_properties"
+            "$ref": "artifacts/image_artifact.json"
           },
           "component_data": {
-            "$ref": "artifacts/image_artifact.json#definitions/properties/data_properties"
+            "$ref": "artifacts/image_artifact.json"
           },
           "output_summary": {
-            "$ref": "artifacts/csv_artifact.json#definitions/properties/data_properties"
+            "$ref": "artifacts/csv_artifact.json"
           },
           "binary_seg_map": {
-            "$ref": "artifacts/image_artifact.json#definitions/properties/data_properties"
+            "$ref": "artifacts/image_artifact"
           },
           "cell_seg_data": {
-            "$ref": "artifacts/csv_artifact.json#definitions/properties/data_properties"
+            "$ref": "artifacts/csv_artifact.json"
           },
           "cell_seg_data_summary": {
-            "$ref": "artifacts/csv_artifact.json#definitions/properties/data_properties"
+            "$ref": "artifacts/csv_artifact"
           },
           "phenotype_map": {
-            "$ref": "artifacts/image_artifact.json#definitions/properties/data_properties"
+            "$ref": "artifacts/image_artifact.json"
           },
           "region_seg_map": {
-            "$ref": "artifacts/image_artifact.json#definitions/properties/data_properties"
+            "$ref": "artifacts/image_artifact.json"
           }
         }
       }

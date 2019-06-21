@@ -50,10 +50,10 @@
             "ref": "aliquot.json#properties/cimac_aliquot_id"
           },
           "processed_fcs": {
-            "$ref": "artifacts/binary_artifact.json#definitions/properties/data_properties"
+            "$ref": "artifacts/binary_artifact.json"
           },
           "source_fcs": {
-            "$ref": "artifacts/binary_artifact.json#definitions/properties/data_properties"
+            "$ref": "artifacts/binary_artifact.json"
           }
         }
       }

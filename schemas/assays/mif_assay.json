@@ -27,41 +27,41 @@
             "ref": "aliquot.json#properties/cimac_aliquot_id"
           },
           "whole_slide_image": {
-            "$ref": "artifacts/image_artifact.json#definitions/properties/data_properties"
+            "$ref": "artifacts/image_artifact.json"
           },
           "roi_annotation": {
-            "$ref": "artifacts/binary_artifact.json#definitions/properties/data_properties"
+            "$ref": "artifacts/binary_artifact.json"
           },
           "output_summary": {
-            "$ref": "artifacts/csv_artifact.json#definitions/properties/data_properties"
+            "$ref": "artifacts/csv_artifact.json"
           }
         },
         "rois": {
           "type": "array",
           "items": {
             "binary_seg_map": {
-              "$ref": "artifacts/csv_artifact.json#definitions/properties/data_properties"
+              "$ref": "artifacts/csv_artifact.json"
             },
             "cell_seg_data": {
-              "$ref": "artifacts/csv_artifact.json#definitions/properties/data_properties"
+              "$ref": "artifacts/csv_artifact.json"
             },
             "cell_seg_data_summary": {
-              "$ref": "artifacts/csv_artifact.json#definitions/properties/data_properties"
+              "$ref": "artifacts/csv_artifact.json#"
             },
             "component_data": {
-              "$ref": "artifacts/image_artifact.json#definitions/properties/data_properties"
+              "$ref": "artifacts/image_artifact.json"
             },
             "composite_image": {
-              "$ref": "artifacts/image_artifact.json#definitions/properties/data_properties"
+              "$ref": "artifacts/image_artifact.json"
             },
             "phenotype_map": {
-              "$ref": "artifacts/csv_artifact.json#definitions/properties/data_properties"
+              "$ref": "artifacts/csv_artifact.json"
             },
             "score_data": {
-              "$ref": "artifacts/csv_artifact.json#definitions/properties/data_properties"
+              "$ref": "artifacts/csv_artifact.json"
             },
             "region_seg_map": {
-              "$ref": "artifacts/image_artifact.json#definitions/properties/data_properties"
+              "$ref": "artifacts/image_artifact.json"
             }
           }
         }

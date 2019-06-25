@@ -42,7 +42,10 @@ def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT, o
 def _map_refs(node: dict, fn: Callable):
     """
     Apply `fn` to all refs in node, returning node with refs replaced
-    with results of the function call
+    with results of the function call.
+
+    Note: _map_refs is shallow, i.e., if calling `fn` on a node produces 
+    a new node that contains refs, those refs will not be resolved.
     """
     if isinstance(node, collections.Mapping) and '$ref' in node:
         # We found a ref, so return it
@@ -60,16 +63,19 @@ def _map_refs(node: dict, fn: Callable):
 
 def _resolve_refs(base_uri: str, json_spec: dict) -> dict:
     """
-    Resolve JSON references in `json_spec` relative to `base_uri`,
+    Resolve JSON Schema references in `json_spec` relative to `base_uri`,
     return `json_spec` with all references inlined.
     """
     resolver = jsonschema.RefResolver(base_uri, json_spec)
 
-    def _do_resolve(ref):
-        with resolver.resolving(ref) as resolved:
-            return resolved
+    def _resolve_ref(ref):
+        with resolver.resolving(ref) as resolved_spec:
+            # resolved_spec might have unresolved refs in it, so we pass
+            # it back to _resolve_refs to resolve them. This way,
+            # we can fully resolve schemas with nested refs.
+            return _resolve_refs(base_uri, resolved_spec)
 
-    return _map_refs(json_spec, _do_resolve)
+    return _map_refs(json_spec, _resolve_ref)
 
 
 def validate_instance(instance: str, schema: dict, required: bool) -> Optional[str]:

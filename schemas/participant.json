@@ -57,6 +57,12 @@
         "Unknown",
         "Other"
       ]
+    },
+    "samples": {
+      "type": "array",
+      "items": {
+        "$ref": "sample.json"
+      }
     }
   },
   "required": ["cimac_participant_id", "trial_participant_id"]

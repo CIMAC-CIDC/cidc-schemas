@@ -29,7 +29,7 @@ def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT, o
         if on_refs:
             schema = _map_refs(json_spec, on_refs)
         else:
-            schema = _resolve_refs(base_uri, json_spec)
+            schema = _resolve_refs(base_uri, json_spec, schema_root)
 
     # Ensure schema is valid
     # NOTE: $refs were resolved above, so no need for a RefResolver here
@@ -58,15 +58,25 @@ def _map_refs(node: dict, fn: Callable):
     return node
 
 
-def _resolve_refs(base_uri: str, json_spec: dict) -> dict:
+def _resolve_refs(base_uri: str, json_spec: dict, schema_root: str) -> dict:
     """
     Resolve JSON references in `json_spec` relative to `base_uri`,
     return `json_spec` with all references inlined.
     """
     resolver = jsonschema.RefResolver(base_uri, json_spec)
-
+    print("level1: ")
+    print(base_uri)
+    #print(json_spec)
     def _do_resolve(ref):
+        print("level2:")
+        print(ref)
         with resolver.resolving(ref) as resolved:
+            if "samples" in resolved['properties']:
+              print("level3: samples")
+              print(resolved['properties']['samples'])
+            if "participants" in resolved['properties']:
+              print("level3: participants")
+              print(resolved['properties']['participants'])
             return resolved
 
     return _map_refs(json_spec, _do_resolve)

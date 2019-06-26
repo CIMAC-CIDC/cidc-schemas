@@ -29,7 +29,7 @@ def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT, o
         if on_refs:
             schema = _map_refs(json_spec, on_refs)
         else:
-            schema = _resolve_refs(base_uri, json_spec, schema_root)
+            schema = _resolve_refs(base_uri, json_spec)
 
     # Ensure schema is valid
     # NOTE: $refs were resolved above, so no need for a RefResolver here
@@ -42,7 +42,10 @@ def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT, o
 def _map_refs(node: dict, fn: Callable):
     """
     Apply `fn` to all refs in node, returning node with refs replaced
-    with results of the function call
+    with results of the function call.
+
+    Note: _map_refs is shallow, i.e., if calling `fn` on a node produces 
+    a new node that contains refs, those refs will not be resolved.
     """
     if isinstance(node, collections.Mapping) and '$ref' in node:
         # We found a ref, so return it
@@ -58,28 +61,21 @@ def _map_refs(node: dict, fn: Callable):
     return node
 
 
-def _resolve_refs(base_uri: str, json_spec: dict, schema_root: str) -> dict:
+def _resolve_refs(base_uri: str, json_spec: dict) -> dict:
     """
-    Resolve JSON references in `json_spec` relative to `base_uri`,
+    Resolve JSON Schema references in `json_spec` relative to `base_uri`,
     return `json_spec` with all references inlined.
     """
     resolver = jsonschema.RefResolver(base_uri, json_spec)
-    print("level1: ")
-    print(base_uri)
-    #print(json_spec)
-    def _do_resolve(ref):
-        print("level2:")
-        print(ref)
-        with resolver.resolving(ref) as resolved:
-            if "samples" in resolved['properties']:
-              print("level3: samples")
-              print(resolved['properties']['samples'])
-            if "participants" in resolved['properties']:
-              print("level3: participants")
-              print(resolved['properties']['participants'])
-            return resolved
 
-    return _map_refs(json_spec, _do_resolve)
+    def _resolve_ref(ref):
+        with resolver.resolving(ref) as resolved_spec:
+            # resolved_spec might have unresolved refs in it, so we pass
+            # it back to _resolve_refs to resolve them. This way,
+            # we can fully resolve schemas with nested refs.
+            return _resolve_refs(base_uri, resolved_spec)
+
+    return _map_refs(json_spec, _resolve_ref)
 
 
 def validate_instance(instance: str, schema: dict, required: bool) -> Optional[str]:

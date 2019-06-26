@@ -79,16 +79,10 @@
         "Other"
       ]
     },
-    "specimen_analyte":{
+    "specimen_analyte": {
       "description": "",
       "type": "string",
-      "enum": [
-        "H&E slide",
-        "Unstained slide",
-        "DNA",
-        "RNA",
-        "Protein Lysate"
-      ]
+      "enum": ["H&E slide", "Unstained slide", "DNA", "RNA", "Protein Lysate"]
     },
     "tissue_type_submitted": {
       "description": "The type of tissue that was obtained for the study.",
@@ -107,12 +101,14 @@
     "genomic_source": {
       "description": "The type of material submitted - tumor/normal/etc",
       "type": "string",
-      "enum": [
-        "Tumor",
-        "Normal",
-        "Metastasis"
-      ]
+      "enum": ["Tumor", "Normal", "Metastasis"]
+    },
+    "aliquots": {
+      "type": "array",
+      "items": {
+        "$ref": "aliquot.json"
+      }
     }
   },
-  "required": ["cimac_sample_id", "site_sample_id"]
+  "required": ["cimac_sample_id", "site_sample_id", "aliquots"]
 }

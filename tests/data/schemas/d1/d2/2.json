@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "2_prop": {
+      "$ref": "d1/3.json#properties"
+    }
+  }
+}

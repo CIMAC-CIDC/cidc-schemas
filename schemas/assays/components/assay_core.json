@@ -38,7 +38,43 @@
         "Other",
         "None"
       ]
+    },
+    "cyTOF": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/cytof_assay.json"
+      }
+    },
+    "mIF": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/mif_assay.json"
+      }
+    },
+    "micsss": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/micsss_assay.json"
+      }
+    },
+    "olink": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/olink_assay.json"
+      }
+    },
+    "rna_seq": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/rna_expression_assay.json"
+      }
+    },
+    "wes": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/wes_assay.json"
+      }
     }
   },
-  "required": ["uploader"]
+  "required": ["assay_creator", "uploader", "assay_category"]
 }

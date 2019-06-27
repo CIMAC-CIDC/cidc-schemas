@@ -48,25 +48,18 @@ def test_trial_core():
     al_validator = jsonschema.Draft7Validator(al_schema)
     al_validator.check_schema(al_schema)
 
-    # create some samples
-    assay = {
-        "assay_creator": "DFCI",
-        "uploader": "dfci@dfci.harvard.edu",
-        "assay_category": "CyTOF"
-    }
-
+    # create some aliquots.
     aliquot1 = {
-        "cimac_aliquot_id": "c1d1",
-        "assays": [assay]
+        "cimac_aliquot_id": "c1d1"
     }
 
     aliquot2 = {
-        "cimac_aliquot_id": "c1d2",
-        "assays": [assay]
+        "cimac_aliquot_id": "c1d2"
     }
     al_validator.validate(aliquot1)
     al_validator.validate(aliquot2)
 
+    # create some samples.
     sample1 = {
         "cimac_sample_id": "csid1",
         "site_sample_id": "ssida",

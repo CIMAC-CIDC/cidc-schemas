@@ -57,14 +57,5 @@
       }
     }
   },
-  "required": [
-    "cimac_participant_id",
-    "trial_participant_id",
-    "arm_id",
-    "cohort_id",
-    "gender",
-    "race",
-    "ethnicity",
-    "samples"
-  ]
+  "required": ["cimac_participant_id", "trial_participant_id", "samples"]
 }

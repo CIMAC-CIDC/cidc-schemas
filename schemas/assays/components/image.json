@@ -34,5 +34,14 @@
       "type": "string"
     }
   },
-  "required": ["creator", "protocol_name"]
+  "required": [
+    "slide_scanner_model",
+    "staining_platform",
+    "autostainer_model",
+    "image_analysis_software",
+    "image_analysis_software_version",
+    "cell_segmentation_model",
+    "positive_cell_detection",
+    "protocol_name"
+  ]
 }

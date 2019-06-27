@@ -65,12 +65,8 @@
     }
   },
   "allOf": [
-    {
-      "$ref": "assays/components/antibody.json"
-    },
-    {
-      "$ref": "#definitions/micsss_properties"
-    }
+    { "$ref": "assays/components/antibody.json" },
+    { "$ref": "#definitions/micsss_properties" }
   ],
   "required": [
     "primary_antibody_block",

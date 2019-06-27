@@ -5,7 +5,9 @@
   "type": "object",
   "description": "Multiplexed immunohistochemical consecutive staining on single slide",
   "allOf:": [
+    { "ref": "assays/components/antibody.json" },
     { "ref": "assays/components/image.json" },
+    { "ref": "assays/components/imaging_data.json" },
     { "ref": "assays/components/micsss_antibody.json" }
   ],
   "properties": {
@@ -16,10 +18,22 @@
       "type": "string"
     },
     "properties": {
+      "antibodies": {
+        "type": "array",
+        "items": {
+          "$ref": "assays/components/antibody.json"
+        }
+      },
       "images": {
         "type": "array",
         "items": {
           "$ref": "assays/components/image.json"
+        }
+      },
+      "imaging_data": {
+        "type": "array",
+        "items": {
+          "$ref": "assays/components/imaging_data.json"
         }
       },
       "micsss_antibodies": {
@@ -33,7 +47,9 @@
   "required": [
     "project_qupath_folder",
     "micsss_exported_data_folder",
+    "antibodies",
     "images",
+    "imaging_data",
     "micsss_antibodies"
   ],
   "files": {

@@ -49,6 +49,7 @@ def test_trial_core():
     al_validator.check_schema(al_schema)
 
     # create some aliquots.
+    shipment = {"request": "DFCI"}
     aliquot1 = {
         "cimac_aliquot_id": "c1d1"
     }
@@ -88,7 +89,8 @@ def test_trial_core():
     # validate the positive version works.
     clinical_trial = {
         "lead_organization_study_id": "trial1",
-        "participants": [participant]
+        "participants": [participant],
+        "shipments": [shipment]
     }
     ct_validator.validate(clinical_trial)
 

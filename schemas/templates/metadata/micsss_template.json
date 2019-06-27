@@ -62,55 +62,55 @@
               "$ref": "assays/components/antibody.json#properties/staining_order"
             },
             "Primary Antibody Block": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/primary_antibody_block"
+              "$ref": "assays/components/micsss_antibody.json#properties/primary_antibody_block"
             },
             "PostPrimary Linker Block": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/postPrimary_linker_block"
+              "$ref": "assays/components/micsss_antibody.json#properties/postPrimary_linker_block"
             },
             "Secondary Antibody Block": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/secondary_antibody_block"
+              "$ref": "assays/components/micsss_antibody.json#properties/secondary_antibody_block"
             },
             "Species": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/species"
+              "$ref": "assays/components/micsss_antibody.json#properties/species"
             },
             "Isotype": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/isotype"
+              "$ref": "assays/components/micsss_antibody.json#properties/isotype"
             },
             "Pr. Antibody Dilution": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/primary_antibody_dilution"
+              "$ref": "assays/components/micsss_antibody.json#properties/primary_antibody_dilution"
             },
             "Pr. Antibody Incubation Time": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/primary_antibody_incubation_time"
+              "$ref": "assays/components/micsss_antibody.json#properties/primary_antibody_incubation_time"
             },
             "Pr. Antibody Incubation Temp": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/primary_antibody_incubation_temp"
+              "$ref": "assays/components/micsss_antibody.json#properties/primary_antibody_incubation_temp"
             },
             "S. Antibody": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/secondary_antibody"
+              "$ref": "assays/components/micsss_antibody.json#properties/secondary_antibody"
             },
             "S. Company": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/secondary_company"
+              "$ref": "assays/components/micsss_antibody.json#properties/secondary_company"
             },
             "S. Cat #": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/secondary_cat_num"
+              "$ref": "assays/components/micsss_antibody.json#properties/secondary_cat_num"
             },
             "S. Lot #": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/secondary_lot_num"
+              "$ref": "assays/components/micsss_antibody.json#properties/secondary_lot_num"
             },
             "S. Antibody Dilution": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/secondary_antibody_dilution"
+              "$ref": "assays/components/micsss_antibody.json#properties/secondary_antibody_dilution"
             },
             "S. Antibody Incubation Time": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/secondary_antibody_incubation_time"
+              "$ref": "assays/components/micsss_antibody.json#properties/secondary_antibody_incubation_time"
             },
             "AR Reagent": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/ar_reagent"
+              "$ref": "assays/components/micsss_antibody.json#properties/ar_reagent"
             },
             "AR pH": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/ar_ph"
+              "$ref": "assays/components/micsss_antibody.json#properties/ar_ph"
             },
             "AR Incubation Time": {
-              "$ref": "assays/components/micsss_antibody.json#definitions/micsss_properties/properties/ar_incubation_time"
+              "$ref": "assays/components/micsss_antibody.json#properties/ar_incubation_time"
             }
           }
         }
@@ -130,22 +130,22 @@
               "$ref": "sample.json#properties/cimac_sample_id"
             },
             "internal_slide_id": {
-              "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/internal_slide_id"
+              "$ref": "assays/components/imaging_data.json#properties/internal_slide_id"
             },
             "time_point": {
               "$ref": "sample.json#properties/time_point"
             },
             "protocol_name": {
-              "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/protocol_name"
+              "$ref": "assays/components/imaging_data.json#properties/protocol_name"
             },
             "staining_date": {
-              "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/staining_date"
+              "$ref": "assays/components/imaging_data.json#properties/staining_date"
             },
             "imaging_date": {
-              "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/imaging_date"
+              "$ref": "assays/components/imaging_data.json#properties/imaging_date"
             },
             "imaging_status": {
-              "$ref": "assays/components/imaging_data.json#definitions/data_properties/properties/imaging_status"
+              "$ref": "assays/components/imaging_data.json#properties/imaging_status"
             },
             "project_qupath_folder": {
               "$ref": "assays/micsss_assay.json#properties/project_qupath_folder"

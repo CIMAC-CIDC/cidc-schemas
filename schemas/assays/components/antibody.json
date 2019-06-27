@@ -23,12 +23,5 @@
       "type": "number"
     }
   },
-  "required": [
-    "antibody",
-    "clone",
-    "company",
-    "cat_num",
-    "lot_num",
-    "staining_order"
-  ]
+  "required": ["antibody"]
 }

@@ -4,14 +4,6 @@
   "title": "Assay Core",
   "type": "object",
   "description": "Main properties of the assay experiment template",
-  "links": [
-    {
-      "link": {
-        "cardinality": "exactly_one",
-        "linked_to": "artifact"
-      }
-    }
-  ],
   "properties": {
     "assay_creator": {
       "description": "Indicates what site is filling out the assay",

@@ -4,14 +4,6 @@
   "title": "OLink Assay",
   "type": "object",
   "description": "High-throughput multiplexed assays for protein biomarker discovery",
-  "links": [
-    {
-      "link": {
-        "cardinality": "exactly_one",
-        "linked_to": "artifact"
-      }
-    }
-  ],
   "properties": {
     "assay_prefix": {
       "description": "Prefix to used for the filename",

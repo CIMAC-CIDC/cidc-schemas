@@ -4,14 +4,6 @@
   "title": "Artifact",
   "type": "object",
   "description": "Any file artifact associated with a clinical trial.",
-  "links": [
-    {
-      "link": {
-        "cardinality": "0_or_N",
-        "linked_to": "aliquot"
-      }
-    }
-  ],
   "properties": {
     "artifact_creator": {
       "description": "The name of the center that created this artificat",

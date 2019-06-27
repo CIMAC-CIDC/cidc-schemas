@@ -4,41 +4,45 @@
   "title": "CYTOF Run",
   "type": "object",
   "description": "Base information about the aquisition and analysis CYTOF data\n",
-  "properties": {
-    "processed_fcs_filename": {
-      "type": "string"
-    },
-    "source_fcs_filenames": {
-      "type": "string"
-    },
-    "concatonation_version": {
-      "type": "string"
-    },
-    "normalization_version": {
-      "type": "string"
-    },
-    "beads_removed": {
-      "type": "string",
-      "enum": ["Y", "N"]
-    },
-    "staining_date": {
-      "type": "string",
-      "format": "date"
-    },
-    "batch_id": {
-      "type": "string"
-    },
-    "debarcoding_protocol": {
-      "type": "string"
-    },
-    "debarcoding_key": {
-      "type": "string"
-    }
-  },
   "allOf": [
     { "$ref": "assays/components/cytof_platform.json" },
     { "$ref": "assays/components/cytof_panel.json" }
   ],
+  "definitions": {
+    "data_properties": {
+      "properties": {
+        "processed_fcs_filename": {
+          "type": "string"
+        },
+        "source_fcs_filenames": {
+          "type": "string"
+        },
+        "concatonation_version": {
+          "type": "string"
+        },
+        "normalization_version": {
+          "type": "string"
+        },
+        "beads_removed": {
+          "type": "string",
+          "enum": ["Y", "N"]
+        },
+        "staining_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "batch_id": {
+          "type": "string"
+        },
+        "debarcoding_protocol": {
+          "type": "string"
+        },
+        "debarcoding_key": {
+          "type": "string"
+        }
+      }
+    }
+  },
   "required": [],
   "files": {
     "type": "array",

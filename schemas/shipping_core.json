@@ -2,22 +2,8 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "shipping_core",
   "title": "Core Shipping Details",
-  "description": "Core shipping details for a manifest.",
   "type": "object",
-  "links": [
-    {
-      "link": {
-        "cardinality": "exactly_one",
-        "linked_to": "clinical_trial"
-      }
-    },
-    {
-      "link": {
-        "cardinality": "exactly_one",
-        "linked_to": "user"
-      }
-    }
-  ],
+  "description": "Core shipping details for a manifest.",
   "properties": {
     "manifest_id": {
       "description": "Filename of the manifest used to ship this sample. Example: E4412_PBMC.",

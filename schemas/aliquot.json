@@ -116,13 +116,7 @@
     "fibrosis_percent_area": {
       "description": "Percent area of fibrotic area. Example: 15",
       "type": "number"
-    },
-    "assays": {
-      "type": "array",
-      "items": {
-        "$ref": "assays/components/assay_core.json"
-      }
     }
   },
-  "required": ["cimac_aliquot_id", "assays"]
+  "required": ["cimac_aliquot_id"]
 }

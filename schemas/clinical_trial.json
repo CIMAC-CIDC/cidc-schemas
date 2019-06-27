@@ -46,7 +46,13 @@
           "Multiplexed Ion-Beam Imaging (MIBI)"
         ]
       }
+    },
+    "participants": {
+      "type": "array",
+      "items": {
+        "$ref": "participant.json"
+      }
     }
   },
-  "required": ["lead_organization_study_id"]
+  "required": ["lead_organization_study_id", "participants"]
 }

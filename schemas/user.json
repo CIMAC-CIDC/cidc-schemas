@@ -4,14 +4,6 @@
   "title": "User",
   "type": "object",
   "description": "Any user of the CIDC platform.",
-  "links": [
-    {
-      "link": {
-        "cardinality": "zero_or_n",
-        "linked_to": "clinical_trial"
-      }
-    }
-  ],
   "properties": {
     "user_id": {
       "description": "User Identifier.",

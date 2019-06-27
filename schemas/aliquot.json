@@ -4,14 +4,6 @@
   "title": "Aliquot",
   "type": "object",
   "description": "Pertaining to a portion (volume or weight) of the whole.",
-  "links": [
-    {
-      "link": {
-        "cardinality": "exactly_one",
-        "linked_to": "sample"
-      }
-    }
-  ],
   "properties": {
     "cimac_aliquot_id": {
       "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",

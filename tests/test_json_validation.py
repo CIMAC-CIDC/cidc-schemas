@@ -55,11 +55,9 @@ def test_trial_core():
              }
 
     aliquot1 = {"cimac_aliquot_id": "c1d1",
-                "assays": [assay]
                 }
 
     aliquot2 = {"cimac_aliquot_id": "c1d2",
-                "assays": [assay]
                 }
     al_validator.validate(aliquot1)
     al_validator.validate(aliquot2)

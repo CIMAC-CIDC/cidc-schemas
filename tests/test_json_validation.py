@@ -49,18 +49,21 @@ def test_trial_core():
     al_validator.check_schema(al_schema)
 
     # create some samples
-    assay = {"assay_creator": "DFCI",
-             "uploader": "dfci@dfci.harvard.edu",
-             "assay_category": "CyTOF"
-             }
+    assay = {
+        "assay_creator": "DFCI",
+        "uploader": "dfci@dfci.harvard.edu",
+        "assay_category": "CyTOF"
+    }
 
-    aliquot1 = {"cimac_aliquot_id": "c1d1",
-                "assays": [assay]
-                }
+    aliquot1 = {
+        "cimac_aliquot_id": "c1d1",
+        "assays": [assay]
+    }
 
-    aliquot2 = {"cimac_aliquot_id": "c1d2",
-                "assays": [assay]
-                }
+    aliquot2 = {
+        "cimac_aliquot_id": "c1d2",
+        "assays": [assay]
+    }
     al_validator.validate(aliquot1)
     al_validator.validate(aliquot2)
 
@@ -80,12 +83,10 @@ def test_trial_core():
     # create a bad participant, then make it good.
     participant = {
         "cimac_participant_id": "cpid_1",
+        "trial_participant_id": "tpid_a"
     }
-    # with pytest.raises(jsonschema.ValidationError):
-    #  pt_validator.validate(participant)
-
-    participant['trial_participant_id'] = 'tpid_a'
-    # pt_validator.validate(participant)
+    with pytest.raises(jsonschema.ValidationError):
+        pt_validator.validate(participant)
 
     # add samples to the participant.
     participant["samples"] = [sample1, sample2]

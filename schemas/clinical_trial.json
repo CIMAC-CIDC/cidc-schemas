@@ -47,6 +47,12 @@
         ]
       }
     },
+    "shipments": {
+      "type": "array",
+      "items": {
+        "$ref": "shipping_core.json"
+      }
+    },
     "participants": {
       "type": "array",
       "items": {
@@ -54,5 +60,5 @@
       }
     }
   },
-  "required": ["lead_organization_study_id", "participants"]
+  "required": ["lead_organization_study_id", "shipments", "participants"]
 }

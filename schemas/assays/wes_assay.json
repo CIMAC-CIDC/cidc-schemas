@@ -4,7 +4,6 @@
   "title": "Whole Exome Sequencing Assay",
   "type": "object",
   "description": "Whole Exome Sequencing Assay",
-  "allOf": [{ "$ref": "assays/components/ngs.json" }],
   "properties": {
     "enrichment_vendor_kit": {
       "description": "Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT",

@@ -54,6 +54,7 @@
   "required": [
     "project_qupath_folder",
     "micsss_exported_data_folder",
+    "core_data",
     "antibodies",
     "images",
     "imaging_data",

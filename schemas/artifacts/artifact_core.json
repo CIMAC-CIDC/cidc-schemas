@@ -61,6 +61,7 @@
         "FASTA",
         "FASTQ",
         "TIFF",
+        "VCF",
         "TSV",
         "Excel",
         "NPX",

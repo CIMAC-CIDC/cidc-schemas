@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "binary_artifact",
   "title": "Binary Artifact",
-  "description": "Information about files that include any binary artifacts",
+  "description": "Information about binary files.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

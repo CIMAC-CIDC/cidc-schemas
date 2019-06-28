@@ -13,14 +13,6 @@ from cidc_schemas.json_validation import _map_refs, load_and_validate_schema, _r
 from .constants import SCHEMA_DIR, ROOT_DIR, TEST_SCHEMA_DIR
 
 
-def test_map_refs():
-    spec = {"a": {"$ref": "foo"}, "b": [{"$ref": "foo"}]}
-
-    target = {"a": "FOO", "b": ["FOO"]}
-
-    assert _map_refs(spec, lambda ref: ref.upper()) == target
-
-
 def test_assay_core():
 
     # load and validate schema.
@@ -34,61 +26,37 @@ def test_assay_core():
     micsss_validator.check_schema(micsss_schema)
 
     # create some sample data
-    core_data = {"assay_creator": "DFCI"}
+    payload = {}
+    core_data = {
+        "assay_creator": "DFCI"
+    }
+    payload = {**payload, **core_data}
 
+    # add imaging core data
     image = {
         "protocol_name": "Celebi"
     }
+    payload = {**payload, **image}
+    antibody = [
+        {
+            "antibody": "FOXP3",
+            "primary_antibody_block": "dummy",
+        }
+    ]
+    payload['payload'] = payload
 
-    antibody = {
-        "antibody": "FOXP3",
-    }
-
-    micsss_antibody = {
-        "primary_antibody_block": "N/A",
-    }
-
+    # add the data row
     imaging_data = {
         "internal_slide_id": "a1b1"
     }
-    # validate the positive version works.
-    micsss = {"project_qupath_folder": "n/a",
-              "micsss_exported_data_folder": "n/a",
-              "core_data": [core_data],
-              "images": [image],
-              "imaging_data": [imaging_data],
-              "antibodies": [antibody],
-              "micsss_antibodies": [micsss_antibody]
-              }
+    payload = {**payload, **imaging_data}
 
-    micsss_validator.validate(micsss)
-
-    # make it fail
-    # micsss.pop('project_qupath_folder')
-    # with pytest.raises(jsonschema.ValidationError):
-    # micsss_validator.validate(micsss)
-
-
-def do_resolve(schema_path):
-    base_uri = f"file://{TEST_SCHEMA_DIR}/"
-
-    with open(os.path.join(TEST_SCHEMA_DIR, schema_path)) as f:
-        spec = json.load(f)
-        return _resolve_refs(base_uri, spec)
-
-
-def test_resolve_refs():
-    """Ensure that ref resolution can handle nested refs"""
-
-    # One level of nesting
-    b = do_resolve("b.json")
-    assert b["properties"] == {"b_prop": {"c_prop": {"type": "string"}}}
-
-    # Two levels of nesting
-    a = do_resolve("a.json")
-    assert a["properties"] == {"a_prop": b["properties"]}
-
-    # Two levels of nesting across different directories
-    one = do_resolve("1.json")
-    assert one["properties"] == {"1_prop": {
-        "2_prop": {"3_prop": {"type": "string"}}}}
+    micsss = {
+        "project_qupath_folder": "n/a",
+        "micsss_exported_data_folder": "n/a",
+        "antibody": antibody
+    }
+    payload = {**payload, **micsss}
+    
+    # assert this is valid.
+    micsss_validator.validate(payload)

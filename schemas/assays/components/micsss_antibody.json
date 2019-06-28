@@ -3,6 +3,7 @@
   "id": "micsss_antibody",
   "title": "MICSSS antibody",
   "description": "Data specific to antibody prepration on the multiplex immunohistochemical platform\n",
+  "allOf": [ {"$ref": "assays/components/antibody.json"} ],
   "properties": {
     "primary_antibody_block": {
       "type": "string"

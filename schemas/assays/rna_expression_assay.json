@@ -41,7 +41,6 @@
     "enrichment_method",
     "enrichment_vendor_kit",
     "enrichment_vendor_lot",
-    "capture_date",
-    "files"
+    "capture_date"
   ]
 }

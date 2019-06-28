@@ -34,5 +34,5 @@
       "type": "string"
     }
   },
-  "required": ["creator", "protocol_name"]
+  "required": ["protocol_name"]
 }

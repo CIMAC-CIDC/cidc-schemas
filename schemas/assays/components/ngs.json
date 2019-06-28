@@ -4,14 +4,6 @@
   "title": "NGS Sequencing",
   "type": "object",
   "description": "Common properties for NGS Sequencing sxperiments.",
-  "links": [
-    {
-      "link": {
-        "cardinality": "exactly_one",
-        "linked_to": "artifact"
-      }
-    }
-  ],
   "properties": {
     "sequencer_platform": {
       "description": "Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.",

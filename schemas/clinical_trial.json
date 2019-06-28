@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "clinical_trial",
   "title": "Clinical Trial",
   "description": "Encapsulates information regarding a clinical trial.\n",
@@ -46,7 +46,19 @@
           "Multiplexed Ion-Beam Imaging (MIBI)"
         ]
       }
+    },
+    "shipments": {
+      "type": "array",
+      "items": {
+        "$ref": "shipping_core.json"
+      }
+    },
+    "participants": {
+      "type": "array",
+      "items": {
+        "$ref": "participant.json"
+      }
     }
   },
-  "required": ["lead_organization_study_id"]
+  "required": ["lead_organization_study_id", "shipments", "participants"]
 }

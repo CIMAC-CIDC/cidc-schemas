@@ -1,34 +1,27 @@
 {
-	"$schema": "http://json-schema.org/draft-07/schema#",
-	"id": "antibody",
-	"title": "Antibody",
-	"description": "Common information about an antibody used in a number of immune-oncology assays\n",
-	"properties": {
-		"antibody": {
-			"type": "string"
-		},
-		"clone": {
-			"type": "string"
-		},
-		"company": {
-			"type": "string"
-		},
-		"cat_num": {
-			"type": "string"
-		},
-		"lot_num": {
-			"type": "string"
-		},
-		"staining_order": {
-			"type": "number"
-		}
-	},
-	"required": [
-		"antibody",
-		"clone",
-    "company",
-    "cat_num",
-    "lot_num",
-    "staining_order"
-	]
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "antibody",
+  "title": "Antibody",
+  "description": "Common information about an antibody used in a number of immune-oncology assays\n",
+  "properties": {
+    "antibody": {
+      "type": "string"
+    },
+    "clone": {
+      "type": "string"
+    },
+    "company": {
+      "type": "string"
+    },
+    "cat_num": {
+      "type": "string"
+    },
+    "lot_num": {
+      "type": "string"
+    },
+    "staining_order": {
+      "type": "number"
+    }
+  },
+  "required": ["antibody"]
 }

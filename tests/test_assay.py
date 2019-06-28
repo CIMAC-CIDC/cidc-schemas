@@ -34,6 +34,8 @@ def test_assay_core():
     micsss_validator.check_schema(micsss_schema)
 
     # create some sample data
+    core_data = {"assay_creator": "DFCI"}
+
     image = {
         "protocol_name": "Celebi"
     }
@@ -52,6 +54,7 @@ def test_assay_core():
     # validate the positive version works.
     micsss = {"project_qupath_folder": "n/a",
               "micsss_exported_data_folder": "n/a",
+              "core_data": [core_data],
               "images": [image],
               "imaging_data": [imaging_data],
               "antibodies": [antibody],

@@ -3,57 +3,25 @@
   "$id": "imaging_data",
   "title": "Imaging Data",
   "description": "Shared schema for experiments involving the use of imaging data",
-  "definitions": {
-    "data_properties": {
-      "type": "object",
-      "properties": {
-        "internal_slide_id": {
-          "type": "string"
-        },
-        "protocol_name": {
-          "type": "string"
-        },
-        "staining_date": {
-          "type": "string",
-          "format": "date"
-        },
-        "imaging_date": {
-          "type": "string",
-          "format": "date"
-        },
-        "imaging_status": {
-          "type": "string",
-          "enum": ["Yes", "No"]
-        }
-      }
+  "properties": {
+    "internal_slide_id": {
+      "type": "string"
     },
-    "data_row": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#definitions/data_properties"
-        }
-      ]
+    "protocol_name": {
+      "type": "string"
+    },
+    "staining_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "imaging_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "imaging_status": {
+      "type": "string",
+      "enum": ["Yes", "No"]
     }
   },
-  "allOf": [
-    {
-      "$ref": "assays/components/image.json"
-    },
-    {
-      "properties": {
-        "antibody": {
-          "type": "array",
-          "items": {
-            "$ref": "assays/components/micsss_antibody.json"
-          }
-        },
-        "data": {
-          "type": "array",
-          "items": { "$ref": "#definitions/data_row" }
-        }
-      }
-    }
-  ],
-  "required": []
+  "required": ["internal_slide_id"]
 }

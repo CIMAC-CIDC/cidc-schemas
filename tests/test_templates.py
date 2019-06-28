@@ -60,6 +60,12 @@ def test_template(schema_path, xlsx_path, tmpdir):
     compare_templates(schema_path, generated_template, reference_template)
 
     # Validate the Excel template
+    print(schema_path, xlsx_path)
+    print(schema_path, xlsx_path)
+    print(schema_path, xlsx_path)
+    print(schema_path, xlsx_path)
+    #print(dir(template))
+    #print(template.template_schema)
     assert reference_template.validate(template)
 
 

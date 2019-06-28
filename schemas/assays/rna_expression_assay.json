@@ -31,35 +31,17 @@
       "description": "Date of the hybrid capture enrichment",
       "type": "string",
       "format": "date"
-    }
-  },
-  "data": {
-    "type": "array",
-    "items": {
-      "type": "object",
-      "properties": {
-        "cimac_sample_id": {
-          "ref": "sample.cimac_sample_id.json#properties/cimac_sample_id"
-        },
-        "cimac_aliquot_id": {
-          "ref": "sample.cimac_aliquot_id#properties/cimac_aliquot_id"
-        },
-        "fastq_f": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
-        },
-        "fastq_r": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
-        },
-        "read_group": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
-        }
-      }
+    },
+    "files": {
+      "description": "Input files for RNA-seq assay.",
+      "$ref": "assays/components/rna_input.json"
     }
   },
   "required": [
     "enrichment_method",
     "enrichment_vendor_kit",
     "enrichment_vendor_lot",
-    "capture_date"
+    "capture_date",
+    "files"
   ]
 }

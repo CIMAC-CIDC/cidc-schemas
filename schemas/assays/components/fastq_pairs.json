@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fastq_pairs",
+  "title": "Paired end sequencing file pairs",
+  "type": "object",
+  "description": "Paired end sequencing file pairs",
+  "properties": {
+    "fastq_1": {
+      "$ref": "artifacts/artifact_fastq.json",
+      "description": "Fastq file for the first fragment"
+    },
+    "fastq_2": {
+      "$ref": "artifacts/artifact_fastq.json",
+      "description": "Fastq file for the second fragment"
+    }
+  },
+  "required": [
+    "tumor_fastq_1",
+    "tumor_fastq_2",
+    "normal_fastq_1", 
+    "normal_fastq_2", 
+    "read_group_mapping_file"
+  ]
+}

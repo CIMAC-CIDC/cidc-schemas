@@ -1,8 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "binary_artifact",
-  "title": "Binary Artifact",
-  "description": "Information about files that include any binary artifacts",
+  "$id": "text_artifact",
+  "title": "Text Artifact",
+  "type": "object",
+  "description": "Information about text files",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

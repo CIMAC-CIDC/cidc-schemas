@@ -4,12 +4,10 @@
   "title": "WES assay record",
   "type": "object",
   "description": "A single data record from WES assay",
+  "allOf": [
+    { "$ref": "assays/components/ngs/ngs_entry.json" }
+  ],
   "properties": {
-    "enrichment_vendor_kit": {
-      "description": "Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT",
-      "type": "string",
-      "enum": ["Agilent", "Twist", "IDT", "NEB"]
-    },
     "enrichment_vendor_lot": {
       "description": "Lot number for the bait set",
       "type": "string"
@@ -24,6 +22,7 @@
     }
   },
   "required": [
-    "enrichment_vendor_kit"
+    "enrichment_vendor_lot",
+    "capture_date"
   ]
 }

@@ -14,6 +14,26 @@
       "type": "string",
       "enum": ["PolyA capture", "Transcriptome capture", "Ribo minus"]
     },
+    "enrichment_vendor_kit": {
+      "description": "Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT",
+      "type": "string",
+      "enum": ["Agilent", "Twist", "IDT", "NEB", "Illumina - TruSeq Stranded PolyA mRNA"]
+    },
+    "stranded_library": {
+      "description": "Is the RNAseq library stranded or not",
+      "type": "boolean"
+    },
+    "library_type": {
+      "description": "The type of RNAseq library generated",
+      "type": "string",
+      "enum": ["ff-firststrand",
+        "ff-secondstrand",
+        "ff-unstranded",
+        "fr-firststrand",
+        "fr-secondstrand",
+        "fr-unstranded",
+        "transfrags"]
+    },
     "records": {
       "type": "array",
       "items": {

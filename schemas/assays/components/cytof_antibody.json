@@ -3,33 +3,22 @@
   "$id": "cytof_antibody",
   "title": "CYTOF Conjugated Antibody",
   "description": "Data specific to antibody prepration on the CYTOF.",
-  "definitions": {
-    "cytof_antibody":{
-      "properties":{
-          "isotope":{
-            "type":"string"
-          },
-          "dilution":{
-            "type": "string"
-          },
-          "stain_type":{
-            "type" : "string",
-            "enum": ["Surface Stain", "Intracellular"]
-          }
-      }
+  "allOf": [
+    {"$ref": "assays/components/antibody.json"}
+  ],
+  "properties":{
+    "isotope":{
+      "type":"string"
+    },
+    "dilution":{
+      "type": "string"
+    },
+    "stain_type":{
+      "type" : "string",
+      "enum": ["Surface Stain", "Intracellular"]
     }
   },
-  "allOf": [
-    {
-      "$ref": "assays/components/antibody.json"
-    },
-    {
-      "$ref": "#definitions/cytof_antibody"
-    }
-  ],
-
   "required": [
-    "isotope",
-    "antibody"
+    "isotope"
   ]
 }

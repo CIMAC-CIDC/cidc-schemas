@@ -15,10 +15,7 @@
     }
   },
   "required": [
-    "tumor_fastq_1",
-    "tumor_fastq_2",
-    "normal_fastq_1", 
-    "normal_fastq_2", 
-    "read_group_mapping_file"
+    "fastq_1",
+    "fastq_2"
   ]
 }

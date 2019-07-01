@@ -4,25 +4,17 @@
   "title": "Whole Exome Sequencing Assay",
   "type": "object",
   "description": "Whole Exome Sequencing Assay",
-  "allOf": [{ "$ref": "assays/components/ngs.json" }],
+  "allOf": [
+    { "$ref": "assays/components/assay_core.json" },
+    { "$ref": "assays/components/ngs.json" }
+  ],
   "properties": {
-    "enrichment_vendor_kit": {
-      "description": "Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT",
-      "type": "string",
-      "enum": ["Agilent", "Twist", "IDT", "NEB"]
-    },
-    "enrichment_vendor_lot": {
-      "description": "Lot number for the bait set",
-      "type": "string"
-    },
-    "capture_date": {
-      "description": "Date of the hybrid capture enrichment",
-      "type": "string",
-      "format": "date"
-    },
-    "files": {
-      "$ref": "assays/components/wes_input.json"
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/components/ngs/wes_entry.json"
+      }
     }
   },
-  "required": ["enrichment_vendor_kit", "enrichment_vendor_lot", "capture_date"]
+  "required": ["records"]
 }

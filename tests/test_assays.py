@@ -13,19 +13,25 @@ from cidc_schemas.json_validation import load_and_validate_schema
 from .constants import SCHEMA_DIR
 
 ARTIFACT_OBJ = {
-    "artifact_category": "Manifest File",
-    "artifact_creator": "DFCI",
-    "assay_category": "Whole Exome Sequencing (WES)",
-    "bucket_url": "dummy",
-    "file_name": "dummy.txt",
-    "file_size_bytes": 1,
-    "file_type": "FASTA",
-    "md5_hash": "dummy",
-    "uploaded_timestamp": "dummy",
-    "uploader": "dummy",
-    "uuid": "dummy",
-    "visible": True
-  }
+  "artifact_category": "Manifest File",
+  "artifact_creator": "DFCI",
+  "assay_category": "Whole Exome Sequencing (WES)",
+  "bucket_url": "dummy",
+  "file_name": "dummy.txt",
+  "file_size_bytes": 1,
+  "file_type": "FASTA",
+  "md5_hash": "dummy",
+  "uploaded_timestamp": "dummy",
+  "uploader": "dummy",
+  "uuid": "dummy",
+  "visible": True
+}
+
+ASSAY_CORE = {
+  "assay_creator": "DFCI",
+  "uploader": "dummy",
+  "assay_category": "Whole Exome Sequencing (WES)"
+}
 
 def _fetch_validator(name):
 
@@ -50,21 +56,40 @@ def test_wes():
     "library_yield_ng": 666,
     "average_insert_size": 200
   }
+  obj = {**ASSAY_CORE, **ngs_obj}    # merge two dictionaries
 
   # create the wes object
-  wes_obj = {
+  fastq_1 = ARTIFACT_OBJ.copy()
+  fastq_1['info'] = {"pizza": "bagel"}
+  record = {
     "enrichment_vendor_kit": "Twist",
     "enrichment_vendor_lot": "dummy_value", 
-    "capture_date": "01/01/2001"
+    "capture_date": "01/01/2001",
+    "files": {
+      "tumor": {
+        "fastq_1": fastq_1,
+        "fastq_2": fastq_1
+      },
+      "normal": {
+        "fastq_1": fastq_1,
+        "fastq_2": fastq_1
+      },
+      "read_group_mapping_file": fastq_1
+    }
   }
-  obj = {**ngs_obj, **wes_obj}    # merge two dictionaries
+
+  # add a demo record.
+  obj['records'] = [
+    record
+  ]
+  
 
   # create validator assert schemas are valid.
   validator = _fetch_validator("wes")
   validator.validate(obj)
 
   # assert negative behaviors
-  del obj['enrichment_vendor_kit']
+  del obj['records'][0]['enrichment_vendor_kit']
   with pytest.raises(jsonschema.ValidationError):
     validator.validate(obj)
 

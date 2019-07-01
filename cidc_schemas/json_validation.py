@@ -4,6 +4,7 @@
 
 import os
 import json
+import sys
 import collections
 from typing import Optional, List, Callable
 
@@ -121,6 +122,13 @@ def _to_time(value):
     return dt.strftime('%H:%M:%S')
 
 
+def _to_bool(value):
+    if isinstance(value, (bool)):
+        return value
+    else:
+        raise ValueError(f"could not convert \"{value}\" to boolean")
+
+
 def convert(fmt: str, value: str) -> str:
     """Try to convert a value to the given format"""
     if fmt == 'time':
@@ -131,6 +139,8 @@ def convert(fmt: str, value: str) -> str:
         def reformatter(n): return n and str(n)
     elif fmt == 'integer':
         def reformatter(n): return n and int(n)
+    elif fmt == 'boolean':
+        reformatter = _to_bool
     else:
         # If we don't have a specified reformatter, use the identity function
         reformatter = id

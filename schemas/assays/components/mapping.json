@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "image_mapping",
+  "title": "Regions of interest for imaging experiments",
+  "type": "object",
+  "description": "Regions of interest for imaging experiments",
+  "properties": {
+    "binary_seg_map": {
+      "$ref": "artifacts/artifact_csv.json",
+      "description": "Results of a computer vision task, in which specific regions of a region are mapped."
+    },
+    "cell_seg_data": {
+      "$ref": "artifacts/artifact_csv.json",
+      "description": "Data produced from the analysis of cellular image."
+    },
+    "cell_seg_data_summary": {
+      "$ref": "artifacts/artifact_csv.json",
+      "description": "Summary of the results of a cell segmentation data experiment."
+    },
+    "phenotype_map": {
+      "$ref": "artifacts/artifact_csv.json",
+      "description": "Image produced from the combination of multiple imaging experiment data images."
+    },
+    "region_seg_map": {
+      "$ref": "artifacts/artifact_image.json",
+      "description": "Genome segmentation mapping"
+    }
+  },
+  "required": []
+}

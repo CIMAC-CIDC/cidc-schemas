@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mif_input",
+  "title": "Multiplex Immunoflouresence Input Files",
+  "type": "object",
+  "description": "mIF Assay Input Files",
+  "properties": {
+    "whole_slide_imaging_file": {
+      "$ref": "artifacts/artifact_image.json",
+      "description": "Digital slide produced from the scanning of conventional glass slides."
+    },
+    "roi_annotations": {
+      "$ref": "artifacts/artifact_text.json",
+      "description": "Text describing region of interest for experiment."
+    },
+    "output_summary": {
+      "$ref": "artifacts/artifact_csv.json",
+      "description": "Summary of the results of the experiment."
+    },
+    "region_of_interests": {
+      "score_data": {
+        "$ref": "artifacts/artifact_csv.json",
+        "description": "Generation of values based onthe trainged machine learning model, based on experiment data."
+      },
+      "allOf": [
+        { "$ref": "assays/components/mapping.json" },
+        { "$ref": "assays/components/composite_image.json" }
+      ]
+    }
+  },
+  "required": ["whole_slide_imaging file"]
+}

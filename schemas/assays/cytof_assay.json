@@ -8,54 +8,13 @@
     { "$ref": "assays/components/cytof_platform.json" },
     { "$ref": "assays/components/cytof_panel.json" }
   ],
-  "definitions": {
-    "data_properties": {
-      "properties": {
-        "processed_fcs_filename": {
-          "type": "string"
-        },
-        "source_fcs_filenames": {
-          "type": "string"
-        },
-        "concatonation_version": {
-          "type": "string"
-        },
-        "normalization_version": {
-          "type": "string"
-        },
-        "beads_removed": {
-          "type": "string",
-          "enum": ["Y", "N"]
-        },
-        "staining_date": {
-          "type": "string",
-          "format": "date"
-        },
-        "batch_id": {
-          "type": "string"
-        },
-        "debarcoding_protocol": {
-          "type": "string"
-        },
-        "debarcoding_key": {
-          "type": "string"
-        }
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/components/cytof/cytof_entry.json"
       }
     }
   },
-  "required": [],
-  "files": {
-    "type": "array",
-    "items": {
-      "type": "object",
-      "properties": {
-        "processed_fcs": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
-        },
-        "source_fcs": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
-        }
-      }
-    }
-  }
+  "required": ["records"]
 }

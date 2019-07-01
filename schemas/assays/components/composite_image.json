@@ -14,5 +14,5 @@
       "description": "Imaging data resulting from the individual components of the imaging experiment."
     }
   },
-  "required": []
+  "required": ["composite_image", "component_data"]
 }

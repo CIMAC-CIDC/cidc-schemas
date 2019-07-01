@@ -41,13 +41,12 @@ def test_text():
   # create validator assert schemas are valid.
   obj = BASE_OBJ.copy()
   at_validator = _fetch_validator("text")
-  with pytest.raises(jsonschema.ValidationError):
-    at_validator.validate(obj)
-
-  # create a dummy info 
-  obj['info'] = {"dummy": "text"}
   at_validator.validate(obj)
 
+  # assert we can fail it.
+  del obj['md5_hash']
+  with pytest.raises(jsonschema.ValidationError):
+    at_validator.validate(obj)
 
 def test_image():
 

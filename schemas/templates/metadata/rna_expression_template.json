@@ -22,7 +22,7 @@
             "$ref": "assays/rna_expression_assay.json#properties/enrichment_method"
           },
           "enrichment kit": {
-            "$ref": "assays/rna_expression_assay.json#properties/enrichment_vendor_kit"
+            "$ref": "assays/components/ngs/rna_expression_entry.json#properties/enrichment_vendor_kit"
           },
           "library kit vendor": {
             "$ref": "assays/components/ngs.json#properties/library_vendor_kit"
@@ -52,13 +52,13 @@
               "$ref": "assays/components/ngs.json#properties/library_kit_lot"
             },
             "enrichment lot": {
-              "$ref": "assays/rna_expression_assay.json#properties/enrichment_vendor_lot"
+              "$ref": "assays/components/ngs/rna_expression_entry.json#properties/enrichment_vendor_lot"
             },
             "library prep date": {
               "$ref": "assays/components/ngs.json#properties/library_prep_date"
             },
             "capture date": {
-              "$ref": "assays/rna_expression_assay.json#properties/capture_date"
+              "$ref": "assays/components/ngs/rna_expression_entry.json#properties/capture_date"
             },
             "dna input ng": {
               "$ref": "assays/components/ngs.json#properties/input_ng"

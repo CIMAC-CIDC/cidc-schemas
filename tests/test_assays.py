@@ -144,3 +144,65 @@ def test_rna_expression():
   del obj['records'][0]['enrichment_vendor_kit']
   with pytest.raises(jsonschema.ValidationError):
     validator.validate(obj)
+
+
+def test_cytof():
+
+  # create the cytof object
+  cytof_platform = {
+    "instrument": "dummy"
+  }
+
+  # create a cytof antibody object.
+  antibodies = [
+    {
+      "antibody": "CD8",
+      "isotope": "dummy",
+      "dilution": "dummy",
+      "stain_type": "Intracellular"
+    },
+    {
+      "antibody": "PD-L1",
+      "isotope": "dummy",
+      "dilution": "dummy",
+      "stain_type": "Intracellular"
+    }
+  ]
+  cytof_panel = {
+    "panel_name": "DFCI default",
+    "cytof_antibodies": antibodies
+  }
+
+  obj = {**ASSAY_CORE, **cytof_platform, **cytof_panel}    # merge two dictionaries
+
+
+
+  # create the wes object
+  fcs_1 = ARTIFACT_OBJ.copy()
+  fcs_2 = ARTIFACT_OBJ.copy()
+  record = {
+    "processed_fcs_filename": "dummy",
+    "source_fcs_filenames": "dummies",
+    "files": [
+      {
+        "processed_fcs": fcs_1,
+        "source_fcs": fcs_2
+      }
+    ]
+  }
+  
+
+  # add a demo record.
+  obj['records'] = [
+    record
+  ]
+  
+
+  # create validator assert schemas are valid.
+  validator = _fetch_validator("cytof")
+  validator.validate(obj)
+
+  # assert negative behaviors
+  #del obj['records'][0]['enrichment_vendor_kit']
+  #with pytest.raises(jsonschema.ValidationError):
+  #  validator.validate(obj)

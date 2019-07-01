@@ -17,6 +17,10 @@
       "description": "UUID of artifact.",
       "type": "string"
     },
+    "file_name": {
+      "description": "The name of the file with extension",
+      "type": "string"
+    },
     "bucket_url": {
       "description": "URL to artifact within Google Bucket.",
       "type": "string"
@@ -57,17 +61,22 @@
         "FASTA",
         "FASTQ",
         "TIFF",
+        "VCF",
         "TSV",
         "Excel",
         "NPX",
         "BAM",
         "MAF",
+        "PNG",
+        "JPG",
+        "XML",
         "Other"
       ]
     }
   },
   "required": [
     "uuid",
+    "file_name",
     "bucket_url",
     "uploaded_timestamp",
     "file_size_bytes",

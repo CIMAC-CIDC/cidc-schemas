@@ -4,62 +4,22 @@
   "title": "RNA Gene Expression Assay",
   "type": "object",
   "description": "Additional properties to describe a RNA assay for expression analysis.",
-  "allOf": [{ "$ref": "assays/components/ngs.json" }],
+  "allOf": [
+    { "$ref": "assays/components/assay_core.json" },
+    { "$ref": "assays/components/ngs.json" }
+  ],
   "properties": {
     "enrichment_method": {
       "description": "Method used for enriching for mRNA",
       "type": "string",
       "enum": ["PolyA capture", "Transcriptome capture", "Ribo minus"]
     },
-    "enrichment_vendor_kit": {
-      "description": "Vendor for the kit used for enrichment, e.g. Twist, Agilent, IDT",
-      "type": "string",
-      "enum": [
-        "Illumina - TruSeq Stranded PolyA mRNA",
-        "Agilent",
-        "Twist",
-        "IDT",
-        "NEB",
-        "Broad - Exome Baits"
-      ]
-    },
-    "enrichment_vendor_lot": {
-      "description": "Lot number for the enrichment kit",
-      "type": "string"
-    },
-    "capture_date": {
-      "description": "Date of the hybrid capture enrichment",
-      "type": "string",
-      "format": "date"
-    }
-  },
-  "data": {
-    "type": "array",
-    "items": {
-      "type": "object",
-      "properties": {
-        "cimac_sample_id": {
-          "ref": "sample.cimac_sample_id.json#properties/cimac_sample_id"
-        },
-        "cimac_aliquot_id": {
-          "ref": "sample.cimac_aliquot_id#properties/cimac_aliquot_id"
-        },
-        "fastq_f": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
-        },
-        "fastq_r": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
-        },
-        "read_group": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
-        }
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/components/ngs/rna_expression_entry.json"
       }
     }
   },
-  "required": [
-    "enrichment_method",
-    "enrichment_vendor_kit",
-    "enrichment_vendor_lot",
-    "capture_date"
-  ]
+  "required": ["enrichment_method", "records"]
 }

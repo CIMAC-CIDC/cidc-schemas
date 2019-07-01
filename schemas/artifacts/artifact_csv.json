@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "csv_artifact",
+  "title": "CSV Artifact",
+  "type": "object",
+  "description": "Information about CSV files",
+  "allOf": [
+    {
+      "$ref": "artifacts/artifact_core.json"
+    },
+    {
+      "properties": {
+        "seperator": {
+          "type": "string"
+        },
+        "header_row": {
+          "type": "integer"
+        }
+      }
+    }
+  ],
+  "required": ["seperator", "header_row"]
+}

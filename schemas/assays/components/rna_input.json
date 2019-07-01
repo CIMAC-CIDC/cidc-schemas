@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "wes_input",
+  "title": "Whole Exome Sequencing Input Files",
+  "type": "object",
+  "description": "Whole Exome Sequencing Assay Input Files",
+  "allOf": [
+    { "$ref": "assays/components/fastq_pairs.json" }
+  ],
+  "properties": {
+    "read_group_mapping_file": {
+      "$ref": "artifacts/artifact_text.json",
+      "description": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes."
+    }
+  },
+  "required": [
+    "read_group_mapping_file"
+  ]
+}

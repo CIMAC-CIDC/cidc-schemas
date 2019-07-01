@@ -24,6 +24,10 @@
     "region_seg_map": {
       "$ref": "artifacts/artifact_image.json",
       "description": "Genome segmentation mapping"
+    },
+    "score_data": {
+      "$ref": "artifacts/artifact_csv.json",
+      "description": "Generation of values based onthe trainged machine learning model, based on experiment data."
     }
   },
   "required": []

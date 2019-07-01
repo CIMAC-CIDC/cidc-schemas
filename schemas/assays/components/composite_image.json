@@ -12,10 +12,6 @@
     "component_data": {
       "$ref": "artifacts/artifact_image.json",
       "description": "Imaging data resulting from the individual components of the imaging experiment."
-    },
-    "output_summary": {
-      "$ref": "artifacts/artifact_csv.json",
-      "description": "Summary of the results of the experiment."
     }
   },
   "required": []

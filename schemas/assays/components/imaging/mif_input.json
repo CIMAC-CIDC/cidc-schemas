@@ -17,15 +17,14 @@
       "$ref": "artifacts/artifact_csv.json",
       "description": "Summary of the results of the experiment."
     },
-    "region_of_interests": {
-      "score_data": {
-        "$ref": "artifacts/artifact_csv.json",
-        "description": "Generation of values based onthe trainged machine learning model, based on experiment data."
-      },
-      "allOf": [
-        { "$ref": "assays/components/mapping.json" },
-        { "$ref": "assays/components/composite_image.json" }
-      ]
+    "properties": {
+      "region_of_interests": {
+        "type": "array",
+        "allOf": [
+          { "$ref": "assays/components/mapping.json" },
+          { "$ref": "assays/components/composite_image.json" }
+        ]
+      }
     }
   },
   "required": ["whole_slide_imaging file"]

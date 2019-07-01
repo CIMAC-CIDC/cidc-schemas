@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "composite_image",
+  "title": "Regions of interest for imaging experiments",
+  "type": "object",
+  "description": "Regions of interest for imaging experiments",
+  "properties": {
+    "composite_image": {
+      "$ref": "artifacts/artifact_image.json",
+      "description": "Image produced from the combination of multiple imaging experiment data images."
+    },
+    "component_data": {
+      "$ref": "artifacts/artifact_image.json",
+      "description": "Imaging data resulting from the individual components of the imaging experiment."
+    }
+  },
+  "required": ["composite_image", "component_data"]
+}

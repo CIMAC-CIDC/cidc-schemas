@@ -118,10 +118,10 @@
               "$ref": "assays/components/imaging_data.json#properties/imaging_status"
             },
             "project inform folder": {
-              "$ref": "assays/mif_assay.json#properties/project_inform_folder"
+              "$ref": "assays/components/imaging/mif_entry.json#properties/project_inform_folder"
             },
             "exported_data_folder": {
-              "$ref": "assays/mif_assay.json#properties/mif_exported_data_folder"
+              "$ref": "assays/components/imaging/mif_entry.json#properties/mif_exported_data_folder"
             }
           }
         }

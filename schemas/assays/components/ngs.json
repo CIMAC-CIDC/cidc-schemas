@@ -25,6 +25,11 @@
       "description": "Lot number for the library construction kit",
       "type": "string"
     },
+    "library_prep_date": {
+      "description": "Date of library construction.",
+      "type": "string",
+      "format": "date"
+    },
     "paired_end_reads": {
       "description": "Indicate if the sequencing was performed paired or single ended",
       "type": "string",
@@ -34,18 +39,13 @@
       "description": "Number of cycles for each sequencing read",
       "type": "integer",
       "exclusiveMinimum": 0,
-      "maximum": 200
-    },
-    "library_prep_date": {
-      "description": "Date of library construction.",
-      "type": "string",
-      "format": "date"
+      "maximum": 1000
     },
     "input_ng": {
       "description": "Amount of DNA/RNA (in ng) used for library construction",
       "type": "integer",
       "exclusiveMinimum": 0,
-      "maximum": 1000
+      "maximum": 10000
     },
     "library_yield_ng": {
       "description": "Resulting yield (in ng) from library construction",
@@ -57,61 +57,18 @@
       "description": "The average insert size for the library",
       "type": "integer",
       "exclusiveMinimum": 0,
-      "maximum": 1000
-    },
-    "forward_fastq": {
-      "description": "Fastq file for the forward reads",
-      "type": "string",
-      "pattern": "^gs://.+$"
-    },
-    "reverse_fastq": {
-      "description": "Fastq file for the reverse reads",
-      "type": "string",
-      "pattern": "^gs://.+$"
-    },
-    "read_group_mapping_file": {
-      "description": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
-      "type": "string",
-      "pattern": "^gs://.+$"
-    },
-    "enrichment_method": {
-      "description": "Method used for enriching for mRNA",
-      "type": "string",
-      "enum": ["PolyA capture", "Transcriptome capture", "Ribo minus"]
-    },
-    "enrichment_vendor_kit": {
-      "description": "Vendor for the kit used for enrichment, e.g. Twist, Agilent, IDT",
-      "type": "string",
-      "enum": [
-        "Illumina - TruSeq Stranded PolyA mRNA",
-        "Agilent",
-        "Twist",
-        "IDT",
-        "NEB",
-        "Broad - Exome Baits"
-      ]
-    },
-    "enrichment_vendor_lot": {
-      "description": "Lot number for the enrichment kit",
-      "type": "string"
-    },
-    "capture_date": {
-      "description": "Date of the hybrid capture enrichment",
-      "type": "string",
-      "format": "date"
+      "maximum": 10000
     }
   },
   "required": [
+    "sequencer_platform",
+    "library_vendor_kit",
     "library_kit_lot",
     "library_prep_date",
+    "paired_end_reads",
+    "read_length",
     "input_ng",
     "library_yield_ng",
-    "average_insert_size",
-    "forward_fastq",
-    "read_group_mapping_file",
-    "library_vendor_kit",
-    "sequencer_platform",
-    "paired_end_reads",
-    "read_length"
+    "average_insert_size"
   ]
 }

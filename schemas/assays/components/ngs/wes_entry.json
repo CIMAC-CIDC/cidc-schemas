@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "wes_assay_record",
+  "title": "WES assay record",
+  "type": "object",
+  "description": "A single data record from WES assay",
+  "properties": {
+    "enrichment_vendor_kit": {
+      "description": "Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT",
+      "type": "string",
+      "enum": ["Agilent", "Twist", "IDT", "NEB"]
+    },
+    "enrichment_vendor_lot": {
+      "description": "Lot number for the bait set",
+      "type": "string"
+    },
+    "capture_date": {
+      "description": "Date of the hybrid capture enrichment",
+      "type": "string",
+      "format": "date"
+    },
+    "files": {
+      "$ref": "assays/components/wes_input.json"
+    }
+  },
+  "required": [
+    "enrichment_vendor_kit"
+  ]
+}

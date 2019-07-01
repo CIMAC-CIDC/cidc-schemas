@@ -4,7 +4,6 @@
 
 import os
 import json
-import sys
 import collections
 from typing import Optional, List, Callable
 

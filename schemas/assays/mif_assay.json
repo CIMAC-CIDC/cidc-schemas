@@ -2,30 +2,31 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "mif",
   "title": "mIF Assay",
+  "type": "object",
   "description": "Multiplex immunoflourescence",
-  "definitions": {
-    "data_properties": {
-      "type": "object",
-      "properties": {
-        "project_inform_folder": {
-          "type": "string"
-        },
-        "mif_exported_data_folder": {
-          "type": "string"
-        }
+  "allOf": [
+    { "$ref": "assays/components/assay_core.json" },
+    { "$ref": "assays/components/image.json" },
+    { "$ref": "assays/components/imaging_data.json" }
+  ],
+  "properties": {
+    "project_inform_folder": {
+      "type": "string"
+    },
+    "mif_exported_data_folder": {
+      "type": "string"
+    },
+    "antibody": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/components/mif_antibody.json"
       }
     },
-    "data": {
+    "files": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
-          "cimac_sample_id": {
-            "ref": "sample.cimac_sample_id.json#properties/cimac_sample_id"
-          },
-          "cimac_aliquot_id": {
-            "ref": "sample.cimac_aliquot_id#properties/cimac_aliquot_id"
-          },
           "whole_slide_image": {
             "$ref": "artifacts/artifact_core.json#properties/uuid"
           },
@@ -66,34 +67,7 @@
           }
         }
       }
-    },
-    "data_row": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#definitions/data_properties"
-        }
-      ]
     }
   },
-  "allOf": [
-    {
-      "$ref": "assays/components/image.json"
-    },
-    {
-      "properties": {
-        "antibody": {
-          "type": "array",
-          "items": {
-            "$ref": "assays/components/mif_antibody.json"
-          }
-        },
-        "data": {
-          "type": "array",
-          "items": { "$ref": "#definitions/data_row" }
-        }
-      }
-    }
-  ],
-  "required": []
+  "required": ["project_inform_folder", "mif_exported_data_folder", "antibody"]
 }

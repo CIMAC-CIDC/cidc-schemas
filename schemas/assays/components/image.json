@@ -34,5 +34,5 @@
       "type": "string"
     }
   },
-  "required": ["protocol_name"]
+  "required": ["slide_scanner_model", "protocol_name"]
 }

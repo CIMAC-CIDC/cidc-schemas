@@ -148,10 +148,10 @@
               "$ref": "assays/components/imaging_data.json#properties/imaging_status"
             },
             "project_qupath_folder": {
-              "$ref": "assays/micsss_assay.json#properties/project_qupath_folder"
+              "$ref": "assays/components/local_file.json#properties/file_path"
             },
             "exported_data_folder": {
-              "$ref": "assays/micsss_assay.json#properties/micsss_exported_data_folder"
+              "$ref": "assays/components/local_file.json#properties/file_path"
             }
           }
         }

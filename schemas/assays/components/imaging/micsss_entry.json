@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "micsss_assay_record",
+  "title": "micsss assay record",
+  "type": "object",
+  "description": "A single data record from micsss assay",
+  "properties": {
+    "project_qupath_folder": {
+      "type": "string"
+    },
+    "micsss_exported_data_folder": {
+      "type": "string"
+    },
+    "files": {
+      "$ref": "assays/components/imaging/micsss_input.json"
+    }
+  },
+  "required": []
+}

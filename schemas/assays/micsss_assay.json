@@ -10,54 +10,18 @@
     { "$ref": "assays/components/imaging_data.json" }
   ],
   "properties": {
-    "project_qupath_folder": {
-      "type": "string"
-    },
-    "micsss_exported_data_folder": {
-      "type": "string"
-    },
-    "antibody": {
+    "records": {
       "type": "array",
       "items": {
-        "$ref": "assays/components/micsss_antibody.json"
-      }
-    },
-    "files": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "composite_image": {
-            "$ref": "artifacts/artifact_core.json#properties/uuid"
-          },
-          "component_data": {
-            "$ref": "artifacts/artifact_core.json#properties/uuid"
-          },
-          "output_summary": {
-            "$ref": "artifacts/artifact_core.json#properties/uuid"
-          },
-          "binary_seg_map": {
-            "$ref": "artifacts/artifact_core.json#properties/uuid"
-          },
-          "cell_seg_data": {
-            "$ref": "artifacts/artifact_core.json#properties/uuid"
-          },
-          "cell_seg_data_summary": {
-            "$ref": "artifacts/artifact_core.json#properties/uuid"
-          },
-          "phenotype_map": {
-            "$ref": "artifacts/artifact_core.json#properties/uuid"
-          },
-          "region_seg_map": {
-            "$ref": "artifacts/artifact_core.json#properties/uuid"
-          }
-        }
+        "$ref": "assays/components/imaging/micsss_entry.json"
       }
     }
   },
-  "required": [
-    "project_qupath_folder",
-    "micsss_exported_data_folder",
-    "antibody"
-  ]
+  "antibody": {
+    "type": "array",
+    "items": {
+      "$ref": "assays/components/micsss_antibody.json"
+    }
+  },
+  "required": ["records"]
 }

@@ -201,3 +201,62 @@ def test_cytof():
     # assert negative behaviors
     #del obj['records'][0]['enrichment_vendor_kit']
     # with pytest.raises(jsonschema.ValidationError):
+
+
+def test_micsss():
+
+    # create the micsss object
+    image = {
+        "slide_scanner_model": "Vectra 2.0",
+        "protocol_name": "E4412"
+    }
+
+    imaging_data = {
+        "internal_slide_id": "a1s1e1"
+    }
+    obj = {**ASSAY_CORE, **image, **imaging_data}    # merge three dictionaries
+
+    # create the artifact object
+    image_1 = ARTIFACT_OBJ.copy()
+    image_1["height"] = 300
+    image_1["width"] = 250
+    image_1["channels"] = 3
+    csv_1 = ARTIFACT_OBJ.copy()
+    csv_1["seperator"] = ","
+    csv_1["header_row"] = 128
+    record = {
+        "project_qupath_folder": "dummy",
+        "micsss_exported_data_folder": "dummy_value",
+        "files":
+            {
+                "micsss_output_summary": csv_1,
+                "Mapping Artifacts": [
+                    {
+                        "binary_seg_map": csv_1,
+                        "cell_seg_data": csv_1,
+                        "cell_seg_data_summary": csv_1,
+                        "phenotype_map": image_1,
+                        "region_seg_map": image_1,
+                        "score_data": csv_1,
+                    }],
+                "Composite Image Artifacts": [
+                    {
+                        "composite_image": image_1,
+                        "component_data": image_1
+                    }]
+            }
+    }
+
+    # add a demo record.
+    obj['records'] = [
+        record
+    ]
+
+    # create validator assert schemas are valid.
+    validator = _fetch_validator("micsss")
+    validator.validate(obj)
+
+    # assert negative behaviors
+    del obj['records'][0]['project_qupath_folder']
+    with pytest.raises(jsonschema.ValidationError):
+        validator.validate(obj)

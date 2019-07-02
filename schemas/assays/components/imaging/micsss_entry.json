@@ -15,5 +15,5 @@
       "$ref": "assays/components/imaging/micsss_input.json"
     }
   },
-  "required": []
+  "required": ["project_qupath_folder", "micsss_exported_data_folder"]
 }

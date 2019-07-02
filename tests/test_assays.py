@@ -201,6 +201,7 @@ def test_cytof():
     # assert negative behaviors
     #del obj['records'][0]['enrichment_vendor_kit']
     # with pytest.raises(jsonschema.ValidationError):
+    #    validator.validate(obj)
 
 
 def test_micsss():

@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "olink_input",
+  "title": "Olink Input Files",
+  "type": "object",
+  "description": "Olink Assay Input Files",
+  "properties": {
+    "assay_npx": {
+      "$ref": "artifacts/artifact_text.json",
+      "description": "Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale."
+    },
+    "assay_raw_ct": {
+      "$ref": "artifacts/artifact_text.json",
+      "description": "Number of cycles required for the fluorescent signal to cross the threshold."
+    },
+    "study_npx": {
+      "$ref": "artifacts/artifact_text.json",
+      "description": "Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale."
+    }
+  },
+  "required": ["assay_npx", "assay_raw_ct"]
+}

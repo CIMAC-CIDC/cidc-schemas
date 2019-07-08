@@ -50,8 +50,6 @@ def test_wes():
     ngs_obj = {
         "sequencer_platform": "Illumina - NovaSeq 6000",
         "library_vendor_kit": "KAPA - Hyper Prep",
-        "library_kit_lot": "dummy_value",
-        "library_prep_date": "01/01/2001",
         "paired_end_reads": "Paired",
         "read_length": 200,
         "input_ng": 666,
@@ -67,6 +65,8 @@ def test_wes():
     record = {
         "enrichment_vendor_kit": "Twist",
         "enrichment_vendor_lot": "dummy_value",
+        "library_kit_lot": "dummy_value",
+        "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
         "files": {
             "tumor": {
@@ -102,8 +102,6 @@ def test_rna_expression():
     ngs_obj = {
         "sequencer_platform": "Illumina - NovaSeq 6000",
         "library_vendor_kit": "KAPA - Hyper Prep",
-        "library_kit_lot": "dummy_value",
-        "library_prep_date": "01/01/2001",
         "paired_end_reads": "Paired",
         "read_length": 200,
         "input_ng": 666,
@@ -115,13 +113,15 @@ def test_rna_expression():
     # add custom entry
     obj['enrichment_method'] = "Ribo minus"
 
-    # create the ngs object
+    # create the wes object
     fastq_1 = ARTIFACT_OBJ.copy()
     rgmf = ARTIFACT_OBJ.copy()
     rgmf['artifact_category'] = 'Assay Artifact from CIMAC'
     record = {
         "enrichment_vendor_kit": "Twist",
         "enrichment_vendor_lot": "dummy_value",
+        "library_kit_lot": "dummy_value",
+        "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
         "files": {
             "fastq_1": fastq_1,
@@ -175,7 +175,7 @@ def test_cytof():
     obj = {**ASSAY_CORE, **cytof_platform, **
            cytof_panel}    # merge two dictionaries
 
-    # create the cytof object
+    # create the wes object
     fcs_1 = ARTIFACT_OBJ.copy()
     fcs_2 = ARTIFACT_OBJ.copy()
     record = {
@@ -202,6 +202,65 @@ def test_cytof():
     #del obj['records'][0]['enrichment_vendor_kit']
     # with pytest.raises(jsonschema.ValidationError):
     #    validator.validate(obj)
+
+
+def test_mif():
+
+        # create the micsss object
+    image = {
+        "slide_scanner_model": "Vectra 2.0",
+        "protocol_name": "E4412"
+    }
+
+    imaging_data = {
+        "internal_slide_id": "a1s1e1"
+    }
+    obj = {**ASSAY_CORE, **image, **imaging_data}    # merge three dictionaries
+
+    # create the artifact object
+    image_1 = ARTIFACT_OBJ.copy()
+    image_1["height"] = 300
+    image_1["width"] = 250
+    image_1["channels"] = 3
+    csv_1 = ARTIFACT_OBJ.copy()
+    csv_1["seperator"] = ","
+    csv_1["header_row"] = 128
+    text = ARTIFACT_OBJ.copy()
+    record = {
+        "project_inform_folder": "dummy",
+        "mif_exported_data_folder": "dummy_value",
+        "files":
+            {
+                "whole_slide_imaging_file": image_1,
+                "roi_annotations": text,
+                "output_summary": csv_1,
+                "regions_of_interest": [
+                    {
+                        "binary_seg_map": csv_1,
+                        "cell_seg_data": csv_1,
+                        "cell_seg_data_summary": csv_1,
+                        "phenotype_map": image_1,
+                        "region_seg_map": image_1,
+                        "score_data": csv_1,
+                        "composite_image": image_1,
+                        "component_data": image_1
+                    }]
+            }
+    }
+
+    # add a demo record.
+    obj['records'] = [
+        record
+    ]
+
+    # create validator assert schemas are valid.
+    validator = _fetch_validator("mif")
+    validator.validate(obj)
+
+    # assert negative behaviors
+    del obj['records'][0]['project_inform_folder']
+    with pytest.raises(jsonschema.ValidationError):
+        validator.validate(obj)
 
 
 def test_micsss():
@@ -259,5 +318,52 @@ def test_micsss():
 
     # assert negative behaviors
     del obj['records'][0]['project_qupath_folder']
+    with pytest.raises(jsonschema.ValidationError):
+        validator.validate(obj)
+
+
+def test_olink():
+
+    # create the olink object
+    obj = {**ASSAY_CORE}
+
+    # create the olink object
+    text = ARTIFACT_OBJ.copy()
+    record = {
+        "assay_prefix": "dummy",
+        "filetype": "assay",
+        "run_date": "1/2/98",
+        "run_time": "12:00",
+        "instrument": "dummy",
+        "fludigm_application_version": "0.2.0",
+        "fludigm_application_build": "dummy",
+        "chip_barcode": 22129,
+        "probe_type": "dummy",
+        "passive_reference": "dummy",
+        "quality_threshold": 90,
+        "baseline_correction": "dummy",
+        "panel": "dummy",
+        "number_of_sample": 5,
+        "number_of_sample_failed": 4,
+        "npx_manager_version": "dummy",
+        "assay_panel_lot": 90,
+        "files": {
+            "assay_npx": text,
+            "assay_raw_ct": text,
+            "study_npx": text
+        }
+    }
+
+# add a demo record.
+    obj['records'] = [
+        record
+    ]
+
+    # create validator assert schemas are valid.
+    validator = _fetch_validator("olink")
+    validator.validate(obj)
+
+    # assert negative behaviors
+    del obj['records'][0]['assay_prefix']
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)

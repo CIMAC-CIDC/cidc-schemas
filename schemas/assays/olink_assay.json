@@ -5,106 +5,12 @@
   "type": "object",
   "description": "High-throughput multiplexed assays for protein biomarker discovery",
   "properties": {
-    "assay_prefix": {
-      "description": "Prefix to used for the filename",
-      "type": "string"
-    },
-    "filetype": {
-      "description": "Type of file being uploaded",
-      "type": "string",
-      "enum": ["assay", "study"]
-    },
-    "run_date": {
-      "description": "Date when the olink assay was run",
-      "type": "string",
-      "format": "date"
-    },
-    "run_time": {
-      "description": "Time when the olink assay was run",
-      "type": "string",
-      "format": "time"
-    },
-    "instrument": {
-      "description": "Instrument used for the assay",
-      "type": "string"
-    },
-    "fludigm_application_version": {
-      "description": "Version of the Fluidgm application used",
-      "type": "string"
-    },
-    "fludigm_application_build": {
-      "description": "Build of the Fluidgm application used",
-      "type": "string"
-    },
-    "chip_barcode": {
-      "description": "Chip barcode number",
-      "type": "number"
-    },
-    "probe_type": {
-      "description": "Probe Type",
-      "type": "string"
-    },
-    "passive_reference": {
-      "description": "Passive Reference",
-      "type": "string"
-    },
-    "quality_threshold": {
-      "description": "Threshold used for quality cutoff",
-      "type": "number"
-    },
-    "baseline_correction": {
-      "description": "Method used for baseline correction",
-      "type": "string"
-    },
-    "panel": {
-      "description": "Panel used for the assay",
-      "type": "string"
-    },
-    "number_of_sample": {
-      "description": "Number of sample analyzed in the assay",
-      "type": "number"
-    },
-    "number_of_sample_failed": {
-      "description": "Number of sample failed in the assay",
-      "type": "number"
-    },
-    "npx_manager_version": {
-      "description": "Version of NPX manager used for the analysis",
-      "type": "string"
-    },
-    "assay_panel_lot": {
-      "description": "Lot Number of the assay panel",
-      "type": "number"
-    }
-  },
-  "data": {
-    "type": "array",
-    "items": {
-      "type": "object",
-      "properties": {
-        "cimac_sample_id": {
-          "ref": "sample.cimac_sample_id.json#properties/cimac_sample_id"
-        },
-        "cimac_aliquot_id": {
-          "ref": "sample.cimac_aliquot_id#properties/cimac_aliquot_id"
-        },
-        "assay_npx": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
-        },
-        "assay_raw_ct": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
-        },
-        "study_npx": {
-          "$ref": "artifacts/artifact_core.json#properties/uuid"
-        }
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/components/olink/olink_entry.json"
       }
     }
   },
-  "required": [
-    "assay_prefix",
-    "filetype",
-    "panel",
-    "number_of_sample",
-    "npx_manager_version"
-  ]
+  "required": ["records"]
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "wes_assay_record",
+  "$id": "ngs_assay_record",
   "title": "NGS assay record",
   "type": "object",
   "description": "A single data record from an NGS assay",
@@ -31,9 +31,6 @@
       "type": "integer",
       "exclusiveMinimum": 0,
       "maximum": 10000
-    },
-    "files": {
-      "$ref": "assays/components/wes_input.json"
     }
   },
   "required": [

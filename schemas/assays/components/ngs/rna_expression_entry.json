@@ -27,6 +27,7 @@
   },
   "required": [
     "enrichment_vendor_lot",
+    "enrichment_vendor_kit",
     "capture_date"
   ]
 }

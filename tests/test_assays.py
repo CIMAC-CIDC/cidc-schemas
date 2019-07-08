@@ -50,8 +50,6 @@ def test_wes():
     ngs_obj = {
         "sequencer_platform": "Illumina - NovaSeq 6000",
         "library_vendor_kit": "KAPA - Hyper Prep",
-        "library_kit_lot": "dummy_value",
-        "library_prep_date": "01/01/2001",
         "paired_end_reads": "Paired",
         "read_length": 200,
         "input_ng": 666,
@@ -67,6 +65,8 @@ def test_wes():
     record = {
         "enrichment_vendor_kit": "Twist",
         "enrichment_vendor_lot": "dummy_value",
+        "library_kit_lot": "dummy_value",
+        "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
         "files": {
             "tumor": {
@@ -102,8 +102,6 @@ def test_rna_expression():
     ngs_obj = {
         "sequencer_platform": "Illumina - NovaSeq 6000",
         "library_vendor_kit": "KAPA - Hyper Prep",
-        "library_kit_lot": "dummy_value",
-        "library_prep_date": "01/01/2001",
         "paired_end_reads": "Paired",
         "read_length": 200,
         "input_ng": 666,
@@ -122,6 +120,8 @@ def test_rna_expression():
     record = {
         "enrichment_vendor_kit": "Twist",
         "enrichment_vendor_lot": "dummy_value",
+        "library_kit_lot": "dummy_value",
+        "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
         "files": {
             "fastq_1": fastq_1,

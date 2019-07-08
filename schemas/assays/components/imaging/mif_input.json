@@ -13,7 +13,7 @@
       "$ref": "artifacts/artifact_text.json",
       "description": "Text describing region of interest for experiment."
     },
-    "output_summary": {
+    "mif_output_summary": {
       "$ref": "artifacts/artifact_csv.json",
       "description": "Summary of the results of the experiment."
     },

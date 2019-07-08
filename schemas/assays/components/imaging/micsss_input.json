@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "micsss_input",
+  "title": "Multiplexed Immunohistochemical Input Files",
+  "type": "object",
+  "description": "micsss Assay Input Files",
+  "properties": {
+    "micsss_output_summary": {
+      "$ref": "artifacts/artifact_csv.json",
+      "description": "Summary of the results of the experiment."
+    },
+    "Mapping Artifacts": {
+      "type": "array",
+      "items": { "$ref": "assays/components/mapping.json" }
+    },
+    "Composite Image Artifacts": {
+      "type": "array",
+      "items": { "$ref": "assays/components/composite_image.json" }
+    }
+  },
+  "required": []
+}

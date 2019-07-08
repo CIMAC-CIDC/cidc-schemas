@@ -18,7 +18,7 @@
       "description": "Summary of the results of a cell segmentation data experiment."
     },
     "phenotype_map": {
-      "$ref": "artifacts/artifact_csv.json",
+      "$ref": "artifacts/artifact_image.json",
       "description": "Image produced from the combination of multiple imaging experiment data images."
     },
     "region_seg_map": {

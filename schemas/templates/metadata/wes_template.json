@@ -19,7 +19,7 @@
             "$ref": "assays/components/assay_core.json#properties/assay_category"
           },
           "enrichment kit": {
-            "$ref": "assays/components/ngs/wes_entry.json#properties/enrichment_vendor_kit"
+            "$ref": "assays/wes_assay.json#properties/enrichment_vendor_kit"
           },
           "library kit vendor": {
             "$ref": "assays/components/ngs.json#properties/library_vendor_kit"
@@ -46,25 +46,25 @@
               "$ref": "sample.json#properties/genomic_source"
             },
             "library kit lot": {
-              "$ref": "assays/components/ngs.json#properties/library_kit_lot"
+              "$ref": "assays/components/ngs/ngs_entry.json#properties/library_kit_lot"
             },
             "enrichment lot": {
               "$ref": "assays/components/ngs/wes_entry.json#properties/enrichment_vendor_lot"
             },
             "library prep date": {
-              "$ref": "assays/components/ngs.json#properties/library_prep_date"
+              "$ref": "assays/components/ngs/ngs_entry.json#properties/library_prep_date"
             },
             "capture date": {
               "$ref": "assays/components/ngs/wes_entry.json#properties/capture_date"
             },
             "dna input ng": {
-              "$ref": "assays/components/ngs.json#properties/input_ng"
+              "$ref": "assays/components/ngs/ngs_entry.json#properties/input_ng"
             },
             "library yield ng": {
-              "$ref": "assays/components/ngs.json#properties/library_yield_ng"
+              "$ref": "assays/components/ngs/ngs_entry.json#properties/library_yield_ng"
             },
             "average insert size": {
-              "$ref": "assays/components/ngs.json#properties/average_insert_size"
+              "$ref": "assays/components/ngs/ngs_entry.json#properties/average_insert_size"
             },
             "forward fastq": {
               "$ref": "assays/components/local_file.json#properties/file_path"

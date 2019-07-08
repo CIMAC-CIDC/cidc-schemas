@@ -21,15 +21,6 @@
       "type": "string",
       "enum": ["KAPA - Hyper Prep"]
     },
-    "library_kit_lot": {
-      "description": "Lot number for the library construction kit",
-      "type": "string"
-    },
-    "library_prep_date": {
-      "description": "Date of library construction.",
-      "type": "string",
-      "format": "date"
-    },
     "paired_end_reads": {
       "description": "Indicate if the sequencing was performed paired or single ended",
       "type": "string",
@@ -40,35 +31,11 @@
       "type": "integer",
       "exclusiveMinimum": 0,
       "maximum": 1000
-    },
-    "input_ng": {
-      "description": "Amount of DNA/RNA (in ng) used for library construction",
-      "type": "integer",
-      "exclusiveMinimum": 0,
-      "maximum": 10000
-    },
-    "library_yield_ng": {
-      "description": "Resulting yield (in ng) from library construction",
-      "type": "integer",
-      "exclusiveMinimum": 0,
-      "maximum": 2000
-    },
-    "average_insert_size": {
-      "description": "The average insert size for the library",
-      "type": "integer",
-      "exclusiveMinimum": 0,
-      "maximum": 10000
     }
   },
   "required": [
     "sequencer_platform",
     "library_vendor_kit",
-    "library_kit_lot",
-    "library_prep_date",
-    "paired_end_reads",
-    "read_length",
-    "input_ng",
-    "library_yield_ng",
-    "average_insert_size"
+    "paired_end_reads"
   ]
 }

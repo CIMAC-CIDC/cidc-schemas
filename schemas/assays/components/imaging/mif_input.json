@@ -18,7 +18,7 @@
       "description": "Summary of the results of the experiment."
     },
     "properties": {
-      "region_of_interests": {
+      "regions_of_interest": {
         "type": "array",
         "allOf": [
           { "$ref": "assays/components/mapping.json" },
@@ -27,5 +27,5 @@
       }
     }
   },
-  "required": ["whole_slide_imaging file"]
+  "required": ["whole_slide_imaging_file"]
 }

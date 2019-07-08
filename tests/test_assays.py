@@ -204,6 +204,65 @@ def test_cytof():
     #  validator.validate(obj)
 
 
+def test_mif():
+
+        # create the micsss object
+    image = {
+        "slide_scanner_model": "Vectra 2.0",
+        "protocol_name": "E4412"
+    }
+
+    imaging_data = {
+        "internal_slide_id": "a1s1e1"
+    }
+    obj = {**ASSAY_CORE, **image, **imaging_data}    # merge three dictionaries
+
+    # create the artifact object
+    image_1 = ARTIFACT_OBJ.copy()
+    image_1["height"] = 300
+    image_1["width"] = 250
+    image_1["channels"] = 3
+    csv_1 = ARTIFACT_OBJ.copy()
+    csv_1["seperator"] = ","
+    csv_1["header_row"] = 128
+    text = ARTIFACT_OBJ.copy()
+    record = {
+        "project_inform_folder": "dummy",
+        "mif_exported_data_folder": "dummy_value",
+        "files":
+            {
+                "whole_slide_imaging_file": image_1,
+                "roi_annotations": text,
+                "output_summary": csv_1,
+                "regions_of_interest": [
+                    {
+                        "binary_seg_map": csv_1,
+                        "cell_seg_data": csv_1,
+                        "cell_seg_data_summary": csv_1,
+                        "phenotype_map": image_1,
+                        "region_seg_map": image_1,
+                        "score_data": csv_1,
+                        "composite_image": image_1,
+                        "component_data": image_1
+                    }]
+            }
+    }
+
+    # add a demo record.
+    obj['records'] = [
+        record
+    ]
+
+    # create validator assert schemas are valid.
+    validator = _fetch_validator("mif")
+    validator.validate(obj)
+
+    # assert negative behaviors
+    del obj['records'][0]['project_inform_folder']
+    with pytest.raises(jsonschema.ValidationError):
+        validator.validate(obj)
+
+
 def test_olink():
 
     # create the olink object
@@ -236,7 +295,7 @@ def test_olink():
         }
     }
 
-    # add a demo record.
+# add a demo record.
     obj['records'] = [
         record
     ]

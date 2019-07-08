@@ -30,5 +30,5 @@
       "description": "Generation of values based onthe trainged machine learning model, based on experiment data."
     }
   },
-  "required": []
+  "required": ["phenotype_map"]
 }

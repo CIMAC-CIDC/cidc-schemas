@@ -5,7 +5,7 @@
   "description": "Metadata information for multiplexed immunohistochemical consecutive staining on single slide.",
   "properties": {
     "worksheets": {
-      "mIF_template": {
+      "micsss": {
         "preamble_rows": {
           "lead organization study id": {
             "$ref": "clinical_trial.json#properties/lead_organization_study_id"

@@ -22,7 +22,7 @@
       "type": "string"
     },
     "files": {
-      "$ref": "assays/components/rna_input.json"
+      "$ref": "assays/components/ngs/rna_input.json"
     }
   },
   "required": [

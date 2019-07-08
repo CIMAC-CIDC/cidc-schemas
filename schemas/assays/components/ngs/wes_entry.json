@@ -18,11 +18,8 @@
       "format": "date"
     },
     "files": {
-      "$ref": "assays/components/wes_input.json"
+      "$ref": "assays/components/ngs/wes_input.json"
     }
   },
-  "required": [
-    "enrichment_vendor_lot",
-    "capture_date"
-  ]
+  "required": ["enrichment_vendor_kit"]
 }

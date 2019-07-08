@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mif_assay_record",
+  "title": "mIF assay record",
+  "type": "object",
+  "description": "A single data record from mIF assay",
+  "properties": {
+    "project_inform_folder": {
+      "type": "string"
+    },
+    "mif_exported_data_folder": {
+      "type": "string"
+    },
+    "files": {
+      "$ref": "assays/components/imaging/mif_input.json"
+    }
+  },
+  "required": ["project_inform_folder"]
+}

@@ -4,9 +4,6 @@
   "title": "CYTOF Panel",
   "description": "Base information about the aquisition and analysis of a CYTOF data\n",
   "properties": {
-    "creator": {
-      "$ref": "user.json"
-    },
     "panel_name": {
       "type": "string"
     },
@@ -15,5 +12,5 @@
       "items": { "$ref": "assays/components/cytof_antibody.json" }
     }
   },
-  "required": ["creator", "panel_name"]
+  "required": ["panel_name", "cytof_antibodies"]
 }

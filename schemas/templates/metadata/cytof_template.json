@@ -68,28 +68,28 @@
               "$ref": "sample.json#properties/time_point"
             },
             "processed fcs filename": {
-              "$ref": "assays/cytof_assay.json#definitions/data_properties/properties/processed_fcs_filename"
+              "$ref": "assays/components/local_file.json#properties/file_path"
             },
             "source fcs filenames": {
-              "$ref": "assays/cytof_assay.json#definitions/data_properties/properties/source_fcs_filenames"
+              "$ref": "assays/components/local_file.json#properties/file_path"
             },
             "concatonation version": {
-              "$ref": "assays/cytof_assay.json#definitions/data_properties/properties/concatonation_version"
+              "$ref": "assays/components/cytof/cytof_entry.json#properties/concatonation_version"
             },
             "normalization version": {
-              "$ref": "assays/cytof_assay.json#definitions/data_properties/properties/normalization_version"
+              "$ref": "assays/components/cytof/cytof_entry.json#properties/normalization_version"
             },
             "beads removed": {
-              "$ref": "assays/cytof_assay.json#definitions/data_properties/properties/beads_removed"
+              "$ref": "assays/components/cytof/cytof_entry.json#properties/beads_removed"
             },
             "debarcoding protocol": {
-              "$ref": "assays/cytof_assay.json#definitions/data_properties/properties/debarcoding_protocol"
+              "$ref": "assays/components/cytof/cytof_entry.json#properties/debarcoding_protocol"
             },
             "debarcoding key": {
-              "$ref": "assays/cytof_assay.json#definitions/data_properties/properties/debarcoding_key"
+              "$ref": "assays/components/cytof/cytof_entry.json#properties/debarcoding_key"
             },
             "batch id": {
-              "$ref": "assays/cytof_assay.json#definitions/data_properties/properties/batch_id"
+              "$ref": "assays/components/cytof/cytof_entry.json#properties/batch_id"
             }
           }
         }
@@ -113,13 +113,13 @@
               "$ref": "assays/components/antibody.json#properties/lot_num"
             },
             "isotope": {
-              "$ref": "assays/components/cytof_antibody.json#definitions/cytof_antibody/properties/isotope"
+              "$ref": "assays/components/cytof_antibody.json#properties/isotope"
             },
             "dilution": {
-              "$ref": "assays/components/cytof_antibody.json#definitions/cytof_antibody/properties/dilution"
+              "$ref": "assays/components/cytof_antibody.json#properties/dilution"
             },
             "stain_type": {
-              "$ref": "assays/components/cytof_antibody.json#definitions/cytof_antibody/properties/stain_type"
+              "$ref": "assays/components/cytof_antibody.json#properties/stain_type"
             }
           }
         }

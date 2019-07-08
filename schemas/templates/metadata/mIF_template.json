@@ -5,7 +5,7 @@
   "description": "Metadata information for multiplex immunoflouresence(mIF).",
   "properties": {
     "worksheets": {
-      "mIF_template": {
+      "mIF": {
         "preamble_rows": {
           "lead organization study id": {
             "$ref": "clinical_trial.json#properties/lead_organization_study_id"
@@ -62,25 +62,25 @@
               "$ref": "assays/components/antibody.json#properties/staining_order"
             },
             "Fluor Wavelength": {
-              "$ref": "assays/components/mif_antibody.json#definitions/mif_properties/properties/fluor_wavelength"
+              "$ref": "assays/components/mif_antibody.json#properties/fluor_wavelength"
             },
             "Primary ab Dilution": {
-              "$ref": "assays/components/mif_antibody.json#definitions/mif_properties/properties/primary_ab_dilution"
+              "$ref": "assays/components/mif_antibody.json#properties/primary_ab_dilution"
             },
             "Dilutent": {
-              "$ref": "assays/components/mif_antibody.json#definitions/mif_properties/properties/dilutent"
+              "$ref": "assays/components/mif_antibody.json#properties/dilutent"
             },
             "Fluor dilution": {
-              "$ref": "assays/components/mif_antibody.json#definitions/mif_properties/properties/fluor_dilution"
+              "$ref": "assays/components/mif_antibody.json#properties/fluor_dilution"
             },
             "Antigen Retrieval Time": {
-              "$ref": "assays/components/mif_antibody.json#definitions/mif_properties/properties/antigen_retrieval_time"
+              "$ref": "assays/components/mif_antibody.json#properties/antigen_retrieval_time"
             },
             "Primary Incubation Time": {
-              "$ref": "assays/components/mif_antibody.json#definitions/mif_properties/properties/primary_incubation_time"
+              "$ref": "assays/components/mif_antibody.json#properties/primary_incubation_time"
             },
             "Amplification Time": {
-              "$ref": "assays/components/mif_antibody.json#definitions/mif_properties/properties/amplification_time"
+              "$ref": "assays/components/mif_antibody.json#properties/amplification_time"
             }
           }
         }
@@ -118,10 +118,10 @@
               "$ref": "assays/components/imaging_data.json#properties/imaging_status"
             },
             "project inform folder": {
-              "$ref": "assays/mif_assay.json#definitions/data_properties/properties/project_inform_folder"
+              "$ref": "assays/components/local_file.json#properties/file_path"
             },
             "exported_data_folder": {
-              "$ref": "assays/mif_assay.json#definitions/data_properties/properties/mif_exported_data_folder"
+              "$ref": "assays/components/local_file.json#properties/file_path"
             }
           }
         }

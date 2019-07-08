@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "cytof_entry",
+  "title": "CyTOF assay record",
+  "type": "object",
+  "description": "A single data record from CyTOF assay batch",
+  "properties": {
+    "processed_fcs_filename": {
+      "type": "string"
+    },
+    "source_fcs_filenames": {
+      "type": "string"
+    },
+    "concatonation_version": {
+      "type": "string"
+    },
+    "normalization_version": {
+      "type": "string"
+    },
+    "beads_removed": {
+      "type": "string",
+      "enum": ["Y", "N"]
+    },
+    "staining_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "batch_id": {
+      "type": "string"
+    },
+    "debarcoding_protocol": {
+      "type": "string"
+    },
+    "debarcoding_key": {
+      "type": "string"
+    },
+    "files": {
+      "$ref": "assays/components/cytof/cytof_input.json"
+    }
+  },
+  "required": [
+    "processed_fcs_filename",
+    "source_fcs_filenames",
+    "files"
+  ]
+}

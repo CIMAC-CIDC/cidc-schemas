@@ -8,7 +8,7 @@
     "artifact_creator": {
       "description": "The name of the center that created this artificat",
       "type": "string",
-      "enum": ["DFCI", "Mount Sinai, Stanford, MD Anderson"]
+      "enum": ["DFCI", "Mount Sinai", "Stanford", "MD Anderson"]
     },
     "uploader": {
       "type": "string"

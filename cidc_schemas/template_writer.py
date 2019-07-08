@@ -255,6 +255,7 @@ class XlTemplateWriter:
     def _get_validation(cell: str, property_schema: dict) -> Optional[dict]:
         property_enum = property_schema.get('enum')
         property_format = property_schema.get('format')
+        property_type = property_schema.get('type')
         if property_enum and len(property_enum) > 0:
             return {'validate': 'list', 'source': property_enum}
         elif property_format == 'date':
@@ -271,6 +272,12 @@ class XlTemplateWriter:
                 'maximum': time(23, 59),
                 'error_message': 'Please enter time in format hh:mm'
             }
+        elif property_type == 'boolean':
+            return {
+                'validate': 'list',
+                'source': ['True', 'False'],
+            }
+
         return None
 
     @staticmethod

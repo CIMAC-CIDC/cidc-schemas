@@ -10,9 +10,7 @@ from typing import Optional, List, Callable
 import dateparser
 import jsonschema
 
-SCHEMA_ROOT = os.path.join(os.path.dirname(
-    os.path.abspath(__file__)), '..', 'schemas')
-
+from .constants import SCHEMA_ROOT
 
 def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT, on_refs: Optional[Callable] = None) -> dict:
     """
@@ -23,6 +21,7 @@ def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT, o
         schema_root), "schema_root must be an absolute path"
 
     # Load schema with resolved $refs
+    schema_path = os.path.join(schema_root, schema_path)
     with open(schema_path) as schema_file:
         base_uri = f'file://{schema_root}/'
         json_spec = json.load(schema_file)

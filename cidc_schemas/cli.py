@@ -5,7 +5,7 @@ from typing import List
 from . import util
 from .template import Template
 from .json_validation import load_and_validate_schema
-
+from .constants import SCHEMA_ROOT
 
 def main():
     args = interface()
@@ -25,7 +25,7 @@ def interface() -> argparse.Namespace:
     generate_parser.add_argument('-m', '--manifest_file',
                                  help='Path to yaml file containing template configuration', required=True)
     generate_parser.add_argument('-s', '--schemas_dir',
-                                 help='Path to directory containing data entity schemas', required=True)
+                                 help='Path to directory containing data entity schemas', required=False)
     generate_parser.add_argument(
         '-o', '--out_file', help='Where to write the resulting excel template', required=True)
     generate_parser.set_defaults(func=generate_template)
@@ -36,7 +36,7 @@ def interface() -> argparse.Namespace:
     template_parser.add_argument('-m', '--manifest_file',
                                  help='Path to yaml file containing template configuration', required=True)
     template_parser.add_argument('-s', '--schemas_dir',
-                                 help='Path to directory containing data entity schemas', required=True)
+                                 help='Path to directory containing data entity schemas')
     template_parser.add_argument('-x', '--xlsx_file', )
     template_parser.set_defaults(func=validate_template)
 
@@ -44,7 +44,7 @@ def interface() -> argparse.Namespace:
     schema_parser = subparsers.add_parser(
         'validate_schema', help='Validate a JSON schema.')
     schema_parser.add_argument('-s', '--schemas_dir',
-                               help='Path to the directory containing data entity schemas', required=True)
+                               help='Path to the directory containing data entity schemas')
     schema_parser.add_argument('-f', '--schema_file',
                                help='Path to the schema file to validate', required=True)
     schema_parser.set_defaults(func=validate_schema)
@@ -61,8 +61,11 @@ def interface() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def get_schemas_dir(schemas_dir) -> str:
+    return os.path.abspath(schemas_dir) if schemas_dir else SCHEMA_ROOT
+
 def build_manifest(args: argparse.Namespace) -> Template:
-    schemas_dir = os.path.abspath(args.schemas_dir)
+    schemas_dir = get_schemas_dir(args.schemas_dir)
     return Template.from_json(args.manifest_file, schemas_dir)
 
 
@@ -79,7 +82,7 @@ def validate_template(args: argparse.Namespace):
 
 
 def validate_schema(args: argparse.Namespace):
-    abs_schemas_dir = os.path.abspath(args.schemas_dir)
+    abs_schemas_dir = get_schemas_dir(args.schemas_dir)
     success = load_and_validate_schema(args.schema_file, abs_schemas_dir)
     if success:
         print(f'{args.schema_file} is valid')

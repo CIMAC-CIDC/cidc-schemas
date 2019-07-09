@@ -11,7 +11,7 @@ from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader
 
-from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR
+from .constants import ROOT_DIR, SCHEMA_ROOT, TEMPLATE_EXAMPLES_DIR
 
 
 def template_paths():
@@ -19,7 +19,7 @@ def template_paths():
     Get the path to every template schema in the schemas/templates directory
     and their corresponding xlsx example file. 
     """
-    template_schema_dir = os.path.join(SCHEMA_DIR, 'templates')
+    template_schema_dir = os.path.join(SCHEMA_ROOT, 'templates')
 
     template_paths = []
 
@@ -46,7 +46,7 @@ def test_template(schema_path, xlsx_path, tmpdir):
     """
 
     # Load the template and write it to a temporary file
-    template = Template.from_json(schema_path, SCHEMA_DIR)
+    template = Template.from_json(schema_path, SCHEMA_ROOT)
     p = tmpdir.join('test_output.xlsx')
     template.to_excel(p)
     generated_template = XlTemplateReader.from_excel(p)

@@ -3,6 +3,8 @@
 
 """The setup script."""
 
+import os
+import glob
 from setuptools import setup, find_packages
 
 with open('README.md') as readme_file:
@@ -11,11 +13,8 @@ with open('README.md') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = []
-
-setup_requirements = []
-
-test_requirements = []
+with open("requirements.txt") as f:
+    requirements = f.read().splitlines()
 
 setup(
     author="James Lindsay",
@@ -25,15 +24,12 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
-        "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
     description="library for parsing manifest data",
+    python_requires='>=3.5',
     install_requires=requirements,
     license="MIT license",
     long_description=readme + '\n\n' + history,
@@ -41,9 +37,7 @@ setup(
     keywords='cidc_schemas',
     name='cidc_schemas',
     packages=find_packages(include=['cidc_schemas']),
-    setup_requires=setup_requirements,
     test_suite='tests',
-    tests_require=test_requirements,
     url='https://github.com/CIMAC-CIDC/schemas',
     version='0.1.0',
     zip_safe=False,

@@ -60,5 +60,5 @@
       }
     }
   },
-  "required": ["lead_organization_study_id", "shipments", "participants"]
+  "required": ["lead_organization_study_id", "participants"]
 }

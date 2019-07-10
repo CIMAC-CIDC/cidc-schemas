@@ -1,8 +1,10 @@
 import json
 import os
 import pytest
+import copy
 import jsonschema
 from deepdiff import DeepSearch, grep
+from jsonmerge import merge, Merger
 from pprint import pprint
 
 from cidc_schemas.json_validation import load_and_validate_schema
@@ -52,9 +54,19 @@ def _load_template(template_path: str):
         "ref": ref
       }
 
-    # BIG OLD TODO HERE TO FIGURE THIS OUT.
-    #dat_cols = t2[ws]['data_columns']
-    #print(dat_cols.keys())
+    # load the data columns
+    dat_cols = t2[ws]['data_columns']
+    for key1 in dat_cols.keys():
+      for key2 in dat_cols[key1]:
+        
+        # get the reference
+        ref = dat_cols[key1][key2]['$ref']
+        schema_key = ref.split("/")[-1]
+
+        key_lu[key2] = {
+          "schema_key": schema_key,
+          "ref": ref
+        }
 
   return key_lu
 
@@ -70,7 +82,7 @@ def _find_it(key: str, schema: dict, key_lu: dict):
   # get the first occurance of it
   return sorted(ds['matched_paths'], key=len)[0]
   
-def _set_val(path: str, val: str, trial: dict):
+def _set_val(path: str, val: str, trial: dict, verbose=False):
   """ sets the value given the path """
 
   # first we trim the root entry.
@@ -82,7 +94,7 @@ def _set_val(path: str, val: str, trial: dict):
   paths[0] = paths[0].replace("['", "")
   paths[-1] = paths[-1].replace("']", "")
 
-  print("-", paths)
+  if verbose: print("-", paths)
 
   # modifier keys
   mods = set([
@@ -97,7 +109,7 @@ def _set_val(path: str, val: str, trial: dict):
 
     # simplify
     key = paths[i]
-    print("--", key)
+    if verbose: print("--", key)
 
     # check if its final
     if i == lenp - 1:
@@ -171,16 +183,16 @@ def prismify(xlsx_path: str, template_path: str):
       key = row[0]
       val = row[1]
 
-      print("-----")
-      print()
-      print(key, val)
-      path = _find_it(key, schema, key_lu)
-      print()
-      print(path)
-      _set_val(path, val, root)
-      print()
-      print()
-      print(root)
+      #print("-----")
+      #print()
+      #print(key, val)
+      #path = _find_it(key, schema, key_lu)
+      #print()
+      #print(path)
+      #_set_val(path, val, root)
+      #print()
+      #print()
+      #print(root)
 
       # find this lookup in out dictionary.
       #print("--fin0--")
@@ -191,12 +203,68 @@ def prismify(xlsx_path: str, template_path: str):
       
 
     # Compare data headers
-    #gen_headers = gen_ws[RowType.HEADER][0]
-    #ref_headers = ref_ws[RowType.HEADER][0]
-    # for (gen_h, ref_h) in zip(gen_headers, ref_headers):
-    #    assert gen_h == ref_h, error(
-    #        f'data: generated template had header {gen_h} where reference had {ref_h}')
+    print()
+    print()
+    print("headers")
+    print()
+    print()
+
+    # get the headers.
+    headers = ws[RowType.HEADER][0]
     
+    # get the data.
+    data = ws[RowType.DATA]
+    cnt = 0
+    prevd = -1
+    for row in data:
+      curd = {}
+      for key, val in zip(headers, row):
+
+        verb = True
+        if cnt == 0:
+          verb = False
+        if key != "CIMAC PARTICIPANT ID":
+          verb = False
+        verb = False
+
+        if verb: 
+          print("++++++")
+          print()
+          print(key, val)
+        path = _find_it(key, schema, key_lu)
+        if verb:
+          print()
+          print(path)
+        _set_val(path, val, curd, verbose=verb)
+        if verb:
+          print()
+          print()
+          print(curd)
+          #break
+
+      # check if we merge.
+      if prevd != -1:
+        print("HEYYYY")
+        print("HEYYYY")
+        print("HEYYYY")
+        pprint(prevd)
+        print()
+        pprint(curd)
+
+        # create the merger
+        merger = Merger(schema)
+        curd = merger.merge(prevd, curd)
+        print()
+        pprint(curd)
+        break
+      
+      # setup for next steps.
+      prevd = copy.deepcopy(curd)
+
+      print("7777777777777777")
+      cnt += 1
+      #if cnt >= 2:
+      #  break
 
 
     print("")

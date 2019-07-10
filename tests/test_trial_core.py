@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests the entire clinical trial schema"""
+"""Tests the entire trial core schemas"""
 
 import os
 import json
@@ -53,7 +53,7 @@ def test_aliquot():
     assays = {
         "olink": {"thisshould": "fail"}
     }
-    aliquot['assays'] = assays
+    aliquot['assay'] = assays
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(aliquot) 
 
@@ -80,7 +80,7 @@ def test_clinicaltrial_simple():
     # create aliquot
     aliquot = {
         "cimac_aliquot_id": "1234",
-        "assays": assays
+        "assay": assays
     }
 
     # create the sample.
@@ -117,11 +117,11 @@ def test_clinicaltrial_olink():
     # create 2 aliquots
     aliquot1 = {
         "cimac_aliquot_id": "1234",
-        "assays": assays
+        "assay": assays
     }
     aliquot2 = {
         "cimac_aliquot_id": "1234",
-        "assays": assays.copy()
+        "assay": assays.copy()
     }
 
     # create the sample.

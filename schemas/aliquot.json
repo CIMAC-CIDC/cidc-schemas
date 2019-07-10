@@ -109,7 +109,7 @@
       "description": "Percent area of fibrotic area. Example: 15",
       "type": "number"
     },
-    "assays": {
+    "assay": {
       "description": "Set of possible assays for this aliquot, only should be present",
       "$ref": "assays/components/aliquot_to_assay.json"
     }

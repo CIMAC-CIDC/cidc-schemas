@@ -110,7 +110,7 @@
       "type": "number"
     },
     "assays": {
-      "description": "Set of possible assays for this aliquot, only one can be filled as a time",
+      "description": "Set of possible assays for this aliquot, only should be present",
       "$ref": "assays/components/aliquot_to_assay.json"
     }
   },

@@ -1,10 +1,24 @@
 # cidc-schemas
-
-[![Build Status](https://travis-ci.org/CIMAC-CIDC/cidc-schemas.svg?branch=master)](https://travis-ci.org/CIMAC-CIDC/cidc-schemas)
+| Branch                                                            | Status                                                                                                                             |
+| ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| [master](https://cimac-cidc.github.io/cidc-schemas/)              | [![Build Status](https://travis-ci.org/CIMAC-CIDC/cidc-schemas.svg?branch=master)](https://travis-ci.org/CIMAC-CIDC/cidc-schemas)  |
+| [release](https://cimac-cidc.github.io/cidc-schemas/tree/release) | [![Build Status](https://travis-ci.org/CIMAC-CIDC/cidc-schemas.svg?branch=release)](https://travis-ci.org/CIMAC-CIDC/cidc-schemas) |
 
 This repository contains formal definitions of the CIDC metadata model using [json-schema](https://json-schema.org/) syntax and vocabulary.
 
 ### View documentation at https://cimac-cidc.github.io/cidc-schemas/
+
+## Installation
+
+To install the latest stable version from the `release` branch, run:
+```bash
+pip install git+https://github.com/cimac-cidc/cidc-schemas@release
+```
+
+To install the latest development version from the `master` branch, run:
+```bash
+pip install git+https://github.com/cimac-cidc/cidc-schemas
+```
 
 ## Development
 

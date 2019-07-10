@@ -28,6 +28,31 @@ def _load_tools():
   # return the validator and schema
   return validator, validator.schema
 
+def _get_coerce(ref: str):
+
+  # get just the json file
+  file_path = ref.split("#")[0]
+  prop = ref.split("properties/")[-1]
+
+  # load the schema
+  with open(os.path.join(SCHEMA_DIR, file_path)) as fin:
+    schema = json.load(fin)
+
+  # get the entry
+  entry = schema['properties'][prop]
+
+  # add our own type conversion
+  t = entry['type']
+  if t == 'string':
+    return str
+  elif t == 'integer':
+    return int
+  elif t == 'number':
+    return float
+  else:
+    raise NotImplementedError
+
+
 def _load_template(template_path: str):
 
   # get the template.
@@ -51,7 +76,8 @@ def _load_template(template_path: str):
 
       key_lu[xlsx_key] = {
         "schema_key": schema_key,
-        "ref": ref
+        "ref": ref,
+        "coerce": _get_coerce(ref)
       }
 
     # load the data columns
@@ -65,7 +91,8 @@ def _load_template(template_path: str):
 
         key_lu[key2] = {
           "schema_key": schema_key,
-          "ref": ref
+          "ref": ref,
+          "coerce": _get_coerce(ref)
         }
 
   return key_lu
@@ -109,7 +136,6 @@ def _set_val(path: str, val: str, trial: dict, verbose=False):
 
     # simplify
     key = paths[i]
-    if verbose: print("--", key)
 
     # check if its final
     if i == lenp - 1:
@@ -169,6 +195,7 @@ def prismify(xlsx_path: str, template_path: str):
 
   # create the root dictionary.
   root = {}
+  data_rows = []
 
   # loop over spreadsheet
   worksheet_names = t.grouped_rows.keys()
@@ -180,95 +207,50 @@ def prismify(xlsx_path: str, template_path: str):
     # Compare preamble rows
     cnt = 0
     for row in ws[RowType.PREAMBLE]:
+      
+      # simplify
       key = row[0]
       val = row[1]
 
-      #print("-----")
-      #print()
-      #print(key, val)
-      #path = _find_it(key, schema, key_lu)
-      #print()
-      #print(path)
-      #_set_val(path, val, root)
-      #print()
-      #print()
-      #print(root)
+      # coerce value
+      val = key_lu[key.lower()]['coerce'](val)
 
-      # find this lookup in out dictionary.
-      #print("--fin0--")
+      # add to dictionary
+      path = _find_it(key, schema, key_lu)
+      _set_val(path, val, root)      
 
-      cnt += 1
-      if cnt > 100:
-        break
-      
-
-    # Compare data headers
-    print()
-    print()
-    print("headers")
-    print()
-    print()
-
-    # get the headers.
+    # move to headers
     headers = ws[RowType.HEADER][0]
     
     # get the data.
     data = ws[RowType.DATA]
-    cnt = 0
-    prevd = -1
     for row in data:
+
+      # create dictionary per row
       curd = {}
       for key, val in zip(headers, row):
 
-        verb = True
-        if cnt == 0:
-          verb = False
-        if key != "CIMAC PARTICIPANT ID":
-          verb = False
-        verb = False
+        # coerce value
+        val = key_lu[key.lower()]['coerce'](val)
 
-        if verb: 
-          print("++++++")
-          print()
-          print(key, val)
+        # add to dictionary
         path = _find_it(key, schema, key_lu)
-        if verb:
-          print()
-          print(path)
-        _set_val(path, val, curd, verbose=verb)
-        if verb:
-          print()
-          print()
-          print(curd)
-          #break
+        _set_val(path, val, curd)
 
-      # check if we merge.
-      if prevd != -1:
-        print("HEYYYY")
-        print("HEYYYY")
-        print("HEYYYY")
-        pprint(prevd)
-        print()
-        pprint(curd)
+      # save the entry
+      data_rows.append(curd)
 
-        # create the merger
-        merger = Merger(schema)
-        curd = merger.merge(prevd, curd)
-        print()
-        pprint(curd)
-        break
-      
-      # setup for next steps.
-      prevd = copy.deepcopy(curd)
+  # prepend header to data rows
+  objs = [root] + data_rows
 
-      print("7777777777777777")
-      cnt += 1
-      #if cnt >= 2:
-      #  break
+  # create the merger
+  merger = Merger(schema)
 
-
-    print("")
-    print("")
-    print("blah")
-
+  # iteratively merge.
+  cur_obj = objs[0]
+  for i in range(1, len(objs)):
+    cur_obj = merger.merge(cur_obj, objs[i])
+  
+  # return the object.
+  return cur_obj
   

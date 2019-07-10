@@ -5,7 +5,8 @@ from typing import List
 from . import util
 from .template import Template
 from .json_validation import load_and_validate_schema
-from .constants import SCHEMA_ROOT
+from .constants import SCHEMA_DIR
+
 
 def main():
     args = interface()
@@ -62,7 +63,8 @@ def interface() -> argparse.Namespace:
 
 
 def get_schemas_dir(schemas_dir) -> str:
-    return os.path.abspath(schemas_dir) if schemas_dir else SCHEMA_ROOT
+    return os.path.abspath(schemas_dir) if schemas_dir else SCHEMA_DIR
+
 
 def build_manifest(args: argparse.Namespace) -> Template:
     schemas_dir = get_schemas_dir(args.schemas_dir)

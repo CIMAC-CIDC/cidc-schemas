@@ -10,13 +10,13 @@ import json
 import jsonschema
 
 from cidc_schemas.json_validation import load_and_validate_schema
-from .constants import ROOT_DIR, SCHEMA_ROOT
+from .constants import ROOT_DIR, SCHEMA_DIR
 
 
 def schema_paths():
     """Get the path to every schema in the schemas directory"""
     schema_paths = []
-    for root, _, files in os.walk(SCHEMA_ROOT):
+    for root, _, files in os.walk(SCHEMA_DIR):
         for f in files:
             schema_paths.append(os.path.join(root, f))
 

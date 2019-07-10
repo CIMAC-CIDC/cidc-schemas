@@ -10,9 +10,9 @@ from typing import Optional, List, Callable
 import dateparser
 import jsonschema
 
-from .constants import SCHEMA_ROOT
+from .constants import SCHEMA_DIR
 
-def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_ROOT, on_refs: Optional[Callable] = None) -> dict:
+def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_DIR, on_refs: Optional[Callable] = None) -> dict:
     """
     Try to load a valid schema at `schema_path`. If an `on_refs` function is supplied,
     call that on all refs in the schema, rather than resolving the refs.

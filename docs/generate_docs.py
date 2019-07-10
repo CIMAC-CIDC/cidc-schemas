@@ -5,7 +5,7 @@ from typing import List, Dict
 import jinja2
 
 from cidc_schemas.json_validation import load_and_validate_schema
-from cidc_schemas.constants import SCHEMA_ROOT
+from cidc_schemas.constants import SCHEMA_DIR
 
 
 DOCS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -22,7 +22,7 @@ def load_schemas() -> dict:
     names to loaded and validated entity schemas.
     """
     schemas = {}
-    for root, _, paths in os.walk(SCHEMA_ROOT):
+    for root, _, paths in os.walk(SCHEMA_DIR):
         root_schemas = {}
         for path in paths:
             schema_path = os.path.join(root, path)
@@ -36,7 +36,7 @@ def load_schemas() -> dict:
                 return {'url': url}
 
             schema = load_and_validate_schema(
-                schema_path, SCHEMA_ROOT, on_refs=json_to_html)
+                schema_path, SCHEMA_DIR, on_refs=json_to_html)
 
             schema_path = path.replace(".json", ".html").replace("/", ".")
             root_schemas[schema_path] = schema
@@ -48,7 +48,7 @@ def load_schemas() -> dict:
 
 def generate_docs(out_directory: str = HTML_DIR):
     """
-    Generate documentation based on the schemas found in `SCHEMA_ROOT`.
+    Generate documentation based on the schemas found in `SCHEMA_DIR`.
     """
 
     templateLoader = jinja2.FileSystemLoader(TEMPLATES_DIR)

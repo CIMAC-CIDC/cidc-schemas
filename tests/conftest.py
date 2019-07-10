@@ -8,13 +8,13 @@ import pytest
 
 from cidc_schemas.template import Template
 
-from .constants import SCHEMA_ROOT
+from .constants import SCHEMA_DIR
 
 
 @pytest.fixture
 def pbmc_template():
-    pbmc_template_path = os.path.join(SCHEMA_ROOT, 'templates', 'pbmc_template.json')
-    return Template.from_json(pbmc_template_path, SCHEMA_ROOT)
+    pbmc_template_path = os.path.join(SCHEMA_DIR, 'templates', 'pbmc_template.json')
+    return Template.from_json(pbmc_template_path, SCHEMA_DIR)
 
 
 @pytest.fixture

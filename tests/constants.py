@@ -1,6 +1,6 @@
 import os
 
-from cidc_schemas.constants import SCHEMA_ROOT
+from cidc_schemas.constants import SCHEMA_DIR
 
 TESTS_DIR = os.path.abspath(os.path.dirname(os.path.join(__file__)))
 ROOT_DIR = os.path.join(TESTS_DIR, '..')

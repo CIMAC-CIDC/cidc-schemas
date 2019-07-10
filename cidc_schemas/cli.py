@@ -1,4 +1,5 @@
 import os
+import glob
 import argparse
 from typing import List
 
@@ -19,6 +20,11 @@ def interface() -> argparse.Namespace:
 
     # Print out usage if no subcommands provided
     parser.set_defaults(func=lambda _: parser.print_usage(None))
+
+    # Option to list available schemas
+    list_parser = subparsers.add_parser(
+        'list', help='List all available schemas')
+    list_parser.set_defaults(func=lambda _: list_schemas())
 
     # Parser for template generation
     generate_parser = subparsers.add_parser(
@@ -60,6 +66,11 @@ def interface() -> argparse.Namespace:
     conversion_parser.set_defaults(func=convert)
 
     return parser.parse_args()
+
+
+def list_schemas():
+    for path in glob.glob(f'{SCHEMA_DIR}/**/*.json', recursive=True):
+        print(path.replace(SCHEMA_DIR + '/', ''))
 
 
 def get_schemas_dir(schemas_dir) -> str:

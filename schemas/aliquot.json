@@ -108,6 +108,10 @@
     "fibrosis_percent_area": {
       "description": "Percent area of fibrotic area. Example: 15",
       "type": "number"
+    },
+    "assays": {
+      "description": "Set of possible assays for this aliquot, only one can be filled as a time",
+      "$ref": "assays/components/aliquot_to_assay.json"
     }
   },
   "required": ["cimac_aliquot_id"]

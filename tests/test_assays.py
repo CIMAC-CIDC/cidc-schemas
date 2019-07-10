@@ -27,6 +27,31 @@ ARTIFACT_OBJ = {
     "visible": True
 }
 
+OLINK_RECORD = {
+        "assay_prefix": "dummy",
+        "filetype": "assay",
+        "run_date": "1/2/98",
+        "run_time": "12:00",
+        "instrument": "dummy",
+        "fludigm_application_version": "0.2.0",
+        "fludigm_application_build": "dummy",
+        "chip_barcode": 22129,
+        "probe_type": "dummy",
+        "passive_reference": "dummy",
+        "quality_threshold": 90,
+        "baseline_correction": "dummy",
+        "panel": "dummy",
+        "number_of_sample": 5,
+        "number_of_sample_failed": 4,
+        "npx_manager_version": "dummy",
+        "assay_panel_lot": 90,
+        "files": {
+            "assay_npx": "",
+            "assay_raw_ct": "",
+            "study_npx": ""
+        }
+    }
+
 ASSAY_CORE = {
     "assay_creator": "DFCI",
     "uploader": "dummy",
@@ -329,32 +354,12 @@ def test_olink():
 
     # create the olink object
     text = ARTIFACT_OBJ.copy()
-    record = {
-        "assay_prefix": "dummy",
-        "filetype": "assay",
-        "run_date": "1/2/98",
-        "run_time": "12:00",
-        "instrument": "dummy",
-        "fludigm_application_version": "0.2.0",
-        "fludigm_application_build": "dummy",
-        "chip_barcode": 22129,
-        "probe_type": "dummy",
-        "passive_reference": "dummy",
-        "quality_threshold": 90,
-        "baseline_correction": "dummy",
-        "panel": "dummy",
-        "number_of_sample": 5,
-        "number_of_sample_failed": 4,
-        "npx_manager_version": "dummy",
-        "assay_panel_lot": 90,
-        "files": {
-            "assay_npx": text,
-            "assay_raw_ct": text,
-            "study_npx": text
-        }
-    }
+    record = OLINK_RECORD.copy()
+    record["files"]["assay_npx"] = text
+    record["files"]["assay_raw_ct"] = text
+    record["files"]["study_npx"] = text
 
-# add a demo record.
+    # add a demo record.
     obj['records'] = [
         record
     ]

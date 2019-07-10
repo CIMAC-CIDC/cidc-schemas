@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "aliquot_to_assay",
+  "title": "Aliquot to assay",
+  "description": "An object to store one assay associated with a given aliquot\n",
+  "properties": {
+    "wes": {
+      "$ref": "assays/wes_assay.json"
+    },
+    "rna_expression": {
+      "$ref": "assays/rna_expression_assay.json"
+    },
+    "cytof": {
+      "$ref": "assays/cytof_assay.json"
+    },
+    "olink": {
+      "$ref": "assays/olink_assay.json"
+    },
+    "mif": {
+      "$ref": "assays/mif_assay.json"
+    },
+    "micsss": {
+      "$ref": "assays/micsss_assay.json"
+    }
+  }
+}

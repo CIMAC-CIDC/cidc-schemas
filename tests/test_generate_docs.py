@@ -8,7 +8,7 @@ import unittest
 import pytest
 from docs import generate_docs
 
-from .constants import ROOT_DIR
+from cidc_schemas.constants import SCHEMA_DIR
 
 
 def count_files(directory):
@@ -21,7 +21,7 @@ def test_generate_docs(tmpdir):
     generate_docs.generate_docs(tmpdir)
 
     # Count all schemas
-    num_schemas = count_files(os.path.join(ROOT_DIR, 'schemas'))
+    num_schemas = count_files(SCHEMA_DIR)
 
     # Count all documentation files
     num_docs = count_files(tmpdir)

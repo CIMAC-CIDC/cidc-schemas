@@ -25,11 +25,11 @@ pip install git+https://github.com/cimac-cidc/cidc-schemas
 ### Project Structure
 
 - **`cidc_schemas/`** - a python module for generating, validating, and reading manifest and assay templates.
+  - **`schemas/`** - json specifications defining the CIDC metadata model.
+    - `templates/` - schemas for generating and validating manifest and assay templates.
+    - `assays/` - schemas defining assay data models
 - **`docs/`** - the most recent build of the data model documentation, along with templates and scripts for re-generating the documentation.
 - **`template_examples/`** - example populated Excel files for template specifications in `schemas/templates`.
-- **`schemas/`** - json specifications defining the CIDC metadata model.
-  - `templates/` - schemas for generating and validating manifest and assay templates.
-  - `assays/` - schemas defining assay data models
 - **`tests/`** - tests for the `cidc_schemas` module.
 
 ### Running tests
@@ -85,7 +85,7 @@ python3 -m cidc_schemas.cli [args]
 Create a template for a given template configuration.
 
 ```bash
-cidc_schemas generate_template -m schemas/templates/pbmc.json -s schemas -o pbmc.xlsx
+cidc_schemas generate_template -m templates/pbmc_template.json -o pbmc.xlsx
 ```
 
 ### Validate filled-out templates
@@ -93,7 +93,7 @@ cidc_schemas generate_template -m schemas/templates/pbmc.json -s schemas -o pbmc
 Check that a populated template file is valid with respect to a template specification.
 
 ```bash
-cidc_schemas validate_template -m schemas/templates/pbmc.json -s schemas -x template_examples/pbmc_template.xlsx
+cidc_schemas validate_template -m templates/pbmc_template.json -x template_examples/pbmc_template.xlsx
 ```
 
 ### Validate JSON schemas
@@ -101,7 +101,7 @@ cidc_schemas validate_template -m schemas/templates/pbmc.json -s schemas -x temp
 Check that a JSON schema conforms to the JSON Schema specifications.
 
 ```bash
-cidc_schemas validate_schema -s schemas -f schemas/shipping_core.json
+cidc_schemas validate_schema -f shipping_core.json
 ```
 
 ### Convert between yaml and json

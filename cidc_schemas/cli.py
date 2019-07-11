@@ -8,7 +8,6 @@ from .template import Template
 from .json_validation import load_and_validate_schema
 from .constants import SCHEMA_DIR, SCHEMA_LIST
 
-
 def main():
     args = interface()
     args.func(args)

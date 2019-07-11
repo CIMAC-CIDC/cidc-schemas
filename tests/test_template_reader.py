@@ -43,14 +43,12 @@ def test_valid_from_excel(tiny_template):
 
 def search_error_message(workbook, template, error, msg_fragment):
     reader = XlTemplateReader(workbook)
-    with pytest.raises(error) as e:
+    with pytest.raises(error, match=msg_fragment):
         reader.validate(template)
-
-    assert msg_fragment in str(e.value)
 
 
 def test_missing_headers(tiny_template):
-    """Test that a spreadsheet with empty headers raises an assertion error"""
+    """Test that a spreadsheet with empty headers raises a validation error"""
     tiny_missing_header = {
         'TEST_SHEET': [
             (RowType.HEADER, 'test_property', None, 'test_time'),
@@ -58,11 +56,11 @@ def test_missing_headers(tiny_template):
     }
 
     search_error_message(tiny_missing_header, tiny_template,
-                         AssertionError, 'empty header cell')
+                         ValidationError, 'empty header cell')
 
 
 def test_missing_required_value(tiny_template):
-    """Test that spreadsheet with a missing value marked required raises an assertion error"""
+    """Test that spreadsheet with a missing value marked required raises a validation error"""
     tiny_missing_value = {
         'TEST_SHEET': [
             (RowType.HEADER, 'test_property', 'test_date', 'test_time'),
@@ -80,7 +78,7 @@ def test_missing_required_value(tiny_template):
 
 
 def test_wrong_number_of_headers(tiny_template):
-    """Test that a spreadsheet with multiple or no headers raises an assertion error"""
+    """Test that a spreadsheet with multiple or no headers raises an validation error"""
     tiny_double = {
         'TEST_SHEET': [
             (RowType.HEADER, 'test_property', 'test_date', 'test_time'),
@@ -95,10 +93,10 @@ def test_wrong_number_of_headers(tiny_template):
     }
 
     search_error_message(tiny_double, tiny_template,
-                         AssertionError, 'one header row expected')
+                         ValidationError, 'one header row expected')
 
     search_error_message(tiny_no_headers, tiny_template,
-                         AssertionError, 'one header row expected')
+                         ValidationError, 'one header row expected')
 
 
 def test_missing_schema(tiny_template):

@@ -97,22 +97,33 @@ def _load_template(template_path: str):
 
   return key_lu
 
-def _find_it(key: str, schema: dict, key_lu: dict):
+def _find_it(key: str, schema: dict, key_lu: dict, assay_hint: str = ""):
 
   # first translate key name.
   key = key.lower()
   schema_key = key_lu[key]["schema_key"]
 
+  # special case1: file_path
+  if schema_key == "file_path":
+    return "file_path:TODO"
+
   # find it in the schema
   ds = schema | grep(schema_key)
 
-  print(json.dumps(schema))
+  # sort
+  choices = sorted(ds['matched_paths'], key=len)
 
-  # get the first occurance of it
-  if 'matched_paths' not in ds:
-    print(key, schema_key, key_lu[key])
-    print(ds)
-  return sorted(ds['matched_paths'], key=len)[0]
+  # check if there are more equal length
+  choice = choices[0]
+  if len(choices) > 1 and len(choices[0]) == len(choices[1]):
+    if assay_hint != "":
+      for i in range(len(choices)):
+        if choices[i].count(assay_hint) > 0:
+          choice = choices[i]
+          break
+
+  # return chosen one.
+  return choice
   
 def _set_val(path: str, val: str, trial: dict, verbose=False):
   """ sets the value given the path """
@@ -122,9 +133,12 @@ def _set_val(path: str, val: str, trial: dict, verbose=False):
   path = path[stop::]
 
   # then we tokenize the paths.
-  paths = path.split("']['")
-  paths[0] = paths[0].replace("['", "")
-  paths[-1] = paths[-1].replace("']", "")
+  tmps = path.split("][")
+  for i in range(len(tmps)):
+    tmps[i] = tmps[i].replace("'","")
+    tmps[i] = tmps[i].replace("[", "")
+    tmps[i] = tmps[i].replace("]", "")
+  paths = tmps
 
   if verbose: print("-", paths)
 
@@ -134,18 +148,45 @@ def _set_val(path: str, val: str, trial: dict, verbose=False):
     "properties"
   ])
 
+  skipers = set([
+    'allOf'
+  ])
+
   # then we loop until we are done.
   curp = trial
   lenp = len(paths)
+  skip_next = False
   for i in range(len(paths)):
 
     # simplify
     key = paths[i]
 
+    if verbose: print("--", key)
+
+    # short circuit
+    if skip_next:
+      skip_next = False
+      if verbose: print("-skip-", key)
+      continue
+
     # check if its final
     if i == lenp - 1:
       curp[key] = val
+
+      if verbose:
+        print("final", json.dumps(trial))
       return
+
+    # check if this is a skiper
+    elif key in skipers:
+      if verbose: print("-skipers-", key)
+      skip_next = True
+      continue
+
+    # always skip integers as keys.
+    elif isinstance(key, int):
+      if verbose: print("-skipers: int-", key)
+      continue
 
     # check if this is a modifer
     elif key in mods:
@@ -161,6 +202,9 @@ def _set_val(path: str, val: str, trial: dict, verbose=False):
             curp = new_obj
           else:
             curp = curp[0]
+        
+        elif isinstance(curp, dict):
+          pass  # no need to do anything
         else:
           raise NotImplementedError
 
@@ -173,10 +217,18 @@ def _set_val(path: str, val: str, trial: dict, verbose=False):
         # look forward to see what we might add.
         key2 = paths[i+1]
 
+        if verbose: print("--2", key2)
+
         # its a list.
         if key2 == "items":
           curp[key] = []
           
+        elif key2 == 'properties':
+          curp[key] = {}
+
+        elif key2 == 'allOf':
+          curp[key] = {}    # this assume allOf always creates object, maybe not true?
+
         else:
           raise NotImplementedError
 
@@ -185,8 +237,7 @@ def _set_val(path: str, val: str, trial: dict, verbose=False):
 
 
 
-
-def prismify(xlsx_path: str, template_path: str):
+def prismify(xlsx_path: str, template_path: str, assay_hint: str=""):
   """
   convert excel file to json object
   """
@@ -194,6 +245,9 @@ def prismify(xlsx_path: str, template_path: str):
   # get the schema
   validator, schema = _load_tools()
   key_lu = _load_template(template_path)
+
+  # verbosity
+  verb = False
 
   # read the excel file
   t = XlTemplateReader.from_excel(xlsx_path)
@@ -210,7 +264,6 @@ def prismify(xlsx_path: str, template_path: str):
     ws = t.grouped_rows[name]
 
     # Compare preamble rows
-    cnt = 0
     for row in ws[RowType.PREAMBLE]:
       
       # simplify
@@ -221,8 +274,8 @@ def prismify(xlsx_path: str, template_path: str):
       val = key_lu[key.lower()]['coerce'](val)
 
       # add to dictionary
-      path = _find_it(key, schema, key_lu)
-      _set_val(path, val, root)      
+      path = _find_it(key, schema, key_lu, assay_hint=assay_hint)
+      _set_val(path, val, root, verbose=verb)      
 
     # move to headers
     headers = ws[RowType.HEADER][0]
@@ -232,21 +285,21 @@ def prismify(xlsx_path: str, template_path: str):
     for row in data:
 
       # create dictionary per row
-      curd = {}
+      curd = copy.deepcopy(root)
       for key, val in zip(headers, row):
 
         # coerce value
         val = key_lu[key.lower()]['coerce'](val)
 
         # add to dictionary
-        path = _find_it(key, schema, key_lu)
-        _set_val(path, val, curd)
+        path = _find_it(key, schema, key_lu, assay_hint=assay_hint)
+        _set_val(path, val, curd, verbose=verb)
 
       # save the entry
       data_rows.append(curd)
 
   # prepend header to data rows
-  objs = [root] + data_rows
+  objs = data_rows
 
   # create the merger
   merger = Merger(schema)
@@ -255,7 +308,7 @@ def prismify(xlsx_path: str, template_path: str):
   cur_obj = objs[0]
   for i in range(1, len(objs)):
     cur_obj = merger.merge(cur_obj, objs[i])
-  
+
   # return the object.
   return cur_obj
   

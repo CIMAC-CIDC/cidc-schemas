@@ -8,6 +8,7 @@ import copy
 import pytest
 import jsonschema
 import json
+from pprint import pprint
 from jsonmerge import Merger
 
 from cidc_schemas.prism import prismify
@@ -115,18 +116,114 @@ def test_merge_core():
     ct7 = merger.merge(ct5, ct6)
     assert len(ct7['participants'][0]['samples'][0]['aliquots']) == 2
 
+def test_assay_merge():
+    
+    # two wes assays.
+    a1 = {
+        "lead_organization_study_id":"10021",
+        "participants":[
+            {
+                "samples":[
+                    {
+                    "aliquots":[
+                        {
+                            "assay":{
+                                "wes":{
+                                "assay_creator":"Mount Sinai",
+                                "assay_category":"Whole Exome Sequencing (WES)",
+                                "enrichment_vendor_kit":"Twist",
+                                "library_vendor_kit":"KAPA - Hyper Prep",
+                                "sequencer_platform":"Illumina - NextSeq 550",
+                                "paired_end_reads":"Paired",
+                                "read_length":100,
+                                "records":[
+                                    {
+                                        "library_kit_lot":"lot abc",
+                                        "enrichment_vendor_lot":"lot 123",
+                                        "library_prep_date":"2019-05-01 00:00:00",
+                                        "capture_date":"2019-05-02 00:00:00",
+                                        "input_ng":100,
+                                        "library_yield_ng":700,
+                                        "average_insert_size":250
+                                    }
+                                ]
+                                }
+                            },
+                            "cimac_aliquot_id":"aliquot 1"
+                        }
+                    ],
+                    "genomic_source":"Tumor"
+                    }
+                ],
+                "cimac_participant_id":"Patient 1"
+            }
+        ]    
+    }
+    a2 = {
+        "lead_organization_study_id":"10021",
+        "participants":[
+            {
+                "samples":[
+                    {
+                    "aliquots":[
+                        {
+                            "assay":{
+                                "wes":{
+                                "assay_creator":"Mount Sinai",
+                                "assay_category":"Whole Exome Sequencing (WES)",
+                                "enrichment_vendor_kit":"Twist",
+                                "library_vendor_kit":"KAPA - Hyper Prep",
+                                "sequencer_platform":"Illumina - NextSeq 550",
+                                "paired_end_reads":"Paired",
+                                "read_length":100,
+                                "records":[
+                                    {
+                                        "library_kit_lot":"lot abc",
+                                        "enrichment_vendor_lot":"lot 123",
+                                        "library_prep_date":"2019-05-01 00:00:00",
+                                        "capture_date":"2019-05-02 00:00:00",
+                                        "input_ng":100,
+                                        "library_yield_ng":700,
+                                        "average_insert_size":250
+                                    }
+                                ]
+                                }
+                            },
+                            "cimac_aliquot_id":"aliquot 2"
+                        }
+                    ],
+                    "genomic_source":"Normal"
+                    }
+                ],
+                "cimac_participant_id":"Patient 1"
+            }
+        ]
+    }
+
+    # create validator assert schemas are valid.
+    validator, schema = _fetch_validator("clinical_trial")
+
+    # merge them
+    merger = Merger(schema)
+    a3 = merger.merge(a1, a2)
+    assert len(a3['participants']) == 1
+    assert len(a3['participants'])
 
 def test_prism():
 
     # get a specifc template
-    for x, y in template_paths():
-        if x.count("wes_template") > 0:
-            temp_path = x
-            xlsx_path = y
+    for temp_path, xlsx_path in template_paths():
 
-    # turn into object.
-    ct = prismify(xlsx_path, temp_path)
+        # extract hint.
+        hint = temp_path.split("/")[-1].replace("_template.json", "")
 
-    # create validator assert schemas are valid.
-    validator, schema = _fetch_validator("clinical_trial")
-    validator.validate(ct)
+        # TODO: only implemented WES parsing...
+        if hint != "wes": continue
+
+        # turn into object.
+        ct = prismify(xlsx_path, temp_path, assay_hint=hint)
+
+        # create validator assert schemas are valid.
+        validator, schema = _fetch_validator("clinical_trial")
+        validator.validate(ct)
+

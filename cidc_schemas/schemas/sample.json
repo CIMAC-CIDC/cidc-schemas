@@ -114,5 +114,5 @@
       }
     }
   },
-  "required": ["cimac_sample_id", "site_sample_id", "aliquots"]
+  "required": ["cimac_sample_id", "aliquots"]
 }

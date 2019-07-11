@@ -6,7 +6,7 @@ import os
 import json
 import logging
 from itertools import dropwhile
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Union
 
 import openpyxl
 
@@ -44,6 +44,8 @@ class XlTemplateReader:
 
         # Mapping from worksheet names to rows grouped by type
         self.grouped_rows: Dict[str, RowGroup] = self._group_worksheet_rows()
+
+        self.invalid_messages: List[str] = []
 
     @staticmethod
     def from_excel(xlsx_path: str):
@@ -137,27 +139,35 @@ class XlTemplateReader:
                    for header in header_row if header]
         return schemas
 
-    def validate(self, template: Template) -> bool:
+    def validate(self, template: Template, raise_validation_error: bool = True) -> Union[List[str], bool]:
         """
         Validate a populated Excel template against a template schema.
 
         Arguments:
             template {Template} -- a template object containing the expected structure of the template
+            raise_validation_error {bool} -- if True, raise a validation error if template is 
+                                invalid, otherwise return the list of invalidation messages.
+
+        Raises:
+            ValidationError -- if raise_validation_error is True and the .xlsx file is invalid.
 
         Returns:
             {bool} -- True if valid, otherwise raises an exception with validation reporting
         """
-        invalid_messages = []
+        self.invalid_messages = []
 
         required = template.template_schema.get('required', [])
 
         for name, schema in template.worksheets.items():
             errors = self._validate_worksheet(name, schema, required)
-            invalid_messages.extend(errors)
+            self.invalid_messages.extend(errors)
 
-        if invalid_messages:
-            feedback = '\n'.join(invalid_messages)
-            raise ValidationError('\n' + feedback)
+        if self.invalid_messages:
+            if raise_validation_error:
+                feedback = '\n'.join(self.invalid_messages)
+                raise ValidationError('\n' + feedback)
+            else:
+                return self.invalid_messages
 
         return True
 
@@ -165,9 +175,13 @@ class XlTemplateReader:
         """Validate rows in a worksheet, returning a list of validation error messages."""
 
         invalid_messages = []
-        assert worksheet_name in self.grouped_rows, f'No worksheet found with name {worksheet_name}'
+
+        # If no worksheet is found, return only that error.
+        if not worksheet_name in self.grouped_rows:
+            return [f'No worksheet found with name {worksheet_name}']
         row_groups = self.grouped_rows[worksheet_name]
 
+        invalid_messages = []
         if 'preamble_rows' in ws_schema:
             # Validate preamble rows
             preamble_schemas = ws_schema['preamble_rows']
@@ -190,10 +204,16 @@ class XlTemplateReader:
 
             # Validate data rows
             n_headers = len(row_groups[RowType.HEADER])
-            assert n_headers == 1, f"Exactly one header row expected, but found {n_headers}"
+            if not n_headers == 1:
+                invalid_messages.append(
+                    f"Exactly one header row expected, but found {n_headers}")
+                return invalid_messages
+
             headers = row_groups[RowType.HEADER][0]
-            assert all(
-                headers), f"Found an empty header cell at index {headers.index(None)}"
+            if not all(headers):
+                invalid_messages.append(
+                    f"Found an empty header cell at index {headers.index(None)}")
+                return invalid_messages
 
             data_schemas = self._get_data_schemas(
                 row_groups, flat_data_schemas)

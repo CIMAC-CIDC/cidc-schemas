@@ -6,8 +6,7 @@ from typing import List
 from . import util
 from .template import Template
 from .json_validation import load_and_validate_schema
-from .constants import SCHEMA_DIR
-
+from .constants import SCHEMA_DIR, SCHEMA_LIST
 
 def main():
     args = interface()
@@ -69,8 +68,7 @@ def interface() -> argparse.Namespace:
 
 
 def list_schemas():
-    for path in glob.glob(f'{SCHEMA_DIR}/**/*.json', recursive=True):
-        print(path.replace(SCHEMA_DIR + '/', ''))
+    print('\n'.join(SCHEMA_LIST))
 
 
 def get_schemas_dir(schemas_dir) -> str:

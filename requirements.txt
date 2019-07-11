@@ -13,3 +13,5 @@ coverage==4.5.1
 Sphinx==1.8.1
 strict-rfc3339==0.7
 openpyxl==2.6.2
+jsonmerge==1.6.1
+deepdiff==4.0.6

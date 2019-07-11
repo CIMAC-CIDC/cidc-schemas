@@ -7,6 +7,7 @@ import json
 from typing import List, Optional, Dict
 from collections import OrderedDict
 
+from .constants import SCHEMA_DIR
 from .json_validation import load_and_validate_schema
 
 logger = logging.getLogger('cidc_schemas.template')
@@ -90,7 +91,7 @@ class Template:
             f'unknown worksheet sections {unknown_props} - only {Template.VALID_WS_SECTIONS} supported'
 
     @staticmethod
-    def from_json(template_schema_path: str, schema_root: str):
+    def from_json(template_schema_path: str, schema_root: str = SCHEMA_DIR):
         """
         Load a Template from a template schema.
 
@@ -109,8 +110,8 @@ class Template:
 
         XlTemplateWriter().write(xlsx_path, self)
 
-    def validate_excel(self, xlsx_path: str) -> bool:
+    def validate_excel(self, xlsx_path: str, raise_validation_errors: bool = True) -> bool:
         """Validate the given Excel file against this `Template`"""
         from .template_reader import XlTemplateReader
 
-        return XlTemplateReader.from_excel(xlsx_path).validate(self)
+        return XlTemplateReader.from_excel(xlsx_path).validate(self, raise_validation_errors)

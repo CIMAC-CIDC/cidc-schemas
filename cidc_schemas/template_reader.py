@@ -45,6 +45,8 @@ class XlTemplateReader:
         # Mapping from worksheet names to rows grouped by type
         self.grouped_rows: Dict[str, RowGroup] = self._group_worksheet_rows()
 
+        self.invalid_messages: List[str] = []
+
     @staticmethod
     def from_excel(xlsx_path: str):
         """
@@ -152,20 +154,20 @@ class XlTemplateReader:
         Returns:
             {bool} -- True if valid, otherwise raises an exception with validation reporting
         """
-        invalid_messages = []
+        self.invalid_messages = []
 
         required = template.template_schema.get('required', [])
 
         for name, schema in template.worksheets.items():
             errors = self._validate_worksheet(name, schema, required)
-            invalid_messages.extend(errors)
+            self.invalid_messages.extend(errors)
 
-        if invalid_messages:
+        if self.invalid_messages:
             if raise_validation_error:
-                feedback = '\n'.join(invalid_messages)
+                feedback = '\n'.join(self.invalid_messages)
                 raise ValidationError('\n' + feedback)
             else:
-                return invalid_messages
+                return self.invalid_messages
 
         return True
 
@@ -202,10 +204,16 @@ class XlTemplateReader:
 
             # Validate data rows
             n_headers = len(row_groups[RowType.HEADER])
-            assert n_headers == 1, f"Exactly one header row expected, but found {n_headers}"
+            if not n_headers == 1:
+                invalid_messages.append(
+                    f"Exactly one header row expected, but found {n_headers}")
+                return invalid_messages
+
             headers = row_groups[RowType.HEADER][0]
-            assert all(
-                headers), f"Found an empty header cell at index {headers.index(None)}"
+            if not all(headers):
+                invalid_messages.append(
+                    f"Found an empty header cell at index {headers.index(None)}")
+                return invalid_messages
 
             data_schemas = self._get_data_schemas(
                 row_groups, flat_data_schemas)

@@ -106,7 +106,12 @@ def _find_it(key: str, schema: dict, key_lu: dict):
   # find it in the schema
   ds = schema | grep(schema_key)
 
+  print(json.dumps(schema))
+
   # get the first occurance of it
+  if 'matched_paths' not in ds:
+    print(key, schema_key, key_lu[key])
+    print(ds)
   return sorted(ds['matched_paths'], key=len)[0]
   
 def _set_val(path: str, val: str, trial: dict, verbose=False):

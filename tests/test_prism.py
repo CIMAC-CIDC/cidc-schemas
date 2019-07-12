@@ -18,40 +18,7 @@ from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader
 
 from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR
-
-
-def template_paths():
-    """
-    Get the path to every template schema in the schemas/templates directory
-    and their corresponding xlsx example file. 
-    """
-    template_schema_dir = os.path.join(SCHEMA_DIR, 'templates')
-
-    template_paths = []
-
-    # Collect template schemas
-    for root, _, files in os.walk(template_schema_dir):
-        for f in files:
-            template_paths.append(os.path.join(root, f))
-
-    # Collect template xlsx examples
-    for i, schema_path in enumerate(template_paths):
-        name = os.path.basename(schema_path).rsplit('.', 1)[0]
-        xlsx = f'{name}.xlsx'
-        xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, xlsx)
-        template_paths[i] = (schema_path, xlsx_path)
-
-    return template_paths
-
-
-def _fetch_validator(name):
-
-    schema_root = SCHEMA_DIR
-    schema_path = os.path.join(SCHEMA_DIR, "%s.json" % name)
-    schema = load_and_validate_schema(schema_path, schema_root)
-
-    # create validator assert schemas are valid.
-    return jsonschema.Draft7Validator(schema), schema
+from .test_templates import template_paths
 
 
 def test_merge_core():
@@ -82,7 +49,7 @@ def test_merge_core():
     }
 
     # create validator assert schemas are valid.
-    validator, schema = _fetch_validator("clinical_trial")
+    schema, validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     validator.validate(ct1)
 
     # create a copy of this, modify participant id
@@ -104,8 +71,6 @@ def test_merge_core():
     sample2['cimac_sample_id'] = 'new_id_1'
 
     ct5 = merger.merge(ct3, ct4)
-    #print(json.dumps(ct5))
-    #assert False
     assert len(ct5['participants'][0]['samples']) == 2
 
     # now lets add a new aliquot to one of the samples.
@@ -116,92 +81,93 @@ def test_merge_core():
     ct7 = merger.merge(ct5, ct6)
     assert len(ct7['participants'][0]['samples'][0]['aliquots']) == 2
 
+
 def test_assay_merge():
-    
+
     # two wes assays.
     a1 = {
-        "lead_organization_study_id":"10021",
-        "participants":[
+        "lead_organization_study_id": "10021",
+        "participants": [
             {
-                "samples":[
+                "samples": [
                     {
-                    "aliquots":[
-                        {
-                            "assay":{
-                                "wes":{
-                                "assay_creator":"Mount Sinai",
-                                "assay_category":"Whole Exome Sequencing (WES)",
-                                "enrichment_vendor_kit":"Twist",
-                                "library_vendor_kit":"KAPA - Hyper Prep",
-                                "sequencer_platform":"Illumina - NextSeq 550",
-                                "paired_end_reads":"Paired",
-                                "read_length":100,
-                                "records":[
-                                    {
-                                        "library_kit_lot":"lot abc",
-                                        "enrichment_vendor_lot":"lot 123",
-                                        "library_prep_date":"2019-05-01 00:00:00",
-                                        "capture_date":"2019-05-02 00:00:00",
-                                        "input_ng":100,
-                                        "library_yield_ng":700,
-                                        "average_insert_size":250
+                        "aliquots": [
+                            {
+                                "assay": {
+                                    "wes": {
+                                        "assay_creator": "Mount Sinai",
+                                        "assay_category": "Whole Exome Sequencing (WES)",
+                                        "enrichment_vendor_kit": "Twist",
+                                        "library_vendor_kit": "KAPA - Hyper Prep",
+                                        "sequencer_platform": "Illumina - NextSeq 550",
+                                        "paired_end_reads": "Paired",
+                                        "read_length": 100,
+                                        "records": [
+                                            {
+                                                "library_kit_lot": "lot abc",
+                                                "enrichment_vendor_lot": "lot 123",
+                                                "library_prep_date": "2019-05-01 00:00:00",
+                                                "capture_date": "2019-05-02 00:00:00",
+                                                "input_ng": 100,
+                                                "library_yield_ng": 700,
+                                                "average_insert_size": 250
+                                            }
+                                        ]
                                     }
-                                ]
-                                }
-                            },
-                            "cimac_aliquot_id":"aliquot 1"
-                        }
-                    ],
-                    "genomic_source":"Tumor"
+                                },
+                                "cimac_aliquot_id": "aliquot 1"
+                            }
+                        ],
+                        "genomic_source": "Tumor"
                     }
                 ],
-                "cimac_participant_id":"Patient 1"
+                "cimac_participant_id": "Patient 1"
             }
-        ]    
+        ]
     }
     a2 = {
-        "lead_organization_study_id":"10021",
-        "participants":[
+        "lead_organization_study_id": "10021",
+        "participants": [
             {
-                "samples":[
+                "samples": [
                     {
-                    "aliquots":[
-                        {
-                            "assay":{
-                                "wes":{
-                                "assay_creator":"Mount Sinai",
-                                "assay_category":"Whole Exome Sequencing (WES)",
-                                "enrichment_vendor_kit":"Twist",
-                                "library_vendor_kit":"KAPA - Hyper Prep",
-                                "sequencer_platform":"Illumina - NextSeq 550",
-                                "paired_end_reads":"Paired",
-                                "read_length":100,
-                                "records":[
-                                    {
-                                        "library_kit_lot":"lot abc",
-                                        "enrichment_vendor_lot":"lot 123",
-                                        "library_prep_date":"2019-05-01 00:00:00",
-                                        "capture_date":"2019-05-02 00:00:00",
-                                        "input_ng":100,
-                                        "library_yield_ng":700,
-                                        "average_insert_size":250
+                        "aliquots": [
+                            {
+                                "assay": {
+                                    "wes": {
+                                        "assay_creator": "Mount Sinai",
+                                        "assay_category": "Whole Exome Sequencing (WES)",
+                                        "enrichment_vendor_kit": "Twist",
+                                        "library_vendor_kit": "KAPA - Hyper Prep",
+                                        "sequencer_platform": "Illumina - NextSeq 550",
+                                        "paired_end_reads": "Paired",
+                                        "read_length": 100,
+                                        "records": [
+                                            {
+                                                "library_kit_lot": "lot abc",
+                                                "enrichment_vendor_lot": "lot 123",
+                                                "library_prep_date": "2019-05-01 00:00:00",
+                                                "capture_date": "2019-05-02 00:00:00",
+                                                "input_ng": 100,
+                                                "library_yield_ng": 700,
+                                                "average_insert_size": 250
+                                            }
+                                        ]
                                     }
-                                ]
-                                }
-                            },
-                            "cimac_aliquot_id":"aliquot 2"
-                        }
-                    ],
-                    "genomic_source":"Normal"
+                                },
+                                "cimac_aliquot_id": "aliquot 2"
+                            }
+                        ],
+                        "genomic_source": "Normal"
                     }
                 ],
-                "cimac_participant_id":"Patient 1"
+                "cimac_participant_id": "Patient 1"
             }
         ]
     }
 
     # create validator assert schemas are valid.
-    validator, schema = _fetch_validator("clinical_trial")
+    schema, validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
 
     # merge them
     merger = Merger(schema)
@@ -209,7 +175,11 @@ def test_assay_merge():
     assert len(a3['participants']) == 1
     assert len(a3['participants'])
 
+
 def test_prism():
+
+    # create validators
+    schema, validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
 
     # get a specifc template
     for temp_path, xlsx_path in template_paths():
@@ -218,12 +188,11 @@ def test_prism():
         hint = temp_path.split("/")[-1].replace("_template.json", "")
 
         # TODO: only implemented WES parsing...
-        if hint != "wes": continue
+        if hint != "wes":
+            continue
 
         # turn into object.
         ct = prismify(xlsx_path, temp_path, assay_hint=hint)
 
-        # create validator assert schemas are valid.
-        validator, schema = _fetch_validator("clinical_trial")
+        # assert works
         validator.validate(ct)
-

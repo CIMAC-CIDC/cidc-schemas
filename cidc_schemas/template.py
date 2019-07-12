@@ -4,7 +4,7 @@
 
 import logging
 import json
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, BinaryIO, Union
 from collections import OrderedDict
 
 from .constants import SCHEMA_DIR
@@ -110,8 +110,8 @@ class Template:
 
         XlTemplateWriter().write(xlsx_path, self)
 
-    def validate_excel(self, xlsx_path: str, raise_validation_errors: bool = True) -> bool:
-        """Validate the given Excel file against this `Template`"""
+    def validate_excel(self, xlsx: Union[str, BinaryIO], raise_validation_errors: bool = True) -> bool:
+        """Validate the given Excel file (either a path or an open file) against this `Template`"""
         from .template_reader import XlTemplateReader
 
-        return XlTemplateReader.from_excel(xlsx_path).validate(self, raise_validation_errors)
+        return XlTemplateReader.from_excel(xlsx).validate(self, raise_validation_errors)

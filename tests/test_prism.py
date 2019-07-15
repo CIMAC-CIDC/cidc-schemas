@@ -91,6 +91,7 @@ def test_assay_merge():
             {
                 "samples": [
                     {
+                        "genomic_source": "Tumor",
                         "aliquots": [
                             {
                                 "assay": {
@@ -115,56 +116,20 @@ def test_assay_merge():
                                         ]
                                     }
                                 },
-                                "cimac_aliquot_id": "aliquot 1"
+                                "cimac_aliquot_id": "Aliquot 1"
                             }
                         ],
-                        "genomic_source": "Tumor"
+                        "cimac_sample_id": "Sample 1"
                     }
                 ],
                 "cimac_participant_id": "Patient 1"
             }
         ]
     }
-    a2 = {
-        "lead_organization_study_id": "10021",
-        "participants": [
-            {
-                "samples": [
-                    {
-                        "aliquots": [
-                            {
-                                "assay": {
-                                    "wes": {
-                                        "assay_creator": "Mount Sinai",
-                                        "assay_category": "Whole Exome Sequencing (WES)",
-                                        "enrichment_vendor_kit": "Twist",
-                                        "library_vendor_kit": "KAPA - Hyper Prep",
-                                        "sequencer_platform": "Illumina - NextSeq 550",
-                                        "paired_end_reads": "Paired",
-                                        "read_length": 100,
-                                        "records": [
-                                            {
-                                                "library_kit_lot": "lot abc",
-                                                "enrichment_vendor_lot": "lot 123",
-                                                "library_prep_date": "2019-05-01 00:00:00",
-                                                "capture_date": "2019-05-02 00:00:00",
-                                                "input_ng": 100,
-                                                "library_yield_ng": 700,
-                                                "average_insert_size": 250
-                                            }
-                                        ]
-                                    }
-                                },
-                                "cimac_aliquot_id": "aliquot 2"
-                            }
-                        ],
-                        "genomic_source": "Normal"
-                    }
-                ],
-                "cimac_participant_id": "Patient 1"
-            }
-        ]
-    }
+    
+    # create a2 and modify ids to trigger merge behavior
+    a2 = copy.deepcopy(a1)
+    a2['participants'][0]['samples'][0]['cimac_sample_id'] = "something different"
 
     # create validator assert schemas are valid.
     schema, validator = load_and_validate_schema("clinical_trial.json", return_validator=True)

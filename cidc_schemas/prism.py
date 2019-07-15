@@ -432,8 +432,8 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
     """
 
     # get the schema and validator
-    schema, validator = load_and_validate_schema(
-        "clinical_trial.json", return_validator=True)
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
 
     key_lu = _load_keylookup(template_path)
 

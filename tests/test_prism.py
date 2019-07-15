@@ -49,7 +49,8 @@ def test_merge_core():
     }
 
     # create validator assert schemas are valid.
-    schema, validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
     validator.validate(ct1)
 
     # create a copy of this, modify participant id
@@ -132,7 +133,8 @@ def test_assay_merge():
     a2['participants'][0]['samples'][0]['cimac_sample_id'] = "something different"
 
     # create validator assert schemas are valid.
-    schema, validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
 
     # merge them
     merger = Merger(schema)
@@ -144,7 +146,8 @@ def test_assay_merge():
 def test_prism():
 
     # create validators
-    schema, validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
 
     # get a specifc template
     for temp_path, xlsx_path in template_paths():

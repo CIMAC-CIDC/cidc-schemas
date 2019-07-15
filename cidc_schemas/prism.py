@@ -26,16 +26,9 @@ def _get_coerce(ref: str):
         Python function pointer
     """
 
-    # get just the json file
-    file_path = ref.split("#")[0]
-    prop = ref.split("properties/")[-1]
-
-    # load the schema
-    with open(os.path.join(SCHEMA_DIR, file_path)) as fin:
-        schema = json.load(fin)
-
     # get the entry
-    entry = schema['properties'][prop]
+    resolver = jsonschema.RefResolver(f'file://{SCHEMA_DIR}/schemas', {'$ref': ref})
+    _, entry = resolver.resolve(ref)
 
     # add our own type conversion
     t = entry['type']
@@ -419,11 +412,12 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
 
     Args:
         xlsx_path: file on file system to excel file.
-        template_path: path on file system relative to schema root of the temaplate
+        template_path: path on file system relative to schema root of the 
+                        temaplate
                 
-        assay_hint: string used to help idnetify properties in template. Must be the
-                    the root of the template filename i.e. wes_template.json would 
-                    be wes.
+        assay_hint: string used to help idnetify properties in template. Must 
+                    be the the root of the template filename i.e. 
+                    wes_template.json would be wes.
         verb: boolean indicating verbosity
 
     Returns:
@@ -432,7 +426,8 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
     """
 
     # get the schema and validator
-    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    validator = load_and_validate_schema(
+        "clinical_trial.json", return_validator=True)
     schema = validator.schema
 
     key_lu = _load_keylookup(template_path)
@@ -469,7 +464,8 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
             for key, val in zip(headers, row):
 
                 # process this property
-                _process_property([key, val], key_lu, schema, curd, assay_hint, verb)
+                _process_property([key, val], key_lu, schema,
+                                  curd, assay_hint, verb)
 
             # save the entry
             data_rows.append(curd)

@@ -6,7 +6,7 @@ import os
 import json
 import logging
 from itertools import dropwhile
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Tuple, Union, BinaryIO
 
 import openpyxl
 
@@ -48,12 +48,12 @@ class XlTemplateReader:
         self.invalid_messages: List[str] = []
 
     @staticmethod
-    def from_excel(xlsx_path: str):
+    def from_excel(xlsx_path: Union[str, BinaryIO]):
         """
-        Initialize an Excel template reader from an excel path.
+        Initialize an Excel template reader from an excel file.
 
         Arguments:
-          xlsx_path {str} -- path to the Excel template
+          xlsx_path {Union[str, BinaryIO]} -- path to the Excel file or the open file itself.
         """
 
         # Load the Excel file

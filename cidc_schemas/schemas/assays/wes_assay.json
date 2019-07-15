@@ -21,5 +21,6 @@
       }
     }
   },
-  "required": ["records"]
+  "required": ["records"],
+  "mergeStrategy": "objectMerge"
 }

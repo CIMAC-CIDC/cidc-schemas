@@ -5,17 +5,25 @@
 import os
 import json
 import collections
-from typing import Optional, List, Callable
+from typing import Optional, List, Callable, Union
 
 import dateparser
 import jsonschema
 
 from .constants import SCHEMA_DIR
 
-def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_DIR, on_refs: Optional[Callable] = None) -> dict:
+
+def load_and_validate_schema(
+        schema_path: str,
+        schema_root: str = SCHEMA_DIR,
+        return_validator: bool = False,
+        on_refs: Optional[Callable] = None) -> Union[dict, jsonschema.Draft7Validator]:
     """
-    Try to load a valid schema at `schema_path`. If an `on_refs` function is supplied,
-    call that on all refs in the schema, rather than resolving the refs.
+    Try to load a valid schema at `schema_path`. If an `on_refs` function
+    is supplied, call that on all refs in the schema, rather than
+    resolving the refs. If return validator is true it will return
+    the validator and the schema used in the validator.
+    validator.
     """
     assert os.path.isabs(
         schema_root), "schema_root must be an absolute path"
@@ -35,7 +43,10 @@ def load_and_validate_schema(schema_path: str, schema_root: str = SCHEMA_DIR, on
     validator = jsonschema.Draft7Validator(schema)
     validator.check_schema(schema)
 
-    return schema
+    if not return_validator:
+        return schema
+    else:
+        return validator
 
 
 def _map_refs(node: dict, fn: Callable):

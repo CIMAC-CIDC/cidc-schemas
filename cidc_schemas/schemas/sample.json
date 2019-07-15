@@ -107,8 +107,12 @@
       "type": "array",
       "items": {
         "$ref": "aliquot.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "/cimac_aliquot_id"
       }
     }
   },
-  "required": ["cimac_sample_id", "site_sample_id", "aliquots"]
+  "required": ["cimac_sample_id", "aliquots"]
 }

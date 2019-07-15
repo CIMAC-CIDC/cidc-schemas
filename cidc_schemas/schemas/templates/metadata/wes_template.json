@@ -39,6 +39,9 @@
             "cimac participant id": {
               "$ref": "participant.json#properties/cimac_participant_id"
             },
+            "cimac sample id": {
+              "$ref": "sample.json#properties/cimac_sample_id"
+            },
             "cimac aliquot id": {
               "$ref": "aliquot.json#properties/cimac_aliquot_id"
             },

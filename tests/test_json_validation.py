@@ -95,7 +95,7 @@ def test_trial_core():
     ct_validator.validate(clinical_trial)
 
     # make it fail
-    participant.pop('trial_participant_id')
+    participant.pop('cimac_participant_id')
     with pytest.raises(jsonschema.ValidationError):
         ct_validator.validate(clinical_trial)
 

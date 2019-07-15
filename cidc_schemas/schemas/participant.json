@@ -54,8 +54,12 @@
       "type": "array",
       "items": {
         "$ref": "sample.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "/cimac_sample_id"
       }
     }
   },
-  "required": ["cimac_participant_id", "trial_participant_id", "samples"]
+  "required": ["cimac_participant_id", "samples"]
 }

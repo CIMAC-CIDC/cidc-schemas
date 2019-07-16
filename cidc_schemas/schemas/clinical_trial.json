@@ -57,6 +57,10 @@
       "type": "array",
       "items": {
         "$ref": "participant.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "/cimac_participant_id"
       }
     }
   },

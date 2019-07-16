@@ -116,7 +116,7 @@ def test_wes():
     validator.validate(obj)
 
     # assert negative behaviors
-    del obj['records'][0]['enrichment_vendor_kit']
+    del obj['records'][0]['enrichment_vendor_lot']
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)
 
@@ -222,11 +222,6 @@ def test_cytof():
     # create validator assert schemas are valid.
     validator = _fetch_validator("cytof")
     validator.validate(obj)
-
-    # assert negative behaviors
-    #del obj['records'][0]['enrichment_vendor_kit']
-    # with pytest.raises(jsonschema.ValidationError):
-    #    validator.validate(obj)
 
 
 def test_mif():

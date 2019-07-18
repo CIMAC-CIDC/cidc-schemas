@@ -460,6 +460,7 @@ def _process_property(
         # we still do nothing as this key isn't explicitly in the
         # data model. Another process will merge the artifact components
         # into this
+
         return
 
     # add to dictionary
@@ -526,8 +527,6 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
         (tuple):
             arg1: clinical trial object with data parsed from spreadsheet
             arg2: list of objects which describe each file identified.
-
-
     """
 
     # get the schema and validator
@@ -543,6 +542,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
 
     # add a special key to track the files
     fp_lu['special'] = list()
+
 
     # read the excel file
     t = XlTemplateReader.from_excel(xlsx_path)
@@ -564,6 +564,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
             # process this property
             _process_property(row, key_lu, schema, root, assay_hint, fp_lu, verb)
 
+
         # move to headers
         headers = ws[RowType.HEADER][0]
 
@@ -578,6 +579,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
                 # process this property
                 _process_property([key, val], key_lu, schema,
                                   curd, assay_hint, fp_lu, verb)
+
 
             # save the entry
             data_rows.append(curd)

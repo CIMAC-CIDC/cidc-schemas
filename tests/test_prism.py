@@ -201,3 +201,5 @@ def test_filepath_gen():
             # we should have 2 text files
             assert 2 == sum([1 for x in file_maps if x['gs_key'].count("txt") > 0])
 
+        # assert works
+        validator.validate(ct)

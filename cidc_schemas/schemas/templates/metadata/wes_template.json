@@ -70,13 +70,16 @@
               "$ref": "assays/components/ngs/ngs_entry.json#properties/average_insert_size"
             },
             "forward fastq": {
-              "$ref": "assays/components/local_file.json#properties/file_path"
+              "$ref": "assays/components/local_file.json#properties/file_path",
+              "artifact_link": "assays/components/fastq_pairs/fastq_1"
             },
             "reverse fastq": {
-              "$ref": "assays/components/local_file.json#properties/file_path"
+              "$ref": "assays/components/local_file.json#properties/file_path",
+              "artifact_link": "assays/components/fastq_pairs/fastq_2"
             },
             "read group mapping file": {
-              "$ref": "assays/components/local_file.json#properties/file_path"
+              "$ref": "assays/components/local_file.json#properties/file_path",
+              "artifact_link": "artifacts/artifact_text"
             }
           }
         }

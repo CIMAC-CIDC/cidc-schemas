@@ -11,7 +11,7 @@ import json
 from pprint import pprint
 from jsonmerge import Merger
 
-from cidc_schemas.prism import prismify
+from cidc_schemas.prism import prismify, filepath_gen
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
@@ -160,7 +160,44 @@ def test_prism():
             continue
 
         # turn into object.
-        ct = prismify(xlsx_path, temp_path, assay_hint=hint)
+        ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
 
         # assert works
         validator.validate(ct)
+
+
+def test_filepath_gen():
+
+    # create validators
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
+
+    # get a specifc template
+    for temp_path, xlsx_path in template_paths():
+
+        # extract hint.
+        hint = temp_path.split("/")[-1].replace("_template.json", "")
+
+        # TODO: only implemented WES parsing...
+        if hint != "wes":
+            continue
+
+        # parse the spreadsheet and get the file maps
+        ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
+
+        # assert we have the right counts.
+        if hint == "wes":
+
+            # check the number of files present.
+            assert len(file_maps) == 6
+
+            # we should have 2 fastq per sample.
+            assert 4 == sum([1 for x in file_maps if x['gs_key'].count("fastq") > 0])
+
+            # we should have 2 tot forward.
+            assert 2 == sum([1 for x in file_maps if x['gs_key'].count("forward") > 0])
+            assert 2 == sum([1 for x in file_maps if x['gs_key'].count("reverse") > 0])
+
+            # we should have 2 text files
+            assert 2 == sum([1 for x in file_maps if x['gs_key'].count("txt") > 0])
+

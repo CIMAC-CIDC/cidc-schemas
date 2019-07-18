@@ -6,26 +6,33 @@
   "allOf": [{ "$ref": "assays/components/antibody.json" }],
   "properties": {
     "fluor_wavelength": {
+      "description": "Wavelength registered for Alexa Fluor processing.",
       "type": "number"
     },
     "primary_ab_dilution": {
+      "description": "Concentration ratio for primary antibody dilution.",
       "type": "string"
     },
     "dilutent": {
+      "description": "Dilution agent used for antibody sample.",
       "type": "string"
     },
     "fluor_dilution": {
+      "description": "Concentration ratio for fluor dilution agent.",
       "type": "string"
     },
     "antigen_retrieval_time": {
+      "description": "Length of time needed for antigen retrieval.",
       "type": "string",
       "format": "time"
     },
     "primary_incubation_time": {
+      "description": "Length of time for primary antibody incubation.",
       "type": "string",
       "format": "time"
     },
     "amplification_time": {
+      "description": "Length of time required for amplified signal detection.",
       "type": "string",
       "format": "time"
     }

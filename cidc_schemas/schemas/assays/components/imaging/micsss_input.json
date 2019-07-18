@@ -6,8 +6,8 @@
   "description": "micsss Assay Input Files",
   "properties": {
     "micsss_output_summary": {
-      "$ref": "artifacts/artifact_csv.json",
-      "description": "Summary of the results of the experiment."
+      "description": "Summary of the results of the experiment.",
+      "$ref": "artifacts/artifact_csv.json"
     },
     "Mapping Artifacts": {
       "type": "array",

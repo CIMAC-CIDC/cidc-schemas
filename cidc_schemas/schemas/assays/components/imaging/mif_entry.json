@@ -6,9 +6,11 @@
   "description": "A single data record from mIF assay",
   "properties": {
     "project_inform_folder": {
+      "description": "Folder path containing files produced from an Inform image analysis.",
       "type": "string"
     },
     "mif_exported_data_folder": {
+      "description": "Folder path containing imaging files.",
       "type": "string"
     },
     "files": {

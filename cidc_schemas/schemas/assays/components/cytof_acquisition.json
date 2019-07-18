@@ -7,30 +7,39 @@
     "cytof_acquisition": {
       "properties": {
         "original_fcs_filenames": {
+          "description": "Normalized cyTOF FCS filenames.",
           "type": "string"
         },
         "date_of_acquisition": {
+          "description": "Date of cyTOF batch acquisition.",
           "type": "string"
         },
         "instrument": {
+          "description": "Name of cyTOF instrument on which experiment was conducted.",
           "type": "string"
         },
         "injector": {
+          "description": "Name of Injector component used as part of the CyTOF software",
           "type": "string"
         },
         "acquisition_buffer": {
+          "description": "Cell staining buffer used for antibody and cell dilution.",
           "type": "string"
         },
         "batch_id": {
+          "description": "CyTOF batch identifaction number.",
           "type": "string"
         },
-        "average_event_per_second":{
+        "average_event_per_second": {
+          "description": "Analysis rate of cyTOF expressions per second.",
           "type": "number"
         },
-        "run_time":{
-          "type":"string"
+        "run_time": {
+          "description": "Length of run time for cyTOF experiment.",
+          "type": "string"
         },
-        "notes":{
+        "notes": {
+          "description": "Any notes pertaining to cyTOF acquisition.",
           "type": "string"
         }
       }

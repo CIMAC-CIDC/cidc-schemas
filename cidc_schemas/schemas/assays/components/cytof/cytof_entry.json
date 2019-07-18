@@ -6,41 +6,46 @@
   "description": "A single data record from CyTOF assay batch",
   "properties": {
     "processed_fcs_filename": {
+      "description": "Filename of a processed CyTOF FCS file.",
       "type": "string"
     },
     "source_fcs_filenames": {
+      "description": "Filename of source CyTOF FCS file.",
       "type": "string"
     },
-    "concatonation_version": {
+    "concatenation_version": {
+      "description": "Concatenation of FCS files into a single FCS version number.",
       "type": "string"
     },
     "normalization_version": {
+      "description": "Version of normalization for CyTOF assay batch.",
       "type": "string"
     },
     "beads_removed": {
+      "description": "Confirmation of beads being removed after normalization process.",
       "type": "string",
       "enum": ["Y", "N"]
     },
     "staining_date": {
+      "description": "Date of staining for CyTOF assay slides.",
       "type": "string",
       "format": "date"
     },
     "batch_id": {
+      "description": "Identification number for CyTOF assay batch.",
       "type": "string"
     },
     "debarcoding_protocol": {
+      "description": "Protocol for the download and installation of the Debarcoder CyTOF software feature.",
       "type": "string"
     },
     "debarcoding_key": {
+      "description": "Key required for access to the Debarcoding software.",
       "type": "string"
     },
     "files": {
       "$ref": "assays/components/cytof/cytof_input.json"
     }
   },
-  "required": [
-    "processed_fcs_filename",
-    "source_fcs_filenames",
-    "files"
-  ]
+  "required": ["processed_fcs_filename", "source_fcs_filenames", "files"]
 }

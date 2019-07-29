@@ -353,7 +353,7 @@ def _set_val(path: str, val: object, trial: dict, verbose=False):
                 elif key2 == 'properties':
                     curp[key] = {}
 
-                # also a dictionary, just will be proceeded by a nunber
+                # also a dictionary, just will be preceeded by a nunber
                 elif key2 == 'allOf':
                     # this assume allOf always creates object, maybe not true?
                     curp[key] = {}
@@ -612,89 +612,3 @@ def _deep_get(obj: dict, key: str):
         cur_obj = cur_obj[token]
 
     return cur_obj, tokens[-2]
-
-
-def filepath_gen(xlsx_path: str, schema: dict, assay_hint: str, verb: bool = False):
-    """
-    This is a python generator which yields the paths of local files we are expecting 
-    to recieve alongsdie the supplied metadata xlsx file.
-
-    There is bespoke assay specific logic encoded in this function and it will
-    likely change if conventions around what files are expected in a given 
-    folder, or what files an assay is expecting.
-
-    Args:
-        xlsx_path: file on file system to excel file.
-        schema: json schema with all ref resolved
-        assay_hint: string used to help idnetify properties in template. Must 
-                    be the the root of the template filename i.e. 
-                    wes_template.json would be wes.
-        verb: boolean indicating verbosity
-
-    Returns:
-        None, data_obj is modified in place
-    """
-
-    # get the un resolved schema
-    template_path = os.path.join(TEMPLATE_DIR, 'metadata', f'{assay_hint}_template.json')
-    with open(template_path) as fin:
-        schema = json.load(fin)
-
-    # find key in the schema, this notation is
-    # recommended usage of deepdif grep. assuming they
-    # overload the pipe operator to simulate cmd line
-    schema_key = 'artifact_link'
-    ds = schema | grep(schema_key)
-    if 'matched_paths' not in ds:
-        raise KeyError(f'{schema_key} not found in schema')
-
-    # sort potential matches, shortest is what we want.
-    choices = sorted(ds['matched_paths'], key=len)
-
-    # create tuples
-    key_lu = {}
-    for c in choices:
-
-        # get the value and parent of the file link.
-        val, pkey = _deep_get(schema, c)
-        pkey = pkey.upper()
-        key_lu[pkey] = val
-
-    def _do_stuff(key, val, lu):
-        if key in lu:
-            # make the accession key
-            tmp = lu[key][1]
-            print(tmp)
-            gs_key = tmp["lead_organization_study_id"]
-            gs_key = f'{gs_key}/{tmp["cimac_participant_id"]}'
-            gs_key = f'{gs_key}/{tmp["cimac_sample_id"]}'
-            gs_key = f'{gs_key}/{tmp["cimac_aliquot_id"]}'
-            #print("stuff", key, val, lu[key])
-            print(gs_key)
-
-    # read the excel file
-    t = XlTemplateReader.from_excel(xlsx_path)
-
-    # loop over spreadsheet
-    worksheet_names = t.grouped_rows.keys()
-    for name in worksheet_names:
-
-        # get the worksheat.
-        ws = t.grouped_rows[name]
-
-        # Compare preamble rows
-        for row in ws[RowType.PREAMBLE]:
-
-            _do_stuff(row[0], row[1], key_lu)
-
-        # move to headers
-        headers = ws[RowType.HEADER][0]
-
-        # get the data.
-        data = ws[RowType.DATA]
-        for row in data:
-
-            # create dictionary per row
-            for key, val in zip(headers, row):
-
-                _do_stuff(key, val, key_lu)

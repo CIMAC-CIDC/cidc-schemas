@@ -18,7 +18,8 @@
       "format": "date"
     },
     "files": {
-      "$ref": "assays/components/ngs/wes_input.json"
+      "$ref": "assays/components/ngs/wes_input.json",
+      "mergeStrategy": "objectMerge"
     }
   },
   "required": ["enrichment_vendor_lot"]

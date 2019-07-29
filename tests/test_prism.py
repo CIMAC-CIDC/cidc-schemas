@@ -11,7 +11,7 @@ import json
 from pprint import pprint
 from jsonmerge import Merger
 
-from cidc_schemas.prism import prismify, filepath_gen
+from cidc_schemas.prism import prismify
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
@@ -19,6 +19,7 @@ from cidc_schemas.template_reader import XlTemplateReader
 
 from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR
 from .test_templates import template_paths
+from .test_assays import ARTIFACT_OBJ
 
 
 def test_merge_core():
@@ -203,3 +204,159 @@ def test_filepath_gen():
 
         # assert works
         validator.validate(ct)
+
+
+def test_wes():
+
+    # create validators
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
+
+    # create the example template.
+    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'metadata', 'wes_template.json')
+    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, "wes_template.xlsx")
+    hint = 'wes'
+
+    # parse the spreadsheet and get the file maps
+    ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
+
+    # assert works
+    validator.validate(ct)
+
+    print(json.dumps(ct))
+    assert False
+
+
+def test_tmp():
+
+    ct = {
+        "lead_organization_study_id": "10021",
+        "participants": [
+            {
+                "samples": [
+                    {
+                        "aliquots": [
+                            {
+                                "assay": {
+                                    "wes": {
+                                        "assay_creator": "Mount Sinai",
+                                        "assay_category": "Whole Exome Sequencing (WES)",
+                                        "enrichment_vendor_kit": "Twist",
+                                        "library_vendor_kit": "KAPA - Hyper Prep",
+                                        "sequencer_platform": "Illumina - NextSeq 550",
+                                        "paired_end_reads": "Paired",
+                                        "read_length": 100,
+                                        "records": [
+                                            {
+                                                "library_kit_lot": "lot abc",
+                                                "enrichment_vendor_lot": "lot 123",
+                                                "library_prep_date": "2019-05-01 00:00:00",
+                                                "capture_date": "2019-05-02 00:00:00",
+                                                "input_ng": 100,
+                                                "library_yield_ng": 700,
+                                                "average_insert_size": 250
+                                            }
+                                        ]
+                                    }
+                                },
+                                "cimac_aliquot_id": "aliquot 1"
+                            },
+                        ],
+                        "cimac_sample_id": "sample A",
+                        "genomic_source": "Tumor"
+                    },
+                    {
+                        "aliquots": [
+                            {
+                                "assay": {
+                                    "wes": {
+                                        "assay_creator": "Mount Sinai",
+                                        "assay_category": "Whole Exome Sequencing (WES)",
+                                        "enrichment_vendor_kit": "Twist",
+                                        "library_vendor_kit": "KAPA - Hyper Prep",
+                                        "sequencer_platform": "Illumina - NextSeq 550",
+                                        "paired_end_reads": "Paired",
+                                        "read_length": 100,
+                                        "records": [
+                                            {
+                                                "library_kit_lot": "lot abc",
+                                                "enrichment_vendor_lot": "lot 123",
+                                                "library_prep_date": "2019-05-01 00:00:00",
+                                                "capture_date": "2019-05-02 00:00:00",
+                                                "input_ng": 100,
+                                                "library_yield_ng": 700,
+                                                "average_insert_size": 250,
+                                            }
+                                        ]
+                                    }
+                                },
+                                "cimac_aliquot_id": "aliquot 2"
+                            }
+                        ],
+                        "cimac_sample_id": "sample B",
+                        "genomic_source": "Normal"
+                    }
+                ],
+                "cimac_participant_id": "patient 1"
+            }
+        ]
+    }
+
+    # add a second set of sample/aliquot
+
+    # create validators
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
+
+    # assert works
+    validator.validate(ct)
+
+    # isolate what we are doing.
+    aliquot = ct['participants'][0]['samples'][0]['aliquots'][0]
+    record = aliquot['assay']['wes']['records'][0]
+
+    # manually add file records
+    fastq_1 = ARTIFACT_OBJ.copy()
+    rgmf = ARTIFACT_OBJ.copy()
+    entry = {
+        "files": {
+            "tumor": {
+                "fastq_1": fastq_1,
+                "fastq_2": fastq_1
+            },
+            "normal": {
+                "fastq_1": fastq_1,
+                "fastq_2": fastq_1
+            },
+            "read_group_mapping_file": rgmf
+        }
+    }
+
+    #record['files'] = entry['files']
+
+    # create file pointers.
+    ct3 = copy.deepcopy(ct)
+    aliquot = ct3['participants'][0]['samples'][1]['aliquots'][0]
+    aliquot['assay']['wes']['records'][0]['files'] = entry['files']
+
+    # try to merge them
+    merger = Merger(schema)
+    ct2 = merger.merge(ct, ct3)
+
+    print(json.dumps(ct2))
+
+    assert len(ct2['participants']) == 1
+    assert len(ct2['participants'][0]['samples']) == 2
+    assert len(ct2['participants'][0]['samples'][0]['aliquots']) == 1
+    assert len(ct2['participants'][0]['samples'][1]['aliquots']) == 1
+
+    # we should have no file in first aliquot
+    p = ct2['participants'][0]
+    assert 'files' not in p['samples'][0]['aliquots'][0]['assay']['wes']['records'][0]
+
+    # we should have a file in the first aliquot
+    p = ct2['participants'][0]
+    assert 'files' in p['samples'][1]['aliquots'][0]['assay']['wes']['records'][0]
+
+    # assert it is still valid
+    validator.validate(ct2)

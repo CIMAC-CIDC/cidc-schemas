@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fastq_pairs",
+  "title": "Paired end sequencing file pairs",
+  "type": "object",
+  "description": "Paired end sequencing file pairs",
+  "properties": {
+    "fastq_1_alignment":{
+      "type":"array",
+      "properties":{
+          "align_sorted": {
+            "description": "",
+            "$ref": "artifacts/artifact_bam.json" 
+          },
+          "align_sorted_dedup":{
+            "description":"",
+            "$ref": "artifacts/artifact_bam.json"
+          },
+          "align_realigned":{
+            "description":"",
+            "$ref": "artifacts/artifact_bam.json"
+          },
+          "align_recalibrated":{
+            "description":"",
+            "$ref": "artifacts/artifact_bam.json"
+          },
+          "corealignments_tn_corealigned":{
+            "description":"",
+            "$ref": "artifacts/artifact_bam.json"  
+          }
+        },
+    "fastq_2_alignment":{
+      "type": "array",
+        "properties":{
+          "align_sorted": {
+            "description": "",
+            "$ref": "artifacts/artifact_bam.json" 
+          },
+          "align_sorted_dedup":{
+            "description":"",
+            "$ref": "artifacts/artifact_bam.json"
+          },
+          "align_realigned":{
+            "description":"",
+            "$ref": "artifacts/artifact_bam.json"
+          },
+          "align_recalibrated":{
+            "description":"",
+            "$ref": "artifacts/artifact_bam.json"
+          },
+          "corealignments_tn_corealigned":{
+            "description":"",
+            "$ref": "artifacts/artifact_bam.json"  
+          }
+        }
+      }
+    }
+  },
+  "required": ["fastq_1_alignment", "fastq_2_alignment"]
+}

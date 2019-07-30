@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "wes_output",
+  "title": "Whole Exome Sequencing Output Files",
+  "type": "object",
+  "description": "Whole Exome Sequencing Assay Output Files",
+  "properties": {
+    "tumor": {
+      "allOf": [
+        { "$ref": "assays/components/alignment.json" }
+      ]
+    },
+    "normal": {
+      "allOf": [
+        { "$ref": "assays/components/alignment.json" }
+      ]
+    }
+  },
+  "required": [
+    "tumor",
+    "normal"
+  ]
+}

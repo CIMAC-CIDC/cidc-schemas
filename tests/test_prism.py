@@ -114,7 +114,7 @@ def test_assay_merge():
                                                 "library_yield_ng": 700,
                                                 "average_insert_size": 250
                                             }
-                                        ]
+                                        ],
                                     }
                                 },
                                 "cimac_aliquot_id": "Aliquot 1"

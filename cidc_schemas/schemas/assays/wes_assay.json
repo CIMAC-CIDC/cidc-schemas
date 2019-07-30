@@ -19,6 +19,12 @@
       "items": {
         "$ref": "assays/components/ngs/wes_entry.json"
       }
+    },
+    "experiment":{
+      "type":"array",
+      "items":{
+        "$ref": "assays/components/ngs/wes_export.json"
+      }
     }
   },
   "required": ["records"],

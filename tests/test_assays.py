@@ -86,6 +86,7 @@ def test_wes():
     # create the wes object
     fastq_1 = ARTIFACT_OBJ.copy()
     rgmf = ARTIFACT_OBJ.copy()
+    bam = ARTIFACT_OBJ.copy()
     rgmf['artifact_category'] = 'Assay Artifact from CIMAC'
     record = {
         "enrichment_vendor_kit": "Twist",
@@ -106,9 +107,56 @@ def test_wes():
         }
     }
 
+    experiment = {
+        "wes_experiment_id": "101010",
+        "capture_date": "01/02/2001",
+        "output_files": {
+            "tumor": {
+                "fastq_1_alignment": [
+                    {
+                        "align_sorted": bam,
+                        "align_sorted_dedup": bam,
+                        "align_realigned": bam,
+                        "align_recalibrated": bam,
+                        "corealignments_tn_corealigned": bam 
+                    }],
+                "fastq_2_alignment": [
+                    {
+                        "align_sorted": bam,
+                        "align_sorted_dedup": bam,
+                        "align_realigned": bam,
+                        "align_recalibrated": bam,
+                        "corealignments_tn_corealigned": bam 
+                    }]
+                },
+            "normal": {
+                "fastq_1_alignment": [
+                    {
+                        "align_sorted": bam,
+                        "align_sorted_dedup": bam,
+                        "align_realigned": bam,
+                        "align_recalibrated": bam,
+                        "corealignments_tn_corealigned": bam 
+                    }],
+                "fastq_2_alignment": [
+                    {
+                        "align_sorted": bam,
+                        "align_sorted_dedup": bam,
+                        "align_realigned": bam,
+                        "align_recalibrated": bam,
+                        "corealignments_tn_corealigned": bam 
+                    }]
+                }            
+            }
+        }
+
     # add a demo record.
     obj['records'] = [
         record
+    ]
+
+    obj['experiment'] = [
+        experiment
     ]
 
     # create validator assert schemas are valid.

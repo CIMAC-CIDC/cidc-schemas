@@ -4,11 +4,10 @@
   "title": "CYTOF Platform",
   "description": "Basic information about the instrumentation used in a CYTOF experiment\n",
   "properties": {
-        "instrument": {
-          "type": "string"
-        }
+    "instrument": {
+      "description": "CyTOF instrument used for experiment.",
+      "type": "string"
+    }
   },
-  "required": [
-    "instrument"
-  ]
+  "required": ["instrument"]
 }

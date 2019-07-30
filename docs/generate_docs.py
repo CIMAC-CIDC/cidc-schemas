@@ -37,10 +37,13 @@ def load_schemas() -> dict:
 
             schema = load_and_validate_schema(
                 schema_path, SCHEMA_DIR, on_refs=json_to_html)
-
+            
             schema_path = path.replace(".json", ".html").replace("/", ".")
             root_schemas[schema_path] = schema
+
         relative_root = root.replace(f"{ROOT_DIR}/", "").replace("/", ".")
+        relative_root = root.replace(SCHEMA_DIR, "").replace("/", ".")
+        relative_root = relative_root.replace(".", "", 1)
         schemas[relative_root] = root_schemas
 
     return schemas
@@ -64,7 +67,9 @@ def generate_docs(out_directory: str = HTML_DIR):
     entity_template = templateEnv.get_template('entity.j2')
     template_template = templateEnv.get_template('template.j2')
     template_schemas_path = f'{PATH_PREFIX}.templates'
+
     for directory, entity in schemas.items():
+
         # Determine whether these are spreadsheet templates or normal entities
         if directory == template_schemas_path:
             template = template_template
@@ -73,9 +78,17 @@ def generate_docs(out_directory: str = HTML_DIR):
 
         # Generate the templates
         for name, schema in entity.items():
+
+            # render the HTML to string
             entity_html = template.render(
                 name=name, schema=schema, scope=directory)
+
+            # modify filename
             file_name = f'{directory}.{name}'
+            if file_name[0] == ".":
+                file_name = file_name[1::]
+
+            # write this out
             with open(os.path.join(out_directory, file_name), 'w') as f:
                 f.write(entity_html)
 

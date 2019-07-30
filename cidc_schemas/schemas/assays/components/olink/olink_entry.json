@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "Olink_assay_record",
-  "title": " assay record",
+  "title": "Olink assay record",
   "type": "object",
   "description": "A single data record from Olink assay",
   "properties": {
@@ -15,17 +15,17 @@
       "enum": ["assay", "study"]
     },
     "run_date": {
-      "description": "Date when the olink assay was run",
+      "description": "Date when the Olink assay was run",
       "type": "string",
       "format": "date"
     },
     "run_time": {
-      "description": "Time when the olink assay was run",
+      "description": "Time when the Olink assay was run",
       "type": "string",
       "format": "time"
     },
     "instrument": {
-      "description": "Instrument used for the assay",
+      "description": "Instrument used for the Olink assay",
       "type": "string"
     },
     "fludigm_application_version": {

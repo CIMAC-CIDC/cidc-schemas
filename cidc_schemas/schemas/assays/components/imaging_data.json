@@ -5,20 +5,25 @@
   "description": "Shared schema for experiments involving the use of imaging data",
   "properties": {
     "internal_slide_id": {
+      "description": "Identification number used for internal imaging slide.",
       "type": "string"
     },
     "protocol_name": {
+      "description": "Protocol name for which imaging experiment conducted.",
       "type": "string"
     },
     "staining_date": {
+      "description": "Date on which slide staining was processed.",
       "type": "string",
       "format": "date"
     },
     "imaging_date": {
+      "description": "Date on which imaging experiment was analyzed.",
       "type": "string",
       "format": "date"
     },
     "imaging_status": {
+      "description": "Imaging experiment's successful completion.",
       "type": "string",
       "enum": ["Yes", "No"]
     }

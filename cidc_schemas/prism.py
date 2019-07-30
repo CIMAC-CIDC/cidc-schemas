@@ -1,3 +1,4 @@
+import re
 import json
 import os
 import copy
@@ -10,7 +11,7 @@ from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader
 
-from cidc_schemas.constants import SCHEMA_DIR
+from cidc_schemas.constants import SCHEMA_DIR, TEMPLATE_DIR
 
 
 def _get_coerce(ref: str):
@@ -364,12 +365,41 @@ def _set_val(path: str, val: object, trial: dict, verbose=False):
             curp = curp[key]
 
 
+def _get_recursively(search_dict, field):
+    """
+    Takes a dict with nested lists and dicts,
+    and searches all dicts for a key of the field
+    provided.
+    """
+    fields_found = []
+
+    for key, value in search_dict.items():
+
+        if key == field:
+            fields_found.append(value)
+
+        elif isinstance(value, dict):
+            results = _get_recursively(value, field)
+            for result in results:
+                fields_found.append(result)
+
+        elif isinstance(value, list):
+            for item in value:
+                if isinstance(item, dict):
+                    more_results = _get_recursively(item, field)
+                    for another_result in more_results:
+                        fields_found.append(another_result)
+
+    return fields_found
+
+
 def _process_property(
                     row: list, 
                     key_lu: dict,
                     schema: dict,
                     data_obj: dict,
                     assay_hint: str,
+                    fp_lu: dict,
                     verb: bool):
     """
     Takes a single property (key, val) from spreadsheet, determines
@@ -398,7 +428,39 @@ def _process_property(
 
     # don't try to get file_path, this needs to be resolved later
     if schema_key == 'file_path':
-        # TODO: need to implement code dealing with file validation
+
+        # setup the base path
+        gs_key = _get_recursively(data_obj, "lead_organization_study_id")[0]
+        gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_participant_id")[0]}'
+        gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_sample_id")[0]}'
+        gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_aliquot_id")[0]}'
+        gs_key = f'{gs_key}/{assay_hint}'
+        gs_key = gs_key.replace(" ", "_")
+
+        # do the suffix
+        tmp = key.lower().split(" ")
+
+        # bespoke suffix logic.
+        just_use = set(["fastq"])
+        text_use = set(["group"])
+        if tmp[1] in just_use:
+            suffix = f'{tmp[0]}.{tmp[1]}'
+        elif tmp[1] in text_use:
+            suffix = f'{tmp[0]}_{tmp[1]}.txt'
+        gs_key = f'{gs_key}_{suffix}'
+
+        # create the entry.
+        fp_lu['special'].append({
+            "template_key": key,
+            "local_path": val,
+            "schema_ref": fp_lu[key],
+            "gs_key": gs_key
+        })
+
+        # we still do nothing as this key isn't explicitly in the
+        # data model. Another process will merge the artifact components
+        # into this
+
         return
 
     # add to dictionary
@@ -406,9 +468,50 @@ def _process_property(
     _set_val(path, val, data_obj, verbose=verb)
 
 
-def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: bool = False):
+def _build_fplu(assay_hint: str):
+
+    # get the un resolved schema
+    template_path = os.path.join(TEMPLATE_DIR, 'metadata', f'{assay_hint}_template.json')
+    with open(template_path) as fin:
+        schema = json.load(fin)
+
+    # find key in the schema, this notation is
+    # recommended usage of deepdif grep. assuming they
+    # overload the pipe operator to simulate cmd line
+    schema_key = 'artifact_link'
+    ds = schema | grep(schema_key)
+    if 'matched_paths' not in ds:
+        raise KeyError(f'{schema_key} not found in schema')
+
+    # sort potential matches, shortest is what we want.
+    choices = sorted(ds['matched_paths'], key=len)
+
+    # create tuples
+    key_lu = {}
+    for c in choices:
+
+        # get the value and parent of the file link.
+        val, pkey = _deep_get(schema, c)
+        pkey = pkey.upper()
+        key_lu[pkey] = val
+
+    return key_lu
+
+
+def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: bool = False) -> (dict, dict):
     """
-    Converts excel file to json object.
+    Converts excel file to json object. It also identifies local files
+    which need to uploaded to a google bucket and provides some logic
+    to help build the bucket url.
+
+    e.g. file list
+    [
+        {
+            'local_path': '/path/to/fwd.fastq', 
+            'gs_key': '10021/Patient_1/sample_1/aliquot_1/wes_forward.fastq'
+        }
+    ]
+
 
     Args:
         xlsx_path: file on file system to excel file.
@@ -421,8 +524,9 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
         verb: boolean indicating verbosity
 
     Returns:
-        None, data_obj is modified in place
-
+        (tuple):
+            arg1: clinical trial object with data parsed from spreadsheet
+            arg2: list of objects which describe each file identified.
     """
 
     # get the schema and validator
@@ -430,7 +534,15 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
         "clinical_trial.json", return_validator=True)
     schema = validator.schema
 
+    # this lets us lookup xlsx-to-schema keys
     key_lu = _load_keylookup(template_path)
+
+    # this helps us identify file paths in xlsx
+    fp_lu = _build_fplu(assay_hint)
+
+    # add a special key to track the files
+    fp_lu['special'] = list()
+
 
     # read the excel file
     t = XlTemplateReader.from_excel(xlsx_path)
@@ -450,7 +562,8 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
         for row in ws[RowType.PREAMBLE]:
 
             # process this property
-            _process_property(row, key_lu, schema, root, assay_hint, verb)
+            _process_property(row, key_lu, schema, root, assay_hint, fp_lu, verb)
+
 
         # move to headers
         headers = ws[RowType.HEADER][0]
@@ -465,7 +578,8 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
 
                 # process this property
                 _process_property([key, val], key_lu, schema,
-                                  curd, assay_hint, verb)
+                                  curd, assay_hint, fp_lu, verb)
+
 
             # save the entry
             data_rows.append(curd)
@@ -479,4 +593,108 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
         cur_obj = merger.merge(cur_obj, data_rows[i])
 
     # return the object.
-    return cur_obj
+    return cur_obj, fp_lu['special']
+
+
+def _deep_get(obj: dict, key: str):
+    """ 
+    returns value of they supplied key
+    gotten via deepdif
+    """
+
+    # tokenize.
+    key = key.replace("root", "").replace("'", "")
+    tokens = re.findall(r"\[(.*?)\]", key)
+
+    # keep getting based on the key.
+    cur_obj = obj
+    for token in tokens:
+        cur_obj = cur_obj[token]
+
+    return cur_obj, tokens[-2]
+
+
+def filepath_gen(xlsx_path: str, schema: dict, assay_hint: str, verb: bool = False):
+    """
+    This is a python generator which yields the paths of local files we are expecting 
+    to recieve alongsdie the supplied metadata xlsx file.
+
+    There is bespoke assay specific logic encoded in this function and it will
+    likely change if conventions around what files are expected in a given 
+    folder, or what files an assay is expecting.
+
+    Args:
+        xlsx_path: file on file system to excel file.
+        schema: json schema with all ref resolved
+        assay_hint: string used to help idnetify properties in template. Must 
+                    be the the root of the template filename i.e. 
+                    wes_template.json would be wes.
+        verb: boolean indicating verbosity
+
+    Returns:
+        None, data_obj is modified in place
+    """
+
+    # get the un resolved schema
+    template_path = os.path.join(TEMPLATE_DIR, 'metadata', f'{assay_hint}_template.json')
+    with open(template_path) as fin:
+        schema = json.load(fin)
+
+    # find key in the schema, this notation is
+    # recommended usage of deepdif grep. assuming they
+    # overload the pipe operator to simulate cmd line
+    schema_key = 'artifact_link'
+    ds = schema | grep(schema_key)
+    if 'matched_paths' not in ds:
+        raise KeyError(f'{schema_key} not found in schema')
+
+    # sort potential matches, shortest is what we want.
+    choices = sorted(ds['matched_paths'], key=len)
+
+    # create tuples
+    key_lu = {}
+    for c in choices:
+
+        # get the value and parent of the file link.
+        val, pkey = _deep_get(schema, c)
+        pkey = pkey.upper()
+        key_lu[pkey] = val
+
+    def _do_stuff(key, val, lu):
+        if key in lu:
+            # make the accession key
+            tmp = lu[key][1]
+            print(tmp)
+            gs_key = tmp["lead_organization_study_id"]
+            gs_key = f'{gs_key}/{tmp["cimac_participant_id"]}'
+            gs_key = f'{gs_key}/{tmp["cimac_sample_id"]}'
+            gs_key = f'{gs_key}/{tmp["cimac_aliquot_id"]}'
+            #print("stuff", key, val, lu[key])
+            print(gs_key)
+
+    # read the excel file
+    t = XlTemplateReader.from_excel(xlsx_path)
+
+    # loop over spreadsheet
+    worksheet_names = t.grouped_rows.keys()
+    for name in worksheet_names:
+
+        # get the worksheat.
+        ws = t.grouped_rows[name]
+
+        # Compare preamble rows
+        for row in ws[RowType.PREAMBLE]:
+
+            _do_stuff(row[0], row[1], key_lu)
+
+        # move to headers
+        headers = ws[RowType.HEADER][0]
+
+        # get the data.
+        data = ws[RowType.DATA]
+        for row in data:
+
+            # create dictionary per row
+            for key, val in zip(headers, row):
+
+                _do_stuff(key, val, key_lu)

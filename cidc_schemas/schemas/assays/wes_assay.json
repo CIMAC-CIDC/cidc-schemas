@@ -27,6 +27,6 @@
       }
     }
   },
-  "required": ["records"],
+  "required": ["records", "experiment"],
   "mergeStrategy": "objectMerge"
 }

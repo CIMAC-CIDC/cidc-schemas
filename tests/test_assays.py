@@ -112,43 +112,17 @@ def test_wes():
         "capture_date": "01/02/2001",
         "output_files": {
             "tumor": {
-                "fastq_1_alignment": [
-                    {
-                        "align_sorted": bam,
-                        "align_sorted_dedup": bam,
-                        "align_realigned": bam,
-                        "align_recalibrated": bam,
-                        "corealignments_tn_corealigned": bam 
-                    }],
-                "fastq_2_alignment": [
-                    {
-                        "align_sorted": bam,
-                        "align_sorted_dedup": bam,
-                        "align_realigned": bam,
-                        "align_recalibrated": bam,
-                        "corealignments_tn_corealigned": bam 
-                    }]
+                "align_sorted": bam,
+                "align_sorted_dedup": bam,
+                "align_recalibrated": bam 
                 },
             "normal": {
-                "fastq_1_alignment": [
-                    {
-                        "align_sorted": bam,
-                        "align_sorted_dedup": bam,
-                        "align_realigned": bam,
-                        "align_recalibrated": bam,
-                        "corealignments_tn_corealigned": bam 
-                    }],
-                "fastq_2_alignment": [
-                    {
-                        "align_sorted": bam,
-                        "align_sorted_dedup": bam,
-                        "align_realigned": bam,
-                        "align_recalibrated": bam,
-                        "corealignments_tn_corealigned": bam 
-                    }]
+                "align_sorted": bam,
+                "align_sorted_dedup": bam,
+                "align_recalibrated": bam    
+                    }
                 }            
             }
-        }
 
     # add a demo record.
     obj['records'] = [

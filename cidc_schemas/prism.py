@@ -612,3 +612,18 @@ def _deep_get(obj: dict, key: str):
         cur_obj = cur_obj[token]
 
     return cur_obj, tokens[-2]
+
+
+def merge_wes_fastq(
+            ct: dict,
+            artifact_creator: str,
+            bucket_url: str,
+            file_size_bytes: int,
+            uploaded_timestamp: str,
+            md5_hash: str
+        ):
+    '''
+    this function takes information about fastq
+    artifacts for the WES assay and adds them to
+    the meta data.
+    '''

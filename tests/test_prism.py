@@ -311,11 +311,7 @@ def test_tmp():
     # assert works
     validator.validate(ct)
 
-    # isolate what we are doing.
-    aliquot = ct['participants'][0]['samples'][0]['aliquots'][0]
-    record = aliquot['assay']['wes']['records'][0]
-
-    # manually add file records
+    # create the updated file records
     fastq_1 = ARTIFACT_OBJ.copy()
     rgmf = ARTIFACT_OBJ.copy()
     entry = {
@@ -332,10 +328,10 @@ def test_tmp():
         }
     }
 
-    #record['files'] = entry['files']
-
-    # create file pointers.
+    # copy the original data.
     ct3 = copy.deepcopy(ct)
+
+    # add the files to the second sample.
     aliquot = ct3['participants'][0]['samples'][1]['aliquots'][0]
     aliquot['assay']['wes']['records'][0]['files'] = entry['files']
 
@@ -343,18 +339,16 @@ def test_tmp():
     merger = Merger(schema)
     ct2 = merger.merge(ct, ct3)
 
-    print(json.dumps(ct2))
-
-    assert len(ct2['participants']) == 1
-    assert len(ct2['participants'][0]['samples']) == 2
-    assert len(ct2['participants'][0]['samples'][0]['aliquots']) == 1
+    assert len(ct2['participants']) == 1    # still one participatn
+    assert len(ct2['participants'][0]['samples']) == 2  # still two samples
+    assert len(ct2['participants'][0]['samples'][0]['aliquots']) == 1   # still one aliquot per sample
     assert len(ct2['participants'][0]['samples'][1]['aliquots']) == 1
 
     # we should have no file in first aliquot
     p = ct2['participants'][0]
     assert 'files' not in p['samples'][0]['aliquots'][0]['assay']['wes']['records'][0]
 
-    # we should have a file in the first aliquot
+    # we should have a file in the other aliquot
     p = ct2['participants'][0]
     assert 'files' in p['samples'][1]['aliquots'][0]['assay']['wes']['records'][0]
 

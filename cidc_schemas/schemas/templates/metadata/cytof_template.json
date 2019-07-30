@@ -73,8 +73,8 @@
             "source fcs filenames": {
               "$ref": "assays/components/local_file.json#properties/file_path"
             },
-            "concatonation version": {
-              "$ref": "assays/components/cytof/cytof_entry.json#properties/concatonation_version"
+            "concatenation version": {
+              "$ref": "assays/components/cytof/cytof_entry.json#properties/concatenation_version"
             },
             "normalization version": {
               "$ref": "assays/components/cytof/cytof_entry.json#properties/normalization_version"

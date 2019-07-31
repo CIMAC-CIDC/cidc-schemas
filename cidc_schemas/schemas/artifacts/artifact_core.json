@@ -21,7 +21,7 @@
       "description": "The name of the file with extension",
       "type": "string"
     },
-    "bucket_url": {
+    "object_url": {
       "description": "URL to artifact within Google Bucket.",
       "type": "string"
     },
@@ -76,11 +76,10 @@
   },
   "required": [
     "file_name",
-    "bucket_url",
+    "object_url",
     "uploaded_timestamp",
     "file_size_bytes",
     "md5_hash",
-    "visible",
     "artifact_category",
     "assay_category",
     "file_type"

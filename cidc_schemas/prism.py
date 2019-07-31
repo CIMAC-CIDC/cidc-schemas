@@ -437,7 +437,7 @@ def _process_property(
         gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_sample_id")[0]}'
         gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_aliquot_id")[0]}'
         gs_key = f'{gs_key}/{assay_hint}'
-        gs_key = gs_key.replace(" ", "_")
+        #gs_key = gs_key.replace(" ", "_")
 
         # do the suffix
         tmp = key.lower().split(" ")
@@ -614,107 +614,113 @@ def _deep_get(obj: dict, key: str):
 
     return cur_obj, tokens[-2]
 
+def _get_path(ct: dict, key: str) -> str:
+    """
+    find the path to the given key in the dictionary
 
-def merge_wes_fastq(
+    Args:
+        ct: clinical_trial object to be modified
+        key: the identifier we are looking for in the dictionary
+
+    Returns:
+        arg1: string describing the location of the key
+    """
+
+    # first look for key as is
+    ds1 = ct | grep(key, match_string=True)
+    count1 = 0
+    if 'matched_values' in ds1:
+        count1 = len(ds1['matched_values'])
+
+    # the hack fails if both work... probably need to deal with this
+    if count1 == 0:
+        raise NotImplementedError(f"key: {key} not found in dictionary")
+
+    # get the keypath
+    return ds1['matched_values'].pop()
+
+
+def _get_source(obj: dict, key: str, level="sample") -> dict:
+    """
+    extract the object in the dicitionary specified by
+    the supplied key (or one of its parents.)
+
+    Args:
+        obj: clinical_trial object to be searched
+        key: the identifier we are looking for in the dictionary,
+        level: a keyword describing which level in the key path
+                (trial, participants, sample, aliquot) we want to return
+
+    Returns:
+        arg1: string describing the location of the key
+    """
+
+    # tokenize.
+    key = key.replace("root", "").replace("'", "")
+    tokens = re.findall(r"\[(.*?)\]", key)
+
+    # this will get us to the object we have the key for
+    if level == "sample":
+        tokens = tokens[0:-3]
+    elif level == "aliquot":
+        tokens = tokens[0:-1]
+    else:
+        raise NotImplementedError(f'the following level is not supported: {level}')
+
+    # keep getting based on the key.
+    cur_obj = obj
+    for token in tokens:
+        try:
+            token = int(token)
+        except ValueError:
+            pass
+
+        cur_obj = cur_obj[token]
+
+    return cur_obj
+
+
+def _merge_artifact_wes(
             ct: dict,
-            artifact_creator: str,
-            bucket_url: str,
+            object_url: str,
             file_size_bytes: int,
             uploaded_timestamp: str,
             md5_hash: str
         ):
-    '''
-    this function takes information about fastq
-    artifacts for the WES assay and adds them to
-    the meta data.
-    '''
+    """
+    create and merge an artifact into the WES assay metadata.
+    The artifacts currently supported are only the input
+    fastq files and read mapping group file.
+
+    Args:
+        obj: clinical_trial object to be searched
+        key: the identifier we are looking for in the dictionary,
+        level: a keyword describing which level in the key path
+                (trial, participants, sample, aliquot) we want to return
+
+    Returns:
+        arg1: string describing the location of the key
+    """
 
     # replace gs prfix if exists.
-    bucket_url = bucket_url.replace("gs://", "")
-
-    # parse the url to get key identifiers
-    tokens = bucket_url.split("/")
-    lead_organization_study_id = tokens[0]
-    cimac_participant_id = tokens[1]
-    cimac_sample_id = tokens[2]
-    cimac_aliquot_id = tokens[3]
-    file_name = tokens[4]
-
-    def _try_spaces(ct, key):
-
-        #def _cnt_matches(ds):
-        #    tmp = []
-        #    for 
-
-
-        # first look for key as is
-        ds1 = ct | grep(key, match_string=True)
-        count1 = 0
-        if 'matched_values' in ds1:
-            count1 = len(ds1['matched_values'])
-
-        # then try replacing _ with spaces
-        key2 = key.replace("_", " ")
-        ds2 = ct | grep(key2, match_string=True)
-        count2 = 0
-        if 'matched_values' in ds2:
-            count2 = len(ds2['matched_values'])
-
-        # the hack fails if both work... probably need to deal with this
-        if count1 > 0 and count2 > 0:
-            raise NotImplementedError
-
-        # get the keypath
-        keypath = ""
-        if count1 > 0:
-            keypath = ds1['matched_values'].pop()
-
-        elif count2 > 0:
-            keypath = ds2['matched_values'].pop()
-
-        return keypath
-
-    def _get_source(obj: dict, key: str, level="sample"):
-
-        # tokenize.
-        key = key.replace("root", "").replace("'", "")
-        tokens = re.findall(r"\[(.*?)\]", key)
-
-        # this will get us to the object we have the key for
-        if level == "sample":
-            tokens = tokens[0:-3]
-        elif level == "aliquot":
-            tokens = tokens[0:-1]
-
-        # keep getting based on the key.
-        cur_obj = obj
-        for token in tokens:
-            try:
-                token = int(token)
-            except ValueError:
-                pass
-
-            cur_obj = cur_obj[token]
-
-        return cur_obj
+    object_url, lead_organization_study_id, \
+        cimac_participant_id, cimac_sample_id, cimac_aliquot_id, \
+        file_name = _split_objurl(object_url)
 
     # get the genomic source.
-    keypath = _try_spaces(ct, cimac_aliquot_id)
+    keypath = _get_path(ct, cimac_aliquot_id)
     sample_obj = _get_source(ct, keypath)
     genomic_source = sample_obj['genomic_source']
 
     # create the artifact.
     artifact = {
-        "artifact_category": "Manifest File",
-        "artifact_creator": "DFCI",
+        "artifact_category": "Assay Artifact from CIMAC",
         "assay_category": "Whole Exome Sequencing (WES)",
-        "bucket_url": bucket_url,
+        "object_url": object_url,
         "file_name": file_name,
         "file_size_bytes": 1,
         "md5_hash": md5_hash,
-        "uploaded_timestamp": str(datetime.datetime.now()).split('.')[0],
-        "uploader": "dummy",
-        "visible": True
+        "uploaded_timestamp": str(datetime.datetime.now()).split('.')[0]
     }
 
     # create the object to merge
@@ -732,9 +738,6 @@ def merge_wes_fastq(
         # set the artifact type
         artifact["file_type"] = "FASTQ"
 
-        # determine if this is a tumor or normal aliquot.
-        genomic_source = _try_spaces(ct, cimac_aliquot_id)
-
         # determine how to craft the artifact
         obj[genomic_source] = {}
         if file_name.count("wes_forward") > 0:
@@ -746,3 +749,83 @@ def merge_wes_fastq(
     # descend into the particulars and add this value
     aliquot_obj = _get_source(ct, keypath, level="aliquot")
     aliquot_obj['assay']['wes']['records'][0]['files'] = obj
+
+
+def _split_objurl(obj_url: str) -> (str, str, str, str, str, str):
+    """
+    splits gs_url into components and returns them
+
+    Args:
+        obj_url: gs://url/to/file
+
+    Returns:
+        arg1: tuple of the components
+    """
+
+    # replace gs prfix if exists.
+    obj_url = obj_url.replace("gs://", "")
+
+    # parse the url to get key identifiers
+    tokens = obj_url.split("/")
+    lead_organization_study_id = tokens[0]
+    cimac_participant_id = tokens[1]
+    cimac_sample_id = tokens[2]
+    cimac_aliquot_id = tokens[3]
+    file_name = tokens[4]
+
+    return obj_url, lead_organization_study_id, cimac_participant_id, \
+        cimac_sample_id, cimac_aliquot_id, file_name
+
+
+def merge_artifact(
+            ct: dict,
+            object_url: str,
+            file_size_bytes: int,
+            uploaded_timestamp: str,
+            md5_hash: str
+        ):
+    """
+    create and merge an artifact into the metadata blob
+    for a clinical trial. The merging process is automatically
+    determined by inspecting the gs url path.
+
+    Args:
+        obj: clinical_trial object to be searched
+        key: the identifier we are looking for in the dictionary,
+        level: a keyword describing which level in the key path
+                (trial, participants, sample, aliquot) we want to return
+
+    Returns:
+        arg1: string describing the location of the key
+    """
+
+    # replace gs prfix if exists.
+    object_url, lead_organization_study_id, \
+        cimac_participant_id, cimac_sample_id, cimac_aliquot_id, \
+        file_name = _split_objurl(object_url)
+
+    # determine which function to call
+    def _in_set(the_set: set, key: str):
+        """
+        return true or false if any value in 
+        set is a substring in the key
+        """
+        for f in the_set:
+            if key.count(f) > 0:
+                return True
+        return False
+
+    # define criteria.
+    wes_names = {'wes_forward', 'wes_reverse', 'wes_read_group'}
+
+    # test criteria.
+    if _in_set(wes_names, file_name):
+        _merge_artifact_wes(
+                ct,
+                object_url,
+                file_size_bytes,
+                uploaded_timestamp,
+                md5_hash
+            )
+    else:
+        raise NotImplementedError(f'the following file_name is not supported: {file_name}')

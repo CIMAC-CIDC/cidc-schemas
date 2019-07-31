@@ -75,7 +75,6 @@
     }
   },
   "required": [
-    "uuid",
     "file_name",
     "bucket_url",
     "uploaded_timestamp",

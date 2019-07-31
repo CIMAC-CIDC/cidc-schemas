@@ -20,9 +20,5 @@
       "description": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes."
     }
   },
-  "required": [
-    "tumor",
-    "normal",
-    "read_group_mapping_file"
-  ]
+  "required": []
 }

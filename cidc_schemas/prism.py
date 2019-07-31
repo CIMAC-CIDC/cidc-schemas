@@ -4,6 +4,7 @@ import os
 import copy
 import jsonschema
 from deepdiff import grep
+import datetime
 from jsonmerge import merge, Merger
 
 from cidc_schemas.json_validation import load_and_validate_schema
@@ -28,7 +29,8 @@ def _get_coerce(ref: str):
     """
 
     # get the entry
-    resolver = jsonschema.RefResolver(f'file://{SCHEMA_DIR}/schemas', {'$ref': ref})
+    resolver = jsonschema.RefResolver(
+        f'file://{SCHEMA_DIR}/schemas', {'$ref': ref})
     _, entry = resolver.resolve(ref)
 
     # add our own type conversion
@@ -121,7 +123,7 @@ def _find_key(schema_key: str, schema: dict, assay_hint: str = "") -> str:
     choice.
 
     I've introduced the assay_hint string to help disambuguate
-    a path to a key when there are multiple possibilities. 
+    a path to a key when there are multiple possibilities.
     Consider "assay_creator" a property in assay_core.json
     which is associated with every assay. Searching the schema
     for assay_creator will return multiple hits, the hint lets
@@ -195,9 +197,9 @@ def _set_val(path: str, val: object, trial: dict, verbose=False):
     consumed:
 
     path = "['items'][0]['properties']['prop1']"
-    
+
     Next we see an 'item' property which in json-schema
-    denotes an array. So the implication 
+    denotes an array. So the implication
     is that the value of 'participants' is list.
         {
             "participants": [...]
@@ -206,7 +208,7 @@ def _set_val(path: str, val: object, trial: dict, verbose=False):
     path = "['properties']['prop1']"
 
     Next we 'properties' so we know we are entering an object
-    with *prop1* as a property. This is the 
+    with *prop1* as a property. This is the
     final piece of the *path* so we can assign the val:
         {
             "participants": [{
@@ -220,7 +222,7 @@ def _set_val(path: str, val: object, trial: dict, verbose=False):
 
     For each token we test for its json-schema modifier,
     'items', 'properties', 'allOf'. If we see items we need
-    to add a list, assuming it doesn't exist, if we see properties 
+    to add a list, assuming it doesn't exist, if we see properties
     we need to create a dictionary if it doesn't exist.
 
     *One limitation* of this code is that no list can have
@@ -237,7 +239,7 @@ def _set_val(path: str, val: object, trial: dict, verbose=False):
     For our purposes we need to treat the 'allOf' followed
     by the array entry and subsequent object properties
     as properties of the previous object 'prop2'. This
-    is why there are "skip" blocks in the code which advance 
+    is why there are "skip" blocks in the code which advance
     to the next token while keeping the pointer of the current
     object on 'prop2'.
 
@@ -394,7 +396,7 @@ def _get_recursively(search_dict, field):
 
 
 def _process_property(
-                    row: list, 
+                    row: list,
                     key_lu: dict,
                     schema: dict,
                     data_obj: dict,
@@ -471,7 +473,8 @@ def _process_property(
 def _build_fplu(assay_hint: str):
 
     # get the un resolved schema
-    template_path = os.path.join(TEMPLATE_DIR, 'metadata', f'{assay_hint}_template.json')
+    template_path = os.path.join(
+        TEMPLATE_DIR, 'metadata', f'{assay_hint}_template.json')
     with open(template_path) as fin:
         schema = json.load(fin)
 
@@ -507,7 +510,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
     e.g. file list
     [
         {
-            'local_path': '/path/to/fwd.fastq', 
+            'local_path': '/path/to/fwd.fastq',
             'gs_key': '10021/Patient_1/sample_1/aliquot_1/wes_forward.fastq'
         }
     ]
@@ -515,11 +518,11 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
 
     Args:
         xlsx_path: file on file system to excel file.
-        template_path: path on file system relative to schema root of the 
+        template_path: path on file system relative to schema root of the
                         temaplate
-                
-        assay_hint: string used to help idnetify properties in template. Must 
-                    be the the root of the template filename i.e. 
+
+        assay_hint: string used to help idnetify properties in template. Must
+                    be the the root of the template filename i.e.
                     wes_template.json would be wes.
         verb: boolean indicating verbosity
 
@@ -543,7 +546,6 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
     # add a special key to track the files
     fp_lu['special'] = list()
 
-
     # read the excel file
     t = XlTemplateReader.from_excel(xlsx_path)
 
@@ -562,8 +564,8 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
         for row in ws[RowType.PREAMBLE]:
 
             # process this property
-            _process_property(row, key_lu, schema, root, assay_hint, fp_lu, verb)
-
+            _process_property(row, key_lu, schema, root,
+                              assay_hint, fp_lu, verb)
 
         # move to headers
         headers = ws[RowType.HEADER][0]
@@ -579,7 +581,6 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
                 # process this property
                 _process_property([key, val], key_lu, schema,
                                   curd, assay_hint, fp_lu, verb)
-
 
             # save the entry
             data_rows.append(curd)
@@ -597,7 +598,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
 
 
 def _deep_get(obj: dict, key: str):
-    """ 
+    """
     returns value of they supplied key
     gotten via deepdif
     """
@@ -628,16 +629,120 @@ def merge_wes_fastq(
     the meta data.
     '''
 
-    # create the artifact object.
+    # replace gs prfix if exists.
+    bucket_url = bucket_url.replace("gs://", "")
+
+    # parse the url to get key identifiers
+    tokens = bucket_url.split("/")
+    lead_organization_study_id = tokens[0]
+    cimac_participant_id = tokens[1]
+    cimac_sample_id = tokens[2]
+    cimac_aliquot_id = tokens[3]
+    file_name = tokens[4]
+
+    def _try_spaces(ct, key):
+
+        #def _cnt_matches(ds):
+        #    tmp = []
+        #    for 
+
+
+        # first look for key as is
+        ds1 = ct | grep(key, match_string=True)
+        count1 = 0
+        if 'matched_values' in ds1:
+            count1 = len(ds1['matched_values'])
+
+        # then try replacing _ with spaces
+        key2 = key.replace("_", " ")
+        ds2 = ct | grep(key2, match_string=True)
+        count2 = 0
+        if 'matched_values' in ds2:
+            count2 = len(ds2['matched_values'])
+
+        # the hack fails if both work... probably need to deal with this
+        if count1 > 0 and count2 > 0:
+            raise NotImplementedError
+
+        # get the keypath
+        keypath = ""
+        if count1 > 0:
+            keypath = ds1['matched_values'].pop()
+
+        elif count2 > 0:
+            keypath = ds2['matched_values'].pop()
+
+        return keypath
+
+    def _get_source(obj: dict, key: str, level="sample"):
+
+        # tokenize.
+        key = key.replace("root", "").replace("'", "")
+        tokens = re.findall(r"\[(.*?)\]", key)
+
+        # this will get us to the object we have the key for
+        if level == "sample":
+            tokens = tokens[0:-3]
+        elif level == "aliquot":
+            tokens = tokens[0:-1]
+
+        # keep getting based on the key.
+        cur_obj = obj
+        for token in tokens:
+            try:
+                token = int(token)
+            except ValueError:
+                pass
+
+            cur_obj = cur_obj[token]
+
+        return cur_obj
+
+    # get the genomic source.
+    keypath = _try_spaces(ct, cimac_aliquot_id)
+    sample_obj = _get_source(ct, keypath)
+    genomic_source = sample_obj['genomic_source']
+
+    # create the artifact.
     artifact = {
-        "tumor": {
-            "fastq_1": fastq_1,
-            "fastq_2": fastq_1
-        },
-        "normal": {
-            "fastq_1": fastq_1,
-            "fastq_2": fastq_1
-        },
-        "read_group_mapping_file": rgmf
+        "artifact_category": "Manifest File",
+        "artifact_creator": "DFCI",
+        "assay_category": "Whole Exome Sequencing (WES)",
+        "bucket_url": bucket_url,
+        "file_name": file_name,
+        "file_size_bytes": 1,
+        "md5_hash": md5_hash,
+        "uploaded_timestamp": str(datetime.datetime.now()).split('.')[0],
+        "uploader": "dummy",
+        "visible": True
     }
 
+    # create the object to merge
+    obj = {}
+
+    # check if we are adding read group mapping file.
+    if file_name.count("wes_read_group") > 0:
+
+        # set the artifact type and save
+        artifact["file_type"] = "Other"
+        obj['read_group_mapping_file'] = artifact
+
+    else:
+
+        # set the artifact type
+        artifact["file_type"] = "FASTQ"
+
+        # determine if this is a tumor or normal aliquot.
+        genomic_source = _try_spaces(ct, cimac_aliquot_id)
+
+        # determine how to craft the artifact
+        obj[genomic_source] = {}
+        if file_name.count("wes_forward") > 0:
+            obj[genomic_source]['fastq_1'] = artifact
+
+        elif file_name.count("wes_reverse") > 0:
+            obj[genomic_source]['fastq_2'] = artifact
+
+    # descend into the particulars and add this value
+    aliquot_obj = _get_source(ct, keypath, level="aliquot")
+    aliquot_obj['assay']['wes']['records'][0]['files'] = obj

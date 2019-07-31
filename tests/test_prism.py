@@ -11,7 +11,7 @@ import json
 from pprint import pprint
 from jsonmerge import Merger
 
-from cidc_schemas.prism import prismify
+from cidc_schemas.prism import prismify, merge_wes_fastq
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
@@ -202,6 +202,10 @@ def test_filepath_gen():
             # we should have 2 text files
             assert 2 == sum([1 for x in file_maps if x['gs_key'].count("txt") > 0])
 
+            for x in file_maps:
+                print(x["gs_key"])
+            assert False
+
         # assert works
         validator.validate(ct)
 
@@ -223,13 +227,8 @@ def test_wes():
     # assert works
     validator.validate(ct)
 
-    print(json.dumps(ct))
-    assert False
 
-
-def test_tmp():
-
-    ct = {
+CLINICAL_TRIAL = {
         "lead_organization_study_id": "10021",
         "participants": [
             {
@@ -302,7 +301,11 @@ def test_tmp():
         ]
     }
 
-    # add a second set of sample/aliquot
+
+def test_tmp():
+
+    # create the clinical trial.
+    ct = copy.deepcopy(CLINICAL_TRIAL)
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
@@ -354,3 +357,38 @@ def test_tmp():
 
     # assert it is still valid
     validator.validate(ct2)
+
+
+def test_merge_wes():
+
+    # create the clinical trial.
+    ct = copy.deepcopy(CLINICAL_TRIAL)
+
+    # define list of gs_urls.
+    urls = [
+        '10021/Patient_1/sample_1/aliquot_1/wes_forward.fastq',
+        '10021/Patient_1/sample_1/aliquot_1/wes_reverse.fastq',
+        '10021/Patient_1/sample_1/aliquot_1/wes_read_group.txt',
+        '10021/Patient_1/sample_1/aliquot_2/wes_forward.fastq',
+        '10021/Patient_1/sample_1/aliquot_2/wes_reverse.fastq',
+        '10021/Patient_1/sample_1/aliquot_2/wes_read_group.txt'
+    ]
+
+    # create validator
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+
+    # loop over each url
+    for gs_url in urls:
+
+        # attempt to merge
+        merge_wes_fastq(
+                ct,
+                artifact_creator="DFCI",
+                bucket_url=gs_url,
+                file_size_bytes=14,
+                uploaded_timestamp="01/01/2001",
+                md5_hash="hash1234"
+            )
+
+        # assert we stull have a good clinical trial object.
+        validator.validate(ct)

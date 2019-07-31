@@ -107,7 +107,7 @@ def test_wes():
         }
     }
 
-    experiment = {
+    analysis = {
         "wes_experiment_id": "101010",
         "capture_date": "01/02/2001",
         "output_files": {
@@ -129,8 +129,8 @@ def test_wes():
         record
     ]
 
-    obj['experiment'] = [
-        experiment
+    obj['analysis'] = [
+        analysis
     ]
 
     # create validator assert schemas are valid.
@@ -139,6 +139,11 @@ def test_wes():
 
     # assert negative behaviors
     del obj['records'][0]['enrichment_vendor_lot']
+    with pytest.raises(jsonschema.ValidationError):
+        validator.validate(obj)
+    
+    # assert negative behaviors for analysis
+    del obj['analysis'][0]['wes_experiment_id']
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)
 

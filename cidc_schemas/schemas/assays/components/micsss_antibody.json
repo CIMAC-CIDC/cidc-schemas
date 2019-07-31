@@ -6,56 +6,73 @@
   "allOf": [{ "$ref": "assays/components/antibody.json" }],
   "properties": {
     "primary_antibody_block": {
+      "description": "Blocking reagent used for primary antibody sample.",
       "type": "string"
     },
     "postPrimary_linker_block": {
+      "description": "Linker block between the antibody and the therapeutic drug.",
       "type": "string"
     },
     "secondary_antibody_block": {
+      "description": "Secondary antibody blocking reagent used for primary sample.",
       "type": "string"
     },
     "species": {
+      "description": "Host species from which primary antibody sample was derived.",
       "type": "string"
     },
     "isotype": {
+      "description": "Antibody isotype used to help differentiate non-specific background signal from specific antibody signal.",
       "type": "string"
     },
     "primary_antibody_dilution": {
+      "description": "Concentration ratio of dilution buffer for primary antibody.",
       "type": "string"
     },
     "primary_antibody_incubation_time": {
+      "description": "Time of primary antibody incubation.",
       "type": "string",
       "format": "time"
     },
     "primary_antibody_incubation_temp": {
+      "description": "Temperature used for primary antibody incubation.",
       "type": "string"
     },
     "secondary_antibody": {
+      "description": "Secondary antibody used to bind to primary antibody for detection assistance.",
       "type": "string"
     },
     "secondary_company": {
+      "description": "Company from which secondary antibody sample was derived.",
       "type": "string"
     },
     "secondary_cat_num": {
+      "description": "Antibody registry catalog number assigned to secondary antibody sample.",
       "type": "number"
     },
     "secondary_lot_num": {
+      "description": "Identification number assigned to the particular quantity or lot of secondary antibody material from manufacturer.",
       "type": "number"
     },
     "secondary_antibody_dilution": {
+      "description": "Concentration ratio of dilution buffer for secondary antibody prep.",
       "type": "string"
     },
     "secondary_antibody_incubation_time": {
+      "description": "Temperature used for secondary antibody incubation.",
       "type": "string",
       "format": "time"
     },
     "ar_reagent": {
+      "description": "Heating antigen retrieval reagents for tissue preparation.",
       "type": "string"
     },
     "ar_ph": {
+      "description": "pH levels of reagents from heating antigen retrieval procedure.",
       "type": "string"
     },
     "ar_incubation_time": {
+      "description": "Time of AR reagent incubation.",
       "type": "string",
       "format": "time"
     }

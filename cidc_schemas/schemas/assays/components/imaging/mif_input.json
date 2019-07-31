@@ -6,16 +6,16 @@
   "description": "mIF Assay Input Files",
   "properties": {
     "whole_slide_imaging_file": {
-      "$ref": "artifacts/artifact_image.json",
-      "description": "Digital slide produced from the scanning of conventional glass slides."
+      "description": "Digital slide produced from the scanning of conventional glass slides.",
+      "$ref": "artifacts/artifact_image.json"
     },
     "roi_annotations": {
-      "$ref": "artifacts/artifact_text.json",
-      "description": "Text describing region of interest for experiment."
+      "description": "Text describing region of interest for experiment.",
+      "$ref": "artifacts/artifact_text.json"
     },
     "mif_output_summary": {
-      "$ref": "artifacts/artifact_csv.json",
-      "description": "Summary of the results of the experiment."
+      "description": "Summary of the results of the experiment.",
+      "$ref": "artifacts/artifact_csv.json"
     },
     "properties": {
       "regions_of_interest": {

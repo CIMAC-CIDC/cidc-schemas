@@ -5,32 +5,40 @@
   "description": "Base information about the aquisition and analysis of a quantitative pathology image\n",
   "properties": {
     "slide_scanner_model": {
+      "description": "Model version of the slide scanner instrument.",
       "type": "string",
       "enum": ["Vectra 2.0", "Hamamatsu"]
     },
     "staining_platform": {
+      "description": "Staining platform used for tissue sample labeling.",
       "type": "string",
       "enum": ["auto", "manual"]
     },
     "autostainer_model": {
+      "description": "Model version of the autostainer instrument.",
       "type": "string"
     },
     "image_analysis_software": {
+      "description": "Source sofware for digital pathology and image analysis.",
       "type": "string",
       "enum": ["InForm", "QuPath"]
     },
     "image_analysis_software_version": {
+      "description": "Source sofware version for digital pathology and image analysis.",
       "type": "string"
     },
     "cell_segmentation_model": {
+      "description": "Model used for cell segmentation in an imaging experiment.",
       "type": "string",
       "enum": ["proprietary", "watershed"]
     },
     "positive_cell_detection": {
+      "description": "Model used for postitive cell detection in imaging experiment.",
       "type": "string",
       "enum": ["proprietary", "random forest classifier"]
     },
     "protocol_name": {
+      "description": "Protocol name for which imaging experiment conducted.",
       "type": "string"
     }
   },

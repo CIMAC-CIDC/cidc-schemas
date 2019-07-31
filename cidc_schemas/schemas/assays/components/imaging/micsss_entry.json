@@ -6,9 +6,11 @@
   "description": "A single data record from micsss assay",
   "properties": {
     "project_qupath_folder": {
+      "description": "Folder path containing files produced from a QuPath image analysis.",
       "type": "string"
     },
     "micsss_exported_data_folder": {
+      "description": "Folder path containing imaging files.",
       "type": "string"
     },
     "files": {

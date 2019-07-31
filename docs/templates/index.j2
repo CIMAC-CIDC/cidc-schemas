@@ -23,7 +23,11 @@
                 </thead>
                 {% for entity_path, entity_schema in schemas.items() %}
                 <tr>
-                    <td width=25%><a href='{{ dirname }}.{{ entity_path }}'>{{ entity_schema["title"] }}</a></td>
+                    {% if dirname == "" %}
+                        <td width=25%><a href='{{ entity_path }}'>{{ entity_schema["title"] }}</a></td>
+                    {% else %}
+                        <td width=25%><a href='{{ dirname }}.{{ entity_path }}'>{{ entity_schema["title"] }}</a></td>
+                    {% endif %}
                     <td>{{ entity_schema["description"] }}</td>
                 </tr>
                 {% endfor %}

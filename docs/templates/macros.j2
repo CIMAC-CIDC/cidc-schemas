@@ -65,9 +65,21 @@
                         {% for item in prop_schema["enum"] %}
                             <li>{{ item }}</li>
                         {% endfor %}
+                        {% if "items" in prop_schema %}
+                            {% if "url" in prop_schema["items"] %}
+                                <a href="{{ prop_schema['items']['url'] }}">{{ prop_schema['items']['url'].replace('.html', '') }}</a>
+                            {% else %}
+                                &lt;{{ prop_schema["items"]["type"]}}&gt; {{ prop_schema["items"]["format"]}}
+                                <ul>
+                                {% for item in prop_schema["items"]["enum"] %}
+                                    <li>{{ item }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endif %}
                         </ul>
                     {% elif "url" in prop_schema %}
-                        <a href="schemas.{{ prop_schema['url'] }}">{{ prop_schema['url'].replace('.html', '') }}</a>
+                        <a href="{{ prop_schema['url'] }}">{{ prop_schema['url'].replace('.html', '') }}</a>
                     {% endif %}
                 </td>
                 <td>

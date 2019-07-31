@@ -6,16 +6,13 @@
   "description": "Paired end sequencing file pairs",
   "properties": {
     "fastq_1": {
-      "$ref": "artifacts/artifact_fastq.json",
-      "description": "Fastq file for the first fragment"
+      "description": "Fastq file for the first fragment.",
+      "$ref": "artifacts/artifact_fastq.json"
     },
     "fastq_2": {
-      "$ref": "artifacts/artifact_fastq.json",
-      "description": "Fastq file for the second fragment"
+      "description": "Fastq file for the second fragment.",
+      "$ref": "artifacts/artifact_fastq.json"
     }
   },
-  "required": [
-    "fastq_1",
-    "fastq_2"
-  ]
+  "required": ["fastq_1", "fastq_2"]
 }

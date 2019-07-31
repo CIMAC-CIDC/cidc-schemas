@@ -627,3 +627,17 @@ def merge_wes_fastq(
     artifacts for the WES assay and adds them to
     the meta data.
     '''
+
+    # create the artifact object.
+    artifact = {
+        "tumor": {
+            "fastq_1": fastq_1,
+            "fastq_2": fastq_1
+        },
+        "normal": {
+            "fastq_1": fastq_1,
+            "fastq_2": fastq_1
+        },
+        "read_group_mapping_file": rgmf
+    }
+

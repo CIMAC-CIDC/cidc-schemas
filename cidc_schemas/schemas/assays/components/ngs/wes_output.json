@@ -7,12 +7,14 @@
   "properties": {
     "tumor": {
       "allOf": [
-        { "$ref": "assays/components/alignment.json" }
+        { "$ref": "assays/components/alignment.json" },
+        { "$ref": "assays/components/germline.json" }
       ]
     },
     "normal": {
       "allOf": [
-        { "$ref": "assays/components/alignment.json" }
+        { "$ref": "assays/components/alignment.json" },
+        { "$ref": "assays/components/germline.json" }
       ]
     }
   },

@@ -87,6 +87,7 @@ def test_wes():
     fastq_1 = ARTIFACT_OBJ.copy()
     rgmf = ARTIFACT_OBJ.copy()
     bam = ARTIFACT_OBJ.copy()
+    vcf = ARTIFACT_OBJ.copy()
     rgmf['artifact_category'] = 'Assay Artifact from CIMAC'
     record = {
         "enrichment_vendor_kit": "Twist",
@@ -114,12 +115,14 @@ def test_wes():
             "tumor": {
                 "align_sorted": bam,
                 "align_sorted_dedup": bam,
-                "align_recalibrated": bam 
+                "align_recalibrated": bam,
+                "SNP92_recode": vcf 
                 },
             "normal": {
                 "align_sorted": bam,
                 "align_sorted_dedup": bam,
-                "align_recalibrated": bam    
+                "align_recalibrated": bam,
+                "SNP92_recode": vcf     
                     }
                 }            
             }

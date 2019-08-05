@@ -23,6 +23,12 @@
       "mergeOptions": {
         "idRef": "entry_id"
       }
+    },
+    "analysis":{
+      "type":"array",
+      "items":{
+        "$ref": "assays/components/ngs/wes_export.json"
+      }
     }
   },
   "required": ["records"],

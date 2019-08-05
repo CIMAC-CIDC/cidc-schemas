@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "bam_artifact",
+  "title": "BAM Artifact",
+  "type": "object",
+  "description": "Information about a Bam file",
+  "allOf": [
+    {
+      "$ref": "artifacts/artifact_core.json"
+    },
+    {
+      "properties": {
+        "info": {
+          "type": "object"
+        }
+      }
+    }
+  ]
+}

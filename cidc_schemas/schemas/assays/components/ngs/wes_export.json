@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "wes_assay_record",
+  "title": "WES assay record",
+  "type": "object",
+  "description": "A single data record from WES assay",
+  "properties": {
+    "wes_experiment_id": {
+      "description": "Identification # for Wes Output files",
+      "type": "string"
+    },
+    "export_date": {
+      "description": "Date files were exported",
+      "type": "string",
+      "format": "date"
+    },
+    "output_files": {
+      "$ref": "assays/components/ngs/wes_output.json"
+    }
+  },
+  "required": ["wes_experiment_id"]
+}

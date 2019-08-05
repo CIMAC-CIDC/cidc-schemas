@@ -193,7 +193,7 @@ def test_assay_merge():
                                                 "average_insert_size": 250,
                                                 "entry_id": "abc"
                                             }
-                                        ]
+                                        ],
                                     }
                                 },
                                 "cimac_aliquot_id": "Aliquot 1"

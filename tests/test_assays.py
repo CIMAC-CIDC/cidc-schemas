@@ -86,6 +86,7 @@ def test_wes():
     # create the wes object
     fastq_1 = ARTIFACT_OBJ.copy()
     rgmf = ARTIFACT_OBJ.copy()
+    bam = ARTIFACT_OBJ.copy()
     rgmf['artifact_category'] = 'Assay Artifact from CIMAC'
     record = {
         "enrichment_vendor_kit": "Twist",
@@ -107,9 +108,30 @@ def test_wes():
         }
     }
 
+    analysis = {
+        "wes_experiment_id": "101010",
+        "capture_date": "01/02/2001",
+        "output_files": {
+            "tumor": {
+                "align_sorted": bam,
+                "align_sorted_dedup": bam,
+                "align_recalibrated": bam 
+                },
+            "normal": {
+                "align_sorted": bam,
+                "align_sorted_dedup": bam,
+                "align_recalibrated": bam    
+                    }
+                }            
+            }
+
     # add a demo record.
     obj['records'] = [
         record
+    ]
+
+    obj['analysis'] = [
+        analysis
     ]
 
     # create validator assert schemas are valid.
@@ -118,6 +140,11 @@ def test_wes():
 
     # assert negative behaviors
     del obj['records'][0]['enrichment_vendor_lot']
+    with pytest.raises(jsonschema.ValidationError):
+        validator.validate(obj)
+    
+    # assert negative behaviors for analysis
+    del obj['analysis'][0]['wes_experiment_id']
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)
 

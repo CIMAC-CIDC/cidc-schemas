@@ -18,6 +18,10 @@
       "type": "array",
       "items": {
         "$ref": "assays/components/ngs/wes_entry.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "entry_id"
       }
     }
   },

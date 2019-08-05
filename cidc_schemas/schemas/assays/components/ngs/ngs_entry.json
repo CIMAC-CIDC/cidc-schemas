@@ -5,6 +5,10 @@
   "type": "object",
   "description": "A single data record from an NGS assay",
   "properties": {
+    "entry_id": {
+        "description": "Identifier which is unique to this entry, this is clincal trial, participant, aliquot id's",
+        "type": "string"
+    },
     "library_kit_lot": {
       "description": "Lot number for the library construction kit",
       "type": "string"
@@ -35,6 +39,7 @@
   },
   "required": [
     "library_kit_lot",
-    "library_prep_date"
+    "library_prep_date",
+    "entry_id"
   ]
 }

@@ -6,14 +6,12 @@
   "description": "Whole Exome Sequencing Assay Input Files",
   "properties": {
     "tumor": {
-      "allOf": [
-        { "$ref": "assays/components/fastq_pairs.json" }
-      ]
+        "$ref": "assays/components/fastq_pairs.json",
+        "mergeStrategy": "objectMerge"
     },
     "normal": {
-      "allOf": [
-        { "$ref": "assays/components/fastq_pairs.json" }
-      ]
+        "$ref": "assays/components/fastq_pairs.json",
+        "mergeStrategy": "objectMerge"
     },
     "read_group_mapping_file": {
       "$ref": "artifacts/artifact_text.json",

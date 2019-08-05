@@ -105,6 +105,12 @@ def _load_keylookup(template_path: str) -> dict:
                 # populate lookup.
                 populate_lu(ref, key_lu, data_key)
 
+    # special case for wes keys.
+    if 'wes' in template_path:
+        ref = "assays/components/ngs/ngs_entry.json#properties/entry_id"
+        data_key = "entry_id"
+        populate_lu(ref, key_lu, data_key)
+
     return key_lu
 
 
@@ -396,13 +402,13 @@ def _get_recursively(search_dict, field):
 
 
 def _process_property(
-                    row: list,
-                    key_lu: dict,
-                    schema: dict,
-                    data_obj: dict,
-                    assay_hint: str,
-                    fp_lu: dict,
-                    verb: bool):
+        row: list,
+        key_lu: dict,
+        schema: dict,
+        data_obj: dict,
+        assay_hint: str,
+        fp_lu: dict,
+        verb: bool):
     """
     Takes a single property (key, val) from spreadsheet, determines
     where it needs to go in the final object, then inserts it.
@@ -570,6 +576,13 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
         # move to headers
         headers = ws[RowType.HEADER][0]
 
+        # track these identifiers
+        potential_ids = {
+            "CIMAC PARTICIPANT ID": "",
+            "CIMAC SAMPLE ID": "",
+            "CIMAC ALIQUOT ID": ""
+        }
+
         # get the data.
         data = ws[RowType.DATA]
         for row in data:
@@ -582,8 +595,28 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
                 _process_property([key, val], key_lu, schema,
                                   curd, assay_hint, fp_lu, verb)
 
+                # track ids
+                if key in potential_ids:
+                    potential_ids[key] = val
+
             # save the entry
             data_rows.append(curd)
+
+            # data rows will require a unique identifier
+            if assay_hint == "wes":
+
+                # create a unique key
+                unique_key = potential_ids['CIMAC PARTICIPANT ID']
+                unique_key = f'{unique_key}_{potential_ids["CIMAC SAMPLE ID"]}'
+                unique_key = f'{unique_key}_{potential_ids["CIMAC ALIQUOT ID"]}'
+
+                # add this to the most recent payload
+                _process_property(['entry_id', unique_key], key_lu, schema,
+                        curd, assay_hint, fp_lu, verb)
+
+            else:
+                raise NotImplementedError(f'only WES is supported, please add additional support \
+                    for {assay_hint}')
 
     # create the merger
     merger = Merger(schema)
@@ -614,6 +647,7 @@ def _deep_get(obj: dict, key: str):
 
     return cur_obj, tokens[-2]
 
+
 def _get_path(ct: dict, key: str) -> str:
     """
     find the path to the given key in the dictionary
@@ -640,13 +674,13 @@ def _get_path(ct: dict, key: str) -> str:
     return ds1['matched_values'].pop()
 
 
-def _get_source(obj: dict, key: str, level="sample") -> dict:
+def _get_source(ct: dict, key: str, level="sample") -> dict:
     """
     extract the object in the dicitionary specified by
     the supplied key (or one of its parents.)
 
     Args:
-        obj: clinical_trial object to be searched
+        ct: clinical_trial object to be searched
         key: the identifier we are looking for in the dictionary,
         level: a keyword describing which level in the key path
                 (trial, participants, sample, aliquot) we want to return
@@ -665,10 +699,11 @@ def _get_source(obj: dict, key: str, level="sample") -> dict:
     elif level == "aliquot":
         tokens = tokens[0:-1]
     else:
-        raise NotImplementedError(f'the following level is not supported: {level}')
+        raise NotImplementedError(
+            f'the following level is not supported: {level}')
 
     # keep getting based on the key.
-    cur_obj = obj
+    cur_obj = ct
     for token in tokens:
         try:
             token = int(token)
@@ -681,25 +716,25 @@ def _get_source(obj: dict, key: str, level="sample") -> dict:
 
 
 def _merge_artifact_wes(
-            ct: dict,
-            object_url: str,
-            file_size_bytes: int,
-            uploaded_timestamp: str,
-            md5_hash: str
-        ):
+    ct: dict,
+    object_url: str,
+    file_size_bytes: int,
+    uploaded_timestamp: str,
+    md5_hash: str
+):
     """
     create and merge an artifact into the WES assay metadata.
     The artifacts currently supported are only the input
     fastq files and read mapping group file.
 
     Args:
-        obj: clinical_trial object to be searched
-        key: the identifier we are looking for in the dictionary,
-        level: a keyword describing which level in the key path
-                (trial, participants, sample, aliquot) we want to return
+        ct: clinical_trial object to be searched
+        object_url: the gs url pointing to the object being added
+        file_size_bytes: integer specifying the numebr of bytes in the file
+        uploaded_timestamp: time stamp associated with this object
+        md5_hash: hash of the uploaded object, usually provided by
+                    object storage
 
-    Returns:
-        arg1: string describing the location of the key
     """
 
     # replace gs prfix if exists.
@@ -723,11 +758,11 @@ def _merge_artifact_wes(
         "uploaded_timestamp": str(datetime.datetime.now()).split('.')[0]
     }
 
-    # create the object to merge
+    # create the wes input object which will be added to existing data
     obj = {}
 
     # check if we are adding read group mapping file.
-    if file_name.count("wes_read_group") > 0:
+    if "wes_read_group" in file_name:
 
         # set the artifact type and save
         artifact["file_type"] = "Other"
@@ -740,15 +775,36 @@ def _merge_artifact_wes(
 
         # determine how to craft the artifact
         obj[genomic_source] = {}
-        if file_name.count("wes_forward") > 0:
+        if "wes_forward" in file_name:
             obj[genomic_source]['fastq_1'] = artifact
 
-        elif file_name.count("wes_reverse") > 0:
+        elif "wes_reverse" in file_name:
             obj[genomic_source]['fastq_2'] = artifact
 
-    # descend into the particulars and add this value
-    aliquot_obj = _get_source(ct, keypath, level="aliquot")
+    # copy the metadata and add this a new record.
+    # note this will clobber whatever is here. This is
+    # OK because the original copy of ct will have the
+    # clobbered data, while the new copy will have
+    # the new entry which will get appended to the
+    # "records" list by the merge by ID strategy
+    # specified in the json-schema for records
+    ct_copy = copy.deepcopy(ct)
+    aliquot_obj = _get_source(ct_copy, keypath, level="aliquot")
     aliquot_obj['assay']['wes']['records'][0]['files'] = obj
+
+    # merge the copy with the original.
+    validator = load_and_validate_schema(
+        "clinical_trial.json", return_validator=True)
+    schema = validator.schema
+    merger = Merger(schema)
+
+    ct_new = merger.merge(ct, ct_copy)
+
+    # validate the new data
+    validator.validate(ct_new)
+
+    # return the new dictionary
+    return ct_new
 
 
 def _split_objurl(obj_url: str) -> (str, str, str, str, str, str):
@@ -778,25 +834,25 @@ def _split_objurl(obj_url: str) -> (str, str, str, str, str, str):
 
 
 def merge_artifact(
-            ct: dict,
-            object_url: str,
-            file_size_bytes: int,
-            uploaded_timestamp: str,
-            md5_hash: str
-        ):
+    ct: dict,
+    object_url: str,
+    file_size_bytes: int,
+    uploaded_timestamp: str,
+    md5_hash: str
+):
     """
     create and merge an artifact into the metadata blob
     for a clinical trial. The merging process is automatically
     determined by inspecting the gs url path.
 
     Args:
-        obj: clinical_trial object to be searched
-        key: the identifier we are looking for in the dictionary,
-        level: a keyword describing which level in the key path
-                (trial, participants, sample, aliquot) we want to return
+        ct: clinical_trial object to be searched
+        object_url: the gs url pointing to the object being added
+        file_size_bytes: integer specifying the numebr of bytes in the file
+        uploaded_timestamp: time stamp associated with this object
+        md5_hash: hash of the uploaded object, usually provided by
+                    object storage
 
-    Returns:
-        arg1: string describing the location of the key
     """
 
     # replace gs prfix if exists.
@@ -804,28 +860,21 @@ def merge_artifact(
         cimac_participant_id, cimac_sample_id, cimac_aliquot_id, \
         file_name = _split_objurl(object_url)
 
-    # determine which function to call
-    def _in_set(the_set: set, key: str):
-        """
-        return true or false if any value in 
-        set is a substring in the key
-        """
-        for f in the_set:
-            if key.count(f) > 0:
-                return True
-        return False
-
     # define criteria.
     wes_names = {'wes_forward', 'wes_reverse', 'wes_read_group'}
 
     # test criteria.
-    if _in_set(wes_names, file_name):
-        _merge_artifact_wes(
-                ct,
-                object_url,
-                file_size_bytes,
-                uploaded_timestamp,
-                md5_hash
-            )
+    if any(wes_name in file_name for wes_name in wes_names):
+        new_ct = _merge_artifact_wes(
+            ct,
+            object_url,
+            file_size_bytes,
+            uploaded_timestamp,
+            md5_hash
+        )
     else:
-        raise NotImplementedError(f'the following file_name is not supported: {file_name}')
+        raise NotImplementedError(
+            f'the following file_name is not supported: {file_name}')
+
+    # return new object
+    return new_ct

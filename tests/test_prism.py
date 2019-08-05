@@ -8,6 +8,7 @@ import copy
 import pytest
 import jsonschema
 import json
+from deepdiff import grep
 from pprint import pprint
 from jsonmerge import Merger
 
@@ -20,6 +21,82 @@ from cidc_schemas.template_reader import XlTemplateReader
 from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR
 from .test_templates import template_paths
 from .test_assays import ARTIFACT_OBJ
+
+
+CLINICAL_TRIAL = {
+        "lead_organization_study_id": "10021",
+        "participants": [
+            {
+                "samples": [
+                    {
+                        "aliquots": [
+                            {
+                                "assay": {
+                                    "wes": {
+                                        "assay_creator": "Mount Sinai",
+                                        "assay_category": "Whole Exome Sequencing (WES)",
+                                        "enrichment_vendor_kit": "Twist",
+                                        "library_vendor_kit": "KAPA - Hyper Prep",
+                                        "sequencer_platform": "Illumina - NextSeq 550",
+                                        "paired_end_reads": "Paired",
+                                        "read_length": 100,
+                                        "records": [
+                                            {
+                                                "library_kit_lot": "lot abc",
+                                                "enrichment_vendor_lot": "lot 123",
+                                                "library_prep_date": "2019-05-01 00:00:00",
+                                                "capture_date": "2019-05-02 00:00:00",
+                                                "input_ng": 100,
+                                                "library_yield_ng": 700,
+                                                "average_insert_size": 250,
+                                                "entry_id": "abc1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "cimac_aliquot_id": "aliquot 1"
+                            },
+                        ],
+                        "cimac_sample_id": "sample 1",
+                        "genomic_source": "Tumor"
+                    },
+                    {
+                        "aliquots": [
+                            {
+                                "assay": {
+                                    "wes": {
+                                        "assay_creator": "Mount Sinai",
+                                        "assay_category": "Whole Exome Sequencing (WES)",
+                                        "enrichment_vendor_kit": "Twist",
+                                        "library_vendor_kit": "KAPA - Hyper Prep",
+                                        "sequencer_platform": "Illumina - NextSeq 550",
+                                        "paired_end_reads": "Paired",
+                                        "read_length": 100,
+                                        "records": [
+                                            {
+                                                "library_kit_lot": "lot abc",
+                                                "enrichment_vendor_lot": "lot 123",
+                                                "library_prep_date": "2019-05-01 00:00:00",
+                                                "capture_date": "2019-05-02 00:00:00",
+                                                "input_ng": 100,
+                                                "library_yield_ng": 700,
+                                                "average_insert_size": 250,
+                                                "entry_id": "abc2"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "cimac_aliquot_id": "aliquot 2"
+                            }
+                        ],
+                        "cimac_sample_id": "sample 2",
+                        "genomic_source": "Normal"
+                    }
+                ],
+                "cimac_participant_id": "patient 1"
+            }
+        ]
+    }
 
 
 def test_merge_core():
@@ -113,7 +190,8 @@ def test_assay_merge():
                                                 "capture_date": "2019-05-02 00:00:00",
                                                 "input_ng": 100,
                                                 "library_yield_ng": 700,
-                                                "average_insert_size": 250
+                                                "average_insert_size": 250,
+                                                "entry_id": "abc"
                                             }
                                         ]
                                     }
@@ -224,137 +302,6 @@ def test_wes():
     validator.validate(ct)
 
 
-CLINICAL_TRIAL = {
-        "lead_organization_study_id": "10021",
-        "participants": [
-            {
-                "samples": [
-                    {
-                        "aliquots": [
-                            {
-                                "assay": {
-                                    "wes": {
-                                        "assay_creator": "Mount Sinai",
-                                        "assay_category": "Whole Exome Sequencing (WES)",
-                                        "enrichment_vendor_kit": "Twist",
-                                        "library_vendor_kit": "KAPA - Hyper Prep",
-                                        "sequencer_platform": "Illumina - NextSeq 550",
-                                        "paired_end_reads": "Paired",
-                                        "read_length": 100,
-                                        "records": [
-                                            {
-                                                "library_kit_lot": "lot abc",
-                                                "enrichment_vendor_lot": "lot 123",
-                                                "library_prep_date": "2019-05-01 00:00:00",
-                                                "capture_date": "2019-05-02 00:00:00",
-                                                "input_ng": 100,
-                                                "library_yield_ng": 700,
-                                                "average_insert_size": 250
-                                            }
-                                        ]
-                                    }
-                                },
-                                "cimac_aliquot_id": "aliquot 1"
-                            },
-                        ],
-                        "cimac_sample_id": "sample A",
-                        "genomic_source": "Tumor"
-                    },
-                    {
-                        "aliquots": [
-                            {
-                                "assay": {
-                                    "wes": {
-                                        "assay_creator": "Mount Sinai",
-                                        "assay_category": "Whole Exome Sequencing (WES)",
-                                        "enrichment_vendor_kit": "Twist",
-                                        "library_vendor_kit": "KAPA - Hyper Prep",
-                                        "sequencer_platform": "Illumina - NextSeq 550",
-                                        "paired_end_reads": "Paired",
-                                        "read_length": 100,
-                                        "records": [
-                                            {
-                                                "library_kit_lot": "lot abc",
-                                                "enrichment_vendor_lot": "lot 123",
-                                                "library_prep_date": "2019-05-01 00:00:00",
-                                                "capture_date": "2019-05-02 00:00:00",
-                                                "input_ng": 100,
-                                                "library_yield_ng": 700,
-                                                "average_insert_size": 250,
-                                            }
-                                        ]
-                                    }
-                                },
-                                "cimac_aliquot_id": "aliquot 2"
-                            }
-                        ],
-                        "cimac_sample_id": "sample B",
-                        "genomic_source": "Normal"
-                    }
-                ],
-                "cimac_participant_id": "patient 1"
-            }
-        ]
-    }
-
-
-def test_tmp():
-
-    # create the clinical trial.
-    ct = copy.deepcopy(CLINICAL_TRIAL)
-
-    # create validators
-    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-    schema = validator.schema
-
-    # assert works
-    validator.validate(ct)
-
-    # create the updated file records
-    fastq_1 = ARTIFACT_OBJ.copy()
-    rgmf = ARTIFACT_OBJ.copy()
-    entry = {
-        "files": {
-            "tumor": {
-                "fastq_1": fastq_1,
-                "fastq_2": fastq_1
-            },
-            "normal": {
-                "fastq_1": fastq_1,
-                "fastq_2": fastq_1
-            },
-            "read_group_mapping_file": rgmf
-        }
-    }
-
-    # copy the original data.
-    ct3 = copy.deepcopy(ct)
-
-    # add the files to the second sample.
-    aliquot = ct3['participants'][0]['samples'][1]['aliquots'][0]
-    aliquot['assay']['wes']['records'][0]['files'] = entry['files']
-
-    # try to merge them
-    merger = Merger(schema)
-    ct2 = merger.merge(ct, ct3)
-
-    assert len(ct2['participants']) == 1    # still one participatn
-    assert len(ct2['participants'][0]['samples']) == 2  # still two samples
-    assert len(ct2['participants'][0]['samples'][0]['aliquots']) == 1   # still one aliquot per sample
-    assert len(ct2['participants'][0]['samples'][1]['aliquots']) == 1
-
-    # we should have no file in first aliquot
-    p = ct2['participants'][0]
-    assert 'files' not in p['samples'][0]['aliquots'][0]['assay']['wes']['records'][0]
-
-    # we should have a file in the other aliquot
-    p = ct2['participants'][0]
-    assert 'files' in p['samples'][1]['aliquots'][0]['assay']['wes']['records'][0]
-
-    # assert it is still valid
-    validator.validate(ct2)
-
-
 def test_snippet_wes():
 
     # create the clinical trial.
@@ -374,10 +321,11 @@ def test_snippet_wes():
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
 
     # loop over each url
+    searched_urls = []
     for gs_url in urls:
 
         # attempt to merge
-        merge_artifact(
+        ct = merge_artifact(
                 ct,
                 object_url=gs_url,
                 file_size_bytes=14,
@@ -387,3 +335,10 @@ def test_snippet_wes():
 
         # assert we stull have a good clinical trial object.
         validator.validate(ct)
+
+        # search for this url and all previous (no clobber)
+        searched_urls.append(gs_url)
+        for url in searched_urls:
+            ds = ct | grep(url)
+            assert 'matched_values' in ds
+            assert len(ds['matched_values']) > 0

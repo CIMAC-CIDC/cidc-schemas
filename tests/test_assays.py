@@ -93,6 +93,7 @@ def test_wes():
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
+        "entry_id": "xyz",
         "files": {
             "tumor": {
                 "fastq_1": fastq_1,
@@ -148,6 +149,7 @@ def test_rna_expression():
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
+        "entry_id": "abc",
         "files": {
             "fastq_1": fastq_1,
             "fastq_2": fastq_1,

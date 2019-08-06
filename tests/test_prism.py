@@ -12,7 +12,8 @@ from deepdiff import grep
 from pprint import pprint
 from jsonmerge import Merger
 
-from cidc_schemas.prism import prismify, merge_artifact
+from cidc_schemas.prism import prismify, merge_artifact, \
+    merge_clinical_trial_metadata
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
@@ -342,3 +343,60 @@ def test_snippet_wes():
             ds = ct | grep(url)
             assert 'matched_values' in ds
             assert len(ds['matched_values']) > 0
+
+
+def test_merge_ct_meta():
+    """ 
+    tests merging of two clinical trial metadata
+    objects. Currently this test only supports
+    WES but other tests should be added in the
+    future
+    """
+
+    # create two clinical trials
+    ct1 = copy.deepcopy(CLINICAL_TRIAL)
+    ct2 = copy.deepcopy(CLINICAL_TRIAL)
+
+    # first we assert the merge is only happening on the same trial
+    ct1["lead_organization_study_id"] = "not_the_same"
+    with pytest.raises(RuntimeError):
+        merge_clinical_trial_metadata(ct1, ct2)
+
+    # revert the data to same key trial id but
+    # include data in 1 that is missing in the other
+    # at the trial level and assert the merge
+    # does not clobber any
+    ct1["lead_organization_study_id"] = ct2["lead_organization_study_id"] 
+    ct1['trial_name'] = 'name ABC'
+    ct2['nci_id'] = 'xyz1234'
+    ct_merge = merge_clinical_trial_metadata(ct1, ct2)
+
+    assert ct_merge['trial_name'] == 'name ABC'
+    assert ct_merge['nci_id'] == 'xyz1234'
+
+    # assert the patch over-writes the original value
+    # when value is present in both objects
+    ct1['trial_name'] = 'name ABC'
+    ct2['trial_name'] = 'CBA eman'
+    ct_merge = merge_clinical_trial_metadata(ct1, ct2)
+    
+    assert ct_merge['trial_name'] == 'name ABC'
+
+    # now change the participant ids
+    # this should cause the merge to have two
+    # participants.
+    ct1['participants'][0]['cimac_participant_id'] = 'different_id'
+
+    ct_merge = merge_clinical_trial_metadata(ct1, ct2)
+    assert len(ct_merge['participants']) == 2
+
+    # now lets have the same participant but adding multiple samples.
+    ct1["lead_organization_study_id"] = ct2["lead_organization_study_id"] 
+    ct1['participants'][0]['cimac_participant_id'] = \
+        ct2['participants'][0]['cimac_participant_id']
+    ct1['participants'][0]['samples'][0]['cimac_sample_id'] = 'new_id_1'
+    ct1['participants'][0]['samples'][1]['cimac_sample_id'] = 'new_id_2'
+
+    ct_merge = merge_clinical_trial_metadata(ct1, ct2)
+    assert len(ct_merge['participants']) == 1
+    assert len(ct_merge['participants'][0]['samples']) == 4

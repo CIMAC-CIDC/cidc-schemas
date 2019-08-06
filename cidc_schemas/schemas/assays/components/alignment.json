@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "fastq_pairs",
-  "title": "Paired end sequencing file pairs",
+  "$id": "alignment",
+  "title": "WES output align files",
   "type": "object",
-  "description": "Paired end sequencing file pairs",
+  "description": "WES output align files",
   "properties": {
     "align_sorted": {
       "description": "",

@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "germline",
+  "title": "Germline variant output sample files",
+  "type": "object",
+  "description": "Germline variant output sample files",
+  "properties": {
+    "SNP92_recode": {
+      "description": "",
+      "$ref": "artifacts/artifact_vcf.json"
+    }
+  },
+  "required": [
+    "SNP92_recode"
+  ]
+}

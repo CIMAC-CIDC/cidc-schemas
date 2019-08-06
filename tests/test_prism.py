@@ -369,8 +369,8 @@ def test_merge_ct_meta():
     ct1["lead_organization_study_id"] = ct2["lead_organization_study_id"] 
     ct1['trial_name'] = 'name ABC'
     ct2['nci_id'] = 'xyz1234'
-    ct_merge = merge_clinical_trial_metadata(ct1, ct2)
 
+    ct_merge = merge_clinical_trial_metadata(ct1, ct2)
     assert ct_merge['trial_name'] == 'name ABC'
     assert ct_merge['nci_id'] == 'xyz1234'
 
@@ -378,8 +378,8 @@ def test_merge_ct_meta():
     # when value is present in both objects
     ct1['trial_name'] = 'name ABC'
     ct2['trial_name'] = 'CBA eman'
+
     ct_merge = merge_clinical_trial_metadata(ct1, ct2)
-    
     assert ct_merge['trial_name'] == 'name ABC'
 
     # now change the participant ids

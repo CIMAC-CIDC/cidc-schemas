@@ -21,5 +21,8 @@
       "$ref": "assays/components/ngs/wes_input.json"
     }
   },
-  "required": ["enrichment_vendor_lot"]
+  "mergeStrategy": "objectMerge",
+  "required": [
+      "enrichment_vendor_lot"
+    ]
 }

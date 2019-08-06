@@ -16,7 +16,7 @@ ARTIFACT_OBJ = {
     "artifact_category": "Manifest File",
     "artifact_creator": "DFCI",
     "assay_category": "Whole Exome Sequencing (WES)",
-    "bucket_url": "dummy",
+    "object_url": "dummy",
     "file_name": "dummy.txt",
     "file_size_bytes": 1,
     "file_type": "FASTA",
@@ -95,6 +95,7 @@ def test_wes():
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
+        "entry_id": "xyz",
         "files": {
             "tumor": {
                 "fastq_1": fastq_1,
@@ -178,6 +179,7 @@ def test_rna_expression():
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
+        "entry_id": "abc",
         "files": {
             "fastq_1": fastq_1,
             "fastq_2": fastq_1,

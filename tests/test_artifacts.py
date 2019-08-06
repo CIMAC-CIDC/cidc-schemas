@@ -16,7 +16,7 @@ BASE_OBJ = {
     "artifact_category": "Manifest File",
     "artifact_creator": "DFCI",
     "assay_category": "Whole Exome Sequencing (WES)",
-    "bucket_url": "dummy",
+    "object_url": "dummy",
     "file_name": "dummy.txt",
     "file_size_bytes": 1,
     "file_type": "FASTA",

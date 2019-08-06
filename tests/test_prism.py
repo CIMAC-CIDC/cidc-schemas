@@ -8,10 +8,11 @@ import copy
 import pytest
 import jsonschema
 import json
+from deepdiff import grep
 from pprint import pprint
 from jsonmerge import Merger
 
-from cidc_schemas.prism import prismify, filepath_gen
+from cidc_schemas.prism import prismify, merge_artifact
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
@@ -19,6 +20,83 @@ from cidc_schemas.template_reader import XlTemplateReader
 
 from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR
 from .test_templates import template_paths
+from .test_assays import ARTIFACT_OBJ
+
+
+CLINICAL_TRIAL = {
+        "lead_organization_study_id": "10021",
+        "participants": [
+            {
+                "samples": [
+                    {
+                        "aliquots": [
+                            {
+                                "assay": {
+                                    "wes": {
+                                        "assay_creator": "Mount Sinai",
+                                        "assay_category": "Whole Exome Sequencing (WES)",
+                                        "enrichment_vendor_kit": "Twist",
+                                        "library_vendor_kit": "KAPA - Hyper Prep",
+                                        "sequencer_platform": "Illumina - NextSeq 550",
+                                        "paired_end_reads": "Paired",
+                                        "read_length": 100,
+                                        "records": [
+                                            {
+                                                "library_kit_lot": "lot abc",
+                                                "enrichment_vendor_lot": "lot 123",
+                                                "library_prep_date": "2019-05-01 00:00:00",
+                                                "capture_date": "2019-05-02 00:00:00",
+                                                "input_ng": 100,
+                                                "library_yield_ng": 700,
+                                                "average_insert_size": 250,
+                                                "entry_id": "abc1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "cimac_aliquot_id": "aliquot 1"
+                            },
+                        ],
+                        "cimac_sample_id": "sample 1",
+                        "genomic_source": "Tumor"
+                    },
+                    {
+                        "aliquots": [
+                            {
+                                "assay": {
+                                    "wes": {
+                                        "assay_creator": "Mount Sinai",
+                                        "assay_category": "Whole Exome Sequencing (WES)",
+                                        "enrichment_vendor_kit": "Twist",
+                                        "library_vendor_kit": "KAPA - Hyper Prep",
+                                        "sequencer_platform": "Illumina - NextSeq 550",
+                                        "paired_end_reads": "Paired",
+                                        "read_length": 100,
+                                        "records": [
+                                            {
+                                                "library_kit_lot": "lot abc",
+                                                "enrichment_vendor_lot": "lot 123",
+                                                "library_prep_date": "2019-05-01 00:00:00",
+                                                "capture_date": "2019-05-02 00:00:00",
+                                                "input_ng": 100,
+                                                "library_yield_ng": 700,
+                                                "average_insert_size": 250,
+                                                "entry_id": "abc2"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "cimac_aliquot_id": "aliquot 2"
+                            }
+                        ],
+                        "cimac_sample_id": "sample 2",
+                        "genomic_source": "Normal"
+                    }
+                ],
+                "cimac_participant_id": "patient 1"
+            }
+        ]
+    }
 
 
 def test_merge_core():
@@ -112,7 +190,8 @@ def test_assay_merge():
                                                 "capture_date": "2019-05-02 00:00:00",
                                                 "input_ng": 100,
                                                 "library_yield_ng": 700,
-                                                "average_insert_size": 250
+                                                "average_insert_size": 250,
+                                                "entry_id": "abc"
                                             }
                                         ],
                                     }
@@ -203,3 +282,63 @@ def test_filepath_gen():
 
         # assert works
         validator.validate(ct)
+
+
+def test_wes():
+
+    # create validators
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
+
+    # create the example template.
+    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'metadata', 'wes_template.json')
+    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, "wes_template.xlsx")
+    hint = 'wes'
+
+    # parse the spreadsheet and get the file maps
+    ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
+
+    # assert works
+    validator.validate(ct)
+
+
+def test_snippet_wes():
+
+    # create the clinical trial.
+    ct = copy.deepcopy(CLINICAL_TRIAL)
+
+    # define list of gs_urls.
+    urls = [
+        '10021/Patient 1/sample 1/aliquot 1/wes_forward.fastq',
+        '10021/Patient 1/sample 1/aliquot 1/wes_reverse.fastq',
+        '10021/Patient 1/sample 1/aliquot 1/wes_read_group.txt',
+        '10021/Patient 1/sample 1/aliquot 2/wes_forward.fastq',
+        '10021/Patient 1/sample 1/aliquot 2/wes_reverse.fastq',
+        '10021/Patient 1/sample 1/aliquot 2/wes_read_group.txt'
+    ]
+
+    # create validator
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+
+    # loop over each url
+    searched_urls = []
+    for gs_url in urls:
+
+        # attempt to merge
+        ct = merge_artifact(
+                ct,
+                object_url=gs_url,
+                file_size_bytes=14,
+                uploaded_timestamp="01/01/2001",
+                md5_hash="hash1234"
+            )
+
+        # assert we stull have a good clinical trial object.
+        validator.validate(ct)
+
+        # search for this url and all previous (no clobber)
+        searched_urls.append(gs_url)
+        for url in searched_urls:
+            ds = ct | grep(url)
+            assert 'matched_values' in ds
+            assert len(ds['matched_values']) > 0

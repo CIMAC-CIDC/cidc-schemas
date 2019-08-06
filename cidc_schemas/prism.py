@@ -4,6 +4,7 @@ import os
 import copy
 import jsonschema
 from deepdiff import grep
+import datetime
 from jsonmerge import merge, Merger
 
 from cidc_schemas.json_validation import load_and_validate_schema
@@ -28,7 +29,8 @@ def _get_coerce(ref: str):
     """
 
     # get the entry
-    resolver = jsonschema.RefResolver(f'file://{SCHEMA_DIR}/schemas', {'$ref': ref})
+    resolver = jsonschema.RefResolver(
+        f'file://{SCHEMA_DIR}/schemas', {'$ref': ref})
     _, entry = resolver.resolve(ref)
 
     # add our own type conversion
@@ -103,6 +105,12 @@ def _load_keylookup(template_path: str) -> dict:
                 # populate lookup.
                 populate_lu(ref, key_lu, data_key)
 
+    # special case for wes keys.
+    if 'wes' in template_path:
+        ref = "assays/components/ngs/ngs_entry.json#properties/entry_id"
+        data_key = "entry_id"
+        populate_lu(ref, key_lu, data_key)
+
     return key_lu
 
 
@@ -121,7 +129,7 @@ def _find_key(schema_key: str, schema: dict, assay_hint: str = "") -> str:
     choice.
 
     I've introduced the assay_hint string to help disambuguate
-    a path to a key when there are multiple possibilities. 
+    a path to a key when there are multiple possibilities.
     Consider "assay_creator" a property in assay_core.json
     which is associated with every assay. Searching the schema
     for assay_creator will return multiple hits, the hint lets
@@ -195,9 +203,9 @@ def _set_val(path: str, val: object, trial: dict, verbose=False):
     consumed:
 
     path = "['items'][0]['properties']['prop1']"
-    
+
     Next we see an 'item' property which in json-schema
-    denotes an array. So the implication 
+    denotes an array. So the implication
     is that the value of 'participants' is list.
         {
             "participants": [...]
@@ -206,7 +214,7 @@ def _set_val(path: str, val: object, trial: dict, verbose=False):
     path = "['properties']['prop1']"
 
     Next we 'properties' so we know we are entering an object
-    with *prop1* as a property. This is the 
+    with *prop1* as a property. This is the
     final piece of the *path* so we can assign the val:
         {
             "participants": [{
@@ -220,7 +228,7 @@ def _set_val(path: str, val: object, trial: dict, verbose=False):
 
     For each token we test for its json-schema modifier,
     'items', 'properties', 'allOf'. If we see items we need
-    to add a list, assuming it doesn't exist, if we see properties 
+    to add a list, assuming it doesn't exist, if we see properties
     we need to create a dictionary if it doesn't exist.
 
     *One limitation* of this code is that no list can have
@@ -237,7 +245,7 @@ def _set_val(path: str, val: object, trial: dict, verbose=False):
     For our purposes we need to treat the 'allOf' followed
     by the array entry and subsequent object properties
     as properties of the previous object 'prop2'. This
-    is why there are "skip" blocks in the code which advance 
+    is why there are "skip" blocks in the code which advance
     to the next token while keeping the pointer of the current
     object on 'prop2'.
 
@@ -353,7 +361,7 @@ def _set_val(path: str, val: object, trial: dict, verbose=False):
                 elif key2 == 'properties':
                     curp[key] = {}
 
-                # also a dictionary, just will be proceeded by a nunber
+                # also a dictionary, just will be preceeded by a nunber
                 elif key2 == 'allOf':
                     # this assume allOf always creates object, maybe not true?
                     curp[key] = {}
@@ -394,13 +402,13 @@ def _get_recursively(search_dict, field):
 
 
 def _process_property(
-                    row: list, 
-                    key_lu: dict,
-                    schema: dict,
-                    data_obj: dict,
-                    assay_hint: str,
-                    fp_lu: dict,
-                    verb: bool):
+        row: list,
+        key_lu: dict,
+        schema: dict,
+        data_obj: dict,
+        assay_hint: str,
+        fp_lu: dict,
+        verb: bool):
     """
     Takes a single property (key, val) from spreadsheet, determines
     where it needs to go in the final object, then inserts it.
@@ -435,7 +443,7 @@ def _process_property(
         gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_sample_id")[0]}'
         gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_aliquot_id")[0]}'
         gs_key = f'{gs_key}/{assay_hint}'
-        gs_key = gs_key.replace(" ", "_")
+        #gs_key = gs_key.replace(" ", "_")
 
         # do the suffix
         tmp = key.lower().split(" ")
@@ -471,7 +479,8 @@ def _process_property(
 def _build_fplu(assay_hint: str):
 
     # get the un resolved schema
-    template_path = os.path.join(TEMPLATE_DIR, 'metadata', f'{assay_hint}_template.json')
+    template_path = os.path.join(
+        TEMPLATE_DIR, 'metadata', f'{assay_hint}_template.json')
     with open(template_path) as fin:
         schema = json.load(fin)
 
@@ -507,7 +516,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
     e.g. file list
     [
         {
-            'local_path': '/path/to/fwd.fastq', 
+            'local_path': '/path/to/fwd.fastq',
             'gs_key': '10021/Patient_1/sample_1/aliquot_1/wes_forward.fastq'
         }
     ]
@@ -515,11 +524,11 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
 
     Args:
         xlsx_path: file on file system to excel file.
-        template_path: path on file system relative to schema root of the 
+        template_path: path on file system relative to schema root of the
                         temaplate
-                
-        assay_hint: string used to help idnetify properties in template. Must 
-                    be the the root of the template filename i.e. 
+
+        assay_hint: string used to help idnetify properties in template. Must
+                    be the the root of the template filename i.e.
                     wes_template.json would be wes.
         verb: boolean indicating verbosity
 
@@ -543,7 +552,6 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
     # add a special key to track the files
     fp_lu['special'] = list()
 
-
     # read the excel file
     t = XlTemplateReader.from_excel(xlsx_path)
 
@@ -562,11 +570,18 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
         for row in ws[RowType.PREAMBLE]:
 
             # process this property
-            _process_property(row, key_lu, schema, root, assay_hint, fp_lu, verb)
-
+            _process_property(row, key_lu, schema, root,
+                              assay_hint, fp_lu, verb)
 
         # move to headers
         headers = ws[RowType.HEADER][0]
+
+        # track these identifiers
+        potential_ids = {
+            "CIMAC PARTICIPANT ID": "",
+            "CIMAC SAMPLE ID": "",
+            "CIMAC ALIQUOT ID": ""
+        }
 
         # get the data.
         data = ws[RowType.DATA]
@@ -580,9 +595,28 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
                 _process_property([key, val], key_lu, schema,
                                   curd, assay_hint, fp_lu, verb)
 
+                # track ids
+                if key in potential_ids:
+                    potential_ids[key] = val
 
             # save the entry
             data_rows.append(curd)
+
+            # data rows will require a unique identifier
+            if assay_hint == "wes":
+
+                # create a unique key
+                unique_key = potential_ids['CIMAC PARTICIPANT ID']
+                unique_key = f'{unique_key}_{potential_ids["CIMAC SAMPLE ID"]}'
+                unique_key = f'{unique_key}_{potential_ids["CIMAC ALIQUOT ID"]}'
+
+                # add this to the most recent payload
+                _process_property(['entry_id', unique_key], key_lu, schema,
+                        curd, assay_hint, fp_lu, verb)
+
+            else:
+                raise NotImplementedError(f'only WES is supported, please add additional support \
+                    for {assay_hint}')
 
     # create the merger
     merger = Merger(schema)
@@ -597,7 +631,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
 
 
 def _deep_get(obj: dict, key: str):
-    """ 
+    """
     returns value of they supplied key
     gotten via deepdif
     """
@@ -614,87 +648,233 @@ def _deep_get(obj: dict, key: str):
     return cur_obj, tokens[-2]
 
 
-def filepath_gen(xlsx_path: str, schema: dict, assay_hint: str, verb: bool = False):
+def _get_path(ct: dict, key: str) -> str:
     """
-    This is a python generator which yields the paths of local files we are expecting 
-    to recieve alongsdie the supplied metadata xlsx file.
-
-    There is bespoke assay specific logic encoded in this function and it will
-    likely change if conventions around what files are expected in a given 
-    folder, or what files an assay is expecting.
+    find the path to the given key in the dictionary
 
     Args:
-        xlsx_path: file on file system to excel file.
-        schema: json schema with all ref resolved
-        assay_hint: string used to help idnetify properties in template. Must 
-                    be the the root of the template filename i.e. 
-                    wes_template.json would be wes.
-        verb: boolean indicating verbosity
+        ct: clinical_trial object to be modified
+        key: the identifier we are looking for in the dictionary
 
     Returns:
-        None, data_obj is modified in place
+        arg1: string describing the location of the key
     """
 
-    # get the un resolved schema
-    template_path = os.path.join(TEMPLATE_DIR, 'metadata', f'{assay_hint}_template.json')
-    with open(template_path) as fin:
-        schema = json.load(fin)
+    # first look for key as is
+    ds1 = ct | grep(key, match_string=True)
+    count1 = 0
+    if 'matched_values' in ds1:
+        count1 = len(ds1['matched_values'])
 
-    # find key in the schema, this notation is
-    # recommended usage of deepdif grep. assuming they
-    # overload the pipe operator to simulate cmd line
-    schema_key = 'artifact_link'
-    ds = schema | grep(schema_key)
-    if 'matched_paths' not in ds:
-        raise KeyError(f'{schema_key} not found in schema')
+    # the hack fails if both work... probably need to deal with this
+    if count1 == 0:
+        raise NotImplementedError(f"key: {key} not found in dictionary")
 
-    # sort potential matches, shortest is what we want.
-    choices = sorted(ds['matched_paths'], key=len)
+    # get the keypath
+    return ds1['matched_values'].pop()
 
-    # create tuples
-    key_lu = {}
-    for c in choices:
 
-        # get the value and parent of the file link.
-        val, pkey = _deep_get(schema, c)
-        pkey = pkey.upper()
-        key_lu[pkey] = val
+def _get_source(ct: dict, key: str, level="sample") -> dict:
+    """
+    extract the object in the dicitionary specified by
+    the supplied key (or one of its parents.)
 
-    def _do_stuff(key, val, lu):
-        if key in lu:
-            # make the accession key
-            tmp = lu[key][1]
-            print(tmp)
-            gs_key = tmp["lead_organization_study_id"]
-            gs_key = f'{gs_key}/{tmp["cimac_participant_id"]}'
-            gs_key = f'{gs_key}/{tmp["cimac_sample_id"]}'
-            gs_key = f'{gs_key}/{tmp["cimac_aliquot_id"]}'
-            #print("stuff", key, val, lu[key])
-            print(gs_key)
+    Args:
+        ct: clinical_trial object to be searched
+        key: the identifier we are looking for in the dictionary,
+        level: a keyword describing which level in the key path
+                (trial, participants, sample, aliquot) we want to return
 
-    # read the excel file
-    t = XlTemplateReader.from_excel(xlsx_path)
+    Returns:
+        arg1: string describing the location of the key
+    """
 
-    # loop over spreadsheet
-    worksheet_names = t.grouped_rows.keys()
-    for name in worksheet_names:
+    # tokenize.
+    key = key.replace("root", "").replace("'", "")
+    tokens = re.findall(r"\[(.*?)\]", key)
 
-        # get the worksheat.
-        ws = t.grouped_rows[name]
+    # this will get us to the object we have the key for
+    if level == "sample":
+        tokens = tokens[0:-3]
+    elif level == "aliquot":
+        tokens = tokens[0:-1]
+    else:
+        raise NotImplementedError(
+            f'the following level is not supported: {level}')
 
-        # Compare preamble rows
-        for row in ws[RowType.PREAMBLE]:
+    # keep getting based on the key.
+    cur_obj = ct
+    for token in tokens:
+        try:
+            token = int(token)
+        except ValueError:
+            pass
 
-            _do_stuff(row[0], row[1], key_lu)
+        cur_obj = cur_obj[token]
 
-        # move to headers
-        headers = ws[RowType.HEADER][0]
+    return cur_obj
 
-        # get the data.
-        data = ws[RowType.DATA]
-        for row in data:
 
-            # create dictionary per row
-            for key, val in zip(headers, row):
+def _merge_artifact_wes(
+    ct: dict,
+    object_url: str,
+    file_size_bytes: int,
+    uploaded_timestamp: str,
+    md5_hash: str
+):
+    """
+    create and merge an artifact into the WES assay metadata.
+    The artifacts currently supported are only the input
+    fastq files and read mapping group file.
 
-                _do_stuff(key, val, key_lu)
+    Args:
+        ct: clinical_trial object to be searched
+        object_url: the gs url pointing to the object being added
+        file_size_bytes: integer specifying the numebr of bytes in the file
+        uploaded_timestamp: time stamp associated with this object
+        md5_hash: hash of the uploaded object, usually provided by
+                    object storage
+
+    """
+
+    # replace gs prfix if exists.
+    object_url, lead_organization_study_id, \
+        cimac_participant_id, cimac_sample_id, cimac_aliquot_id, \
+        file_name = _split_objurl(object_url)
+
+    # get the genomic source.
+    keypath = _get_path(ct, cimac_aliquot_id)
+    sample_obj = _get_source(ct, keypath)
+    genomic_source = sample_obj['genomic_source']
+
+    # create the artifact.
+    artifact = {
+        "artifact_category": "Assay Artifact from CIMAC",
+        "assay_category": "Whole Exome Sequencing (WES)",
+        "object_url": object_url,
+        "file_name": file_name,
+        "file_size_bytes": 1,
+        "md5_hash": md5_hash,
+        "uploaded_timestamp": str(datetime.datetime.now()).split('.')[0]
+    }
+
+    # create the wes input object which will be added to existing data
+    obj = {}
+
+    # check if we are adding read group mapping file.
+    if "wes_read_group" in file_name:
+
+        # set the artifact type and save
+        artifact["file_type"] = "Other"
+        obj['read_group_mapping_file'] = artifact
+
+    else:
+
+        # set the artifact type
+        artifact["file_type"] = "FASTQ"
+
+        # determine how to craft the artifact
+        obj[genomic_source] = {}
+        if "wes_forward" in file_name:
+            obj[genomic_source]['fastq_1'] = artifact
+
+        elif "wes_reverse" in file_name:
+            obj[genomic_source]['fastq_2'] = artifact
+
+    # copy the metadata and add this a new record.
+    # note this will clobber whatever is here. This is
+    # OK because the original copy of ct will have the
+    # clobbered data, while the new copy will have
+    # the new entry which will get appended to the
+    # "records" list by the merge by ID strategy
+    # specified in the json-schema for records
+    ct_copy = copy.deepcopy(ct)
+    aliquot_obj = _get_source(ct_copy, keypath, level="aliquot")
+    aliquot_obj['assay']['wes']['records'][0]['files'] = obj
+
+    # merge the copy with the original.
+    validator = load_and_validate_schema(
+        "clinical_trial.json", return_validator=True)
+    schema = validator.schema
+    merger = Merger(schema)
+
+    ct_new = merger.merge(ct, ct_copy)
+
+    # validate the new data
+    validator.validate(ct_new)
+
+    # return the new dictionary
+    return ct_new
+
+
+def _split_objurl(obj_url: str) -> (str, str, str, str, str, str):
+    """
+    splits gs_url into components and returns them
+
+    Args:
+        obj_url: gs://url/to/file
+
+    Returns:
+        arg1: tuple of the components
+    """
+
+    # replace gs prfix if exists.
+    obj_url = obj_url.replace("gs://", "")
+
+    # parse the url to get key identifiers
+    tokens = obj_url.split("/")
+    lead_organization_study_id = tokens[0]
+    cimac_participant_id = tokens[1]
+    cimac_sample_id = tokens[2]
+    cimac_aliquot_id = tokens[3]
+    file_name = tokens[4]
+
+    return obj_url, lead_organization_study_id, cimac_participant_id, \
+        cimac_sample_id, cimac_aliquot_id, file_name
+
+
+def merge_artifact(
+    ct: dict,
+    object_url: str,
+    file_size_bytes: int,
+    uploaded_timestamp: str,
+    md5_hash: str
+):
+    """
+    create and merge an artifact into the metadata blob
+    for a clinical trial. The merging process is automatically
+    determined by inspecting the gs url path.
+
+    Args:
+        ct: clinical_trial object to be searched
+        object_url: the gs url pointing to the object being added
+        file_size_bytes: integer specifying the numebr of bytes in the file
+        uploaded_timestamp: time stamp associated with this object
+        md5_hash: hash of the uploaded object, usually provided by
+                    object storage
+
+    """
+
+    # replace gs prfix if exists.
+    object_url, lead_organization_study_id, \
+        cimac_participant_id, cimac_sample_id, cimac_aliquot_id, \
+        file_name = _split_objurl(object_url)
+
+    # define criteria.
+    wes_names = {'wes_forward', 'wes_reverse', 'wes_read_group'}
+
+    # test criteria.
+    if any(wes_name in file_name for wes_name in wes_names):
+        new_ct = _merge_artifact_wes(
+            ct,
+            object_url,
+            file_size_bytes,
+            uploaded_timestamp,
+            md5_hash
+        )
+    else:
+        raise NotImplementedError(
+            f'the following file_name is not supported: {file_name}')
+
+    # return new object
+    return new_ct

@@ -2,7 +2,8 @@ include AUTHORS.rst
 include CONTRIBUTING.rst
 include HISTORY.rst
 include LICENSE
-include README.rst
+include README.md
+include requirements.txt
 
 graft cidc_schemas/schemas
 

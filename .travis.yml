@@ -3,3 +3,11 @@ install:
   - pip install -r requirements.txt
 script:
   - pytest
+deploy:
+  provider: pypi
+  # TODO: should this be on a shared CIDC account?
+  username: jlurye-ksg
+  password: $PYPI_PASSWORD
+  skip_existing: true
+  on:
+    branch: master

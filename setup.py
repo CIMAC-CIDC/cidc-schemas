@@ -24,22 +24,23 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
-    description="library for parsing manifest data",
-    python_requires='>=3.5',
+    description="The CIDC data model and tools for working with it.",
+    python_requires='>=3.6',
     install_requires=requirements,
     license="MIT license",
-    long_description=readme + '\n\n' + history,
+    # TODO: work this out - we can't mix content types (.md and .rst)
+    # in the long_description.
+    # long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='cidc_schemas',
     name='cidc_schemas',
     packages=find_packages(include=['cidc_schemas']),
     test_suite='tests',
     url='https://github.com/CIMAC-CIDC/schemas',
-    version='0.1.0',
+    version='0.1.1',
     zip_safe=False,
     entry_points={
         'console_scripts': ['cidc_schemas=cidc_schemas.cli:main']

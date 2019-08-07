@@ -2,15 +2,44 @@
 
 """The underlying data representation of an assay or shipping manifest template."""
 
+import os
 import logging
 import json
 from typing import List, Optional, Dict, BinaryIO, Union
 from collections import OrderedDict
 
-from .constants import SCHEMA_DIR
+from .constants import SCHEMA_DIR, TEMPLATE_DIR
 from .json_validation import load_and_validate_schema
 
 logger = logging.getLogger('cidc_schemas.template')
+
+
+def generate_empty_template(schema_path: str, target_path: str):
+    """Write the .xlsx template for the given schema to the target path."""
+    logger.info(f"Writing empty template for {schema_path} to {target_path}.")
+    template = Template.from_json(schema_path)
+    template.to_excel(target_path)
+
+
+def generate_all_templates(target_dir: str):
+    """
+    Generate empty template .xlsx files for every available template schema and 
+    write them to the target directory.
+    """
+    # We expect two directories: one for metadata schemas and one for manifests
+    for template_type_dir in os.listdir(TEMPLATE_DIR):
+        # Create the directory for this template type
+        target_subdir = os.path.join(target_dir, template_type_dir)
+        os.makedirs(target_subdir)
+
+        schema_subdir = os.path.join(TEMPLATE_DIR, template_type_dir)
+
+        # Create a new empty template for each template schema in schema_subdir
+        for template_schema_file in os.listdir(schema_subdir):
+            schema_path = os.path.join(schema_subdir, template_schema_file)
+            template_xlsx_file = template_schema_file.replace('.json', '.xlsx')
+            target_path = os.path.join(target_subdir, template_xlsx_file)
+            generate_empty_template(schema_path, target_path)
 
 
 class Template:

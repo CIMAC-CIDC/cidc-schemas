@@ -4,8 +4,7 @@ import argparse
 from typing import List
 
 from . import util
-from .template import Template
-from .manifest import generate_all_manifests
+from .template import Template, generate_all_templates
 from .json_validation import load_and_validate_schema
 from .constants import SCHEMA_DIR, SCHEMA_LIST, MANIFEST_DIR
 
@@ -27,12 +26,12 @@ def interface() -> argparse.Namespace:
         'list', help='List all available schemas')
     list_parser.set_defaults(func=lambda _: list_schemas())
 
-    # Option to generate all manifests
-    manifests_parser = subparsers.add_parser(
-        "generate_manifests", help="Generate all available manifest excel files.")
-    manifests_parser.add_argument(
+    # Option to generate all templates
+    generate_all_parser = subparsers.add_parser(
+        "generate_all_templates", help="Generate all available template excel files.")
+    generate_all_parser.add_argument(
         '-d', '--out_dir', help='Path to the directory to which to write the templates', required=True)
-    manifests_parser.set_defaults(func=generate_all_manifests_from_args)
+    generate_all_parser.set_defaults(func=generate_all_templates_from_args)
 
     # Parser for template generation
     generate_parser = subparsers.add_parser(
@@ -94,8 +93,8 @@ def generate_template(args: argparse.Namespace):
     manifest.to_excel(args.out_file)
 
 
-def generate_all_manifests_from_args(args: argparse.Namespace):
-    generate_all_manifests(args.out_dir)
+def generate_all_templates_from_args(args: argparse.Namespace):
+    generate_all_templates(args.out_dir)
 
 
 def validate_template(args: argparse.Namespace):

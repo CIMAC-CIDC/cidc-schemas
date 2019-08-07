@@ -5,7 +5,8 @@
 import os
 import pytest
 
-from cidc_schemas.template import Template
+from cidc_schemas.constants import TEMPLATE_DIR
+from cidc_schemas.template import Template, generate_empty_template, generate_all_templates
 
 # NOTE: see conftest.py for pbmc_template and tiny_template fixture definitions
 
@@ -67,3 +68,34 @@ def test_worksheet_processing():
     }
 
     assert Template._process_worksheet(worksheet) == target
+
+
+def test_generate_empty_template(pbmc_schema_path, pbmc_template, tmpdir):
+    """Check that generate_empty_template generates the correct template."""
+    # Generate the xlsx file with the convenience method
+    target_path = tmpdir.join('pbmc_target.xlsx')
+    generate_empty_template(pbmc_schema_path, target_path)
+
+    # Generate the xlsx file from the known-good Template instance
+    # for comparison
+    cmp_path = tmpdir.join('pbmc_truth.xlsx')
+    pbmc_template.to_excel(cmp_path)
+
+    # Check that the files have the same contents
+    with open(target_path, 'rb') as generated, open(cmp_path, 'rb') as comparison:
+        assert generated.read() == comparison.read()
+
+
+def test_generate_all_templates(tmpdir):
+    """Check that generate_all_templates appears to, in fact, generate all templates."""
+    generate_all_templates(tmpdir)
+
+    # Check that the right number of empty templates was generated
+    schema_files = [f for _, _, fs in os.walk(TEMPLATE_DIR) for f in fs]
+    generated_files = [f for _, _, fs in os.walk(tmpdir) for f in fs]
+    assert len(schema_files) == len(generated_files)
+
+    # Check that the empty templates have the right names
+    generated_filenames = set(f.rstrip('.xlsx') for f in generated_files)
+    schema_filenames = set(f.rstrip('.json') for f in schema_files)
+    assert generated_filenames == schema_filenames

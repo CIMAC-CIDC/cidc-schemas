@@ -5,8 +5,10 @@ from typing import List
 
 from . import util
 from .template import Template
+from .manifest import generate_all_manifests
 from .json_validation import load_and_validate_schema
-from .constants import SCHEMA_DIR, SCHEMA_LIST
+from .constants import SCHEMA_DIR, SCHEMA_LIST, MANIFEST_DIR
+
 
 def main():
     args = interface()
@@ -24,6 +26,13 @@ def interface() -> argparse.Namespace:
     list_parser = subparsers.add_parser(
         'list', help='List all available schemas')
     list_parser.set_defaults(func=lambda _: list_schemas())
+
+    # Option to generate all manifests
+    manifests_parser = subparsers.add_parser(
+        "generate_manifests", help="Generate all available manifest excel files.")
+    manifests_parser.add_argument(
+        '-d', '--out_dir', help='Path to the directory to which to write the templates', required=True)
+    manifests_parser.set_defaults(func=generate_all_manifests_from_args)
 
     # Parser for template generation
     generate_parser = subparsers.add_parser(
@@ -83,6 +92,10 @@ def build_manifest(args: argparse.Namespace) -> Template:
 def generate_template(args: argparse.Namespace):
     manifest = build_manifest(args)
     manifest.to_excel(args.out_file)
+
+
+def generate_all_manifests_from_args(args: argparse.Namespace):
+    generate_all_manifests(args.out_dir)
 
 
 def validate_template(args: argparse.Namespace):

@@ -8,5 +8,6 @@ deploy:
   # TODO: should this be on a shared CIDC account?
   username: jlurye-ksg
   password: $PYPI_PASSWORD
+  skip_existing: true
   on:
     branch: master

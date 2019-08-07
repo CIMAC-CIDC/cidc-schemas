@@ -878,3 +878,44 @@ def merge_artifact(
 
     # return new object
     return new_ct
+
+
+def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
+    """
+    merges two clinical trial metadata objects together
+
+    Args:
+        patch: the metadata object to add
+        target: the existing metadata object
+
+    Returns:
+        arg1: the merged metadata object
+    """
+
+    # merge the copy with the original.
+    validator = load_and_validate_schema(
+        "clinical_trial.json", return_validator=True)
+    schema = validator.schema
+    
+    # first we assert both objects are valid
+    validator.validate(target)
+    validator.validate(patch)
+
+    # next assert the un-mutable fields are equal
+    # these fields are required in the schema
+    # so previous validation assert they exist
+    key_details = ["lead_organization_study_id"]
+    for d in key_details:
+        if patch.get(d) != target.get(d):
+            raise RuntimeError("unable to merge trials with different \
+                lead_organization_study_id")
+
+    # merge the two documents
+    merger = Merger(schema)
+    merged = merger.merge(target, patch)
+
+    # validate this
+    validator.validate(merged)
+
+    # now return it
+    return merged

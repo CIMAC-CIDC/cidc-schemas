@@ -357,7 +357,15 @@ def test_merge_ct_meta():
     ct1 = copy.deepcopy(CLINICAL_TRIAL)
     ct2 = copy.deepcopy(CLINICAL_TRIAL)
 
-    # first we assert the merge is only happening on the same trial
+    # first test the fact that both snippets must be valid
+    del ct1['lead_organization_study_id']
+    with pytest.raises(jsonschema.ValidationError):
+        merge_clinical_trial_metadata(ct1, ct2)
+
+    with pytest.raises(jsonschema.ValidationError):
+        merge_clinical_trial_metadata(ct1, {})
+
+    # next assert the merge is only happening on the same trial
     ct1["lead_organization_study_id"] = "not_the_same"
     with pytest.raises(RuntimeError):
         merge_clinical_trial_metadata(ct1, ct2)

@@ -30,7 +30,8 @@ def generate_all_templates(target_dir: str):
     for template_type_dir in os.listdir(TEMPLATE_DIR):
         # Create the directory for this template type
         target_subdir = os.path.join(target_dir, template_type_dir)
-        os.makedirs(target_subdir)
+        if not os.path.exists(target_subdir):
+            os.makedirs(target_subdir)
 
         schema_subdir = os.path.join(TEMPLATE_DIR, template_type_dir)
 

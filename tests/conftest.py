@@ -7,15 +7,17 @@ import os
 import pytest
 
 from cidc_schemas.template import Template
-
-from .constants import SCHEMA_DIR
+from cidc_schemas.constants import SCHEMA_DIR, MANIFEST_DIR
 
 
 @pytest.fixture
-def pbmc_template():
-    pbmc_template_path = os.path.join(
-        SCHEMA_DIR, 'templates', 'manifests', 'pbmc_template.json')
-    return Template.from_json(pbmc_template_path, SCHEMA_DIR)
+def pbmc_schema_path():
+    return os.path.join(MANIFEST_DIR, 'pbmc_template.json')
+
+
+@pytest.fixture
+def pbmc_template(pbmc_schema_path):
+    return Template.from_json(pbmc_schema_path, SCHEMA_DIR)
 
 
 @pytest.fixture

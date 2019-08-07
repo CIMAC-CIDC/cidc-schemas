@@ -62,7 +62,11 @@
       "mergeOptions": {
         "idRef": "/cimac_participant_id"
       }
-    }
+    },
+    "assays": {
+        "description": "Assays for this trials",
+        "$ref": "assays/components/available_assays.json"
+      }
   },
   "required": ["lead_organization_study_id", "participants"]
 }

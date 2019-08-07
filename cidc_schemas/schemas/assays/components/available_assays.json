@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "id": "aliquot_to_assay",
-  "title": "Aliquot to assay",
-  "description": "An object to store one assay associated with a given aliquot\n",
+  "id": "available assays",
+  "title": "Assays which are available in the network",
+  "description": "Reference for every available assay in network",
   "properties": {
     "wes": {
       "$ref": "assays/wes_assay.json"

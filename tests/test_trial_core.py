@@ -38,6 +38,7 @@ def _sim_olink():
     
     return olink
 
+
 def test_aliquot():
 
     # create basic aliquot
@@ -48,26 +49,6 @@ def test_aliquot():
     # create validator assert schemas are valid.
     validator = _fetch_validator("aliquot")
     validator.validate(aliquot)
-
-    # now add a olink but make it invalid
-    assays = {
-        "olink": {"thisshould": "fail"}
-    }
-    aliquot['assay'] = assays
-    with pytest.raises(jsonschema.ValidationError):
-        validator.validate(aliquot) 
-
-    # update olink to be valid
-    olink = _sim_olink()
-    assays["olink"] = olink
-
-    # assert we can validate this.
-    validator.validate(aliquot)
-
-    # try to make an invalid assay
-    assays["wes"] = olink.copy()
-    with pytest.raises(jsonschema.ValidationError):
-        validator.validate(aliquot) 
 
 
 def test_clinicaltrial_simple():
@@ -106,6 +87,7 @@ def test_clinicaltrial_simple():
     # create validator assert schemas are valid.
     validator = _fetch_validator("clinical_trial")
     validator.validate(ct)
+
 
 def test_clinicaltrial_olink():
 

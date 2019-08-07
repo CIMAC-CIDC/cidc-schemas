@@ -90,6 +90,9 @@ def test_generate_all_templates(tmpdir):
     """Check that generate_all_templates appears to, in fact, generate all templates."""
     generate_all_templates(tmpdir)
 
+    # Run twice to ensure we overwrite files without issue
+    generate_all_templates(tmpdir)
+
     # Check that the right number of empty templates was generated
     schema_files = [f for _, _, fs in os.walk(TEMPLATE_DIR) for f in fs]
     generated_files = [f for _, _, fs in os.walk(tmpdir) for f in fs]

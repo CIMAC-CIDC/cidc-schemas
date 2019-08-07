@@ -27,7 +27,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
-    description="library for parsing manifest data",
+    description="The CIDC data model and tools for working with it.",
     python_requires='>=3.6',
     install_requires=requirements,
     license="MIT license",

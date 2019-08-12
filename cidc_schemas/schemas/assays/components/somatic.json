@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "somatic",
+  "title": "Somatic variant output sample files",
+  "type": "object",
+  "description": "Somatic variant calling",
+  "properties": {
+    "vcf_filtered": {
+      "$ref": "artifacts/artifact_vcf.json"
+    },
+    "maf": {
+      "$ref": "artifacts/artifact_maf.json"
+    }
+  },
+  "required": [
+    "vcf_filtered",
+    "maf"
+  ]
+}

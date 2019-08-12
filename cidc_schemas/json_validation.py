@@ -4,7 +4,7 @@
 
 import os
 import json
-import collections
+import collections.abc
 from typing import Optional, List, Callable, Union
 
 import dateparser
@@ -17,11 +17,14 @@ def load_and_validate_schema(
         schema_path: str,
         schema_root: str = SCHEMA_DIR,
         return_validator: bool = False,
-        on_refs: Optional[Callable] = None) -> Union[dict, jsonschema.Draft7Validator]:
+        on_refs: Optional[Callable[[dict], dict]] = None) -> Union[dict, jsonschema.Draft7Validator]:
     """
     Try to load a valid schema at `schema_path`. If an `on_refs` function
     is supplied, call that on all refs in the schema, rather than
-    resolving the refs. If return validator is true it will return
+    resolving the refs. Note: it is shallow, i.e., if calling `on_refs` on a node produces 
+    a new node that contains refs, those refs will not be resolved.
+
+    If return validator is true it will return
     the validator and the schema used in the validator.
     validator.
     """
@@ -49,25 +52,40 @@ def load_and_validate_schema(
         return validator
 
 
-def _map_refs(node: dict, fn: Callable):
+def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
     """
-    Apply `fn` to all refs in node, returning node with refs replaced
+    Apply `on_refs` to all nodes with `$ref`, returning node with refs replaced
     with results of the function call.
 
-    Note: _map_refs is shallow, i.e., if calling `fn` on a node produces 
+    Note: _map_refs is shallow, i.e., if calling `on_refs` on a node produces 
     a new node that contains refs, those refs will not be resolved.
     """
-    if isinstance(node, collections.Mapping) and '$ref' in node:
-        # We found a ref, so return it
-        return fn(node['$ref'])
-    elif isinstance(node, collections.Mapping):
+    if isinstance(node, collections.abc.Mapping) and '$ref' in node:
+        extra_keys = set(node.keys()).difference({'$ref', '$comment'})
+        if extra_keys:
+            # As for json-schema.org:
+            # "... You will always use $ref as the only key in an object: 
+            # any other keys you put there will be ignored by the validator."
+            # So we raise on that, to notify schema creator that s/he should not 
+            # expect those additional keys to be verified by schema validator.
+            raise Exception(f"Schema node with '$ref' should not contain anything else (besides '$comment' for docs). \
+                \nOn: {node} \nOffending keys {extra_keys}")
+        
+        # We found a ref, so return it mapped through `on_refs`
+        new_node = on_refs(node['$ref'])
+        # Plus concatenated new and old '$comment' fields 
+        # which should be just ignored anyways.
+        if '$comment' in new_node or '$comment' in node:
+            new_node['$comment'] = new_node.get('$comment', '') + node.get('$comment', '')
+        return new_node
+    elif isinstance(node, collections.abc.Mapping):
         # Look for all refs in this mapping
         for k, v in node.items():
-            node[k] = _map_refs(v, fn)
+            node[k] = _map_refs(v, on_refs)
     elif isinstance(node, (list, tuple)):
         # Look for all refs in this list
         for i in range(len(node)):
-            node[i] = _map_refs(node[i], fn)
+            node[i] = _map_refs(node[i], on_refs)
     return node
 
 
@@ -78,7 +96,7 @@ def _resolve_refs(base_uri: str, json_spec: dict) -> dict:
     """
     resolver = jsonschema.RefResolver(base_uri, json_spec)
 
-    def _resolve_ref(ref):
+    def _resolve_ref(ref:str) -> dict:
         with resolver.resolving(ref) as resolved_spec:
             # resolved_spec might have unresolved refs in it, so we pass
             # it back to _resolve_refs to resolve them. This way,
@@ -102,7 +120,17 @@ def validate_instance(instance: str, schema: dict, required: bool) -> Optional[s
             else:
                 return None
 
-        instance = convert(schema.get('format') or schema['type'], instance)
+        stype = schema.get('format')
+        if not stype:
+            stype = schema.get('type')
+        if not stype:
+            if 'allOf' in schema:
+                types = set(s.get('type') for s in schema['allOf'] if 'type' in s)
+                # if all types in 'allOf' are the same:
+                if len(types) == 1:
+                    stype = types.pop()
+
+        instance = convert(stype, instance)
 
         jsonschema.validate(
             instance, schema, format_checker=jsonschema.FormatChecker())
@@ -129,6 +157,12 @@ def _to_time(value):
     if not dt:
         raise ValueError(f"could not convert \"{value}\" to time")
     return dt.strftime('%H:%M:%S')
+
+def _to_datetime(value):
+    dt = _get_datetime(value)
+    if not dt:
+        raise ValueError(f"could not convert \"{value}\" to datetime")
+    return dt.isoformat()
 
 
 def _to_bool(value):

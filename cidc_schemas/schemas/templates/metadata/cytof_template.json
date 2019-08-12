@@ -13,12 +13,6 @@
           "assay creator": {
             "$ref": "assays/components/assay_core.json#properties/assay_creator"
           },
-          "assay category": {
-            "$ref": "assays/components/assay_core.json#properties/assay_category"
-          },
-          "artifact category": {
-            "$ref": "artifacts/artifact_core.json#properties/artifact_category"
-          },
           "panel name": {
             "$ref": "assays/components/cytof_panel.json#properties/panel_name"
           }

@@ -1,4 +1,4 @@
-{% macro header(schema, scope, required) -%}
+{% macro header(schema, scope, name, required) -%}
 {# Generate the section to put at the top of an entity's page #}
     <div class="container">
         <p>
@@ -26,19 +26,21 @@
 {%- endmacro %}
 
 {% macro properties_table(schema, required) -%}
-    {% if 'properties' in schema %}
-        {% set properties = schema['properties'].items() %}
-        {% set allOf = false %}
-    {% elif 'allOf' in schema %}
-        {% set properties = [] %}
-        {% set allOf = true %}
-        {% for prop in schema['allOf'] %}
-            {% if 'properties' in prop %}
-                {% set _ = properties.extend(prop['properties'].items()) %}
-            {% else %}
-                {% set _ = properties.append(("(inherits all properties from this schema)", prop)) %}
-            {% endif %}
-        {% endfor %}
+    {% set properties = [] %}
+    {% if 'properties' in schema or 'allOf' in schema %}
+        {% if 'allOf' in schema %}
+            {% for prop in schema['allOf'] %}
+                {% if 'url' in prop %}
+                    {% set _ = properties.append(("$ref", prop)) %}
+                {% endif %}
+                {% if 'properties' in prop %}
+                    {% set _ = properties.extend(prop['properties'].items()) %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if 'properties' in schema %}
+            {% set _ = properties.extend(schema['properties'].items()) %}
+        {% endif %}
     {% else %}
         {% set properties = schema.items() %}
     {% endif %}
@@ -49,50 +51,95 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         {% for prop_name, prop_schema in properties %}
-            <tr>
-                <td><a name="{{ prop_name }}"></a>{{ prop_name }}</td>
-                <td width=25%>
-                    {{ prop_schema["description"] }}
-                </td>
-                <td>
-                    {% if "type" in prop_schema %}
-                        &lt;{{ prop_schema["type"]}}&gt; {{ prop_schema["format"]}}
-                        <ul>
-                        {% for item in prop_schema["enum"] %}
-                            <li>{{ item }}</li>
-                        {% endfor %}
-                        {% if "items" in prop_schema %}
-                            {% if "url" in prop_schema["items"] %}
-                                <a href="{{ prop_schema['items']['url'] }}">{{ prop_schema['items']['url'].replace('.html', '') }}</a>
-                            {% else %}
-                                &lt;{{ prop_schema["items"]["type"]}}&gt; {{ prop_schema["items"]["format"]}}
-                                <ul>
-                                {% for item in prop_schema["items"]["enum"] %}
-                                    <li>{{ item }}</li>
-                                {% endfor %}
-                                </ul>
-                            {% endif %}
-                        {% endif %}
-                        </ul>
-                    {% elif "url" in prop_schema %}
-                        <a href="{{ prop_schema['url'] }}">{{ prop_schema['url'].replace('.html', '') }}</a>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if prop_name in required %}
-                        required
-                    {% else %}
-                        optional
-                    {% endif %}
-                </td>
-            </tr>
+            {% if prop_name in required or prop_name == "$ref" %}
+                {{ property_table_row(prop_name, prop_schema, True) }}
+            {% endif %}
+        {% endfor %}
+        {% for prop_name, prop_schema in properties %}
+            {% if prop_name not in required and prop_name != "$ref" %}
+                {{ property_table_row(prop_name, prop_schema, False) }}
+            {% endif %}
         {% endfor %}
     </table>
 {%- endmacro %}
+
+{% macro property_table_row(prop_name, prop_schema, required) -%}
+<tr>
+    <td>
+        {% if "$ref" != prop_name %}
+            <span id="{{ prop_name }}">
+                {{ prop_name }}
+            </span>
+            {% if required %}
+                <br><sup><mark>required</mark></sup>
+            {% endif %}
+        {% endif %}
+    </td>
+    <td width=55%>
+        {% if "$ref" == prop_name %}
+            Inherits all properties from schema:
+        {% elif "allOf" in prop_schema %}
+            Inherits all properties from schemas:
+        {% else %}
+            {{ prop_schema["description"] }}{% if prop_schema["$comment"] %}
+                <div><small>{{prop_schema["$comment"]}}</small></div>
+            {% endif %}
+        {% endif %}
+    </td>
+    <td>
+        {% if "type" in prop_schema %}
+            &lt; 
+                {{ prop_type_format(prop_schema) }}
+            &gt;
+            <ul>
+                {% for item in prop_schema["enum"] %}
+                    <li>{{ item | tojson }}</li>
+                {% endfor %}
+            </ul>
+            {% if "items" in prop_schema %} {# type: array #}
+                {% if "url" in prop_schema["items"] %}
+                    <a href="{{ prop_schema['items']['url'] }}">{{ prop_schema['items']['url'].replace('.html', '') }}</a>
+                {% else %}
+                    {{ prop_type_format(prop_schema["items"]) }}
+                {% endif %}
+            {% endif %}
+            {% if "additionalProperties" in prop_schema %}
+                {% if "propertyNames" in prop_schema and "$id" in prop_schema["propertyNames"] %}
+                    {{prop_schema["propertyNames"]["$id"]}} -&gt;
+                {% endif %}
+                {% if "url" in prop_schema["additionalProperties"] %}
+                    <a href="{{ prop_schema['additionalProperties']['url'] }}">{{ prop_schema['additionalProperties']['url'].replace('.html', '') }}</a>
+                {% else %}
+                    {{ prop_type_format(prop_schema["additionalProperties"]) }}
+                {% endif %}
+            {% endif %}
+        {% elif "url" in prop_schema %}
+            <a href="{{ prop_schema['url'] }}">{{ prop_schema['url'].replace('.html', '') }}</a>
+        {% elif "allOf" in prop_schema %}
+            <ul>
+            {% for ref in prop_schema['allOf'] %}
+                <li><a href="{{ref['url']}}">{{ref['url'].replace('.html', '')}}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            (UNKNOWN PROPERTY TYPE)
+        {% endif %}
+    </td>
+</tr>
+{%- endmacro %}
+
+{% macro prop_type_format(prop_schema) -%}
+    {{ prop_schema["type"]}} 
+    {% if "format" in prop_schema %} :  {{prop_schema["format"]}}{% endif %}
+    {% if "pattern" in prop_schema %} : <code>{{prop_schema["pattern"]}}</code> {% endif %}
+    {% if "object" == prop_schema["type"] and "propertyNames" in prop_schema and "pattern" in prop_schema["propertyNames"] %}
+        : <code>{{prop_schema["propertyNames"]["pattern"]}}</code>
+    {% endif %}
+{%- endmacro %}
+
 
 {% macro definitions_table(schema, required) -%}
     {% if 'definitions' in schema %}

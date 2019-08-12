@@ -28,25 +28,6 @@
       "description": "Name of the primary organization that oversees the clinical trial. Example: ECOG-ACRIN, SWOG, etc.",
       "type": "string"
     },
-    "assay_list": {
-      "type": "array",
-      "description": "List of approved assays to be performed on the clinical trial.",
-      "items": {
-        "type": "string",
-        "enum": [
-          "Whole Exome Sequencing (WES)",
-          "RNASeq",
-          "Conventional Immunohistochemistry",
-          "Multiplex Immunohistochemistry",
-          "Multiplex Immunofluorescence",
-          "CyTOF",
-          "OLink",
-          "NanoString",
-          "ELISpot",
-          "Multiplexed Ion-Beam Imaging (MIBI)"
-        ]
-      }
-    },
     "shipments": {
       "type": "array",
       "items": {
@@ -64,9 +45,9 @@
       }
     },
     "assays": {
-        "description": "Assays for this trials",
-        "$ref": "assays/components/available_assays.json"
-      }
+      "$comment": "Assays for this trial",
+      "$ref": "assays/components/available_assays.json"
+    }
   },
   "required": ["lead_organization_study_id", "participants"]
 }

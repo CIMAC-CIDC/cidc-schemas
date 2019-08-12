@@ -5,9 +5,21 @@
   "type": "object",
   "description": "A single data record from an NGS assay",
   "properties": {
-    "entry_id": {
-        "description": "Identifier which is unique to this entry, this is clincal trial, participant, aliquot id's",
-        "type": "string"
+    "cimac_participant_id": {
+        "$comment": "Id of an participant within this clinical trial, that this assay record is based upon.",
+        "$ref": "participant.json#properties/cimac_participant_id"
+    },
+    "cimac_sample_id": {
+        "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
+        "$ref": "sample.json#properties/cimac_sample_id"
+    },
+    "cimac_aliquot_id": {
+        "$comment": "Id of an aliquot within this clinical trial, that this assay record is based upon.",
+        "$ref": "aliquot.json#properties/cimac_aliquot_id"
+    },
+    "files": {
+      "$comment": "Fastq and read group mapping files produced by the assay for that .",
+      "$ref": "assays/components/fastq_pair_and_mapping.json"
     },
     "library_kit_lot": {
       "description": "Lot number for the library construction kit",
@@ -40,6 +52,9 @@
   "required": [
     "library_kit_lot",
     "library_prep_date",
-    "entry_id"
+    "cimac_participant_id",
+    "cimac_sample_id",
+    "cimac_aliquot_id",
+    "files"
   ]
 }

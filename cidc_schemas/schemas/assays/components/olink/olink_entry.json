@@ -60,12 +60,12 @@
       "description": "Panel used for the assay",
       "type": "string"
     },
-    "number_of_sample": {
-      "description": "Number of sample analyzed in the assay",
+    "number_of_samples": {
+      "description": "Number of samples analyzed in the assay",
       "type": "number"
     },
-    "number_of_sample_failed": {
-      "description": "Number of sample failed in the assay",
+    "number_of_samples_failed": {
+      "description": "Number of samples failed in the assay",
       "type": "number"
     },
     "npx_manager_version": {
@@ -84,7 +84,7 @@
     "assay_prefix",
     "filetype",
     "panel",
-    "number_of_sample",
+    "number_of_samples",
     "npx_manager_version"
   ]
 }

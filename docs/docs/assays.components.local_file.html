@@ -41,7 +41,10 @@
   <div class="container">
     <h3>Properties</h3>
     
+    
         
+        
+            
         
     
 
@@ -51,35 +54,67 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
-            <tr>
-                <td><a name="file_path"></a>file_path</td>
-                <td width=25%>
-                    Path to a file on a users computer
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="file_path">
+                file_path
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a users computer
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
         
     </table>
 
     
   </div>
+
+  <div class="container">
+    <h3>local_file.full.json</h3>
+  	<pre><code>{
+    "$id": "local_file",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "A type to store local file paths",
+    "properties": {
+        "file_path": {
+            "description": "Path to a file on a users computer",
+            "type": "string"
+        }
+    },
+    "required": [],
+    "title": "Local file type",
+    "type": "object"
+}</code></pre>
+  </container>
 
 
     </main>

@@ -15,7 +15,6 @@ from .constants import SCHEMA_DIR
 BASE_OBJ = {
     "artifact_category": "Manifest File",
     "artifact_creator": "DFCI",
-    "assay_category": "Whole Exome Sequencing (WES)",
     "object_url": "dummy",
     "file_name": "dummy.txt",
     "file_size_bytes": 1,

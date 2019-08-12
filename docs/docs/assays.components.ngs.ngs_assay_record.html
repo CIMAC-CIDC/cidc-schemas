@@ -1,0 +1,744 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CIDC Schemas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main role="main">
+      
+
+  
+    <div class="container">
+        <p>
+            <a href="index.html">CIDC Data Model</a>
+        </p>
+        <h1>NGS assay record</h1>
+        <p>
+            <b>Description:</b>  A single data record from an NGS assay
+        </p>
+        
+    </div>
+
+  <div class="container">
+    <h3>Properties</h3>
+    
+    
+        
+        
+            
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cimac_participant_id">
+                cimac_participant_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+                <div><small>Id of an participant within this clinical trial, that this assay record is based upon.</small></div>
+            
+        
+    </td>
+    <td>
+        
+            <a href="participant.html#cimac_participant_id">participant#cimac_participant_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cimac_sample_id">
+                cimac_sample_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+                <div><small>Id of an sample within this clinical trial, that this assay record is based upon.</small></div>
+            
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#cimac_sample_id">sample#cimac_sample_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cimac_aliquot_id">
+                cimac_aliquot_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+                <div><small>Id of an aliquot within this clinical trial, that this assay record is based upon.</small></div>
+            
+        
+    </td>
+    <td>
+        
+            <a href="aliquot.html#cimac_aliquot_id">aliquot#cimac_aliquot_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="files">
+                files
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+                <div><small>Fastq and read group mapping files produced by the assay for that .</small></div>
+            
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.fastq_pair_and_mapping.html">assays.components.fastq_pair_and_mapping</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="library_kit_lot">
+                library_kit_lot
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Lot number for the library construction kit
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="library_prep_date">
+                library_prep_date
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Date of library construction.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+     :  date
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="input_ng">
+                input_ng
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Amount of DNA/RNA (in ng) used for library construction
+        
+    </td>
+    <td>
+        
+            &lt; 
+                integer 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="library_yield_ng">
+                library_yield_ng
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Resulting yield (in ng) from library construction
+        
+    </td>
+    <td>
+        
+            &lt; 
+                integer 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="average_insert_size">
+                average_insert_size
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The average insert size for the library
+        
+    </td>
+    <td>
+        
+            &lt; 
+                integer 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+    </table>
+
+    
+  </div>
+
+  <div class="container">
+    <h3>ngs_assay_record.full.json</h3>
+  	<pre><code>{
+    "$id": "ngs_assay_record",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "A single data record from an NGS assay",
+    "properties": {
+        "average_insert_size": {
+            "description": "The average insert size for the library",
+            "exclusiveMinimum": 0,
+            "maximum": 10000,
+            "type": "integer"
+        },
+        "cimac_aliquot_id": {
+            "$comment": "Id of an aliquot within this clinical trial, that this assay record is based upon.",
+            "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
+            "type": "string"
+        },
+        "cimac_participant_id": {
+            "$comment": "Id of an participant within this clinical trial, that this assay record is based upon.",
+            "description": "Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234.",
+            "type": "string"
+        },
+        "cimac_sample_id": {
+            "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
+            "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
+            "type": "string"
+        },
+        "files": {
+            "$comment": "Fastq and read group mapping files produced by the assay for that .",
+            "$id": "fastq_pair_and_mapping",
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "description": "Paired end sequencing fastq file pair and read group mapping file",
+            "properties": {
+                "fastq_1": {
+                    "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
+                    "$id": "fastq_artifact",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "oneOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artificat",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
+                                    "description": "The name of the file with extension",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artfiact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "info": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    ],
+                    "description": "Information about a fastq file",
+                    "title": "FastQ Artifact",
+                    "type": "object"
+                },
+                "fastq_2": {
+                    "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
+                    "$id": "fastq_artifact",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "oneOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artificat",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
+                                    "description": "The name of the file with extension",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artfiact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "info": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    ],
+                    "description": "Information about a fastq file",
+                    "title": "FastQ Artifact",
+                    "type": "object"
+                },
+                "read_group_mapping_file": {
+                    "$comment": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
+                    "$id": "text_artifact",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "oneOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artificat",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
+                                    "description": "The name of the file with extension",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artfiact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "info": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    ],
+                    "description": "Information about text files",
+                    "mergeStrategy": "objectMerge",
+                    "title": "Text Artifact",
+                    "type": "object"
+                }
+            },
+            "required": [
+                "fastq_1",
+                "fastq_2",
+                "read_group_mapping_file"
+            ],
+            "title": "Fastq pair and group mapping",
+            "type": "object"
+        },
+        "input_ng": {
+            "description": "Amount of DNA/RNA (in ng) used for library construction",
+            "exclusiveMinimum": 0,
+            "maximum": 10000,
+            "type": "integer"
+        },
+        "library_kit_lot": {
+            "description": "Lot number for the library construction kit",
+            "type": "string"
+        },
+        "library_prep_date": {
+            "description": "Date of library construction.",
+            "format": "date",
+            "type": "string"
+        },
+        "library_yield_ng": {
+            "description": "Resulting yield (in ng) from library construction",
+            "exclusiveMinimum": 0,
+            "maximum": 2000,
+            "type": "integer"
+        }
+    },
+    "required": [
+        "library_kit_lot",
+        "library_prep_date",
+        "cimac_participant_id",
+        "cimac_sample_id",
+        "cimac_aliquot_id",
+        "files"
+    ],
+    "title": "NGS assay record",
+    "type": "object"
+}</code></pre>
+  </container>
+
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+    

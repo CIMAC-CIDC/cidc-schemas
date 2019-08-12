@@ -1,7 +1,6 @@
 "#t","METADATA FILE FOR RNA EXPRESSION"
 "#p","LEAD ORGANIZATION STUDY ID","10021"
 "#p","ASSAY CREATOR","MD Anderson"
-"#p","ASSAY CATEGORY","RNASeq"
 "#p","ENRICHMENT METHOD","PolyA capture"
 "#p","ENRICHMENT KIT","Illumina - TruSeq Stranded PolyA mRNA"
 "#p","STRANDED LIBRARY"

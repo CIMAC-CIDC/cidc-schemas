@@ -8,7 +8,6 @@ ROOT_DIR = os.path.join(DOCS_DIR, '..')
 TEMPLATES_DIR = os.path.join(DOCS_DIR, 'templates')
 HTML_DIR = os.path.join(DOCS_DIR, "docs")
 
-
 def load_schemas() -> dict:
     """
     Load all JSON schemas into a dictionary keyed on the
@@ -21,19 +20,22 @@ def load_schemas() -> dict:
         for path in paths:
             schema_path = os.path.join(root, path)
 
-            def json_to_html(ref):
+            def json_to_html(ref:str) -> dict:
                 """Update refs to refer to the URL of the corresponding documentation."""
                 url = ref.replace('.json', '.html')
                 url = url.replace('properties/', '')
                 url = url.replace('definitions/', '')
                 url = url.replace('/', '.')
-                return {'url': url}
+                return {'url':url}
 
+            full_json = load_and_validate_schema(
+                schema_path, SCHEMA_DIR)
             schema = load_and_validate_schema(
                 schema_path, SCHEMA_DIR, on_refs=json_to_html)
             
-            schema_path = path.replace(".json", ".html").replace("/", ".")
-            root_schemas[schema_path] = schema
+            assert path.endswith(".json")
+            schema_name = path[:-5].replace("/", ".")
+            root_schemas[schema_name] = (schema, full_json)
 
         relative_root = root.replace(SCHEMA_DIR, "").replace("/", ".")
         relative_root = relative_root.replace(".", "", 1)
@@ -69,19 +71,22 @@ def generate_docs(out_directory: str = HTML_DIR):
             template = entity_template
 
         # Generate the templates
-        for name, schema in entity.items():
+        for name, (schema, full_json) in entity.items():
+
+            full_name = f'{directory}.{name}'
+            if full_name.startswith("."):
+                full_name = full_name[1::]
 
             # render the HTML to string
             entity_html = template.render(
-                name=name, schema=schema, scope=directory)
-
-            # modify filename
-            file_name = f'{directory}.{name}'
-            if file_name[0] == ".":
-                file_name = file_name[1::]
+                name=name,
+                full_name=full_name,
+                schema=schema,
+                scope=directory,
+                full_json_str=json.dumps(full_json, sort_keys=True, indent=4))
 
             # write this out
-            with open(os.path.join(out_directory, file_name), 'w') as f:
+            with open(os.path.join(out_directory, f'{full_name}.html'), 'w') as f:
                 f.write(entity_html)
 
 

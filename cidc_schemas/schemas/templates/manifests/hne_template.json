@@ -108,10 +108,10 @@
               "$ref": "aliquot.json#properties/fibrosis_percent_area"
             },
             "sample quality status": {
-              "$ref": "aliquot.json#properties/sample_quality_status"
+              "$ref": "aliquot.json#properties/aliquot_quality_status"
             },
             "sample replacement": {
-              "$ref": "aliquot.json#properties/sample_replacement"
+              "$ref": "aliquot.json#properties/aliquot_replacement"
             }
           }
         }

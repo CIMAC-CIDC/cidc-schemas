@@ -6,7 +6,6 @@
   "description": "Germline variant output sample files",
   "properties": {
     "SNP92_recode": {
-      "description": "",
       "$ref": "artifacts/artifact_vcf.json"
     }
   },

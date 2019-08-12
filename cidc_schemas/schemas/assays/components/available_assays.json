@@ -1,26 +1,50 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "id": "available assays",
+  "$id": "available_assays",
   "title": "Assays which are available in the network",
   "description": "Reference for every available assay in network",
   "properties": {
     "wes": {
-      "$ref": "assays/wes_assay.json"
+      "type": "array",
+      "items": {
+        "$ref": "assays/wes_assay.json"
+      }, 
+      "mergeStrategy": "append"
     },
     "rna_expression": {
-      "$ref": "assays/rna_expression_assay.json"
+      "type": "array",
+      "items": {
+        "$ref": "assays/rna_expression_assay.json"
+      },
+      "mergeStrategy": "append"
     },
     "cytof": {
-      "$ref": "assays/cytof_assay.json"
+      "type": "array",
+      "items": {
+        "$ref": "assays/cytof_assay.json"
+      },
+      "mergeStrategy": "append"
     },
     "olink": {
-      "$ref": "assays/olink_assay.json"
+      "$comment": "REVISIT An `append` merge strategy disallowes updates to assay entries. Priti said there isn't anything like `assay id`, but Dave or Joyce might have something in tracking spreadsheet.",
+      "type": "array",
+      "items": {
+        "$ref": "assays/olink_assay.json"
+      }
     },
     "mif": {
-      "$ref": "assays/mif_assay.json"
+      "type": "array",
+      "items": {
+        "$ref": "assays/mif_assay.json"
+      },
+      "mergeStrategy": "append"
     },
     "micsss": {
-      "$ref": "assays/micsss_assay.json"
+      "type": "array",
+      "items": {
+        "$ref": "assays/micsss_assay.json"
+      },
+      "mergeStrategy": "append"
     }
   }
 }

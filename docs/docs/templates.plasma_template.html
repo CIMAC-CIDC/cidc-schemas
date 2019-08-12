@@ -42,7 +42,10 @@
   <div class="container">
     <h3>Properties</h3>
     
+    
         
+        
+            
         
     
 
@@ -52,29 +55,335 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
-            <tr>
-                <td><a name="worksheets"></a>worksheets</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="worksheets">
+                worksheets
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+        
+    </td>
+    <td>
+        
+            (UNKNOWN PROPERTY TYPE)
+        
+    </td>
+</tr>
+            
         
     </table>
 
     
   </div>
+
+  <div class="container">
+    <h3>plasma_template.full.json</h3>
+  	<pre><code>{
+    "$id": "plasma_shipping",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "category": "manifest",
+    "description": "Shipping / receiving manifest for transferring Plasma samples.\n",
+    "properties": {
+        "worksheets": {
+            "Plasma": {
+                "data_columns": {
+                    "Filled by Biorepository": {
+                        "arm id": {
+                            "description": "Identifies the trial arm to which the participant belongs. Example: Arm A.",
+                            "type": "string"
+                        },
+                        "blood collection date": {
+                            "description": "Date of blood collection.",
+                            "format": "date",
+                            "type": "string"
+                        },
+                        "blood collection time": {
+                            "description": "Time of blood collection.",
+                            "format": "time",
+                            "type": "string"
+                        },
+                        "blood processing date": {
+                            "description": "Date of blood processing.",
+                            "format": "date",
+                            "type": "string"
+                        },
+                        "blood processing time": {
+                            "description": "Time of blood processing.",
+                            "format": "time",
+                            "type": "string"
+                        },
+                        "cimac participant id": {
+                            "description": "Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234.",
+                            "type": "string"
+                        },
+                        "cimac sample id": {
+                            "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
+                            "type": "string"
+                        },
+                        "cohort id": {
+                            "description": "Identifies the treatment cohort to which the participant belongs. Example: Cohort A.",
+                            "type": "string"
+                        },
+                        "lead organization study id": {
+                            "description": "Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.",
+                            "type": "string"
+                        },
+                        "quantity": {
+                            "description": "Quantity of each aliquot shipped.",
+                            "type": "integer"
+                        },
+                        "sample location": {
+                            "description": "Sample location within the shipping container. Example: A1.",
+                            "type": "string"
+                        },
+                        "sample source": {
+                            "$comment": "RECHECK Moved here from aliquot level.",
+                            "description": "Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52",
+                            "type": "string"
+                        },
+                        "site sample id": {
+                            "description": "Sample identifier assigned by the biorepository site. Example: EA123-45.",
+                            "type": "string"
+                        },
+                        "specimen format": {
+                            "description": "The format in which the sample was sent.",
+                            "enum": [
+                                "FFPE Block",
+                                "FFPE Scroll",
+                                "FFPE Core Punch",
+                                "Unstained Slide",
+                                "Frozen Tissue",
+                                "Sodium Heparin Green-Top Tube",
+                                "Streck Tube",
+                                "EDTA Tube",
+                                "Archival FFPE Block",
+                                "Archival FFPE Slides",
+                                "Archival FFPE Core Punch",
+                                "Archival FFPE Scroll",
+                                "Frozen Stool",
+                                "DNA-Preserved Stool",
+                                "Other"
+                            ],
+                            "type": "string"
+                        },
+                        "specimen type": {
+                            "description": "Type of sample sent.",
+                            "enum": [
+                                "Core Needle Biopsy",
+                                "Surgical Resection",
+                                "Endoscopic Biopsy",
+                                "Punch Biopsy",
+                                "Plasma",
+                                "PBMC",
+                                "Whole Blood",
+                                "Stool Sample",
+                                "Bone Marrow Aspirate",
+                                "Other"
+                            ],
+                            "type": "string"
+                        },
+                        "time point": {
+                            "description": "Study related collection time point, as described in the protocol intake form. Example: Progression.",
+                            "title": "Time Point",
+                            "type": "string"
+                        },
+                        "trial participant id": {
+                            "description": "Trial Participant Identifier. Example: PT123.",
+                            "type": "string"
+                        },
+                        "units": {
+                            "description": "The unit of biological material from this aliquot.",
+                            "enum": [
+                                "\u00b5L",
+                                "mL",
+                                "mg",
+                                "ng",
+                                "Vials",
+                                "Slides",
+                                "Scrolls",
+                                "Blocks",
+                                "ng/\u00b5L",
+                                "cells/ml",
+                                "N/A",
+                                "Other"
+                            ],
+                            "type": "string"
+                        },
+                        "volume quantity": {
+                            "description": "Volume of aliquot shipped.",
+                            "type": "number"
+                        }
+                    },
+                    "Filled by CIMAC Lab": {
+                        "aliquot quality status": {
+                            "description": "Final status of aliquot after QC and pathology review.",
+                            "enum": [
+                                "Usable for Assay",
+                                "Not Usable for Assay",
+                                "Verifying",
+                                "Other"
+                            ],
+                            "type": "string"
+                        },
+                        "aliquot replacement": {
+                            "description": "Status of aliquot if replacement is/was requested.",
+                            "enum": [
+                                "Replacement Requested",
+                                "Replacement Tested",
+                                "N/A"
+                            ],
+                            "type": "string"
+                        },
+                        "aliquot status": {
+                            "description": "Status of aliquot used for other assay, exhausted, destroyed, or returned.",
+                            "enum": [
+                                "Aliquot Returned",
+                                "Aliquot Exhausted",
+                                "Remainder used for other Assay",
+                                "Other",
+                                "Aliquot Leftover"
+                            ],
+                            "type": "string"
+                        },
+                        "cimac aliquot id": {
+                            "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
+                            "type": "string"
+                        },
+                        "material remaining": {
+                            "description": "Receiving site indicates how much material remains after assay use.",
+                            "type": "number"
+                        },
+                        "material used": {
+                            "description": "Receiving site indicates how much material was used for assay purposes.",
+                            "type": "number"
+                        }
+                    }
+                },
+                "preamble_rows": {
+                    "account number": {
+                        "description": "Courier account number to pay for shipping if avaialable. Example: 45465732.",
+                        "type": "string"
+                    },
+                    "assay priority": {
+                        "description": "Priority of the assay as it appears on the intake form.",
+                        "enum": [
+                            "Assay-1",
+                            "Assay-2",
+                            "Assay-3",
+                            "Assay-4",
+                            "Assay-5",
+                            "Assay-6",
+                            "Assay-7",
+                            "Assay-8",
+                            "Assay-9",
+                            "Assay-10",
+                            "Assay-11",
+                            "Assay-12",
+                            "Assay-13",
+                            "Assay-14",
+                            "Assay-15",
+                            "Other"
+                        ],
+                        "type": "string"
+                    },
+                    "assay run number": {
+                        "description": "Assay run number for samples received.",
+                        "type": "integer"
+                    },
+                    "assay type": {
+                        "description": "Assay and sample type used. Example: Green-top tube - Plasma (Olink).",
+                        "type": "string"
+                    },
+                    "batch number": {
+                        "description": "The number corresponding to the batch sent for this assay.",
+                        "type": "integer"
+                    },
+                    "box number": {
+                        "description": "Box identifier for samples, if sample shipment container includes multiple boxes for each sample/assay type.",
+                        "type": "integer"
+                    },
+                    "courier": {
+                        "description": "Courier utilized for shipment.",
+                        "enum": [
+                            "FEDEX",
+                            "USPS",
+                            "UPC"
+                        ],
+                        "type": "string"
+                    },
+                    "date shipped": {
+                        "description": "Date of shipment.",
+                        "format": "date",
+                        "type": "string"
+                    },
+                    "lead organization study id": {
+                        "description": "Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.",
+                        "type": "string"
+                    },
+                    "manifest id": {
+                        "description": "Filename of the manifest used to ship this sample. Example: E4412_PBMC.",
+                        "type": "string"
+                    },
+                    "num of path report": {
+                        "description": "Number if pathology report received.",
+                        "type": "integer"
+                    },
+                    "num of samples good": {
+                        "description": "Number of Samples Received in Good Condition.",
+                        "type": "integer"
+                    },
+                    "num of samples shipped": {
+                        "description": "Count of specimens distributed by site.",
+                        "type": "integer"
+                    },
+                    "request": {
+                        "description": "Assigns a request identifier (mandatory or optional) for the assay.",
+                        "type": "string"
+                    },
+                    "ship from": {
+                        "description": "Shipping from [free text: person or organization, address, phone number, email address.]",
+                        "type": "string"
+                    },
+                    "ship to": {
+                        "description": "Shipping to [free text: person or organization, address, phone number, email address.]",
+                        "type": "string"
+                    },
+                    "shipping condition": {
+                        "description": "Type of shippment made.",
+                        "enum": [
+                            "Frozen (Dry Ice)",
+                            "Frozen (Dry Shipper)",
+                            "Ambient (Ice Pack)",
+                            "Ambient",
+                            "Other"
+                        ],
+                        "type": "string"
+                    },
+                    "tracking number": {
+                        "description": "Air bill number assigned to shipment. Example: 4567788343.",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "title": "Shipping manifest for Plasma samples",
+    "type": "object"
+}</code></pre>
+  </container>
 
 
     </main>

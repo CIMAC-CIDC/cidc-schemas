@@ -1,10 +1,10 @@
-{% macro header(schema, scope, required) -%}
+{% macro header(schema, scope, name, required) -%}
 {# Generate the section to put at the top of an entity's page #}
     <div class="container">
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>{{ schema["title"] }}</h1>
+        <h1>{{ schema["title"] }} <small> - <a href="{{name}}.full.json">full json</a></small></h1>
         <p>
             <b>Description:</b>  {{ schema["description"] }}
         </p>
@@ -53,45 +53,57 @@
         </tr>
         </thead>
         {% for prop_name, prop_schema in properties %}
-            <tr>
-                <td><a name="{{ prop_name }}"></a>{{ prop_name }}</td>
-                <td width=25%>
-                    {{ prop_schema["description"] }}
-                </td>
-                <td>
-                    {% if "type" in prop_schema %}
-                        &lt;{{ prop_schema["type"]}}&gt; {{ prop_schema["format"]}}
-                        <ul>
-                        {% for item in prop_schema["enum"] %}
-                            <li>{{ item }}</li>
-                        {% endfor %}
-                        {% if "items" in prop_schema %}
-                            {% if "url" in prop_schema["items"] %}
-                                <a href="{{ prop_schema['items']['url'] }}">{{ prop_schema['items']['url'].replace('.html', '') }}</a>
-                            {% else %}
-                                &lt;{{ prop_schema["items"]["type"]}}&gt; {{ prop_schema["items"]["format"]}}
-                                <ul>
-                                {% for item in prop_schema["items"]["enum"] %}
-                                    <li>{{ item }}</li>
-                                {% endfor %}
-                                </ul>
-                            {% endif %}
-                        {% endif %}
-                        </ul>
-                    {% elif "url" in prop_schema %}
-                        <a href="{{ prop_schema['url'] }}">{{ prop_schema['url'].replace('.html', '') }}</a>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if prop_name in required %}
-                        required
-                    {% else %}
-                        optional
-                    {% endif %}
-                </td>
-            </tr>
+            {% if prop_name in required %}
+                {{ property_table_row(prop_name, prop_schema, required) }}
+            {% endif %}
+        {% endfor %}
+        {% for prop_name, prop_schema in properties %}
+            {% if prop_name not in required %}
+                {{ property_table_row(prop_name, prop_schema, required) }}
+            {% endif %}
         {% endfor %}
     </table>
+{%- endmacro %}
+
+{% macro property_table_row(prop_name, prop_schema, required) -%}
+<tr>
+    <td><a name="{{ prop_name }}"></a>{{ prop_name }}</td>
+    <td width=25%>
+        {{ prop_schema["description"] }}
+    </td>
+    <td>
+        {% if "type" in prop_schema %}
+            &lt;{{ prop_schema["type"]}}&gt; {{ prop_schema["format"]}}
+            <ul>
+            {% for item in prop_schema["enum"] %}
+                <li>{{ item }}</li>
+            {% endfor %}
+            {% if "items" in prop_schema %}
+                {% if "url" in prop_schema["items"] %}
+                    <a href="{{ prop_schema['items']['url'] }}">{{ prop_schema['items']['url'].replace('.html', '') }}</a>
+                {% else %}
+                    &lt;{{ prop_schema["items"]["type"]}}&gt; {{ prop_schema["items"]["format"]}}
+                    <ul>
+                    {% for item in prop_schema["items"]["enum"] %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endif %}
+            </ul>
+        {% elif "url" in prop_schema %}
+            <a href="{{ prop_schema['url'] }}">{{ prop_schema['url'].replace('.html', '') }}</a>
+        {% else %}
+        {% endif %}
+    </td>
+    <td>
+        {% if prop_name in required %}
+            required
+        {% else %}
+            optional
+        {% endif %}
+    </td>
+</tr>
 {%- endmacro %}
 
 {% macro definitions_table(schema, required) -%}

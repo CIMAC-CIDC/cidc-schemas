@@ -1,0 +1,258 @@
+{
+    "$id": "cytof_input",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "CyTOF Assay Input Files",
+    "items": {
+        "properties": {
+            "processed_fcs": {
+                "$id": "binary_artifact",
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "allOf": [
+                    {
+                        "$id": "artifact",
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "description": "Any file artifact associated with a clinical trial.",
+                        "properties": {
+                            "artifact_category": {
+                                "description": "Artifact category.",
+                                "enum": [
+                                    "Assay Artifact from CIMAC",
+                                    "Pipeline Artifact",
+                                    "Manifest File",
+                                    "Other"
+                                ],
+                                "type": "string"
+                            },
+                            "artifact_creator": {
+                                "description": "The name of the center that created this artificat",
+                                "enum": [
+                                    "DFCI",
+                                    "Mount Sinai",
+                                    "Stanford",
+                                    "MD Anderson"
+                                ],
+                                "type": "string"
+                            },
+                            "assay_category": {
+                                "description": "Assay category.",
+                                "enum": [
+                                    "Whole Exome Sequencing (WES)",
+                                    "RNASeq",
+                                    "Conventional Immunohistochemistry",
+                                    "Multiplex Immunohistochemistry",
+                                    "Multiplex Immunofluorescence",
+                                    "CyTOF",
+                                    "OLink",
+                                    "NanoString",
+                                    "ELISpot",
+                                    "Multiplexed Ion-Beam Imaging (MIBI)",
+                                    "Other",
+                                    "None"
+                                ],
+                                "type": "string"
+                            },
+                            "file_name": {
+                                "description": "The name of the file with extension",
+                                "type": "string"
+                            },
+                            "file_size_bytes": {
+                                "description": "File size in bytes.",
+                                "type": "integer"
+                            },
+                            "file_type": {
+                                "description": "File Type.",
+                                "enum": [
+                                    "FASTA",
+                                    "FASTQ",
+                                    "TIFF",
+                                    "VCF",
+                                    "TSV",
+                                    "Excel",
+                                    "NPX",
+                                    "BAM",
+                                    "MAF",
+                                    "PNG",
+                                    "JPG",
+                                    "XML",
+                                    "Other"
+                                ],
+                                "type": "string"
+                            },
+                            "md5_hash": {
+                                "description": "MD5 Hash of artifact.",
+                                "type": "string"
+                            },
+                            "object_url": {
+                                "description": "URL to artifact within Google Bucket.",
+                                "type": "string"
+                            },
+                            "uploaded_timestamp": {
+                                "description": "Timestamp of when artfiact was loaded into the system.",
+                                "type": "string"
+                            },
+                            "uploader": {
+                                "type": "string"
+                            },
+                            "uuid": {
+                                "description": "UUID of artifact.",
+                                "type": "string"
+                            },
+                            "visible": {
+                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "file_name",
+                            "object_url",
+                            "uploaded_timestamp",
+                            "file_size_bytes",
+                            "md5_hash",
+                            "artifact_category",
+                            "assay_category",
+                            "file_type"
+                        ],
+                        "title": "Artifact",
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "info": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                ],
+                "description": "Information about binary files.",
+                "title": "Binary Artifact",
+                "type": "object"
+            },
+            "source_fcs": {
+                "$id": "binary_artifact",
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "allOf": [
+                    {
+                        "$id": "artifact",
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "description": "Any file artifact associated with a clinical trial.",
+                        "properties": {
+                            "artifact_category": {
+                                "description": "Artifact category.",
+                                "enum": [
+                                    "Assay Artifact from CIMAC",
+                                    "Pipeline Artifact",
+                                    "Manifest File",
+                                    "Other"
+                                ],
+                                "type": "string"
+                            },
+                            "artifact_creator": {
+                                "description": "The name of the center that created this artificat",
+                                "enum": [
+                                    "DFCI",
+                                    "Mount Sinai",
+                                    "Stanford",
+                                    "MD Anderson"
+                                ],
+                                "type": "string"
+                            },
+                            "assay_category": {
+                                "description": "Assay category.",
+                                "enum": [
+                                    "Whole Exome Sequencing (WES)",
+                                    "RNASeq",
+                                    "Conventional Immunohistochemistry",
+                                    "Multiplex Immunohistochemistry",
+                                    "Multiplex Immunofluorescence",
+                                    "CyTOF",
+                                    "OLink",
+                                    "NanoString",
+                                    "ELISpot",
+                                    "Multiplexed Ion-Beam Imaging (MIBI)",
+                                    "Other",
+                                    "None"
+                                ],
+                                "type": "string"
+                            },
+                            "file_name": {
+                                "description": "The name of the file with extension",
+                                "type": "string"
+                            },
+                            "file_size_bytes": {
+                                "description": "File size in bytes.",
+                                "type": "integer"
+                            },
+                            "file_type": {
+                                "description": "File Type.",
+                                "enum": [
+                                    "FASTA",
+                                    "FASTQ",
+                                    "TIFF",
+                                    "VCF",
+                                    "TSV",
+                                    "Excel",
+                                    "NPX",
+                                    "BAM",
+                                    "MAF",
+                                    "PNG",
+                                    "JPG",
+                                    "XML",
+                                    "Other"
+                                ],
+                                "type": "string"
+                            },
+                            "md5_hash": {
+                                "description": "MD5 Hash of artifact.",
+                                "type": "string"
+                            },
+                            "object_url": {
+                                "description": "URL to artifact within Google Bucket.",
+                                "type": "string"
+                            },
+                            "uploaded_timestamp": {
+                                "description": "Timestamp of when artfiact was loaded into the system.",
+                                "type": "string"
+                            },
+                            "uploader": {
+                                "type": "string"
+                            },
+                            "uuid": {
+                                "description": "UUID of artifact.",
+                                "type": "string"
+                            },
+                            "visible": {
+                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "file_name",
+                            "object_url",
+                            "uploaded_timestamp",
+                            "file_size_bytes",
+                            "md5_hash",
+                            "artifact_category",
+                            "assay_category",
+                            "file_type"
+                        ],
+                        "title": "Artifact",
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "info": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                ],
+                "description": "Information about binary files.",
+                "title": "Binary Artifact",
+                "type": "object"
+            }
+        },
+        "type": "object"
+    },
+    "title": "CyTOF Input Files",
+    "type": "array"
+}

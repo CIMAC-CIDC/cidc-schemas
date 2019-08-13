@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>MICSSS antibody</h1>
+        <h1>MICSSS antibody <small> - <a href="assays.components.micsss_antibody.full.json">full json</a></small></h1>
         <p>
             <b>Description:</b>  Data specific to antibody prepration on the multiplex immunohistochemical platform
 
@@ -56,362 +56,431 @@
         </tr>
         </thead>
         
-            <tr>
-                <td><a name="primary_antibody_block"></a>primary_antibody_block</td>
-                <td width=25%>
-                    Blocking reagent used for primary antibody sample.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            
+                <tr>
+    <td><a name="primary_antibody_block"></a>primary_antibody_block</td>
+    <td width=25%>
+        Blocking reagent used for primary antibody sample.
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="postPrimary_linker_block"></a>postPrimary_linker_block</td>
-                <td width=25%>
-                    Linker block between the antibody and the therapeutic drug.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
         
-            <tr>
-                <td><a name="secondary_antibody_block"></a>secondary_antibody_block</td>
-                <td width=25%>
-                    Secondary antibody blocking reagent used for primary sample.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="species"></a>species</td>
-                <td width=25%>
-                    Host species from which primary antibody sample was derived.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            required
         
-            <tr>
-                <td><a name="isotype"></a>isotype</td>
-                <td width=25%>
-                    Antibody isotype used to help differentiate non-specific background signal from specific antibody signal.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+    </td>
+</tr>
+            
         
-            <tr>
-                <td><a name="primary_antibody_dilution"></a>primary_antibody_dilution</td>
-                <td width=25%>
-                    Concentration ratio of dilution buffer for primary antibody.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="primary_antibody_incubation_time"></a>primary_antibody_incubation_time</td>
-                <td width=25%>
-                    Time of primary antibody incubation.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; time
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="primary_antibody_incubation_temp"></a>primary_antibody_incubation_temp</td>
-                <td width=25%>
-                    Temperature used for primary antibody incubation.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="secondary_antibody"></a>secondary_antibody</td>
-                <td width=25%>
-                    Secondary antibody used to bind to primary antibody for detection assistance.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="secondary_company"></a>secondary_company</td>
-                <td width=25%>
-                    Company from which secondary antibody sample was derived.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="secondary_cat_num"></a>secondary_cat_num</td>
-                <td width=25%>
-                    Antibody registry catalog number assigned to secondary antibody sample.
-                </td>
-                <td>
-                    
-                        &lt;number&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="secondary_lot_num"></a>secondary_lot_num</td>
-                <td width=25%>
-                    Identification number assigned to the particular quantity or lot of secondary antibody material from manufacturer.
-                </td>
-                <td>
-                    
-                        &lt;number&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="secondary_antibody_dilution"></a>secondary_antibody_dilution</td>
-                <td width=25%>
-                    Concentration ratio of dilution buffer for secondary antibody prep.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="secondary_antibody_incubation_time"></a>secondary_antibody_incubation_time</td>
-                <td width=25%>
-                    Temperature used for secondary antibody incubation.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; time
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="ar_reagent"></a>ar_reagent</td>
-                <td width=25%>
-                    Heating antigen retrieval reagents for tissue preparation.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="ar_ph"></a>ar_ph</td>
-                <td width=25%>
-                    pH levels of reagents from heating antigen retrieval procedure.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="ar_incubation_time"></a>ar_incubation_time</td>
-                <td width=25%>
-                    Time of AR reagent incubation.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; time
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+        
+            
+                <tr>
+    <td><a name="postPrimary_linker_block"></a>postPrimary_linker_block</td>
+    <td width=25%>
+        Linker block between the antibody and the therapeutic drug.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="secondary_antibody_block"></a>secondary_antibody_block</td>
+    <td width=25%>
+        Secondary antibody blocking reagent used for primary sample.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="species"></a>species</td>
+    <td width=25%>
+        Host species from which primary antibody sample was derived.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="isotype"></a>isotype</td>
+    <td width=25%>
+        Antibody isotype used to help differentiate non-specific background signal from specific antibody signal.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="primary_antibody_dilution"></a>primary_antibody_dilution</td>
+    <td width=25%>
+        Concentration ratio of dilution buffer for primary antibody.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="primary_antibody_incubation_time"></a>primary_antibody_incubation_time</td>
+    <td width=25%>
+        Time of primary antibody incubation.
+    </td>
+    <td>
+        
+            &lt;string&gt; time
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="primary_antibody_incubation_temp"></a>primary_antibody_incubation_temp</td>
+    <td width=25%>
+        Temperature used for primary antibody incubation.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="secondary_antibody"></a>secondary_antibody</td>
+    <td width=25%>
+        Secondary antibody used to bind to primary antibody for detection assistance.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="secondary_company"></a>secondary_company</td>
+    <td width=25%>
+        Company from which secondary antibody sample was derived.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="secondary_cat_num"></a>secondary_cat_num</td>
+    <td width=25%>
+        Antibody registry catalog number assigned to secondary antibody sample.
+    </td>
+    <td>
+        
+            &lt;number&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="secondary_lot_num"></a>secondary_lot_num</td>
+    <td width=25%>
+        Identification number assigned to the particular quantity or lot of secondary antibody material from manufacturer.
+    </td>
+    <td>
+        
+            &lt;number&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="secondary_antibody_dilution"></a>secondary_antibody_dilution</td>
+    <td width=25%>
+        Concentration ratio of dilution buffer for secondary antibody prep.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="secondary_antibody_incubation_time"></a>secondary_antibody_incubation_time</td>
+    <td width=25%>
+        Temperature used for secondary antibody incubation.
+    </td>
+    <td>
+        
+            &lt;string&gt; time
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="ar_reagent"></a>ar_reagent</td>
+    <td width=25%>
+        Heating antigen retrieval reagents for tissue preparation.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="ar_ph"></a>ar_ph</td>
+    <td width=25%>
+        pH levels of reagents from heating antigen retrieval procedure.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="ar_incubation_time"></a>ar_incubation_time</td>
+    <td width=25%>
+        Time of AR reagent incubation.
+    </td>
+    <td>
+        
+            &lt;string&gt; time
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
         
     </table>
 

@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>CYTOF Panel</h1>
+        <h1>CYTOF Panel <small> - <a href="assays.components.cytof_panel.full.json">full json</a></small></h1>
         <p>
             <b>Description:</b>  Base information about the aquisition and analysis of a CYTOF data
 
@@ -56,51 +56,60 @@
         </tr>
         </thead>
         
-            <tr>
-                <td><a name="panel_name"></a>panel_name</td>
-                <td width=25%>
-                    Standardized CyTOF panel name used for antibody sample development.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            
+                <tr>
+    <td><a name="panel_name"></a>panel_name</td>
+    <td width=25%>
+        Standardized CyTOF panel name used for antibody sample development.
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="cytof_antibodies"></a>cytof_antibodies</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        &lt;array&gt; 
-                        <ul>
-                        
-                        
-                            
-                                <a href="assays.components.cytof_antibody.html">assays.components.cytof_antibody</a>
-                            
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            required
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="cytof_antibodies"></a>cytof_antibodies</td>
+    <td width=25%>
+        
+    </td>
+    <td>
+        
+            &lt;array&gt; 
+            <ul>
+            
+            
+                
+                    <a href="assays.components.cytof_antibody.html">assays.components.cytof_antibody</a>
+                
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            required
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+            
         
     </table>
 

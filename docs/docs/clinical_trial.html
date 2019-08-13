@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Clinical Trial</h1>
+        <h1>Clinical Trial <small> - <a href="clinical_trial.full.json">full json</a></small></h1>
         <p>
             <b>Description:</b>  Encapsulates information regarding a clinical trial.
 
@@ -56,229 +56,287 @@
         </tr>
         </thead>
         
-            <tr>
-                <td><a name="nct_id"></a>nct_id</td>
-                <td width=25%>
-                    ClinicalTrials.gov identifier. Example: NCT03731260.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="nci_id"></a>nci_id</td>
-                <td width=25%>
-                    NCI Trial Identifier. Example: NCI22345.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="lead_organization_study_id"></a>lead_organization_study_id</td>
-                <td width=25%>
-                    Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            
+                <tr>
+    <td><a name="lead_organization_study_id"></a>lead_organization_study_id</td>
+    <td width=25%>
+        Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="trial_name"></a>trial_name</td>
-                <td width=25%>
-                    Name of clinical trial.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
         
-            <tr>
-                <td><a name="trial_description"></a>trial_description</td>
-                <td width=25%>
-                    A brief description of the clinical trial.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="trial_organization"></a>trial_organization</td>
-                <td width=25%>
-                    Name of the primary organization that oversees the clinical trial. Example: ECOG-ACRIN, SWOG, etc.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            required
         
-            <tr>
-                <td><a name="assay_list"></a>assay_list</td>
-                <td width=25%>
-                    List of approved assays to be performed on the clinical trial.
-                </td>
-                <td>
-                    
-                        &lt;array&gt; 
-                        <ul>
-                        
-                        
-                            
-                                &lt;string&gt; 
-                                <ul>
-                                
-                                    <li>Whole Exome Sequencing (WES)</li>
-                                
-                                    <li>RNASeq</li>
-                                
-                                    <li>Conventional Immunohistochemistry</li>
-                                
-                                    <li>Multiplex Immunohistochemistry</li>
-                                
-                                    <li>Multiplex Immunofluorescence</li>
-                                
-                                    <li>CyTOF</li>
-                                
-                                    <li>OLink</li>
-                                
-                                    <li>NanoString</li>
-                                
-                                    <li>ELISpot</li>
-                                
-                                    <li>Multiplexed Ion-Beam Imaging (MIBI)</li>
-                                
-                                </ul>
-                            
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+    </td>
+</tr>
+            
         
-            <tr>
-                <td><a name="shipments"></a>shipments</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        &lt;array&gt; 
-                        <ul>
-                        
-                        
-                            
-                                <a href="shipping_core.html">shipping_core</a>
-                            
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="participants"></a>participants</td>
-                <td width=25%>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td><a name="participants"></a>participants</td>
+    <td width=25%>
+        
+    </td>
+    <td>
+        
+            &lt;array&gt; 
+            <ul>
+            
+            
+                
+                    <a href="participant.html">participant</a>
+                
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            required
+        
+    </td>
+</tr>
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td><a name="nct_id"></a>nct_id</td>
+    <td width=25%>
+        ClinicalTrials.gov identifier. Example: NCT03731260.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="nci_id"></a>nci_id</td>
+    <td width=25%>
+        NCI Trial Identifier. Example: NCI22345.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td><a name="trial_name"></a>trial_name</td>
+    <td width=25%>
+        Name of clinical trial.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="trial_description"></a>trial_description</td>
+    <td width=25%>
+        A brief description of the clinical trial.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="trial_organization"></a>trial_organization</td>
+    <td width=25%>
+        Name of the primary organization that oversees the clinical trial. Example: ECOG-ACRIN, SWOG, etc.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="assay_list"></a>assay_list</td>
+    <td width=25%>
+        List of approved assays to be performed on the clinical trial.
+    </td>
+    <td>
+        
+            &lt;array&gt; 
+            <ul>
+            
+            
+                
+                    &lt;string&gt; 
+                    <ul>
                     
-                </td>
-                <td>
+                        <li>Whole Exome Sequencing (WES)</li>
                     
-                        &lt;array&gt; 
-                        <ul>
-                        
-                        
-                            
-                                <a href="participant.html">participant</a>
-                            
-                        
-                        </ul>
+                        <li>RNASeq</li>
                     
-                </td>
-                <td>
+                        <li>Conventional Immunohistochemistry</li>
                     
-                        required
+                        <li>Multiplex Immunohistochemistry</li>
                     
-                </td>
-            </tr>
+                        <li>Multiplex Immunofluorescence</li>
+                    
+                        <li>CyTOF</li>
+                    
+                        <li>OLink</li>
+                    
+                        <li>NanoString</li>
+                    
+                        <li>ELISpot</li>
+                    
+                        <li>Multiplexed Ion-Beam Imaging (MIBI)</li>
+                    
+                    </ul>
+                
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="shipments"></a>shipments</td>
+    <td width=25%>
+        
+    </td>
+    <td>
+        
+            &lt;array&gt; 
+            <ul>
+            
+            
+                
+                    <a href="shipping_core.html">shipping_core</a>
+                
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td><a name="assays"></a>assays</td>
+    <td width=25%>
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.available_assays.html">assays.components.available_assays</a>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
         
     </table>
 

@@ -1,0 +1,38 @@
+{
+    "$id": "imaging_data",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Shared schema for experiments involving the use of imaging data",
+    "properties": {
+        "imaging_date": {
+            "description": "Date on which imaging experiment was analyzed.",
+            "format": "date",
+            "type": "string"
+        },
+        "imaging_status": {
+            "description": "Imaging experiment's successful completion.",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "type": "string"
+        },
+        "internal_slide_id": {
+            "description": "Identification number used for internal imaging slide.",
+            "required": true,
+            "type": "string"
+        },
+        "protocol_name": {
+            "description": "Protocol name for which imaging experiment conducted.",
+            "type": "string"
+        },
+        "staining_date": {
+            "description": "Date on which slide staining was processed.",
+            "format": "date",
+            "type": "string"
+        }
+    },
+    "required": [
+        "internal_slide_id"
+    ],
+    "title": "Imaging Data"
+}

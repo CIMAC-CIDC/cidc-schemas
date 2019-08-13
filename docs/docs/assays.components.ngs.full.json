@@ -1,0 +1,49 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Common properties for NGS Sequencing sxperiments.",
+    "id": "ngs_assay",
+    "properties": {
+        "library_vendor_kit": {
+            "description": "Vendor for the library construction kit, e.g. KAPA",
+            "enum": [
+                "KAPA - Hyper Prep"
+            ],
+            "required": true,
+            "type": "string"
+        },
+        "paired_end_reads": {
+            "description": "Indicate if the sequencing was performed paired or single ended",
+            "enum": [
+                "Paired",
+                "Single"
+            ],
+            "required": true,
+            "type": "string"
+        },
+        "read_length": {
+            "description": "Number of cycles for each sequencing read",
+            "exclusiveMinimum": 0,
+            "maximum": 1000,
+            "type": "integer"
+        },
+        "sequencer_platform": {
+            "description": "Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.",
+            "enum": [
+                "Illumina - HiSeq 2500",
+                "Illumina - HiSeq 3000",
+                "Illumina - NextSeq 550",
+                "Illumina - HiSeq 4000",
+                "Illumina - NovaSeq 6000"
+            ],
+            "required": true,
+            "type": "string"
+        }
+    },
+    "required": [
+        "sequencer_platform",
+        "library_vendor_kit",
+        "paired_end_reads"
+    ],
+    "title": "NGS Sequencing",
+    "type": "object"
+}

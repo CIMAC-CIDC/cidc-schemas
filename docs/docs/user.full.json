@@ -1,0 +1,33 @@
+{
+    "$id": "user",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Any user of the CIDC platform.",
+    "properties": {
+        "google_id": {
+            "description": "User's Google Idenfier.",
+            "type": "string"
+        },
+        "organization": {
+            "description": "Affiliated Organization",
+            "enum": [
+                "National Cancer Institute",
+                "Dana-Farber Cancer Institute (CIDC)",
+                "Dana-Farber Cancer Institute (CIMAC)",
+                "Stanford",
+                "MD Anderson",
+                "Mount Sinai"
+            ],
+            "type": "string"
+        },
+        "preferred_email_address": {
+            "description": "User's preferred email address.",
+            "type": "string"
+        },
+        "user_id": {
+            "description": "User Identifier.",
+            "type": "string"
+        }
+    },
+    "title": "User",
+    "type": "object"
+}

@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>CyTOF assay record</h1>
+        <h1>CyTOF assay record <small> - <a href="assays.components.cytof.cytof_entry.full.json">full json</a></small></h1>
         <p>
             <b>Description:</b>  A single data record from CyTOF assay batch
         </p>
@@ -55,215 +55,256 @@
         </tr>
         </thead>
         
-            <tr>
-                <td><a name="processed_fcs_filename"></a>processed_fcs_filename</td>
-                <td width=25%>
-                    Filename of a processed CyTOF FCS file.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            
+                <tr>
+    <td><a name="processed_fcs_filename"></a>processed_fcs_filename</td>
+    <td width=25%>
+        Filename of a processed CyTOF FCS file.
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="source_fcs_filenames"></a>source_fcs_filenames</td>
-                <td width=25%>
-                    Filename of source CyTOF FCS file.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
         
-            <tr>
-                <td><a name="concatenation_version"></a>concatenation_version</td>
-                <td width=25%>
-                    Concatenation of FCS files into a single FCS version number.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="normalization_version"></a>normalization_version</td>
-                <td width=25%>
-                    Version of normalization for CyTOF assay batch.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            required
         
-            <tr>
-                <td><a name="beads_removed"></a>beads_removed</td>
-                <td width=25%>
-                    Confirmation of beads being removed after normalization process.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>Y</li>
-                        
-                            <li>N</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+    </td>
+</tr>
+            
         
-            <tr>
-                <td><a name="staining_date"></a>staining_date</td>
-                <td width=25%>
-                    Date of staining for CyTOF assay slides.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; date
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
+                <tr>
+    <td><a name="source_fcs_filenames"></a>source_fcs_filenames</td>
+    <td width=25%>
+        Filename of source CyTOF FCS file.
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="batch_id"></a>batch_id</td>
-                <td width=25%>
-                    Identification number for CyTOF assay batch.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
         
-            <tr>
-                <td><a name="debarcoding_protocol"></a>debarcoding_protocol</td>
-                <td width=25%>
-                    Protocol for the download and installation of the Debarcoder CyTOF software feature.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="debarcoding_key"></a>debarcoding_key</td>
-                <td width=25%>
-                    Key required for access to the Debarcoding software.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            required
         
-            <tr>
-                <td><a name="files"></a>files</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        <a href="assays.components.cytof.cytof_input.html">assays.components.cytof.cytof_input</a>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td><a name="files"></a>files</td>
+    <td width=25%>
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.cytof.cytof_input.html">assays.components.cytof.cytof_input</a>
+        
+    </td>
+    <td>
+        
+            required
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td><a name="concatenation_version"></a>concatenation_version</td>
+    <td width=25%>
+        Concatenation of FCS files into a single FCS version number.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="normalization_version"></a>normalization_version</td>
+    <td width=25%>
+        Version of normalization for CyTOF assay batch.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="beads_removed"></a>beads_removed</td>
+    <td width=25%>
+        Confirmation of beads being removed after normalization process.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+                <li>Y</li>
+            
+                <li>N</li>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="staining_date"></a>staining_date</td>
+    <td width=25%>
+        Date of staining for CyTOF assay slides.
+    </td>
+    <td>
+        
+            &lt;string&gt; date
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="batch_id"></a>batch_id</td>
+    <td width=25%>
+        Identification number for CyTOF assay batch.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="debarcoding_protocol"></a>debarcoding_protocol</td>
+    <td width=25%>
+        Protocol for the download and installation of the Debarcoder CyTOF software feature.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="debarcoding_key"></a>debarcoding_key</td>
+    <td width=25%>
+        Key required for access to the Debarcoding software.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
         
     </table>
 

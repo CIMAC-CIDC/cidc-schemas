@@ -1,0 +1,129 @@
+{
+    "$id": "cytof_acquistion",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "allOf": [
+        {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "description": "Basic information about the instrumentation used in a CYTOF experiment\n",
+            "id": "cytof_platform",
+            "properties": {
+                "instrument": {
+                    "description": "CyTOF instrument used for experiment.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "instrument"
+            ],
+            "title": "CYTOF Platform"
+        },
+        {
+            "properties": {
+                "acquisition_buffer": {
+                    "description": "Cell staining buffer used for antibody and cell dilution.",
+                    "type": "string"
+                },
+                "average_event_per_second": {
+                    "description": "Analysis rate of cyTOF expressions per second.",
+                    "type": "number"
+                },
+                "batch_id": {
+                    "description": "CyTOF batch identifaction number.",
+                    "type": "string"
+                },
+                "date_of_acquisition": {
+                    "description": "Date of cyTOF batch acquisition.",
+                    "type": "string"
+                },
+                "injector": {
+                    "description": "Name of Injector component used as part of the CyTOF software",
+                    "type": "string"
+                },
+                "instrument": {
+                    "description": "Name of cyTOF instrument on which experiment was conducted.",
+                    "type": "string"
+                },
+                "notes": {
+                    "description": "Any notes pertaining to cyTOF acquisition.",
+                    "type": "string"
+                },
+                "original_fcs_filenames": {
+                    "description": "Normalized cyTOF FCS filenames.",
+                    "type": "string"
+                },
+                "run_time": {
+                    "description": "Length of run time for cyTOF experiment.",
+                    "type": "string"
+                }
+            }
+        }
+    ],
+    "definitions": {
+        "cytof_acquisition": {
+            "properties": {
+                "acquisition_buffer": {
+                    "description": "Cell staining buffer used for antibody and cell dilution.",
+                    "type": "string"
+                },
+                "average_event_per_second": {
+                    "description": "Analysis rate of cyTOF expressions per second.",
+                    "type": "number"
+                },
+                "batch_id": {
+                    "description": "CyTOF batch identifaction number.",
+                    "type": "string"
+                },
+                "date_of_acquisition": {
+                    "description": "Date of cyTOF batch acquisition.",
+                    "type": "string"
+                },
+                "injector": {
+                    "description": "Name of Injector component used as part of the CyTOF software",
+                    "type": "string"
+                },
+                "instrument": {
+                    "description": "Name of cyTOF instrument on which experiment was conducted.",
+                    "type": "string"
+                },
+                "notes": {
+                    "description": "Any notes pertaining to cyTOF acquisition.",
+                    "type": "string"
+                },
+                "original_fcs_filenames": {
+                    "description": "Normalized cyTOF FCS filenames.",
+                    "type": "string"
+                },
+                "run_time": {
+                    "description": "Length of run time for cyTOF experiment.",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "description": "Data specific to the run of a CyTOF batch.",
+    "properties": {
+        "batch_number": {
+            "required": true
+        },
+        "date_of_acquisition": {
+            "required": true
+        },
+        "injector": {
+            "required": true
+        },
+        "instrument": {
+            "required": true
+        },
+        "original_fcs_filenames": {
+            "required": true
+        }
+    },
+    "required": [
+        "original_fcs_filenames",
+        "date_of_acquisition",
+        "instrument",
+        "injector",
+        "batch_number"
+    ],
+    "title": "CYTOF Acquisition"
+}

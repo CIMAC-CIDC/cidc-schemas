@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Participant</h1>
+        <h1>Participant <small> - <a href="participant.full.json">full json</a></small></h1>
         <p>
             <b>Description:</b>  The collection of all data related to a specific participant in the context of a specific clinical trial.
 
@@ -56,213 +56,246 @@
         </tr>
         </thead>
         
-            <tr>
-                <td><a name="cimac_participant_id"></a>cimac_participant_id</td>
-                <td width=25%>
-                    Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            
+                <tr>
+    <td><a name="cimac_participant_id"></a>cimac_participant_id</td>
+    <td width=25%>
+        Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234.
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="trial_participant_id"></a>trial_participant_id</td>
-                <td width=25%>
-                    Trial Participant Identifier. Example: PT123.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
         
-            <tr>
-                <td><a name="arm_id"></a>arm_id</td>
-                <td width=25%>
-                    Identifies the trial arm to which the participant belongs. Example: Arm A.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="cohort_id"></a>cohort_id</td>
-                <td width=25%>
-                    Identifies the treatment cohort to which the participant belongs. Example: Cohort A.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            required
         
-            <tr>
-                <td><a name="gender"></a>gender</td>
-                <td width=25%>
-                    Identifies the gender of the participant.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>Male</li>
-                        
-                            <li>Female</li>
-                        
-                            <li>Not Specified</li>
-                        
-                            <li>Other</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+    </td>
+</tr>
+            
         
-            <tr>
-                <td><a name="race"></a>race</td>
-                <td width=25%>
-                    'NIH Racial and Ethnic Categories and Definitions for NIH Diversity Programs and for Other Reporting Purposes (NOT-OD-15-089),  Release Date: April 8, 2015.'
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td><a name="samples"></a>samples</td>
+    <td width=25%>
+        
+    </td>
+    <td>
+        
+            &lt;array&gt; 
+            <ul>
+            
+            
+                
+                    <a href="sample.html">sample</a>
+                
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            required
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+            
+                <tr>
+    <td><a name="trial_participant_id"></a>trial_participant_id</td>
+    <td width=25%>
+        Trial Participant Identifier. Example: PT123.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="arm_id"></a>arm_id</td>
+    <td width=25%>
+        Identifies the trial arm to which the participant belongs. Example: Arm A.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="cohort_id"></a>cohort_id</td>
+    <td width=25%>
+        Identifies the treatment cohort to which the participant belongs. Example: Cohort A.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="gender"></a>gender</td>
+    <td width=25%>
+        Identifies the gender of the participant.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+                <li>Male</li>
+            
+                <li>Female</li>
+            
+                <li>Not Specified</li>
+            
+                <li>Other</li>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="race"></a>race</td>
+    <td width=25%>
+        'NIH Racial and Ethnic Categories and Definitions for NIH Diversity Programs and for Other Reporting Purposes (NOT-OD-15-089),  Release Date: April 8, 2015.'
 
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>American Indian/Alaska Native</li>
-                        
-                            <li>Asian</li>
-                        
-                            <li>Black/African American</li>
-                        
-                            <li>Native Hawaiian/Pacific Islander</li>
-                        
-                            <li>White</li>
-                        
-                            <li>Not Reported</li>
-                        
-                            <li>Unknown</li>
-                        
-                            <li>Other</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="ethnicity"></a>ethnicity</td>
-                <td width=25%>
-                    'NIH Racial and Ethnic Categories and Definitions for NIH Diversity Programs and for Other Reporting Purposes (NOT-OD-15-089),  Release Date: April 8, 2015.'
+            &lt;string&gt; 
+            <ul>
+            
+                <li>American Indian/Alaska Native</li>
+            
+                <li>Asian</li>
+            
+                <li>Black/African American</li>
+            
+                <li>Native Hawaiian/Pacific Islander</li>
+            
+                <li>White</li>
+            
+                <li>Not Reported</li>
+            
+                <li>Unknown</li>
+            
+                <li>Other</li>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="ethnicity"></a>ethnicity</td>
+    <td width=25%>
+        'NIH Racial and Ethnic Categories and Definitions for NIH Diversity Programs and for Other Reporting Purposes (NOT-OD-15-089),  Release Date: April 8, 2015.'
 
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>Hispanic or Latino</li>
-                        
-                            <li>Not Hispanic or Latino</li>
-                        
-                            <li>Not reported</li>
-                        
-                            <li>Unknown</li>
-                        
-                            <li>Other</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="samples"></a>samples</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        &lt;array&gt; 
-                        <ul>
-                        
-                        
-                            
-                                <a href="sample.html">sample</a>
-                            
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            &lt;string&gt; 
+            <ul>
+            
+                <li>Hispanic or Latino</li>
+            
+                <li>Not Hispanic or Latino</li>
+            
+                <li>Not reported</li>
+            
+                <li>Unknown</li>
+            
+                <li>Other</li>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
         
     </table>
 

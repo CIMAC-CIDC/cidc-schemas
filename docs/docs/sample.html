@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Sample</h1>
+        <h1>Sample <small> - <a href="sample.full.json">full json</a></small></h1>
         <p>
             <b>Description:</b>  Any material sample taken from a biological entity for testing, diagnostic, propagation, treatment or research purposes, including a sample obtained from a living organism or taken from the biological object after halting of all its life functions. Biospecimen can contain one or more components including but not limited to cellular molecules, cells, tissues, organs, body fluids, embryos, and body excretory products.
         </p>
@@ -55,385 +55,442 @@
         </tr>
         </thead>
         
-            <tr>
-                <td><a name="cimac_sample_id"></a>cimac_sample_id</td>
-                <td width=25%>
-                    Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            
+                <tr>
+    <td><a name="cimac_sample_id"></a>cimac_sample_id</td>
+    <td width=25%>
+        Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="site_sample_id"></a>site_sample_id</td>
-                <td width=25%>
-                    Sample identifier assigned by the biorepository site. Example: EA123-45.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
         
-            <tr>
-                <td><a name="time_point"></a>time_point</td>
-                <td width=25%>
-                    Study related collection time point, as described in the protocol intake form. Example: Progression.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="blood_collection_date"></a>blood_collection_date</td>
-                <td width=25%>
-                    Date of blood collection.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; date
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            required
         
-            <tr>
-                <td><a name="blood_collection_time"></a>blood_collection_time</td>
-                <td width=25%>
-                    Time of blood collection.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; time
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+    </td>
+</tr>
+            
         
-            <tr>
-                <td><a name="blood_processing_date"></a>blood_processing_date</td>
-                <td width=25%>
-                    Date of blood processing.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; date
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="blood_processing_time"></a>blood_processing_time</td>
-                <td width=25%>
-                    Time of blood processing.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; time
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="sample_location"></a>sample_location</td>
-                <td width=25%>
-                    Sample location within the shipping container. Example: A1.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="specimen_type"></a>specimen_type</td>
-                <td width=25%>
-                    Type of sample sent.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>Core Needle Biopsy</li>
-                        
-                            <li>Surgical Resection</li>
-                        
-                            <li>Endoscopic Biopsy</li>
-                        
-                            <li>Punch Biopsy</li>
-                        
-                            <li>Plasma</li>
-                        
-                            <li>PBMC</li>
-                        
-                            <li>Whole Blood</li>
-                        
-                            <li>Stool Sample</li>
-                        
-                            <li>Bone Marrow Aspirate</li>
-                        
-                            <li>Other</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="specimen_format"></a>specimen_format</td>
-                <td width=25%>
-                    The format in which the sample was sent.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>FFPE Block</li>
-                        
-                            <li>FFPE Scroll</li>
-                        
-                            <li>FFPE Core Punch</li>
-                        
-                            <li>Unstained Slide</li>
-                        
-                            <li>Frozen Tissue</li>
-                        
-                            <li>Sodium Heparin Green-Top Tube</li>
-                        
-                            <li>Streck Tube</li>
-                        
-                            <li>EDTA Tube</li>
-                        
-                            <li>Archival FFPE Block</li>
-                        
-                            <li>Archival FFPE Slides</li>
-                        
-                            <li>Archival FFPE Core Punch</li>
-                        
-                            <li>Archival FFPE Scroll</li>
-                        
-                            <li>Frozen Stool</li>
-                        
-                            <li>DNA-Preserved Stool</li>
-                        
-                            <li>Other</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="specimen_analyte"></a>specimen_analyte</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>H&E slide</li>
-                        
-                            <li>Unstained slide</li>
-                        
-                            <li>DNA</li>
-                        
-                            <li>RNA</li>
-                        
-                            <li>Protein Lysate</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="tissue_type_submitted"></a>tissue_type_submitted</td>
-                <td width=25%>
-                    The type of tissue that was obtained for the study.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>Primary Tumor</li>
-                        
-                            <li>Residual Tumor</li>
-                        
-                            <li>Recurrence</li>
-                        
-                            <li>Metastatic Tumor</li>
-                        
-                            <li>Lymph Node</li>
-                        
-                            <li>Bone Marrow</li>
-                        
-                            <li>Normal Adjacent</li>
-                        
-                            <li>Other</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="genomic_source"></a>genomic_source</td>
-                <td width=25%>
-                    The type of material submitted - tumor/normal/etc
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>Tumor</li>
-                        
-                            <li>Normal</li>
-                        
-                            <li>Metastasis</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="aliquots"></a>aliquots</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        &lt;array&gt; 
-                        <ul>
-                        
-                        
-                            
-                                <a href="aliquot.html">aliquot</a>
-                            
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td><a name="aliquots"></a>aliquots</td>
+    <td width=25%>
+        
+    </td>
+    <td>
+        
+            &lt;array&gt; 
+            <ul>
+            
+            
+                
+                    <a href="aliquot.html">aliquot</a>
+                
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            required
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+            
+                <tr>
+    <td><a name="site_sample_id"></a>site_sample_id</td>
+    <td width=25%>
+        Sample identifier assigned by the biorepository site. Example: EA123-45.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="time_point"></a>time_point</td>
+    <td width=25%>
+        Study related collection time point, as described in the protocol intake form. Example: Progression.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="blood_collection_date"></a>blood_collection_date</td>
+    <td width=25%>
+        Date of blood collection.
+    </td>
+    <td>
+        
+            &lt;string&gt; date
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="blood_collection_time"></a>blood_collection_time</td>
+    <td width=25%>
+        Time of blood collection.
+    </td>
+    <td>
+        
+            &lt;string&gt; time
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="blood_processing_date"></a>blood_processing_date</td>
+    <td width=25%>
+        Date of blood processing.
+    </td>
+    <td>
+        
+            &lt;string&gt; date
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="blood_processing_time"></a>blood_processing_time</td>
+    <td width=25%>
+        Time of blood processing.
+    </td>
+    <td>
+        
+            &lt;string&gt; time
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="sample_location"></a>sample_location</td>
+    <td width=25%>
+        Sample location within the shipping container. Example: A1.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="specimen_type"></a>specimen_type</td>
+    <td width=25%>
+        Type of sample sent.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+                <li>Core Needle Biopsy</li>
+            
+                <li>Surgical Resection</li>
+            
+                <li>Endoscopic Biopsy</li>
+            
+                <li>Punch Biopsy</li>
+            
+                <li>Plasma</li>
+            
+                <li>PBMC</li>
+            
+                <li>Whole Blood</li>
+            
+                <li>Stool Sample</li>
+            
+                <li>Bone Marrow Aspirate</li>
+            
+                <li>Other</li>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="specimen_format"></a>specimen_format</td>
+    <td width=25%>
+        The format in which the sample was sent.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+                <li>FFPE Block</li>
+            
+                <li>FFPE Scroll</li>
+            
+                <li>FFPE Core Punch</li>
+            
+                <li>Unstained Slide</li>
+            
+                <li>Frozen Tissue</li>
+            
+                <li>Sodium Heparin Green-Top Tube</li>
+            
+                <li>Streck Tube</li>
+            
+                <li>EDTA Tube</li>
+            
+                <li>Archival FFPE Block</li>
+            
+                <li>Archival FFPE Slides</li>
+            
+                <li>Archival FFPE Core Punch</li>
+            
+                <li>Archival FFPE Scroll</li>
+            
+                <li>Frozen Stool</li>
+            
+                <li>DNA-Preserved Stool</li>
+            
+                <li>Other</li>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="specimen_analyte"></a>specimen_analyte</td>
+    <td width=25%>
+        
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+                <li>H&E slide</li>
+            
+                <li>Unstained slide</li>
+            
+                <li>DNA</li>
+            
+                <li>RNA</li>
+            
+                <li>Protein Lysate</li>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="tissue_type_submitted"></a>tissue_type_submitted</td>
+    <td width=25%>
+        The type of tissue that was obtained for the study.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+                <li>Primary Tumor</li>
+            
+                <li>Residual Tumor</li>
+            
+                <li>Recurrence</li>
+            
+                <li>Metastatic Tumor</li>
+            
+                <li>Lymph Node</li>
+            
+                <li>Bone Marrow</li>
+            
+                <li>Normal Adjacent</li>
+            
+                <li>Other</li>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="genomic_source"></a>genomic_source</td>
+    <td width=25%>
+        The type of material submitted - tumor/normal/etc
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+                <li>Tumor</li>
+            
+                <li>Normal</li>
+            
+                <li>Metastasis</li>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
         
     </table>
 

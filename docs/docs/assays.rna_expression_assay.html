@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>RNA Gene Expression Assay</h1>
+        <h1>RNA Gene Expression Assay <small> - <a href="assays.rna_expression_assay.full.json">full json</a></small></h1>
         <p>
             <b>Description:</b>  Additional properties to describe a RNA assay for expression analysis.
         </p>
@@ -55,144 +55,165 @@
         </tr>
         </thead>
         
-            <tr>
-                <td><a name="enrichment_method"></a>enrichment_method</td>
-                <td width=25%>
-                    Method used for enriching for mRNA
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>PolyA capture</li>
-                        
-                            <li>Transcriptome capture</li>
-                        
-                            <li>Ribo minus</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            
+                <tr>
+    <td><a name="enrichment_method"></a>enrichment_method</td>
+    <td width=25%>
+        Method used for enriching for mRNA
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="enrichment_vendor_kit"></a>enrichment_vendor_kit</td>
-                <td width=25%>
-                    Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>Agilent</li>
-                        
-                            <li>Twist</li>
-                        
-                            <li>IDT</li>
-                        
-                            <li>NEB</li>
-                        
-                            <li>Illumina - TruSeq Stranded PolyA mRNA</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            &lt;string&gt; 
+            <ul>
+            
+                <li>PolyA capture</li>
+            
+                <li>Transcriptome capture</li>
+            
+                <li>Ribo minus</li>
+            
+            
+            </ul>
         
-            <tr>
-                <td><a name="stranded_library"></a>stranded_library</td>
-                <td width=25%>
-                    Is the RNAseq library stranded or not
-                </td>
-                <td>
-                    
-                        &lt;boolean&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="library_type"></a>library_type</td>
-                <td width=25%>
-                    The type of RNAseq library generated
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>ff-firststrand</li>
-                        
-                            <li>ff-secondstrand</li>
-                        
-                            <li>ff-unstranded</li>
-                        
-                            <li>fr-firststrand</li>
-                        
-                            <li>fr-secondstrand</li>
-                        
-                            <li>fr-unstranded</li>
-                        
-                            <li>transfrags</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            required
         
-            <tr>
-                <td><a name="records"></a>records</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        &lt;array&gt; 
-                        <ul>
-                        
-                        
-                            
-                                <a href="assays.components.ngs.rna_expression_entry.html">assays.components.ngs.rna_expression_entry</a>
-                            
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td><a name="records"></a>records</td>
+    <td width=25%>
+        
+    </td>
+    <td>
+        
+            &lt;array&gt; 
+            <ul>
+            
+            
+                
+                    <a href="assays.components.ngs.rna_expression_entry.html">assays.components.ngs.rna_expression_entry</a>
+                
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            required
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+            
+                <tr>
+    <td><a name="enrichment_vendor_kit"></a>enrichment_vendor_kit</td>
+    <td width=25%>
+        Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+                <li>Agilent</li>
+            
+                <li>Twist</li>
+            
+                <li>IDT</li>
+            
+                <li>NEB</li>
+            
+                <li>Illumina - TruSeq Stranded PolyA mRNA</li>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="stranded_library"></a>stranded_library</td>
+    <td width=25%>
+        Is the RNAseq library stranded or not
+    </td>
+    <td>
+        
+            &lt;boolean&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="library_type"></a>library_type</td>
+    <td width=25%>
+        The type of RNAseq library generated
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+                <li>ff-firststrand</li>
+            
+                <li>ff-secondstrand</li>
+            
+                <li>ff-unstranded</li>
+            
+                <li>fr-firststrand</li>
+            
+                <li>fr-secondstrand</li>
+            
+                <li>fr-unstranded</li>
+            
+                <li>transfrags</li>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
         
     </table>
 

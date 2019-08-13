@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>mIF antibody</h1>
+        <h1>mIF antibody <small> - <a href="assays.components.mif_antibody.full.json">full json</a></small></h1>
         <p>
             <b>Description:</b>  Data specific to antibody prepration on the multiplex immunoflourescence platform.
         </p>
@@ -55,152 +55,181 @@
         </tr>
         </thead>
         
-            <tr>
-                <td><a name="fluor_wavelength"></a>fluor_wavelength</td>
-                <td width=25%>
-                    Wavelength registered for Alexa Fluor processing.
-                </td>
-                <td>
-                    
-                        &lt;number&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            
+                <tr>
+    <td><a name="fluor_wavelength"></a>fluor_wavelength</td>
+    <td width=25%>
+        Wavelength registered for Alexa Fluor processing.
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="primary_ab_dilution"></a>primary_ab_dilution</td>
-                <td width=25%>
-                    Concentration ratio for primary antibody dilution.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            &lt;number&gt; 
+            <ul>
+            
+            
+            </ul>
         
-            <tr>
-                <td><a name="dilutent"></a>dilutent</td>
-                <td width=25%>
-                    Dilution agent used for antibody sample.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="fluor_dilution"></a>fluor_dilution</td>
-                <td width=25%>
-                    Concentration ratio for fluor dilution agent.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            required
         
-            <tr>
-                <td><a name="antigen_retrieval_time"></a>antigen_retrieval_time</td>
-                <td width=25%>
-                    Length of time needed for antigen retrieval.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; time
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+    </td>
+</tr>
+            
         
-            <tr>
-                <td><a name="primary_incubation_time"></a>primary_incubation_time</td>
-                <td width=25%>
-                    Length of time for primary antibody incubation.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; time
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            
+                <tr>
+    <td><a name="primary_ab_dilution"></a>primary_ab_dilution</td>
+    <td width=25%>
+        Concentration ratio for primary antibody dilution.
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="amplification_time"></a>amplification_time</td>
-                <td width=25%>
-                    Length of time required for amplified signal detection.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; time
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            required
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="dilutent"></a>dilutent</td>
+    <td width=25%>
+        Dilution agent used for antibody sample.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            required
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="fluor_dilution"></a>fluor_dilution</td>
+    <td width=25%>
+        Concentration ratio for fluor dilution agent.
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            required
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="antigen_retrieval_time"></a>antigen_retrieval_time</td>
+    <td width=25%>
+        Length of time needed for antigen retrieval.
+    </td>
+    <td>
+        
+            &lt;string&gt; time
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            required
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="primary_incubation_time"></a>primary_incubation_time</td>
+    <td width=25%>
+        Length of time for primary antibody incubation.
+    </td>
+    <td>
+        
+            &lt;string&gt; time
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            required
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="amplification_time"></a>amplification_time</td>
+    <td width=25%>
+        Length of time required for amplified signal detection.
+    </td>
+    <td>
+        
+            &lt;string&gt; time
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            required
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
         
     </table>
 

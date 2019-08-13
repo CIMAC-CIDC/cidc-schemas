@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>NGS Sequencing</h1>
+        <h1>NGS Sequencing <small> - <a href="assays.components.ngs.full.json">full json</a></small></h1>
         <p>
             <b>Description:</b>  Common properties for NGS Sequencing sxperiments.
         </p>
@@ -55,105 +55,122 @@
         </tr>
         </thead>
         
-            <tr>
-                <td><a name="sequencer_platform"></a>sequencer_platform</td>
-                <td width=25%>
-                    Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>Illumina - HiSeq 2500</li>
-                        
-                            <li>Illumina - HiSeq 3000</li>
-                        
-                            <li>Illumina - NextSeq 550</li>
-                        
-                            <li>Illumina - HiSeq 4000</li>
-                        
-                            <li>Illumina - NovaSeq 6000</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            
+                <tr>
+    <td><a name="sequencer_platform"></a>sequencer_platform</td>
+    <td width=25%>
+        Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="library_vendor_kit"></a>library_vendor_kit</td>
-                <td width=25%>
-                    Vendor for the library construction kit, e.g. KAPA
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>KAPA - Hyper Prep</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            &lt;string&gt; 
+            <ul>
+            
+                <li>Illumina - HiSeq 2500</li>
+            
+                <li>Illumina - HiSeq 3000</li>
+            
+                <li>Illumina - NextSeq 550</li>
+            
+                <li>Illumina - HiSeq 4000</li>
+            
+                <li>Illumina - NovaSeq 6000</li>
+            
+            
+            </ul>
         
-            <tr>
-                <td><a name="paired_end_reads"></a>paired_end_reads</td>
-                <td width=25%>
-                    Indicate if the sequencing was performed paired or single ended
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>Paired</li>
-                        
-                            <li>Single</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="read_length"></a>read_length</td>
-                <td width=25%>
-                    Number of cycles for each sequencing read
-                </td>
-                <td>
-                    
-                        &lt;integer&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            required
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="library_vendor_kit"></a>library_vendor_kit</td>
+    <td width=25%>
+        Vendor for the library construction kit, e.g. KAPA
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+                <li>KAPA - Hyper Prep</li>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            required
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td><a name="paired_end_reads"></a>paired_end_reads</td>
+    <td width=25%>
+        Indicate if the sequencing was performed paired or single ended
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+                <li>Paired</li>
+            
+                <li>Single</li>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            required
+        
+    </td>
+</tr>
+            
+        
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td><a name="read_length"></a>read_length</td>
+    <td width=25%>
+        Number of cycles for each sequencing read
+    </td>
+    <td>
+        
+            &lt;integer&gt; 
+            <ul>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
         
     </table>
 

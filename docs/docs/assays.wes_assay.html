@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Whole Exome Sequencing Assay</h1>
+        <h1>Whole Exome Sequencing Assay <small> - <a href="assays.wes_assay.full.json">full json</a></small></h1>
         <p>
             <b>Description:</b>  Whole Exome Sequencing Assay
         </p>
@@ -55,59 +55,97 @@
         </tr>
         </thead>
         
-            <tr>
-                <td><a name="enrichment_vendor_kit"></a>enrichment_vendor_kit</td>
-                <td width=25%>
-                    Vendor for the bait set used for enrichment , e.g. Twist, Agilent, IDT
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>Agilent</li>
-                        
-                            <li>Twist</li>
-                        
-                            <li>IDT</li>
-                        
-                            <li>NEB</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="records"></a>records</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        &lt;array&gt; 
-                        <ul>
-                        
-                        
-                            
-                                <a href="assays.components.ngs.wes_entry.html">assays.components.ngs.wes_entry</a>
-                            
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            
+                <tr>
+    <td><a name="records"></a>records</td>
+    <td width=25%>
+        
+    </td>
+    <td>
+        
+            &lt;array&gt; 
+            <ul>
+            
+            
+                
+                    <a href="assays.components.ngs.wes_entry.html">assays.components.ngs.wes_entry</a>
+                
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            required
+        
+    </td>
+</tr>
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td><a name="enrichment_vendor_kit"></a>enrichment_vendor_kit</td>
+    <td width=25%>
+        Vendor for the bait set used for enrichment , e.g. Twist, Agilent, IDT
+    </td>
+    <td>
+        
+            &lt;string&gt; 
+            <ul>
+            
+                <li>Agilent</li>
+            
+                <li>Twist</li>
+            
+                <li>IDT</li>
+            
+                <li>NEB</li>
+            
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td><a name="analysis"></a>analysis</td>
+    <td width=25%>
+        
+    </td>
+    <td>
+        
+            &lt;array&gt; 
+            <ul>
+            
+            
+                
+                    <a href="assays.components.ngs.wes_export.html">assays.components.ngs.wes_export</a>
+                
+            
+            </ul>
+        
+    </td>
+    <td>
+        
+            optional
+        
+    </td>
+</tr>
+            
         
     </table>
 

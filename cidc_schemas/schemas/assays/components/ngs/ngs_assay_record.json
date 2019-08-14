@@ -7,10 +7,12 @@
   "properties": {
     "cimac_aliquot_id": {
         "description": "Id of an aliquot within this clinical trial, that this assay record is based upon.",
+        "type": "string",
         "$ref": "aliquot.json#properties/cimac_aliquot_id"
     },
     "files": {
       "description": "Fastq and read group mapping files produced by the assay for that .",
+      "type": "object",
       "$ref": "assays/components/fastq_pair_and_mapping.json"
     },
     "library_kit_lot": {

@@ -22,16 +22,16 @@
             "$ref": "assays/wes_assay.json#properties/enrichment_vendor_kit"
           },
           "library kit vendor": {
-            "$ref": "assays/components/ngs.json#properties/library_vendor_kit"
+            "$ref": "assays/components/ngs_assay_core.json#properties/library_vendor_kit"
           },
           "sequencer platform": {
-            "$ref": "assays/components/ngs.json#properties/sequencer_platform"
+            "$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"
           },
           "paired end reads": {
-            "$ref": "assays/components/ngs.json#properties/paired_end_reads"
+            "$ref": "assays/components/ngs_assay_core.json#properties/paired_end_reads"
           },
           "read length": {
-            "$ref": "assays/components/ngs.json#properties/read_length"
+            "$ref": "assays/components/ngs_assay_core.json#properties/read_length"
           }
         },
         "data_columns": {
@@ -52,13 +52,13 @@
               "$ref": "assays/components/ngs/ngs_assay_record.json#properties/library_kit_lot"
             },
             "enrichment lot": {
-              "$ref": "assays/components/ngs/wes_entry.json#properties/enrichment_vendor_lot"
+              "$ref": "assays/components/ngs/wes_assay_record.json#properties/enrichment_vendor_lot"
             },
             "library prep date": {
               "$ref": "assays/components/ngs/ngs_assay_record.json#properties/library_prep_date"
             },
             "capture date": {
-              "$ref": "assays/components/ngs/wes_entry.json#properties/capture_date"
+              "$ref": "assays/components/ngs/wes_assay_record.json#properties/capture_date"
             },
             "dna input ng": {
               "$ref": "assays/components/ngs/ngs_assay_record.json#properties/input_ng"

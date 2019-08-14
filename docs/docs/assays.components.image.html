@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Image <small> - <a href="assays.components.image.full.json">full json</a></small></h1>
+        <h1>Image</h1>
         <p>
             <b>Description:</b>  Base information about the aquisition and analysis of a quantitative pathology image
 
@@ -55,19 +55,27 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
             
                 <tr>
-    <td><a name="slide_scanner_model"></a>slide_scanner_model</td>
-    <td width=25%>
+    <td>
+        <span id="slide_scanner_model">slide_scanner_model</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Model version of the slide scanner instrument.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
                 <li>Vectra 2.0</li>
@@ -75,12 +83,8 @@
                 <li>Hamamatsu</li>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -100,22 +104,27 @@
         
             
                 <tr>
-    <td><a name="protocol_name"></a>protocol_name</td>
-    <td width=25%>
+    <td>
+        <span id="protocol_name">protocol_name</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Protocol name for which imaging experiment conducted.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -126,13 +135,20 @@
         
             
                 <tr>
-    <td><a name="staining_platform"></a>staining_platform</td>
-    <td width=25%>
+    <td>
+        <span id="staining_platform">staining_platform</span>
+        
+    </td>
+    <td>
         Staining platform used for tissue sample labeling.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
                 <li>auto</li>
@@ -140,10 +156,8 @@
                 <li>manual</li>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -151,20 +165,25 @@
         
             
                 <tr>
-    <td><a name="autostainer_model"></a>autostainer_model</td>
-    <td width=25%>
+    <td>
+        <span id="autostainer_model">autostainer_model</span>
+        
+    </td>
+    <td>
         Model version of the autostainer instrument.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -172,13 +191,20 @@
         
             
                 <tr>
-    <td><a name="image_analysis_software"></a>image_analysis_software</td>
-    <td width=25%>
+    <td>
+        <span id="image_analysis_software">image_analysis_software</span>
+        
+    </td>
+    <td>
         Source sofware for digital pathology and image analysis.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
                 <li>InForm</li>
@@ -186,10 +212,8 @@
                 <li>QuPath</li>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -197,20 +221,25 @@
         
             
                 <tr>
-    <td><a name="image_analysis_software_version"></a>image_analysis_software_version</td>
-    <td width=25%>
+    <td>
+        <span id="image_analysis_software_version">image_analysis_software_version</span>
+        
+    </td>
+    <td>
         Source sofware version for digital pathology and image analysis.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -218,13 +247,20 @@
         
             
                 <tr>
-    <td><a name="cell_segmentation_model"></a>cell_segmentation_model</td>
-    <td width=25%>
+    <td>
+        <span id="cell_segmentation_model">cell_segmentation_model</span>
+        
+    </td>
+    <td>
         Model used for cell segmentation in an imaging experiment.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
                 <li>proprietary</li>
@@ -232,10 +268,8 @@
                 <li>watershed</li>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -243,13 +277,20 @@
         
             
                 <tr>
-    <td><a name="positive_cell_detection"></a>positive_cell_detection</td>
-    <td width=25%>
+    <td>
+        <span id="positive_cell_detection">positive_cell_detection</span>
+        
+    </td>
+    <td>
         Model used for postitive cell detection in imaging experiment.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
                 <li>proprietary</li>
@@ -257,10 +298,8 @@
                 <li>random forest classifier</li>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>

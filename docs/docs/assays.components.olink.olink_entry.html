@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Olink assay record <small> - <a href="assays.components.olink.olink_entry.full.json">full json</a></small></h1>
+        <h1>Olink assay record</h1>
         <p>
             <b>Description:</b>  A single data record from Olink assay
         </p>
@@ -54,28 +54,32 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
             
                 <tr>
-    <td><a name="assay_prefix"></a>assay_prefix</td>
-    <td width=25%>
+    <td>
+        <span id="assay_prefix">assay_prefix</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Prefix to used for the filename
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -83,13 +87,22 @@
         
             
                 <tr>
-    <td><a name="filetype"></a>filetype</td>
-    <td width=25%>
+    <td>
+        <span id="filetype">filetype</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Type of file being uploaded
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
                 <li>assay</li>
@@ -97,12 +110,8 @@
                 <li>study</li>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -130,22 +139,27 @@
         
             
                 <tr>
-    <td><a name="panel"></a>panel</td>
-    <td width=25%>
+    <td>
+        <span id="panel">panel</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Panel used for the assay
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -153,22 +167,27 @@
         
             
                 <tr>
-    <td><a name="number_of_samples"></a>number_of_samples</td>
-    <td width=25%>
+    <td>
+        <span id="number_of_samples">number_of_samples</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Number of samples analyzed in the assay
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -178,22 +197,27 @@
         
             
                 <tr>
-    <td><a name="npx_manager_version"></a>npx_manager_version</td>
-    <td width=25%>
+    <td>
+        <span id="npx_manager_version">npx_manager_version</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Version of NPX manager used for the analysis
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -210,20 +234,25 @@
         
             
                 <tr>
-    <td><a name="run_date"></a>run_date</td>
-    <td width=25%>
+    <td>
+        <span id="run_date">run_date</span>
+        
+    </td>
+    <td>
         Date when the Olink assay was run
     </td>
     <td>
         
-            &lt;string&gt; date
+            &lt; 
+                string 
+                 :  date
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -231,20 +260,25 @@
         
             
                 <tr>
-    <td><a name="run_time"></a>run_time</td>
-    <td width=25%>
+    <td>
+        <span id="run_time">run_time</span>
+        
+    </td>
+    <td>
         Time when the Olink assay was run
     </td>
     <td>
         
-            &lt;string&gt; time
+            &lt; 
+                string 
+                 :  time
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -252,20 +286,25 @@
         
             
                 <tr>
-    <td><a name="instrument"></a>instrument</td>
-    <td width=25%>
+    <td>
+        <span id="instrument">instrument</span>
+        
+    </td>
+    <td>
         Instrument used for the Olink assay
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -273,20 +312,25 @@
         
             
                 <tr>
-    <td><a name="fludigm_application_version"></a>fludigm_application_version</td>
-    <td width=25%>
+    <td>
+        <span id="fludigm_application_version">fludigm_application_version</span>
+        
+    </td>
+    <td>
         Version of the Fluidgm application used
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -294,20 +338,25 @@
         
             
                 <tr>
-    <td><a name="fludigm_application_build"></a>fludigm_application_build</td>
-    <td width=25%>
+    <td>
+        <span id="fludigm_application_build">fludigm_application_build</span>
+        
+    </td>
+    <td>
         Build of the Fluidgm application used
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -315,20 +364,25 @@
         
             
                 <tr>
-    <td><a name="chip_barcode"></a>chip_barcode</td>
-    <td width=25%>
+    <td>
+        <span id="chip_barcode">chip_barcode</span>
+        
+    </td>
+    <td>
         Chip barcode number
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -336,20 +390,25 @@
         
             
                 <tr>
-    <td><a name="probe_type"></a>probe_type</td>
-    <td width=25%>
+    <td>
+        <span id="probe_type">probe_type</span>
+        
+    </td>
+    <td>
         Probe Type
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -357,20 +416,25 @@
         
             
                 <tr>
-    <td><a name="passive_reference"></a>passive_reference</td>
-    <td width=25%>
+    <td>
+        <span id="passive_reference">passive_reference</span>
+        
+    </td>
+    <td>
         Passive Reference
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -378,20 +442,25 @@
         
             
                 <tr>
-    <td><a name="quality_threshold"></a>quality_threshold</td>
-    <td width=25%>
+    <td>
+        <span id="quality_threshold">quality_threshold</span>
+        
+    </td>
+    <td>
         Threshold used for quality cutoff
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -399,20 +468,25 @@
         
             
                 <tr>
-    <td><a name="baseline_correction"></a>baseline_correction</td>
-    <td width=25%>
+    <td>
+        <span id="baseline_correction">baseline_correction</span>
+        
+    </td>
+    <td>
         Method used for baseline correction
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -424,20 +498,25 @@
         
             
                 <tr>
-    <td><a name="number_of_samples_failed"></a>number_of_samples_failed</td>
-    <td width=25%>
+    <td>
+        <span id="number_of_samples_failed">number_of_samples_failed</span>
+        
+    </td>
+    <td>
         Number of samples failed in the assay
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -447,20 +526,25 @@
         
             
                 <tr>
-    <td><a name="assay_panel_lot"></a>assay_panel_lot</td>
-    <td width=25%>
+    <td>
+        <span id="assay_panel_lot">assay_panel_lot</span>
+        
+    </td>
+    <td>
         Lot Number of the assay panel
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -468,16 +552,16 @@
         
             
                 <tr>
-    <td><a name="files"></a>files</td>
-    <td width=25%>
+    <td>
+        <span id="files">files</span>
+        
+    </td>
+    <td>
         
     </td>
     <td>
         
             <a href="assays.components.olink.olink_input.html">assays.components.olink.olink_input</a>
-        
-    </td>
-    <td>
         
     </td>
 </tr>

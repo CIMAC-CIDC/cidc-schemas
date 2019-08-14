@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Text Artifact</h1>
+        <h1>NGS Assay</h1>
         <p>
-            <b>Description:</b>  Information about text files
+            <b>Description:</b>  Common properties for NGS Assays.
         </p>
         
     </div>
@@ -43,18 +43,8 @@
     
     
         
-            
-                
-                    
-                
-                
-            
-                
-                
-                    
-                
-            
         
+            
         
     
 
@@ -68,22 +58,38 @@
         </thead>
         
             
-        
-            
-        
-        
-            
                 <tr>
     <td>
-        <span id="(inherits all properties from this schema)">(inherits all properties from this schema)</span>
+        <span id="sequencer_platform">sequencer_platform</span>
+        
+            <sup>required</sup>
         
     </td>
     <td>
-        
+        Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.
     </td>
     <td>
         
-            <a href="artifacts.artifact_core.html">artifacts.artifact_core</a>
+            &lt; 
+                string 
+                 
+                
+            &gt;
+            <ul>
+            
+                <li>Illumina - HiSeq 2500</li>
+            
+                <li>Illumina - HiSeq 3000</li>
+            
+                <li>Illumina - NextSeq 550</li>
+            
+                <li>Illumina - HiSeq 4000</li>
+            
+                <li>Illumina - NovaSeq 6000</li>
+            
+            
+            
+            </ul>
         
     </td>
 </tr>
@@ -92,16 +98,87 @@
             
                 <tr>
     <td>
-        <span id="info">info</span>
+        <span id="library_vendor_kit">library_vendor_kit</span>
+        
+            <sup>required</sup>
         
     </td>
     <td>
-        
+        Vendor for the library construction kit, e.g. KAPA
     </td>
     <td>
         
             &lt; 
-                object 
+                string 
+                 
+                
+            &gt;
+            <ul>
+            
+                <li>KAPA - Hyper Prep</li>
+            
+            
+            
+            </ul>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        <span id="paired_end_reads">paired_end_reads</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
+        Indicate if the sequencing was performed paired or single ended
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+                 
+                
+            &gt;
+            <ul>
+            
+                <li>Paired</li>
+            
+                <li>Single</li>
+            
+            
+            
+            </ul>
+        
+    </td>
+</tr>
+            
+        
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        <span id="read_length">read_length</span>
+        
+    </td>
+    <td>
+        Number of cycles for each sequencing read
+    </td>
+    <td>
+        
+            &lt; 
+                integer 
                  
                 
             &gt;

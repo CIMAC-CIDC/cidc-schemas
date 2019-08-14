@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Aliquot <small> - <a href="aliquot.full.json">full json</a></small></h1>
+        <h1>Aliquot</h1>
         <p>
             <b>Description:</b>  Pertaining to a portion (volume or weight) of the whole.
         </p>
@@ -54,28 +54,32 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
             
                 <tr>
-    <td><a name="cimac_aliquot_id"></a>cimac_aliquot_id</td>
-    <td width=25%>
+    <td>
+        <span id="cimac_aliquot_id">cimac_aliquot_id</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -124,20 +128,25 @@
         
             
                 <tr>
-    <td><a name="quantity"></a>quantity</td>
-    <td width=25%>
+    <td>
+        <span id="quantity">quantity</span>
+        
+    </td>
+    <td>
         Quantity of each sample shipped.
     </td>
     <td>
         
-            &lt;integer&gt; 
+            &lt; 
+                integer 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -145,20 +154,25 @@
         
             
                 <tr>
-    <td><a name="volume_quantity"></a>volume_quantity</td>
-    <td width=25%>
+    <td>
+        <span id="volume_quantity">volume_quantity</span>
+        
+    </td>
+    <td>
         Volume of sample shipped.
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -166,20 +180,25 @@
         
             
                 <tr>
-    <td><a name="pbmc_aliquoted"></a>pbmc_aliquoted</td>
-    <td width=25%>
+    <td>
+        <span id="pbmc_aliquoted">pbmc_aliquoted</span>
+        
+    </td>
+    <td>
         Site or biobank provides the final number of PBMCs per vial that were frozen.
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -187,20 +206,25 @@
         
             
                 <tr>
-    <td><a name="pbmc_recovered"></a>pbmc_recovered</td>
-    <td width=25%>
+    <td>
+        <span id="pbmc_recovered">pbmc_recovered</span>
+        
+    </td>
+    <td>
         Receiving site determines number fo PBMCs per vial recovered upon receipt.
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -208,20 +232,25 @@
         
             
                 <tr>
-    <td><a name="material_used"></a>material_used</td>
-    <td width=25%>
+    <td>
+        <span id="material_used">material_used</span>
+        
+    </td>
+    <td>
         Receiving site indicates how much material was used for assay purposes.
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -229,20 +258,25 @@
         
             
                 <tr>
-    <td><a name="material_remaining"></a>material_remaining</td>
-    <td width=25%>
+    <td>
+        <span id="material_remaining">material_remaining</span>
+        
+    </td>
+    <td>
         Receiving site indicates how much material remains after assay use.
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -250,20 +284,25 @@
         
             
                 <tr>
-    <td><a name="sample_source"></a>sample_source</td>
-    <td width=25%>
+    <td>
+        <span id="sample_source">sample_source</span>
+        
+    </td>
+    <td>
         Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -271,13 +310,20 @@
         
             
                 <tr>
-    <td><a name="sample_quality_status"></a>sample_quality_status</td>
-    <td width=25%>
+    <td>
+        <span id="sample_quality_status">sample_quality_status</span>
+        
+    </td>
+    <td>
         Final status of sample after QC and pathology review.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
                 <li>Usable for Assay</li>
@@ -289,10 +335,8 @@
                 <li>Other</li>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -300,13 +344,20 @@
         
             
                 <tr>
-    <td><a name="sample_replacement"></a>sample_replacement</td>
-    <td width=25%>
+    <td>
+        <span id="sample_replacement">sample_replacement</span>
+        
+    </td>
+    <td>
         Status of sample if replacement is/was requested.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
                 <li>Replacement Requested</li>
@@ -316,10 +367,8 @@
                 <li>N/A</li>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -327,13 +376,20 @@
         
             
                 <tr>
-    <td><a name="sample_status"></a>sample_status</td>
-    <td width=25%>
+    <td>
+        <span id="sample_status">sample_status</span>
+        
+    </td>
+    <td>
         Status of sample used for other assay, exhausted, destroyed, or returned.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
                 <li>Sample Returned</li>
@@ -347,10 +403,8 @@
                 <li>Sample Leftover</li>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -358,13 +412,20 @@
         
             
                 <tr>
-    <td><a name="material_extracted"></a>material_extracted</td>
-    <td width=25%>
+    <td>
+        <span id="material_extracted">material_extracted</span>
+        
+    </td>
+    <td>
         The type of biological material that was extracted from this sample.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
                 <li>DNA</li>
@@ -376,10 +437,8 @@
                 <li>Other</li>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -387,20 +446,25 @@
         
             
                 <tr>
-    <td><a name="extracted_concentration"></a>extracted_concentration</td>
-    <td width=25%>
+    <td>
+        <span id="extracted_concentration">extracted_concentration</span>
+        
+    </td>
+    <td>
         The concentration of biological material that was extracted from this sample.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -408,13 +472,20 @@
         
             
                 <tr>
-    <td><a name="units"></a>units</td>
-    <td width=25%>
+    <td>
+        <span id="units">units</span>
+        
+    </td>
+    <td>
         The unit of biological material from this sample.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
                 <li>µL</li>
@@ -442,10 +513,8 @@
                 <li>Other</li>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -453,20 +522,25 @@
         
             
                 <tr>
-    <td><a name="sample_amount"></a>sample_amount</td>
-    <td width=25%>
+    <td>
+        <span id="sample_amount">sample_amount</span>
+        
+    </td>
+    <td>
         The amount of extracted sample shipped. Example: 400 ng
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -474,20 +548,25 @@
         
             
                 <tr>
-    <td><a name="lymphocyte_influx"></a>lymphocyte_influx</td>
-    <td width=25%>
+    <td>
+        <span id="lymphocyte_influx">lymphocyte_influx</span>
+        
+    </td>
+    <td>
         Extent of lymphocytic infiltration into the tumor stroma or surrounding environment. Example: 2
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -495,20 +574,25 @@
         
             
                 <tr>
-    <td><a name="viable_stroma_percent_area"></a>viable_stroma_percent_area</td>
-    <td width=25%>
+    <td>
+        <span id="viable_stroma_percent_area">viable_stroma_percent_area</span>
+        
+    </td>
+    <td>
         Percent area of viable tissue . Example: 10
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -516,20 +600,25 @@
         
             
                 <tr>
-    <td><a name="viable_tumor_percent_area"></a>viable_tumor_percent_area</td>
-    <td width=25%>
+    <td>
+        <span id="viable_tumor_percent_area">viable_tumor_percent_area</span>
+        
+    </td>
+    <td>
         Percent area that contains viable tumor cells . Example: 60
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -537,20 +626,25 @@
         
             
                 <tr>
-    <td><a name="necrosis_percent_area"></a>necrosis_percent_area</td>
-    <td width=25%>
+    <td>
+        <span id="necrosis_percent_area">necrosis_percent_area</span>
+        
+    </td>
+    <td>
         Percent area of necrotic tissue . Example: 5
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -558,20 +652,25 @@
         
             
                 <tr>
-    <td><a name="fibrosis_percent_area"></a>fibrosis_percent_area</td>
-    <td width=25%>
+    <td>
+        <span id="fibrosis_percent_area">fibrosis_percent_area</span>
+        
+    </td>
+    <td>
         Percent area of fibrotic area. Example: 15
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>

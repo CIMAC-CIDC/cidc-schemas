@@ -110,13 +110,77 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_aliquot_id":         "AL 1.1.1"
+                        "cimac_aliquot_id":         "AL 1.1.1",
+                        "files": {
+                            "fastq_1":{
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "assay_category" :      "Whole Exome Sequencing (WES)",
+                                "file_type" :           "FASTQ"
+                            },
+                            "fastq_2":{
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "assay_category" :      "Whole Exome Sequencing (WES)",
+                                "file_type" :           "FASTQ"
+                            },
+                            "read_group_mapping_file":{
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "assay_category" :      "Whole Exome Sequencing (WES)",
+                                "file_type" :           "Other"
+                            }
+                        }
                     }, 
                     {
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_aliquot_id":         "AL 1.2.1"
+                        "cimac_aliquot_id":         "AL 1.2.1",
+                        "files": {
+                            "fastq_1":{
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "assay_category" :      "Whole Exome Sequencing (WES)",
+                                "file_type" :           "FASTQ"
+                            },
+                            "fastq_2":{
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "assay_category" :      "Whole Exome Sequencing (WES)",
+                                "file_type" :           "FASTQ"
+                            },
+                            "read_group_mapping_file":{
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "assay_category" :      "Whole Exome Sequencing (WES)",
+                                "file_type" :           "Other"
+                            }
+                        }
                     }
                 ]
             },
@@ -131,13 +195,77 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_aliquot_id":         "AL 2.1.1"
+                        "cimac_aliquot_id":         "AL 2.1.1",
+                        "files": {
+                            "fastq_1":{
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "assay_category" :      "Whole Exome Sequencing (WES)",
+                                "file_type" :           "FASTQ"
+                            },
+                            "fastq_2":{
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "assay_category" :      "Whole Exome Sequencing (WES)",
+                                "file_type" :           "FASTQ"
+                            },
+                            "read_group_mapping_file":{
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "assay_category" :      "Whole Exome Sequencing (WES)",
+                                "file_type" :           "Other"
+                            }
+                        }
                     }, 
                     {
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_aliquot_id":         "AL 2.2.1"
+                        "cimac_aliquot_id":         "AL 2.2.1",
+                        "files": {
+                            "fastq_1":{
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "assay_category" :      "Whole Exome Sequencing (WES)",
+                                "file_type" :           "FASTQ"
+                            },
+                            "fastq_2":{
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "assay_category" :      "Whole Exome Sequencing (WES)",
+                                "file_type" :           "FASTQ"
+                            },
+                            "read_group_mapping_file":{
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "assay_category" :      "Whole Exome Sequencing (WES)",
+                                "file_type" :           "Other"
+                            }
+                        }
                     }
                 ]
             }

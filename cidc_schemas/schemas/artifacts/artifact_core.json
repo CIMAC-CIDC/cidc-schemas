@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "artifact",
-  "title": "Artifact",
+  "$id": "artifact_core",
+  "title": "Artifact Core",
   "type": "object",
   "description": "Any file artifact associated with a clinical trial.",
   "$comment": "_____!!!_____ Add 'AllOf/If/Then' cases for artifact_category / file_type combinations. _____!!!_____",
@@ -58,7 +58,7 @@
       "$ref": "assays/components/assay_core.json#properties/assay_category"
     },
     "file_type": {
-      "$comment": "_____!!!_____ Maybe remove? We already know know in which concrete artifact this is embeded. _____!!!_____",
+      "$comment": "_____!!!_____ Maybe remove? We already know in which concrete artifact this core is embeded. _____!!!_____",
       "description": "File Type.",
       "type": "string",
       "enum": [

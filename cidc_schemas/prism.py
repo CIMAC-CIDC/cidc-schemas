@@ -42,7 +42,7 @@ def _get_coerce(ref: str):
     elif t == 'number':
         return float
     else:
-        raise NotImplementedError(f"no coercion available for type{t}")
+        raise NotImplementedError(f"no coercion available for type:{t}")
 
 
 def _load_keylookup(template_path: str) -> dict:

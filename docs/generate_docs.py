@@ -26,13 +26,13 @@ def load_schemas() -> dict:
         for path in paths:
             schema_path = os.path.join(root, path)
 
-            def json_to_html(ref):
+            def json_to_html(node:dict) -> dict:
                 """Update refs to refer to the URL of the corresponding documentation."""
-                url = ref.replace('.json', '.html')
+                url = node['$ref'].replace('.json', '.html')
                 url = url.replace('properties/', '')
                 url = url.replace('definitions/', '')
                 url = url.replace('/', '.')
-                return {'url': url}
+                return dict(url=url, **node)
 
             full_json = load_and_validate_schema(
                 schema_path, SCHEMA_DIR)
@@ -89,9 +89,6 @@ def generate_docs(out_directory: str = HTML_DIR):
             if full_name.startswith("."):
                 full_name = full_name[1::]
 
-            # if not 'ngs.wes_entry' in full_name: continue
-            # print(f'generating {full_name}')
-
             # render the HTML to string
             entity_html = template.render(
                 name=name, full_name=full_name, schema=schema, scope=directory)
@@ -99,9 +96,6 @@ def generate_docs(out_directory: str = HTML_DIR):
             # write this out
             with open(os.path.join(out_directory, f'{full_name}.html'), 'w') as f:
                 f.write(entity_html)
-
-            # with open(os.path.join(out_directory, f'{full_name}.full.json'), 'w') as f:
-            #     f.write(json.dumps(full_json, sort_keys=True, indent=4))
 
 
 if __name__ == '__main__':

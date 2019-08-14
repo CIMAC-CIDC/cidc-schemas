@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>RNA Gene Expression Assay <small> - <a href="assays.rna_expression_assay.full.json">full json</a></small></h1>
+        <h1>RNA Gene Expression Assay</h1>
         <p>
             <b>Description:</b>  Additional properties to describe a RNA assay for expression analysis.
         </p>
@@ -66,7 +66,6 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
@@ -76,13 +75,22 @@
         
             
                 <tr>
-    <td><a name="enrichment_method"></a>enrichment_method</td>
-    <td width=25%>
+    <td>
+        <span id="enrichment_method">enrichment_method</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Method used for enriching for mRNA
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
                 <li>PolyA capture</li>
@@ -92,12 +100,8 @@
                 <li>Ribo minus</li>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -111,13 +115,22 @@
         
             
                 <tr>
-    <td><a name="records"></a>records</td>
-    <td width=25%>
+    <td>
+        <span id="records">records</span>
+        
+            <sup>required</sup>
         
     </td>
     <td>
         
-            &lt;array&gt; 
+    </td>
+    <td>
+        
+            &lt; 
+                array 
+                 
+                
+            &gt;
             <ul>
             
             
@@ -125,12 +138,8 @@
                     <a href="assays.components.ngs.rna_expression_entry.html">assays.components.ngs.rna_expression_entry</a>
                 
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -139,8 +148,11 @@
         
             
                 <tr>
-    <td><a name="(inherits all properties from this schema)"></a>(inherits all properties from this schema)</td>
-    <td width=25%>
+    <td>
+        <span id="(inherits all properties from this schema)">(inherits all properties from this schema)</span>
+        
+    </td>
+    <td>
         
     </td>
     <td>
@@ -148,24 +160,21 @@
             <a href="assays.components.assay_core.html">assays.components.assay_core</a>
         
     </td>
-    <td>
-        
-    </td>
 </tr>
             
         
             
                 <tr>
-    <td><a name="(inherits all properties from this schema)"></a>(inherits all properties from this schema)</td>
-    <td width=25%>
+    <td>
+        <span id="(inherits all properties from this schema)">(inherits all properties from this schema)</span>
         
     </td>
     <td>
         
-            <a href="assays.components.ngs.html">assays.components.ngs</a>
-        
     </td>
     <td>
+        
+            <a href="assays.components.ngs_assay_core.html">assays.components.ngs_assay_core</a>
         
     </td>
 </tr>
@@ -175,13 +184,20 @@
         
             
                 <tr>
-    <td><a name="enrichment_vendor_kit"></a>enrichment_vendor_kit</td>
-    <td width=25%>
+    <td>
+        <span id="enrichment_vendor_kit">enrichment_vendor_kit</span>
+        
+    </td>
+    <td>
         Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
                 <li>Agilent</li>
@@ -195,10 +211,8 @@
                 <li>Illumina - TruSeq Stranded PolyA mRNA</li>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -206,20 +220,25 @@
         
             
                 <tr>
-    <td><a name="stranded_library"></a>stranded_library</td>
-    <td width=25%>
+    <td>
+        <span id="stranded_library">stranded_library</span>
+        
+    </td>
+    <td>
         Is the RNAseq library stranded or not
     </td>
     <td>
         
-            &lt;boolean&gt; 
+            &lt; 
+                boolean 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -227,13 +246,20 @@
         
             
                 <tr>
-    <td><a name="library_type"></a>library_type</td>
-    <td width=25%>
+    <td>
+        <span id="library_type">library_type</span>
+        
+    </td>
+    <td>
         The type of RNAseq library generated
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
                 <li>ff-firststrand</li>
@@ -251,10 +277,8 @@
                 <li>transfrags</li>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>

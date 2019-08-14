@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>MICSSS antibody <small> - <a href="assays.components.micsss_antibody.full.json">full json</a></small></h1>
+        <h1>MICSSS antibody</h1>
         <p>
             <b>Description:</b>  Data specific to antibody prepration on the multiplex immunohistochemical platform
 
@@ -62,7 +62,6 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
@@ -70,22 +69,27 @@
         
             
                 <tr>
-    <td><a name="primary_antibody_block"></a>primary_antibody_block</td>
-    <td width=25%>
+    <td>
+        <span id="primary_antibody_block">primary_antibody_block</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Blocking reagent used for primary antibody sample.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -126,8 +130,11 @@
         
             
                 <tr>
-    <td><a name="(inherits all properties from this schema)"></a>(inherits all properties from this schema)</td>
-    <td width=25%>
+    <td>
+        <span id="(inherits all properties from this schema)">(inherits all properties from this schema)</span>
+        
+    </td>
+    <td>
         
     </td>
     <td>
@@ -135,9 +142,6 @@
             <a href="assays.components.antibody.html">assays.components.antibody</a>
         
     </td>
-    <td>
-        
-    </td>
 </tr>
             
         
@@ -145,20 +149,25 @@
         
             
                 <tr>
-    <td><a name="postPrimary_linker_block"></a>postPrimary_linker_block</td>
-    <td width=25%>
+    <td>
+        <span id="postPrimary_linker_block">postPrimary_linker_block</span>
+        
+    </td>
+    <td>
         Linker block between the antibody and the therapeutic drug.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -166,20 +175,25 @@
         
             
                 <tr>
-    <td><a name="secondary_antibody_block"></a>secondary_antibody_block</td>
-    <td width=25%>
+    <td>
+        <span id="secondary_antibody_block">secondary_antibody_block</span>
+        
+    </td>
+    <td>
         Secondary antibody blocking reagent used for primary sample.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -187,20 +201,25 @@
         
             
                 <tr>
-    <td><a name="species"></a>species</td>
-    <td width=25%>
+    <td>
+        <span id="species">species</span>
+        
+    </td>
+    <td>
         Host species from which primary antibody sample was derived.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -208,20 +227,25 @@
         
             
                 <tr>
-    <td><a name="isotype"></a>isotype</td>
-    <td width=25%>
+    <td>
+        <span id="isotype">isotype</span>
+        
+    </td>
+    <td>
         Antibody isotype used to help differentiate non-specific background signal from specific antibody signal.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -229,20 +253,25 @@
         
             
                 <tr>
-    <td><a name="primary_antibody_dilution"></a>primary_antibody_dilution</td>
-    <td width=25%>
+    <td>
+        <span id="primary_antibody_dilution">primary_antibody_dilution</span>
+        
+    </td>
+    <td>
         Concentration ratio of dilution buffer for primary antibody.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -250,20 +279,25 @@
         
             
                 <tr>
-    <td><a name="primary_antibody_incubation_time"></a>primary_antibody_incubation_time</td>
-    <td width=25%>
+    <td>
+        <span id="primary_antibody_incubation_time">primary_antibody_incubation_time</span>
+        
+    </td>
+    <td>
         Time of primary antibody incubation.
     </td>
     <td>
         
-            &lt;string&gt; time
+            &lt; 
+                string 
+                 :  time
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -271,20 +305,25 @@
         
             
                 <tr>
-    <td><a name="primary_antibody_incubation_temp"></a>primary_antibody_incubation_temp</td>
-    <td width=25%>
+    <td>
+        <span id="primary_antibody_incubation_temp">primary_antibody_incubation_temp</span>
+        
+    </td>
+    <td>
         Temperature used for primary antibody incubation.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -292,20 +331,25 @@
         
             
                 <tr>
-    <td><a name="secondary_antibody"></a>secondary_antibody</td>
-    <td width=25%>
+    <td>
+        <span id="secondary_antibody">secondary_antibody</span>
+        
+    </td>
+    <td>
         Secondary antibody used to bind to primary antibody for detection assistance.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -313,20 +357,25 @@
         
             
                 <tr>
-    <td><a name="secondary_company"></a>secondary_company</td>
-    <td width=25%>
+    <td>
+        <span id="secondary_company">secondary_company</span>
+        
+    </td>
+    <td>
         Company from which secondary antibody sample was derived.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -334,20 +383,25 @@
         
             
                 <tr>
-    <td><a name="secondary_cat_num"></a>secondary_cat_num</td>
-    <td width=25%>
+    <td>
+        <span id="secondary_cat_num">secondary_cat_num</span>
+        
+    </td>
+    <td>
         Antibody registry catalog number assigned to secondary antibody sample.
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -355,20 +409,25 @@
         
             
                 <tr>
-    <td><a name="secondary_lot_num"></a>secondary_lot_num</td>
-    <td width=25%>
+    <td>
+        <span id="secondary_lot_num">secondary_lot_num</span>
+        
+    </td>
+    <td>
         Identification number assigned to the particular quantity or lot of secondary antibody material from manufacturer.
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -376,20 +435,25 @@
         
             
                 <tr>
-    <td><a name="secondary_antibody_dilution"></a>secondary_antibody_dilution</td>
-    <td width=25%>
+    <td>
+        <span id="secondary_antibody_dilution">secondary_antibody_dilution</span>
+        
+    </td>
+    <td>
         Concentration ratio of dilution buffer for secondary antibody prep.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -397,20 +461,25 @@
         
             
                 <tr>
-    <td><a name="secondary_antibody_incubation_time"></a>secondary_antibody_incubation_time</td>
-    <td width=25%>
+    <td>
+        <span id="secondary_antibody_incubation_time">secondary_antibody_incubation_time</span>
+        
+    </td>
+    <td>
         Temperature used for secondary antibody incubation.
     </td>
     <td>
         
-            &lt;string&gt; time
+            &lt; 
+                string 
+                 :  time
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -418,20 +487,25 @@
         
             
                 <tr>
-    <td><a name="ar_reagent"></a>ar_reagent</td>
-    <td width=25%>
+    <td>
+        <span id="ar_reagent">ar_reagent</span>
+        
+    </td>
+    <td>
         Heating antigen retrieval reagents for tissue preparation.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -439,20 +513,25 @@
         
             
                 <tr>
-    <td><a name="ar_ph"></a>ar_ph</td>
-    <td width=25%>
+    <td>
+        <span id="ar_ph">ar_ph</span>
+        
+    </td>
+    <td>
         pH levels of reagents from heating antigen retrieval procedure.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -460,20 +539,25 @@
         
             
                 <tr>
-    <td><a name="ar_incubation_time"></a>ar_incubation_time</td>
-    <td width=25%>
+    <td>
+        <span id="ar_incubation_time">ar_incubation_time</span>
+        
+    </td>
+    <td>
         Time of AR reagent incubation.
     </td>
     <td>
         
-            &lt;string&gt; time
+            &lt; 
+                string 
+                 :  time
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>

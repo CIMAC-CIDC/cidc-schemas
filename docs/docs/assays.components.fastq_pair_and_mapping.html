@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Paired end sequencing file pair and group mapping file <small> - <a href="assays.components.fastq_pair_and_mapping.full.json">full json</a></small></h1>
+        <h1>Paired end sequencing file pair and group mapping file</h1>
         <p>
             <b>Description:</b>  Paired end sequencing file pairs
         </p>
@@ -54,24 +54,23 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
             
                 <tr>
-    <td><a name="fastq_1"></a>fastq_1</td>
-    <td width=25%>
+    <td>
+        <span id="fastq_1">fastq_1</span>
         
+            <sup>required</sup>
+        
+    </td>
+    <td>
+        Fastq file for the first fragment.
     </td>
     <td>
         
             <a href="artifacts.artifact_fastq.html">artifacts.artifact_fastq</a>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -79,18 +78,18 @@
         
             
                 <tr>
-    <td><a name="fastq_2"></a>fastq_2</td>
-    <td width=25%>
+    <td>
+        <span id="fastq_2">fastq_2</span>
         
+            <sup>required</sup>
+        
+    </td>
+    <td>
+        Fastq file for the second fragment.
     </td>
     <td>
         
             <a href="artifacts.artifact_fastq.html">artifacts.artifact_fastq</a>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -98,18 +97,18 @@
         
             
                 <tr>
-    <td><a name="read_group_mapping_file"></a>read_group_mapping_file</td>
-    <td width=25%>
+    <td>
+        <span id="read_group_mapping_file">read_group_mapping_file</span>
         
+            <sup>required</sup>
+        
+    </td>
+    <td>
+        Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.
     </td>
     <td>
         
             <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>

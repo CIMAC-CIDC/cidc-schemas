@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>WES assay export <small> - <a href="assays.components.ngs.wes_export.full.json">full json</a></small></h1>
+        <h1>WES assay export</h1>
         <p>
             <b>Description:</b>  A single export data record from WES assay
         </p>
@@ -54,28 +54,32 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
             
                 <tr>
-    <td><a name="wes_experiment_id"></a>wes_experiment_id</td>
-    <td width=25%>
+    <td>
+        <span id="wes_experiment_id">wes_experiment_id</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Identification # for Wes Output files
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -90,20 +94,25 @@
         
             
                 <tr>
-    <td><a name="export_date"></a>export_date</td>
-    <td width=25%>
+    <td>
+        <span id="export_date">export_date</span>
+        
+    </td>
+    <td>
         Date files were exported
     </td>
     <td>
         
-            &lt;string&gt; date
+            &lt; 
+                string 
+                 :  date
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -111,16 +120,16 @@
         
             
                 <tr>
-    <td><a name="output_files"></a>output_files</td>
-    <td width=25%>
+    <td>
+        <span id="output_files">output_files</span>
+        
+    </td>
+    <td>
         
     </td>
     <td>
         
             <a href="assays.components.ngs.wes_output.html">assays.components.ngs.wes_output</a>
-        
-    </td>
-    <td>
         
     </td>
 </tr>

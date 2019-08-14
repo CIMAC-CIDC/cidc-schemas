@@ -31,16 +31,16 @@
             "$ref": "assays/rna_expression_assay.json#properties/library_type"
           },
           "library kit vendor": {
-            "$ref": "assays/components/ngs.json#properties/library_vendor_kit"
+            "$ref": "assays/components/ngs_assay_core.json#properties/library_vendor_kit"
           },
           "sequencer platform": {
-            "$ref": "assays/components/ngs.json#properties/sequencer_platform"
+            "$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"
           },
           "paired end reads": {
-            "$ref": "assays/components/ngs.json#properties/paired_end_reads"
+            "$ref": "assays/components/ngs_assay_core.json#properties/paired_end_reads"
           },
           "read length": {
-            "$ref": "assays/components/ngs.json#properties/read_length"
+            "$ref": "assays/components/ngs_assay_core.json#properties/read_length"
           }
         },
         "data_columns": {

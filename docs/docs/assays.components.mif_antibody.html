@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>mIF antibody <small> - <a href="assays.components.mif_antibody.full.json">full json</a></small></h1>
+        <h1>mIF antibody</h1>
         <p>
             <b>Description:</b>  Data specific to antibody prepration on the multiplex immunoflourescence platform.
         </p>
@@ -61,7 +61,6 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
@@ -69,22 +68,27 @@
         
             
                 <tr>
-    <td><a name="fluor_wavelength"></a>fluor_wavelength</td>
-    <td width=25%>
+    <td>
+        <span id="fluor_wavelength">fluor_wavelength</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Wavelength registered for Alexa Fluor processing.
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -92,22 +96,27 @@
         
             
                 <tr>
-    <td><a name="primary_ab_dilution"></a>primary_ab_dilution</td>
-    <td width=25%>
+    <td>
+        <span id="primary_ab_dilution">primary_ab_dilution</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Concentration ratio for primary antibody dilution.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -115,22 +124,27 @@
         
             
                 <tr>
-    <td><a name="dilutent"></a>dilutent</td>
-    <td width=25%>
+    <td>
+        <span id="dilutent">dilutent</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Dilution agent used for antibody sample.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -138,22 +152,27 @@
         
             
                 <tr>
-    <td><a name="fluor_dilution"></a>fluor_dilution</td>
-    <td width=25%>
+    <td>
+        <span id="fluor_dilution">fluor_dilution</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Concentration ratio for fluor dilution agent.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -161,22 +180,27 @@
         
             
                 <tr>
-    <td><a name="antigen_retrieval_time"></a>antigen_retrieval_time</td>
-    <td width=25%>
+    <td>
+        <span id="antigen_retrieval_time">antigen_retrieval_time</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Length of time needed for antigen retrieval.
     </td>
     <td>
         
-            &lt;string&gt; time
+            &lt; 
+                string 
+                 :  time
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -184,22 +208,27 @@
         
             
                 <tr>
-    <td><a name="primary_incubation_time"></a>primary_incubation_time</td>
-    <td width=25%>
+    <td>
+        <span id="primary_incubation_time">primary_incubation_time</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Length of time for primary antibody incubation.
     </td>
     <td>
         
-            &lt;string&gt; time
+            &lt; 
+                string 
+                 :  time
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -207,22 +236,27 @@
         
             
                 <tr>
-    <td><a name="amplification_time"></a>amplification_time</td>
-    <td width=25%>
+    <td>
+        <span id="amplification_time">amplification_time</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Length of time required for amplified signal detection.
     </td>
     <td>
         
-            &lt;string&gt; time
+            &lt; 
+                string 
+                 :  time
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -231,16 +265,16 @@
         
             
                 <tr>
-    <td><a name="(inherits all properties from this schema)"></a>(inherits all properties from this schema)</td>
-    <td width=25%>
+    <td>
+        <span id="(inherits all properties from this schema)">(inherits all properties from this schema)</span>
+        
+    </td>
+    <td>
         
     </td>
     <td>
         
             <a href="assays.components.antibody.html">assays.components.antibody</a>
-        
-    </td>
-    <td>
         
     </td>
 </tr>

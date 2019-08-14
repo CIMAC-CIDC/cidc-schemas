@@ -6,7 +6,7 @@
   "description": "Whole Exome Sequencing Assay",
   "allOf": [
     { "$ref": "assays/components/assay_core.json" },
-    { "$ref": "assays/components/ngs.json" }
+    { "$ref": "assays/components/ngs_assay_core.json" }
   ],
   "properties": {
     "enrichment_vendor_kit": {
@@ -17,7 +17,7 @@
     "records": {
       "type": "array",
       "items": {
-        "$ref": "assays/components/ngs/wes_entry.json"
+        "$ref": "assays/components/ngs/wes_assay_record.json"
       },
       "mergeStrategy": "arrayMergeById",
       "mergeOptions": {

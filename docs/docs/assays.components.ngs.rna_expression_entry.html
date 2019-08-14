@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>RNAseq assay record <small> - <a href="assays.components.ngs.rna_expression_entry.full.json">full json</a></small></h1>
+        <h1>RNAseq assay record</h1>
         <p>
             <b>Description:</b>  A single data record from RNAseq assay
         </p>
@@ -61,7 +61,6 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
@@ -69,22 +68,27 @@
         
             
                 <tr>
-    <td><a name="enrichment_vendor_lot"></a>enrichment_vendor_lot</td>
-    <td width=25%>
+    <td>
+        <span id="enrichment_vendor_lot">enrichment_vendor_lot</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Lot number for the bait set
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -92,22 +96,27 @@
         
             
                 <tr>
-    <td><a name="capture_date"></a>capture_date</td>
-    <td width=25%>
+    <td>
+        <span id="capture_date">capture_date</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Date of the hybrid capture enrichment
     </td>
     <td>
         
-            &lt;string&gt; date
+            &lt; 
+                string 
+                 :  date
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -120,8 +129,11 @@
         
             
                 <tr>
-    <td><a name="(inherits all properties from this schema)"></a>(inherits all properties from this schema)</td>
-    <td width=25%>
+    <td>
+        <span id="(inherits all properties from this schema)">(inherits all properties from this schema)</span>
+        
+    </td>
+    <td>
         
     </td>
     <td>
@@ -129,9 +141,6 @@
             <a href="assays.components.ngs.ngs_assay_record.html">assays.components.ngs.ngs_assay_record</a>
         
     </td>
-    <td>
-        
-    </td>
 </tr>
             
         
@@ -141,37 +150,42 @@
         
             
                 <tr>
-    <td><a name="sequencing_batch"></a>sequencing_batch</td>
-    <td width=25%>
+    <td>
+        <span id="sequencing_batch">sequencing_batch</span>
+        
+    </td>
+    <td>
         Identifier for the sequencing batch for this sample
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
+            
             
             
             </ul>
         
     </td>
-    <td>
-        
-    </td>
 </tr>
             
         
             
                 <tr>
-    <td><a name="files"></a>files</td>
-    <td width=25%>
+    <td>
+        <span id="files">files</span>
+        
+    </td>
+    <td>
         
     </td>
     <td>
         
             <a href="assays.components.ngs.rna_input.html">assays.components.ngs.rna_input</a>
-        
-    </td>
-    <td>
         
     </td>
 </tr>

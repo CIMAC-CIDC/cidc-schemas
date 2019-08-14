@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Image Mapping <small> - <a href="assays.components.mapping.full.json">full json</a></small></h1>
+        <h1>Image Mapping</h1>
         <p>
             <b>Description:</b>  Regions of interest obtained from image mapping.
         </p>
@@ -54,7 +54,6 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
@@ -66,20 +65,20 @@
         
             
                 <tr>
-    <td><a name="phenotype_map"></a>phenotype_map</td>
-    <td width=25%>
+    <td>
+        <span id="phenotype_map">phenotype_map</span>
         
+            <sup>required</sup>
+        
+    </td>
+    <td>
+        Image produced from the combination of multiple imaging experiment data images.
     </td>
     <td>
         
             <a href="artifacts.artifact_image.html">artifacts.artifact_image</a>
         
     </td>
-    <td>
-        
-            required
-        
-    </td>
 </tr>
             
         
@@ -90,52 +89,52 @@
         
             
                 <tr>
-    <td><a name="binary_seg_map"></a>binary_seg_map</td>
-    <td width=25%>
+    <td>
+        <span id="binary_seg_map">binary_seg_map</span>
         
+    </td>
+    <td>
+        Results of a computer vision task, in which specific regions of a region are mapped.
     </td>
     <td>
         
             <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
         
     </td>
-    <td>
-        
-    </td>
 </tr>
             
         
             
                 <tr>
-    <td><a name="cell_seg_data"></a>cell_seg_data</td>
-    <td width=25%>
+    <td>
+        <span id="cell_seg_data">cell_seg_data</span>
         
+    </td>
+    <td>
+        Data produced from the analysis of cellular image.
     </td>
     <td>
         
             <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
         
     </td>
-    <td>
-        
-    </td>
 </tr>
             
         
             
                 <tr>
-    <td><a name="cell_seg_data_summary"></a>cell_seg_data_summary</td>
-    <td width=25%>
+    <td>
+        <span id="cell_seg_data_summary">cell_seg_data_summary</span>
         
+    </td>
+    <td>
+        Summary of the results of a cell segmentation data experiment.
     </td>
     <td>
         
             <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
         
     </td>
-    <td>
-        
-    </td>
 </tr>
             
         
@@ -143,33 +142,33 @@
         
             
                 <tr>
-    <td><a name="region_seg_map"></a>region_seg_map</td>
-    <td width=25%>
+    <td>
+        <span id="region_seg_map">region_seg_map</span>
         
+    </td>
+    <td>
+        Genome segmentation mapping
     </td>
     <td>
         
             <a href="artifacts.artifact_image.html">artifacts.artifact_image</a>
         
     </td>
-    <td>
-        
-    </td>
 </tr>
             
         
             
                 <tr>
-    <td><a name="score_data"></a>score_data</td>
-    <td width=25%>
+    <td>
+        <span id="score_data">score_data</span>
         
+    </td>
+    <td>
+        Generation of values based on based on experiment data.
     </td>
     <td>
         
             <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
-        
-    </td>
-    <td>
         
     </td>
 </tr>

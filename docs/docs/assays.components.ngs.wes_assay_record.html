@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>NGS Sequencing <small> - <a href="assays.components.ngs.full.json">full json</a></small></h1>
+        <h1>WES assay record</h1>
         <p>
-            <b>Description:</b>  Common properties for NGS Sequencing sxperiments.
+            <b>Description:</b>  A single data record from WES assay
         </p>
         
     </div>
@@ -42,6 +42,13 @@
     <h3>Properties</h3>
     
     
+        
+            
+                
+                    
+                
+                
+            
         
         
             
@@ -54,90 +61,34 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
             
-                <tr>
-    <td><a name="sequencer_platform"></a>sequencer_platform</td>
-    <td width=25%>
-        Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.
-    </td>
-    <td>
-        
-            &lt;string&gt; 
-            <ul>
-            
-                <li>Illumina - HiSeq 2500</li>
-            
-                <li>Illumina - HiSeq 3000</li>
-            
-                <li>Illumina - NextSeq 550</li>
-            
-                <li>Illumina - HiSeq 4000</li>
-            
-                <li>Illumina - NovaSeq 6000</li>
-            
-            
-            </ul>
-        
-    </td>
-    <td>
-        
-            required
-        
-    </td>
-</tr>
-            
         
             
                 <tr>
-    <td><a name="library_vendor_kit"></a>library_vendor_kit</td>
-    <td width=25%>
-        Vendor for the library construction kit, e.g. KAPA
+    <td>
+        <span id="enrichment_vendor_lot">enrichment_vendor_lot</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
+        Lot number for the bait set
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
-                <li>KAPA - Hyper Prep</li>
             
             
             </ul>
-        
-    </td>
-    <td>
-        
-            required
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td><a name="paired_end_reads"></a>paired_end_reads</td>
-    <td width=25%>
-        Indicate if the sequencing was performed paired or single ended
-    </td>
-    <td>
-        
-            &lt;string&gt; 
-            <ul>
-            
-                <li>Paired</li>
-            
-                <li>Single</li>
-            
-            
-            </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -147,27 +98,45 @@
         
         
             
+                <tr>
+    <td>
+        <span id="(inherits all properties from this schema)">(inherits all properties from this schema)</span>
         
+    </td>
+    <td>
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.ngs.ngs_assay_record.html">assays.components.ngs.ngs_assay_record</a>
+        
+    </td>
+</tr>
             
         
             
         
             
                 <tr>
-    <td><a name="read_length"></a>read_length</td>
-    <td width=25%>
-        Number of cycles for each sequencing read
+    <td>
+        <span id="capture_date">capture_date</span>
+        
+    </td>
+    <td>
+        Date of the hybrid capture enrichment
     </td>
     <td>
         
-            &lt;integer&gt; 
+            &lt; 
+                string 
+                 :  date
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>

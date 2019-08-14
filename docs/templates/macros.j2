@@ -4,7 +4,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>{{ schema["title"] }} <small> - <a href="{{name}}.full.json">full json</a></small></h1>
+        <h1>{{ schema["title"] }}</h1>
         <p>
             <b>Description:</b>  {{ schema["description"] }}
         </p>
@@ -51,7 +51,6 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         {% for prop_name, prop_schema in properties %}
@@ -69,13 +68,24 @@
 
 {% macro property_table_row(prop_name, prop_schema, required) -%}
 <tr>
-    <td><a name="{{ prop_name }}"></a>{{ prop_name }}</td>
-    <td width=25%>
+    <td>
+        <span id="{{ prop_name }}">{{ prop_name }}</span>
+        {% if prop_name in required %}
+            <sup>required</sup>
+        {% endif %}
+    </td>
+    <td>
         {{ prop_schema["description"] }}
     </td>
     <td>
         {% if "type" in prop_schema %}
-            &lt;{{ prop_schema["type"]}}&gt; {{ prop_schema["format"]}}
+            &lt; 
+                {{ prop_schema["type"]}} 
+                {% if "format" in prop_schema %} : {% endif %} {{prop_schema["format"]}}
+                {% if "propertyNames" in prop_schema and "pattern" in prop_schema["propertyNames"] %}
+                    : <code>{{prop_schema["propertyNames"]["pattern"]}}</code>
+                {% endif %}
+            &gt;
             <ul>
             {% for item in prop_schema["enum"] %}
                 <li>{{ item }}</li>
@@ -92,15 +102,25 @@
                     </ul>
                 {% endif %}
             {% endif %}
+            {% if "additionalProperties" in prop_schema %}
+                {% if "propertyNames" in prop_schema and "$id" in prop_schema["propertyNames"] %}
+                    {{prop_schema["propertyNames"]["$id"]}} -&gt;
+                {% endif %}
+                {% if "url" in prop_schema["additionalProperties"] %}
+                    <a href="{{ prop_schema['additionalProperties']['url'] }}">{{ prop_schema['additionalProperties']['url'].replace('.html', '') }}</a>
+                {% else %}
+                    &lt;{{ prop_schema["additionalProperties"]["type"]}}&gt; {{ prop_schema["additionalProperties"]["format"]}}
+                    <ul>
+                    {% for item in prop_schema["additionalProperties"]["enum"] %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endif %}
             </ul>
         {% elif "url" in prop_schema %}
             <a href="{{ prop_schema['url'] }}">{{ prop_schema['url'].replace('.html', '') }}</a>
         {% else %}
-        {% endif %}
-    </td>
-    <td>
-        {% if prop_name in required %}
-            required
         {% endif %}
     </td>
 </tr>

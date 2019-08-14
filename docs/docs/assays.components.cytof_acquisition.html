@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>CYTOF Acquisition <small> - <a href="assays.components.cytof_acquisition.full.json">full json</a></small></h1>
+        <h1>CYTOF Acquisition</h1>
         <p>
             <b>Description:</b>  Data specific to the run of a CyTOF batch.
         </p>
@@ -64,7 +64,6 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
@@ -75,8 +74,11 @@
         
             
                 <tr>
-    <td><a name="(inherits all properties from this schema)"></a>(inherits all properties from this schema)</td>
-    <td width=25%>
+    <td>
+        <span id="(inherits all properties from this schema)">(inherits all properties from this schema)</span>
+        
+    </td>
+    <td>
         
     </td>
     <td>
@@ -84,24 +86,21 @@
             <a href="assays.components.cytof_platform.html">assays.components.cytof_platform</a>
         
     </td>
-    <td>
-        
-    </td>
 </tr>
             
         
             
                 <tr>
-    <td><a name="(inherits all properties from this schema)"></a>(inherits all properties from this schema)</td>
-    <td width=25%>
+    <td>
+        <span id="(inherits all properties from this schema)">(inherits all properties from this schema)</span>
+        
+    </td>
+    <td>
         
     </td>
     <td>
         
             <a href="#cytof_acquisition">#cytof_acquisition</a>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -126,28 +125,32 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
             
                 <tr>
-    <td><a name="original_fcs_filenames"></a>original_fcs_filenames</td>
-    <td width=25%>
+    <td>
+        <span id="original_fcs_filenames">original_fcs_filenames</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Normalized cyTOF FCS filenames.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -155,22 +158,27 @@
         
             
                 <tr>
-    <td><a name="date_of_acquisition"></a>date_of_acquisition</td>
-    <td width=25%>
+    <td>
+        <span id="date_of_acquisition">date_of_acquisition</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Date of cyTOF batch acquisition.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -178,22 +186,27 @@
         
             
                 <tr>
-    <td><a name="instrument"></a>instrument</td>
-    <td width=25%>
+    <td>
+        <span id="instrument">instrument</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Name of cyTOF instrument on which experiment was conducted.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -201,22 +214,27 @@
         
             
                 <tr>
-    <td><a name="injector"></a>injector</td>
-    <td width=25%>
+    <td>
+        <span id="injector">injector</span>
+        
+            <sup>required</sup>
+        
+    </td>
+    <td>
         Name of Injector component used as part of the CyTOF software
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
-        
-            required
         
     </td>
 </tr>
@@ -243,20 +261,25 @@
         
             
                 <tr>
-    <td><a name="acquisition_buffer"></a>acquisition_buffer</td>
-    <td width=25%>
+    <td>
+        <span id="acquisition_buffer">acquisition_buffer</span>
+        
+    </td>
+    <td>
         Cell staining buffer used for antibody and cell dilution.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -264,20 +287,25 @@
         
             
                 <tr>
-    <td><a name="batch_id"></a>batch_id</td>
-    <td width=25%>
+    <td>
+        <span id="batch_id">batch_id</span>
+        
+    </td>
+    <td>
         CyTOF batch identifaction number.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -285,20 +313,25 @@
         
             
                 <tr>
-    <td><a name="average_event_per_second"></a>average_event_per_second</td>
-    <td width=25%>
+    <td>
+        <span id="average_event_per_second">average_event_per_second</span>
+        
+    </td>
+    <td>
         Analysis rate of cyTOF expressions per second.
     </td>
     <td>
         
-            &lt;number&gt; 
+            &lt; 
+                number 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -306,20 +339,25 @@
         
             
                 <tr>
-    <td><a name="run_time"></a>run_time</td>
-    <td width=25%>
+    <td>
+        <span id="run_time">run_time</span>
+        
+    </td>
+    <td>
         Length of run time for cyTOF experiment.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>
@@ -327,20 +365,25 @@
         
             
                 <tr>
-    <td><a name="notes"></a>notes</td>
-    <td width=25%>
+    <td>
+        <span id="notes">notes</span>
+        
+    </td>
+    <td>
         Any notes pertaining to cyTOF acquisition.
     </td>
     <td>
         
-            &lt;string&gt; 
+            &lt; 
+                string 
+                 
+                
+            &gt;
             <ul>
             
             
+            
             </ul>
-        
-    </td>
-    <td>
         
     </td>
 </tr>

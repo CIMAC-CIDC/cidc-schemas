@@ -1,8 +1,7 @@
 {
     "lead_organization_study_id": "10021",
-    "participants": [
-        {
-            "cimac_participant_id": "PA 1",
+    "participants": {
+        "PA_1": {
             "samples": [
                 {
                     "cimac_sample_id": "SA 1.1",
@@ -16,8 +15,7 @@
                 }
             ]
         },
-        {
-            "cimac_participant_id": "PA 2",
+        "PA_2": {
             "samples": [
                 {
                     "cimac_sample_id": "SA 2.1",
@@ -31,7 +29,7 @@
                 }
             ]
         }
-    ],
+    },
     "assays": {
         "olink": [
             {

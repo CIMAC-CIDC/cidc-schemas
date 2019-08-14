@@ -1,18 +1,19 @@
 {
     "lead_organization_study_id": "1/minimal",
-    "participants": [
-        {
-            "cimac_participant_id": "PA.1.1",
+    "participants": {
+        "PA_1.1" : {
             "samples": [
                 {
                     "cimac_sample_id": "SA.1.1.1",
+                    "genomic_source": "Normal",
                     "aliquots": [{"cimac_aliquot_id": "AL 1.1.1.1"}] 
                 }, 
                 {
                     "cimac_sample_id": "SA.1.1.2",
+                    "genomic_source": "Tumor",
                     "aliquots": [{"cimac_aliquot_id": "AL.1.1.2.2"}]
                 }
             ]
         }
-    ]
+    }
 }

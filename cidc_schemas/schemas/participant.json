@@ -4,10 +4,6 @@
   "title": "Participant",
   "description": "The collection of all data related to a specific participant in the context of a specific clinical trial.\n",
   "properties": {
-    "cimac_participant_id": {
-      "type": "string",
-      "description": "Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234."
-    },
     "trial_participant_id": {
       "type": "string",
       "description": "Trial Participant Identifier. Example: PT123."
@@ -61,5 +57,5 @@
       }
     }
   },
-  "required": ["cimac_participant_id", "samples"]
+  "required": ["samples"]
 }

@@ -61,7 +61,7 @@
               "$ref": "participant.json#properties/trial_participant_id"
             },
             "cimac participant id": {
-              "$ref": "participant.json#properties/cimac_participant_id"
+              "$ref": "clinical_trial.json#properties/participants"
             },
             "cohort id": { "$ref": "participant.json#properties/cohort_id" },
             "arm id": { "$ref": "participant.json#properties/arm_id" },

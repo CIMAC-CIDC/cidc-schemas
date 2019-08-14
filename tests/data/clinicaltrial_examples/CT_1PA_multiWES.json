@@ -1,8 +1,7 @@
 {
     "lead_organization_study_id": "2/1PA_multiWES",
-    "participants": [
-        {
-            "cimac_participant_id": "PA_2.1",
+    "participants": {
+        "PA_2.1": {
             "samples": [
                 {
                     "cimac_sample_id":  "SA_2.1.1",
@@ -24,7 +23,7 @@
                 }
             ]
         }
-    ], 
+    }, 
     "assays": {
         "wes": [
             {

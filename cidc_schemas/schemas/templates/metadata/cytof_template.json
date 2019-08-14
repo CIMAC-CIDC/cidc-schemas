@@ -53,7 +53,7 @@
         "data_columns": {
           "Samples": {
             "cimac particpant id": {
-              "$ref": "participant.json#properties/cimac_participant_id"
+              "$ref": "clinical_trial.json#properties/participants"
             },
             "cimac sample id": {
               "$ref": "sample.json#properties/cimac_sample_id"

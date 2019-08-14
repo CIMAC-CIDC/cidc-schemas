@@ -35,13 +35,14 @@
       }
     },
     "participants": {
-      "type": "array",
-      "items": {
-        "$ref": "participant.json"
+      "type": "object",
+      "description": "The collection of participants in this clinical trial.\n `cimac_participant_id` - participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234.",
+      "propertyNames": {
+        "$id": "cimac_participant_id",
+        "pattern": "^[^ ]+$"
       },
-      "mergeStrategy": "arrayMergeById",
-      "mergeOptions": {
-        "idRef": "/cimac_participant_id"
+      "additionalProperties": { 
+        "$ref": "participant.json"
       }
     },
     "assays": {

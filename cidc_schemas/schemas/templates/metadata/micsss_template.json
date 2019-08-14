@@ -121,7 +121,7 @@
         "data_columns": {
           "Samples": {
             "cimac_particpant_id": {
-              "$ref": "participant.json#properties/cimac_participant_id"
+              "$ref": "clinical_trial.json#properties/participants"
             },
             "cimac_sample_id": {
               "$ref": "sample.json#properties/cimac_sample_id"

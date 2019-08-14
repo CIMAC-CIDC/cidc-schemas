@@ -97,8 +97,8 @@ def generate_docs(out_directory: str = HTML_DIR):
             with open(os.path.join(out_directory, f'{full_name}.html'), 'w') as f:
                 f.write(entity_html)
 
-            with open(os.path.join(out_directory, f'{full_name}.full.json'), 'w') as f:
-                f.write(json.dumps(full_json, sort_keys=True, indent=4))
+            # with open(os.path.join(out_directory, f'{full_name}.full.json'), 'w') as f:
+            #     f.write(json.dumps(full_json, sort_keys=True, indent=4))
 
 
 if __name__ == '__main__':

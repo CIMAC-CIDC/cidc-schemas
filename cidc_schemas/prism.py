@@ -107,8 +107,8 @@ def _load_keylookup(template_path: str) -> dict:
 
     # special case for wes keys.
     if 'wes' in template_path:
-        ref = "assays/components/ngs/ngs_entry.json#properties/entry_id"
-        data_key = "entry_id"
+        ref = "assays/components/ngs/ngs_assay_record.json#properties/cimac_aliquot_id"
+        data_key = "cimac_aliquot_id"
         populate_lu(ref, key_lu, data_key)
 
     return key_lu
@@ -611,7 +611,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
                 unique_key = f'{unique_key}_{potential_ids["CIMAC ALIQUOT ID"]}'
 
                 # add this to the most recent payload
-                _process_property(['entry_id', unique_key], key_lu, schema,
+                _process_property(['cimac_aliquot_id', unique_key], key_lu, schema,
                         curd, assay_hint, fp_lu, verb)
 
             else:

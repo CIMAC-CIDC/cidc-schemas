@@ -5,7 +5,7 @@
   "type": "object",
   "description": "A single data record from RNAseq assay",
   "allOf": [
-    { "$ref": "assays/components/ngs/ngs_entry.json" }
+    { "$ref": "assays/components/ngs/ngs_assay_record.json" }
   ],
   "properties": {
     "enrichment_vendor_lot": {

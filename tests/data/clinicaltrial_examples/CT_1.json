@@ -1,0 +1,146 @@
+{
+    "lead_organization_study_id": "10021",
+    "participants": [
+        {
+            "cimac_participant_id": "PA 1",
+            "samples": [
+                {
+                    "cimac_sample_id": "SA 1.1",
+                    "genomic_source": "Tumor",
+                    "aliquots": [{"cimac_aliquot_id": "AL 1.1.1"}] 
+                }, 
+                {
+                    "cimac_sample_id": "SA 1.2",
+                    "genomic_source": "Normal",
+                    "aliquots": [{"cimac_aliquot_id": "AL 1.2.1"}]
+                }
+            ]
+        },
+        {
+            "cimac_participant_id": "PA 2",
+            "samples": [
+                {
+                    "cimac_sample_id": "SA 2.1",
+                    "genomic_source": "Tumor",
+                    "aliquots": [{"cimac_aliquot_id": "AL 2.1.1"}]
+                },
+                {
+                    "cimac_sample_id": "SA 2.2",
+                    "genomic_source": "Normal",
+                    "aliquots": [{"cimac_aliquot_id": "AL 2.2.1"}]
+                }
+            ]
+        }
+    ],
+    "assays": {
+        "olink": [
+            {
+                "assay_creator": "Mount Sinai",
+                "records": [
+                    {
+                        "assay_prefix": "ol1_",
+                        "filetype": "assay",
+                        "panel": "ol_panel_1",
+                        "number_of_samples": 88,
+                        "npx_manager_version": "ol_npx_v1",
+                        "files": {
+                            "assay_npx": {
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "assay_category" :      "OLink",
+                                "file_type" :           "NPX"
+                            },
+                            "assay_raw_ct": {
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "assay_category" :      "OLink",
+                                "file_type" :           "Other"
+                            }
+                        }
+                    }, 
+                    {
+                        "assay_prefix": "ol2_",
+                        "filetype": "study",
+                        "panel": "ol_panel_1",
+                        "number_of_samples": 45,
+                        "npx_manager_version": "ol_npx_v1",
+                        "files": {
+                            "assay_npx": {
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "assay_category" :      "OLink",
+                                "file_type" :           "NPX"
+                            },
+                            "assay_raw_ct": {
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "assay_category" :      "OLink",
+                                "file_type" :           "Other"
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "wes": [
+            {
+                "assay_creator": "Mount Sinai",
+                "assay_category": "Whole Exome Sequencing (WES)",
+                "paired_end_reads": "Paired",
+                "sequencer_platform": "Illumina - HiSeq 3000",
+                "library_vendor_kit": "KAPA - Hyper Prep",
+                "records": [
+                    {
+                        "enrichment_vendor_lot":    "...",
+                        "library_kit_lot":          "...",
+                        "library_prep_date":        "...",
+                        "cimac_aliquot_id":         "AL 1.1.1"
+                    }, 
+                    {
+                        "enrichment_vendor_lot":    "...",
+                        "library_kit_lot":          "...",
+                        "library_prep_date":        "...",
+                        "cimac_aliquot_id":         "AL 1.2.1"
+                    }
+                ]
+            },
+            {
+                "assay_creator": "DFCI",
+                "assay_category": "Whole Exome Sequencing (WES)",
+                "paired_end_reads": "Paired",
+                "sequencer_platform": "Illumina - HiSeq 3000",
+                "library_vendor_kit": "KAPA - Hyper Prep",
+                "records": [
+                    {
+                        "enrichment_vendor_lot":    "...",
+                        "library_kit_lot":          "...",
+                        "library_prep_date":        "...",
+                        "cimac_aliquot_id":         "AL 2.1.1"
+                    }, 
+                    {
+                        "enrichment_vendor_lot":    "...",
+                        "library_kit_lot":          "...",
+                        "library_prep_date":        "...",
+                        "cimac_aliquot_id":         "AL 2.2.1"
+                    }
+                ]
+            }
+        ]
+    }
+}

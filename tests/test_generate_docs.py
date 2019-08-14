@@ -26,5 +26,5 @@ def test_generate_docs(tmpdir):
     # Count all documentation files
     num_docs = count_files(tmpdir)
 
-    # Minus the index file
-    assert num_schemas == num_docs - 1
+    # .HTMLs and .FULL.JSONs minus the index file
+    assert 2*num_schemas == num_docs - 1

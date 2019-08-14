@@ -31,29 +31,6 @@ CLINICAL_TRIAL = {
                     {
                         "aliquots": [
                             {
-                                "assay": {
-                                    "wes": {
-                                        "assay_creator": "Mount Sinai",
-                                        "assay_category": "Whole Exome Sequencing (WES)",
-                                        "enrichment_vendor_kit": "Twist",
-                                        "library_vendor_kit": "KAPA - Hyper Prep",
-                                        "sequencer_platform": "Illumina - NextSeq 550",
-                                        "paired_end_reads": "Paired",
-                                        "read_length": 100,
-                                        "records": [
-                                            {
-                                                "library_kit_lot": "lot abc",
-                                                "enrichment_vendor_lot": "lot 123",
-                                                "library_prep_date": "2019-05-01 00:00:00",
-                                                "capture_date": "2019-05-02 00:00:00",
-                                                "input_ng": 100,
-                                                "library_yield_ng": 700,
-                                                "average_insert_size": 250,
-                                                "entry_id": "abc1"
-                                            }
-                                        ]
-                                    }
-                                },
                                 "cimac_aliquot_id": "aliquot 1"
                             },
                         ],
@@ -63,29 +40,6 @@ CLINICAL_TRIAL = {
                     {
                         "aliquots": [
                             {
-                                "assay": {
-                                    "wes": {
-                                        "assay_creator": "Mount Sinai",
-                                        "assay_category": "Whole Exome Sequencing (WES)",
-                                        "enrichment_vendor_kit": "Twist",
-                                        "library_vendor_kit": "KAPA - Hyper Prep",
-                                        "sequencer_platform": "Illumina - NextSeq 550",
-                                        "paired_end_reads": "Paired",
-                                        "read_length": 100,
-                                        "records": [
-                                            {
-                                                "library_kit_lot": "lot abc",
-                                                "enrichment_vendor_lot": "lot 123",
-                                                "library_prep_date": "2019-05-01 00:00:00",
-                                                "capture_date": "2019-05-02 00:00:00",
-                                                "input_ng": 100,
-                                                "library_yield_ng": 700,
-                                                "average_insert_size": 250,
-                                                "entry_id": "abc2"
-                                            }
-                                        ]
-                                    }
-                                },
                                 "cimac_aliquot_id": "aliquot 2"
                             }
                         ],
@@ -95,7 +49,53 @@ CLINICAL_TRIAL = {
                 ],
                 "cimac_participant_id": "patient 1"
             }
-        ]
+        ],
+        "assays": {
+            "wes": [
+                {
+                    "assay_creator": "Mount Sinai",
+                    "assay_category": "Whole Exome Sequencing (WES)",
+                    "enrichment_vendor_kit": "Twist",
+                    "library_vendor_kit": "KAPA - Hyper Prep",
+                    "sequencer_platform": "Illumina - NextSeq 550",
+                    "paired_end_reads": "Paired",
+                    "read_length": 100,
+                    "records": [
+                        {
+                            "library_kit_lot": "lot abc",
+                            "enrichment_vendor_lot": "lot 123",
+                            "library_prep_date": "2019-05-01 00:00:00",
+                            "capture_date": "2019-05-02 00:00:00",
+                            "input_ng": 100,
+                            "library_yield_ng": 700,
+                            "average_insert_size": 250,
+                            "cimac_aliquot_id": "aliquot 1"
+                        },
+                        {
+                            "assay_creator": "Mount Sinai",
+                            "assay_category": "Whole Exome Sequencing (WES)",
+                            "enrichment_vendor_kit": "Twist",
+                            "library_vendor_kit": "KAPA - Hyper Prep",
+                            "sequencer_platform": "Illumina - NextSeq 550",
+                            "paired_end_reads": "Paired",
+                            "read_length": 100,
+                            "records": [
+                                {
+                                    "library_kit_lot": "lot abc",
+                                    "enrichment_vendor_lot": "lot 123",
+                                    "library_prep_date": "2019-05-01 00:00:00",
+                                    "capture_date": "2019-05-02 00:00:00",
+                                    "input_ng": 100,
+                                    "library_yield_ng": 700,
+                                    "average_insert_size": 250,
+                                    "cimac_aliquot_id": "aliquot 2"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
     }
 
 
@@ -173,29 +173,6 @@ def test_assay_merge():
                         "genomic_source": "Tumor",
                         "aliquots": [
                             {
-                                "assay": {
-                                    "wes": {
-                                        "assay_creator": "Mount Sinai",
-                                        "assay_category": "Whole Exome Sequencing (WES)",
-                                        "enrichment_vendor_kit": "Twist",
-                                        "library_vendor_kit": "KAPA - Hyper Prep",
-                                        "sequencer_platform": "Illumina - NextSeq 550",
-                                        "paired_end_reads": "Paired",
-                                        "read_length": 100,
-                                        "records": [
-                                            {
-                                                "library_kit_lot": "lot abc",
-                                                "enrichment_vendor_lot": "lot 123",
-                                                "library_prep_date": "2019-05-01 00:00:00",
-                                                "capture_date": "2019-05-02 00:00:00",
-                                                "input_ng": 100,
-                                                "library_yield_ng": 700,
-                                                "average_insert_size": 250,
-                                                "entry_id": "abc"
-                                            }
-                                        ],
-                                    }
-                                },
                                 "cimac_aliquot_id": "Aliquot 1"
                             }
                         ],
@@ -339,6 +316,4 @@ def test_snippet_wes():
         # search for this url and all previous (no clobber)
         searched_urls.append(gs_url)
         for url in searched_urls:
-            ds = ct | grep(url)
-            assert 'matched_values' in ds
-            assert len(ds['matched_values']) > 0
+            assert len((ct | grep(url))['matched_values']) > 0

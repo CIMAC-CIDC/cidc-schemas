@@ -5,21 +5,16 @@
   "type": "object",
   "category": "metadata",
   "description": "Metadata information for olink analysis.\n",
+  "$comment": "_______!!!!______ REDO with definition for a shared between combined/assays",
   "properties": {
     "worksheets": {
-      "olink": {
+      "olink": { 
         "preamble_rows": {
           "lead organization study id": {
             "$ref": "clinical_trial.json#properties/lead_organization_study_id"
           },
           "assay creator": {
             "$ref": "assays/components/assay_core.json#properties/assay_creator"
-          },
-          "assay category": {
-            "$ref": "assays/components/assay_core.json#properties/assay_category"
-          },
-          "artifact_category": {
-            "$ref": "artifacts/artifact_core.json#properties/artifact_category"
           }
         },
         "data_columns": {
@@ -63,11 +58,11 @@
             "panel": {
               "$ref": "assays/components/olink/olink_entry.json#properties/panel"
             },
-            "number of sample": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/number_of_sample"
+            "number of samples": {
+              "$ref": "assays/components/olink/olink_entry.json#properties/number_of_samples"
             },
-            "number of sample failed": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/number_of_sample_failed"
+            "number of samples failed": {
+              "$ref": "assays/components/olink/olink_entry.json#properties/number_of_samples_failed"
             },
             "npx manager version": {
               "$ref": "assays/components/olink/olink_entry.json#properties/npx_manager_version"

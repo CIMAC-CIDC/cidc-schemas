@@ -99,6 +99,7 @@
       ]
     },
     "genomic_source": {
+      "$comment": "_____!!!_____ Maybe should be required? _____!!!_____",
       "description": "The type of material submitted - tumor/normal/etc",
       "type": "string",
       "enum": ["Tumor", "Normal", "Metastasis"]

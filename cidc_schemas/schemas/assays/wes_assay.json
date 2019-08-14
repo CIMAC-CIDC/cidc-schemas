@@ -21,7 +21,7 @@
       },
       "mergeStrategy": "arrayMergeById",
       "mergeOptions": {
-        "idRef": "entry_id"
+        "idRef": "cimac_aliquot_id"
       }
     },
     "analysis":{

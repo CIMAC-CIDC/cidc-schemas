@@ -23,5 +23,6 @@
       "$ref": "assays/components/mif_antibody.json"
     }
   },
-  "required": ["records"]
+  "required": ["records"],
+  "mergeStrategy": "objectMerge"
 }

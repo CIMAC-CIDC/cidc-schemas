@@ -41,8 +41,8 @@ OLINK_RECORD = {
         "quality_threshold": 90,
         "baseline_correction": "dummy",
         "panel": "dummy",
-        "number_of_sample": 5,
-        "number_of_sample_failed": 4,
+        "number_of_samples": 5,
+        "number_of_samples_failed": 4,
         "npx_manager_version": "dummy",
         "assay_panel_lot": 90,
         "files": {
@@ -95,7 +95,7 @@ def test_wes():
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
-        "entry_id": "xyz",
+        "cimac_aliquot_id": "xyz",
         "files": {
             "tumor": {
                 "fastq_1": fastq_1,
@@ -179,7 +179,7 @@ def test_rna_expression():
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
-        "entry_id": "abc",
+        "cimac_aliquot_id": "abc",
         "files": {
             "fastq_1": fastq_1,
             "fastq_2": fastq_1,

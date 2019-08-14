@@ -26,19 +26,21 @@
 {%- endmacro %}
 
 {% macro properties_table(schema, required) -%}
-    {% if 'properties' in schema %}
-        {% set properties = schema['properties'].items() %}
-        {% set allOf = false %}
-    {% elif 'allOf' in schema %}
-        {% set properties = [] %}
-        {% set allOf = true %}
-        {% for prop in schema['allOf'] %}
-            {% if 'properties' in prop %}
-                {% set _ = properties.extend(prop['properties'].items()) %}
-            {% else %}
-                {% set _ = properties.append(("(inherits all properties from this schema)", prop)) %}
-            {% endif %}
-        {% endfor %}
+    {% set properties = [] %}
+    {% if 'properties' in schema or 'allOf' in schema %}
+        {% if 'allOf' in schema %}
+            {% for prop in schema['allOf'] %}
+                {% if 'url' in prop %}
+                    {% set _ = properties.append(("(inherits all properties from this schema)", prop)) %}
+                {% endif %}
+                {% if 'properties' in prop %}
+                    {% set _ = properties.extend(prop['properties'].items()) %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if 'properties' in schema %}
+            {% set _ = properties.extend(schema['properties'].items()) %}
+        {% endif %}
     {% else %}
         {% set properties = schema.items() %}
     {% endif %}
@@ -99,8 +101,6 @@
     <td>
         {% if prop_name in required %}
             required
-        {% else %}
-            optional
         {% endif %}
     </td>
 </tr>

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "fastq_pairs",
-  "title": "Paired end sequencing file pairs",
+  "$id": "fastq_pair_and_mapping",
+  "title": "Paired end sequencing file pair and group mapping file",
   "type": "object",
   "description": "Paired end sequencing file pairs",
   "properties": {
@@ -12,7 +12,11 @@
     "fastq_2": {
       "description": "Fastq file for the second fragment.",
       "$ref": "artifacts/artifact_fastq.json"
+    },
+    "read_group_mapping_file": {
+      "$ref": "artifacts/artifact_text.json",
+      "description": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes."
     }
   },
-  "required": ["fastq_1", "fastq_2"]
+  "required": ["fastq_1", "fastq_2", "read_group_mapping_file"]
 }

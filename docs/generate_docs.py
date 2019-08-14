@@ -89,6 +89,9 @@ def generate_docs(out_directory: str = HTML_DIR):
             if full_name.startswith("."):
                 full_name = full_name[1::]
 
+            # if not 'ngs.wes_entry' in full_name: continue
+            # print(f'generating {full_name}')
+
             # render the HTML to string
             entity_html = template.render(
                 name=name, full_name=full_name, schema=schema, scope=directory)

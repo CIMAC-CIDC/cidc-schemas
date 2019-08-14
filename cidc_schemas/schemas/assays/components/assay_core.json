@@ -10,11 +10,8 @@
       "type": "string",
       "enum": ["DFCI", "Mount Sinai", "Stanford", "MD Anderson"]
     },
-    "uploader": {
-      "description": "Email address for individual uploading files.",
-      "type": "string"
-    },
     "assay_category": {
+      "$comment": "_____!!!_____ Maybe remove? We already know in which assay this is embeded. _____!!!_____",
       "description": "Assay category.",
       "type": "string",
       "enum": [
@@ -27,11 +24,9 @@
         "OLink",
         "NanoString",
         "ELISpot",
-        "Multiplexed Ion-Beam Imaging (MIBI)",
-        "Other",
-        "None"
+        "Multiplexed Ion-Beam Imaging (MIBI)"
       ]
     }
   },
-  "required": ["assay_creator"]
+  "required": ["assay_creator", "assay_category"]
 }

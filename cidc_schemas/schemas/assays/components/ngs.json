@@ -1,6 +1,7 @@
 {
+  "$comment": "_____!!!!_____ shouldn't this be called 'ngs_assay.json' _____????_____",
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "id": "ngs_assay",
+  "$id": "ngs_assay",
   "title": "NGS Sequencing",
   "type": "object",
   "description": "Common properties for NGS Sequencing sxperiments.",
@@ -17,6 +18,7 @@
       ]
     },
     "library_vendor_kit": {
+      "$comment": "_____!!!!_____ if this is 'required' shouldn't enum allow more options, not just one _____????_____",
       "description": "Vendor for the library construction kit, e.g. KAPA",
       "type": "string",
       "enum": ["KAPA - Hyper Prep"]
@@ -27,6 +29,7 @@
       "enum": ["Paired", "Single"]
     },
     "read_length": {
+      "$comment": "_____!!!!_____ shouldn't this be required _____????_____",
       "description": "Number of cycles for each sequencing read",
       "type": "integer",
       "exclusiveMinimum": 0,

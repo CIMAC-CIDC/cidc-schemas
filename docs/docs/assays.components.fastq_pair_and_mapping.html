@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Whole Exome Sequencing Input Files <small> - <a href="assays.components.ngs.wes_input.full.json">full json</a></small></h1>
+        <h1>Paired end sequencing file pair and group mapping file <small> - <a href="assays.components.fastq_pair_and_mapping.full.json">full json</a></small></h1>
         <p>
-            <b>Description:</b>  Whole Exome Sequencing Assay Input Files
+            <b>Description:</b>  Paired end sequencing file pairs
         </p>
         
     </div>
@@ -41,7 +41,10 @@
   <div class="container">
     <h3>Properties</h3>
     
+    
         
+        
+            
         
     
 
@@ -56,26 +59,19 @@
         </thead>
         
             
-        
-            
-        
-            
-        
-        
-            
                 <tr>
-    <td><a name="tumor"></a>tumor</td>
+    <td><a name="fastq_1"></a>fastq_1</td>
     <td width=25%>
         
     </td>
     <td>
         
-            <a href="assays.components.fastq_pairs.html">assays.components.fastq_pairs</a>
+            <a href="artifacts.artifact_fastq.html">artifacts.artifact_fastq</a>
         
     </td>
     <td>
         
-            optional
+            required
         
     </td>
 </tr>
@@ -83,18 +79,18 @@
         
             
                 <tr>
-    <td><a name="normal"></a>normal</td>
+    <td><a name="fastq_2"></a>fastq_2</td>
     <td width=25%>
         
     </td>
     <td>
         
-            <a href="assays.components.fastq_pairs.html">assays.components.fastq_pairs</a>
+            <a href="artifacts.artifact_fastq.html">artifacts.artifact_fastq</a>
         
     </td>
     <td>
         
-            optional
+            required
         
     </td>
 </tr>
@@ -113,10 +109,17 @@
     </td>
     <td>
         
-            optional
+            required
         
     </td>
 </tr>
+            
+        
+        
+            
+        
+            
+        
             
         
     </table>

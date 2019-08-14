@@ -4,6 +4,7 @@
   "title": "Artifact",
   "type": "object",
   "description": "Any file artifact associated with a clinical trial.",
+  "$comment": "_____!!!_____ Add 'AllOf/If/Then' cases for artifact_category / file_type combinations. _____!!!_____",
   "properties": {
     "artifact_creator": {
       "description": "The name of the center that created this artificat",
@@ -18,6 +19,7 @@
       "type": "string"
     },
     "file_name": {
+      "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
       "description": "The name of the file with extension",
       "type": "string"
     },
@@ -27,6 +29,7 @@
     },
     "uploaded_timestamp": {
       "description": "Timestamp of when artfiact was loaded into the system.",
+      "$comment": "_____!!!_____ Why is this string? integer maybe better? _____!!!_____",
       "type": "string"
     },
     "file_size_bytes": {
@@ -47,14 +50,15 @@
       "enum": [
         "Assay Artifact from CIMAC",
         "Pipeline Artifact",
-        "Manifest File",
-        "Other"
+        "Manifest File"
       ]
     },
     "assay_category": {
+      "$comment": "_____!!!_____ Maybe remove? We already know assay this artifact belongs to. _____!!!_____",
       "$ref": "assays/components/assay_core.json#properties/assay_category"
     },
     "file_type": {
+      "$comment": "_____!!!_____ Maybe remove? We already know know in which concrete artifact this is embeded. _____!!!_____",
       "description": "File Type.",
       "type": "string",
       "enum": [

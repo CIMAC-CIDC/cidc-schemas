@@ -1,33 +1,37 @@
 {
     "lead_organization_study_id": "10021",
     "participants": {
-        "PA_1": {
-            "samples": [
-                {
-                    "cimac_sample_id": "SA 1.1",
+        "PA-b1": {
+            "samples": {
+                "SA-b1.1": {
                     "genomic_source": "Tumor",
-                    "aliquots": [{"cimac_aliquot_id": "AL 1.1.1"}] 
+                    "aliquots": {
+                        "AL-b1.1.1":{}
+                    } 
                 }, 
-                {
-                    "cimac_sample_id": "SA 1.2",
+                "SA-b1.2": {
                     "genomic_source": "Normal",
-                    "aliquots": [{"cimac_aliquot_id": "AL 1.2.1"}]
+                    "aliquots": {
+                        "AL-b1.2.1":{}
+                    }
                 }
-            ]
+            }
         },
-        "PA_2": {
-            "samples": [
-                {
-                    "cimac_sample_id": "SA 2.1",
+        "PA-b2": {
+            "samples": {
+                "SA-b2.1": {
                     "genomic_source": "Tumor",
-                    "aliquots": [{"cimac_aliquot_id": "AL 2.1.1"}]
+                    "aliquots": {
+                        "AL-b2.1.1":{}
+                    }
                 },
-                {
-                    "cimac_sample_id": "SA 2.2",
+                "SA-b2.2": {
                     "genomic_source": "Normal",
-                    "aliquots": [{"cimac_aliquot_id": "AL 2.2.1"}]
+                    "aliquots": {
+                        "AL-b2.2.1":{}
+                    }
                 }
-            ]
+            }
         }
     },
     "assays": {
@@ -108,7 +112,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_aliquot_id":         "AL 1.1.1",
+                        "aliquot_pointer":         "/participants/PA_1/samples/SA_1.1/aliqouts/AL_1.1.1",
                         "files": {
                             "fastq_1":{
                                 "file_name" :           "...",
@@ -146,7 +150,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_aliquot_id":         "AL 1.2.1",
+                        "aliquot_pointer":         "/participants/PA_1/samples/SA_1.2/aliqouts/AL_1.2.1",
                         "files": {
                             "fastq_1":{
                                 "file_name" :           "...",
@@ -193,7 +197,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_aliquot_id":         "AL 2.1.1",
+                        "aliquot_pointer":         "/participants/PA_2/samples/SA_2.1/aliqouts/AL_2.1.1",
                         "files": {
                             "fastq_1":{
                                 "file_name" :           "...",
@@ -231,7 +235,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_aliquot_id":         "AL 2.2.1",
+                        "aliquot_pointer":         "/participants/PA_2/samples/SA_2.2/aliqouts/AL_2.2.1",
                         "files": {
                             "fastq_1":{
                                 "file_name" :           "...",

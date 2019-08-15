@@ -47,7 +47,6 @@
     "aliquot_pointer",
     "library_kit_lot",
     "library_prep_date",
-    "cimac_aliquot_id",
     "files"
   ]
 }

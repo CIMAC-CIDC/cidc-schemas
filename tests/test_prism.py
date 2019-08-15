@@ -326,7 +326,7 @@ def test_snippet_wes():
     for gs_url in urls:
 
         # attempt to merge
-        ct = merge_artifact(
+        ct, _ = merge_artifact(
                 ct,
                 object_url=gs_url,
                 file_size_bytes=14,

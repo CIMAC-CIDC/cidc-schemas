@@ -721,7 +721,7 @@ def _merge_artifact_wes(
     file_size_bytes: int,
     uploaded_timestamp: str,
     md5_hash: str
-):
+) -> (dict, dict):
     """
     create and merge an artifact into the WES assay metadata.
     The artifacts currently supported are only the input
@@ -804,7 +804,7 @@ def _merge_artifact_wes(
     validator.validate(ct_new)
 
     # return the new dictionary
-    return ct_new
+    return ct_new, artifact
 
 
 def _split_objurl(obj_url: str) -> (str, str, str, str, str, str):
@@ -839,7 +839,7 @@ def merge_artifact(
     file_size_bytes: int,
     uploaded_timestamp: str,
     md5_hash: str
-):
+) -> (dict, dict):
     """
     create and merge an artifact into the metadata blob
     for a clinical trial. The merging process is automatically
@@ -865,7 +865,7 @@ def merge_artifact(
 
     # test criteria.
     if any(wes_name in file_name for wes_name in wes_names):
-        new_ct = _merge_artifact_wes(
+        new_ct, artifact = _merge_artifact_wes(
             ct,
             object_url,
             file_size_bytes,
@@ -876,8 +876,8 @@ def merge_artifact(
         raise NotImplementedError(
             f'the following file_name is not supported: {file_name}')
 
-    # return new object
-    return new_ct
+    # return new object and the artifact that was merged
+    return new_ct, artifact
 
 
 def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
@@ -896,7 +896,7 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
     validator = load_and_validate_schema(
         "clinical_trial.json", return_validator=True)
     schema = validator.schema
-    
+
     # first we assert both objects are valid
     validator.validate(target)
     validator.validate(patch)

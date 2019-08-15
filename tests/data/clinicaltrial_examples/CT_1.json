@@ -112,7 +112,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "aliquot_pointer":         "/participants/PA_1/samples/SA_1.1/aliqouts/AL_1.1.1",
+                        "aliquot_pointer":         "/participants/PA-b1/samples/SA-b1.1/aliqouts/AL-b1.1.1",
                         "files": {
                             "fastq_1":{
                                 "file_name" :           "...",
@@ -150,7 +150,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "aliquot_pointer":         "/participants/PA_1/samples/SA_1.2/aliqouts/AL_1.2.1",
+                        "aliquot_pointer":         "/participants/PA-b1/samples/SA-b1.2/aliqouts/AL-b1.2.1",
                         "files": {
                             "fastq_1":{
                                 "file_name" :           "...",
@@ -197,7 +197,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "aliquot_pointer":         "/participants/PA_2/samples/SA_2.1/aliqouts/AL_2.1.1",
+                        "aliquot_pointer":         "/participants/PA-b2/samples/SA-b2.1/aliqouts/AL-b2.1.1",
                         "files": {
                             "fastq_1":{
                                 "file_name" :           "...",
@@ -235,7 +235,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "aliquot_pointer":         "/participants/PA_2/samples/SA_2.2/aliqouts/AL_2.2.1",
+                        "aliquot_pointer":         "/participants/PA-b2/samples/SA-b2.2/aliqouts/AL-b2.2.1",
                         "files": {
                             "fastq_1":{
                                 "file_name" :           "...",

@@ -33,21 +33,17 @@
       "description": "Receiving site indicates how much material remains after assay use.",
       "type": "number"
     },
-    "sample_source": {
-      "description": "Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52",
-      "type": "string"
-    },
-    "sample_quality_status": {
+    "aliquot_quality_status": {
       "description": "Final status of sample after QC and pathology review.",
       "type": "string",
       "enum": ["Usable for Assay", "Not Usable for Assay", "Verifying", "Other"]
     },
-    "sample_replacement": {
+    "aliquot_replacement": {
       "description": "Status of sample if replacement is/was requested.",
       "type": "string",
       "enum": ["Replacement Requested", "Replacement Tested", "N/A"]
     },
-    "sample_status": {
+    "aliquot_status": {
       "description": "Status of sample used for other assay, exhausted, destroyed, or returned.",
       "type": "string",
       "enum": [
@@ -86,6 +82,7 @@
       ]
     },
     "sample_amount": {
+      "$comment": "RECHECK Should this be moved to the sample level or renamed?",
       "description": "The amount of extracted sample shipped. Example: 400 ng",
       "type": "string"
     },
@@ -110,5 +107,13 @@
       "type": "number"
     }
   },
-  "required": ["cimac_aliquot_id"]
+  "required": [
+    "cimac_aliquot_id",
+    "units",
+    "material_used",
+    "material_remaining",
+    "aliquot_quality_status",
+    "aliquot_replacement",
+    "aliquot_status"
+  ]
 }

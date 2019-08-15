@@ -42,6 +42,11 @@
       "description": "Sample location within the shipping container. Example: A1.",
       "type": "string"
     },
+    "sample_source": {
+      "$comment": "RECHECK Moved here from aliquot level.",
+      "description": "Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52",
+      "type": "string"
+    },
     "specimen_type": {
       "description": "Type of sample sent.",
       "type": "string",
@@ -114,5 +119,13 @@
       }
     }
   },
-  "required": ["cimac_sample_id", "aliquots", "genomic_source"]
+  "required": [
+    "cimac_sample_id",
+    "site_sample_id",
+    "time_point",
+    "sample_location",
+    "specimen_type",
+    "specimen_format",
+    "aliquots", 
+    "genomic_source"]
 }

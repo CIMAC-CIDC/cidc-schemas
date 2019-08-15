@@ -62,7 +62,7 @@
     <td>
         <span id="sequencer_platform">sequencer_platform</span>
         
-            <sup>required</sup>
+            <br><sup><mark>required</mark></sup>
         
     </td>
     <td>
@@ -72,7 +72,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -100,7 +101,7 @@
     <td>
         <span id="library_vendor_kit">library_vendor_kit</span>
         
-            <sup>required</sup>
+            <br><sup><mark>required</mark></sup>
         
     </td>
     <td>
@@ -110,7 +111,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -130,7 +132,7 @@
     <td>
         <span id="paired_end_reads">paired_end_reads</span>
         
-            <sup>required</sup>
+            <br><sup><mark>required</mark></sup>
         
     </td>
     <td>
@@ -140,7 +142,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -158,18 +161,11 @@
             
         
             
-        
-        
-            
-        
-            
-        
-            
-        
-            
                 <tr>
     <td>
         <span id="read_length">read_length</span>
+        
+            <br><sup><mark>required</mark></sup>
         
     </td>
     <td>
@@ -179,7 +175,8 @@
         
             &lt; 
                 integer 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -192,10 +189,71 @@
 </tr>
             
         
+        
+            
+        
+            
+        
+            
+        
+            
+        
     </table>
 
     
   </div>
+
+  <div class="container">
+    <h3>ngs_assay_core.full.json</h3>
+  	<pre><code>{
+    "$id": "ngs_assay_core",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Common properties for NGS Assays.",
+    "properties": {
+        "library_vendor_kit": {
+            "$comment": "This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.",
+            "description": "Vendor for the library construction kit, e.g. KAPA",
+            "enum": [
+                "KAPA - Hyper Prep"
+            ],
+            "type": "string"
+        },
+        "paired_end_reads": {
+            "description": "Indicate if the sequencing was performed paired or single ended",
+            "enum": [
+                "Paired",
+                "Single"
+            ],
+            "type": "string"
+        },
+        "read_length": {
+            "description": "Number of cycles for each sequencing read",
+            "exclusiveMinimum": 0,
+            "maximum": 1000,
+            "type": "integer"
+        },
+        "sequencer_platform": {
+            "description": "Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.",
+            "enum": [
+                "Illumina - HiSeq 2500",
+                "Illumina - HiSeq 3000",
+                "Illumina - NextSeq 550",
+                "Illumina - HiSeq 4000",
+                "Illumina - NovaSeq 6000"
+            ],
+            "type": "string"
+        }
+    },
+    "required": [
+        "sequencer_platform",
+        "library_vendor_kit",
+        "paired_end_reads",
+        "read_length"
+    ],
+    "title": "NGS Assay Core",
+    "type": "object"
+}</code></pre>
+  </container>
 
 
     </main>

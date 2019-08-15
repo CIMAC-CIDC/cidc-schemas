@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "fastq_pair_and_mapping",
-  "title": "Paired end sequencing file pair and group mapping file",
+  "title": "Fastq pair and group mapping",
   "type": "object",
-  "description": "Paired end sequencing file pairs",
+  "description": "Paired end sequencing fastq file pair and read group mapping file",
   "properties": {
     "fastq_1": {
       "description": "Fastq file for the first fragment.",

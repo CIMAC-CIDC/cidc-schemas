@@ -63,7 +63,7 @@
     <td>
         <span id="antibody">antibody</span>
         
-            <sup>required</sup>
+            <br><sup><mark>required</mark></sup>
         
     </td>
     <td>
@@ -73,7 +73,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -112,7 +113,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -138,7 +140,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -164,7 +167,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -190,7 +194,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -216,7 +221,8 @@
         
             &lt; 
                 number 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -233,6 +239,45 @@
 
     
   </div>
+
+  <div class="container">
+    <h3>antibody.full.json</h3>
+  	<pre><code>{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Common information about an antibody used in a number of immune-oncology assays\n",
+    "id": "antibody",
+    "properties": {
+        "antibody": {
+            "description": "Antibody type collected for this study.",
+            "type": "string"
+        },
+        "cat_num": {
+            "description": "Antibody registry catalog number assigned to antibody sample.",
+            "type": "string"
+        },
+        "clone": {
+            "description": "Resulting type of antibody clone from primary antibody sample.",
+            "type": "string"
+        },
+        "company": {
+            "description": "Company from which antibody sample was derived.",
+            "type": "string"
+        },
+        "lot_num": {
+            "description": "Identification number assigned to the particular quantity or lot of material from manufacturer.",
+            "type": "string"
+        },
+        "staining_order": {
+            "description": "Order in which samples were stained for procedure.",
+            "type": "number"
+        }
+    },
+    "required": [
+        "antibody"
+    ],
+    "title": "Antibody"
+}</code></pre>
+  </container>
 
 
     </main>

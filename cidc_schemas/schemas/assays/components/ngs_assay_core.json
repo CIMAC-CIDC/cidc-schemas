@@ -17,7 +17,7 @@
       ]
     },
     "library_vendor_kit": {
-      "$comment": "_____!!!!_____ if this is 'required' shouldn't enum allow more options, not just one _____????_____",
+      "$comment": "This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.",
       "description": "Vendor for the library construction kit, e.g. KAPA",
       "type": "string",
       "enum": ["KAPA - Hyper Prep"]
@@ -28,7 +28,6 @@
       "enum": ["Paired", "Single"]
     },
     "read_length": {
-      "$comment": "_____!!!!_____ shouldn't this be required _____????_____",
       "description": "Number of cycles for each sequencing read",
       "type": "integer",
       "exclusiveMinimum": 0,
@@ -38,6 +37,7 @@
   "required": [
     "sequencer_platform",
     "library_vendor_kit",
-    "paired_end_reads"
+    "paired_end_reads",
+    "read_length"
   ]
 }

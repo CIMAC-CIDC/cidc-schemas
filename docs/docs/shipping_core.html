@@ -64,7 +64,7 @@
     <td>
         <span id="request">request</span>
         
-            <sup>required</sup>
+            <br><sup><mark>required</mark></sup>
         
     </td>
     <td>
@@ -74,7 +74,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -131,7 +132,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -159,7 +161,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -217,7 +220,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -243,7 +247,8 @@
         
             &lt; 
                 integer 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -269,7 +274,8 @@
         
             &lt; 
                 integer 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -295,7 +301,8 @@
         
             &lt; 
                 integer 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -321,7 +328,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -353,7 +361,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -379,7 +388,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -405,7 +415,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -443,6 +454,7 @@
                 string 
                  :  date
                 
+                
             &gt;
             <ul>
             
@@ -467,7 +479,8 @@
         
             &lt; 
                 integer 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -493,7 +506,8 @@
         
             &lt; 
                 integer 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -519,7 +533,8 @@
         
             &lt; 
                 integer 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -545,7 +560,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -571,7 +587,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -588,6 +605,121 @@
 
     
   </div>
+
+  <div class="container">
+    <h3>shipping_core.full.json</h3>
+  	<pre><code>{
+    "$id": "shipping_core",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Core shipping details for a manifest.",
+    "properties": {
+        "account_number": {
+            "description": "Courier account number to pay for shipping if avaialable. Example: 45465732.",
+            "type": "string"
+        },
+        "assay_priority": {
+            "description": "Priority of the assay as it appears on the intake form.",
+            "enum": [
+                "Assay-1",
+                "Assay-2",
+                "Assay-3",
+                "Assay-4",
+                "Assay-5",
+                "Assay-6",
+                "Assay-7",
+                "Assay-8",
+                "Assay-9",
+                "Assay-10",
+                "Assay-11",
+                "Assay-12",
+                "Assay-13",
+                "Assay-14",
+                "Assay-15",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "assay_run_number": {
+            "description": "Assay run number for samples received.",
+            "type": "integer"
+        },
+        "assay_type": {
+            "description": "Assay and sample type used. Example: Green-top tube - Plasma (Olink).",
+            "type": "string"
+        },
+        "batch_number": {
+            "description": "The number corresponding to the batch sent for this assay.",
+            "type": "integer"
+        },
+        "box_number": {
+            "description": "Box identifier for samples, if sample shipment container includes multiple boxes for each sample/assay type.",
+            "type": "integer"
+        },
+        "courier": {
+            "description": "Courier utilized for shipment.",
+            "enum": [
+                "FEDEX",
+                "USPS",
+                "UPC"
+            ],
+            "type": "string"
+        },
+        "date_shipped": {
+            "description": "Date of shipment.",
+            "format": "date",
+            "type": "string"
+        },
+        "manifest_id": {
+            "description": "Filename of the manifest used to ship this sample. Example: E4412_PBMC.",
+            "type": "string"
+        },
+        "num_of_path_report": {
+            "description": "Number if pathology report received.",
+            "type": "integer"
+        },
+        "num_of_samples_good": {
+            "description": "Number of Samples Received in Good Condition.",
+            "type": "integer"
+        },
+        "num_of_samples_shipped": {
+            "description": "Count of specimens distributed by site.",
+            "type": "integer"
+        },
+        "request": {
+            "description": "Assigns a request identifier (mandatory or optional) for the assay.",
+            "type": "string"
+        },
+        "ship_from": {
+            "description": "Shipping from [free text: person or organization, address, phone number, email address.]",
+            "type": "string"
+        },
+        "ship_to": {
+            "description": "Shipping to [free text: person or organization, address, phone number, email address.]",
+            "type": "string"
+        },
+        "shipping_condition": {
+            "description": "Type of shippment made.",
+            "enum": [
+                "Frozen (Dry Ice)",
+                "Frozen (Dry Shipper)",
+                "Ambient (Ice Pack)",
+                "Ambient",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "tracking_number": {
+            "description": "Air bill number assigned to shipment. Example: 4567788343.",
+            "type": "string"
+        }
+    },
+    "required": [
+        "request"
+    ],
+    "title": "Core Shipping Details",
+    "type": "object"
+}</code></pre>
+  </container>
 
 
     </main>

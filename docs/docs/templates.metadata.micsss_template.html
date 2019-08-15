@@ -81,6 +81,248 @@
     
   </div>
 
+  <div class="container">
+    <h3>micsss_template.full.json</h3>
+  	<pre><code>{
+    "$id": "micsss",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Metadata information for multiplexed immunohistochemical consecutive staining on single slide.",
+    "properties": {
+        "worksheets": {
+            "Data": {
+                "data_columns": {
+                    "Samples": {
+                        "cimac_particpant_id": {
+                            "description": "Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234.",
+                            "type": "string"
+                        },
+                        "cimac_sample_id": {
+                            "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
+                            "type": "string"
+                        },
+                        "exported_data_folder": {
+                            "description": "Path to a file on a users computer",
+                            "type": "string"
+                        },
+                        "imaging_date": {
+                            "description": "Date on which imaging experiment was analyzed.",
+                            "format": "date",
+                            "type": "string"
+                        },
+                        "imaging_status": {
+                            "description": "Imaging experiment's successful completion.",
+                            "enum": [
+                                "Yes",
+                                "No"
+                            ],
+                            "type": "string"
+                        },
+                        "internal_slide_id": {
+                            "description": "Identification number used for internal imaging slide.",
+                            "type": "string"
+                        },
+                        "project_qupath_folder": {
+                            "description": "Path to a file on a users computer",
+                            "type": "string"
+                        },
+                        "protocol_name": {
+                            "description": "Protocol name for which imaging experiment conducted.",
+                            "type": "string"
+                        },
+                        "staining_date": {
+                            "description": "Date on which slide staining was processed.",
+                            "format": "date",
+                            "type": "string"
+                        },
+                        "time_point": {
+                            "description": "Study related collection time point, as described in the protocol intake form. Example: Progression.",
+                            "title": "Time Point",
+                            "type": "string"
+                        }
+                    }
+                },
+                "preamble_rows": {
+                    "lead organization study id": {
+                        "description": "Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.",
+                        "type": "string"
+                    }
+                }
+            },
+            "micsss": {
+                "data_columns": {
+                    "Samples": {
+                        "AR Incubation Time": {
+                            "description": "Time of AR reagent incubation.",
+                            "format": "time",
+                            "type": "string"
+                        },
+                        "AR Reagent": {
+                            "description": "Heating antigen retrieval reagents for tissue preparation.",
+                            "type": "string"
+                        },
+                        "AR pH": {
+                            "description": "pH levels of reagents from heating antigen retrieval procedure.",
+                            "type": "string"
+                        },
+                        "Antibody": {
+                            "description": "Antibody type collected for this study.",
+                            "type": "string"
+                        },
+                        "Antibody Company": {
+                            "description": "Company from which antibody sample was derived.",
+                            "type": "string"
+                        },
+                        "Cat#": {
+                            "description": "Antibody registry catalog number assigned to antibody sample.",
+                            "type": "string"
+                        },
+                        "Clone": {
+                            "description": "Resulting type of antibody clone from primary antibody sample.",
+                            "type": "string"
+                        },
+                        "Isotype": {
+                            "description": "Antibody isotype used to help differentiate non-specific background signal from specific antibody signal.",
+                            "type": "string"
+                        },
+                        "Lot#": {
+                            "description": "Identification number assigned to the particular quantity or lot of material from manufacturer.",
+                            "type": "string"
+                        },
+                        "PostPrimary Linker Block": {
+                            "description": "Linker block between the antibody and the therapeutic drug.",
+                            "type": "string"
+                        },
+                        "Pr. Antibody Dilution": {
+                            "description": "Concentration ratio of dilution buffer for primary antibody.",
+                            "type": "string"
+                        },
+                        "Pr. Antibody Incubation Temp": {
+                            "description": "Temperature used for primary antibody incubation.",
+                            "type": "string"
+                        },
+                        "Pr. Antibody Incubation Time": {
+                            "description": "Time of primary antibody incubation.",
+                            "format": "time",
+                            "type": "string"
+                        },
+                        "Primary Antibody Block": {
+                            "description": "Blocking reagent used for primary antibody sample.",
+                            "type": "string"
+                        },
+                        "S. Antibody": {
+                            "description": "Secondary antibody used to bind to primary antibody for detection assistance.",
+                            "type": "string"
+                        },
+                        "S. Antibody Dilution": {
+                            "description": "Concentration ratio of dilution buffer for secondary antibody prep.",
+                            "type": "string"
+                        },
+                        "S. Antibody Incubation Time": {
+                            "description": "Temperature used for secondary antibody incubation.",
+                            "format": "time",
+                            "type": "string"
+                        },
+                        "S. Cat #": {
+                            "description": "Antibody registry catalog number assigned to secondary antibody sample.",
+                            "type": "number"
+                        },
+                        "S. Company": {
+                            "description": "Company from which secondary antibody sample was derived.",
+                            "type": "string"
+                        },
+                        "S. Lot #": {
+                            "description": "Identification number assigned to the particular quantity or lot of secondary antibody material from manufacturer.",
+                            "type": "number"
+                        },
+                        "Secondary Antibody Block": {
+                            "description": "Secondary antibody blocking reagent used for primary sample.",
+                            "type": "string"
+                        },
+                        "Species": {
+                            "description": "Host species from which primary antibody sample was derived.",
+                            "type": "string"
+                        },
+                        "Staining Order": {
+                            "description": "Order in which samples were stained for procedure.",
+                            "type": "number"
+                        }
+                    }
+                },
+                "preamble_rows": {
+                    "assay creator": {
+                        "description": "Indicates what site is filling out the assay.",
+                        "enum": [
+                            "DFCI",
+                            "Mount Sinai",
+                            "Stanford",
+                            "MD Anderson"
+                        ],
+                        "type": "string"
+                    },
+                    "autostainer model": {
+                        "description": "Model version of the autostainer instrument.",
+                        "type": "string"
+                    },
+                    "cell segmentation model": {
+                        "description": "Model used for cell segmentation in an imaging experiment.",
+                        "enum": [
+                            "proprietary",
+                            "watershed"
+                        ],
+                        "type": "string"
+                    },
+                    "image analysis software": {
+                        "description": "Source sofware for digital pathology and image analysis.",
+                        "enum": [
+                            "InForm",
+                            "QuPath"
+                        ],
+                        "type": "string"
+                    },
+                    "image analysis software version": {
+                        "description": "Source sofware version for digital pathology and image analysis.",
+                        "type": "string"
+                    },
+                    "lead organization study id": {
+                        "description": "Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.",
+                        "type": "string"
+                    },
+                    "positive cell detection model": {
+                        "description": "Model used for postitive cell detection in imaging experiment.",
+                        "enum": [
+                            "proprietary",
+                            "random forest classifier"
+                        ],
+                        "type": "string"
+                    },
+                    "protocol name": {
+                        "description": "Protocol name for which imaging experiment conducted.",
+                        "type": "string"
+                    },
+                    "slide scanner model": {
+                        "description": "Model version of the slide scanner instrument.",
+                        "enum": [
+                            "Vectra 2.0",
+                            "Hamamatsu"
+                        ],
+                        "type": "string"
+                    },
+                    "staining platform": {
+                        "description": "Staining platform used for tissue sample labeling.",
+                        "enum": [
+                            "auto",
+                            "manual"
+                        ],
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "title": "Metadata file for micsss"
+}</code></pre>
+  </container>
+
 
     </main>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

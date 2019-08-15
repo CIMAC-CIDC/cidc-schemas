@@ -62,7 +62,7 @@
     <td>
         <span id="internal_slide_id">internal_slide_id</span>
         
-            <sup>required</sup>
+            <br><sup><mark>required</mark></sup>
         
     </td>
     <td>
@@ -72,7 +72,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -109,7 +110,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -137,6 +139,7 @@
                 string 
                  :  date
                 
+                
             &gt;
             <ul>
             
@@ -163,6 +166,7 @@
                 string 
                  :  date
                 
+                
             &gt;
             <ul>
             
@@ -187,7 +191,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -208,6 +213,47 @@
 
     
   </div>
+
+  <div class="container">
+    <h3>imaging_data.full.json</h3>
+  	<pre><code>{
+    "$id": "imaging_data",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Shared schema for experiments involving the use of imaging data",
+    "properties": {
+        "imaging_date": {
+            "description": "Date on which imaging experiment was analyzed.",
+            "format": "date",
+            "type": "string"
+        },
+        "imaging_status": {
+            "description": "Imaging experiment's successful completion.",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "type": "string"
+        },
+        "internal_slide_id": {
+            "description": "Identification number used for internal imaging slide.",
+            "type": "string"
+        },
+        "protocol_name": {
+            "description": "Protocol name for which imaging experiment conducted.",
+            "type": "string"
+        },
+        "staining_date": {
+            "description": "Date on which slide staining was processed.",
+            "format": "date",
+            "type": "string"
+        }
+    },
+    "required": [
+        "internal_slide_id"
+    ],
+    "title": "Imaging Data"
+}</code></pre>
+  </container>
 
 
     </main>

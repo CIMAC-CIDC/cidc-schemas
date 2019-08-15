@@ -38,10 +38,6 @@ def load_schemas() -> dict:
                 schema_path, SCHEMA_DIR)
             schema = load_and_validate_schema(
                 schema_path, SCHEMA_DIR, on_refs=json_to_html)
-
-            for req in full_json.get('required', []):
-                props = full_json.setdefault('properties', {})
-                props.setdefault(req, {})['required']=True  
             
             assert path.endswith(".json")
             schema_name = path[:-5].replace("/", ".")
@@ -91,7 +87,11 @@ def generate_docs(out_directory: str = HTML_DIR):
 
             # render the HTML to string
             entity_html = template.render(
-                name=name, full_name=full_name, schema=schema, scope=directory)
+                name=name,
+                full_name=full_name,
+                schema=schema,
+                scope=directory,
+                full_json_str=json.dumps(full_json, sort_keys=True, indent=4))
 
             # write this out
             with open(os.path.join(out_directory, f'{full_name}.html'), 'w') as f:

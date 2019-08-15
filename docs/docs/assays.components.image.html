@@ -63,7 +63,7 @@
     <td>
         <span id="slide_scanner_model">slide_scanner_model</span>
         
-            <sup>required</sup>
+            <br><sup><mark>required</mark></sup>
         
     </td>
     <td>
@@ -73,7 +73,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -107,7 +108,7 @@
     <td>
         <span id="protocol_name">protocol_name</span>
         
-            <sup>required</sup>
+            <br><sup><mark>required</mark></sup>
         
     </td>
     <td>
@@ -117,7 +118,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -146,7 +148,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -176,7 +179,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -202,7 +206,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -232,7 +237,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -258,7 +264,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -288,7 +295,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -311,6 +319,74 @@
 
     
   </div>
+
+  <div class="container">
+    <h3>image.full.json</h3>
+  	<pre><code>{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Base information about the aquisition and analysis of a quantitative pathology image\n",
+    "id": "image",
+    "properties": {
+        "autostainer_model": {
+            "description": "Model version of the autostainer instrument.",
+            "type": "string"
+        },
+        "cell_segmentation_model": {
+            "description": "Model used for cell segmentation in an imaging experiment.",
+            "enum": [
+                "proprietary",
+                "watershed"
+            ],
+            "type": "string"
+        },
+        "image_analysis_software": {
+            "description": "Source sofware for digital pathology and image analysis.",
+            "enum": [
+                "InForm",
+                "QuPath"
+            ],
+            "type": "string"
+        },
+        "image_analysis_software_version": {
+            "description": "Source sofware version for digital pathology and image analysis.",
+            "type": "string"
+        },
+        "positive_cell_detection": {
+            "description": "Model used for postitive cell detection in imaging experiment.",
+            "enum": [
+                "proprietary",
+                "random forest classifier"
+            ],
+            "type": "string"
+        },
+        "protocol_name": {
+            "description": "Protocol name for which imaging experiment conducted.",
+            "type": "string"
+        },
+        "slide_scanner_model": {
+            "description": "Model version of the slide scanner instrument.",
+            "enum": [
+                "Vectra 2.0",
+                "Hamamatsu"
+            ],
+            "type": "string"
+        },
+        "staining_platform": {
+            "description": "Staining platform used for tissue sample labeling.",
+            "enum": [
+                "auto",
+                "manual"
+            ],
+            "type": "string"
+        }
+    },
+    "required": [
+        "slide_scanner_model",
+        "protocol_name"
+    ],
+    "title": "Image"
+}</code></pre>
+  </container>
 
 
     </main>

@@ -5,10 +5,10 @@
   "type": "object",
   "category": "metadata",
   "description": "Metadata information for olink analysis.\n",
-  "$comment": "_______!!!!______ REDO with definition for a shared between combined/assays",
+  "$comment": "REDO with definition for a shared between combined/assays",
   "properties": {
     "worksheets": {
-      "olink": { 
+      "olink": {
         "preamble_rows": {
           "lead organization study id": {
             "$ref": "clinical_trial.json#properties/lead_organization_study_id"

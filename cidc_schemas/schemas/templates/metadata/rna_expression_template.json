@@ -15,9 +15,6 @@
           "assay creator": {
             "$ref": "assays/components/assay_core.json#properties/assay_creator"
           },
-          "assay category": {
-            "$ref": "assays/components/assay_core.json#properties/assay_category"
-          },
           "enrichment method": {
             "$ref": "assays/rna_expression_assay.json#properties/enrichment_method"
           },

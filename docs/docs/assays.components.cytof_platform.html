@@ -63,7 +63,7 @@
     <td>
         <span id="instrument">instrument</span>
         
-            <sup>required</sup>
+            <br><sup><mark>required</mark></sup>
         
     </td>
     <td>
@@ -73,7 +73,8 @@
         
             &lt; 
                 string 
-                 
+                
+                
                 
             &gt;
             <ul>
@@ -93,6 +94,25 @@
 
     
   </div>
+
+  <div class="container">
+    <h3>cytof_platform.full.json</h3>
+  	<pre><code>{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Basic information about the instrumentation used in a CYTOF experiment\n",
+    "id": "cytof_platform",
+    "properties": {
+        "instrument": {
+            "description": "CyTOF instrument used for experiment.",
+            "type": "string"
+        }
+    },
+    "required": [
+        "instrument"
+    ],
+    "title": "CYTOF Platform"
+}</code></pre>
+  </container>
 
 
     </main>

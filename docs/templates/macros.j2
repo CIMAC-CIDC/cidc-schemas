@@ -55,12 +55,12 @@
         </thead>
         {% for prop_name, prop_schema in properties %}
             {% if prop_name in required %}
-                {{ property_table_row(prop_name, prop_schema, required) }}
+                {{ property_table_row(prop_name, prop_schema, True) }}
             {% endif %}
         {% endfor %}
         {% for prop_name, prop_schema in properties %}
             {% if prop_name not in required %}
-                {{ property_table_row(prop_name, prop_schema, required) }}
+                {{ property_table_row(prop_name, prop_schema, False) }}
             {% endif %}
         {% endfor %}
     </table>
@@ -70,8 +70,8 @@
 <tr>
     <td>
         <span id="{{ prop_name }}">{{ prop_name }}</span>
-        {% if prop_name in required %}
-            <sup>required</sup>
+        {% if required %}
+            <br><sup><mark>required</mark></sup>
         {% endif %}
     </td>
     <td>
@@ -81,8 +81,9 @@
         {% if "type" in prop_schema %}
             &lt; 
                 {{ prop_schema["type"]}} 
-                {% if "format" in prop_schema %} : {% endif %} {{prop_schema["format"]}}
-                {% if "propertyNames" in prop_schema and "pattern" in prop_schema["propertyNames"] %}
+                {% if "format" in prop_schema %} :  {{prop_schema["format"]}}{% endif %}
+                {% if "pattern" in prop_schema %} : <code>{{prop_schema["pattern"]}}</code> {% endif %}
+                {% if "object" == prop_schema["type"] and "propertyNames" in prop_schema and "pattern" in prop_schema["propertyNames"] %}
                     : <code>{{prop_schema["propertyNames"]["pattern"]}}</code>
                 {% endif %}
             &gt;

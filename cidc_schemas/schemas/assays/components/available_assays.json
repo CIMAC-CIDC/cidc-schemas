@@ -26,7 +26,7 @@
       "mergeStrategy": "append"
     },
     "olink": {
-      "$comment": "_____!!!_____ Should mergeStrategy be simply 'append' or should we overwrite 'combined' file with newer ?",
+      "$comment": "REVISIT when working on assay updates. A merge strategy of append we are disallowing any updates to the assay entries. Priti said there isn't anything we can use as `assay id`. Only id of `sample/set of samples` it was created upon.",
       "type": "array",
       "items": {
         "$ref": "assays/olink_assay.json"

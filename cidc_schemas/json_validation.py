@@ -51,7 +51,7 @@ def load_and_validate_schema(
 
 def _map_refs(node: dict, fn: Callable[[dict], dict]) -> dict:
     """
-    Apply `fn` to all refs in node, returning node with refs replaced
+    Apply `fn` to all nodes with `$ref`, returning node with refs replaced
     with results of the function call.
 
     Note: _map_refs is shallow, i.e., if calling `fn` on a node produces 

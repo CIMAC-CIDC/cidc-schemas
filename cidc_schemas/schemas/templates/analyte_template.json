@@ -69,7 +69,7 @@
               "$ref": "sample.json#properties/site_sample_id"
             },
             "cimac sample id": {
-              "$ref": "sample.json#properties/cimac_sample_id"
+              "$ref": "participant.json#properties/samples"
             },
             "time point": { "$ref": "sample.json#properties/time_point" },
             "sample location": {
@@ -97,7 +97,7 @@
           },
           "Filled by CIMAC Lab": {
             "cimac aliquot id": {
-              "$ref": "aliquot.json#properties/cimac_aliquot_id"
+              "$ref": "sample.json#properties/aliquots"
             },
             "material used": {
               "$ref": "aliquot.json#properties/material_used"

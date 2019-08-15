@@ -47,13 +47,14 @@
       ]
     },
     "samples": {
-      "type": "array",
-      "items": {
+      "type": "object",
+      "additionalProperties": { 
         "$ref": "sample.json"
       },
-      "mergeStrategy": "arrayMergeById",
-      "mergeOptions": {
-        "idRef": "/cimac_sample_id"
+      "description": "The collection of samples of this participant.\n `cimac_sample_id` - Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234.",
+      "propertyNames": {
+        "$id": "cimac_sample_id",
+        "pattern": "^[^ ]+$"
       }
     }
   },

@@ -46,7 +46,7 @@
               "$ref": "clinical_trial.json#properties/participants"
             },
             "cimac aliquot id": {
-              "$ref": "aliquot.json#properties/cimac_aliquot_id"
+              "$ref": "sample.json#properties/aliquots"
             },
             "genomic source": {
               "$ref": "sample.json#properties/genomic_source"

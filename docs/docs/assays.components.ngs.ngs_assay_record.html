@@ -60,20 +60,19 @@
             
                 <tr>
     <td>
-        <span id="cimac_aliquot_id">cimac_aliquot_id</span>
+        <span id="aliquot_pointer">aliquot_pointer</span>
         
             <br><sup><mark>required</mark></sup>
         
     </td>
     <td>
-        Id of an aliquot within this clinical trial, that this assay record is based upon.
+        Json pointer within this CT to an aliquot, that this assay record is based upon.
     </td>
     <td>
         
             &lt; 
                 string 
-                
-                
+                  : <code>^/participants/([^ ]+)/samples/([^ ]+)/aliquots/([^ ]+)$</code> 
                 
             &gt;
             <ul>
@@ -159,7 +158,7 @@
         
             &lt; 
                 string 
-                 :  date
+                 :  date 
                 
                 
             &gt;

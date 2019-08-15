@@ -5,10 +5,10 @@
   "type": "object",
   "description": "A single data record from an NGS assay",
   "properties": {
-    "cimac_aliquot_id": {
-        "description": "Id of an aliquot within this clinical trial, that this assay record is based upon.",
+    "aliquot_pointer": {
+        "description": "Json pointer within this CT to an aliquot, that this assay record is based upon.",
         "type": "string",
-        "$ref": "aliquot.json#properties/cimac_aliquot_id"
+        "pattern": "^/participants/([^ ]+)/samples/([^ ]+)/aliquots/([^ ]+)$"
     },
     "files": {
       "description": "Fastq and read group mapping files produced by the assay for that .",
@@ -44,6 +44,7 @@
     }
   },
   "required": [
+    "aliquot_pointer",
     "library_kit_lot",
     "library_prep_date",
     "cimac_aliquot_id",

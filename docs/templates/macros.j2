@@ -81,8 +81,7 @@
         {% if "type" in prop_schema %}
             &lt; 
                 {{ prop_schema["type"]}} 
-                {% if "format" in prop_schema %} :  {{prop_schema["format"]}}{% endif %}
-                {% if "pattern" in prop_schema %} : <code>{{prop_schema["pattern"]}}</code> {% endif %}
+                {% if "format" in prop_schema %} :  {{prop_schema["format"]}}{% endif %} {% if "pattern" in prop_schema %} : <code>{{prop_schema["pattern"]}}</code> {% endif %}
                 {% if "object" == prop_schema["type"] and "propertyNames" in prop_schema and "pattern" in prop_schema["propertyNames"] %}
                     : <code>{{prop_schema["propertyNames"]["pattern"]}}</code>
                 {% endif %}

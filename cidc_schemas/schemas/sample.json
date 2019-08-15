@@ -5,10 +5,6 @@
   "type": "object",
   "description": "Any material sample taken from a biological entity for testing, diagnostic, propagation, treatment or research purposes, including a sample obtained from a living organism or taken from the biological object after halting of all its life functions. Biospecimen can contain one or more components including but not limited to cellular molecules, cells, tissues, organs, body fluids, embryos, and body excretory products.",
   "properties": {
-    "cimac_sample_id": {
-      "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
-      "type": "string"
-    },
     "site_sample_id": {
       "description": "Sample identifier assigned by the biorepository site. Example: EA123-45.",
       "type": "string"
@@ -104,15 +100,16 @@
       "enum": ["Tumor", "Normal", "Metastasis"]
     },
     "aliquots": {
-      "type": "array",
-      "items": {
+      "type": "object",
+      "additionalProperties": { 
         "$ref": "aliquot.json"
       },
-      "mergeStrategy": "arrayMergeById",
-      "mergeOptions": {
-        "idRef": "/cimac_aliquot_id"
+      "description": "`cimac_aliquot_id` - identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234.",
+      "propertyNames": {
+        "$id": "cimac_aliquot_id",
+        "pattern": "^[^ ]+$"
       }
     }
   },
-  "required": ["cimac_sample_id", "aliquots", "genomic_source"]
+  "required": ["aliquots", "genomic_source"]
 }

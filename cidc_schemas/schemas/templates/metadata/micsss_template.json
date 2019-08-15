@@ -124,7 +124,7 @@
               "$ref": "clinical_trial.json#properties/participants"
             },
             "cimac_sample_id": {
-              "$ref": "sample.json#properties/cimac_sample_id"
+              "$ref": "participant.json#properties/samples"
             },
             "internal_slide_id": {
               "$ref": "assays/components/imaging_data.json#properties/internal_slide_id"

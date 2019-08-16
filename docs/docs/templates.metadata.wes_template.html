@@ -128,8 +128,15 @@
                             "type": "string"
                         },
                         "forward fastq": {
-                            "description": "Path to a file on a users computer",
-                            "type": "string"
+                            "allOf": [
+                                {
+                                    "description": "Path to a file on a users computer",
+                                    "type": "string"
+                                },
+                                {
+                                    "artifact_link": "assays/components/fastq_pair_and_mapping/fastq_1"
+                                }
+                            ]
                         },
                         "genomic source": {
                             "description": "The type of material submitted - tumor/normal/etc",
@@ -156,12 +163,26 @@
                             "type": "integer"
                         },
                         "read group mapping file": {
-                            "description": "Path to a file on a users computer",
-                            "type": "string"
+                            "allOf": [
+                                {
+                                    "description": "Path to a file on a users computer",
+                                    "type": "string"
+                                },
+                                {
+                                    "artifact_link": "assays/components/fastq_pair_and_mapping/read_group_mapping_file"
+                                }
+                            ]
                         },
                         "reverse fastq": {
-                            "description": "Path to a file on a users computer",
-                            "type": "string"
+                            "allOf": [
+                                {
+                                    "description": "Path to a file on a users computer",
+                                    "type": "string"
+                                },
+                                {
+                                    "artifact_link": "assays/components/fastq_pair_and_mapping/fastq_2"
+                                }
+                            ]
                         }
                     }
                 },

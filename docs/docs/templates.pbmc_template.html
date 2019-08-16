@@ -139,7 +139,7 @@
                             "type": "number"
                         },
                         "quantity": {
-                            "description": "Quantity of each sample shipped.",
+                            "description": "Quantity of each aliquot shipped.",
                             "type": "integer"
                         },
                         "sample location": {
@@ -147,6 +147,7 @@
                             "type": "string"
                         },
                         "sample source": {
+                            "$comment": "RECHECK Moved here from aliquot level.",
                             "description": "Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52",
                             "type": "string"
                         },
@@ -201,7 +202,7 @@
                             "type": "string"
                         },
                         "units": {
-                            "description": "The unit of biological material from this sample.",
+                            "description": "The unit of biological material from this aliquot.",
                             "enum": [
                                 "\u00b5L",
                                 "mL",
@@ -219,7 +220,7 @@
                             "type": "string"
                         },
                         "volume quantity": {
-                            "description": "Volume of sample shipped.",
+                            "description": "Volume of aliquot shipped.",
                             "type": "number"
                         }
                     },
@@ -241,7 +242,7 @@
                             "type": "number"
                         },
                         "sample quality status": {
-                            "description": "Final status of sample after QC and pathology review.",
+                            "description": "Final status of aliquot after QC and pathology review.",
                             "enum": [
                                 "Usable for Assay",
                                 "Not Usable for Assay",
@@ -251,7 +252,7 @@
                             "type": "string"
                         },
                         "sample replacement": {
-                            "description": "Status of sample if replacement is/was requested.",
+                            "description": "Status of aliquot if replacement is/was requested.",
                             "enum": [
                                 "Replacement Requested",
                                 "Replacement Tested",
@@ -260,13 +261,13 @@
                             "type": "string"
                         },
                         "sample status": {
-                            "description": "Status of sample used for other assay, exhausted, destroyed, or returned.",
+                            "description": "Status of aliquot used for other assay, exhausted, destroyed, or returned.",
                             "enum": [
-                                "Sample Returned",
-                                "Sample Exhausted",
+                                "Aliquot Returned",
+                                "Aliquot Exhausted",
                                 "Remainder used for other Assay",
                                 "Other",
-                                "Sample Leftover"
+                                "Aliquot Leftover"
                             ],
                             "type": "string"
                         }

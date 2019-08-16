@@ -484,10 +484,10 @@ def _build_fplu(assay_hint: str):
     with open(template_path) as fin:
         schema = json.load(fin)
 
+    schema_key = 'artifact_link'
     # find key in the schema, this notation is
     # recommended usage of deepdif grep. assuming they
     # overload the pipe operator to simulate cmd line
-    schema_key = 'artifact_link'
     ds = schema | grep(schema_key)
     if 'matched_paths' not in ds:
         raise KeyError(f'{schema_key} not found in schema')

@@ -96,7 +96,7 @@
               "$ref": "aliquot.json#properties/volume_quantity"
             },
             "units": { "$ref": "aliquot.json#properties/units" },
-            "sample source": { "$ref": "aliquot.json#properties/sample_source" }
+            "sample source": { "$ref": "sample.json#properties/sample_source" }
           },
           "Filled by CIMAC Lab": {
             "cimac aliquot id": {
@@ -109,12 +109,12 @@
               "$ref": "aliquot.json#properties/material_remaining"
             },
             "sample quality status": {
-              "$ref": "aliquot.json#properties/sample_quality_status"
+              "$ref": "aliquot.json#properties/aliquot_quality_status"
             },
             "sample replacement": {
-              "$ref": "aliquot.json#properties/sample_replacement"
+              "$ref": "aliquot.json#properties/aliquot_replacement"
             },
-            "sample status": { "$ref": "aliquot.json#properties/sample_status" }
+            "sample status": { "$ref": "aliquot.json#properties/aliquot_status" }
           }
         }
       }

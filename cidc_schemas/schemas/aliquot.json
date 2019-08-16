@@ -10,11 +10,11 @@
       "type": "string"
     },
     "quantity": {
-      "description": "Quantity of each sample shipped.",
+      "description": "Quantity of each aliquot shipped.",
       "type": "integer"
     },
     "volume_quantity": {
-      "description": "Volume of sample shipped.",
+      "description": "Volume of aliquot shipped.",
       "type": "number"
     },
     "pbmc_aliquoted": {
@@ -34,37 +34,37 @@
       "type": "number"
     },
     "aliquot_quality_status": {
-      "description": "Final status of sample after QC and pathology review.",
+      "description": "Final status of aliquot after QC and pathology review.",
       "type": "string",
       "enum": ["Usable for Assay", "Not Usable for Assay", "Verifying", "Other"]
     },
     "aliquot_replacement": {
-      "description": "Status of sample if replacement is/was requested.",
+      "description": "Status of aliquot if replacement is/was requested.",
       "type": "string",
       "enum": ["Replacement Requested", "Replacement Tested", "N/A"]
     },
     "aliquot_status": {
-      "description": "Status of sample used for other assay, exhausted, destroyed, or returned.",
+      "description": "Status of aliquot used for other assay, exhausted, destroyed, or returned.",
       "type": "string",
       "enum": [
-        "Sample Returned",
-        "Sample Exhausted",
+        "Aliquot Returned",
+        "Aliquot Exhausted",
         "Remainder used for other Assay",
         "Other",
-        "Sample Leftover"
+        "Aliquot Leftover"
       ]
     },
     "material_extracted": {
-      "description": "The type of biological material that was extracted from this sample.",
+      "description": "The type of biological material that was extracted from this aliquot.",
       "type": "string",
       "enum": ["DNA", "RNA", "cfDNA", "Other"]
     },
     "extracted_concentration": {
-      "description": "The concentration of biological material that was extracted from this sample.",
+      "description": "The concentration of biological material that was extracted from this aliquot.",
       "type": "string"
     },
     "units": {
-      "description": "The unit of biological material from this sample.",
+      "description": "The unit of biological material from this aliquot.",
       "type": "string",
       "enum": [
         "\u00b5L",
@@ -81,9 +81,9 @@
         "Other"
       ]
     },
-    "sample_amount": {
+    "aliquot_amount": {
       "$comment": "RECHECK Should this be moved to the sample level or renamed?",
-      "description": "The amount of extracted sample shipped. Example: 400 ng",
+      "description": "The amount of extracted aliquot shipped. Example: 400 ng",
       "type": "string"
     },
     "lymphocyte_influx": {

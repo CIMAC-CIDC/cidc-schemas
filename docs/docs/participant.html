@@ -88,9 +88,90 @@
             
         
             
+                <tr>
+    <td>
+        <span id="trial_participant_id">trial_participant_id</span>
         
+            <br><sup><mark>required</mark></sup>
+        
+    </td>
+    <td>
+        Trial Participant Identifier. Example: PT123.
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+                
+                
+                
+            &gt;
+            <ul>
+            
+            
+            
+            </ul>
+        
+    </td>
+</tr>
             
         
+            
+                <tr>
+    <td>
+        <span id="arm_id">arm_id</span>
+        
+            <br><sup><mark>required</mark></sup>
+        
+    </td>
+    <td>
+        Identifies the trial arm to which the participant belongs. Example: Arm A.
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+                
+                
+                
+            &gt;
+            <ul>
+            
+            
+            
+            </ul>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        <span id="cohort_id">cohort_id</span>
+        
+            <br><sup><mark>required</mark></sup>
+        
+    </td>
+    <td>
+        Identifies the treatment cohort to which the participant belongs. Example: Cohort A.
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+                
+                
+                
+            &gt;
+            <ul>
+            
+            
+            
+            </ul>
+        
+    </td>
+</tr>
             
         
             
@@ -136,84 +217,9 @@
             
         
             
-                <tr>
-    <td>
-        <span id="trial_participant_id">trial_participant_id</span>
-        
-    </td>
-    <td>
-        Trial Participant Identifier. Example: PT123.
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-                
-                
-                
-            &gt;
-            <ul>
-            
-            
-            
-            </ul>
-        
-    </td>
-</tr>
-            
         
             
-                <tr>
-    <td>
-        <span id="arm_id">arm_id</span>
         
-    </td>
-    <td>
-        Identifies the trial arm to which the participant belongs. Example: Arm A.
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-                
-                
-                
-            &gt;
-            <ul>
-            
-            
-            
-            </ul>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        <span id="cohort_id">cohort_id</span>
-        
-    </td>
-    <td>
-        Identifies the treatment cohort to which the participant belongs. Example: Cohort A.
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-                
-                
-                
-            &gt;
-            <ul>
-            
-            
-            
-            </ul>
-        
-    </td>
-</tr>
             
         
             
@@ -406,12 +412,47 @@
                             "$schema": "http://json-schema.org/draft-07/schema#",
                             "description": "Pertaining to a portion (volume or weight) of the whole.",
                             "properties": {
+                                "aliquot_amount": {
+                                    "$comment": "RECHECK Should this be moved to the sample level or renamed?",
+                                    "description": "The amount of extracted aliquot shipped. Example: 400 ng",
+                                    "type": "string"
+                                },
+                                "aliquot_quality_status": {
+                                    "description": "Final status of aliquot after QC and pathology review.",
+                                    "enum": [
+                                        "Usable for Assay",
+                                        "Not Usable for Assay",
+                                        "Verifying",
+                                        "Other"
+                                    ],
+                                    "type": "string"
+                                },
+                                "aliquot_replacement": {
+                                    "description": "Status of aliquot if replacement is/was requested.",
+                                    "enum": [
+                                        "Replacement Requested",
+                                        "Replacement Tested",
+                                        "N/A"
+                                    ],
+                                    "type": "string"
+                                },
+                                "aliquot_status": {
+                                    "description": "Status of aliquot used for other assay, exhausted, destroyed, or returned.",
+                                    "enum": [
+                                        "Aliquot Returned",
+                                        "Aliquot Exhausted",
+                                        "Remainder used for other Assay",
+                                        "Other",
+                                        "Aliquot Leftover"
+                                    ],
+                                    "type": "string"
+                                },
                                 "cimac_aliquot_id": {
                                     "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
                                     "type": "string"
                                 },
                                 "extracted_concentration": {
-                                    "description": "The concentration of biological material that was extracted from this sample.",
+                                    "description": "The concentration of biological material that was extracted from this aliquot.",
                                     "type": "string"
                                 },
                                 "fibrosis_percent_area": {
@@ -423,7 +464,7 @@
                                     "type": "string"
                                 },
                                 "material_extracted": {
-                                    "description": "The type of biological material that was extracted from this sample.",
+                                    "description": "The type of biological material that was extracted from this aliquot.",
                                     "enum": [
                                         "DNA",
                                         "RNA",
@@ -453,49 +494,11 @@
                                     "type": "number"
                                 },
                                 "quantity": {
-                                    "description": "Quantity of each sample shipped.",
+                                    "description": "Quantity of each aliquot shipped.",
                                     "type": "integer"
                                 },
-                                "sample_amount": {
-                                    "description": "The amount of extracted sample shipped. Example: 400 ng",
-                                    "type": "string"
-                                },
-                                "sample_quality_status": {
-                                    "description": "Final status of sample after QC and pathology review.",
-                                    "enum": [
-                                        "Usable for Assay",
-                                        "Not Usable for Assay",
-                                        "Verifying",
-                                        "Other"
-                                    ],
-                                    "type": "string"
-                                },
-                                "sample_replacement": {
-                                    "description": "Status of sample if replacement is/was requested.",
-                                    "enum": [
-                                        "Replacement Requested",
-                                        "Replacement Tested",
-                                        "N/A"
-                                    ],
-                                    "type": "string"
-                                },
-                                "sample_source": {
-                                    "description": "Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52",
-                                    "type": "string"
-                                },
-                                "sample_status": {
-                                    "description": "Status of sample used for other assay, exhausted, destroyed, or returned.",
-                                    "enum": [
-                                        "Sample Returned",
-                                        "Sample Exhausted",
-                                        "Remainder used for other Assay",
-                                        "Other",
-                                        "Sample Leftover"
-                                    ],
-                                    "type": "string"
-                                },
                                 "units": {
-                                    "description": "The unit of biological material from this sample.",
+                                    "description": "The unit of biological material from this aliquot.",
                                     "enum": [
                                         "\u00b5L",
                                         "mL",
@@ -521,12 +524,18 @@
                                     "type": "number"
                                 },
                                 "volume_quantity": {
-                                    "description": "Volume of sample shipped.",
+                                    "description": "Volume of aliquot shipped.",
                                     "type": "number"
                                 }
                             },
                             "required": [
-                                "cimac_aliquot_id"
+                                "cimac_aliquot_id",
+                                "units",
+                                "material_used",
+                                "material_remaining",
+                                "aliquot_quality_status",
+                                "aliquot_replacement",
+                                "aliquot_status"
                             ],
                             "title": "Aliquot",
                             "type": "object"
@@ -572,6 +581,11 @@
                     },
                     "sample_location": {
                         "description": "Sample location within the shipping container. Example: A1.",
+                        "type": "string"
+                    },
+                    "sample_source": {
+                        "$comment": "RECHECK Moved here from aliquot level.",
+                        "description": "Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52",
                         "type": "string"
                     },
                     "site_sample_id": {
@@ -648,6 +662,11 @@
                 },
                 "required": [
                     "cimac_sample_id",
+                    "site_sample_id",
+                    "time_point",
+                    "sample_location",
+                    "specimen_type",
+                    "specimen_format",
                     "aliquots",
                     "genomic_source"
                 ],
@@ -667,6 +686,9 @@
     },
     "required": [
         "cimac_participant_id",
+        "trial_participant_id",
+        "cohort_id",
+        "arm_id",
         "samples"
     ],
     "title": "Participant"

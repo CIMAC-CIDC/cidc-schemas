@@ -66,21 +66,13 @@
         
     </td>
     <td>
-        Id of an aliquot within this clinical trial, that this assay record is based upon.
+        
+            <div>Comment: Id of an aliquot within this clinical trial, that this assay record is based upon.</div>
+        
     </td>
     <td>
         
-            &lt; 
-                string 
-                
-                
-                
-            &gt;
-            <ul>
-            
-            
-            
-            </ul>
+            <a href="aliquot.html#cimac_aliquot_id">aliquot#cimac_aliquot_id</a>
         
     </td>
 </tr>
@@ -95,21 +87,13 @@
         
     </td>
     <td>
-        Fastq and read group mapping files produced by the assay for that .
+        
+            <div>Comment: Fastq and read group mapping files produced by the assay for that .</div>
+        
     </td>
     <td>
         
-            &lt; 
-                object 
-                
-                
-                
-            &gt;
-            <ul>
-            
-            
-            
-            </ul>
+            <a href="assays.components.fastq_pair_and_mapping.html">assays.components.fastq_pair_and_mapping</a>
         
     </td>
 </tr>
@@ -288,15 +272,18 @@
             "type": "integer"
         },
         "cimac_aliquot_id": {
+            "$comment": "Id of an aliquot within this clinical trial, that this assay record is based upon.",
             "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
             "type": "string"
         },
         "files": {
+            "$comment": "Fastq and read group mapping files produced by the assay for that .",
             "$id": "fastq_pair_and_mapping",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "description": "Paired end sequencing fastq file pair and read group mapping file",
             "properties": {
                 "fastq_1": {
+                    "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
                     "$id": "fastq_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "allOf": [
@@ -384,6 +371,7 @@
                     "type": "object"
                 },
                 "fastq_2": {
+                    "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
                     "$id": "fastq_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "allOf": [
@@ -471,6 +459,7 @@
                     "type": "object"
                 },
                 "read_group_mapping_file": {
+                    "$comment": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
                     "$id": "text_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "allOf": [

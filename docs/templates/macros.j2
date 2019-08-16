@@ -75,7 +75,9 @@
         {% endif %}
     </td>
     <td>
-        {{ prop_schema["description"] }}
+        {{ prop_schema["description"] }}{% if prop_schema["$comment"] %}
+            <div>Comment: {{prop_schema["$comment"]}}</div>
+        {% endif %}
     </td>
     <td>
         {% if "type" in prop_schema %}

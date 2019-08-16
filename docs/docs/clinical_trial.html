@@ -312,7 +312,9 @@
         
     </td>
     <td>
-        Assays for this trial
+        
+            <div>Comment: Assays for this trial</div>
+        
     </td>
     <td>
         
@@ -335,6 +337,7 @@
     "description": "Encapsulates information regarding a clinical trial.\n",
     "properties": {
         "assays": {
+            "$comment": "Assays for this trial",
             "$id": "available_assays",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "description": "Reference for every available assay in network",
@@ -971,6 +974,7 @@
                                                         "description": "Regions of interest obtained from composite images.",
                                                         "properties": {
                                                             "component_data": {
+                                                                "$comment": "Image produced from the combination of multiple imaging experiment data images.Imaging data resulting from the individual components of the imaging experiment.",
                                                                 "$id": "image_artifact",
                                                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                                                 "allOf": [
@@ -1069,6 +1073,7 @@
                                                                 "type": "object"
                                                             },
                                                             "composite_image": {
+                                                                "$comment": "Image produced from the combination of multiple imaging experiment data images.Imaging data resulting from the individual components of the imaging experiment.",
                                                                 "$id": "image_artifact",
                                                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                                                 "allOf": [
@@ -1183,6 +1188,7 @@
                                                         "description": "Regions of interest obtained from image mapping.",
                                                         "properties": {
                                                             "binary_seg_map": {
+                                                                "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
                                                                 "$id": "csv_artifact",
                                                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                                                 "allOf": [
@@ -1277,6 +1283,7 @@
                                                                 "type": "object"
                                                             },
                                                             "cell_seg_data": {
+                                                                "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
                                                                 "$id": "csv_artifact",
                                                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                                                 "allOf": [
@@ -1371,6 +1378,7 @@
                                                                 "type": "object"
                                                             },
                                                             "cell_seg_data_summary": {
+                                                                "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
                                                                 "$id": "csv_artifact",
                                                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                                                 "allOf": [
@@ -1465,6 +1473,7 @@
                                                                 "type": "object"
                                                             },
                                                             "phenotype_map": {
+                                                                "$comment": "Image produced from the combination of multiple imaging experiment data images.Genome segmentation mapping",
                                                                 "$id": "image_artifact",
                                                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                                                 "allOf": [
@@ -1563,6 +1572,7 @@
                                                                 "type": "object"
                                                             },
                                                             "region_seg_map": {
+                                                                "$comment": "Image produced from the combination of multiple imaging experiment data images.Genome segmentation mapping",
                                                                 "$id": "image_artifact",
                                                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                                                 "allOf": [
@@ -1661,6 +1671,7 @@
                                                                 "type": "object"
                                                             },
                                                             "score_data": {
+                                                                "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
                                                                 "$id": "csv_artifact",
                                                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                                                 "allOf": [
@@ -1764,6 +1775,7 @@
                                                     "type": "array"
                                                 },
                                                 "micsss_output_summary": {
+                                                    "$comment": "Summary of the results of the experiment.",
                                                     "$id": "csv_artifact",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "allOf": [
@@ -2123,6 +2135,7 @@
                                             "description": "mIF Assay Input Files",
                                             "properties": {
                                                 "mif_output_summary": {
+                                                    "$comment": "Summary of the results of the experiment.",
                                                     "$id": "csv_artifact",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "allOf": [
@@ -2225,6 +2238,7 @@
                                                                 "description": "Regions of interest obtained from image mapping.",
                                                                 "properties": {
                                                                     "binary_seg_map": {
+                                                                        "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
                                                                         "$id": "csv_artifact",
                                                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                                                         "allOf": [
@@ -2319,6 +2333,7 @@
                                                                         "type": "object"
                                                                     },
                                                                     "cell_seg_data": {
+                                                                        "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
                                                                         "$id": "csv_artifact",
                                                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                                                         "allOf": [
@@ -2413,6 +2428,7 @@
                                                                         "type": "object"
                                                                     },
                                                                     "cell_seg_data_summary": {
+                                                                        "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
                                                                         "$id": "csv_artifact",
                                                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                                                         "allOf": [
@@ -2507,6 +2523,7 @@
                                                                         "type": "object"
                                                                     },
                                                                     "phenotype_map": {
+                                                                        "$comment": "Image produced from the combination of multiple imaging experiment data images.Genome segmentation mapping",
                                                                         "$id": "image_artifact",
                                                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                                                         "allOf": [
@@ -2605,6 +2622,7 @@
                                                                         "type": "object"
                                                                     },
                                                                     "region_seg_map": {
+                                                                        "$comment": "Image produced from the combination of multiple imaging experiment data images.Genome segmentation mapping",
                                                                         "$id": "image_artifact",
                                                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                                                         "allOf": [
@@ -2703,6 +2721,7 @@
                                                                         "type": "object"
                                                                     },
                                                                     "score_data": {
+                                                                        "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
                                                                         "$id": "csv_artifact",
                                                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                                                         "allOf": [
@@ -2809,6 +2828,7 @@
                                                                 "description": "Regions of interest obtained from composite images.",
                                                                 "properties": {
                                                                     "component_data": {
+                                                                        "$comment": "Image produced from the combination of multiple imaging experiment data images.Imaging data resulting from the individual components of the imaging experiment.",
                                                                         "$id": "image_artifact",
                                                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                                                         "allOf": [
@@ -2907,6 +2927,7 @@
                                                                         "type": "object"
                                                                     },
                                                                     "composite_image": {
+                                                                        "$comment": "Image produced from the combination of multiple imaging experiment data images.Imaging data resulting from the individual components of the imaging experiment.",
                                                                         "$id": "image_artifact",
                                                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                                                         "allOf": [
@@ -3017,6 +3038,7 @@
                                                     }
                                                 },
                                                 "roi_annotations": {
+                                                    "$comment": "Text describing region of interest for experiment.",
                                                     "$id": "text_artifact",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "allOf": [
@@ -3105,6 +3127,7 @@
                                                     "type": "object"
                                                 },
                                                 "whole_slide_imaging_file": {
+                                                    "$comment": "Digital slide produced from the scanning of conventional glass slides.",
                                                     "$id": "image_artifact",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "allOf": [
@@ -3271,6 +3294,7 @@
                                             "description": "Olink Assay Input Files",
                                             "properties": {
                                                 "assay_npx": {
+                                                    "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.",
                                                     "$id": "text_artifact",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "allOf": [
@@ -3359,6 +3383,7 @@
                                                     "type": "object"
                                                 },
                                                 "assay_raw_ct": {
+                                                    "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.",
                                                     "$id": "text_artifact",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "allOf": [
@@ -3447,6 +3472,7 @@
                                                     "type": "object"
                                                 },
                                                 "study_npx": {
+                                                    "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.",
                                                     "$id": "text_artifact",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "allOf": [
@@ -3751,15 +3777,18 @@
                                                     "type": "integer"
                                                 },
                                                 "cimac_aliquot_id": {
+                                                    "$comment": "Id of an aliquot within this clinical trial, that this assay record is based upon.",
                                                     "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
                                                     "type": "string"
                                                 },
                                                 "files": {
+                                                    "$comment": "Fastq and read group mapping files produced by the assay for that .",
                                                     "$id": "fastq_pair_and_mapping",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "description": "Paired end sequencing fastq file pair and read group mapping file",
                                                     "properties": {
                                                         "fastq_1": {
+                                                            "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
                                                             "$id": "fastq_artifact",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                                             "allOf": [
@@ -3847,6 +3876,7 @@
                                                             "type": "object"
                                                         },
                                                         "fastq_2": {
+                                                            "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
                                                             "$id": "fastq_artifact",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                                             "allOf": [
@@ -3934,6 +3964,7 @@
                                                             "type": "object"
                                                         },
                                                         "read_group_mapping_file": {
+                                                            "$comment": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
                                                             "$id": "text_artifact",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                                             "allOf": [
@@ -4083,6 +4114,7 @@
                                                     "description": "Paired end sequencing fastq file pair and read group mapping file",
                                                     "properties": {
                                                         "fastq_1": {
+                                                            "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
                                                             "$id": "fastq_artifact",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                                             "allOf": [
@@ -4170,6 +4202,7 @@
                                                             "type": "object"
                                                         },
                                                         "fastq_2": {
+                                                            "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
                                                             "$id": "fastq_artifact",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                                             "allOf": [
@@ -4257,6 +4290,7 @@
                                                             "type": "object"
                                                         },
                                                         "read_group_mapping_file": {
+                                                            "$comment": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
                                                             "$id": "text_artifact",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                                             "allOf": [
@@ -5288,15 +5322,18 @@
                                                     "type": "integer"
                                                 },
                                                 "cimac_aliquot_id": {
+                                                    "$comment": "Id of an aliquot within this clinical trial, that this assay record is based upon.",
                                                     "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
                                                     "type": "string"
                                                 },
                                                 "files": {
+                                                    "$comment": "Fastq and read group mapping files produced by the assay for that .",
                                                     "$id": "fastq_pair_and_mapping",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "description": "Paired end sequencing fastq file pair and read group mapping file",
                                                     "properties": {
                                                         "fastq_1": {
+                                                            "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
                                                             "$id": "fastq_artifact",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                                             "allOf": [
@@ -5384,6 +5421,7 @@
                                                             "type": "object"
                                                         },
                                                         "fastq_2": {
+                                                            "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
                                                             "$id": "fastq_artifact",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                                             "allOf": [
@@ -5471,6 +5509,7 @@
                                                             "type": "object"
                                                         },
                                                         "read_group_mapping_file": {
+                                                            "$comment": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
                                                             "$id": "text_artifact",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                                             "allOf": [
@@ -5714,12 +5753,47 @@
                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                         "description": "Pertaining to a portion (volume or weight) of the whole.",
                                         "properties": {
+                                            "aliquot_amount": {
+                                                "$comment": "RECHECK Should this be moved to the sample level or renamed?",
+                                                "description": "The amount of extracted aliquot shipped. Example: 400 ng",
+                                                "type": "string"
+                                            },
+                                            "aliquot_quality_status": {
+                                                "description": "Final status of aliquot after QC and pathology review.",
+                                                "enum": [
+                                                    "Usable for Assay",
+                                                    "Not Usable for Assay",
+                                                    "Verifying",
+                                                    "Other"
+                                                ],
+                                                "type": "string"
+                                            },
+                                            "aliquot_replacement": {
+                                                "description": "Status of aliquot if replacement is/was requested.",
+                                                "enum": [
+                                                    "Replacement Requested",
+                                                    "Replacement Tested",
+                                                    "N/A"
+                                                ],
+                                                "type": "string"
+                                            },
+                                            "aliquot_status": {
+                                                "description": "Status of aliquot used for other assay, exhausted, destroyed, or returned.",
+                                                "enum": [
+                                                    "Aliquot Returned",
+                                                    "Aliquot Exhausted",
+                                                    "Remainder used for other Assay",
+                                                    "Other",
+                                                    "Aliquot Leftover"
+                                                ],
+                                                "type": "string"
+                                            },
                                             "cimac_aliquot_id": {
                                                 "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
                                                 "type": "string"
                                             },
                                             "extracted_concentration": {
-                                                "description": "The concentration of biological material that was extracted from this sample.",
+                                                "description": "The concentration of biological material that was extracted from this aliquot.",
                                                 "type": "string"
                                             },
                                             "fibrosis_percent_area": {
@@ -5731,7 +5805,7 @@
                                                 "type": "string"
                                             },
                                             "material_extracted": {
-                                                "description": "The type of biological material that was extracted from this sample.",
+                                                "description": "The type of biological material that was extracted from this aliquot.",
                                                 "enum": [
                                                     "DNA",
                                                     "RNA",
@@ -5761,49 +5835,11 @@
                                                 "type": "number"
                                             },
                                             "quantity": {
-                                                "description": "Quantity of each sample shipped.",
+                                                "description": "Quantity of each aliquot shipped.",
                                                 "type": "integer"
                                             },
-                                            "sample_amount": {
-                                                "description": "The amount of extracted sample shipped. Example: 400 ng",
-                                                "type": "string"
-                                            },
-                                            "sample_quality_status": {
-                                                "description": "Final status of sample after QC and pathology review.",
-                                                "enum": [
-                                                    "Usable for Assay",
-                                                    "Not Usable for Assay",
-                                                    "Verifying",
-                                                    "Other"
-                                                ],
-                                                "type": "string"
-                                            },
-                                            "sample_replacement": {
-                                                "description": "Status of sample if replacement is/was requested.",
-                                                "enum": [
-                                                    "Replacement Requested",
-                                                    "Replacement Tested",
-                                                    "N/A"
-                                                ],
-                                                "type": "string"
-                                            },
-                                            "sample_source": {
-                                                "description": "Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52",
-                                                "type": "string"
-                                            },
-                                            "sample_status": {
-                                                "description": "Status of sample used for other assay, exhausted, destroyed, or returned.",
-                                                "enum": [
-                                                    "Sample Returned",
-                                                    "Sample Exhausted",
-                                                    "Remainder used for other Assay",
-                                                    "Other",
-                                                    "Sample Leftover"
-                                                ],
-                                                "type": "string"
-                                            },
                                             "units": {
-                                                "description": "The unit of biological material from this sample.",
+                                                "description": "The unit of biological material from this aliquot.",
                                                 "enum": [
                                                     "\u00b5L",
                                                     "mL",
@@ -5829,12 +5865,18 @@
                                                 "type": "number"
                                             },
                                             "volume_quantity": {
-                                                "description": "Volume of sample shipped.",
+                                                "description": "Volume of aliquot shipped.",
                                                 "type": "number"
                                             }
                                         },
                                         "required": [
-                                            "cimac_aliquot_id"
+                                            "cimac_aliquot_id",
+                                            "units",
+                                            "material_used",
+                                            "material_remaining",
+                                            "aliquot_quality_status",
+                                            "aliquot_replacement",
+                                            "aliquot_status"
                                         ],
                                         "title": "Aliquot",
                                         "type": "object"
@@ -5880,6 +5922,11 @@
                                 },
                                 "sample_location": {
                                     "description": "Sample location within the shipping container. Example: A1.",
+                                    "type": "string"
+                                },
+                                "sample_source": {
+                                    "$comment": "RECHECK Moved here from aliquot level.",
+                                    "description": "Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52",
                                     "type": "string"
                                 },
                                 "site_sample_id": {
@@ -5956,6 +6003,11 @@
                             },
                             "required": [
                                 "cimac_sample_id",
+                                "site_sample_id",
+                                "time_point",
+                                "sample_location",
+                                "specimen_type",
+                                "specimen_format",
                                 "aliquots",
                                 "genomic_source"
                             ],
@@ -5975,6 +6027,9 @@
                 },
                 "required": [
                     "cimac_participant_id",
+                    "trial_participant_id",
+                    "cohort_id",
+                    "arm_id",
                     "samples"
                 ],
                 "title": "Participant"

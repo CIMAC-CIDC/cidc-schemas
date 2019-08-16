@@ -95,7 +95,172 @@
             
         
             
+                <tr>
+    <td>
+        <span id="material_used">material_used</span>
         
+            <br><sup><mark>required</mark></sup>
+        
+    </td>
+    <td>
+        Receiving site indicates how much material was used for assay purposes.
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+                
+                
+                
+            &gt;
+            <ul>
+            
+            
+            
+            </ul>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        <span id="material_remaining">material_remaining</span>
+        
+            <br><sup><mark>required</mark></sup>
+        
+    </td>
+    <td>
+        Receiving site indicates how much material remains after assay use.
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+                
+                
+                
+            &gt;
+            <ul>
+            
+            
+            
+            </ul>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        <span id="aliquot_quality_status">aliquot_quality_status</span>
+        
+            <br><sup><mark>required</mark></sup>
+        
+    </td>
+    <td>
+        Final status of aliquot after QC and pathology review.
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+                
+                
+                
+            &gt;
+            <ul>
+            
+                <li>Usable for Assay</li>
+            
+                <li>Not Usable for Assay</li>
+            
+                <li>Verifying</li>
+            
+                <li>Other</li>
+            
+            
+            
+            </ul>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        <span id="aliquot_replacement">aliquot_replacement</span>
+        
+            <br><sup><mark>required</mark></sup>
+        
+    </td>
+    <td>
+        Status of aliquot if replacement is/was requested.
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+                
+                
+                
+            &gt;
+            <ul>
+            
+                <li>Replacement Requested</li>
+            
+                <li>Replacement Tested</li>
+            
+                <li>N/A</li>
+            
+            
+            
+            </ul>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        <span id="aliquot_status">aliquot_status</span>
+        
+            <br><sup><mark>required</mark></sup>
+        
+    </td>
+    <td>
+        Status of aliquot used for other assay, exhausted, destroyed, or returned.
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+                
+                
+                
+            &gt;
+            <ul>
+            
+                <li>Aliquot Returned</li>
+            
+                <li>Aliquot Exhausted</li>
+            
+                <li>Remainder used for other Assay</li>
+            
+                <li>Other</li>
+            
+                <li>Aliquot Leftover</li>
+            
+            
+            
+            </ul>
+        
+    </td>
+</tr>
             
         
             
@@ -103,13 +268,56 @@
             
         
             
+                <tr>
+    <td>
+        <span id="units">units</span>
         
+            <br><sup><mark>required</mark></sup>
+        
+    </td>
+    <td>
+        The unit of biological material from this aliquot.
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+                
+                
+                
+            &gt;
+            <ul>
             
-        
+                <li>µL</li>
             
-        
+                <li>mL</li>
             
+                <li>mg</li>
+            
+                <li>ng</li>
+            
+                <li>Vials</li>
+            
+                <li>Slides</li>
+            
+                <li>Scrolls</li>
+            
+                <li>Blocks</li>
+            
+                <li>ng/µL</li>
+            
+                <li>cells/ml</li>
+            
+                <li>N/A</li>
+            
+                <li>Other</li>
+            
+            
+            
+            </ul>
         
+    </td>
+</tr>
             
         
             
@@ -134,7 +342,7 @@
         
     </td>
     <td>
-        Quantity of each sample shipped.
+        Quantity of each aliquot shipped.
     </td>
     <td>
         
@@ -161,7 +369,7 @@
         
     </td>
     <td>
-        Volume of sample shipped.
+        Volume of aliquot shipped.
     </td>
     <td>
         
@@ -236,189 +444,13 @@
             
         
             
-                <tr>
-    <td>
-        <span id="material_used">material_used</span>
         
-    </td>
-    <td>
-        Receiving site indicates how much material was used for assay purposes.
-    </td>
-    <td>
-        
-            &lt; 
-                number 
-                
-                
-                
-            &gt;
-            <ul>
-            
-            
-            
-            </ul>
-        
-    </td>
-</tr>
             
         
             
-                <tr>
-    <td>
-        <span id="material_remaining">material_remaining</span>
-        
-    </td>
-    <td>
-        Receiving site indicates how much material remains after assay use.
-    </td>
-    <td>
-        
-            &lt; 
-                number 
-                
-                
-                
-            &gt;
-            <ul>
-            
-            
-            
-            </ul>
-        
-    </td>
-</tr>
-            
         
             
-                <tr>
-    <td>
-        <span id="sample_source">sample_source</span>
         
-    </td>
-    <td>
-        Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-                
-                
-                
-            &gt;
-            <ul>
-            
-            
-            
-            </ul>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        <span id="sample_quality_status">sample_quality_status</span>
-        
-    </td>
-    <td>
-        Final status of sample after QC and pathology review.
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-                
-                
-                
-            &gt;
-            <ul>
-            
-                <li>Usable for Assay</li>
-            
-                <li>Not Usable for Assay</li>
-            
-                <li>Verifying</li>
-            
-                <li>Other</li>
-            
-            
-            
-            </ul>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        <span id="sample_replacement">sample_replacement</span>
-        
-    </td>
-    <td>
-        Status of sample if replacement is/was requested.
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-                
-                
-                
-            &gt;
-            <ul>
-            
-                <li>Replacement Requested</li>
-            
-                <li>Replacement Tested</li>
-            
-                <li>N/A</li>
-            
-            
-            
-            </ul>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        <span id="sample_status">sample_status</span>
-        
-    </td>
-    <td>
-        Status of sample used for other assay, exhausted, destroyed, or returned.
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-                
-                
-                
-            &gt;
-            <ul>
-            
-                <li>Sample Returned</li>
-            
-                <li>Sample Exhausted</li>
-            
-                <li>Remainder used for other Assay</li>
-            
-                <li>Other</li>
-            
-                <li>Sample Leftover</li>
-            
-            
-            
-            </ul>
-        
-    </td>
-</tr>
             
         
             
@@ -428,7 +460,7 @@
         
     </td>
     <td>
-        The type of biological material that was extracted from this sample.
+        The type of biological material that was extracted from this aliquot.
     </td>
     <td>
         
@@ -463,7 +495,7 @@
         
     </td>
     <td>
-        The concentration of biological material that was extracted from this sample.
+        The concentration of biological material that was extracted from this aliquot.
     </td>
     <td>
         
@@ -484,64 +516,17 @@
             
         
             
-                <tr>
-    <td>
-        <span id="units">units</span>
-        
-    </td>
-    <td>
-        The unit of biological material from this sample.
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-                
-                
-                
-            &gt;
-            <ul>
-            
-                <li>µL</li>
-            
-                <li>mL</li>
-            
-                <li>mg</li>
-            
-                <li>ng</li>
-            
-                <li>Vials</li>
-            
-                <li>Slides</li>
-            
-                <li>Scrolls</li>
-            
-                <li>Blocks</li>
-            
-                <li>ng/µL</li>
-            
-                <li>cells/ml</li>
-            
-                <li>N/A</li>
-            
-                <li>Other</li>
-            
-            
-            
-            </ul>
-        
-    </td>
-</tr>
-            
         
             
                 <tr>
     <td>
-        <span id="sample_amount">sample_amount</span>
+        <span id="aliquot_amount">aliquot_amount</span>
         
     </td>
     <td>
-        The amount of extracted sample shipped. Example: 400 ng
+        The amount of extracted aliquot shipped. Example: 400 ng
+            <div>Comment: RECHECK Should this be moved to the sample level or renamed?</div>
+        
     </td>
     <td>
         
@@ -708,12 +693,47 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "Pertaining to a portion (volume or weight) of the whole.",
     "properties": {
+        "aliquot_amount": {
+            "$comment": "RECHECK Should this be moved to the sample level or renamed?",
+            "description": "The amount of extracted aliquot shipped. Example: 400 ng",
+            "type": "string"
+        },
+        "aliquot_quality_status": {
+            "description": "Final status of aliquot after QC and pathology review.",
+            "enum": [
+                "Usable for Assay",
+                "Not Usable for Assay",
+                "Verifying",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "aliquot_replacement": {
+            "description": "Status of aliquot if replacement is/was requested.",
+            "enum": [
+                "Replacement Requested",
+                "Replacement Tested",
+                "N/A"
+            ],
+            "type": "string"
+        },
+        "aliquot_status": {
+            "description": "Status of aliquot used for other assay, exhausted, destroyed, or returned.",
+            "enum": [
+                "Aliquot Returned",
+                "Aliquot Exhausted",
+                "Remainder used for other Assay",
+                "Other",
+                "Aliquot Leftover"
+            ],
+            "type": "string"
+        },
         "cimac_aliquot_id": {
             "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
             "type": "string"
         },
         "extracted_concentration": {
-            "description": "The concentration of biological material that was extracted from this sample.",
+            "description": "The concentration of biological material that was extracted from this aliquot.",
             "type": "string"
         },
         "fibrosis_percent_area": {
@@ -725,7 +745,7 @@
             "type": "string"
         },
         "material_extracted": {
-            "description": "The type of biological material that was extracted from this sample.",
+            "description": "The type of biological material that was extracted from this aliquot.",
             "enum": [
                 "DNA",
                 "RNA",
@@ -755,49 +775,11 @@
             "type": "number"
         },
         "quantity": {
-            "description": "Quantity of each sample shipped.",
+            "description": "Quantity of each aliquot shipped.",
             "type": "integer"
         },
-        "sample_amount": {
-            "description": "The amount of extracted sample shipped. Example: 400 ng",
-            "type": "string"
-        },
-        "sample_quality_status": {
-            "description": "Final status of sample after QC and pathology review.",
-            "enum": [
-                "Usable for Assay",
-                "Not Usable for Assay",
-                "Verifying",
-                "Other"
-            ],
-            "type": "string"
-        },
-        "sample_replacement": {
-            "description": "Status of sample if replacement is/was requested.",
-            "enum": [
-                "Replacement Requested",
-                "Replacement Tested",
-                "N/A"
-            ],
-            "type": "string"
-        },
-        "sample_source": {
-            "description": "Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52",
-            "type": "string"
-        },
-        "sample_status": {
-            "description": "Status of sample used for other assay, exhausted, destroyed, or returned.",
-            "enum": [
-                "Sample Returned",
-                "Sample Exhausted",
-                "Remainder used for other Assay",
-                "Other",
-                "Sample Leftover"
-            ],
-            "type": "string"
-        },
         "units": {
-            "description": "The unit of biological material from this sample.",
+            "description": "The unit of biological material from this aliquot.",
             "enum": [
                 "\u00b5L",
                 "mL",
@@ -823,12 +805,18 @@
             "type": "number"
         },
         "volume_quantity": {
-            "description": "Volume of sample shipped.",
+            "description": "Volume of aliquot shipped.",
             "type": "number"
         }
     },
     "required": [
-        "cimac_aliquot_id"
+        "cimac_aliquot_id",
+        "units",
+        "material_used",
+        "material_remaining",
+        "aliquot_quality_status",
+        "aliquot_replacement",
+        "aliquot_status"
     ],
     "title": "Aliquot",
     "type": "object"

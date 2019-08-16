@@ -6,11 +6,11 @@
   "description": "Regions of interest obtained from composite images.",
   "properties": {
     "composite_image": {
-      "description": "Image produced from the combination of multiple imaging experiment data images.",
+      "$comment": "Image produced from the combination of multiple imaging experiment data images.",
       "$ref": "artifacts/artifact_image.json"
     },
     "component_data": {
-      "description": "Imaging data resulting from the individual components of the imaging experiment.",
+      "$comment": "Imaging data resulting from the individual components of the imaging experiment.",
       "$ref": "artifacts/artifact_image.json"
     }
   },

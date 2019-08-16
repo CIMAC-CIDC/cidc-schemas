@@ -66,7 +66,9 @@
         
     </td>
     <td>
-        Fastq file for the first fragment.
+        
+            <div>Comment: Fastq file for the first fragment.</div>
+        
     </td>
     <td>
         
@@ -85,7 +87,9 @@
         
     </td>
     <td>
-        Fastq file for the second fragment.
+        
+            <div>Comment: Fastq file for the second fragment.</div>
+        
     </td>
     <td>
         
@@ -104,21 +108,13 @@
         
     </td>
     <td>
-        Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.
+        
+            <div>Comment: Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.</div>
+        
     </td>
     <td>
         
-            &lt; 
-                array 
-                
-                
-                
-            &gt;
-            <ul>
-            
-            
-            
-            </ul>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
@@ -144,6 +140,7 @@
     "description": "Paired end sequencing fastq file pair and read group mapping file",
     "properties": {
         "fastq_1": {
+            "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
             "$id": "fastq_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
@@ -231,6 +228,7 @@
             "type": "object"
         },
         "fastq_2": {
+            "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
             "$id": "fastq_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
@@ -318,6 +316,7 @@
             "type": "object"
         },
         "read_group_mapping_file": {
+            "$comment": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
             "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [

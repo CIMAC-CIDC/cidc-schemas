@@ -6,15 +6,12 @@
   "description": "WES output align files",
   "properties": {
     "align_sorted": {
-      "description": "",
       "$ref": "artifacts/artifact_bam.json"
     },
     "align_sorted_dedup": {
-      "description": "",
       "$ref": "artifacts/artifact_bam.json"
     },
     "align_recalibrated": {
-      "description": "",
       "$ref": "artifacts/artifact_bam.json"
     }
   },

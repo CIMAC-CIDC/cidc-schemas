@@ -67,16 +67,34 @@
               "$ref": "assays/components/ngs/ngs_assay_record.json#properties/average_insert_size"
             },
             "forward fastq": {
-              "$ref": "assays/components/local_file.json#properties/file_path",
-              "artifact_link": "assays/components/fastq_pair_and_mapping/fastq_1"
+              "allOf": [
+                {
+                  "$ref": "assays/components/local_file.json#properties/file_path"
+                },
+                {
+                  "artifact_link": "assays/components/fastq_pair_and_mapping/fastq_1"
+                }
+              ]
             },
             "reverse fastq": {
-              "$ref": "assays/components/local_file.json#properties/file_path",
-              "artifact_link": "assays/components/fastq_pair_and_mapping/fastq_2"
+              "allOf": [
+                {
+                  "$ref": "assays/components/local_file.json#properties/file_path"
+                },
+                {
+                  "artifact_link": "assays/components/fastq_pair_and_mapping/fastq_2"
+                }
+              ]
             },
             "read group mapping file": {
-              "$ref": "assays/components/local_file.json#properties/file_path",
-              "artifact_link": "assays/components/fastq_pair_and_mapping/read_group_mapping_file"
+              "allOf": [
+                {
+                  "$ref": "assays/components/local_file.json#properties/file_path"
+                },
+                {
+                  "artifact_link": "assays/components/fastq_pair_and_mapping/read_group_mapping_file"
+                }
+              ]
             }
           }
         }

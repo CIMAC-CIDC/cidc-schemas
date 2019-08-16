@@ -171,6 +171,8 @@
     </td>
     <td>
         
+            <div>Comment: REVISIT when working on assay updates. A merge strategy of append we are disallowing any updates to the assay entries. Priti said there isn't anything we can use as `assay id`. Only id of `sample/set of samples` it was created upon.</div>
+        
     </td>
     <td>
         
@@ -900,6 +902,7 @@
                                                 "description": "Regions of interest obtained from composite images.",
                                                 "properties": {
                                                     "component_data": {
+                                                        "$comment": "Image produced from the combination of multiple imaging experiment data images.Imaging data resulting from the individual components of the imaging experiment.",
                                                         "$id": "image_artifact",
                                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                                         "allOf": [
@@ -998,6 +1001,7 @@
                                                         "type": "object"
                                                     },
                                                     "composite_image": {
+                                                        "$comment": "Image produced from the combination of multiple imaging experiment data images.Imaging data resulting from the individual components of the imaging experiment.",
                                                         "$id": "image_artifact",
                                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                                         "allOf": [
@@ -1112,6 +1116,7 @@
                                                 "description": "Regions of interest obtained from image mapping.",
                                                 "properties": {
                                                     "binary_seg_map": {
+                                                        "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
                                                         "$id": "csv_artifact",
                                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                                         "allOf": [
@@ -1206,6 +1211,7 @@
                                                         "type": "object"
                                                     },
                                                     "cell_seg_data": {
+                                                        "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
                                                         "$id": "csv_artifact",
                                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                                         "allOf": [
@@ -1300,6 +1306,7 @@
                                                         "type": "object"
                                                     },
                                                     "cell_seg_data_summary": {
+                                                        "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
                                                         "$id": "csv_artifact",
                                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                                         "allOf": [
@@ -1394,6 +1401,7 @@
                                                         "type": "object"
                                                     },
                                                     "phenotype_map": {
+                                                        "$comment": "Image produced from the combination of multiple imaging experiment data images.Genome segmentation mapping",
                                                         "$id": "image_artifact",
                                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                                         "allOf": [
@@ -1492,6 +1500,7 @@
                                                         "type": "object"
                                                     },
                                                     "region_seg_map": {
+                                                        "$comment": "Image produced from the combination of multiple imaging experiment data images.Genome segmentation mapping",
                                                         "$id": "image_artifact",
                                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                                         "allOf": [
@@ -1590,6 +1599,7 @@
                                                         "type": "object"
                                                     },
                                                     "score_data": {
+                                                        "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
                                                         "$id": "csv_artifact",
                                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                                         "allOf": [
@@ -1693,6 +1703,7 @@
                                             "type": "array"
                                         },
                                         "micsss_output_summary": {
+                                            "$comment": "Summary of the results of the experiment.",
                                             "$id": "csv_artifact",
                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                             "allOf": [
@@ -2052,6 +2063,7 @@
                                     "description": "mIF Assay Input Files",
                                     "properties": {
                                         "mif_output_summary": {
+                                            "$comment": "Summary of the results of the experiment.",
                                             "$id": "csv_artifact",
                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                             "allOf": [
@@ -2154,6 +2166,7 @@
                                                         "description": "Regions of interest obtained from image mapping.",
                                                         "properties": {
                                                             "binary_seg_map": {
+                                                                "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
                                                                 "$id": "csv_artifact",
                                                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                                                 "allOf": [
@@ -2248,6 +2261,7 @@
                                                                 "type": "object"
                                                             },
                                                             "cell_seg_data": {
+                                                                "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
                                                                 "$id": "csv_artifact",
                                                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                                                 "allOf": [
@@ -2342,6 +2356,7 @@
                                                                 "type": "object"
                                                             },
                                                             "cell_seg_data_summary": {
+                                                                "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
                                                                 "$id": "csv_artifact",
                                                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                                                 "allOf": [
@@ -2436,6 +2451,7 @@
                                                                 "type": "object"
                                                             },
                                                             "phenotype_map": {
+                                                                "$comment": "Image produced from the combination of multiple imaging experiment data images.Genome segmentation mapping",
                                                                 "$id": "image_artifact",
                                                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                                                 "allOf": [
@@ -2534,6 +2550,7 @@
                                                                 "type": "object"
                                                             },
                                                             "region_seg_map": {
+                                                                "$comment": "Image produced from the combination of multiple imaging experiment data images.Genome segmentation mapping",
                                                                 "$id": "image_artifact",
                                                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                                                 "allOf": [
@@ -2632,6 +2649,7 @@
                                                                 "type": "object"
                                                             },
                                                             "score_data": {
+                                                                "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
                                                                 "$id": "csv_artifact",
                                                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                                                 "allOf": [
@@ -2738,6 +2756,7 @@
                                                         "description": "Regions of interest obtained from composite images.",
                                                         "properties": {
                                                             "component_data": {
+                                                                "$comment": "Image produced from the combination of multiple imaging experiment data images.Imaging data resulting from the individual components of the imaging experiment.",
                                                                 "$id": "image_artifact",
                                                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                                                 "allOf": [
@@ -2836,6 +2855,7 @@
                                                                 "type": "object"
                                                             },
                                                             "composite_image": {
+                                                                "$comment": "Image produced from the combination of multiple imaging experiment data images.Imaging data resulting from the individual components of the imaging experiment.",
                                                                 "$id": "image_artifact",
                                                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                                                 "allOf": [
@@ -2946,6 +2966,7 @@
                                             }
                                         },
                                         "roi_annotations": {
+                                            "$comment": "Text describing region of interest for experiment.",
                                             "$id": "text_artifact",
                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                             "allOf": [
@@ -3034,6 +3055,7 @@
                                             "type": "object"
                                         },
                                         "whole_slide_imaging_file": {
+                                            "$comment": "Digital slide produced from the scanning of conventional glass slides.",
                                             "$id": "image_artifact",
                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                             "allOf": [
@@ -3200,6 +3222,7 @@
                                     "description": "Olink Assay Input Files",
                                     "properties": {
                                         "assay_npx": {
+                                            "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.",
                                             "$id": "text_artifact",
                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                             "allOf": [
@@ -3288,6 +3311,7 @@
                                             "type": "object"
                                         },
                                         "assay_raw_ct": {
+                                            "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.",
                                             "$id": "text_artifact",
                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                             "allOf": [
@@ -3376,6 +3400,7 @@
                                             "type": "object"
                                         },
                                         "study_npx": {
+                                            "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.",
                                             "$id": "text_artifact",
                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                             "allOf": [
@@ -3680,15 +3705,18 @@
                                             "type": "integer"
                                         },
                                         "cimac_aliquot_id": {
+                                            "$comment": "Id of an aliquot within this clinical trial, that this assay record is based upon.",
                                             "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
                                             "type": "string"
                                         },
                                         "files": {
+                                            "$comment": "Fastq and read group mapping files produced by the assay for that .",
                                             "$id": "fastq_pair_and_mapping",
                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                             "description": "Paired end sequencing fastq file pair and read group mapping file",
                                             "properties": {
                                                 "fastq_1": {
+                                                    "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
                                                     "$id": "fastq_artifact",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "allOf": [
@@ -3776,6 +3804,7 @@
                                                     "type": "object"
                                                 },
                                                 "fastq_2": {
+                                                    "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
                                                     "$id": "fastq_artifact",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "allOf": [
@@ -3863,6 +3892,7 @@
                                                     "type": "object"
                                                 },
                                                 "read_group_mapping_file": {
+                                                    "$comment": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
                                                     "$id": "text_artifact",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "allOf": [
@@ -4012,6 +4042,7 @@
                                             "description": "Paired end sequencing fastq file pair and read group mapping file",
                                             "properties": {
                                                 "fastq_1": {
+                                                    "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
                                                     "$id": "fastq_artifact",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "allOf": [
@@ -4099,6 +4130,7 @@
                                                     "type": "object"
                                                 },
                                                 "fastq_2": {
+                                                    "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
                                                     "$id": "fastq_artifact",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "allOf": [
@@ -4186,6 +4218,7 @@
                                                     "type": "object"
                                                 },
                                                 "read_group_mapping_file": {
+                                                    "$comment": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
                                                     "$id": "text_artifact",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "allOf": [
@@ -5217,15 +5250,18 @@
                                             "type": "integer"
                                         },
                                         "cimac_aliquot_id": {
+                                            "$comment": "Id of an aliquot within this clinical trial, that this assay record is based upon.",
                                             "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
                                             "type": "string"
                                         },
                                         "files": {
+                                            "$comment": "Fastq and read group mapping files produced by the assay for that .",
                                             "$id": "fastq_pair_and_mapping",
                                             "$schema": "http://json-schema.org/draft-07/schema#",
                                             "description": "Paired end sequencing fastq file pair and read group mapping file",
                                             "properties": {
                                                 "fastq_1": {
+                                                    "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
                                                     "$id": "fastq_artifact",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "allOf": [
@@ -5313,6 +5349,7 @@
                                                     "type": "object"
                                                 },
                                                 "fastq_2": {
+                                                    "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
                                                     "$id": "fastq_artifact",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "allOf": [
@@ -5400,6 +5437,7 @@
                                                     "type": "object"
                                                 },
                                                 "read_group_mapping_file": {
+                                                    "$comment": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
                                                     "$id": "text_artifact",
                                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                                     "allOf": [

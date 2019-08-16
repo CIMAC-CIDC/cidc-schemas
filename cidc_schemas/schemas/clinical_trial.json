@@ -45,7 +45,7 @@
       }
     },
     "assays": {
-      "description": "Assays for this trial",
+      "$comment": "Assays for this trial",
       "$ref": "assays/components/available_assays.json"
     }
   },

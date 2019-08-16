@@ -6,27 +6,27 @@
   "description": "Regions of interest obtained from image mapping.",
   "properties": {
     "binary_seg_map": {
-      "description": "Results of a computer vision task, in which specific regions of a region are mapped.",
+      "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.",
       "$ref": "artifacts/artifact_csv.json"
     },
     "cell_seg_data": {
-      "description": "Data produced from the analysis of cellular image.",
+      "$comment": "Data produced from the analysis of cellular image.",
       "$ref": "artifacts/artifact_csv.json"
     },
     "cell_seg_data_summary": {
-      "description": "Summary of the results of a cell segmentation data experiment.",
+      "$comment": "Summary of the results of a cell segmentation data experiment.",
       "$ref": "artifacts/artifact_csv.json"
     },
     "phenotype_map": {
-      "description": "Image produced from the combination of multiple imaging experiment data images.",
+      "$comment": "Image produced from the combination of multiple imaging experiment data images.",
       "$ref": "artifacts/artifact_image.json"
     },
     "region_seg_map": {
-      "description": "Genome segmentation mapping",
+      "$comment": "Genome segmentation mapping",
       "$ref": "artifacts/artifact_image.json"
     },
     "score_data": {
-      "description": "Generation of values based on based on experiment data.",
+      "$comment": "Generation of values based on based on experiment data.",
       "$ref": "artifacts/artifact_csv.json"
     }
   },

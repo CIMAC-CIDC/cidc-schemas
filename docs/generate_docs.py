@@ -26,13 +26,13 @@ def load_schemas() -> dict:
         for path in paths:
             schema_path = os.path.join(root, path)
 
-            def json_to_html(node:dict) -> dict:
+            def json_to_html(ref:str) -> dict:
                 """Update refs to refer to the URL of the corresponding documentation."""
-                url = node['$ref'].replace('.json', '.html')
+                url = ref.replace('.json', '.html')
                 url = url.replace('properties/', '')
                 url = url.replace('definitions/', '')
                 url = url.replace('/', '.')
-                return dict(url=url, **node)
+                return {'url':url}
 
             full_json = load_and_validate_schema(
                 schema_path, SCHEMA_DIR)

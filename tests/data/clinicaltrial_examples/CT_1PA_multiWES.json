@@ -29,7 +29,6 @@
         "wes": [
             {
                 "assay_creator":        "DFCI",
-                "assay_category":       "Whole Exome Sequencing (WES)",
                 "paired_end_reads":     "Paired",
                 "sequencer_platform":   "Illumina - HiSeq 3000",
                 "library_vendor_kit":   "KAPA - Hyper Prep",
@@ -47,7 +46,6 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "assay_category" :      "Whole Exome Sequencing (WES)",
                                 "file_type" :           "FASTQ"
                             },
                             "fastq_2":{
@@ -57,7 +55,6 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "assay_category" :      "Whole Exome Sequencing (WES)",
                                 "file_type" :           "FASTQ"
                             },
                             "read_group_mapping_file":{
@@ -67,7 +64,6 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "assay_category" :      "Whole Exome Sequencing (WES)",
                                 "file_type" :           "Other"
                             }
                         }
@@ -85,7 +81,6 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "assay_category" :      "Whole Exome Sequencing (WES)",
                                 "file_type" :           "FASTQ"
                             },
                             "fastq_2":{
@@ -95,7 +90,6 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "assay_category" :      "Whole Exome Sequencing (WES)",
                                 "file_type" :           "FASTQ"
                             },
                             "read_group_mapping_file":{
@@ -105,7 +99,6 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "assay_category" :      "Whole Exome Sequencing (WES)",
                                 "file_type" :           "Other"
                             }
                         }
@@ -114,7 +107,6 @@
             },
             {
                 "assay_creator":        "DFCI",
-                "assay_category":       "Whole Exome Sequencing (WES)",
                 "paired_end_reads":     "Paired",
                 "sequencer_platform":   "Illumina - HiSeq 3000",
                 "library_vendor_kit":   "KAPA - Hyper Prep",
@@ -132,7 +124,6 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "assay_category" :      "Whole Exome Sequencing (WES)",
                                 "file_type" :           "Other"
                             },
                             "fastq_2":{
@@ -142,7 +133,6 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "assay_category" :      "Whole Exome Sequencing (WES)",
                                 "file_type" :           "Other"
                             },
                             "read_group_mapping_file":{
@@ -152,7 +142,6 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "assay_category" :      "Whole Exome Sequencing (WES)",
                                 "file_type" :           "Other"
                             }
                         }
@@ -170,7 +159,6 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "assay_category" :      "Whole Exome Sequencing (WES)",
                                 "file_type" :           "Other"
                             },
                             "fastq_2":{
@@ -180,7 +168,6 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "assay_category" :      "Whole Exome Sequencing (WES)",
                                 "file_type" :           "Other"
                             },
                             "read_group_mapping_file":{
@@ -190,7 +177,6 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "assay_category" :      "Whole Exome Sequencing (WES)",
                                 "file_type" :           "Other"
                             }
                         }

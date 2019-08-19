@@ -11,5 +11,5 @@
       "enum": ["DFCI", "Mount Sinai", "Stanford", "MD Anderson"]
     }
   },
-  "required": ["assay_creator", "assay_category"]
+  "required": ["assay_creator"]
 }

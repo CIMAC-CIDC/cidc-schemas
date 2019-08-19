@@ -750,7 +750,6 @@ def _merge_artifact_wes(
     # create the artifact.
     artifact = {
         "artifact_category": "Assay Artifact from CIMAC",
-        "assay_category": "Whole Exome Sequencing (WES)",
         "object_url": object_url,
         "file_name": file_name,
         "file_size_bytes": 1,

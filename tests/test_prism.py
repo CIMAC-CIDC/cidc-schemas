@@ -54,7 +54,6 @@ CLINICAL_TRIAL = {
             "wes": [
                 {
                     "assay_creator": "Mount Sinai",
-                    "assay_category": "Whole Exome Sequencing (WES)",
                     "enrichment_vendor_kit": "Twist",
                     "library_vendor_kit": "KAPA - Hyper Prep",
                     "sequencer_platform": "Illumina - NextSeq 550",
@@ -73,7 +72,6 @@ CLINICAL_TRIAL = {
                         },
                         {
                             "assay_creator": "Mount Sinai",
-                            "assay_category": "Whole Exome Sequencing (WES)",
                             "enrichment_vendor_kit": "Twist",
                             "library_vendor_kit": "KAPA - Hyper Prep",
                             "sequencer_platform": "Illumina - NextSeq 550",

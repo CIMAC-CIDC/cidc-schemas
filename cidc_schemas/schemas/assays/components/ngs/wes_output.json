@@ -6,20 +6,22 @@
   "description": "Whole Exome Sequencing Assay Output Files",
   "properties": {
     "tumor": {
-      "allOf": [
-        { "$ref": "assays/components/alignment.json" },
-        { "$ref": "assays/components/germline.json" }
-      ]
+      "$ref": "assays/components/alignment.json"
     },
     "normal": {
       "allOf": [
         { "$ref": "assays/components/alignment.json" },
         { "$ref": "assays/components/germline.json" }
       ]
+    },
+    "combined": {
+      "$ref": "assays/components/somatic.json"
     }
+
   },
   "required": [
     "tumor",
-    "normal"
+    "normal",
+    "combined"
   ]
 }

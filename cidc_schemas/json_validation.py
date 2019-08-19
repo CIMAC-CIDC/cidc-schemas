@@ -4,7 +4,7 @@
 
 import os
 import json
-import collections
+import collections.abc
 from typing import Optional, List, Callable, Union
 
 import dateparser
@@ -60,7 +60,7 @@ def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
     Note: _map_refs is shallow, i.e., if calling `on_refs` on a node produces 
     a new node that contains refs, those refs will not be resolved.
     """
-    if isinstance(node, collections.Mapping) and '$ref' in node:
+    if isinstance(node, collections.abc.Mapping) and '$ref' in node:
         extra_keys = set(node.keys()).difference({'$ref', '$comment'})
         if extra_keys:
             # As for json-schema.org:
@@ -77,7 +77,7 @@ def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
         if '$comment' in new_node or '$comment' in node:
             new_node['$comment'] = new_node.get('$comment', '') + node.get('$comment', '')
         return new_node
-    elif isinstance(node, collections.Mapping):
+    elif isinstance(node, collections.abc.Mapping):
         # Look for all refs in this mapping
         for k, v in node.items():
             node[k] = _map_refs(v, on_refs)

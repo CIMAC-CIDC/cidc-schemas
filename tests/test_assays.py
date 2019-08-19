@@ -95,14 +95,8 @@ def test_wes():
         "capture_date": "01/01/2001",
         "cimac_aliquot_id": "xyz",
         "files": {
-            "tumor": {
-                "fastq_1": fastq_1,
-                "fastq_2": fastq_1
-            },
-            "normal": {
-                "fastq_1": fastq_1,
-                "fastq_2": fastq_1
-            },
+            "fastq_1": fastq_1,
+            "fastq_2": fastq_1,
             "read_group_mapping_file": rgmf
         }
     }
@@ -110,20 +104,20 @@ def test_wes():
     analysis = {
         "wes_experiment_id": "101010",
         "capture_date": "01/02/2001",
-        "output_files": {
-            "tumor": {
-                "align_sorted": bam,
-                "align_sorted_dedup": bam,
-                "align_recalibrated": bam,
-                "SNP92_recode": vcf 
-                },
-            "normal": {
-                "align_sorted": bam,
-                "align_sorted_dedup": bam,
-                "align_recalibrated": bam,
-                "SNP92_recode": vcf     
-                    }
-                }            
+        # "output_files": {
+        #     "tumor": {
+        #         "align_sorted": bam,
+        #         "align_sorted_dedup": bam,
+        #         "align_recalibrated": bam,
+        #         "SNP92_recode": vcf 
+        #         },
+        #     "normal": {
+        #         "align_sorted": bam,
+        #         "align_sorted_dedup": bam,
+        #         "align_recalibrated": bam,
+        #         "SNP92_recode": vcf     
+        #             }
+        #         }            
             }
 
     # add a demo record.

@@ -92,27 +92,18 @@
     <td>
         {% if "type" in prop_schema %}
             &lt; 
-                {{ prop_schema["type"]}} 
-                {% if "format" in prop_schema %} :  {{prop_schema["format"]}}{% endif %}
-                {% if "pattern" in prop_schema %} : <code>{{prop_schema["pattern"]}}</code> {% endif %}
-                {% if "object" == prop_schema["type"] and "propertyNames" in prop_schema and "pattern" in prop_schema["propertyNames"] %}
-                    : <code>{{prop_schema["propertyNames"]["pattern"]}}</code>
-                {% endif %}
+                {{ prop_type_format(prop_schema) }}
             &gt;
             <ul>
-            {% for item in prop_schema["enum"] %}
-                <li>{{ item }}</li>
-            {% endfor %}
-            {% if "items" in prop_schema %}
+                {% for item in prop_schema["enum"] %}
+                    <li>{{ item | tojson }}</li>
+                {% endfor %}
+            </ul>
+            {% if "items" in prop_schema %} {# type: array #}
                 {% if "url" in prop_schema["items"] %}
                     <a href="{{ prop_schema['items']['url'] }}">{{ prop_schema['items']['url'].replace('.html', '') }}</a>
                 {% else %}
-                    &lt;{{ prop_schema["items"]["type"]}}&gt; {{ prop_schema["items"]["format"]}}
-                    <ul>
-                    {% for item in prop_schema["items"]["enum"] %}
-                        <li>{{ item }}</li>
-                    {% endfor %}
-                    </ul>
+                    {{ prop_type_format(prop_schema["items"]) }}
                 {% endif %}
             {% endif %}
             {% if "additionalProperties" in prop_schema %}
@@ -122,15 +113,9 @@
                 {% if "url" in prop_schema["additionalProperties"] %}
                     <a href="{{ prop_schema['additionalProperties']['url'] }}">{{ prop_schema['additionalProperties']['url'].replace('.html', '') }}</a>
                 {% else %}
-                    &lt;{{ prop_schema["additionalProperties"]["type"]}}&gt; {{ prop_schema["additionalProperties"]["format"]}}
-                    <ul>
-                    {% for item in prop_schema["additionalProperties"]["enum"] %}
-                        <li>{{ item }}</li>
-                    {% endfor %}
-                    </ul>
+                    {{ prop_type_format(prop_schema["additionalProperties"]) }}
                 {% endif %}
             {% endif %}
-            </ul>
         {% elif "url" in prop_schema %}
             <a href="{{ prop_schema['url'] }}">{{ prop_schema['url'].replace('.html', '') }}</a>
         {% elif "allOf" in prop_schema %}
@@ -145,6 +130,16 @@
     </td>
 </tr>
 {%- endmacro %}
+
+{% macro prop_type_format(prop_schema) -%}
+    {{ prop_schema["type"]}} 
+    {% if "format" in prop_schema %} :  {{prop_schema["format"]}}{% endif %}
+    {% if "pattern" in prop_schema %} : <code>{{prop_schema["pattern"]}}</code> {% endif %}
+    {% if "object" == prop_schema["type"] and "propertyNames" in prop_schema and "pattern" in prop_schema["propertyNames"] %}
+        : <code>{{prop_schema["propertyNames"]["pattern"]}}</code>
+    {% endif %}
+{%- endmacro %}
+
 
 {% macro definitions_table(schema, required) -%}
     {% if 'definitions' in schema %}

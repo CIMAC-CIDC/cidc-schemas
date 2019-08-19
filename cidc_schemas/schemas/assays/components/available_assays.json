@@ -26,7 +26,7 @@
       "mergeStrategy": "append"
     },
     "olink": {
-      "$comment": "REVISIT when working on assay updates. A merge strategy of append we are disallowing any updates to the assay entries. Priti said there isn't anything we can use as `assay id`. Only id of `sample/set of samples` it was created upon.",
+      "$comment": "REVISIT An `append` merge strategy disallowes updates to assay entries. Priti said there isn't anything like `assay id`, but Dave or Joyce might have something in tracking spreadsheet.",
       "type": "array",
       "items": {
         "$ref": "assays/olink_assay.json"

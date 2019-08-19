@@ -119,7 +119,17 @@ def validate_instance(instance: str, schema: dict, required: bool) -> Optional[s
             else:
                 return None
 
-        instance = convert(schema.get('format') or schema['type'], instance)
+        stype = schema.get('format')
+        if not stype:
+            stype = schema.get('type')
+        if not stype:
+            if 'allOf' in schema:
+                types = set(s.get('type') for s in schema['allOf'] if 'type' in s)
+                # if all types in 'allOf' are the same:
+                if len(types) == 1:
+                    stype = types.pop()
+
+        instance = convert(stype, instance)
 
         jsonschema.validate(
             instance, schema, format_checker=jsonschema.FormatChecker())
@@ -146,6 +156,12 @@ def _to_time(value):
     if not dt:
         raise ValueError(f"could not convert \"{value}\" to time")
     return dt.strftime('%H:%M:%S')
+
+def _to_datetime(value):
+    dt = _get_datetime(value)
+    if not dt:
+        raise ValueError(f"could not convert \"{value}\" to datetime")
+    return dt.isoformat()
 
 
 def _to_bool(value):

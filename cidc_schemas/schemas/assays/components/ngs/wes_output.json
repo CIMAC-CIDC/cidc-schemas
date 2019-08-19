@@ -9,19 +9,18 @@
       "$ref": "assays/components/alignment.json"
     },
     "normal": {
-      "allOf": [
-        { "$ref": "assays/components/alignment.json" },
-        { "$ref": "assays/components/germline.json" }
-      ]
+        "$ref": "assays/components/alignment.json" 
     },
-    "combined": {
+    "somatic": {
       "$ref": "assays/components/somatic.json"
+    },
+    "germline": {
+      "$ref": "assays/components/germline.json"
     }
-
   },
   "required": [
     "tumor",
     "normal",
-    "combined"
+    "somatic"
   ]
 }

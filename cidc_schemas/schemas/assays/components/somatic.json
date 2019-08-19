@@ -5,15 +5,15 @@
   "type": "object",
   "description": "Somatic variant calling",
   "properties": {
-    "tnscope_filter": {
+    "vcf_filtered": {
       "$ref": "artifacts/artifact_vcf.json"
     },
-    "tnscope_output": {
+    "maf": {
       "$ref": "artifacts/artifact_maf.json"
     }
   },
   "required": [
-    "tnscope_filter",
-    "tnscope_output"
+    "vcf_filtered",
+    "maf"
   ]
 }

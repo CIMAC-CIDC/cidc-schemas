@@ -65,13 +65,19 @@
             
                 <tr>
     <td>
-        <span id="lead_organization_study_id">lead_organization_study_id</span>
         
-            <br><sup><mark>required</mark></sup>
+            <span id="lead_organization_study_id">
+                lead_organization_study_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
-    <td>
-        Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+    <td width=55%>
+        
+            Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
     </td>
     <td>
         
@@ -102,12 +108,18 @@
             
                 <tr>
     <td>
-        <span id="participants">participants</span>
         
-            <br><sup><mark>required</mark></sup>
+            <span id="participants">
+                participants
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
-    <td>
+    <td width=55%>
+        
+            
         
     </td>
     <td>
@@ -138,67 +150,17 @@
             
                 <tr>
     <td>
-        <span id="nct_id">nct_id</span>
+        
+            <span id="nct_id">
+                nct_id
+            </span>
+            
         
     </td>
-    <td>
-        ClinicalTrials.gov identifier. Example: NCT03731260.
-    </td>
-    <td>
+    <td width=55%>
         
-            &lt; 
-                string 
-                
-                
-                
-            &gt;
-            <ul>
-            
-            
-            
-            </ul>
+            ClinicalTrials.gov identifier. Example: NCT03731260.
         
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        <span id="nci_id">nci_id</span>
-        
-    </td>
-    <td>
-        NCI Trial Identifier. Example: NCI22345.
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-                
-                
-                
-            &gt;
-            <ul>
-            
-            
-            
-            </ul>
-        
-    </td>
-</tr>
-            
-        
-            
-        
-            
-                <tr>
-    <td>
-        <span id="trial_name">trial_name</span>
-        
-    </td>
-    <td>
-        Name of clinical trial.
     </td>
     <td>
         
@@ -221,11 +183,52 @@
             
                 <tr>
     <td>
-        <span id="trial_description">trial_description</span>
+        
+            <span id="nci_id">
+                nci_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            NCI Trial Identifier. Example: NCI22345.
         
     </td>
     <td>
-        A brief description of the clinical trial.
+        
+            &lt; 
+                string 
+                
+                
+                
+            &gt;
+            <ul>
+            
+            
+            
+            </ul>
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="trial_name">
+                trial_name
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Name of clinical trial.
+        
     </td>
     <td>
         
@@ -248,11 +251,17 @@
             
                 <tr>
     <td>
-        <span id="trial_organization">trial_organization</span>
+        
+            <span id="trial_description">
+                trial_description
+            </span>
+            
         
     </td>
-    <td>
-        Name of the primary organization that oversees the clinical trial. Example: ECOG-ACRIN, SWOG, etc.
+    <td width=55%>
+        
+            A brief description of the clinical trial.
+        
     </td>
     <td>
         
@@ -275,10 +284,49 @@
             
                 <tr>
     <td>
-        <span id="shipments">shipments</span>
+        
+            <span id="trial_organization">
+                trial_organization
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Name of the primary organization that oversees the clinical trial. Example: ECOG-ACRIN, SWOG, etc.
         
     </td>
     <td>
+        
+            &lt; 
+                string 
+                
+                
+                
+            &gt;
+            <ul>
+            
+            
+            
+            </ul>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="shipments">
+                shipments
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
         
     </td>
     <td>
@@ -308,12 +356,18 @@
             
                 <tr>
     <td>
-        <span id="assays">assays</span>
+        
+            <span id="assays">
+                assays
+            </span>
+            
         
     </td>
-    <td>
+    <td width=55%>
         
-            <div>Comment: Assays for this trial</div>
+            
+                <div><small>Assays for this trial</small></div>
+            
         
     </td>
     <td>
@@ -3260,7 +3314,7 @@
                     "type": "array"
                 },
                 "olink": {
-                    "$comment": "REVISIT when working on assay updates. A merge strategy of append we are disallowing any updates to the assay entries. Priti said there isn't anything we can use as `assay id`. Only id of `sample/set of samples` it was created upon.",
+                    "$comment": "REVISIT An `append` merge strategy disallowes updates to assay entries. Priti said there isn't anything like `assay id`, but Dave or Joyce might have something in tracking spreadsheet.",
                     "items": {
                         "$id": "olink_assay",
                         "$schema": "http://json-schema.org/draft-07/schema#",

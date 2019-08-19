@@ -31,7 +31,7 @@
         {% if 'allOf' in schema %}
             {% for prop in schema['allOf'] %}
                 {% if 'url' in prop %}
-                    {% set _ = properties.append(("(inherits all properties from this schema)", prop)) %}
+                    {% set _ = properties.append(("$ref", prop)) %}
                 {% endif %}
                 {% if 'properties' in prop %}
                     {% set _ = properties.extend(prop['properties'].items()) %}
@@ -54,12 +54,12 @@
         </tr>
         </thead>
         {% for prop_name, prop_schema in properties %}
-            {% if prop_name in required %}
+            {% if prop_name in required or prop_name == "$ref" %}
                 {{ property_table_row(prop_name, prop_schema, True) }}
             {% endif %}
         {% endfor %}
         {% for prop_name, prop_schema in properties %}
-            {% if prop_name not in required %}
+            {% if prop_name not in required and prop_name != "$ref" %}
                 {{ property_table_row(prop_name, prop_schema, False) }}
             {% endif %}
         {% endfor %}
@@ -69,14 +69,24 @@
 {% macro property_table_row(prop_name, prop_schema, required) -%}
 <tr>
     <td>
-        <span id="{{ prop_name }}">{{ prop_name }}</span>
-        {% if required %}
-            <br><sup><mark>required</mark></sup>
+        {% if "$ref" != prop_name %}
+            <span id="{{ prop_name }}">
+                {{ prop_name }}
+            </span>
+            {% if required %}
+                <br><sup><mark>required</mark></sup>
+            {% endif %}
         {% endif %}
     </td>
-    <td>
-        {{ prop_schema["description"] }}{% if prop_schema["$comment"] %}
-            <div>Comment: {{prop_schema["$comment"]}}</div>
+    <td width=55%>
+        {% if "$ref" == prop_name %}
+            Inherits all properties from schema:
+        {% elif "allOf" in prop_schema %}
+            Inherits all properties from schemas:
+        {% else %}
+            {{ prop_schema["description"] }}{% if prop_schema["$comment"] %}
+                <div><small>{{prop_schema["$comment"]}}</small></div>
+            {% endif %}
         {% endif %}
     </td>
     <td>
@@ -123,7 +133,14 @@
             </ul>
         {% elif "url" in prop_schema %}
             <a href="{{ prop_schema['url'] }}">{{ prop_schema['url'].replace('.html', '') }}</a>
+        {% elif "allOf" in prop_schema %}
+            <ul>
+            {% for ref in prop_schema['allOf'] %}
+                <li><a href="{{ref['url']}}">{{ref['url'].replace('.html', '')}}</a></li>
+            {% endfor %}
+            </ul>
         {% else %}
+            (UNKNOWN PROPERTY TYPE)
         {% endif %}
     </td>
 </tr>

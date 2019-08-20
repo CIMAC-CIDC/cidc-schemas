@@ -31,23 +31,48 @@ CLINICAL_TRIAL = {
                     {
                         "aliquots": [
                             {
-                                "cimac_aliquot_id": "aliquot 1"
+                                "cimac_aliquot_id": "aliquot 1",
+                                "units": "Other",
+                                "material_used": 1,
+                                "material_remaining": 0,
+                                "aliquot_quality_status": "Other",
+                                "aliquot_replacement": "N/A",
+                                "aliquot_status": "Other"
                             },
                         ],
                         "cimac_sample_id": "sample 1",
-                        "genomic_source": "Tumor"
+                        "site_sample_id": "site sample 1",
+                        "time_point": "---",
+                        "sample_location": "---",
+                        "specimen_type": "Other",
+                        "specimen_format": "Other",
+                        "genomic_source": "Tumor",
                     },
                     {
                         "aliquots": [
                             {
-                                "cimac_aliquot_id": "aliquot 2"
+                                "cimac_aliquot_id": "aliquot 2",
+                                "units": "Other",
+                                "material_used": 1,
+                                "material_remaining": 0,
+                                "aliquot_quality_status": "Other",
+                                "aliquot_replacement": "N/A",
+                                "aliquot_status": "Other"
                             }
                         ],
                         "cimac_sample_id": "sample 2",
-                        "genomic_source": "Normal"
+                        "site_sample_id": "site sample 2",
+                        "time_point": "---",
+                        "sample_location": "---",
+                        "specimen_type": "Other",
+                        "specimen_format": "Other",
+                        "genomic_source": "Tumor",
                     }
                 ],
-                "cimac_participant_id": "patient 1"
+                "cimac_participant_id": "patient 1",
+                "trial_participant_id": "trial patient 1",
+                "cohort_id": "---",
+                "arm_id": "---"
             }
         ],
         "assays": {
@@ -101,21 +126,34 @@ def test_merge_core():
 
     # create aliquot
     aliquot = {
-        "cimac_aliquot_id": "1234"
+        "cimac_aliquot_id": "1234",
+        "units": "Other",
+        "material_used": 1,
+        "material_remaining": 0,
+        "aliquot_quality_status": "Other",
+        "aliquot_replacement": "N/A",
+        "aliquot_status": "Other"
     }
 
     # create the sample.
     sample = {
         "cimac_sample_id": "S1234",
         "site_sample_id": "blank",
-        "aliquots": [aliquot]
+        "aliquots": [aliquot],
+        "time_point": "---",
+        "sample_location": "---",
+        "specimen_type": "Other",
+        "specimen_format": "Other",
+        "genomic_source": "Tumor",
     }
 
     # create the participant
     participant = {
         "cimac_participant_id": "P1234",
         "trial_participant_id": "blank",
-        "samples": [sample]
+        "samples": [sample],
+        "cohort_id": "---",
+        "arm_id": "---"
     }
 
     # create the trial
@@ -168,12 +206,17 @@ def test_assay_merge():
             {
                 "samples": [
                     {
-                        "genomic_source": "Tumor",
                         "aliquots": [
                             {
                                 "cimac_aliquot_id": "Aliquot 1"
                             }
                         ],
+                        "genomic_source": "Tumor",
+                        "time_point": "---",
+                        "sample_location": "---",
+                        "specimen_type": "Other",
+                        "specimen_format": "Other",
+                        "site_sample_id": "site Sample 1",
                         "cimac_sample_id": "Sample 1"
                     }
                 ],
@@ -197,27 +240,25 @@ def test_assay_merge():
     assert len(a3['participants'])
 
 
-def test_prism():
+@pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
+def test_prism(schema_path, xlsx_path):
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     schema = validator.schema
 
-    # get a specifc template
-    for temp_path, xlsx_path in template_paths():
+    # extract hint.
+    hint = schema_path.split("/")[-1].replace("_template.json", "")
 
-        # extract hint.
-        hint = temp_path.split("/")[-1].replace("_template.json", "")
+    # TODO: only implemented WES parsing...
+    if hint != "wes":
+        return
 
-        # TODO: only implemented WES parsing...
-        if hint != "wes":
-            continue
+    # turn into object.
+    ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
 
-        # turn into object.
-        ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
-
-        # assert works
-        validator.validate(ct)
+    # assert works
+    validator.validate(ct)
 
 
 def test_filepath_gen():

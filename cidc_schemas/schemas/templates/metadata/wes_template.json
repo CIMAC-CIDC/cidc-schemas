@@ -10,91 +10,109 @@
       "WES": {
         "preamble_rows": {
           "lead organization study id": {
-            "$ref": "clinical_trial.json#properties/lead_organization_study_id"
+            "merge_pointer": "/lead_organization_study_id",
+            "type_ref": "clinical_trial.json#properties/lead_organization_study_id"
           },
           "assay creator": {
-            "$ref": "assays/components/assay_core.json#properties/assay_creator"
+            "relative_merge_pointer": "0/assay_creator",
+            "merge_pointer": "/assays/wes/0/assay_creator",
+            "type_ref": "assays/components/assay_core.json#properties/assay_creator"
           },
           "enrichment kit": {
-            "$ref": "assays/wes_assay.json#properties/enrichment_vendor_kit"
+            "relative_merge_pointer": "0/enrichment_vendor_kit",
+            "merge_pointer": "/assays/wes/0/enrichment_vendor_kit",
+            "type_ref": "assays/wes_assay.json#properties/enrichment_vendor_kit"
           },
           "library kit vendor": {
-            "$ref": "assays/components/ngs_assay_core.json#properties/library_vendor_kit"
+            "relative_merge_pointer": "0/library_vendor_kit",
+            "merge_pointer": "/assays/wes/0/library_vendor_kit",
+            "type_ref": "assays/components/ngs_assay_core.json#properties/library_vendor_kit"
           },
           "sequencer platform": {
-            "$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"
+            "relative_merge_pointer": "0/sequencer_platform",
+            "merge_pointer": "/assays/wes/0/sequencer_platform",
+            "type_ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"
           },
           "paired end reads": {
-            "$ref": "assays/components/ngs_assay_core.json#properties/paired_end_reads"
+            "relative_merge_pointer": "0/paired_end_reads",
+            "merge_pointer": "/assays/wes/0/paired_end_reads",
+            "type_ref": "assays/components/ngs_assay_core.json#properties/paired_end_reads"
           },
           "read length": {
-            "$ref": "assays/components/ngs_assay_core.json#properties/read_length"
+            "relative_merge_pointer": "0/read_length",
+            "merge_pointer": "/assays/wes/0/read_length",
+            "type_ref": "assays/components/ngs_assay_core.json#properties/read_length"
           }
         },
         "data_columns": {
           "Samples": {
             "cimac participant id": {
-              "$ref": "participant.json#properties/cimac_participant_id"
+              "relative_merge_pointer": "0/records/0/cimac_participant_id", 
+              "merge_pointer": "/assays/wes/0/records/0/cimac_participant_id", 
+              "type_ref": "participant.json#properties/cimac_participant_id"
             },
             "cimac sample id": {
-              "$ref": "sample.json#properties/cimac_sample_id"
+              "relative_merge_pointer": "0/records/0/cimac_sample_id", 
+              "merge_pointer": "/assays/wes/0/records/0/cimac_sample_id", 
+              "type_ref": "sample.json#properties/cimac_sample_id"
             },
             "cimac aliquot id": {
-              "$ref": "aliquot.json#properties/cimac_aliquot_id"
-            },
-            "genomic source": {
-              "$ref": "sample.json#properties/genomic_source"
+              "relative_merge_pointer": "0/records/0/cimac_aliquot_id", 
+              "merge_pointer": "/assays/wes/0/records/0/cimac_aliquot_id", 
+              "type_ref": "aliquot.json#properties/cimac_aliquot_id"
             },
             "library kit lot": {
-              "$ref": "assays/components/ngs/ngs_assay_record.json#properties/library_kit_lot"
-            },
-            "enrichment lot": {
-              "$ref": "assays/components/ngs/wes_assay_record.json#properties/enrichment_vendor_lot"
+              "relative_merge_pointer": "0/records/0/library_kit_lot", 
+              "merge_pointer": "/assays/wes/0/records/0/library_kit_lot", 
+              "type_ref": "assays/components/ngs/ngs_assay_record.json#properties/library_kit_lot"
             },
             "library prep date": {
-              "$ref": "assays/components/ngs/ngs_assay_record.json#properties/library_prep_date"
-            },
-            "capture date": {
-              "$ref": "assays/components/ngs/wes_assay_record.json#properties/capture_date"
+              "relative_merge_pointer": "0/records/0/library_prep_date", 
+              "merge_pointer": "/assays/wes/0/records/0/library_prep_date", 
+              "type_ref": "assays/components/ngs/ngs_assay_record.json#properties/library_prep_date"
             },
             "dna input ng": {
-              "$ref": "assays/components/ngs/ngs_assay_record.json#properties/input_ng"
+              "relative_merge_pointer": "0/records/0/input_ng", 
+              "merge_pointer": "/assays/wes/0/records/0/input_ng", 
+              "type_ref": "assays/components/ngs/ngs_assay_record.json#properties/input_ng"
             },
             "library yield ng": {
-              "$ref": "assays/components/ngs/ngs_assay_record.json#properties/library_yield_ng"
+              "relative_merge_pointer": "0/records/0/library_yield_ng", 
+              "merge_pointer": "/assays/wes/0/records/0/library_yield_ng", 
+              "type_ref": "assays/components/ngs/ngs_assay_record.json#properties/library_yield_ng"
             },
             "average insert size": {
-              "$ref": "assays/components/ngs/ngs_assay_record.json#properties/average_insert_size"
+              "relative_merge_pointer": "0/records/0/average_insert_size", 
+              "merge_pointer": "/assays/wes/0/records/0/average_insert_size", 
+              "type_ref": "assays/components/ngs/ngs_assay_record.json#properties/average_insert_size"
+            },
+            "enrichment lot": {
+              "relative_merge_pointer": "0/records/0/enrichment_vendor_lot", 
+              "merge_pointer": "/assays/wes/0/records/0/enrichment_vendor_lot", 
+              "type_ref": "assays/components/ngs/wes_assay_record.json#properties/enrichment_vendor_lot"
+            },
+            "capture date": {
+              "relative_merge_pointer": "0/records/0/capture_date", 
+              "merge_pointer": "/assays/wes/0/records/0/capture_date", 
+              "type_ref": "assays/components/ngs/wes_assay_record.json#properties/capture_date"
             },
             "forward fastq": {
-              "allOf": [
-                {
-                  "$ref": "assays/components/local_file.json#properties/file_path"
-                },
-                {
-                  "artifact_link": "assays/components/fastq_pair_and_mapping/fastq_1"
-                }
-              ]
+              "relative_merge_pointer": "0/files/fastq_1", 
+              "merge_pointer": "/assays/wes/0/files/fastq_1", 
+              "type_ref": "assays/components/fastq_pair_and_mapping.json#properties/fastq_1",
+              "load_through": "assays/components/local_file.json#properties/file_path"
             },
             "reverse fastq": {
-              "allOf": [
-                {
-                  "$ref": "assays/components/local_file.json#properties/file_path"
-                },
-                {
-                  "artifact_link": "assays/components/fastq_pair_and_mapping/fastq_2"
-                }
-              ]
+              "relative_merge_pointer": "0/files/fastq_2", 
+              "merge_pointer": "/assays/wes/0/files/fastq_2", 
+              "type_ref": "assays/components/fastq_pair_and_mapping.json#properties/fastq_2",
+              "load_through": "assays/components/local_file.json#properties/file_path"
             },
             "read group mapping file": {
-              "allOf": [
-                {
-                  "$ref": "assays/components/local_file.json#properties/file_path"
-                },
-                {
-                  "artifact_link": "assays/components/fastq_pair_and_mapping/read_group_mapping_file"
-                }
-              ]
+              "relative_merge_pointer": "0/files/read_group_mapping_file", 
+              "merge_pointer": "/assays/wes/0/files/read_group_mapping_file", 
+              "type_ref": "assays/components/fastq_pair_and_mapping.json#properties/read_group_mapping_file",
+              "load_through": "assays/components/local_file.json#properties/file_path"
             }
           }
         }

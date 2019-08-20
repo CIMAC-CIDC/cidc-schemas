@@ -6,6 +6,8 @@ import jsonschema
 from deepdiff import grep
 import datetime
 from jsonmerge import merge, Merger
+from collections import namedtuple
+from jsonpointer import JsonPointer, JsonPointerException
 
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
@@ -17,7 +19,7 @@ from cidc_schemas.constants import SCHEMA_DIR, TEMPLATE_DIR
 
 def _get_coerce(ref: str):
     """
-    This function takes a jscon-schema style ref pointer,
+    This function takes a jscon-schema style $ref pointer,
     opens the schema and determines the best python
     function to type the value.
 
@@ -28,11 +30,16 @@ def _get_coerce(ref: str):
         Python function pointer
     """
 
-    # get the entry
-    resolver = jsonschema.RefResolver(
-        f'file://{SCHEMA_DIR}/schemas', {'$ref': ref})
-    _, entry = resolver.resolve(ref)
+    referer = {'$ref': ref}
 
+    resolver_cache = {}
+    while '$ref' in referer:
+        # get the entry
+        resolver = jsonschema.RefResolver(
+            f'file://{SCHEMA_DIR}/schemas', referer, resolver_cache)
+        _, referer = resolver.resolve(referer['$ref'])
+
+    entry = referer
     # add our own type conversion
     t = entry['type']
     if t == 'string':
@@ -69,16 +76,12 @@ def _load_keylookup(template_path: str) -> dict:
     # create a key lookup dictionary
     key_lu = {}
 
-    def populate_lu(ref: str, key_lu: dict, xlsx_key: str):
-        # split on / because this lets us get the property name which
-        # is at the end of the json-scehma reference.
-        schema_key = ref.split("/")[-1]
-
-        key_lu[xlsx_key] = {
-            "schema_key": schema_key,
-            "ref": ref,
-            "coerce": _get_coerce(ref)
-        }
+    # checks if we have a cast func for that 'type_ref'
+    def _add_coerce(field_def:dict) -> dict: 
+        if 'load_through' in field_def:
+            return dict(coerce=_get_coerce(field_def['load_through']), **field_def)
+        else: 
+            return dict(coerce=_get_coerce(field_def['type_ref']), **field_def)
 
     # loop over each worksheet
     worksheets = t['properties']['worksheets']
@@ -86,136 +89,68 @@ def _load_keylookup(template_path: str) -> dict:
 
         # loop over each row in pre-amble
         pre_rows = worksheets[worksheet]['preamble_rows']
-        for xlsx_key in pre_rows.keys():
-
-            # get the json reference used to define this property
-            ref = pre_rows[xlsx_key]['$ref']
+        for preamble_key, preamble_def in pre_rows.items():
 
             # populate lookup
-            populate_lu(ref, key_lu, xlsx_key)
+            key_lu[preamble_key] = _add_coerce(preamble_def)
+            # we expect preamble_def from `_template.json` have 3 fields (as for template.schema)
+            # "merge_pointer" "type_ref" "load_through"
 
         # load the data columns
         dat_cols = worksheets[worksheet]['data_columns']
-        for section_key in dat_cols.keys():
-            for data_key in dat_cols[section_key]:
+        for section_key, section in dat_cols.items():
+            for column_key, column_def in section.items():
 
-                # get the json reference used to define this property
-                ref = dat_cols[section_key][data_key]['$ref']
+                # populate lookup
+                key_lu[column_key] = _add_coerce(column_def)
+                # we expect column_def from `_template.json` have 3 fields (as for template.schema)
+                # "merge_pointer" "type_ref" "load_through"
 
-                # populate lookup.
-                populate_lu(ref, key_lu, data_key)
 
-    # special case for wes keys.
-    if 'wes' in template_path:
-        ref = "assays/components/ngs/ngs_assay_record.json#properties/cimac_aliquot_id"
-        data_key = "cimac_aliquot_id"
-        populate_lu(ref, key_lu, data_key)
+    # # special case for wes keys.
+    # if 'wes' in template_path:
+    #     ref = "assays/components/ngs/ngs_assay_record.json#properties/cimac_aliquot_id"
+    #     data_key = "cimac_aliquot_id"
+    #     populate_lu(ref, key_lu, data_key)
 
     return key_lu
 
 
-def _find_key(schema_key: str, schema: dict, assay_hint: str = "") -> str:
+
+def _set_val(pointer: str, val: object, trial: dict, verbose=False):
     """
-    This finds a given json proptery in the resolved
-    schema. It uses a library deepdif to recursively
-    search the schema and it returns the path to that key as
-    python notation string (i.e. array[0][key1][3][key2]).
-
-    The search function can return multiple hits because an
-    key can be in an object with mutliple level itself. Therefore
-    I sort all the return hits and find the shortest one. The
-    shortest path will be the first occurance of that key
-    in the dictionary. In general we use this path as our
-    choice.
-
-    I've introduced the assay_hint string to help disambuguate
-    a path to a key when there are multiple possibilities.
-    Consider "assay_creator" a property in assay_core.json
-    which is associated with every assay. Searching the schema
-    for assay_creator will return multiple hits, the hint lets
-    us prioritize which we are looking for.
-
-    Args:
-        schema_key: the property name we are looking for in the json-schema
-        schema: the dictionary contain the whole clinical_trial schema
-        assay_hint: optional string to help prioritize the path
-          to they key, among equivalents.
-
-    Returns:
-        Path to the property searched for in python notation
-    """
-
-    # find key in the schema, this notation is
-    # recommended usage of deepdif grep. assuming they
-    # overload the pipe operator to simulate cmd line
-    # grep
-    ds = schema | grep(schema_key)
-    if 'matched_paths' not in ds:
-        raise KeyError('%s not found in schema' % schema_key)
-
-    # sort potential matches, shortest is what we want.
-    choices = sorted(ds['matched_paths'], key=len)
-
-    # if there are equal length short matches, try to use assay hint
-    choice = choices[0]
-    if len(choices) > 1 and len(choices[0]) == len(choices[1]):
-        if assay_hint != "":
-            for i in range(len(choices)):
-                if choices[i].count(assay_hint) > 0:
-                    choice = choices[i]
-                    break
-
-    # return chosen one.
-    return choice
-
-
-def _set_val(path: str, val: object, trial: dict, verbose=False):
-    """
-    ** warning **
-    This function is under active development and can likely be
-    simplified/styled and will likely undergo change as more data
-    are tested. Currently much of the debug logic is still
-    in place while this matures. I suspect we can write this
-    as a recursive function...
-
-    The goal of this function is given a *path* to a property
-    in a python object, set the supplied value. The path is
-    a string representation of a propetry in a python object
-    to be validated using clinical_trial json-schema.
+    This function given a *pointer* (jsonpointer, RFC 6901)
+    to a property in a python object, sets the supplied value
+    inplace in the *trial* object.
 
     The object we are adding data to is *trial*. The object
     may or maynot have any of the intermediate structure
     to fully insert the desired property.
 
     For example: consider trial = {}
-    And path = "['root']['properties']['participants']['items'][0]['properties']['prop1']"
-
-    Here root is the special keyword for the first
-    object in the string. Parameters allowed in a json object
-    are defined in the 'properties' object of a json-schema.
-    So by seeing properties we know we are entering an object
-    and that 'participants' is a key in that object.
-    object like so:
+    And pointer = "/participants/0/prop1"
+    
+    We should assume to update sub-object: 
         {
             "participants": ...
         }
     Lets truncate the path to exclude tokens we've already
     consumed:
 
-    path = "['items'][0]['properties']['prop1']"
+    path = "0/prop1"
 
-    Next we see an 'item' property which in json-schema
-    denotes an array. So the implication
+    Next we see an `0` property which in json-pointer
+    denotes a first element of an array. So the implication
     is that the value of 'participants' is list.
         {
             "participants": [...]
         }
 
-    path = "['properties']['prop1']"
+    Truncated again path = "prop1"
 
-    Next we 'properties' so we know we are entering an object
-    with *prop1* as a property. This is the
-    final piece of the *path* so we can assign the val:
+    We see it's a string, not an integer so we know 
+    we are entering an object with *prop1* as a property. 
+    This is the final piece of the *path* so we can assign the val:
         {
             "participants": [{
                 "prop1": val
@@ -223,36 +158,13 @@ def _set_val(path: str, val: object, trial: dict, verbose=False):
         }
 
 
-    The code below first tokenizes the string based on
-    brackets.
-
-    For each token we test for its json-schema modifier,
-    'items', 'properties', 'allOf'. If we see items we need
-    to add a list, assuming it doesn't exist, if we see properties
-    we need to create a dictionary if it doesn't exist.
-
     *One limitation* of this code is that no list can have
     more than 1 item. This is likely OK because we are building
     one object per record in the excel templates and using
     a seperate library to merge objects.
 
-    *Another caveat* is the 'allOf' modifier. When a schema
-    is parsed it will treat 'allOf' as list of dictionaries
-    like so:
-
-    path = ['prop2']['allOf'][0]['properties'][...]
-
-    For our purposes we need to treat the 'allOf' followed
-    by the array entry and subsequent object properties
-    as properties of the previous object 'prop2'. This
-    is why there are "skip" blocks in the code which advance
-    to the next token while keeping the pointer of the current
-    object on 'prop2'.
-
-
-
     Args:
-        path: the python path to the property being set
+        pointer: jsonpointer path to the property being set
         val: the value being set
         trial: the python object being constructed
         verbose: indicates if debug logic should be printed.
@@ -261,116 +173,49 @@ def _set_val(path: str, val: object, trial: dict, verbose=False):
        Nothing
     """
 
-    # first we trim the root entry which is always the first dictionary
-    # find by default returns the first occurance of the string
-    stop = path.find("]") + 1
-    path = path[stop::]
+    jpoint = JsonPointer(pointer)
 
-    # then we tokenize the paths.
-    tmps = path.split("][")
-    for i in range(len(tmps)):
-        tmps[i] = tmps[i].replace("'", "")
-        tmps[i] = tmps[i].replace("[", "")
-        tmps[i] = tmps[i].replace("]", "")
-    paths = tmps
+    assert len(jpoint.parts) > 0, "Can't update root object"
 
-    if verbose:
-        print("-", paths)
 
-    # modifier keys
-    mods = set([
-        "items",
-        "properties"
-    ])
+    # we need to walk our trial doc up until the last step
+    doc = trial
+    # then we update it
+    for i, part in enumerate(jpoint.parts[:-1]):
 
-    skipers = set([
-        'allOf'
-    ])
+        try:
+            doc = jpoint.walk(doc, part)
 
-    # then we loop until we are done.
-    curp = trial
-    lenp = len(paths)
-    skip_next = False
-    for i in range(len(paths)):
+        except (JsonPointerException, IndexError) as e:
+            # means that we probably don't have needed sub-object in place
+            # so we need to create one
 
-        # simplify
-        key = paths[i]
+            # but we need to look ahead to figure out
+            # a proper type that need to be created
+            if i+1 == len(jpoint.parts):
+                raise NotImplementedError(f'no next_part in jsonpointer{pointer}')
 
-        if verbose:
-            print("--", key)
+            next_part = jpoint.parts[i+1]
+            
+            typed_part = jpoint.get_part(doc, part)
+            # `part` looks like array index, so create array
+            if jpoint._RE_ARRAY_INDEX.match(str(next_part)):
+                insert = []
+            # or just dict as default
+            else:
+                insert = {}
+            try:
+                doc[typed_part] = insert
+            except IndexError:
+                doc.append(insert)
 
-        # short circuit
-        if skip_next:
-            skip_next = False
-            if verbose:
-                print("-skip-", key)
-            continue
+            # now we `walk` it again - this time should be ok
+            doc = jpoint.walk(doc, part)
 
-        # check if its final
-        if i == lenp - 1:
-            curp[key] = val
+    # now we update it
+    doc[jpoint.parts[-1]] = val
 
-            if verbose:
-                print("final", json.dumps(trial))
-            return
-
-        # check if this is a skiper
-        elif key in skipers:
-            if verbose:
-                print("-skipers-", key)
-            skip_next = True
-            continue
-
-        # check if this is a modifer
-        elif key in mods:
-
-            # we must be adding a new object.
-            if key == "properties":
-                if isinstance(curp, list):
-
-                    # don't add new objects
-                    if len(curp) == 0:
-                        new_obj = {}
-                        curp.append(new_obj)
-                        curp = new_obj
-                    else:
-                        curp = curp[0]
-
-                elif isinstance(curp, dict):
-                    pass  # no need to do anything
-                else:
-                    raise NotImplementedError
-
-        # not a modifer so add another level
-        else:
-
-            # is there already a key?
-            if key not in curp:
-
-                # look forward to see what we might add.
-                key2 = paths[i+1]
-
-                if verbose:
-                    print("--2", key2)
-
-                # its a list.
-                if key2 == "items":
-                    curp[key] = []
-
-                # its a dictionary
-                elif key2 == 'properties':
-                    curp[key] = {}
-
-                # also a dictionary, just will be preceeded by a nunber
-                elif key2 == 'allOf':
-                    # this assume allOf always creates object, maybe not true?
-                    curp[key] = {}
-
-                else:
-                    raise NotImplementedError
-
-            # set pointer for next round
-            curp = curp[key]
+    return trial
 
 
 def _get_recursively(search_dict, field):
@@ -407,8 +252,7 @@ def _process_property(
         schema: dict,
         data_obj: dict,
         assay_hint: str,
-        fp_lu: dict,
-        verb: bool):
+        verb: bool) -> dict:
     """
     Takes a single property (key, val) from spreadsheet, determines
     where it needs to go in the final object, then inserts it.
@@ -422,20 +266,27 @@ def _process_property(
         verb: boolean indicating verbosity
 
     Returns:
-        None, data_obj is modified in place
+        TBD
 
     """
+
     # simplify
     key = row[0]
-    val = row[1]
+    raw_val = row[1]
 
+    if verb:
+        print(f"processing {key!r} {raw_val!r}")
     # coerce value
-    lu = key_lu[key.lower()]
-    val = lu['coerce'](val)
-    schema_key = lu['schema_key']
-
+    field_def = key_lu[key.lower()]
+    if verb:
+        print(f'found def {field_def}')
+    
+    val = field_def['coerce'](raw_val)
+    if verb:
+        print(f'coerced {raw_val!r} - {val!r}')
+    
     # don't try to get file_path, this needs to be resolved later
-    if schema_key == 'file_path':
+    if field_def.get('load_through') == 'assays/components/local_file.json#properties/file_path':
 
         # setup the base path
         gs_key = _get_recursively(data_obj, "lead_organization_study_id")[0]
@@ -457,57 +308,22 @@ def _process_property(
             suffix = f'{tmp[0]}_{tmp[1]}.txt'
         gs_key = f'{gs_key}_{suffix}'
 
-        # create the entry.
-        fp_lu['special'].append({
+        # return local_path entry
+        return {
             "template_key": key,
             "local_path": val,
-            "schema_ref": fp_lu[key],
+            "field_def": field_def,
             "gs_key": gs_key
-        })
+        }
 
-        # we still do nothing as this key isn't explicitly in the
-        # data model. Another process will merge the artifact components
-        # into this
+    # or set/update value in-place in data_obj dictionary 
+    _set_val(field_def['merge_pointer'], val, data_obj, verbose=verb)
 
-        return
+    if verb:
+        print(f'current {data_obj}')
+    
 
-    # add to dictionary
-    path = _find_key(schema_key, schema, assay_hint=assay_hint)
-    _set_val(path, val, data_obj, verbose=verb)
-
-
-def _build_fplu(assay_hint: str):
-
-    # get the un resolved schema
-    template_path = os.path.join(
-        TEMPLATE_DIR, 'metadata', f'{assay_hint}_template.json')
-    with open(template_path) as fin:
-        schema = json.load(fin)
-
-    schema_key = 'artifact_link'
-    # find key in the schema, this notation is
-    # recommended usage of deepdif grep. assuming they
-    # overload the pipe operator to simulate cmd line
-    ds = schema | grep(schema_key)
-    if 'matched_paths' not in ds:
-        raise KeyError(f'{schema_key} not found in schema')
-
-    # sort potential matches, shortest is what we want.
-    choices = sorted(ds['matched_paths'], key=len)
-
-    # create tuples
-    key_lu = {}
-    for c in choices:
-
-        # get the value and parent of the file link.
-        val, pkey = _deep_get(schema, c)
-        pkey = pkey.upper()
-        key_lu[pkey] = val
-
-    return key_lu
-
-
-def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: bool = False) -> (dict, dict):
+def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: bool = True) -> (dict, dict):
     """
     Converts excel file to json object. It also identifies local files
     which need to uploaded to a google bucket and provides some logic
@@ -546,11 +362,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
     # this lets us lookup xlsx-to-schema keys
     key_lu = _load_keylookup(template_path)
 
-    # this helps us identify file paths in xlsx
-    fp_lu = _build_fplu(assay_hint)
-
-    # add a special key to track the files
-    fp_lu['special'] = list()
+    local_file_paths = []
 
     # read the excel file
     t = XlTemplateReader.from_excel(xlsx_path)
@@ -559,19 +371,14 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
     root = {}
     data_rows = []
 
-    # loop over spreadsheet
-    worksheet_names = t.grouped_rows.keys()
-    for name in worksheet_names:
-
-        # get the worksheat.
-        ws = t.grouped_rows[name]
+    # loop over spreadsheet worksheets
+    for ws in t.grouped_rows.values():
 
         # Compare preamble rows
         for row in ws[RowType.PREAMBLE]:
 
             # process this property
-            _process_property(row, key_lu, schema, root,
-                              assay_hint, fp_lu, verb)
+            local_file_paths.append(_process_property(row, key_lu, schema, root, assay_hint, verb))
 
         # move to headers
         headers = ws[RowType.HEADER][0]
@@ -592,8 +399,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
             for key, val in zip(headers, row):
 
                 # process this property
-                _process_property([key, val], key_lu, schema,
-                                  curd, assay_hint, fp_lu, verb)
+                local_file_paths.append(_process_property([key, val], key_lu, schema, curd, assay_hint, verb))
 
                 # track ids
                 if key in potential_ids:
@@ -605,15 +411,15 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
             # data rows will require a unique identifier
             if assay_hint == "wes":
 
-                # create a unique key
-                unique_key = potential_ids['CIMAC PARTICIPANT ID']
-                unique_key = f'{unique_key}_{potential_ids["CIMAC SAMPLE ID"]}'
-                unique_key = f'{unique_key}_{potential_ids["CIMAC ALIQUOT ID"]}'
+                # # create a unique key
+                # unique_key = potential_ids['CIMAC PARTICIPANT ID']
+                # unique_key = f'{unique_key}_{potential_ids["CIMAC SAMPLE ID"]}'
+                # unique_key = f'{unique_key}_{potential_ids["CIMAC ALIQUOT ID"]}'
 
-                # add this to the most recent payload
-                _process_property(['cimac_aliquot_id', unique_key], key_lu, schema,
-                        curd, assay_hint, fp_lu, verb)
-
+                # # add this to the most recent payload
+                # _process_property(['cimac_aliquot_id', unique_key], key_lu, schema,
+                #         curd, assay_hint, verb)
+                pass
             else:
                 raise NotImplementedError(f'only WES is supported, please add additional support \
                     for {assay_hint}')
@@ -627,7 +433,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
         cur_obj = merger.merge(cur_obj, data_rows[i])
 
     # return the object.
-    return cur_obj, fp_lu['special']
+    return cur_obj, local_file_paths
 
 
 def _deep_get(obj: dict, key: str):
@@ -754,7 +560,7 @@ def _merge_artifact_wes(
         "file_name": file_name,
         "file_size_bytes": 1,
         "md5_hash": md5_hash,
-        "uploaded_timestamp": str(datetime.datetime.now()).split('.')[0]
+        "uploaded_timestamp": datetime.datetime.now().strftime('%Y-%M-%dT%H:%m:%S')
     }
 
     # create the wes input object which will be added to existing data
@@ -772,13 +578,13 @@ def _merge_artifact_wes(
         # set the artifact type
         artifact["file_type"] = "FASTQ"
 
-        # determine how to craft the artifact
-        obj[genomic_source] = {}
-        if "wes_forward" in file_name:
-            obj[genomic_source]['fastq_1'] = artifact
+        # # determine how to craft the artifact
+        # obj[genomic_source] = {}
+        # if "wes_forward" in file_name:
+        #     obj[genomic_source]['fastq_1'] = artifact
 
-        elif "wes_reverse" in file_name:
-            obj[genomic_source]['fastq_2'] = artifact
+        # elif "wes_reverse" in file_name:
+        #     obj[genomic_source]['fastq_2'] = artifact
 
     # copy the metadata and add this a new record.
     # note this will clobber whatever is here. This is
@@ -789,7 +595,7 @@ def _merge_artifact_wes(
     # specified in the json-schema for records
     ct_copy = copy.deepcopy(ct)
     aliquot_obj = _get_source(ct_copy, keypath, level="aliquot")
-    aliquot_obj['assay']['wes']['records'][0]['files'] = obj
+    ct_copy['assays']['wes'][0]['records'][0]['files'] = obj
 
     # merge the copy with the original.
     validator = load_and_validate_schema(
@@ -847,7 +653,7 @@ def merge_artifact(
     Args:
         ct: clinical_trial object to be searched
         object_url: the gs url pointing to the object being added
-        file_size_bytes: integer specifying the numebr of bytes in the file
+        file_size_bytes: integer specifying the number of bytes in the file
         uploaded_timestamp: time stamp associated with this object
         md5_hash: hash of the uploaded object, usually provided by
                     object storage

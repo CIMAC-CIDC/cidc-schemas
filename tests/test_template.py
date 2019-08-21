@@ -25,6 +25,9 @@ def test_from_type():
     assert 'PBMCs' in Template.from_type('pbmc').worksheets
     assert 'WES' in Template.from_type('wes').worksheets
 
+    with pytest.raises(Exception, match='unknown template type'):
+        Template.from_type('foo')
+
 
 def test_worksheet_validation():
     """Check validation errors on invalid worksheets"""

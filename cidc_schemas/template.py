@@ -14,6 +14,21 @@ from .json_validation import load_and_validate_schema
 logger = logging.getLogger('cidc_schemas.template')
 
 
+def _get_template_path_map() -> dict:
+    """Build a mapping from template schema types to template schema paths."""
+    path_map = {}
+    for template_type_dir in os.listdir(TEMPLATE_DIR):
+        abs_type_dir = os.path.join(TEMPLATE_DIR, template_type_dir)
+        for template_file in os.listdir(abs_type_dir):
+            template_type = template_file.replace('_template.json', '')
+            template_schema_path = os.path.join(abs_type_dir, template_file)
+            path_map[template_type] = template_schema_path
+    return path_map
+
+
+_TEMPLATE_PATH_MAP = _get_template_path_map()
+
+
 def generate_empty_template(schema_path: str, target_path: str):
     """Write the .xlsx template for the given schema to the target path."""
     logger.info(f"Writing empty template for {schema_path} to {target_path}.")
@@ -119,6 +134,15 @@ class Template:
             Template.VALID_WS_SECTIONS)
         assert not unknown_props, \
             f'unknown worksheet sections {unknown_props} - only {Template.VALID_WS_SECTIONS} supported'
+
+    @staticmethod
+    def from_type(template_type: str):
+        """Load a Template from a template type, e.g., "pbmc" or "wes"."""
+        try:
+            schema_path = _TEMPLATE_PATH_MAP[template_type]
+        except KeyError:
+            raise Exception(f"unknown template type: {template_type}")
+        return Template.from_json(schema_path)
 
     @staticmethod
     def from_json(template_schema_path: str, schema_root: str = SCHEMA_DIR):

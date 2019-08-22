@@ -93,7 +93,9 @@ def test_wes():
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
-        "cimac_aliquot_id": "xyz",
+        "cimac_participant_id": "PAid",
+        "cimac_sample_id": "SAid",
+        "cimac_aliquot_id": "ALid",
         "files": {
             "fastq_1": fastq_1,
             "fastq_2": fastq_1,
@@ -103,22 +105,8 @@ def test_wes():
 
     analysis = {
         "wes_experiment_id": "101010",
-        "capture_date": "01/02/2001",
-        # "output_files": {
-        #     "tumor": {
-        #         "align_sorted": bam,
-        #         "align_sorted_dedup": bam,
-        #         "align_recalibrated": bam,
-        #         "SNP92_recode": vcf 
-        #         },
-        #     "normal": {
-        #         "align_sorted": bam,
-        #         "align_sorted_dedup": bam,
-        #         "align_recalibrated": bam,
-        #         "SNP92_recode": vcf     
-        #             }
-        #         }            
-            }
+        "capture_date": "01/02/2001"          
+    }
 
     # add a demo record.
     obj['records'] = [
@@ -171,7 +159,9 @@ def test_rna_expression():
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
-        "cimac_aliquot_id": "abc",
+        "cimac_participant_id": "PAid",
+        "cimac_sample_id": "SAid",
+        "cimac_aliquot_id": "ALid",
         "files": {
             "fastq_1": fastq_1,
             "fastq_2": fastq_1,

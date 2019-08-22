@@ -61,6 +61,60 @@
                 <tr>
     <td>
         
+            <span id="cimac_participant_id">
+                cimac_participant_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+                <div><small>Id of an participant within this clinical trial, that this assay record is based upon.</small></div>
+            
+        
+    </td>
+    <td>
+        
+            <a href="participant.html#cimac_participant_id">participant#cimac_participant_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cimac_sample_id">
+                cimac_sample_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+                <div><small>Id of an sample within this clinical trial, that this assay record is based upon.</small></div>
+            
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#cimac_sample_id">sample#cimac_sample_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
             <span id="cimac_aliquot_id">
                 cimac_aliquot_id
             </span>
@@ -197,6 +251,10 @@
             
         
             
+        
+            
+        
+            
                 <tr>
     <td>
         
@@ -318,6 +376,16 @@
             "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
             "type": "string"
         },
+        "cimac_participant_id": {
+            "$comment": "Id of an participant within this clinical trial, that this assay record is based upon.",
+            "description": "Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234.",
+            "type": "string"
+        },
+        "cimac_sample_id": {
+            "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
+            "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
+            "type": "string"
+        },
         "files": {
             "$comment": "Fastq and read group mapping files produced by the assay for that .",
             "$id": "fastq_pair_and_mapping",
@@ -333,6 +401,23 @@
                             "$id": "artifact_core",
                             "$schema": "http://json-schema.org/draft-07/schema#",
                             "description": "Any file artifact associated with a clinical trial.",
+                            "oneOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -370,6 +455,10 @@
                                     "description": "URL to artifact within Google Bucket.",
                                     "type": "string"
                                 },
+                                "upload_placeholder": {
+                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                    "type": "string"
+                                },
                                 "uploaded_timestamp": {
                                     "description": "Timestamp of when artfiact was loaded into the system.",
                                     "format": "date-time",
@@ -387,15 +476,6 @@
                                     "type": "boolean"
                                 }
                             },
-                            "required": [
-                                "file_name",
-                                "object_url",
-                                "uploaded_timestamp",
-                                "file_size_bytes",
-                                "md5_hash",
-                                "artifact_category",
-                                "file_type"
-                            ],
                             "title": "Artifact Core",
                             "type": "object"
                         },
@@ -420,6 +500,23 @@
                             "$id": "artifact_core",
                             "$schema": "http://json-schema.org/draft-07/schema#",
                             "description": "Any file artifact associated with a clinical trial.",
+                            "oneOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -457,6 +554,10 @@
                                     "description": "URL to artifact within Google Bucket.",
                                     "type": "string"
                                 },
+                                "upload_placeholder": {
+                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                    "type": "string"
+                                },
                                 "uploaded_timestamp": {
                                     "description": "Timestamp of when artfiact was loaded into the system.",
                                     "format": "date-time",
@@ -474,15 +575,6 @@
                                     "type": "boolean"
                                 }
                             },
-                            "required": [
-                                "file_name",
-                                "object_url",
-                                "uploaded_timestamp",
-                                "file_size_bytes",
-                                "md5_hash",
-                                "artifact_category",
-                                "file_type"
-                            ],
                             "title": "Artifact Core",
                             "type": "object"
                         },
@@ -507,6 +599,23 @@
                             "$id": "artifact_core",
                             "$schema": "http://json-schema.org/draft-07/schema#",
                             "description": "Any file artifact associated with a clinical trial.",
+                            "oneOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -544,6 +653,10 @@
                                     "description": "URL to artifact within Google Bucket.",
                                     "type": "string"
                                 },
+                                "upload_placeholder": {
+                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                    "type": "string"
+                                },
                                 "uploaded_timestamp": {
                                     "description": "Timestamp of when artfiact was loaded into the system.",
                                     "format": "date-time",
@@ -561,15 +674,6 @@
                                     "type": "boolean"
                                 }
                             },
-                            "required": [
-                                "file_name",
-                                "object_url",
-                                "uploaded_timestamp",
-                                "file_size_bytes",
-                                "md5_hash",
-                                "artifact_category",
-                                "file_type"
-                            ],
                             "title": "Artifact Core",
                             "type": "object"
                         },
@@ -620,6 +724,8 @@
     "required": [
         "library_kit_lot",
         "library_prep_date",
+        "cimac_participant_id",
+        "cimac_sample_id",
         "cimac_aliquot_id",
         "files"
     ],

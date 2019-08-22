@@ -2,6 +2,7 @@ import re
 import json
 import os
 import copy
+import uuid
 import jsonschema
 from deepdiff import grep
 import datetime
@@ -48,6 +49,11 @@ def _get_coerce(ref: str):
         return int
     elif t == 'number':
         return float
+
+    # if it's an artifact that we load through local file
+    # we just set uuid to upload_placeholder field 
+    elif t == 'object' and entry['$id'] == "local_file":
+        return lambda _: str(uuid.uuid4())
     else:
         raise NotImplementedError(f"no coercion available for type:{t}")
 
@@ -78,10 +84,7 @@ def _load_keylookup(template_path: str) -> dict:
 
     # checks if we have a cast func for that 'type_ref'
     def _add_coerce(field_def:dict) -> dict: 
-        if 'load_through' in field_def:
-            return dict(coerce=_get_coerce(field_def['load_through']), **field_def)
-        else: 
-            return dict(coerce=_get_coerce(field_def['type_ref']), **field_def)
+        return dict(coerce=_get_coerce(field_def['type_ref']), **field_def)
 
     # loop over each worksheet
     worksheets = t['properties']['worksheets']
@@ -93,8 +96,8 @@ def _load_keylookup(template_path: str) -> dict:
 
             # populate lookup
             key_lu[preamble_key] = _add_coerce(preamble_def)
-            # we expect preamble_def from `_template.json` have 3 fields (as for template.schema)
-            # "merge_pointer" "type_ref" "load_through"
+            # we expect preamble_def from `_template.json` have 2 fields
+            # (as for template.schema) - "merge_pointer" and "type_ref"
 
         # load the data columns
         dat_cols = worksheets[worksheet]['data_columns']
@@ -103,8 +106,8 @@ def _load_keylookup(template_path: str) -> dict:
 
                 # populate lookup
                 key_lu[column_key] = _add_coerce(column_def)
-                # we expect column_def from `_template.json` have 3 fields (as for template.schema)
-                # "merge_pointer" "type_ref" "load_through"
+                # we expect column_def from `_template.json` have 2 fields
+                # (as for template.schema) - "merge_pointer" and "type_ref"
 
 
     # # special case for wes keys.
@@ -282,48 +285,41 @@ def _process_property(
         print(f'found def {field_def}')
     
     val = field_def['coerce'](raw_val)
+
+    # or set/update value in-place in data_obj dictionary 
+    pointer = field_def['merge_pointer']
+    if field_def.get('is_artifact'):
+        pointer+='/upload_placeholder'
+    _set_val(pointer, val, data_obj, verbose=verb)
+
     if verb:
-        print(f'coerced {raw_val!r} - {val!r}')
-    
-    # don't try to get file_path, this needs to be resolved later
-    if field_def.get('load_through') == 'assays/components/local_file.json#properties/file_path':
+        print(f'current {data_obj}')
+
+    if field_def.get('is_artifact'):
+
+        if verb:
+            print(f'collecting local_file_path {field_def}')
 
         # setup the base path
         gs_key = _get_recursively(data_obj, "lead_organization_study_id")[0]
         gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_participant_id")[0]}'
         gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_sample_id")[0]}'
         gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_aliquot_id")[0]}'
-        gs_key = f'{gs_key}/{assay_hint}'
-        #gs_key = gs_key.replace(" ", "_")
 
-        # do the suffix
-        tmp = key.lower().split(" ")
-
-        # bespoke suffix logic.
-        just_use = set(["fastq"])
-        text_use = set(["group"])
-        if tmp[1] in just_use:
-            suffix = f'{tmp[0]}.{tmp[1]}'
-        elif tmp[1] in text_use:
-            suffix = f'{tmp[0]}_{tmp[1]}.txt'
-        gs_key = f'{gs_key}_{suffix}'
+        artifact_field_name = field_def['merge_pointer'].split('/')[-1]
+        gs_key = f'{gs_key}/{assay_hint}/{artifact_field_name}'
 
         # return local_path entry
         return {
-            "template_key": key,
-            "local_path": val,
-            "field_def": field_def,
+            ## REVERT?
+            # "template_key": key,
+            # "local_path": val,
+            # "field_def": field_def,
             "gs_key": gs_key
         }
-
-    # or set/update value in-place in data_obj dictionary 
-    _set_val(field_def['merge_pointer'], val, data_obj, verbose=verb)
-
-    if verb:
-        print(f'current {data_obj}')
     
 
-def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: bool = True) -> (dict, dict):
+def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: bool = False) -> (dict, dict):
     """
     Converts excel file to json object. It also identifies local files
     which need to uploaded to a google bucket and provides some logic
@@ -378,7 +374,9 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
         for row in ws[RowType.PREAMBLE]:
 
             # process this property
-            local_file_paths.append(_process_property(row, key_lu, schema, root, assay_hint, verb))
+            new_file = _process_property(row, key_lu, schema, root, assay_hint, verb)
+            if new_file:
+                local_file_paths.append(new_file)
 
         # move to headers
         headers = ws[RowType.HEADER][0]
@@ -399,7 +397,9 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
             for key, val in zip(headers, row):
 
                 # process this property
-                local_file_paths.append(_process_property([key, val], key_lu, schema, curd, assay_hint, verb))
+                new_file = _process_property([key, val], key_lu, schema, curd, assay_hint, verb)
+                if new_file:
+                    local_file_paths.append(new_file)
 
                 # track ids
                 if key in potential_ids:
@@ -410,15 +410,6 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
 
             # data rows will require a unique identifier
             if assay_hint == "wes":
-
-                # # create a unique key
-                # unique_key = potential_ids['CIMAC PARTICIPANT ID']
-                # unique_key = f'{unique_key}_{potential_ids["CIMAC SAMPLE ID"]}'
-                # unique_key = f'{unique_key}_{potential_ids["CIMAC ALIQUOT ID"]}'
-
-                # # add this to the most recent payload
-                # _process_property(['cimac_aliquot_id', unique_key], key_lu, schema,
-                #         curd, assay_hint, verb)
                 pass
             else:
                 raise NotImplementedError(f'only WES is supported, please add additional support \
@@ -480,7 +471,7 @@ def _get_path(ct: dict, key: str) -> str:
     return ds1['matched_values'].pop()
 
 
-def _get_source(ct: dict, key: str, level="sample") -> dict:
+def _get_source(ct: dict, key: str, slice=None) -> dict:
     """
     extract the object in the dicitionary specified by
     the supplied key (or one of its parents.)
@@ -488,8 +479,8 @@ def _get_source(ct: dict, key: str, level="sample") -> dict:
     Args:
         ct: clinical_trial object to be searched
         key: the identifier we are looking for in the dictionary,
-        level: a keyword describing which level in the key path
-                (trial, participants, sample, aliquot) we want to return
+        slice: how many levels down we want to go, usually will be 
+            negative 
 
     Returns:
         arg1: string describing the location of the key
@@ -499,15 +490,8 @@ def _get_source(ct: dict, key: str, level="sample") -> dict:
     key = key.replace("root", "").replace("'", "")
     tokens = re.findall(r"\[(.*?)\]", key)
 
-    # this will get us to the object we have the key for
-    if level == "sample":
-        tokens = tokens[0:-3]
-    elif level == "aliquot":
-        tokens = tokens[0:-1]
-    else:
-        raise NotImplementedError(
-            f'the following level is not supported: {level}')
-
+    tokens = tokens[0:slice]
+    
     # keep getting based on the key.
     cur_obj = ct
     for token in tokens:
@@ -544,102 +528,58 @@ def _merge_artifact_wes(
     """
 
     # replace gs prfix if exists.
-    object_url, lead_organization_study_id, \
-        cimac_participant_id, cimac_sample_id, cimac_aliquot_id, \
-        file_name = _split_objurl(object_url)
+    wes_object = _split_wes_url(object_url)
 
-    # get the genomic source.
-    keypath = _get_path(ct, cimac_aliquot_id)
-    sample_obj = _get_source(ct, keypath)
-    genomic_source = sample_obj['genomic_source']
-
+    
     # create the artifact.
     artifact = {
         "artifact_category": "Assay Artifact from CIMAC",
         "object_url": object_url,
-        "file_name": file_name,
+        "file_name": wes_object.file_name,
         "file_size_bytes": 1,
         "md5_hash": md5_hash,
-        "uploaded_timestamp": datetime.datetime.now().strftime('%Y-%M-%dT%H:%m:%S')
+        "uploaded_timestamp": uploaded_timestamp
     }
 
-    # create the wes input object which will be added to existing data
-    obj = {}
+    
+    all_WESes = ct.get('assays',{}).get('wes',[])
 
-    # check if we are adding read group mapping file.
-    if "wes_read_group" in file_name:
+    ## TODO use jsonpointer maybe? 
+    # get the wes record by aliquot_id.
+    record_path = _get_path(all_WESes, wes_object.cimac_aliquot_id)
 
-        # set the artifact type and save
-        artifact["file_type"] = "Other"
-        obj['read_group_mapping_file'] = artifact
+    # slice=-1 is for go one level up from 'cimac_aliquot_id' field to it's parent record 
+    record_obj = _get_source(all_WESes, record_path, slice=-1)
 
-    else:
+    assert record_obj['cimac_aliquot_id'] == wes_object.cimac_aliquot_id
+    assert record_obj['cimac_sample_id'] == wes_object.cimac_sample_id
+    assert record_obj['cimac_participant_id'] == wes_object.cimac_participant_id
 
-        # set the artifact type
-        artifact["file_type"] = "FASTQ"
+    # modify inplace
+    record_obj['files'][wes_object.file_name] = artifact
 
-        # # determine how to craft the artifact
-        # obj[genomic_source] = {}
-        # if "wes_forward" in file_name:
-        #     obj[genomic_source]['fastq_1'] = artifact
+    ## we skip that because we didn't check `ct` on start
+    # validator.validate(ct)
 
-        # elif "wes_reverse" in file_name:
-        #     obj[genomic_source]['fastq_2'] = artifact
-
-    # copy the metadata and add this a new record.
-    # note this will clobber whatever is here. This is
-    # OK because the original copy of ct will have the
-    # clobbered data, while the new copy will have
-    # the new entry which will get appended to the
-    # "records" list by the merge by ID strategy
-    # specified in the json-schema for records
-    ct_copy = copy.deepcopy(ct)
-    aliquot_obj = _get_source(ct_copy, keypath, level="aliquot")
-    ct_copy['assays']['wes'][0]['records'][0]['files'] = obj
-
-    # merge the copy with the original.
-    validator = load_and_validate_schema(
-        "clinical_trial.json", return_validator=True)
-    schema = validator.schema
-    merger = Merger(schema)
-
-    ct_new = merger.merge(ct, ct_copy)
-
-    # validate the new data
-    validator.validate(ct_new)
-
-    # return the new dictionary
-    return ct_new
+    ## as we don't `copy.deepcopy(ct)`+`merge` - just return it
+    return ct
 
 
-def _split_objurl(obj_url: str) -> (str, str, str, str, str, str):
-    """
-    splits gs_url into components and returns them
+WesFileUrlParts = namedtuple("FileUrlParts", ["lead_organization_study_id", "cimac_participant_id", \
+        "cimac_sample_id", "cimac_aliquot_id", "assay", "file_name"]) 
 
-    Args:
-        obj_url: gs://url/to/file
-
-    Returns:
-        arg1: tuple of the components
-    """
-
-    # replace gs prfix if exists.
-    obj_url = obj_url.replace("gs://", "")
-
+def _split_wes_url(obj_url: str) -> WesFileUrlParts:
+    
     # parse the url to get key identifiers
     tokens = obj_url.split("/")
-    lead_organization_study_id = tokens[0]
-    cimac_participant_id = tokens[1]
-    cimac_sample_id = tokens[2]
-    cimac_aliquot_id = tokens[3]
-    file_name = tokens[4]
+    assert len(tokens) == len(WesFileUrlParts._fields), f"bad GCS url {obj_url}"
 
-    return obj_url, lead_organization_study_id, cimac_participant_id, \
-        cimac_sample_id, cimac_aliquot_id, file_name
+    return WesFileUrlParts(*tokens)
 
 
 def merge_artifact(
     ct: dict,
+    assay: str,
     object_url: str,
     file_size_bytes: int,
     uploaded_timestamp: str,
@@ -660,16 +600,7 @@ def merge_artifact(
 
     """
 
-    # replace gs prfix if exists.
-    object_url, lead_organization_study_id, \
-        cimac_participant_id, cimac_sample_id, cimac_aliquot_id, \
-        file_name = _split_objurl(object_url)
-
-    # define criteria.
-    wes_names = {'wes_forward', 'wes_reverse', 'wes_read_group'}
-
-    # test criteria.
-    if any(wes_name in file_name for wes_name in wes_names):
+    if assay == "wes":
         new_ct = _merge_artifact_wes(
             ct,
             object_url,
@@ -679,7 +610,7 @@ def merge_artifact(
         )
     else:
         raise NotImplementedError(
-            f'the following file_name is not supported: {file_name}')
+            f'the following assay is not supported: {assay}')
 
     # return new object
     return new_ct

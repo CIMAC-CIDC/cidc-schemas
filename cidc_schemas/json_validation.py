@@ -70,6 +70,7 @@ def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
             # expect those additional keys to be verified by schema validator.
             raise Exception(f"Schema node with '$ref' should not contain anything else (besides '$comment' for docs). \
                 \nOn: {node} \nOffending keys {extra_keys}")
+        
         # We found a ref, so return it mapped through `on_refs`
         new_node = on_refs(node['$ref'])
         # Plus concatenated new and old '$comment' fields 

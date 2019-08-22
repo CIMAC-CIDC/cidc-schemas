@@ -190,6 +190,23 @@
                                 "$id": "artifact_core",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "description": "Any file artifact associated with a clinical trial.",
+                                "oneOf": [
+                                    {
+                                        "required": [
+                                            "file_name",
+                                            "object_url",
+                                            "uploaded_timestamp",
+                                            "file_size_bytes",
+                                            "md5_hash",
+                                            "artifact_category"
+                                        ]
+                                    },
+                                    {
+                                        "required": [
+                                            "upload_placeholder"
+                                        ]
+                                    }
+                                ],
                                 "properties": {
                                     "artifact_category": {
                                         "description": "Artifact category.",
@@ -227,6 +244,10 @@
                                         "description": "URL to artifact within Google Bucket.",
                                         "type": "string"
                                     },
+                                    "upload_placeholder": {
+                                        "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                        "type": "string"
+                                    },
                                     "uploaded_timestamp": {
                                         "description": "Timestamp of when artfiact was loaded into the system.",
                                         "format": "date-time",
@@ -244,15 +265,6 @@
                                         "type": "boolean"
                                     }
                                 },
-                                "required": [
-                                    "file_name",
-                                    "object_url",
-                                    "uploaded_timestamp",
-                                    "file_size_bytes",
-                                    "md5_hash",
-                                    "artifact_category",
-                                    "file_type"
-                                ],
                                 "title": "Artifact Core",
                                 "type": "object"
                             },
@@ -288,6 +300,23 @@
                                 "$id": "artifact_core",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "description": "Any file artifact associated with a clinical trial.",
+                                "oneOf": [
+                                    {
+                                        "required": [
+                                            "file_name",
+                                            "object_url",
+                                            "uploaded_timestamp",
+                                            "file_size_bytes",
+                                            "md5_hash",
+                                            "artifact_category"
+                                        ]
+                                    },
+                                    {
+                                        "required": [
+                                            "upload_placeholder"
+                                        ]
+                                    }
+                                ],
                                 "properties": {
                                     "artifact_category": {
                                         "description": "Artifact category.",
@@ -325,6 +354,10 @@
                                         "description": "URL to artifact within Google Bucket.",
                                         "type": "string"
                                     },
+                                    "upload_placeholder": {
+                                        "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                        "type": "string"
+                                    },
                                     "uploaded_timestamp": {
                                         "description": "Timestamp of when artfiact was loaded into the system.",
                                         "format": "date-time",
@@ -342,15 +375,6 @@
                                         "type": "boolean"
                                     }
                                 },
-                                "required": [
-                                    "file_name",
-                                    "object_url",
-                                    "uploaded_timestamp",
-                                    "file_size_bytes",
-                                    "md5_hash",
-                                    "artifact_category",
-                                    "file_type"
-                                ],
                                 "title": "Artifact Core",
                                 "type": "object"
                             },
@@ -402,6 +426,23 @@
                                 "$id": "artifact_core",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "description": "Any file artifact associated with a clinical trial.",
+                                "oneOf": [
+                                    {
+                                        "required": [
+                                            "file_name",
+                                            "object_url",
+                                            "uploaded_timestamp",
+                                            "file_size_bytes",
+                                            "md5_hash",
+                                            "artifact_category"
+                                        ]
+                                    },
+                                    {
+                                        "required": [
+                                            "upload_placeholder"
+                                        ]
+                                    }
+                                ],
                                 "properties": {
                                     "artifact_category": {
                                         "description": "Artifact category.",
@@ -439,6 +480,10 @@
                                         "description": "URL to artifact within Google Bucket.",
                                         "type": "string"
                                     },
+                                    "upload_placeholder": {
+                                        "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                        "type": "string"
+                                    },
                                     "uploaded_timestamp": {
                                         "description": "Timestamp of when artfiact was loaded into the system.",
                                         "format": "date-time",
@@ -456,15 +501,6 @@
                                         "type": "boolean"
                                     }
                                 },
-                                "required": [
-                                    "file_name",
-                                    "object_url",
-                                    "uploaded_timestamp",
-                                    "file_size_bytes",
-                                    "md5_hash",
-                                    "artifact_category",
-                                    "file_type"
-                                ],
                                 "title": "Artifact Core",
                                 "type": "object"
                             },
@@ -496,6 +532,23 @@
                                 "$id": "artifact_core",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "description": "Any file artifact associated with a clinical trial.",
+                                "oneOf": [
+                                    {
+                                        "required": [
+                                            "file_name",
+                                            "object_url",
+                                            "uploaded_timestamp",
+                                            "file_size_bytes",
+                                            "md5_hash",
+                                            "artifact_category"
+                                        ]
+                                    },
+                                    {
+                                        "required": [
+                                            "upload_placeholder"
+                                        ]
+                                    }
+                                ],
                                 "properties": {
                                     "artifact_category": {
                                         "description": "Artifact category.",
@@ -533,6 +586,10 @@
                                         "description": "URL to artifact within Google Bucket.",
                                         "type": "string"
                                     },
+                                    "upload_placeholder": {
+                                        "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                        "type": "string"
+                                    },
                                     "uploaded_timestamp": {
                                         "description": "Timestamp of when artfiact was loaded into the system.",
                                         "format": "date-time",
@@ -550,15 +607,6 @@
                                         "type": "boolean"
                                     }
                                 },
-                                "required": [
-                                    "file_name",
-                                    "object_url",
-                                    "uploaded_timestamp",
-                                    "file_size_bytes",
-                                    "md5_hash",
-                                    "artifact_category",
-                                    "file_type"
-                                ],
                                 "title": "Artifact Core",
                                 "type": "object"
                             },
@@ -590,6 +638,23 @@
                                 "$id": "artifact_core",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "description": "Any file artifact associated with a clinical trial.",
+                                "oneOf": [
+                                    {
+                                        "required": [
+                                            "file_name",
+                                            "object_url",
+                                            "uploaded_timestamp",
+                                            "file_size_bytes",
+                                            "md5_hash",
+                                            "artifact_category"
+                                        ]
+                                    },
+                                    {
+                                        "required": [
+                                            "upload_placeholder"
+                                        ]
+                                    }
+                                ],
                                 "properties": {
                                     "artifact_category": {
                                         "description": "Artifact category.",
@@ -627,6 +692,10 @@
                                         "description": "URL to artifact within Google Bucket.",
                                         "type": "string"
                                     },
+                                    "upload_placeholder": {
+                                        "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                        "type": "string"
+                                    },
                                     "uploaded_timestamp": {
                                         "description": "Timestamp of when artfiact was loaded into the system.",
                                         "format": "date-time",
@@ -644,15 +713,6 @@
                                         "type": "boolean"
                                     }
                                 },
-                                "required": [
-                                    "file_name",
-                                    "object_url",
-                                    "uploaded_timestamp",
-                                    "file_size_bytes",
-                                    "md5_hash",
-                                    "artifact_category",
-                                    "file_type"
-                                ],
                                 "title": "Artifact Core",
                                 "type": "object"
                             },
@@ -684,6 +744,23 @@
                                 "$id": "artifact_core",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "description": "Any file artifact associated with a clinical trial.",
+                                "oneOf": [
+                                    {
+                                        "required": [
+                                            "file_name",
+                                            "object_url",
+                                            "uploaded_timestamp",
+                                            "file_size_bytes",
+                                            "md5_hash",
+                                            "artifact_category"
+                                        ]
+                                    },
+                                    {
+                                        "required": [
+                                            "upload_placeholder"
+                                        ]
+                                    }
+                                ],
                                 "properties": {
                                     "artifact_category": {
                                         "description": "Artifact category.",
@@ -721,6 +798,10 @@
                                         "description": "URL to artifact within Google Bucket.",
                                         "type": "string"
                                     },
+                                    "upload_placeholder": {
+                                        "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                        "type": "string"
+                                    },
                                     "uploaded_timestamp": {
                                         "description": "Timestamp of when artfiact was loaded into the system.",
                                         "format": "date-time",
@@ -738,15 +819,6 @@
                                         "type": "boolean"
                                     }
                                 },
-                                "required": [
-                                    "file_name",
-                                    "object_url",
-                                    "uploaded_timestamp",
-                                    "file_size_bytes",
-                                    "md5_hash",
-                                    "artifact_category",
-                                    "file_type"
-                                ],
                                 "title": "Artifact Core",
                                 "type": "object"
                             },
@@ -782,6 +854,23 @@
                                 "$id": "artifact_core",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "description": "Any file artifact associated with a clinical trial.",
+                                "oneOf": [
+                                    {
+                                        "required": [
+                                            "file_name",
+                                            "object_url",
+                                            "uploaded_timestamp",
+                                            "file_size_bytes",
+                                            "md5_hash",
+                                            "artifact_category"
+                                        ]
+                                    },
+                                    {
+                                        "required": [
+                                            "upload_placeholder"
+                                        ]
+                                    }
+                                ],
                                 "properties": {
                                     "artifact_category": {
                                         "description": "Artifact category.",
@@ -819,6 +908,10 @@
                                         "description": "URL to artifact within Google Bucket.",
                                         "type": "string"
                                     },
+                                    "upload_placeholder": {
+                                        "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                        "type": "string"
+                                    },
                                     "uploaded_timestamp": {
                                         "description": "Timestamp of when artfiact was loaded into the system.",
                                         "format": "date-time",
@@ -836,15 +929,6 @@
                                         "type": "boolean"
                                     }
                                 },
-                                "required": [
-                                    "file_name",
-                                    "object_url",
-                                    "uploaded_timestamp",
-                                    "file_size_bytes",
-                                    "md5_hash",
-                                    "artifact_category",
-                                    "file_type"
-                                ],
                                 "title": "Artifact Core",
                                 "type": "object"
                             },
@@ -880,6 +964,23 @@
                                 "$id": "artifact_core",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "description": "Any file artifact associated with a clinical trial.",
+                                "oneOf": [
+                                    {
+                                        "required": [
+                                            "file_name",
+                                            "object_url",
+                                            "uploaded_timestamp",
+                                            "file_size_bytes",
+                                            "md5_hash",
+                                            "artifact_category"
+                                        ]
+                                    },
+                                    {
+                                        "required": [
+                                            "upload_placeholder"
+                                        ]
+                                    }
+                                ],
                                 "properties": {
                                     "artifact_category": {
                                         "description": "Artifact category.",
@@ -917,6 +1018,10 @@
                                         "description": "URL to artifact within Google Bucket.",
                                         "type": "string"
                                     },
+                                    "upload_placeholder": {
+                                        "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                        "type": "string"
+                                    },
                                     "uploaded_timestamp": {
                                         "description": "Timestamp of when artfiact was loaded into the system.",
                                         "format": "date-time",
@@ -934,15 +1039,6 @@
                                         "type": "boolean"
                                     }
                                 },
-                                "required": [
-                                    "file_name",
-                                    "object_url",
-                                    "uploaded_timestamp",
-                                    "file_size_bytes",
-                                    "md5_hash",
-                                    "artifact_category",
-                                    "file_type"
-                                ],
                                 "title": "Artifact Core",
                                 "type": "object"
                             },
@@ -983,6 +1079,23 @@
                     "$id": "artifact_core",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "description": "Any file artifact associated with a clinical trial.",
+                    "oneOf": [
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "md5_hash",
+                                "artifact_category"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "upload_placeholder"
+                            ]
+                        }
+                    ],
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -1020,6 +1133,10 @@
                             "description": "URL to artifact within Google Bucket.",
                             "type": "string"
                         },
+                        "upload_placeholder": {
+                            "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                            "type": "string"
+                        },
                         "uploaded_timestamp": {
                             "description": "Timestamp of when artfiact was loaded into the system.",
                             "format": "date-time",
@@ -1037,15 +1154,6 @@
                             "type": "boolean"
                         }
                     },
-                    "required": [
-                        "file_name",
-                        "object_url",
-                        "uploaded_timestamp",
-                        "file_size_bytes",
-                        "md5_hash",
-                        "artifact_category",
-                        "file_type"
-                    ],
                     "title": "Artifact Core",
                     "type": "object"
                 },

@@ -64,21 +64,36 @@
             
         
             
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
                 <tr>
     <td>
         
-            <span id="file_name">
-                file_name
+            <span id="upload_placeholder">
+                upload_placeholder
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
     <td width=55%>
         
-            The name of the file with extension
-                <div><small>_____!!!_____ What if file name contains PHI? _____!!!_____</small></div>
+            
+                <div><small>_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____</small></div>
             
         
     </td>
@@ -99,190 +114,6 @@
     </td>
 </tr>
             
-        
-            
-                <tr>
-    <td>
-        
-            <span id="object_url">
-                object_url
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            URL to artifact within Google Bucket.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="uploaded_timestamp">
-                uploaded_timestamp
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Timestamp of when artfiact was loaded into the system.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-     :  date-time
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="file_size_bytes">
-                file_size_bytes
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            File size in bytes.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                integer 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="md5_hash">
-                md5_hash
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            MD5 Hash of artifact.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="artifact_category">
-                artifact_category
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Artifact category.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-                    <li>"Assay Artifact from CIMAC"</li>
-                
-                    <li>"Pipeline Artifact"</li>
-                
-                    <li>"Manifest File"</li>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
         
             
                 <tr>
@@ -392,13 +223,170 @@
             
         
             
+                <tr>
+    <td>
         
+            <span id="file_name">
+                file_name
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The name of the file with extension
+                <div><small>_____!!!_____ What if file name contains PHI? _____!!!_____</small></div>
+            
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
             
         
             
+                <tr>
+    <td>
         
+            <span id="object_url">
+                object_url
+            </span>
             
         
+    </td>
+    <td width=55%>
+        
+            URL to artifact within Google Bucket.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="uploaded_timestamp">
+                uploaded_timestamp
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Timestamp of when artfiact was loaded into the system.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+     :  date-time
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="file_size_bytes">
+                file_size_bytes
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            File size in bytes.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                integer 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="md5_hash">
+                md5_hash
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            MD5 Hash of artifact.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
             
         
             
@@ -435,6 +423,43 @@
             
         
             
+                <tr>
+    <td>
+        
+            <span id="artifact_category">
+                artifact_category
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Artifact category.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Assay Artifact from CIMAC"</li>
+                
+                    <li>"Pipeline Artifact"</li>
+                
+                    <li>"Manifest File"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
         
     </table>
 
@@ -447,6 +472,23 @@
     "$id": "artifact_core",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "Any file artifact associated with a clinical trial.",
+    "oneOf": [
+        {
+            "required": [
+                "file_name",
+                "object_url",
+                "uploaded_timestamp",
+                "file_size_bytes",
+                "md5_hash",
+                "artifact_category"
+            ]
+        },
+        {
+            "required": [
+                "upload_placeholder"
+            ]
+        }
+    ],
     "properties": {
         "artifact_category": {
             "description": "Artifact category.",
@@ -484,6 +526,10 @@
             "description": "URL to artifact within Google Bucket.",
             "type": "string"
         },
+        "upload_placeholder": {
+            "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+            "type": "string"
+        },
         "uploaded_timestamp": {
             "description": "Timestamp of when artfiact was loaded into the system.",
             "format": "date-time",
@@ -501,15 +547,6 @@
             "type": "boolean"
         }
     },
-    "required": [
-        "file_name",
-        "object_url",
-        "uploaded_timestamp",
-        "file_size_bytes",
-        "md5_hash",
-        "artifact_category",
-        "file_type"
-    ],
     "title": "Artifact Core",
     "type": "object"
 }</code></pre>

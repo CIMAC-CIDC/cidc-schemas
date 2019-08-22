@@ -101,6 +101,11 @@
             "Tissue": {
                 "data_columns": {
                     "Filled by Biorepository": {
+                        "aliquot amount": {
+                            "$comment": "RECHECK Should this be moved to the sample level or renamed?",
+                            "description": "The amount of extracted aliquot shipped. Example: 400 ng",
+                            "type": "string"
+                        },
                         "arm id": {
                             "description": "Identifies the trial arm to which the participant belongs. Example: Arm A.",
                             "type": "string"
@@ -151,11 +156,6 @@
                                 "cfDNA",
                                 "Other"
                             ],
-                            "type": "string"
-                        },
-                        "sample amount": {
-                            "$comment": "RECHECK Should this be moved to the sample level or renamed?",
-                            "description": "The amount of extracted aliquot shipped. Example: 400 ng",
                             "type": "string"
                         },
                         "sample location": {
@@ -214,6 +214,36 @@
                         }
                     },
                     "Filled by CIMAC Lab": {
+                        "aliquot quality status": {
+                            "description": "Final status of aliquot after QC and pathology review.",
+                            "enum": [
+                                "Usable for Assay",
+                                "Not Usable for Assay",
+                                "Verifying",
+                                "Other"
+                            ],
+                            "type": "string"
+                        },
+                        "aliquot replacement": {
+                            "description": "Status of aliquot if replacement is/was requested.",
+                            "enum": [
+                                "Replacement Requested",
+                                "Replacement Tested",
+                                "N/A"
+                            ],
+                            "type": "string"
+                        },
+                        "aliquot status": {
+                            "description": "Status of aliquot used for other assay, exhausted, destroyed, or returned.",
+                            "enum": [
+                                "Aliquot Returned",
+                                "Aliquot Exhausted",
+                                "Remainder used for other Assay",
+                                "Other",
+                                "Aliquot Leftover"
+                            ],
+                            "type": "string"
+                        },
                         "cimac aliquot id": {
                             "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
                             "type": "string"
@@ -225,36 +255,6 @@
                         "material used": {
                             "description": "Receiving site indicates how much material was used for assay purposes.",
                             "type": "number"
-                        },
-                        "sample quality status": {
-                            "description": "Final status of aliquot after QC and pathology review.",
-                            "enum": [
-                                "Usable for Assay",
-                                "Not Usable for Assay",
-                                "Verifying",
-                                "Other"
-                            ],
-                            "type": "string"
-                        },
-                        "sample replacement": {
-                            "description": "Status of aliquot if replacement is/was requested.",
-                            "enum": [
-                                "Replacement Requested",
-                                "Replacement Tested",
-                                "N/A"
-                            ],
-                            "type": "string"
-                        },
-                        "sample status": {
-                            "description": "Status of aliquot used for other assay, exhausted, destroyed, or returned.",
-                            "enum": [
-                                "Aliquot Returned",
-                                "Aliquot Exhausted",
-                                "Remainder used for other Assay",
-                                "Other",
-                                "Aliquot Leftover"
-                            ],
-                            "type": "string"
                         }
                     }
                 },

@@ -172,6 +172,8 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
+                        "cimac_participant_id":     "PA 1",
+                        "cimac_sample_id":          "SA 1.1",
                         "cimac_aliquot_id":         "AL 1.1.1",
                         "files": {
                             "fastq_1":{
@@ -180,8 +182,7 @@
                                 "uploaded_timestamp" :  "...",
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "file_type" :           "FASTQ"
+                                "artifact_category" :   "Assay Artifact from CIMAC"
                             },
                             "fastq_2":{
                                 "file_name" :           "...",
@@ -189,8 +190,7 @@
                                 "uploaded_timestamp" :  "...",
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "file_type" :           "FASTQ"
+                                "artifact_category" :   "Assay Artifact from CIMAC"
                             },
                             "read_group_mapping_file":{
                                 "file_name" :           "...",
@@ -198,8 +198,7 @@
                                 "uploaded_timestamp" :  "...",
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "file_type" :           "Other"
+                                "artifact_category" :   "Assay Artifact from CIMAC"
                             }
                         }
                     }, 
@@ -207,6 +206,8 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
+                        "cimac_participant_id":     "PA 1",
+                        "cimac_sample_id":          "SA 1.2",
                         "cimac_aliquot_id":         "AL 1.2.1",
                         "files": {
                             "fastq_1":{
@@ -251,6 +252,8 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
+                        "cimac_participant_id":     "PA 2",
+                        "cimac_sample_id":          "SA 2.1",
                         "cimac_aliquot_id":         "AL 2.1.1",
                         "files": {
                             "fastq_1":{
@@ -286,6 +289,8 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
+                        "cimac_participant_id":     "PA 2",
+                        "cimac_sample_id":          "SA 2.2",
                         "cimac_aliquot_id":         "AL 2.2.1",
                         "files": {
                             "fastq_1":{

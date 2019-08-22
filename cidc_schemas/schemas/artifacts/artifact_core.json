@@ -5,6 +5,10 @@
   "type": "object",
   "description": "Any file artifact associated with a clinical trial.",
   "properties": {
+    "upload_placeholder": {
+      "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+      "type": "string"
+    },
     "artifact_creator": {
       "description": "The name of the center that created this artificat",
       "type": "string",
@@ -53,13 +57,21 @@
       ]
     }
   },
-  "required": [
-    "file_name",
-    "object_url",
-    "uploaded_timestamp",
-    "file_size_bytes",
-    "md5_hash",
-    "artifact_category",
-    "file_type"
+  "oneOf": [
+    {
+      "required": [
+        "file_name",
+        "object_url",
+        "uploaded_timestamp",
+        "file_size_bytes",
+        "md5_hash",
+        "artifact_category"
+      ]
+    },
+    {
+      "required": [
+        "upload_placeholder"
+      ]
+    }
   ]
 }

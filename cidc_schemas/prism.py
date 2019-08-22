@@ -109,13 +109,6 @@ def _load_keylookup(template_path: str) -> dict:
                 # we expect column_def from `_template.json` have 2 fields
                 # (as for template.schema) - "merge_pointer" and "type_ref"
 
-
-    # # special case for wes keys.
-    # if 'wes' in template_path:
-    #     ref = "assays/components/ngs/ngs_assay_record.json#properties/cimac_aliquot_id"
-    #     data_key = "cimac_aliquot_id"
-    #     populate_lu(ref, key_lu, data_key)
-
     return key_lu
 
 
@@ -196,28 +189,44 @@ def _set_val(pointer: str, val: object, trial: dict, verbose=False):
             # but we need to look ahead to figure out
             # a proper type that need to be created
             if i+1 == len(jpoint.parts):
-                raise NotImplementedError(f'no next_part in jsonpointer{pointer}')
+                raise Exception(f'no next_part in jsonpointer {pointer}')
 
             next_part = jpoint.parts[i+1]
             
             typed_part = jpoint.get_part(doc, part)
-            # `part` looks like array index, so create array
+
+            # `next_part` looks like array index like"[0]"
             if jpoint._RE_ARRAY_INDEX.match(str(next_part)):
-                insert = []
+                # so create array
+                next_thing = []
             # or just dict as default
             else:
-                insert = {}
+                next_thing = {}
+            
             try:
-                doc[typed_part] = insert
+                doc[typed_part] = next_thing          
+            # if it's an empty array - we get an error 
+            # when we try to paste to [0] index,
+            # so just append then
             except IndexError:
-                doc.append(insert)
+                doc.append(next_thing)
 
             # now we `walk` it again - this time should be ok
             doc = jpoint.walk(doc, part)
 
-    # now we update it
-    doc[jpoint.parts[-1]] = val
+    last_part = jpoint.parts[-1]
+    typed_last_part = jpoint.get_part(doc, last_part)
 
+    # now we update it with val
+    try:
+        doc[typed_last_part] = val          
+    # if it's an empty array - we get an error 
+    # when we try to paste to [0] index,
+    # so just append then
+    except IndexError:
+        doc.append(val)
+
+    # return whole thing
     return trial
 
 

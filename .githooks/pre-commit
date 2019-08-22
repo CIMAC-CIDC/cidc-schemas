@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+
+import openpyxl
+import csv
+import os
+import sys
+import subprocess
+
+def system(*args, **kwargs):
+    kwargs.setdefault('stdout', subprocess.PIPE)
+    proc = subprocess.Popen(args, **kwargs)
+    out, err = proc.communicate()
+    return out
+
+
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
+
+def rtrim(seq):
+    res = []
+    iter = reversed(seq)
+    for i in iter:
+        if i:
+            res.append(i)
+            break
+    res.extend(iter)
+    return type(seq)(reversed(res))
+
+def csv_from_excel(xlsx_path):
+    csv_fnames = []
+
+    wb = openpyxl.load_workbook(xlsx_path)
+
+    for worksheet_name in wb.sheetnames:
+        worksheet = wb[worksheet_name]
+            
+        csv_fname = xlsx_path[:-5]+'__'+worksheet_name.replace(' ', '_')+'.csv'
+        eprint(f'writing {csv_fname}')
+        with open(csv_fname, 'w') as csv_file:
+            wr = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
+
+            for row in worksheet.iter_rows(values_only=True):
+                trimmed_row = rtrim(row)
+                if len(trimmed_row) == 1: #only first cell with row type
+                    continue #skip empty rows
+                wr.writerow(trimmed_row)
+
+        csv_fnames.append(csv_fname)
+    return csv_fnames
+
+def main():
+    for template_example in os.listdir('./template_examples/'):
+        if not template_example.endswith('.xlsx') or template_example.startswith('~$'):
+            continue
+
+        eprint(f'processing {template_example}')
+        csv_fns = csv_from_excel(os.path.join('./template_examples/', template_example))
+        for fn in csv_fns:
+            system('git', 'add', fn)
+
+main()

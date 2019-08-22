@@ -427,24 +427,6 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
     return cur_obj, local_file_paths
 
 
-def _deep_get(obj: dict, key: str):
-    """
-    returns value of they supplied key
-    gotten via deepdif
-    """
-
-    # tokenize.
-    key = key.replace("root", "").replace("'", "")
-    tokens = re.findall(r"\[(.*?)\]", key)
-
-    # keep getting based on the key.
-    cur_obj = obj
-    for token in tokens:
-        cur_obj = cur_obj[token]
-
-    return cur_obj, tokens[-2]
-
-
 def _get_path(ct: dict, key: str) -> str:
     """
     find the path to the given key in the dictionary

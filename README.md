@@ -28,8 +28,18 @@ pip install git+https://github.com/cimac-cidc/cidc-schemas
     - `templates/` - schemas for generating and validating manifest and assay templates.
     - `assays/` - schemas defining assay data models
 - **`docs/`** - the most recent build of the data model documentation, along with templates and scripts for re-generating the documentation.
-- **`template_examples/`** - example populated Excel files for template specifications in `schemas/templates`.
+- **`template_examples/`** - example populated Excel files for template specifications in `schemas/templates`, and `.csv`s auto-generated from those `.xlsx`s that allow to transparently keep track of changes in them.
 - **`tests/`** - tests for the `cidc_schemas` module.
+- **`.githooks/`** - git hooks, e.g. for auto-generate `.csv`s in `template_examples/`.
+
+### Setting up git hooks
+
+This repository contains git hooks in the `.githooks` folder. After cloning it
+it's recommended to configure those hooks with
+
+```bash
+git config core.hooksPath .githooks
+```
 
 ### Running tests
 

@@ -50,20 +50,27 @@ def csv_from_excel(xlsx_path):
     return csv_fnames
 
 def main():
+    csvs = set()
+    generated_csvs = set()
     for template_example in os.listdir('./template_examples/'):
         #remove any .csv in there, so nothing old will be left
         if template_example.endswith('.csv'):
-            os.remove(os.path.join('./template_examples/', template_example))
+            csvs.add(os.path.join('./template_examples/', template_example))
 
         # '~$xxx.xlsx' is something like lockfiles for Excel
         if not template_example.endswith('.xlsx') or template_example.startswith('~$'):
             continue
 
         #eprint(f'processing {template_example}')
-        csv_fns = csv_from_excel(os.path.join('./template_examples/', template_example))
-        for fn in csv_fns:
-            output, err = system('git', 'add', fn)
+        csv_fnames = csv_from_excel(os.path.join('./template_examples/', template_example))
+        generated_csvs.update(csv_fnames)
+        for fname in csv_fnames:
+            output, err = system('git', 'add', fname)
             if output: print(output)
             if err: eprint(err)
+
+    if csvs.difference(generated_csvs):
+        sys.exit("Extra (non auto-gen) .csv's in 'template_examples/' "\
+            "remove them to proceed:\n\t"+ '\n\t'.join(csvs.difference(generated_csvs)))
 
 main()

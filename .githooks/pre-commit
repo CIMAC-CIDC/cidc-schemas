@@ -10,7 +10,7 @@ def system(*args, **kwargs):
     kwargs.setdefault('stdout', subprocess.PIPE)
     proc = subprocess.Popen(args, **kwargs)
     out, err = proc.communicate()
-    return out
+    return out, err
 
 
 def eprint(*args, **kwargs):
@@ -36,7 +36,7 @@ def csv_from_excel(xlsx_path):
         worksheet = wb[worksheet_name]
             
         csv_fname = xlsx_path[:-5]+'__'+worksheet_name.replace(' ', '_')+'.csv'
-        eprint(f'writing {csv_fname}')
+        #eprint(f'writing {csv_fname}')
         with open(csv_fname, 'w') as csv_file:
             wr = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
 
@@ -51,12 +51,19 @@ def csv_from_excel(xlsx_path):
 
 def main():
     for template_example in os.listdir('./template_examples/'):
+        #remove any .csv in there, so nothing old will be left
+        if template_example.endswith('.csv'):
+            os.remove(os.path.join('./template_examples/', template_example))
+
+        # '~$xxx.xlsx' is something like lockfiles for Excel
         if not template_example.endswith('.xlsx') or template_example.startswith('~$'):
             continue
 
-        eprint(f'processing {template_example}')
+        #eprint(f'processing {template_example}')
         csv_fns = csv_from_excel(os.path.join('./template_examples/', template_example))
         for fn in csv_fns:
-            system('git', 'add', fn)
+            output, err = system('git', 'add', fn)
+            if output: print(output)
+            if err: eprint(err)
 
 main()

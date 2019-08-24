@@ -1,7 +1,6 @@
 "#t","METADATA FILE FOR WES"
 "#p","LEAD ORGANIZATION STUDY ID","10021"
 "#p","ASSAY CREATOR","Mount Sinai"
-"#p","ASSAY CATEGORY","Whole Exome Sequencing (WES)"
 "#p","ENRICHMENT KIT","Twist"
 "#p","LIBRARY KIT VENDOR","KAPA - Hyper Prep"
 "#p","SEQUENCER PLATFORM","Illumina - NextSeq 550"
@@ -9,6 +8,6 @@
 "#p","READ LENGTH","100"
 
 "","Samples"
-"#h","CIMAC PARTICIPANT ID","CIMAC SAMPLE ID","CIMAC ALIQUOT ID","GENOMIC SOURCE","LIBRARY KIT LOT","ENRICHMENT LOT","LIBRARY PREP DATE","CAPTURE DATE","DNA INPUT NG","LIBRARY YIELD NG","AVERAGE INSERT SIZE","FORWARD FASTQ","REVERSE FASTQ","READ GROUP MAPPING FILE"
-"#d","Patient 1","sample 1","aliquot 1","Tumor","lot abc","lot 123","2019-05-01 00:00:00","2019-05-02 00:00:00","100","700","250","gs://path/to/fwd.fastq","gs://path/to/rev.fastq","gs://path/to/read_group_map.txt"
-"#d","Patient 1","sample 1","aliquot 2","Normal","lot abc","lot 123","2019-05-01 00:00:00","2019-05-02 00:00:00","100","700","250","gs://path/to/fwd.fastq","gs://path/to/rev.fastq","gs://path/to/read_group_map.txt"
+"#h","CIMAC PARTICIPANT ID","CIMAC SAMPLE ID","CIMAC ALIQUOT ID","LIBRARY KIT LOT","ENRICHMENT LOT","LIBRARY PREP DATE","CAPTURE DATE","DNA INPUT NG","LIBRARY YIELD NG","AVERAGE INSERT SIZE","FORWARD FASTQ","REVERSE FASTQ","READ GROUP MAPPING FILE"
+"#d","wes example PA 1","wes example SA 1.1","wes example aliquot 1.1.1","l lot 1.1.1","e lot 1.1.1","2019-05-01 00:00:00","2019-05-02 00:00:00","101","701","251","/local/path/to/fwd.1.1.1.fastq","/local/path/to/rev.1.1.1.fastq","/local/path/to/rgm.1.1.1.txt"
+"#d","wes example PA 2","wes example SA 2.1","wes example aliquot 1.2.1","l loc 1.2.1","e lot 1.2.1","2019-05-01 00:00:00","2019-05-02 00:00:00","102","702","252","/local/path/to/fwd.1.2.1.fastq","/local/path/to/rev.1.2.1.fastq","/local/path/to/rgm.1.2.1.txt"

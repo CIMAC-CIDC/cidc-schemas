@@ -284,7 +284,7 @@ def _process_property(
             "gs_key": gs_key
         }
         if field_def.get('is_artifact'):
-            res['/upload_placeholder'] = val
+            res['upload_placeholder'] = val
         return res
     
 def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = False) -> (dict, dict):
@@ -316,6 +316,98 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = F
         (tuple):
             arg1: clinical trial object with data parsed from spreadsheet
             arg2: list of objects which describe each file identified.
+
+    Process:
+
+    * checks out `prism_preamble_object_pointer` which is a "standard"/absolute
+    rfc6901 json-pointer from CT root object to a new assay location. 
+
+    E.g. for WES it is `/assays/wes/0`, in DeepDiff terms `ct["assays"]["wes"][0]`
+
+
+    * creates such "parent/preamble" object. 
+
+    E.g. for WES an object that corresponds to a wes_assay will be created:
+        {
+          "assays": {
+            "wes": [
+              {
+                ...    # we're here - this is "preamble" obj = "assay" obj
+              }
+            ]
+          }
+        }
+
+
+    * then processes all "preamble_rows" properties from "..._template.json" 
+    to fill object's properties. It uses "merge_pointer"s relative to this 
+    "parent/preamble" object to determine exact location where to set value. 
+    In most cases it's just "0/field_name". Where "0" denotes that "field_name"
+    is a field in the current object. 
+    With exception - "3/lead_organization_study_id" which says basically 
+    "go 3 levels up in the hierarchy and take lead_org_study_id field". 
+
+    E.g. WES:
+        {
+          "lead_organization_study_id": "4412" # from `3/lead_organization_study_id`
+          "assays": {
+            "wes": [
+              {
+                "assay_creator": "DFCI" # from `0/assay_creator`
+              }
+            ]
+          }
+        }
+
+
+    * then it goes in a loop over all "record" rows in .xlsx, and creates 
+    an object within that "parent" object for each row. These "record-objects"
+    are created at "prism_data_object_pointer" location relative to "preamble".
+    
+    E.g. for WES: `"prism_data_object_pointer" : "/records/-"`
+        {
+          "assays": {
+            "wes": [
+              {
+                "assay_creator": "DFCI",
+                "records": [
+                  {
+                    ...    # we're here - this is "record" obj = "assay entry" obj
+                  }
+                ]
+              }
+            ]
+          }
+        }
+    NB Minus sign at the end of "/records/-" is a special relative-json-pointer
+    notation that means we need to create new object in an 'record' array. 
+    So it's like if python's `l.append(v)` would've been `l[-] = v`.
+
+
+    * Prism now uses those "merge_pointer" relative to this "record" object, 
+    to populate field values of a "record" in the same way as with "preamble".
+
+    E.g. for WES: `"prism_data_object_pointer" : "/records/-"`
+        {
+          "assays": {
+            "wes": [
+              {
+                "assay_creator": "DFCI",
+                "records": [
+                  {
+                    "cimac_aliquot_id": ...         # from "0/cimac_aliquot_id", 
+                    "enrichment_vendor_lot": ...    # from "0/enrichment_vendor_lot", 
+                    "capture_date": ...             # from "0/capture_date", 
+                  }
+                ]
+              }
+            ]
+          }
+        }
+
+    * Finally, as there were many "records" object created/populated, 
+    Prism now uses `prism_preamble_object_schema` to merge all that together
+    with respect to `mergeStrategy`es defined in that schema.
     """
 
     # data rows will require a unique identifier
@@ -380,18 +472,16 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = F
         _set_val(preamble_object_pointer, preamble_obj, root_ct_obj, verb=verb)
         # Compare preamble rows
         for row in ws[RowType.PREAMBLE]:
-
-            # TODO maybe use preamble merger as well?
             # process this property
             new_file = _process_property(row, assay_hint, xlsx_template.key_lu, preamble_obj, root_ct_obj, preamble_object_pointer, verb=verb)
+            # TODO we might want to use preamble_merger here too,
+            # to for complex properites that require mergeStrategy 
+            
             if new_file:
                 local_file_paths.append(new_file)
 
-    if verb:
-        print({k:len(v) for k,v in root_ct_obj['assays'].items()})
 
-    # assert False and i<1, ([r['files'] for r in preamble_obj.get("records",[])])
-    # return the object.
+    # return root object and files list
     return root_ct_obj, local_file_paths
 
 
@@ -415,13 +505,13 @@ def _get_path(ct: dict, key: str) -> str:
 
     # the hack fails if both work... probably need to deal with this
     if count1 == 0:
-        raise NotImplementedError(f"key: {key} not found in dictionary")
+        raise KeyError(f"key: {key} not found")
 
     # get the keypath
     return ds1['matched_values'].pop()
 
 
-def _get_source(ct: dict, key: str, slice=None) -> dict:
+def _get_source(ct: dict, key: str, skip_last=None) -> dict:
     """
     extract the object in the dicitionary specified by
     the supplied key (or one of its parents.)
@@ -429,8 +519,7 @@ def _get_source(ct: dict, key: str, slice=None) -> dict:
     Args:
         ct: clinical_trial object to be searched
         key: the identifier we are looking for in the dictionary,
-        slice: how many levels down we want to go, usually will be 
-            negative 
+        skip_last: how many levels at the end of key path we want to skip.
 
     Returns:
         arg1: string describing the location of the key
@@ -440,7 +529,8 @@ def _get_source(ct: dict, key: str, slice=None) -> dict:
     key = key.replace("root", "").replace("'", "")
     tokens = re.findall(r"\[(.*?)\]", key)
 
-    tokens = tokens[0:slice]
+    if skip_last:
+        tokens = tokens[0:-1*skip_last]
     
     # keep getting based on the key.
     cur_obj = ct
@@ -494,25 +584,40 @@ def _merge_artifact_wes(
     
     all_WESes = ct.get('assays',{}).get('wes',[])
 
-    ## TODO use jsonpointer maybe? 
-    # get the wes record by aliquot_id.
-    record_path = _get_path(all_WESes, wes_object.cimac_aliquot_id)
+    # get the wes record by aliquot_id
+    aliquot_id_field_path = _get_path(all_WESes, wes_object.cimac_aliquot_id)
+    ## TODO consider refactoring that using something else
+    ## instead of using errorprone deepdiff.grep.
+    ## We might use uuid's written into `upload_placeholder`
+    ## or any other way to specify exactly where loaded data file info
+    ## should endup being ingected into metadata.
+    ## Jsonpointer might work, but as long as we're using array for wes.records
+    ## json pointer will look like /assays/wes/{int}/records/{int}
+    ## this might be error-prone wrt to merging on those "int" indexes.
+    ## Which won't be a problem if arrays will get removed from data model. 
 
-    # slice=-1 is for go one level up from 'cimac_aliquot_id' field to it's parent record 
-    record_obj = _get_source(all_WESes, record_path, slice=-1)
+
+    # As "aliquot_id_field_path" contains path to a field with aliquot_id,
+    # we're looking for a record that contains, not the "string" field itself
+    # That's why we need skip_last=1, to get 1 "level" higher 
+    # from 'cimac_aliquot_id' field to it's parent - record obj. 
+    record_obj = _get_source(all_WESes, aliquot_id_field_path, skip_last=1)
 
     assert record_obj['cimac_aliquot_id'] == wes_object.cimac_aliquot_id
     assert record_obj['cimac_sample_id'] == wes_object.cimac_sample_id
     assert record_obj['cimac_participant_id'] == wes_object.cimac_participant_id
 
     # modify inplace
-    # TODO maybe use merger(template['prism_preamble_object_schema']) 
-    ## as we don't `copy.deepcopy(ct)`+`merge` - just return it
     record_obj['files'][wes_object.file_name] = artifact
+    # TODO consider using use merger with template['prism_preamble_object_schema']
+    # instead of overwriting it in-place. It will keep 'upload_placeholder' etc.
+    # That might be needed for complex artifacts, that use mergeStrategy.
 
     ## we skip that because we didn't check `ct` on start
     # validator.validate(ct)
 
+    # as we didn't `copy.deepcopy(ct)` beforehand and modified in-place 
+    # we just return it modified
     return ct
 
 

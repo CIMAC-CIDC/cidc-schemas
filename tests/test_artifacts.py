@@ -37,6 +37,52 @@ def _fetch_validator(name):
     return jsonschema.Draft7Validator(schema)
 
 
+def test_upload_placeholder_oneOf_required():
+    """
+    Tests whether json schema allows to use something like
+        "oneOf": [
+          {
+            "required": [
+              "file_name",
+              "object_url",
+              "uploaded_timestamp",
+              "file_size_bytes",
+              "md5_hash",
+              "artifact_category"
+            ]
+          },
+          {
+            "required": [
+              "upload_placeholder"
+            ]
+          }
+        ]
+    """
+
+    # create validator assert schemas are valid.
+    obj = BASE_OBJ.copy()
+    at_validator = _fetch_validator("core")
+    at_validator.validate(obj)
+
+    # assert we can fail it.
+    del obj["file_name"]
+    del obj["object_url"]
+    del obj["uploaded_timestamp"]
+    del obj["file_size_bytes"]
+    del obj["md5_hash"]
+    del obj["artifact_category"]
+    with pytest.raises(jsonschema.ValidationError):
+        at_validator.validate(obj)
+
+
+    obj['upload_placeholder'] = "some uuid or job_id"
+    at_validator.validate(obj)
+
+    del obj["upload_placeholder"]
+    with pytest.raises(jsonschema.ValidationError):
+        at_validator.validate(obj)
+
+
 def test_text():
 
     # create validator assert schemas are valid.

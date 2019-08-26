@@ -3,16 +3,13 @@
   "$id": "cytof_input",
   "title": "CyTOF Input Files",
   "description": "CyTOF Assay Input Files",
-  "type": "array",
-  "items": {
-    "type": "object",
-    "properties": {
-      "processed_fcs": {
-        "$ref": "artifacts/artifact_binary.json"
-      },
-      "source_fcs": {
-        "$ref": "artifacts/artifact_binary.json"
-      }
+  "type": "object",
+  "properties": {
+    "processed_fcs": {
+      "$ref": "artifacts/artifact_binary.json"
+    },
+    "source_fcs": {
+      "$ref": "artifacts/artifact_binary.json"
     }
   }
 }

@@ -13,10 +13,6 @@ def system(*args, **kwargs):
     return out, err
 
 
-def eprint(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
-
-
 def rtrim(seq):
     res = []
     iter = reversed(seq)
@@ -27,18 +23,17 @@ def rtrim(seq):
     res.extend(iter)
     return type(seq)(reversed(res))
 
-def csv_from_excel(xlsx_path):
-    csv_fnames = []
+def csv_from_excel(xlsx_dir, xslx_fname, csv_dir):
+    csv_files = []
 
-    wb = openpyxl.load_workbook(xlsx_path)
+    wb = openpyxl.load_workbook(os.path.join(xlsx_dir, xslx_fname))
 
     for worksheet_name in wb.sheetnames:
         worksheet = wb[worksheet_name]
             
-        csv_fname = xlsx_path[:-5]+'__'+worksheet_name.replace(' ', '_')+'.csv'
-        #eprint(f'writing {csv_fname}')
-        with open(csv_fname, 'w') as csv_file:
-            wr = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
+        csv_file = os.path.join(csv_dir, xslx_fname[:-5]+'__'+worksheet_name.replace(' ', '_')+'.csv')
+        with open(csv_file, 'w') as fd:
+            wr = csv.writer(fd, quoting=csv.QUOTE_ALL)
 
             for row in worksheet.iter_rows(values_only=True):
                 trimmed_row = rtrim(row)
@@ -46,31 +41,38 @@ def csv_from_excel(xlsx_path):
                     continue #skip empty rows
                 wr.writerow(trimmed_row)
 
-        csv_fnames.append(csv_fname)
-    return csv_fnames
+        csv_files.append(csv_file)
+    return csv_files
 
 def main():
-    csvs = set()
-    generated_csvs = set()
+
+    output, err = system('mkdir', './template_examples/csvs')
+    if output: print(output)
+    if err: 
+        os.exit(err)
+
     for template_example in os.listdir('./template_examples/'):
         #remove any .csv in there, so nothing old will be left
         if template_example.endswith('.csv'):
-            csvs.add(os.path.join('./template_examples/', template_example))
+            output, err = system('rm', os.path.join('./template_examples/', template_example))
+            if output: print(output)
+            if err: 
+                os.exit(err)
+            output, err = system('git', 'rm', os.path.join('./template_examples/', template_example))
+            if output: print(output)
+            if err: 
+                os.exit(err)
 
-        # '~$xxx.xlsx' is something like lockfiles for Excel
+        # '~$___.xlsx' is something like lockfiles for Excel
         if not template_example.endswith('.xlsx') or template_example.startswith('~$'):
             continue
 
-        #eprint(f'processing {template_example}')
-        csv_fnames = csv_from_excel(os.path.join('./template_examples/', template_example))
-        generated_csvs.update(csv_fnames)
+        csv_fnames = csv_from_excel('./template_examples/', template_example, './template_examples/csvs/')
         for fname in csv_fnames:
             output, err = system('git', 'add', fname)
             if output: print(output)
-            if err: eprint(err)
+            if err: 
+                os.exit(err)
 
-    if csvs.difference(generated_csvs):
-        sys.exit("Extra (non auto-gen) .csv's in 'template_examples/' "\
-            "remove them to proceed:\n\t"+ '\n\t'.join(csvs.difference(generated_csvs)))
-
+    
 main()

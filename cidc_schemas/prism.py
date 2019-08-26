@@ -269,8 +269,7 @@ def _process_property(
 
         # TODO should be pretty different for not wes 
         # setup the base path
-        gs_key = ""# _get_recursively(data_obj, "lead_organization_study_id")[0]
-        gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_participant_id")[0]}'
+        gs_key = _get_recursively(data_obj, "cimac_participant_id")[0]
         gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_sample_id")[0]}'
         gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_aliquot_id")[0]}'
 
@@ -517,7 +516,7 @@ def _merge_artifact_wes(
     return ct
 
 
-WesFileUrlParts = namedtuple("FileUrlParts", ["lead_organization_study_id", "cimac_participant_id", \
+WesFileUrlParts = namedtuple("FileUrlParts", ["cimac_participant_id", \
         "cimac_sample_id", "cimac_aliquot_id", "assay", "file_name"]) 
 
 def _split_wes_url(obj_url: str) -> WesFileUrlParts:

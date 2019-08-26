@@ -1,18 +1,12 @@
 import os
-import json
-from typing import List, Dict
-
 import jinja2
-
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.constants import SCHEMA_DIR
-
 
 DOCS_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.join(DOCS_DIR, '..')
 TEMPLATES_DIR = os.path.join(DOCS_DIR, 'templates')
 HTML_DIR = os.path.join(DOCS_DIR, "docs")
-PATH_PREFIX = "schemas"
 
 
 def load_schemas() -> dict:
@@ -41,7 +35,6 @@ def load_schemas() -> dict:
             schema_path = path.replace(".json", ".html").replace("/", ".")
             root_schemas[schema_path] = schema
 
-        relative_root = root.replace(f"{ROOT_DIR}/", "").replace("/", ".")
         relative_root = root.replace(SCHEMA_DIR, "").replace("/", ".")
         relative_root = relative_root.replace(".", "", 1)
         schemas[relative_root] = root_schemas
@@ -66,12 +59,11 @@ def generate_docs(out_directory: str = HTML_DIR):
 
     entity_template = templateEnv.get_template('entity.j2')
     template_template = templateEnv.get_template('template.j2')
-    template_schemas_path = f'{PATH_PREFIX}.templates'
 
     for directory, entity in schemas.items():
 
         # Determine whether these are spreadsheet templates or normal entities
-        if directory == template_schemas_path:
+        if directory in ('templates.manifests', 'templates.metadata'):
             template = template_template
         else:
             template = entity_template

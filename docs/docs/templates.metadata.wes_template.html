@@ -40,9 +40,11 @@
     </div>
 
   <div class="container">
-    <h3>Properties</h3>
     
-        
+      <h3>Worksheet - WES</h3>
+  
+    <h4>Preamble Rows</h4>
+    
         
     
 
@@ -57,11 +59,132 @@
         </thead>
         
             <tr>
-                <td><a name="worksheets"></a>worksheets</td>
+                <td><a name="lead organization study id"></a>lead organization study id</td>
                 <td width=25%>
                     
                 </td>
                 <td>
+                    
+                        <a href="clinical_trial.html#lead_organization_study_id">clinical_trial#lead_organization_study_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="assay creator"></a>assay creator</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.components.assay_core.html#assay_creator">assays.components.assay_core#assay_creator</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="assay category"></a>assay category</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.components.assay_core.html#assay_category">assays.components.assay_core#assay_category</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="enrichment kit"></a>enrichment kit</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.wes_assay.html#enrichment_vendor_kit">assays.wes_assay#enrichment_vendor_kit</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="library kit vendor"></a>library kit vendor</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.components.ngs.html#library_vendor_kit">assays.components.ngs#library_vendor_kit</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="sequencer platform"></a>sequencer platform</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.components.ngs.html#sequencer_platform">assays.components.ngs#sequencer_platform</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="paired end reads"></a>paired end reads</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.components.ngs.html#paired_end_reads">assays.components.ngs#paired_end_reads</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="read length"></a>read length</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.components.ngs.html#read_length">assays.components.ngs#read_length</a>
                     
                 </td>
                 <td>
@@ -72,10 +195,270 @@
             </tr>
         
     </table>
+  
+  
+    <h4>Data Columns</h4>
+    
+      <h5 class="text-muted">Samples</h4>
+      
+        
+    
 
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Required/Optional</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td><a name="cimac participant id"></a>cimac participant id</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="participant.html#cimac_participant_id">participant#cimac_participant_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="cimac sample id"></a>cimac sample id</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="sample.html#cimac_sample_id">sample#cimac_sample_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="cimac aliquot id"></a>cimac aliquot id</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="aliquot.html#cimac_aliquot_id">aliquot#cimac_aliquot_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="genomic source"></a>genomic source</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="sample.html#genomic_source">sample#genomic_source</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="library kit lot"></a>library kit lot</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.components.ngs.ngs_entry.html#library_kit_lot">assays.components.ngs.ngs_entry#library_kit_lot</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="enrichment lot"></a>enrichment lot</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.components.ngs.wes_entry.html#enrichment_vendor_lot">assays.components.ngs.wes_entry#enrichment_vendor_lot</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="library prep date"></a>library prep date</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.components.ngs.ngs_entry.html#library_prep_date">assays.components.ngs.ngs_entry#library_prep_date</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="capture date"></a>capture date</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.components.ngs.wes_entry.html#capture_date">assays.components.ngs.wes_entry#capture_date</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="dna input ng"></a>dna input ng</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.components.ngs.ngs_entry.html#input_ng">assays.components.ngs.ngs_entry#input_ng</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="library yield ng"></a>library yield ng</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.components.ngs.ngs_entry.html#library_yield_ng">assays.components.ngs.ngs_entry#library_yield_ng</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="average insert size"></a>average insert size</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.components.ngs.ngs_entry.html#average_insert_size">assays.components.ngs.ngs_entry#average_insert_size</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="forward fastq"></a>forward fastq</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="reverse fastq"></a>reverse fastq</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="read group mapping file"></a>read group mapping file</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+    </table>
+    
+  
+    
+    
     
   </div>
-
 
     </main>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

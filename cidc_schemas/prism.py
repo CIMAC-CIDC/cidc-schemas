@@ -208,6 +208,7 @@ def _get_recursively(search_dict, field):
 
 def _process_property(
         row: list,
+        assay_hint: str,
         key_lu: dict,
         data_obj: dict,
         root_obj: Union[None, dict] = None,
@@ -219,6 +220,7 @@ def _process_property(
 
     Args:
         row: array with two fields, key-val
+        assay_hint: 'wes' or similar to create proper urls
         key_lu: dictionary to translate from template naming to json-schema
                 property names
         data_obj: dictionary we are building to represent data
@@ -265,6 +267,7 @@ def _process_property(
         if verb:
             print(f'collecting local_file_path {field_def}')
 
+        # TODO should be pretty different for not wes 
         # setup the base path
         gs_key = ""# _get_recursively(data_obj, "lead_organization_study_id")[0]
         gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_participant_id")[0]}'
@@ -272,7 +275,7 @@ def _process_property(
         gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_aliquot_id")[0]}'
 
         artifact_field_name = field_def['merge_pointer'].split('/')[-1]
-        gs_key = f'{gs_key}/assay_hint/{artifact_field_name}'
+        gs_key = f'{gs_key}/{assay_hint}/{artifact_field_name}'
 
         # return local_path entry
         res = {
@@ -285,7 +288,7 @@ def _process_property(
             res['/upload_placeholder'] = val
         return res
     
-def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: bool = False) -> (dict, dict):
+def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = False) -> (dict, dict):
     """
     Converts excel file to json object. It also identifies local files
     which need to uploaded to a google bucket and provides some logic
@@ -368,7 +371,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
             for key, val in zip(headers, row):
                 
                 # get corr xsls schema type 
-                new_file = _process_property([key, val], xlsx_template.key_lu, data_obj, copy_of_preamble, data_object_pointer, verb)
+                new_file = _process_property([key, val], assay_hint, xlsx_template.key_lu, data_obj, copy_of_preamble, data_object_pointer, verb)
                 if new_file:
                     local_file_paths.append(new_file)
 
@@ -381,7 +384,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
 
             # TODO maybe use preamble merger as well?
             # process this property
-            new_file = _process_property(row, xlsx_template.key_lu, preamble_obj, root_ct_obj, preamble_object_pointer, verb=verb)
+            new_file = _process_property(row, assay_hint, xlsx_template.key_lu, preamble_obj, root_ct_obj, preamble_object_pointer, verb=verb)
             if new_file:
                 local_file_paths.append(new_file)
 

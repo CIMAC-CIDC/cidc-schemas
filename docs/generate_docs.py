@@ -1,5 +1,6 @@
 import os
 import jinja2
+import json
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.constants import SCHEMA_DIR
 

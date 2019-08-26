@@ -31,16 +31,17 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Metadata file for mIF</h1>
+        <h1>Shipping manifest for PBMC samples</h1>
         <p>
-            <b>Description:</b>  Metadata information for multiplex immunoflouresence(mIF).
+            <b>Description:</b>  Shipping / receiving manifest for transferring PBMC samples.
+
         </p>
         
     </div>
 
   <div class="container">
     
-      <h3>Worksheet - mIF</h3>
+      <h3>Worksheet - PBMCs</h3>
   
     <h4>Preamble Rows</h4>
     
@@ -75,13 +76,13 @@
             </tr>
         
             <tr>
-                <td><a name="assay creator"></a>assay creator</td>
+                <td><a name="manifest id"></a>manifest id</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
-                        <a href="assays.components.assay_core.html#assay_creator">assays.components.assay_core#assay_creator</a>
+                        <a href="shipping_core.html#manifest_id">shipping_core#manifest_id</a>
                     
                 </td>
                 <td>
@@ -92,13 +93,13 @@
             </tr>
         
             <tr>
-                <td><a name="assay category"></a>assay category</td>
+                <td><a name="request"></a>request</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
-                        <a href="assays.components.assay_core.html#assay_category">assays.components.assay_core#assay_category</a>
+                        <a href="shipping_core.html#request">shipping_core#request</a>
                     
                 </td>
                 <td>
@@ -109,13 +110,13 @@
             </tr>
         
             <tr>
-                <td><a name="slide scanner model"></a>slide scanner model</td>
+                <td><a name="assay priority"></a>assay priority</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
-                        <a href="assays.components.image.html#slide_scanner_model">assays.components.image#slide_scanner_model</a>
+                        <a href="shipping_core.html#assay_priority">shipping_core#assay_priority</a>
                     
                 </td>
                 <td>
@@ -126,13 +127,13 @@
             </tr>
         
             <tr>
-                <td><a name="staining platform"></a>staining platform</td>
+                <td><a name="assay type"></a>assay type</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
-                        <a href="assays.components.image.html#staining_platform">assays.components.image#staining_platform</a>
+                        <a href="shipping_core.html#assay_type">shipping_core#assay_type</a>
                     
                 </td>
                 <td>
@@ -143,13 +144,13 @@
             </tr>
         
             <tr>
-                <td><a name="autostainer model"></a>autostainer model</td>
+                <td><a name="batch number"></a>batch number</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
-                        <a href="assays.components.image.html#autostainer_model">assays.components.image#autostainer_model</a>
+                        <a href="shipping_core.html#batch_number">shipping_core#batch_number</a>
                     
                 </td>
                 <td>
@@ -160,13 +161,13 @@
             </tr>
         
             <tr>
-                <td><a name="image analysis software"></a>image analysis software</td>
+                <td><a name="box number"></a>box number</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
-                        <a href="assays.components.image.html#image_analysis_software">assays.components.image#image_analysis_software</a>
+                        <a href="shipping_core.html#box_number">shipping_core#box_number</a>
                     
                 </td>
                 <td>
@@ -177,13 +178,13 @@
             </tr>
         
             <tr>
-                <td><a name="image analysis software version"></a>image analysis software version</td>
+                <td><a name="assay run number"></a>assay run number</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
-                        <a href="assays.components.image.html#image_analysis_software_version">assays.components.image#image_analysis_software_version</a>
+                        <a href="shipping_core.html#assay_run_number">shipping_core#assay_run_number</a>
                     
                 </td>
                 <td>
@@ -194,13 +195,13 @@
             </tr>
         
             <tr>
-                <td><a name="cell segmentation model"></a>cell segmentation model</td>
+                <td><a name="courier"></a>courier</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
-                        <a href="assays.components.image.html#cell_segmentation_model">assays.components.image#cell_segmentation_model</a>
+                        <a href="shipping_core.html#courier">shipping_core#courier</a>
                     
                 </td>
                 <td>
@@ -211,13 +212,13 @@
             </tr>
         
             <tr>
-                <td><a name="positive cell detection model"></a>positive cell detection model</td>
+                <td><a name="tracking number"></a>tracking number</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
-                        <a href="assays.components.image.html#positive_cell_detection">assays.components.image#positive_cell_detection</a>
+                        <a href="shipping_core.html#tracking_number">shipping_core#tracking_number</a>
                     
                 </td>
                 <td>
@@ -228,13 +229,132 @@
             </tr>
         
             <tr>
-                <td><a name="protocol name"></a>protocol name</td>
+                <td><a name="account number"></a>account number</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
-                        <a href="assays.components.image.html#protocol_name">assays.components.image#protocol_name</a>
+                        <a href="shipping_core.html#account_number">shipping_core#account_number</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="shipping condition"></a>shipping condition</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="shipping_core.html#shipping_condition">shipping_core#shipping_condition</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="date shipped"></a>date shipped</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="shipping_core.html#date_shipped">shipping_core#date_shipped</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="num of samples shipped"></a>num of samples shipped</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="shipping_core.html#num_of_samples_shipped">shipping_core#num_of_samples_shipped</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="num of samples good"></a>num of samples good</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="shipping_core.html#num_of_samples_good">shipping_core#num_of_samples_good</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="num of path report"></a>num of path report</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="shipping_core.html#num_of_path_report">shipping_core#num_of_path_report</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="ship from"></a>ship from</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="shipping_core.html#ship_from">shipping_core#ship_from</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="ship to"></a>ship to</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="shipping_core.html#ship_to">shipping_core#ship_to</a>
                     
                 </td>
                 <td>
@@ -249,250 +369,8 @@
   
     <h4>Data Columns</h4>
     
-      <h5 class="text-muted">Samples</h4>
+      <h5 class="text-muted">Filled by Biorepository</h4>
       
-        
-    
-
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Property</th>
-            <th>Description</th>
-            <th>Data Type</th>
-            <th>Required/Optional</th>
-        </tr>
-        </thead>
-        
-            <tr>
-                <td><a name="Antibody"></a>Antibody</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        <a href="assays.components.antibody.html#antibody">assays.components.antibody#antibody</a>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td><a name="Clone"></a>Clone</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        <a href="assays.components.antibody.html#clone">assays.components.antibody#clone</a>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td><a name="Antibody Company"></a>Antibody Company</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        <a href="assays.components.antibody.html#company">assays.components.antibody#company</a>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td><a name="Cat#"></a>Cat#</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        <a href="assays.components.antibody.html#cat_num">assays.components.antibody#cat_num</a>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td><a name="Lot#"></a>Lot#</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        <a href="assays.components.antibody.html#lot_num">assays.components.antibody#lot_num</a>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td><a name="Staining Order"></a>Staining Order</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        <a href="assays.components.antibody.html#staining_order">assays.components.antibody#staining_order</a>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td><a name="Fluor Wavelength"></a>Fluor Wavelength</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        <a href="assays.components.mif_antibody.html#fluor_wavelength">assays.components.mif_antibody#fluor_wavelength</a>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td><a name="Primary ab Dilution"></a>Primary ab Dilution</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        <a href="assays.components.mif_antibody.html#primary_ab_dilution">assays.components.mif_antibody#primary_ab_dilution</a>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td><a name="Dilutent"></a>Dilutent</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        <a href="assays.components.mif_antibody.html#dilutent">assays.components.mif_antibody#dilutent</a>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td><a name="Fluor dilution"></a>Fluor dilution</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        <a href="assays.components.mif_antibody.html#fluor_dilution">assays.components.mif_antibody#fluor_dilution</a>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td><a name="Antigen Retrieval Time"></a>Antigen Retrieval Time</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        <a href="assays.components.mif_antibody.html#antigen_retrieval_time">assays.components.mif_antibody#antigen_retrieval_time</a>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td><a name="Primary Incubation Time"></a>Primary Incubation Time</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        <a href="assays.components.mif_antibody.html#primary_incubation_time">assays.components.mif_antibody#primary_incubation_time</a>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td><a name="Amplification Time"></a>Amplification Time</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        <a href="assays.components.mif_antibody.html#amplification_time">assays.components.mif_antibody#amplification_time</a>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-    </table>
-    
-  
-    
-      <h3>Worksheet - Data</h3>
-  
-    <h4>Preamble Rows</h4>
-    
         
     
 
@@ -523,34 +401,82 @@
                 </td>
             </tr>
         
-    </table>
-  
-  
-    <h4>Data Columns</h4>
-    
-      <h5 class="text-muted">Samples</h4>
-      
-        
-    
-
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Property</th>
-            <th>Description</th>
-            <th>Data Type</th>
-            <th>Required/Optional</th>
-        </tr>
-        </thead>
+            <tr>
+                <td><a name="trial participant id"></a>trial participant id</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="participant.html#trial_participant_id">participant#trial_participant_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
         
             <tr>
-                <td><a name="cimac particpant id"></a>cimac particpant id</td>
+                <td><a name="cimac participant id"></a>cimac participant id</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
                         <a href="participant.html#cimac_participant_id">participant#cimac_participant_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="cohort id"></a>cohort id</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="participant.html#cohort_id">participant#cohort_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="arm id"></a>arm id</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="participant.html#arm_id">participant#arm_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="site sample id"></a>site sample id</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="sample.html#site_sample_id">sample#site_sample_id</a>
                     
                 </td>
                 <td>
@@ -578,23 +504,6 @@
             </tr>
         
             <tr>
-                <td><a name="internal slide id"></a>internal slide id</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        <a href="assays.components.imaging_data.html#internal_slide_id">assays.components.imaging_data#internal_slide_id</a>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
-        
-            <tr>
                 <td><a name="time point"></a>time point</td>
                 <td width=25%>
                     
@@ -612,13 +521,13 @@
             </tr>
         
             <tr>
-                <td><a name="protocol_name"></a>protocol_name</td>
+                <td><a name="blood collection date"></a>blood collection date</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
-                        <a href="assays.components.imaging_data.html#protocol_name">assays.components.imaging_data#protocol_name</a>
+                        <a href="sample.html#blood_collection_date">sample#blood_collection_date</a>
                     
                 </td>
                 <td>
@@ -629,13 +538,13 @@
             </tr>
         
             <tr>
-                <td><a name="staining date"></a>staining date</td>
+                <td><a name="blood collection time"></a>blood collection time</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
-                        <a href="assays.components.imaging_data.html#staining_date">assays.components.imaging_data#staining_date</a>
+                        <a href="sample.html#blood_collection_time">sample#blood_collection_time</a>
                     
                 </td>
                 <td>
@@ -646,13 +555,13 @@
             </tr>
         
             <tr>
-                <td><a name="imaging date"></a>imaging date</td>
+                <td><a name="blood processing date"></a>blood processing date</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
-                        <a href="assays.components.imaging_data.html#imaging_date">assays.components.imaging_data#imaging_date</a>
+                        <a href="sample.html#blood_processing_date">sample#blood_processing_date</a>
                     
                 </td>
                 <td>
@@ -663,13 +572,13 @@
             </tr>
         
             <tr>
-                <td><a name="imaging status"></a>imaging status</td>
+                <td><a name="blood processing time"></a>blood processing time</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
-                        <a href="assays.components.imaging_data.html#imaging_status">assays.components.imaging_data#imaging_status</a>
+                        <a href="sample.html#blood_processing_time">sample#blood_processing_time</a>
                     
                 </td>
                 <td>
@@ -680,13 +589,13 @@
             </tr>
         
             <tr>
-                <td><a name="project inform folder"></a>project inform folder</td>
+                <td><a name="sample location"></a>sample location</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
-                        <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+                        <a href="sample.html#sample_location">sample#sample_location</a>
                     
                 </td>
                 <td>
@@ -697,13 +606,251 @@
             </tr>
         
             <tr>
-                <td><a name="exported_data_folder"></a>exported_data_folder</td>
+                <td><a name="specimen type"></a>specimen type</td>
                 <td width=25%>
                     
                 </td>
                 <td>
                     
-                        <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+                        <a href="sample.html#specimen_type">sample#specimen_type</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="specimen format"></a>specimen format</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="sample.html#specimen_format">sample#specimen_format</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="quantity"></a>quantity</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="aliquot.html#quantity">aliquot#quantity</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="volume quantity"></a>volume quantity</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="aliquot.html#volume_quantity">aliquot#volume_quantity</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="units"></a>units</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="aliquot.html#units">aliquot#units</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="pbmc aliquoted"></a>pbmc aliquoted</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="aliquot.html#pbmc_aliquoted">aliquot#pbmc_aliquoted</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="sample source"></a>sample source</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="aliquot.html#sample_source">aliquot#sample_source</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+    </table>
+    
+      <h5 class="text-muted">Filled by CIMAC Lab</h4>
+      
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Required/Optional</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td><a name="cimac aliquot id"></a>cimac aliquot id</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="aliquot.html#cimac_aliquot_id">aliquot#cimac_aliquot_id</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="pbmc recovered"></a>pbmc recovered</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="aliquot.html#pbmc_recovered">aliquot#pbmc_recovered</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="material used"></a>material used</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="aliquot.html#material_used">aliquot#material_used</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="material remaining"></a>material remaining</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="aliquot.html#material_remaining">aliquot#material_remaining</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="sample quality status"></a>sample quality status</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="aliquot.html#sample_quality_status">aliquot#sample_quality_status</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="sample replacement"></a>sample replacement</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="aliquot.html#sample_replacement">aliquot#sample_replacement</a>
+                    
+                </td>
+                <td>
+                    
+                        optional
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td><a name="sample status"></a>sample status</td>
+                <td width=25%>
+                    
+                </td>
+                <td>
+                    
+                        <a href="aliquot.html#sample_status">aliquot#sample_status</a>
                     
                 </td>
                 <td>

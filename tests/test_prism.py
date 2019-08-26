@@ -255,7 +255,7 @@ def test_samples_merge():
     a2 = copy.deepcopy(a1)
     a2['participants'][0]['samples'][0]['cimac_sample_id'] = "something different"
 
-    # create validator assert schemas are valid.
+    # create validator assert schema is valid.
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     schema = validator.schema
 
@@ -282,55 +282,54 @@ def test_prism(schema_path, xlsx_path):
 
     # turn into object.
     ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
+
+    assert len(ct['assays']['wes']) == 1
     
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
-    # 2. we can check it didn't overwrite anything cruicial
+    # 2. we can check it didn't overwrite anything crucial
     merger = Merger(schema)
     merged = merger.merge(MINIMAL_CT_1PA1SA1AL, ct)
 
     # assert works
     validator.validate(merged)
 
+@pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
+def test_filepath_gen_wes_only(schema_path, xlsx_path):
+    # extract hint.
+    hint = schema_path.split("/")[-1].replace("_template.json", "")
 
-def test_filepath_gen():
+    # TODO: only implemented WES parsing...
+    if hint != "wes":
+        return
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     schema = validator.schema
 
-    # get a specifc template
-    for temp_path, xlsx_path in template_paths():
+    # parse the spreadsheet and get the file maps
+    _, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
+    # we ignore and do not validate 'ct' 
+    # because it's only a ct patch not a full ct 
 
-        # extract hint.
-        hint = temp_path.split("/")[-1].replace("_template.json", "")
+    # assert we have the right counts.
+    if hint == "wes":
 
-        # TODO: only implemented WES parsing...
-        if hint != "wes":
-            continue
+        # check the number of files present.
+        assert len(file_maps) == 6
 
-        # parse the spreadsheet and get the file maps
-        _, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
-        # we ignore and do not validate 'ct' 
-        # because it's only a ct patch not a full ct 
+        # we should have 2 fastq per sample.
+        # we should have 2 tot forward.
+        assert 2 == sum([1 for x in file_maps if x['gs_key'].endswith("fastq_1")])
+        # we should have 2 tot rev.
+        assert 2 == sum([1 for x in file_maps if x['gs_key'].endswith("fastq_2")])
 
-        # assert we have the right counts.
-        if hint == "wes":
-
-            # check the number of files present.
-            assert len(file_maps) == 6
-
-            # we should have 2 fastq per sample.
-            # we should have 2 tot forward.
-            assert 2 == sum([1 for x in file_maps if x['gs_key'].endswith("fastq_1")])
-            # we should have 2 tot rev.
-            assert 2 == sum([1 for x in file_maps if x['gs_key'].endswith("fastq_2")])
-
-            # we should have 2 text files
-            assert 2 == sum([1 for x in file_maps if x['gs_key'].endswith("read_group_mapping_file")])
+        # we should have 2 text files
+        assert 2 == sum([1 for x in file_maps if x['gs_key'].endswith("read_group_mapping_file")])
+    
 
 
-def test_wes():
+def test_prismify_wes_only():
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
@@ -346,7 +345,7 @@ def test_wes():
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
-    # 2. we can check it didn't overwrite anything cruicial
+    # 2. we can check it didn't overwrite anything crucial
     merger = Merger(schema)
     merged = merger.merge(MINIMAL_CT_1PA1SA1AL, ct)
 
@@ -354,7 +353,7 @@ def test_wes():
     validator.validate(merged)
 
 
-def test_snippet_wes():
+def test_merge_artifact_wes_only():
 
     # create the clinical trial.
     ct = copy.deepcopy(CLINICAL_TRIAL)
@@ -388,7 +387,7 @@ def test_snippet_wes():
                 md5_hash=f"hash_{i}"
             )
 
-        # assert we stull have a good clinical trial object.
+        # assert we still have a good clinical trial object.
         validator.validate(ct)
 
         # search for this url and all previous (no clobber)
@@ -408,3 +407,79 @@ def test_snippet_wes():
     # in the process upload_placeholder gets removed per artifact
     assert len(dd['dictionary_item_removed']) == len(urls), "Unexpected CT changes"
     assert list(dd.keys()) == ['dictionary_item_added', 'dictionary_item_removed'], "Unexpected CT changes"
+
+@pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
+def test_end_to_end_wes_only(schema_path, xlsx_path):
+    # extract hint
+    hint = schema_path.split("/")[-1].replace("_template.json", "")
+
+    # TODO: implement other than WES parsing...
+    if hint != "wes":
+        return 
+
+    # create validators
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
+    merger = Merger(schema)
+
+    # parse the spreadsheet and get the file maps
+    prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
+
+    assert len(prism_patch['assays']['wes']) == 1
+    assert len(prism_patch['assays']['wes'][0]['records']) == 2
+
+    # assert we still have a good clinical trial object, so we can save it
+    # but we need to merge it, because "prismify" provides only a patch
+    after_prism = merger.merge(CLINICAL_TRIAL, prism_patch)
+    validator.validate(after_prism)
+
+    after_prism_copy = copy.deepcopy(after_prism)
+
+    #now we simulate that upload was successful 
+    searched_urls = []
+    for i, fmap_entry in enumerate(file_maps):
+
+        # attempt to merge
+        after_prism_w_artifact = merge_artifact(
+                after_prism_copy,
+                object_url=fmap_entry['gs_key'],
+                assay=hint, # TODO figure out how to know that prior to calling?
+                file_size_bytes=i,
+                uploaded_timestamp="01/01/2001",
+                md5_hash=f"hash_{i}"
+            )
+
+        # assert we still have a good clinical trial object, so we can save it
+        validator.validate(after_prism_w_artifact)
+
+        # we will than search for this url in the resulting ct, 
+        # to check all artifacts were indeed merged
+        searched_urls.append(fmap_entry['gs_key'])
+
+    # `merge_artifact` modifies ct in-place, so 
+    full_ct = after_prism_w_artifact
+
+
+    assert len(searched_urls) == 3*2 # 3 files per entry in xlsx
+
+    for url in searched_urls:
+        assert len((full_ct | grep(url))['matched_values']) == 1 # each gs_url only once  
+
+    assert len(full_ct['assays']['wes']) == 1+len(CLINICAL_TRIAL['assays']['wes']), "Multiple WESes created instead of merging into one"
+    assert len(full_ct['assays']['wes'][0]['records']) == 2, "More records than expected"
+
+    dd = DeepDiff(after_prism, full_ct)
+
+     # 6 files * 6 artifact atributes
+    assert len(dd['dictionary_item_added']) == 6*6, "Unexpected CT changes"
+
+    # in the process upload_placeholder gets removed per artifact = 6
+    assert len(dd['dictionary_item_removed']) == len(searched_urls), "Unexpected CT changes"
+
+    # nothing else in diff
+    assert list(dd.keys()) == ['dictionary_item_added', 'dictionary_item_removed'], "Unexpected CT changes"
+
+
+
+
+

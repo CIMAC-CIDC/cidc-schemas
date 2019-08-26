@@ -3,12 +3,13 @@ import json
 import os
 import copy
 import uuid
+from typing import Union
 import jsonschema
 from deepdiff import grep
 import datetime
 from jsonmerge import merge, Merger
 from collections import namedtuple
-from jsonpointer import JsonPointer, JsonPointerException
+from jsonpointer import JsonPointer, JsonPointerException, resolve_pointer
 
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
@@ -18,164 +19,106 @@ from cidc_schemas.template_reader import XlTemplateReader
 from cidc_schemas.constants import SCHEMA_DIR, TEMPLATE_DIR
 
 
-def _get_coerce(ref: str):
+def _set_val(
+        pointer: str, 
+        val: object, 
+        context: dict, 
+        root: Union[dict, None] = None, 
+        context_pointer: Union[str, None] = None, 
+        verb=False):
     """
-    This function takes a jscon-schema style $ref pointer,
-    opens the schema and determines the best python
-    function to type the value.
-
-    Args:
-        ref: /path/to/schema.json
-
-    Returns:
-        Python function pointer
-    """
-
-    referer = {'$ref': ref}
-
-    resolver_cache = {}
-    while '$ref' in referer:
-        # get the entry
-        resolver = jsonschema.RefResolver(
-            f'file://{SCHEMA_DIR}/schemas', referer, resolver_cache)
-        _, referer = resolver.resolve(referer['$ref'])
-
-    entry = referer
-    # add our own type conversion
-    t = entry['type']
-    if t == 'string':
-        return str
-    elif t == 'integer':
-        return int
-    elif t == 'number':
-        return float
-
-    # if it's an artifact that we load through local file
-    # we just set uuid to upload_placeholder field 
-    elif t == 'object' and entry['$id'] == "local_file":
-        return lambda _: str(uuid.uuid4())
-    else:
-        raise NotImplementedError(f"no coercion available for type:{t}")
-
-
-def _load_keylookup(template_path: str) -> dict:
-    """
-    The excel spreadsheet use a human friendly (no _) name
-    for properties, where the field it refers to in the schema
-    has a different name. This function builds a dictionary
-    to lookup these differences.
-
-    It also populates the coercion function for each
-    property.
-
-    Args:
-        template_path: /path/to/template.json
-
-    Returns:
-        Dictionary keyed by spreadsheet property names
-    """
-
-    # get the template.
-    with open(template_path) as fin:
-        t = json.load(fin)
-
-    # create a key lookup dictionary
-    key_lu = {}
-
-    # checks if we have a cast func for that 'type_ref'
-    def _add_coerce(field_def:dict) -> dict: 
-        return dict(coerce=_get_coerce(field_def['type_ref']), **field_def)
-
-    # loop over each worksheet
-    worksheets = t['properties']['worksheets']
-    for worksheet in worksheets:
-
-        # loop over each row in pre-amble
-        pre_rows = worksheets[worksheet]['preamble_rows']
-        for preamble_key, preamble_def in pre_rows.items():
-
-            # populate lookup
-            key_lu[preamble_key] = _add_coerce(preamble_def)
-            # we expect preamble_def from `_template.json` have 2 fields
-            # (as for template.schema) - "merge_pointer" and "type_ref"
-
-        # load the data columns
-        dat_cols = worksheets[worksheet]['data_columns']
-        for section_key, section in dat_cols.items():
-            for column_key, column_def in section.items():
-
-                # populate lookup
-                key_lu[column_key] = _add_coerce(column_def)
-                # we expect column_def from `_template.json` have 2 fields
-                # (as for template.schema) - "merge_pointer" and "type_ref"
-
-    return key_lu
-
-
-
-def _set_val(pointer: str, val: object, trial: dict, verbose=False):
-    """
-    This function given a *pointer* (jsonpointer, RFC 6901)
+    This function given a *pointer* (jsonpointer RFC 6901 or relative json pointer)
     to a property in a python object, sets the supplied value
-    inplace in the *trial* object.
+    in-place in the *context* object within *root* object.
 
-    The object we are adding data to is *trial*. The object
-    may or maynot have any of the intermediate structure
+    The object we are adding data to is *root*. The object
+    may or may not have any of the intermediate structure
     to fully insert the desired property.
 
-    For example: consider trial = {}
-    And pointer = "/participants/0/prop1"
+    For example: consider 
+    pointer = "0/prop1/prop2"
+    val = {"more": "props"}
+    context = {"Pid": 1}
+    root = {"participants": [context]}
+    context_pointer = "/participants/0"
     
-    We should assume to update sub-object: 
-        {
-            "participants": ...
-        }
-    Lets truncate the path to exclude tokens we've already
-    consumed:
+   
+    First we see an `0` in pointer which denotes update 
+    should be within context. So no need to jump higher than context.
+    
+    So we truncate path to = "prop1/prop2"
 
-    path = "0/prop1"
-
-    Next we see an `0` property which in json-pointer
-    denotes a first element of an array. So the implication
-    is that the value of 'participants' is list.
-        {
-            "participants": [...]
-        }
-
-    Truncated again path = "prop1"
-
-    We see it's a string, not an integer so we know 
-    we are entering an object with *prop1* as a property. 
-    This is the final piece of the *path* so we can assign the val:
+    We see it's a string, so we know we are entering object's *prop1* as a property:
         {
             "participants": [{
-                "prop1": val
+                "prop1": ...
             }]
         }
+    It's our whole Trial object, and ... here denotes our current descend.
 
-
-    *One limitation* of this code is that no list can have
-    more than 1 item. This is likely OK because we are building
-    one object per record in the excel templates and using
-    a seperate library to merge objects.
+    Now we truncate path one step further to = "prop2" 
+    Go down there and set `val={"more": "props"}` :
+        {
+            "participants": [{
+                "prop1": {
+                    "prop2": {"more": "props"}
+                }
+            }]
+        }
+    While context is a sub-part of that:
+            {
+                "prop1": {
+                    "prop2": {"more": "props"}
+                }
+            }
+    
 
     Args:
-        pointer: jsonpointer path to the property being set
+        pointer: relative jsonpointer to the property being set within current `context`
         val: the value being set
-        trial: the python object being constructed
-        verbose: indicates if debug logic should be printed.
+        context: the python object relatively to which val is being set
+        root: the whole python object being constructed, contains `context`
+        context_pointer: jsonpointer of `context` within `root`. Needed to jump up.
+        verb: indicates if debug logic should be printed.
 
     Returns:
        Nothing
     """
 
-    jpoint = JsonPointer(pointer)
+    #fill defaults 
+    root = context if root is None else root
+    context_pointer = "/" if root is None else context_pointer
+    
 
-    assert len(jpoint.parts) > 0, "Can't update root object"
+    # first we need to convert pointer to an absolute one
+    # if it was a relative one (https://tools.ietf.org/id/draft-handrews-relative-json-pointer-00.html)
+    if pointer.startswith('/'):
+        jpoint = JsonPointer(pointer)
+        doc = context
+
+    else:
+        # parse "relative" jumps up
+        jumpups, rem_pointer = pointer.split('/',1)
+        jumpups = int(jumpups.rstrip('#'))
+        # check that we don't have to jump up more than we dived in already 
+        assert jumpups <= context_pointer.rstrip('/').count('/'), \
+            f"Can't set value for pointer {pointer} - to many jumps up from current."
+
+        # and we'll go down remaining part of `pointer` from there
+        jpoint = JsonPointer('/'+rem_pointer)
+        if jumpups > 0:
+            # new context pointer 
+            higher_context_pointer = '/'.join(context_pointer.strip('/').split('/')[:-1*jumpups])
+            # making jumps up, by going down context_pointer but no all the way down
+            if higher_context_pointer == '':
+                doc = root
+                assert len(jpoint.parts) > 0, f"Can't update root object (pointer {pointer})"
+            else: 
+                doc = resolve_pointer(root, '/'+higher_context_pointer)
+        else:
+            doc = context
 
 
-    # we need to walk our trial doc up until the last step
-    doc = trial
     # then we update it
     for i, part in enumerate(jpoint.parts[:-1]):
 
@@ -183,40 +126,46 @@ def _set_val(pointer: str, val: object, trial: dict, verbose=False):
             doc = jpoint.walk(doc, part)
 
         except (JsonPointerException, IndexError) as e:
-            # means that we probably don't have needed sub-object in place
-            # so we need to create one
+            # means that there isn't needed sub-object in place
+            # so create one
 
-            # but we need to look ahead to figure out
-            # a proper type that need to be created
+            # look ahead to figure out a proper type that needs to be created
             if i+1 == len(jpoint.parts):
-                raise Exception(f'no next_part in jsonpointer {pointer}')
+                raise Exception(f"Can't determine how to set value in {pointer!r}")
 
             next_part = jpoint.parts[i+1]
             
             typed_part = jpoint.get_part(doc, part)
 
-            # `next_part` looks like array index like"[0]"
-            if jpoint._RE_ARRAY_INDEX.match(str(next_part)):
+            # `next_part` looks like array index like"[0]" or "-" (RFC 6901)
+            if next_part == "-" or jpoint._RE_ARRAY_INDEX.match(str(next_part)):
                 # so create array
                 next_thing = []
             # or just dict as default
             else:
                 next_thing = {}
             
-            try:
-                doc[typed_part] = next_thing          
-            # if it's an empty array - we get an error 
-            # when we try to paste to [0] index,
-            # so just append then
-            except IndexError:
+            if part == "-":
                 doc.append(next_thing)
+            else:
+                try:
+                    doc[typed_part] = next_thing          
+                # if it's an empty array - we get an error 
+                # when we try to paste to [0] index,
+                # so just append then
+                except IndexError:
+                    doc.append(next_thing)
 
-            # now we `walk` it again - this time should be ok
+            # now we `walk` it again - this time should be OK
             doc = jpoint.walk(doc, part)
 
     last_part = jpoint.parts[-1]
-    typed_last_part = jpoint.get_part(doc, last_part)
+    if last_part == '-':
+        doc.append(val)
+        return
 
+    typed_last_part = jpoint.get_part(doc, last_part)
+    
     # now we update it with val
     try:
         doc[typed_last_part] = val          
@@ -224,10 +173,9 @@ def _set_val(pointer: str, val: object, trial: dict, verbose=False):
     # when we try to paste to [0] index,
     # so just append then
     except IndexError:
+        assert len(doc) == typed_last_part, f"Can't set value in {pointer!r}"
         doc.append(val)
 
-    # return whole thing
-    return trial
 
 
 def _get_recursively(search_dict, field):
@@ -261,10 +209,10 @@ def _get_recursively(search_dict, field):
 def _process_property(
         row: list,
         key_lu: dict,
-        schema: dict,
         data_obj: dict,
-        assay_hint: str,
-        verb: bool) -> dict:
+        root_obj: Union[None, dict] = None,
+        data_obj_pointer: Union[None, str] = None,
+        verb: bool = False) -> dict:
     """
     Takes a single property (key, val) from spreadsheet, determines
     where it needs to go in the final object, then inserts it.
@@ -273,8 +221,12 @@ def _process_property(
         row: array with two fields, key-val
         key_lu: dictionary to translate from template naming to json-schema
                 property names
-        data_object: dictionary we are building to represent data
-        assay_hint: assay pre-fixed used to help identify property in schema
+        data_obj: dictionary we are building to represent data
+        root_obj: root dictionary we are building to represent data, 
+                  that holds 'data_obj' within 'data_obj_pointer'
+        data_obj_pointer: pointer of 'data_obj' within 'root_obj'.
+                          this will allow to process relative json-pointer properties
+                          to jump out of data_object
         verb: boolean indicating verbosity
 
     Returns:
@@ -287,7 +239,7 @@ def _process_property(
     raw_val = row[1]
 
     if verb:
-        print(f"processing {key!r} {raw_val!r}")
+        print(f"processing property {key!r} - {raw_val!r}")
     # coerce value
     field_def = key_lu[key.lower()]
     if verb:
@@ -299,7 +251,11 @@ def _process_property(
     pointer = field_def['merge_pointer']
     if field_def.get('is_artifact'):
         pointer+='/upload_placeholder'
-    _set_val(pointer, val, data_obj, verbose=verb)
+
+    try:
+        _set_val(pointer, val, data_obj, root_obj, data_obj_pointer, verb=verb)
+    except Exception as e:
+        raise Exception(e)
 
     if verb:
         print(f'current {data_obj}')
@@ -310,24 +266,25 @@ def _process_property(
             print(f'collecting local_file_path {field_def}')
 
         # setup the base path
-        gs_key = _get_recursively(data_obj, "lead_organization_study_id")[0]
+        gs_key = ""# _get_recursively(data_obj, "lead_organization_study_id")[0]
         gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_participant_id")[0]}'
         gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_sample_id")[0]}'
         gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_aliquot_id")[0]}'
 
         artifact_field_name = field_def['merge_pointer'].split('/')[-1]
-        gs_key = f'{gs_key}/{assay_hint}/{artifact_field_name}'
+        gs_key = f'{gs_key}/assay_hint/{artifact_field_name}'
 
         # return local_path entry
-        return {
-            ## REVERT?
-            # "template_key": key,
-            # "local_path": val,
-            # "field_def": field_def,
+        res = {
+            "template_key": key,
+            "local_path": raw_val,
+            "field_def": field_def,
             "gs_key": gs_key
         }
+        if field_def.get('is_artifact'):
+            res['/upload_placeholder'] = val
+        return res
     
-
 def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: bool = False) -> (dict, dict):
     """
     Converts excel file to json object. It also identifies local files
@@ -359,81 +316,81 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str = "", verb: boo
             arg2: list of objects which describe each file identified.
     """
 
-    # get the schema and validator
-    validator = load_and_validate_schema(
-        "clinical_trial.json", return_validator=True)
-    schema = validator.schema
+    # data rows will require a unique identifier
+    if not assay_hint == "wes":
+        raise NotImplementedError(f'{assay_hint} is not supported yet, only WES is supported.')
 
-    # this lets us lookup xlsx-to-schema keys
-    key_lu = _load_keylookup(template_path)
-
+    
+    # get the root CT schema
+    root_ct_schema = load_and_validate_schema("clinical_trial.json")
+    # create the result CT dictionary
+    root_ct_obj = {'_this': 'root'}
+    # and merger for it
+    root_merger = Merger(root_ct_schema)
+    # and where to collect all local file refs
     local_file_paths = []
 
     # read the excel file
-    t = XlTemplateReader.from_excel(xlsx_path)
-
-    # create the root dictionary.
-    root = {}
-    data_rows = []
+    xslx = XlTemplateReader.from_excel(xlsx_path)
+    # get corr xsls schema
+    xlsx_template = Template.from_json(template_path)
+    xslx.validate(xlsx_template)
 
     # loop over spreadsheet worksheets
-    for ws in t.grouped_rows.values():
+    for ws_name, ws in xslx.grouped_rows.items():
+        if verb:
+            print(f'next worksheet {ws_name}')
 
-        # Compare preamble rows
-        for row in ws[RowType.PREAMBLE]:
+        templ_ws = xlsx_template.template_schema['properties']['worksheets'][ws_name]
+        preamble_object_schema = load_and_validate_schema(templ_ws['prism_preamble_object_schema'])
+        preamble_merger = Merger(preamble_object_schema)
+        preamble_object_pointer = templ_ws['prism_preamble_object_pointer']
+        data_object_pointer = templ_ws['prism_data_object_pointer']
 
-            # process this property
-            new_file = _process_property(row, key_lu, schema, root, assay_hint, verb)
-            if new_file:
-                local_file_paths.append(new_file)
-
-        # move to headers
+        # creating preamble obj 
+        preamble_obj = {'_this': f'preamble_obj_{ws_name}'}
+        
+        # get headers
         headers = ws[RowType.HEADER][0]
 
-        # track these identifiers
-        potential_ids = {
-            "CIMAC PARTICIPANT ID": "",
-            "CIMAC SAMPLE ID": "",
-            "CIMAC ALIQUOT ID": ""
-        }
-
-        # get the data.
+        # get the data
         data = ws[RowType.DATA]
-        for row in data:
+        # for row in data:
+        for i, row in enumerate(data):
+
+            # creating data obj 
+            data_obj = {'_this': f"data_obj_{i}"}
+            copy_of_preamble = copy.deepcopy(preamble_obj)
+            copy_of_preamble['_this'] = f"copy_of_preamble_obj_{ws_name}_{i}" 
+            _set_val(data_object_pointer, data_obj, copy_of_preamble, verb=verb)
 
             # create dictionary per row
-            curd = copy.deepcopy(root)
             for key, val in zip(headers, row):
-
-                # process this property
-                new_file = _process_property([key, val], key_lu, schema, curd, assay_hint, verb)
+                
+                # get corr xsls schema type 
+                new_file = _process_property([key, val], xlsx_template.key_lu, data_obj, copy_of_preamble, data_object_pointer, verb)
                 if new_file:
                     local_file_paths.append(new_file)
 
-                # track ids
-                if key in potential_ids:
-                    potential_ids[key] = val
+            preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
+        
 
-            # save the entry
-            data_rows.append(curd)
+        _set_val(preamble_object_pointer, preamble_obj, root_ct_obj, verb=verb)
+        # Compare preamble rows
+        for row in ws[RowType.PREAMBLE]:
 
-            # data rows will require a unique identifier
-            if assay_hint == "wes":
-                pass
-            else:
-                raise NotImplementedError(f'only WES is supported, please add additional support \
-                    for {assay_hint}')
+            # TODO maybe use preamble merger as well?
+            # process this property
+            new_file = _process_property(row, xlsx_template.key_lu, preamble_obj, root_ct_obj, preamble_object_pointer, verb=verb)
+            if new_file:
+                local_file_paths.append(new_file)
 
-    # create the merger
-    merger = Merger(schema)
+    if verb:
+        print({k:len(v) for k,v in root_ct_obj['assays'].items()})
 
-    # iteratively merge.
-    cur_obj = data_rows[0]
-    for i in range(1, len(data_rows)):
-        cur_obj = merger.merge(cur_obj, data_rows[i])
-
+    # assert False and i<1, ([r['files'] for r in preamble_obj.get("records",[])])
     # return the object.
-    return cur_obj, local_file_paths
+    return root_ct_obj, local_file_paths
 
 
 def _get_path(ct: dict, key: str) -> str:
@@ -522,7 +479,7 @@ def _merge_artifact_wes(
     wes_object = _split_wes_url(object_url)
 
     
-    # create the artifact.
+    # create the artifact
     artifact = {
         "artifact_category": "Assay Artifact from CIMAC",
         "object_url": object_url,
@@ -547,12 +504,13 @@ def _merge_artifact_wes(
     assert record_obj['cimac_participant_id'] == wes_object.cimac_participant_id
 
     # modify inplace
+    # TODO maybe use merger(template['prism_preamble_object_schema']) 
+    ## as we don't `copy.deepcopy(ct)`+`merge` - just return it
     record_obj['files'][wes_object.file_name] = artifact
 
     ## we skip that because we didn't check `ct` on start
     # validator.validate(ct)
 
-    ## as we don't `copy.deepcopy(ct)`+`merge` - just return it
     return ct
 
 

@@ -26,7 +26,8 @@ def template_paths():
     # Collect template schemas
     for root, _, files in os.walk(template_schema_dir):
         for f in files:
-            template_paths.append(os.path.join(root, f))
+            if f.endswith('_template.json'):
+                template_paths.append(os.path.join(root, f))
 
     # Collect template xlsx examples
     for i, schema_path in enumerate(template_paths):

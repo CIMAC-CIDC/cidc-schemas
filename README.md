@@ -26,8 +26,8 @@ pip install git+https://github.com/cimac-cidc/cidc-schemas
 - **`cidc_schemas/`** - a python module for generating, validating, and reading manifest and assay templates.
   - **`schemas/`** - json specifications defining the CIDC metadata model.
     - `templates/` - schemas for generating and validating manifest and assay templates.
-    - `assays/` - schemas defining assay data models.
-    - `artifacts/` - schemas defining artifacts.
+    - `assays/` - schemas for defining assay data models.
+    - `artifacts/` - schemas for defining artifacts.
 - **`docs/`** - the most recent build of the data model documentation, along with templates and scripts for re-generating the documentation.
 - **`template_examples/`** - example populated Excel files for template specifications in `schemas/templates`.
 - **`tests/`** - tests for the `cidc_schemas` module.

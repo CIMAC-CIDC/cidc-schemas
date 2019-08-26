@@ -494,6 +494,8 @@ def test_end_to_end_wes_only(schema_path, xlsx_path):
 
     assert len(prism_patch['assays']['wes']) == 1
     assert len(prism_patch['assays']['wes'][0]['records']) == 2
+    for f in file_maps:
+        assert f'/{hint}/' in f['gs_key'], f"No {hint} hint found"
 
     # assert we still have a good clinical trial object, so we can save it
     # but we need to merge it, because "prismify" provides only a patch
@@ -537,7 +539,7 @@ def test_end_to_end_wes_only(schema_path, xlsx_path):
 
     dd = DeepDiff(after_prism, full_ct)
 
-     # 6 files * 6 artifact atributes
+    # 6 files * 6 artifact atributes
     assert len(dd['dictionary_item_added']) == 6*6, "Unexpected CT changes"
 
     # in the process upload_placeholder gets removed per artifact = 6

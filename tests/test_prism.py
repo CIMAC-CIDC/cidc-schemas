@@ -24,7 +24,7 @@ from .test_templates import template_paths
 from .test_assays import ARTIFACT_OBJ
 
 
-CLINICAL_TRIAL = {
+WES_TEMPLATE_EXAMPLE_CT = {
         "lead_organization_study_id": "10021",
         "participants": [
             {
@@ -32,7 +32,7 @@ CLINICAL_TRIAL = {
                     {
                         "aliquots": [
                             {
-                                "cimac_aliquot_id": "aliquot 1",
+                                "cimac_aliquot_id": "wes example aliquot 1.1.1",
                                 "units": "Other",
                                 "material_used": 1,
                                 "material_remaining": 0,
@@ -41,18 +41,26 @@ CLINICAL_TRIAL = {
                                 "aliquot_status": "Other"
                             },
                         ],
-                        "cimac_sample_id": "sample 1",
+                        "cimac_sample_id": "wes example SA 1.1",
                         "site_sample_id": "site sample 1",
                         "time_point": "---",
                         "sample_location": "---",
                         "specimen_type": "Other",
                         "specimen_format": "Other",
                         "genomic_source": "Tumor",
-                    },
+                    }
+                ],
+                "cimac_participant_id": "wes example PA 1",
+                "trial_participant_id": "trial patient 1",
+                "cohort_id": "---",
+                "arm_id": "---"
+            },
+            {
+                "samples": [
                     {
                         "aliquots": [
                             {
-                                "cimac_aliquot_id": "aliquot 2",
+                                "cimac_aliquot_id": "wes example aliquot 1.2.1",
                                 "units": "Other",
                                 "material_used": 2,
                                 "material_remaining": 0,
@@ -61,7 +69,7 @@ CLINICAL_TRIAL = {
                                 "aliquot_status": "Other"
                             }
                         ],
-                        "cimac_sample_id": "sample 2",
+                        "cimac_sample_id": "wes example SA 2.1",
                         "site_sample_id": "site sample 2",
                         "time_point": "---",
                         "sample_location": "---",
@@ -70,8 +78,8 @@ CLINICAL_TRIAL = {
                         "genomic_source": "Tumor",
                     }
                 ],
-                "cimac_participant_id": "patient 1",
-                "trial_participant_id": "trial patient 1",
+                "cimac_participant_id": "wes example PA 2",
+                "trial_participant_id": "trial patient 2",
                 "cohort_id": "---",
                 "arm_id": "---"
             }
@@ -94,9 +102,9 @@ CLINICAL_TRIAL = {
                             "input_ng": 101,
                             "library_yield_ng": 701,
                             "average_insert_size": 251,
-                            "cimac_participant_id": "patient 1",
-                            "cimac_sample_id": "sample 1",
-                            "cimac_aliquot_id": "aliquot 1",
+                            "cimac_participant_id": "wes example PA 1",
+                            "cimac_sample_id": "wes example SA 1.1",
+                            "cimac_aliquot_id": "wes example aliquot 1.1.1",
                             "files": {
                                 "fastq_1": {
                                     "upload_placeholder": "fastq_1.1"
@@ -117,9 +125,9 @@ CLINICAL_TRIAL = {
                             "input_ng": 102,
                             "library_yield_ng": 702,
                             "average_insert_size": 252,
-                            "cimac_participant_id": "patient 1",
-                            "cimac_sample_id": "sample 2",
-                            "cimac_aliquot_id": "aliquot 2",
+                            "cimac_participant_id": "wes example PA 2",
+                            "cimac_sample_id": "wes example SA 2.1",
+                            "cimac_aliquot_id": "wes example aliquot 1.2.1",
                             "files": {
                                 "fastq_1": {
                                     "upload_placeholder": "fastq_1.2"
@@ -137,6 +145,17 @@ CLINICAL_TRIAL = {
             ]
         }
     }
+
+
+# corresponding list of gs_urls.
+WES_TEMPLATE_EXAMPLE_GS_URLS = [
+    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/fastq_1',
+    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/fastq_2',
+    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/read_group_mapping_file',
+    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/fastq_1',
+    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/fastq_2',
+    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/read_group_mapping_file'
+]
 
 
 def test_merge_core():
@@ -284,7 +303,7 @@ def test_prism(schema_path, xlsx_path):
     # turn into object.
     ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
 
-    assert len(ct['assays']['wes']) == 1
+    assert len(ct['assays'][hint]) == 1
     
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -294,6 +313,12 @@ def test_prism(schema_path, xlsx_path):
 
     # assert works
     validator.validate(merged)
+
+    if hint == 'wes':
+        assert merged["lead_organization_study_id"] == "10021"
+    else:
+        assert MINIMAL_CT_1PA1SA1AL["lead_organization_study_id"] == merged["lead_organization_study_id"]
+
 
 @pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
 def test_filepath_gen_wes_only(schema_path, xlsx_path):
@@ -327,6 +352,13 @@ def test_filepath_gen_wes_only(schema_path, xlsx_path):
 
         # we should have 2 text files
         assert 2 == sum([1 for x in file_maps if x['gs_key'].endswith("read_group_mapping_file")])
+
+        # 2 participants
+        assert 2 == len(set([x['gs_key'].split("/")[0] for x in file_maps]))
+        # 2 samples
+        assert 2 == len(set([x['gs_key'].split("/")[1] for x in file_maps]))
+        # 2 aliquots
+        assert 2 == len(set([x['gs_key'].split("/")[2] for x in file_maps]))
     
 
 
@@ -354,20 +386,12 @@ def test_prismify_wes_only():
     validator.validate(merged)
 
 
+
 def test_merge_artifact_wes_only():
 
     # create the clinical trial.
-    ct = copy.deepcopy(CLINICAL_TRIAL)
+    ct = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT)
 
-    # define list of gs_urls.
-    urls = [
-        '10021/patient 1/sample 1/aliquot 1/wes/fastq_1',
-        '10021/patient 1/sample 1/aliquot 1/wes/fastq_2',
-        '10021/patient 1/sample 1/aliquot 1/wes/read_group_mapping_file',
-        '10021/patient 1/sample 2/aliquot 2/wes/fastq_1',
-        '10021/patient 1/sample 2/aliquot 2/wes/fastq_2',
-        '10021/patient 1/sample 2/aliquot 2/wes/read_group_mapping_file'
-    ]
 
     # create validator
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
@@ -376,7 +400,7 @@ def test_merge_artifact_wes_only():
 
     # loop over each url
     searched_urls = []
-    for i, url in enumerate(urls):
+    for i, url in enumerate(WES_TEMPLATE_EXAMPLE_GS_URLS):
 
         # attempt to merge
         ct = merge_artifact(
@@ -400,13 +424,13 @@ def test_merge_artifact_wes_only():
     assert len(ct['assays']['wes']) == 1, "Multiple WESes created instead of merging into one"
     assert len(ct['assays']['wes'][0]['records']) == 2, "More records than expected"
 
-    dd = DeepDiff(CLINICAL_TRIAL,ct)
+    dd = DeepDiff(WES_TEMPLATE_EXAMPLE_CT,ct)
 
     # we add 6 required fields per artifact thus `*6`
-    assert len(dd['dictionary_item_added']) == len(urls)*6, "Unexpected CT changes"
+    assert len(dd['dictionary_item_added']) == len(WES_TEMPLATE_EXAMPLE_GS_URLS)*6, "Unexpected CT changes"
 
     # in the process upload_placeholder gets removed per artifact
-    assert len(dd['dictionary_item_removed']) == len(urls), "Unexpected CT changes"
+    assert len(dd['dictionary_item_removed']) == len(WES_TEMPLATE_EXAMPLE_GS_URLS), "Unexpected CT changes"
     assert list(dd.keys()) == ['dictionary_item_added', 'dictionary_item_removed'], "Unexpected CT changes"
 
 
@@ -492,14 +516,14 @@ def test_end_to_end_wes_only(schema_path, xlsx_path):
     # parse the spreadsheet and get the file maps
     prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
 
-    assert len(prism_patch['assays']['wes']) == 1
-    assert len(prism_patch['assays']['wes'][0]['records']) == 2
+    assert len(prism_patch['assays'][hint]) == 1
+    assert len(prism_patch['assays'][hint][0]['records']) == 2
     for f in file_maps:
         assert f'/{hint}/' in f['gs_key'], f"No {hint} hint found"
 
     # assert we still have a good clinical trial object, so we can save it
     # but we need to merge it, because "prismify" provides only a patch
-    after_prism = merger.merge(CLINICAL_TRIAL, prism_patch)
+    after_prism = merger.merge(WES_TEMPLATE_EXAMPLE_CT, prism_patch)
     validator.validate(after_prism)
 
     after_prism_copy = copy.deepcopy(after_prism)
@@ -531,11 +555,13 @@ def test_end_to_end_wes_only(schema_path, xlsx_path):
 
     assert len(searched_urls) == 3*2 # 3 files per entry in xlsx
 
+    assert searched_urls == WES_TEMPLATE_EXAMPLE_GS_URLS
+
     for url in searched_urls:
         assert len((full_ct | grep(url))['matched_values']) == 1 # each gs_url only once  
 
-    assert len(full_ct['assays']['wes']) == 1+len(CLINICAL_TRIAL['assays']['wes']), "Multiple WESes created instead of merging into one"
-    assert len(full_ct['assays']['wes'][0]['records']) == 2, "More records than expected"
+    assert len(full_ct['assays'][hint]) == 1+len(WES_TEMPLATE_EXAMPLE_CT['assays'][hint]), f"Multiple {hint}-assays created instead of merging into one"
+    assert len(full_ct['assays'][hint][0]['records']) == 2, "More records than expected"
 
     dd = DeepDiff(after_prism, full_ct)
 

@@ -129,6 +129,9 @@ def validate_instance(instance: str, schema: dict, required: bool) -> Optional[s
                 # if all types in 'allOf' are the same:
                 if len(types) == 1:
                     stype = types.pop()
+                else:
+                    return f"Value can't be of multiple different types ({types}), "\
+                    "as 'allOf' in schema specifies."
 
         instance = convert(stype, instance)
 

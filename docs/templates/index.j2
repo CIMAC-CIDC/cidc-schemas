@@ -21,12 +21,12 @@
                     <th>Description</th>
                 </tr>
                 </thead>
-                {% for entity_path, entity_schema in schemas.items() %}
+                {% for entity_name, (entity_schema, json) in schemas.items() %}
                 <tr>
                     {% if dirname == "" %}
-                        <td width=25%><a href='{{ entity_path }}'>{{ entity_schema["title"] }}</a></td>
+                        <td width=25%><a href='{{ entity_name }}.html'>{{ entity_schema["title"] }}</a></td>
                     {% else %}
-                        <td width=25%><a href='{{ dirname }}.{{ entity_path }}'>{{ entity_schema["title"] }}</a></td>
+                        <td width=25%><a href='{{ dirname }}.{{ entity_name }}.html'>{{ entity_schema["title"] }}</a></td>
                     {% endif %}
                     <td>{{ entity_schema["description"] }}</td>
                 </tr>

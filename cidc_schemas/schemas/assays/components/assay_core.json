@@ -9,28 +9,6 @@
       "description": "Indicates what site is filling out the assay.",
       "type": "string",
       "enum": ["DFCI", "Mount Sinai", "Stanford", "MD Anderson"]
-    },
-    "uploader": {
-      "description": "Email address for individual uploading files.",
-      "type": "string"
-    },
-    "assay_category": {
-      "description": "Assay category.",
-      "type": "string",
-      "enum": [
-        "Whole Exome Sequencing (WES)",
-        "RNASeq",
-        "Conventional Immunohistochemistry",
-        "Multiplex Immunohistochemistry",
-        "Multiplex Immunofluorescence",
-        "CyTOF",
-        "OLink",
-        "NanoString",
-        "ELISpot",
-        "Multiplexed Ion-Beam Imaging (MIBI)",
-        "Other",
-        "None"
-      ]
     }
   },
   "required": ["assay_creator"]

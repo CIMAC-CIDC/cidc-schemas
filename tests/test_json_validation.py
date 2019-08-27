@@ -51,33 +51,57 @@ def test_trial_core():
     # create some aliquots.
     shipment = {"request": "DFCI"}
     aliquot1 = {
-        "cimac_aliquot_id": "c1d1"
-    }
-
-    aliquot2 = {
-        "cimac_aliquot_id": "c1d2"
+        "cimac_aliquot_id": "c1d1",
+        "units": "Other",
+        "material_used": 1,
+        "material_remaining": 0,
+        "aliquot_quality_status": "Other",
+        "aliquot_replacement": "N/A",
+        "aliquot_status": "Other"
     }
     al_validator.validate(aliquot1)
+
+    aliquot2 = {
+        "cimac_aliquot_id": "c1d2",
+        "units": "Other",
+        "material_used": 1,
+        "material_remaining": 0,
+        "aliquot_quality_status": "Other",
+        "aliquot_replacement": "N/A",
+        "aliquot_status": "Other"
+    }
     al_validator.validate(aliquot2)
 
     # create some samples.
     sample1 = {
         "cimac_sample_id": "csid1",
         "site_sample_id": "ssida",
-        "aliquots": [aliquot1]
+        "aliquots": [aliquot1],
+        "time_point": "---",
+        "sample_location": "---",
+        "specimen_type": "Other",
+        "specimen_format": "Other",
+        "genomic_source": "Normal",
     }
+    sm_validator.validate(sample1)
     sample2 = {
         "cimac_sample_id": "csid12",
         "site_sample_id": "ssidb",
-        "aliquots": [aliquot2]
+        "aliquots": [aliquot2],
+        "time_point": "---",
+        "sample_location": "---",
+        "specimen_type": "Other",
+        "specimen_format": "Other",
+        "genomic_source": "Normal",
     }
-    sm_validator.validate(sample1)
     sm_validator.validate(sample2)
 
     # create a bad participant, then make it good.
     participant = {
         "cimac_participant_id": "cpid_1",
-        "trial_participant_id": "tpid_a"
+        "trial_participant_id": "tpid_a",
+        "cohort_id": "---",
+        "arm_id": "---",    
     }
     with pytest.raises(jsonschema.ValidationError):
         pt_validator.validate(participant)

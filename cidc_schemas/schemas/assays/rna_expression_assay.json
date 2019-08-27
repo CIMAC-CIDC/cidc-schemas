@@ -6,7 +6,7 @@
   "description": "Additional properties to describe a RNA assay for expression analysis.",
   "allOf": [
     { "$ref": "assays/components/assay_core.json" },
-    { "$ref": "assays/components/ngs.json" }
+    { "$ref": "assays/components/ngs_assay_core.json" }
   ],
   "properties": {
     "enrichment_method": {

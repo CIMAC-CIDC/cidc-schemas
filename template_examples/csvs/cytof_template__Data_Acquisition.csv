@@ -1,8 +1,6 @@
 "#t","METADATA FILE FOR CYTOF"
 "#p","LEAD ORGANIZATION STUDY ID","10021"
 "#p","ASSAY CREATOR","DFCI"
-"#p","ASSAY CATEGORY","CyTOF"
-"#p","ARTIFACT CATEGORY","Assay Artifact from CIMAC"
 "#p","PANEL NAME","Immune-1"
 
 "","Runs"

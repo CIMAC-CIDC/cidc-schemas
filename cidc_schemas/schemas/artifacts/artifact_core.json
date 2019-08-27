@@ -1,10 +1,14 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "artifact",
-  "title": "Artifact",
+  "$id": "artifact_core",
+  "title": "Artifact Core",
   "type": "object",
   "description": "Any file artifact associated with a clinical trial.",
   "properties": {
+    "upload_placeholder": {
+      "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+      "type": "string"
+    },
     "artifact_creator": {
       "description": "The name of the center that created this artificat",
       "type": "string",
@@ -18,6 +22,7 @@
       "type": "string"
     },
     "file_name": {
+      "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
       "description": "The name of the file with extension",
       "type": "string"
     },
@@ -27,7 +32,8 @@
     },
     "uploaded_timestamp": {
       "description": "Timestamp of when artfiact was loaded into the system.",
-      "type": "string"
+      "type": "string",
+      "format": "date-time"
     },
     "file_size_bytes": {
       "description": "File size in bytes.",
@@ -47,41 +53,25 @@
       "enum": [
         "Assay Artifact from CIMAC",
         "Pipeline Artifact",
-        "Manifest File",
-        "Other"
-      ]
-    },
-    "assay_category": {
-      "$ref": "assays/components/assay_core.json#properties/assay_category"
-    },
-    "file_type": {
-      "description": "File Type.",
-      "type": "string",
-      "enum": [
-        "FASTA",
-        "FASTQ",
-        "TIFF",
-        "VCF",
-        "TSV",
-        "Excel",
-        "NPX",
-        "BAM",
-        "MAF",
-        "PNG",
-        "JPG",
-        "XML",
-        "Other"
+        "Manifest File"
       ]
     }
   },
-  "required": [
-    "file_name",
-    "object_url",
-    "uploaded_timestamp",
-    "file_size_bytes",
-    "md5_hash",
-    "artifact_category",
-    "assay_category",
-    "file_type"
+  "oneOf": [
+    {
+      "required": [
+        "file_name",
+        "object_url",
+        "uploaded_timestamp",
+        "file_size_bytes",
+        "md5_hash",
+        "artifact_category"
+      ]
+    },
+    {
+      "required": [
+        "upload_placeholder"
+      ]
+    }
   ]
 }

@@ -41,7 +41,10 @@
   <div class="container">
     <h3>Properties</h3>
     
+    
         
+        
+            
         
     
 
@@ -51,39 +54,477 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
-            <tr>
-                <td><a name="records"></a>records</td>
-                <td width=25%>
-                    
-                </td>
-                <td>
-                    
-                        &lt;array&gt; 
-                        <ul>
-                        
-                        
-                            
-                                <a href="assays.components.olink.olink_entry.html">assays.components.olink.olink_entry</a>
-                            
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            
+                <tr>
+    <td>
+        
+            <span id="records">
+                records
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+        
+    </td>
+    <td>
+        
+            &lt; 
+                array 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+             
+                
+                    <a href="assays.components.olink.olink_entry.html">assays.components.olink.olink_entry</a>
+                
+            
+            
+        
+    </td>
+</tr>
+            
+        
+        
+            
         
     </table>
 
     
   </div>
+
+  <div class="container">
+    <h3>olink_assay.full.json</h3>
+  	<pre><code>{
+    "$id": "olink_assay",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "High-throughput multiplexed assays for protein biomarker discovery",
+    "properties": {
+        "records": {
+            "items": {
+                "$id": "Olink_assay_record",
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "description": "A single data record from Olink assay",
+                "properties": {
+                    "assay_panel_lot": {
+                        "description": "Lot Number of the assay panel",
+                        "type": "number"
+                    },
+                    "assay_prefix": {
+                        "description": "Prefix to used for the filename",
+                        "type": "string"
+                    },
+                    "baseline_correction": {
+                        "description": "Method used for baseline correction",
+                        "type": "string"
+                    },
+                    "chip_barcode": {
+                        "description": "Chip barcode number",
+                        "type": "number"
+                    },
+                    "files": {
+                        "$id": "olink_input",
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "description": "Olink Assay Input Files",
+                        "properties": {
+                            "assay_npx": {
+                                "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.",
+                                "$id": "text_artifact",
+                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                "allOf": [
+                                    {
+                                        "$id": "artifact_core",
+                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "description": "Any file artifact associated with a clinical trial.",
+                                        "oneOf": [
+                                            {
+                                                "required": [
+                                                    "file_name",
+                                                    "object_url",
+                                                    "uploaded_timestamp",
+                                                    "file_size_bytes",
+                                                    "md5_hash",
+                                                    "artifact_category"
+                                                ]
+                                            },
+                                            {
+                                                "required": [
+                                                    "upload_placeholder"
+                                                ]
+                                            }
+                                        ],
+                                        "properties": {
+                                            "artifact_category": {
+                                                "description": "Artifact category.",
+                                                "enum": [
+                                                    "Assay Artifact from CIMAC",
+                                                    "Pipeline Artifact",
+                                                    "Manifest File"
+                                                ],
+                                                "type": "string"
+                                            },
+                                            "artifact_creator": {
+                                                "description": "The name of the center that created this artificat",
+                                                "enum": [
+                                                    "DFCI",
+                                                    "Mount Sinai",
+                                                    "Stanford",
+                                                    "MD Anderson"
+                                                ],
+                                                "type": "string"
+                                            },
+                                            "file_name": {
+                                                "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
+                                                "description": "The name of the file with extension",
+                                                "type": "string"
+                                            },
+                                            "file_size_bytes": {
+                                                "description": "File size in bytes.",
+                                                "type": "integer"
+                                            },
+                                            "md5_hash": {
+                                                "description": "MD5 Hash of artifact.",
+                                                "type": "string"
+                                            },
+                                            "object_url": {
+                                                "description": "URL to artifact within Google Bucket.",
+                                                "type": "string"
+                                            },
+                                            "upload_placeholder": {
+                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "type": "string"
+                                            },
+                                            "uploaded_timestamp": {
+                                                "description": "Timestamp of when artfiact was loaded into the system.",
+                                                "format": "date-time",
+                                                "type": "string"
+                                            },
+                                            "uploader": {
+                                                "type": "string"
+                                            },
+                                            "uuid": {
+                                                "description": "UUID of artifact.",
+                                                "type": "string"
+                                            },
+                                            "visible": {
+                                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "title": "Artifact Core",
+                                        "type": "object"
+                                    },
+                                    {
+                                        "properties": {
+                                            "info": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "description": "Information about text files",
+                                "mergeStrategy": "objectMerge",
+                                "title": "Text Artifact",
+                                "type": "object"
+                            },
+                            "assay_raw_ct": {
+                                "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.",
+                                "$id": "text_artifact",
+                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                "allOf": [
+                                    {
+                                        "$id": "artifact_core",
+                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "description": "Any file artifact associated with a clinical trial.",
+                                        "oneOf": [
+                                            {
+                                                "required": [
+                                                    "file_name",
+                                                    "object_url",
+                                                    "uploaded_timestamp",
+                                                    "file_size_bytes",
+                                                    "md5_hash",
+                                                    "artifact_category"
+                                                ]
+                                            },
+                                            {
+                                                "required": [
+                                                    "upload_placeholder"
+                                                ]
+                                            }
+                                        ],
+                                        "properties": {
+                                            "artifact_category": {
+                                                "description": "Artifact category.",
+                                                "enum": [
+                                                    "Assay Artifact from CIMAC",
+                                                    "Pipeline Artifact",
+                                                    "Manifest File"
+                                                ],
+                                                "type": "string"
+                                            },
+                                            "artifact_creator": {
+                                                "description": "The name of the center that created this artificat",
+                                                "enum": [
+                                                    "DFCI",
+                                                    "Mount Sinai",
+                                                    "Stanford",
+                                                    "MD Anderson"
+                                                ],
+                                                "type": "string"
+                                            },
+                                            "file_name": {
+                                                "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
+                                                "description": "The name of the file with extension",
+                                                "type": "string"
+                                            },
+                                            "file_size_bytes": {
+                                                "description": "File size in bytes.",
+                                                "type": "integer"
+                                            },
+                                            "md5_hash": {
+                                                "description": "MD5 Hash of artifact.",
+                                                "type": "string"
+                                            },
+                                            "object_url": {
+                                                "description": "URL to artifact within Google Bucket.",
+                                                "type": "string"
+                                            },
+                                            "upload_placeholder": {
+                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "type": "string"
+                                            },
+                                            "uploaded_timestamp": {
+                                                "description": "Timestamp of when artfiact was loaded into the system.",
+                                                "format": "date-time",
+                                                "type": "string"
+                                            },
+                                            "uploader": {
+                                                "type": "string"
+                                            },
+                                            "uuid": {
+                                                "description": "UUID of artifact.",
+                                                "type": "string"
+                                            },
+                                            "visible": {
+                                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "title": "Artifact Core",
+                                        "type": "object"
+                                    },
+                                    {
+                                        "properties": {
+                                            "info": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "description": "Information about text files",
+                                "mergeStrategy": "objectMerge",
+                                "title": "Text Artifact",
+                                "type": "object"
+                            },
+                            "study_npx": {
+                                "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.",
+                                "$id": "text_artifact",
+                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                "allOf": [
+                                    {
+                                        "$id": "artifact_core",
+                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "description": "Any file artifact associated with a clinical trial.",
+                                        "oneOf": [
+                                            {
+                                                "required": [
+                                                    "file_name",
+                                                    "object_url",
+                                                    "uploaded_timestamp",
+                                                    "file_size_bytes",
+                                                    "md5_hash",
+                                                    "artifact_category"
+                                                ]
+                                            },
+                                            {
+                                                "required": [
+                                                    "upload_placeholder"
+                                                ]
+                                            }
+                                        ],
+                                        "properties": {
+                                            "artifact_category": {
+                                                "description": "Artifact category.",
+                                                "enum": [
+                                                    "Assay Artifact from CIMAC",
+                                                    "Pipeline Artifact",
+                                                    "Manifest File"
+                                                ],
+                                                "type": "string"
+                                            },
+                                            "artifact_creator": {
+                                                "description": "The name of the center that created this artificat",
+                                                "enum": [
+                                                    "DFCI",
+                                                    "Mount Sinai",
+                                                    "Stanford",
+                                                    "MD Anderson"
+                                                ],
+                                                "type": "string"
+                                            },
+                                            "file_name": {
+                                                "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
+                                                "description": "The name of the file with extension",
+                                                "type": "string"
+                                            },
+                                            "file_size_bytes": {
+                                                "description": "File size in bytes.",
+                                                "type": "integer"
+                                            },
+                                            "md5_hash": {
+                                                "description": "MD5 Hash of artifact.",
+                                                "type": "string"
+                                            },
+                                            "object_url": {
+                                                "description": "URL to artifact within Google Bucket.",
+                                                "type": "string"
+                                            },
+                                            "upload_placeholder": {
+                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "type": "string"
+                                            },
+                                            "uploaded_timestamp": {
+                                                "description": "Timestamp of when artfiact was loaded into the system.",
+                                                "format": "date-time",
+                                                "type": "string"
+                                            },
+                                            "uploader": {
+                                                "type": "string"
+                                            },
+                                            "uuid": {
+                                                "description": "UUID of artifact.",
+                                                "type": "string"
+                                            },
+                                            "visible": {
+                                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "title": "Artifact Core",
+                                        "type": "object"
+                                    },
+                                    {
+                                        "properties": {
+                                            "info": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "description": "Information about text files",
+                                "mergeStrategy": "objectMerge",
+                                "title": "Text Artifact",
+                                "type": "object"
+                            }
+                        },
+                        "required": [
+                            "assay_npx",
+                            "assay_raw_ct"
+                        ],
+                        "title": "Olink Input Files",
+                        "type": "object"
+                    },
+                    "filetype": {
+                        "description": "Type of file being uploaded",
+                        "enum": [
+                            "assay",
+                            "study"
+                        ],
+                        "type": "string"
+                    },
+                    "fludigm_application_build": {
+                        "description": "Build of the Fluidgm application used",
+                        "type": "string"
+                    },
+                    "fludigm_application_version": {
+                        "description": "Version of the Fluidgm application used",
+                        "type": "string"
+                    },
+                    "instrument": {
+                        "description": "Instrument used for the Olink assay",
+                        "type": "string"
+                    },
+                    "npx_manager_version": {
+                        "description": "Version of NPX manager used for the analysis",
+                        "type": "string"
+                    },
+                    "number_of_samples": {
+                        "description": "Number of samples analyzed in the assay",
+                        "type": "number"
+                    },
+                    "number_of_samples_failed": {
+                        "description": "Number of samples failed in the assay",
+                        "type": "number"
+                    },
+                    "panel": {
+                        "description": "Panel used for the assay",
+                        "type": "string"
+                    },
+                    "passive_reference": {
+                        "description": "Passive Reference",
+                        "type": "string"
+                    },
+                    "probe_type": {
+                        "description": "Probe Type",
+                        "type": "string"
+                    },
+                    "quality_threshold": {
+                        "description": "Threshold used for quality cutoff",
+                        "type": "number"
+                    },
+                    "run_date": {
+                        "description": "Date when the Olink assay was run",
+                        "format": "date",
+                        "type": "string"
+                    },
+                    "run_time": {
+                        "description": "Time when the Olink assay was run",
+                        "format": "time",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "assay_prefix",
+                    "filetype",
+                    "panel",
+                    "number_of_samples",
+                    "npx_manager_version"
+                ],
+                "title": "Olink assay record",
+                "type": "object"
+            },
+            "type": "array"
+        }
+    },
+    "required": [
+        "records"
+    ],
+    "title": "OLink Assay",
+    "type": "object"
+}</code></pre>
+  </container>
 
 
     </main>

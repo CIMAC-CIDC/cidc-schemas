@@ -41,7 +41,10 @@
   <div class="container">
     <h3>Properties</h3>
     
+    
         
+        
+            
         
     
 
@@ -51,110 +54,203 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
-            <tr>
-                <td><a name="user_id"></a>user_id</td>
-                <td width=25%>
-                    User Identifier.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="google_id"></a>google_id</td>
-                <td width=25%>
-                    User's Google Idenfier.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="preferred_email_address"></a>preferred_email_address</td>
-                <td width=25%>
-                    User's preferred email address.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
         
-            <tr>
-                <td><a name="organization"></a>organization</td>
-                <td width=25%>
-                    Affiliated Organization
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                            <li>National Cancer Institute</li>
-                        
-                            <li>Dana-Farber Cancer Institute (CIDC)</li>
-                        
-                            <li>Dana-Farber Cancer Institute (CIMAC)</li>
-                        
-                            <li>Stanford</li>
-                        
-                            <li>MD Anderson</li>
-                        
-                            <li>Mount Sinai</li>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="user_id">
+                user_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            User Identifier.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="google_id">
+                google_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            User's Google Idenfier.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="preferred_email_address">
+                preferred_email_address
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            User's preferred email address.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="organization">
+                organization
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Affiliated Organization
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"National Cancer Institute"</li>
+                
+                    <li>"Dana-Farber Cancer Institute (CIDC)"</li>
+                
+                    <li>"Dana-Farber Cancer Institute (CIMAC)"</li>
+                
+                    <li>"Stanford"</li>
+                
+                    <li>"MD Anderson"</li>
+                
+                    <li>"Mount Sinai"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
         
     </table>
 
     
   </div>
+
+  <div class="container">
+    <h3>user.full.json</h3>
+  	<pre><code>{
+    "$id": "user",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Any user of the CIDC platform.",
+    "properties": {
+        "google_id": {
+            "description": "User's Google Idenfier.",
+            "type": "string"
+        },
+        "organization": {
+            "description": "Affiliated Organization",
+            "enum": [
+                "National Cancer Institute",
+                "Dana-Farber Cancer Institute (CIDC)",
+                "Dana-Farber Cancer Institute (CIMAC)",
+                "Stanford",
+                "MD Anderson",
+                "Mount Sinai"
+            ],
+            "type": "string"
+        },
+        "preferred_email_address": {
+            "description": "User's preferred email address.",
+            "type": "string"
+        },
+        "user_id": {
+            "description": "User Identifier.",
+            "type": "string"
+        }
+    },
+    "title": "User",
+    "type": "object"
+}</code></pre>
+  </container>
 
 
     </main>

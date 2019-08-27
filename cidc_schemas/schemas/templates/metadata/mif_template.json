@@ -13,9 +13,6 @@
           "assay creator": {
             "$ref": "assays/components/assay_core.json#properties/assay_creator"
           },
-          "assay category": {
-            "$ref": "assays/components/assay_core.json#properties/assay_category"
-          },
           "slide scanner model": {
             "$ref": "assays/components/image.json#properties/slide_scanner_model"
           },

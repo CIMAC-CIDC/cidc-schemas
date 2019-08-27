@@ -42,7 +42,10 @@
   <div class="container">
     <h3>Properties</h3>
     
+    
         
+        
+            
         
     
 
@@ -52,35 +55,70 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
-            <tr>
-                <td><a name="instrument"></a>instrument</td>
-                <td width=25%>
-                    CyTOF instrument used for experiment.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            
+                <tr>
+    <td>
+        
+            <span id="instrument">
+                instrument
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            CyTOF instrument used for experiment.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+        
+            
         
     </table>
 
     
   </div>
+
+  <div class="container">
+    <h3>cytof_platform.full.json</h3>
+  	<pre><code>{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Basic information about the instrumentation used in a CYTOF experiment\n",
+    "id": "cytof_platform",
+    "properties": {
+        "instrument": {
+            "description": "CyTOF instrument used for experiment.",
+            "type": "string"
+        }
+    },
+    "required": [
+        "instrument"
+    ],
+    "title": "CYTOF Platform"
+}</code></pre>
+  </container>
 
 
     </main>

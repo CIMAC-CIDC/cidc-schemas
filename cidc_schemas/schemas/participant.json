@@ -61,5 +61,10 @@
       }
     }
   },
-  "required": ["cimac_participant_id", "samples"]
+  "required": [
+    "cimac_participant_id",
+    "trial_participant_id",
+    "cohort_id",
+    "arm_id",
+    "samples"]
 }

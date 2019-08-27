@@ -51,7 +51,7 @@ def interface() -> argparse.Namespace:
                                  help='Path to yaml file containing template configuration', required=True)
     template_parser.add_argument('-s', '--schemas_dir',
                                  help='Path to directory containing data entity schemas')
-    template_parser.add_argument('-x', '--xlsx_file', )
+    template_parser.add_argument('-x', '--xlsx_file', required=True)
     template_parser.set_defaults(func=validate_template)
 
     # Parser for validation a JSON schema

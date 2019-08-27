@@ -38,36 +38,23 @@ def _sim_olink():
     
     return olink
 
+
 def test_aliquot():
 
     # create basic aliquot
     aliquot = {
-        "cimac_aliquot_id": "1234"
+        "cimac_aliquot_id": "1234",
+        "units": "Other",
+        "material_used": 1,
+        "material_remaining": 0,
+        "aliquot_quality_status": "Other",
+        "aliquot_replacement": "N/A",
+        "aliquot_status": "Other"
     }
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("aliquot")
     validator.validate(aliquot)
-
-    # now add a olink but make it invalid
-    assays = {
-        "olink": {"thisshould": "fail"}
-    }
-    aliquot['assay'] = assays
-    with pytest.raises(jsonschema.ValidationError):
-        validator.validate(aliquot) 
-
-    # update olink to be valid
-    olink = _sim_olink()
-    assays["olink"] = olink
-
-    # assert we can validate this.
-    validator.validate(aliquot)
-
-    # try to make an invalid assay
-    assays["wes"] = olink.copy()
-    with pytest.raises(jsonschema.ValidationError):
-        validator.validate(aliquot) 
 
 
 def test_clinicaltrial_simple():
@@ -80,21 +67,34 @@ def test_clinicaltrial_simple():
     # create aliquot
     aliquot = {
         "cimac_aliquot_id": "1234",
-        "assay": assays
+        "assay": assays,
+        "units": "Other",
+        "material_used": 1,
+        "material_remaining": 0,
+        "aliquot_quality_status": "Other",
+        "aliquot_replacement": "N/A",
+        "aliquot_status": "Other"
     }
 
     # create the sample.
     sample = {
         "cimac_sample_id": "S1234",
         "site_sample_id": "blank",
-        "aliquots": [aliquot]
+        "aliquots": [aliquot],
+        "time_point": "---",
+        "sample_location": "---",
+        "specimen_type": "Other",
+        "specimen_format": "Other",
+        "genomic_source": "Normal",
     }
 
     # create the participant
     participant = {
         "cimac_participant_id": "P1234",
         "trial_participant_id": "blank",
-        "samples": [sample]
+        "samples": [sample],
+        "cohort_id": "---",
+        "arm_id": "---",    
     }
 
     # create the trial
@@ -107,45 +107,65 @@ def test_clinicaltrial_simple():
     validator = _fetch_validator("clinical_trial")
     validator.validate(ct)
 
-def test_clinicaltrial_olink():
 
-    # create the assay
-    assays = {
-        "olink": _sim_olink()
-    }
+def test_clinicaltrial_olink():
 
     # create 2 aliquots
     aliquot1 = {
         "cimac_aliquot_id": "1234",
-        "assay": assays
+        "units": "Other",
+        "material_used": 1,
+        "material_remaining": 0,
+        "aliquot_quality_status": "Other",
+        "aliquot_replacement": "N/A",
+        "aliquot_status": "Other"
     }
     aliquot2 = {
         "cimac_aliquot_id": "1234",
-        "assay": assays.copy()
+        "units": "Other",
+        "material_used": 1,
+        "material_remaining": 0,
+        "aliquot_quality_status": "Other",
+        "aliquot_replacement": "N/A",
+        "aliquot_status": "Other"
     }
 
     # create the sample.
     sample1 = {
         "cimac_sample_id": "S1234",
         "site_sample_id": "blank",
-        "aliquots": [aliquot1]
+        "aliquots": [aliquot1],
+        "time_point": "---",
+        "sample_location": "---",
+        "specimen_type": "Other",
+        "specimen_format": "Other",
+        "genomic_source": "Normal",
     }
     sample2 = {
         "cimac_sample_id": "SABCD",
         "site_sample_id": "blank",
-        "aliquots": [aliquot2]
+        "aliquots": [aliquot2],
+        "time_point": "---",
+        "sample_location": "---",
+        "specimen_type": "Other",
+        "specimen_format": "Other",
+        "genomic_source": "Normal",
     }
 
     # create the participant
     participant1 = {
         "cimac_participant_id": "P1234",
         "trial_participant_id": "blank",
-        "samples": [sample1]
+        "samples": [sample1],
+        "cohort_id": "---",
+        "arm_id": "---",    
     }
     participant2 = {
         "cimac_participant_id": "PABCD",
         "trial_participant_id": "blank",
-        "samples": [sample2]
+        "samples": [sample2],
+        "cohort_id": "---",
+        "arm_id": "---",    
     }
 
     # create the trial

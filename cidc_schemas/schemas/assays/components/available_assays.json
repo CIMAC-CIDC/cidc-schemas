@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "available_assays",
+  "title": "Assays which are available in the network",
+  "description": "Reference for every available assay in network",
+  "properties": {
+    "wes": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/wes_assay.json"
+      }, 
+      "mergeStrategy": "append"
+    },
+    "rna_expression": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/rna_expression_assay.json"
+      },
+      "mergeStrategy": "append"
+    },
+    "cytof": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/cytof_assay.json"
+      },
+      "mergeStrategy": "append"
+    },
+    "olink": {
+      "$comment": "REVISIT An `append` merge strategy disallowes updates to assay entries. Priti said there isn't anything like `assay id`, but Dave or Joyce might have something in tracking spreadsheet.",
+      "type": "array",
+      "items": {
+        "$ref": "assays/olink_assay.json"
+      }
+    },
+    "mif": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/mif_assay.json"
+      },
+      "mergeStrategy": "append"
+    },
+    "micsss": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/micsss_assay.json"
+      },
+      "mergeStrategy": "append"
+    }
+  }
+}

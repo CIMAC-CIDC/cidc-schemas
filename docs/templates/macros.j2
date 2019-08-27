@@ -119,7 +119,7 @@
         {% elif "url" in prop_schema %}
             <a href="{{ prop_schema['url'] }}">{{ prop_schema['url'].replace('.html', '') }}</a>
         {% elif "type_ref" in prop_schema %} {# means we're in _template.json #}
-            <a href="{{ prop_schema['type_ref'].replace('.json', '.html') }} }}">{{ prop_schema['type_ref'].replace('.json', '') }}</a>
+            <a href="{{ prop_schema['type_ref'].replace('.json', '.html').replace('/', '.') }} }}">{{ prop_schema['type_ref'].replace('.json', '') }}</a>
         {% elif "allOf" in prop_schema %}
             <ul>
             {% for ref in prop_schema['allOf'] %}

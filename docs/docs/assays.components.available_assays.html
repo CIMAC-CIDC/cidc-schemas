@@ -446,209 +446,206 @@
                                     "$id": "cytof_input",
                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                     "description": "CyTOF Assay Input Files",
-                                    "items": {
-                                        "properties": {
-                                            "processed_fcs": {
-                                                "$id": "binary_artifact",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
-                                                "allOf": [
-                                                    {
-                                                        "$id": "artifact_core",
-                                                        "$schema": "http://json-schema.org/draft-07/schema#",
-                                                        "description": "Any file artifact associated with a clinical trial.",
-                                                        "oneOf": [
-                                                            {
-                                                                "required": [
-                                                                    "file_name",
-                                                                    "object_url",
-                                                                    "uploaded_timestamp",
-                                                                    "file_size_bytes",
-                                                                    "md5_hash",
-                                                                    "artifact_category"
-                                                                ]
-                                                            },
-                                                            {
-                                                                "required": [
-                                                                    "upload_placeholder"
-                                                                ]
-                                                            }
-                                                        ],
-                                                        "properties": {
-                                                            "artifact_category": {
-                                                                "description": "Artifact category.",
-                                                                "enum": [
-                                                                    "Assay Artifact from CIMAC",
-                                                                    "Pipeline Artifact",
-                                                                    "Manifest File"
-                                                                ],
-                                                                "type": "string"
-                                                            },
-                                                            "artifact_creator": {
-                                                                "description": "The name of the center that created this artificat",
-                                                                "enum": [
-                                                                    "DFCI",
-                                                                    "Mount Sinai",
-                                                                    "Stanford",
-                                                                    "MD Anderson"
-                                                                ],
-                                                                "type": "string"
-                                                            },
-                                                            "file_name": {
-                                                                "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
-                                                                "description": "The name of the file with extension",
-                                                                "type": "string"
-                                                            },
-                                                            "file_size_bytes": {
-                                                                "description": "File size in bytes.",
-                                                                "type": "integer"
-                                                            },
-                                                            "md5_hash": {
-                                                                "description": "MD5 Hash of artifact.",
-                                                                "type": "string"
-                                                            },
-                                                            "object_url": {
-                                                                "description": "URL to artifact within Google Bucket.",
-                                                                "type": "string"
-                                                            },
-                                                            "upload_placeholder": {
-                                                                "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
-                                                                "type": "string"
-                                                            },
-                                                            "uploaded_timestamp": {
-                                                                "description": "Timestamp of when artfiact was loaded into the system.",
-                                                                "format": "date-time",
-                                                                "type": "string"
-                                                            },
-                                                            "uploader": {
-                                                                "type": "string"
-                                                            },
-                                                            "uuid": {
-                                                                "description": "UUID of artifact.",
-                                                                "type": "string"
-                                                            },
-                                                            "visible": {
-                                                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
-                                                                "type": "boolean"
-                                                            }
+                                    "properties": {
+                                        "processed_fcs": {
+                                            "$id": "binary_artifact",
+                                            "$schema": "http://json-schema.org/draft-07/schema#",
+                                            "allOf": [
+                                                {
+                                                    "$id": "artifact_core",
+                                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                                    "description": "Any file artifact associated with a clinical trial.",
+                                                    "oneOf": [
+                                                        {
+                                                            "required": [
+                                                                "file_name",
+                                                                "object_url",
+                                                                "uploaded_timestamp",
+                                                                "file_size_bytes",
+                                                                "md5_hash",
+                                                                "artifact_category"
+                                                            ]
                                                         },
-                                                        "title": "Artifact Core",
-                                                        "type": "object"
+                                                        {
+                                                            "required": [
+                                                                "upload_placeholder"
+                                                            ]
+                                                        }
+                                                    ],
+                                                    "properties": {
+                                                        "artifact_category": {
+                                                            "description": "Artifact category.",
+                                                            "enum": [
+                                                                "Assay Artifact from CIMAC",
+                                                                "Pipeline Artifact",
+                                                                "Manifest File"
+                                                            ],
+                                                            "type": "string"
+                                                        },
+                                                        "artifact_creator": {
+                                                            "description": "The name of the center that created this artificat",
+                                                            "enum": [
+                                                                "DFCI",
+                                                                "Mount Sinai",
+                                                                "Stanford",
+                                                                "MD Anderson"
+                                                            ],
+                                                            "type": "string"
+                                                        },
+                                                        "file_name": {
+                                                            "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
+                                                            "description": "The name of the file with extension",
+                                                            "type": "string"
+                                                        },
+                                                        "file_size_bytes": {
+                                                            "description": "File size in bytes.",
+                                                            "type": "integer"
+                                                        },
+                                                        "md5_hash": {
+                                                            "description": "MD5 Hash of artifact.",
+                                                            "type": "string"
+                                                        },
+                                                        "object_url": {
+                                                            "description": "URL to artifact within Google Bucket.",
+                                                            "type": "string"
+                                                        },
+                                                        "upload_placeholder": {
+                                                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                            "type": "string"
+                                                        },
+                                                        "uploaded_timestamp": {
+                                                            "description": "Timestamp of when artfiact was loaded into the system.",
+                                                            "format": "date-time",
+                                                            "type": "string"
+                                                        },
+                                                        "uploader": {
+                                                            "type": "string"
+                                                        },
+                                                        "uuid": {
+                                                            "description": "UUID of artifact.",
+                                                            "type": "string"
+                                                        },
+                                                        "visible": {
+                                                            "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                                            "type": "boolean"
+                                                        }
                                                     },
-                                                    {
-                                                        "properties": {
-                                                            "info": {
-                                                                "type": "object"
-                                                            }
+                                                    "title": "Artifact Core",
+                                                    "type": "object"
+                                                },
+                                                {
+                                                    "properties": {
+                                                        "info": {
+                                                            "type": "object"
                                                         }
                                                     }
-                                                ],
-                                                "description": "Information about binary files.",
-                                                "title": "Binary Artifact",
-                                                "type": "object"
-                                            },
-                                            "source_fcs": {
-                                                "$id": "binary_artifact",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
-                                                "allOf": [
-                                                    {
-                                                        "$id": "artifact_core",
-                                                        "$schema": "http://json-schema.org/draft-07/schema#",
-                                                        "description": "Any file artifact associated with a clinical trial.",
-                                                        "oneOf": [
-                                                            {
-                                                                "required": [
-                                                                    "file_name",
-                                                                    "object_url",
-                                                                    "uploaded_timestamp",
-                                                                    "file_size_bytes",
-                                                                    "md5_hash",
-                                                                    "artifact_category"
-                                                                ]
-                                                            },
-                                                            {
-                                                                "required": [
-                                                                    "upload_placeholder"
-                                                                ]
-                                                            }
-                                                        ],
-                                                        "properties": {
-                                                            "artifact_category": {
-                                                                "description": "Artifact category.",
-                                                                "enum": [
-                                                                    "Assay Artifact from CIMAC",
-                                                                    "Pipeline Artifact",
-                                                                    "Manifest File"
-                                                                ],
-                                                                "type": "string"
-                                                            },
-                                                            "artifact_creator": {
-                                                                "description": "The name of the center that created this artificat",
-                                                                "enum": [
-                                                                    "DFCI",
-                                                                    "Mount Sinai",
-                                                                    "Stanford",
-                                                                    "MD Anderson"
-                                                                ],
-                                                                "type": "string"
-                                                            },
-                                                            "file_name": {
-                                                                "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
-                                                                "description": "The name of the file with extension",
-                                                                "type": "string"
-                                                            },
-                                                            "file_size_bytes": {
-                                                                "description": "File size in bytes.",
-                                                                "type": "integer"
-                                                            },
-                                                            "md5_hash": {
-                                                                "description": "MD5 Hash of artifact.",
-                                                                "type": "string"
-                                                            },
-                                                            "object_url": {
-                                                                "description": "URL to artifact within Google Bucket.",
-                                                                "type": "string"
-                                                            },
-                                                            "upload_placeholder": {
-                                                                "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
-                                                                "type": "string"
-                                                            },
-                                                            "uploaded_timestamp": {
-                                                                "description": "Timestamp of when artfiact was loaded into the system.",
-                                                                "format": "date-time",
-                                                                "type": "string"
-                                                            },
-                                                            "uploader": {
-                                                                "type": "string"
-                                                            },
-                                                            "uuid": {
-                                                                "description": "UUID of artifact.",
-                                                                "type": "string"
-                                                            },
-                                                            "visible": {
-                                                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
-                                                                "type": "boolean"
-                                                            }
-                                                        },
-                                                        "title": "Artifact Core",
-                                                        "type": "object"
-                                                    },
-                                                    {
-                                                        "properties": {
-                                                            "info": {
-                                                                "type": "object"
-                                                            }
-                                                        }
-                                                    }
-                                                ],
-                                                "description": "Information about binary files.",
-                                                "title": "Binary Artifact",
-                                                "type": "object"
-                                            }
+                                                }
+                                            ],
+                                            "description": "Information about binary files.",
+                                            "title": "Binary Artifact",
+                                            "type": "object"
                                         },
-                                        "type": "object"
+                                        "source_fcs": {
+                                            "$id": "binary_artifact",
+                                            "$schema": "http://json-schema.org/draft-07/schema#",
+                                            "allOf": [
+                                                {
+                                                    "$id": "artifact_core",
+                                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                                    "description": "Any file artifact associated with a clinical trial.",
+                                                    "oneOf": [
+                                                        {
+                                                            "required": [
+                                                                "file_name",
+                                                                "object_url",
+                                                                "uploaded_timestamp",
+                                                                "file_size_bytes",
+                                                                "md5_hash",
+                                                                "artifact_category"
+                                                            ]
+                                                        },
+                                                        {
+                                                            "required": [
+                                                                "upload_placeholder"
+                                                            ]
+                                                        }
+                                                    ],
+                                                    "properties": {
+                                                        "artifact_category": {
+                                                            "description": "Artifact category.",
+                                                            "enum": [
+                                                                "Assay Artifact from CIMAC",
+                                                                "Pipeline Artifact",
+                                                                "Manifest File"
+                                                            ],
+                                                            "type": "string"
+                                                        },
+                                                        "artifact_creator": {
+                                                            "description": "The name of the center that created this artificat",
+                                                            "enum": [
+                                                                "DFCI",
+                                                                "Mount Sinai",
+                                                                "Stanford",
+                                                                "MD Anderson"
+                                                            ],
+                                                            "type": "string"
+                                                        },
+                                                        "file_name": {
+                                                            "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
+                                                            "description": "The name of the file with extension",
+                                                            "type": "string"
+                                                        },
+                                                        "file_size_bytes": {
+                                                            "description": "File size in bytes.",
+                                                            "type": "integer"
+                                                        },
+                                                        "md5_hash": {
+                                                            "description": "MD5 Hash of artifact.",
+                                                            "type": "string"
+                                                        },
+                                                        "object_url": {
+                                                            "description": "URL to artifact within Google Bucket.",
+                                                            "type": "string"
+                                                        },
+                                                        "upload_placeholder": {
+                                                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                            "type": "string"
+                                                        },
+                                                        "uploaded_timestamp": {
+                                                            "description": "Timestamp of when artfiact was loaded into the system.",
+                                                            "format": "date-time",
+                                                            "type": "string"
+                                                        },
+                                                        "uploader": {
+                                                            "type": "string"
+                                                        },
+                                                        "uuid": {
+                                                            "description": "UUID of artifact.",
+                                                            "type": "string"
+                                                        },
+                                                        "visible": {
+                                                            "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "title": "Artifact Core",
+                                                    "type": "object"
+                                                },
+                                                {
+                                                    "properties": {
+                                                        "info": {
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "description": "Information about binary files.",
+                                            "title": "Binary Artifact",
+                                            "type": "object"
+                                        }
                                     },
                                     "title": "CyTOF Input Files",
-                                    "type": "array"
+                                    "type": "object"
                                 },
                                 "normalization_version": {
                                     "description": "Version of normalization for CyTOF assay batch.",
@@ -1022,7 +1019,7 @@
                                                                         "type": "string"
                                                                     },
                                                                     "upload_placeholder": {
-                                                                        "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                        "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                         "type": "string"
                                                                     },
                                                                     "uploaded_timestamp": {
@@ -1132,7 +1129,7 @@
                                                                         "type": "string"
                                                                     },
                                                                     "upload_placeholder": {
-                                                                        "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                        "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                         "type": "string"
                                                                     },
                                                                     "uploaded_timestamp": {
@@ -1258,7 +1255,7 @@
                                                                         "type": "string"
                                                                     },
                                                                     "upload_placeholder": {
-                                                                        "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                        "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                         "type": "string"
                                                                     },
                                                                     "uploaded_timestamp": {
@@ -1364,7 +1361,7 @@
                                                                         "type": "string"
                                                                     },
                                                                     "upload_placeholder": {
-                                                                        "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                        "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                         "type": "string"
                                                                     },
                                                                     "uploaded_timestamp": {
@@ -1470,7 +1467,7 @@
                                                                         "type": "string"
                                                                     },
                                                                     "upload_placeholder": {
-                                                                        "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                        "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                         "type": "string"
                                                                     },
                                                                     "uploaded_timestamp": {
@@ -1576,7 +1573,7 @@
                                                                         "type": "string"
                                                                     },
                                                                     "upload_placeholder": {
-                                                                        "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                        "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                         "type": "string"
                                                                     },
                                                                     "uploaded_timestamp": {
@@ -1686,7 +1683,7 @@
                                                                         "type": "string"
                                                                     },
                                                                     "upload_placeholder": {
-                                                                        "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                        "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                         "type": "string"
                                                                     },
                                                                     "uploaded_timestamp": {
@@ -1796,7 +1793,7 @@
                                                                         "type": "string"
                                                                     },
                                                                     "upload_placeholder": {
-                                                                        "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                        "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                         "type": "string"
                                                                     },
                                                                     "uploaded_timestamp": {
@@ -1911,7 +1908,7 @@
                                                             "type": "string"
                                                         },
                                                         "upload_placeholder": {
-                                                            "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                             "type": "string"
                                                         },
                                                         "uploaded_timestamp": {
@@ -2281,7 +2278,7 @@
                                                             "type": "string"
                                                         },
                                                         "upload_placeholder": {
-                                                            "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                             "type": "string"
                                                         },
                                                         "uploaded_timestamp": {
@@ -2395,7 +2392,7 @@
                                                                                 "type": "string"
                                                                             },
                                                                             "upload_placeholder": {
-                                                                                "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                                 "type": "string"
                                                                             },
                                                                             "uploaded_timestamp": {
@@ -2501,7 +2498,7 @@
                                                                                 "type": "string"
                                                                             },
                                                                             "upload_placeholder": {
-                                                                                "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                                 "type": "string"
                                                                             },
                                                                             "uploaded_timestamp": {
@@ -2607,7 +2604,7 @@
                                                                                 "type": "string"
                                                                             },
                                                                             "upload_placeholder": {
-                                                                                "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                                 "type": "string"
                                                                             },
                                                                             "uploaded_timestamp": {
@@ -2713,7 +2710,7 @@
                                                                                 "type": "string"
                                                                             },
                                                                             "upload_placeholder": {
-                                                                                "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                                 "type": "string"
                                                                             },
                                                                             "uploaded_timestamp": {
@@ -2823,7 +2820,7 @@
                                                                                 "type": "string"
                                                                             },
                                                                             "upload_placeholder": {
-                                                                                "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                                 "type": "string"
                                                                             },
                                                                             "uploaded_timestamp": {
@@ -2933,7 +2930,7 @@
                                                                                 "type": "string"
                                                                             },
                                                                             "upload_placeholder": {
-                                                                                "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                                 "type": "string"
                                                                             },
                                                                             "uploaded_timestamp": {
@@ -3051,7 +3048,7 @@
                                                                                 "type": "string"
                                                                             },
                                                                             "upload_placeholder": {
-                                                                                "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                                 "type": "string"
                                                                             },
                                                                             "uploaded_timestamp": {
@@ -3161,7 +3158,7 @@
                                                                                 "type": "string"
                                                                             },
                                                                             "upload_placeholder": {
-                                                                                "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                                 "type": "string"
                                                                             },
                                                                             "uploaded_timestamp": {
@@ -3283,7 +3280,7 @@
                                                             "type": "string"
                                                         },
                                                         "upload_placeholder": {
-                                                            "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                             "type": "string"
                                                         },
                                                         "uploaded_timestamp": {
@@ -3383,7 +3380,7 @@
                                                             "type": "string"
                                                         },
                                                         "upload_placeholder": {
-                                                            "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                             "type": "string"
                                                         },
                                                         "uploaded_timestamp": {
@@ -3561,7 +3558,7 @@
                                                             "type": "string"
                                                         },
                                                         "upload_placeholder": {
-                                                            "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                             "type": "string"
                                                         },
                                                         "uploaded_timestamp": {
@@ -3661,7 +3658,7 @@
                                                             "type": "string"
                                                         },
                                                         "upload_placeholder": {
-                                                            "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                             "type": "string"
                                                         },
                                                         "uploaded_timestamp": {
@@ -3761,7 +3758,7 @@
                                                             "type": "string"
                                                         },
                                                         "upload_placeholder": {
-                                                            "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                             "type": "string"
                                                         },
                                                         "uploaded_timestamp": {
@@ -4097,7 +4094,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -4196,7 +4193,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -4295,7 +4292,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -4458,7 +4455,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -4557,7 +4554,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -4656,7 +4653,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -4899,7 +4896,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -5009,7 +5006,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -5107,7 +5104,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -5205,7 +5202,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -5317,7 +5314,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -5415,7 +5412,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -5526,7 +5523,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -5624,7 +5621,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -5722,7 +5719,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -5899,7 +5896,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -5998,7 +5995,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {
@@ -6097,7 +6094,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "upload_placeholder": {
-                                                                    "$comment": "_____!!!_____ FIXME it's a placeholder for while file is being upoloaded, `job_id` or something like that _____!!!_____",
+                                                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
                                                                     "type": "string"
                                                                 },
                                                                 "uploaded_timestamp": {

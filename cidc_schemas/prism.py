@@ -277,18 +277,15 @@ def _process_property(
 
         # TODO should be pretty different for not wes 
         # setup the base path
-        gs_key = _get_recursively(data_obj, "cimac_participant_id")[0]
-        gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_sample_id")[0]}'
-        gs_key = f'{gs_key}/{_get_recursively(data_obj, "cimac_aliquot_id")[0]}'
-
         artifact_field_name = field_def['merge_pointer'].split('/')[-1]
-        gs_key = f'{gs_key}/{assay_hint}/{artifact_field_name}'
+        gs_key = field_def['url_template'].format_map(data_obj)
+        gs_key += f'/{assay_hint}/{artifact_field_name}/{val}'
 
         # return local_path entry
         res = {
             "template_key": key,
             "local_path": raw_val,
-            "field_def": field_def,
+            # "field_def": field_def,
             "gs_key": gs_key
         }
         if field_def.get('is_artifact'):
@@ -424,7 +421,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = F
     """
 
     # data rows will require a unique identifier
-    if not assay_hint == "wes":
+    if assay_hint not in ["wes", "olink"]:
         raise NotImplementedError(f'{assay_hint} is not supported yet, only WES is supported.')
 
     
@@ -435,7 +432,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = F
     # and merger for it
     root_merger = Merger(root_ct_schema)
     # and where to collect all local file refs
-    local_file_paths = []
+    collected_files = []
 
     # read the excel file
     xslx = XlTemplateReader.from_excel(xlsx_path)
@@ -448,7 +445,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = F
         if verb:
             print(f'next worksheet {ws_name}')
 
-        templ_ws = xlsx_template.template_schema['properties']['worksheets'][ws_name]
+        templ_ws = xlsx_template.schema['properties']['worksheets'][ws_name]
         preamble_object_schema = load_and_validate_schema(templ_ws['prism_preamble_object_schema'])
         preamble_merger = Merger(preamble_object_schema)
         preamble_object_pointer = templ_ws['prism_preamble_object_pointer']
@@ -476,7 +473,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = F
                 # get corr xsls schema type 
                 new_file = _process_property([key, val], assay_hint, xlsx_template.key_lu, data_obj, copy_of_preamble, data_object_pointer, verb)
                 if new_file:
-                    local_file_paths.append(new_file)
+                    collected_files.append(new_file)
 
             preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
         
@@ -486,15 +483,14 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = F
         for row in ws[RowType.PREAMBLE]:
             # process this property
             new_file = _process_property(row, assay_hint, xlsx_template.key_lu, preamble_obj, root_ct_obj, preamble_object_pointer, verb=verb)
-            # TODO we might want to use preamble_merger here too,
+            # TODO we might want to use copy+preamble_merger here too,
             # to for complex properites that require mergeStrategy 
             
             if new_file:
-                local_file_paths.append(new_file)
-
+                collected_files.append(new_file)
 
     # return root object and files list
-    return root_ct_obj, local_file_paths
+    return root_ct_obj, collected_files
 
 
 def _get_path(ct: dict, key: str) -> str:
@@ -634,7 +630,7 @@ def _merge_artifact_wes(
 
 
 WesFileUrlParts = namedtuple("FileUrlParts", ["cimac_participant_id", \
-        "cimac_sample_id", "cimac_aliquot_id", "assay", "file_name"]) 
+        "cimac_sample_id", "cimac_aliquot_id", "assay", "file_name", "uuui"]) 
 
 def _split_wes_url(obj_url: str) -> WesFileUrlParts:
     
@@ -647,7 +643,7 @@ def _split_wes_url(obj_url: str) -> WesFileUrlParts:
 
 def merge_artifact(
     ct: dict,
-    assay: str,
+    assay_type: str,
     object_url: str,
     file_size_bytes: int,
     uploaded_timestamp: str,
@@ -669,17 +665,45 @@ def merge_artifact(
     """
 
    
-    if assay == "wes":
-        new_ct, artifact = _merge_artifact_wes(
+    if assay_type == "wes":
+        return _merge_artifact_wes(
             ct,
             object_url,
             file_size_bytes,
             uploaded_timestamp,
             md5_hash
         )
-    else:
-        raise NotImplementedError(
-            f'the following assay is not supported: {assay}')
+
+
+    ## not wes
+    tt = Template.from_type(assay_type)
+
+
+    file_name, uuid = *object_url.split("/")[-2:], #TODO maybe this (parsing fname) should be in tempplate too?
+
+    artifact = {
+        "artifact_category": "Assay Artifact from CIMAC",
+        "object_url": object_url,
+        "file_name": file_name,
+        "file_size_bytes": file_size_bytes,
+        "md5_hash": md5_hash,
+        "uploaded_timestamp": uploaded_timestamp
+    }
+
+    uuid_field_path = _get_path(ct, uuid)
+
+    # As "uuid_field_path" contains path to a field with uuid,
+    # we're looking for an artifact that contains it, not the "string" field itself
+    # That's why we need skip_last=1, to get 1 "level" higher 
+    # from 'uuid_field_path' field to it's parent - existing_artifact obj. 
+    existing_artifact = _get_source(ct, uuid_field_path, skip_last=1)
+
+    ## TODO should be like this - with merger
+    # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")
+    # artifact_parent[file_name] = Merger(artifact_schema).merge(existing_artifact, artifact)
+
+    # TODO but for now like this
+    existing_artifact.update(artifact)
 
     # return new object and the artifact that was merged
     return new_ct, artifact

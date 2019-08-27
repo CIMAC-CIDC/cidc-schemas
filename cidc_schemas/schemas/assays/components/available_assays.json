@@ -3,6 +3,7 @@
   "$id": "available_assays",
   "title": "Assays which are available in the network",
   "description": "Reference for every available assay in network",
+  "mergeStrategy": "objectMerge",
   "properties": {
     "wes": {
       "type": "array",
@@ -26,11 +27,8 @@
       "mergeStrategy": "append"
     },
     "olink": {
-      "$comment": "REVISIT An `append` merge strategy disallowes updates to assay entries. Priti said there isn't anything like `assay id`, but Dave or Joyce might have something in tracking spreadsheet.",
-      "type": "array",
-      "items": {
-        "$ref": "assays/olink_assay.json"
-      }
+      "$comment": "NB This is not array as every other assay. Will update data on any olink upload.",
+      "$ref": "assays/olink_assay.json"
     },
     "mif": {
       "type": "array",

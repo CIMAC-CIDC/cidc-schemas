@@ -6,16 +6,12 @@
   "description": "Olink Assay Input Files",
   "properties": {
     "assay_npx": {
-      "$ref": "artifacts/artifact_text.json",
+      "$ref": "artifacts/artifact_xlsx.json",
       "$comment": "Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale."
     },
     "assay_raw_ct": {
-      "$ref": "artifacts/artifact_text.json",
+      "$ref": "artifacts/artifact_xlsx.json",
       "$comment": "Number of cycles required for the fluorescent signal to cross the threshold."
-    },
-    "study_npx": {
-      "$comment": "Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.",
-      "$ref": "artifacts/artifact_text.json"
     }
   },
   "required": ["assay_npx", "assay_raw_ct"]

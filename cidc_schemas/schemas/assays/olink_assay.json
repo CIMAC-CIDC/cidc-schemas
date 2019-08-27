@@ -10,7 +10,18 @@
       "items": {
         "$ref": "assays/components/olink/olink_entry.json"
       }
+    },
+    "panel": {
+      "description": "Panel used for the assay",
+      "type": "string"
+    },
+    "assay_panel_lot": {
+      "description": "Lot Number of the assay panel",
+      "type": "number"
+    },
+    "study": {
+      "$ref": "assays/components/olink/olink_combined.json"
     }
   },
-  "required": ["records"]
+  "required": ["panel", "records"]
 }

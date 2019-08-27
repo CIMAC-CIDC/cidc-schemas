@@ -99,67 +99,65 @@
         }
     ],
     "assays": {
-        "olink": [
-            {
-                "assay_creator": "Mount Sinai",
-                "records": [
-                    {
-                        "assay_prefix": "ol1_",
-                        "filetype": "assay",
-                        "panel": "ol_panel_1",
-                        "number_of_samples": 88,
-                        "npx_manager_version": "ol_npx_v1",
-                        "files": {
-                            "assay_npx": {
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "file_type" :           "NPX"
-                            },
-                            "assay_raw_ct": {
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "file_type" :           "Other"
-                            }
-                        }
-                    }, 
-                    {
-                        "assay_prefix": "ol2_",
-                        "filetype": "study",
-                        "panel": "ol_panel_1",
-                        "number_of_samples": 45,
-                        "npx_manager_version": "ol_npx_v1",
-                        "files": {
-                            "assay_npx": {
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "file_type" :           "NPX"
-                            },
-                            "assay_raw_ct": {
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "file_type" :           "Other"
-                            }
+        "olink": {
+            "assay_creator": "Mount Sinai",
+            "panel": "ol_panel_1",
+            "npx_manager_version": "ol_npx_v1",
+            "records": [
+                {
+                    "assay_prefix": "ol1_",
+                    "filetype": "assay",
+                    "number_of_samples": 88,
+                    "npx_manager_version": "ol_npx_v1",
+                    "files": {
+                        "assay_npx": {
+                            "file_name" :           "...",
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC",
+                            "file_type" :           "NPX"
+                        },
+                        "assay_raw_ct": {
+                            "file_name" :           "...",
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC",
+                            "file_type" :           "Other"
                         }
                     }
-                ]
-            }
-        ],
+                }, 
+                {
+                    "assay_prefix": "ol2_",
+                    "filetype": "study",
+                    "number_of_samples": 45,
+                    "npx_manager_version": "ol_npx_v1",
+                    "files": {
+                        "assay_npx": {
+                            "file_name" :           "...",
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC",
+                            "file_type" :           "NPX"
+                        },
+                        "assay_raw_ct": {
+                            "file_name" :           "...",
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC",
+                            "file_type" :           "Other"
+                        }
+                    }
+                }
+            ]
+        },
         "wes": [
             {
                 "assay_creator": "Mount Sinai",

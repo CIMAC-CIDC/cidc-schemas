@@ -355,6 +355,7 @@ def test_olink():
 
     # create the olink object
     obj = {**ASSAY_CORE}
+    obj['panel'] = "panel v1"
 
     # create the olink object
     text = ARTIFACT_OBJ.copy()

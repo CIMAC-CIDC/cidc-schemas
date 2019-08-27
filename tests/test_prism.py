@@ -149,12 +149,12 @@ WES_TEMPLATE_EXAMPLE_CT = {
 
 # corresponding list of gs_urls.
 WES_TEMPLATE_EXAMPLE_GS_URLS = [
-    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/fastq_1',
-    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/fastq_2',
-    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/read_group_mapping_file',
-    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/fastq_1',
-    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/fastq_2',
-    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/read_group_mapping_file'
+    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/fastq_1/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx1',
+    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/fastq_2/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx2',
+    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/read_group_mapping_file/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx3',
+    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/fastq_1/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx4',
+    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/fastq_2/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx5',
+    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/read_group_mapping_file/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx6'
 ]
 
 
@@ -346,12 +346,15 @@ def test_filepath_gen_wes_only(schema_path, xlsx_path):
 
         # we should have 2 fastq per sample.
         # we should have 2 tot forward.
-        assert 2 == sum([1 for x in file_maps if x['gs_key'].endswith("fastq_1")])
+        assert 2 == sum([1 for x in file_maps if "/fastq_1/" in x['gs_key']])
         # we should have 2 tot rev.
-        assert 2 == sum([1 for x in file_maps if x['gs_key'].endswith("fastq_2")])
+        assert 2 == sum([1 for x in file_maps if "/fastq_2/" in x['gs_key']])
+        # in total local
+        assert 4 == sum([1 for x in file_maps if x['local_path'].endswith(".fastq")])
 
         # we should have 2 text files
-        assert 2 == sum([1 for x in file_maps if x['gs_key'].endswith("read_group_mapping_file")])
+        assert 2 == sum([1 for x in file_maps if "/read_group_mapping_file/" in x['gs_key']])
+        assert 2 == sum([1 for x in file_maps if x['local_path'].endswith(".txt")])
 
         # 2 participants
         assert 2 == len(set([x['gs_key'].split("/")[0] for x in file_maps]))
@@ -359,7 +362,8 @@ def test_filepath_gen_wes_only(schema_path, xlsx_path):
         assert 2 == len(set([x['gs_key'].split("/")[1] for x in file_maps]))
         # 2 aliquots
         assert 2 == len(set([x['gs_key'].split("/")[2] for x in file_maps]))
-    
+
+
 
 
 def test_prismify_wes_only():
@@ -406,7 +410,7 @@ def test_merge_artifact_wes_only():
         ct, _ = merge_artifact(
                 ct,
                 object_url=url,
-                assay="wes", # TODO figure out how to know that prior to calling?
+                assay_type="wes", # TODO figure out how to know that prior to calling?
                 file_size_bytes=i,
                 uploaded_timestamp="01/01/2001",
                 md5_hash=f"hash_{i}"
@@ -504,8 +508,8 @@ def test_end_to_end_wes_only(schema_path, xlsx_path):
     # extract hint
     hint = schema_path.split("/")[-1].replace("_template.json", "")
 
-    # TODO: implement other than WES parsing...
-    if hint != "wes":
+    # TODO: implement other assays
+    if hint not in ["wes", "olink"]:
         return 
 
     # create validators
@@ -516,15 +520,22 @@ def test_end_to_end_wes_only(schema_path, xlsx_path):
     # parse the spreadsheet and get the file maps
     prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
 
-    assert len(prism_patch['assays'][hint]) == 1
-    assert len(prism_patch['assays'][hint][0]['records']) == 2
+    if hint != 'olink':
+        assert len(prism_patch['assays'][hint]) == 1
+        assert len(prism_patch['assays'][hint][0]['records']) == 2
+    else:
+        assert len(prism_patch['assays'][hint]['records']) == 2
+
     for f in file_maps:
         assert f'/{hint}/' in f['gs_key'], f"No {hint} hint found"
 
-    # assert we still have a good clinical trial object, so we can save it
-    # but we need to merge it, because "prismify" provides only a patch
-    after_prism = merger.merge(WES_TEMPLATE_EXAMPLE_CT, prism_patch)
-    validator.validate(after_prism)
+    if hint == 'wes':
+        # assert we still have a good clinical trial object, so we can save it
+        # but we need to merge it, because "prismify" provides only a patch
+        after_prism = merger.merge(WES_TEMPLATE_EXAMPLE_CT, prism_patch)
+        validator.validate(after_prism)
+    else:
+        after_prism = prism_patch
 
     after_prism_copy = copy.deepcopy(after_prism)
 
@@ -536,8 +547,8 @@ def test_end_to_end_wes_only(schema_path, xlsx_path):
         after_prism_w_artifact, _ = merge_artifact(
                 after_prism_copy,
                 object_url=fmap_entry['gs_key'],
-                assay=hint, # TODO figure out how to know that prior to calling?
-                file_size_bytes=i,
+                assay_type=hint, # TODO figure out how to know that prior to calling?
+                file_size_bytes=100+i,
                 uploaded_timestamp="01/01/2001",
                 md5_hash=f"hash_{i}"
             )

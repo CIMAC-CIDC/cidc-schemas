@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "Olink_assay_record",
+  "title": "Olink assay record",
+  "type": "object",
+  "description": "A single data record from Olink assay",
+  "properties": {
+    "npx_manager_version": {
+      "description": "Version of NPX manager used for the analysis",
+      "type": "string"
+    },
+    "study_npx": {
+      "$comment": "Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale.",
+      "$ref": "artifacts/artifact_xlsx.json"
+    }
+  },
+  "required": [
+    "npx_manager_version",
+    "study_npx"
+  ]
+}

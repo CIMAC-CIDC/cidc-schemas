@@ -83,5 +83,5 @@ def test_csv():
     # create a dummy info
     obj = BASE_OBJ.copy()
     obj["header_row"] = 128
-    obj["seperator"] = ","
+    obj["separator"] = ","
     at_validator.validate(obj)

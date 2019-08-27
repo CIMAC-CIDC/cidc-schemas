@@ -8,6 +8,10 @@ ROOT_DIR = os.path.join(DOCS_DIR, '..')
 TEMPLATES_DIR = os.path.join(DOCS_DIR, 'templates')
 HTML_DIR = os.path.join(DOCS_DIR, "docs")
 
+# Empty contents of docs/docs directory to prevent old html renders from showing up
+for filename in os.listdir(HTML_DIR):
+    os.unlink(HTML_DIR+"/"+filename)
+
 
 def load_schemas() -> dict:
     """

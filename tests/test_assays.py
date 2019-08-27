@@ -220,12 +220,10 @@ def test_cytof():
     record = {
         "processed_fcs_filename": "dummy",
         "source_fcs_filenames": "dummies",
-        "files": [
-            {
+        "files": {
                 "processed_fcs": fcs_1,
                 "source_fcs": fcs_2
             }
-        ]
     }
 
     # add a demo record.

@@ -17,14 +17,12 @@
       "description": "Summary of the results of the experiment.",
       "$ref": "artifacts/artifact_csv.json"
     },
-    "properties": {
-      "regions_of_interest": {
-        "type": "array",
-        "allOf": [
-          { "$ref": "assays/components/mapping.json" },
-          { "$ref": "assays/components/composite_image.json" }
-        ]
-      }
+    "regions_of_interest": {
+      "type": "array",
+      "allOf": [
+        { "$ref": "assays/components/mapping.json" },
+        { "$ref": "assays/components/composite_image.json" }
+      ]
     }
   },
   "required": ["whole_slide_imaging_file"]

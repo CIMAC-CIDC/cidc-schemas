@@ -3,7 +3,7 @@
   "$id": "aliquot",
   "title": "Aliquot",
   "type": "object",
-  "description": "Pertaining to a portion (volume or weight) of the whole.",
+  "description": "Pertaining to a portion (volume or weight) of the whole",
   "properties": {
     "cimac_aliquot_id": {
       "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
@@ -94,15 +94,15 @@
       "type": "string"
     },
     "viable_stroma_percent_area": {
-      "description": "Percent area of viable tissue . Example: 10",
+      "description": "Percent area of viable tissue. Example: 10",
       "type": "string"
     },
     "viable_tumor_percent_area": {
-      "description": "Percent area that contains viable tumor cells . Example: 60",
+      "description": "Percent area that contains viable tumor cells. Example: 60",
       "type": "number"
     },
     "necrosis_percent_area": {
-      "description": "Percent area of necrotic tissue . Example: 5",
+      "description": "Percent area of necrotic tissue. Example: 5",
       "type": "number"
     },
     "fibrosis_percent_area": {
@@ -110,7 +110,7 @@
       "type": "number"
     },
     "assay": {
-      "description": "Set of possible assays for this aliquot, only should be present",
+      "description": "Set of possible assays for this aliquot, only should be present.",
       "$ref": "assays/components/aliquot_to_assay.json"
     }
   },

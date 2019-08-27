@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "mif_input",
-  "title": "Multiplex Immunoflouresence Input Files",
+  "title": "Multiplex Immunofluorescence Input Files",
   "type": "object",
   "description": "mIF Assay Input Files",
   "properties": {

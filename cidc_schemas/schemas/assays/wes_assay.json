@@ -10,7 +10,7 @@
   ],
   "properties": {
     "enrichment_vendor_kit": {
-      "description": "Vendor for the bait set used for enrichment , e.g. Twist, Agilent, IDT",
+      "description": "Vendor for the bait set used for enrichment , e.g. Twist, Agilent, IDT.",
       "type": "string",
       "enum": ["Agilent", "Twist", "IDT", "NEB"]
     },

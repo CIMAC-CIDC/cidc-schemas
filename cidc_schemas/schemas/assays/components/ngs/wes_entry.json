@@ -9,11 +9,11 @@
   ],
   "properties": {
     "enrichment_vendor_lot": {
-      "description": "Lot number for the bait set",
+      "description": "Lot number for the bait set.",
       "type": "string"
     },
     "capture_date": {
-      "description": "Date of the hybrid capture enrichment",
+      "description": "Date of the hybrid capture enrichment.",
       "type": "string",
       "format": "date"
     },

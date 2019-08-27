@@ -6,11 +6,11 @@
   "description": "A single data record from WES assay",
   "properties": {
     "wes_experiment_id": {
-      "description": "Identification # for Wes Output files",
+      "description": "Identification # for Wes Output files.",
       "type": "string"
     },
     "export_date": {
-      "description": "Date files were exported",
+      "description": "Date files were exported.",
       "type": "string",
       "format": "date"
     },

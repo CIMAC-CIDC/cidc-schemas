@@ -431,7 +431,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = F
     # get the root CT schema
     root_ct_schema = load_and_validate_schema("clinical_trial.json")
     # create the result CT dictionary
-    root_ct_obj = {'_this': 'root'}
+    root_ct_obj = {}
     # and merger for it
     root_merger = Merger(root_ct_schema)
     # and where to collect all local file refs
@@ -455,7 +455,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = F
         data_object_pointer = templ_ws['prism_data_object_pointer']
 
         # creating preamble obj 
-        preamble_obj = {'_this': f'preamble_obj_{ws_name}'}
+        preamble_obj = {}
         
         # get headers
         headers = ws[RowType.HEADER][0]
@@ -466,9 +466,8 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = F
         for i, row in enumerate(data):
 
             # creating data obj 
-            data_obj = {'_this': f"data_obj_{i}"}
+            data_obj = {}
             copy_of_preamble = copy.deepcopy(preamble_obj)
-            copy_of_preamble['_this'] = f"copy_of_preamble_obj_{ws_name}_{i}" 
             _set_val(data_object_pointer, data_obj, copy_of_preamble, verb=verb)
 
             # create dictionary per row

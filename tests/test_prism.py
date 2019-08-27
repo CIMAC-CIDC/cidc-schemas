@@ -443,8 +443,8 @@ def test_merge_ct_meta():
     """
 
     # create two clinical trials
-    ct1 = copy.deepcopy(CLINICAL_TRIAL)
-    ct2 = copy.deepcopy(CLINICAL_TRIAL)
+    ct1 = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT)
+    ct2 = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT)
 
     # first test the fact that both snippets must be valid
     del ct1['lead_organization_study_id']
@@ -485,18 +485,18 @@ def test_merge_ct_meta():
     ct1['participants'][0]['cimac_participant_id'] = 'different_id'
 
     ct_merge = merge_clinical_trial_metadata(ct1, ct2)
-    assert len(ct_merge['participants']) == 2
+    assert len(ct_merge['participants']) == 1+len(WES_TEMPLATE_EXAMPLE_CT['participants'])
 
     # now lets have the same participant but adding multiple samples.
     ct1["lead_organization_study_id"] = ct2["lead_organization_study_id"] 
     ct1['participants'][0]['cimac_participant_id'] = \
         ct2['participants'][0]['cimac_participant_id']
     ct1['participants'][0]['samples'][0]['cimac_sample_id'] = 'new_id_1'
-    ct1['participants'][0]['samples'][1]['cimac_sample_id'] = 'new_id_2'
-
+    ct1['participants'][1]['samples'][0]['cimac_sample_id'] = 'new_id_2'
+ 
     ct_merge = merge_clinical_trial_metadata(ct1, ct2)
-    assert len(ct_merge['participants']) == 1
-    assert len(ct_merge['participants'][0]['samples']) == 4
+    assert len(ct_merge['participants']) == len(WES_TEMPLATE_EXAMPLE_CT['participants'])
+    assert sum(len(p['samples']) for p in ct_merge['participants']) == 2+sum(len(p['samples']) for p in WES_TEMPLATE_EXAMPLE_CT['participants'])
 
 
 @pytest.mark.parametrize('schema_path, xlsx_path', template_paths())

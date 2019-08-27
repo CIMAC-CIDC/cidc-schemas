@@ -242,6 +242,7 @@ def test_cytof():
                 "processed_fcs": fcs_1,
                 "source_fcs": fcs_2
             }
+
     }
 
     # add a demo record.
@@ -256,7 +257,7 @@ def test_cytof():
 
 def test_mif():
 
-        # create the micsss object
+    # create the mif object
     image = {
         "slide_scanner_model": "Vectra 2.0",
         "protocol_name": "E4412"

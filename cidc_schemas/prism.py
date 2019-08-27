@@ -134,8 +134,7 @@ def _set_val(
                 raise Exception(f"Can't determine how to set value in {pointer!r}")
 
             next_part = jpoint.parts[i+1]
-            
-            typed_part = jpoint.get_part(doc, part)
+
 
             # `next_part` looks like array index like"[0]" or "-" (RFC 6901)
             if next_part == "-" or jpoint._RE_ARRAY_INDEX.match(str(next_part)):
@@ -148,11 +147,13 @@ def _set_val(
             if part == "-":
                 doc.append(next_thing)
             else:
+                # get_part will return str or int, so we can use it for `doc[typed_part]`
+                # and it will work for both - doc being `dict` or `array`
+                typed_part = jpoint.get_part(doc, part)
                 try:
                     doc[typed_part] = next_thing          
-                # if it's an empty array - we get an error 
-                # when we try to paste to [0] index,
-                # so just append then
+                # if doc is an empty array we hit an error when we try to paste to [0] index,
+                # so just append
                 except IndexError:
                     doc.append(next_thing)
 
@@ -232,7 +233,14 @@ def _process_property(
         verb: boolean indicating verbosity
 
     Returns:
-        TBD
+        (dict):
+            {
+                "template_key": row[0],
+                "local_path": row[1],   
+                "field_def": key_lu[key.lower()],
+                "gs_key": gs_key 
+            }
+            gs_key: constructed GCS upload path 
 
     """
 
@@ -315,7 +323,12 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = F
     Returns:
         (tuple):
             arg1: clinical trial object with data parsed from spreadsheet
-            arg2: list of objects which describe each file identified.
+            arg2: list of objects which describe each file identified:
+                {
+                    "local_path": /local/path/to/a/data/file/parsed/from/template ,
+                    "gs_key": constructed/relative/to/clinical/trial/GCS/upload/path ,
+                    "upload_placeholder": random uuid for artifact upload
+                } 
 
     Process:
 

@@ -588,7 +588,7 @@ def _merge_artifact_wes(
         "artifact_category": "Assay Artifact from CIMAC",
         "object_url": object_url,
         "file_name": wes_object.file_name,
-        "file_size_bytes": 1,
+        "file_size_bytes": file_size_bytes,
         "md5_hash": md5_hash,
         "uploaded_timestamp": uploaded_timestamp
     }

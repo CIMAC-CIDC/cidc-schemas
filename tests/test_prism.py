@@ -403,7 +403,7 @@ def test_merge_artifact_wes_only():
     for i, url in enumerate(WES_TEMPLATE_EXAMPLE_GS_URLS):
 
         # attempt to merge
-        ct = merge_artifact(
+        ct, _ = merge_artifact(
                 ct,
                 object_url=url,
                 assay="wes", # TODO figure out how to know that prior to calling?
@@ -533,7 +533,7 @@ def test_end_to_end_wes_only(schema_path, xlsx_path):
     for i, fmap_entry in enumerate(file_maps):
 
         # attempt to merge
-        after_prism_w_artifact = merge_artifact(
+        after_prism_w_artifact, _ = merge_artifact(
                 after_prism_copy,
                 object_url=fmap_entry['gs_key'],
                 assay=hint, # TODO figure out how to know that prior to calling?

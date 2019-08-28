@@ -5,10 +5,6 @@
   "type": "object",
   "description": "A single data record from Olink assay",
   "properties": {
-    "assay_prefix": {
-      "description": "Prefix to used for the filename",
-      "type": "string"
-    },
     "run_date": {
       "description": "Date when the Olink assay was run",
       "type": "string",
@@ -68,7 +64,6 @@
     }
   },
   "required": [
-    "assay_prefix",
     "number_of_samples",
     "npx_manager_version",
     "files"

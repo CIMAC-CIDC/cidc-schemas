@@ -18,7 +18,7 @@
         "preamble_rows": {
           "lead organization study id": {
             "merge_pointer": "2/lead_organization_study_id",
-            "$comment": "only 2 jumps up to lead_organization_study_id, because olink is not an array assay, see available_assays.json",
+            "$comment": "Only 2 jumps up to lead_organization_study_id, because olink is not an array assay, see available_assays.json",
             "type_ref": "clinical_trial.json#properties/lead_organization_study_id"
           },
           "assay creator": {
@@ -46,9 +46,17 @@
         },
         "data_columns": {
           "Olink Assay details": {
-            "assay_prefix": {
-              "merge_pointer": "0/assay_prefix",
-              "type_ref": "assays/components/olink/olink_entry.json#properties/assay_prefix"
+            "npx file": {
+              "merge_pointer": "0/files/assay_npx",
+              "url_template": "",
+              "is_artifact" : 1,
+              "type_ref": "assays/components/local_file.json"
+            },
+            "raw ct file": {
+              "merge_pointer": "0/files/assay_raw_ct",
+              "url_template": "",
+              "is_artifact" : 1,
+              "type_ref": "assays/components/local_file.json"
             },
             "run date": {
               "merge_pointer": "0/run_date",
@@ -101,18 +109,6 @@
             "npx manager version": {
               "merge_pointer": "0/npx_manager_version",
               "type_ref": "assays/components/olink/olink_entry.json#properties/npx_manager_version"
-            },
-            "npx file": {
-              "merge_pointer": "0/files/assay_npx",
-              "is_artifact" : 1,
-              "type_ref": "assays/components/local_file.json",
-              "value_template_format": "{assay_prefix}_NPX.xlsx" 
-            },
-            "npx assay_raw_ct": {
-              "merge_pointer": "0/files/assay_npx",
-              "is_artifact" : 1,
-              "type_ref": "assays/components/local_file.json",
-              "value_template_format": "{assay_prefix}_CT.xlsx" 
             }
           }
         }

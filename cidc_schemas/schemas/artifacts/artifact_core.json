@@ -32,8 +32,7 @@
     },
     "uploaded_timestamp": {
       "description": "Timestamp of when artfiact was loaded into the system.",
-      "type": "string",
-      "format": "date-time"
+      "type": "string"
     },
     "file_size_bytes": {
       "description": "File size in bytes.",
@@ -57,7 +56,7 @@
       ]
     }
   },
-  "oneOf": [
+  "anyOf": [
     {
       "required": [
         "file_name",

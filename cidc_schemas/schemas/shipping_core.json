@@ -61,11 +61,11 @@
       "type": "string"
     },
     "account_number": {
-      "description": "Courier account number to pay for shipping if avaialable. Example: 45465732.",
+      "description": "Courier account number to pay for shipping if available. Example: 45465732.",
       "type": "string"
     },
     "shipping_condition": {
-      "description": "Type of shippment made.",
+      "description": "Type of shipment made.",
       "type": "string",
       "enum": [
         "Frozen (Dry Ice)",

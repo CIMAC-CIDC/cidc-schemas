@@ -7,7 +7,7 @@
   "properties": {
     "file_path": {
       "type": "string",
-      "description": "Path to a file on a users computer"
+      "description": "Path to a file on a users computer."
     }
   },
   "required": []

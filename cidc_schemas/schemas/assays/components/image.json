@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "id": "image",
   "title": "Image",
-  "description": "Base information about the aquisition and analysis of a quantitative pathology image\n",
+  "description": "Base information about the acquisition and analysis of a quantitative pathology image\n",
   "properties": {
     "slide_scanner_model": {
       "description": "Model version of the slide scanner instrument.",
@@ -19,12 +19,12 @@
       "type": "string"
     },
     "image_analysis_software": {
-      "description": "Source sofware for digital pathology and image analysis.",
+      "description": "Source software for digital pathology and image analysis.",
       "type": "string",
       "enum": ["InForm", "QuPath"]
     },
     "image_analysis_software_version": {
-      "description": "Source sofware version for digital pathology and image analysis.",
+      "description": "Source software version for digital pathology and image analysis.",
       "type": "string"
     },
     "cell_segmentation_model": {
@@ -33,7 +33,7 @@
       "enum": ["proprietary", "watershed"]
     },
     "positive_cell_detection": {
-      "description": "Model used for postitive cell detection in imaging experiment.",
+      "description": "Model used for positive cell detection in imaging experiment.",
       "type": "string",
       "enum": ["proprietary", "random forest classifier"]
     },

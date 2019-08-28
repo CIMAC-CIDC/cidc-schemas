@@ -630,7 +630,7 @@ def _merge_artifact_wes(
 
     # as we didn't `copy.deepcopy(ct)` beforehand and modified in-place 
     # we just return it modified
-    return ct
+    return ct, artifact
 
 
 WesFileUrlParts = namedtuple("FileUrlParts", ["cimac_participant_id", \
@@ -670,7 +670,7 @@ def merge_artifact(
 
    
     if assay == "wes":
-        new_ct = _merge_artifact_wes(
+        new_ct, artifact = _merge_artifact_wes(
             ct,
             object_url,
             file_size_bytes,
@@ -682,7 +682,7 @@ def merge_artifact(
             f'the following assay is not supported: {assay}')
 
     # return new object and the artifact that was merged
-    return new_ct
+    return new_ct, artifact
 
 
 def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:

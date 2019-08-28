@@ -30,7 +30,7 @@ def csv_from_excel(xlsx_dir, xslx_fname, csv_dir):
 
     for worksheet_name in wb.sheetnames:
         worksheet = wb[worksheet_name]
-            
+        
         csv_file = os.path.join(csv_dir, xslx_fname[:-5]+'__'+worksheet_name.replace(' ', '_')+'.csv')
         with open(csv_file, 'w') as fd:
             wr = csv.writer(fd, quoting=csv.QUOTE_ALL)
@@ -46,10 +46,8 @@ def csv_from_excel(xlsx_dir, xslx_fname, csv_dir):
 
 def main():
 
-    output, err = system('mkdir', './template_examples/csvs')
-    if output: print(output)
-    if err: 
-        os.exit(err)
+    if not os.path.exists('./template_examples/csvs'):
+        os.makedirs('./template_examples/csvs')
 
     for template_example in os.listdir('./template_examples/'):
         #remove any .csv in there, so nothing old will be left

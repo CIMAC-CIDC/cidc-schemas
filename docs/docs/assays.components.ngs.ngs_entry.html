@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>NGS assay record <small> - <a href="assays.components.ngs.ngs_entry.full.json">full json</a></small></h1>
+        <h1>NGS assay record</h1>
         <p>
             <b>Description:</b>  A single data record from an NGS assay
         </p>
@@ -41,7 +41,10 @@
   <div class="container">
     <h3>Properties</h3>
     
+    
         
+        
+            
         
     
 
@@ -51,140 +54,279 @@
             <th>Property</th>
             <th>Description</th>
             <th>Data Type</th>
-            <th>Required/Optional</th>
         </tr>
         </thead>
         
-            <tr>
-                <td><a name="entry_id"></a>entry_id</td>
-                <td width=25%>
-                    Identifier which is unique to this entry, this is clincal trial, participant, aliquot id's
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            
+                <tr>
+    <td>
         
-            <tr>
-                <td><a name="library_kit_lot"></a>library_kit_lot</td>
-                <td width=25%>
-                    Lot number for the library construction kit
-                </td>
-                <td>
-                    
-                        &lt;string&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+            <span id="entry_id">
+                entry_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
         
-            <tr>
-                <td><a name="library_prep_date"></a>library_prep_date</td>
-                <td width=25%>
-                    Date of library construction.
-                </td>
-                <td>
-                    
-                        &lt;string&gt; date
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        required
-                    
-                </td>
-            </tr>
+    </td>
+    <td width=55%>
         
-            <tr>
-                <td><a name="input_ng"></a>input_ng</td>
-                <td width=25%>
-                    Amount of DNA/RNA (in ng) used for library construction
-                </td>
-                <td>
-                    
-                        &lt;integer&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            Identifier which is unique to this entry, this is clincal trial, participant, aliquot id's
         
-            <tr>
-                <td><a name="library_yield_ng"></a>library_yield_ng</td>
-                <td width=25%>
-                    Resulting yield (in ng) from library construction
-                </td>
-                <td>
-                    
-                        &lt;integer&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+    </td>
+    <td>
         
-            <tr>
-                <td><a name="average_insert_size"></a>average_insert_size</td>
-                <td width=25%>
-                    The average insert size for the library
-                </td>
-                <td>
-                    
-                        &lt;integer&gt; 
-                        <ul>
-                        
-                        
-                        </ul>
-                    
-                </td>
-                <td>
-                    
-                        optional
-                    
-                </td>
-            </tr>
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="library_kit_lot">
+                library_kit_lot
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Lot number for the library construction kit
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="library_prep_date">
+                library_prep_date
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Date of library construction.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+     :  date
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="input_ng">
+                input_ng
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Amount of DNA/RNA (in ng) used for library construction
+        
+    </td>
+    <td>
+        
+            &lt; 
+                integer 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="library_yield_ng">
+                library_yield_ng
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Resulting yield (in ng) from library construction
+        
+    </td>
+    <td>
+        
+            &lt; 
+                integer 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="average_insert_size">
+                average_insert_size
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The average insert size for the library
+        
+    </td>
+    <td>
+        
+            &lt; 
+                integer 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
         
     </table>
 
     
   </div>
+
+  <div class="container">
+    <h3>ngs_entry.full.json</h3>
+  	<pre><code>{
+    "$id": "ngs_assay_record",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "A single data record from an NGS assay",
+    "properties": {
+        "average_insert_size": {
+            "description": "The average insert size for the library",
+            "exclusiveMinimum": 0,
+            "maximum": 10000,
+            "type": "integer"
+        },
+        "entry_id": {
+            "description": "Identifier which is unique to this entry, this is clincal trial, participant, aliquot id's",
+            "type": "string"
+        },
+        "input_ng": {
+            "description": "Amount of DNA/RNA (in ng) used for library construction",
+            "exclusiveMinimum": 0,
+            "maximum": 10000,
+            "type": "integer"
+        },
+        "library_kit_lot": {
+            "description": "Lot number for the library construction kit",
+            "type": "string"
+        },
+        "library_prep_date": {
+            "description": "Date of library construction.",
+            "format": "date",
+            "type": "string"
+        },
+        "library_yield_ng": {
+            "description": "Resulting yield (in ng) from library construction",
+            "exclusiveMinimum": 0,
+            "maximum": 2000,
+            "type": "integer"
+        }
+    },
+    "required": [
+        "library_kit_lot",
+        "library_prep_date",
+        "entry_id"
+    ],
+    "title": "NGS assay record",
+    "type": "object"
+}</code></pre>
+  </container>
 
 
     </main>

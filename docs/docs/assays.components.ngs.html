@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>NGS Assay Core</h1>
+        <h1>NGS Sequencing</h1>
         <p>
-            <b>Description:</b>  Common properties for NGS Assays.
+            <b>Description:</b>  Common properties for NGS Sequencing sxperiments.
         </p>
         
     </div>
@@ -117,8 +117,6 @@
     <td width=55%>
         
             Vendor for the library construction kit, e.g. KAPA
-                <div><small>This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.</small></div>
-            
         
     </td>
     <td>
@@ -181,14 +179,21 @@
             
         
             
+        
+        
+            
+        
+            
+        
+            
+        
+            
                 <tr>
     <td>
         
             <span id="read_length">
                 read_length
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -215,29 +220,19 @@
 </tr>
             
         
-        
-            
-        
-            
-        
-            
-        
-            
-        
     </table>
 
     
   </div>
 
   <div class="container">
-    <h3>ngs_assay_core.full.json</h3>
+    <h3>ngs.full.json</h3>
   	<pre><code>{
-    "$id": "ngs_assay_core",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "description": "Common properties for NGS Assays.",
+    "description": "Common properties for NGS Sequencing sxperiments.",
+    "id": "ngs_assay",
     "properties": {
         "library_vendor_kit": {
-            "$comment": "This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.",
             "description": "Vendor for the library construction kit, e.g. KAPA",
             "enum": [
                 "KAPA - Hyper Prep"
@@ -273,10 +268,9 @@
     "required": [
         "sequencer_platform",
         "library_vendor_kit",
-        "paired_end_reads",
-        "read_length"
+        "paired_end_reads"
     ],
-    "title": "NGS Assay Core",
+    "title": "NGS Sequencing",
     "type": "object"
 }</code></pre>
   </container>

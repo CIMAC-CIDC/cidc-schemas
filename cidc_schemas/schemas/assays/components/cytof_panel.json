@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "id": "cytof_panel",
-  "title": "CYTOF Panel",
-  "description": "Base information about the aquisition and analysis of a CYTOF data\n",
+  "title": "CyTOF Panel",
+  "description": "Base information about the acquisition and analysis of a CyTOF data\n",
   "properties": {
     "panel_name": {
       "description": "Standardized CyTOF panel name used for antibody sample development.",

@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>NGS assay record</h1>
+        <h1>NGS Assay Core</h1>
         <p>
-            <b>Description:</b>  A single data record from an NGS assay
+            <b>Description:</b>  Common properties for NGS Assays.
         </p>
         
     </div>
@@ -61,8 +61,8 @@
                 <tr>
     <td>
         
-            <span id="entry_id">
-                entry_id
+            <span id="sequencer_platform">
+                sequencer_platform
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -71,7 +71,7 @@
     </td>
     <td width=55%>
         
-            Identifier which is unique to this entry, this is clincal trial, participant, aliquot id's
+            Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.
         
     </td>
     <td>
@@ -83,6 +83,16 @@
     
             &gt;
             <ul>
+                
+                    <li>"Illumina - HiSeq 2500"</li>
+                
+                    <li>"Illumina - HiSeq 3000"</li>
+                
+                    <li>"Illumina - NextSeq 550"</li>
+                
+                    <li>"Illumina - HiSeq 4000"</li>
+                
+                    <li>"Illumina - NovaSeq 6000"</li>
                 
             </ul>
             
@@ -96,8 +106,8 @@
                 <tr>
     <td>
         
-            <span id="library_kit_lot">
-                library_kit_lot
+            <span id="library_vendor_kit">
+                library_vendor_kit
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -106,7 +116,9 @@
     </td>
     <td width=55%>
         
-            Lot number for the library construction kit
+            Vendor for the library construction kit, e.g. KAPA
+                <div><small>This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.</small></div>
+            
         
     </td>
     <td>
@@ -118,6 +130,8 @@
     
             &gt;
             <ul>
+                
+                    <li>"KAPA - Hyper Prep"</li>
                 
             </ul>
             
@@ -131,8 +145,8 @@
                 <tr>
     <td>
         
-            <span id="library_prep_date">
-                library_prep_date
+            <span id="paired_end_reads">
+                paired_end_reads
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -141,18 +155,22 @@
     </td>
     <td width=55%>
         
-            Date of library construction.
+            Indicate if the sequencing was performed paired or single ended
         
     </td>
     <td>
         
             &lt; 
                 string 
-     :  date
+    
     
     
             &gt;
             <ul>
+                
+                    <li>"Paired"</li>
+                
+                    <li>"Single"</li>
                 
             </ul>
             
@@ -163,31 +181,20 @@
             
         
             
-        
-            
-        
-            
-        
-        
-            
-        
-            
-        
-            
-        
-            
                 <tr>
     <td>
         
-            <span id="input_ng">
-                input_ng
+            <span id="read_length">
+                read_length
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
     <td width=55%>
         
-            Amount of DNA/RNA (in ng) used for library construction
+            Number of cycles for each sequencing read
         
     </td>
     <td>
@@ -208,70 +215,13 @@
 </tr>
             
         
-            
-                <tr>
-    <td>
         
-            <span id="library_yield_ng">
-                library_yield_ng
-            </span>
             
         
-    </td>
-    <td width=55%>
-        
-            Resulting yield (in ng) from library construction
-        
-    </td>
-    <td>
-        
-            &lt; 
-                integer 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
             
         
             
-                <tr>
-    <td>
         
-            <span id="average_insert_size">
-                average_insert_size
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            The average insert size for the library
-        
-    </td>
-    <td>
-        
-            &lt; 
-                integer 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
             
         
     </table>
@@ -280,50 +230,53 @@
   </div>
 
   <div class="container">
-    <h3>ngs_entry.full.json</h3>
+    <h3>ngs_assay_core.full.json</h3>
   	<pre><code>{
-    "$id": "ngs_assay_record",
+    "$id": "ngs_assay_core",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "description": "A single data record from an NGS assay",
+    "description": "Common properties for NGS Assays.",
     "properties": {
-        "average_insert_size": {
-            "description": "The average insert size for the library",
-            "exclusiveMinimum": 0,
-            "maximum": 10000,
-            "type": "integer"
-        },
-        "entry_id": {
-            "description": "Identifier which is unique to this entry, this is clincal trial, participant, aliquot id's",
+        "library_vendor_kit": {
+            "$comment": "This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.",
+            "description": "Vendor for the library construction kit, e.g. KAPA",
+            "enum": [
+                "KAPA - Hyper Prep"
+            ],
             "type": "string"
         },
-        "input_ng": {
-            "description": "Amount of DNA/RNA (in ng) used for library construction",
-            "exclusiveMinimum": 0,
-            "maximum": 10000,
-            "type": "integer"
-        },
-        "library_kit_lot": {
-            "description": "Lot number for the library construction kit",
+        "paired_end_reads": {
+            "description": "Indicate if the sequencing was performed paired or single ended",
+            "enum": [
+                "Paired",
+                "Single"
+            ],
             "type": "string"
         },
-        "library_prep_date": {
-            "description": "Date of library construction.",
-            "format": "date",
-            "type": "string"
-        },
-        "library_yield_ng": {
-            "description": "Resulting yield (in ng) from library construction",
+        "read_length": {
+            "description": "Number of cycles for each sequencing read",
             "exclusiveMinimum": 0,
-            "maximum": 2000,
+            "maximum": 1000,
             "type": "integer"
+        },
+        "sequencer_platform": {
+            "description": "Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.",
+            "enum": [
+                "Illumina - HiSeq 2500",
+                "Illumina - HiSeq 3000",
+                "Illumina - NextSeq 550",
+                "Illumina - HiSeq 4000",
+                "Illumina - NovaSeq 6000"
+            ],
+            "type": "string"
         }
     },
     "required": [
-        "library_kit_lot",
-        "library_prep_date",
-        "entry_id"
+        "sequencer_platform",
+        "library_vendor_kit",
+        "paired_end_reads",
+        "read_length"
     ],
-    "title": "NGS assay record",
+    "title": "NGS Assay Core",
     "type": "object"
 }</code></pre>
   </container>

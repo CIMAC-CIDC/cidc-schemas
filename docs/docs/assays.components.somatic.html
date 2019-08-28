@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Paired end sequencing file pairs</h1>
+        <h1>Somatic variant output sample files</h1>
         <p>
-            <b>Description:</b>  Paired end sequencing file pairs
+            <b>Description:</b>  Somatic variant calling
         </p>
         
     </div>
@@ -61,8 +61,8 @@
                 <tr>
     <td>
         
-            <span id="fastq_1">
-                fastq_1
+            <span id="vcf_filtered">
+                vcf_filtered
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -76,7 +76,7 @@
     </td>
     <td>
         
-            <a href="artifacts.artifact_fastq.html">artifacts.artifact_fastq</a>
+            <a href="artifacts.artifact_vcf.html">artifacts.artifact_vcf</a>
         
     </td>
 </tr>
@@ -86,8 +86,8 @@
                 <tr>
     <td>
         
-            <span id="fastq_2">
-                fastq_2
+            <span id="maf">
+                maf
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -101,7 +101,7 @@
     </td>
     <td>
         
-            <a href="artifacts.artifact_fastq.html">artifacts.artifact_fastq</a>
+            <a href="artifacts.artifact_maf.html">artifacts.artifact_maf</a>
         
     </td>
 </tr>
@@ -118,28 +118,44 @@
   </div>
 
   <div class="container">
-    <h3>fastq_pairs.full.json</h3>
+    <h3>somatic.full.json</h3>
   	<pre><code>{
-    "$id": "fastq_pairs",
+    "$id": "somatic",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "description": "Paired end sequencing file pairs",
+    "description": "Somatic variant calling",
     "properties": {
-        "fastq_1": {
-            "$id": "fastq_artifact",
+        "maf": {
+            "$id": "maf_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
-                    "$id": "artifact",
+                    "$id": "artifact_core",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "description": "Any file artifact associated with a clinical trial.",
+                    "oneOf": [
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "md5_hash",
+                                "artifact_category"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "upload_placeholder"
+                            ]
+                        }
+                    ],
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
                             "enum": [
                                 "Assay Artifact from CIMAC",
                                 "Pipeline Artifact",
-                                "Manifest File",
-                                "Other"
+                                "Manifest File"
                             ],
                             "type": "string"
                         },
@@ -153,50 +169,14 @@
                             ],
                             "type": "string"
                         },
-                        "assay_category": {
-                            "description": "Assay category.",
-                            "enum": [
-                                "Whole Exome Sequencing (WES)",
-                                "RNASeq",
-                                "Conventional Immunohistochemistry",
-                                "Multiplex Immunohistochemistry",
-                                "Multiplex Immunofluorescence",
-                                "CyTOF",
-                                "OLink",
-                                "NanoString",
-                                "ELISpot",
-                                "Multiplexed Ion-Beam Imaging (MIBI)",
-                                "Other",
-                                "None"
-                            ],
-                            "type": "string"
-                        },
                         "file_name": {
+                            "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
                             "description": "The name of the file with extension",
                             "type": "string"
                         },
                         "file_size_bytes": {
                             "description": "File size in bytes.",
                             "type": "integer"
-                        },
-                        "file_type": {
-                            "description": "File Type.",
-                            "enum": [
-                                "FASTA",
-                                "FASTQ",
-                                "TIFF",
-                                "VCF",
-                                "TSV",
-                                "Excel",
-                                "NPX",
-                                "BAM",
-                                "MAF",
-                                "PNG",
-                                "JPG",
-                                "XML",
-                                "Other"
-                            ],
-                            "type": "string"
                         },
                         "md5_hash": {
                             "description": "MD5 Hash of artifact.",
@@ -206,8 +186,13 @@
                             "description": "URL to artifact within Google Bucket.",
                             "type": "string"
                         },
+                        "upload_placeholder": {
+                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "type": "string"
+                        },
                         "uploaded_timestamp": {
                             "description": "Timestamp of when artfiact was loaded into the system.",
+                            "format": "date-time",
                             "type": "string"
                         },
                         "uploader": {
@@ -222,17 +207,7 @@
                             "type": "boolean"
                         }
                     },
-                    "required": [
-                        "file_name",
-                        "object_url",
-                        "uploaded_timestamp",
-                        "file_size_bytes",
-                        "md5_hash",
-                        "artifact_category",
-                        "assay_category",
-                        "file_type"
-                    ],
-                    "title": "Artifact",
+                    "title": "Artifact Core",
                     "type": "object"
                 },
                 {
@@ -243,26 +218,42 @@
                     }
                 }
             ],
-            "description": "Information about a fastq file",
-            "title": "FastQ Artifact",
+            "description": "Information about a Maf file",
+            "title": "MAF Artifact",
             "type": "object"
         },
-        "fastq_2": {
-            "$id": "fastq_artifact",
+        "vcf_filtered": {
+            "$id": "vcf_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
-                    "$id": "artifact",
+                    "$id": "artifact_core",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "description": "Any file artifact associated with a clinical trial.",
+                    "oneOf": [
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "md5_hash",
+                                "artifact_category"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "upload_placeholder"
+                            ]
+                        }
+                    ],
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
                             "enum": [
                                 "Assay Artifact from CIMAC",
                                 "Pipeline Artifact",
-                                "Manifest File",
-                                "Other"
+                                "Manifest File"
                             ],
                             "type": "string"
                         },
@@ -276,50 +267,14 @@
                             ],
                             "type": "string"
                         },
-                        "assay_category": {
-                            "description": "Assay category.",
-                            "enum": [
-                                "Whole Exome Sequencing (WES)",
-                                "RNASeq",
-                                "Conventional Immunohistochemistry",
-                                "Multiplex Immunohistochemistry",
-                                "Multiplex Immunofluorescence",
-                                "CyTOF",
-                                "OLink",
-                                "NanoString",
-                                "ELISpot",
-                                "Multiplexed Ion-Beam Imaging (MIBI)",
-                                "Other",
-                                "None"
-                            ],
-                            "type": "string"
-                        },
                         "file_name": {
+                            "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
                             "description": "The name of the file with extension",
                             "type": "string"
                         },
                         "file_size_bytes": {
                             "description": "File size in bytes.",
                             "type": "integer"
-                        },
-                        "file_type": {
-                            "description": "File Type.",
-                            "enum": [
-                                "FASTA",
-                                "FASTQ",
-                                "TIFF",
-                                "VCF",
-                                "TSV",
-                                "Excel",
-                                "NPX",
-                                "BAM",
-                                "MAF",
-                                "PNG",
-                                "JPG",
-                                "XML",
-                                "Other"
-                            ],
-                            "type": "string"
                         },
                         "md5_hash": {
                             "description": "MD5 Hash of artifact.",
@@ -329,8 +284,13 @@
                             "description": "URL to artifact within Google Bucket.",
                             "type": "string"
                         },
+                        "upload_placeholder": {
+                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "type": "string"
+                        },
                         "uploaded_timestamp": {
                             "description": "Timestamp of when artfiact was loaded into the system.",
+                            "format": "date-time",
                             "type": "string"
                         },
                         "uploader": {
@@ -345,17 +305,7 @@
                             "type": "boolean"
                         }
                     },
-                    "required": [
-                        "file_name",
-                        "object_url",
-                        "uploaded_timestamp",
-                        "file_size_bytes",
-                        "md5_hash",
-                        "artifact_category",
-                        "assay_category",
-                        "file_type"
-                    ],
-                    "title": "Artifact",
+                    "title": "Artifact Core",
                     "type": "object"
                 },
                 {
@@ -366,16 +316,16 @@
                     }
                 }
             ],
-            "description": "Information about a fastq file",
-            "title": "FastQ Artifact",
+            "description": "Information about a VCF file",
+            "title": "VCF Artifact",
             "type": "object"
         }
     },
     "required": [
-        "fastq_1",
-        "fastq_2"
+        "vcf_filtered",
+        "maf"
     ],
-    "title": "Paired end sequencing file pairs",
+    "title": "Somatic variant output sample files",
     "type": "object"
 }</code></pre>
   </container>

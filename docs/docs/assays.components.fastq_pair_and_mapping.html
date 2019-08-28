@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Olink Input Files</h1>
+        <h1>Fastq pair and group mapping</h1>
         <p>
-            <b>Description:</b>  Olink Assay Input Files
+            <b>Description:</b>  Paired end sequencing fastq file pair and read group mapping file
         </p>
         
     </div>
@@ -61,8 +61,8 @@
                 <tr>
     <td>
         
-            <span id="assay_npx">
-                assay_npx
+            <span id="fastq_1">
+                fastq_1
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -72,13 +72,13 @@
     <td width=55%>
         
             
-                <div><small>Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale.</small></div>
+                <div><small>Fastq file for the first fragment.</small></div>
             
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
+            <a href="artifacts.artifact_fastq.html">artifacts.artifact_fastq</a>
         
     </td>
 </tr>
@@ -88,8 +88,8 @@
                 <tr>
     <td>
         
-            <span id="assay_raw_ct">
-                assay_raw_ct
+            <span id="fastq_2">
+                fastq_2
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -99,39 +99,34 @@
     <td width=55%>
         
             
-                <div><small>Number of cycles required for the fluorescent signal to cross the threshold.</small></div>
+                <div><small>Fastq file for the second fragment.</small></div>
             
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
+            <a href="artifacts.artifact_fastq.html">artifacts.artifact_fastq</a>
         
     </td>
 </tr>
-            
-        
-            
-        
-        
-            
-        
             
         
             
                 <tr>
     <td>
         
-            <span id="study_npx">
-                study_npx
+            <span id="read_group_mapping_file">
+                read_group_mapping_file
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
     <td width=55%>
         
             
-                <div><small>Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.</small></div>
+                <div><small>Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.</small></div>
             
         
     </td>
@@ -141,6 +136,13 @@
         
     </td>
 </tr>
+            
+        
+        
+            
+        
+            
+        
             
         
     </table>
@@ -149,15 +151,15 @@
   </div>
 
   <div class="container">
-    <h3>olink_input.full.json</h3>
+    <h3>fastq_pair_and_mapping.full.json</h3>
   	<pre><code>{
-    "$id": "olink_input",
+    "$id": "fastq_pair_and_mapping",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "description": "Olink Assay Input Files",
+    "description": "Paired end sequencing fastq file pair and read group mapping file",
     "properties": {
-        "assay_npx": {
-            "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.",
-            "$id": "text_artifact",
+        "fastq_1": {
+            "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
+            "$id": "fastq_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -250,14 +252,13 @@
                     }
                 }
             ],
-            "description": "Information about text files",
-            "mergeStrategy": "objectMerge",
-            "title": "Text Artifact",
+            "description": "Information about a fastq file",
+            "title": "FastQ Artifact",
             "type": "object"
         },
-        "assay_raw_ct": {
-            "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.",
-            "$id": "text_artifact",
+        "fastq_2": {
+            "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
+            "$id": "fastq_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -350,13 +351,12 @@
                     }
                 }
             ],
-            "description": "Information about text files",
-            "mergeStrategy": "objectMerge",
-            "title": "Text Artifact",
+            "description": "Information about a fastq file",
+            "title": "FastQ Artifact",
             "type": "object"
         },
-        "study_npx": {
-            "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.",
+        "read_group_mapping_file": {
+            "$comment": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
             "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
@@ -457,10 +457,11 @@
         }
     },
     "required": [
-        "assay_npx",
-        "assay_raw_ct"
+        "fastq_1",
+        "fastq_2",
+        "read_group_mapping_file"
     ],
-    "title": "Olink Input Files",
+    "title": "Fastq pair and group mapping",
     "type": "object"
 }</code></pre>
   </container>

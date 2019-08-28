@@ -100,101 +100,7 @@
 </tr>
             
         
-            
         
-            
-        
-        
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="uploader">
-                uploader
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Email address for individual uploading files.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="assay_category">
-                assay_category
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Assay category.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-                    <li>"Whole Exome Sequencing (WES)"</li>
-                
-                    <li>"RNASeq"</li>
-                
-                    <li>"Conventional Immunohistochemistry"</li>
-                
-                    <li>"Multiplex Immunohistochemistry"</li>
-                
-                    <li>"Multiplex Immunofluorescence"</li>
-                
-                    <li>"CyTOF"</li>
-                
-                    <li>"OLink"</li>
-                
-                    <li>"NanoString"</li>
-                
-                    <li>"ELISpot"</li>
-                
-                    <li>"Multiplexed Ion-Beam Imaging (MIBI)"</li>
-                
-                    <li>"Other"</li>
-                
-                    <li>"None"</li>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
             
         
     </table>
@@ -209,24 +115,6 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "Main properties of the assay experiment template",
     "properties": {
-        "assay_category": {
-            "description": "Assay category.",
-            "enum": [
-                "Whole Exome Sequencing (WES)",
-                "RNASeq",
-                "Conventional Immunohistochemistry",
-                "Multiplex Immunohistochemistry",
-                "Multiplex Immunofluorescence",
-                "CyTOF",
-                "OLink",
-                "NanoString",
-                "ELISpot",
-                "Multiplexed Ion-Beam Imaging (MIBI)",
-                "Other",
-                "None"
-            ],
-            "type": "string"
-        },
         "assay_creator": {
             "description": "Indicates what site is filling out the assay.",
             "enum": [
@@ -235,10 +123,6 @@
                 "Stanford",
                 "MD Anderson"
             ],
-            "type": "string"
-        },
-        "uploader": {
-            "description": "Email address for individual uploading files.",
             "type": "string"
         }
     },

@@ -4,10 +4,7 @@
 """Tests for artifact schemas"""
 
 import os
-import json
-
 import pytest
-
 import jsonschema
 from cidc_schemas.json_validation import load_and_validate_schema
 from .constants import SCHEMA_DIR
@@ -238,7 +235,7 @@ def test_cytof():
 
 def test_mif():
 
-        # create the micsss object
+    # create the mif object
     image = {
         "slide_scanner_model": "Vectra 2.0",
         "protocol_name": "E4412"
@@ -255,7 +252,7 @@ def test_mif():
     image_1["width"] = 250
     image_1["channels"] = 3
     csv_1 = ARTIFACT_OBJ.copy()
-    csv_1["seperator"] = ","
+    csv_1["separator"] = ","
     csv_1["header_row"] = 128
     text = ARTIFACT_OBJ.copy()
     record = {
@@ -314,7 +311,7 @@ def test_micsss():
     image_1["width"] = 250
     image_1["channels"] = 3
     csv_1 = ARTIFACT_OBJ.copy()
-    csv_1["seperator"] = ","
+    csv_1["separator"] = ","
     csv_1["header_row"] = 128
     record = {
         "project_qupath_folder": "dummy",

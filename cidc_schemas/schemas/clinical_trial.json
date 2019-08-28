@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "clinical_trial",
   "title": "Clinical Trial",
-  "description": "Encapsulates information regarding a clinical trial.\n",
+  "description": "Encapsulates information regarding a clinical trial\n",
   "properties": {
     "nct_id": {
       "type": "string",
@@ -14,7 +14,7 @@
     },
     "lead_organization_study_id": {
       "type": "string",
-      "description": "Trial identifier used by lead organization, e.g. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412."
+      "description": "Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412."
     },
     "trial_name": {
       "description": "Name of clinical trial.",

@@ -9,6 +9,7 @@ ROOT_DIR = os.path.join(DOCS_DIR, '..')
 TEMPLATES_DIR = os.path.join(DOCS_DIR, 'templates')
 HTML_DIR = os.path.join(DOCS_DIR, "docs")
 
+
 def load_schemas() -> dict:
     """
     Load all JSON schemas into a dictionary keyed on the
@@ -49,6 +50,11 @@ def generate_docs(out_directory: str = HTML_DIR):
     """
     Generate documentation based on the schemas found in `SCHEMA_DIR`.
     """
+
+    # Empty contents of docs/docs directory to prevent old html renders from showing up
+    for filename in os.listdir(HTML_DIR):
+        os.unlink(HTML_DIR + "/" + filename)
+
 
     templateLoader = jinja2.FileSystemLoader(TEMPLATES_DIR)
     templateEnv = jinja2.Environment(loader=templateLoader)

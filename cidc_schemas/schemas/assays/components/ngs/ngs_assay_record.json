@@ -22,7 +22,7 @@
       "$ref": "assays/components/fastq_pair_and_mapping.json"
     },
     "library_kit_lot": {
-      "description": "Lot number for the library construction kit",
+      "description": "Lot number for the library construction kit.",
       "type": "string"
     },
     "library_prep_date": {
@@ -31,19 +31,19 @@
       "format": "date"
     },
     "input_ng": {
-      "description": "Amount of DNA/RNA (in ng) used for library construction",
+      "description": "Amount of DNA/RNA (in ng) used for library construction.",
       "type": "integer",
       "exclusiveMinimum": 0,
       "maximum": 10000
     },
     "library_yield_ng": {
-      "description": "Resulting yield (in ng) from library construction",
+      "description": "Resulting yield (in ng) from library construction.",
       "type": "integer",
       "exclusiveMinimum": 0,
       "maximum": 2000
     },
     "average_insert_size": {
-      "description": "The average insert size for the library",
+      "description": "The average insert size for the library.",
       "type": "integer",
       "exclusiveMinimum": 0,
       "maximum": 10000

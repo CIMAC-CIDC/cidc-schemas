@@ -10,7 +10,7 @@
     },
     {
       "properties": {
-        "seperator": {
+        "separator": {
           "type": "string"
         },
         "header_row": {
@@ -19,5 +19,5 @@
       }
     }
   ],
-  "required": ["seperator", "header_row"]
+  "required": ["separator", "header_row"]
 }

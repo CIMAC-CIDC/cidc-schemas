@@ -233,14 +233,15 @@ def _process_property(
         verb: boolean indicating verbosity
 
     Returns:
-        (dict):
-            {
-                "template_key": row[0],
-                "local_path": row[1],   
-                "field_def": key_lu[key.lower()],
-                "gs_key": gs_key 
-            }
-            gs_key: constructed GCS upload path 
+        res: dict = {
+            "template_key": row[0],
+            "local_path": row[1],   
+            "gs_key": gs_key 
+        }
+        if field_def.get('is_artifact'):
+            res['upload_placeholder'] = val
+            
+        where *gs_key* is a constructed GCS upload path 
 
     """
 
@@ -275,23 +276,37 @@ def _process_property(
         if verb:
             print(f'collecting local_file_path {field_def}')
 
-        # TODO should be pretty different for not wes 
-        # setup the base path
+        # we're using last_part of merge_pointer as a file_name
         artifact_field_name = field_def['merge_pointer'].split('/')[-1]
+
+        # we're using pythonish template from template schema,
+        # so gcs_urls might have different patterns for different assays
+        # FIXME data_obj at this point might have not all fields from
+        # all cells in a template form, so format might fail 
+        # depending on template schema order of fields
+        # This needs to be moved to after data_obj completely filled.
         gs_key = field_def['url_template'].format_map(data_obj)
+
+        # For artifacts `val` is a uuid
+        # Which we use to later, in merge, find a right path in CT
+        # where corresponding artifact is located 
+        # As uuids are unique, this should be fine. 
+        # TODO MAYBE But pointers within CT might be used instead as a part of gcs_uri
         gs_key += f'/{assay_hint}/{artifact_field_name}/{val}'
 
         # return local_path entry
         res = {
             "template_key": key,
             "local_path": raw_val,
-            # "field_def": field_def,
             "gs_key": gs_key
         }
         if field_def.get('is_artifact'):
+            # for artifacts `val` is a uuid
             res['upload_placeholder'] = val
         return res
     
+
+SUPPORTED_ASSAYS = ["wes", "olink"]
 def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = False) -> (dict, dict):
     """
     Converts excel file to json object. It also identifies local files
@@ -421,8 +436,8 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = F
     """
 
     # data rows will require a unique identifier
-    if assay_hint not in ["wes", "olink"]:
-        raise NotImplementedError(f'{assay_hint} is not supported yet, only WES is supported.')
+    if assay_hint not in SUPPORTED_ASSAYS:
+        raise NotImplementedError(f'{assay_hint} is not supported yet, only {SUPPORTED_ASSAYS} are supported.')
 
     
     # get the root CT schema
@@ -674,14 +689,15 @@ def merge_artifact(
             md5_hash
         )
 
+    # general code for if not wes
+    
 
-    ## not wes
-    tt = Template.from_type(assay_type)
+    # urls are created like this in _process_property:
+    file_name, uuid = object_url.split("/")[-2:]
 
-
-    file_name, uuid = *object_url.split("/")[-2:], #TODO maybe this (parsing fname) should be in tempplate too?
 
     artifact = {
+        # TODO 1. this artifact_category should be filled out during prismify
         "artifact_category": "Assay Artifact from CIMAC",
         "object_url": object_url,
         "file_name": file_name,
@@ -690,6 +706,8 @@ def merge_artifact(
         "uploaded_timestamp": uploaded_timestamp
     }
 
+    # We're using uuids to find path in CT where corresponding artifact is located
+    # As uuids are unique, this should be fine.
     uuid_field_path = _get_path(ct, uuid)
 
     # As "uuid_field_path" contains path to a field with uuid,
@@ -698,7 +716,7 @@ def merge_artifact(
     # from 'uuid_field_path' field to it's parent - existing_artifact obj. 
     existing_artifact = _get_source(ct, uuid_field_path, skip_last=1)
 
-    ## TODO should be like this - with merger
+    ## TODO this might be better like this - with merger:
     # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")
     # artifact_parent[file_name] = Merger(artifact_schema).merge(existing_artifact, artifact)
 

@@ -410,7 +410,7 @@ def test_merge_artifact_wes_only():
         ct, _ = merge_artifact(
                 ct,
                 object_url=url,
-                assay_type="wes", # TODO figure out how to know that prior to calling?
+                assay_type="wes",
                 file_size_bytes=i,
                 uploaded_timestamp="01/01/2001",
                 md5_hash=f"hash_{i}"
@@ -529,59 +529,71 @@ def test_end_to_end_wes_only(schema_path, xlsx_path):
     for f in file_maps:
         assert f'/{hint}/' in f['gs_key'], f"No {hint} hint found"
 
-    if hint == 'wes':
-        # assert we still have a good clinical trial object, so we can save it
-        # but we need to merge it, because "prismify" provides only a patch
-        after_prism = merger.merge(WES_TEMPLATE_EXAMPLE_CT, prism_patch)
-        validator.validate(after_prism)
-    else:
-        after_prism = prism_patch
+    # assert we still have a good clinical trial object, so we can save it
+    # but we need to merge it, because "prismify" provides only a patch
+    after_prism = merger.merge(WES_TEMPLATE_EXAMPLE_CT, prism_patch)
+    validator.validate(after_prism)
 
-    after_prism_copy = copy.deepcopy(after_prism)
+    prism_patch_copy = copy.deepcopy(prism_patch)
 
     #now we simulate that upload was successful 
     searched_urls = []
     for i, fmap_entry in enumerate(file_maps):
 
         # attempt to merge
-        after_prism_w_artifact, _ = merge_artifact(
-                after_prism_copy,
+        patch_w_artifact, _ = merge_artifact(
+                prism_patch_copy,
                 object_url=fmap_entry['gs_key'],
-                assay_type=hint, # TODO figure out how to know that prior to calling?
-                file_size_bytes=100+i,
+                assay_type=hint,
+                file_size_bytes=i,
                 uploaded_timestamp="01/01/2001",
                 md5_hash=f"hash_{i}"
             )
 
         # assert we still have a good clinical trial object, so we can save it
-        validator.validate(after_prism_w_artifact)
+        validator.validate(merger.merge(WES_TEMPLATE_EXAMPLE_CT, patch_w_artifact))
 
         # we will than search for this url in the resulting ct, 
         # to check all artifacts were indeed merged
         searched_urls.append(fmap_entry['gs_key'])
 
     # `merge_artifact` modifies ct in-place, so 
-    full_ct = after_prism_w_artifact
+    full_ct = merger.merge(WES_TEMPLATE_EXAMPLE_CT, patch_w_artifact)
 
+    if hint == 'wes':
+        assert len(searched_urls) == 3*2 # 3 files per entry in xlsx
 
-    assert len(searched_urls) == 3*2 # 3 files per entry in xlsx
-
-    assert searched_urls == WES_TEMPLATE_EXAMPLE_GS_URLS
+        stripped_uuid_urls = [u[:-len("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")] for u in searched_urls]
+        stripped_uuid_WES = [u[:-len("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")] for u in WES_TEMPLATE_EXAMPLE_GS_URLS]
+        assert stripped_uuid_urls == stripped_uuid_WES
 
     for url in searched_urls:
         assert len((full_ct | grep(url))['matched_values']) == 1 # each gs_url only once  
 
-    assert len(full_ct['assays'][hint]) == 1+len(WES_TEMPLATE_EXAMPLE_CT['assays'][hint]), f"Multiple {hint}-assays created instead of merging into one"
-    assert len(full_ct['assays'][hint][0]['records']) == 2, "More records than expected"
+    # olink is special - it's not an array
+    if hint == "olink":
+        assert len(full_ct['assays'][hint]['records']) == 2, "More records than expected"
+    else:
+        assert len(full_ct['assays'][hint]) == 1+len(WES_TEMPLATE_EXAMPLE_CT['assays'][hint]), f"Multiple {hint}-assays created instead of merging into one"
+        assert len(full_ct['assays'][hint][0]['records']) == 2, "More records than expected"
 
     dd = DeepDiff(after_prism, full_ct)
 
-    # 6 files * 6 artifact atributes
-    assert len(dd['dictionary_item_added']) == 6*6, "Unexpected CT changes"
+    if hint=='wes':
+        # 6 files * 6 artifact atributes
+        assert len(dd['dictionary_item_added']) == 6*6, "Unexpected CT changes"
 
-    # in the process upload_placeholder gets removed per artifact = 6
-    assert len(dd['dictionary_item_removed']) == len(searched_urls), "Unexpected CT changes"
+        # in the process upload_placeholder gets removed per artifact = 6
+        assert len(dd['dictionary_item_removed']) == len(searched_urls), "Unexpected CT changes"
 
-    # nothing else in diff
-    assert list(dd.keys()) == ['dictionary_item_added', 'dictionary_item_removed'], "Unexpected CT changes"
+        # nothing else in diff
+        assert list(dd.keys()) == ['dictionary_item_added', 'dictionary_item_removed'], "Unexpected CT changes"
 
+    elif hint == "olink":
+        assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
+
+        # 6 artifact atributes * 5 files (2 per record + 1 study)
+        assert len(dd['dictionary_item_added']) == 6*(2*2+1), "Unexpected CT changes"
+
+    else:
+        assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"

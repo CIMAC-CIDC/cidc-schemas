@@ -706,7 +706,7 @@ def merge_artifact(
     existing_artifact.update(artifact)
 
     # return new object and the artifact that was merged
-    return new_ct, artifact
+    return ct, artifact
 
 
 def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:

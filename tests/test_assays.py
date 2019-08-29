@@ -374,6 +374,6 @@ def test_olink():
     validator.validate(obj)
 
     # assert negative behaviors
-    del obj['records'][0]['assay_prefix']
+    del obj['records'][0]['number_of_samples']
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)

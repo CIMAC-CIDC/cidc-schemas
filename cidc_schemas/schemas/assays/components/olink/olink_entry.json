@@ -5,15 +5,6 @@
   "type": "object",
   "description": "A single data record from Olink assay",
   "properties": {
-    "assay_prefix": {
-      "description": "Prefix to used for the filename",
-      "type": "string"
-    },
-    "filetype": {
-      "description": "Type of file being uploaded",
-      "type": "string",
-      "enum": ["assay", "study"]
-    },
     "run_date": {
       "description": "Date when the Olink assay was run",
       "type": "string",
@@ -56,10 +47,6 @@
       "description": "Method used for baseline correction",
       "type": "string"
     },
-    "panel": {
-      "description": "Panel used for the assay",
-      "type": "string"
-    },
     "number_of_samples": {
       "description": "Number of samples analyzed in the assay",
       "type": "number"
@@ -72,19 +59,13 @@
       "description": "Version of NPX manager used for the analysis",
       "type": "string"
     },
-    "assay_panel_lot": {
-      "description": "Lot Number of the assay panel",
-      "type": "number"
-    },
     "files": {
       "$ref": "assays/components/olink/olink_input.json"
     }
   },
   "required": [
-    "assay_prefix",
-    "filetype",
-    "panel",
     "number_of_samples",
-    "npx_manager_version"
+    "npx_manager_version",
+    "files"
   ]
 }

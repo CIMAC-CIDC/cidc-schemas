@@ -6,69 +6,106 @@
   "category": "metadata",
   "description": "Metadata information for olink analysis.\n",
   "$comment": "REDO with definition for a shared between combined/assays",
+
   "properties": {
     "worksheets": {
       "olink": {
+
+        "prism_preamble_object_schema" : "assays/olink_assay.json",
+        "prism_preamble_object_pointer" : "/assays/olink",
+        "prism_data_object_pointer" : "/records/-",
+        
         "preamble_rows": {
           "lead organization study id": {
-            "$ref": "clinical_trial.json#properties/lead_organization_study_id"
+            "merge_pointer": "2/lead_organization_study_id",
+            "$comment": "Only 2 jumps up to lead_organization_study_id, because olink is not an array assay, see available_assays.json",
+            "type_ref": "clinical_trial.json#properties/lead_organization_study_id"
           },
           "assay creator": {
-            "$ref": "assays/components/assay_core.json#properties/assay_creator"
+            "merge_pointer": "0/assay_creator",
+            "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+          },
+          "panel": {
+            "merge_pointer": "0/panel",
+            "type_ref": "assays/olink_assay.json#properties/panel"
+          },
+          "assay panel lot": {
+            "merge_pointer": "0/assay_panel_lot",
+            "type_ref": "assays/olink_assay.json#properties/assay_panel_lot"
+          },
+          "combined file": {
+            "merge_pointer": "0/study/study_npx",
+            "is_artifact" : 1,
+            "type_ref": "assays/components/local_file.json"
+          },
+          "combined file npx manager version": {
+            "merge_pointer": "0/study/npx_manager_version",
+            "type_ref": "assays/components/olink/olink_combined.json#properties/npx_manager_version"
           }
         },
         "data_columns": {
           "Olink Assay details": {
-            "assay_prefix": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/assay_prefix"
+            "npx file": {
+              "merge_pointer": "0/files/assay_npx",
+              "is_artifact" : 1,
+              "type_ref": "assays/components/local_file.json"
             },
-            "filetype": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/filetype"
+            "raw ct file": {
+              "merge_pointer": "0/files/assay_raw_ct",
+              "is_artifact" : 1,
+              "type_ref": "assays/components/local_file.json"
             },
             "run date": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/run_date"
+              "merge_pointer": "0/run_date",
+              "type_ref": "assays/components/olink/olink_entry.json#properties/run_date"
             },
             "run time": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/run_time"
+              "merge_pointer": "0/run_time",
+              "type_ref": "assays/components/olink/olink_entry.json#properties/run_time"
             },
             "instrument": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/instrument"
+              "merge_pointer": "0/instrument",
+              "type_ref": "assays/components/olink/olink_entry.json#properties/instrument"
             },
             "fludigm application version": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/fludigm_application_version"
+              "merge_pointer": "0/fludigm_application_version",
+              "type_ref": "assays/components/olink/olink_entry.json#properties/fludigm_application_version"
             },
             "fludigm application build": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/fludigm_application_build"
+              "merge_pointer": "0/fludigm_application_build",
+              "type_ref": "assays/components/olink/olink_entry.json#properties/fludigm_application_build"
             },
             "chip barcode": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/chip_barcode"
+              "merge_pointer": "0/chip_barcode",
+              "type_ref": "assays/components/olink/olink_entry.json#properties/chip_barcode"
             },
             "probe type": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/probe_type"
+              "merge_pointer": "0/probe_type",
+              "type_ref": "assays/components/olink/olink_entry.json#properties/probe_type"
             },
             "passive reference": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/passive_reference"
+              "merge_pointer": "0/passive_reference",
+              "type_ref": "assays/components/olink/olink_entry.json#properties/passive_reference"
             },
             "quality threshold": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/quality_threshold"
+              "merge_pointer": "0/quality_threshold",
+              "type_ref": "assays/components/olink/olink_entry.json#properties/quality_threshold"
             },
             "baseline correction": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/baseline_correction"
-            },
-            "panel": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/panel"
+              "merge_pointer": "0/baseline_correction",
+              "type_ref": "assays/components/olink/olink_entry.json#properties/baseline_correction"
             },
             "number of samples": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/number_of_samples"
+              "merge_pointer": "0/number_of_samples",
+              "type_ref": "assays/components/olink/olink_entry.json#properties/number_of_samples"
             },
             "number of samples failed": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/number_of_samples_failed"
+              "merge_pointer": "0/number_of_samples_failed",
+              "type_ref": "assays/components/olink/olink_entry.json#properties/number_of_samples_failed"
             },
             "npx manager version": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/npx_manager_version"
-            },
-            "assay panel lot": {
-              "$ref": "assays/components/olink/olink_entry.json#properties/assay_panel_lot"
+              "merge_pointer": "0/npx_manager_version",
+              "type_ref": "assays/components/olink/olink_entry.json#properties/npx_manager_version"
             }
           }
         }

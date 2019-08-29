@@ -156,7 +156,7 @@ class XlTemplateReader:
         """
         self.invalid_messages = []
 
-        required = template.template_schema.get('required', [])
+        required = template.schema.get('required', [])
 
         for name, schema in template.worksheets.items():
             errors = self._validate_worksheet(name, schema, required)

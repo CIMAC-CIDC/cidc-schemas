@@ -146,7 +146,7 @@ class XlTemplateWriter:
             self.MAIN_WIDTH = max(self.MAIN_WIDTH, num_data_columns)
 
         if write_title:
-            self._write_title(self.template.template_schema['title'])
+            self._write_title(self.template.schema['title'])
             self.row += 1
 
         if 'preamble_rows' in schema:

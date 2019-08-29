@@ -72,7 +72,7 @@ def test_missing_required_value(tiny_template):
     assert XlTemplateReader(tiny_missing_value).validate(tiny_template)
 
     # add a required field
-    tiny_template.template_schema['required'] = ['test_property']
+    tiny_template.schema['required'] = ['test_property']
     search_error_message(tiny_missing_value,
                          tiny_template, ValidationError, 'empty value for required field')
 

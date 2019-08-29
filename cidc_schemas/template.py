@@ -65,33 +65,33 @@ class Template:
     Configuration describing a manifest or assay template
 
     Properties:
-        template_schema {dict} -- a validated template JSON schema
+        schema {dict} -- a validated template JSON schema
         worksheets {Dict[str, dict]} -- a mapping from worksheet names to worksheet schemas
     """
 
-    def __init__(self, template_schema: dict, name = None):
+    def __init__(self, schema: dict, name = None):
         """
         Load the schema defining a manifest or assay template.
 
         Arguments:
-            template_schema {dict} -- a valid JSON schema describing a template
+            schema {dict} -- a valid JSON schema describing a template
             name -- a "name" for repr
         """
-        self.template_schema = template_schema
+        self.schema = schema
         self._name = name
         self.worksheets = self._extract_worksheets()
         self.key_lu = self._load_keylookup()
 
     def __repr__(self):
-        return f"<Template({self._name if self._name else self.template_schema})>"
+        return f"<Template({self._name if self._name else self.schema})>"
 
     def _extract_worksheets(self) -> Dict[str, dict]:
         """Build a mapping from worksheet names to worksheet section schemas"""
 
-        template_id = self.template_schema['$id']
-        assert 'worksheets' in self.template_schema[
+        template_id = self.schema['$id']
+        assert 'worksheets' in self.schema[
             'properties'], f'{template_id} schema missing "worksheets" property'
-        worksheet_schemas = self.template_schema['properties']['worksheets']
+        worksheet_schemas = self.schema['properties']['worksheets']
 
         worksheets = {}
         for name, schema in worksheet_schemas.items():
@@ -205,6 +205,8 @@ class Template:
 
         def _add_coerce(field_def:dict) -> dict: 
             # checks if we have a cast func for that 'type_ref'
+            if 'value_template_format' in field_def:
+                coerce = lambda x: field_def['value_template_format'].format_map(x) 
             if 'type' in field_def:
                 coerce = self._get_coerce(field_def['type'])
             else:
@@ -233,9 +235,6 @@ class Template:
                     # (as for template.schema) - "merge_pointer" and "type_ref"
 
         return key_lu
-
-
-
 
     # XlTemplateReader only knows how to format these types of sections
     VALID_WS_SECTIONS = set(['preamble_rows',

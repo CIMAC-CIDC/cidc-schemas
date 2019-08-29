@@ -527,7 +527,7 @@ def test_end_to_end_wes_only(schema_path, xlsx_path):
         assert len(prism_patch['assays'][hint]['records']) == 2
 
     for f in file_maps:
-        assert f'/{hint}/' in f['gs_key'], f"No {hint} hint found"
+        assert f'{hint}/' in f['gs_key'], f"No {hint} hint found"
 
     # assert we still have a good clinical trial object, so we can save it
     # but we need to merge it, because "prismify" provides only a patch

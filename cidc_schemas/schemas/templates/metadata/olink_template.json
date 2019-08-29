@@ -36,7 +36,6 @@
           "combined file": {
             "merge_pointer": "0/study/study_npx",
             "is_artifact" : 1,
-            "url_template": "",
             "type_ref": "assays/components/local_file.json"
           },
           "combined file npx manager version": {
@@ -48,13 +47,11 @@
           "Olink Assay details": {
             "npx file": {
               "merge_pointer": "0/files/assay_npx",
-              "url_template": "",
               "is_artifact" : 1,
               "type_ref": "assays/components/local_file.json"
             },
             "raw ct file": {
               "merge_pointer": "0/files/assay_raw_ct",
-              "url_template": "",
               "is_artifact" : 1,
               "type_ref": "assays/components/local_file.json"
             },

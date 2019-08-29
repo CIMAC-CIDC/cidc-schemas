@@ -285,14 +285,14 @@ def _process_property(
         # all cells in a template form, so format might fail 
         # depending on template schema order of fields
         # This needs to be moved to after data_obj completely filled.
-        gs_key = field_def['url_template'].format_map(data_obj)
+        gs_key = field_def.get('gcs_prefix_format', "").format_map(data_obj)
 
         # For artifacts `val` is a uuid
         # Which we use to later, in merge, find a right path in CT
         # where corresponding artifact is located 
         # As uuids are unique, this should be fine. 
         # TODO MAYBE But pointers within CT might be used instead as a part of gcs_uri
-        gs_key += f'/{assay_hint}/{artifact_field_name}/{val}'
+        gs_key = os.path.join(gs_key, f'{assay_hint}/{artifact_field_name}/{val}')
 
         # return local_path entry
         res = {

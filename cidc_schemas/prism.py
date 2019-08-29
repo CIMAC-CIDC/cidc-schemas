@@ -277,6 +277,7 @@ def _process_property(
             print(f'collecting local_file_path {field_def}')
 
         # we're using last_part of merge_pointer as a file_name
+        # so like '/study/study_npx' - 'study_npx' will be the filename
         artifact_field_name = field_def['merge_pointer'].split('/')[-1]
 
         # we're using pythonish template from template schema,
@@ -645,7 +646,7 @@ def _merge_artifact_wes(
 
 
 WesFileUrlParts = namedtuple("FileUrlParts", ["cimac_participant_id", \
-        "cimac_sample_id", "cimac_aliquot_id", "assay", "file_name", "uuui"]) 
+        "cimac_sample_id", "cimac_aliquot_id", "assay", "file_name", "uuid"]) 
 
 def _split_wes_url(obj_url: str) -> WesFileUrlParts:
     

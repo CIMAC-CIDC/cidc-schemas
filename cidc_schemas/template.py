@@ -236,15 +236,6 @@ class Template:
 
         return key_lu
 
-    # def find_artifact(self, root:dict, artifact_uri:str):
-    #     """
-    #     Parses artifact_uri according to pattern specified in template schema,
-    #     and finds it with its parent within *root* object. 
-    #     """
-    #     self.schema[]
-        
-    #     return
-
     # XlTemplateReader only knows how to format these types of sections
     VALID_WS_SECTIONS = set(['preamble_rows',
         'data_columns',

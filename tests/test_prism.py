@@ -107,13 +107,13 @@ WES_TEMPLATE_EXAMPLE_CT = {
                             "cimac_aliquot_id": "wes example aliquot 1.1.1",
                             "files": {
                                 "fastq_1": {
-                                    "upload_placeholder": "fastq_1.1"
+                                    "upload_placeholder": "fastq1.1-xxxx-PA.1-SA11-aliquot1.1.1"
                                 },
                                 "fastq_2": {
-                                    "upload_placeholder": "fastq_2.1"
+                                    "upload_placeholder": "fastq2.1-xxxx-PA.1-SA11-aliquot1.1.1"
                                 },
                                 "read_group_mapping_file": {
-                                    "upload_placeholder": "read_group_mapping_file.1"
+                                    "upload_placeholder": "readgr.1-xxxx-PA.1-SA11-aliquot1.1.1"
                                 }
                             }
                         },
@@ -130,13 +130,13 @@ WES_TEMPLATE_EXAMPLE_CT = {
                             "cimac_aliquot_id": "wes example aliquot 1.2.1",
                             "files": {
                                 "fastq_1": {
-                                    "upload_placeholder": "fastq_1.2"
+                                    "upload_placeholder": "fastq1.2-xxxx-PA.2-SA21-aliquot1.2.1"
                                 },
                                 "fastq_2": {
-                                    "upload_placeholder": "fastq_2.2"
+                                    "upload_placeholder": "fastq2.2-xxxx-PA.2-SA21-aliquot1.2.1"
                                 },
                                 "read_group_mapping_file": {
-                                    "upload_placeholder": "read_group_mapping_file.2"
+                                    "upload_placeholder": "readgr.2-xxxx-PA.2-SA21-aliquot1.2.1"
                                 }
                             }
                         }
@@ -149,12 +149,12 @@ WES_TEMPLATE_EXAMPLE_CT = {
 
 # corresponding list of gs_urls.
 WES_TEMPLATE_EXAMPLE_GS_URLS = [
-    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/fastq_1/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx1',
-    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/fastq_2/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx2',
-    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/read_group_mapping_file/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx3',
-    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/fastq_1/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx4',
-    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/fastq_2/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx5',
-    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/read_group_mapping_file/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx6'
+    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/fastq_1/fastq1.1-xxxx-PA.1-SA11-aliquot1.1.1',
+    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/fastq_2/fastq2.1-xxxx-PA.1-SA11-aliquot1.1.1',
+    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/read_group_mapping_file/readgr.1-xxxx-PA.1-SA11-aliquot1.1.1',
+    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/fastq_1/fastq1.2-xxxx-PA.2-SA21-aliquot1.2.1',
+    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/fastq_2/fastq2.2-xxxx-PA.2-SA21-aliquot1.2.1',
+    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/read_group_mapping_file/readgr.2-xxxx-PA.2-SA21-aliquot1.2.1'
 ]
 
 
@@ -433,9 +433,7 @@ def test_merge_artifact_wes_only():
     # we add 6 required fields per artifact thus `*6`
     assert len(dd['dictionary_item_added']) == len(WES_TEMPLATE_EXAMPLE_GS_URLS)*6, "Unexpected CT changes"
 
-    # in the process upload_placeholder gets removed per artifact
-    assert len(dd['dictionary_item_removed']) == len(WES_TEMPLATE_EXAMPLE_GS_URLS), "Unexpected CT changes"
-    assert list(dd.keys()) == ['dictionary_item_added', 'dictionary_item_removed'], "Unexpected CT changes"
+    assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
 
 
 def test_merge_ct_meta():
@@ -578,21 +576,19 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
 
     dd = DeepDiff(full_after_prism, full_ct)
 
+    # nothing in diff besides some additions
+    assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
+
     if hint=='wes':
         # 6 files * 6 artifact atributes
         assert len(dd['dictionary_item_added']) == 6*6, "Unexpected CT changes"
 
-        # in the process upload_placeholder gets removed per artifact = 6
-        assert len(dd['dictionary_item_removed']) == len(searched_urls), "Unexpected CT changes"
-
-        # nothing else in diff
-        assert list(dd.keys()) == ['dictionary_item_added', 'dictionary_item_removed'], "Unexpected CT changes"
-
     elif hint == "olink":
-        assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
 
         # 6 artifact atributes * 5 files (2 per record + 1 study)
         assert len(dd['dictionary_item_added']) == 6*(2*2+1), "Unexpected CT changes"
-
     else:
-        assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
+
+        # Should never happen
+        # Update for new assays
+        assert len(dd['dictionary_item_added']) == -1, "Unexpected CT changes"

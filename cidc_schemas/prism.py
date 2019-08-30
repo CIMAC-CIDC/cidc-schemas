@@ -680,19 +680,6 @@ def merge_artifact(
 
     """
 
-   
-    if assay_type == "wes":
-        return _merge_artifact_wes(
-            ct,
-            object_url,
-            file_size_bytes,
-            uploaded_timestamp,
-            md5_hash
-        )
-
-    # general code for if not wes
-    
-
     # urls are created like this in _process_property:
     file_name, uuid = object_url.split("/")[-2:]
 

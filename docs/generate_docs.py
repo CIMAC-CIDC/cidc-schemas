@@ -22,19 +22,19 @@ def load_schemas() -> dict:
         for path in paths:
             schema_path = os.path.join(root, path)
 
-            def json_to_html(ref:str) -> dict:
+            def json_to_html(ref: str) -> dict:
                 """Update refs to refer to the URL of the corresponding documentation."""
                 url = ref.replace('.json', '.html')
                 url = url.replace('properties/', '')
                 url = url.replace('definitions/', '')
                 url = url.replace('/', '.')
-                return {'url':url}
+                return {'url': url}
 
             full_json = load_and_validate_schema(
                 schema_path, SCHEMA_DIR)
             schema = load_and_validate_schema(
                 schema_path, SCHEMA_DIR, on_refs=json_to_html)
-            
+
             assert path.endswith(".json")
             schema_name = path[:-5].replace("/", ".")
             root_schemas[schema_name] = (schema, full_json)
@@ -52,9 +52,8 @@ def generate_docs(out_directory: str = HTML_DIR):
     """
 
     # Empty contents of docs/docs directory to prevent old html renders from showing up
-    for filename in os.listdir(HTML_DIR):
-        os.unlink(HTML_DIR + "/" + filename)
-
+    for filename in os.listdir(out_directory):
+        os.unlink(out_directory + "/" + filename)
 
     templateLoader = jinja2.FileSystemLoader(TEMPLATES_DIR)
     templateEnv = jinja2.Environment(loader=templateLoader)

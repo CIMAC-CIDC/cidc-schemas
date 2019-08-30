@@ -727,7 +727,7 @@ def merge_artifact(
     # return new object and the artifact that was merged
     return ct, artifact
 
-class InvalidTargetException(ValueError):
+class InvalidMergeTargetException(ValueError):
     """Exception raised for target of merge_clinical_trial_metadata being non schema compliant."""
 
 def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
@@ -751,7 +751,7 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
     try:
         validator.validate(target)
     except jsonschema.ValidationError as e:
-        raise InvalidTargetException(f"Merge target is invalid: {target}") from e
+        raise InvalidMergeTargetException(f"Merge target is invalid: {target}") from e
 
     # next assert the un-mutable fields are equal
     # these fields are required in the schema

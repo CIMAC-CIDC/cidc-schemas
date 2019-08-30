@@ -13,7 +13,7 @@ from pprint import pprint
 from jsonmerge import Merger
 
 from cidc_schemas.prism import prismify, merge_artifact, \
-    merge_clinical_trial_metadata, InvalidTargetException
+    merge_clinical_trial_metadata, InvalidMergeTargetException
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
@@ -452,10 +452,10 @@ def test_merge_ct_meta():
 
     # first test the fact that base doc must be valid
     del ct2['participants']
-    with pytest.raises(InvalidTargetException):
+    with pytest.raises(InvalidMergeTargetException):
         merge_clinical_trial_metadata(ct1, ct2)
 
-    with pytest.raises(InvalidTargetException):
+    with pytest.raises(InvalidMergeTargetException):
         merge_clinical_trial_metadata(ct1, {})
 
     # next assert the merge is only happening on the same trial

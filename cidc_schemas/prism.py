@@ -653,8 +653,8 @@ def _split_wes_url(obj_url: str) -> WesFileUrlParts:
 
 def merge_artifact(
     ct: dict,
-    artifact_uuid: str,
     assay_type: str,
+    artifact_uuid: str,
     object_url: str,
     file_size_bytes: int,
     uploaded_timestamp: str,

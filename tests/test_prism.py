@@ -412,8 +412,8 @@ def test_merge_artifact_wes_only():
         # attempt to merge
         ct, _ = merge_artifact(
                 ct,
-                artifact_uuid,
                 assay_type="wes",
+                artifact_uuid=artifact_uuid,
                 object_url=url_without_uuid,
                 file_size_bytes=i,
                 uploaded_timestamp="01/01/2001",

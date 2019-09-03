@@ -13,7 +13,7 @@ from pprint import pprint
 from jsonmerge import Merger
 
 from cidc_schemas.prism import prismify, merge_artifact, \
-    merge_clinical_trial_metadata, InvalidMergeTargetException
+    merge_clinical_trial_metadata
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
@@ -450,17 +450,16 @@ def test_merge_ct_meta():
     ct1 = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT)
     ct2 = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT)
 
-    # first test the fact that base doc must be valid
-    del ct2['participants']
-    with pytest.raises(InvalidMergeTargetException):
+    # first test the fact that both snippets must be valid
+    del ct1['lead_organization_study_id']
+    with pytest.raises(jsonschema.ValidationError):
         merge_clinical_trial_metadata(ct1, ct2)
 
-    with pytest.raises(InvalidMergeTargetException):
+    with pytest.raises(jsonschema.ValidationError):
         merge_clinical_trial_metadata(ct1, {})
 
     # next assert the merge is only happening on the same trial
     ct1["lead_organization_study_id"] = "not_the_same"
-    ct2 = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT)
     with pytest.raises(RuntimeError):
         merge_clinical_trial_metadata(ct1, ct2)
 
@@ -505,7 +504,7 @@ def test_merge_ct_meta():
 
 
 @pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
-def test_end_to_end_wes_olink(schema_path, xlsx_path):
+def test_end_to_end_wes_only(schema_path, xlsx_path):
     # extract hint
     hint = schema_path.split("/")[-1].replace("_template.json", "")
 
@@ -515,7 +514,9 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-    
+    schema = validator.schema
+    merger = Merger(schema)
+
     # parse the spreadsheet and get the file maps
     prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
 
@@ -530,18 +531,18 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
 
     # assert we still have a good clinical trial object, so we can save it
     # but we need to merge it, because "prismify" provides only a patch
-    full_after_prism = merge_clinical_trial_metadata(prism_patch, WES_TEMPLATE_EXAMPLE_CT)
-    validator.validate(full_after_prism)
+    after_prism = merger.merge(WES_TEMPLATE_EXAMPLE_CT, prism_patch)
+    validator.validate(after_prism)
 
-    patch_copy_4_artifacts = copy.deepcopy(prism_patch)
+    prism_patch_copy = copy.deepcopy(prism_patch)
 
     #now we simulate that upload was successful 
     searched_urls = []
     for i, fmap_entry in enumerate(file_maps):
 
         # attempt to merge
-        patch_copy_4_artifacts, _ = merge_artifact(
-                patch_copy_4_artifacts,
+        patch_w_artifact, _ = merge_artifact(
+                prism_patch_copy,
                 object_url=fmap_entry['gs_key'],
                 assay_type=hint,
                 file_size_bytes=i,
@@ -550,14 +551,14 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
             )
 
         # assert we still have a good clinical trial object, so we can save it
-        validator.validate(merge_clinical_trial_metadata(patch_copy_4_artifacts, WES_TEMPLATE_EXAMPLE_CT))
+        validator.validate(merger.merge(WES_TEMPLATE_EXAMPLE_CT, patch_w_artifact))
 
         # we will than search for this url in the resulting ct, 
         # to check all artifacts were indeed merged
         searched_urls.append(fmap_entry['gs_key'])
 
     # `merge_artifact` modifies ct in-place, so 
-    full_ct = merge_clinical_trial_metadata(patch_copy_4_artifacts, WES_TEMPLATE_EXAMPLE_CT)
+    full_ct = merger.merge(WES_TEMPLATE_EXAMPLE_CT, patch_w_artifact)
 
     if hint == 'wes':
         assert len(searched_urls) == 3*2 # 3 files per entry in xlsx
@@ -576,7 +577,7 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
         assert len(full_ct['assays'][hint]) == 1+len(WES_TEMPLATE_EXAMPLE_CT['assays'][hint]), f"Multiple {hint}-assays created instead of merging into one"
         assert len(full_ct['assays'][hint][0]['records']) == 2, "More records than expected"
 
-    dd = DeepDiff(full_after_prism, full_ct)
+    dd = DeepDiff(after_prism, full_ct)
 
     if hint=='wes':
         # 6 files * 6 artifact atributes

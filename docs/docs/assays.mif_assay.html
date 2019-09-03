@@ -33,7 +33,7 @@
         </p>
         <h1>mIF Assay</h1>
         <p>
-            <b>Description:</b>  Multiplex immunoflourescence
+            <b>Description:</b>  Multiplex immunofluorescence
         </p>
         
     </div>
@@ -211,7 +211,7 @@
         },
         {
             "$schema": "http://json-schema.org/draft-07/schema#",
-            "description": "Base information about the aquisition and analysis of a quantitative pathology image\n",
+            "description": "Base information about the acquisition and analysis of a quantitative pathology image\n",
             "id": "image",
             "properties": {
                 "autostainer_model": {
@@ -227,7 +227,7 @@
                     "type": "string"
                 },
                 "image_analysis_software": {
-                    "description": "Source sofware for digital pathology and image analysis.",
+                    "description": "Source software for digital pathology and image analysis.",
                     "enum": [
                         "InForm",
                         "QuPath"
@@ -235,11 +235,11 @@
                     "type": "string"
                 },
                 "image_analysis_software_version": {
-                    "description": "Source sofware version for digital pathology and image analysis.",
+                    "description": "Source software version for digital pathology and image analysis.",
                     "type": "string"
                 },
                 "positive_cell_detection": {
-                    "description": "Model used for postitive cell detection in imaging experiment.",
+                    "description": "Model used for positive cell detection in imaging experiment.",
                     "enum": [
                         "proprietary",
                         "random forest classifier"
@@ -351,7 +351,7 @@
                     "title": "Antibody"
                 }
             ],
-            "description": "Data specific to antibody prepration on the multiplex immunoflourescence platform.",
+            "description": "Data specific to antibody preparation on the multiplex immunofluorescence platform.",
             "id": "mif_antibody",
             "properties": {
                 "amplification_time": {
@@ -399,7 +399,7 @@
         },
         "type": "array"
     },
-    "description": "Multiplex immunoflourescence",
+    "description": "Multiplex immunofluorescence",
     "mergeStrategy": "objectMerge",
     "properties": {
         "records": {
@@ -421,8 +421,7 @@
                                     {
                                         "$id": "artifact_core",
                                         "$schema": "http://json-schema.org/draft-07/schema#",
-                                        "description": "Any file artifact associated with a clinical trial.",
-                                        "oneOf": [
+                                        "anyOf": [
                                             {
                                                 "required": [
                                                     "file_name",
@@ -439,6 +438,7 @@
                                                 ]
                                             }
                                         ],
+                                        "description": "Any file artifact associated with a clinical trial.",
                                         "properties": {
                                             "artifact_category": {
                                                 "description": "Artifact category.",
@@ -505,7 +505,7 @@
                                             "header_row": {
                                                 "type": "integer"
                                             },
-                                            "seperator": {
+                                            "separator": {
                                                 "type": "string"
                                             }
                                         }
@@ -513,14 +513,14 @@
                                 ],
                                 "description": "Information about CSV files",
                                 "required": [
-                                    "seperator",
+                                    "separator",
                                     "header_row"
                                 ],
                                 "title": "CSV Artifact",
                                 "type": "object"
                             },
-                            "properties": {
-                                "regions_of_interest": {
+                            "regions_of_interest": {
+                                "items": {
                                     "allOf": [
                                         {
                                             "$id": "image_mapping",
@@ -535,8 +535,7 @@
                                                         {
                                                             "$id": "artifact_core",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
-                                                            "description": "Any file artifact associated with a clinical trial.",
-                                                            "oneOf": [
+                                                            "anyOf": [
                                                                 {
                                                                     "required": [
                                                                         "file_name",
@@ -553,6 +552,7 @@
                                                                     ]
                                                                 }
                                                             ],
+                                                            "description": "Any file artifact associated with a clinical trial.",
                                                             "properties": {
                                                                 "artifact_category": {
                                                                     "description": "Artifact category.",
@@ -619,7 +619,7 @@
                                                                 "header_row": {
                                                                     "type": "integer"
                                                                 },
-                                                                "seperator": {
+                                                                "separator": {
                                                                     "type": "string"
                                                                 }
                                                             }
@@ -627,7 +627,7 @@
                                                     ],
                                                     "description": "Information about CSV files",
                                                     "required": [
-                                                        "seperator",
+                                                        "separator",
                                                         "header_row"
                                                     ],
                                                     "title": "CSV Artifact",
@@ -641,8 +641,7 @@
                                                         {
                                                             "$id": "artifact_core",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
-                                                            "description": "Any file artifact associated with a clinical trial.",
-                                                            "oneOf": [
+                                                            "anyOf": [
                                                                 {
                                                                     "required": [
                                                                         "file_name",
@@ -659,6 +658,7 @@
                                                                     ]
                                                                 }
                                                             ],
+                                                            "description": "Any file artifact associated with a clinical trial.",
                                                             "properties": {
                                                                 "artifact_category": {
                                                                     "description": "Artifact category.",
@@ -725,7 +725,7 @@
                                                                 "header_row": {
                                                                     "type": "integer"
                                                                 },
-                                                                "seperator": {
+                                                                "separator": {
                                                                     "type": "string"
                                                                 }
                                                             }
@@ -733,7 +733,7 @@
                                                     ],
                                                     "description": "Information about CSV files",
                                                     "required": [
-                                                        "seperator",
+                                                        "separator",
                                                         "header_row"
                                                     ],
                                                     "title": "CSV Artifact",
@@ -747,8 +747,7 @@
                                                         {
                                                             "$id": "artifact_core",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
-                                                            "description": "Any file artifact associated with a clinical trial.",
-                                                            "oneOf": [
+                                                            "anyOf": [
                                                                 {
                                                                     "required": [
                                                                         "file_name",
@@ -765,6 +764,7 @@
                                                                     ]
                                                                 }
                                                             ],
+                                                            "description": "Any file artifact associated with a clinical trial.",
                                                             "properties": {
                                                                 "artifact_category": {
                                                                     "description": "Artifact category.",
@@ -831,7 +831,7 @@
                                                                 "header_row": {
                                                                     "type": "integer"
                                                                 },
-                                                                "seperator": {
+                                                                "separator": {
                                                                     "type": "string"
                                                                 }
                                                             }
@@ -839,7 +839,7 @@
                                                     ],
                                                     "description": "Information about CSV files",
                                                     "required": [
-                                                        "seperator",
+                                                        "separator",
                                                         "header_row"
                                                     ],
                                                     "title": "CSV Artifact",
@@ -853,8 +853,7 @@
                                                         {
                                                             "$id": "artifact_core",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
-                                                            "description": "Any file artifact associated with a clinical trial.",
-                                                            "oneOf": [
+                                                            "anyOf": [
                                                                 {
                                                                     "required": [
                                                                         "file_name",
@@ -871,6 +870,7 @@
                                                                     ]
                                                                 }
                                                             ],
+                                                            "description": "Any file artifact associated with a clinical trial.",
                                                             "properties": {
                                                                 "artifact_category": {
                                                                     "description": "Artifact category.",
@@ -963,8 +963,7 @@
                                                         {
                                                             "$id": "artifact_core",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
-                                                            "description": "Any file artifact associated with a clinical trial.",
-                                                            "oneOf": [
+                                                            "anyOf": [
                                                                 {
                                                                     "required": [
                                                                         "file_name",
@@ -981,6 +980,7 @@
                                                                     ]
                                                                 }
                                                             ],
+                                                            "description": "Any file artifact associated with a clinical trial.",
                                                             "properties": {
                                                                 "artifact_category": {
                                                                     "description": "Artifact category.",
@@ -1073,8 +1073,7 @@
                                                         {
                                                             "$id": "artifact_core",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
-                                                            "description": "Any file artifact associated with a clinical trial.",
-                                                            "oneOf": [
+                                                            "anyOf": [
                                                                 {
                                                                     "required": [
                                                                         "file_name",
@@ -1091,6 +1090,7 @@
                                                                     ]
                                                                 }
                                                             ],
+                                                            "description": "Any file artifact associated with a clinical trial.",
                                                             "properties": {
                                                                 "artifact_category": {
                                                                     "description": "Artifact category.",
@@ -1157,7 +1157,7 @@
                                                                 "header_row": {
                                                                     "type": "integer"
                                                                 },
-                                                                "seperator": {
+                                                                "separator": {
                                                                     "type": "string"
                                                                 }
                                                             }
@@ -1165,7 +1165,7 @@
                                                     ],
                                                     "description": "Information about CSV files",
                                                     "required": [
-                                                        "seperator",
+                                                        "separator",
                                                         "header_row"
                                                     ],
                                                     "title": "CSV Artifact",
@@ -1191,8 +1191,7 @@
                                                         {
                                                             "$id": "artifact_core",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
-                                                            "description": "Any file artifact associated with a clinical trial.",
-                                                            "oneOf": [
+                                                            "anyOf": [
                                                                 {
                                                                     "required": [
                                                                         "file_name",
@@ -1209,6 +1208,7 @@
                                                                     ]
                                                                 }
                                                             ],
+                                                            "description": "Any file artifact associated with a clinical trial.",
                                                             "properties": {
                                                                 "artifact_category": {
                                                                     "description": "Artifact category.",
@@ -1301,8 +1301,7 @@
                                                         {
                                                             "$id": "artifact_core",
                                                             "$schema": "http://json-schema.org/draft-07/schema#",
-                                                            "description": "Any file artifact associated with a clinical trial.",
-                                                            "oneOf": [
+                                                            "anyOf": [
                                                                 {
                                                                     "required": [
                                                                         "file_name",
@@ -1319,6 +1318,7 @@
                                                                     ]
                                                                 }
                                                             ],
+                                                            "description": "Any file artifact associated with a clinical trial.",
                                                             "properties": {
                                                                 "artifact_category": {
                                                                     "description": "Artifact category.",
@@ -1411,9 +1411,9 @@
                                             "title": "Composite Image",
                                             "type": "object"
                                         }
-                                    ],
-                                    "type": "array"
-                                }
+                                    ]
+                                },
+                                "type": "array"
                             },
                             "roi_annotations": {
                                 "$comment": "Text describing region of interest for experiment.",
@@ -1423,8 +1423,7 @@
                                     {
                                         "$id": "artifact_core",
                                         "$schema": "http://json-schema.org/draft-07/schema#",
-                                        "description": "Any file artifact associated with a clinical trial.",
-                                        "oneOf": [
+                                        "anyOf": [
                                             {
                                                 "required": [
                                                     "file_name",
@@ -1441,6 +1440,7 @@
                                                 ]
                                             }
                                         ],
+                                        "description": "Any file artifact associated with a clinical trial.",
                                         "properties": {
                                             "artifact_category": {
                                                 "description": "Artifact category.",
@@ -1523,8 +1523,7 @@
                                     {
                                         "$id": "artifact_core",
                                         "$schema": "http://json-schema.org/draft-07/schema#",
-                                        "description": "Any file artifact associated with a clinical trial.",
-                                        "oneOf": [
+                                        "anyOf": [
                                             {
                                                 "required": [
                                                     "file_name",
@@ -1541,6 +1540,7 @@
                                                 ]
                                             }
                                         ],
+                                        "description": "Any file artifact associated with a clinical trial.",
                                         "properties": {
                                             "artifact_category": {
                                                 "description": "Artifact category.",
@@ -1629,7 +1629,7 @@
                         "required": [
                             "whole_slide_imaging_file"
                         ],
-                        "title": "Multiplex Immunoflouresence Input Files",
+                        "title": "Multiplex Immunofluorescence Input Files",
                         "type": "object"
                     },
                     "mif_exported_data_folder": {

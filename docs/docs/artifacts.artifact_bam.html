@@ -137,8 +137,7 @@
         {
             "$id": "artifact_core",
             "$schema": "http://json-schema.org/draft-07/schema#",
-            "description": "Any file artifact associated with a clinical trial.",
-            "oneOf": [
+            "anyOf": [
                 {
                     "required": [
                         "file_name",
@@ -155,6 +154,7 @@
                     ]
                 }
             ],
+            "description": "Any file artifact associated with a clinical trial.",
             "properties": {
                 "artifact_category": {
                     "description": "Artifact category.",

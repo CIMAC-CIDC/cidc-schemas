@@ -77,7 +77,7 @@
     </td>
     <td width=55%>
         
-            
+            Information about images include height and width
                 <div><small>Image produced from the combination of multiple imaging experiment data images.</small></div>
             
         
@@ -107,7 +107,7 @@
     </td>
     <td width=55%>
         
-            
+            Information about CSV files
                 <div><small>Results of a computer vision task, in which specific regions of a region are mapped.</small></div>
             
         
@@ -132,7 +132,7 @@
     </td>
     <td width=55%>
         
-            
+            Information about CSV files
                 <div><small>Data produced from the analysis of cellular image.</small></div>
             
         
@@ -157,7 +157,7 @@
     </td>
     <td width=55%>
         
-            
+            Information about CSV files
                 <div><small>Summary of the results of a cell segmentation data experiment.</small></div>
             
         
@@ -184,7 +184,7 @@
     </td>
     <td width=55%>
         
-            
+            Information about images include height and width
                 <div><small>Genome segmentation mapping</small></div>
             
         
@@ -209,7 +209,7 @@
     </td>
     <td width=55%>
         
-            
+            Information about CSV files
                 <div><small>Generation of values based on based on experiment data.</small></div>
             
         
@@ -242,8 +242,7 @@
                 {
                     "$id": "artifact_core",
                     "$schema": "http://json-schema.org/draft-07/schema#",
-                    "description": "Any file artifact associated with a clinical trial.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "required": [
                                 "file_name",
@@ -260,6 +259,7 @@
                             ]
                         }
                     ],
+                    "description": "Any file artifact associated with a clinical trial.",
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -326,7 +326,7 @@
                         "header_row": {
                             "type": "integer"
                         },
-                        "seperator": {
+                        "separator": {
                             "type": "string"
                         }
                     }
@@ -334,7 +334,7 @@
             ],
             "description": "Information about CSV files",
             "required": [
-                "seperator",
+                "separator",
                 "header_row"
             ],
             "title": "CSV Artifact",
@@ -348,8 +348,7 @@
                 {
                     "$id": "artifact_core",
                     "$schema": "http://json-schema.org/draft-07/schema#",
-                    "description": "Any file artifact associated with a clinical trial.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "required": [
                                 "file_name",
@@ -366,6 +365,7 @@
                             ]
                         }
                     ],
+                    "description": "Any file artifact associated with a clinical trial.",
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -432,7 +432,7 @@
                         "header_row": {
                             "type": "integer"
                         },
-                        "seperator": {
+                        "separator": {
                             "type": "string"
                         }
                     }
@@ -440,7 +440,7 @@
             ],
             "description": "Information about CSV files",
             "required": [
-                "seperator",
+                "separator",
                 "header_row"
             ],
             "title": "CSV Artifact",
@@ -454,8 +454,7 @@
                 {
                     "$id": "artifact_core",
                     "$schema": "http://json-schema.org/draft-07/schema#",
-                    "description": "Any file artifact associated with a clinical trial.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "required": [
                                 "file_name",
@@ -472,6 +471,7 @@
                             ]
                         }
                     ],
+                    "description": "Any file artifact associated with a clinical trial.",
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -538,7 +538,7 @@
                         "header_row": {
                             "type": "integer"
                         },
-                        "seperator": {
+                        "separator": {
                             "type": "string"
                         }
                     }
@@ -546,7 +546,7 @@
             ],
             "description": "Information about CSV files",
             "required": [
-                "seperator",
+                "separator",
                 "header_row"
             ],
             "title": "CSV Artifact",
@@ -560,8 +560,7 @@
                 {
                     "$id": "artifact_core",
                     "$schema": "http://json-schema.org/draft-07/schema#",
-                    "description": "Any file artifact associated with a clinical trial.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "required": [
                                 "file_name",
@@ -578,6 +577,7 @@
                             ]
                         }
                     ],
+                    "description": "Any file artifact associated with a clinical trial.",
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -670,8 +670,7 @@
                 {
                     "$id": "artifact_core",
                     "$schema": "http://json-schema.org/draft-07/schema#",
-                    "description": "Any file artifact associated with a clinical trial.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "required": [
                                 "file_name",
@@ -688,6 +687,7 @@
                             ]
                         }
                     ],
+                    "description": "Any file artifact associated with a clinical trial.",
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -780,8 +780,7 @@
                 {
                     "$id": "artifact_core",
                     "$schema": "http://json-schema.org/draft-07/schema#",
-                    "description": "Any file artifact associated with a clinical trial.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "required": [
                                 "file_name",
@@ -798,6 +797,7 @@
                             ]
                         }
                     ],
+                    "description": "Any file artifact associated with a clinical trial.",
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -864,7 +864,7 @@
                         "header_row": {
                             "type": "integer"
                         },
-                        "seperator": {
+                        "separator": {
                             "type": "string"
                         }
                     }
@@ -872,7 +872,7 @@
             ],
             "description": "Information about CSV files",
             "required": [
-                "seperator",
+                "separator",
                 "header_row"
             ],
             "title": "CSV Artifact",

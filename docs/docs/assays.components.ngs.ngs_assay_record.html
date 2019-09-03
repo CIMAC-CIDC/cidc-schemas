@@ -71,7 +71,7 @@
     </td>
     <td width=55%>
         
-            
+            Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234.
                 <div><small>Id of an participant within this clinical trial, that this assay record is based upon.</small></div>
             
         
@@ -98,7 +98,7 @@
     </td>
     <td width=55%>
         
-            
+            Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.
                 <div><small>Id of an sample within this clinical trial, that this assay record is based upon.</small></div>
             
         
@@ -125,7 +125,7 @@
     </td>
     <td width=55%>
         
-            
+            Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.
                 <div><small>Id of an aliquot within this clinical trial, that this assay record is based upon.</small></div>
             
         
@@ -152,7 +152,7 @@
     </td>
     <td width=55%>
         
-            
+            Paired end sequencing fastq file pair and read group mapping file
                 <div><small>Fastq and read group mapping files produced by the assay for that .</small></div>
             
         
@@ -179,7 +179,7 @@
     </td>
     <td width=55%>
         
-            Lot number for the library construction kit
+            Lot number for the library construction kit.
         
     </td>
     <td>
@@ -266,7 +266,7 @@
     </td>
     <td width=55%>
         
-            Amount of DNA/RNA (in ng) used for library construction
+            Amount of DNA/RNA (in ng) used for library construction.
         
     </td>
     <td>
@@ -299,7 +299,7 @@
     </td>
     <td width=55%>
         
-            Resulting yield (in ng) from library construction
+            Resulting yield (in ng) from library construction.
         
     </td>
     <td>
@@ -332,7 +332,7 @@
     </td>
     <td width=55%>
         
-            The average insert size for the library
+            The average insert size for the library.
         
     </td>
     <td>
@@ -366,7 +366,7 @@
     "description": "A single data record from an NGS assay",
     "properties": {
         "average_insert_size": {
-            "description": "The average insert size for the library",
+            "description": "The average insert size for the library.",
             "exclusiveMinimum": 0,
             "maximum": 10000,
             "type": "integer"
@@ -400,8 +400,7 @@
                         {
                             "$id": "artifact_core",
                             "$schema": "http://json-schema.org/draft-07/schema#",
-                            "description": "Any file artifact associated with a clinical trial.",
-                            "oneOf": [
+                            "anyOf": [
                                 {
                                     "required": [
                                         "file_name",
@@ -418,6 +417,7 @@
                                     ]
                                 }
                             ],
+                            "description": "Any file artifact associated with a clinical trial.",
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -499,8 +499,7 @@
                         {
                             "$id": "artifact_core",
                             "$schema": "http://json-schema.org/draft-07/schema#",
-                            "description": "Any file artifact associated with a clinical trial.",
-                            "oneOf": [
+                            "anyOf": [
                                 {
                                     "required": [
                                         "file_name",
@@ -517,6 +516,7 @@
                                     ]
                                 }
                             ],
+                            "description": "Any file artifact associated with a clinical trial.",
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -598,8 +598,7 @@
                         {
                             "$id": "artifact_core",
                             "$schema": "http://json-schema.org/draft-07/schema#",
-                            "description": "Any file artifact associated with a clinical trial.",
-                            "oneOf": [
+                            "anyOf": [
                                 {
                                     "required": [
                                         "file_name",
@@ -616,6 +615,7 @@
                                     ]
                                 }
                             ],
+                            "description": "Any file artifact associated with a clinical trial.",
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -700,13 +700,13 @@
             "type": "object"
         },
         "input_ng": {
-            "description": "Amount of DNA/RNA (in ng) used for library construction",
+            "description": "Amount of DNA/RNA (in ng) used for library construction.",
             "exclusiveMinimum": 0,
             "maximum": 10000,
             "type": "integer"
         },
         "library_kit_lot": {
-            "description": "Lot number for the library construction kit",
+            "description": "Lot number for the library construction kit.",
             "type": "string"
         },
         "library_prep_date": {
@@ -715,7 +715,7 @@
             "type": "string"
         },
         "library_yield_ng": {
-            "description": "Resulting yield (in ng) from library construction",
+            "description": "Resulting yield (in ng) from library construction.",
             "exclusiveMinimum": 0,
             "maximum": 2000,
             "type": "integer"

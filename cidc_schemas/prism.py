@@ -207,6 +207,8 @@ def _get_recursively(search_dict, field):
     return fields_found
 
 
+LocalFileUploadEntry = namedtuple('LocalFileUploadEntry', ["local_path", "gs_key", "upload_placeholder"])
+
 def _process_property(
         row: list,
         assay_hint: str,
@@ -214,7 +216,7 @@ def _process_property(
         data_obj: dict,
         root_obj: Union[None, dict] = None,
         data_obj_pointer: Union[None, str] = None,
-        verb: bool = False) -> dict:
+        verb: bool = False) -> LocalFileUploadEntry:
     """
     Takes a single property (key, val) from spreadsheet, determines
     where it needs to go in the final object, then inserts it.
@@ -233,15 +235,11 @@ def _process_property(
         verb: boolean indicating verbosity
 
     Returns:
-        res: dict = {
-            "template_key": row[0],
-            "local_path": row[1],   
-            "gs_key": gs_key 
-        }
-        if field_def.get('is_artifact'):
-            res['upload_placeholder'] = val
-            
-        where *gs_key* is a constructed GCS upload path 
+        LocalFileUploadEntry(
+            local_path = "/local/file/from/excel/file/cell",   
+            gs_key = "constructed/GCS/path/where/this/artifact/shold/endup",
+            upload_placeholder = 'uuiduuiduuid-uuid-uuid-uuiduuid' # unique artifact/upload_placeholder
+        )
 
     """
 
@@ -293,18 +291,14 @@ def _process_property(
         # where corresponding artifact is located 
         # As uuids are unique, this should be fine. 
         # TODO MAYBE But pointers within CT might be used instead as a part of gcs_uri
-        gs_key = os.path.join(gs_key, f'{assay_hint}/{artifact_field_name}/{val}')
+        gs_key = os.path.join(gs_key, f'{assay_hint}/{artifact_field_name}')
 
-        # return local_path entry
-        res = {
-            "template_key": key,
-            "local_path": raw_val,
-            "gs_key": gs_key
-        }
-        if field_def.get('is_artifact'):
+        return LocalFileUploadEntry(
+            local_path = raw_val,
+            gs_key = gs_key,
             # for artifacts `val` is a uuid
-            res['upload_placeholder'] = val
-        return res
+            upload_placeholder = val
+        )
     
 
 SUPPORTED_ASSAYS = ["wes", "olink"]
@@ -336,12 +330,12 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = F
     Returns:
         (tuple):
             arg1: clinical trial object with data parsed from spreadsheet
-            arg2: list of objects which describe each file identified:
-                {
-                    "local_path": /local/path/to/a/data/file/parsed/from/template ,
-                    "gs_key": constructed/relative/to/clinical/trial/GCS/upload/path ,
-                    "upload_placeholder": random uuid for artifact upload
-                } 
+            arg2: list of LocalFileUploadEntry'es that describe each file identified:
+                LocalFileUploadEntry(
+                    local_path = "/local/path/to/a/data/file/parsed/from/template",
+                    gs_key = "constructed/relative/to/clinical/trial/GCS/path",
+                    upload_placeholder = "random_uuid-for-artifact-upload"
+                )
 
     Process:
 
@@ -646,7 +640,7 @@ def _merge_artifact_wes(
 
 
 WesFileUrlParts = namedtuple("FileUrlParts", ["cimac_participant_id", \
-        "cimac_sample_id", "cimac_aliquot_id", "assay", "file_name", "uuid"]) 
+        "cimac_sample_id", "cimac_aliquot_id", "assay", "file_name"]) 
 
 def _split_wes_url(obj_url: str) -> WesFileUrlParts:
     
@@ -659,6 +653,7 @@ def _split_wes_url(obj_url: str) -> WesFileUrlParts:
 
 def merge_artifact(
     ct: dict,
+    artifact_uuid: str,
     assay_type: str,
     object_url: str,
     file_size_bytes: int,
@@ -709,7 +704,7 @@ def merge_artifact(
 
     # We're using uuids to find path in CT where corresponding artifact is located
     # As uuids are unique, this should be fine.
-    uuid_field_path = _get_path(ct, uuid)
+    uuid_field_path = _get_path(ct, artifact_uuid)
 
     # As "uuid_field_path" contains path to a field with uuid,
     # we're looking for an artifact that contains it, not the "string" field itself
@@ -720,7 +715,6 @@ def merge_artifact(
     ## TODO this might be better like this - with merger:
     # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")
     # artifact_parent[file_name] = Merger(artifact_schema).merge(existing_artifact, artifact)
-
     # TODO but for now like this
     existing_artifact.update(artifact)
 

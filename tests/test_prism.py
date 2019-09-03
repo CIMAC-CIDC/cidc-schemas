@@ -346,22 +346,22 @@ def test_filepath_gen_wes_only(schema_path, xlsx_path):
 
         # we should have 2 fastq per sample.
         # we should have 2 tot forward.
-        assert 2 == sum([1 for x in file_maps if "/fastq_1/" in x['gs_key']])
+        assert 2 == sum([1 for x in file_maps if "/fastq_1" in x.gs_key])
         # we should have 2 tot rev.
-        assert 2 == sum([1 for x in file_maps if "/fastq_2/" in x['gs_key']])
+        assert 2 == sum([1 for x in file_maps if "/fastq_2" in x.gs_key])
         # in total local
-        assert 4 == sum([1 for x in file_maps if x['local_path'].endswith(".fastq")])
+        assert 4 == sum([1 for x in file_maps if x.local_path.endswith(".fastq")])
 
         # we should have 2 text files
-        assert 2 == sum([1 for x in file_maps if "/read_group_mapping_file/" in x['gs_key']])
-        assert 2 == sum([1 for x in file_maps if x['local_path'].endswith(".txt")])
+        assert 2 == sum([1 for x in file_maps if "/read_group_mapping_file" in x.gs_key])
+        assert 2 == sum([1 for x in file_maps if x.local_path.endswith(".txt")])
 
         # 2 participants
-        assert 2 == len(set([x['gs_key'].split("/")[0] for x in file_maps]))
+        assert 2 == len(set([x.gs_key.split("/")[0] for x in file_maps]))
         # 2 samples
-        assert 2 == len(set([x['gs_key'].split("/")[1] for x in file_maps]))
+        assert 2 == len(set([x.gs_key.split("/")[1] for x in file_maps]))
         # 2 aliquots
-        assert 2 == len(set([x['gs_key'].split("/")[2] for x in file_maps]))
+        assert 2 == len(set([x.gs_key.split("/")[2] for x in file_maps]))
 
 
 
@@ -406,11 +406,15 @@ def test_merge_artifact_wes_only():
     searched_urls = []
     for i, url in enumerate(WES_TEMPLATE_EXAMPLE_GS_URLS):
 
+        artifact_uuid = url.split("/")[-1]
+        url_without_uuid = url[:-1*(1+len(artifact_uuid))]
+
         # attempt to merge
         ct, _ = merge_artifact(
                 ct,
-                object_url=url,
+                artifact_uuid,
                 assay_type="wes",
+                object_url=url_without_uuid,
                 file_size_bytes=i,
                 uploaded_timestamp="01/01/2001",
                 md5_hash=f"hash_{i}"
@@ -420,7 +424,7 @@ def test_merge_artifact_wes_only():
         validator.validate(ct)
 
         # search for this url and all previous (no clobber)
-        searched_urls.append(url)
+        searched_urls.append(url_without_uuid)
 
     for url in searched_urls:
         assert len((ct | grep(url))['matched_values']) > 0
@@ -526,7 +530,7 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
         assert len(prism_patch['assays'][hint]['records']) == 2
 
     for f in file_maps:
-        assert f'{hint}/' in f['gs_key'], f"No {hint} hint found"
+        assert f'{hint}/' in f.gs_key, f"No {hint} hint found"
 
     # assert we still have a good clinical trial object, so we can save it
     # but we need to merge it, because "prismify" provides only a patch
@@ -536,13 +540,14 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
     patch_copy_4_artifacts = copy.deepcopy(prism_patch)
 
     #now we simulate that upload was successful 
-    searched_urls = []
+    merged_gs_keys = []
     for i, fmap_entry in enumerate(file_maps):
 
         # attempt to merge
         patch_copy_4_artifacts, _ = merge_artifact(
                 patch_copy_4_artifacts,
-                object_url=fmap_entry['gs_key'],
+                artifact_uuid=fmap_entry.upload_placeholder,
+                object_url=fmap_entry.gs_key,
                 assay_type=hint,
                 file_size_bytes=i,
                 uploaded_timestamp="01/01/2001",
@@ -554,20 +559,19 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
 
         # we will than search for this url in the resulting ct, 
         # to check all artifacts were indeed merged
-        searched_urls.append(fmap_entry['gs_key'])
+        merged_gs_keys.append(fmap_entry.gs_key)
 
     # `merge_artifact` modifies ct in-place, so 
     full_ct = merge_clinical_trial_metadata(patch_copy_4_artifacts, WES_TEMPLATE_EXAMPLE_CT)
 
     if hint == 'wes':
-        assert len(searched_urls) == 3*2 # 3 files per entry in xlsx
+        assert len(merged_gs_keys) == 3*2 # 3 files per entry in xlsx
 
-        stripped_uuid_urls = [u[:-len("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")] for u in searched_urls]
-        stripped_uuid_WES = [u[:-len("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")] for u in WES_TEMPLATE_EXAMPLE_GS_URLS]
-        assert stripped_uuid_urls == stripped_uuid_WES
+        stripped_uuid_WES = [u[:-len("/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")] for u in WES_TEMPLATE_EXAMPLE_GS_URLS]
+        assert merged_gs_keys == stripped_uuid_WES
 
-    for url in searched_urls:
-        assert len((full_ct | grep(url))['matched_values']) == 1 # each gs_url only once  
+    for file_map_entry in file_maps:
+        assert len((full_ct | grep(fmap_entry.gs_key))['matched_values']) == 1 # each gs_url only once
 
     # olink is special - it's not an array
     if hint == "olink":
@@ -583,7 +587,7 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
         assert len(dd['dictionary_item_added']) == 6*6, "Unexpected CT changes"
 
         # in the process upload_placeholder gets removed per artifact = 6
-        assert len(dd['dictionary_item_removed']) == len(searched_urls), "Unexpected CT changes"
+        assert len(dd['dictionary_item_removed']) == len(merged_gs_keys), "Unexpected CT changes"
 
         # nothing else in diff
         assert list(dd.keys()) == ['dictionary_item_added', 'dictionary_item_removed'], "Unexpected CT changes"

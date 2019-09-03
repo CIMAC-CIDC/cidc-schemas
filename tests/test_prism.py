@@ -13,7 +13,8 @@ from pprint import pprint
 from jsonmerge import Merger
 
 from cidc_schemas.prism import prismify, merge_artifact, \
-    merge_clinical_trial_metadata, InvalidMergeTargetException
+    merge_clinical_trial_metadata, InvalidMergeTargetException, \
+    SUPPORTED_ASSAYS
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
@@ -296,14 +297,17 @@ def test_prism(schema_path, xlsx_path):
     # extract hint.
     hint = schema_path.split("/")[-1].replace("_template.json", "")
 
-    # TODO: only implemented WES parsing...
-    if hint != "wes":
+    # TODO: every other assay
+    if hint not in SUPPORTED_ASSAYS:
         return
 
     # turn into object.
     ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
 
-    assert len(ct['assays'][hint]) == 1
+    # olink is different - is will never have array of assay "runs" - only one
+    if hint != 'olink':
+        assert len(ct['assays'][hint]) == 1        
+
     
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -316,17 +320,19 @@ def test_prism(schema_path, xlsx_path):
 
     if hint == 'wes':
         assert merged["lead_organization_study_id"] == "10021"
+    elif hint == 'olink':
+        assert merged["lead_organization_study_id"] == "test_prism_trial_id"
     else:
         assert MINIMAL_CT_1PA1SA1AL["lead_organization_study_id"] == merged["lead_organization_study_id"]
 
 
 @pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
-def test_filepath_gen_wes_only(schema_path, xlsx_path):
+def test_filepath_gen(schema_path, xlsx_path):
     # extract hint.
     hint = schema_path.split("/")[-1].replace("_template.json", "")
 
-    # TODO: only implemented WES parsing...
-    if hint != "wes":
+    # TODO: every other assay
+    if hint not in SUPPORTED_ASSAYS:
         return
 
     # create validators
@@ -338,11 +344,15 @@ def test_filepath_gen_wes_only(schema_path, xlsx_path):
     # we ignore and do not validate 'ct' 
     # because it's only a ct patch not a full ct 
 
-    # assert we have the right counts.
-    if hint == "wes":
+    local_to_gcs_mapping = {}
+    for fmap_entry in file_maps:
+        local_to_gcs_mapping[fmap_entry.gs_key] = fmap_entry
 
-        # check the number of files present.
-        assert len(file_maps) == 6
+    assert len(local_to_gcs_mapping) == len(file_maps), "gcs_key/url collision"
+    
+
+    # assert we have the right file counts etc.
+    if hint == "wes":
 
         # we should have 2 fastq per sample.
         # we should have 2 tot forward.
@@ -356,12 +366,37 @@ def test_filepath_gen_wes_only(schema_path, xlsx_path):
         assert 2 == sum([1 for x in file_maps if "/read_group_mapping_file" in x.gs_key])
         assert 2 == sum([1 for x in file_maps if x.local_path.endswith(".txt")])
 
+        # 4 in total
+        assert len(file_maps) == 6
+
+        # all that with
         # 2 participants
         assert 2 == len(set([x.gs_key.split("/")[0] for x in file_maps]))
         # 2 samples
         assert 2 == len(set([x.gs_key.split("/")[1] for x in file_maps]))
         # 2 aliquots
         assert 2 == len(set([x.gs_key.split("/")[2] for x in file_maps]))
+
+    elif hint == 'olink':
+
+        # we should have 2 npx files
+        assert 2 == sum([1 for x in file_maps if "assay_npx" in x.gs_key])
+
+        # we should have 2 raw_ct files
+        assert 2 == sum([1 for x in file_maps if "assay_raw_ct" in x.gs_key])
+
+        # 4 assay level in tots
+        assert 4 == sum([1 for x in file_maps if x.local_path.startswith("Olink_assay")])
+
+        # we should have 1 study level npx
+        assert 1 == sum([1 for x in file_maps if "study_npx" in x.gs_key])
+
+        # check the number of files - 1 study + 2*(npx + ct raw)
+        assert len(file_maps) == 5
+
+    else:
+        assert False, f"add {hint} assay specific asserts"
+
 
 
 
@@ -514,7 +549,7 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
     hint = schema_path.split("/")[-1].replace("_template.json", "")
 
     # TODO: implement other assays
-    if hint not in ["wes", "olink"]:
+    if hint not in SUPPORTED_ASSAYS:
         return 
 
     # create validators
@@ -523,6 +558,8 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
     # parse the spreadsheet and get the file maps
     prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
 
+
+    # olink is different in structure - no array of assays, only one.
     if hint != 'olink':
         assert len(prism_patch['assays'][hint]) == 1
         assert len(prism_patch['assays'][hint][0]['records']) == 2
@@ -532,9 +569,16 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
     for f in file_maps:
         assert f'{hint}/' in f.gs_key, f"No {hint} hint found"
 
-    # assert we still have a good clinical trial object, so we can save it
-    # but we need to merge it, because "prismify" provides only a patch
-    full_after_prism = merge_clinical_trial_metadata(prism_patch, WES_TEMPLATE_EXAMPLE_CT)
+    original_ct = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT) 
+    # And we need set lead_organization_study_id to be the same for testing
+    if hint == "olink":
+        original_ct['lead_organization_study_id'] = 'test_prism_trial_id'
+
+
+    # "prismify" provides only a patch so we need to merge it into a "full" ct
+    full_after_prism = merge_clinical_trial_metadata(prism_patch, original_ct)
+
+    # Assert we still have a good clinical trial object, so we can save it.
     validator.validate(full_after_prism)
 
     patch_copy_4_artifacts = copy.deepcopy(prism_patch)
@@ -555,14 +599,14 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
             )
 
         # assert we still have a good clinical trial object, so we can save it
-        validator.validate(merge_clinical_trial_metadata(patch_copy_4_artifacts, WES_TEMPLATE_EXAMPLE_CT))
+        validator.validate(merge_clinical_trial_metadata(patch_copy_4_artifacts, original_ct))
 
         # we will than search for this url in the resulting ct, 
         # to check all artifacts were indeed merged
         merged_gs_keys.append(fmap_entry.gs_key)
 
     # `merge_artifact` modifies ct in-place, so 
-    full_ct = merge_clinical_trial_metadata(patch_copy_4_artifacts, WES_TEMPLATE_EXAMPLE_CT)
+    full_ct = merge_clinical_trial_metadata(patch_copy_4_artifacts, original_ct)
 
     if hint == 'wes':
         assert len(merged_gs_keys) == 3*2 # 3 files per entry in xlsx
@@ -570,15 +614,25 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
         stripped_uuid_WES = [u[:-len("/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")] for u in WES_TEMPLATE_EXAMPLE_GS_URLS]
         assert merged_gs_keys == stripped_uuid_WES
 
+    elif hint == 'olink':
+        assert len(merged_gs_keys) == 5 # 2 files per entry in xlsx + 1 file in preamble
+
+    else:
+        assert False, f"add {hint} assay specific asserts"
+
     for file_map_entry in file_maps:
         assert len((full_ct | grep(fmap_entry.gs_key))['matched_values']) == 1 # each gs_url only once
 
     # olink is special - it's not an array
     if hint == "olink":
         assert len(full_ct['assays'][hint]['records']) == 2, "More records than expected"
-    else:
+    elif hint == 'wes':
         assert len(full_ct['assays'][hint]) == 1+len(WES_TEMPLATE_EXAMPLE_CT['assays'][hint]), f"Multiple {hint}-assays created instead of merging into one"
         assert len(full_ct['assays'][hint][0]['records']) == 2, "More records than expected"
+
+    else:
+        assert False, f"add {hint} assay specific asserts"
+
 
     dd = DeepDiff(full_after_prism, full_ct)
 
@@ -599,4 +653,5 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
         assert len(dd['dictionary_item_added']) == 6*(2*2+1), "Unexpected CT changes"
 
     else:
-        assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
+        assert False, f"add {hint} assay specific asserts"
+

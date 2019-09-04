@@ -109,3 +109,4 @@ def generate_docs(out_directory: str = HTML_DIR):
 
 if __name__ == '__main__':
     generate_docs()
+

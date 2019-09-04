@@ -3,6 +3,7 @@
 """The underlying data representation of an assay or shipping manifest template."""
 
 import os
+import os.path
 import logging
 import uuid
 import json
@@ -21,10 +22,12 @@ def _get_template_path_map() -> dict:
     path_map = {}
     for template_type_dir in os.listdir(TEMPLATE_DIR):
         abs_type_dir = os.path.join(TEMPLATE_DIR, template_type_dir)
-        for template_file in os.listdir(abs_type_dir):
-            template_type = template_file.replace('_template.json', '')
-            template_schema_path = os.path.join(abs_type_dir, template_file)
-            path_map[template_type] = template_schema_path
+        if os.path.isdir(abs_type_dir):
+            for template_file in os.listdir(abs_type_dir):
+                template_type = template_file.replace('_template.json', '')
+                template_schema_path = os.path.join(abs_type_dir, template_file)
+                path_map[template_type] = template_schema_path
+
     return path_map
 
 

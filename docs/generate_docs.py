@@ -21,6 +21,8 @@ def load_schemas() -> dict:
     for root, _, paths in os.walk(SCHEMA_DIR):
         root_schemas = {}
         for path in paths:
+            if not path.endswith('.json'):
+                continue
             schema_path = os.path.join(root, path)
 
             full_json = load_and_validate_schema(

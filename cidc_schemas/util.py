@@ -2,7 +2,7 @@ import os
 import json
 import yaml
 import openpyxl
-from typing import Union, BinaryIO
+from typing import Union, BinaryIO, List
 
 
 def yaml_to_json(yaml_path: str) -> str:
@@ -39,10 +39,18 @@ def json_to_yaml(json_path: str) -> str:
     return yaml_path
 
 
-def parse_npx(xlsx_path: Union[str, BinaryIO]):
+def parse_npx(xlsx_path: Union[str, BinaryIO]) -> List[str]:
     """
-        Parses the given NPX file from OLINK
-        to extrat a list of aliquot IDs
+    Parses the given NPX file from OLINK
+    to extracts a list of aliquot IDs. If the file 
+    is not valid NPX but still xlsx the function will return an empty
+    list. The function will pass along any IO errors.
+
+    Args:
+        xlsx_path: path to NPX file on disk, or an opened NPX file
+
+    Returns:
+        arg1: a list of IDs found in this file
     """
 
     # load the file
@@ -54,15 +62,14 @@ def parse_npx(xlsx_path: Union[str, BinaryIO]):
 
         # simplify.
         worksheet = workbook[worksheet_name]
-        header_width = 0
         seen_onlinkid = False
         for i, row in enumerate(worksheet.iter_rows()):
 
-            # Convert to string and extract type annotation
+            # extract values from row
             vals = [col.value for col in row]
 
             # skip empty
-            if vals[0] is None:
+            if len(vals) == 0 or vals[0] is None:
                 continue
 
             # check if we are starting ids

@@ -1,8 +1,23 @@
 import os
+import pytest
 
 from cidc_schemas.util import parse_npx
 
 from .constants import TEST_DATA_DIR
+
+
+def test_parse_npx_invalid():
+
+    # test the parse function
+    npx_path = os.path.join(TEST_DATA_DIR, 'olink', 'pizza_assay_1_NPX.xlsx')
+    with pytest.raises(FileNotFoundError):
+        ids = parse_npx(npx_path)
+
+    # test parsing bad xlsx file.
+    bad_path = os.path.join(TEST_DATA_DIR, 'date_examples.xlsx')
+    ids = parse_npx(bad_path)
+
+    assert len(ids) == 0
 
 
 def test_parse_npx_single():

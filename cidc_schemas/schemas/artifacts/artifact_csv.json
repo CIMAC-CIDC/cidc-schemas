@@ -15,6 +15,9 @@
         },
         "header_row": {
           "type": "integer"
+        },
+        "data_format": {
+          "const": "CSV"
         }
       }
     }

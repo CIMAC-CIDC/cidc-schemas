@@ -596,7 +596,8 @@ def _merge_artifact_wes(
         "file_name": wes_object.file_name,
         "file_size_bytes": file_size_bytes,
         "md5_hash": md5_hash,
-        "uploaded_timestamp": uploaded_timestamp
+        "uploaded_timestamp": uploaded_timestamp,
+        "data_format": "[NOT SET]"
     }
 
     
@@ -624,15 +625,22 @@ def _merge_artifact_wes(
     assert record_obj['cimac_aliquot_id'] == wes_object.cimac_aliquot_id
     assert record_obj['cimac_sample_id'] == wes_object.cimac_sample_id
     assert record_obj['cimac_participant_id'] == wes_object.cimac_participant_id
-
+    
     # modify inplace
     record_obj['files'][wes_object.file_name] = artifact
+
+    validator: jsonschema.Draft7Validator = load_and_validate_schema('assays/components/ngs/wes_assay_record.json', return_validator=True)
+    try:
+        validator.validate(record_obj)
+    except jsonschema.exceptions.ValidationError as e:
+        # Since data_format is specified as a constant in the schema,
+        # the validator_value on this exception will be the desired data format.
+        artifact['data_format'] = e.validator_value
+
+
     # TODO consider using use merger with template['prism_preamble_object_schema']
     # instead of overwriting it in-place. It will keep 'upload_placeholder' etc.
     # That might be needed for complex artifacts, that use mergeStrategy.
-
-    ## we skip that because we didn't check `ct` on start
-    # validator.validate(ct)
 
     # as we didn't `copy.deepcopy(ct)` beforehand and modified in-place 
     # we just return it modified

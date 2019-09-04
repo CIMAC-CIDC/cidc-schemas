@@ -55,6 +55,24 @@
         "Pipeline Artifact",
         "Manifest File"
       ]
+    },
+    "data_format": {
+      "description": "Data Format.",
+      "type": "string",
+      "enum": [
+        "FASTA",
+        "FASTQ",
+        "IMAGE",
+        "VCF",
+        "CSV",
+        "XLSX",
+        "NPX",
+        "BAM",
+        "MAF",
+        "BINARY",
+        "TEXT",
+        "[NOT SET]"
+      ]
     }
   },
   "anyOf": [
@@ -65,13 +83,12 @@
         "uploaded_timestamp",
         "file_size_bytes",
         "md5_hash",
-        "artifact_category"
+        "artifact_category",
+        "data_format"
       ]
     },
     {
-      "required": [
-        "upload_placeholder"
-      ]
+      "required": ["upload_placeholder"]
     }
   ]
 }

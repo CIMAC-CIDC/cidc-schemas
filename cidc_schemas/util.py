@@ -1,10 +1,13 @@
 import os
 import json
 import yaml
+import openpyxl
+from typing import Union, BinaryIO
+
 
 def yaml_to_json(yaml_path: str) -> str:
     """
-        Given a path to a yaml file, write the equivalent json 
+        Given a path to a yaml file, write the equivalent json
         to a file of the same name and return the new filename.
     """
     filename, ext = yaml_path.rsplit('.', 1)
@@ -34,3 +37,45 @@ def json_to_yaml(json_path: str) -> str:
             yaml.safe_dump(dictionary, new_file)
 
     return yaml_path
+
+
+def parse_npx(xlsx_path: Union[str, BinaryIO]):
+    """
+        Parses the given NPX file from OLINK
+        to extrat a list of aliquot IDs
+    """
+
+    # load the file
+    workbook = openpyxl.load_workbook(xlsx_path)
+
+    # extract data to python
+    ids = []
+    for worksheet_name in workbook.sheetnames:
+
+        # simplify.
+        worksheet = workbook[worksheet_name]
+        header_width = 0
+        seen_onlinkid = False
+        for i, row in enumerate(worksheet.iter_rows()):
+
+            # Convert to string and extract type annotation
+            vals = [col.value for col in row]
+
+            # skip empty
+            if vals[0] is None:
+                continue
+
+            # check if we are starting ids
+            if vals[0] == 'OlinkID':
+                seen_onlinkid = True
+                continue
+
+            # check if we are done.
+            if vals[0] == 'LOD':
+                break
+
+            # get the identifier
+            if seen_onlinkid:
+                ids.append(vals[0])
+
+    return ids

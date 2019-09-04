@@ -33,7 +33,7 @@
         </p>
         <h1>CYTOF Run</h1>
         <p>
-            <b>Description:</b>  Base information about the aquisition and analysis CYTOF data
+            <b>Description:</b>  Base information about the acquisition and analysis CyTOF data
 
         </p>
         
@@ -180,7 +180,7 @@
         },
         {
             "$schema": "http://json-schema.org/draft-07/schema#",
-            "description": "Base information about the aquisition and analysis of a CYTOF data\n",
+            "description": "Base information about the acquisition and analysis of a CyTOF data\n",
             "id": "cytof_panel",
             "properties": {
                 "cytof_antibodies": {
@@ -224,7 +224,7 @@
                                 "title": "Antibody"
                             }
                         ],
-                        "description": "Data specific to antibody prepration on the CYTOF assay.",
+                        "description": "Data specific to antibody preparation on the CyTOF assay.",
                         "properties": {
                             "dilution": {
                                 "description": "Concentration ratio of dilution buffer for primary antibody.",
@@ -246,7 +246,7 @@
                         "required": [
                             "isotope"
                         ],
-                        "title": "CYTOF Conjugated Antibody"
+                        "title": "CyTOF Conjugated Antibody"
                     },
                     "type": "array"
                 },
@@ -259,10 +259,10 @@
                 "panel_name",
                 "cytof_antibodies"
             ],
-            "title": "CYTOF Panel"
+            "title": "CyTOF Panel"
         }
     ],
-    "description": "Base information about the aquisition and analysis CYTOF data\n",
+    "description": "Base information about the acquisition and analysis CyTOF data\n",
     "properties": {
         "records": {
             "items": {
@@ -306,8 +306,7 @@
                                     {
                                         "$id": "artifact_core",
                                         "$schema": "http://json-schema.org/draft-07/schema#",
-                                        "description": "Any file artifact associated with a clinical trial.",
-                                        "oneOf": [
+                                        "anyOf": [
                                             {
                                                 "required": [
                                                     "file_name",
@@ -324,6 +323,7 @@
                                                 ]
                                             }
                                         ],
+                                        "description": "Any file artifact associated with a clinical trial.",
                                         "properties": {
                                             "artifact_category": {
                                                 "description": "Artifact category.",
@@ -404,8 +404,7 @@
                                     {
                                         "$id": "artifact_core",
                                         "$schema": "http://json-schema.org/draft-07/schema#",
-                                        "description": "Any file artifact associated with a clinical trial.",
-                                        "oneOf": [
+                                        "anyOf": [
                                             {
                                                 "required": [
                                                     "file_name",
@@ -422,6 +421,7 @@
                                                 ]
                                             }
                                         ],
+                                        "description": "Any file artifact associated with a clinical trial.",
                                         "properties": {
                                             "artifact_category": {
                                                 "description": "Artifact category.",

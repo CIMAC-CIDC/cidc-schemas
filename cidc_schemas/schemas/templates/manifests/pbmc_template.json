@@ -54,9 +54,6 @@
         },
         "data_columns": {
           "Filled by Biorepository": {
-            "lead organization study id": {
-              "$ref": "clinical_trial.json#properties/lead_organization_study_id"
-            },
             "trial participant id": {
               "$ref": "participant.json#properties/trial_participant_id"
             },
@@ -99,12 +96,12 @@
             "pbmc aliquoted": {
               "$ref": "aliquot.json#properties/pbmc_aliquoted"
             },
-            "sample source": { "$ref": "sample.json#properties/sample_source" }
-          },
-          "Filled by CIMAC Lab": {
+            "sample source": { "$ref": "sample.json#properties/sample_source" },
             "cimac aliquot id": {
               "$ref": "aliquot.json#properties/cimac_aliquot_id"
-            },
+            }
+          },
+          "Filled by CIMAC Lab": {
             "pbmc recovered": {
               "$ref": "aliquot.json#properties/pbmc_recovered"
             },

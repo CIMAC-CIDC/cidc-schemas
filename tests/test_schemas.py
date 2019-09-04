@@ -17,6 +17,7 @@ def schema_paths():
     """Get the path to every schema in the schemas directory"""
     schema_paths = []
     for root, _, files in os.walk(SCHEMA_DIR):
+        files = [f for f in files if not f[0] == '.']
         for f in files:
             schema_paths.append(os.path.join(root, f))
 

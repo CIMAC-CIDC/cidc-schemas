@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Germline variant output sample files</h1>
+        <h1>Olink assay record</h1>
         <p>
-            <b>Description:</b>  Germline variant output sample files
+            <b>Description:</b>  A single data record from Olink assay
         </p>
         
     </div>
@@ -61,8 +61,8 @@
                 <tr>
     <td>
         
-            <span id="SNP92_recode">
-                SNP92_recode
+            <span id="npx_manager_version">
+                npx_manager_version
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -71,17 +71,56 @@
     </td>
     <td width=55%>
         
-            Information about a VCF file
+            Version of NPX manager used for the analysis
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_vcf.html">artifacts.artifact_vcf</a>
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
         
     </td>
 </tr>
             
         
+            
+                <tr>
+    <td>
+        
+            <span id="study_npx">
+                study_npx
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a xlsx file
+                <div><small>Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale.</small></div>
+            
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_xlsx.html">artifacts.artifact_xlsx</a>
+        
+    </td>
+</tr>
+            
+        
+        
+            
         
             
         
@@ -91,14 +130,19 @@
   </div>
 
   <div class="container">
-    <h3>germline.full.json</h3>
+    <h3>olink_combined.full.json</h3>
   	<pre><code>{
-    "$id": "germline",
+    "$id": "Olink_assay_record",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "description": "Germline variant output sample files",
+    "description": "A single data record from Olink assay",
     "properties": {
-        "SNP92_recode": {
-            "$id": "vcf_artifact",
+        "npx_manager_version": {
+            "description": "Version of NPX manager used for the analysis",
+            "type": "string"
+        },
+        "study_npx": {
+            "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.",
+            "$id": "xlsx_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -191,15 +235,17 @@
                     }
                 }
             ],
-            "description": "Information about a VCF file",
-            "title": "VCF Artifact",
+            "description": "Information about a xlsx file",
+            "mergeStrategy": "objectMerge",
+            "title": "Excel Artifact",
             "type": "object"
         }
     },
     "required": [
-        "SNP92_recode"
+        "npx_manager_version",
+        "study_npx"
     ],
-    "title": "Germline variant output sample files",
+    "title": "Olink assay record",
     "type": "object"
 }</code></pre>
   </container>

@@ -71,7 +71,7 @@
     </td>
     <td width=55%>
         
-            
+            Information about images include height and width
                 <div><small>Image produced from the combination of multiple imaging experiment data images.</small></div>
             
         
@@ -98,7 +98,7 @@
     </td>
     <td width=55%>
         
-            
+            Information about images include height and width
                 <div><small>Imaging data resulting from the individual components of the imaging experiment.</small></div>
             
         
@@ -136,8 +136,7 @@
                 {
                     "$id": "artifact_core",
                     "$schema": "http://json-schema.org/draft-07/schema#",
-                    "description": "Any file artifact associated with a clinical trial.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "required": [
                                 "file_name",
@@ -154,6 +153,7 @@
                             ]
                         }
                     ],
+                    "description": "Any file artifact associated with a clinical trial.",
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -246,8 +246,7 @@
                 {
                     "$id": "artifact_core",
                     "$schema": "http://json-schema.org/draft-07/schema#",
-                    "description": "Any file artifact associated with a clinical trial.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "required": [
                                 "file_name",
@@ -264,6 +263,7 @@
                             ]
                         }
                     ],
+                    "description": "Any file artifact associated with a clinical trial.",
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",

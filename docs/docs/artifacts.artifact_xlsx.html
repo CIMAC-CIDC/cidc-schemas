@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Binary Artifact</h1>
+        <h1>Excel Artifact</h1>
         <p>
-            <b>Description:</b>  Information about binary files.
+            <b>Description:</b>  Information about a xlsx file
         </p>
         
     </div>
@@ -129,9 +129,9 @@
   </div>
 
   <div class="container">
-    <h3>artifact_binary.full.json</h3>
+    <h3>artifact_xlsx.full.json</h3>
   	<pre><code>{
-    "$id": "binary_artifact",
+    "$id": "xlsx_artifact",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "allOf": [
         {
@@ -224,8 +224,9 @@
             }
         }
     ],
-    "description": "Information about binary files.",
-    "title": "Binary Artifact",
+    "description": "Information about a xlsx file",
+    "mergeStrategy": "objectMerge",
+    "title": "Excel Artifact",
     "type": "object"
 }</code></pre>
   </container>

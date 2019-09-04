@@ -9,6 +9,10 @@
       "type": "array",
       "items": {
         "$ref": "assays/components/olink/olink_entry.json"
+      }, 
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "/chip_barcode"
       }
     },
     "panel": {

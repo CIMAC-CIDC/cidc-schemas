@@ -26,7 +26,7 @@ from .test_assays import ARTIFACT_OBJ
 
 
 WES_TEMPLATE_EXAMPLE_CT = {
-        "lead_organization_study_id": "10021",
+        "lead_organization_study_id": "test_prism_trial_id",
         "participants": [
             {
                 "samples": [
@@ -304,9 +304,10 @@ def test_prism(schema_path, xlsx_path):
     # turn into object.
     ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
 
-    # olink is different - is will never have array of assay "runs" - only one
-    if hint != 'olink':
-        assert len(ct['assays'][hint]) == 1        
+    if hint in HINTS_ASSAYS:
+        # olink is different - is will never have array of assay "runs" - only one
+        if hint != 'olink':
+            assert len(ct['assays'][hint]) == 1        
 
     
     # we merge it with a preexisting one
@@ -318,9 +319,7 @@ def test_prism(schema_path, xlsx_path):
     # assert works
     validator.validate(merged)
 
-    if hint == 'wes':
-        assert merged["lead_organization_study_id"] == "10021"
-    elif hint == 'olink':
+    if hint in SUPPORTED_ASSAYS :
         assert merged["lead_organization_study_id"] == "test_prism_trial_id"
     else:
         assert MINIMAL_CT_1PA1SA1AL["lead_organization_study_id"] == merged["lead_organization_study_id"]
@@ -393,6 +392,10 @@ def test_filepath_gen(schema_path, xlsx_path):
 
         # check the number of files - 1 study + 2*(npx + ct raw)
         assert len(file_maps) == 5
+
+    elif hint in HINTS_MANIFESTS:
+
+        assert len(file_maps) == 0
 
     else:
         assert False, f"add {hint} assay specific asserts"
@@ -543,6 +546,9 @@ def test_merge_ct_meta():
     assert sum(len(p['samples']) for p in ct_merge['participants']) == 2+sum(len(p['samples']) for p in WES_TEMPLATE_EXAMPLE_CT['participants'])
 
 
+HINTS_ASSAYS = ["wes", "olink"]
+HINTS_MANIFESTS = ["pbmc"]
+
 @pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
 def test_end_to_end_wes_olink(schema_path, xlsx_path):
     # extract hint
@@ -556,15 +562,28 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     
     # parse the spreadsheet and get the file maps
-    prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
+    prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
+
+    if hint in HINTS_MANIFESTS:
+        assert len(prism_patch['shipments']) == 1
+
+        if hint == 'pbmc':
+            assert (prism_patch['shipments'][0]['request']) == "R123"
+
+            assert len(prism_patch['participants']) == 2
+            assert len(prism_patch['participants'][0]['samples']) == 1
+            assert len(prism_patch['participants'][1]['samples']) == 1
+            assert sum(len(p['samples'][0]["aliquots"]) for p in prism_patch['participants']) == 6
 
 
-    # olink is different in structure - no array of assays, only one.
-    if hint != 'olink':
-        assert len(prism_patch['assays'][hint]) == 1
-        assert len(prism_patch['assays'][hint][0]['records']) == 2
-    else:
-        assert len(prism_patch['assays'][hint]['records']) == 2
+    if hint in HINTS_ASSAYS:
+        # olink is different in structure - no array of assays, only one.
+        if hint == 'olink':
+            prism_patch_assay_records=prism_patch['assays'][hint]['records']
+            assert len(prism_patch['assays'][hint]['records']) == 2
+        else:
+            assert len(prism_patch['assays'][hint]) == 1
+            assert len(prism_patch['assays'][hint][0]['records']) == 2
 
     for f in file_maps:
         assert f'{hint}/' in f.gs_key, f"No {hint} hint found"
@@ -617,6 +636,9 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
     elif hint == 'olink':
         assert len(merged_gs_keys) == 5 # 2 files per entry in xlsx + 1 file in preamble
 
+    elif hint == 'pbmc':
+        assert len(merged_gs_keys) == 0
+
     else:
         assert False, f"add {hint} assay specific asserts"
 
@@ -626,9 +648,13 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
     # olink is special - it's not an array
     if hint == "olink":
         assert len(full_ct['assays'][hint]['records']) == 2, "More records than expected"
+
     elif hint == 'wes':
         assert len(full_ct['assays'][hint]) == 1+len(WES_TEMPLATE_EXAMPLE_CT['assays'][hint]), f"Multiple {hint}-assays created instead of merging into one"
         assert len(full_ct['assays'][hint][0]['records']) == 2, "More records than expected"
+
+    elif hint == 'pbmc':
+        assert full_ct["assays"] == original_ct["assays"]
 
     else:
         assert False, f"add {hint} assay specific asserts"
@@ -651,6 +677,10 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
 
         # 6 artifact atributes * 5 files (2 per record + 1 study)
         assert len(dd['dictionary_item_added']) == 6*(2*2+1), "Unexpected CT changes"
+
+    elif hint == "pbmc":
+        
+        assert len(dd) == 0, "Unexpected CT changes"
 
     else:
         assert False, f"add {hint} assay specific asserts"

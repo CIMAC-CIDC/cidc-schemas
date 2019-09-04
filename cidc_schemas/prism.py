@@ -3,7 +3,7 @@ import json
 import os
 import copy
 import uuid
-from typing import Union
+from typing import Union, BinaryIO
 import jsonschema
 from deepdiff import grep
 import datetime
@@ -302,7 +302,7 @@ def _process_property(
     
 
 SUPPORTED_ASSAYS = ["wes", "olink"]
-def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = False) -> (dict, dict):
+def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) -> (dict, dict):
     """
     Converts excel file to json object. It also identifies local files
     which need to uploaded to a google bucket and provides some logic
@@ -318,7 +318,7 @@ def prismify(xlsx_path: str, template_path: str, assay_hint: str, verb: bool = F
 
 
     Args:
-        xlsx_path: file on file system to excel file.
+        xlsx_path: file on file system to excel file or the open file itself
         template_path: path on file system relative to schema root of the
                         temaplate
 

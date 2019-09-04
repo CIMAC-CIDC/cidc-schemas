@@ -130,3 +130,21 @@ def test_csv():
     obj["header_row"] = 128
     obj["separator"] = ","
     at_validator.validate(obj)
+
+
+def test_npx():
+
+    # create validator assert schemas are valid.
+    at_validator = _fetch_validator("npx")
+
+    # create a dummy info
+    obj = BASE_OBJ.copy()
+
+    # should fail
+    with pytest.raises(jsonschema.ValidationError):
+        at_validator.validate(obj)
+
+    # add the required properties
+    obj["number_of_aliquots"] = 7
+    obj["aliquots"] = ["no", "referential", "integrity", "here"]
+    at_validator.validate(obj)

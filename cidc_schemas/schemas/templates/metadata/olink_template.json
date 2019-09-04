@@ -45,14 +45,20 @@
         },
         "data_columns": {
           "Olink Assay details": {
+            "chip barcode": {
+              "merge_pointer": "0/chip_barcode",
+              "type_ref": "assays/components/olink/olink_entry.json#properties/chip_barcode"
+            },
             "npx file": {
               "merge_pointer": "0/files/assay_npx",
               "is_artifact" : 1,
+              "gcs_prefix_format": "{chip_barcode}",
               "type_ref": "assays/components/local_file.json"
             },
             "raw ct file": {
               "merge_pointer": "0/files/assay_raw_ct",
               "is_artifact" : 1,
+              "gcs_prefix_format": "{chip_barcode}",
               "type_ref": "assays/components/local_file.json"
             },
             "run date": {
@@ -74,10 +80,6 @@
             "fludigm application build": {
               "merge_pointer": "0/fludigm_application_build",
               "type_ref": "assays/components/olink/olink_entry.json#properties/fludigm_application_build"
-            },
-            "chip barcode": {
-              "merge_pointer": "0/chip_barcode",
-              "type_ref": "assays/components/olink/olink_entry.json#properties/chip_barcode"
             },
             "probe type": {
               "merge_pointer": "0/probe_type",

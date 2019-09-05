@@ -568,98 +568,6 @@ def _get_source(ct: dict, key: str, skip_last=None) -> dict:
     return cur_obj
 
 
-def _merge_artifact_wes(
-    ct: dict,
-    artifact_uuid: str,
-    object_url: str,
-    file_size_bytes: int,
-    uploaded_timestamp: str,
-    md5_hash: str
-) -> (dict, dict):
-    """
-    create and merge an artifact into the WES assay metadata.
-    The artifacts currently supported are only the input
-    fastq files and read mapping group file.
-
-    Args:
-        ct: clinical_trial object to be searched
-        object_url: the gs url pointing to the object being added
-        file_size_bytes: integer specifying the numebr of bytes in the file
-        uploaded_timestamp: time stamp associated with this object
-        md5_hash: hash of the uploaded object, usually provided by
-                    object storage
-
-    """
-
-    # replace gs prfix if exists.
-    wes_object = _split_wes_url(object_url)
-
-    
-    # create the artifact
-    artifact = {
-        "artifact_category": "Assay Artifact from CIMAC",
-        "object_url": object_url,
-        "file_name": wes_object.file_name,
-        "file_size_bytes": file_size_bytes,
-        "md5_hash": md5_hash,
-        "uploaded_timestamp": uploaded_timestamp
-    }
-
-    
-    # We're using uuids to find path in CT where corresponding artifact is located
-    # As uuids are unique, this should be fine.
-    uuid_field_path = _get_path(ct, artifact_uuid)
-
-    # As "uuid_field_path" contains path to a field with uuid,
-    # we're looking for an artifact that contains it, not the "string" field itself
-    # That's why we need skip_last=1, to get 1 "level" higher 
-    # from 'uuid_field_path' field to it's parent - existing_artifact obj. 
-    existing_artifact = _get_source(ct, uuid_field_path, skip_last=1)
-
-    # As "uuid_field_path" contains path to a field with uuid within artifact,
-    # we're looking for a wes_assay_record. 
-    # That's why we need skip_last=3, to get 3 "levels" higher
-    # because the path is like wes_assay_record['files']['r1']['upload_placeholder'] 
-    # from 'cimac_aliquot_id' field to it's parent - record obj. 
-    record_obj = _get_source(ct, uuid_field_path, skip_last=3)
-
-    assert record_obj['cimac_aliquot_id'] == wes_object.cimac_aliquot_id
-    assert record_obj['cimac_sample_id'] == wes_object.cimac_sample_id
-    assert record_obj['cimac_participant_id'] == wes_object.cimac_participant_id
-
-    # modify inplace
-    ## TODO this might be better like this - with merger:
-    # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")
-    # artifact_parent[file_name] = Merger(artifact_schema).merge(existing_artifact, artifact)
-    # TODO but for now like this
-    existing_artifact.update(artifact)
-
-    _set_data_format(ct, existing_artifact)
-
-    # TODO consider using use merger with template['prism_preamble_object_schema']
-    # instead of overwriting it in-place. It will keep 'upload_placeholder' etc.
-    # That might be needed for complex artifacts, that use mergeStrategy.
-
-    # as we didn't `copy.deepcopy(ct)` beforehand and modified in-place 
-    # we just return it modified
-    return ct, existing_artifact
-
-
-WesFileUrlParts = namedtuple("FileUrlParts", [
-    "lead_organization_study_id", 
-    "cimac_participant_id",
-    "cimac_sample_id", 
-    "cimac_aliquot_id", 
-    "assay", 
-    "file_name"]) 
-
-def _split_wes_url(obj_url: str) -> WesFileUrlParts:
-    
-    # parse the url to get key identifiers
-    tokens = obj_url.split("/")
-    assert len(tokens) == len(WesFileUrlParts._fields), f"bad GCS url {obj_url}"
-
-    return WesFileUrlParts(*tokens)
 
 def _set_data_format(ct: dict, artifact: dict):
     """
@@ -706,21 +614,7 @@ def merge_artifact(
         md5_hash: hash of the uploaded object, usually provided by
                     object storage
 
-    """
-
-   
-    if assay_type == "wes":
-        return _merge_artifact_wes(
-            ct,
-            artifact_uuid,
-            object_url,
-            file_size_bytes,
-            uploaded_timestamp,
-            md5_hash
-        )
-
-    # general code for if not wes
-    
+    """ 
 
     # urls are created like this in _process_property:
     file_name, uuid = object_url.split("/")[-2:]

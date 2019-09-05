@@ -178,7 +178,7 @@
                         "cimac_sample_id":          "SA 1.1",
                         "cimac_aliquot_id":         "AL 1.1.1",
                         "files": {
-                            "fastq_1":{
+                            "r1":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
@@ -187,7 +187,7 @@
                                 "artifact_category" :   "Assay Artifact from CIMAC",
                                 "data_format":          "FASTQ"
                             },
-                            "fastq_2":{
+                            "r2":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
@@ -215,7 +215,7 @@
                         "cimac_sample_id":          "SA 1.2",
                         "cimac_aliquot_id":         "AL 1.2.1",
                         "files": {
-                            "fastq_1":{
+                            "r1":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
@@ -224,7 +224,7 @@
                                 "artifact_category" :   "Assay Artifact from CIMAC",
                                 "data_format" :           "FASTQ"
                             },
-                            "fastq_2":{
+                            "r2":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
@@ -261,7 +261,7 @@
                         "cimac_sample_id":          "SA 2.1",
                         "cimac_aliquot_id":         "AL 2.1.1",
                         "files": {
-                            "fastq_1":{
+                            "r1":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
@@ -270,7 +270,7 @@
                                 "artifact_category" :   "Assay Artifact from CIMAC",
                                 "data_format" :           "FASTQ"
                             },
-                            "fastq_2":{
+                            "r2":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
@@ -298,7 +298,7 @@
                         "cimac_sample_id":          "SA 2.2",
                         "cimac_aliquot_id":         "AL 2.2.1",
                         "files": {
-                            "fastq_1":{
+                            "r1":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
@@ -307,7 +307,7 @@
                                 "artifact_category" :   "Assay Artifact from CIMAC",
                                 "data_format" :           "FASTQ"
                             },
-                            "fastq_2":{
+                            "r2":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",

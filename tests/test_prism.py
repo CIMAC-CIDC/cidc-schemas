@@ -107,11 +107,11 @@ WES_TEMPLATE_EXAMPLE_CT = {
                             "cimac_sample_id": "wes example SA 1.1",
                             "cimac_aliquot_id": "wes example aliquot 1.1.1",
                             "files": {
-                                "fastq_1": {
-                                    "upload_placeholder": "fastq_1.1"
+                                "r1": {
+                                    "upload_placeholder": "r1.1"
                                 },
-                                "fastq_2": {
-                                    "upload_placeholder": "fastq_2.1"
+                                "r2": {
+                                    "upload_placeholder": "r2.1"
                                 },
                                 "read_group_mapping_file": {
                                     "upload_placeholder": "read_group_mapping_file.1"
@@ -130,11 +130,11 @@ WES_TEMPLATE_EXAMPLE_CT = {
                             "cimac_sample_id": "wes example SA 2.1",
                             "cimac_aliquot_id": "wes example aliquot 1.2.1",
                             "files": {
-                                "fastq_1": {
-                                    "upload_placeholder": "fastq_1.2"
+                                "r1": {
+                                    "upload_placeholder": "r1.2"
                                 },
-                                "fastq_2": {
-                                    "upload_placeholder": "fastq_2.2"
+                                "r2": {
+                                    "upload_placeholder": "r2.2"
                                 },
                                 "read_group_mapping_file": {
                                     "upload_placeholder": "read_group_mapping_file.2"
@@ -149,14 +149,20 @@ WES_TEMPLATE_EXAMPLE_CT = {
 
 
 # corresponding list of gs_urls.
-WES_TEMPLATE_EXAMPLE_GS_URLS = [
-    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/fastq_1/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx1',
-    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/fastq_2/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx2',
-    'wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/read_group_mapping_file/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx3',
-    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/fastq_1/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx4',
-    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/fastq_2/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx5',
-    'wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/read_group_mapping_file/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx6'
-]
+WES_TEMPLATE_EXAMPLE_GS_URLS = {
+    WES_TEMPLATE_EXAMPLE_CT["lead_organization_study_id"]+'/wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/r1.fastq': 
+    "r1.1",
+    WES_TEMPLATE_EXAMPLE_CT["lead_organization_study_id"]+'/wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/r2.fastq': 
+    "r2.1",
+    WES_TEMPLATE_EXAMPLE_CT["lead_organization_study_id"]+'/wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/rgm.txt': 
+    "read_group_mapping_file.1",
+    WES_TEMPLATE_EXAMPLE_CT["lead_organization_study_id"]+'/wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/r1.fastq': 
+    "r1.2",
+    WES_TEMPLATE_EXAMPLE_CT["lead_organization_study_id"]+'/wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/r2.fastq': 
+    "r2.2",
+    WES_TEMPLATE_EXAMPLE_CT["lead_organization_study_id"]+'/wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/rgm.txt': 
+    "read_group_mapping_file.2"
+}
 
 
 def test_merge_core():
@@ -356,43 +362,47 @@ def test_filepath_gen(schema_path, xlsx_path):
 
         # we should have 2 fastq per sample.
         # we should have 2 tot forward.
-        assert 2 == sum([1 for x in file_maps if "/fastq_1" in x.gs_key])
+        assert 2 == sum([x.gs_key.endswith("/r1.fastq") for x in file_maps])
         # we should have 2 tot rev.
-        assert 2 == sum([1 for x in file_maps if "/fastq_2" in x.gs_key])
+        assert 2 == sum([x.gs_key.endswith("/r2.fastq") for x in file_maps])
         # in total local
-        assert 4 == sum([1 for x in file_maps if x.local_path.endswith(".fastq")])
+        assert 4 == sum([x.local_path.endswith(".fastq") for x in file_maps])
 
         # we should have 2 text files
-        assert 2 == sum([1 for x in file_maps if "/read_group_mapping_file" in x.gs_key])
-        assert 2 == sum([1 for x in file_maps if x.local_path.endswith(".txt")])
+        assert 2 == sum([x.gs_key.endswith("/rgm.txt") for x in file_maps])
+        assert 2 == sum([x.local_path.endswith(".txt") for x in file_maps])
 
         # 4 in total
         assert len(file_maps) == 6
+        assert 6 == sum([x.gs_key.startswith(WES_TEMPLATE_EXAMPLE_CT["lead_organization_study_id"]) for x in file_maps])
 
         # all that with
+        # 1 trial id
+        assert 1 == len(set([x.gs_key.split("/")[0] for x in file_maps]))
         # 2 participants
-        assert 2 == len(set([x.gs_key.split("/")[0] for x in file_maps]))
-        # 2 samples
         assert 2 == len(set([x.gs_key.split("/")[1] for x in file_maps]))
-        # 2 aliquots
+        # 2 samples
         assert 2 == len(set([x.gs_key.split("/")[2] for x in file_maps]))
+        # 2 aliquots
+        assert 2 == len(set([x.gs_key.split("/")[3] for x in file_maps]))
 
     elif hint == 'olink':
 
         # we should have 2 npx files
-        assert 2 == sum([1 for x in file_maps if "assay_npx" in x.gs_key])
+        assert 2 == sum([x.gs_key.endswith("assay_npx.xlsx") for x in file_maps])
 
         # we should have 2 raw_ct files
-        assert 2 == sum([1 for x in file_maps if "assay_raw_ct" in x.gs_key])
+        assert 2 == sum([x.gs_key.endswith("assay_raw_ct.xlsx") for x in file_maps])
 
         # 4 assay level in tots
-        assert 4 == sum([1 for x in file_maps if x.local_path.startswith("Olink_assay")])
+        assert 4 == sum([x.local_path.startswith("Olink_assay") for x in file_maps])
 
         # we should have 1 study level npx
-        assert 1 == sum([1 for x in file_maps if "study_npx" in x.gs_key])
+        assert 1 == sum([x.gs_key.endswith("study_npx.xlsx") for x in file_maps])
 
         # check the number of files - 1 study + 2*(npx + ct raw)
         assert len(file_maps) == 5
+        assert 5 == sum([x.gs_key.startswith("test_prism_trial_id") for x in file_maps])
 
     else:
         assert False, f"add {hint} assay specific asserts"
@@ -439,20 +449,17 @@ def test_merge_artifact_wes_only():
 
     # loop over each url
     searched_urls = []
-    for i, url in enumerate(WES_TEMPLATE_EXAMPLE_GS_URLS):
-
-        artifact_uuid = url.split("/")[-1]
-        url_without_uuid = url[:-1*(1+len(artifact_uuid))]
+    for url, uuid in WES_TEMPLATE_EXAMPLE_GS_URLS.items():
 
         # attempt to merge
         ct, artifact = merge_artifact(
                 ct,
                 assay_type="wes",
-                artifact_uuid=artifact_uuid,
-                object_url=url_without_uuid,
-                file_size_bytes=i,
+                artifact_uuid=uuid,
+                object_url=url,
+                file_size_bytes=1,
                 uploaded_timestamp="01/01/2001",
-                md5_hash=f"hash_{i}"
+                md5_hash=f"hash_{uuid}"
             )
 
         # assert we still have a good clinical trial object.
@@ -462,7 +469,7 @@ def test_merge_artifact_wes_only():
         assert 'data_format' in artifact
 
         # search for this url and all previous (no clobber)
-        searched_urls.append(url_without_uuid)
+        searched_urls.append(url)
 
     for url in searched_urls:
         assert len((ct | grep(url))['matched_values']) > 0
@@ -475,9 +482,7 @@ def test_merge_artifact_wes_only():
     # we add 7 required fields per artifact thus `*7`
     assert len(dd['dictionary_item_added']) == len(WES_TEMPLATE_EXAMPLE_GS_URLS)*7, "Unexpected CT changes"
 
-    # in the process upload_placeholder gets removed per artifact
-    assert len(dd['dictionary_item_removed']) == len(WES_TEMPLATE_EXAMPLE_GS_URLS), "Unexpected CT changes"
-    assert list(dd.keys()) == ['dictionary_item_added', 'dictionary_item_removed'], "Unexpected CT changes"
+    assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
 
 def test_merge_ct_meta():
     """ 
@@ -618,8 +623,7 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
     if hint == 'wes':
         assert len(merged_gs_keys) == 3*2 # 3 files per entry in xlsx
 
-        stripped_uuid_WES = [u[:-len("/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")] for u in WES_TEMPLATE_EXAMPLE_GS_URLS]
-        assert merged_gs_keys == stripped_uuid_WES
+        assert set(merged_gs_keys) == set(WES_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
     elif hint == 'olink':
         assert len(merged_gs_keys) == 5 # 2 files per entry in xlsx + 1 file in preamble
@@ -647,11 +651,8 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
         # 6 files * 7 artifact atributes
         assert len(dd['dictionary_item_added']) == 6*7, "Unexpected CT changes"
 
-        # in the process upload_placeholder gets removed per artifact = 6
-        assert len(dd['dictionary_item_removed']) == len(merged_gs_keys), "Unexpected CT changes"
-
         # nothing else in diff
-        assert list(dd.keys()) == ['dictionary_item_added', 'dictionary_item_removed'], "Unexpected CT changes"
+        assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
 
     elif hint == "olink":
         assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"

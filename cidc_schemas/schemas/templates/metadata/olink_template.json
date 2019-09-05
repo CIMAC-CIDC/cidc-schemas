@@ -36,6 +36,7 @@
           "combined file": {
             "merge_pointer": "0/study/study_npx",
             "is_artifact" : 1,
+            "gcs_uri_format": "{lead organization study id}/olink/study_npx.xlsx",
             "type_ref": "assays/components/local_file.json"
           },
           "combined file npx manager version": {
@@ -52,13 +53,13 @@
             "npx file": {
               "merge_pointer": "0/files/assay_npx",
               "is_artifact" : 1,
-              "gcs_prefix_format": "{chip_barcode}",
+              "gcs_uri_format": "{lead organization study id}/olink/chip_{chip barcode}/assay_npx.xlsx",
               "type_ref": "assays/components/local_file.json"
             },
             "raw ct file": {
               "merge_pointer": "0/files/assay_raw_ct",
               "is_artifact" : 1,
-              "gcs_prefix_format": "{chip_barcode}",
+              "gcs_uri_format": "{lead organization study id}/olink/chip_{chip barcode}/assay_raw_ct.xlsx",
               "type_ref": "assays/components/local_file.json"
             },
             "run date": {

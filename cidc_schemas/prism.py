@@ -627,12 +627,12 @@ def _merge_artifact_wes(
 
     # modify inplace
     record_obj['files'][wes_object.file_name] = artifact
+
+    _set_data_format(ct, artifact)
+
     # TODO consider using use merger with template['prism_preamble_object_schema']
     # instead of overwriting it in-place. It will keep 'upload_placeholder' etc.
     # That might be needed for complex artifacts, that use mergeStrategy.
-
-    ## we skip that because we didn't check `ct` on start
-    # validator.validate(ct)
 
     # as we didn't `copy.deepcopy(ct)` beforehand and modified in-place 
     # we just return it modified
@@ -650,6 +650,28 @@ def _split_wes_url(obj_url: str) -> WesFileUrlParts:
 
     return WesFileUrlParts(*tokens)
 
+def _set_data_format(ct: dict, artifact: dict):
+    """
+    Discover the correct data format for the given artifact.
+
+    Args:
+        ct: a clinical trial object with artifact inserted
+        artifact: a reference to the artifact object inserted in `ct`.
+
+        NOTE: in-place updates to artifact must trigger in-place updates to `ct`.
+    """
+    # This is invalid for all artifact types, and will
+    # deliberately trigger a validation error below.
+    artifact['data_format'] = '[NOT SET]'
+
+    validator: jsonschema.Draft7Validator = load_and_validate_schema(
+        'clinical_trial.json', return_validator=True)
+    try:
+        validator.validate(ct)
+    except jsonschema.exceptions.ValidationError as e:
+        # Since data_format is specified as a constant in the schema,
+        # the validator_value on this exception will be the desired data format.
+        artifact['data_format'] = e.validator_value
 
 def merge_artifact(
     ct: dict,
@@ -717,6 +739,8 @@ def merge_artifact(
     # artifact_parent[file_name] = Merger(artifact_schema).merge(existing_artifact, artifact)
     # TODO but for now like this
     existing_artifact.update(artifact)
+
+    _set_data_format(ct, existing_artifact)
 
     # return new object and the artifact that was merged
     return ct, artifact

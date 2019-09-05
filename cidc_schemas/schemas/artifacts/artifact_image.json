@@ -18,6 +18,9 @@
         },
         "channels": {
           "type": "integer"
+        },
+        "data_format": {
+          "const": "IMAGE"
         }
       }
     }

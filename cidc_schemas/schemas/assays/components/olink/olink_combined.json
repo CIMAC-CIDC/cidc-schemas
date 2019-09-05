@@ -11,7 +11,7 @@
     },
     "study_npx": {
       "$comment": "Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale.",
-      "$ref": "artifacts/artifact_xlsx.json"
+      "$ref": "artifacts/artifact_npx.json"
     }
   },
   "required": [

@@ -469,8 +469,8 @@ def test_merge_artifact_wes_only():
 
     dd = DeepDiff(WES_TEMPLATE_EXAMPLE_CT,ct)
 
-    # we add 6 required fields per artifact thus `*6`
-    assert len(dd['dictionary_item_added']) == len(WES_TEMPLATE_EXAMPLE_GS_URLS)*6, "Unexpected CT changes"
+    # we add 7 required fields per artifact thus `*7`
+    assert len(dd['dictionary_item_added']) == len(WES_TEMPLATE_EXAMPLE_GS_URLS)*7, "Unexpected CT changes"
 
     # in the process upload_placeholder gets removed per artifact
     assert len(dd['dictionary_item_removed']) == len(WES_TEMPLATE_EXAMPLE_GS_URLS), "Unexpected CT changes"
@@ -556,8 +556,7 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     
     # parse the spreadsheet and get the file maps
-    prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
-
+    prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
 
     # olink is different in structure - no array of assays, only one.
     if hint != 'olink':
@@ -608,6 +607,9 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
     # `merge_artifact` modifies ct in-place, so 
     full_ct = merge_clinical_trial_metadata(patch_copy_4_artifacts, original_ct)
 
+    # validate the full clinical trial object
+    validator.validate(full_ct)
+
     if hint == 'wes':
         assert len(merged_gs_keys) == 3*2 # 3 files per entry in xlsx
 
@@ -637,8 +639,8 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
     dd = DeepDiff(full_after_prism, full_ct)
 
     if hint=='wes':
-        # 6 files * 6 artifact atributes
-        assert len(dd['dictionary_item_added']) == 6*6, "Unexpected CT changes"
+        # 6 files * 7 artifact atributes
+        assert len(dd['dictionary_item_added']) == 6*7, "Unexpected CT changes"
 
         # in the process upload_placeholder gets removed per artifact = 6
         assert len(dd['dictionary_item_removed']) == len(merged_gs_keys), "Unexpected CT changes"
@@ -649,8 +651,8 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
     elif hint == "olink":
         assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
 
-        # 6 artifact atributes * 5 files (2 per record + 1 study)
-        assert len(dd['dictionary_item_added']) == 6*(2*2+1), "Unexpected CT changes"
+        # 7 artifact atributes * 5 files (2 per record + 1 study)
+        assert len(dd['dictionary_item_added']) == 7*(2*2+1), "Unexpected CT changes"
 
     else:
         assert False, f"add {hint} assay specific asserts"

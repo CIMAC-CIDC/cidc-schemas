@@ -40,11 +40,7 @@ setup(
     packages=find_packages(include=['cidc_schemas']),
     test_suite='tests',
     url='https://github.com/CIMAC-CIDC/schemas',
-<<<<<<< HEAD
     version='0.4.3',
-=======
-    version='0.4.2',
->>>>>>> b56dd84cce8cdf984019133b27e5dc7f624ed25a
     zip_safe=False,
     entry_points={
         'console_scripts': ['cidc_schemas=cidc_schemas.cli:main']

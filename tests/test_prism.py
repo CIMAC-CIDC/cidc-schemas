@@ -479,8 +479,6 @@ def test_merge_artifact_wes_only():
     assert len(dd['dictionary_item_removed']) == len(WES_TEMPLATE_EXAMPLE_GS_URLS), "Unexpected CT changes"
     assert list(dd.keys()) == ['dictionary_item_added', 'dictionary_item_removed'], "Unexpected CT changes"
 
-    validator.validate(ct)
-
 def test_merge_ct_meta():
     """ 
     tests merging of two clinical trial metadata

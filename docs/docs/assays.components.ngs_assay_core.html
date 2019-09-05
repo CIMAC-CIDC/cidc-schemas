@@ -116,7 +116,7 @@
     </td>
     <td width=55%>
         
-            Vendor for the library construction kit, e.g. KAPA
+            Vendor for the library construction kit, e.g. KAPA.
                 <div><small>This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.</small></div>
             
         
@@ -155,7 +155,7 @@
     </td>
     <td width=55%>
         
-            Indicate if the sequencing was performed paired or single ended
+            Indicates if the sequencing was performed paired or single ended.
         
     </td>
     <td>
@@ -194,7 +194,7 @@
     </td>
     <td width=55%>
         
-            Number of cycles for each sequencing read
+            Number of cycles for each sequencing read.
         
     </td>
     <td>
@@ -238,14 +238,14 @@
     "properties": {
         "library_vendor_kit": {
             "$comment": "This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.",
-            "description": "Vendor for the library construction kit, e.g. KAPA",
+            "description": "Vendor for the library construction kit, e.g. KAPA.",
             "enum": [
                 "KAPA - Hyper Prep"
             ],
             "type": "string"
         },
         "paired_end_reads": {
-            "description": "Indicate if the sequencing was performed paired or single ended",
+            "description": "Indicates if the sequencing was performed paired or single ended.",
             "enum": [
                 "Paired",
                 "Single"
@@ -253,7 +253,7 @@
             "type": "string"
         },
         "read_length": {
-            "description": "Number of cycles for each sequencing read",
+            "description": "Number of cycles for each sequencing read.",
             "exclusiveMinimum": 0,
             "maximum": 1000,
             "type": "integer"

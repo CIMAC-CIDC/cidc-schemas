@@ -29,7 +29,7 @@
     },
     "chip_barcode": {
       "description": "Chip barcode number",
-      "type": "number"
+      "type": "string"
     },
     "probe_type": {
       "description": "Probe Type",

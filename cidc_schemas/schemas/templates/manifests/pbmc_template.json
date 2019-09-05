@@ -175,13 +175,13 @@
             "sample source": {
              "merge_pointer": "2/sample_source", 
              "type_ref": "sample.json#properties/sample_source" 
-            }
-          },
-          "Filled by CIMAC Lab": {
+            },
             "cimac aliquot id": {
               "merge_pointer": "/cimac_aliquot_id",
               "type_ref": "aliquot.json#properties/cimac_aliquot_id"
-            },
+            }
+          },
+          "Filled by CIMAC Lab": {
             "pbmc recovered": {
               "merge_pointer": "/pbmc_recovered",
               "type_ref": "aliquot.json#properties/pbmc_recovered"

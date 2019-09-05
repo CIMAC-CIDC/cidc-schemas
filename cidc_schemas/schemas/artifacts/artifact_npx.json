@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "xlsx_artifact",
-  "title": "Excel Artifact",
+  "$id": "npx_artifact",
+  "title": "NPX Artifact",
   "type": "object",
   "description": "Information about a xlsx file",
   "allOf": [
@@ -14,15 +14,21 @@
           "type": "integer"
         },
         "aliquots": {
-            "type": "array",
-            "items": {
-                "$comment": "Id of an aliquot within this assay.",
-                "$ref": "aliquot.json#properties/cimac_aliquot_id"
-            }
+          "type": "array",
+          "items": {
+            "$comment": "Id of an aliquot within this assay.",
+            "$ref": "aliquot.json#properties/cimac_aliquot_id"
+          }
+        },
+        "data_format": {
+          "const": "NPX"
         }
       }
     }
   ],
   "mergeStrategy": "objectMerge",
-  "required": ["number_of_aliquots", "aliquots"]
+  "anyOf": [
+    { "required": ["number_of_aliquots", "aliquots"] },
+    { "required": ["upload_placeholder"] }
+  ]
 }

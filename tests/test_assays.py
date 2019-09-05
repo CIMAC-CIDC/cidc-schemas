@@ -15,7 +15,7 @@ ARTIFACT_OBJ = {
     "object_url": "dummy",
     "file_name": "dummy.txt",
     "file_size_bytes": 1,
-    "file_type": "FASTA",
+    "data_format": "FASTA",
     "md5_hash": "dummy",
     "uploaded_timestamp": "dummy",
     "uploader": "dummy",
@@ -31,7 +31,7 @@ OLINK_RECORD = {
         "instrument": "dummy",
         "fludigm_application_version": "0.2.0",
         "fludigm_application_build": "dummy",
-        "chip_barcode": 22129,
+        "chip_barcode": "22129",
         "probe_type": "dummy",
         "passive_reference": "dummy",
         "quality_threshold": 90,
@@ -80,9 +80,13 @@ def test_wes():
 
     # create the wes object
     fastq_1 = ARTIFACT_OBJ.copy()
+    fastq_1['data_format'] = 'FASTQ'
     rgmf = ARTIFACT_OBJ.copy()
+    rgmf['data_format'] = 'TEXT'
     bam = ARTIFACT_OBJ.copy()
+    bam['data_format']= 'BAM'
     vcf = ARTIFACT_OBJ.copy()
+    vcf['data_format'] = 'VCF'
     rgmf['artifact_category'] = 'Assay Artifact from CIMAC'
     record = {
         "enrichment_vendor_kit": "Twist",
@@ -148,7 +152,9 @@ def test_rna_expression():
 
     # create the wes object
     fastq_1 = ARTIFACT_OBJ.copy()
+    fastq_1['data_format'] = 'FASTQ'
     rgmf = ARTIFACT_OBJ.copy()
+    rgmf['data_format'] = 'TEXT'
     rgmf['artifact_category'] = 'Assay Artifact from CIMAC'
     record = {
         "enrichment_vendor_kit": "Twist",
@@ -211,9 +217,11 @@ def test_cytof():
     obj = {**ASSAY_CORE, **cytof_platform, **
            cytof_panel}    # merge two dictionaries
 
-    # create the wes object
+    # create the cytof object
     fcs_1 = ARTIFACT_OBJ.copy()
+    fcs_1['data_format'] = 'BINARY'
     fcs_2 = ARTIFACT_OBJ.copy()
+    fcs_2['data_format'] = 'BINARY'
     record = {
         "processed_fcs_filename": "dummy",
         "source_fcs_filenames": "dummies",
@@ -248,13 +256,16 @@ def test_mif():
 
     # create the artifact object
     image_1 = ARTIFACT_OBJ.copy()
+    image_1['data_format'] = 'IMAGE'
     image_1["height"] = 300
     image_1["width"] = 250
     image_1["channels"] = 3
     csv_1 = ARTIFACT_OBJ.copy()
+    csv_1['data_format'] = 'CSV'
     csv_1["separator"] = ","
     csv_1["header_row"] = 128
     text = ARTIFACT_OBJ.copy()
+    text['data_format'] = 'TEXT'
     record = {
         "project_inform_folder": "dummy",
         "mif_exported_data_folder": "dummy_value",
@@ -307,10 +318,12 @@ def test_micsss():
 
     # create the artifact object
     image_1 = ARTIFACT_OBJ.copy()
+    image_1['data_format'] = 'IMAGE'
     image_1["height"] = 300
     image_1["width"] = 250
     image_1["channels"] = 3
     csv_1 = ARTIFACT_OBJ.copy()
+    csv_1['data_format'] = 'CSV'
     csv_1["separator"] = ","
     csv_1["header_row"] = 128
     record = {
@@ -358,11 +371,16 @@ def test_olink():
     obj['panel'] = "panel v1"
 
     # create the olink object
-    text = ARTIFACT_OBJ.copy()
+    npx = ARTIFACT_OBJ.copy()
+    npx['data_format'] = 'NPX'
+    npx['aliquots'] = ['a', 'b', 'c']
+    npx['number_of_aliquots'] = 3
+    xlsx = ARTIFACT_OBJ.copy()
+    xlsx['data_format'] = 'XLSX'
     record = OLINK_RECORD.copy()
-    record["files"]["assay_npx"] = text
-    record["files"]["assay_raw_ct"] = text
-    record["files"]["study_npx"] = text
+    record["files"]["assay_npx"] = npx
+    record["files"]["assay_raw_ct"] = xlsx
+    record["files"]["study_npx"] = npx
 
     # add a demo record.
     obj['records'] = [

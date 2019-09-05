@@ -71,7 +71,7 @@
     </td>
     <td width=55%>
         
-            
+            Information about a fastq file
                 <div><small>Fastq file for the first fragment.</small></div>
             
         
@@ -98,7 +98,7 @@
     </td>
     <td width=55%>
         
-            
+            Information about a fastq file
                 <div><small>Fastq file for the second fragment.</small></div>
             
         
@@ -125,7 +125,7 @@
     </td>
     <td width=55%>
         
-            
+            Information about text files
                 <div><small>Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.</small></div>
             
         
@@ -165,8 +165,7 @@
                 {
                     "$id": "artifact_core",
                     "$schema": "http://json-schema.org/draft-07/schema#",
-                    "description": "Any file artifact associated with a clinical trial.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "required": [
                                 "file_name",
@@ -183,6 +182,7 @@
                             ]
                         }
                     ],
+                    "description": "Any file artifact associated with a clinical trial.",
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -264,8 +264,7 @@
                 {
                     "$id": "artifact_core",
                     "$schema": "http://json-schema.org/draft-07/schema#",
-                    "description": "Any file artifact associated with a clinical trial.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "required": [
                                 "file_name",
@@ -282,6 +281,7 @@
                             ]
                         }
                     ],
+                    "description": "Any file artifact associated with a clinical trial.",
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -363,8 +363,7 @@
                 {
                     "$id": "artifact_core",
                     "$schema": "http://json-schema.org/draft-07/schema#",
-                    "description": "Any file artifact associated with a clinical trial.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "required": [
                                 "file_name",
@@ -381,6 +380,7 @@
                             ]
                         }
                     ],
+                    "description": "Any file artifact associated with a clinical trial.",
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",

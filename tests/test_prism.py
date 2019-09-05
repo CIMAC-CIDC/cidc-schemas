@@ -445,7 +445,7 @@ def test_merge_artifact_wes_only():
         url_without_uuid = url[:-1*(1+len(artifact_uuid))]
 
         # attempt to merge
-        ct, _ = merge_artifact(
+        ct, artifact = merge_artifact(
                 ct,
                 assay_type="wes",
                 artifact_uuid=artifact_uuid,
@@ -457,6 +457,9 @@ def test_merge_artifact_wes_only():
 
         # assert we still have a good clinical trial object.
         validator.validate(ct)
+
+        # check that the data_format was set
+        assert 'data_format' in artifact
 
         # search for this url and all previous (no clobber)
         searched_urls.append(url_without_uuid)
@@ -476,6 +479,7 @@ def test_merge_artifact_wes_only():
     assert len(dd['dictionary_item_removed']) == len(WES_TEMPLATE_EXAMPLE_GS_URLS), "Unexpected CT changes"
     assert list(dd.keys()) == ['dictionary_item_added', 'dictionary_item_removed'], "Unexpected CT changes"
 
+    validator.validate(ct)
 
 def test_merge_ct_meta():
     """ 
@@ -587,7 +591,7 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
     for i, fmap_entry in enumerate(file_maps):
 
         # attempt to merge
-        patch_copy_4_artifacts, _ = merge_artifact(
+        patch_copy_4_artifacts, artifact = merge_artifact(
                 patch_copy_4_artifacts,
                 artifact_uuid=fmap_entry.upload_placeholder,
                 object_url=fmap_entry.gs_key,
@@ -599,6 +603,9 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
 
         # assert we still have a good clinical trial object, so we can save it
         validator.validate(merge_clinical_trial_metadata(patch_copy_4_artifacts, original_ct))
+
+        # check that the data_format was set
+        assert 'data_format' in artifact
 
         # we will than search for this url in the resulting ct, 
         # to check all artifacts were indeed merged

@@ -6,7 +6,7 @@
   "description": "Olink Assay Input Files",
   "properties": {
     "assay_npx": {
-      "$ref": "artifacts/artifact_xlsx.json",
+      "$ref": "artifacts/artifact_npx.json",
       "$comment": "Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale."
     },
     "assay_raw_ct": {

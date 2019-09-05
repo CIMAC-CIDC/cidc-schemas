@@ -607,6 +607,9 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
     # `merge_artifact` modifies ct in-place, so 
     full_ct = merge_clinical_trial_metadata(patch_copy_4_artifacts, original_ct)
 
+    # validate the full clinical trial object
+    validator.validate(full_ct)
+
     if hint == 'wes':
         assert len(merged_gs_keys) == 3*2 # 3 files per entry in xlsx
 
@@ -648,8 +651,8 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
     elif hint == "olink":
         assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
 
-        # 6 artifact atributes * 5 files (2 per record + 1 study)
-        assert len(dd['dictionary_item_added']) == 6*(2*2+1), "Unexpected CT changes"
+        # 7 artifact atributes * 5 files (2 per record + 1 study)
+        assert len(dd['dictionary_item_added']) == 7*(2*2+1), "Unexpected CT changes"
 
     else:
         assert False, f"add {hint} assay specific asserts"

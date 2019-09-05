@@ -31,7 +31,7 @@ OLINK_RECORD = {
         "instrument": "dummy",
         "fludigm_application_version": "0.2.0",
         "fludigm_application_build": "dummy",
-        "chip_barcode": 22129,
+        "chip_barcode": "22129",
         "probe_type": "dummy",
         "passive_reference": "dummy",
         "quality_threshold": 90,

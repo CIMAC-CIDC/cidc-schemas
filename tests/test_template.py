@@ -13,7 +13,8 @@ from cidc_schemas.template import Template, generate_empty_template, generate_al
 
 def test_pbmc_loaded(pbmc_template):
     """Smoke test to ensure worksheets loaded from pbmc template"""
-    assert 'PBMCs' in pbmc_template.worksheets
+    assert 'shipment' in pbmc_template.worksheets
+    assert 'aliquots' in pbmc_template.worksheets
 
 
 def test_tiny_loaded(tiny_template):
@@ -22,7 +23,8 @@ def test_tiny_loaded(tiny_template):
 
 
 def test_from_type():
-    assert 'PBMCs' in Template.from_type('pbmc').worksheets
+    assert 'shipment' in Template.from_type('pbmc').worksheets
+    assert 'aliquots' in Template.from_type('pbmc').worksheets
     assert 'WES' in Template.from_type('wes').worksheets
 
     with pytest.raises(Exception, match='unknown template type'):

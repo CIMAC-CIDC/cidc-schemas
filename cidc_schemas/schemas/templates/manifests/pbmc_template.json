@@ -104,6 +104,14 @@
               "merge_pointer": "4/cimac_participant_id",
               "type_ref": "participant.json#properties/cimac_participant_id"
             },
+            "cohort id": {
+              "merge_pointer": "4/cohort_id",
+              "type_ref": "participant.json#properties/cohort_id" 
+            },
+            "arm id": {
+              "merge_pointer": "4/arm_id",
+              "type_ref": "participant.json#properties/arm_id" 
+            },
             "site sample id": {
               "merge_pointer": "2/site_sample_id",
               "type_ref": "sample.json#properties/site_sample_id"
@@ -113,8 +121,12 @@
               "type_ref": "sample.json#properties/cimac_sample_id"
             },
             "time point": {
-             "merge_pointer": "2/time_point", 
-             "type_ref": "sample.json#properties/time_point" 
+              "merge_pointer": "2/time_point", 
+              "type_ref": "sample.json#properties/time_point" 
+            },
+            "genomic source": {
+              "merge_pointer": "2/genomic_source", 
+              "type_ref": "sample.json#properties/genomic_source" 
             },
             "blood collection date": {
               "merge_pointer": "2/blood_collection_date",
@@ -144,10 +156,6 @@
               "merge_pointer": "2/specimen_format",
               "type_ref": "sample.json#properties/specimen_format"
             },
-            "cohort id": {
-              "merge_pointer": "4/cohort_id",
-              "type_ref": "participant.json#properties/cohort_id" 
-            },
             "quantity": {
              "merge_pointer": "/quantity", 
              "type_ref": "aliquot.json#properties/quantity" 
@@ -155,10 +163,6 @@
             "volume quantity": {
               "merge_pointer": "/volume_quantity",
               "type_ref": "aliquot.json#properties/volume_quantity"
-            },
-            "arm id": {
-              "merge_pointer": "4/arm_id",
-              "type_ref": "participant.json#properties/arm_id" 
             },
             "units": {
              "merge_pointer": "/units", 

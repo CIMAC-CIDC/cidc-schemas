@@ -571,9 +571,9 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
             assert (prism_patch['shipments'][0]['request']) == "R123"
 
             assert len(prism_patch['participants']) == 2
-            assert len(prism_patch['participants'][0]['samples']) == 1
-            assert len(prism_patch['participants'][1]['samples']) == 1
-            assert sum(len(p['samples'][0]["aliquots"]) for p in prism_patch['participants']) == 6
+            assert len(prism_patch['participants'][0]['samples']) == 2
+            assert len(prism_patch['participants'][1]['samples']) == 2
+            assert sum(len(s["aliquots"]) for p in prism_patch['participants'] for s in p['samples']) == 6
 
 
     if hint in HINTS_ASSAYS:

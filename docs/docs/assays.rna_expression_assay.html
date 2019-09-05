@@ -119,7 +119,7 @@
     </td>
     <td width=55%>
         
-            Method used for enriching for mRNA
+            Method used for enriching for mRNA.
         
     </td>
     <td>
@@ -210,7 +210,7 @@
     </td>
     <td width=55%>
         
-            Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT
+            Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT.
         
     </td>
     <td>
@@ -253,7 +253,7 @@
     </td>
     <td width=55%>
         
-            Is the RNAseq library stranded or not
+            Is the RNAseq library stranded or not.
         
     </td>
     <td>
@@ -286,7 +286,7 @@
     </td>
     <td width=55%>
         
-            The type of RNAseq library generated
+            The type of RNAseq library generated.
         
     </td>
     <td>
@@ -362,14 +362,14 @@
             "properties": {
                 "library_vendor_kit": {
                     "$comment": "This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.",
-                    "description": "Vendor for the library construction kit, e.g. KAPA",
+                    "description": "Vendor for the library construction kit, e.g. KAPA.",
                     "enum": [
                         "KAPA - Hyper Prep"
                     ],
                     "type": "string"
                 },
                 "paired_end_reads": {
-                    "description": "Indicate if the sequencing was performed paired or single ended",
+                    "description": "Indicates if the sequencing was performed paired or single ended.",
                     "enum": [
                         "Paired",
                         "Single"
@@ -377,7 +377,7 @@
                     "type": "string"
                 },
                 "read_length": {
-                    "description": "Number of cycles for each sequencing read",
+                    "description": "Number of cycles for each sequencing read.",
                     "exclusiveMinimum": 0,
                     "maximum": 1000,
                     "type": "integer"
@@ -408,7 +408,7 @@
     "id": "rna_expression_assay",
     "properties": {
         "enrichment_method": {
-            "description": "Method used for enriching for mRNA",
+            "description": "Method used for enriching for mRNA.",
             "enum": [
                 "PolyA capture",
                 "Transcriptome capture",
@@ -417,7 +417,7 @@
             "type": "string"
         },
         "enrichment_vendor_kit": {
-            "description": "Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT",
+            "description": "Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT.",
             "enum": [
                 "Agilent",
                 "Twist",
@@ -428,7 +428,7 @@
             "type": "string"
         },
         "library_type": {
-            "description": "The type of RNAseq library generated",
+            "description": "The type of RNAseq library generated.",
             "enum": [
                 "ff-firststrand",
                 "ff-secondstrand",
@@ -451,7 +451,7 @@
                         "description": "A single data record from an NGS assay",
                         "properties": {
                             "average_insert_size": {
-                                "description": "The average insert size for the library",
+                                "description": "The average insert size for the library.",
                                 "exclusiveMinimum": 0,
                                 "maximum": 10000,
                                 "type": "integer"
@@ -485,8 +485,7 @@
                                             {
                                                 "$id": "artifact_core",
                                                 "$schema": "http://json-schema.org/draft-07/schema#",
-                                                "description": "Any file artifact associated with a clinical trial.",
-                                                "oneOf": [
+                                                "anyOf": [
                                                     {
                                                         "required": [
                                                             "file_name",
@@ -503,6 +502,7 @@
                                                         ]
                                                     }
                                                 ],
+                                                "description": "Any file artifact associated with a clinical trial.",
                                                 "properties": {
                                                     "artifact_category": {
                                                         "description": "Artifact category.",
@@ -584,8 +584,7 @@
                                             {
                                                 "$id": "artifact_core",
                                                 "$schema": "http://json-schema.org/draft-07/schema#",
-                                                "description": "Any file artifact associated with a clinical trial.",
-                                                "oneOf": [
+                                                "anyOf": [
                                                     {
                                                         "required": [
                                                             "file_name",
@@ -602,6 +601,7 @@
                                                         ]
                                                     }
                                                 ],
+                                                "description": "Any file artifact associated with a clinical trial.",
                                                 "properties": {
                                                     "artifact_category": {
                                                         "description": "Artifact category.",
@@ -683,8 +683,7 @@
                                             {
                                                 "$id": "artifact_core",
                                                 "$schema": "http://json-schema.org/draft-07/schema#",
-                                                "description": "Any file artifact associated with a clinical trial.",
-                                                "oneOf": [
+                                                "anyOf": [
                                                     {
                                                         "required": [
                                                             "file_name",
@@ -701,6 +700,7 @@
                                                         ]
                                                     }
                                                 ],
+                                                "description": "Any file artifact associated with a clinical trial.",
                                                 "properties": {
                                                     "artifact_category": {
                                                         "description": "Artifact category.",
@@ -785,13 +785,13 @@
                                 "type": "object"
                             },
                             "input_ng": {
-                                "description": "Amount of DNA/RNA (in ng) used for library construction",
+                                "description": "Amount of DNA/RNA (in ng) used for library construction.",
                                 "exclusiveMinimum": 0,
                                 "maximum": 10000,
                                 "type": "integer"
                             },
                             "library_kit_lot": {
-                                "description": "Lot number for the library construction kit",
+                                "description": "Lot number for the library construction kit.",
                                 "type": "string"
                             },
                             "library_prep_date": {
@@ -800,7 +800,7 @@
                                 "type": "string"
                             },
                             "library_yield_ng": {
-                                "description": "Resulting yield (in ng) from library construction",
+                                "description": "Resulting yield (in ng) from library construction.",
                                 "exclusiveMinimum": 0,
                                 "maximum": 2000,
                                 "type": "integer"
@@ -821,12 +821,12 @@
                 "description": "A single data record from RNAseq assay",
                 "properties": {
                     "capture_date": {
-                        "description": "Date of the hybrid capture enrichment",
+                        "description": "Date of the hybrid capture enrichment.",
                         "format": "date",
                         "type": "string"
                     },
                     "enrichment_vendor_lot": {
-                        "description": "Lot number for the bait set",
+                        "description": "Lot number for the bait set.",
                         "type": "string"
                     },
                     "files": {
@@ -846,8 +846,7 @@
                                             {
                                                 "$id": "artifact_core",
                                                 "$schema": "http://json-schema.org/draft-07/schema#",
-                                                "description": "Any file artifact associated with a clinical trial.",
-                                                "oneOf": [
+                                                "anyOf": [
                                                     {
                                                         "required": [
                                                             "file_name",
@@ -864,6 +863,7 @@
                                                         ]
                                                     }
                                                 ],
+                                                "description": "Any file artifact associated with a clinical trial.",
                                                 "properties": {
                                                     "artifact_category": {
                                                         "description": "Artifact category.",
@@ -945,8 +945,7 @@
                                             {
                                                 "$id": "artifact_core",
                                                 "$schema": "http://json-schema.org/draft-07/schema#",
-                                                "description": "Any file artifact associated with a clinical trial.",
-                                                "oneOf": [
+                                                "anyOf": [
                                                     {
                                                         "required": [
                                                             "file_name",
@@ -963,6 +962,7 @@
                                                         ]
                                                     }
                                                 ],
+                                                "description": "Any file artifact associated with a clinical trial.",
                                                 "properties": {
                                                     "artifact_category": {
                                                         "description": "Artifact category.",
@@ -1044,8 +1044,7 @@
                                             {
                                                 "$id": "artifact_core",
                                                 "$schema": "http://json-schema.org/draft-07/schema#",
-                                                "description": "Any file artifact associated with a clinical trial.",
-                                                "oneOf": [
+                                                "anyOf": [
                                                     {
                                                         "required": [
                                                             "file_name",
@@ -1062,6 +1061,7 @@
                                                         ]
                                                     }
                                                 ],
+                                                "description": "Any file artifact associated with a clinical trial.",
                                                 "properties": {
                                                     "artifact_category": {
                                                         "description": "Artifact category.",
@@ -1151,7 +1151,7 @@
                         "type": "object"
                     },
                     "sequencing_batch": {
-                        "description": "Identifier for the sequencing batch for this sample",
+                        "description": "Identifier for the sequencing batch for this sample.",
                         "type": "string"
                     }
                 },
@@ -1166,7 +1166,7 @@
             "type": "array"
         },
         "stranded_library": {
-            "description": "Is the RNAseq library stranded or not",
+            "description": "Is the RNAseq library stranded or not.",
             "type": "boolean"
         }
     },

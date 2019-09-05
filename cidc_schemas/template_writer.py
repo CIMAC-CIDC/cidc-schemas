@@ -240,9 +240,9 @@ class XlTemplateWriter:
         self._write_validation(data_range, entity_schema)
 
     def _write_comment(self, row: int, col: int, entity_schema: dict):
-        if '$comment' in entity_schema:
+        if 'description' in entity_schema:
             self.worksheet.write_comment(
-                row, col, entity_schema['$comment'], self.COMMENT_THEME)
+                row, col, entity_schema['description'], self.COMMENT_THEME)
 
     def _write_validation(self, cell: str, entity_schema: dict):
         validation = self._get_validation(cell, entity_schema)

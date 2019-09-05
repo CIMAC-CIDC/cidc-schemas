@@ -96,7 +96,104 @@
 </tr>
             
         
+            
+                <tr>
+    <td>
         
+            <span id="panel">
+                panel
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Panel used for the assay
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="assay_panel_lot">
+                assay_panel_lot
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Lot Number of the assay panel
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="study">
+                study
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A single data record from Olink assay
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.olink.olink_combined.html">assays.components.olink.olink_combined</a>
+        
+    </td>
+</tr>
             
         
     </table>
@@ -111,20 +208,20 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "High-throughput multiplexed assays for protein biomarker discovery",
     "properties": {
+        "assay_panel_lot": {
+            "description": "Lot Number of the assay panel",
+            "type": "number"
+        },
+        "panel": {
+            "description": "Panel used for the assay",
+            "type": "string"
+        },
         "records": {
             "items": {
                 "$id": "Olink_assay_record",
                 "$schema": "http://json-schema.org/draft-07/schema#",
                 "description": "A single data record from Olink assay",
                 "properties": {
-                    "assay_panel_lot": {
-                        "description": "Lot Number of the assay panel",
-                        "type": "number"
-                    },
-                    "assay_prefix": {
-                        "description": "Prefix to used for the filename",
-                        "type": "string"
-                    },
                     "baseline_correction": {
                         "description": "Method used for baseline correction",
                         "type": "string"
@@ -139,15 +236,14 @@
                         "description": "Olink Assay Input Files",
                         "properties": {
                             "assay_npx": {
-                                "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.",
-                                "$id": "text_artifact",
+                                "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.",
+                                "$id": "xlsx_artifact",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "allOf": [
                                     {
                                         "$id": "artifact_core",
                                         "$schema": "http://json-schema.org/draft-07/schema#",
-                                        "description": "Any file artifact associated with a clinical trial.",
-                                        "oneOf": [
+                                        "anyOf": [
                                             {
                                                 "required": [
                                                     "file_name",
@@ -164,6 +260,7 @@
                                                 ]
                                             }
                                         ],
+                                        "description": "Any file artifact associated with a clinical trial.",
                                         "properties": {
                                             "artifact_category": {
                                                 "description": "Artifact category.",
@@ -233,21 +330,20 @@
                                         }
                                     }
                                 ],
-                                "description": "Information about text files",
+                                "description": "Information about a xlsx file",
                                 "mergeStrategy": "objectMerge",
-                                "title": "Text Artifact",
+                                "title": "Excel Artifact",
                                 "type": "object"
                             },
                             "assay_raw_ct": {
-                                "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.",
-                                "$id": "text_artifact",
+                                "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.",
+                                "$id": "xlsx_artifact",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "allOf": [
                                     {
                                         "$id": "artifact_core",
                                         "$schema": "http://json-schema.org/draft-07/schema#",
-                                        "description": "Any file artifact associated with a clinical trial.",
-                                        "oneOf": [
+                                        "anyOf": [
                                             {
                                                 "required": [
                                                     "file_name",
@@ -264,6 +360,7 @@
                                                 ]
                                             }
                                         ],
+                                        "description": "Any file artifact associated with a clinical trial.",
                                         "properties": {
                                             "artifact_category": {
                                                 "description": "Artifact category.",
@@ -333,109 +430,9 @@
                                         }
                                     }
                                 ],
-                                "description": "Information about text files",
+                                "description": "Information about a xlsx file",
                                 "mergeStrategy": "objectMerge",
-                                "title": "Text Artifact",
-                                "type": "object"
-                            },
-                            "study_npx": {
-                                "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale. REVIEW: put 'study_npx' in a separate object (overall-olink assay level) apart from other 'per run' olink files.",
-                                "$id": "text_artifact",
-                                "$schema": "http://json-schema.org/draft-07/schema#",
-                                "allOf": [
-                                    {
-                                        "$id": "artifact_core",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
-                                        "description": "Any file artifact associated with a clinical trial.",
-                                        "oneOf": [
-                                            {
-                                                "required": [
-                                                    "file_name",
-                                                    "object_url",
-                                                    "uploaded_timestamp",
-                                                    "file_size_bytes",
-                                                    "md5_hash",
-                                                    "artifact_category"
-                                                ]
-                                            },
-                                            {
-                                                "required": [
-                                                    "upload_placeholder"
-                                                ]
-                                            }
-                                        ],
-                                        "properties": {
-                                            "artifact_category": {
-                                                "description": "Artifact category.",
-                                                "enum": [
-                                                    "Assay Artifact from CIMAC",
-                                                    "Pipeline Artifact",
-                                                    "Manifest File"
-                                                ],
-                                                "type": "string"
-                                            },
-                                            "artifact_creator": {
-                                                "description": "The name of the center that created this artificat",
-                                                "enum": [
-                                                    "DFCI",
-                                                    "Mount Sinai",
-                                                    "Stanford",
-                                                    "MD Anderson"
-                                                ],
-                                                "type": "string"
-                                            },
-                                            "file_name": {
-                                                "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
-                                                "description": "The name of the file with extension",
-                                                "type": "string"
-                                            },
-                                            "file_size_bytes": {
-                                                "description": "File size in bytes.",
-                                                "type": "integer"
-                                            },
-                                            "md5_hash": {
-                                                "description": "MD5 Hash of artifact.",
-                                                "type": "string"
-                                            },
-                                            "object_url": {
-                                                "description": "URL to artifact within Google Bucket.",
-                                                "type": "string"
-                                            },
-                                            "upload_placeholder": {
-                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
-                                                "type": "string"
-                                            },
-                                            "uploaded_timestamp": {
-                                                "description": "Timestamp of when artfiact was loaded into the system.",
-                                                "format": "date-time",
-                                                "type": "string"
-                                            },
-                                            "uploader": {
-                                                "type": "string"
-                                            },
-                                            "uuid": {
-                                                "description": "UUID of artifact.",
-                                                "type": "string"
-                                            },
-                                            "visible": {
-                                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
-                                                "type": "boolean"
-                                            }
-                                        },
-                                        "title": "Artifact Core",
-                                        "type": "object"
-                                    },
-                                    {
-                                        "properties": {
-                                            "info": {
-                                                "type": "object"
-                                            }
-                                        }
-                                    }
-                                ],
-                                "description": "Information about text files",
-                                "mergeStrategy": "objectMerge",
-                                "title": "Text Artifact",
+                                "title": "Excel Artifact",
                                 "type": "object"
                             }
                         },
@@ -445,14 +442,6 @@
                         ],
                         "title": "Olink Input Files",
                         "type": "object"
-                    },
-                    "filetype": {
-                        "description": "Type of file being uploaded",
-                        "enum": [
-                            "assay",
-                            "study"
-                        ],
-                        "type": "string"
                     },
                     "fludigm_application_build": {
                         "description": "Build of the Fluidgm application used",
@@ -478,10 +467,6 @@
                         "description": "Number of samples failed in the assay",
                         "type": "number"
                     },
-                    "panel": {
-                        "description": "Panel used for the assay",
-                        "type": "string"
-                    },
                     "passive_reference": {
                         "description": "Passive Reference",
                         "type": "string"
@@ -506,19 +491,135 @@
                     }
                 },
                 "required": [
-                    "assay_prefix",
-                    "filetype",
-                    "panel",
                     "number_of_samples",
-                    "npx_manager_version"
+                    "npx_manager_version",
+                    "files"
                 ],
                 "title": "Olink assay record",
                 "type": "object"
             },
             "type": "array"
+        },
+        "study": {
+            "$id": "Olink_assay_record",
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "description": "A single data record from Olink assay",
+            "properties": {
+                "npx_manager_version": {
+                    "description": "Version of NPX manager used for the analysis",
+                    "type": "string"
+                },
+                "study_npx": {
+                    "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.",
+                    "$id": "xlsx_artifact",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "anyOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artificat",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
+                                    "description": "The name of the file with extension",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artfiact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "info": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    ],
+                    "description": "Information about a xlsx file",
+                    "mergeStrategy": "objectMerge",
+                    "title": "Excel Artifact",
+                    "type": "object"
+                }
+            },
+            "required": [
+                "npx_manager_version",
+                "study_npx"
+            ],
+            "title": "Olink assay record",
+            "type": "object"
         }
     },
     "required": [
+        "panel",
         "records"
     ],
     "title": "OLink Assay",

@@ -1,6 +1,7 @@
 import os
 import jinja2
 import json
+import jsonschema
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.constants import SCHEMA_DIR
 
@@ -20,7 +21,14 @@ def load_schemas() -> dict:
     for root, _, paths in os.walk(SCHEMA_DIR):
         root_schemas = {}
         for path in paths:
+            if not path.endswith('.json'):
+                continue
             schema_path = os.path.join(root, path)
+
+            full_json = load_and_validate_schema(
+                schema_path, SCHEMA_DIR)
+
+            resolver = jsonschema.RefResolver(f'file://{SCHEMA_DIR}/schemas', full_json)
 
             def json_to_html(ref: str) -> dict:
                 """Update refs to refer to the URL of the corresponding documentation."""
@@ -28,10 +36,15 @@ def load_schemas() -> dict:
                 url = url.replace('properties/', '')
                 url = url.replace('definitions/', '')
                 url = url.replace('/', '.')
-                return {'url': url}
+                # resolve ref, extract resolved['description']
+                with resolver.resolving(ref) as resolved:
+                    if 'description' in resolved:
+                        description = resolved['description']
+                    else:
+                        description = ""
 
-            full_json = load_and_validate_schema(
-                schema_path, SCHEMA_DIR)
+                return {'url': url, 'description': description}
+
             schema = load_and_validate_schema(
                 schema_path, SCHEMA_DIR, on_refs=json_to_html)
 
@@ -98,3 +111,4 @@ def generate_docs(out_directory: str = HTML_DIR):
 
 if __name__ == '__main__':
     generate_docs()
+

@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Binary Artifact</h1>
+        <h1>Excel Artifact</h1>
         <p>
-            <b>Description:</b>  Information about binary files.
+            <b>Description:</b>  Information about a xlsx file
         </p>
         
     </div>
@@ -86,17 +86,14 @@
             
         
             
-        
-        
-            
-        
-            
                 <tr>
     <td>
         
-            <span id="info">
-                info
+            <span id="number_of_aliquots">
+                number_of_aliquots
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -108,7 +105,7 @@
     <td>
         
             &lt; 
-                object 
+                integer 
     
     
     
@@ -123,15 +120,61 @@
 </tr>
             
         
+            
+                <tr>
+    <td>
+        
+            <span id="aliquots">
+                aliquots
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+        
+    </td>
+    <td>
+        
+            &lt; 
+                array 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+             
+                
+                    <a href="aliquot.html#cimac_aliquot_id">aliquot#cimac_aliquot_id</a>
+                
+            
+            
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+            
+        
+            
+        
     </table>
 
     
   </div>
 
   <div class="container">
-    <h3>artifact_binary.full.json</h3>
+    <h3>artifact_npx.full.json</h3>
   	<pre><code>{
-    "$id": "binary_artifact",
+    "$id": "xlsx_artifact",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "allOf": [
         {
@@ -218,14 +261,27 @@
         },
         {
             "properties": {
-                "info": {
-                    "type": "object"
+                "aliquots": {
+                    "items": {
+                        "$comment": "Id of an aliquot within this assay.",
+                        "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "number_of_aliquots": {
+                    "type": "integer"
                 }
             }
         }
     ],
-    "description": "Information about binary files.",
-    "title": "Binary Artifact",
+    "description": "Information about a xlsx file",
+    "mergeStrategy": "objectMerge",
+    "required": [
+        "number_of_aliquots",
+        "aliquots"
+    ],
+    "title": "Excel Artifact",
     "type": "object"
 }</code></pre>
   </container>

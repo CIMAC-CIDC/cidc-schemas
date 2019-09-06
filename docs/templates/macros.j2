@@ -116,6 +116,8 @@
                     {{ prop_type_format(prop_schema["additionalProperties"]) }}
                 {% endif %}
             {% endif %}
+        {% elif "const" in prop_schema %}
+            &lt; const: <strong>{{ prop_schema["const"] }}</strong> &gt;            
         {% elif "url" in prop_schema %}
             <a href="{{ prop_schema['url'] }}">{{ prop_schema['url'].replace('.html', '') }}</a>
         {% elif "type_ref" in prop_schema %} {# means we're in _template.json #}

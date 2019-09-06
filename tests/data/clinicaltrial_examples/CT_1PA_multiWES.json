@@ -87,7 +87,7 @@
                         "library_kit_lot":          "$ library_kit_lot",
                         "library_prep_date":        "4_12_2012",
                         "files": {
-                            "fastq_1":{
+                            "r1":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
@@ -96,7 +96,7 @@
                                 "artifact_category" :   "Assay Artifact from CIMAC",
                                 "data_format" :           "FASTQ"
                             },
-                            "fastq_2":{
+                            "r2":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
@@ -124,7 +124,7 @@
                         "library_kit_lot":          "$ library_kit_lot",
                         "library_prep_date":        "4_12_2012",
                         "files": {
-                            "fastq_1":{
+                            "r1":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
@@ -133,7 +133,7 @@
                                 "artifact_category" :   "Assay Artifact from CIMAC",
                                 "data_format" :           "FASTQ"
                             },
-                            "fastq_2":{
+                            "r2":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
@@ -170,7 +170,7 @@
                         "library_kit_lot":          "$ library_kit_lot",
                         "library_prep_date":        "4_12_2012",
                         "files": {
-                            "fastq_1":{
+                            "r1":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
@@ -179,7 +179,7 @@
                                 "artifact_category" :   "Assay Artifact from CIMAC",
                                 "data_format" :           "FASTQ"
                             },
-                            "fastq_2":{
+                            "r2":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
@@ -207,7 +207,7 @@
                         "library_kit_lot":          "$ library_kit_lot",
                         "library_prep_date":        "4_12_2012",
                         "files": {
-                            "fastq_1":{
+                            "r1":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
@@ -216,7 +216,7 @@
                                 "artifact_category" :   "Assay Artifact from CIMAC",
                                 "data_format" :           "FASTQ"
                             },
-                            "fastq_2":{
+                            "r2":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",

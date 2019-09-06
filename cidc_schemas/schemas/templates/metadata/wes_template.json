@@ -84,20 +84,20 @@
               "type_ref": "assays/components/ngs/ngs_assay_record.json#properties/average_insert_size"
             },
             "forward fastq": {
-              "merge_pointer": "0/files/fastq_1", 
-              "gcs_prefix_format": "{cimac_participant_id}/{cimac_sample_id}/{cimac_aliquot_id}",
+              "merge_pointer": "0/files/r1", 
+              "gcs_uri_format": "{lead organization study id}/{cimac participant id}/{cimac sample id}/{cimac aliquot id}/wes/r1.fastq",
               "is_artifact" : 1,
               "type_ref": "assays/components/local_file.json#properties/file_path"
             },
             "reverse fastq": {
-              "merge_pointer": "0/files/fastq_2", 
-              "gcs_prefix_format": "{cimac_participant_id}/{cimac_sample_id}/{cimac_aliquot_id}",
+              "merge_pointer": "0/files/r2", 
+              "gcs_uri_format": "{lead organization study id}/{cimac participant id}/{cimac sample id}/{cimac aliquot id}/wes/r2.fastq",
               "is_artifact" : 1,
               "type_ref": "assays/components/local_file.json#properties/file_path"
             },
             "read group mapping file": {
               "merge_pointer": "0/files/read_group_mapping_file", 
-              "gcs_prefix_format": "{cimac_participant_id}/{cimac_sample_id}/{cimac_aliquot_id}",
+              "gcs_uri_format": "{lead organization study id}/{cimac participant id}/{cimac sample id}/{cimac aliquot id}/wes/rgm.txt",
               "is_artifact" : 1,
               "type_ref": "assays/components/local_file.json#properties/file_path"
             }

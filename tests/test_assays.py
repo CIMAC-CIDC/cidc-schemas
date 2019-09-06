@@ -79,8 +79,8 @@ def test_wes():
     obj = {**ASSAY_CORE, **ngs_obj}    # merge two dictionaries
 
     # create the wes object
-    fastq_1 = ARTIFACT_OBJ.copy()
-    fastq_1['data_format'] = 'FASTQ'
+    r1 = ARTIFACT_OBJ.copy()
+    r1['data_format'] = 'FASTQ'
     rgmf = ARTIFACT_OBJ.copy()
     rgmf['data_format'] = 'TEXT'
     bam = ARTIFACT_OBJ.copy()
@@ -98,8 +98,8 @@ def test_wes():
         "cimac_sample_id": "SAid",
         "cimac_aliquot_id": "ALid",
         "files": {
-            "fastq_1": fastq_1,
-            "fastq_2": fastq_1,
+            "r1": r1,
+            "r2": r1,
             "read_group_mapping_file": rgmf
         }
     }
@@ -151,8 +151,8 @@ def test_rna_expression():
     obj['enrichment_method'] = "Ribo minus"
 
     # create the wes object
-    fastq_1 = ARTIFACT_OBJ.copy()
-    fastq_1['data_format'] = 'FASTQ'
+    r1 = ARTIFACT_OBJ.copy()
+    r1['data_format'] = 'FASTQ'
     rgmf = ARTIFACT_OBJ.copy()
     rgmf['data_format'] = 'TEXT'
     rgmf['artifact_category'] = 'Assay Artifact from CIMAC'
@@ -166,8 +166,8 @@ def test_rna_expression():
         "cimac_sample_id": "SAid",
         "cimac_aliquot_id": "ALid",
         "files": {
-            "fastq_1": fastq_1,
-            "fastq_2": fastq_1,
+            "r1": r1,
+            "r2": r1,
             "read_group_mapping_file": rgmf
         }
     }

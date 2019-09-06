@@ -223,10 +223,12 @@ def _get_recursively(search_dict, field):
 LocalFileUploadEntry = namedtuple('LocalFileUploadEntry', ["local_path", "gs_key", "upload_placeholder"])
 
 def _process_property(
-        row: list,
+        key: str,
+        raw_val,
         assay_hint: str,
         key_lu: dict,
         data_obj: dict,
+        format_context: dict,
         root_obj: Union[None, dict] = None,
         data_obj_pointer: Union[None, str] = None,
         verb: bool = False) -> LocalFileUploadEntry:
@@ -235,11 +237,14 @@ def _process_property(
     where it needs to go in the final object, then inserts it.
 
     Args:
-        row: array with two fields, key-val
+        key: property name,
+        raw_val: value of a property beeing processed,
         assay_hint: 'wes' or similar to create proper urls
         key_lu: dictionary to translate from template naming to json-schema
                 property names
         data_obj: dictionary we are building to represent data
+        format_context: dictionary of everything needed for 'gcs_uri_format' 
+                        in case this property has that 
         root_obj: root dictionary we are building to represent data, 
                   that holds 'data_obj' within 'data_obj_pointer'
         data_obj_pointer: pointer of 'data_obj' within 'root_obj'.
@@ -255,10 +260,6 @@ def _process_property(
         )
 
     """
-
-    # simplify
-    key = row[0]
-    raw_val = row[1]
 
     if verb:
         print(f"processing property {key!r} - {raw_val!r}")
@@ -285,24 +286,7 @@ def _process_property(
         if verb:
             print(f'collecting local_file_path {field_def}')
 
-        # we're using last_part of merge_pointer as a file_name
-        # so like '/study/study_npx' - 'study_npx' will be the filename
-        artifact_field_name = field_def['merge_pointer'].split('/')[-1]
-
-        # we're using pythonish template from template schema,
-        # so gcs_urls might have different patterns for different assays
-        # FIXME data_obj at this point might have not all fields from
-        # all cells in a template form, so format might fail 
-        # depending on template schema order of fields
-        # This needs to be moved to after data_obj completely filled.
-        gs_key = field_def.get('gcs_prefix_format', "").format_map(data_obj)
-
-        # For artifacts `val` is a uuid
-        # Which we use to later, in merge, find a right path in CT
-        # where corresponding artifact is located 
-        # As uuids are unique, this should be fine. 
-        # TODO MAYBE But pointers within CT might be used instead as a part of gcs_uri
-        gs_key = os.path.join(gs_key, f'{assay_hint}/{artifact_field_name}')
+        gs_key = field_def['gcs_uri_format'].format_map(format_context)
 
         return LocalFileUploadEntry(
             local_path = raw_val,
@@ -467,6 +451,13 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         if verb:
             print(f'next worksheet {ws_name}')
 
+        # Here we take only first two cells from preamble as key and value respectfully,
+        # lowering keys to match template schema definitions.
+        preamble_context = dict((r[0].lower(), r[1]) for r in ws.get(RowType.PREAMBLE, []))
+        # We need this full "preamble dict" (all key-value pairs) prior to processing
+        # properties from data_columns or preamble wrt template schema definitions, because 
+        # there can be a 'gcs_uri_format' that needs to have access to all values.
+
         templ_ws = xlsx_template.schema['properties']['worksheets'][ws_name]
         preamble_object_schema = load_and_validate_schema(templ_ws['prism_preamble_object_schema'])
         preamble_merger = Merger(preamble_object_schema)
@@ -476,13 +467,11 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         # creating preamble obj 
         preamble_obj = {"_preamble_obj": f"{assay_hint}:{ws_name}"} if verb else {}
         
-
-        # get the data
         data = ws[RowType.DATA]
-
         if data:
+            # get the data
             headers = ws[RowType.HEADER][0]
-            
+
             # for row in data:
             for i, row in enumerate(data):
 
@@ -492,14 +481,26 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                 # creating data obj 
                 data_obj = {"_data_obj": f"{assay_hint}:{ws_name}:row_{i}"} if verb else {}
                 copy_of_preamble = {"_preamble_obj": f"copy_for:{assay_hint}:{ws_name}:row_{i}"} if verb else {}
-
                 _set_val(data_object_pointer, data_obj, copy_of_preamble, root_ct_obj, preamble_object_pointer, verb=verb)
+
+                # We create this "data record dict" (all key-value pairs) prior to processing
+                # properties from data_columns wrt template schema definitions, because 
+                # there can be a 'gcs_uri_format' that needs to have access to all values.
+                local_context = dict(zip([h.lower() for h in headers], row))
 
                 # create dictionary per row
                 for key, val in zip(headers, row):
                     
                     # get corr xsls schema type 
-                    new_file = _process_property([key, val], assay_hint, xlsx_template.key_lu, data_obj, copy_of_preamble, data_object_pointer, verb)
+                    new_file = _process_property(
+                        key, val,
+                        assay_hint=assay_hint,
+                        key_lu=xlsx_template.key_lu,
+                        data_obj=data_obj,
+                        format_context=dict(local_context, **preamble_context), # combine contextes
+                        root_obj=copy_of_preamble,
+                        data_obj_pointer=data_object_pointer,
+                        verb=verb)
                     if new_file:
                         collected_files.append(new_file)
 
@@ -507,16 +508,24 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                     print('merging preambles')
                     print(f'   {preamble_obj}')
                     print(f'   {copy_of_preamble}')
-
                 preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
                 if verb:
                     print(f'merged - {preamble_obj}')
 
         _set_val(preamble_object_pointer, preamble_obj, root_ct_obj, verb=verb)
-        # Compare preamble rows
+        
+
         for row in ws[RowType.PREAMBLE]:
             # process this property
-            new_file = _process_property(row, assay_hint, xlsx_template.key_lu, preamble_obj, root_ct_obj, preamble_object_pointer, verb=verb)
+            new_file = _process_property(
+                row[0], row[1], 
+                assay_hint=assay_hint, 
+                key_lu=xlsx_template.key_lu, 
+                data_obj=preamble_obj, 
+                format_context=preamble_context, 
+                root_obj=root_ct_obj, 
+                data_obj_pointer=preamble_object_pointer, 
+                verb=verb)
             # TODO we might want to use copy+preamble_merger here too,
             # to for complex properites that require mergeStrategy 
             
@@ -587,92 +596,6 @@ def _get_source(ct: dict, key: str, skip_last=None) -> dict:
     return cur_obj
 
 
-def _merge_artifact_wes(
-    ct: dict,
-    object_url: str,
-    file_size_bytes: int,
-    uploaded_timestamp: str,
-    md5_hash: str
-) -> (dict, dict):
-    """
-    create and merge an artifact into the WES assay metadata.
-    The artifacts currently supported are only the input
-    fastq files and read mapping group file.
-
-    Args:
-        ct: clinical_trial object to be searched
-        object_url: the gs url pointing to the object being added
-        file_size_bytes: integer specifying the numebr of bytes in the file
-        uploaded_timestamp: time stamp associated with this object
-        md5_hash: hash of the uploaded object, usually provided by
-                    object storage
-
-    """
-
-    # replace gs prfix if exists.
-    wes_object = _split_wes_url(object_url)
-
-    
-    # create the artifact
-    artifact = {
-        "artifact_category": "Assay Artifact from CIMAC",
-        "object_url": object_url,
-        "file_name": wes_object.file_name,
-        "file_size_bytes": file_size_bytes,
-        "md5_hash": md5_hash,
-        "uploaded_timestamp": uploaded_timestamp
-    }
-
-    
-    all_WESes = ct.get('assays',{}).get('wes',[])
-
-    # get the wes record by aliquot_id
-    aliquot_id_field_path = _get_path(all_WESes, wes_object.cimac_aliquot_id)
-    ## TODO consider refactoring that using something else
-    ## instead of using errorprone deepdiff.grep.
-    ## We might use uuid's written into `upload_placeholder`
-    ## or any other way to specify exactly where loaded data file info
-    ## should endup being ingected into metadata.
-    ## Jsonpointer might work, but as long as we're using array for wes.records
-    ## json pointer will look like /assays/wes/{int}/records/{int}
-    ## this might be error-prone wrt to merging on those "int" indexes.
-    ## Which won't be a problem if arrays will get removed from data model. 
-
-
-    # As "aliquot_id_field_path" contains path to a field with aliquot_id,
-    # we're looking for a record that contains, not the "string" field itself
-    # That's why we need skip_last=1, to get 1 "level" higher 
-    # from 'cimac_aliquot_id' field to it's parent - record obj. 
-    record_obj = _get_source(all_WESes, aliquot_id_field_path, skip_last=1)
-
-    assert record_obj['cimac_aliquot_id'] == wes_object.cimac_aliquot_id
-    assert record_obj['cimac_sample_id'] == wes_object.cimac_sample_id
-    assert record_obj['cimac_participant_id'] == wes_object.cimac_participant_id
-
-    # modify inplace
-    record_obj['files'][wes_object.file_name] = artifact
-
-    _set_data_format(ct, artifact)
-
-    # TODO consider using use merger with template['prism_preamble_object_schema']
-    # instead of overwriting it in-place. It will keep 'upload_placeholder' etc.
-    # That might be needed for complex artifacts, that use mergeStrategy.
-
-    # as we didn't `copy.deepcopy(ct)` beforehand and modified in-place 
-    # we just return it modified
-    return ct, artifact
-
-
-WesFileUrlParts = namedtuple("FileUrlParts", ["cimac_participant_id", \
-        "cimac_sample_id", "cimac_aliquot_id", "assay", "file_name"]) 
-
-def _split_wes_url(obj_url: str) -> WesFileUrlParts:
-    
-    # parse the url to get key identifiers
-    tokens = obj_url.split("/")
-    assert len(tokens) == len(WesFileUrlParts._fields), f"bad GCS url {obj_url}"
-
-    return WesFileUrlParts(*tokens)
 
 def _set_data_format(ct: dict, artifact: dict):
     """
@@ -719,20 +642,7 @@ def merge_artifact(
         md5_hash: hash of the uploaded object, usually provided by
                     object storage
 
-    """
-
-   
-    if assay_type == "wes":
-        return _merge_artifact_wes(
-            ct,
-            object_url,
-            file_size_bytes,
-            uploaded_timestamp,
-            md5_hash
-        )
-
-    # general code for if not wes
-    
+    """ 
 
     # urls are created like this in _process_property:
     file_name, uuid = object_url.split("/")[-2:]

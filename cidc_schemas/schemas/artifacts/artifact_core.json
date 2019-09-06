@@ -22,7 +22,7 @@
       "type": "string"
     },
     "file_name": {
-      "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
+      "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
       "description": "The name of the file with extension",
       "type": "string"
     },

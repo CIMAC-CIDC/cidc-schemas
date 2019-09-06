@@ -5,11 +5,11 @@
   "type": "object",
   "description": "Paired end sequencing fastq file pair and read group mapping file",
   "properties": {
-    "fastq_1": {
+    "r1": {
       "$comment": "Fastq file for the first fragment.",
       "$ref": "artifacts/artifact_fastq.json"
     },
-    "fastq_2": {
+    "r2": {
       "$comment": "Fastq file for the second fragment.",
       "$ref": "artifacts/artifact_fastq.json"
     },
@@ -18,5 +18,5 @@
       "$comment": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes."
     }
   },
-  "required": ["fastq_1", "fastq_2", "read_group_mapping_file"]
+  "required": ["r1", "r2", "read_group_mapping_file"]
 }

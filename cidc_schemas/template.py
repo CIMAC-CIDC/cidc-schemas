@@ -75,7 +75,7 @@ class Template:
         worksheets {Dict[str, dict]} -- a mapping from worksheet names to worksheet schemas
     """
 
-    def __init__(self, schema: dict, name=None):
+    def __init__(self, schema: dict, name = None):
         """
         Load the schema defining a manifest or assay template.
 
@@ -167,7 +167,7 @@ class Template:
         return Template._get_coerce(t, entry.get("$id"))
 
     @staticmethod
-    def _get_coerce(t: str, object_id=None):
+    def _get_coerce(t: str, object_id = None):
         """
         This function takes a json-schema style type
         and determines the best python

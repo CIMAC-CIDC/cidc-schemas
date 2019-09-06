@@ -3,7 +3,7 @@ import json
 import os
 import copy
 import uuid
-from typing import Union, BinaryIO
+from typing import Union, BinaryIO, Tuple
 import jsonschema
 from deepdiff import grep
 import datetime
@@ -268,7 +268,12 @@ def _process_property(
     if verb:
         print(f'found def {field_def}')
     
-    val = field_def['coerce'](raw_val)
+    try:
+        val = field_def['coerce'](raw_val)
+    except (TypeError, ValueError) as e:
+
+        raise ParsingException(f"Can't parse value ({raw_val}) for {key} ({field_def.get('type_ref')}) which shold be {field_def.get('type')}") from e
+
 
     # or set/update value in-place in data_obj dictionary 
     pointer = field_def['merge_pointer']
@@ -296,10 +301,13 @@ def _process_property(
         )
     
 
+class ParsingException(ValueError):
+    pass
+
 SUPPORTED_ASSAYS = ["wes", "olink"]
 SUPPORTED_MANIFESTS = ["pbmc"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
-def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) -> (dict, dict):
+def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, errors_as_list = False, verb: bool = False) -> Union[Tuple[dict, dict], Tuple[dict, dict, list]]:
     """
     Converts excel file to json object. It also identifies local files
     which need to uploaded to a google bucket and provides some logic
@@ -322,6 +330,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         assay_hint: string used to help idnetify properties in template. Must
                     be the the root of the template filename i.e.
                     wes_template.json would be wes.
+        errors_as_list: not to fail on the first error, but return a list of errors
         verb: boolean indicating verbosity
 
     Returns:
@@ -333,6 +342,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                     gs_key = "constructed/relative/to/clinical/trial/GCS/path",
                     upload_placeholder = "random_uuid-for-artifact-upload"
                 )
+            arg3: list of errors, present if errors_as_list = True 
 
     Process:
 
@@ -431,6 +441,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     if assay_hint not in SUPPORTED_TEMPLATES:
         raise NotImplementedError(f'{assay_hint} is not supported yet, only {SUPPORTED_TEMPLATES} are supported.')
 
+    errors_so_far = []
     
     # get the root CT schema
     root_ct_schema = load_and_validate_schema("clinical_trial.json")
@@ -491,18 +502,28 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                 # create dictionary per row
                 for key, val in zip(headers, row):
                     
-                    # get corr xsls schema type 
-                    new_file = _process_property(
-                        key, val,
-                        assay_hint=assay_hint,
-                        key_lu=xlsx_template.key_lu,
-                        data_obj=data_obj,
-                        format_context=dict(local_context, **preamble_context), # combine contextes
-                        root_obj=copy_of_preamble,
-                        data_obj_pointer=data_object_pointer,
-                        verb=verb)
-                    if new_file:
-                        collected_files.append(new_file)
+                    try: 
+                        # get corr xsls schema type 
+                        new_file = _process_property(
+                            key, val,
+                            assay_hint=assay_hint,
+                            key_lu=xlsx_template.key_lu,
+                            data_obj=data_obj,
+                            format_context=dict(local_context, **preamble_context), # combine contextes
+                            root_obj=copy_of_preamble,
+                            data_obj_pointer=data_object_pointer,
+                            verb=verb)
+                        if new_file:
+                            collected_files.append(new_file)
+
+                    except ParsingException as e:
+                        if not errors_as_list:
+                            raise e
+                        errors_so_far.append(e)
+                        if verb:
+                            print('encountered ParsingException')
+                            print(f'   {e}')
+
 
                 if verb:
                     print('merging preambles')
@@ -516,23 +537,30 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         
 
         for row in ws[RowType.PREAMBLE]:
-            # process this property
-            new_file = _process_property(
-                row[0], row[1], 
-                assay_hint=assay_hint, 
-                key_lu=xlsx_template.key_lu, 
-                data_obj=preamble_obj, 
-                format_context=preamble_context, 
-                root_obj=root_ct_obj, 
-                data_obj_pointer=preamble_object_pointer, 
-                verb=verb)
-            # TODO we might want to use copy+preamble_merger here too,
-            # to for complex properites that require mergeStrategy 
-            
-            if new_file:
-                collected_files.append(new_file)
+            try: 
+                # process this preamble property
+                new_file = _process_property(
+                    row[0], row[1], 
+                    assay_hint=assay_hint, 
+                    key_lu=xlsx_template.key_lu, 
+                    data_obj=preamble_obj, 
+                    format_context=preamble_context, 
+                    root_obj=root_ct_obj, 
+                    data_obj_pointer=preamble_object_pointer, 
+                    verb=verb)
+                # TODO we might want to use copy+preamble_merger here too,
+                # to for complex properites that require mergeStrategy 
+                if new_file:
+                    collected_files.append(new_file)
+
+            except ParsingException as e:
+                if not errors_as_list:
+                    raise e
+                errors_so_far.append(e)
 
     # return root object and files list
+    if errors_as_list:
+        return root_ct_obj, collected_files, errors_so_far
     return root_ct_obj, collected_files
 
 

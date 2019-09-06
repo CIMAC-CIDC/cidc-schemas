@@ -32,7 +32,8 @@
       "type": "array",
       "items": {
         "$ref": "shipping_core.json"
-      }
+      },
+      "mergeStrategy": "append"
     },
     "participants": {
       "type": "array",

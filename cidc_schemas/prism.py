@@ -312,7 +312,9 @@ def _process_property(
         )
     
 
-SUPPORTED_ASSAYS = ["wes", "olink", "pbmc"]
+SUPPORTED_ASSAYS = ["wes", "olink"]
+SUPPORTED_MANIFESTS = ["pbmc"]
+SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
 def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) -> (dict, dict):
     """
     Converts excel file to json object. It also identifies local files
@@ -442,8 +444,8 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     """
 
     # data rows will require a unique identifier
-    if assay_hint not in SUPPORTED_ASSAYS:
-        raise NotImplementedError(f'{assay_hint} is not supported yet, only {SUPPORTED_ASSAYS} are supported.')
+    if assay_hint not in SUPPORTED_TEMPLATES:
+        raise NotImplementedError(f'{assay_hint} is not supported yet, only {SUPPORTED_TEMPLATES} are supported.')
 
     
     # get the root CT schema

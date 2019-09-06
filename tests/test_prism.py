@@ -14,7 +14,7 @@ from jsonmerge import Merger
 
 from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
-    SUPPORTED_ASSAYS
+    SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
@@ -304,10 +304,16 @@ def test_prism(schema_path, xlsx_path):
     # turn into object.
     ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
 
-    if hint in HINTS_ASSAYS:
+    if hint in SUPPORTED_ASSAYS:
         # olink is different - is will never have array of assay "runs" - only one
         if hint != 'olink':
-            assert len(ct['assays'][hint]) == 1        
+            assert len(ct['assays'][hint]) == 1
+
+    elif hint in SUPPORTED_MANIFESTS: 
+        assert not ct.get('assays'), "Assay created during manifest prismify"
+
+    else: 
+        assert False, f"Unknown template {hint}"
 
     
     # we merge it with a preexisting one
@@ -546,11 +552,8 @@ def test_merge_ct_meta():
     assert sum(len(p['samples']) for p in ct_merge['participants']) == 2+sum(len(p['samples']) for p in WES_TEMPLATE_EXAMPLE_CT['participants'])
 
 
-HINTS_ASSAYS = ["wes", "olink"]
-HINTS_MANIFESTS = ["pbmc"]
-
 @pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
-def test_end_to_end_wes_olink(schema_path, xlsx_path):
+def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     # extract hint
     hint = schema_path.split("/")[-1].replace("_template.json", "")
 
@@ -564,7 +567,7 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
     # parse the spreadsheet and get the file maps
     prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
 
-    if hint in HINTS_MANIFESTS:
+    if hint in SUPPORTED_MANIFESTS:
         assert len(prism_patch['shipments']) == 1
 
         if hint == 'pbmc':
@@ -578,7 +581,7 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
         else: 
             assert False, f'add {hint} specific asserts'
 
-    if hint in HINTS_ASSAYS:
+    if hint in SUPPORTED_ASSAYS:
         # olink is different in structure - no array of assays, only one.
         if hint == 'olink':
             prism_patch_assay_records=prism_patch['assays'][hint]['records']

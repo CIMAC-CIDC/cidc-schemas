@@ -7,9 +7,9 @@ from typing import Union, BinaryIO
 import jsonschema
 from deepdiff import grep
 import datetime
-from jsonmerge import merge, Merger
+from jsonmerge import merge, Merger, exceptions as jsonmerge_exceptions
 from collections import namedtuple
-from jsonpointer import JsonPointer, JsonPointerException, resolve_pointer
+from jsonpointer import JsonPointer, JsonPointerException, resolve_pointer, EndOfList
 
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
@@ -85,9 +85,17 @@ def _set_val(
        Nothing
     """
 
+    # special case to set context doc itself
+    if pointer.rstrip('#') == '':
+        context.update(val)
+        return
+
+
     #fill defaults 
-    root = context if root is None else root
-    context_pointer = "/" if root is None else context_pointer
+    if root is None:
+        root = context
+    if context_pointer is None:
+        context_pointer = "/"
     
 
     # first we need to convert pointer to an absolute one
@@ -98,14 +106,18 @@ def _set_val(
 
     else:
         # parse "relative" jumps up
-        jumpups, rem_pointer = pointer.split('/',1)
-        jumpups = int(jumpups.rstrip('#'))
+        jumpups, slash, rem_pointer = pointer.partition('/')
+        try:
+            jumpups = int(jumpups.rstrip('#'))
+        except ValueError:
+            jumpups = 0
+
         # check that we don't have to jump up more than we dived in already 
         assert jumpups <= context_pointer.rstrip('/').count('/'), \
-            f"Can't set value for pointer {pointer} - to many jumps up from current."
+            f"Can't set value for pointer {pointer} to many jumps up from current context."
 
         # and we'll go down remaining part of `pointer` from there
-        jpoint = JsonPointer('/'+rem_pointer)
+        jpoint = JsonPointer(slash+rem_pointer)
         if jumpups > 0:
             # new context pointer 
             higher_context_pointer = '/'.join(context_pointer.strip('/').split('/')[:-1*jumpups])
@@ -126,57 +138,58 @@ def _set_val(
             doc = jpoint.walk(doc, part)
 
         except (JsonPointerException, IndexError) as e:
-            # means that there isn't needed sub-object in place
-            # so create one
+            # means that there isn't needed sub-object in place, so create one
 
             # look ahead to figure out a proper type that needs to be created
-            if i+1 == len(jpoint.parts):
-                raise Exception(f"Can't determine how to set value in {pointer!r}")
-
-            next_part = jpoint.parts[i+1]
-
-
-            # `next_part` looks like array index like"[0]" or "-" (RFC 6901)
-            if next_part == "-" or jpoint._RE_ARRAY_INDEX.match(str(next_part)):
-                # so create array
-                next_thing = []
-            # or just dict as default
-            else:
-                next_thing = {}
+            next_thing = __jpointer_get_next_thing(jpoint.parts[i+1])
             
-            if part == "-":
-                doc.append(next_thing)
-            else:
-                # get_part will return str or int, so we can use it for `doc[typed_part]`
-                # and it will work for both - doc being `dict` or `array`
-                typed_part = jpoint.get_part(doc, part)
-                try:
-                    doc[typed_part] = next_thing          
-                # if doc is an empty array we hit an error when we try to paste to [0] index,
-                # so just append
-                except IndexError:
-                    doc.append(next_thing)
+            # insert it
+            __jpointer_insert_next_thing(doc, jpoint, part, next_thing)
 
-            # now we `walk` it again - this time should be OK
+            # and `walk` it again - this time should be OK
             doc = jpoint.walk(doc, part)
 
-    last_part = jpoint.parts[-1]
-    if last_part == '-':
-        doc.append(val)
-        return
 
-    typed_last_part = jpoint.get_part(doc, last_part)
-    
-    # now we update it with val
-    try:
-        doc[typed_last_part] = val          
-    # if it's an empty array - we get an error 
-    # when we try to paste to [0] index,
-    # so just append then
-    except IndexError:
-        assert len(doc) == typed_last_part, f"Can't set value in {pointer!r}"
-        doc.append(val)
+        if isinstance(doc, EndOfList):
+            actual_doc = __jpointer_get_next_thing(jpoint.parts[i+1])
+            __jpointer_insert_next_thing(doc.list_, jpoint, "-", actual_doc)
+            doc = actual_doc
 
+    __jpointer_insert_next_thing(doc, jpoint, jpoint.parts[-1], val)
+
+
+def  __jpointer_get_next_thing(next_part) -> Union[dict, list]:
+    """
+    Looking at next part of pointer creates a proper object - dict or list
+    to insert into a doc, that is being `jsonpointer.walk`ed.
+    """
+    # `next_part` looks like array index like"[0]" or "-" (RFC 6901)
+    if next_part == "-" or JsonPointer._RE_ARRAY_INDEX.match(str(next_part)):
+        # so create array
+        return []
+    # or just dict as default
+    else:
+        return {}
+
+
+def  __jpointer_insert_next_thing(doc, jpoint, part, next_thing):
+    """ 
+    Puts next_thing into a doc (that is being `jsonpointer.walk`ed)
+    by *part* "address". *jpoint* is Jsonpointer that is walked.   
+    """
+    if part == "-":
+        doc.append(next_thing)
+    else:
+        # part will return str or int, so we can use it for `doc[typed_part]`
+        # and it will work for both - doc being `dict` or `array`
+        typed_part = jpoint.get_part(doc, part)
+        try:
+            doc[typed_part] = next_thing
+
+        # if doc is an empty array we hit an error when we try to paste to [0] index,
+        # so just append
+        except IndexError:
+            doc.append(next_thing)
 
 
 def _get_recursively(search_dict, field):
@@ -262,13 +275,11 @@ def _process_property(
     if field_def.get('is_artifact'):
         pointer+='/upload_placeholder'
 
-    try:
-        _set_val(pointer, val, data_obj, root_obj, data_obj_pointer, verb=verb)
-    except Exception as e:
-        raise Exception(e)
+    _set_val(pointer, val, data_obj, root_obj, data_obj_pointer, verb=verb)
 
     if verb:
         print(f'current {data_obj}')
+        print(f'current root {root_obj}')
 
     if field_def.get('is_artifact'):
 
@@ -286,6 +297,8 @@ def _process_property(
     
 
 SUPPORTED_ASSAYS = ["wes", "olink"]
+SUPPORTED_MANIFESTS = ["pbmc"]
+SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
 def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) -> (dict, dict):
     """
     Converts excel file to json object. It also identifies local files
@@ -415,16 +428,15 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     """
 
     # data rows will require a unique identifier
-    if assay_hint not in SUPPORTED_ASSAYS:
-        raise NotImplementedError(f'{assay_hint} is not supported yet, only {SUPPORTED_ASSAYS} are supported.')
+    if assay_hint not in SUPPORTED_TEMPLATES:
+        raise NotImplementedError(f'{assay_hint} is not supported yet, only {SUPPORTED_TEMPLATES} are supported.')
 
     
     # get the root CT schema
     root_ct_schema = load_and_validate_schema("clinical_trial.json")
     # create the result CT dictionary
-    root_ct_obj = {}
+    root_ct_obj = {"_root_ct_obj": assay_hint} if verb else {}
     # and merger for it
-    root_merger = Merger(root_ct_schema)
     # and where to collect all local file refs
     collected_files = []
 
@@ -453,45 +465,52 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         data_object_pointer = templ_ws['prism_data_object_pointer']
 
         # creating preamble obj 
-        preamble_obj = {}
+        preamble_obj = {"_preamble_obj": f"{assay_hint}:{ws_name}"} if verb else {}
         
-        # get headers
-        headers = ws[RowType.HEADER][0]
-
-        # get the data
         data = ws[RowType.DATA]
-        # for row in data:
-        for i, row in enumerate(data):
+        if data:
+            # get the data
+            headers = ws[RowType.HEADER][0]
 
-            # creating data obj 
-            data_obj = {}
-            copy_of_preamble = copy.deepcopy(preamble_obj)
-            _set_val(data_object_pointer, data_obj, copy_of_preamble, verb=verb)
+            # for row in data:
+            for i, row in enumerate(data):
 
-            # We create this "data record dict" (all key-value pairs) prior to processing
-            # properties from data_columns wrt template schema definitions, because 
-            # there can be a 'gcs_uri_format' that needs to have access to all values.
+                if verb:
+                    print(f'next data row {i} {row}')
 
-            local_context = dict(zip([h.lower() for h in headers], row))
+                # creating data obj 
+                data_obj = {"_data_obj": f"{assay_hint}:{ws_name}:row_{i}"} if verb else {}
+                copy_of_preamble = {"_preamble_obj": f"copy_for:{assay_hint}:{ws_name}:row_{i}"} if verb else {}
+                _set_val(data_object_pointer, data_obj, copy_of_preamble, root_ct_obj, preamble_object_pointer, verb=verb)
 
-            # create dictionary per row
-            for key, val in zip(headers, row):
-                
-                # get corr xsls schema type 
-                new_file = _process_property(
-                    key, val,
-                    assay_hint=assay_hint,
-                    key_lu=xlsx_template.key_lu,
-                    data_obj=data_obj,
-                    format_context=dict(local_context, **preamble_context), # combine contextes
-                    root_obj=copy_of_preamble,
-                    data_obj_pointer=data_object_pointer,
-                    verb=verb)
-                if new_file:
-                    collected_files.append(new_file)
+                # We create this "data record dict" (all key-value pairs) prior to processing
+                # properties from data_columns wrt template schema definitions, because 
+                # there can be a 'gcs_uri_format' that needs to have access to all values.
+                local_context = dict(zip([h.lower() for h in headers], row))
 
-            preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
-        
+                # create dictionary per row
+                for key, val in zip(headers, row):
+                    
+                    # get corr xsls schema type 
+                    new_file = _process_property(
+                        key, val,
+                        assay_hint=assay_hint,
+                        key_lu=xlsx_template.key_lu,
+                        data_obj=data_obj,
+                        format_context=dict(local_context, **preamble_context), # combine contextes
+                        root_obj=copy_of_preamble,
+                        data_obj_pointer=data_object_pointer,
+                        verb=verb)
+                    if new_file:
+                        collected_files.append(new_file)
+
+                if verb:
+                    print('merging preambles')
+                    print(f'   {preamble_obj}')
+                    print(f'   {copy_of_preamble}')
+                preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
+                if verb:
+                    print(f'merged - {preamble_obj}')
 
         _set_val(preamble_object_pointer, preamble_obj, root_ct_obj, verb=verb)
         

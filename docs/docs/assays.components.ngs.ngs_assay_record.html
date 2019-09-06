@@ -72,8 +72,6 @@
     <td width=55%>
         
             Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234.
-                <div><small>Id of an participant within this clinical trial, that this assay record is based upon.</small></div>
-            
         
     </td>
     <td>
@@ -99,8 +97,6 @@
     <td width=55%>
         
             Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.
-                <div><small>Id of an sample within this clinical trial, that this assay record is based upon.</small></div>
-            
         
     </td>
     <td>
@@ -126,8 +122,6 @@
     <td width=55%>
         
             Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.
-                <div><small>Id of an aliquot within this clinical trial, that this assay record is based upon.</small></div>
-            
         
     </td>
     <td>
@@ -153,8 +147,6 @@
     <td width=55%>
         
             Paired end sequencing fastq file pair and read group mapping file
-                <div><small>Fastq and read group mapping files produced by the assay for that .</small></div>
-            
         
     </td>
     <td>
@@ -408,7 +400,8 @@
                                         "uploaded_timestamp",
                                         "file_size_bytes",
                                         "md5_hash",
-                                        "artifact_category"
+                                        "artifact_category",
+                                        "data_format"
                                     ]
                                 },
                                 {
@@ -435,6 +428,24 @@
                                         "Mount Sinai",
                                         "Stanford",
                                         "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "description": "Data Format.",
+                                    "enum": [
+                                        "FASTA",
+                                        "FASTQ",
+                                        "IMAGE",
+                                        "VCF",
+                                        "CSV",
+                                        "XLSX",
+                                        "NPX",
+                                        "BAM",
+                                        "MAF",
+                                        "BINARY",
+                                        "TEXT",
+                                        "[NOT SET]"
                                     ],
                                     "type": "string"
                                 },
@@ -481,6 +492,9 @@
                         },
                         {
                             "properties": {
+                                "data_format": {
+                                    "const": "FASTQ"
+                                },
                                 "info": {
                                     "type": "object"
                                 }
@@ -507,7 +521,8 @@
                                         "uploaded_timestamp",
                                         "file_size_bytes",
                                         "md5_hash",
-                                        "artifact_category"
+                                        "artifact_category",
+                                        "data_format"
                                     ]
                                 },
                                 {
@@ -534,6 +549,24 @@
                                         "Mount Sinai",
                                         "Stanford",
                                         "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "description": "Data Format.",
+                                    "enum": [
+                                        "FASTA",
+                                        "FASTQ",
+                                        "IMAGE",
+                                        "VCF",
+                                        "CSV",
+                                        "XLSX",
+                                        "NPX",
+                                        "BAM",
+                                        "MAF",
+                                        "BINARY",
+                                        "TEXT",
+                                        "[NOT SET]"
                                     ],
                                     "type": "string"
                                 },
@@ -580,6 +613,9 @@
                         },
                         {
                             "properties": {
+                                "data_format": {
+                                    "const": "FASTQ"
+                                },
                                 "info": {
                                     "type": "object"
                                 }
@@ -606,7 +642,8 @@
                                         "uploaded_timestamp",
                                         "file_size_bytes",
                                         "md5_hash",
-                                        "artifact_category"
+                                        "artifact_category",
+                                        "data_format"
                                     ]
                                 },
                                 {
@@ -633,6 +670,24 @@
                                         "Mount Sinai",
                                         "Stanford",
                                         "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "description": "Data Format.",
+                                    "enum": [
+                                        "FASTA",
+                                        "FASTQ",
+                                        "IMAGE",
+                                        "VCF",
+                                        "CSV",
+                                        "XLSX",
+                                        "NPX",
+                                        "BAM",
+                                        "MAF",
+                                        "BINARY",
+                                        "TEXT",
+                                        "[NOT SET]"
                                     ],
                                     "type": "string"
                                 },
@@ -679,6 +734,9 @@
                         },
                         {
                             "properties": {
+                                "data_format": {
+                                    "const": "TEXT"
+                                },
                                 "info": {
                                     "type": "object"
                                 }

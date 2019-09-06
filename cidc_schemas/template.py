@@ -25,7 +25,8 @@ def _get_template_path_map() -> dict:
         if os.path.isdir(abs_type_dir):
             for template_file in os.listdir(abs_type_dir):
                 template_type = template_file.replace('_template.json', '')
-                template_schema_path = os.path.join(abs_type_dir, template_file)
+                template_schema_path = os.path.join(
+                    abs_type_dir, template_file)
                 path_map[template_type] = template_schema_path
 
     return path_map
@@ -64,7 +65,6 @@ def generate_all_templates(target_dir: str):
                     template_xlsx_file = template_schema_file.replace('.json', '.xlsx')
                     target_path = os.path.join(target_subdir, template_xlsx_file)
                     generate_empty_template(schema_path, target_path)
-
 
 class Template:
     """
@@ -137,7 +137,6 @@ class Template:
 
         return processed_worksheet
 
-
     @staticmethod
     def _get_ref_coerce(ref: str):
         """
@@ -174,7 +173,10 @@ class Template:
         and determines the best python
         function to type the value.
         """
-
+        # if it's an artifact that will be loaded through local file
+        # we just return uuid as value
+        if object_id == "local_file_path":
+            return lambda _: str(uuid.uuid4())
         if t == 'string':
             return str
         elif t == 'integer':
@@ -183,14 +185,8 @@ class Template:
             return float
         elif t == 'boolean':
             return bool
-
-        # if it's an artifact that will be loaded through local file
-        # we just return uuid as value 
-        elif t == 'object' and object_id == "local_file":
-            return lambda _: str(uuid.uuid4())
         else:
             raise NotImplementedError(f"no coercion available for type:{t}")
-
 
     def _load_keylookup(self) -> dict:
         """
@@ -209,14 +205,19 @@ class Template:
         # create a key lookup dictionary
         key_lu = {}
 
-        def _add_coerce(field_def:dict) -> dict: 
+        def _add_coerce(field_def: dict) -> dict:
             # checks if we have a cast func for that 'type_ref'
             if 'value_template_format' in field_def:
-                coerce = lambda x: field_def['value_template_format'].format_map(x) 
+                coerce = lambda x: field_def['value_template_format'].format_map(x)
             if 'type' in field_def:
-                coerce = self._get_coerce(field_def['type'])
+                if '$id' in field_def:
+                    coerce = self._get_coerce(
+                        field_def['type'], field_def['$id'])
+                else:
+                    coerce = self._get_coerce(field_def['type'])
             else:
-                coerce = self._get_ref_coerce(field_def.get('type_ref') or field_def['$ref'])
+                coerce = self._get_ref_coerce(
+                    field_def.get('type_ref') or field_def['$ref'])
 
             return dict(coerce=coerce, **field_def)
 
@@ -232,7 +233,7 @@ class Template:
                 # (as for template.schema) - "merge_pointer" and "type_ref"
 
             # load the data columns
-            for section_key, section_def in ws_schema.get('data_columns', {}).items():                
+            for section_key, section_def in ws_schema.get('data_columns', {}).items():
                 for column_key, column_def in section_def.items():
 
                     # populate lookup
@@ -244,10 +245,10 @@ class Template:
 
     # XlTemplateReader only knows how to format these types of sections
     VALID_WS_SECTIONS = set(['preamble_rows',
-        'data_columns',
-        'prism_preamble_object_pointer',
-        'prism_data_object_pointer',
-        'prism_preamble_object_schema'])
+                             'data_columns',
+                             'prism_preamble_object_pointer',
+                             'prism_data_object_pointer',
+                             'prism_preamble_object_schema'])
 
     @staticmethod
     def _validate_worksheet(ws_title: str, ws_schema: dict):
@@ -276,8 +277,7 @@ class Template:
             template_schema_path {str} -- path to the template schema file
             schema_root {str} -- path to the directory where all schemas are stored
         """
-        template_schema = load_and_validate_schema(
-            template_schema_path, schema_root)
+        template_schema = load_and_validate_schema(template_schema_path, schema_root)
 
         return Template(template_schema, name=template_schema_path)
 

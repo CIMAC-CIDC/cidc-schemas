@@ -78,8 +78,6 @@
     <td width=55%>
         
             Information about images include height and width
-                <div><small>Image produced from the combination of multiple imaging experiment data images.</small></div>
-            
         
     </td>
     <td>
@@ -108,8 +106,6 @@
     <td width=55%>
         
             Information about CSV files
-                <div><small>Results of a computer vision task, in which specific regions of a region are mapped.</small></div>
-            
         
     </td>
     <td>
@@ -133,8 +129,6 @@
     <td width=55%>
         
             Information about CSV files
-                <div><small>Data produced from the analysis of cellular image.</small></div>
-            
         
     </td>
     <td>
@@ -158,8 +152,6 @@
     <td width=55%>
         
             Information about CSV files
-                <div><small>Summary of the results of a cell segmentation data experiment.</small></div>
-            
         
     </td>
     <td>
@@ -185,8 +177,6 @@
     <td width=55%>
         
             Information about images include height and width
-                <div><small>Genome segmentation mapping</small></div>
-            
         
     </td>
     <td>
@@ -210,8 +200,6 @@
     <td width=55%>
         
             Information about CSV files
-                <div><small>Generation of values based on based on experiment data.</small></div>
-            
         
     </td>
     <td>
@@ -250,7 +238,8 @@
                                 "uploaded_timestamp",
                                 "file_size_bytes",
                                 "md5_hash",
-                                "artifact_category"
+                                "artifact_category",
+                                "data_format"
                             ]
                         },
                         {
@@ -277,6 +266,24 @@
                                 "Mount Sinai",
                                 "Stanford",
                                 "MD Anderson"
+                            ],
+                            "type": "string"
+                        },
+                        "data_format": {
+                            "description": "Data Format.",
+                            "enum": [
+                                "FASTA",
+                                "FASTQ",
+                                "IMAGE",
+                                "VCF",
+                                "CSV",
+                                "XLSX",
+                                "NPX",
+                                "BAM",
+                                "MAF",
+                                "BINARY",
+                                "TEXT",
+                                "[NOT SET]"
                             ],
                             "type": "string"
                         },
@@ -323,6 +330,9 @@
                 },
                 {
                     "properties": {
+                        "data_format": {
+                            "const": "CSV"
+                        },
                         "header_row": {
                             "type": "integer"
                         },
@@ -356,7 +366,8 @@
                                 "uploaded_timestamp",
                                 "file_size_bytes",
                                 "md5_hash",
-                                "artifact_category"
+                                "artifact_category",
+                                "data_format"
                             ]
                         },
                         {
@@ -383,6 +394,24 @@
                                 "Mount Sinai",
                                 "Stanford",
                                 "MD Anderson"
+                            ],
+                            "type": "string"
+                        },
+                        "data_format": {
+                            "description": "Data Format.",
+                            "enum": [
+                                "FASTA",
+                                "FASTQ",
+                                "IMAGE",
+                                "VCF",
+                                "CSV",
+                                "XLSX",
+                                "NPX",
+                                "BAM",
+                                "MAF",
+                                "BINARY",
+                                "TEXT",
+                                "[NOT SET]"
                             ],
                             "type": "string"
                         },
@@ -429,6 +458,9 @@
                 },
                 {
                     "properties": {
+                        "data_format": {
+                            "const": "CSV"
+                        },
                         "header_row": {
                             "type": "integer"
                         },
@@ -462,7 +494,8 @@
                                 "uploaded_timestamp",
                                 "file_size_bytes",
                                 "md5_hash",
-                                "artifact_category"
+                                "artifact_category",
+                                "data_format"
                             ]
                         },
                         {
@@ -489,6 +522,24 @@
                                 "Mount Sinai",
                                 "Stanford",
                                 "MD Anderson"
+                            ],
+                            "type": "string"
+                        },
+                        "data_format": {
+                            "description": "Data Format.",
+                            "enum": [
+                                "FASTA",
+                                "FASTQ",
+                                "IMAGE",
+                                "VCF",
+                                "CSV",
+                                "XLSX",
+                                "NPX",
+                                "BAM",
+                                "MAF",
+                                "BINARY",
+                                "TEXT",
+                                "[NOT SET]"
                             ],
                             "type": "string"
                         },
@@ -535,6 +586,9 @@
                 },
                 {
                     "properties": {
+                        "data_format": {
+                            "const": "CSV"
+                        },
                         "header_row": {
                             "type": "integer"
                         },
@@ -568,7 +622,8 @@
                                 "uploaded_timestamp",
                                 "file_size_bytes",
                                 "md5_hash",
-                                "artifact_category"
+                                "artifact_category",
+                                "data_format"
                             ]
                         },
                         {
@@ -595,6 +650,24 @@
                                 "Mount Sinai",
                                 "Stanford",
                                 "MD Anderson"
+                            ],
+                            "type": "string"
+                        },
+                        "data_format": {
+                            "description": "Data Format.",
+                            "enum": [
+                                "FASTA",
+                                "FASTQ",
+                                "IMAGE",
+                                "VCF",
+                                "CSV",
+                                "XLSX",
+                                "NPX",
+                                "BAM",
+                                "MAF",
+                                "BINARY",
+                                "TEXT",
+                                "[NOT SET]"
                             ],
                             "type": "string"
                         },
@@ -643,6 +716,9 @@
                     "properties": {
                         "channels": {
                             "type": "integer"
+                        },
+                        "data_format": {
+                            "const": "IMAGE"
                         },
                         "height": {
                             "type": "integer"
@@ -678,7 +754,8 @@
                                 "uploaded_timestamp",
                                 "file_size_bytes",
                                 "md5_hash",
-                                "artifact_category"
+                                "artifact_category",
+                                "data_format"
                             ]
                         },
                         {
@@ -705,6 +782,24 @@
                                 "Mount Sinai",
                                 "Stanford",
                                 "MD Anderson"
+                            ],
+                            "type": "string"
+                        },
+                        "data_format": {
+                            "description": "Data Format.",
+                            "enum": [
+                                "FASTA",
+                                "FASTQ",
+                                "IMAGE",
+                                "VCF",
+                                "CSV",
+                                "XLSX",
+                                "NPX",
+                                "BAM",
+                                "MAF",
+                                "BINARY",
+                                "TEXT",
+                                "[NOT SET]"
                             ],
                             "type": "string"
                         },
@@ -754,6 +849,9 @@
                         "channels": {
                             "type": "integer"
                         },
+                        "data_format": {
+                            "const": "IMAGE"
+                        },
                         "height": {
                             "type": "integer"
                         },
@@ -788,7 +886,8 @@
                                 "uploaded_timestamp",
                                 "file_size_bytes",
                                 "md5_hash",
-                                "artifact_category"
+                                "artifact_category",
+                                "data_format"
                             ]
                         },
                         {
@@ -815,6 +914,24 @@
                                 "Mount Sinai",
                                 "Stanford",
                                 "MD Anderson"
+                            ],
+                            "type": "string"
+                        },
+                        "data_format": {
+                            "description": "Data Format.",
+                            "enum": [
+                                "FASTA",
+                                "FASTQ",
+                                "IMAGE",
+                                "VCF",
+                                "CSV",
+                                "XLSX",
+                                "NPX",
+                                "BAM",
+                                "MAF",
+                                "BINARY",
+                                "TEXT",
+                                "[NOT SET]"
                             ],
                             "type": "string"
                         },
@@ -861,6 +978,9 @@
                 },
                 {
                     "properties": {
+                        "data_format": {
+                            "const": "CSV"
+                        },
                         "header_row": {
                             "type": "integer"
                         },

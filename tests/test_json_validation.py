@@ -14,11 +14,18 @@ from .constants import SCHEMA_DIR, ROOT_DIR, TEST_SCHEMA_DIR
 
 
 def test_map_refs():
-    spec = {"a": {"$ref": "foo"}, "b": [{"$ref": "foo"}]}
+    ref_spec = {"a": {"$ref": "foo"}, "b": [{"$ref": "foo"}]}
+    mapped_refs = _map_refs(ref_spec.copy(), lambda ref: ref.upper())
+    assert mapped_refs == {"a": "FOO", "b": ["FOO"]}
 
-    target = {"a": "FOO", "b": ["FOO"]}
+    # Fields with $ref in their values should not contain other keys
+    ref_spec['a']['extra'] = 'blah'
+    with pytest.raises(Exception, match="should not contain"):
+        _map_refs(ref_spec, lambda ref: ref.upper())
 
-    assert _map_refs(spec, lambda ref: ref.upper()) == target
+    type_ref_spec = {"a": {"type_ref": "foo", "extra": "prop"}}
+    mapped_spec = _map_refs(type_ref_spec, lambda _: {"a": "b"})
+    assert mapped_spec == {"a": {"a": "b", "type_ref": "foo", "extra": "prop"}}
 
 
 def test_trial_core():
@@ -101,7 +108,7 @@ def test_trial_core():
         "cimac_participant_id": "cpid_1",
         "trial_participant_id": "tpid_a",
         "cohort_id": "---",
-        "arm_id": "---",    
+        "arm_id": "---",
     }
     with pytest.raises(jsonschema.ValidationError):
         pt_validator.validate(participant)

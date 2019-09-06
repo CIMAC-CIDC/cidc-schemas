@@ -439,7 +439,12 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         if verb:
             print(f'next worksheet {ws_name}')
 
+        # Here we take only first two cells from preamble as key and value respectfully,
+        # lowering keys to match template schema definitions.
         preamble_context = dict((r[0].lower(), r[1]) for r in ws.get(RowType.PREAMBLE, []))
+        # We need this full "preamble dict" (all key-value pairs) prior to processing
+        # properties from data_columns or preamble wrt template schema definitions, because 
+        # there can be a 'gcs_uri_format' that needs to have access to all values.
 
         templ_ws = xlsx_template.schema['properties']['worksheets'][ws_name]
         preamble_object_schema = load_and_validate_schema(templ_ws['prism_preamble_object_schema'])
@@ -463,6 +468,10 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
             copy_of_preamble = copy.deepcopy(preamble_obj)
             _set_val(data_object_pointer, data_obj, copy_of_preamble, verb=verb)
 
+            # We create this "data record dict" (all key-value pairs) prior to processing
+            # properties from data_columns wrt template schema definitions, because 
+            # there can be a 'gcs_uri_format' that needs to have access to all values.
+
             local_context = dict(zip([h.lower() for h in headers], row))
 
             # create dictionary per row
@@ -474,7 +483,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                     assay_hint=assay_hint,
                     key_lu=xlsx_template.key_lu,
                     data_obj=data_obj,
-                    format_context=dict(local_context, **preamble_context),
+                    format_context=dict(local_context, **preamble_context), # combine contextes
                     root_obj=copy_of_preamble,
                     data_obj_pointer=data_object_pointer,
                     verb=verb)

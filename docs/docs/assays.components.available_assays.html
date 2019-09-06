@@ -194,8 +194,6 @@
     <td width=55%>
         
             High-throughput multiplexed assays for protein biomarker discovery
-                <div><small>NB This is not array as every other assay. Will update data on any olink upload.</small></div>
-            
         
     </td>
     <td>
@@ -4292,6 +4290,10 @@
                         "title": "Olink assay record",
                         "type": "object"
                     },
+                    "mergeOptions": {
+                        "idRef": "/chip_barcode"
+                    },
+                    "mergeStrategy": "arrayMergeById",
                     "type": "array"
                 },
                 "study": {

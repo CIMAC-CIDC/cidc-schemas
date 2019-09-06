@@ -84,9 +84,7 @@
         {% elif "allOf" in prop_schema %}
             Inherits all properties from schemas:
         {% else %}
-            {{ prop_schema["description"] }}{% if prop_schema["$comment"] %}
-                <div><small>{{prop_schema["$comment"]}}</small></div>
-            {% endif %}
+            {{ prop_schema["description"] }}
         {% endif %}
     </td>
     <td>

@@ -366,8 +366,6 @@
     <td width=55%>
         
             Reference for every available assay in network
-                <div><small>Assays for this trial</small></div>
-            
         
     </td>
     <td>
@@ -4396,6 +4394,10 @@
                                 "title": "Olink assay record",
                                 "type": "object"
                             },
+                            "mergeOptions": {
+                                "idRef": "/chip_barcode"
+                            },
+                            "mergeStrategy": "arrayMergeById",
                             "type": "array"
                         },
                         "study": {
@@ -7767,6 +7769,7 @@
                 "title": "Core Shipping Details",
                 "type": "object"
             },
+            "mergeStrategy": "append",
             "type": "array"
         },
         "trial_description": {

@@ -190,6 +190,8 @@
 </tr>
             
         
+            
+        
         
             
         
@@ -197,6 +199,29 @@
         
             
         
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="data_format">
+                data_format
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+        
+    </td>
+    <td>
+        
+            &lt; const: <strong>IMAGE</strong> &gt;            
+        
+    </td>
+</tr>
             
         
     </table>
@@ -221,7 +246,8 @@
                         "uploaded_timestamp",
                         "file_size_bytes",
                         "md5_hash",
-                        "artifact_category"
+                        "artifact_category",
+                        "data_format"
                     ]
                 },
                 {
@@ -248,6 +274,24 @@
                         "Mount Sinai",
                         "Stanford",
                         "MD Anderson"
+                    ],
+                    "type": "string"
+                },
+                "data_format": {
+                    "description": "Data Format.",
+                    "enum": [
+                        "FASTA",
+                        "FASTQ",
+                        "IMAGE",
+                        "VCF",
+                        "CSV",
+                        "XLSX",
+                        "NPX",
+                        "BAM",
+                        "MAF",
+                        "BINARY",
+                        "TEXT",
+                        "[NOT SET]"
                     ],
                     "type": "string"
                 },
@@ -296,6 +340,9 @@
             "properties": {
                 "channels": {
                     "type": "integer"
+                },
+                "data_format": {
+                    "const": "IMAGE"
                 },
                 "height": {
                     "type": "integer"

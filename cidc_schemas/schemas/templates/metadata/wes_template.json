@@ -87,19 +87,19 @@
               "merge_pointer": "0/files/fastq_1", 
               "gcs_prefix_format": "{cimac_participant_id}/{cimac_sample_id}/{cimac_aliquot_id}",
               "is_artifact" : 1,
-              "type_ref": "assays/components/local_file.json"
+              "type_ref": "assays/components/local_file.json#properties/file_path"
             },
             "reverse fastq": {
               "merge_pointer": "0/files/fastq_2", 
               "gcs_prefix_format": "{cimac_participant_id}/{cimac_sample_id}/{cimac_aliquot_id}",
               "is_artifact" : 1,
-              "type_ref": "assays/components/local_file.json"
+              "type_ref": "assays/components/local_file.json#properties/file_path"
             },
             "read group mapping file": {
               "merge_pointer": "0/files/read_group_mapping_file", 
               "gcs_prefix_format": "{cimac_participant_id}/{cimac_sample_id}/{cimac_aliquot_id}",
               "is_artifact" : 1,
-              "type_ref": "assays/components/local_file.json"
+              "type_ref": "assays/components/local_file.json#properties/file_path"
             }
           }
         }

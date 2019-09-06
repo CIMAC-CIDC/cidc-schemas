@@ -60,28 +60,39 @@ def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
     Note: _map_refs is shallow, i.e., if calling `on_refs` on a node produces 
     a new node that contains refs, those refs will not be resolved.
     """
-    if isinstance(node, collections.abc.Mapping) and '$ref' in node:
-        extra_keys = set(node.keys()).difference({'$ref', '$comment'})
-        if extra_keys:
-            # As for json-schema.org:
-            # "... You will always use $ref as the only key in an object: 
-            # any other keys you put there will be ignored by the validator."
-            # So we raise on that, to notify schema creator that s/he should not 
-            # expect those additional keys to be verified by schema validator.
-            raise Exception(f"Schema node with '$ref' should not contain anything else (besides '$comment' for docs). \
-                \nOn: {node} \nOffending keys {extra_keys}")
-        
-        # We found a ref, so return it mapped through `on_refs`
-        new_node = on_refs(node['$ref'])
-        # Plus concatenated new and old '$comment' fields 
-        # which should be just ignored anyways.
-        if '$comment' in new_node or '$comment' in node:
-            new_node['$comment'] = new_node.get('$comment', '') + node.get('$comment', '')
-        return new_node
-    elif isinstance(node, collections.abc.Mapping):
-        # Look for all refs in this mapping
-        for k, v in node.items():
-            node[k] = _map_refs(v, on_refs)
+    if isinstance(node, collections.abc.Mapping):
+        if '$ref' in node or 'type_ref' in node:
+            ref_key = '$ref' if '$ref' in node else 'type_ref'
+
+            if ref_key == '$ref':
+                extra_keys = set(node.keys()).difference({'$ref', '$comment'})
+                if extra_keys:
+                    # As for json-schema.org:
+                    # "... You will always use $ref as the only key in an object:
+                    # any other keys you put there will be ignored by the validator."
+                    # So we raise on that, to notify schema creator that s/he should not
+                    # expect those additional keys to be verified by schema validator.
+                    raise Exception(f"Schema node with '$ref' should not contain anything else (besides '$comment' for docs). \
+                        \nOn: {node} \nOffending keys {extra_keys}")
+
+            # We found a ref, so return it mapped through `on_refs`
+            new_node = on_refs(node[ref_key])
+
+            if ref_key == 'type_ref':
+                # For type_ref's, we don't want to clobber the other properties in node,
+                # so merge new_node and node.
+                new_node.update(node)
+
+            # Plus concatenated new and old '$comment' fields
+            # which should be just ignored anyways.
+            if '$comment' in new_node or '$comment' in node:
+                new_node['$comment'] = new_node.get(
+                    '$comment', '') + node.get('$comment', '')
+            return new_node
+        else:
+            # Look for all refs further down in this mapping
+            for k, v in node.items():
+                node[k] = _map_refs(v, on_refs)
     elif isinstance(node, (list, tuple)):
         # Look for all refs in this list
         for i in range(len(node)):

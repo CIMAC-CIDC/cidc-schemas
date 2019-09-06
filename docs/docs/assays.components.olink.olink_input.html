@@ -72,13 +72,11 @@
     <td width=55%>
         
             Information about a xlsx file
-                <div><small>Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale.</small></div>
-            
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_xlsx.html">artifacts.artifact_xlsx</a>
+            <a href="artifacts.artifact_npx.html">artifacts.artifact_npx</a>
         
     </td>
 </tr>
@@ -99,8 +97,6 @@
     <td width=55%>
         
             Information about a xlsx file
-                <div><small>Number of cycles required for the fluorescent signal to cross the threshold.</small></div>
-            
         
     </td>
     <td>
@@ -129,8 +125,8 @@
     "description": "Olink Assay Input Files",
     "properties": {
         "assay_npx": {
-            "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.",
-            "$id": "xlsx_artifact",
+            "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.",
+            "$id": "npx_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -144,7 +140,8 @@
                                 "uploaded_timestamp",
                                 "file_size_bytes",
                                 "md5_hash",
-                                "artifact_category"
+                                "artifact_category",
+                                "data_format"
                             ]
                         },
                         {
@@ -171,6 +168,24 @@
                                 "Mount Sinai",
                                 "Stanford",
                                 "MD Anderson"
+                            ],
+                            "type": "string"
+                        },
+                        "data_format": {
+                            "description": "Data Format.",
+                            "enum": [
+                                "FASTA",
+                                "FASTQ",
+                                "IMAGE",
+                                "VCF",
+                                "CSV",
+                                "XLSX",
+                                "NPX",
+                                "BAM",
+                                "MAF",
+                                "BINARY",
+                                "TEXT",
+                                "[NOT SET]"
                             ],
                             "type": "string"
                         },
@@ -217,19 +232,43 @@
                 },
                 {
                     "properties": {
-                        "info": {
-                            "type": "object"
+                        "aliquots": {
+                            "items": {
+                                "$comment": "Id of an aliquot within this assay.",
+                                "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
+                                "type": "string"
+                            },
+                            "type": "array"
+                        },
+                        "data_format": {
+                            "const": "NPX"
+                        },
+                        "number_of_aliquots": {
+                            "type": "integer"
                         }
                     }
                 }
             ],
+            "anyOf": [
+                {
+                    "required": [
+                        "number_of_aliquots",
+                        "aliquots"
+                    ]
+                },
+                {
+                    "required": [
+                        "upload_placeholder"
+                    ]
+                }
+            ],
             "description": "Information about a xlsx file",
             "mergeStrategy": "objectMerge",
-            "title": "Excel Artifact",
+            "title": "NPX Artifact",
             "type": "object"
         },
         "assay_raw_ct": {
-            "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.Number of cycles required for the fluorescent signal to cross the threshold.",
+            "$comment": "Number of cycles required for the fluorescent signal to cross the threshold.",
             "$id": "xlsx_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
@@ -244,7 +283,8 @@
                                 "uploaded_timestamp",
                                 "file_size_bytes",
                                 "md5_hash",
-                                "artifact_category"
+                                "artifact_category",
+                                "data_format"
                             ]
                         },
                         {
@@ -271,6 +311,24 @@
                                 "Mount Sinai",
                                 "Stanford",
                                 "MD Anderson"
+                            ],
+                            "type": "string"
+                        },
+                        "data_format": {
+                            "description": "Data Format.",
+                            "enum": [
+                                "FASTA",
+                                "FASTQ",
+                                "IMAGE",
+                                "VCF",
+                                "CSV",
+                                "XLSX",
+                                "NPX",
+                                "BAM",
+                                "MAF",
+                                "BINARY",
+                                "TEXT",
+                                "[NOT SET]"
                             ],
                             "type": "string"
                         },
@@ -317,6 +375,9 @@
                 },
                 {
                     "properties": {
+                        "data_format": {
+                            "const": "XLSX"
+                        },
                         "info": {
                             "type": "object"
                         }

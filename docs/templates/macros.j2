@@ -84,9 +84,7 @@
         {% elif "allOf" in prop_schema %}
             Inherits all properties from schemas:
         {% else %}
-            {{ prop_schema["description"] }}{% if prop_schema["$comment"] %}
-                <div><small>{{prop_schema["$comment"]}}</small></div>
-            {% endif %}
+            {{ prop_schema["description"] }}
         {% endif %}
     </td>
     <td>
@@ -116,6 +114,8 @@
                     {{ prop_type_format(prop_schema["additionalProperties"]) }}
                 {% endif %}
             {% endif %}
+        {% elif "const" in prop_schema %}
+            &lt; const: <strong>{{ prop_schema["const"] }}</strong> &gt;            
         {% elif "url" in prop_schema %}
             <a href="{{ prop_schema['url'] }}">{{ prop_schema['url'].replace('.html', '') }}</a>
         {% elif "type_ref" in prop_schema %} {# means we're in _template.json #}

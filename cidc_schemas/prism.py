@@ -767,7 +767,7 @@ def merge_artifact(
     _set_data_format(ct, existing_artifact)
 
     # return new object and the artifact that was merged
-    return ct, artifact
+    return ct, existing_artifact
 
 class InvalidMergeTargetException(ValueError):
     """Exception raised for target of merge_clinical_trial_metadata being non schema compliant."""

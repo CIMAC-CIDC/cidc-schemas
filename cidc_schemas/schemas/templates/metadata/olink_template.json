@@ -10,11 +10,10 @@
   "properties": {
     "worksheets": {
       "olink": {
+        "prism_preamble_object_schema": "assays/olink_assay.json",
+        "prism_preamble_object_pointer": "/assays/olink",
+        "prism_data_object_pointer": "/records/-",
 
-        "prism_preamble_object_schema" : "assays/olink_assay.json",
-        "prism_preamble_object_pointer" : "/assays/olink",
-        "prism_data_object_pointer" : "/records/-",
-        
         "preamble_rows": {
           "lead organization study id": {
             "merge_pointer": "2/lead_organization_study_id",
@@ -35,8 +34,8 @@
           },
           "combined file": {
             "merge_pointer": "0/study/study_npx",
-            "is_artifact" : 1,
-            "type_ref": "assays/components/local_file.json"
+            "is_artifact": 1,
+            "type_ref": "assays/components/local_file.json#properties/file_path"
           },
           "combined file npx manager version": {
             "merge_pointer": "0/study/npx_manager_version",
@@ -51,15 +50,15 @@
             },
             "npx file": {
               "merge_pointer": "0/files/assay_npx",
-              "is_artifact" : 1,
+              "is_artifact": 1,
               "gcs_prefix_format": "{chip_barcode}",
-              "type_ref": "assays/components/local_file.json"
+              "type_ref": "assays/components/local_file.json#properties/file_path"
             },
             "raw ct file": {
               "merge_pointer": "0/files/assay_raw_ct",
-              "is_artifact" : 1,
+              "is_artifact": 1,
               "gcs_prefix_format": "{chip_barcode}",
-              "type_ref": "assays/components/local_file.json"
+              "type_ref": "assays/components/local_file.json#properties/file_path"
             },
             "run date": {
               "merge_pointer": "0/run_date",

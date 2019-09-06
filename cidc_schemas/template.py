@@ -25,7 +25,8 @@ def _get_template_path_map() -> dict:
         if os.path.isdir(abs_type_dir):
             for template_file in os.listdir(abs_type_dir):
                 template_type = template_file.replace('_template.json', '')
-                template_schema_path = os.path.join(abs_type_dir, template_file)
+                template_schema_path = os.path.join(
+                    abs_type_dir, template_file)
                 path_map[template_type] = template_schema_path
 
     return path_map
@@ -54,15 +55,17 @@ def generate_all_templates(target_dir: str):
             if not os.path.exists(target_subdir):
                 os.makedirs(target_subdir)
 
-
             schema_subdir = os.path.join(TEMPLATE_DIR, template_type_dir)
 
             # Create a new empty template for each template schema in schema_subdir
             for template_schema_file in os.listdir(schema_subdir):
                 if not template_schema_file.startswith('.'):
-                    schema_path = os.path.join(schema_subdir, template_schema_file)
-                    template_xlsx_file = template_schema_file.replace('.json', '.xlsx')
-                    target_path = os.path.join(target_subdir, template_xlsx_file)
+                    schema_path = os.path.join(
+                        schema_subdir, template_schema_file)
+                    template_xlsx_file = template_schema_file.replace(
+                        '.json', '.xlsx')
+                    target_path = os.path.join(
+                        target_subdir, template_xlsx_file)
                     generate_empty_template(schema_path, target_path)
 
 
@@ -75,7 +78,7 @@ class Template:
         worksheets {Dict[str, dict]} -- a mapping from worksheet names to worksheet schemas
     """
 
-    def __init__(self, schema: dict, name = None):
+    def __init__(self, schema: dict, name=None):
         """
         Load the schema defining a manifest or assay template.
 
@@ -137,7 +140,6 @@ class Template:
 
         return processed_worksheet
 
-
     @staticmethod
     def _get_ref_coerce(ref: str):
         """
@@ -168,13 +170,16 @@ class Template:
         return Template._get_coerce(t, entry.get("$id"))
 
     @staticmethod
-    def _get_coerce(t: str, object_id = None):
+    def _get_coerce(t: str, object_id=None):
         """
         This function takes a json-schema style type
         and determines the best python
         function to type the value.
         """
-
+        # if it's an artifact that will be loaded through local file
+        # we just return uuid as value
+        if object_id == "local_file_path":
+            return lambda _: str(uuid.uuid4())
         if t == 'string':
             return str
         elif t == 'integer':
@@ -183,14 +188,8 @@ class Template:
             return float
         elif t == 'boolean':
             return bool
-
-        # if it's an artifact that will be loaded through local file
-        # we just return uuid as value 
-        elif t == 'object' and object_id == "local_file":
-            return lambda _: str(uuid.uuid4())
         else:
             raise NotImplementedError(f"no coercion available for type:{t}")
-
 
     def _load_keylookup(self) -> dict:
         """
@@ -209,14 +208,20 @@ class Template:
         # create a key lookup dictionary
         key_lu = {}
 
-        def _add_coerce(field_def:dict) -> dict: 
+        def _add_coerce(field_def: dict) -> dict:
             # checks if we have a cast func for that 'type_ref'
             if 'value_template_format' in field_def:
-                coerce = lambda x: field_def['value_template_format'].format_map(x) 
+                def coerce(
+                    x): return field_def['value_template_format'].format_map(x)
             if 'type' in field_def:
-                coerce = self._get_coerce(field_def['type'])
+                if '$id' in field_def:
+                    coerce = self._get_coerce(
+                        field_def['type'], field_def['$id'])
+                else:
+                    coerce = self._get_coerce(field_def['type'])
             else:
-                coerce = self._get_ref_coerce(field_def.get('type_ref') or field_def['$ref'])
+                coerce = self._get_ref_coerce(
+                    field_def.get('type_ref') or field_def['$ref'])
 
             return dict(coerce=coerce, **field_def)
 
@@ -232,7 +237,7 @@ class Template:
                 # (as for template.schema) - "merge_pointer" and "type_ref"
 
             # load the data columns
-            for section_key, section_def in ws_schema.get('data_columns', {}).items():                
+            for section_key, section_def in ws_schema.get('data_columns', {}).items():
                 for column_key, column_def in section_def.items():
 
                     # populate lookup
@@ -244,10 +249,10 @@ class Template:
 
     # XlTemplateReader only knows how to format these types of sections
     VALID_WS_SECTIONS = set(['preamble_rows',
-        'data_columns',
-        'prism_preamble_object_pointer',
-        'prism_data_object_pointer',
-        'prism_preamble_object_schema'])
+                             'data_columns',
+                             'prism_preamble_object_pointer',
+                             'prism_data_object_pointer',
+                             'prism_preamble_object_schema'])
 
     @staticmethod
     def _validate_worksheet(ws_title: str, ws_schema: dict):

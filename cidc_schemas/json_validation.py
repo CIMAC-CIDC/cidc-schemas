@@ -21,7 +21,7 @@ def load_and_validate_schema(
     """
     Try to load a valid schema at `schema_path`. If an `on_refs` function
     is supplied, call that on all refs in the schema, rather than
-    resolving the refs. Note: it is shallow, i.e., if calling `on_refs` on a node produces
+    resolving the refs. Note: it is shallow, i.e., if calling `on_refs` on a node produces 
     a new node that contains refs, those refs will not be resolved.
 
     If return validator is true it will return
@@ -57,13 +57,14 @@ def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
     Apply `on_refs` to all nodes with `$ref`, returning node with refs replaced
     with results of the function call.
 
-    Note: _map_refs is shallow, i.e., if calling `on_refs` on a node produces
+    Note: _map_refs is shallow, i.e., if calling `on_refs` on a node produces 
     a new node that contains refs, those refs will not be resolved.
     """
     if isinstance(node, collections.abc.Mapping):
         if '$ref' in node or 'type_ref' in node:
-            if '$ref' in node:
-                ref_key = '$ref'
+            ref_key = '$ref' if '$ref' in node else 'type_ref'
+
+            if ref_key == '$ref':
                 extra_keys = set(node.keys()).difference({'$ref', '$comment'})
                 if extra_keys:
                     # As for json-schema.org:
@@ -73,10 +74,15 @@ def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
                     # expect those additional keys to be verified by schema validator.
                     raise Exception(f"Schema node with '$ref' should not contain anything else (besides '$comment' for docs). \
                         \nOn: {node} \nOffending keys {extra_keys}")
-            else:
-                ref_key = 'type_ref'
+
             # We found a ref, so return it mapped through `on_refs`
             new_node = on_refs(node[ref_key])
+
+            if ref_key == 'type_ref':
+                # For type_ref's, we don't want to clobber the other properties in node,
+                # so merge new_node and node.
+                new_node.update(node)
+
             # Plus concatenated new and old '$comment' fields
             # which should be just ignored anyways.
             if '$comment' in new_node or '$comment' in node:
@@ -84,7 +90,7 @@ def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
                     '$comment', '') + node.get('$comment', '')
             return new_node
         else:
-            # Look for all refs in this mapping
+            # Look for all refs further down in this mapping
             for k, v in node.items():
                 node[k] = _map_refs(v, on_refs)
     elif isinstance(node, (list, tuple)):
@@ -101,7 +107,7 @@ def _resolve_refs(base_uri: str, json_spec: dict) -> dict:
     """
     resolver = jsonschema.RefResolver(base_uri, json_spec)
 
-    def _resolve_ref(ref: str) -> dict:
+    def _resolve_ref(ref:str) -> dict:
         with resolver.resolving(ref) as resolved_spec:
             # resolved_spec might have unresolved refs in it, so we pass
             # it back to _resolve_refs to resolve them. This way,
@@ -130,14 +136,13 @@ def validate_instance(instance: str, schema: dict, required: bool) -> Optional[s
             stype = schema.get('type')
         if not stype:
             if 'allOf' in schema:
-                types = set(s.get('type')
-                            for s in schema['allOf'] if 'type' in s)
+                types = set(s.get('type') for s in schema['allOf'] if 'type' in s)
                 # if all types in 'allOf' are the same:
                 if len(types) == 1:
                     stype = types.pop()
                 else:
                     return f"Value can't be of multiple different types ({types}), "\
-                        "as 'allOf' in schema specifies."
+                    "as 'allOf' in schema specifies."
 
         instance = convert(stype, instance)
 
@@ -166,7 +171,6 @@ def _to_time(value):
     if not dt:
         raise ValueError(f"could not convert \"{value}\" to time")
     return dt.strftime('%H:%M:%S')
-
 
 def _to_datetime(value):
     dt = _get_datetime(value)

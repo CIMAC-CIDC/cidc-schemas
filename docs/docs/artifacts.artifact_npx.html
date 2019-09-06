@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Excel Artifact</h1>
+        <h1>NPX Artifact</h1>
         <p>
             <b>Description:</b>  Information about a xlsx file
         </p>
@@ -86,14 +86,21 @@
             
         
             
+        
+            
+        
+            
+        
+        
+            
+        
+            
                 <tr>
     <td>
         
             <span id="number_of_aliquots">
                 number_of_aliquots
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -128,8 +135,6 @@
                 aliquots
             </span>
             
-                <br><sup><mark>required</mark></sup>
-            
         
     </td>
     <td width=55%>
@@ -159,11 +164,27 @@
 </tr>
             
         
+            
+                <tr>
+    <td>
+        
+            <span id="data_format">
+                data_format
+            </span>
+            
+        
+    </td>
+    <td width=55%>
         
             
         
-            
+    </td>
+    <td>
         
+            (UNKNOWN PROPERTY TYPE)
+        
+    </td>
+</tr>
             
         
     </table>
@@ -174,7 +195,7 @@
   <div class="container">
     <h3>artifact_npx.full.json</h3>
   	<pre><code>{
-    "$id": "xlsx_artifact",
+    "$id": "npx_artifact",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "allOf": [
         {
@@ -188,7 +209,8 @@
                         "uploaded_timestamp",
                         "file_size_bytes",
                         "md5_hash",
-                        "artifact_category"
+                        "artifact_category",
+                        "data_format"
                     ]
                 },
                 {
@@ -215,6 +237,24 @@
                         "Mount Sinai",
                         "Stanford",
                         "MD Anderson"
+                    ],
+                    "type": "string"
+                },
+                "data_format": {
+                    "description": "Data Format.",
+                    "enum": [
+                        "FASTA",
+                        "FASTQ",
+                        "IMAGE",
+                        "VCF",
+                        "CSV",
+                        "XLSX",
+                        "NPX",
+                        "BAM",
+                        "MAF",
+                        "BINARY",
+                        "TEXT",
+                        "[NOT SET]"
                     ],
                     "type": "string"
                 },
@@ -269,19 +309,31 @@
                     },
                     "type": "array"
                 },
+                "data_format": {
+                    "const": "NPX"
+                },
                 "number_of_aliquots": {
                     "type": "integer"
                 }
             }
         }
     ],
+    "anyOf": [
+        {
+            "required": [
+                "number_of_aliquots",
+                "aliquots"
+            ]
+        },
+        {
+            "required": [
+                "upload_placeholder"
+            ]
+        }
+    ],
     "description": "Information about a xlsx file",
     "mergeStrategy": "objectMerge",
-    "required": [
-        "number_of_aliquots",
-        "aliquots"
-    ],
-    "title": "Excel Artifact",
+    "title": "NPX Artifact",
     "type": "object"
 }</code></pre>
   </container>

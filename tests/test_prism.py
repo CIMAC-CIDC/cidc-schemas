@@ -654,8 +654,6 @@ def test_end_to_end_wes_olink(schema_path, xlsx_path):
         assert list(dd.keys()) == ['dictionary_item_added', 'dictionary_item_removed'], "Unexpected CT changes"
 
     elif hint == "olink":
-        print()
-        print(full_ct)
         assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
 
         # 7 artifact atributes * 5 files (2 per record + 1 study)

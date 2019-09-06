@@ -8,9 +8,9 @@
   "properties": {
     "worksheets": {
       "WES": {
-        "prism_preamble_object_schema": "assays/wes_assay.json",
-        "prism_preamble_object_pointer": "/assays/wes/0",
-        "prism_data_object_pointer": "/records/-",
+        "prism_preamble_object_schema" : "assays/wes_assay.json",
+        "prism_preamble_object_pointer" : "/assays/wes/0",
+        "prism_data_object_pointer" : "/records/-",
         "preamble_rows": {
           "lead organization study id": {
             "merge_pointer": "3/lead_organization_study_id",
@@ -44,61 +44,61 @@
         "data_columns": {
           "Samples": {
             "cimac participant id": {
-              "merge_pointer": "0/cimac_participant_id",
+              "merge_pointer": "0/cimac_participant_id", 
               "type_ref": "participant.json#properties/cimac_participant_id"
             },
             "cimac sample id": {
-              "merge_pointer": "0/cimac_sample_id",
+              "merge_pointer": "0/cimac_sample_id", 
               "type_ref": "sample.json#properties/cimac_sample_id"
             },
             "cimac aliquot id": {
-              "merge_pointer": "0/cimac_aliquot_id",
+              "merge_pointer": "0/cimac_aliquot_id", 
               "type_ref": "aliquot.json#properties/cimac_aliquot_id"
             },
             "library kit lot": {
-              "merge_pointer": "0/library_kit_lot",
+              "merge_pointer": "0/library_kit_lot", 
               "type_ref": "assays/components/ngs/ngs_assay_record.json#properties/library_kit_lot"
             },
             "enrichment lot": {
-              "merge_pointer": "0/enrichment_vendor_lot",
+              "merge_pointer": "0/enrichment_vendor_lot", 
               "type_ref": "assays/components/ngs/wes_assay_record.json#properties/enrichment_vendor_lot"
             },
             "library prep date": {
-              "merge_pointer": "0/library_prep_date",
+              "merge_pointer": "0/library_prep_date", 
               "type_ref": "assays/components/ngs/ngs_assay_record.json#properties/library_prep_date"
             },
             "capture date": {
-              "merge_pointer": "0/capture_date",
+              "merge_pointer": "0/capture_date", 
               "type_ref": "assays/components/ngs/wes_assay_record.json#properties/capture_date"
             },
             "dna input ng": {
-              "merge_pointer": "0/input_ng",
+              "merge_pointer": "0/input_ng", 
               "type_ref": "assays/components/ngs/ngs_assay_record.json#properties/input_ng"
             },
             "library yield ng": {
-              "merge_pointer": "0/library_yield_ng",
+              "merge_pointer": "0/library_yield_ng", 
               "type_ref": "assays/components/ngs/ngs_assay_record.json#properties/library_yield_ng"
             },
             "average insert size": {
-              "merge_pointer": "0/average_insert_size",
+              "merge_pointer": "0/average_insert_size", 
               "type_ref": "assays/components/ngs/ngs_assay_record.json#properties/average_insert_size"
             },
             "forward fastq": {
-              "merge_pointer": "0/files/fastq_1",
+              "merge_pointer": "0/files/fastq_1", 
               "gcs_prefix_format": "{cimac_participant_id}/{cimac_sample_id}/{cimac_aliquot_id}",
-              "is_artifact": 1,
+              "is_artifact" : 1,
               "type_ref": "assays/components/local_file.json#properties/file_path"
             },
             "reverse fastq": {
-              "merge_pointer": "0/files/fastq_2",
+              "merge_pointer": "0/files/fastq_2", 
               "gcs_prefix_format": "{cimac_participant_id}/{cimac_sample_id}/{cimac_aliquot_id}",
-              "is_artifact": 1,
+              "is_artifact" : 1,
               "type_ref": "assays/components/local_file.json#properties/file_path"
             },
             "read group mapping file": {
-              "merge_pointer": "0/files/read_group_mapping_file",
+              "merge_pointer": "0/files/read_group_mapping_file", 
               "gcs_prefix_format": "{cimac_participant_id}/{cimac_sample_id}/{cimac_aliquot_id}",
-              "is_artifact": 1,
+              "is_artifact" : 1,
               "type_ref": "assays/components/local_file.json#properties/file_path"
             }
           }

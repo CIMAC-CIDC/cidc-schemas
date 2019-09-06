@@ -55,19 +55,16 @@ def generate_all_templates(target_dir: str):
             if not os.path.exists(target_subdir):
                 os.makedirs(target_subdir)
 
+
             schema_subdir = os.path.join(TEMPLATE_DIR, template_type_dir)
 
             # Create a new empty template for each template schema in schema_subdir
             for template_schema_file in os.listdir(schema_subdir):
                 if not template_schema_file.startswith('.'):
-                    schema_path = os.path.join(
-                        schema_subdir, template_schema_file)
-                    template_xlsx_file = template_schema_file.replace(
-                        '.json', '.xlsx')
-                    target_path = os.path.join(
-                        target_subdir, template_xlsx_file)
+                    schema_path = os.path.join(schema_subdir, template_schema_file)
+                    template_xlsx_file = template_schema_file.replace('.json', '.xlsx')
+                    target_path = os.path.join(target_subdir, template_xlsx_file)
                     generate_empty_template(schema_path, target_path)
-
 
 class Template:
     """
@@ -211,8 +208,7 @@ class Template:
         def _add_coerce(field_def: dict) -> dict:
             # checks if we have a cast func for that 'type_ref'
             if 'value_template_format' in field_def:
-                def coerce(
-                    x): return field_def['value_template_format'].format_map(x)
+                coerce = lambda x: field_def['value_template_format'].format_map(x)
             if 'type' in field_def:
                 if '$id' in field_def:
                     coerce = self._get_coerce(
@@ -281,8 +277,7 @@ class Template:
             template_schema_path {str} -- path to the template schema file
             schema_root {str} -- path to the directory where all schemas are stored
         """
-        template_schema = load_and_validate_schema(
-            template_schema_path, schema_root)
+        template_schema = load_and_validate_schema(template_schema_path, schema_root)
 
         return Template(template_schema, name=template_schema_path)
 

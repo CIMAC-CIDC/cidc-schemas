@@ -43,9 +43,14 @@
       "description": "Key required for access to the Debarcoding software.",
       "type": "string"
     },
+    "preprocessing_notes": {
+        "description": "Any notes pertaining to preprocessing of CyTOF data.",
+        "type": "string"
+    },
     "files": {
       "$ref": "assays/components/cytof/cytof_input.json"
     }
   },
+  "mergeStrategy": "objectMerge",
   "required": ["processed_fcs_filename", "source_fcs_filenames", "files"]
 }

@@ -1,4 +1,3 @@
-import os
 import json
 import yaml
 import openpyxl
@@ -131,50 +130,3 @@ def json_to_yaml(json_path: str) -> str:
     return yaml_path
 
 
-def parse_npx(xlsx_path: Union[str, BinaryIO]) -> List[str]:
-    """
-    Parses the given NPX file from OLINK
-    to extracts a list of aliquot IDs. If the file 
-    is not valid NPX but still xlsx the function will return an empty
-    list. The function will pass along any IO errors.
-
-    Args:
-        xlsx_path: path to NPX file on disk, or an opened NPX file
-
-    Returns:
-        arg1: a list of IDs found in this file
-    """
-
-    # load the file
-    workbook = openpyxl.load_workbook(xlsx_path)
-
-    # extract data to python
-    ids = []
-    for worksheet_name in workbook.sheetnames:
-
-        # simplify.
-        worksheet = workbook[worksheet_name]
-        seen_onlinkid = False
-        for i, row in enumerate(worksheet.iter_rows()):
-
-            # extract values from row
-            vals = [col.value for col in row]
-
-            # skip empty
-            if len(vals) == 0 or vals[0] is None:
-                continue
-
-            # check if we are starting ids
-            if vals[0] == 'OlinkID':
-                seen_onlinkid = True
-                continue
-
-            # check if we are done.
-            if vals[0] == 'LOD':
-                break
-
-            # get the identifier
-            if seen_onlinkid:
-                ids.append(vals[0])
-
-    return ids

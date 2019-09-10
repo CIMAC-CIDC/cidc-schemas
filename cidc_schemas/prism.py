@@ -2,7 +2,9 @@ import json
 import os
 import copy
 import uuid
-from typing import Union, BinaryIO
+from typing import Union, BinaryIO, List
+
+import openpyxl
 import jsonschema
 import datetime
 from jsonmerge import merge, Merger, exceptions as jsonmerge_exceptions
@@ -129,7 +131,6 @@ def _set_val(
         else:
             doc = context
 
-
     # then we update it
     for i, part in enumerate(jpoint.parts[:-1]):
 
@@ -147,7 +148,6 @@ def _set_val(
 
             # and `walk` it again - this time should be OK
             doc = jpoint.walk(doc, part)
-
 
         if isinstance(doc, EndOfList):
             actual_doc = __jpointer_get_next_thing(jpoint.parts[i+1])
@@ -235,7 +235,13 @@ def _get_recursively(search_dict, field):
     return fields_found
 
 
-LocalFileUploadEntry = namedtuple('LocalFileUploadEntry', ["local_path", "gs_key", "upload_placeholder"])
+SUPPORTED_ASSAYS = ["wes", "olink"]
+SUPPORTED_MANIFESTS = ["pbmc"]
+SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
+
+LocalFileUploadEntry = namedtuple('LocalFileUploadEntry',
+                                  ["local_path", "gs_key", "upload_placeholder", "metadata_availability"])
+
 
 def _process_property(
         key: str,
@@ -253,7 +259,7 @@ def _process_property(
 
     Args:
         key: property name,
-        raw_val: value of a property beeing processed,
+        raw_val: value of a property being processed,
         assay_hint: 'wes' or similar to create proper urls
         key_lu: dictionary to translate from template naming to json-schema
                 property names
@@ -270,8 +276,9 @@ def _process_property(
     Returns:
         LocalFileUploadEntry(
             local_path = "/local/file/from/excel/file/cell",   
-            gs_key = "constructed/GCS/path/where/this/artifact/shold/endup",
-            upload_placeholder = 'uuiduuiduuid-uuid-uuid-uuiduuid' # unique artifact/upload_placeholder
+            gs_key = "constructed/GCS/path/where/this/artifact/should/endup",
+            upload_placeholder = 'uuiduuiduuid-uuid-uuid-uuiduuid' # unique artifact/upload_placeholder,
+            metadata_availability = boolean indicating existence of extra metadata files
         )
 
     """
@@ -338,7 +345,6 @@ def _process_property(
             print(f'      current {data_obj}')
 
     if field_def.get('is_artifact') == 1:
-
         if verb:
             print(f'      collecting local_file_path {field_def}')
 
@@ -348,7 +354,8 @@ def _process_property(
             local_path = raw_val,
             gs_key = gs_key,
             # for artifacts `val` is a uuid
-            upload_placeholder = val
+            upload_placeholder = val,
+            metadata_availability = field_def.get('extra_metadata')
         )]
 
     elif field_def.get('is_artifact') == "multi":
@@ -368,7 +375,8 @@ def _process_property(
                 LocalFileUploadEntry(
                     local_path = local_paths[num],
                     gs_key = gs_key,
-                    upload_placeholder = upload_placeholder
+                    upload_placeholder = upload_placeholder,
+                    metadata_availability = field_def.get('extra_metadata')
                 )
             )
         return files
@@ -376,10 +384,13 @@ def _process_property(
 
 SUPPORTED_ASSAYS = ["wes", "olink", "cytof"]
 SUPPORTED_MANIFESTS = ["pbmc", "plasma"]
+ASSAYS_WITH_EXTRA_METADATA = ["olink"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
 
 
-def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) -> (dict, dict):
+
+def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) \
+        -> (dict, dict):
     """
     Converts excel file to json object. It also identifies local files
     which need to uploaded to a google bucket and provides some logic
@@ -397,9 +408,9 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     Args:
         xlsx_path: file on file system to excel file or the open file itself
         template_path: path on file system relative to schema root of the
-                        temaplate
+                        template
 
-        assay_hint: string used to help idnetify properties in template. Must
+        assay_hint: string used to help identify properties in template. Must
                     be the the root of the template filename i.e.
                     wes_template.json would be wes.
         verb: boolean indicating verbosity
@@ -407,11 +418,12 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     Returns:
         (tuple):
             arg1: clinical trial object with data parsed from spreadsheet
-            arg2: list of LocalFileUploadEntry'es that describe each file identified:
+            arg2: list of LocalFileUploadEntries that describe each file identified:
                 LocalFileUploadEntry(
                     local_path = "/local/path/to/a/data/file/parsed/from/template",
                     gs_key = "constructed/relative/to/clinical/trial/GCS/path",
-                    upload_placeholder = "random_uuid-for-artifact-upload"
+                    upload_placeholder = "random_uuid-for-artifact-upload",
+                    metadata_availability = boolean indicating existence of extra metadata files
                 )
 
     Process:
@@ -511,10 +523,16 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     if assay_hint not in SUPPORTED_TEMPLATES:
         raise NotImplementedError(f'{assay_hint} is not supported yet, only {SUPPORTED_TEMPLATES} are supported.')
 
+    # get the root CT schema
+    # create the result CT dictionary
+    root_ct_obj = {"_root_ct_obj": assay_hint} if verb else {}
+    # and merger for it
+    # and where to collect all local file refs
+    collected_files = []
 
     # read the excel file
     xslx = XlTemplateReader.from_excel(xlsx_path)
-    # get corr xsls schema
+    # get corr xlsx schema
     xlsx_template = Template.from_json(template_path)
     xslx.validate(xlsx_template)
 
@@ -589,7 +607,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                         assay_hint=assay_hint,
                         key_lu=xlsx_template.key_lu,
                         data_obj=data_obj,
-                        format_context=dict(local_context, **preamble_context), # combine contexts
+                        format_context=dict(local_context, **preamble_context),  # combine contexts
                         root_obj=copy_of_preamble,
                         data_obj_pointer=data_object_pointer,
                         verb=verb)
@@ -604,7 +622,6 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                 preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
                 if verb:
                     print(f'    merged - {preamble_obj}')
-
         
         # Now processing preamble rows 
         print(f'  preamble for {ws_name!r}')
@@ -620,7 +637,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                 data_obj_pointer=template_root_obj_pointer+preamble_object_pointer, 
                 verb=verb)
             # TODO we might want to use copy+preamble_merger here too,
-            # to for complex properites that require mergeStrategy 
+            # to for complex properties that require mergeStrategy
             
             if new_files:
                 for new_file in new_files:
@@ -646,6 +663,61 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     # return root object and files list
     return root_ct_obj, collected_files
 
+
+def _get_path(ct: dict, key: str) -> str:
+    """
+    find the path to the given key in the dictionary
+
+    Args:
+        ct: clinical_trial object to be modified
+        key: the identifier we are looking for in the dictionary
+
+    Returns:
+        arg1: string describing the location of the key
+    """
+
+    # first look for key as is
+    ds1 = ct | grep(key, match_string=True)
+    count1 = 0
+    if 'matched_values' in ds1:
+        count1 = len(ds1['matched_values'])
+
+    # the hack fails if both work... probably need to deal with this
+    if count1 == 0:
+        raise KeyError(f"key: {key} not found")
+
+    # get the keypath
+    return ds1['matched_values'].pop()
+
+
+def _get_source(ct: dict, key: str, skip_last=None) -> dict:
+    """
+    extract the object in the dictionary specified by
+    the supplied key (or one of its parents.)
+
+    Args:
+        ct: clinical_trial object to be searched
+        key: the identifier we are looking for in the dictionary,
+        skip_last: how many levels at the end of key path we want to skip.
+
+    Returns:
+        arg1: string describing the location of the key
+    """
+
+    # tokenize.
+    key = key.replace("root", "").replace("'", "")
+    tokens = re.findall(r"\[(.*?)\]", key)
+
+    if skip_last:
+        tokens = tokens[0:-1*skip_last]
+    
+    # keep getting based on the key.
+    cur_obj = ct
+    for token in tokens:
+        try:
+            token = int(token)
+        except ValueError:
+            pass
 
 def _set_data_format(ct: dict, artifact: dict):
     """
@@ -733,7 +805,7 @@ def merge_artifact(
     # from 'uuid_field_path' field to it's parent - existing_artifact obj. 
     existing_artifact = get_source(ct, uuid_field_path, skip_last=1)
 
-    ## TODO this might be better like this - with merger:
+    # TODO this might be better like this - with merger:
     # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")
     # artifact_parent[file_name] = Merger(artifact_schema).merge(existing_artifact, artifact)
     # TODO but for now like this
@@ -744,8 +816,33 @@ def merge_artifact(
     # return new object and the artifact that was merged
     return ct, existing_artifact
 
+
 class InvalidMergeTargetException(ValueError):
     """Exception raised for target of merge_clinical_trial_metadata being non schema compliant."""
+
+
+def merge_artifact_extra_metadata(patch: dict) -> dict:
+    """
+    merges parsed extra metadata returned by extra_metadata_parsing to corresponding artifact objects within the patch
+
+    Args:
+        patch: preliminary patch from upload_assay
+    Returns:
+        merged_patch: patch after merging with with extra metadata
+    """
+
+    # TODO
+    """
+    patch['job_id']
+    patch['gcs_uris']
+    patch['url_mapping']
+
+    md_patch = extra_metadata_parsing()
+
+    merged_patch = Merger(patch).merge(patch, md_patch)
+
+    return merged_patch
+    """
 
 def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
     """
@@ -788,3 +885,85 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
 
     # now return it
     return merged
+
+
+def parse_npx(xlsx: BinaryIO) -> dict:
+    """
+    Parses the given NPX file from olink to extract a list of aliquot IDs.
+    If the file is not valid NPX but still xlsx the function will
+    return a dict containing an empty list. The function will pass along any IO errors.
+
+    Args:
+        xlsx: an opened NPX file
+
+    Returns:
+        arg1: a dict of containing list of aliquot IDs and number of aliquots
+    """
+
+    # load the file
+    if type(xlsx) == str:
+        raise TypeError(f"parse_npx only accepts BinaryIO and not file paths")
+
+    workbook = openpyxl.load_workbook(xlsx)
+
+    # extract data to python
+    ids = []
+    for worksheet_name in workbook.sheetnames:
+
+        # simplify.
+        worksheet = workbook[worksheet_name]
+        seen_onlinkid = False
+        for i, row in enumerate(worksheet.iter_rows()):
+
+            # extract values from row
+            vals = [col.value for col in row]
+
+            # skip empty
+            if len(vals) == 0 or vals[0] is None:
+                continue
+
+            # check if we are starting ids
+            if vals[0] == 'OlinkID':
+                seen_onlinkid = True
+                continue
+
+            # check if we are done.
+            if vals[0] == 'LOD':
+                break
+
+            # get the identifier
+            if seen_onlinkid:
+                ids.append(vals[0])
+
+    aliquot_count = len(ids)
+
+    aliquots = {
+        "aliquots": ids,
+        "number_of_aliquots": aliquot_count
+    }
+
+    return aliquots
+
+
+_EXTRA_METADATA_PARSERS = {"olink": parse_npx}
+
+ASSAYS_WITH_EXTRA_METADATA = _EXTRA_METADATA_PARSERS.keys()
+
+
+def extra_metadata_parsing(extra_files: List[BinaryIO], assay_hint: str) -> List[dict]:
+    """
+
+    Args:
+        extra_files: list of BinaryIO files
+        assay_hint: assay type
+
+    Returns:
+        artifact_patches: a list of artifact objects patches with extra metadata 
+    """
+
+    if assay_hint not in _EXTRA_METADATA_PARSERS:
+        raise Exception(f"Assay {assay_hint} doesn't support extra metadata parsing")
+
+    return [_EXTRA_METADATA_PARSERS[assay_hint](f) for f in extra_files]
+
+

@@ -15,9 +15,11 @@ from jsonmerge import Merger
 from unittest.mock import MagicMock, patch as mock_patch
 
 
+from .constants import TEST_DATA_DIR
+
 from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
-    SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES
+    SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES, parse_npx
 from cidc_schemas.json_validation import load_and_validate_schema, InDocRefNotFoundError
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
@@ -324,7 +326,8 @@ def test_prism(schema_path, xlsx_path):
         return
 
     # turn into object.
-    ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
+    ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
+
     if hint == 'cytof':
         assert "CYTOF_TEST1" == ct['lead_organization_study_id']
         ct['lead_organization_study_id'] = 'test_prism_trial_id'
@@ -386,7 +389,7 @@ def test_filepath_gen(schema_path, xlsx_path):
 
     # parse the spreadsheet and get the file maps
     _, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
-    # we ignore and do not validate 'ct' 
+    # we ignore and do not validate 'ct'
     # because it's only a ct patch not a full ct 
 
     local_to_gcs_mapping = {}
@@ -394,7 +397,6 @@ def test_filepath_gen(schema_path, xlsx_path):
         local_to_gcs_mapping[fmap_entry.gs_key] = fmap_entry
 
     assert len(local_to_gcs_mapping) == len(file_maps), "gcs_key/url collision"
-    
 
     # assert we have the right file counts etc.
     if hint == "wes":
@@ -494,7 +496,7 @@ def test_prismify_wes_only():
     hint = 'wes'
 
     # parse the spreadsheet and get the file maps
-    md_patch, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
+    ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -505,6 +507,28 @@ def test_prismify_wes_only():
     # assert works
     validator.validate(merged)
 
+def test_prismify_olink_only():
+
+    # create validators
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
+
+    # create the example template.
+    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'metadata', 'olink_template.json')
+    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, "olink_template.xlsx")
+    hint = 'olink'
+
+    # parse the spreadsheet and get the file maps
+    ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
+
+    # we merge it with a preexisting one
+    # 1. we get all 'required' fields from this preexisting
+    # 2. we can check it didn't overwrite anything crucial
+    merger = Merger(schema)
+    merged = merger.merge(MINIMAL_CT_1PA1SA1AL, ct)
+
+    # assert works
+    validator.validate(merged)
 
     merged_wo_needed_participants = copy.deepcopy(merged)
     merged_wo_needed_participants['participants'][0]['samples'].pop()
@@ -643,9 +667,9 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-    
+
     # parse the spreadsheet and get the file maps
-    prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=False)
+    prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
 
     if hint in SUPPORTED_MANIFESTS:
         assert len(prism_patch['shipments']) == 1
@@ -704,7 +728,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
 
     patch_copy_4_artifacts = copy.deepcopy(prism_patch)
 
-    #now we simulate that upload was successful 
+    # now we simulate that upload was successful
     merged_gs_keys = []
     for i, fmap_entry in enumerate(file_maps):
 
@@ -772,11 +796,10 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     else:
         assert False, f"add {hint} assay specific asserts"
 
-
     dd = DeepDiff(full_after_prism, full_ct)
 
     if hint=='wes':
-        # 6 files * 7 artifact atributes
+        # 6 files * 7 artifact attributes
         assert len(dd['dictionary_item_added']) == 6*7, "Unexpected CT changes"
 
         # nothing else in diff
@@ -785,7 +808,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     elif hint == "olink":
         assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
 
-        # 7 artifact atributes * 5 files (2 per record + 1 study)
+        # 7 artifact attributes * 5 files (2 per record + 1 study)
         assert len(dd['dictionary_item_added']) == 7*(2*2+1), "Unexpected CT changes"
 
     elif hint in SUPPORTED_MANIFESTS:
@@ -953,3 +976,30 @@ def test_prism_joining_tabs(monkeypatch):
     
         
 
+def test_parse_npx_invalid():
+    # test the parse function by passing a file path
+    file_path = os.path.join(TEST_DATA_DIR, 'olink', 'olink_assay_1_NPX.xlsx')
+
+    with pytest.raises(TypeError):
+        aliquots = parse_npx(file_path)
+
+
+def test_parse_npx_single():
+    # test the parse function
+    npx_path = os.path.join(TEST_DATA_DIR, 'olink', 'olink_assay_1_NPX.xlsx')
+
+    f = open(npx_path, 'rb')
+    aliquots = parse_npx(f)
+
+    assert aliquots["number_of_aliquots"] == 4
+    assert set(aliquots["aliquots"]) == {'HD_59', 'HD_63', 'HD_32', 'HD_50'}
+
+
+def test_parse_npx_merged():
+    # test the parse function
+    npx_path = os.path.join(TEST_DATA_DIR, 'olink', 'olink_assay_combined.xlsx')
+    f = open(npx_path, 'rb')
+    aliquots = parse_npx(f)
+
+    assert aliquots["number_of_aliquots"] == 9
+    assert set(aliquots["aliquots"]) == {'HD_59', 'HD_63', 'HD_32', 'HD_50', 'HD_71', 'HD_72', 'HD_73', 'HD_80', 'HD_85'}

@@ -541,14 +541,10 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                     print(f'merged - {preamble_obj}')
 
 
-        print()
-        print("====HERE WE ARE====")
-        print()
-        print(root_ct_obj)
+        # set the value of the something TODO: write a better comment
         _set_val(preamble_object_pointer, preamble_obj, root_ct_obj, verb=verb)
-        print()
-        print(root_ct_obj)
 
+        # TODO: What are we doing here?
         for row in ws[RowType.PREAMBLE]:
             # process this property
             new_file = _process_property(

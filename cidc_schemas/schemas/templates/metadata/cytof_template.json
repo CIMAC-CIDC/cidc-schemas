@@ -20,7 +20,11 @@
                     },
                     "panel name": {
                         "merge_pointer": "0/panel_name",
-                        "type_ref": "assays/components/cytof_panel.json#properties/panel_name"
+                        "type_ref": "assays/components/cytof/cytof_entry.json#properties/panel_name"
+                    },
+                    "instrument": {
+                        "merge_pointer": "0/instrument",
+                        "type_ref": "assays/components/cytof/cytof_entry.json#properties/instrument"
                     }
                 },
                 "data_columns": {
@@ -39,40 +43,40 @@
                         },
                         "batch_id": {
                             "merge_pointer": "0/batch_id",
-                            "type_ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/batch_id"
+                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/batch_id"
                         },
                         "original fcs filename(s)": {
                             "merge_pointer": "0/original_fcs_filenames",
-                            "type_ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/original_fcs_filenames"
+                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/original_fcs_filenames"
                         },
                         "date of acquisition": {
                             "merge_pointer": "0/date_of_acquisition",
-                            "type_ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/date_of_acquisition"
+                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/date_of_acquisition"
                         },
                         "instrument": {
                             "merge_pointer": "0/instrument",
-                            "type_ref": "assays/components/cytof_platform.json#properties/instrument"
+                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/instrument"
                         },
                         "injector": {
                             "merge_pointer": "0/injector",
-                            "type_ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/injector"
+                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/injector"
                         },
                         "acquisition_buffer": {
                             "merge_pointer": "0/acquisition_buffer",
-                            "type_ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/acquisition_buffer"
+                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/acquisition_buffer"
                         },
                         "average_event_per_second": {
                             "merge_pointer": "0/average_event_per_second",
-                            "type_ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/average_event_per_second"
+                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/average_event_per_second"
                         },
                         "run_time": {
                             "merge_pointer": "0/run_time",
-                            "type_ref": "assays/components/cytof_acquisition.json#definitions/cytof_acquisition/properties/run_time"
+                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/run_time"
                         }
                     },
                     "Preprocessing": {
                         "processed fcs filename": {
-                            "merge_pointer": "0/processed_fcs_filename",
+                            "merge_pointer": "0/files/processed_fcs",
                             "is_artifact": 1,
                             "gcs_uri_format": "{lead organization study id}/{cimac participant id}/{cimac sample id}/{cimac aliquot id}/cytof/run.fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path"
@@ -132,15 +136,15 @@
                         },
                         "isotope": {
                             "merge_pointer": "0/isotope",
-                            "type_ref": "assays/components/cytof_antibody.json#properties/isotope"
+                            "type_ref": "assays/components/cytof/cytof_antibody.json#properties/isotope"
                         },
                         "dilution": {
                             "merge_pointer": "0/dilution",
-                            "type_ref": "assays/components/cytof_antibody.json#properties/dilution"
+                            "type_ref": "assays/components/cytof/cytof_antibody.json#properties/dilution"
                         },
                         "stain_type": {
                             "merge_pointer": "0/stain_type",
-                            "type_ref": "assays/components/cytof_antibody.json#properties/stain_type"
+                            "type_ref": "assays/components/cytof/cytof_antibody.json#properties/stain_type"
                         }
                     }
                 }

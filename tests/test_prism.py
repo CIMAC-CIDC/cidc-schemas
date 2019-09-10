@@ -574,7 +574,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     
     # parse the spreadsheet and get the file maps
-    prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
+    prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=False)
 
     if hint in SUPPORTED_MANIFESTS:
         assert len(prism_patch['shipments']) == 1
@@ -593,16 +593,11 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     if hint in SUPPORTED_ASSAYS:
         # olink is different in structure - no array of assays, only one.
         if hint == 'olink':
-            prism_patch_assay_records=prism_patch['assays'][hint]['records']
+            prism_patch_assay_records = prism_patch['assays'][hint]['records']
             assert len(prism_patch['assays'][hint]['records']) == 2
         elif hint == 'cytof':
             assert len(prism_patch['assays'][hint]) == 1
             assert 'records' in prism_patch['assays'][hint][0]
-            print()
-            print()
-            print()
-            print(json.dumps(prism_patch, indent=True))
-            assert False
         else:
             
             assert len(['records']) == 2
@@ -610,11 +605,11 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     for f in file_maps:
         assert f'{hint}/' in f.gs_key, f"No {hint} hint found"
 
-    original_ct = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT) 
     # And we need set lead_organization_study_id to be the same for testing
-    if hint == "olink":
+    original_ct = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT) 
+    if hint in ["olink", "cytof"]:
         original_ct['lead_organization_study_id'] = 'test_prism_trial_id'
-
+        prism_patch['lead_organization_study_id'] = 'test_prism_trial_id'
 
     # "prismify" provides only a patch so we need to merge it into a "full" ct
     full_after_prism = merge_clinical_trial_metadata(prism_patch, original_ct)
@@ -709,3 +704,53 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     else:
         assert False, f"add {hint} assay specific asserts"
 
+def test_merge_stuff():
+
+    obj1 = {'_preamble_obj': 'copy_for:cytof:Antibody Information:row_0', 'cytof_antibodies': [{'_data_obj': 'cytof:Antibody Information:row_0', 'antibody': 'CD8', 'clone': 'C8/144b', 'company': 'DAKO', 'cat_num': 'C8-ABC', 'lot_num': '3983272', 'isotope': '146Nd', 'dilution': '100X', 'stain_type': 'Surface Stain'}]}
+    obj2 = {'_preamble_obj': 'copy_for:cytof:Antibody Information:row_1', 'cytof_antibodies': [{'_data_obj': 'cytof:Antibody Information:row_1', 'antibody': 'PD-L1', 'clone': 'C2/11p', 'company': 'DAKO', 'cat_num': 'C8-AB123', 'lot_num': '1231272', 'isotope': '146Nb', 'dilution': '100X', 'stain_type': 'Surface Stain'}]}
+
+    schema = load_and_validate_schema(os.path.join(SCHEMA_DIR, "assays/cytof_assay.json"))
+    obj1 = {"pizza": "peperoni", "slices": [{"topping": "123"}]}
+    obj2 = {"soda": "934857", "slices": [{"topping": "abc"}]}
+
+    schema = {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {
+            "pizza": {
+                "type": "string"
+            },
+            "mergeStrategy": "objectMerge",
+            "allOf": [
+                {
+                    "soda": {
+                        "type": "object",
+                        "properties": {
+                            "prob": {
+                                "type": "number"
+                            }
+                        }
+                    },
+                },
+                {
+                    "slices": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "topping": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "mergeStrategy": "append"
+                    }
+                },
+
+            ]
+        }
+    }
+
+    # this merge will clobber slices because merging across allOf doesn't work
+    merger = Merger(schema)
+    xyz = merger.merge(obj1, obj2)
+    assert len(xyz['slices']) == 1

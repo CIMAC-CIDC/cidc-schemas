@@ -1,21 +1,28 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "cytof",
-  "title": "CYTOF Run",
-  "type": "object",
-  "description": "Base information about the acquisition and analysis CyTOF data\n",
-  "allOf": [
-    { "$ref": "assays/components/cytof_platform.json" },
-    { "$ref": "assays/components/cytof_panel.json" }
-  ],
-  "properties": {
-    "records": {
-      "type": "array",
-      "items": {
-        "$ref": "assays/components/cytof/cytof_entry.json"
-      }
-    }
-  },
-  "required": ["records"],
-  "mergeStrategy": "objectMerge"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "cytof",
+    "title": "CYTOF Run",
+    "type": "object",
+    "description": "Base information about the acquisition and analysis CyTOF data\n",
+    "properties": {
+        "cytof_antibodies": {
+            "type": "array",
+            "items": {
+                "$ref": "assays/components/cytof/cytof_antibody.json"
+            },
+            "mergeStrategy": "append"
+        },
+        "records": {
+            "type": "array",
+            "items": {
+                "$ref": "assays/components/cytof/cytof_entry.json"
+            },
+            "mergeStrategy": "append"
+        }
+    },
+    "required": [
+        "cytof_antibodies",
+        "records"
+    ],
+    "mergeStrategy": "objectMerge"
 }

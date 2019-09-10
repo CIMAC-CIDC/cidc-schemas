@@ -173,6 +173,10 @@ class XlTemplateReader:
         row_note = f", row {row_num}" if row_num is not None else ""
         return f'Error in worksheet "{worksheet_name}", field "{field_name}"{row_note}: {message}'
 
+    def _validate_instance(self, value, schema):
+        # All fields in an Excel template are required
+        return validate_instance(value, schema, is_required=True)
+
     def _validate_worksheet(self, worksheet_name: str, ws_schema: dict) -> List[str]:
         """Validate rows in a worksheet, returning a list of validation error messages."""
 
@@ -190,7 +194,7 @@ class XlTemplateReader:
             for key, *values in row_groups[RowType.PREAMBLE]:
                 value = values[0]
                 schema = self._get_schema(key, preamble_schemas)
-                invalid_reason = validate_instance(value, schema)
+                invalid_reason = self._validate_instance(value, schema)
 
                 if invalid_reason:
                     message = self._make_validation_error(
@@ -222,7 +226,7 @@ class XlTemplateReader:
 
             for row, data_row in enumerate(row_groups[RowType.DATA]):
                 for col, value in enumerate(data_row):
-                    invalid_reason = validate_instance(
+                    invalid_reason = self._validate_instance(
                         value, data_schemas[col])
 
                     if invalid_reason:

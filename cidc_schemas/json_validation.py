@@ -117,7 +117,7 @@ def _resolve_refs(base_uri: str, json_spec: dict) -> dict:
     return _map_refs(json_spec, _resolve_ref)
 
 
-def validate_instance(instance: str, schema: dict) -> Optional[str]:
+def validate_instance(instance: str, schema: dict, is_required=False) -> Optional[str]:
     """
     Validate a data instance against a JSON schema.
 
@@ -125,8 +125,11 @@ def validate_instance(instance: str, schema: dict) -> Optional[str]:
     """
     try:
         if instance is None:
-            raise jsonschema.ValidationError(
-                'found empty value for required field')
+            if is_required:
+                raise jsonschema.ValidationError(
+                    'found empty value for required field')
+            else:
+                return None
 
         stype = schema.get('format')
         if not stype:

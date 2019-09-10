@@ -68,7 +68,7 @@ def test_missing_required_value(tiny_template):
         ]
     }
 
-    message = 'Error in worksheet "TEST_SHEET", field "test_property": found empty value'
+    message = 'Error in worksheet "TEST_SHEET", field "test_property", row 0: found empty value'
     search_error_message(tiny_missing_value,
                          tiny_template, ValidationError, message)
 

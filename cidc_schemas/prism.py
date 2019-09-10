@@ -177,19 +177,47 @@ def  __jpointer_insert_next_thing(doc, jpoint, part, next_thing):
     Puts next_thing into a doc (that is being `jsonpointer.walk`ed)
     by *part* "address". *jpoint* is Jsonpointer that is walked.   
     """
+    #print("---->")
+    #print(doc)
+    #print(jpoint)
+    #print(part)
+    #print(next_thing)
     if part == "-":
+        #print("here1")
         doc.append(next_thing)
     else:
         # part will return str or int, so we can use it for `doc[typed_part]`
         # and it will work for both - doc being `dict` or `array`
         typed_part = jpoint.get_part(doc, part)
         try:
-            doc[typed_part] = next_thing
+            #print("-->", typed_part)
+            #print(doc)
+            #print(doc[typed_part])
+            #print(next_thing)
+
+            # check if something is there.
+            if isinstance(typed_part, int):
+
+                if isinstance(doc[typed_part], dict):
+
+                    # merge the dictionaries.
+                    doc[typed_part].update(next_thing)
+                    #print("here2")
+                else:
+                    # assign it
+                    doc[typed_part] = next_thing
+                    #print("here2b")
+                
+            else:
+                # assign it
+                doc[typed_part] = next_thing
+                #print("here3")
 
         # if doc is an empty array we hit an error when we try to paste to [0] index,
         # so just append
         except IndexError:
             doc.append(next_thing)
+            #print("here4")
 
 
 def _get_recursively(search_dict, field):
@@ -296,7 +324,7 @@ def _process_property(
         )
     
 
-SUPPORTED_ASSAYS = ["wes", "olink"]
+SUPPORTED_ASSAYS = ["wes", "olink", "cytof"]
 SUPPORTED_MANIFESTS = ["pbmc"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
 def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) -> (dict, dict):
@@ -512,8 +540,14 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                 if verb:
                     print(f'merged - {preamble_obj}')
 
+
+        print()
+        print("====HERE WE ARE====")
+        print()
+        print(root_ct_obj)
         _set_val(preamble_object_pointer, preamble_obj, root_ct_obj, verb=verb)
-        
+        print()
+        print(root_ct_obj)
 
         for row in ws[RowType.PREAMBLE]:
             # process this property

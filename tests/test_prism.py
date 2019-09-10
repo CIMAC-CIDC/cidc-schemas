@@ -273,6 +273,8 @@ MINIMAL_CT_1PA1SA1AL = {
         }
     ]
 }
+
+
 def test_samples_merge():
 
     # one with 1 sample
@@ -315,10 +317,10 @@ def test_prism(schema_path, xlsx_path):
         if hint != 'olink':
             assert len(ct['assays'][hint]) == 1
 
-    elif hint in SUPPORTED_MANIFESTS: 
+    elif hint in SUPPORTED_MANIFESTS:
         assert not ct.get('assays'), "Assay created during manifest prismify"
 
-    else: 
+    else:
         assert False, f"Unknown template {hint}"
 
     
@@ -563,7 +565,7 @@ def test_merge_ct_meta():
 def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     # extract hint
     hint = schema_path.split("/")[-1].replace("_template.json", "")
-
+    if hint != 'cytof': return
     # TODO: implement other assays
     if hint not in SUPPORTED_ASSAYS:
         return 
@@ -593,9 +595,17 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
         if hint == 'olink':
             prism_patch_assay_records=prism_patch['assays'][hint]['records']
             assert len(prism_patch['assays'][hint]['records']) == 2
-        else:
+        elif hint == 'cytof':
             assert len(prism_patch['assays'][hint]) == 1
-            assert len(prism_patch['assays'][hint][0]['records']) == 2
+            assert 'records' in prism_patch['assays'][hint][0]
+            print()
+            print()
+            print()
+            print(json.dumps(prism_patch, indent=True))
+            assert False
+        else:
+            
+            assert len(['records']) == 2
 
     for f in file_maps:
         assert f'{hint}/' in f.gs_key, f"No {hint} hint found"

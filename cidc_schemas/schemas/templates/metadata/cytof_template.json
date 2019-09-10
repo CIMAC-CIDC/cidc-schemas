@@ -25,7 +25,7 @@
                 },
                 "data_columns": {
                     "Run info": {
-                        "cimac particpant id": {
+                        "cimac participant id": {
                             "merge_pointer": "0/cimac_participant_id",
                             "type_ref": "participant.json#properties/cimac_participant_id"
                         },
@@ -74,7 +74,8 @@
                         "processed fcs filename": {
                             "merge_pointer": "0/processed_fcs_filename",
                             "is_artifact": 1,
-                            "type_ref": "assays/components/local_file.json"
+                            "gcs_uri_format": "{lead organization study id}/{cimac participant id}/{cimac sample id}/{cimac aliquot id}/cytof/run.fcs",
+                            "type_ref": "assays/components/local_file.json#properties/file_path"
                         },
                         "concatenation version": {
                             "merge_pointer": "0/concatenation_version",

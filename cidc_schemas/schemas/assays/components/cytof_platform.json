@@ -9,5 +9,6 @@
       "type": "string"
     }
   },
-  "required": ["instrument"]
+  "required": ["instrument"],
+  "mergeStrategy": "object"
 }

@@ -10,7 +10,10 @@
     },
     "cytof_antibodies": {
       "type": "array",
-      "items": { "$ref": "assays/components/cytof_antibody.json" }
+      "items": { 
+          "$ref": "assays/components/cytof_antibody.json" 
+        },
+        "mergeStrategy": "append"
     }
   },
   "required": ["panel_name", "cytof_antibodies"]

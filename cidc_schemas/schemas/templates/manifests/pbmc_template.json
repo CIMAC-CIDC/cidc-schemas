@@ -194,15 +194,15 @@
               "merge_pointer": "/material_remaining",
               "type_ref": "aliquot.json#properties/material_remaining"
             },
-            "sample quality status": {
+            "aliquot quality status": {
               "merge_pointer": "/aliquot_quality_status",
               "type_ref": "aliquot.json#properties/aliquot_quality_status"
             },
-            "sample replacement": {
+            "aliquot replacement": {
               "merge_pointer": "/aliquot_replacement",
               "type_ref": "aliquot.json#properties/aliquot_replacement"
             },
-            "sample status": { 
+            "aliquot status": { 
               "merge_pointer": "/aliquot_status", 
               "type_ref": "aliquot.json#properties/aliquot_status" 
             }

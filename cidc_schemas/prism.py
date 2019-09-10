@@ -3,6 +3,7 @@ import json
 import os
 import copy
 import uuid
+import fnmatch
 from typing import Union, BinaryIO
 import jsonschema
 from deepdiff import grep
@@ -192,14 +193,6 @@ def  __jpointer_insert_next_thing(doc, jpoint, part, next_thing):
         except IndexError:
             doc.append(next_thing)
 
-def _fill_artifact_specific_fields(some_path):
-    """
-    Get aliquot IDs from given artifact's path.
-
-    Args:
-        some_path: path to a field with uuid
-    """
-    return parse_npx(some_path)
 
 def _get_recursively(search_dict, field):
     """
@@ -450,6 +443,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     # and merger for it
     # and where to collect all local file refs
     collected_files = []
+    metadata_files = []
 
     # read the excel file
     xslx = XlTemplateReader.from_excel(xlsx_path)
@@ -515,6 +509,10 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                     if new_file:
                         collected_files.append(new_file)
 
+                        if assay_hint == "olink" and "olink" in new_file:
+                            metadata_files.append(new_file)
+
+
                 if verb:
                     print('merging preambles')
                     print(f'   {preamble_obj}')
@@ -543,10 +541,11 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
             if new_file:
                 collected_files.append(new_file)
 
-    artifact_specifics = _fill_artifact_specific_fields(xlsx_path)
-
-    # return root object, files list and list of specifics (aliquots)
-    return root_ct_obj, collected_files, artifact_specifics
+    # return root object, files list and in case of olink, also metadata_files
+    if assay_hint == "olink":
+        return root_ct_obj, collected_files, metadata_files
+    else:
+        return root_ct_obj, collected_files
 
 
 def _get_path(ct: dict, key: str) -> str:

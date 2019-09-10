@@ -68,12 +68,7 @@ def test_missing_required_value(tiny_template):
         ]
     }
 
-    # tiny_template has no required fields, so this should be valid
-    assert XlTemplateReader(tiny_missing_value).validate(tiny_template)
-
-    # add a required field
-    tiny_template.schema['required'] = ['test_property']
-    message = 'Error in worksheet "TEST_SHEET", field "test_property"": found empty value'
+    message = 'Error in worksheet "TEST_SHEET", field "test_property": found empty value'
     search_error_message(tiny_missing_value,
                          tiny_template, ValidationError, message)
 

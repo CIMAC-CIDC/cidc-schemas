@@ -86,7 +86,7 @@ def compare_templates(schema_path: str, generated: XlTemplateReader, reference: 
 
         assert len(gen_ws[RowType.HEADER]) == len(ref_ws[RowType.HEADER])
         for gen_headers, ref_headers in zip(gen_ws[RowType.HEADER], ref_ws[RowType.HEADER]):
-        # Compare data headers
+            # Compare data headers
             for (gen_h, ref_h) in zip(gen_headers, ref_headers):
                 assert gen_h == ref_h, error(
                     f'data: generated template had header {gen_h} where reference had {ref_h}')

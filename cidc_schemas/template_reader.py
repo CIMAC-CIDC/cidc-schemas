@@ -156,10 +156,8 @@ class XlTemplateReader:
         """
         self.invalid_messages = []
 
-        required = template.schema.get('required', [])
-
         for name, schema in template.worksheets.items():
-            errors = self._validate_worksheet(name, schema, required)
+            errors = self._validate_worksheet(name, schema)
             self.invalid_messages.extend(errors)
 
         if self.invalid_messages:
@@ -171,10 +169,11 @@ class XlTemplateReader:
 
         return True
 
-    def _make_validation_error(self, worksheet_name: str, field_name: str, message: str) -> str:
-        return f'Error in worksheet "{worksheet_name}", field "{field_name}"": {message}'
+    def _make_validation_error(self, worksheet_name: str, field_name: str, message: str, row_num=None) -> str:
+        row_note = f", row {row_num}" if row_num is not None else ""
+        return f'Error in worksheet "{worksheet_name}", field "{field_name}"{row_note}: {message}'
 
-    def _validate_worksheet(self, worksheet_name: str, ws_schema: dict, required: List[str]) -> List[str]:
+    def _validate_worksheet(self, worksheet_name: str, ws_schema: dict) -> List[str]:
         """Validate rows in a worksheet, returning a list of validation error messages."""
 
         invalid_messages = []
@@ -191,8 +190,7 @@ class XlTemplateReader:
             for key, *values in row_groups[RowType.PREAMBLE]:
                 value = values[0]
                 schema = self._get_schema(key, preamble_schemas)
-                is_required = key in required
-                invalid_reason = validate_instance(value, schema, is_required)
+                invalid_reason = validate_instance(value, schema)
 
                 if invalid_reason:
                     message = self._make_validation_error(
@@ -222,15 +220,14 @@ class XlTemplateReader:
             data_schemas = self._get_data_schemas(
                 row_groups, flat_data_schemas)
 
-            for data_row in row_groups[RowType.DATA]:
+            for row, data_row in enumerate(row_groups[RowType.DATA]):
                 for col, value in enumerate(data_row):
-                    is_required = headers[col] in required
                     invalid_reason = validate_instance(
-                        value, data_schemas[col], is_required)
+                        value, data_schemas[col])
 
                     if invalid_reason:
                         message = self._make_validation_error(
-                            worksheet_name, headers[col], invalid_reason)
+                            worksheet_name, headers[col], invalid_reason, row)
                         invalid_messages.append(message)
 
         return invalid_messages

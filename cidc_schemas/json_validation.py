@@ -107,7 +107,7 @@ def _resolve_refs(base_uri: str, json_spec: dict) -> dict:
     """
     resolver = jsonschema.RefResolver(base_uri, json_spec)
 
-    def _resolve_ref(ref:str) -> dict:
+    def _resolve_ref(ref: str) -> dict:
         with resolver.resolving(ref) as resolved_spec:
             # resolved_spec might have unresolved refs in it, so we pass
             # it back to _resolve_refs to resolve them. This way,
@@ -117,32 +117,30 @@ def _resolve_refs(base_uri: str, json_spec: dict) -> dict:
     return _map_refs(json_spec, _resolve_ref)
 
 
-def validate_instance(instance: str, schema: dict, required: bool) -> Optional[str]:
+def validate_instance(instance: str, schema: dict) -> Optional[str]:
     """
     Validate a data instance against a JSON schema.
 
     Returns None if `instance` is valid, otherwise returns reason for invalidity.
     """
     try:
-        if not instance:
-            if required:
-                raise jsonschema.ValidationError(
-                    'found empty value for required field')
-            else:
-                return None
+        if instance is None:
+            raise jsonschema.ValidationError(
+                'found empty value for required field')
 
         stype = schema.get('format')
         if not stype:
             stype = schema.get('type')
         if not stype:
             if 'allOf' in schema:
-                types = set(s.get('type') for s in schema['allOf'] if 'type' in s)
+                types = set(s.get('type')
+                            for s in schema['allOf'] if 'type' in s)
                 # if all types in 'allOf' are the same:
                 if len(types) == 1:
                     stype = types.pop()
                 else:
                     return f"Value can't be of multiple different types ({types}), "\
-                    "as 'allOf' in schema specifies."
+                        "as 'allOf' in schema specifies."
 
         instance = convert(stype, instance)
 
@@ -171,6 +169,7 @@ def _to_time(value):
     if not dt:
         raise ValueError(f"could not convert \"{value}\" to time")
     return dt.strftime('%H:%M:%S')
+
 
 def _to_datetime(value):
     dt = _get_datetime(value)

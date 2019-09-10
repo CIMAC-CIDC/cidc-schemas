@@ -171,6 +171,9 @@ class XlTemplateReader:
 
         return True
 
+    def _make_validation_error(self, worksheet_name: str, field_name: str, message: str) -> str:
+        return f'Error in worksheet "{worksheet_name}", field "{field_name}"": {message}'
+
     def _validate_worksheet(self, worksheet_name: str, ws_schema: dict, required: List[str]) -> List[str]:
         """Validate rows in a worksheet, returning a list of validation error messages."""
 
@@ -192,8 +195,9 @@ class XlTemplateReader:
                 invalid_reason = validate_instance(value, schema, is_required)
 
                 if invalid_reason:
-                    invalid_messages.append(
-                        f'{worksheet_name}: Header, {key}:\t{invalid_reason}')
+                    message = self._make_validation_error(
+                        worksheet_name, key, invalid_reason)
+                    invalid_messages.append(message)
 
         if 'data_columns' in ws_schema:
             # Build up flat mapping of data schemas
@@ -225,7 +229,8 @@ class XlTemplateReader:
                         value, data_schemas[col], is_required)
 
                     if invalid_reason:
-                        invalid_messages.append(
-                            f'{worksheet_name}: Data, {headers[col]}:\t{invalid_reason}')
+                        message = self._make_validation_error(
+                            worksheet_name, headers[col], invalid_reason)
+                        invalid_messages.append(message)
 
         return invalid_messages

@@ -3,7 +3,6 @@ import json
 import os
 import copy
 import uuid
-import fnmatch
 from typing import Union, BinaryIO
 import jsonschema
 from deepdiff import grep
@@ -16,7 +15,6 @@ from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader
-from cidc_schemas.util import parse_npx
 
 from cidc_schemas.constants import SCHEMA_DIR, TEMPLATE_DIR
 

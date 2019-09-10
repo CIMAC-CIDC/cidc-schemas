@@ -15,6 +15,7 @@ from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader
+from cidc_schemas.util import parse_npx
 
 from cidc_schemas.constants import SCHEMA_DIR, TEMPLATE_DIR
 
@@ -191,6 +192,14 @@ def  __jpointer_insert_next_thing(doc, jpoint, part, next_thing):
         except IndexError:
             doc.append(next_thing)
 
+def _fill_artifact_specific_fields(some_path):
+    """
+    Get aliquot IDs from given artifact's path.
+
+    Args:
+        some_path: path to a field with uuid
+    """
+    return parse_npx(some_path)
 
 def _get_recursively(search_dict, field):
     """
@@ -299,6 +308,8 @@ def _process_property(
 SUPPORTED_ASSAYS = ["wes", "olink"]
 SUPPORTED_MANIFESTS = ["pbmc"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
+
+
 def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) -> (dict, dict):
     """
     Converts excel file to json object. It also identifies local files
@@ -319,7 +330,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         template_path: path on file system relative to schema root of the
                         temaplate
 
-        assay_hint: string used to help idnetify properties in template. Must
+        assay_hint: string used to help identify properties in template. Must
                     be the the root of the template filename i.e.
                     wes_template.json would be wes.
         verb: boolean indicating verbosity
@@ -442,7 +453,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
 
     # read the excel file
     xslx = XlTemplateReader.from_excel(xlsx_path)
-    # get corr xsls schema
+    # get corr xlsx schema
     xlsx_template = Template.from_json(template_path)
     xslx.validate(xlsx_template)
 
@@ -491,13 +502,13 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                 # create dictionary per row
                 for key, val in zip(headers, row):
                     
-                    # get corr xsls schema type 
+                    # get corr xlsx schema type
                     new_file = _process_property(
                         key, val,
                         assay_hint=assay_hint,
                         key_lu=xlsx_template.key_lu,
                         data_obj=data_obj,
-                        format_context=dict(local_context, **preamble_context), # combine contextes
+                        format_context=dict(local_context, **preamble_context), # combine contexts
                         root_obj=copy_of_preamble,
                         data_obj_pointer=data_object_pointer,
                         verb=verb)
@@ -527,13 +538,15 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                 data_obj_pointer=preamble_object_pointer, 
                 verb=verb)
             # TODO we might want to use copy+preamble_merger here too,
-            # to for complex properites that require mergeStrategy 
+            # to for complex properties that require mergeStrategy
             
             if new_file:
                 collected_files.append(new_file)
 
-    # return root object and files list
-    return root_ct_obj, collected_files
+    artifact_specifics = _fill_artifact_specific_fields(xlsx_path)
+
+    # return root object, files list and list of specifics (aliquots)
+    return root_ct_obj, collected_files, artifact_specifics
 
 
 def _get_path(ct: dict, key: str) -> str:

@@ -308,7 +308,7 @@ def test_prism(schema_path, xlsx_path):
         return
 
     # turn into object.
-    ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
+    ct, file_maps, artifact_specifics = prismify(xlsx_path, schema_path, assay_hint=hint)
 
     if hint in SUPPORTED_ASSAYS:
         # olink is different - is will never have array of assay "runs" - only one
@@ -351,7 +351,7 @@ def test_filepath_gen(schema_path, xlsx_path):
     schema = validator.schema
 
     # parse the spreadsheet and get the file maps
-    _, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
+    _, file_maps, artifact_specifics = prismify(xlsx_path, schema_path, assay_hint=hint)
     # we ignore and do not validate 'ct' 
     # because it's only a ct patch not a full ct 
 
@@ -417,9 +417,6 @@ def test_filepath_gen(schema_path, xlsx_path):
         assert False, f"add {hint} assay specific asserts"
 
 
-
-
-
 def test_prismify_wes_only():
 
     # create validators
@@ -432,7 +429,7 @@ def test_prismify_wes_only():
     hint = 'wes'
 
     # parse the spreadsheet and get the file maps
-    ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
+    ct, file_maps, artifact_specifics = prismify(xlsx_path, temp_path, assay_hint=hint)
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -443,6 +440,34 @@ def test_prismify_wes_only():
     # assert works
     validator.validate(merged)
 
+def test_prismify_olink_only():
+
+    # create validators
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
+
+    # create the example template.
+    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'metadata', 'olink_template.json')
+    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, "olink_template.xlsx")
+    hint = 'olink'
+
+    # parse the spreadsheet and get the file maps
+    ct, file_maps, artifact_specifics = prismify(xlsx_path, temp_path, assay_hint=hint)
+
+    try:
+        for aliquot in artifact_specifics:
+            print(aliquot)
+    except NameError:
+        print("Aliquot IDs not found")
+
+    # we merge it with a preexisting one
+    # 1. we get all 'required' fields from this preexisting
+    # 2. we can check it didn't overwrite anything crucial
+    merger = Merger(schema)
+    merged = merger.merge(MINIMAL_CT_1PA1SA1AL, ct)
+
+    # assert works
+    validator.validate(merged)
 
 
 def test_merge_artifact_wes_only():
@@ -572,7 +597,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     
     # parse the spreadsheet and get the file maps
-    prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
+    prism_patch, file_maps, artifact_specifics = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
 
     if hint in SUPPORTED_MANIFESTS:
         assert len(prism_patch['shipments']) == 1

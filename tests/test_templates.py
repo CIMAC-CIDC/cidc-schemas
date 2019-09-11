@@ -80,13 +80,13 @@ def compare_templates(schema_path: str, generated: XlTemplateReader, reference: 
 
         # Compare preamble rows
         for (gen_row, ref_row) in zip(gen_ws[RowType.PREAMBLE], ref_ws[RowType.PREAMBLE]):
-            gen_key, ref_key = gen_row[0], ref_row[0]
+            gen_key, ref_key = gen_row.values[0], ref_row.values[0]
             assert gen_key == ref_key, error(
                 f'preamble: generated template had key {gen_key} where reference had {ref_key}')
 
         assert len(gen_ws[RowType.HEADER]) == len(ref_ws[RowType.HEADER])
         for gen_headers, ref_headers in zip(gen_ws[RowType.HEADER], ref_ws[RowType.HEADER]):
             # Compare data headers
-            for (gen_h, ref_h) in zip(gen_headers, ref_headers):
+            for (gen_h, ref_h) in zip(gen_headers.values, ref_headers.values):
                 assert gen_h == ref_h, error(
                     f'data: generated template had header {gen_h} where reference had {ref_h}')

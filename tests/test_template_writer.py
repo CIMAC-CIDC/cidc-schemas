@@ -2,7 +2,7 @@
 
 """Tests for `cidc_schemas.template_writer` module."""
 
-from cidc_schemas.template_writer import XlTemplateWriter, RowType
+from cidc_schemas.template_writer import XlTemplateWriter, RowType, row_type_from_string
 
 
 def test_get_validation():
@@ -23,6 +23,6 @@ def test_get_validation():
 def test_row_type_from_string():
     """Test RowType extraction from parsed strings"""
 
-    assert RowType.from_string("#t") == RowType.TITLE
-    assert RowType.from_string("t") == None
-    assert RowType.from_string("") == None
+    assert row_type_from_string("#t") == RowType.TITLE
+    assert row_type_from_string("t") == None
+    assert row_type_from_string("") == None

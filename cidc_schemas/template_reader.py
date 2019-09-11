@@ -68,7 +68,7 @@ class XlTemplateReader:
             worksheet = workbook[worksheet_name]
             rows = []
             header_width = 0
-            for i, row in enumerate(worksheet.iter_rows()):
+            for row_num, row in enumerate(worksheet.iter_rows(), start=1):
                 # Convert to string and extract type annotation
                 typ, *values = [col.value for col in row]
                 row_type = row_type_from_string(typ)
@@ -76,7 +76,7 @@ class XlTemplateReader:
                 # If no recognized row type found, don't parse this row
                 if not row_type:
                     logger.info(
-                        f'No recognized row type found in row {i + 1} - skipping')
+                        f'No recognized row type found in row {row_num} - skipping')
                     continue
 
                 # If entire row is empty, skip it (this happens at the bottom of the data table, e.g.)
@@ -96,7 +96,7 @@ class XlTemplateReader:
                     values = values[:header_width]
 
                 # Reassemble parsed row and add to rows
-                new_row = TemplateRow(i + 1, row_type, values)
+                new_row = TemplateRow(row_num, row_type, values)
                 rows.append(new_row)
             template[worksheet_name] = rows
 

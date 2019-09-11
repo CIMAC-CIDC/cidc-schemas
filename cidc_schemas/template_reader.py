@@ -6,19 +6,23 @@ import os
 import json
 import logging
 from itertools import dropwhile
-from typing import Dict, List, Tuple, Union, BinaryIO
+from typing import Dict, List, Tuple, Union, BinaryIO, NamedTuple
 
 import openpyxl
 
 from .template import Template
-from .template_writer import RowType
+from .template_writer import RowType, row_type_from_string
 from .json_validation import validate_instance
 
 logger = logging.getLogger('cidc_schemas.template_reader')
 
 
 # A template row is any tuple whose first member is a RowType
-TemplateRow = Tuple[RowType, ...]
+class TemplateRow(NamedTuple):
+    row_num: int
+    row_type: RowType
+    values: Union[List, Tuple]
+
 
 # A mapping from RowType to a list of rows with that type
 RowGroup = Dict[RowType, list]
@@ -64,15 +68,15 @@ class XlTemplateReader:
             worksheet = workbook[worksheet_name]
             rows = []
             header_width = 0
-            for i, row in enumerate(worksheet.iter_rows()):
+            for row_num, row in enumerate(worksheet.iter_rows(), start=1):
                 # Convert to string and extract type annotation
                 typ, *values = [col.value for col in row]
-                row_type = RowType.from_string(typ)
+                row_type = row_type_from_string(typ)
 
                 # If no recognized row type found, don't parse this row
                 if not row_type:
                     logger.info(
-                        f'No recognized row type found in row {i + 1} - skipping')
+                        f'No recognized row type found in row {row_num} - skipping')
                     continue
 
                 # If entire row is empty, skip it (this happens at the bottom of the data table, e.g.)
@@ -92,7 +96,8 @@ class XlTemplateReader:
                     values = values[:header_width]
 
                 # Reassemble parsed row and add to rows
-                rows.append((row_type, *values))
+                new_row = TemplateRow(row_num, row_type, values)
+                rows.append(new_row)
             template[worksheet_name] = rows
 
         return XlTemplateReader(template)
@@ -112,8 +117,7 @@ class XlTemplateReader:
             row_type: [] for row_type in RowType}
 
         for row in rows:
-            row_type, *content = row
-            row_groups[row_type].append(content)
+            row_groups[row.row_type].append(row)
 
         return row_groups
 
@@ -130,13 +134,13 @@ class XlTemplateReader:
         data_rows = row_groups[RowType.DATA]
 
         # Ensure every data row has the right number of entries
-        n_columns = len(header_row)
-        for i, data_row in enumerate(data_rows):
-            n_entries = len(data_row)
-            assert n_entries == n_columns, f"The {i + 1}th data row has the wrong number of entries"
+        n_columns = len(header_row.values)
+        for data_row in data_rows:
+            n_entries = len(data_row.values)
+            assert n_entries == n_columns, f"Row {data_row.row_num} has the wrong number of entries"
 
         schemas = [self._get_schema(header, data_schemas)
-                   for header in header_row if header]
+                   for header in header_row.values if header]
         return schemas
 
     def validate(self, template: Template, raise_validation_error: bool = True) -> Union[List[str], bool]:
@@ -156,10 +160,8 @@ class XlTemplateReader:
         """
         self.invalid_messages = []
 
-        required = template.schema.get('required', [])
-
         for name, schema in template.worksheets.items():
-            errors = self._validate_worksheet(name, schema, required)
+            errors = self._validate_worksheet(name, schema)
             self.invalid_messages.extend(errors)
 
         if self.invalid_messages:
@@ -171,7 +173,14 @@ class XlTemplateReader:
 
         return True
 
-    def _validate_worksheet(self, worksheet_name: str, ws_schema: dict, required: List[str]) -> List[str]:
+    def _make_validation_error(self, worksheet_name: str, field_name: str, row_num: int, message: str) -> str:
+        return f'Error in worksheet "{worksheet_name}", field "{field_name}", row {row_num}: {message}'
+
+    def _validate_instance(self, value, schema):
+        # All fields in an Excel template are required
+        return validate_instance(value, schema, is_required=True)
+
+    def _validate_worksheet(self, worksheet_name: str, ws_schema: dict) -> List[str]:
         """Validate rows in a worksheet, returning a list of validation error messages."""
 
         invalid_messages = []
@@ -185,15 +194,15 @@ class XlTemplateReader:
         if 'preamble_rows' in ws_schema:
             # Validate preamble rows
             preamble_schemas = ws_schema['preamble_rows']
-            for key, *values in row_groups[RowType.PREAMBLE]:
-                value = values[0]
+            for row in row_groups[RowType.PREAMBLE]:
+                key, value = row.values[0], row.values[1]
                 schema = self._get_schema(key, preamble_schemas)
-                is_required = key in required
-                invalid_reason = validate_instance(value, schema, is_required)
+                invalid_reason = self._validate_instance(value, schema)
 
                 if invalid_reason:
-                    invalid_messages.append(
-                        f'{worksheet_name}: Header, {key}:\t{invalid_reason}')
+                    message = self._make_validation_error(
+                        worksheet_name, key, row.row_num, invalid_reason)
+                    invalid_messages.append(message)
 
         if 'data_columns' in ws_schema:
             # Build up flat mapping of data schemas
@@ -209,7 +218,7 @@ class XlTemplateReader:
                     f"Exactly one header row expected, but found {n_headers}")
                 return invalid_messages
 
-            headers = row_groups[RowType.HEADER][0]
+            headers = row_groups[RowType.HEADER][0].values
             if not all(headers):
                 invalid_messages.append(
                     f"Found an empty header cell at index {headers.index(None)}")
@@ -219,13 +228,13 @@ class XlTemplateReader:
                 row_groups, flat_data_schemas)
 
             for data_row in row_groups[RowType.DATA]:
-                for col, value in enumerate(data_row):
-                    is_required = headers[col] in required
-                    invalid_reason = validate_instance(
-                        value, data_schemas[col], is_required)
+                for col, value in enumerate(data_row.values):
+                    invalid_reason = self._validate_instance(
+                        value, data_schemas[col])
 
                     if invalid_reason:
-                        invalid_messages.append(
-                            f'{worksheet_name}: Data, {headers[col]}:\t{invalid_reason}')
+                        message = self._make_validation_error(
+                            worksheet_name, headers[col], data_row.row_num, invalid_reason)
+                        invalid_messages.append(message)
 
         return invalid_messages

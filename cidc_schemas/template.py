@@ -119,6 +119,11 @@ class Template:
         def process_fields(schema: dict) -> dict:
             processed = {}
             for field_name, field_schema in schema.items():
+                if 'is_artifact' in field_schema:
+                    print("sdfsdf")
+                    print()
+                    print()
+                    print(field_name, field_schema)
                 field_name_proc = Template._process_fieldname(field_name)
                 processed[field_name_proc] = field_schema
             return processed
@@ -134,6 +139,10 @@ class Template:
                 for table_name, table_schema in section_schema.items():
                     data_schemas[table_name] = process_fields(table_schema)
                 processed_worksheet[section_name] = data_schemas
+
+        if 'Preprocessing' in processed_worksheet['data_columns']:
+            print("AKJSDKJ")
+            print(processed_worksheet['data_columns']['Preprocessing'])
 
         return processed_worksheet
 
@@ -278,6 +287,11 @@ class Template:
             schema_root {str} -- path to the directory where all schemas are stored
         """
         template_schema = load_and_validate_schema(template_schema_path, schema_root)
+
+        print("jjjjjj")
+        print()
+        print()
+        print(json.dumps(template_schema, indent=7))
 
         return Template(template_schema, name=template_schema_path)
 

@@ -311,6 +311,7 @@ def test_prism(schema_path, xlsx_path):
 
     # turn into object.
     ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
+    ct['lead_organization_study_id'] = 'test_prism_trial_id'
 
     if hint in SUPPORTED_ASSAYS:
         # olink is different - is will never have array of assay "runs" - only one
@@ -334,6 +335,7 @@ def test_prism(schema_path, xlsx_path):
     validator.validate(merged)
 
     if hint in SUPPORTED_ASSAYS :
+        print(merged['lead_organization_study_id'])
         assert merged["lead_organization_study_id"] == "test_prism_trial_id"
     else:
         assert MINIMAL_CT_1PA1SA1AL["lead_organization_study_id"] == merged["lead_organization_study_id"]
@@ -411,7 +413,13 @@ def test_filepath_gen(schema_path, xlsx_path):
         assert len(file_maps) == 5
         assert 5 == sum([x.gs_key.startswith("test_prism_trial_id") for x in file_maps])
 
-    elif hint in HINTS_MANIFESTS:
+    elif hint == 'cytof':
+        # TODO: UPdate this to assert we can handle multiple source fcs files
+        for x in file_maps:
+            assert x.gs_key.endswith("run.fcs")
+        assert len(file_maps) == 2
+
+    elif hint in SUPPORTED_MANIFESTS:
 
         assert len(file_maps) == 0
 
@@ -419,6 +427,36 @@ def test_filepath_gen(schema_path, xlsx_path):
         assert False, f"add {hint} assay specific asserts"
 
 
+def test_prismify_cytof_only():
+
+    # create validators
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
+
+    # create the example template.
+    hint = 'cytof'
+    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'metadata', f'{hint}_template.json')
+    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, f"{hint}_template.xlsx")
+
+    # parse the spreadsheet and get the file maps
+    ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint, verb=False)
+    
+    #print(json.dumps(ct, indent=5))
+
+    # assert works
+    validator.validate(ct)
+
+    # we should have 3 files, the processed fcs and two source fcs X2
+    assert len(file_maps) == 6
+
+    # we merge it with a preexisting one
+    # 1. we get all 'required' fields from this preexisting
+    # 2. we can check it didn't overwrite anything crucial
+    merger = Merger(schema)
+    merged = merger.merge(MINIMAL_CT_1PA1SA1AL, ct)
+
+    # assert works
+    validator.validate(merged)
 
 
 
@@ -452,10 +490,8 @@ def test_merge_artifact_wes_only():
     # create the clinical trial.
     ct = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT)
 
-
     # create validator
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-
     validator.validate(ct)
 
     # loop over each url
@@ -563,12 +599,13 @@ def test_merge_ct_meta():
 
 @pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
 def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
+
     # extract hint
     hint = schema_path.split("/")[-1].replace("_template.json", "")
-    if hint != 'cytof': return
+
     # TODO: implement other assays
     if hint not in SUPPORTED_ASSAYS:
-        return 
+        return
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
@@ -598,9 +635,12 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
         elif hint == 'cytof':
             assert len(prism_patch['assays'][hint]) == 1
             assert 'records' in prism_patch['assays'][hint][0]
+            assert len(prism_patch['assays'][hint][0]['records']) == 2
+            assert len(prism_patch['assays'][hint][0]['cytof_antibodies']) == 2
+        elif hint == 'wes':
+            assert len(prism_patch['assays'][hint][0]['records']) == 2
         else:
-            
-            assert len(['records']) == 2
+            raise NotImplementedError(f"no support in test for this hint {hint}")
 
     for f in file_maps:
         assert f'{hint}/' in f.gs_key, f"No {hint} hint found"
@@ -661,6 +701,10 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     elif hint == 'pbmc':
         assert len(merged_gs_keys) == 0
 
+    elif hint == 'cytof':
+        # TODO: This will need ot be updated when we accept a list of source fcs files
+        assert len(merged_gs_keys) == 2
+
     else:
         assert False, f"add {hint} assay specific asserts"
 
@@ -677,6 +721,9 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
 
     elif hint == 'pbmc':
         assert full_ct["assays"] == original_ct["assays"]
+
+    elif hint == 'cytof':
+        assert len(full_ct['assays'][hint]) == 1
 
     else:
         assert False, f"add {hint} assay specific asserts"
@@ -701,8 +748,12 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
         
         assert len(dd) == 0, "Unexpected CT changes"
 
+    elif hint == 'cytof':
+        assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
+
     else:
         assert False, f"add {hint} assay specific asserts"
+
 
 def test_merge_stuff():
 

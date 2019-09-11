@@ -46,16 +46,14 @@
                             "type_ref": "assays/components/cytof/cytof_entry.json#properties/batch_id"
                         },
                         "original fcs filename(s)": {
-                            "merge_pointer": "0/original_fcs_filenames",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/original_fcs_filenames"
+                            "merge_pointer": "0/files/source_fcs",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{lead organization study id}/{cimac participant id}/{cimac sample id}/{cimac aliquot id}/cytof/source_{num}.fcs",
+                            "is_multi_artifact": 1
                         },
                         "date of acquisition": {
                             "merge_pointer": "0/date_of_acquisition",
                             "type_ref": "assays/components/cytof/cytof_entry.json#properties/date_of_acquisition"
-                        },
-                        "instrument": {
-                            "merge_pointer": "0/instrument",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/instrument"
                         },
                         "injector": {
                             "merge_pointer": "0/injector",
@@ -78,7 +76,7 @@
                         "processed fcs filename": {
                             "merge_pointer": "0/files/processed_fcs",
                             "is_artifact": 1,
-                            "gcs_uri_format": "{lead organization study id}/{cimac participant id}/{cimac sample id}/{cimac aliquot id}/cytof/run.fcs",
+                            "gcs_uri_format": "{lead organization study id}/{cimac participant id}/{cimac sample id}/{cimac aliquot id}/cytof/processed.fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path"
                         },
                         "concatenation version": {
@@ -145,6 +143,10 @@
                         "stain_type": {
                             "merge_pointer": "0/stain_type",
                             "type_ref": "assays/components/cytof/cytof_antibody.json#properties/stain_type"
+                        },
+                        "usage": {
+                            "merge_pointer": "0/usage",
+                            "type_ref": "assays/components/cytof/cytof_antibody.json#properties/usage"
                         }
                     }
                 }

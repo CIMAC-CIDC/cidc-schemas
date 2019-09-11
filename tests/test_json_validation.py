@@ -154,3 +154,18 @@ def test_resolve_refs():
     one = do_resolve("1.json")
     assert one["properties"] == {"1_prop": {
         "2_prop": {"3_prop": {"type": "string"}}}}
+
+
+def test_special_keywords():
+
+    # load the schema
+    schema_root = SCHEMA_DIR
+    schema_path = os.path.join(SCHEMA_DIR, "templates/metadata/cytof_template.json")
+    schema = load_and_validate_schema(schema_path, schema_root)
+
+    tmp1 = schema["properties"]["worksheets"]["Acquisition and Preprocessing"]
+    tmp2 = tmp1["data_columns"]["Preprocessing"]["processed fcs filename"]
+
+    assert "is_multi_artifact" not in tmp2
+    assert "is_artifact" in tmp2
+    

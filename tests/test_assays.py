@@ -189,6 +189,22 @@ def test_rna_expression():
 
 def test_cytof():
 
+    # test artifact sub schema
+    schema_root = SCHEMA_DIR
+    schema_path = os.path.join(SCHEMA_DIR, "assays/components/cytof/cytof_input.json")
+    schema = load_and_validate_schema(schema_path, schema_root)
+    validator = jsonschema.Draft7Validator(schema)
+
+    fcs_1 = ARTIFACT_OBJ.copy()
+    fcs_1['data_format'] = 'BINARY'
+    fcs_2 = ARTIFACT_OBJ.copy()
+    fcs_2['data_format'] = 'BINARY'
+    record = {
+        "processed_fcs": fcs_1,
+        "source_fcs": [fcs_2.copy(), fcs_2.copy()]
+    }
+    validator.validate(record)
+
     # create the cytof object
     cytof_platform = {
         "instrument": "dummy"
@@ -200,13 +216,15 @@ def test_cytof():
             "antibody": "CD8",
             "isotope": "dummy",
             "dilution": "dummy",
-            "stain_type": "Intracellular"
+            "stain_type": "Intracellular",
+            "usage": "Analysis Only"
         },
         {
             "antibody": "PD-L1",
             "isotope": "dummy",
             "dilution": "dummy",
-            "stain_type": "Intracellular"
+            "stain_type": "Intracellular",
+            "usage": "Used"
         }
     ]
     cytof_panel = {
@@ -227,7 +245,7 @@ def test_cytof():
         "source_fcs_filenames": "dummies",
         "files": {
                 "processed_fcs": fcs_1,
-                "source_fcs": fcs_2
+                "source_fcs": [fcs_2.copy(), fcs_2.copy()]
             }
     }
 

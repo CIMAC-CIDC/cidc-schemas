@@ -297,7 +297,7 @@ def _process_property(
     
 
 SUPPORTED_ASSAYS = ["wes", "olink"]
-SUPPORTED_MANIFESTS = ["pbmc"]
+SUPPORTED_MANIFESTS = ["pbmc", "plasma"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
 def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) -> (dict, dict):
     """

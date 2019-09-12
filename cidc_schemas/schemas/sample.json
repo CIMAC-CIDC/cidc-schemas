@@ -85,7 +85,7 @@
       ]
     },
     "specimen_analyte": {
-      "description": "",
+      "description": "The format of the substance to be measured.",
       "type": "string",
       "enum": ["H&E slide", "Unstained slide", "DNA", "RNA", "Protein Lysate"]
     },

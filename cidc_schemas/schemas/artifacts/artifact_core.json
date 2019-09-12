@@ -45,7 +45,7 @@
       "type": "string"
     },
     "visible": {
-      "description": "Indicates if the artifact if visible.  If set to false, the artifact is effectively deleted.",
+      "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
       "type": "boolean"
     },
     "artifact_category": {

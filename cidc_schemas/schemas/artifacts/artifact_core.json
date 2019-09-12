@@ -11,11 +11,12 @@
       "type": "string"
     },
     "artifact_creator": {
-      "description": "The name of the center that created this artifact",
+      "description": "The name of the center that created this artifact.",
       "type": "string",
       "enum": ["DFCI", "Mount Sinai", "Stanford", "MD Anderson"]
     },
     "uploader": {
+      "description": "The name of the person uploading the artifact.",
       "type": "string"
     },
     "uuid": {
@@ -24,7 +25,7 @@
     },
     "file_name": {
       "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-      "description": "The name of the file with extension",
+      "description": "The name of the file with extension.",
       "type": "string"
     },
     "object_url": {

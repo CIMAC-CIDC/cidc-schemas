@@ -3,7 +3,7 @@
   "$id": "image_artifact",
   "title": "Image Artifact",
   "type": "object",
-  "description": "Information about images include height and width",
+  "description": "Information about images including height and width",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"
@@ -11,15 +11,20 @@
     {
       "properties": {
         "height": {
+          "description": "Height of the image.",
           "type": "integer"
         },
         "width": {
+          "description": "Width of the image.",
           "type": "integer"
         },
         "channels": {
+          "description": "Number of channels in the image.",
+          "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
           "type": "integer"
         },
         "data_format": {
+          "description": "Data format.",
           "const": "IMAGE"
         }
       }

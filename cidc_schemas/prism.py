@@ -177,23 +177,14 @@ def  __jpointer_insert_next_thing(doc, jpoint, part, next_thing):
     Puts next_thing into a doc (that is being `jsonpointer.walk`ed)
     by *part* "address". *jpoint* is Jsonpointer that is walked.   
     """
-    #print("---->")
-    #print(doc)
-    #print(jpoint)
-    #print(part)
-    #print(next_thing)
+
     if part == "-":
-        #print("here1")
         doc.append(next_thing)
     else:
         # part will return str or int, so we can use it for `doc[typed_part]`
         # and it will work for both - doc being `dict` or `array`
         typed_part = jpoint.get_part(doc, part)
         try:
-            #print("-->", typed_part)
-            #print(doc)
-            #print(doc[typed_part])
-            #print(next_thing)
 
             # check if something is there.
             if isinstance(typed_part, int):
@@ -202,22 +193,19 @@ def  __jpointer_insert_next_thing(doc, jpoint, part, next_thing):
 
                     # merge the dictionaries.
                     doc[typed_part].update(next_thing)
-                    #print("here2")
+
                 else:
                     # assign it
                     doc[typed_part] = next_thing
-                    #print("here2b")
                 
             else:
                 # assign it
                 doc[typed_part] = next_thing
-                #print("here3")
 
         # if doc is an empty array we hit an error when we try to paste to [0] index,
         # so just append
         except IndexError:
             doc.append(next_thing)
-            #print("here4")
 
 
 def _get_recursively(search_dict, field):
@@ -306,20 +294,16 @@ def _process_property(
     # deal with multiartifact
     if 'is_multi_artifact' in field_def:
 
-        print("")
-        print("=========")
-        print(field_def)
-        print("")
-        print(key, val, raw_val)
-
-        # tokenize thing
+        # tokenize value
         local_paths = raw_val.split(",")
 
         # create array container.
         multi_val = []
+        file_ids = []
         for x in range(len(local_paths)):
             file_id = field_def['coerce'](raw_val)
-            multi_val.append({"upload_placeholder123": file_id})
+            file_ids.append(file_id)
+            multi_val.append({"upload_placeholder": file_id})
 
         # set the value
         _set_val(pointer, multi_val, data_obj, root_obj, data_obj_pointer, verb=verb)
@@ -353,7 +337,7 @@ def _process_property(
     
         # loop over each path
         files = []
-        for num in range(len(local_paths)):
+        for num, upload_placeholder in zip(range(len(local_paths)), file_ids):
 
             # add number and generate key
             format_context['num'] = num
@@ -363,7 +347,7 @@ def _process_property(
                 LocalFileUploadEntry(
                     local_path = local_paths[num],
                     gs_key = gs_key,
-                    upload_placeholder = val
+                    upload_placeholder = upload_placeholder
                 )
             )
         return files
@@ -724,7 +708,6 @@ def merge_artifact(
 
     # urls are created like this in _process_property:
     file_name, uuid = object_url.split("/")[-2:]
-
 
     artifact = {
         # TODO 1. this artifact_category should be filled out during prismify

@@ -335,7 +335,6 @@ def test_prism(schema_path, xlsx_path):
     validator.validate(merged)
 
     if hint in SUPPORTED_ASSAYS :
-        print(merged['lead_organization_study_id'])
         assert merged["lead_organization_study_id"] == "test_prism_trial_id"
     else:
         assert MINIMAL_CT_1PA1SA1AL["lead_organization_study_id"] == merged["lead_organization_study_id"]
@@ -416,8 +415,8 @@ def test_filepath_gen(schema_path, xlsx_path):
     elif hint == 'cytof':
         # TODO: UPdate this to assert we can handle multiple source fcs files
         for x in file_maps:
-            assert x.gs_key.endswith("run.fcs")
-        assert len(file_maps) == 2
+            assert x.gs_key.endswith(".fcs")
+        assert len(file_maps) == 6
 
     elif hint in SUPPORTED_MANIFESTS:
 
@@ -440,11 +439,6 @@ def test_prismify_cytof_only():
 
     # parse the spreadsheet and get the file maps
     ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint, verb=False)
-    
-    #print(json.dumps(ct, indent=5))
-
-    # assert works
-    validator.validate(ct)
 
     # we should have 3 files, the processed fcs and two source fcs X2
     assert len(file_maps) == 6
@@ -703,7 +697,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
 
     elif hint == 'cytof':
         # TODO: This will need ot be updated when we accept a list of source fcs files
-        assert len(merged_gs_keys) == 2
+        assert len(merged_gs_keys) == 6
 
     else:
         assert False, f"add {hint} assay specific asserts"
@@ -749,7 +743,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
         assert len(dd) == 0, "Unexpected CT changes"
 
     elif hint == 'cytof':
-        assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
+        assert len(dd['dictionary_item_added']) == 7*6, "Unexpected CT changes"
 
     else:
         assert False, f"add {hint} assay specific asserts"

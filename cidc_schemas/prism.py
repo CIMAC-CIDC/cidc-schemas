@@ -352,8 +352,9 @@ def _process_property(
             )
         return files
 
+
 SUPPORTED_ASSAYS = ["wes", "olink", "cytof"]
-SUPPORTED_MANIFESTS = ["pbmc"]
+SUPPORTED_MANIFESTS = ["pbmc", "plasma"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
 
 
@@ -511,7 +512,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
 
         # Here we take only first two cells from preamble as key and value respectfully,
         # lowering keys to match template schema definitions.
-        preamble_context = dict((r[0].lower(), r[1]) for r in ws.get(RowType.PREAMBLE, []))
+        preamble_context = dict((r.values[0].lower(), r.values[1]) for r in ws.get(RowType.PREAMBLE, []))
         # We need this full "preamble dict" (all key-value pairs) prior to processing
         # properties from data_columns or preamble wrt template schema definitions, because 
         # there can be a 'gcs_uri_format' that needs to have access to all values.
@@ -544,10 +545,10 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                 # We create this "data record dict" (all key-value pairs) prior to processing
                 # properties from data_columns wrt template schema definitions, because 
                 # there can be a 'gcs_uri_format' that needs to have access to all values.
-                local_context = dict(zip([h.lower() for h in headers], row))
+                local_context = dict(zip([h.lower() for h in headers.values], row.values))
 
                 # create dictionary per row
-                for key, val in zip(headers, row):
+                for key, val in zip(headers.values, row.values):
                     
                     # get corr xsls schema type 
                     new_files = _process_property(
@@ -578,8 +579,8 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         # TODO: What are we doing here?
         for row in ws[RowType.PREAMBLE]:
             # process this property
-            new_files = _process_property(
-                row[0], row[1], 
+            new_file = _process_property(
+                row.values[0], row.values[1], 
                 assay_hint=assay_hint, 
                 key_lu=xlsx_template.key_lu, 
                 data_obj=preamble_obj, 

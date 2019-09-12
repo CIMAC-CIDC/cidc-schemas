@@ -14,7 +14,7 @@ from jsonmerge import Merger
 
 from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
-    SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS
+    SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
@@ -29,6 +29,10 @@ WES_TEMPLATE_EXAMPLE_CT = {
         "lead_organization_study_id": "test_prism_trial_id",
         "participants": [
             {
+                "cimac_participant_id": "wes example PA 1",
+                "trial_participant_id": "trial patient 1",
+                "cohort_id": "---",
+                "arm_id": "---",
                 "samples": [
                     {
                         "aliquots": [
@@ -51,10 +55,6 @@ WES_TEMPLATE_EXAMPLE_CT = {
                         "genomic_source": "Tumor",
                     }
                 ],
-                "cimac_participant_id": "wes example PA 1",
-                "trial_participant_id": "trial patient 1",
-                "cohort_id": "---",
-                "arm_id": "---"
             },
             {
                 "samples": [
@@ -598,8 +598,8 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     hint = schema_path.split("/")[-1].replace("_template.json", "")
 
     # TODO: implement other assays
-    if hint not in SUPPORTED_ASSAYS:
-        return
+    if hint not in SUPPORTED_TEMPLATES:
+        return 
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
@@ -617,6 +617,12 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
             assert len(prism_patch['participants'][0]['samples']) == 2
             assert len(prism_patch['participants'][1]['samples']) == 2
             assert sum(len(s["aliquots"]) for p in prism_patch['participants'] for s in p['samples']) == 6
+
+        elif hint == 'plasma':
+            assert (prism_patch['shipments'][0]['request']) == "a123"
+            assert len(prism_patch['participants']) == 1
+            assert len(prism_patch['participants'][0]['samples']) == 1
+            assert len(prism_patch['participants'][0]['samples'][0]['aliquots']) == 1
 
         else: 
             assert False, f'add {hint} specific asserts'
@@ -692,7 +698,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     elif hint == 'olink':
         assert len(merged_gs_keys) == 5 # 2 files per entry in xlsx + 1 file in preamble
 
-    elif hint == 'pbmc':
+    elif hint in SUPPORTED_MANIFESTS:
         assert len(merged_gs_keys) == 0
 
     elif hint == 'cytof':
@@ -713,7 +719,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
         assert len(full_ct['assays'][hint]) == 1+len(WES_TEMPLATE_EXAMPLE_CT['assays'][hint]), f"Multiple {hint}-assays created instead of merging into one"
         assert len(full_ct['assays'][hint][0]['records']) == 2, "More records than expected"
 
-    elif hint == 'pbmc':
+    elif hint in SUPPORTED_MANIFESTS:
         assert full_ct["assays"] == original_ct["assays"]
 
     elif hint == 'cytof':
@@ -738,7 +744,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
         # 7 artifact atributes * 5 files (2 per record + 1 study)
         assert len(dd['dictionary_item_added']) == 7*(2*2+1), "Unexpected CT changes"
 
-    elif hint == "pbmc":
+    elif hint in SUPPORTED_MANIFESTS:
         
         assert len(dd) == 0, "Unexpected CT changes"
 

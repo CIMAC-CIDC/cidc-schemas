@@ -7,114 +7,197 @@
   "description": "Shipping / receiving manifest for transferring Plasma samples.\n",
   "properties": {
     "worksheets": {
-      "Plasma": {
+      "shipment": {
+
+        "prism_preamble_object_schema" : "clinical_trial.json",
+        "prism_preamble_object_pointer" : "/shipments/0",
+        "prism_data_object_pointer" : "/shipped",
+
         "preamble_rows": {
           "lead organization study id": {
-            "$ref": "clinical_trial.json#properties/lead_organization_study_id"
+            "merge_pointer": "2/lead_organization_study_id",
+            "type_ref": "clinical_trial.json#properties/lead_organization_study_id"
           },
           "manifest id": {
-            "$ref": "shipping_core.json#properties/manifest_id"
+            "merge_pointer": "/manifest_id",
+            "type_ref": "shipping_core.json#properties/manifest_id"
           },
-          "request": { "$ref": "shipping_core.json#properties/request" },
+          "request": {
+            "merge_pointer": "/request",
+            "type_ref": "shipping_core.json#properties/request"
+          },
           "assay priority": {
-            "$ref": "shipping_core.json#properties/assay_priority"
+            "merge_pointer": "/assay_priority",
+            "type_ref": "shipping_core.json#properties/assay_priority"
           },
-          "assay type": { "$ref": "shipping_core.json#properties/assay_type" },
+          "assay type": {
+            "merge_pointer": "/assay_type",
+            "type_ref": "shipping_core.json#properties/assay_type"
+          },
           "batch number": {
-            "$ref": "shipping_core.json#properties/batch_number"
+            "merge_pointer": "/batch_number",
+            "type_ref": "shipping_core.json#properties/batch_number"
           },
-          "box number": { "$ref": "shipping_core.json#properties/box_number" },
+          "box number": {
+            "merge_pointer": "/box_number",
+            "type_ref": "shipping_core.json#properties/box_number"
+          },
           "assay run number": {
-            "$ref": "shipping_core.json#properties/assay_run_number"
+            "merge_pointer": "/assay_run_number",
+            "type_ref": "shipping_core.json#properties/assay_run_number"
           },
-          "courier": { "$ref": "shipping_core.json#properties/courier" },
+          "courier": {
+            "merge_pointer": "/courier",
+            "type_ref": "shipping_core.json#properties/courier"
+          },
           "tracking number": {
-            "$ref": "shipping_core.json#properties/tracking_number"
+            "merge_pointer": "/tracking_number",
+            "type_ref": "shipping_core.json#properties/tracking_number"
           },
           "account number": {
-            "$ref": "shipping_core.json#properties/account_number"
+            "merge_pointer": "/account_number",
+            "type_ref": "shipping_core.json#properties/account_number"
           },
           "shipping condition": {
-            "$ref": "shipping_core.json#properties/shipping_condition"
+            "merge_pointer": "/shipping_condition",
+            "type_ref": "shipping_core.json#properties/shipping_condition"
           },
           "date shipped": {
-            "$ref": "shipping_core.json#properties/date_shipped"
+            "merge_pointer": "/date_shipped",
+            "type_ref": "shipping_core.json#properties/date_shipped"
           },
           "num of samples shipped": {
-            "$ref": "shipping_core.json#properties/num_of_samples_shipped"
+            "merge_pointer": "/num_of_samples_shipped",
+            "type_ref": "shipping_core.json#properties/num_of_samples_shipped"
           },
           "num of samples good": {
-            "$ref": "shipping_core.json#properties/num_of_samples_good"
+            "merge_pointer": "/num_of_samples_good",
+            "type_ref": "shipping_core.json#properties/num_of_samples_good"
           },
           "num of path report": {
-            "$ref": "shipping_core.json#properties/num_of_path_report"
+            "merge_pointer": "/num_of_path_report",
+            "type_ref": "shipping_core.json#properties/num_of_path_report"
           },
-          "ship from": { "$ref": "shipping_core.json#properties/ship_from" },
-          "ship to": { "$ref": "shipping_core.json#properties/ship_to" }
-        },
+          "ship from": {
+            "merge_pointer": "/ship_from",
+            "type_ref": "shipping_core.json#properties/ship_from"
+          },
+          "ship to": {
+            "merge_pointer": "/ship_to",
+            "type_ref": "shipping_core.json#properties/ship_to"
+          }
+        }
+      },
+      "aliquots": {
+        
+        "prism_preamble_object_schema" : "clinical_trial.json",
+        "prism_preamble_object_pointer" : "#",
+        "prism_data_object_pointer" : "/participants/0/samples/0/aliquots/0",
+        
         "data_columns": {
           "Filled by Biorepository": {
-            "lead organization study id": {
-              "$ref": "clinical_trial.json#properties/lead_organization_study_id"
-            },
             "trial participant id": {
-              "$ref": "participant.json#properties/trial_participant_id"
+              "merge_pointer": "4/trial_participant_id",
+              "type_ref": "participant.json#properties/trial_participant_id"
             },
             "cimac participant id": {
-              "$ref": "participant.json#properties/cimac_participant_id"
+              "merge_pointer": "4/cimac_participant_id",
+              "type_ref": "participant.json#properties/cimac_participant_id"
             },
-            "cohort id": { "$ref": "participant.json#properties/cohort_id" },
-            "arm id": { "$ref": "participant.json#properties/arm_id" },
+            "cohort id": {
+              "merge_pointer": "4/cohort_id",
+              "type_ref": "participant.json#properties/cohort_id" 
+            },
+            "arm id": {
+              "merge_pointer": "4/arm_id",
+              "type_ref": "participant.json#properties/arm_id" 
+            },
             "site sample id": {
-              "$ref": "sample.json#properties/site_sample_id"
+              "merge_pointer": "2/site_sample_id",
+              "type_ref": "sample.json#properties/site_sample_id"
             },
             "cimac sample id": {
-              "$ref": "sample.json#properties/cimac_sample_id"
+              "merge_pointer": "2/cimac_sample_id",
+              "type_ref": "sample.json#properties/cimac_sample_id"
             },
-            "time point": { "$ref": "sample.json#properties/time_point" },
+            "time point": {
+              "merge_pointer": "2/time_point", 
+              "type_ref": "sample.json#properties/time_point" 
+            },
+            "genomic source": {
+              "merge_pointer": "2/genomic_source", 
+              "type_ref": "sample.json#properties/genomic_source" 
+            },
             "blood collection date": {
-              "$ref": "sample.json#properties/blood_collection_date"
+              "merge_pointer": "2/blood_collection_date",
+              "type_ref": "sample.json#properties/blood_collection_date"
             },
             "blood collection time": {
-              "$ref": "sample.json#properties/blood_collection_time"
+              "merge_pointer": "2/blood_collection_time",
+              "type_ref": "sample.json#properties/blood_collection_time"
             },
             "blood processing date": {
-              "$ref": "sample.json#properties/blood_processing_date"
+              "merge_pointer": "2/blood_processing_date",
+              "type_ref": "sample.json#properties/blood_processing_date"
             },
             "blood processing time": {
-              "$ref": "sample.json#properties/blood_processing_time"
+              "merge_pointer": "2/blood_processing_time",
+              "type_ref": "sample.json#properties/blood_processing_time"
             },
             "sample location": {
-              "$ref": "sample.json#properties/sample_location"
+              "merge_pointer": "2/sample_location",
+              "type_ref": "sample.json#properties/sample_location"
             },
-            "specimen type": { "$ref": "sample.json#properties/specimen_type" },
+            "specimen type": {
+             "merge_pointer": "2/specimen_type", 
+             "type_ref": "sample.json#properties/specimen_type" 
+            },
             "specimen format": {
-              "$ref": "sample.json#properties/specimen_format"
+              "merge_pointer": "2/specimen_format",
+              "type_ref": "sample.json#properties/specimen_format"
             },
-            "quantity": { "$ref": "aliquot.json#properties/quantity" },
+            "quantity": {
+             "merge_pointer": "/quantity", 
+             "type_ref": "aliquot.json#properties/quantity" 
+            },
             "volume quantity": {
-              "$ref": "aliquot.json#properties/volume_quantity"
+              "merge_pointer": "/volume_quantity",
+              "type_ref": "aliquot.json#properties/volume_quantity"
             },
-            "units": { "$ref": "aliquot.json#properties/units" },
-            "sample source": { "$ref": "sample.json#properties/sample_source" }
+            "units": {
+             "merge_pointer": "/units", 
+             "type_ref": "aliquot.json#properties/units" 
+            },
+            "sample source": {
+             "merge_pointer": "2/sample_source", 
+             "type_ref": "sample.json#properties/sample_source" 
+            },
+            "cimac aliquot id": {
+              "merge_pointer": "/cimac_aliquot_id",
+              "type_ref": "aliquot.json#properties/cimac_aliquot_id"
+            }
           },
           "Filled by CIMAC Lab": {
-            "cimac aliquot id": {
-              "$ref": "aliquot.json#properties/cimac_aliquot_id"
-            },
             "material used": {
-              "$ref": "aliquot.json#properties/material_used"
+              "merge_pointer": "/material_used",
+              "type_ref": "aliquot.json#properties/material_used"
             },
             "material remaining": {
-              "$ref": "aliquot.json#properties/material_remaining"
+              "merge_pointer": "/material_remaining",
+              "type_ref": "aliquot.json#properties/material_remaining"
             },
             "aliquot quality status": {
-              "$ref": "aliquot.json#properties/aliquot_quality_status"
+              "merge_pointer": "/aliquot_quality_status",
+              "type_ref": "aliquot.json#properties/aliquot_quality_status"
             },
             "aliquot replacement": {
-              "$ref": "aliquot.json#properties/aliquot_replacement"
+              "merge_pointer": "/aliquot_replacement",
+              "type_ref": "aliquot.json#properties/aliquot_replacement"
             },
-            "aliquot status": { "$ref": "aliquot.json#properties/aliquot_status" }
+            "aliquot status": { 
+              "merge_pointer": "/aliquot_status", 
+              "type_ref": "aliquot.json#properties/aliquot_status" 
+            }
           }
         }
       }

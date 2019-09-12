@@ -9,7 +9,7 @@ import jsonschema
 from typing import List
 from openpyxl import load_workbook
 
-from cidc_schemas.template_reader import XlTemplateReader, ValidationError
+from cidc_schemas.template_reader import XlTemplateReader, ValidationError, TemplateRow
 from cidc_schemas.template_writer import RowType
 
 from .constants import TEMPLATE_EXAMPLES_DIR, TEST_DATA_DIR
@@ -21,12 +21,13 @@ def test_valid(tiny_template):
     """Test that a known-valid spreadsheet is considered valid"""
     tiny_valid = {
         'TEST_SHEET': [
-            (RowType.PREAMBLE, 'test_property', 'foo'),
-            (RowType.PREAMBLE, 'test_date', '6/11/12'),
-            (RowType.PREAMBLE, 'test_time', '10:44:61'),
-            (RowType.HEADER, 'test_property', 'test_date', 'test_time'),
-            (RowType.DATA, 'foo', '6/11/12', '10:44:61'),
-            (RowType.DATA, 'foo', '6/12/12', '10:45:61')
+            TemplateRow(1, RowType.PREAMBLE, ('test_property', 'foo')),
+            TemplateRow(2, RowType.PREAMBLE, ('test_date', '6/11/12')),
+            TemplateRow(3, RowType.PREAMBLE, ('test_time', '10:44:61')),
+            TemplateRow(4, RowType.HEADER, ('test_property',
+                                            'test_date', 'test_time')),
+            TemplateRow(5, RowType.DATA, ('foo', '6/11/12', '10:44:61')),
+            TemplateRow(6, RowType.DATA, ('foo', '6/12/12', '10:45:61'))
         ]
     }
 
@@ -51,7 +52,8 @@ def test_missing_headers(tiny_template):
     """Test that a spreadsheet with empty headers raises a validation error"""
     tiny_missing_header = {
         'TEST_SHEET': [
-            (RowType.HEADER, 'test_property', None, 'test_time'),
+            TemplateRow(1, RowType.HEADER,
+                        ('test_property', None, 'test_time')),
         ]
     }
 
@@ -63,32 +65,31 @@ def test_missing_required_value(tiny_template):
     """Test that spreadsheet with a missing value marked required raises a validation error"""
     tiny_missing_value = {
         'TEST_SHEET': [
-            (RowType.HEADER, 'test_property', 'test_date', 'test_time'),
-            (RowType.DATA, None, '6/11/12', '10:44:61'),
+            TemplateRow(1, RowType.HEADER, ('test_property',
+                                            'test_date', 'test_time')),
+            TemplateRow(2, RowType.DATA, (None, '6/11/12', '10:44:61')),
         ]
     }
 
-    # tiny_template has no required fields, so this should be valid
-    assert XlTemplateReader(tiny_missing_value).validate(tiny_template)
-
-    # add a required field
-    tiny_template.schema['required'] = ['test_property']
+    message = 'Error in worksheet "TEST_SHEET", field "test_property", row 2: found empty value'
     search_error_message(tiny_missing_value,
-                         tiny_template, ValidationError, 'empty value for required field')
+                         tiny_template, ValidationError, message)
 
 
 def test_wrong_number_of_headers(tiny_template):
     """Test that a spreadsheet with multiple or no headers raises an validation error"""
     tiny_double = {
         'TEST_SHEET': [
-            (RowType.HEADER, 'test_property', 'test_date', 'test_time'),
-            (RowType.HEADER, 'test_property', 'test_date', 'test_time'),
+            TemplateRow(1, RowType.HEADER, ('test_property',
+                                            'test_date', 'test_time')),
+            TemplateRow(2, RowType.HEADER, ('test_property',
+                                            'test_date', 'test_time')),
         ]
     }
 
     tiny_no_headers = {
         'TEST_SHEET': [
-            (RowType.DATA, 1, 2, 3)
+            TemplateRow(1, RowType.DATA, (1, 2, 3))
         ]
     }
 
@@ -103,7 +104,7 @@ def test_missing_schema(tiny_template):
     """Test that a spreadsheet with an unknown property raises an assertion error"""
     tiny_missing = {
         'TEST_SHEET': [
-            (RowType.PREAMBLE, 'missing_property', 'foo'),
+            TemplateRow(1, RowType.PREAMBLE, ('missing_property', 'foo')),
         ]
     }
 
@@ -115,12 +116,13 @@ def test_invalid(tiny_template):
     """Test that a known-invalid spreadsheet is considered invalid"""
     tiny_invalid = {
         'TEST_SHEET': [
-            (RowType.PREAMBLE, 'test_property', 'foo'),
-            (RowType.PREAMBLE, 'test_date', '6foo'),
-            (RowType.PREAMBLE, 'test_time', '10:foo:61'),
-            (RowType.HEADER, 'test_property', 'test_date', 'test_time'),
-            (RowType.DATA, 'foo', '6/11/foo', '10::::44:61'),
-            (RowType.DATA, 'foo', '6//12', '10:45:61asdf')
+            TemplateRow(2, RowType.PREAMBLE, ('test_property', 'foo')),
+            TemplateRow(2, RowType.PREAMBLE, ('test_date', '6foo')),
+            TemplateRow(2, RowType.PREAMBLE, ('test_time', '10:foo:61')),
+            TemplateRow(2, RowType.HEADER, ('test_property',
+                                            'test_date', 'test_time')),
+            TemplateRow(2, RowType.DATA, ('foo', '6/11/foo', '10::::44:61')),
+            TemplateRow(2, RowType.DATA, ('foo', '6//12', '10:45:61asdf'))
         ]
     }
 

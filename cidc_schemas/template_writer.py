@@ -23,12 +23,12 @@ class RowType(Enum):
     PREAMBLE = "#p"
     DATA = "#d"
 
-    @staticmethod
-    def from_string(maybe_type: str) -> Optional[Enum]:
-        try:
-            return RowType(maybe_type)
-        except ValueError:
-            return None
+
+def row_type_from_string(maybe_type: str) -> Optional[RowType]:
+    try:
+        return RowType(maybe_type)
+    except ValueError:
+        return None
 
 
 class XlThemes:

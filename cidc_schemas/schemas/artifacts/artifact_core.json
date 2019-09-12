@@ -6,11 +6,12 @@
   "description": "Any file artifact associated with a clinical trial.",
   "properties": {
     "upload_placeholder": {
-      "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+      "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+      "description": "A placeholder for when artifact file is being uploaded.",
       "type": "string"
     },
     "artifact_creator": {
-      "description": "The name of the center that created this artificat",
+      "description": "The name of the center that created this artifact",
       "type": "string",
       "enum": ["DFCI", "Mount Sinai", "Stanford", "MD Anderson"]
     },
@@ -31,7 +32,7 @@
       "type": "string"
     },
     "uploaded_timestamp": {
-      "description": "Timestamp of when artfiact was loaded into the system.",
+      "description": "Timestamp of when artifact was loaded into the system.",
       "format": "date-time",
       "type": "string"
     },
@@ -44,7 +45,7 @@
       "type": "string"
     },
     "visible": {
-      "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+      "description": "Indicates if the artifact if visible.  If set to false, the artifact is effectively deleted.",
       "type": "boolean"
     },
     "artifact_category": {

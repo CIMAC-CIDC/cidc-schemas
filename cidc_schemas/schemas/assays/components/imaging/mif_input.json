@@ -18,6 +18,7 @@
       "$ref": "artifacts/artifact_csv.json"
     },
     "regions_of_interest": {
+      "description": "A region of interest (ROI) is a portion of an image which has been analyzed using image processing software.",
       "type": "array",
       "items": {
         "allOf": [

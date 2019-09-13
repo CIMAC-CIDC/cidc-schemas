@@ -3,7 +3,7 @@
   "$id": "germline",
   "title": "Germline variant output sample files",
   "type": "object",
-  "description": "Germline variant output sample files",
+  "description": "Germline variant output sample files.",
   "properties": {
     "SNP92_recode": {
       "$ref": "artifacts/artifact_vcf.json"

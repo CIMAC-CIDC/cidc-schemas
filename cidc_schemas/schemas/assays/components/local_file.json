@@ -3,7 +3,7 @@
   "$id": "local_file",
   "title": "Local file type",
   "type": "object",
-  "description": "A type to store local file paths",
+  "description": "A type to store local file paths.",
   "properties": {
     "file_path": {
       "$id": "local_file_path",

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "id": "image",
   "title": "Image",
-  "description": "Base information about the acquisition and analysis of a quantitative pathology image\n",
+  "description": "Base information about the acquisition and analysis of a quantitative pathology image.",
   "properties": {
     "slide_scanner_model": {
       "description": "Model version of the slide scanner instrument.",

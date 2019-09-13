@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "imaging_data",
   "title": "Imaging Data",
-  "description": "Shared schema for experiments involving the use of imaging data",
+  "description": "Shared schema for experiments involving the use of imaging data.",
   "properties": {
     "internal_slide_id": {
       "description": "Identification number used for internal imaging slide.",

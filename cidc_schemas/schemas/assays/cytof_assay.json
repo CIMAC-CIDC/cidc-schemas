@@ -3,7 +3,7 @@
   "$id": "cytof",
   "title": "CYTOF Run",
   "type": "object",
-  "description": "Base information about the acquisition and analysis CyTOF data\n",
+  "description": "Base information about the acquisition and analysis CyTOF data.",
   "allOf": [
     { "$ref": "assays/components/cytof_platform.json" },
     { "$ref": "assays/components/cytof_panel.json" }

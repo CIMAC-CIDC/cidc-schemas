@@ -3,7 +3,7 @@
   "$id": "aliquot",
   "title": "Aliquot",
   "type": "object",
-  "description": "Pertaining to a portion (volume or weight) of the whole",
+  "description": "Pertaining to a portion (volume or weight) of the whole.",
   "properties": {
     "cimac_aliquot_id": {
       "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",

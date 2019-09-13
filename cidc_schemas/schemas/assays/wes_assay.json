@@ -3,7 +3,7 @@
   "$id": "wes_assay",
   "title": "Whole Exome Sequencing Assay",
   "type": "object",
-  "description": "Whole Exome Sequencing Assay",
+  "description": "Whole Exome Sequencing Assay.",
   "allOf": [
     { "$ref": "assays/components/assay_core.json" },
     { "$ref": "assays/components/ngs_assay_core.json" }

@@ -3,7 +3,7 @@
   "$id": "alignment",
   "title": "WES output align files",
   "type": "object",
-  "description": "WES output align files",
+  "description": "WES output align files.",
   "properties": {
     "align_sorted": {
       "$ref": "artifacts/artifact_bam.json"

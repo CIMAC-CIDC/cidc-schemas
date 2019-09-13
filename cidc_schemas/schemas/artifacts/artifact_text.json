@@ -3,7 +3,7 @@
   "$id": "text_artifact",
   "title": "Text Artifact",
   "type": "object",
-  "description": "Information about text files",
+  "description": "Information about text files.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

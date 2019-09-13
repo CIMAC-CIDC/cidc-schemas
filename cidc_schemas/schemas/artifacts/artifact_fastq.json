@@ -3,7 +3,7 @@
   "$id": "fastq_artifact",
   "title": "FastQ Artifact",
   "type": "object",
-  "description": "Information about a fastq file",
+  "description": "Information about a fastq file.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

@@ -3,7 +3,7 @@
   "$id": "image_artifact",
   "title": "Image Artifact",
   "type": "object",
-  "description": "Information about images including height and width",
+  "description": "Information about images including height and width.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

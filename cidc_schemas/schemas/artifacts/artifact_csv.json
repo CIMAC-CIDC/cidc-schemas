@@ -3,7 +3,7 @@
   "$id": "csv_artifact",
   "title": "CSV Artifact",
   "type": "object",
-  "description": "Information about CSV files",
+  "description": "Information about CSV files.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

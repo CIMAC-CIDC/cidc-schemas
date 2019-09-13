@@ -3,7 +3,7 @@
   "$id": "wes_output",
   "title": "Whole Exome Sequencing Output Files",
   "type": "object",
-  "description": "Whole Exome Sequencing Assay Output Files",
+  "description": "Whole Exome Sequencing assay output files.",
   "properties": {
     "tumor": {
       "$ref": "assays/components/alignment.json"

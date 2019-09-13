@@ -3,7 +3,7 @@
   "$id": "rna_input",
   "title": "RNASeq Input Files",
   "type": "object",
-  "description": "RNASeq Assay Input Files",
+  "description": "RNASeq assay input files.",
   "allOf": [
     { "$ref": "assays/components/fastq_pair_and_mapping.json" }
   ]

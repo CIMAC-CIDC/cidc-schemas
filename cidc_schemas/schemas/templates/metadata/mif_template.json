@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "mIF",
   "title": "Metadata file for mIF",
-  "description": "Metadata information for multiplex immunoflouresence(mIF).",
+  "description": "Metadata information for multiplex immunoflouresence (mIF).",
   "properties": {
     "worksheets": {
       "mIF": {

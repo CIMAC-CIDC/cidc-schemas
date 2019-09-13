@@ -3,7 +3,7 @@
   "$id": "mif_input",
   "title": "Multiplex Immunofluorescence Input Files",
   "type": "object",
-  "description": "mIF Assay Input Files",
+  "description": "mIF assay input files.",
   "properties": {
     "whole_slide_imaging_file": {
       "$comment": "Digital slide produced from the scanning of conventional glass slides.",

@@ -3,7 +3,7 @@
   "$id": "olink_input",
   "title": "Olink Input Files",
   "type": "object",
-  "description": "Olink Assay Input Files",
+  "description": "Olink assay input files.",
   "properties": {
     "assay_npx": {
       "$ref": "artifacts/artifact_npx.json",

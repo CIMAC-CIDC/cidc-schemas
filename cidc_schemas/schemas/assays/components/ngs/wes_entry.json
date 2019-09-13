@@ -3,7 +3,7 @@
   "$id": "wes_assay_record",
   "title": "WES assay record",
   "type": "object",
-  "description": "A single data record from WES assay",
+  "description": "A single data record from WES assay.",
   "allOf": [
     { "$ref": "assays/components/ngs/ngs_assay_record.json" }
   ],

@@ -3,7 +3,7 @@
   "$id": "micsss_assay_record",
   "title": "micsss assay record",
   "type": "object",
-  "description": "A single data record from micsss assay",
+  "description": "A single data record from micsss assay.",
   "properties": {
     "project_qupath_folder": {
       "description": "Folder path containing files produced from a QuPath image analysis.",

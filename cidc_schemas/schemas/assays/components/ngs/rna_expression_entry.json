@@ -3,7 +3,7 @@
   "$id": "rna_assay_record",
   "title": "RNAseq assay record",
   "type": "object",
-  "description": "A single data record from RNAseq assay",
+  "description": "A single data record from RNAseq assay.",
   "allOf": [
     { "$ref": "assays/components/ngs/ngs_assay_record.json" }
   ],

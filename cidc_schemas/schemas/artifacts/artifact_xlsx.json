@@ -10,9 +10,6 @@
     },
     {
       "properties": {
-        "info": {
-          "type": "object"
-        },
         "data_format": {
           "const": "XLSX"
         }

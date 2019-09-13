@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "wes_assay",
-  "title": "Whole exome sequencing.",
+  "title": "Whole Exome Sequencing Assay.",
   "type": "object",
-  "description": "Whole Exome Sequencing Assay.",
+  "description": "Whole exome sequencing.",
   "allOf": [
     { "$ref": "assays/components/assay_core.json" },
     { "$ref": "assays/components/ngs_assay_core.json" }

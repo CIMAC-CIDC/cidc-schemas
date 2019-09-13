@@ -11,16 +11,18 @@
     {
       "properties": {
         "number_of_aliquots": {
+          "description": "Number of aliquots within this assay.",
           "type": "integer"
         },
         "aliquots": {
           "type": "array",
           "items": {
-            "$comment": "Id of an aliquot within this assay.",
+            "description": "Ids of the aliquot(s) within this assay.",
             "$ref": "aliquot.json#properties/cimac_aliquot_id"
           }
         },
         "data_format": {
+          "description": "Data format.",
           "const": "NPX"
         }
       }

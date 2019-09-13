@@ -10,10 +10,8 @@
     },
     {
       "properties": {
-        "info": {
-          "type": "object"
-        },
         "data_format": {
+          "description": "Data format.",
           "const": "VCF"
         }
       }

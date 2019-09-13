@@ -384,7 +384,7 @@
             "$schema": "http://json-schema.org/draft-07/schema#",
             "description": "Paired end sequencing fastq file pair and read group mapping file",
             "properties": {
-                "fastq_1": {
+                "r1": {
                     "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
                     "$id": "fastq_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
@@ -450,7 +450,7 @@
                                     "type": "string"
                                 },
                                 "file_name": {
-                                    "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
                                     "description": "The name of the file with extension",
                                     "type": "string"
                                 },
@@ -505,7 +505,7 @@
                     "title": "FastQ Artifact",
                     "type": "object"
                 },
-                "fastq_2": {
+                "r2": {
                     "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
                     "$id": "fastq_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
@@ -571,7 +571,7 @@
                                     "type": "string"
                                 },
                                 "file_name": {
-                                    "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
                                     "description": "The name of the file with extension",
                                     "type": "string"
                                 },
@@ -692,7 +692,7 @@
                                     "type": "string"
                                 },
                                 "file_name": {
-                                    "$comment": "_____!!!_____ What if file name contains PHI? _____!!!_____",
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
                                     "description": "The name of the file with extension",
                                     "type": "string"
                                 },
@@ -750,8 +750,8 @@
                 }
             },
             "required": [
-                "fastq_1",
-                "fastq_2",
+                "r1",
+                "r2",
                 "read_group_mapping_file"
             ],
             "title": "Fastq pair and group mapping",

@@ -273,6 +273,8 @@ MINIMAL_CT_1PA1SA1AL = {
         }
     ]
 }
+
+
 def test_samples_merge():
 
     # one with 1 sample
@@ -309,16 +311,19 @@ def test_prism(schema_path, xlsx_path):
 
     # turn into object.
     ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
+    if hint == 'cytof':
+        assert "CYTOF_TEST1" == ct['lead_organization_study_id']
+        ct['lead_organization_study_id'] = 'test_prism_trial_id'
 
     if hint in SUPPORTED_ASSAYS:
         # olink is different - is will never have array of assay "runs" - only one
         if hint != 'olink':
             assert len(ct['assays'][hint]) == 1
 
-    elif hint in SUPPORTED_MANIFESTS: 
+    elif hint in SUPPORTED_MANIFESTS:
         assert not ct.get('assays'), "Assay created during manifest prismify"
 
-    else: 
+    else:
         assert False, f"Unknown template {hint}"
 
     
@@ -409,7 +414,13 @@ def test_filepath_gen(schema_path, xlsx_path):
         assert len(file_maps) == 5
         assert 5 == sum([x.gs_key.startswith("test_prism_trial_id") for x in file_maps])
 
-    elif hint in HINTS_MANIFESTS:
+    elif hint == 'cytof':
+        # TODO: UPdate this to assert we can handle multiple source fcs files
+        for x in file_maps:
+            assert x.gs_key.endswith(".fcs")
+        assert len(file_maps) == 6
+
+    elif hint in SUPPORTED_MANIFESTS:
 
         assert len(file_maps) == 0
 
@@ -417,6 +428,31 @@ def test_filepath_gen(schema_path, xlsx_path):
         assert False, f"add {hint} assay specific asserts"
 
 
+def test_prismify_cytof_only():
+
+    # create validators
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
+
+    # create the example template.
+    hint = 'cytof'
+    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'metadata', f'{hint}_template.json')
+    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, f"{hint}_template.xlsx")
+
+    # parse the spreadsheet and get the file maps
+    ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint, verb=False)
+
+    # we should have 3 files, the processed fcs and two source fcs X2
+    assert len(file_maps) == 6
+
+    # we merge it with a preexisting one
+    # 1. we get all 'required' fields from this preexisting
+    # 2. we can check it didn't overwrite anything crucial
+    merger = Merger(schema)
+    merged = merger.merge(MINIMAL_CT_1PA1SA1AL, ct)
+
+    # assert works
+    validator.validate(merged)
 
 
 
@@ -450,10 +486,8 @@ def test_merge_artifact_wes_only():
     # create the clinical trial.
     ct = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT)
 
-
     # create validator
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-
     validator.validate(ct)
 
     # loop over each url
@@ -561,6 +595,7 @@ def test_merge_ct_meta():
 
 @pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
 def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
+
     # extract hint
     hint = schema_path.split("/")[-1].replace("_template.json", "")
 
@@ -572,7 +607,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     
     # parse the spreadsheet and get the file maps
-    prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
+    prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=False)
 
     if hint in SUPPORTED_MANIFESTS:
         assert len(prism_patch['shipments']) == 1
@@ -597,17 +632,27 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     if hint in SUPPORTED_ASSAYS:
         # olink is different in structure - no array of assays, only one.
         if hint == 'olink':
-            prism_patch_assay_records=prism_patch['assays'][hint]['records']
+            prism_patch_assay_records = prism_patch['assays'][hint]['records']
             assert len(prism_patch['assays'][hint]['records']) == 2
-        else:
+        elif hint == 'cytof':
             assert len(prism_patch['assays'][hint]) == 1
+            assert 'records' in prism_patch['assays'][hint][0]
             assert len(prism_patch['assays'][hint][0]['records']) == 2
+            assert len(prism_patch['assays'][hint][0]['cytof_antibodies']) == 2
+        elif hint == 'wes':
+            assert len(prism_patch['assays'][hint][0]['records']) == 2
+        else:
+            raise NotImplementedError(f"no support in test for this hint {hint}")
 
     for f in file_maps:
         assert f'{hint}/' in f.gs_key, f"No {hint} hint found"
 
+    # And we need set lead_organization_study_id to be the same for testing
     original_ct = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT) 
-    
+    if hint in ["olink", "cytof"]:
+        original_ct['lead_organization_study_id'] = 'test_prism_trial_id'
+        prism_patch['lead_organization_study_id'] = 'test_prism_trial_id'
+
     # "prismify" provides only a patch so we need to merge it into a "full" ct
     full_after_prism = merge_clinical_trial_metadata(prism_patch, original_ct)
 
@@ -648,8 +693,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     validator.validate(full_ct)
 
     if hint == 'wes':
-        assert len(merged_gs_keys) == 3*2 # 3 files per entry in xlsx
-
+        assert len(merged_gs_keys) == 3 * 2 # 3 files per entry in xlsx
         assert set(merged_gs_keys) == set(WES_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
     elif hint == 'olink':
@@ -657,6 +701,10 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
 
     elif hint in SUPPORTED_MANIFESTS:
         assert len(merged_gs_keys) == 0
+
+    elif hint == 'cytof':
+        # TODO: This will need ot be updated when we accept a list of source fcs files
+        assert len(merged_gs_keys) == 6
 
     else:
         assert False, f"add {hint} assay specific asserts"
@@ -674,6 +722,9 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
 
     elif hint in SUPPORTED_MANIFESTS:
         assert full_ct["assays"] == original_ct["assays"]
+
+    elif hint == 'cytof':
+        assert len(full_ct['assays'][hint]) == 1
 
     else:
         assert False, f"add {hint} assay specific asserts"
@@ -698,6 +749,60 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
         
         assert len(dd) == 0, "Unexpected CT changes"
 
+    elif hint == 'cytof':
+        assert len(dd['dictionary_item_added']) == 7*6, "Unexpected CT changes"
+
     else:
         assert False, f"add {hint} assay specific asserts"
 
+
+def test_merge_stuff():
+
+    obj1 = {'_preamble_obj': 'copy_for:cytof:Antibody Information:row_0', 'cytof_antibodies': [{'_data_obj': 'cytof:Antibody Information:row_0', 'antibody': 'CD8', 'clone': 'C8/144b', 'company': 'DAKO', 'cat_num': 'C8-ABC', 'lot_num': '3983272', 'isotope': '146Nd', 'dilution': '100X', 'stain_type': 'Surface Stain'}]}
+    obj2 = {'_preamble_obj': 'copy_for:cytof:Antibody Information:row_1', 'cytof_antibodies': [{'_data_obj': 'cytof:Antibody Information:row_1', 'antibody': 'PD-L1', 'clone': 'C2/11p', 'company': 'DAKO', 'cat_num': 'C8-AB123', 'lot_num': '1231272', 'isotope': '146Nb', 'dilution': '100X', 'stain_type': 'Surface Stain'}]}
+
+    schema = load_and_validate_schema(os.path.join(SCHEMA_DIR, "assays/cytof_assay.json"))
+    obj1 = {"pizza": "peperoni", "slices": [{"topping": "123"}]}
+    obj2 = {"soda": "934857", "slices": [{"topping": "abc"}]}
+
+    schema = {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {
+            "pizza": {
+                "type": "string"
+            },
+            "mergeStrategy": "objectMerge",
+            "allOf": [
+                {
+                    "soda": {
+                        "type": "object",
+                        "properties": {
+                            "prob": {
+                                "type": "number"
+                            }
+                        }
+                    },
+                },
+                {
+                    "slices": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "topping": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "mergeStrategy": "append"
+                    }
+                },
+
+            ]
+        }
+    }
+
+    # this merge will clobber slices because merging across allOf doesn't work
+    merger = Merger(schema)
+    xyz = merger.merge(obj1, obj2)
+    assert len(xyz['slices']) == 1

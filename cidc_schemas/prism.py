@@ -177,6 +177,7 @@ def  __jpointer_insert_next_thing(doc, jpoint, part, next_thing):
     Puts next_thing into a doc (that is being `jsonpointer.walk`ed)
     by *part* "address". *jpoint* is Jsonpointer that is walked.   
     """
+
     if part == "-":
         doc.append(next_thing)
     else:
@@ -184,7 +185,22 @@ def  __jpointer_insert_next_thing(doc, jpoint, part, next_thing):
         # and it will work for both - doc being `dict` or `array`
         typed_part = jpoint.get_part(doc, part)
         try:
-            doc[typed_part] = next_thing
+
+            # check if something is there.
+            if isinstance(typed_part, int):
+
+                if isinstance(doc[typed_part], dict):
+
+                    # merge the dictionaries.
+                    doc[typed_part].update(next_thing)
+
+                else:
+                    # assign it
+                    doc[typed_part] = next_thing
+                
+            else:
+                # assign it
+                doc[typed_part] = next_thing
 
         # if doc is an empty array we hit an error when we try to paste to [0] index,
         # so just append
@@ -272,33 +288,76 @@ def _process_property(
 
     # or set/update value in-place in data_obj dictionary 
     pointer = field_def['merge_pointer']
-    if field_def.get('is_artifact'):
-        pointer+='/upload_placeholder'
+    if field_def.get('is_artifact') == 1:
+        pointer += '/upload_placeholder'
 
-    _set_val(pointer, val, data_obj, root_obj, data_obj_pointer, verb=verb)
+    # deal with multiartifact
+    if field_def.get("is_artifact") == "multi":
+
+        # tokenize value
+        local_paths = raw_val.split(",")
+
+        # create array container.
+        multi_val = []
+        file_ids = []
+        for x in range(len(local_paths)):
+            file_id = field_def['coerce'](raw_val)
+            file_ids.append(file_id)
+            multi_val.append({"upload_placeholder": file_id})
+
+        # set the value
+        _set_val(pointer, multi_val, data_obj, root_obj, data_obj_pointer, verb=verb)
+
+    else:
+        # set the value
+        _set_val(pointer, val, data_obj, root_obj, data_obj_pointer, verb=verb)
 
     if verb:
         print(f'current {data_obj}')
         print(f'current root {root_obj}')
 
-    if field_def.get('is_artifact'):
+    if field_def.get('is_artifact') == 1:
 
         if verb:
             print(f'collecting local_file_path {field_def}')
 
         gs_key = field_def['gcs_uri_format'].format_map(format_context)
 
-        return LocalFileUploadEntry(
+        return [LocalFileUploadEntry(
             local_path = raw_val,
             gs_key = gs_key,
             # for artifacts `val` is a uuid
             upload_placeholder = val
-        )
-    
+        )]
 
-SUPPORTED_ASSAYS = ["wes", "olink"]
+    elif field_def.get('is_artifact') == "multi":
+
+        if verb:
+            print(f'collecting multi local_file_path {field_def}')
+    
+        # loop over each path
+        files = []
+        for num, upload_placeholder in zip(range(len(local_paths)), file_ids):
+
+            # add number and generate key
+            format_context['num'] = num
+            gs_key = field_def['gcs_uri_format'].format_map(format_context)
+
+            files.append(
+                LocalFileUploadEntry(
+                    local_path = local_paths[num],
+                    gs_key = gs_key,
+                    upload_placeholder = upload_placeholder
+                )
+            )
+        return files
+
+
+SUPPORTED_ASSAYS = ["wes", "olink", "cytof"]
 SUPPORTED_MANIFESTS = ["pbmc", "plasma"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
+
+
 def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) -> (dict, dict):
     """
     Converts excel file to json object. It also identifies local files
@@ -431,7 +490,6 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     if assay_hint not in SUPPORTED_TEMPLATES:
         raise NotImplementedError(f'{assay_hint} is not supported yet, only {SUPPORTED_TEMPLATES} are supported.')
 
-    
     # get the root CT schema
     root_ct_schema = load_and_validate_schema("clinical_trial.json")
     # create the result CT dictionary
@@ -492,7 +550,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                 for key, val in zip(headers.values, row.values):
                     
                     # get corr xsls schema type 
-                    new_file = _process_property(
+                    new_files = _process_property(
                         key, val,
                         assay_hint=assay_hint,
                         key_lu=xlsx_template.key_lu,
@@ -501,8 +559,9 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                         root_obj=copy_of_preamble,
                         data_obj_pointer=data_object_pointer,
                         verb=verb)
-                    if new_file:
-                        collected_files.append(new_file)
+                    if new_files:
+                        for new_file in new_files:
+                            collected_files.append(new_file)
 
                 if verb:
                     print('merging preambles')
@@ -512,12 +571,14 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                 if verb:
                     print(f'merged - {preamble_obj}')
 
-        _set_val(preamble_object_pointer, preamble_obj, root_ct_obj, verb=verb)
-        
 
+        # set the value of the something TODO: write a better comment
+        _set_val(preamble_object_pointer, preamble_obj, root_ct_obj, verb=verb)
+
+        # TODO: What are we doing here?
         for row in ws[RowType.PREAMBLE]:
             # process this property
-            new_file = _process_property(
+            new_files = _process_property(
                 row.values[0], row.values[1], 
                 assay_hint=assay_hint, 
                 key_lu=xlsx_template.key_lu, 
@@ -529,8 +590,9 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
             # TODO we might want to use copy+preamble_merger here too,
             # to for complex properites that require mergeStrategy 
             
-            if new_file:
-                collected_files.append(new_file)
+            if new_files:
+                for new_file in new_files:
+                    collected_files.append(new_file)
 
     # return root object and files list
     return root_ct_obj, collected_files
@@ -646,7 +708,6 @@ def merge_artifact(
 
     # urls are created like this in _process_property:
     file_name, uuid = object_url.split("/")[-2:]
-
 
     artifact = {
         # TODO 1. this artifact_category should be filled out during prismify

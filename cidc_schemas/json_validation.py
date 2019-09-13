@@ -4,6 +4,7 @@
 
 import os
 import json
+import copy
 import collections.abc
 from typing import Optional, List, Callable, Union
 
@@ -112,7 +113,12 @@ def _resolve_refs(base_uri: str, json_spec: dict) -> dict:
             # resolved_spec might have unresolved refs in it, so we pass
             # it back to _resolve_refs to resolve them. This way,
             # we can fully resolve schemas with nested refs.
-            return _resolve_refs(base_uri, resolved_spec)
+
+            res = _resolve_refs(base_uri, resolved_spec)
+
+            # as reslover uses cache we don't want to return mutable 
+            # objects, so we make a copy
+            return copy.deepcopy(res)
 
     return _map_refs(json_spec, _resolve_ref)
 

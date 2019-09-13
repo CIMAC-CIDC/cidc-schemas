@@ -691,8 +691,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     validator.validate(full_ct)
 
     if hint == 'wes':
-        assert len(merged_gs_keys) == 3*2 # 3 files per entry in xlsx
-
+        assert len(merged_gs_keys) == 3 * 2 # 3 files per entry in xlsx
         assert set(merged_gs_keys) == set(WES_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
     elif hint == 'olink':

@@ -490,7 +490,6 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     if assay_hint not in SUPPORTED_TEMPLATES:
         raise NotImplementedError(f'{assay_hint} is not supported yet, only {SUPPORTED_TEMPLATES} are supported.')
 
-    
     # get the root CT schema
     root_ct_schema = load_and_validate_schema("clinical_trial.json")
     # create the result CT dictionary
@@ -579,7 +578,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         # TODO: What are we doing here?
         for row in ws[RowType.PREAMBLE]:
             # process this property
-            new_file = _process_property(
+            new_files = _process_property(
                 row.values[0], row.values[1], 
                 assay_hint=assay_hint, 
                 key_lu=xlsx_template.key_lu, 

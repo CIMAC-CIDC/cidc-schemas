@@ -17,7 +17,7 @@
         "aliquots": {
           "type": "array",
           "items": {
-            "description": "Ids of the aliquot(s) within this assay.",
+            "$comment": "Ids of the aliquot(s) within this assay.",
             "$ref": "aliquot.json#properties/cimac_aliquot_id"
           }
         },

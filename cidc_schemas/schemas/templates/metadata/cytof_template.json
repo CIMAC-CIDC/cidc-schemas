@@ -49,7 +49,7 @@
                             "merge_pointer": "0/files/source_fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
                             "gcs_uri_format": "{lead organization study id}/{cimac participant id}/{cimac sample id}/{cimac aliquot id}/cytof/source_{num}.fcs",
-                            "is_multi_artifact": 1
+                            "is_artifact": "multi"
                         },
                         "date of acquisition": {
                             "merge_pointer": "0/date_of_acquisition",

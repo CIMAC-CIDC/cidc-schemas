@@ -17,7 +17,10 @@
             "items": {
                 "$ref": "assays/components/cytof/cytof_entry.json"
             },
-            "mergeStrategy": "append"
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": {
+              "idRef": "cimac_aliquot_id"
+            }
         }
     },
     "required": [

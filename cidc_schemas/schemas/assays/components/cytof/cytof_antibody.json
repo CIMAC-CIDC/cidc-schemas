@@ -24,5 +24,9 @@
         "enum": ["Ignored", "Used", "Analysis Only"]
       }
   },
+  "mergeStrategy": "arrayMergeById",
+  "mergeOptions": {
+    "idRef": "antibody"
+  },
   "required": ["isotope", "dilution", "stain_type", "usage"]
 }

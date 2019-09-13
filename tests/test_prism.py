@@ -311,7 +311,7 @@ def test_prism(schema_path, xlsx_path):
 
     # turn into object.
     ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
-    if hint = 'cytof':
+    if hint == 'cytof':
         assert "CYTOF_TEST1" == ct['lead_organization_study_id']
         ct['lead_organization_study_id'] = 'test_prism_trial_id'
 

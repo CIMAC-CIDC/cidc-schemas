@@ -241,8 +241,7 @@ def test_cytof():
     fcs_2 = ARTIFACT_OBJ.copy()
     fcs_2['data_format'] = 'BINARY'
     record = {
-        "processed_fcs_filename": "dummy",
-        "source_fcs_filenames": "dummies",
+        "cimac_aliquot_id": "ABC",
         "files": {
                 "processed_fcs": fcs_1,
                 "source_fcs": [fcs_2.copy(), fcs_2.copy()]

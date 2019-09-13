@@ -288,11 +288,11 @@ def _process_property(
 
     # or set/update value in-place in data_obj dictionary 
     pointer = field_def['merge_pointer']
-    if field_def.get('is_artifact'):
+    if field_def.get('is_artifact') == 1:
         pointer += '/upload_placeholder'
 
     # deal with multiartifact
-    if 'is_multi_artifact' in field_def:
+    if field_def.get("is_artifact") == "multi":
 
         # tokenize value
         local_paths = raw_val.split(",")
@@ -316,7 +316,7 @@ def _process_property(
         print(f'current {data_obj}')
         print(f'current root {root_obj}')
 
-    if field_def.get('is_artifact'):
+    if field_def.get('is_artifact') == 1:
 
         if verb:
             print(f'collecting local_file_path {field_def}')
@@ -330,7 +330,7 @@ def _process_property(
             upload_placeholder = val
         )]
 
-    elif field_def.get('is_multi_artifact'):
+    elif field_def.get('is_artifact') == "multi":
 
         if verb:
             print(f'collecting multi local_file_path {field_def}')

@@ -33,8 +33,7 @@
         </p>
         <h1>CYTOF Run</h1>
         <p>
-            <b>Description:</b>  Base information about the acquisition and analysis CyTOF data
-
+            <b>Description:</b>  Base information about the acquisition and analysis CyTOF data.
         </p>
         
     </div>
@@ -165,7 +164,7 @@
     "allOf": [
         {
             "$schema": "http://json-schema.org/draft-07/schema#",
-            "description": "Basic information about the instrumentation used in a CYTOF experiment\n",
+            "description": "Basic information about the instrumentation used in a CyTOF experiment.",
             "id": "cytof_platform",
             "properties": {
                 "instrument": {
@@ -180,7 +179,7 @@
         },
         {
             "$schema": "http://json-schema.org/draft-07/schema#",
-            "description": "Base information about the acquisition and analysis of a CyTOF data\n",
+            "description": "Base information about the acquisition and analysis of a CyTOF data.",
             "id": "cytof_panel",
             "properties": {
                 "cytof_antibodies": {
@@ -190,7 +189,7 @@
                         "allOf": [
                             {
                                 "$schema": "http://json-schema.org/draft-07/schema#",
-                                "description": "Common information about an antibody used in a number of immune-oncology assays\n",
+                                "description": "Common information about an antibody used in a number of immune-oncology assays.",
                                 "id": "antibody",
                                 "properties": {
                                     "antibody": {
@@ -262,7 +261,7 @@
             "title": "CyTOF Panel"
         }
     ],
-    "description": "Base information about the acquisition and analysis CyTOF data\n",
+    "description": "Base information about the acquisition and analysis CyTOF data.",
     "properties": {
         "records": {
             "items": {
@@ -336,7 +335,7 @@
                                                 "type": "string"
                                             },
                                             "artifact_creator": {
-                                                "description": "The name of the center that created this artificat",
+                                                "description": "The name of the center that created this artifact.",
                                                 "enum": [
                                                     "DFCI",
                                                     "Mount Sinai",
@@ -365,7 +364,7 @@
                                             },
                                             "file_name": {
                                                 "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                                "description": "The name of the file with extension",
+                                                "description": "The name of the file with extension.",
                                                 "type": "string"
                                             },
                                             "file_size_bytes": {
@@ -381,15 +380,17 @@
                                                 "type": "string"
                                             },
                                             "upload_placeholder": {
-                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "description": "A placeholder for when artifact file is being uploaded.",
                                                 "type": "string"
                                             },
                                             "uploaded_timestamp": {
-                                                "description": "Timestamp of when artfiact was loaded into the system.",
+                                                "description": "Timestamp of when artifact was loaded into the system.",
                                                 "format": "date-time",
                                                 "type": "string"
                                             },
                                             "uploader": {
+                                                "description": "The name of the person uploading the artifact.",
                                                 "type": "string"
                                             },
                                             "uuid": {
@@ -397,7 +398,7 @@
                                                 "type": "string"
                                             },
                                             "visible": {
-                                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                                "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                                 "type": "boolean"
                                             }
                                         },
@@ -407,10 +408,8 @@
                                     {
                                         "properties": {
                                             "data_format": {
-                                                "const": "BINARY"
-                                            },
-                                            "info": {
-                                                "type": "object"
+                                                "const": "BINARY",
+                                                "description": "Data format."
                                             }
                                         }
                                     }
@@ -456,7 +455,7 @@
                                                 "type": "string"
                                             },
                                             "artifact_creator": {
-                                                "description": "The name of the center that created this artificat",
+                                                "description": "The name of the center that created this artifact.",
                                                 "enum": [
                                                     "DFCI",
                                                     "Mount Sinai",
@@ -485,7 +484,7 @@
                                             },
                                             "file_name": {
                                                 "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                                "description": "The name of the file with extension",
+                                                "description": "The name of the file with extension.",
                                                 "type": "string"
                                             },
                                             "file_size_bytes": {
@@ -501,15 +500,17 @@
                                                 "type": "string"
                                             },
                                             "upload_placeholder": {
-                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "description": "A placeholder for when artifact file is being uploaded.",
                                                 "type": "string"
                                             },
                                             "uploaded_timestamp": {
-                                                "description": "Timestamp of when artfiact was loaded into the system.",
+                                                "description": "Timestamp of when artifact was loaded into the system.",
                                                 "format": "date-time",
                                                 "type": "string"
                                             },
                                             "uploader": {
+                                                "description": "The name of the person uploading the artifact.",
                                                 "type": "string"
                                             },
                                             "uuid": {
@@ -517,7 +518,7 @@
                                                 "type": "string"
                                             },
                                             "visible": {
-                                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                                "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                                 "type": "boolean"
                                             }
                                         },
@@ -527,10 +528,8 @@
                                     {
                                         "properties": {
                                             "data_format": {
-                                                "const": "BINARY"
-                                            },
-                                            "info": {
-                                                "type": "object"
+                                                "const": "BINARY",
+                                                "description": "Data format."
                                             }
                                         }
                                     }

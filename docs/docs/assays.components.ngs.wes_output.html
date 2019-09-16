@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Whole Exome Sequencing Output Files</h1>
+        <h1>WES Output Files</h1>
         <p>
-            <b>Description:</b>  Whole Exome Sequencing Assay Output Files
+            <b>Description:</b>  Whole Exome Sequencing assay output files.
         </p>
         
     </div>
@@ -71,7 +71,7 @@
     </td>
     <td width=55%>
         
-            WES output align files
+            WES output align files.
         
     </td>
     <td>
@@ -96,7 +96,7 @@
     </td>
     <td width=55%>
         
-            WES output align files
+            WES output align files.
         
     </td>
     <td>
@@ -121,7 +121,7 @@
     </td>
     <td width=55%>
         
-            Somatic variant calling
+            Somatic variant calling.
         
     </td>
     <td>
@@ -153,7 +153,7 @@
     </td>
     <td width=55%>
         
-            Germline variant output sample files
+            Germline variant output sample files.
         
     </td>
     <td>
@@ -174,12 +174,12 @@
   	<pre><code>{
     "$id": "wes_output",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "description": "Whole Exome Sequencing Assay Output Files",
+    "description": "Whole Exome Sequencing assay output files.",
     "properties": {
         "germline": {
             "$id": "germline",
             "$schema": "http://json-schema.org/draft-07/schema#",
-            "description": "Germline variant output sample files",
+            "description": "Germline variant output sample files.",
             "properties": {
                 "SNP92_recode": {
                     "$id": "vcf_artifact",
@@ -218,7 +218,7 @@
                                     "type": "string"
                                 },
                                 "artifact_creator": {
-                                    "description": "The name of the center that created this artificat",
+                                    "description": "The name of the center that created this artifact.",
                                     "enum": [
                                         "DFCI",
                                         "Mount Sinai",
@@ -247,7 +247,7 @@
                                 },
                                 "file_name": {
                                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                    "description": "The name of the file with extension",
+                                    "description": "The name of the file with extension.",
                                     "type": "string"
                                 },
                                 "file_size_bytes": {
@@ -263,15 +263,17 @@
                                     "type": "string"
                                 },
                                 "upload_placeholder": {
-                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
                                     "type": "string"
                                 },
                                 "uploaded_timestamp": {
-                                    "description": "Timestamp of when artfiact was loaded into the system.",
+                                    "description": "Timestamp of when artifact was loaded into the system.",
                                     "format": "date-time",
                                     "type": "string"
                                 },
                                 "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
                                     "type": "string"
                                 },
                                 "uuid": {
@@ -279,7 +281,7 @@
                                     "type": "string"
                                 },
                                 "visible": {
-                                    "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                     "type": "boolean"
                                 }
                             },
@@ -289,15 +291,13 @@
                         {
                             "properties": {
                                 "data_format": {
-                                    "const": "VCF"
-                                },
-                                "info": {
-                                    "type": "object"
+                                    "const": "VCF",
+                                    "description": "Data format."
                                 }
                             }
                         }
                     ],
-                    "description": "Information about a VCF file",
+                    "description": "Information about a VCF file.",
                     "title": "VCF Artifact",
                     "type": "object"
                 }
@@ -311,7 +311,7 @@
         "normal": {
             "$id": "alignment",
             "$schema": "http://json-schema.org/draft-07/schema#",
-            "description": "WES output align files",
+            "description": "WES output align files.",
             "properties": {
                 "align_recalibrated": {
                     "$id": "bam_artifact",
@@ -350,7 +350,7 @@
                                     "type": "string"
                                 },
                                 "artifact_creator": {
-                                    "description": "The name of the center that created this artificat",
+                                    "description": "The name of the center that created this artifact.",
                                     "enum": [
                                         "DFCI",
                                         "Mount Sinai",
@@ -379,7 +379,7 @@
                                 },
                                 "file_name": {
                                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                    "description": "The name of the file with extension",
+                                    "description": "The name of the file with extension.",
                                     "type": "string"
                                 },
                                 "file_size_bytes": {
@@ -395,15 +395,17 @@
                                     "type": "string"
                                 },
                                 "upload_placeholder": {
-                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
                                     "type": "string"
                                 },
                                 "uploaded_timestamp": {
-                                    "description": "Timestamp of when artfiact was loaded into the system.",
+                                    "description": "Timestamp of when artifact was loaded into the system.",
                                     "format": "date-time",
                                     "type": "string"
                                 },
                                 "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
                                     "type": "string"
                                 },
                                 "uuid": {
@@ -411,7 +413,7 @@
                                     "type": "string"
                                 },
                                 "visible": {
-                                    "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                     "type": "boolean"
                                 }
                             },
@@ -421,15 +423,13 @@
                         {
                             "properties": {
                                 "data_format": {
-                                    "const": "BAM"
-                                },
-                                "info": {
-                                    "type": "object"
+                                    "const": "BAM",
+                                    "description": "Data format."
                                 }
                             }
                         }
                     ],
-                    "description": "Information about a Bam file",
+                    "description": "Information about a Bam file.",
                     "title": "BAM Artifact",
                     "type": "object"
                 },
@@ -470,7 +470,7 @@
                                     "type": "string"
                                 },
                                 "artifact_creator": {
-                                    "description": "The name of the center that created this artificat",
+                                    "description": "The name of the center that created this artifact.",
                                     "enum": [
                                         "DFCI",
                                         "Mount Sinai",
@@ -499,7 +499,7 @@
                                 },
                                 "file_name": {
                                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                    "description": "The name of the file with extension",
+                                    "description": "The name of the file with extension.",
                                     "type": "string"
                                 },
                                 "file_size_bytes": {
@@ -515,15 +515,17 @@
                                     "type": "string"
                                 },
                                 "upload_placeholder": {
-                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
                                     "type": "string"
                                 },
                                 "uploaded_timestamp": {
-                                    "description": "Timestamp of when artfiact was loaded into the system.",
+                                    "description": "Timestamp of when artifact was loaded into the system.",
                                     "format": "date-time",
                                     "type": "string"
                                 },
                                 "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
                                     "type": "string"
                                 },
                                 "uuid": {
@@ -531,7 +533,7 @@
                                     "type": "string"
                                 },
                                 "visible": {
-                                    "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                     "type": "boolean"
                                 }
                             },
@@ -541,15 +543,13 @@
                         {
                             "properties": {
                                 "data_format": {
-                                    "const": "BAM"
-                                },
-                                "info": {
-                                    "type": "object"
+                                    "const": "BAM",
+                                    "description": "Data format."
                                 }
                             }
                         }
                     ],
-                    "description": "Information about a Bam file",
+                    "description": "Information about a Bam file.",
                     "title": "BAM Artifact",
                     "type": "object"
                 },
@@ -590,7 +590,7 @@
                                     "type": "string"
                                 },
                                 "artifact_creator": {
-                                    "description": "The name of the center that created this artificat",
+                                    "description": "The name of the center that created this artifact.",
                                     "enum": [
                                         "DFCI",
                                         "Mount Sinai",
@@ -619,7 +619,7 @@
                                 },
                                 "file_name": {
                                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                    "description": "The name of the file with extension",
+                                    "description": "The name of the file with extension.",
                                     "type": "string"
                                 },
                                 "file_size_bytes": {
@@ -635,15 +635,17 @@
                                     "type": "string"
                                 },
                                 "upload_placeholder": {
-                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
                                     "type": "string"
                                 },
                                 "uploaded_timestamp": {
-                                    "description": "Timestamp of when artfiact was loaded into the system.",
+                                    "description": "Timestamp of when artifact was loaded into the system.",
                                     "format": "date-time",
                                     "type": "string"
                                 },
                                 "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
                                     "type": "string"
                                 },
                                 "uuid": {
@@ -651,7 +653,7 @@
                                     "type": "string"
                                 },
                                 "visible": {
-                                    "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                     "type": "boolean"
                                 }
                             },
@@ -661,15 +663,13 @@
                         {
                             "properties": {
                                 "data_format": {
-                                    "const": "BAM"
-                                },
-                                "info": {
-                                    "type": "object"
+                                    "const": "BAM",
+                                    "description": "Data format."
                                 }
                             }
                         }
                     ],
-                    "description": "Information about a Bam file",
+                    "description": "Information about a Bam file.",
                     "title": "BAM Artifact",
                     "type": "object"
                 }
@@ -685,7 +685,7 @@
         "somatic": {
             "$id": "somatic",
             "$schema": "http://json-schema.org/draft-07/schema#",
-            "description": "Somatic variant calling",
+            "description": "Somatic variant calling.",
             "properties": {
                 "maf": {
                     "$id": "maf_artifact",
@@ -724,7 +724,7 @@
                                     "type": "string"
                                 },
                                 "artifact_creator": {
-                                    "description": "The name of the center that created this artificat",
+                                    "description": "The name of the center that created this artifact.",
                                     "enum": [
                                         "DFCI",
                                         "Mount Sinai",
@@ -753,7 +753,7 @@
                                 },
                                 "file_name": {
                                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                    "description": "The name of the file with extension",
+                                    "description": "The name of the file with extension.",
                                     "type": "string"
                                 },
                                 "file_size_bytes": {
@@ -769,15 +769,17 @@
                                     "type": "string"
                                 },
                                 "upload_placeholder": {
-                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
                                     "type": "string"
                                 },
                                 "uploaded_timestamp": {
-                                    "description": "Timestamp of when artfiact was loaded into the system.",
+                                    "description": "Timestamp of when artifact was loaded into the system.",
                                     "format": "date-time",
                                     "type": "string"
                                 },
                                 "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
                                     "type": "string"
                                 },
                                 "uuid": {
@@ -785,7 +787,7 @@
                                     "type": "string"
                                 },
                                 "visible": {
-                                    "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                     "type": "boolean"
                                 }
                             },
@@ -795,15 +797,13 @@
                         {
                             "properties": {
                                 "data_format": {
-                                    "const": "MAF"
-                                },
-                                "info": {
-                                    "type": "object"
+                                    "const": "MAF",
+                                    "description": "Data format."
                                 }
                             }
                         }
                     ],
-                    "description": "Information about a Maf file",
+                    "description": "Information about a Maf file.",
                     "title": "MAF Artifact",
                     "type": "object"
                 },
@@ -844,7 +844,7 @@
                                     "type": "string"
                                 },
                                 "artifact_creator": {
-                                    "description": "The name of the center that created this artificat",
+                                    "description": "The name of the center that created this artifact.",
                                     "enum": [
                                         "DFCI",
                                         "Mount Sinai",
@@ -873,7 +873,7 @@
                                 },
                                 "file_name": {
                                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                    "description": "The name of the file with extension",
+                                    "description": "The name of the file with extension.",
                                     "type": "string"
                                 },
                                 "file_size_bytes": {
@@ -889,15 +889,17 @@
                                     "type": "string"
                                 },
                                 "upload_placeholder": {
-                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
                                     "type": "string"
                                 },
                                 "uploaded_timestamp": {
-                                    "description": "Timestamp of when artfiact was loaded into the system.",
+                                    "description": "Timestamp of when artifact was loaded into the system.",
                                     "format": "date-time",
                                     "type": "string"
                                 },
                                 "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
                                     "type": "string"
                                 },
                                 "uuid": {
@@ -905,7 +907,7 @@
                                     "type": "string"
                                 },
                                 "visible": {
-                                    "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                     "type": "boolean"
                                 }
                             },
@@ -915,15 +917,13 @@
                         {
                             "properties": {
                                 "data_format": {
-                                    "const": "VCF"
-                                },
-                                "info": {
-                                    "type": "object"
+                                    "const": "VCF",
+                                    "description": "Data format."
                                 }
                             }
                         }
                     ],
-                    "description": "Information about a VCF file",
+                    "description": "Information about a VCF file.",
                     "title": "VCF Artifact",
                     "type": "object"
                 }
@@ -938,7 +938,7 @@
         "tumor": {
             "$id": "alignment",
             "$schema": "http://json-schema.org/draft-07/schema#",
-            "description": "WES output align files",
+            "description": "WES output align files.",
             "properties": {
                 "align_recalibrated": {
                     "$id": "bam_artifact",
@@ -977,7 +977,7 @@
                                     "type": "string"
                                 },
                                 "artifact_creator": {
-                                    "description": "The name of the center that created this artificat",
+                                    "description": "The name of the center that created this artifact.",
                                     "enum": [
                                         "DFCI",
                                         "Mount Sinai",
@@ -1006,7 +1006,7 @@
                                 },
                                 "file_name": {
                                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                    "description": "The name of the file with extension",
+                                    "description": "The name of the file with extension.",
                                     "type": "string"
                                 },
                                 "file_size_bytes": {
@@ -1022,15 +1022,17 @@
                                     "type": "string"
                                 },
                                 "upload_placeholder": {
-                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
                                     "type": "string"
                                 },
                                 "uploaded_timestamp": {
-                                    "description": "Timestamp of when artfiact was loaded into the system.",
+                                    "description": "Timestamp of when artifact was loaded into the system.",
                                     "format": "date-time",
                                     "type": "string"
                                 },
                                 "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
                                     "type": "string"
                                 },
                                 "uuid": {
@@ -1038,7 +1040,7 @@
                                     "type": "string"
                                 },
                                 "visible": {
-                                    "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                     "type": "boolean"
                                 }
                             },
@@ -1048,15 +1050,13 @@
                         {
                             "properties": {
                                 "data_format": {
-                                    "const": "BAM"
-                                },
-                                "info": {
-                                    "type": "object"
+                                    "const": "BAM",
+                                    "description": "Data format."
                                 }
                             }
                         }
                     ],
-                    "description": "Information about a Bam file",
+                    "description": "Information about a Bam file.",
                     "title": "BAM Artifact",
                     "type": "object"
                 },
@@ -1097,7 +1097,7 @@
                                     "type": "string"
                                 },
                                 "artifact_creator": {
-                                    "description": "The name of the center that created this artificat",
+                                    "description": "The name of the center that created this artifact.",
                                     "enum": [
                                         "DFCI",
                                         "Mount Sinai",
@@ -1126,7 +1126,7 @@
                                 },
                                 "file_name": {
                                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                    "description": "The name of the file with extension",
+                                    "description": "The name of the file with extension.",
                                     "type": "string"
                                 },
                                 "file_size_bytes": {
@@ -1142,15 +1142,17 @@
                                     "type": "string"
                                 },
                                 "upload_placeholder": {
-                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
                                     "type": "string"
                                 },
                                 "uploaded_timestamp": {
-                                    "description": "Timestamp of when artfiact was loaded into the system.",
+                                    "description": "Timestamp of when artifact was loaded into the system.",
                                     "format": "date-time",
                                     "type": "string"
                                 },
                                 "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
                                     "type": "string"
                                 },
                                 "uuid": {
@@ -1158,7 +1160,7 @@
                                     "type": "string"
                                 },
                                 "visible": {
-                                    "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                     "type": "boolean"
                                 }
                             },
@@ -1168,15 +1170,13 @@
                         {
                             "properties": {
                                 "data_format": {
-                                    "const": "BAM"
-                                },
-                                "info": {
-                                    "type": "object"
+                                    "const": "BAM",
+                                    "description": "Data format."
                                 }
                             }
                         }
                     ],
-                    "description": "Information about a Bam file",
+                    "description": "Information about a Bam file.",
                     "title": "BAM Artifact",
                     "type": "object"
                 },
@@ -1217,7 +1217,7 @@
                                     "type": "string"
                                 },
                                 "artifact_creator": {
-                                    "description": "The name of the center that created this artificat",
+                                    "description": "The name of the center that created this artifact.",
                                     "enum": [
                                         "DFCI",
                                         "Mount Sinai",
@@ -1246,7 +1246,7 @@
                                 },
                                 "file_name": {
                                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                    "description": "The name of the file with extension",
+                                    "description": "The name of the file with extension.",
                                     "type": "string"
                                 },
                                 "file_size_bytes": {
@@ -1262,15 +1262,17 @@
                                     "type": "string"
                                 },
                                 "upload_placeholder": {
-                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
                                     "type": "string"
                                 },
                                 "uploaded_timestamp": {
-                                    "description": "Timestamp of when artfiact was loaded into the system.",
+                                    "description": "Timestamp of when artifact was loaded into the system.",
                                     "format": "date-time",
                                     "type": "string"
                                 },
                                 "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
                                     "type": "string"
                                 },
                                 "uuid": {
@@ -1278,7 +1280,7 @@
                                     "type": "string"
                                 },
                                 "visible": {
-                                    "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                     "type": "boolean"
                                 }
                             },
@@ -1288,15 +1290,13 @@
                         {
                             "properties": {
                                 "data_format": {
-                                    "const": "BAM"
-                                },
-                                "info": {
-                                    "type": "object"
+                                    "const": "BAM",
+                                    "description": "Data format."
                                 }
                             }
                         }
                     ],
-                    "description": "Information about a Bam file",
+                    "description": "Information about a Bam file.",
                     "title": "BAM Artifact",
                     "type": "object"
                 }
@@ -1315,7 +1315,7 @@
         "normal",
         "somatic"
     ],
-    "title": "Whole Exome Sequencing Output Files",
+    "title": "WES Output Files",
     "type": "object"
 }</code></pre>
   </container>

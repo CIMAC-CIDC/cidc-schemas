@@ -33,7 +33,7 @@
         </p>
         <h1>Germline variant output sample files</h1>
         <p>
-            <b>Description:</b>  Germline variant output sample files
+            <b>Description:</b>  Germline variant output sample files.
         </p>
         
     </div>
@@ -71,7 +71,7 @@
     </td>
     <td width=55%>
         
-            Information about a VCF file
+            Information about a VCF file.
         
     </td>
     <td>
@@ -95,7 +95,7 @@
   	<pre><code>{
     "$id": "germline",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "description": "Germline variant output sample files",
+    "description": "Germline variant output sample files.",
     "properties": {
         "SNP92_recode": {
             "$id": "vcf_artifact",
@@ -134,7 +134,7 @@
                             "type": "string"
                         },
                         "artifact_creator": {
-                            "description": "The name of the center that created this artificat",
+                            "description": "The name of the center that created this artifact.",
                             "enum": [
                                 "DFCI",
                                 "Mount Sinai",
@@ -163,7 +163,7 @@
                         },
                         "file_name": {
                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                            "description": "The name of the file with extension",
+                            "description": "The name of the file with extension.",
                             "type": "string"
                         },
                         "file_size_bytes": {
@@ -179,15 +179,17 @@
                             "type": "string"
                         },
                         "upload_placeholder": {
-                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "description": "A placeholder for when artifact file is being uploaded.",
                             "type": "string"
                         },
                         "uploaded_timestamp": {
-                            "description": "Timestamp of when artfiact was loaded into the system.",
+                            "description": "Timestamp of when artifact was loaded into the system.",
                             "format": "date-time",
                             "type": "string"
                         },
                         "uploader": {
+                            "description": "The name of the person uploading the artifact.",
                             "type": "string"
                         },
                         "uuid": {
@@ -195,7 +197,7 @@
                             "type": "string"
                         },
                         "visible": {
-                            "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                             "type": "boolean"
                         }
                     },
@@ -205,15 +207,13 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "VCF"
-                        },
-                        "info": {
-                            "type": "object"
+                            "const": "VCF",
+                            "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a VCF file",
+            "description": "Information about a VCF file.",
             "title": "VCF Artifact",
             "type": "object"
         }

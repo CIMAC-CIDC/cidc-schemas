@@ -12,9 +12,11 @@ from deepdiff import grep, DeepDiff
 from pprint import pprint
 from jsonmerge import Merger
 
+from .constants import TEST_DATA_DIR
+
 from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
-    SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS
+    SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, parse_npx
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
@@ -608,7 +610,6 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     else:
         prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
 
-
     if hint in SUPPORTED_MANIFESTS:
         assert len(prism_patch['shipments']) == 1
 
@@ -640,7 +641,6 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     if hint == "olink":
         original_ct['lead_organization_study_id'] = 'test_prism_trial_id'
 
-
     # "prismify" provides only a patch so we need to merge it into a "full" ct
     full_after_prism = merge_clinical_trial_metadata(prism_patch, original_ct)
 
@@ -649,7 +649,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
 
     patch_copy_4_artifacts = copy.deepcopy(prism_patch)
 
-    #now we simulate that upload was successful 
+    # now we simulate that upload was successful
     merged_gs_keys = []
     for i, fmap_entry in enumerate(file_maps):
 
@@ -711,11 +711,10 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     else:
         assert False, f"add {hint} assay specific asserts"
 
-
     dd = DeepDiff(full_after_prism, full_ct)
 
     if hint=='wes':
-        # 6 files * 7 artifact atributes
+        # 6 files * 7 artifact attributes
         assert len(dd['dictionary_item_added']) == 6*7, "Unexpected CT changes"
 
         # nothing else in diff
@@ -724,7 +723,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     elif hint == "olink":
         assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
 
-        # 7 artifact atributes * 5 files (2 per record + 1 study)
+        # 7 artifact attributes * 5 files (2 per record + 1 study)
         assert len(dd['dictionary_item_added']) == 7*(2*2+1), "Unexpected CT changes"
 
     elif hint == "pbmc":
@@ -734,3 +733,35 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     else:
         assert False, f"add {hint} assay specific asserts"
 
+
+def test_parse_npx_invalid():
+    # test the parse function
+    npx_path = os.path.join(TEST_DATA_DIR, 'olink', 'pizza_assay_1_NPX.xlsx')
+    with pytest.raises(FileNotFoundError):
+        ids = parse_npx(npx_path)
+
+    # test parsing bad xlsx file.
+    bad_path = os.path.join(TEST_DATA_DIR, 'date_examples.xlsx')
+    ids = parse_npx(bad_path)
+
+    assert len(ids) == 0
+
+
+def test_parse_npx_single():
+    # test the parse function
+    npx_path = os.path.join(TEST_DATA_DIR, 'olink', 'olink_assay_1_NPX.xlsx')
+    ids = parse_npx(npx_path)
+
+    assert len(ids) == 4
+    assert set(ids) == {'HD_59', 'HD_63', 'HD_32', 'HD_50'}
+
+
+def test_parse_npx_merged():
+    # test the parse function
+    npx_path = os.path.join(TEST_DATA_DIR, 'olink', 'olink_assay_combined.xlsx')
+    ids = parse_npx(npx_path)
+
+    assert len(ids) == 9
+    assert set(ids) == {'HD_59', 'HD_63', 'HD_32', 'HD_50',
+                        'HD_71', 'HD_72', 'HD_73', 'HD_80',
+                        'HD_85'}

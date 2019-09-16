@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "cytof_output",
+    "title": "CyTOF Output Files",
+    "description": "CyTOF output, a zip archive created by Astrolabe containing one folder of FCS files per sample, where each file corresponds to one of the main cell types. Also a variety of figures, tables and charts with QC and other information.",
+    "type": "object",
+    "properties": {
+        "astrolabe_gatedfcs": {
+            "$ref": "artifacts/artifact_astrolabe.json"
+        },
+        "astrolabe_reports": {
+            "$ref": "artifacts/artifact_astrolabe.json"
+        },
+        "astrolabe_rfiles": {
+            "$ref": "artifacts/artifact_astrolabe.json"
+        }
+    }
+}

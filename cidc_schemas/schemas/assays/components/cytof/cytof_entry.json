@@ -1,51 +1,99 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "cytof_entry",
-  "title": "CyTOF assay record",
-  "type": "object",
-  "description": "A single data record from CyTOF assay batch",
-  "properties": {
-    "processed_fcs_filename": {
-      "description": "Filename of a processed CyTOF FCS file.",
-      "type": "string"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "cytof_entry",
+    "title": "CyTOF assay record",
+    "type": "object",
+    "description": "A single data record from CyTOF assay batch",
+    "properties": {
+        "cimac_participant_id": {
+            "$comment": "Id of an participant within this clinical trial, that this assay record is based upon.",
+            "$ref": "participant.json#properties/cimac_participant_id"
+        },
+        "cimac_sample_id": {
+            "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
+            "$ref": "sample.json#properties/cimac_sample_id"
+        },
+        "cimac_aliquot_id": {
+            "$comment": "Id of an aliquot within this clinical trial, that this assay record is based upon.",
+            "$ref": "aliquot.json#properties/cimac_aliquot_id"
+        },
+        "panel_name": {
+            "description": "Standardized CyTOF panel name used for antibody sample development.",
+            "type": "string"
+        },
+        "batch_id": {
+            "description": "CyTOF batch identification number.",
+            "type": "string"
+        },
+        "date_of_acquisition": {
+            "description": "Date of CyTOF batch acquisition.",
+            "type": "string"
+        },
+        "instrument": {
+            "description": "Name of CyTOF instrument on which experiment was conducted.",
+            "type": "string"
+        },
+        "injector": {
+            "description": "Name of Injector component used as part of the CyTOF software",
+            "type": "string"
+        },
+        "acquisition_buffer": {
+            "description": "Cell staining buffer used for antibody and cell dilution.",
+            "type": "string"
+        },
+        "average_event_per_second": {
+            "description": "Analysis rate of CyTOF expressions per second.",
+            "type": "number"
+        },
+        "run_time": {
+            "description": "Length of run time for CyTOF experiment.",
+            "type": "string"
+        },
+        "notes": {
+            "description": "Any notes pertaining to CyTOF acquisition.",
+            "type": "string"
+        },
+        "concatenation_version": {
+            "description": "Concatenation of FCS files into a single FCS version number.",
+            "type": "string"
+        },
+        "normalization_version": {
+            "description": "Version of normalization for CyTOF assay batch.",
+            "type": "string"
+        },
+        "beads_removed": {
+            "description": "Confirmation of beads being removed after normalization process.",
+            "type": "string",
+            "enum": [
+                "Y",
+                "N"
+            ]
+        },
+        "staining_date": {
+            "description": "Date of staining for CyTOF assay slides.",
+            "type": "string",
+            "format": "date"
+        },
+        "debarcoding_protocol": {
+            "description": "Protocol for the download and installation of the Debarcoder CyTOF software feature.",
+            "type": "string"
+        },
+        "debarcoding_key": {
+            "description": "Key required for access to the Debarcoding software.",
+            "type": "string"
+        },
+        "preprocessing_notes": {
+            "description": "Any notes pertaining to preprocessing of CyTOF data.",
+            "type": "string"
+        },
+        "files": {
+            "$ref": "assays/components/cytof/cytof_input.json"
+        }
     },
-    "source_fcs_filenames": {
-      "description": "Filename of source CyTOF FCS file.",
-      "type": "string"
-    },
-    "concatenation_version": {
-      "description": "Concatenation of FCS files into a single FCS version number.",
-      "type": "string"
-    },
-    "normalization_version": {
-      "description": "Version of normalization for CyTOF assay batch.",
-      "type": "string"
-    },
-    "beads_removed": {
-      "description": "Confirmation of beads being removed after normalization process.",
-      "type": "string",
-      "enum": ["Y", "N"]
-    },
-    "staining_date": {
-      "description": "Date of staining for CyTOF assay slides.",
-      "type": "string",
-      "format": "date"
-    },
-    "batch_id": {
-      "description": "Identification number for CyTOF assay batch.",
-      "type": "string"
-    },
-    "debarcoding_protocol": {
-      "description": "Protocol for the download and installation of the Debarcoder CyTOF software feature.",
-      "type": "string"
-    },
-    "debarcoding_key": {
-      "description": "Key required for access to the Debarcoding software.",
-      "type": "string"
-    },
-    "files": {
-      "$ref": "assays/components/cytof/cytof_input.json"
-    }
-  },
-  "required": ["processed_fcs_filename", "source_fcs_filenames", "files"]
+    "mergeStrategy": "objectMerge",
+    "required": [
+        "cimac_aliquot_id",
+        "files"
+    ]
 }
+

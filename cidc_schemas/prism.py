@@ -3,7 +3,9 @@ import json
 import os
 import copy
 import uuid
-from typing import Union, BinaryIO
+from typing import Union, BinaryIO, List
+
+import openpyxl
 import jsonschema
 from deepdiff import grep
 import datetime
@@ -130,7 +132,6 @@ def _set_val(
         else:
             doc = context
 
-
     # then we update it
     for i, part in enumerate(jpoint.parts[:-1]):
 
@@ -148,7 +149,6 @@ def _set_val(
 
             # and `walk` it again - this time should be OK
             doc = jpoint.walk(doc, part)
-
 
         if isinstance(doc, EndOfList):
             actual_doc = __jpointer_get_next_thing(jpoint.parts[i+1])
@@ -222,6 +222,7 @@ def _get_recursively(search_dict, field):
 
 LocalFileUploadEntry = namedtuple('LocalFileUploadEntry', ["local_path", "gs_key", "upload_placeholder"])
 
+
 def _process_property(
         key: str,
         raw_val,
@@ -238,7 +239,7 @@ def _process_property(
 
     Args:
         key: property name,
-        raw_val: value of a property beeing processed,
+        raw_val: value of a property being processed,
         assay_hint: 'wes' or similar to create proper urls
         key_lu: dictionary to translate from template naming to json-schema
                 property names
@@ -298,10 +299,12 @@ def _process_property(
 
 SUPPORTED_ASSAYS = ["wes", "olink"]
 SUPPORTED_MANIFESTS = ["pbmc"]
+ASSAYS_WITH_EXTRA_METADATA = ["olink"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
 
 
-def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) -> (dict, dict):
+def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) \
+        -> (dict, dict, dict):
     """
     Converts excel file to json object. It also identifies local files
     which need to uploaded to a google bucket and provides some logic
@@ -433,9 +436,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     if assay_hint not in SUPPORTED_TEMPLATES:
         raise NotImplementedError(f'{assay_hint} is not supported yet, only {SUPPORTED_TEMPLATES} are supported.')
 
-    
     # get the root CT schema
-    root_ct_schema = load_and_validate_schema("clinical_trial.json")
     # create the result CT dictionary
     root_ct_obj = {"_root_ct_obj": assay_hint} if verb else {}
     # and merger for it
@@ -507,9 +508,9 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                     if new_file:
                         collected_files.append(new_file)
 
-                        if assay_hint == "olink" and "olink" in new_file:
+                        if assay_hint in ASSAYS_WITH_EXTRA_METADATA:
+                            # TODO: select subset of olink files from new_files and add to metadata_files
                             metadata_files.append(new_file)
-
 
                 if verb:
                     print('merging preambles')
@@ -520,7 +521,6 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                     print(f'merged - {preamble_obj}')
 
         _set_val(preamble_object_pointer, preamble_obj, root_ct_obj, verb=verb)
-        
 
         for row in ws[RowType.PREAMBLE]:
             # process this property
@@ -606,7 +606,6 @@ def _get_source(ct: dict, key: str, skip_last=None) -> dict:
     return cur_obj
 
 
-
 def _set_data_format(ct: dict, artifact: dict):
     """
     Discover the correct data format for the given artifact.
@@ -657,7 +656,6 @@ def merge_artifact(
     # urls are created like this in _process_property:
     file_name, uuid = object_url.split("/")[-2:]
 
-
     artifact = {
         # TODO 1. this artifact_category should be filled out during prismify
         "artifact_category": "Assay Artifact from CIMAC",
@@ -678,7 +676,7 @@ def merge_artifact(
     # from 'uuid_field_path' field to it's parent - existing_artifact obj. 
     existing_artifact = _get_source(ct, uuid_field_path, skip_last=1)
 
-    ## TODO this might be better like this - with merger:
+    # TODO this might be better like this - with merger:
     # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")
     # artifact_parent[file_name] = Merger(artifact_schema).merge(existing_artifact, artifact)
     # TODO but for now like this
@@ -689,8 +687,10 @@ def merge_artifact(
     # return new object and the artifact that was merged
     return ct, existing_artifact
 
+
 class InvalidMergeTargetException(ValueError):
     """Exception raised for target of merge_clinical_trial_metadata being non schema compliant."""
+
 
 def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
     """
@@ -733,3 +733,52 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
 
     # now return it
     return merged
+
+
+def parse_npx(xlsx_path: Union[str, BinaryIO]) -> List[str]:
+    """
+    Parses the given NPX file from OLINK
+    to extracts a list of aliquot IDs. If the file
+    is not valid NPX but still xlsx the function will return an empty
+    list. The function will pass along any IO errors.
+
+    Args:
+        xlsx_path: path to NPX file on disk, or an opened NPX file
+
+    Returns:
+        arg1: a list of IDs found in this file
+    """
+
+    # load the file
+    workbook = openpyxl.load_workbook(xlsx_path)
+
+    # extract data to python
+    ids = []
+    for worksheet_name in workbook.sheetnames:
+
+        # simplify.
+        worksheet = workbook[worksheet_name]
+        seen_onlinkid = False
+        for i, row in enumerate(worksheet.iter_rows()):
+
+            # extract values from row
+            vals = [col.value for col in row]
+
+            # skip empty
+            if len(vals) == 0 or vals[0] is None:
+                continue
+
+            # check if we are starting ids
+            if vals[0] == 'OlinkID':
+                seen_onlinkid = True
+                continue
+
+            # check if we are done.
+            if vals[0] == 'LOD':
+                break
+
+            # get the identifier
+            if seen_onlinkid:
+                ids.append(vals[0])
+
+    return ids

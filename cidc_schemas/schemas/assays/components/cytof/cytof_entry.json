@@ -88,6 +88,9 @@
         },
         "files": {
             "$ref": "assays/components/cytof/cytof_input.json"
+        },
+        "analysis": {
+            "$ref": "assays/components/cytof/cytof_analysis.json"
         }
     },
     "mergeStrategy": "objectMerge",

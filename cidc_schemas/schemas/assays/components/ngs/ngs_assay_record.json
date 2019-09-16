@@ -14,8 +14,11 @@
         "$ref": "sample.json#properties/cimac_sample_id"
     },
     "cimac_aliquot_id": {
-        "$comment": "Id of an aliquot within this clinical trial, that this assay record is based upon.",
-        "$ref": "aliquot.json#properties/cimac_aliquot_id"
+        "type:": {
+          "$ref": "aliquot.json#properties/cimac_aliquot_id/type"
+        }, 
+        "in_doc_ref_pattern": "/participants/*/samples/*/aliquot/*/cimac_aliquot_id",
+        "description": "TBD"
     },
     "files": {
       "$comment": "Fastq and read group mapping files produced by the assay for that .",

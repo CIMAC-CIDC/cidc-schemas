@@ -334,7 +334,8 @@ def test_prism(schema_path, xlsx_path):
     merged = merger.merge(MINIMAL_CT_1PA1SA1AL, ct)
 
     # assert works
-    validator.validate(merged)
+    errors = list(validator.iter_errors(merged))
+    assert not errors 
 
     if hint in SUPPORTED_ASSAYS :
         assert merged["lead_organization_study_id"] == "test_prism_trial_id"

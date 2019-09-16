@@ -3,60 +3,60 @@
   "$id": "Olink_assay_record",
   "title": "Olink assay record",
   "type": "object",
-  "description": "A single data record from Olink assay",
+  "description": "A single data record from Olink assay.",
   "properties": {
     "run_date": {
-      "description": "Date when the Olink assay was run",
+      "description": "Date when the Olink assay was run.",
       "type": "string",
       "format": "date"
     },
     "run_time": {
-      "description": "Time when the Olink assay was run",
+      "description": "Time when the Olink assay was run.",
       "type": "string",
       "format": "time"
     },
     "instrument": {
-      "description": "Instrument used for the Olink assay",
+      "description": "Instrument used for the Olink assay.",
       "type": "string"
     },
     "fludigm_application_version": {
-      "description": "Version of the Fluidgm application used",
+      "description": "Version of the Fluidgm application used.",
       "type": "string"
     },
     "fludigm_application_build": {
-      "description": "Build of the Fluidgm application used",
+      "description": "Build of the Fluidgm application used.",
       "type": "string"
     },
     "chip_barcode": {
-      "description": "Chip barcode number",
+      "description": "Chip barcode number.",
       "type": "string"
     },
     "probe_type": {
-      "description": "Probe Type",
+      "description": "Probe Type.",
       "type": "string"
     },
     "passive_reference": {
-      "description": "Passive Reference",
+      "description": "Passive Reference.",
       "type": "string"
     },
     "quality_threshold": {
-      "description": "Threshold used for quality cutoff",
+      "description": "Threshold used for quality cutoff.",
       "type": "number"
     },
     "baseline_correction": {
-      "description": "Method used for baseline correction",
+      "description": "Method used for baseline correction.",
       "type": "string"
     },
     "number_of_samples": {
-      "description": "Number of samples analyzed in the assay",
+      "description": "Number of samples analyzed in the assay.",
       "type": "number"
     },
     "number_of_samples_failed": {
-      "description": "Number of samples failed in the assay",
+      "description": "Number of samples failed in the assay.",
       "type": "number"
     },
     "npx_manager_version": {
-      "description": "Version of NPX manager used for the analysis",
+      "description": "Version of NPX manager used for the analysis.",
       "type": "string"
     },
     "files": {

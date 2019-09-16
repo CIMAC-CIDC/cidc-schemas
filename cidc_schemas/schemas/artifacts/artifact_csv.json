@@ -3,7 +3,7 @@
   "$id": "csv_artifact",
   "title": "CSV Artifact",
   "type": "object",
-  "description": "Information about CSV files",
+  "description": "Information about CSV files.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"
@@ -11,12 +11,15 @@
     {
       "properties": {
         "separator": {
+          "description": "Delimiter for separating values within the CSV file.",
           "type": "string"
         },
         "header_row": {
+          "description": "Number of header lines in the CSV file.",
           "type": "integer"
         },
         "data_format": {
+          "description": "Data format.",
           "const": "CSV"
         }
       }

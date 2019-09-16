@@ -3,7 +3,7 @@
   "$id": "wes_export",
   "title": "WES assay export",
   "type": "object",
-  "description": "A single export data record from WES assay",
+  "description": "A single export data record from WES assay.",
   "properties": {
     "wes_experiment_id": {
       "description": "Identification # for Wes Output files.",

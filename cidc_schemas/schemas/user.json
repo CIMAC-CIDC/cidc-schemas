@@ -3,7 +3,7 @@
   "$id": "user",
   "title": "User",
   "type": "object",
-  "description": "Any user of the CIDC platform",
+  "description": "Any user of the CIDC platform.",
   "properties": {
     "user_id": {
       "description": "User Identifier.",

@@ -33,7 +33,7 @@
         </p>
         <h1>Olink assay record</h1>
         <p>
-            <b>Description:</b>  A single data record from Olink assay
+            <b>Description:</b>  A single data record from Olink assay.
         </p>
         
     </div>
@@ -91,7 +91,7 @@
     </td>
     <td width=55%>
         
-            Number of samples analyzed in the assay
+            Number of samples analyzed in the assay.
         
     </td>
     <td>
@@ -128,7 +128,7 @@
     </td>
     <td width=55%>
         
-            Version of NPX manager used for the analysis
+            Version of NPX manager used for the analysis.
         
     </td>
     <td>
@@ -163,7 +163,7 @@
     </td>
     <td width=55%>
         
-            Olink Assay Input Files
+            Olink assay input files.
         
     </td>
     <td>
@@ -187,7 +187,7 @@
     </td>
     <td width=55%>
         
-            Date when the Olink assay was run
+            Date when the Olink assay was run.
         
     </td>
     <td>
@@ -220,7 +220,7 @@
     </td>
     <td width=55%>
         
-            Time when the Olink assay was run
+            Time when the Olink assay was run.
         
     </td>
     <td>
@@ -253,7 +253,7 @@
     </td>
     <td width=55%>
         
-            Instrument used for the Olink assay
+            Instrument used for the Olink assay.
         
     </td>
     <td>
@@ -286,7 +286,7 @@
     </td>
     <td width=55%>
         
-            Version of the Fluidgm application used
+            Version of the Fluidgm application used.
         
     </td>
     <td>
@@ -319,7 +319,7 @@
     </td>
     <td width=55%>
         
-            Build of the Fluidgm application used
+            Build of the Fluidgm application used.
         
     </td>
     <td>
@@ -352,7 +352,7 @@
     </td>
     <td width=55%>
         
-            Chip barcode number
+            Chip barcode number.
         
     </td>
     <td>
@@ -385,7 +385,7 @@
     </td>
     <td width=55%>
         
-            Probe Type
+            Probe Type.
         
     </td>
     <td>
@@ -418,7 +418,7 @@
     </td>
     <td width=55%>
         
-            Passive Reference
+            Passive Reference.
         
     </td>
     <td>
@@ -451,7 +451,7 @@
     </td>
     <td width=55%>
         
-            Threshold used for quality cutoff
+            Threshold used for quality cutoff.
         
     </td>
     <td>
@@ -484,7 +484,7 @@
     </td>
     <td width=55%>
         
-            Method used for baseline correction
+            Method used for baseline correction.
         
     </td>
     <td>
@@ -519,7 +519,7 @@
     </td>
     <td width=55%>
         
-            Number of samples failed in the assay
+            Number of samples failed in the assay.
         
     </td>
     <td>
@@ -554,20 +554,20 @@
   	<pre><code>{
     "$id": "Olink_assay_record",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "description": "A single data record from Olink assay",
+    "description": "A single data record from Olink assay.",
     "properties": {
         "baseline_correction": {
-            "description": "Method used for baseline correction",
+            "description": "Method used for baseline correction.",
             "type": "string"
         },
         "chip_barcode": {
-            "description": "Chip barcode number",
+            "description": "Chip barcode number.",
             "type": "string"
         },
         "files": {
             "$id": "olink_input",
             "$schema": "http://json-schema.org/draft-07/schema#",
-            "description": "Olink Assay Input Files",
+            "description": "Olink assay input files.",
             "properties": {
                 "assay_npx": {
                     "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.",
@@ -607,7 +607,7 @@
                                     "type": "string"
                                 },
                                 "artifact_creator": {
-                                    "description": "The name of the center that created this artificat",
+                                    "description": "The name of the center that created this artifact.",
                                     "enum": [
                                         "DFCI",
                                         "Mount Sinai",
@@ -636,7 +636,7 @@
                                 },
                                 "file_name": {
                                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                    "description": "The name of the file with extension",
+                                    "description": "The name of the file with extension.",
                                     "type": "string"
                                 },
                                 "file_size_bytes": {
@@ -652,15 +652,17 @@
                                     "type": "string"
                                 },
                                 "upload_placeholder": {
-                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
                                     "type": "string"
                                 },
                                 "uploaded_timestamp": {
-                                    "description": "Timestamp of when artfiact was loaded into the system.",
+                                    "description": "Timestamp of when artifact was loaded into the system.",
                                     "format": "date-time",
                                     "type": "string"
                                 },
                                 "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
                                     "type": "string"
                                 },
                                 "uuid": {
@@ -668,7 +670,7 @@
                                     "type": "string"
                                 },
                                 "visible": {
-                                    "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                     "type": "boolean"
                                 }
                             },
@@ -679,16 +681,18 @@
                             "properties": {
                                 "aliquots": {
                                     "items": {
-                                        "$comment": "Id of an aliquot within this assay.",
+                                        "$comment": "Ids of the aliquot(s) within this assay.",
                                         "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
                                         "type": "string"
                                     },
                                     "type": "array"
                                 },
                                 "data_format": {
-                                    "const": "NPX"
+                                    "const": "NPX",
+                                    "description": "Data format."
                                 },
                                 "number_of_aliquots": {
+                                    "description": "Number of aliquots within this assay.",
                                     "type": "integer"
                                 }
                             }
@@ -707,7 +711,7 @@
                             ]
                         }
                     ],
-                    "description": "Information about a xlsx file",
+                    "description": "Information about a xlsx file.",
                     "mergeStrategy": "objectMerge",
                     "title": "NPX Artifact",
                     "type": "object"
@@ -750,7 +754,7 @@
                                     "type": "string"
                                 },
                                 "artifact_creator": {
-                                    "description": "The name of the center that created this artificat",
+                                    "description": "The name of the center that created this artifact.",
                                     "enum": [
                                         "DFCI",
                                         "Mount Sinai",
@@ -779,7 +783,7 @@
                                 },
                                 "file_name": {
                                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                    "description": "The name of the file with extension",
+                                    "description": "The name of the file with extension.",
                                     "type": "string"
                                 },
                                 "file_size_bytes": {
@@ -795,15 +799,17 @@
                                     "type": "string"
                                 },
                                 "upload_placeholder": {
-                                    "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
                                     "type": "string"
                                 },
                                 "uploaded_timestamp": {
-                                    "description": "Timestamp of when artfiact was loaded into the system.",
+                                    "description": "Timestamp of when artifact was loaded into the system.",
                                     "format": "date-time",
                                     "type": "string"
                                 },
                                 "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
                                     "type": "string"
                                 },
                                 "uuid": {
@@ -811,7 +817,7 @@
                                     "type": "string"
                                 },
                                 "visible": {
-                                    "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                     "type": "boolean"
                                 }
                             },
@@ -821,15 +827,13 @@
                         {
                             "properties": {
                                 "data_format": {
-                                    "const": "XLSX"
-                                },
-                                "info": {
-                                    "type": "object"
+                                    "const": "XLSX",
+                                    "description": "Data format."
                                 }
                             }
                         }
                     ],
-                    "description": "Information about a xlsx file",
+                    "description": "Information about a xlsx file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Excel Artifact",
                     "type": "object"
@@ -843,48 +847,48 @@
             "type": "object"
         },
         "fludigm_application_build": {
-            "description": "Build of the Fluidgm application used",
+            "description": "Build of the Fluidgm application used.",
             "type": "string"
         },
         "fludigm_application_version": {
-            "description": "Version of the Fluidgm application used",
+            "description": "Version of the Fluidgm application used.",
             "type": "string"
         },
         "instrument": {
-            "description": "Instrument used for the Olink assay",
+            "description": "Instrument used for the Olink assay.",
             "type": "string"
         },
         "npx_manager_version": {
-            "description": "Version of NPX manager used for the analysis",
+            "description": "Version of NPX manager used for the analysis.",
             "type": "string"
         },
         "number_of_samples": {
-            "description": "Number of samples analyzed in the assay",
+            "description": "Number of samples analyzed in the assay.",
             "type": "number"
         },
         "number_of_samples_failed": {
-            "description": "Number of samples failed in the assay",
+            "description": "Number of samples failed in the assay.",
             "type": "number"
         },
         "passive_reference": {
-            "description": "Passive Reference",
+            "description": "Passive Reference.",
             "type": "string"
         },
         "probe_type": {
-            "description": "Probe Type",
+            "description": "Probe Type.",
             "type": "string"
         },
         "quality_threshold": {
-            "description": "Threshold used for quality cutoff",
+            "description": "Threshold used for quality cutoff.",
             "type": "number"
         },
         "run_date": {
-            "description": "Date when the Olink assay was run",
+            "description": "Date when the Olink assay was run.",
             "format": "date",
             "type": "string"
         },
         "run_time": {
-            "description": "Time when the Olink assay was run",
+            "description": "Time when the Olink assay was run.",
             "format": "time",
             "type": "string"
         }

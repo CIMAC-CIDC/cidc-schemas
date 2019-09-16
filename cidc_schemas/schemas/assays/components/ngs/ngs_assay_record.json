@@ -3,7 +3,7 @@
   "$id": "ngs_assay_record",
   "title": "NGS assay record",
   "type": "object",
-  "description": "A single data record from an NGS assay",
+  "description": "A single data record from an NGS assay.",
   "properties": {
     "cimac_participant_id": {
         "$comment": "Id of an participant within this clinical trial, that this assay record is based upon.",

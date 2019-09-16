@@ -3,7 +3,7 @@
   "$id": "fastq_pair_and_mapping",
   "title": "Fastq pair and group mapping",
   "type": "object",
-  "description": "Paired end sequencing fastq file pair and read group mapping file",
+  "description": "Paired end sequencing fastq file pair and read group mapping file.",
   "properties": {
     "r1": {
       "$comment": "Fastq file for the first fragment.",

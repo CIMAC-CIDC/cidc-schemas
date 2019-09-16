@@ -3,7 +3,7 @@
   "$id": "micsss_input",
   "title": "Multiplexed Immunohistochemical Input Files",
   "type": "object",
-  "description": "micsss Assay Input Files",
+  "description": "micsss assay input files.",
   "properties": {
     "micsss_output_summary": {
       "$comment": "Summary of the results of the experiment.",

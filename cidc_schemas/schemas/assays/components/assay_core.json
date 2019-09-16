@@ -3,7 +3,7 @@
   "$id": "assay_core",
   "title": "Assay Core",
   "type": "object",
-  "description": "Main properties of the assay experiment template",
+  "description": "Main properties of the assay experiment template.",
   "properties": {
     "assay_creator": {
       "description": "Indicates what site is filling out the assay.",

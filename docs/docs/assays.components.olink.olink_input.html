@@ -33,7 +33,7 @@
         </p>
         <h1>Olink Input Files</h1>
         <p>
-            <b>Description:</b>  Olink Assay Input Files
+            <b>Description:</b>  Olink assay input files.
         </p>
         
     </div>
@@ -71,7 +71,7 @@
     </td>
     <td width=55%>
         
-            Information about a xlsx file
+            Information about a xlsx file.
         
     </td>
     <td>
@@ -96,7 +96,7 @@
     </td>
     <td width=55%>
         
-            Information about a xlsx file
+            Information about a xlsx file.
         
     </td>
     <td>
@@ -122,7 +122,7 @@
   	<pre><code>{
     "$id": "olink_input",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "description": "Olink Assay Input Files",
+    "description": "Olink assay input files.",
     "properties": {
         "assay_npx": {
             "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.",
@@ -162,7 +162,7 @@
                             "type": "string"
                         },
                         "artifact_creator": {
-                            "description": "The name of the center that created this artificat",
+                            "description": "The name of the center that created this artifact.",
                             "enum": [
                                 "DFCI",
                                 "Mount Sinai",
@@ -191,7 +191,7 @@
                         },
                         "file_name": {
                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                            "description": "The name of the file with extension",
+                            "description": "The name of the file with extension.",
                             "type": "string"
                         },
                         "file_size_bytes": {
@@ -207,15 +207,17 @@
                             "type": "string"
                         },
                         "upload_placeholder": {
-                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "description": "A placeholder for when artifact file is being uploaded.",
                             "type": "string"
                         },
                         "uploaded_timestamp": {
-                            "description": "Timestamp of when artfiact was loaded into the system.",
+                            "description": "Timestamp of when artifact was loaded into the system.",
                             "format": "date-time",
                             "type": "string"
                         },
                         "uploader": {
+                            "description": "The name of the person uploading the artifact.",
                             "type": "string"
                         },
                         "uuid": {
@@ -223,7 +225,7 @@
                             "type": "string"
                         },
                         "visible": {
-                            "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                             "type": "boolean"
                         }
                     },
@@ -234,16 +236,18 @@
                     "properties": {
                         "aliquots": {
                             "items": {
-                                "$comment": "Id of an aliquot within this assay.",
+                                "$comment": "Ids of the aliquot(s) within this assay.",
                                 "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
                                 "type": "string"
                             },
                             "type": "array"
                         },
                         "data_format": {
-                            "const": "NPX"
+                            "const": "NPX",
+                            "description": "Data format."
                         },
                         "number_of_aliquots": {
+                            "description": "Number of aliquots within this assay.",
                             "type": "integer"
                         }
                     }
@@ -262,7 +266,7 @@
                     ]
                 }
             ],
-            "description": "Information about a xlsx file",
+            "description": "Information about a xlsx file.",
             "mergeStrategy": "objectMerge",
             "title": "NPX Artifact",
             "type": "object"
@@ -305,7 +309,7 @@
                             "type": "string"
                         },
                         "artifact_creator": {
-                            "description": "The name of the center that created this artificat",
+                            "description": "The name of the center that created this artifact.",
                             "enum": [
                                 "DFCI",
                                 "Mount Sinai",
@@ -334,7 +338,7 @@
                         },
                         "file_name": {
                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                            "description": "The name of the file with extension",
+                            "description": "The name of the file with extension.",
                             "type": "string"
                         },
                         "file_size_bytes": {
@@ -350,15 +354,17 @@
                             "type": "string"
                         },
                         "upload_placeholder": {
-                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "description": "A placeholder for when artifact file is being uploaded.",
                             "type": "string"
                         },
                         "uploaded_timestamp": {
-                            "description": "Timestamp of when artfiact was loaded into the system.",
+                            "description": "Timestamp of when artifact was loaded into the system.",
                             "format": "date-time",
                             "type": "string"
                         },
                         "uploader": {
+                            "description": "The name of the person uploading the artifact.",
                             "type": "string"
                         },
                         "uuid": {
@@ -366,7 +372,7 @@
                             "type": "string"
                         },
                         "visible": {
-                            "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                             "type": "boolean"
                         }
                     },
@@ -376,15 +382,13 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "XLSX"
-                        },
-                        "info": {
-                            "type": "object"
+                            "const": "XLSX",
+                            "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a xlsx file",
+            "description": "Information about a xlsx file.",
             "mergeStrategy": "objectMerge",
             "title": "Excel Artifact",
             "type": "object"

@@ -3,7 +3,7 @@
   "$id": "mif",
   "title": "mIF Assay",
   "type": "object",
-  "description": "Multiplex immunofluorescence",
+  "description": "Multiplex immunofluorescence.",
   "allOf": [
     { "$ref": "assays/components/assay_core.json" },
     { "$ref": "assays/components/image.json" },

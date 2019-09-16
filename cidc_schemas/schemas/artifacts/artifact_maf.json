@@ -3,17 +3,15 @@
   "$id": "maf_artifact",
   "title": "MAF Artifact",
   "type": "object",
-  "description": "Information about a Maf file",
+  "description": "Information about a Maf file.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"
     },
     {
       "properties": {
-        "info": {
-          "type": "object"
-        },
         "data_format": {
+          "description": "Data format.",
           "const": "MAF"
         }
       }

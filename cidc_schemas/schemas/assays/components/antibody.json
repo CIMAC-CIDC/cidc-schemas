@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "id": "antibody",
   "title": "Antibody",
-  "description": "Common information about an antibody used in a number of immune-oncology assays\n",
+  "description": "Common information about an antibody used in a number of immune-oncology assays.",
   "properties": {
     "antibody": {
       "description": "Antibody type collected for this study.",

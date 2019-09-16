@@ -33,7 +33,7 @@
         </p>
         <h1>RNAseq assay record</h1>
         <p>
-            <b>Description:</b>  A single data record from RNAseq assay
+            <b>Description:</b>  A single data record from RNAseq assay.
         </p>
         
     </div>
@@ -208,7 +208,7 @@
     </td>
     <td width=55%>
         
-            RNASeq Assay Input Files
+            RNASeq assay input files.
         
     </td>
     <td>
@@ -233,7 +233,7 @@
         {
             "$id": "ngs_assay_record",
             "$schema": "http://json-schema.org/draft-07/schema#",
-            "description": "A single data record from an NGS assay",
+            "description": "A single data record from an NGS assay.",
             "properties": {
                 "average_insert_size": {
                     "description": "The average insert size for the library.",
@@ -260,10 +260,10 @@
                     "$comment": "Fastq and read group mapping files produced by the assay for that .",
                     "$id": "fastq_pair_and_mapping",
                     "$schema": "http://json-schema.org/draft-07/schema#",
-                    "description": "Paired end sequencing fastq file pair and read group mapping file",
+                    "description": "Paired end sequencing fastq file pair and read group mapping file.",
                     "properties": {
                         "r1": {
-                            "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
+                            "$comment": "Fastq file for the first fragment.",
                             "$id": "fastq_artifact",
                             "$schema": "http://json-schema.org/draft-07/schema#",
                             "allOf": [
@@ -300,7 +300,7 @@
                                             "type": "string"
                                         },
                                         "artifact_creator": {
-                                            "description": "The name of the center that created this artificat",
+                                            "description": "The name of the center that created this artifact.",
                                             "enum": [
                                                 "DFCI",
                                                 "Mount Sinai",
@@ -329,7 +329,7 @@
                                         },
                                         "file_name": {
                                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                            "description": "The name of the file with extension",
+                                            "description": "The name of the file with extension.",
                                             "type": "string"
                                         },
                                         "file_size_bytes": {
@@ -345,15 +345,17 @@
                                             "type": "string"
                                         },
                                         "upload_placeholder": {
-                                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                            "description": "A placeholder for when artifact file is being uploaded.",
                                             "type": "string"
                                         },
                                         "uploaded_timestamp": {
-                                            "description": "Timestamp of when artfiact was loaded into the system.",
+                                            "description": "Timestamp of when artifact was loaded into the system.",
                                             "format": "date-time",
                                             "type": "string"
                                         },
                                         "uploader": {
+                                            "description": "The name of the person uploading the artifact.",
                                             "type": "string"
                                         },
                                         "uuid": {
@@ -361,7 +363,7 @@
                                             "type": "string"
                                         },
                                         "visible": {
-                                            "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                             "type": "boolean"
                                         }
                                     },
@@ -371,20 +373,18 @@
                                 {
                                     "properties": {
                                         "data_format": {
-                                            "const": "FASTQ"
-                                        },
-                                        "info": {
-                                            "type": "object"
+                                            "const": "FASTQ",
+                                            "description": "Data format."
                                         }
                                     }
                                 }
                             ],
-                            "description": "Information about a fastq file",
+                            "description": "Information about a fastq file.",
                             "title": "FastQ Artifact",
                             "type": "object"
                         },
                         "r2": {
-                            "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
+                            "$comment": "Fastq file for the second fragment.",
                             "$id": "fastq_artifact",
                             "$schema": "http://json-schema.org/draft-07/schema#",
                             "allOf": [
@@ -421,7 +421,7 @@
                                             "type": "string"
                                         },
                                         "artifact_creator": {
-                                            "description": "The name of the center that created this artificat",
+                                            "description": "The name of the center that created this artifact.",
                                             "enum": [
                                                 "DFCI",
                                                 "Mount Sinai",
@@ -450,7 +450,7 @@
                                         },
                                         "file_name": {
                                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                            "description": "The name of the file with extension",
+                                            "description": "The name of the file with extension.",
                                             "type": "string"
                                         },
                                         "file_size_bytes": {
@@ -466,15 +466,17 @@
                                             "type": "string"
                                         },
                                         "upload_placeholder": {
-                                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                            "description": "A placeholder for when artifact file is being uploaded.",
                                             "type": "string"
                                         },
                                         "uploaded_timestamp": {
-                                            "description": "Timestamp of when artfiact was loaded into the system.",
+                                            "description": "Timestamp of when artifact was loaded into the system.",
                                             "format": "date-time",
                                             "type": "string"
                                         },
                                         "uploader": {
+                                            "description": "The name of the person uploading the artifact.",
                                             "type": "string"
                                         },
                                         "uuid": {
@@ -482,7 +484,7 @@
                                             "type": "string"
                                         },
                                         "visible": {
-                                            "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                             "type": "boolean"
                                         }
                                     },
@@ -492,15 +494,13 @@
                                 {
                                     "properties": {
                                         "data_format": {
-                                            "const": "FASTQ"
-                                        },
-                                        "info": {
-                                            "type": "object"
+                                            "const": "FASTQ",
+                                            "description": "Data format."
                                         }
                                     }
                                 }
                             ],
-                            "description": "Information about a fastq file",
+                            "description": "Information about a fastq file.",
                             "title": "FastQ Artifact",
                             "type": "object"
                         },
@@ -542,7 +542,7 @@
                                             "type": "string"
                                         },
                                         "artifact_creator": {
-                                            "description": "The name of the center that created this artificat",
+                                            "description": "The name of the center that created this artifact.",
                                             "enum": [
                                                 "DFCI",
                                                 "Mount Sinai",
@@ -571,7 +571,7 @@
                                         },
                                         "file_name": {
                                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                            "description": "The name of the file with extension",
+                                            "description": "The name of the file with extension.",
                                             "type": "string"
                                         },
                                         "file_size_bytes": {
@@ -587,15 +587,17 @@
                                             "type": "string"
                                         },
                                         "upload_placeholder": {
-                                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                            "description": "A placeholder for when artifact file is being uploaded.",
                                             "type": "string"
                                         },
                                         "uploaded_timestamp": {
-                                            "description": "Timestamp of when artfiact was loaded into the system.",
+                                            "description": "Timestamp of when artifact was loaded into the system.",
                                             "format": "date-time",
                                             "type": "string"
                                         },
                                         "uploader": {
+                                            "description": "The name of the person uploading the artifact.",
                                             "type": "string"
                                         },
                                         "uuid": {
@@ -603,7 +605,7 @@
                                             "type": "string"
                                         },
                                         "visible": {
-                                            "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                             "type": "boolean"
                                         }
                                     },
@@ -613,15 +615,13 @@
                                 {
                                     "properties": {
                                         "data_format": {
-                                            "const": "TEXT"
-                                        },
-                                        "info": {
-                                            "type": "object"
+                                            "const": "TEXT",
+                                            "description": "Data format."
                                         }
                                     }
                                 }
                             ],
-                            "description": "Information about text files",
+                            "description": "Information about text files.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -669,7 +669,7 @@
             "type": "object"
         }
     ],
-    "description": "A single data record from RNAseq assay",
+    "description": "A single data record from RNAseq assay.",
     "properties": {
         "capture_date": {
             "description": "Date of the hybrid capture enrichment.",
@@ -687,10 +687,10 @@
                 {
                     "$id": "fastq_pair_and_mapping",
                     "$schema": "http://json-schema.org/draft-07/schema#",
-                    "description": "Paired end sequencing fastq file pair and read group mapping file",
+                    "description": "Paired end sequencing fastq file pair and read group mapping file.",
                     "properties": {
                         "r1": {
-                            "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
+                            "$comment": "Fastq file for the first fragment.",
                             "$id": "fastq_artifact",
                             "$schema": "http://json-schema.org/draft-07/schema#",
                             "allOf": [
@@ -727,7 +727,7 @@
                                             "type": "string"
                                         },
                                         "artifact_creator": {
-                                            "description": "The name of the center that created this artificat",
+                                            "description": "The name of the center that created this artifact.",
                                             "enum": [
                                                 "DFCI",
                                                 "Mount Sinai",
@@ -756,7 +756,7 @@
                                         },
                                         "file_name": {
                                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                            "description": "The name of the file with extension",
+                                            "description": "The name of the file with extension.",
                                             "type": "string"
                                         },
                                         "file_size_bytes": {
@@ -772,15 +772,17 @@
                                             "type": "string"
                                         },
                                         "upload_placeholder": {
-                                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                            "description": "A placeholder for when artifact file is being uploaded.",
                                             "type": "string"
                                         },
                                         "uploaded_timestamp": {
-                                            "description": "Timestamp of when artfiact was loaded into the system.",
+                                            "description": "Timestamp of when artifact was loaded into the system.",
                                             "format": "date-time",
                                             "type": "string"
                                         },
                                         "uploader": {
+                                            "description": "The name of the person uploading the artifact.",
                                             "type": "string"
                                         },
                                         "uuid": {
@@ -788,7 +790,7 @@
                                             "type": "string"
                                         },
                                         "visible": {
-                                            "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                             "type": "boolean"
                                         }
                                     },
@@ -798,20 +800,18 @@
                                 {
                                     "properties": {
                                         "data_format": {
-                                            "const": "FASTQ"
-                                        },
-                                        "info": {
-                                            "type": "object"
+                                            "const": "FASTQ",
+                                            "description": "Data format."
                                         }
                                     }
                                 }
                             ],
-                            "description": "Information about a fastq file",
+                            "description": "Information about a fastq file.",
                             "title": "FastQ Artifact",
                             "type": "object"
                         },
                         "r2": {
-                            "$comment": "Fastq file for the first fragment.Fastq file for the second fragment.",
+                            "$comment": "Fastq file for the second fragment.",
                             "$id": "fastq_artifact",
                             "$schema": "http://json-schema.org/draft-07/schema#",
                             "allOf": [
@@ -848,7 +848,7 @@
                                             "type": "string"
                                         },
                                         "artifact_creator": {
-                                            "description": "The name of the center that created this artificat",
+                                            "description": "The name of the center that created this artifact.",
                                             "enum": [
                                                 "DFCI",
                                                 "Mount Sinai",
@@ -877,7 +877,7 @@
                                         },
                                         "file_name": {
                                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                            "description": "The name of the file with extension",
+                                            "description": "The name of the file with extension.",
                                             "type": "string"
                                         },
                                         "file_size_bytes": {
@@ -893,15 +893,17 @@
                                             "type": "string"
                                         },
                                         "upload_placeholder": {
-                                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                            "description": "A placeholder for when artifact file is being uploaded.",
                                             "type": "string"
                                         },
                                         "uploaded_timestamp": {
-                                            "description": "Timestamp of when artfiact was loaded into the system.",
+                                            "description": "Timestamp of when artifact was loaded into the system.",
                                             "format": "date-time",
                                             "type": "string"
                                         },
                                         "uploader": {
+                                            "description": "The name of the person uploading the artifact.",
                                             "type": "string"
                                         },
                                         "uuid": {
@@ -909,7 +911,7 @@
                                             "type": "string"
                                         },
                                         "visible": {
-                                            "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                             "type": "boolean"
                                         }
                                     },
@@ -919,15 +921,13 @@
                                 {
                                     "properties": {
                                         "data_format": {
-                                            "const": "FASTQ"
-                                        },
-                                        "info": {
-                                            "type": "object"
+                                            "const": "FASTQ",
+                                            "description": "Data format."
                                         }
                                     }
                                 }
                             ],
-                            "description": "Information about a fastq file",
+                            "description": "Information about a fastq file.",
                             "title": "FastQ Artifact",
                             "type": "object"
                         },
@@ -969,7 +969,7 @@
                                             "type": "string"
                                         },
                                         "artifact_creator": {
-                                            "description": "The name of the center that created this artificat",
+                                            "description": "The name of the center that created this artifact.",
                                             "enum": [
                                                 "DFCI",
                                                 "Mount Sinai",
@@ -998,7 +998,7 @@
                                         },
                                         "file_name": {
                                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                            "description": "The name of the file with extension",
+                                            "description": "The name of the file with extension.",
                                             "type": "string"
                                         },
                                         "file_size_bytes": {
@@ -1014,15 +1014,17 @@
                                             "type": "string"
                                         },
                                         "upload_placeholder": {
-                                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                            "description": "A placeholder for when artifact file is being uploaded.",
                                             "type": "string"
                                         },
                                         "uploaded_timestamp": {
-                                            "description": "Timestamp of when artfiact was loaded into the system.",
+                                            "description": "Timestamp of when artifact was loaded into the system.",
                                             "format": "date-time",
                                             "type": "string"
                                         },
                                         "uploader": {
+                                            "description": "The name of the person uploading the artifact.",
                                             "type": "string"
                                         },
                                         "uuid": {
@@ -1030,7 +1032,7 @@
                                             "type": "string"
                                         },
                                         "visible": {
-                                            "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                             "type": "boolean"
                                         }
                                     },
@@ -1040,15 +1042,13 @@
                                 {
                                     "properties": {
                                         "data_format": {
-                                            "const": "TEXT"
-                                        },
-                                        "info": {
-                                            "type": "object"
+                                            "const": "TEXT",
+                                            "description": "Data format."
                                         }
                                     }
                                 }
                             ],
-                            "description": "Information about text files",
+                            "description": "Information about text files.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -1063,7 +1063,7 @@
                     "type": "object"
                 }
             ],
-            "description": "RNASeq Assay Input Files",
+            "description": "RNASeq assay input files.",
             "title": "RNASeq Input Files",
             "type": "object"
         },

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "clinical_trial",
   "title": "Clinical Trial",
-  "description": "Encapsulates information regarding a clinical trial\n",
+  "description": "Encapsulates information regarding a clinical trial.",
   "properties": {
     "nct_id": {
       "type": "string",

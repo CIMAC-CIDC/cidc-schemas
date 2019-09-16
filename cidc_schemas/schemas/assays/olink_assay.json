@@ -3,7 +3,7 @@
   "$id": "olink_assay",
   "title": "OLink Assay",
   "type": "object",
-  "description": "High-throughput multiplexed assays for protein biomarker discovery",
+  "description": "High-throughput multiplexed assays for protein biomarker discovery.",
   "properties": {
     "records": {
       "type": "array",
@@ -16,11 +16,11 @@
       }
     },
     "panel": {
-      "description": "Panel used for the assay",
+      "description": "Panel used for the assay.",
       "type": "string"
     },
     "assay_panel_lot": {
-      "description": "Lot Number of the assay panel",
+      "description": "Lot number of the assay panel.",
       "type": "number"
     },
     "study": {

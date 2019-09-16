@@ -3,7 +3,7 @@
   "$id": "micsss",
   "title": "MICSSS Assay",
   "type": "object",
-  "description": "Multiplexed immunohistochemical consecutive staining on single slide",
+  "description": "Multiplexed immunohistochemical consecutive staining on single slide.",
   "allOf": [
     { "$ref": "assays/components/assay_core.json" },
     { "$ref": "assays/components/image.json" },

@@ -33,7 +33,7 @@
         </p>
         <h1>Multiplex Immunofluorescence Input Files</h1>
         <p>
-            <b>Description:</b>  mIF Assay Input Files
+            <b>Description:</b>  mIF assay input files.
         </p>
         
     </div>
@@ -71,7 +71,7 @@
     </td>
     <td width=55%>
         
-            Information about images include height and width
+            Information about images including height and width.
         
     </td>
     <td>
@@ -103,7 +103,7 @@
     </td>
     <td width=55%>
         
-            Information about text files
+            Information about text files.
         
     </td>
     <td>
@@ -126,7 +126,7 @@
     </td>
     <td width=55%>
         
-            Information about CSV files
+            Information about CSV files.
         
     </td>
     <td>
@@ -149,7 +149,7 @@
     </td>
     <td width=55%>
         
-            
+            A region of interest (ROI) is a portion of an image which has been analyzed using image processing software.
         
     </td>
     <td>
@@ -187,7 +187,7 @@
   	<pre><code>{
     "$id": "mif_input",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "description": "mIF Assay Input Files",
+    "description": "mIF assay input files.",
     "properties": {
         "mif_output_summary": {
             "$comment": "Summary of the results of the experiment.",
@@ -227,7 +227,7 @@
                             "type": "string"
                         },
                         "artifact_creator": {
-                            "description": "The name of the center that created this artificat",
+                            "description": "The name of the center that created this artifact.",
                             "enum": [
                                 "DFCI",
                                 "Mount Sinai",
@@ -256,7 +256,7 @@
                         },
                         "file_name": {
                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                            "description": "The name of the file with extension",
+                            "description": "The name of the file with extension.",
                             "type": "string"
                         },
                         "file_size_bytes": {
@@ -272,15 +272,17 @@
                             "type": "string"
                         },
                         "upload_placeholder": {
-                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "description": "A placeholder for when artifact file is being uploaded.",
                             "type": "string"
                         },
                         "uploaded_timestamp": {
-                            "description": "Timestamp of when artfiact was loaded into the system.",
+                            "description": "Timestamp of when artifact was loaded into the system.",
                             "format": "date-time",
                             "type": "string"
                         },
                         "uploader": {
+                            "description": "The name of the person uploading the artifact.",
                             "type": "string"
                         },
                         "uuid": {
@@ -288,7 +290,7 @@
                             "type": "string"
                         },
                         "visible": {
-                            "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                             "type": "boolean"
                         }
                     },
@@ -298,18 +300,21 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "CSV"
+                            "const": "CSV",
+                            "description": "Data format."
                         },
                         "header_row": {
+                            "description": "Number of header lines in the CSV file.",
                             "type": "integer"
                         },
                         "separator": {
+                            "description": "Delimiter for separating values within the CSV file.",
                             "type": "string"
                         }
                     }
                 }
             ],
-            "description": "Information about CSV files",
+            "description": "Information about CSV files.",
             "required": [
                 "separator",
                 "header_row"
@@ -318,6 +323,7 @@
             "type": "object"
         },
         "regions_of_interest": {
+            "description": "A region of interest (ROI) is a portion of an image which has been analyzed using image processing software.",
             "items": {
                 "allOf": [
                     {
@@ -326,7 +332,7 @@
                         "description": "Regions of interest obtained from image mapping.",
                         "properties": {
                             "binary_seg_map": {
-                                "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
+                                "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.",
                                 "$id": "csv_artifact",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "allOf": [
@@ -363,7 +369,7 @@
                                                 "type": "string"
                                             },
                                             "artifact_creator": {
-                                                "description": "The name of the center that created this artificat",
+                                                "description": "The name of the center that created this artifact.",
                                                 "enum": [
                                                     "DFCI",
                                                     "Mount Sinai",
@@ -392,7 +398,7 @@
                                             },
                                             "file_name": {
                                                 "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                                "description": "The name of the file with extension",
+                                                "description": "The name of the file with extension.",
                                                 "type": "string"
                                             },
                                             "file_size_bytes": {
@@ -408,15 +414,17 @@
                                                 "type": "string"
                                             },
                                             "upload_placeholder": {
-                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "description": "A placeholder for when artifact file is being uploaded.",
                                                 "type": "string"
                                             },
                                             "uploaded_timestamp": {
-                                                "description": "Timestamp of when artfiact was loaded into the system.",
+                                                "description": "Timestamp of when artifact was loaded into the system.",
                                                 "format": "date-time",
                                                 "type": "string"
                                             },
                                             "uploader": {
+                                                "description": "The name of the person uploading the artifact.",
                                                 "type": "string"
                                             },
                                             "uuid": {
@@ -424,7 +432,7 @@
                                                 "type": "string"
                                             },
                                             "visible": {
-                                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                                "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                                 "type": "boolean"
                                             }
                                         },
@@ -434,18 +442,21 @@
                                     {
                                         "properties": {
                                             "data_format": {
-                                                "const": "CSV"
+                                                "const": "CSV",
+                                                "description": "Data format."
                                             },
                                             "header_row": {
+                                                "description": "Number of header lines in the CSV file.",
                                                 "type": "integer"
                                             },
                                             "separator": {
+                                                "description": "Delimiter for separating values within the CSV file.",
                                                 "type": "string"
                                             }
                                         }
                                     }
                                 ],
-                                "description": "Information about CSV files",
+                                "description": "Information about CSV files.",
                                 "required": [
                                     "separator",
                                     "header_row"
@@ -454,7 +465,7 @@
                                 "type": "object"
                             },
                             "cell_seg_data": {
-                                "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
+                                "$comment": "Data produced from the analysis of cellular image.",
                                 "$id": "csv_artifact",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "allOf": [
@@ -491,7 +502,7 @@
                                                 "type": "string"
                                             },
                                             "artifact_creator": {
-                                                "description": "The name of the center that created this artificat",
+                                                "description": "The name of the center that created this artifact.",
                                                 "enum": [
                                                     "DFCI",
                                                     "Mount Sinai",
@@ -520,7 +531,7 @@
                                             },
                                             "file_name": {
                                                 "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                                "description": "The name of the file with extension",
+                                                "description": "The name of the file with extension.",
                                                 "type": "string"
                                             },
                                             "file_size_bytes": {
@@ -536,15 +547,17 @@
                                                 "type": "string"
                                             },
                                             "upload_placeholder": {
-                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "description": "A placeholder for when artifact file is being uploaded.",
                                                 "type": "string"
                                             },
                                             "uploaded_timestamp": {
-                                                "description": "Timestamp of when artfiact was loaded into the system.",
+                                                "description": "Timestamp of when artifact was loaded into the system.",
                                                 "format": "date-time",
                                                 "type": "string"
                                             },
                                             "uploader": {
+                                                "description": "The name of the person uploading the artifact.",
                                                 "type": "string"
                                             },
                                             "uuid": {
@@ -552,7 +565,7 @@
                                                 "type": "string"
                                             },
                                             "visible": {
-                                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                                "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                                 "type": "boolean"
                                             }
                                         },
@@ -562,18 +575,21 @@
                                     {
                                         "properties": {
                                             "data_format": {
-                                                "const": "CSV"
+                                                "const": "CSV",
+                                                "description": "Data format."
                                             },
                                             "header_row": {
+                                                "description": "Number of header lines in the CSV file.",
                                                 "type": "integer"
                                             },
                                             "separator": {
+                                                "description": "Delimiter for separating values within the CSV file.",
                                                 "type": "string"
                                             }
                                         }
                                     }
                                 ],
-                                "description": "Information about CSV files",
+                                "description": "Information about CSV files.",
                                 "required": [
                                     "separator",
                                     "header_row"
@@ -582,7 +598,7 @@
                                 "type": "object"
                             },
                             "cell_seg_data_summary": {
-                                "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
+                                "$comment": "Summary of the results of a cell segmentation data experiment.",
                                 "$id": "csv_artifact",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "allOf": [
@@ -619,7 +635,7 @@
                                                 "type": "string"
                                             },
                                             "artifact_creator": {
-                                                "description": "The name of the center that created this artificat",
+                                                "description": "The name of the center that created this artifact.",
                                                 "enum": [
                                                     "DFCI",
                                                     "Mount Sinai",
@@ -648,7 +664,7 @@
                                             },
                                             "file_name": {
                                                 "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                                "description": "The name of the file with extension",
+                                                "description": "The name of the file with extension.",
                                                 "type": "string"
                                             },
                                             "file_size_bytes": {
@@ -664,15 +680,17 @@
                                                 "type": "string"
                                             },
                                             "upload_placeholder": {
-                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "description": "A placeholder for when artifact file is being uploaded.",
                                                 "type": "string"
                                             },
                                             "uploaded_timestamp": {
-                                                "description": "Timestamp of when artfiact was loaded into the system.",
+                                                "description": "Timestamp of when artifact was loaded into the system.",
                                                 "format": "date-time",
                                                 "type": "string"
                                             },
                                             "uploader": {
+                                                "description": "The name of the person uploading the artifact.",
                                                 "type": "string"
                                             },
                                             "uuid": {
@@ -680,7 +698,7 @@
                                                 "type": "string"
                                             },
                                             "visible": {
-                                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                                "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                                 "type": "boolean"
                                             }
                                         },
@@ -690,18 +708,21 @@
                                     {
                                         "properties": {
                                             "data_format": {
-                                                "const": "CSV"
+                                                "const": "CSV",
+                                                "description": "Data format."
                                             },
                                             "header_row": {
+                                                "description": "Number of header lines in the CSV file.",
                                                 "type": "integer"
                                             },
                                             "separator": {
+                                                "description": "Delimiter for separating values within the CSV file.",
                                                 "type": "string"
                                             }
                                         }
                                     }
                                 ],
-                                "description": "Information about CSV files",
+                                "description": "Information about CSV files.",
                                 "required": [
                                     "separator",
                                     "header_row"
@@ -710,7 +731,7 @@
                                 "type": "object"
                             },
                             "phenotype_map": {
-                                "$comment": "Image produced from the combination of multiple imaging experiment data images.Genome segmentation mapping",
+                                "$comment": "Image produced from the combination of multiple imaging experiment data images.",
                                 "$id": "image_artifact",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "allOf": [
@@ -747,7 +768,7 @@
                                                 "type": "string"
                                             },
                                             "artifact_creator": {
-                                                "description": "The name of the center that created this artificat",
+                                                "description": "The name of the center that created this artifact.",
                                                 "enum": [
                                                     "DFCI",
                                                     "Mount Sinai",
@@ -776,7 +797,7 @@
                                             },
                                             "file_name": {
                                                 "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                                "description": "The name of the file with extension",
+                                                "description": "The name of the file with extension.",
                                                 "type": "string"
                                             },
                                             "file_size_bytes": {
@@ -792,15 +813,17 @@
                                                 "type": "string"
                                             },
                                             "upload_placeholder": {
-                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "description": "A placeholder for when artifact file is being uploaded.",
                                                 "type": "string"
                                             },
                                             "uploaded_timestamp": {
-                                                "description": "Timestamp of when artfiact was loaded into the system.",
+                                                "description": "Timestamp of when artifact was loaded into the system.",
                                                 "format": "date-time",
                                                 "type": "string"
                                             },
                                             "uploader": {
+                                                "description": "The name of the person uploading the artifact.",
                                                 "type": "string"
                                             },
                                             "uuid": {
@@ -808,7 +831,7 @@
                                                 "type": "string"
                                             },
                                             "visible": {
-                                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                                "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                                 "type": "boolean"
                                             }
                                         },
@@ -818,21 +841,26 @@
                                     {
                                         "properties": {
                                             "channels": {
+                                                "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
+                                                "description": "Number of channels in the image.",
                                                 "type": "integer"
                                             },
                                             "data_format": {
-                                                "const": "IMAGE"
+                                                "const": "IMAGE",
+                                                "description": "Data format."
                                             },
                                             "height": {
+                                                "description": "Height of the image.",
                                                 "type": "integer"
                                             },
                                             "width": {
+                                                "description": "Width of the image.",
                                                 "type": "integer"
                                             }
                                         }
                                     }
                                 ],
-                                "description": "Information about images include height and width",
+                                "description": "Information about images including height and width.",
                                 "required": [
                                     "height",
                                     "width",
@@ -842,7 +870,7 @@
                                 "type": "object"
                             },
                             "region_seg_map": {
-                                "$comment": "Image produced from the combination of multiple imaging experiment data images.Genome segmentation mapping",
+                                "$comment": "Genome segmentation mapping",
                                 "$id": "image_artifact",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "allOf": [
@@ -879,7 +907,7 @@
                                                 "type": "string"
                                             },
                                             "artifact_creator": {
-                                                "description": "The name of the center that created this artificat",
+                                                "description": "The name of the center that created this artifact.",
                                                 "enum": [
                                                     "DFCI",
                                                     "Mount Sinai",
@@ -908,7 +936,7 @@
                                             },
                                             "file_name": {
                                                 "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                                "description": "The name of the file with extension",
+                                                "description": "The name of the file with extension.",
                                                 "type": "string"
                                             },
                                             "file_size_bytes": {
@@ -924,15 +952,17 @@
                                                 "type": "string"
                                             },
                                             "upload_placeholder": {
-                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "description": "A placeholder for when artifact file is being uploaded.",
                                                 "type": "string"
                                             },
                                             "uploaded_timestamp": {
-                                                "description": "Timestamp of when artfiact was loaded into the system.",
+                                                "description": "Timestamp of when artifact was loaded into the system.",
                                                 "format": "date-time",
                                                 "type": "string"
                                             },
                                             "uploader": {
+                                                "description": "The name of the person uploading the artifact.",
                                                 "type": "string"
                                             },
                                             "uuid": {
@@ -940,7 +970,7 @@
                                                 "type": "string"
                                             },
                                             "visible": {
-                                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                                "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                                 "type": "boolean"
                                             }
                                         },
@@ -950,21 +980,26 @@
                                     {
                                         "properties": {
                                             "channels": {
+                                                "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
+                                                "description": "Number of channels in the image.",
                                                 "type": "integer"
                                             },
                                             "data_format": {
-                                                "const": "IMAGE"
+                                                "const": "IMAGE",
+                                                "description": "Data format."
                                             },
                                             "height": {
+                                                "description": "Height of the image.",
                                                 "type": "integer"
                                             },
                                             "width": {
+                                                "description": "Width of the image.",
                                                 "type": "integer"
                                             }
                                         }
                                     }
                                 ],
-                                "description": "Information about images include height and width",
+                                "description": "Information about images including height and width.",
                                 "required": [
                                     "height",
                                     "width",
@@ -974,7 +1009,7 @@
                                 "type": "object"
                             },
                             "score_data": {
-                                "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.Data produced from the analysis of cellular image.Summary of the results of a cell segmentation data experiment.Generation of values based on based on experiment data.",
+                                "$comment": "Generation of values based on based on experiment data.",
                                 "$id": "csv_artifact",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "allOf": [
@@ -1011,7 +1046,7 @@
                                                 "type": "string"
                                             },
                                             "artifact_creator": {
-                                                "description": "The name of the center that created this artificat",
+                                                "description": "The name of the center that created this artifact.",
                                                 "enum": [
                                                     "DFCI",
                                                     "Mount Sinai",
@@ -1040,7 +1075,7 @@
                                             },
                                             "file_name": {
                                                 "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                                "description": "The name of the file with extension",
+                                                "description": "The name of the file with extension.",
                                                 "type": "string"
                                             },
                                             "file_size_bytes": {
@@ -1056,15 +1091,17 @@
                                                 "type": "string"
                                             },
                                             "upload_placeholder": {
-                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "description": "A placeholder for when artifact file is being uploaded.",
                                                 "type": "string"
                                             },
                                             "uploaded_timestamp": {
-                                                "description": "Timestamp of when artfiact was loaded into the system.",
+                                                "description": "Timestamp of when artifact was loaded into the system.",
                                                 "format": "date-time",
                                                 "type": "string"
                                             },
                                             "uploader": {
+                                                "description": "The name of the person uploading the artifact.",
                                                 "type": "string"
                                             },
                                             "uuid": {
@@ -1072,7 +1109,7 @@
                                                 "type": "string"
                                             },
                                             "visible": {
-                                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                                "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                                 "type": "boolean"
                                             }
                                         },
@@ -1082,18 +1119,21 @@
                                     {
                                         "properties": {
                                             "data_format": {
-                                                "const": "CSV"
+                                                "const": "CSV",
+                                                "description": "Data format."
                                             },
                                             "header_row": {
+                                                "description": "Number of header lines in the CSV file.",
                                                 "type": "integer"
                                             },
                                             "separator": {
+                                                "description": "Delimiter for separating values within the CSV file.",
                                                 "type": "string"
                                             }
                                         }
                                     }
                                 ],
-                                "description": "Information about CSV files",
+                                "description": "Information about CSV files.",
                                 "required": [
                                     "separator",
                                     "header_row"
@@ -1114,7 +1154,7 @@
                         "description": "Regions of interest obtained from composite images.",
                         "properties": {
                             "component_data": {
-                                "$comment": "Image produced from the combination of multiple imaging experiment data images.Imaging data resulting from the individual components of the imaging experiment.",
+                                "$comment": "Imaging data resulting from the individual components of the imaging experiment.",
                                 "$id": "image_artifact",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "allOf": [
@@ -1151,7 +1191,7 @@
                                                 "type": "string"
                                             },
                                             "artifact_creator": {
-                                                "description": "The name of the center that created this artificat",
+                                                "description": "The name of the center that created this artifact.",
                                                 "enum": [
                                                     "DFCI",
                                                     "Mount Sinai",
@@ -1180,7 +1220,7 @@
                                             },
                                             "file_name": {
                                                 "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                                "description": "The name of the file with extension",
+                                                "description": "The name of the file with extension.",
                                                 "type": "string"
                                             },
                                             "file_size_bytes": {
@@ -1196,15 +1236,17 @@
                                                 "type": "string"
                                             },
                                             "upload_placeholder": {
-                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "description": "A placeholder for when artifact file is being uploaded.",
                                                 "type": "string"
                                             },
                                             "uploaded_timestamp": {
-                                                "description": "Timestamp of when artfiact was loaded into the system.",
+                                                "description": "Timestamp of when artifact was loaded into the system.",
                                                 "format": "date-time",
                                                 "type": "string"
                                             },
                                             "uploader": {
+                                                "description": "The name of the person uploading the artifact.",
                                                 "type": "string"
                                             },
                                             "uuid": {
@@ -1212,7 +1254,7 @@
                                                 "type": "string"
                                             },
                                             "visible": {
-                                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                                "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                                 "type": "boolean"
                                             }
                                         },
@@ -1222,21 +1264,26 @@
                                     {
                                         "properties": {
                                             "channels": {
+                                                "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
+                                                "description": "Number of channels in the image.",
                                                 "type": "integer"
                                             },
                                             "data_format": {
-                                                "const": "IMAGE"
+                                                "const": "IMAGE",
+                                                "description": "Data format."
                                             },
                                             "height": {
+                                                "description": "Height of the image.",
                                                 "type": "integer"
                                             },
                                             "width": {
+                                                "description": "Width of the image.",
                                                 "type": "integer"
                                             }
                                         }
                                     }
                                 ],
-                                "description": "Information about images include height and width",
+                                "description": "Information about images including height and width.",
                                 "required": [
                                     "height",
                                     "width",
@@ -1246,7 +1293,7 @@
                                 "type": "object"
                             },
                             "composite_image": {
-                                "$comment": "Image produced from the combination of multiple imaging experiment data images.Imaging data resulting from the individual components of the imaging experiment.",
+                                "$comment": "Image produced from the combination of multiple imaging experiment data images.",
                                 "$id": "image_artifact",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "allOf": [
@@ -1283,7 +1330,7 @@
                                                 "type": "string"
                                             },
                                             "artifact_creator": {
-                                                "description": "The name of the center that created this artificat",
+                                                "description": "The name of the center that created this artifact.",
                                                 "enum": [
                                                     "DFCI",
                                                     "Mount Sinai",
@@ -1312,7 +1359,7 @@
                                             },
                                             "file_name": {
                                                 "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                                "description": "The name of the file with extension",
+                                                "description": "The name of the file with extension.",
                                                 "type": "string"
                                             },
                                             "file_size_bytes": {
@@ -1328,15 +1375,17 @@
                                                 "type": "string"
                                             },
                                             "upload_placeholder": {
-                                                "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                "description": "A placeholder for when artifact file is being uploaded.",
                                                 "type": "string"
                                             },
                                             "uploaded_timestamp": {
-                                                "description": "Timestamp of when artfiact was loaded into the system.",
+                                                "description": "Timestamp of when artifact was loaded into the system.",
                                                 "format": "date-time",
                                                 "type": "string"
                                             },
                                             "uploader": {
+                                                "description": "The name of the person uploading the artifact.",
                                                 "type": "string"
                                             },
                                             "uuid": {
@@ -1344,7 +1393,7 @@
                                                 "type": "string"
                                             },
                                             "visible": {
-                                                "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                                                "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                                                 "type": "boolean"
                                             }
                                         },
@@ -1354,21 +1403,26 @@
                                     {
                                         "properties": {
                                             "channels": {
+                                                "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
+                                                "description": "Number of channels in the image.",
                                                 "type": "integer"
                                             },
                                             "data_format": {
-                                                "const": "IMAGE"
+                                                "const": "IMAGE",
+                                                "description": "Data format."
                                             },
                                             "height": {
+                                                "description": "Height of the image.",
                                                 "type": "integer"
                                             },
                                             "width": {
+                                                "description": "Width of the image.",
                                                 "type": "integer"
                                             }
                                         }
                                     }
                                 ],
-                                "description": "Information about images include height and width",
+                                "description": "Information about images including height and width.",
                                 "required": [
                                     "height",
                                     "width",
@@ -1427,7 +1481,7 @@
                             "type": "string"
                         },
                         "artifact_creator": {
-                            "description": "The name of the center that created this artificat",
+                            "description": "The name of the center that created this artifact.",
                             "enum": [
                                 "DFCI",
                                 "Mount Sinai",
@@ -1456,7 +1510,7 @@
                         },
                         "file_name": {
                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                            "description": "The name of the file with extension",
+                            "description": "The name of the file with extension.",
                             "type": "string"
                         },
                         "file_size_bytes": {
@@ -1472,15 +1526,17 @@
                             "type": "string"
                         },
                         "upload_placeholder": {
-                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "description": "A placeholder for when artifact file is being uploaded.",
                             "type": "string"
                         },
                         "uploaded_timestamp": {
-                            "description": "Timestamp of when artfiact was loaded into the system.",
+                            "description": "Timestamp of when artifact was loaded into the system.",
                             "format": "date-time",
                             "type": "string"
                         },
                         "uploader": {
+                            "description": "The name of the person uploading the artifact.",
                             "type": "string"
                         },
                         "uuid": {
@@ -1488,7 +1544,7 @@
                             "type": "string"
                         },
                         "visible": {
-                            "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                             "type": "boolean"
                         }
                     },
@@ -1498,15 +1554,13 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "TEXT"
-                        },
-                        "info": {
-                            "type": "object"
+                            "const": "TEXT",
+                            "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about text files",
+            "description": "Information about text files.",
             "mergeStrategy": "objectMerge",
             "title": "Text Artifact",
             "type": "object"
@@ -1549,7 +1603,7 @@
                             "type": "string"
                         },
                         "artifact_creator": {
-                            "description": "The name of the center that created this artificat",
+                            "description": "The name of the center that created this artifact.",
                             "enum": [
                                 "DFCI",
                                 "Mount Sinai",
@@ -1578,7 +1632,7 @@
                         },
                         "file_name": {
                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                            "description": "The name of the file with extension",
+                            "description": "The name of the file with extension.",
                             "type": "string"
                         },
                         "file_size_bytes": {
@@ -1594,15 +1648,17 @@
                             "type": "string"
                         },
                         "upload_placeholder": {
-                            "$comment": "A placeholder for when artifact file is being upoloaded. It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "description": "A placeholder for when artifact file is being uploaded.",
                             "type": "string"
                         },
                         "uploaded_timestamp": {
-                            "description": "Timestamp of when artfiact was loaded into the system.",
+                            "description": "Timestamp of when artifact was loaded into the system.",
                             "format": "date-time",
                             "type": "string"
                         },
                         "uploader": {
+                            "description": "The name of the person uploading the artifact.",
                             "type": "string"
                         },
                         "uuid": {
@@ -1610,7 +1666,7 @@
                             "type": "string"
                         },
                         "visible": {
-                            "description": "Indicates if the artifiact if visible.  If set to false, the artifact is effectively deleted.",
+                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
                             "type": "boolean"
                         }
                     },
@@ -1620,21 +1676,26 @@
                 {
                     "properties": {
                         "channels": {
+                            "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
+                            "description": "Number of channels in the image.",
                             "type": "integer"
                         },
                         "data_format": {
-                            "const": "IMAGE"
+                            "const": "IMAGE",
+                            "description": "Data format."
                         },
                         "height": {
+                            "description": "Height of the image.",
                             "type": "integer"
                         },
                         "width": {
+                            "description": "Width of the image.",
                             "type": "integer"
                         }
                     }
                 }
             ],
-            "description": "Information about images include height and width",
+            "description": "Information about images including height and width.",
             "required": [
                 "height",
                 "width",

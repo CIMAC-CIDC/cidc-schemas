@@ -81,15 +81,15 @@
       "format": "date"
     },
     "num_of_samples_shipped": {
-      "description": "Count of specimens distributed by site.",
+      "description": "Count of specimen(s) distributed by site.",
       "type": "integer"
     },
     "num_of_samples_good": {
-      "description": "Number of Samples Received in Good Condition.",
+      "description": "Number of Sample(s) Received in Good Condition.",
       "type": "integer"
     },
     "num_of_path_report": {
-      "description": "Number if pathology report received.",
+      "description": "Number of pathology report(s) received.",
       "type": "integer"
     },
     "ship_from": {

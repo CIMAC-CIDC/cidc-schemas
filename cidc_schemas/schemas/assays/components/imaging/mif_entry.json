@@ -3,7 +3,7 @@
   "$id": "mif_assay_record",
   "title": "mIF assay record",
   "type": "object",
-  "description": "A single data record from mIF assay",
+  "description": "A single data record from mIF assay.",
   "properties": {
     "project_inform_folder": {
       "description": "Folder path containing files produced from an Inform image analysis.",

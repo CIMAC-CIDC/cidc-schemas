@@ -3,17 +3,15 @@
   "$id": "vcf_artifact",
   "title": "VCF Artifact",
   "type": "object",
-  "description": "Information about a VCF file",
+  "description": "Information about a VCF file.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"
     },
     {
       "properties": {
-        "info": {
-          "type": "object"
-        },
         "data_format": {
+          "description": "Data format.",
           "const": "VCF"
         }
       }

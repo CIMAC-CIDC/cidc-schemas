@@ -3,7 +3,7 @@
   "$id": "somatic",
   "title": "Somatic variant output sample files",
   "type": "object",
-  "description": "Somatic variant calling",
+  "description": "Somatic variant calling.",
   "properties": {
     "vcf_filtered": {
       "$ref": "artifacts/artifact_vcf.json"

@@ -4,7 +4,7 @@
   "title": "Shipping manifest for Analyte",
   "type": "object",
   "category": "manifest",
-  "description": "Shipping / receiving manifest for transferring Aanlyte.\n",
+  "description": "Shipping / receiving manifest for transferring Analyte.\n",
   "properties": {
     "worksheets": {
       "Tissue": {

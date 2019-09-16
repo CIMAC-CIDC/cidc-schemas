@@ -3,7 +3,7 @@
     "$id": "cytof",
     "title": "CYTOF Run",
     "type": "object",
-    "description": "Base information about the acquisition and analysis CyTOF data\n",
+    "description": "Base information about the acquisition and analysis CyTOF data.",
     "properties": {
         "cytof_antibodies": {
             "type": "array",
@@ -29,3 +29,4 @@
     ],
     "mergeStrategy": "objectMerge"
 }
+

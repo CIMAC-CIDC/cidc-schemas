@@ -48,7 +48,7 @@ def search_error_message(workbook, template, error, msg_fragment):
         reader.validate(template)
 
 
-def test_missing_headers(tiny_template):
+def test_empty_headers(tiny_template):
     """Test that a spreadsheet with empty headers raises a validation error"""
     tiny_missing_header = {
         'TEST_SHEET': [
@@ -59,6 +59,24 @@ def test_missing_headers(tiny_template):
 
     search_error_message(tiny_missing_header, tiny_template,
                          ValidationError, 'empty header cell')
+
+
+def test_missing_rows_or_columns(tiny_template):
+    """Test that a template with missing rows or columns raises a validation error"""
+    missing_rows_and_columns = {
+        'TEST_SHEET': [
+            TemplateRow(1, RowType.PREAMBLE, ('test_property', 'foo')),
+            TemplateRow(2, RowType.PREAMBLE, ('test_date', '6/11/12')),
+            TemplateRow(3, RowType.HEADER,
+                        ('test_property', 'test_time')),
+        ]
+    }
+
+    search_error_message(missing_rows_and_columns, tiny_template,
+                         ValidationError, "expected template row: test_time")
+
+    search_error_message(missing_rows_and_columns, tiny_template,
+                         ValidationError, "expected template column: test_date")
 
 
 def test_missing_required_value(tiny_template):
@@ -109,7 +127,7 @@ def test_missing_schema(tiny_template):
     }
 
     search_error_message(tiny_missing, tiny_template,
-                         AssertionError, 'No schema found')
+                         ValidationError, 'Found unexpected column "missing_property"')
 
 
 def test_invalid(tiny_template):

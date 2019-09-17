@@ -313,7 +313,7 @@ def test_prism(schema_path, xlsx_path):
     if hint == 'olink':
         ct, file_maps, metadata_files = prismify(xlsx_path, schema_path, assay_hint=hint)
     else:
-        ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
+        ct, file_maps, _ = prismify(xlsx_path, schema_path, assay_hint=hint)
 
     if hint in SUPPORTED_ASSAYS:
         # olink is different - is will never have array of assay "runs" - only one
@@ -359,8 +359,8 @@ def test_filepath_gen(schema_path, xlsx_path):
     if hint == 'olink':
         _, file_maps, metadata_files = prismify(xlsx_path, schema_path, assay_hint=hint)
     else:
-        _, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
-    # we ignore and do not validate 'ct' 
+        _, file_maps, _ = prismify(xlsx_path, schema_path, assay_hint=hint)
+    # we ignore and do not validate 'ct'
     # because it's only a ct patch not a full ct 
 
     local_to_gcs_mapping = {}
@@ -368,7 +368,6 @@ def test_filepath_gen(schema_path, xlsx_path):
         local_to_gcs_mapping[fmap_entry.gs_key] = fmap_entry
 
     assert len(local_to_gcs_mapping) == len(file_maps), "gcs_key/url collision"
-    
 
     # assert we have the right file counts etc.
     if hint == "wes":
@@ -437,7 +436,7 @@ def test_prismify_wes_only():
     hint = 'wes'
 
     # parse the spreadsheet and get the file maps
-    ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
+    ct, file_maps, _ = prismify(xlsx_path, temp_path, assay_hint=hint)
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -608,7 +607,8 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     if hint == "olink":
         prism_patch, file_maps, metadata_files = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
     else:
-        prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
+        prism_patch, file_maps, _ = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
+
 
     if hint in SUPPORTED_MANIFESTS:
         assert len(prism_patch['shipments']) == 1

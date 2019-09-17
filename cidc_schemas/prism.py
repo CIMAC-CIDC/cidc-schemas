@@ -219,8 +219,12 @@ def _get_recursively(search_dict, field):
 
     return fields_found
 
+SUPPORTED_ASSAYS = ["wes", "olink"]
+SUPPORTED_MANIFESTS = ["pbmc"]
+ASSAYS_WITH_EXTRA_METADATA = ["olink"]
+SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
 
-LocalFileUploadEntry = namedtuple('LocalFileUploadEntry', ["local_path", "gs_key", "upload_placeholder"])
+LocalFileUploadEntry = namedtuple('LocalFileUploadEntry', ["local_path", "gs_key", "upload_placeholder", "metadata_availability"])
 
 
 def _process_property(
@@ -256,8 +260,9 @@ def _process_property(
     Returns:
         LocalFileUploadEntry(
             local_path = "/local/file/from/excel/file/cell",   
-            gs_key = "constructed/GCS/path/where/this/artifact/shold/endup",
-            upload_placeholder = 'uuiduuiduuid-uuid-uuid-uuiduuid' # unique artifact/upload_placeholder
+            gs_key = "constructed/GCS/path/where/this/artifact/should/endup",
+            upload_placeholder = 'uuiduuiduuid-uuid-uuid-uuiduuid' # unique artifact/upload_placeholder,
+            metadata_availability = boolean indicating existence of extra metadata files
         )
 
     """
@@ -274,13 +279,15 @@ def _process_property(
     # or set/update value in-place in data_obj dictionary 
     pointer = field_def['merge_pointer']
     if field_def.get('is_artifact'):
-        pointer+='/upload_placeholder'
+        pointer += '/upload_placeholder'
 
     _set_val(pointer, val, data_obj, root_obj, data_obj_pointer, verb=verb)
 
     if verb:
         print(f'current {data_obj}')
         print(f'current root {root_obj}')
+
+    metadata = True if assay_hint in ASSAYS_WITH_EXTRA_METADATA else False
 
     if field_def.get('is_artifact'):
 
@@ -290,17 +297,12 @@ def _process_property(
         gs_key = field_def['gcs_uri_format'].format_map(format_context)
 
         return LocalFileUploadEntry(
-            local_path = raw_val,
-            gs_key = gs_key,
+            local_path=raw_val,
+            gs_key=gs_key,
             # for artifacts `val` is a uuid
-            upload_placeholder = val
+            upload_placeholder=val,
+            metadata_availability=metadata
         )
-    
-
-SUPPORTED_ASSAYS = ["wes", "olink"]
-SUPPORTED_MANIFESTS = ["pbmc"]
-ASSAYS_WITH_EXTRA_METADATA = ["olink"]
-SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
 
 
 def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) \
@@ -322,7 +324,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     Args:
         xlsx_path: file on file system to excel file or the open file itself
         template_path: path on file system relative to schema root of the
-                        temaplate
+                        template
 
         assay_hint: string used to help identify properties in template. Must
                     be the the root of the template filename i.e.
@@ -332,11 +334,11 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     Returns:
         (tuple):
             arg1: clinical trial object with data parsed from spreadsheet
-            arg2: list of LocalFileUploadEntry'es that describe each file identified:
+            arg2: list of LocalFileUploadEntries that describe each file identified:
                 LocalFileUploadEntry(
                     local_path = "/local/path/to/a/data/file/parsed/from/template",
                     gs_key = "constructed/relative/to/clinical/trial/GCS/path",
-                    upload_placeholder = "random_uuid-for-artifact-upload"
+                    upload_placeholder = "random_uuid-for-artifact-upload",
                 )
 
     Process:
@@ -501,16 +503,12 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                         assay_hint=assay_hint,
                         key_lu=xlsx_template.key_lu,
                         data_obj=data_obj,
-                        format_context=dict(local_context, **preamble_context), # combine contexts
+                        format_context=dict(local_context, **preamble_context),  # combine contexts
                         root_obj=copy_of_preamble,
                         data_obj_pointer=data_object_pointer,
                         verb=verb)
                     if new_file:
                         collected_files.append(new_file)
-
-                        if assay_hint in ASSAYS_WITH_EXTRA_METADATA:
-                            # TODO: select subset of olink files from new_files and add to metadata_files
-                            metadata_files.append(new_file)
 
                 if verb:
                     print('merging preambles')
@@ -539,11 +537,10 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
             if new_file:
                 collected_files.append(new_file)
 
-    # return root object, files list and in case of olink, also metadata_files
-    if assay_hint == "olink":
-        return root_ct_obj, collected_files, metadata_files
-    else:
-        return root_ct_obj, collected_files
+                # TODO: identify and return metadata_files
+
+    # return root object, files list and (optional) metadata_files
+    return root_ct_obj, collected_files, metadata_files
 
 
 def _get_path(ct: dict, key: str) -> str:

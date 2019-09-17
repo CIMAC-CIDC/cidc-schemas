@@ -37,16 +37,13 @@
             "merge_pointer": "0/study/study_npx",
             "is_artifact" : 1,
             "gcs_uri_format": "{lead organization study id}/olink/study_npx.xlsx",
-            "type_ref": "assays/components/local_file.json#properties/file_path"
+            "type_ref": "assays/components/local_file.json#properties/file_path",
+            "extra_metadata": "True"
           },
           "combined file npx manager version": {
             "merge_pointer": "0/study/npx_manager_version",
             "type_ref": "assays/components/olink/olink_combined.json#properties/npx_manager_version"
           },
-          "metadata files": {
-            "merge_pointer": "0/metadata_files",
-            "type_ref": "assays/components/olink/olink_combined.json#properties/metadata_files"
-          }
         },
         "data_columns": {
           "Olink Assay details": {
@@ -58,11 +55,8 @@
               "merge_pointer": "0/files/assay_npx",
               "is_artifact" : 1,
               "gcs_uri_format": "{lead organization study id}/olink/chip_{chip barcode}/assay_npx.xlsx",
-              "type_ref": "assays/components/local_file.json#properties/file_path"
-            },
-            "metadata files": {
-              "merge_pointer": "0/metadata_files",
-              "type_ref": "assays/components/olink/olink_combined.json#properties/metadata_files"
+              "type_ref": "assays/components/local_file.json#properties/file_path",
+              "extra_metadata": "True"
             },
             "raw ct file": {
               "merge_pointer": "0/files/assay_raw_ct",

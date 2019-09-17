@@ -18,7 +18,7 @@
           "$ref": "aliquot.json#properties/cimac_aliquot_id/type"
         }, 
         "in_doc_ref_pattern": "/participants/*/samples/*/aliquots/*/cimac_aliquot_id",
-        "description": "TBD"
+        "description": "Id of an aliquot within this clinical trial, that this assay record is based upon."
     },
     "files": {
       "$comment": "Fastq and read group mapping files produced by the assay for that .",

@@ -74,7 +74,6 @@ class _Validator(jsonschema.Draft7Validator):
         ref_path_pattern = in_doc_ref.validator_value 
 
         fixed_path_pattern = ref_path_pattern.replace("*", "[!/]")
-        # fixed_path_pattern = ref_path_pattern.replace("*", "*")
 
         found_id_paths = _get_all_paths(instance, id_ref)
         found_id_jpointers = [

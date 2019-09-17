@@ -25,19 +25,19 @@ from .test_templates import template_paths
 from .test_assays import ARTIFACT_OBJ
 
 
-WES_TEMPLATE_EXAMPLE_CT = {
+TEST_PRISM_TRIAL = {
         "lead_organization_study_id": "test_prism_trial_id",
         "participants": [
             {
-                "cimac_participant_id": "wes example PA 1",
-                "trial_participant_id": "trial patient 1",
+                "cimac_participant_id": "test_PA_1",
+                "trial_participant_id": "test_trial_patient_1",
                 "cohort_id": "---",
                 "arm_id": "---",
                 "samples": [
                     {
                         "aliquots": [
                             {
-                                "cimac_aliquot_id": "wes example aliquot 1.1.1",
+                                "cimac_aliquot_id": "test_AL_1.1.1",
                                 "units": "Other",
                                 "material_used": 1,
                                 "material_remaining": 0,
@@ -46,8 +46,8 @@ WES_TEMPLATE_EXAMPLE_CT = {
                                 "aliquot_status": "Other"
                             },
                         ],
-                        "cimac_sample_id": "wes example SA 1.1",
-                        "site_sample_id": "site sample 1",
+                        "cimac_sample_id": "test_SA_1.1",
+                        "site_sample_id": "test_sample_1",
                         "time_point": "---",
                         "sample_location": "---",
                         "specimen_type": "Other",
@@ -61,7 +61,7 @@ WES_TEMPLATE_EXAMPLE_CT = {
                     {
                         "aliquots": [
                             {
-                                "cimac_aliquot_id": "wes example aliquot 1.2.1",
+                                "cimac_aliquot_id": "test_AL_1.2.1",
                                 "units": "Other",
                                 "material_used": 2,
                                 "material_remaining": 0,
@@ -70,8 +70,8 @@ WES_TEMPLATE_EXAMPLE_CT = {
                                 "aliquot_status": "Other"
                             }
                         ],
-                        "cimac_sample_id": "wes example SA 2.1",
-                        "site_sample_id": "site sample 2",
+                        "cimac_sample_id": "test_SA_2.1",
+                        "site_sample_id": "test_sample_2",
                         "time_point": "---",
                         "sample_location": "---",
                         "specimen_type": "Other",
@@ -79,8 +79,8 @@ WES_TEMPLATE_EXAMPLE_CT = {
                         "genomic_source": "Tumor",
                     }
                 ],
-                "cimac_participant_id": "wes example PA 2",
-                "trial_participant_id": "trial patient 2",
+                "cimac_participant_id": "test_PA_2",
+                "trial_participant_id": "test_trial_patient_2",
                 "cohort_id": "---",
                 "arm_id": "---"
             }
@@ -103,9 +103,9 @@ WES_TEMPLATE_EXAMPLE_CT = {
                             "input_ng": 101,
                             "library_yield_ng": 701,
                             "average_insert_size": 251,
-                            "cimac_participant_id": "wes example PA 1",
-                            "cimac_sample_id": "wes example SA 1.1",
-                            "cimac_aliquot_id": "wes example aliquot 1.1.1",
+                            "cimac_participant_id": "test_PA_1",
+                            "cimac_sample_id": "test_SA_1.1",
+                            "cimac_aliquot_id": "test_AL_1.1.1",
                             "files": {
                                 "r1": {
                                     "upload_placeholder": "r1.1"
@@ -126,9 +126,9 @@ WES_TEMPLATE_EXAMPLE_CT = {
                             "input_ng": 102,
                             "library_yield_ng": 702,
                             "average_insert_size": 252,
-                            "cimac_participant_id": "wes example PA 2",
-                            "cimac_sample_id": "wes example SA 2.1",
-                            "cimac_aliquot_id": "wes example aliquot 1.2.1",
+                            "cimac_participant_id": "test_PA_2",
+                            "cimac_sample_id": "test_SA_2.1",
+                            "cimac_aliquot_id": "test_AL_1.2.1",
                             "files": {
                                 "r1": {
                                     "upload_placeholder": "r1.2"
@@ -150,17 +150,17 @@ WES_TEMPLATE_EXAMPLE_CT = {
 
 # corresponding list of gs_urls.
 WES_TEMPLATE_EXAMPLE_GS_URLS = {
-    WES_TEMPLATE_EXAMPLE_CT["lead_organization_study_id"]+'/wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/r1.fastq': 
+    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/test_PA_1/test_SA_1.1/test_AL_1.1.1/wes/r1.fastq': 
     "r1.1",
-    WES_TEMPLATE_EXAMPLE_CT["lead_organization_study_id"]+'/wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/r2.fastq': 
+    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/test_PA_1/test_SA_1.1/test_AL_1.1.1/wes/r2.fastq': 
     "r2.1",
-    WES_TEMPLATE_EXAMPLE_CT["lead_organization_study_id"]+'/wes example PA 1/wes example SA 1.1/wes example aliquot 1.1.1/wes/rgm.txt': 
+    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/test_PA_1/test_SA_1.1/test_AL_1.1.1/wes/rgm.txt': 
     "read_group_mapping_file.1",
-    WES_TEMPLATE_EXAMPLE_CT["lead_organization_study_id"]+'/wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/r1.fastq': 
+    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/test_PA_2/test_SA_2.1/test_AL_1.2.1/wes/r1.fastq': 
     "r1.2",
-    WES_TEMPLATE_EXAMPLE_CT["lead_organization_study_id"]+'/wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/r2.fastq': 
+    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/test_PA_2/test_SA_2.1/test_AL_1.2.1/wes/r2.fastq': 
     "r2.2",
-    WES_TEMPLATE_EXAMPLE_CT["lead_organization_study_id"]+'/wes example PA 2/wes example SA 2.1/wes example aliquot 1.2.1/wes/rgm.txt': 
+    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/test_PA_2/test_SA_2.1/test_AL_1.2.1/wes/rgm.txt': 
     "read_group_mapping_file.2"
 }
 
@@ -262,12 +262,12 @@ MINIMAL_CT_1PA1SA1AL = {
                     "sample_location": "---",
                     "specimen_type": "Other",
                     "specimen_format": "Other",
-                    "site_sample_id": "site Sample 1",
+                    "site_sample_id": "test_Sample_1",
                     "cimac_sample_id": "Sample 1"
                 }
             ],
             "cimac_participant_id": "Patient 1",
-            "trial_participant_id": "trial Patient 1",
+            "trial_participant_id": "test_trial_Patient_1",
             "cohort_id": "---",
             "arm_id": "---"
         }
@@ -331,7 +331,7 @@ def test_prism(schema_path, xlsx_path):
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
     merger = Merger(schema)
-    merged = merger.merge(WES_TEMPLATE_EXAMPLE_CT, ct)
+    merged = merger.merge(TEST_PRISM_TRIAL, ct)
 
     # assert works
     errors = list(validator.iter_errors(merged))
@@ -340,7 +340,7 @@ def test_prism(schema_path, xlsx_path):
     if hint in SUPPORTED_ASSAYS :
         assert merged["lead_organization_study_id"] == "test_prism_trial_id"
     else:
-        assert WES_TEMPLATE_EXAMPLE_CT["lead_organization_study_id"] == merged["lead_organization_study_id"]
+        assert TEST_PRISM_TRIAL["lead_organization_study_id"] == merged["lead_organization_study_id"]
 
 
 @pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
@@ -399,7 +399,7 @@ def test_filepath_gen(schema_path, xlsx_path):
 
         # 4 in total
         assert len(file_maps) == 6
-        assert 6 == sum([x.gs_key.startswith(WES_TEMPLATE_EXAMPLE_CT["lead_organization_study_id"]) for x in file_maps])
+        assert 6 == sum([x.gs_key.startswith(TEST_PRISM_TRIAL["lead_organization_study_id"]) for x in file_maps])
 
         # all that with
         # 1 trial id
@@ -464,7 +464,7 @@ def test_prismify_cytof_only():
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
     merger = Merger(schema)
-    merged = merger.merge(MINIMAL_CT_1PA1SA1AL, ct)
+    merged = merger.merge(TEST_PRISM_TRIAL, ct)
 
     # assert works
     validator.validate(merged)
@@ -489,7 +489,7 @@ def test_prismify_wes_only():
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
     merger = Merger(schema)
-    merged = merger.merge(WES_TEMPLATE_EXAMPLE_CT, md_patch)
+    merged = merger.merge(TEST_PRISM_TRIAL, md_patch)
 
     # assert works
     validator.validate(merged)
@@ -499,7 +499,7 @@ def test_prismify_wes_only():
 def test_merge_artifact_wes_only():
 
     # create the clinical trial.
-    ct = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT)
+    ct = copy.deepcopy(TEST_PRISM_TRIAL)
 
     # create validator
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
@@ -535,7 +535,7 @@ def test_merge_artifact_wes_only():
     assert len(ct['assays']['wes']) == 1, "Multiple WESes created instead of merging into one"
     assert len(ct['assays']['wes'][0]['records']) == 2, "More records than expected"
 
-    dd = DeepDiff(WES_TEMPLATE_EXAMPLE_CT,ct)
+    dd = DeepDiff(TEST_PRISM_TRIAL,ct)
 
     # we add 7 required fields per artifact thus `*7`
     assert len(dd['dictionary_item_added']) == len(WES_TEMPLATE_EXAMPLE_GS_URLS)*7, "Unexpected CT changes"
@@ -551,8 +551,8 @@ def test_merge_ct_meta():
     """
 
     # create two clinical trials
-    ct1 = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT)
-    ct2 = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT)
+    ct1 = copy.deepcopy(TEST_PRISM_TRIAL)
+    ct2 = copy.deepcopy(TEST_PRISM_TRIAL)
 
     # first test the fact that base doc must be valid
     del ct2['participants']
@@ -564,7 +564,7 @@ def test_merge_ct_meta():
 
     # next assert the merge is only happening on the same trial
     ct1["lead_organization_study_id"] = "not_the_same"
-    ct2 = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT)
+    ct2 = copy.deepcopy(TEST_PRISM_TRIAL)
     with pytest.raises(RuntimeError):
         merge_clinical_trial_metadata(ct1, ct2)
 
@@ -594,7 +594,7 @@ def test_merge_ct_meta():
     ct1['participants'][0]['cimac_participant_id'] = 'different_id'
 
     ct_merge = merge_clinical_trial_metadata(ct1, ct2)
-    assert len(ct_merge['participants']) == 1+len(WES_TEMPLATE_EXAMPLE_CT['participants'])
+    assert len(ct_merge['participants']) == 1+len(TEST_PRISM_TRIAL['participants'])
 
     # now lets have the same participant but adding multiple samples.
     ct1["lead_organization_study_id"] = ct2["lead_organization_study_id"] 
@@ -604,8 +604,8 @@ def test_merge_ct_meta():
     ct1['participants'][1]['samples'][0]['cimac_sample_id'] = 'new_id_2'
  
     ct_merge = merge_clinical_trial_metadata(ct1, ct2)
-    assert len(ct_merge['participants']) == len(WES_TEMPLATE_EXAMPLE_CT['participants'])
-    assert sum(len(p['samples']) for p in ct_merge['participants']) == 2+sum(len(p['samples']) for p in WES_TEMPLATE_EXAMPLE_CT['participants'])
+    assert len(ct_merge['participants']) == len(TEST_PRISM_TRIAL['participants'])
+    assert sum(len(p['samples']) for p in ct_merge['participants']) == 2+sum(len(p['samples']) for p in TEST_PRISM_TRIAL['participants'])
 
 
 @pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
@@ -663,7 +663,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
         assert f'{hint}/' in f.gs_key, f"No {hint} hint found"
 
     # And we need set lead_organization_study_id to be the same for testing
-    original_ct = copy.deepcopy(WES_TEMPLATE_EXAMPLE_CT) 
+    original_ct = copy.deepcopy(TEST_PRISM_TRIAL) 
     if hint in ["olink", "cytof"]:
         original_ct['lead_organization_study_id'] = 'test_prism_trial_id'
         prism_patch['lead_organization_study_id'] = 'test_prism_trial_id'
@@ -732,7 +732,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
         assert len(full_ct['assays'][hint]['records']) == 2, "More records than expected"
 
     elif hint == 'wes':
-        assert len(full_ct['assays'][hint]) == 1+len(WES_TEMPLATE_EXAMPLE_CT['assays'][hint]), f"Multiple {hint}-assays created instead of merging into one"
+        assert len(full_ct['assays'][hint]) == 1+len(TEST_PRISM_TRIAL['assays'][hint]), f"Multiple {hint}-assays created instead of merging into one"
         assert len(full_ct['assays'][hint][0]['records']) == 2, "More records than expected"
 
     elif hint in SUPPORTED_MANIFESTS:

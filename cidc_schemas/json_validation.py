@@ -34,6 +34,54 @@ def _in_doc_refs_check(validator, schema_prop_value, ref_value, subschema):
 
 
 class _Validator(jsonschema.Draft7Validator):
+    """
+    This _Validator will additionally check intra-doc refs.
+    So say we have this schema:
+        {
+            "properties": {
+                "objs" : {
+                    "type:": "array"
+                    "items" : {
+                        "type" : "object",
+                        "required" : ["id"]
+                    }
+                }
+                "refs": {
+                    "type:": "array",
+                    "items": {
+                        "in_doc_ref_pattern": "/objs/*/id"
+                    }
+                }
+            } 
+        }
+
+    This Validator will allow for these docs:
+        {
+            "objs": [{"id":1}, {"id":"something"}],
+            "refs": [1, "something"]
+        }
+
+        {
+            "objs": [{"id":1}, {"id":"something"}],
+            "refs": [1]
+        }
+
+    but those will be invalid:
+        {
+            "objs": [{"id":1}, {"id":"something"}],
+            "refs": [2, "something", "else"]
+        }
+
+        {
+            "objs": [],
+            "refs": ["anything"]
+        }
+
+
+    It achieves that by first checking everything with regular Draft7Validator,
+    and then collecting all refs and checking existence of a corresponding value.
+    
+    """
 
     def __init__(self, *args, **kwargs):
 
@@ -42,7 +90,6 @@ class _Validator(jsonschema.Draft7Validator):
         self.in_dic_ref_validator = jsonschema.validators.create(
             self.META_SCHEMA,
             validators={"in_doc_ref_pattern": _in_doc_refs_check},
-            # type_checker= # TODO add cimac_..._ids checker
         )(*args, **kwargs)
 
     @classmethod
@@ -50,7 +97,9 @@ class _Validator(jsonschema.Draft7Validator):
         return super(_Validator, cls).check_schema(schema)
 
     def iter_errors(self, instance, _schema=None):
-
+        """ 
+        This is the main validation method. `.is_valid`, `.validate` are based on this. 
+        """
         for downstream_error in super().iter_errors(instance, _schema):
             if isinstance(downstream_error, InDocRefNotFoundError):
                 error = self._insure_in_doc_refs(downstream_error, instance)

@@ -221,7 +221,7 @@ def _get_recursively(search_dict, field):
 
 SUPPORTED_ASSAYS = ["wes", "olink"]
 SUPPORTED_MANIFESTS = ["pbmc"]
-ASSAYS_WITH_EXTRA_METADATA = ["olink"]
+# ASSAYS_WITH_EXTRA_METADATA = ["olink"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
 
 LocalFileUploadEntry = namedtuple('LocalFileUploadEntry', ["local_path", "gs_key", "upload_placeholder", "metadata_availability"])
@@ -287,10 +287,10 @@ def _process_property(
         print(f'current {data_obj}')
         print(f'current root {root_obj}')
 
-    metadata = True if assay_hint in ASSAYS_WITH_EXTRA_METADATA else False
+    if field_def.get('extra_metadata'):
+        metadata = True
 
     if field_def.get('is_artifact'):
-
         if verb:
             print(f'collecting local_file_path {field_def}')
 

@@ -9,7 +9,7 @@ import pytest
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
-from cidc_schemas.template_reader import XlTemplateReader, ValidationError
+from cidc_schemas.template_reader import XlTemplateReader
 
 from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR
 
@@ -68,7 +68,7 @@ def test_template(schema_path, xlsx_path, tmpdir):
         if other_schema_path == schema_path:
             continue
         other_template = Template.from_json(other_schema_path)
-        with pytest.raises(ValidationError):
+        with pytest.raises(Exception):
             other_template.validate_excel(xlsx_path)
 
 

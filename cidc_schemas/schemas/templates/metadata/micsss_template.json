@@ -120,7 +120,7 @@
         },
         "data_columns": {
           "Samples": {
-            "cimac_particpant_id": {
+            "cimac_participant_id": {
               "$ref": "participant.json#properties/cimac_participant_id"
             },
             "cimac_sample_id": {

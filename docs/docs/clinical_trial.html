@@ -496,6 +496,387 @@
                                             "description": "Cell staining buffer used for antibody and cell dilution.",
                                             "type": "string"
                                         },
+                                        "analysis": {
+                                            "$id": "cytof_output",
+                                            "$schema": "http://json-schema.org/draft-07/schema#",
+                                            "description": "CyTOF output, a zip archive created by Astrolabe containing one folder of FCS files per sample, where each file corresponds to one of the main cell types. Also a variety of figures, tables and charts with QC and other information.",
+                                            "properties": {
+                                                "astrolabe_gatedfcs": {
+                                                    "$id": "astrolabe_artifact",
+                                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                                    "allOf": [
+                                                        {
+                                                            "$id": "artifact_core",
+                                                            "$schema": "http://json-schema.org/draft-07/schema#",
+                                                            "anyOf": [
+                                                                {
+                                                                    "required": [
+                                                                        "file_name",
+                                                                        "object_url",
+                                                                        "uploaded_timestamp",
+                                                                        "file_size_bytes",
+                                                                        "md5_hash",
+                                                                        "artifact_category",
+                                                                        "data_format"
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "required": [
+                                                                        "upload_placeholder"
+                                                                    ]
+                                                                }
+                                                            ],
+                                                            "description": "Any file artifact associated with a clinical trial.",
+                                                            "properties": {
+                                                                "artifact_category": {
+                                                                    "description": "Artifact category.",
+                                                                    "enum": [
+                                                                        "Assay Artifact from CIMAC",
+                                                                        "Pipeline Artifact",
+                                                                        "Manifest File"
+                                                                    ],
+                                                                    "type": "string"
+                                                                },
+                                                                "artifact_creator": {
+                                                                    "description": "The name of the center that created this artifact.",
+                                                                    "enum": [
+                                                                        "DFCI",
+                                                                        "Mount Sinai",
+                                                                        "Stanford",
+                                                                        "MD Anderson"
+                                                                    ],
+                                                                    "type": "string"
+                                                                },
+                                                                "data_format": {
+                                                                    "description": "Data Format.",
+                                                                    "enum": [
+                                                                        "FASTA",
+                                                                        "FASTQ",
+                                                                        "IMAGE",
+                                                                        "VCF",
+                                                                        "CSV",
+                                                                        "XLSX",
+                                                                        "NPX",
+                                                                        "BAM",
+                                                                        "MAF",
+                                                                        "BINARY",
+                                                                        "TEXT",
+                                                                        "[NOT SET]"
+                                                                    ],
+                                                                    "type": "string"
+                                                                },
+                                                                "file_name": {
+                                                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                                                    "description": "The name of the file with extension.",
+                                                                    "type": "string"
+                                                                },
+                                                                "file_size_bytes": {
+                                                                    "description": "File size in bytes.",
+                                                                    "type": "integer"
+                                                                },
+                                                                "md5_hash": {
+                                                                    "description": "MD5 Hash of artifact.",
+                                                                    "type": "string"
+                                                                },
+                                                                "object_url": {
+                                                                    "description": "URL to artifact within Google Bucket.",
+                                                                    "type": "string"
+                                                                },
+                                                                "upload_placeholder": {
+                                                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                                                    "type": "string"
+                                                                },
+                                                                "uploaded_timestamp": {
+                                                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                                                    "format": "date-time",
+                                                                    "type": "string"
+                                                                },
+                                                                "uploader": {
+                                                                    "description": "The name of the person uploading the artifact.",
+                                                                    "type": "string"
+                                                                },
+                                                                "uuid": {
+                                                                    "description": "UUID of artifact.",
+                                                                    "type": "string"
+                                                                },
+                                                                "visible": {
+                                                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                                                    "type": "boolean"
+                                                                }
+                                                            },
+                                                            "title": "Artifact Core",
+                                                            "type": "object"
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "analysis_type": {
+                                                                    "enum": [
+                                                                        "Gated FCS",
+                                                                        "Reports",
+                                                                        "R Files"
+                                                                    ],
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    "description": "A compressed archive storing results from Astrolabe analysis",
+                                                    "title": "Astrolabe Artifact",
+                                                    "type": "object"
+                                                },
+                                                "astrolabe_reports": {
+                                                    "$id": "astrolabe_artifact",
+                                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                                    "allOf": [
+                                                        {
+                                                            "$id": "artifact_core",
+                                                            "$schema": "http://json-schema.org/draft-07/schema#",
+                                                            "anyOf": [
+                                                                {
+                                                                    "required": [
+                                                                        "file_name",
+                                                                        "object_url",
+                                                                        "uploaded_timestamp",
+                                                                        "file_size_bytes",
+                                                                        "md5_hash",
+                                                                        "artifact_category",
+                                                                        "data_format"
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "required": [
+                                                                        "upload_placeholder"
+                                                                    ]
+                                                                }
+                                                            ],
+                                                            "description": "Any file artifact associated with a clinical trial.",
+                                                            "properties": {
+                                                                "artifact_category": {
+                                                                    "description": "Artifact category.",
+                                                                    "enum": [
+                                                                        "Assay Artifact from CIMAC",
+                                                                        "Pipeline Artifact",
+                                                                        "Manifest File"
+                                                                    ],
+                                                                    "type": "string"
+                                                                },
+                                                                "artifact_creator": {
+                                                                    "description": "The name of the center that created this artifact.",
+                                                                    "enum": [
+                                                                        "DFCI",
+                                                                        "Mount Sinai",
+                                                                        "Stanford",
+                                                                        "MD Anderson"
+                                                                    ],
+                                                                    "type": "string"
+                                                                },
+                                                                "data_format": {
+                                                                    "description": "Data Format.",
+                                                                    "enum": [
+                                                                        "FASTA",
+                                                                        "FASTQ",
+                                                                        "IMAGE",
+                                                                        "VCF",
+                                                                        "CSV",
+                                                                        "XLSX",
+                                                                        "NPX",
+                                                                        "BAM",
+                                                                        "MAF",
+                                                                        "BINARY",
+                                                                        "TEXT",
+                                                                        "[NOT SET]"
+                                                                    ],
+                                                                    "type": "string"
+                                                                },
+                                                                "file_name": {
+                                                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                                                    "description": "The name of the file with extension.",
+                                                                    "type": "string"
+                                                                },
+                                                                "file_size_bytes": {
+                                                                    "description": "File size in bytes.",
+                                                                    "type": "integer"
+                                                                },
+                                                                "md5_hash": {
+                                                                    "description": "MD5 Hash of artifact.",
+                                                                    "type": "string"
+                                                                },
+                                                                "object_url": {
+                                                                    "description": "URL to artifact within Google Bucket.",
+                                                                    "type": "string"
+                                                                },
+                                                                "upload_placeholder": {
+                                                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                                                    "type": "string"
+                                                                },
+                                                                "uploaded_timestamp": {
+                                                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                                                    "format": "date-time",
+                                                                    "type": "string"
+                                                                },
+                                                                "uploader": {
+                                                                    "description": "The name of the person uploading the artifact.",
+                                                                    "type": "string"
+                                                                },
+                                                                "uuid": {
+                                                                    "description": "UUID of artifact.",
+                                                                    "type": "string"
+                                                                },
+                                                                "visible": {
+                                                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                                                    "type": "boolean"
+                                                                }
+                                                            },
+                                                            "title": "Artifact Core",
+                                                            "type": "object"
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "analysis_type": {
+                                                                    "enum": [
+                                                                        "Gated FCS",
+                                                                        "Reports",
+                                                                        "R Files"
+                                                                    ],
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    "description": "A compressed archive storing results from Astrolabe analysis",
+                                                    "title": "Astrolabe Artifact",
+                                                    "type": "object"
+                                                },
+                                                "astrolabe_rfiles": {
+                                                    "$id": "astrolabe_artifact",
+                                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                                    "allOf": [
+                                                        {
+                                                            "$id": "artifact_core",
+                                                            "$schema": "http://json-schema.org/draft-07/schema#",
+                                                            "anyOf": [
+                                                                {
+                                                                    "required": [
+                                                                        "file_name",
+                                                                        "object_url",
+                                                                        "uploaded_timestamp",
+                                                                        "file_size_bytes",
+                                                                        "md5_hash",
+                                                                        "artifact_category",
+                                                                        "data_format"
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "required": [
+                                                                        "upload_placeholder"
+                                                                    ]
+                                                                }
+                                                            ],
+                                                            "description": "Any file artifact associated with a clinical trial.",
+                                                            "properties": {
+                                                                "artifact_category": {
+                                                                    "description": "Artifact category.",
+                                                                    "enum": [
+                                                                        "Assay Artifact from CIMAC",
+                                                                        "Pipeline Artifact",
+                                                                        "Manifest File"
+                                                                    ],
+                                                                    "type": "string"
+                                                                },
+                                                                "artifact_creator": {
+                                                                    "description": "The name of the center that created this artifact.",
+                                                                    "enum": [
+                                                                        "DFCI",
+                                                                        "Mount Sinai",
+                                                                        "Stanford",
+                                                                        "MD Anderson"
+                                                                    ],
+                                                                    "type": "string"
+                                                                },
+                                                                "data_format": {
+                                                                    "description": "Data Format.",
+                                                                    "enum": [
+                                                                        "FASTA",
+                                                                        "FASTQ",
+                                                                        "IMAGE",
+                                                                        "VCF",
+                                                                        "CSV",
+                                                                        "XLSX",
+                                                                        "NPX",
+                                                                        "BAM",
+                                                                        "MAF",
+                                                                        "BINARY",
+                                                                        "TEXT",
+                                                                        "[NOT SET]"
+                                                                    ],
+                                                                    "type": "string"
+                                                                },
+                                                                "file_name": {
+                                                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                                                    "description": "The name of the file with extension.",
+                                                                    "type": "string"
+                                                                },
+                                                                "file_size_bytes": {
+                                                                    "description": "File size in bytes.",
+                                                                    "type": "integer"
+                                                                },
+                                                                "md5_hash": {
+                                                                    "description": "MD5 Hash of artifact.",
+                                                                    "type": "string"
+                                                                },
+                                                                "object_url": {
+                                                                    "description": "URL to artifact within Google Bucket.",
+                                                                    "type": "string"
+                                                                },
+                                                                "upload_placeholder": {
+                                                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                                                    "type": "string"
+                                                                },
+                                                                "uploaded_timestamp": {
+                                                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                                                    "format": "date-time",
+                                                                    "type": "string"
+                                                                },
+                                                                "uploader": {
+                                                                    "description": "The name of the person uploading the artifact.",
+                                                                    "type": "string"
+                                                                },
+                                                                "uuid": {
+                                                                    "description": "UUID of artifact.",
+                                                                    "type": "string"
+                                                                },
+                                                                "visible": {
+                                                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                                                    "type": "boolean"
+                                                                }
+                                                            },
+                                                            "title": "Artifact Core",
+                                                            "type": "object"
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "analysis_type": {
+                                                                    "enum": [
+                                                                        "Gated FCS",
+                                                                        "Reports",
+                                                                        "R Files"
+                                                                    ],
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    "description": "A compressed archive storing results from Astrolabe analysis",
+                                                    "title": "Astrolabe Artifact",
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "title": "CyTOF Output Files",
+                                            "type": "object"
+                                        },
                                         "average_event_per_second": {
                                             "description": "Analysis rate of CyTOF expressions per second.",
                                             "type": "number"

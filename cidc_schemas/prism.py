@@ -615,12 +615,28 @@ def _set_data_format(ct: dict, artifact: dict):
 
     validator: jsonschema.Draft7Validator = load_and_validate_schema(
         'clinical_trial.json', return_validator=True)
-    try:
-        validator.validate(ct)
-    except jsonschema.exceptions.ValidationError as e:
+    
+    for error in validator.iter_errors(ct):
+        if not isinstance(error, jsonschema.exceptions.ValidationError):
+            continue
+
+        if error.validator != 'const':
+            continue
+
+        if error.path[-1] != 'data_format':
+            continue
+
+        if error.instance != artifact['data_format']:
+            continue
+
         # Since data_format is specified as a constant in the schema,
         # the validator_value on this exception will be the desired data format.
-        artifact['data_format'] = e.validator_value
+        artifact['data_format'] = error.validator_value
+        return
+
+    # data format was not set!
+
+
 
 def merge_artifact(
     ct: dict,

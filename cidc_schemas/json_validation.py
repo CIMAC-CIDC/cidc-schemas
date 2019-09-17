@@ -30,7 +30,7 @@ class InDocRefNotFoundError(ValidationError):
 
 def _in_doc_refs_check(validator, schema_prop_value, ref_value, subschema):
     """ A generator producing errors """
-    yield InDocRefNotFoundError(f"Ref {ref_value!r} not found within {schema_prop_value!r}")
+    yield InDocRefNotFoundError(f"Ref {schema_prop_value.split('/')[-1]}: {ref_value!r} not found within {schema_prop_value!r}")
 
 
 class _Validator(jsonschema.Draft7Validator):
@@ -77,8 +77,8 @@ class _Validator(jsonschema.Draft7Validator):
 
         found_id_paths = _get_all_paths(instance, id_ref)
         found_id_jpointers = [
-            '/' + '/'.join(map(str, _path_to_typed_tokens(ppath)))
-            for ppath in found_id_paths
+            '/' + '/'.join(map(str, _path_to_typed_tokens(id_path)))
+            for id_path in found_id_paths
         ]
 
         if fnmatch.filter(found_id_jpointers, fixed_path_pattern):

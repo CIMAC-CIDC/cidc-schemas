@@ -7,8 +7,7 @@
   "properties": {
     "cimac_aliquot_id": {
       "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
-      "type": "string",
-      "_pattern": "^.{2}-.{4}-.{4}-.{2}-.+$"
+      "type": "string"
     },
     "quantity": {
       "description": "Quantity of each aliquot shipped.",

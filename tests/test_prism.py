@@ -240,7 +240,7 @@ def test_merge_core():
     assert len(ct7['participants'][0]['samples'][0]['aliquots']) == 2
 
 
-MINIMAL_CT_1PA1SA1AL = {
+MINIMAL_TEST_TRIAL = {
     "lead_organization_study_id": "minimal",
     "participants": [
         {
@@ -248,7 +248,7 @@ MINIMAL_CT_1PA1SA1AL = {
                 {
                     "aliquots": [
                         {
-                            "cimac_aliquot_id": "Aliquot 1",
+                            "cimac_aliquot_id": "test_min_AL_1.1.1",
                             "units": "Other",
                             "material_used": 1,
                             "material_remaining": 0,
@@ -262,12 +262,12 @@ MINIMAL_CT_1PA1SA1AL = {
                     "sample_location": "---",
                     "specimen_type": "Other",
                     "specimen_format": "Other",
-                    "site_sample_id": "test_Sample_1",
-                    "cimac_sample_id": "Sample 1"
+                    "site_sample_id": "test_min_Sample_1",
+                    "cimac_sample_id": "test_min_SA_1.1"
                 }
             ],
-            "cimac_participant_id": "Patient 1",
-            "trial_participant_id": "test_trial_Patient_1",
+            "cimac_participant_id": "test_min_PA_1",
+            "trial_participant_id": "test_min_Patient_1",
             "cohort_id": "---",
             "arm_id": "---"
         }
@@ -278,7 +278,7 @@ MINIMAL_CT_1PA1SA1AL = {
 def test_samples_merge():
 
     # one with 1 sample
-    a1 = copy.deepcopy(MINIMAL_CT_1PA1SA1AL)
+    a1 = copy.deepcopy(MINIMAL_TEST_TRIAL)
     
     # create a2 and modify ids to trigger merge behavior
     a2 = copy.deepcopy(a1)
@@ -493,6 +493,17 @@ def test_prismify_wes_only():
 
     # assert works
     validator.validate(merged)
+
+
+    merger = Merger(schema)
+    merged_wo_needed_participants = merger.merge(MINIMAL_TEST_TRIAL, md_patch)
+
+    # assert in_doc_ref constraints work
+    with pytest.raises(InDocRefNotFoundError):
+        validator.validate(merged_wo_needed_participants)
+
+    # 2 record = 2 missing aliquot refs = 2 errors
+    assert 2 == len(list(validator.iter_errors(merged_wo_needed_participants)))
     
 
 
@@ -649,13 +660,16 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
         if hint == 'olink':
             prism_patch_assay_records = prism_patch['assays'][hint]['records']
             assert len(prism_patch['assays'][hint]['records']) == 2
+
         elif hint == 'cytof':
             assert len(prism_patch['assays'][hint]) == 1
             assert 'records' in prism_patch['assays'][hint][0]
             assert len(prism_patch['assays'][hint][0]['records']) == 2
             assert len(prism_patch['assays'][hint][0]['cytof_antibodies']) == 2
+
         elif hint == 'wes':
             assert len(prism_patch['assays'][hint][0]['records']) == 2
+
         else:
             raise NotImplementedError(f"no support in test for this hint {hint}")
 
@@ -691,11 +705,11 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
                 md5_hash=f"hash_{i}"
             )
 
-        # assert we still have a good clinical trial object, so we can save it
-        validator.validate(merge_clinical_trial_metadata(patch_copy_4_artifacts, original_ct))
-
         # check that the data_format was set
         assert 'data_format' in artifact
+
+        # assert we still have a good clinical trial object, so we can save it
+        validator.validate(merge_clinical_trial_metadata(patch_copy_4_artifacts, original_ct))
 
         # we will than search for this url in the resulting ct, 
         # to check all artifacts were indeed merged

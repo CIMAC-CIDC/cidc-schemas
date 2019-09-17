@@ -125,7 +125,8 @@ class XlTemplateReader:
     def _get_schema(self, key: str, schema: Dict[str, dict]) -> dict:
         """Try to find a schemas for the given template key"""
         entity_name = Template._process_fieldname(key)
-        assert entity_name in schema, f"Found unexpected column \"{entity_name}\". Cannot continue validation."
+        if entity_name not in schema:
+            raise ValidationError(f'Found unexpected column "{entity_name}"')
         # Add a note saying this field was accessed
         self.visited_fields.add(entity_name)
         return schema[entity_name]

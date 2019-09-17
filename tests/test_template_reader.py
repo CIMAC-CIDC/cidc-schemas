@@ -127,7 +127,7 @@ def test_missing_schema(tiny_template):
     }
 
     search_error_message(tiny_missing, tiny_template,
-                         AssertionError, 'Found unexpected column "missing_property"')
+                         ValidationError, 'Found unexpected column "missing_property"')
 
 
 def test_invalid(tiny_template):

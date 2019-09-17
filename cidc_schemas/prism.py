@@ -339,6 +339,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                     local_path = "/local/path/to/a/data/file/parsed/from/template",
                     gs_key = "constructed/relative/to/clinical/trial/GCS/path",
                     upload_placeholder = "random_uuid-for-artifact-upload",
+                    metadata_availability = boolean indicating existence of extra metadata files
                 )
 
     Process:

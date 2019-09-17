@@ -17,7 +17,7 @@
         "type:": {
           "$ref": "aliquot.json#properties/cimac_aliquot_id/type"
         }, 
-        "in_doc_ref_pattern": "/participants/*/samples/*/aliquot/*/cimac_aliquot_id",
+        "in_doc_ref_pattern": "/participants/*/samples/*/aliquots/*/cimac_aliquot_id",
         "description": "TBD"
     },
     "files": {

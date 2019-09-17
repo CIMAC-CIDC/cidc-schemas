@@ -15,7 +15,7 @@ from jsonmerge import Merger
 from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
     SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES
-from cidc_schemas.json_validation import load_and_validate_schema
+from cidc_schemas.json_validation import load_and_validate_schema, InDocRefNotFoundError
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader
@@ -331,7 +331,7 @@ def test_prism(schema_path, xlsx_path):
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
     merger = Merger(schema)
-    merged = merger.merge(MINIMAL_CT_1PA1SA1AL, ct)
+    merged = merger.merge(WES_TEMPLATE_EXAMPLE_CT, ct)
 
     # assert works
     errors = list(validator.iter_errors(merged))
@@ -340,7 +340,21 @@ def test_prism(schema_path, xlsx_path):
     if hint in SUPPORTED_ASSAYS :
         assert merged["lead_organization_study_id"] == "test_prism_trial_id"
     else:
-        assert MINIMAL_CT_1PA1SA1AL["lead_organization_study_id"] == merged["lead_organization_study_id"]
+        assert WES_TEMPLATE_EXAMPLE_CT["lead_organization_study_id"] == merged["lead_organization_study_id"]
+
+
+@pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
+def test_unsupported_prismify(schema_path, xlsx_path):
+    # extract hint
+    hint = schema_path.split("/")[-1].replace("_template.json", "")
+
+    # skipp supported
+    if hint in SUPPORTED_TEMPLATES:
+        return
+
+    with pytest.raises(NotImplementedError):
+        prismify(xlsx_path, schema_path, assay_hint=hint)
+
 
 
 @pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
@@ -469,17 +483,17 @@ def test_prismify_wes_only():
     hint = 'wes'
 
     # parse the spreadsheet and get the file maps
-    ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
+    md_patch, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
     merger = Merger(schema)
-    merged = merger.merge(MINIMAL_CT_1PA1SA1AL, ct)
+    merged = merger.merge(WES_TEMPLATE_EXAMPLE_CT, md_patch)
 
     # assert works
     validator.validate(merged)
-
+    
 
 
 def test_merge_artifact_wes_only():

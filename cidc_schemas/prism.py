@@ -1,11 +1,9 @@
-import re
 import json
 import os
 import copy
 import uuid
 from typing import Union, BinaryIO
 import jsonschema
-from deepdiff import grep
 import datetime
 from jsonmerge import merge, Merger, exceptions as jsonmerge_exceptions
 from collections import namedtuple
@@ -17,6 +15,7 @@ from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader
 
 from cidc_schemas.constants import SCHEMA_DIR, TEMPLATE_DIR
+from .util import _get_path, _get_source
 
 
 def _set_val(
@@ -486,6 +485,8 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     with respect to `mergeStrategy`es defined in that schema.
     """
 
+    verb = False
+
     # data rows will require a unique identifier
     if assay_hint not in SUPPORTED_TEMPLATES:
         raise NotImplementedError(f'{assay_hint} is not supported yet, only {SUPPORTED_TEMPLATES} are supported.')
@@ -596,67 +597,6 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
 
     # return root object and files list
     return root_ct_obj, collected_files
-
-
-def _get_path(ct: dict, key: str) -> str:
-    """
-    find the path to the given key in the dictionary
-
-    Args:
-        ct: clinical_trial object to be modified
-        key: the identifier we are looking for in the dictionary
-
-    Returns:
-        arg1: string describing the location of the key
-    """
-
-    # first look for key as is
-    ds1 = ct | grep(key, match_string=True)
-    count1 = 0
-    if 'matched_values' in ds1:
-        count1 = len(ds1['matched_values'])
-
-    # the hack fails if both work... probably need to deal with this
-    if count1 == 0:
-        raise KeyError(f"key: {key} not found")
-
-    # get the keypath
-    return ds1['matched_values'].pop()
-
-
-def _get_source(ct: dict, key: str, skip_last=None) -> dict:
-    """
-    extract the object in the dicitionary specified by
-    the supplied key (or one of its parents.)
-
-    Args:
-        ct: clinical_trial object to be searched
-        key: the identifier we are looking for in the dictionary,
-        skip_last: how many levels at the end of key path we want to skip.
-
-    Returns:
-        arg1: string describing the location of the key
-    """
-
-    # tokenize.
-    key = key.replace("root", "").replace("'", "")
-    tokens = re.findall(r"\[(.*?)\]", key)
-
-    if skip_last:
-        tokens = tokens[0:-1*skip_last]
-    
-    # keep getting based on the key.
-    cur_obj = ct
-    for token in tokens:
-        try:
-            token = int(token)
-        except ValueError:
-            pass
-
-        cur_obj = cur_obj[token]
-
-    return cur_obj
-
 
 
 def _set_data_format(ct: dict, artifact: dict):

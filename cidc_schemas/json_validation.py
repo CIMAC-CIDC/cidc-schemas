@@ -5,6 +5,7 @@
 import os
 import json
 import copy
+import fnmatch
 import collections.abc
 from typing import Optional, List, Callable, Union
 
@@ -13,6 +14,7 @@ import jsonschema
 from jsonschema.exceptions import ValidationError
 
 from .constants import SCHEMA_DIR
+from .util import _get_all_paths, _path_to_typed_tokens
 
 
 
@@ -26,16 +28,68 @@ def _json_pointer_checker(checker, instance):
 class InDocRefNotFoundError(ValidationError):
     pass
 
-def _doc_ref_validator(validator, schema_prop_value, ref_value, subschema):
+def _in_doc_refs_check(validator, schema_prop_value, ref_value, subschema):
     """ A generator producing errors """
-    yield InDocRefNotFoundError(f"{ref_value!r} should be in {schema_prop_value}")
-    return
+    yield InDocRefNotFoundError(f"Ref {ref_value!r} not found within {schema_prop_value!r}")
 
 
-_Validator = jsonschema.validators.extend(
-    jsonschema.Draft7Validator,
-    validators={"in_doc_ref_pattern": _doc_ref_validator}
-)
+class _Validator(jsonschema.Draft7Validator):
+
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+
+        self.in_dic_ref_validator = jsonschema.validators.create(
+            self.META_SCHEMA,
+            validators={"in_doc_ref_pattern": _in_doc_refs_check},
+            # type_checker= # TODO add cimac_..._ids checker
+        )(*args, **kwargs)
+
+    @classmethod
+    def check_schema(cls, schema):
+        return super(_Validator, cls).check_schema(schema)
+
+    def iter_errors(self, instance, _schema=None):
+
+        for downstream_error in super().iter_errors(instance, _schema):
+            if isinstance(downstream_error, InDocRefNotFoundError):
+                error = self._insure_in_doc_refs(downstream_error, instance)
+                if error:
+                    yield error
+            else: 
+                yield downstream_error
+
+
+        for in_doc_ref_not_found in self.in_dic_ref_validator.iter_errors(instance, _schema):
+            error = self._insure_in_doc_refs(in_doc_ref_not_found, instance)
+            if error:
+                yield error
+
+    def _insure_in_doc_refs(self, in_doc_ref, instance):
+        if not (self.is_type(instance, "object") or self.is_type(instance, "array")):
+            # propagate error up, if we're in a literal value context
+            return in_doc_ref
+
+        id_ref = in_doc_ref.instance
+        ref_path_pattern = in_doc_ref.validator_value 
+
+        fixed_path_pattern = ref_path_pattern.replace("*", "[!/]")
+        # fixed_path_pattern = ref_path_pattern.replace("*", "*")
+
+        found_id_paths = _get_all_paths(instance, id_ref)
+        found_id_jpointers = [
+            '/' + '/'.join(map(str, _path_to_typed_tokens(ppath)))
+            for ppath in found_id_paths
+        ]
+
+        if fnmatch.filter(found_id_jpointers, fixed_path_pattern):
+            # id ref found and matched - no error 
+            return
+
+        # id ref not found
+        return in_doc_ref
+
+        
 
 
 def load_and_validate_schema(

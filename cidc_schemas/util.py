@@ -2,7 +2,81 @@ import os
 import json
 import yaml
 import openpyxl
+import re
 from typing import Union, BinaryIO, List
+
+from deepdiff import grep
+
+def _get_all_paths(ct: dict, key: str) -> str:
+    """
+    find all paths to the given key in the dictionary
+
+    Args:
+        ct: clinical_trial object to be modified
+        key: the identifier we are looking for in the dictionary
+
+    Returns:
+        arg1: string describing the location of the key
+    """
+
+    # first look for key as is
+    ds1 = ct | grep(key, match_string=True, case_sensitive=True)
+    count1 = 0
+    if 'matched_values' in ds1:
+        count1 = len(ds1['matched_values'])
+
+    # the hack fails if both work... probably need to deal with this
+    if count1 == 0:
+        raise KeyError(f"key: {key} not found")
+
+    return ds1['matched_values']
+
+
+def _get_path(ct: dict, key: str) -> str:
+
+    all_paths = _get_all_paths(ct, key)
+
+    return all_paths.pop()
+
+
+def _path_to_typed_tokens(path: str) -> list:
+
+    # strip "root[]"
+    assert path.startswith("root[")
+    path = path[4:]
+    # tokenize
+    for groups in re.findall(r"\[(([0-9]*)|'([^\]]+)')\]", path):
+        yield groups[2] or int(groups[1])
+
+
+
+def _get_source(ct: dict, key: str, skip_last=None) -> dict:
+    """
+    extract the object in the dicitionary specified by
+    the supplied key (or one of its parents.)
+
+    Args:
+        ct: clinical_trial object to be searched
+        key: the identifier we are looking for in the dictionary,
+        skip_last: how many levels at the end of key path we want to skip.
+
+    Returns:
+        arg1: string describing the location of the key
+    """
+
+    tokens = _path_to_typed_tokens(key)
+
+    if skip_last:
+        tokens = list(tokens)[0:-1*skip_last]
+    
+    # keep getting based on the key.
+    cur_obj = ct
+    for token in tokens:
+        cur_obj = cur_obj[token]
+
+    return cur_obj
+
+
 
 
 def yaml_to_json(yaml_path: str) -> str:

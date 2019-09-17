@@ -306,7 +306,7 @@ def _process_property(
 
 
 def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) \
-        -> (dict, dict, dict):
+        -> (dict, dict):
     """
     Converts excel file to json object. It also identifies local files
     which need to uploaded to a google bucket and provides some logic
@@ -445,7 +445,6 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     # and merger for it
     # and where to collect all local file refs
     collected_files = []
-    metadata_files = []
 
     # read the excel file
     xslx = XlTemplateReader.from_excel(xlsx_path)
@@ -538,10 +537,8 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
             if new_file:
                 collected_files.append(new_file)
 
-                # TODO: identify and return metadata_files
-
-    # return root object, files list and (optional) metadata_files
-    return root_ct_obj, collected_files, metadata_files
+    # return root object, files list
+    return root_ct_obj, collected_files
 
 
 def _get_path(ct: dict, key: str) -> str:

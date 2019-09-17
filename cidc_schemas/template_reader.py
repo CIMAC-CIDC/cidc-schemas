@@ -50,6 +50,7 @@ class XlTemplateReader:
         self.grouped_rows: Dict[str, RowGroup] = self._group_worksheet_rows()
 
         self.invalid_messages: List[str] = []
+        self.visited_fields = set()
 
     @staticmethod
     def from_excel(xlsx_path: Union[str, BinaryIO]):
@@ -121,11 +122,12 @@ class XlTemplateReader:
 
         return row_groups
 
-    @staticmethod
-    def _get_schema(key: str, schema: Dict[str, dict]) -> dict:
+    def _get_schema(self, key: str, schema: Dict[str, dict]) -> dict:
         """Try to find a schemas for the given template key"""
         entity_name = Template._process_fieldname(key)
         assert entity_name in schema, f"No schema found for \"{entity_name}\""
+        # Add a note saying this field was accessed
+        self.visited_fields.add(entity_name)
         return schema[entity_name]
 
     def _get_data_schemas(self, row_groups, data_schemas: Dict[str, dict]) -> List[dict]:
@@ -182,7 +184,7 @@ class XlTemplateReader:
 
     def _validate_worksheet(self, worksheet_name: str, ws_schema: dict) -> List[str]:
         """Validate rows in a worksheet, returning a list of validation error messages."""
-
+        self.visited_fields.clear()
         invalid_messages = []
 
         # If no worksheet is found, return only that error.
@@ -203,6 +205,15 @@ class XlTemplateReader:
                     message = self._make_validation_error(
                         worksheet_name, key, row.row_num, invalid_reason)
                     invalid_messages.append(message)
+
+            # Ensure that all preamble rows are present
+            for name in preamble_schemas.keys():
+                if name not in self.visited_fields:
+                    invalid_messages.append(
+                        f"Missing expected template row: {name}")
+
+        # Clear visited fields in case a data column has the same header as a preamble row
+        self.visited_fields.clear()
 
         if 'data_columns' in ws_schema:
             # Build up flat mapping of data schemas
@@ -226,6 +237,12 @@ class XlTemplateReader:
 
             data_schemas = self._get_data_schemas(
                 row_groups, flat_data_schemas)
+
+            # Ensure that all data columns appear to be present
+            for name in flat_data_schemas.keys():
+                if name not in self.visited_fields:
+                    invalid_messages.append(
+                        f"Missing expected template column: {name}")
 
             for data_row in row_groups[RowType.DATA]:
                 for col, value in enumerate(data_row.values):

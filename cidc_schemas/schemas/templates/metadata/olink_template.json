@@ -42,6 +42,10 @@
           "combined file npx manager version": {
             "merge_pointer": "0/study/npx_manager_version",
             "type_ref": "assays/components/olink/olink_combined.json#properties/npx_manager_version"
+          },
+          "metadata files": {
+            "merge_pointer": "0/metadata_files",
+            "type_ref": "assays/components/olink/olink_combined.json#properties/metadata_files"
           }
         },
         "data_columns": {
@@ -55,6 +59,10 @@
               "is_artifact" : 1,
               "gcs_uri_format": "{lead organization study id}/olink/chip_{chip barcode}/assay_npx.xlsx",
               "type_ref": "assays/components/local_file.json#properties/file_path"
+            },
+            "metadata files": {
+              "merge_pointer": "0/metadata_files",
+              "type_ref": "assays/components/olink/olink_combined.json#properties/metadata_files"
             },
             "raw ct file": {
               "merge_pointer": "0/files/assay_raw_ct",

@@ -730,18 +730,17 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
     return merged
 
 
-def parse_npx(xlsx_path: Union[str, BinaryIO]) -> List[str]:
+def parse_npx(xlsx_path: BinaryIO) -> dict:
     """
-    Parses the given NPX file from OLINK
-    to extracts a list of aliquot IDs. If the file
-    is not valid NPX but still xlsx the function will return an empty
-    list. The function will pass along any IO errors.
+    Parses the given NPX file from olink to extract a list of aliquot IDs.
+    If the file is not valid NPX but still xlsx the function will
+    return an empty list. The function will pass along any IO errors.
 
     Args:
-        xlsx_path: path to NPX file on disk, or an opened NPX file
+        xlsx_path: an opened NPX file
 
     Returns:
-        arg1: a list of IDs found in this file
+        arg1: a dict of containing list of aliquot IDs and number of aliquots
     """
 
     # load the file
@@ -776,4 +775,11 @@ def parse_npx(xlsx_path: Union[str, BinaryIO]) -> List[str]:
             if seen_onlinkid:
                 ids.append(vals[0])
 
-    return ids
+    aliquot_count = len(ids)
+
+    aliquots = {
+        "aliquots": ids,
+        "number_of_aliquots": aliquot_count
+    }
+
+    return aliquots

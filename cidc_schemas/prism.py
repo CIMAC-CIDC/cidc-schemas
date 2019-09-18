@@ -219,6 +219,7 @@ def _get_recursively(search_dict, field):
 
     return fields_found
 
+
 SUPPORTED_ASSAYS = ["wes", "olink"]
 SUPPORTED_MANIFESTS = ["pbmc"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
@@ -287,8 +288,6 @@ def _process_property(
         print(f'current {data_obj}')
         print(f'current root {root_obj}')
 
-    metadata = field_def.get('extra_metadata')
-
     if field_def.get('is_artifact'):
         if verb:
             print(f'collecting local_file_path {field_def}')
@@ -300,7 +299,7 @@ def _process_property(
             gs_key=gs_key,
             # for artifacts `val` is a uuid
             upload_placeholder=val,
-            metadata_availability=metadata
+            metadata_availability=field_def.get('extra_metadata')
         )
 
 
@@ -729,44 +728,24 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
     return merged
 
 
-
-_EXTRA_METADATA_PARSERS = {"olink" : _parse_npx}
-
-ASSAYS_WITH_EXTRA_METADATA = _EXTRA_METADATA_PARSERS.keys()
-
-def extra_metadate_parsing(extra_files: List[BinaryIO], assay_hint: str) -> List[dict]:
-    """
-
-    Args:
-        extra_files:
-        assay_hint:
-
-    Returns:
-        artifact_patches: a list of artifact objects patches with extra metadata 
-    """
-
-    if assay_hint not in _EXTRA_METADATA_PARSERS:
-        raise Exception(f"Assay {assay_hint} doesn't support extra metadata parsing")
-
-    return [_EXTRA_METADATA_PARSERS[assay_hint](f) for f in extra_files]
-
-    
-
-def _parse_npx(xlsx_path: BinaryIO) -> dict:
+def parse_npx(xlsx: BinaryIO) -> dict:
     """
     Parses the given NPX file from olink to extract a list of aliquot IDs.
     If the file is not valid NPX but still xlsx the function will
-    return an empty list. The function will pass along any IO errors.
+    return a dict containing an empty list. The function will pass along any IO errors.
 
     Args:
-        xlsx_path: an opened NPX file
+        xlsx: an opened NPX file
 
     Returns:
         arg1: a dict of containing list of aliquot IDs and number of aliquots
     """
 
     # load the file
-    workbook = openpyxl.load_workbook(xlsx_path)
+    if type(xlsx) == str:
+        raise TypeError(f"parse_npx only accepts BinaryIO and not file paths")
+
+    workbook = openpyxl.load_workbook(xlsx)
 
     # extract data to python
     ids = []
@@ -805,3 +784,27 @@ def _parse_npx(xlsx_path: BinaryIO) -> dict:
     }
 
     return aliquots
+
+
+_EXTRA_METADATA_PARSERS = {"olink": parse_npx}
+
+ASSAYS_WITH_EXTRA_METADATA = _EXTRA_METADATA_PARSERS.keys()
+
+
+def extra_metadata_parsing(extra_files: List[BinaryIO], assay_hint: str) -> List[dict]:
+    """
+
+    Args:
+        extra_files: list of BinaryIO files
+        assay_hint: assay type
+
+    Returns:
+        artifact_patches: a list of artifact objects patches with extra metadata 
+    """
+
+    if assay_hint not in _EXTRA_METADATA_PARSERS:
+        raise Exception(f"Assay {assay_hint} doesn't support extra metadata parsing")
+
+    return [_EXTRA_METADATA_PARSERS[assay_hint](f) for f in extra_files]
+
+

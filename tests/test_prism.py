@@ -719,22 +719,19 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
 
 
 def test_parse_npx_invalid():
-    # test the parse function
-    npx_path = os.path.join(TEST_DATA_DIR, 'olink', 'pizza_assay_1_NPX.xlsx')
-    with pytest.raises(FileNotFoundError):
-        aliquots = parse_npx(npx_path)
+    # test the parse function by passing a file path
+    file_path = os.path.join(TEST_DATA_DIR, 'olink', 'olink_assay_1_NPX.xlsx')
 
-    # test parsing bad xlsx file.
-    bad_path = os.path.join(TEST_DATA_DIR, 'date_examples.xlsx')
-    aliquots = parse_npx(bad_path)
-
-    assert aliquots["number_of_aliquots"] == 0
+    with pytest.raises(TypeError):
+        aliquots = parse_npx(file_path)
 
 
 def test_parse_npx_single():
     # test the parse function
     npx_path = os.path.join(TEST_DATA_DIR, 'olink', 'olink_assay_1_NPX.xlsx')
-    aliquots = parse_npx(npx_path)
+
+    f = open(npx_path, 'rb')
+    aliquots = parse_npx(f)
 
     assert aliquots["number_of_aliquots"] == 4
     assert set(aliquots["aliquots"]) == {'HD_59', 'HD_63', 'HD_32', 'HD_50'}
@@ -743,7 +740,8 @@ def test_parse_npx_single():
 def test_parse_npx_merged():
     # test the parse function
     npx_path = os.path.join(TEST_DATA_DIR, 'olink', 'olink_assay_combined.xlsx')
-    aliquots = parse_npx(npx_path)
+    f = open(npx_path, 'rb')
+    aliquots = parse_npx(f)
 
     assert aliquots["number_of_aliquots"] == 9
     assert set(aliquots["aliquots"]) == {'HD_59', 'HD_63', 'HD_32', 'HD_50', 'HD_71', 'HD_72', 'HD_73', 'HD_80', 'HD_85'}

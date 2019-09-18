@@ -569,7 +569,7 @@ def _get_path(ct: dict, key: str) -> str:
 
 def _get_source(ct: dict, key: str, skip_last=None) -> dict:
     """
-    extract the object in the dicitionary specified by
+    extract the object in the dictionary specified by
     the supplied key (or one of its parents.)
 
     Args:
@@ -728,6 +728,21 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
 
     # now return it
     return merged
+
+
+def npx_patches(xlsx_path: BinaryIO, assay_hint: str) -> list:
+    """
+
+    Args:
+        xlsx_path:
+        assay_hint:
+
+    Returns:
+        npx_artifact_patches: a list of npx artifact patches
+    """
+
+    # TODO
+    parse_npx()
 
 
 def parse_npx(xlsx_path: BinaryIO) -> dict:

@@ -594,7 +594,6 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     # parse the spreadsheet and get the file maps
     prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
 
-
     if hint in SUPPORTED_MANIFESTS:
         assert len(prism_patch['shipments']) == 1
 

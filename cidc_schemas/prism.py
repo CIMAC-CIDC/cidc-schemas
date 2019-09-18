@@ -221,7 +221,6 @@ def _get_recursively(search_dict, field):
 
 SUPPORTED_ASSAYS = ["wes", "olink"]
 SUPPORTED_MANIFESTS = ["pbmc"]
-# ASSAYS_WITH_EXTRA_METADATA = ["olink"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
 
 LocalFileUploadEntry = namedtuple('LocalFileUploadEntry',
@@ -730,22 +729,30 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
     return merged
 
 
-def npx_patches(xlsx_path: BinaryIO, assay_hint: str) -> list:
+
+_EXTRA_METADATA_PARSERS = {"olink" : _parse_npx}
+
+ASSAYS_WITH_EXTRA_METADATA = _EXTRA_METADATA_PARSERS.keys()
+
+def extra_metadate_parsing(extra_files: List[BinaryIO], assay_hint: str) -> List[dict]:
     """
 
     Args:
-        xlsx_path:
+        extra_files:
         assay_hint:
 
     Returns:
-        npx_artifact_patches: a list of npx artifact patches
+        artifact_patches: a list of artifact objects patches with extra metadata 
     """
 
-    # TODO
-    parse_npx()
+    if assay_hint not in _EXTRA_METADATA_PARSERS:
+        raise Exception(f"Assay {assay_hint} doesn't support extra metadata parsing")
 
+    return [_EXTRA_METADATA_PARSERS[assay_hint](f) for f in extra_files]
 
-def parse_npx(xlsx_path: BinaryIO) -> dict:
+    
+
+def _parse_npx(xlsx_path: BinaryIO) -> dict:
     """
     Parses the given NPX file from olink to extract a list of aliquot IDs.
     If the file is not valid NPX but still xlsx the function will

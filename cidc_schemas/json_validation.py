@@ -5,20 +5,192 @@
 import os
 import json
 import copy
+import fnmatch
 import collections.abc
 from typing import Optional, List, Callable, Union
+JSON = Union[dict, list, str, int, float]
 
 import dateparser
 import jsonschema
+from jsonschema.exceptions import ValidationError
 
 from .constants import SCHEMA_DIR
+from .util import get_all_paths, split_python_style_path
+
+
+class InDocRefNotFoundError(ValidationError):
+    pass
+
+
+def _in_doc_refs_check(validator, schema_prop_value, ref_value, subschema):
+    """ A "dummy" validator, that just produces errors for every occurrence of `in_doc_ref_pattern` """
+    yield InDocRefNotFoundError(
+        f"Ref {schema_prop_value.split('/')[-1]}: {ref_value!r} not found within {schema_prop_value!r}"
+    )
+
+
+class _Validator(jsonschema.Draft7Validator):
+    """
+    This _Validator will additionally check intra-doc refs.
+    So say we have this schema:
+        {
+            "properties": {
+                "objs": {
+                    "type:": "array",
+                    "items": {"type": "object", "required": ["id"]},
+                },
+                "refs": {
+                    "type:": "array",
+                    "items": {"in_doc_ref_pattern": "/objs/*/id"},
+                },
+            }
+        }
+
+    This Validator will allow for these docs:
+        {
+            "objs": [{"id":1}, {"id":"something"}],
+            "refs": [1, "something"]
+        }
+
+        {
+            "objs": [{"id":1}, {"id":"something"}],
+            "refs": [1]
+        }
+
+    but those will be invalid:
+        {
+            "objs": [{"id":1}, {"id":"something"}],
+            "refs": [2, "something", "else"]
+        }
+
+        {
+            "objs": [],
+            "refs": ["anything"]
+        }
+
+
+    It achieves that by first checking everything with regular Draft7Validator,
+    and then collecting all refs and checking existence of a corresponding value.
+    
+    """
+
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+
+        # TODO consider adding json pointer check to metaschema for in_doc_ref_pattern values
+        self.in_doc_ref_validator = jsonschema.validators.create(
+            self.META_SCHEMA, validators={"in_doc_ref_pattern": _in_doc_refs_check}
+        )(*args, **kwargs)
+
+    def iter_errors(
+        self,
+        instance: JSON,
+        _schema: Optional[dict] = None,
+    ):
+        """ 
+        This is the main validation method. `.is_valid`, `.validate` are based on this. 
+    
+        It will be called recursively, while `.descend`ing instance and schema.
+
+        """
+
+        # First we call usual Draft7Validator validation 
+        for downstream_error in super().iter_errors(instance, _schema):
+            # and if an error is not "ours" - just propagate it up
+            if not isinstance(downstream_error, InDocRefNotFoundError):
+                yield downstream_error
+            # if it is "ours" - we actually check ref
+            elif not self._ensure_in_doc_ref(
+                    # error.instance - is value in doc that should satisfy a constraint
+                    ref = downstream_error.instance,
+                    # error.validator_value - is value of a constraint from schema, 
+                    # which should be in a form of path pattern, where ref value needs to be present.  
+                    ref_path_pattern = downstream_error.validator_value,
+                    doc = instance):
+                # and if the check was not passed - we propagate it
+                yield downstream_error
+
+
+        # Here we actually call our custom validator, that will through errors
+        # on every occurrence of `in_doc_ref_pattern` constraint
+        for in_doc_ref_not_found in self.in_doc_ref_validator.iter_errors(
+            instance, _schema
+        ):
+            # but then we actually check refs 
+            if not self._ensure_in_doc_ref(
+                    ref = in_doc_ref_not_found.instance,
+                    ref_path_pattern = in_doc_ref_not_found.validator_value,
+                    doc = instance):
+                # and produce errors only when check wont pass 
+                yield in_doc_ref_not_found
+
+
+    def _ensure_in_doc_ref(
+        self,
+        ref: str,
+        ref_path_pattern: str,
+        doc: JSON 
+    ):
+        """
+        This checks that a `ref` (think foreign key) can be found within a `doc` (JSON object),
+        and it's location (json pointer path) should match `ref_path_pattern`. 
+        
+        ref_path_pattern might be in `fnmatch` form
+
+        E.g.
+
+        >>> doc = {"objs": [{"id":"1"}, {"id":"something"}]}
+        >>> _Validator({})._ensure_in_doc_ref("something", "/objs/*/id", doc)
+        True
+
+        >>> _Validator({})._ensure_in_doc_ref("1", "/objs/*/id", doc)
+        True
+        
+        >>> _Validator({})._ensure_in_doc_ref("something_else", "/objs/*/id", doc)
+        False
+
+        
+        >>> _Validator({})._ensure_in_doc_ref("something", "/objs", doc)
+        False
+
+        """
+        if not (self.is_type(doc, "object") or self.is_type(doc, "array")):
+            # if we're in a "simple" value context,
+            # we can't possibly match ref_path_pattern
+            return False
+
+        # get_all_paths will find any occurrences of `ref` in doc
+        found_id_paths = get_all_paths(doc, ref, dont_throw=True)
+
+
+        # pattern like "/this/*/that" will match on "/this/multi/level/nested/that"
+        # as we don't want that - we replace "*" with "[!/]"
+        # latter will match anything but "/", disallowing those nested matches. 
+        fixed_path_pattern = ref_path_pattern.replace("*", "[!/]")
+
+        found_id_jpointers = [
+            # as get_all_paths returns results in `root['access']['path']` form
+            # we need to convert that to `/json/pointer/style/path`
+            "/" + "/".join(map(str, split_python_style_path(id_path)))
+            for id_path in found_id_paths
+        ]
+
+        # fnmatch.filter has better performance than a naive for loop
+        if fnmatch.filter(found_id_jpointers, fixed_path_pattern):
+            # id ref found and matched
+            return True
+
+        # id ref not found
+        return False
 
 
 def load_and_validate_schema(
-        schema_path: str,
-        schema_root: str = SCHEMA_DIR,
-        return_validator: bool = False,
-        on_refs: Optional[Callable[[dict], dict]] = None) -> Union[dict, jsonschema.Draft7Validator]:
+    schema_path: str,
+    schema_root: str = SCHEMA_DIR,
+    return_validator: bool = False,
+    on_refs: Optional[Callable[[dict], dict]] = None,
+) -> Union[dict, jsonschema.Draft7Validator]:
     """
     Try to load a valid schema at `schema_path`. If an `on_refs` function
     is supplied, call that on all refs in the schema, rather than
@@ -29,13 +201,12 @@ def load_and_validate_schema(
     the validator and the schema used in the validator.
     validator.
     """
-    assert os.path.isabs(
-        schema_root), "schema_root must be an absolute path"
+    assert os.path.isabs(schema_root), "schema_root must be an absolute path"
 
     # Load schema with resolved $refs
     schema_path = os.path.join(schema_root, schema_path)
     with open(schema_path) as schema_file:
-        base_uri = f'file://{schema_root}/'
+        base_uri = f"file://{schema_root}/"
         json_spec = json.load(schema_file)
         if on_refs:
             schema = _map_refs(json_spec, on_refs)
@@ -44,7 +215,7 @@ def load_and_validate_schema(
 
     # Ensure schema is valid
     # NOTE: $refs were resolved above, so no need for a RefResolver here
-    validator = jsonschema.Draft7Validator(schema)
+    validator = _Validator(schema)
     validator.check_schema(schema)
 
     if not return_validator:
@@ -62,33 +233,36 @@ def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
     a new node that contains refs, those refs will not be resolved.
     """
     if isinstance(node, collections.abc.Mapping):
-        if '$ref' in node or 'type_ref' in node:
-            ref_key = '$ref' if '$ref' in node else 'type_ref'
+        if "$ref" in node or "type_ref" in node:
+            ref_key = "$ref" if "$ref" in node else "type_ref"
 
-            if ref_key == '$ref':
-                extra_keys = set(node.keys()).difference({'$ref', '$comment'})
+            if ref_key == "$ref":
+                extra_keys = set(node.keys()).difference({"$ref", "$comment"})
                 if extra_keys:
                     # As for json-schema.org:
                     # "... You will always use $ref as the only key in an object:
                     # any other keys you put there will be ignored by the validator."
                     # So we raise on that, to notify schema creator that s/he should not
                     # expect those additional keys to be verified by schema validator.
-                    raise Exception(f"Schema node with '$ref' should not contain anything else (besides '$comment' for docs). \
-                        \nOn: {node} \nOffending keys {extra_keys}")
+                    raise Exception(
+                        f"Schema node with '$ref' should not contain anything else (besides '$comment' for docs). \
+                        \nOn: {node} \nOffending keys {extra_keys}"
+                    )
 
             # We found a ref, so return it mapped through `on_refs`
             new_node = on_refs(node[ref_key])
 
-            if ref_key == 'type_ref':
+            if ref_key == "type_ref":
                 # For type_ref's, we don't want to clobber the other properties in node,
                 # so merge new_node and node.
                 new_node.update(node)
 
             # Plus concatenated new and old '$comment' fields
             # which should be just ignored anyways.
-            if '$comment' in new_node or '$comment' in node:
-                new_node['$comment'] = new_node.get(
-                    '$comment', '') + node.get('$comment', '')
+            if "$comment" in new_node or "$comment" in node:
+                new_node["$comment"] = new_node.get("$comment", "") + node.get(
+                    "$comment", ""
+                )
             return new_node
         else:
             # Look for all refs further down in this mapping
@@ -116,7 +290,7 @@ def _resolve_refs(base_uri: str, json_spec: dict) -> dict:
 
             res = _resolve_refs(base_uri, resolved_spec)
 
-            # as reslover uses cache we don't want to return mutable 
+            # as reslover uses cache we don't want to return mutable
             # objects, so we make a copy
             return copy.deepcopy(res)
 
@@ -132,35 +306,37 @@ def validate_instance(instance: str, schema: dict, is_required=False) -> Optiona
     try:
         if instance is None:
             if is_required:
-                raise jsonschema.ValidationError(
-                    'found empty value for required field')
+                raise jsonschema.ValidationError("found empty value for required field")
             else:
                 return None
 
-        stype = schema.get('format')
+        stype = schema.get("format")
         if not stype:
-            stype = schema.get('type')
+            stype = schema.get("type")
         if not stype:
-            if 'allOf' in schema:
-                types = set(s.get('type')
-                            for s in schema['allOf'] if 'type' in s)
+            if "allOf" in schema:
+                types = set(s.get("type") for s in schema["allOf"] if "type" in s)
                 # if all types in 'allOf' are the same:
                 if len(types) == 1:
                     stype = types.pop()
                 else:
-                    return f"Value can't be of multiple different types ({types}), "\
+                    return (
+                        f"Value can't be of multiple different types ({types}), "
                         "as 'allOf' in schema specifies."
+                    )
 
         instance = convert(stype, instance)
 
         jsonschema.validate(
-            instance, schema, format_checker=jsonschema.FormatChecker())
+            instance, schema, cls=_Validator, format_checker=jsonschema.FormatChecker()
+        )
         return None
     except jsonschema.ValidationError as error:
         return error.message
 
 
 # Methods for reformatting strings
+
 
 def _get_datetime(value):
     return dateparser.parse(str(value))
@@ -169,21 +345,21 @@ def _get_datetime(value):
 def _to_date(value):
     dt = _get_datetime(value)
     if not dt:
-        raise ValueError(f"could not convert \"{value}\" to date")
-    return dt.strftime('%Y-%m-%d')
+        raise ValueError(f'could not convert "{value}" to date')
+    return dt.strftime("%Y-%m-%d")
 
 
 def _to_time(value):
     dt = _get_datetime(value)
     if not dt:
-        raise ValueError(f"could not convert \"{value}\" to time")
-    return dt.strftime('%H:%M:%S')
+        raise ValueError(f'could not convert "{value}" to time')
+    return dt.strftime("%H:%M:%S")
 
 
 def _to_datetime(value):
     dt = _get_datetime(value)
     if not dt:
-        raise ValueError(f"could not convert \"{value}\" to datetime")
+        raise ValueError(f'could not convert "{value}" to datetime')
     return dt.isoformat()
 
 
@@ -191,20 +367,26 @@ def _to_bool(value):
     if isinstance(value, (bool)):
         return value
     else:
-        raise ValueError(f"could not convert \"{value}\" to boolean")
+        raise ValueError(f'could not convert "{value}" to boolean')
 
 
 def convert(fmt: str, value: str) -> str:
     """Try to convert a value to the given format"""
-    if fmt == 'time':
+    if fmt == "time":
         reformatter = _to_time
-    elif fmt == 'date':
+    elif fmt == "date":
         reformatter = _to_date
-    elif fmt == 'string':
-        def reformatter(n): return n and str(n)
-    elif fmt == 'integer':
-        def reformatter(n): return n and int(n)
-    elif fmt == 'boolean':
+    elif fmt == "string":
+
+        def reformatter(n):
+            return n and str(n)
+
+    elif fmt == "integer":
+
+        def reformatter(n):
+            return n and int(n)
+
+    elif fmt == "boolean":
         reformatter = _to_bool
     else:
         # If we don't have a specified reformatter, use the identity function

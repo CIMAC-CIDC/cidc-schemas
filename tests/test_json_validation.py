@@ -9,7 +9,13 @@ import json
 import pytest
 import jsonschema
 
-from cidc_schemas.json_validation import _map_refs, load_and_validate_schema, _resolve_refs
+from cidc_schemas.json_validation import (
+    _map_refs,
+    load_and_validate_schema,
+    _resolve_refs,
+    _Validator,
+    InDocRefNotFoundError,
+)
 from .constants import SCHEMA_DIR, ROOT_DIR, TEST_SCHEMA_DIR
 
 
@@ -19,7 +25,7 @@ def test_map_refs():
     assert mapped_refs == {"a": "FOO", "b": ["FOO"]}
 
     # Fields with $ref in their values should not contain other keys
-    ref_spec['a']['extra'] = 'blah'
+    ref_spec["a"]["extra"] = "blah"
     with pytest.raises(Exception, match="should not contain"):
         _map_refs(ref_spec, lambda ref: ref.upper())
 
@@ -64,7 +70,7 @@ def test_trial_core():
         "material_remaining": 0,
         "aliquot_quality_status": "Other",
         "aliquot_replacement": "N/A",
-        "aliquot_status": "Other"
+        "aliquot_status": "Other",
     }
     al_validator.validate(aliquot1)
 
@@ -75,7 +81,7 @@ def test_trial_core():
         "material_remaining": 0,
         "aliquot_quality_status": "Other",
         "aliquot_replacement": "N/A",
-        "aliquot_status": "Other"
+        "aliquot_status": "Other",
     }
     al_validator.validate(aliquot2)
 
@@ -121,12 +127,12 @@ def test_trial_core():
     clinical_trial = {
         "lead_organization_study_id": "trial1",
         "participants": [participant],
-        "shipments": [shipment]
+        "shipments": [shipment],
     }
     ct_validator.validate(clinical_trial)
 
     # make it fail
-    participant.pop('cimac_participant_id')
+    participant.pop("cimac_participant_id")
     with pytest.raises(jsonschema.ValidationError):
         ct_validator.validate(clinical_trial)
 
@@ -152,8 +158,55 @@ def test_resolve_refs():
 
     # Two levels of nesting across different directories
     one = do_resolve("1.json")
-    assert one["properties"] == {"1_prop": {
-        "2_prop": {"3_prop": {"type": "string"}}}}
+    assert one["properties"] == {"1_prop": {"2_prop": {"3_prop": {"type": "string"}}}}
+
+
+def test_validate_in_doc_refs():
+    doc = {"objs": [{"id": "1"}, {"id": "something"}]}
+
+    v = empty_schema_validator = _Validator({})
+    assert True == v._ensure_in_doc_ref("something", "/objs/*/id", doc)
+
+    assert True == v._ensure_in_doc_ref("1", "/objs/*/id", doc)
+
+    assert False == v._ensure_in_doc_ref("something_else", "/objs/*/id", doc)
+
+    assert False == v._ensure_in_doc_ref("something", "/objs", doc)
+
+    v = _Validator(
+        {
+            "properties": {
+                "objs": {
+                    "type:": "array",
+                    "items": {"type": "object", "required": ["id"]},
+                },
+                "refs": {
+                    "type:": "array",
+                    "items": {"in_doc_ref_pattern": "/objs/*/id"},
+                },
+            }
+        }
+    )
+
+    v.validate({"objs": [{"id": 1}, {"id": "something"}], "refs": [1, "something"]})
+
+    v.validate({"objs": [{"id": 1}, {"id": "something"}], "refs": [1]})
+
+    assert 2 == len(
+        [
+            e
+            for e in v.iter_errors(
+                {
+                    "objs": [{"id": 1}, {"id": "something"}],
+                    "refs": [2, "something", "else"],
+                }
+            )
+            if isinstance(e, InDocRefNotFoundError)
+        ]
+    )
+
+    with pytest.raises(InDocRefNotFoundError):
+        v.validate({"objs": [], "refs": ["anything"]})
 
 
 def test_special_keywords():
@@ -168,4 +221,3 @@ def test_special_keywords():
 
     assert "is_multi_artifact" not in tmp2
     assert "is_artifact" in tmp2
-    

@@ -15,10 +15,13 @@
           "type": "integer"
         },
         "aliquots": {
+          "description": "Ids of the aliquot(s) within this assay.",
           "type": "array",
           "items": {
-            "$comment": "Ids of the aliquot(s) within this assay.",
-            "$ref": "aliquot.json#properties/cimac_aliquot_id"
+            "type:": {
+              "$ref": "aliquot.json#properties/cimac_aliquot_id/type"
+            }, 
+            "in_doc_ref_pattern": "/participants/*/samples/*/aliquots/*/cimac_aliquot_id"
           }
         },
         "data_format": {

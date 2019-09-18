@@ -1,11 +1,9 @@
-import re
 import json
 import os
 import copy
 import uuid
 from typing import Union, BinaryIO
 import jsonschema
-from deepdiff import grep
 import datetime
 from jsonmerge import merge, Merger, exceptions as jsonmerge_exceptions
 from collections import namedtuple
@@ -17,6 +15,7 @@ from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader
 
 from cidc_schemas.constants import SCHEMA_DIR, TEMPLATE_DIR
+from .util import get_path, get_source
 
 
 def _set_val(
@@ -598,67 +597,6 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     return root_ct_obj, collected_files
 
 
-def _get_path(ct: dict, key: str) -> str:
-    """
-    find the path to the given key in the dictionary
-
-    Args:
-        ct: clinical_trial object to be modified
-        key: the identifier we are looking for in the dictionary
-
-    Returns:
-        arg1: string describing the location of the key
-    """
-
-    # first look for key as is
-    ds1 = ct | grep(key, match_string=True)
-    count1 = 0
-    if 'matched_values' in ds1:
-        count1 = len(ds1['matched_values'])
-
-    # the hack fails if both work... probably need to deal with this
-    if count1 == 0:
-        raise KeyError(f"key: {key} not found")
-
-    # get the keypath
-    return ds1['matched_values'].pop()
-
-
-def _get_source(ct: dict, key: str, skip_last=None) -> dict:
-    """
-    extract the object in the dicitionary specified by
-    the supplied key (or one of its parents.)
-
-    Args:
-        ct: clinical_trial object to be searched
-        key: the identifier we are looking for in the dictionary,
-        skip_last: how many levels at the end of key path we want to skip.
-
-    Returns:
-        arg1: string describing the location of the key
-    """
-
-    # tokenize.
-    key = key.replace("root", "").replace("'", "")
-    tokens = re.findall(r"\[(.*?)\]", key)
-
-    if skip_last:
-        tokens = tokens[0:-1*skip_last]
-    
-    # keep getting based on the key.
-    cur_obj = ct
-    for token in tokens:
-        try:
-            token = int(token)
-        except ValueError:
-            pass
-
-        cur_obj = cur_obj[token]
-
-    return cur_obj
-
-
-
 def _set_data_format(ct: dict, artifact: dict):
     """
     Discover the correct data format for the given artifact.
@@ -675,12 +613,28 @@ def _set_data_format(ct: dict, artifact: dict):
 
     validator: jsonschema.Draft7Validator = load_and_validate_schema(
         'clinical_trial.json', return_validator=True)
-    try:
-        validator.validate(ct)
-    except jsonschema.exceptions.ValidationError as e:
+    
+    for error in validator.iter_errors(ct):
+        if not isinstance(error, jsonschema.exceptions.ValidationError):
+            continue
+
+        if error.validator != 'const':
+            continue
+
+        if error.path[-1] != 'data_format':
+            continue
+
+        if error.instance != artifact['data_format']:
+            continue
+
         # Since data_format is specified as a constant in the schema,
         # the validator_value on this exception will be the desired data format.
-        artifact['data_format'] = e.validator_value
+        artifact['data_format'] = error.validator_value
+        return
+
+    # data format was not set!
+
+
 
 def merge_artifact(
     ct: dict,
@@ -721,13 +675,13 @@ def merge_artifact(
 
     # We're using uuids to find path in CT where corresponding artifact is located
     # As uuids are unique, this should be fine.
-    uuid_field_path = _get_path(ct, artifact_uuid)
+    uuid_field_path = get_path(ct, artifact_uuid)
 
     # As "uuid_field_path" contains path to a field with uuid,
     # we're looking for an artifact that contains it, not the "string" field itself
     # That's why we need skip_last=1, to get 1 "level" higher 
     # from 'uuid_field_path' field to it's parent - existing_artifact obj. 
-    existing_artifact = _get_source(ct, uuid_field_path, skip_last=1)
+    existing_artifact = get_source(ct, uuid_field_path, skip_last=1)
 
     ## TODO this might be better like this - with merger:
     # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")

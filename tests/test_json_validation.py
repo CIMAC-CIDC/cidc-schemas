@@ -192,10 +192,18 @@ def test_validate_in_doc_refs():
 
     v.validate({"objs": [{"id": 1}, {"id": "something"}], "refs": [1]})
 
-    with pytest.raises(InDocRefNotFoundError):
-        v.validate(
-            {"objs": [{"id": 1}, {"id": "something"}], "refs": [2, "something", "else"]}
-        )
+    assert 2 == len(
+        [
+            e
+            for e in v.iter_errors(
+                {
+                    "objs": [{"id": 1}, {"id": "something"}],
+                    "refs": [2, "something", "else"],
+                }
+            )
+            if isinstance(e, InDocRefNotFoundError)
+        ]
+    )
 
     with pytest.raises(InDocRefNotFoundError):
         v.validate({"objs": [], "refs": ["anything"]})

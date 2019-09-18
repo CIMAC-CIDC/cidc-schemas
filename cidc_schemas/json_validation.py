@@ -14,23 +14,18 @@ import jsonschema
 from jsonschema.exceptions import ValidationError
 
 from .constants import SCHEMA_DIR
-from .util import _get_all_paths, _path_to_typed_tokens
-
-
-
-def _json_pointer_checker(checker, instance):
-    """ Check json-pointer type in schemas to be conforming with RFC 6901 """
-    # TODO actually check it
-    raise Exception("json pointer")
-    return checker.is_type(instance, "string")
+from .util import get_all_paths, split_python_style_path
 
 
 class InDocRefNotFoundError(ValidationError):
     pass
 
+
 def _in_doc_refs_check(validator, schema_prop_value, ref_value, subschema):
-    """ A generator producing errors """
-    yield InDocRefNotFoundError(f"Ref {schema_prop_value.split('/')[-1]}: {ref_value!r} not found within {schema_prop_value!r}")
+    """ A "dummy" validator, that just produces errors for every occurrence of `in_doc_ref_pattern` """
+    yield InDocRefNotFoundError(
+        f"Ref {schema_prop_value.split('/')[-1]}: {ref_value!r} not found within {schema_prop_value!r}"
+    )
 
 
 class _Validator(jsonschema.Draft7Validator):
@@ -39,20 +34,15 @@ class _Validator(jsonschema.Draft7Validator):
     So say we have this schema:
         {
             "properties": {
-                "objs" : {
-                    "type:": "array"
-                    "items" : {
-                        "type" : "object",
-                        "required" : ["id"]
-                    }
-                }
+                "objs": {
+                    "type:": "array",
+                    "items": {"type": "object", "required": ["id"]},
+                },
                 "refs": {
                     "type:": "array",
-                    "items": {
-                        "in_doc_ref_pattern": "/objs/*/id"
-                    }
-                }
-            } 
+                    "items": {"in_doc_ref_pattern": "/objs/*/id"},
+                },
+            }
         }
 
     This Validator will allow for these docs:
@@ -87,57 +77,111 @@ class _Validator(jsonschema.Draft7Validator):
 
         super().__init__(*args, **kwargs)
 
-        self.in_dic_ref_validator = jsonschema.validators.create(
-            self.META_SCHEMA,
-            validators={"in_doc_ref_pattern": _in_doc_refs_check},
+        # TODO consider adding json pointer check to metaschema for in_doc_ref_pattern values
+        self.in_doc_ref_validator = jsonschema.validators.create(
+            self.META_SCHEMA, validators={"in_doc_ref_pattern": _in_doc_refs_check}
         )(*args, **kwargs)
 
-    @classmethod
-    def check_schema(cls, schema):
-        return super(_Validator, cls).check_schema(schema)
-
-    def iter_errors(self, instance, _schema=None):
+    def iter_errors(
+        self,
+        instance: Union[dict, list, str, int, float], # anything JSON can be
+        _schema: Optional[dict] = None,
+    ):
         """ 
         This is the main validation method. `.is_valid`, `.validate` are based on this. 
+    
+        It will be called recursively, while `.descend`ing instance and schema.
+
         """
+
+        # First we call usual Draft7Validator validation 
         for downstream_error in super().iter_errors(instance, _schema):
-            if isinstance(downstream_error, InDocRefNotFoundError):
-                error = self._insure_in_doc_refs(downstream_error, instance)
-                if error:
-                    yield error
-            else: 
+            # and if an error is not "ours" - just propagate it up
+            if not isinstance(downstream_error, InDocRefNotFoundError):
+                yield downstream_error
+            # if it is "ours" - we actually check ref
+            elif not self._ensure_in_doc_ref(
+                    # error.instance - is value in doc that should satisfy a constraint
+                    ref = downstream_error.instance,
+                    # error.validator_value - is value of a constraint from schema, 
+                    # which should be in a form of path pattern, where ref value needs to be present.  
+                    ref_path_pattern = downstream_error.validator_value,
+                    doc = instance):
+                # and if the check was not passed - we propagate it
                 yield downstream_error
 
 
-        for in_doc_ref_not_found in self.in_dic_ref_validator.iter_errors(instance, _schema):
-            error = self._insure_in_doc_refs(in_doc_ref_not_found, instance)
-            if error:
-                yield error
+        # Here we actually call our custom validator, that will through errors
+        # on every occurrence of `in_doc_ref_pattern` constraint
+        for in_doc_ref_not_found in self.in_doc_ref_validator.iter_errors(
+            instance, _schema
+        ):
+            # but then we actually check refs 
+            if not self._ensure_in_doc_ref(
+                    ref = in_doc_ref_not_found.instance,
+                    ref_path_pattern = in_doc_ref_not_found.validator_value,
+                    doc = instance):
+                # and produce errors only when check wont pass 
+                yield in_doc_ref_not_found
 
-    def _insure_in_doc_refs(self, in_doc_ref, instance):
-        if not (self.is_type(instance, "object") or self.is_type(instance, "array")):
-            # propagate error up, if we're in a literal value context
-            return in_doc_ref
 
-        id_ref = in_doc_ref.instance
-        ref_path_pattern = in_doc_ref.validator_value 
+    def _ensure_in_doc_ref(
+        self,
+        ref: str,
+        ref_path_pattern: str,
+        doc: Union[dict, list, str, int, float] # basically anything JSON can be
+    ):
+        """
+        This checks that a `ref` (think foreign key) can be found within a `doc` (JSON object),
+        and it's location (json pointer path) should match `ref_path_pattern`. 
+        
+        ref_path_pattern might be in `fnmatch` form
 
+        E.g.
+
+        >>> doc = {"objs": [{"id":"1"}, {"id":"something"}]}
+        >>> _Validator({})._ensure_in_doc_ref("something", "/objs/*/id", doc)
+        True
+
+        >>> _Validator({})._ensure_in_doc_ref("1", "/objs/*/id", doc)
+        True
+        
+        >>> _Validator({})._ensure_in_doc_ref("something_else", "/objs/*/id", doc)
+        False
+
+        
+        >>> _Validator({})._ensure_in_doc_ref("something", "/objs", doc)
+        False
+
+        """
+        if not (self.is_type(doc, "object") or self.is_type(doc, "array")):
+            # if we're in a "simple" value context,
+            # we can't possibly match ref_path_pattern
+            return False
+
+        # get_all_paths will find any occurrences of `ref` in doc
+        found_id_paths = get_all_paths(doc, ref, dont_throw=True)
+
+
+        # pattern like "/this/*/that" will match on "/this/multi/level/nested/that"
+        # as we don't want that - we replace "*" with "[!/]"
+        # latter will match anything but "/", disallowing those nested matches. 
         fixed_path_pattern = ref_path_pattern.replace("*", "[!/]")
 
-        found_id_paths = _get_all_paths(instance, id_ref)
         found_id_jpointers = [
-            '/' + '/'.join(map(str, _path_to_typed_tokens(id_path)))
+            # as get_all_paths returns results in `root['access']['path']` form
+            # we need to convert that to `/json/pointer/style/path`
+            "/" + "/".join(map(str, split_python_style_path(id_path)))
             for id_path in found_id_paths
         ]
 
+        # fnmatch.filter has better performance than a naive for loop
         if fnmatch.filter(found_id_jpointers, fixed_path_pattern):
-            # id ref found and matched - no error 
-            return
+            # id ref found and matched
+            return True
 
         # id ref not found
-        return in_doc_ref
-
-        
+        return False
 
 
 def load_and_validate_schema(
@@ -245,7 +289,7 @@ def _resolve_refs(base_uri: str, json_spec: dict) -> dict:
 
             res = _resolve_refs(base_uri, resolved_spec)
 
-            # as reslover uses cache we don't want to return mutable 
+            # as reslover uses cache we don't want to return mutable
             # objects, so we make a copy
             return copy.deepcopy(res)
 
@@ -282,7 +326,9 @@ def validate_instance(instance: str, schema: dict, is_required=False) -> Optiona
 
         instance = convert(stype, instance)
 
-        jsonschema.validate(instance, schema, cls=_Validator, format_checker=jsonschema.FormatChecker())
+        jsonschema.validate(
+            instance, schema, cls=_Validator, format_checker=jsonschema.FormatChecker()
+        )
         return None
     except jsonschema.ValidationError as error:
         return error.message

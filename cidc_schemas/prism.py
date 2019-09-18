@@ -15,7 +15,7 @@ from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader
 
 from cidc_schemas.constants import SCHEMA_DIR, TEMPLATE_DIR
-from .util import _get_path, _get_source
+from .util import get_path, get_source
 
 
 def _set_val(
@@ -485,8 +485,6 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     with respect to `mergeStrategy`es defined in that schema.
     """
 
-    verb = False
-
     # data rows will require a unique identifier
     if assay_hint not in SUPPORTED_TEMPLATES:
         raise NotImplementedError(f'{assay_hint} is not supported yet, only {SUPPORTED_TEMPLATES} are supported.')
@@ -677,13 +675,13 @@ def merge_artifact(
 
     # We're using uuids to find path in CT where corresponding artifact is located
     # As uuids are unique, this should be fine.
-    uuid_field_path = _get_path(ct, artifact_uuid)
+    uuid_field_path = get_path(ct, artifact_uuid)
 
     # As "uuid_field_path" contains path to a field with uuid,
     # we're looking for an artifact that contains it, not the "string" field itself
     # That's why we need skip_last=1, to get 1 "level" higher 
     # from 'uuid_field_path' field to it's parent - existing_artifact obj. 
-    existing_artifact = _get_source(ct, uuid_field_path, skip_last=1)
+    existing_artifact = get_source(ct, uuid_field_path, skip_last=1)
 
     ## TODO this might be better like this - with merger:
     # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")

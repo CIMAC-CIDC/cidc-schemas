@@ -7,7 +7,7 @@ from typing import Union, BinaryIO, List
 
 from deepdiff import grep
 
-def _get_all_paths(ct: dict, key: str) -> str:
+def get_all_paths(ct: dict, key: str, dont_throw=False) -> str:
     """
     find all paths to the given key in the dictionary
 
@@ -15,8 +15,12 @@ def _get_all_paths(ct: dict, key: str) -> str:
         ct: clinical_trial object to be modified
         key: the identifier we are looking for in the dictionary
 
+    Throws:
+        KeyError if *key* is not found within *ct*  
+
     Returns:
         arg1: string describing the location of the key
+        in python-ish access style: "root['access']['path'][0]['something']"
     """
 
     # first look for key as is
@@ -27,19 +31,33 @@ def _get_all_paths(ct: dict, key: str) -> str:
 
     # the hack fails if both work... probably need to deal with this
     if count1 == 0:
-        raise KeyError(f"key: {key} not found")
+        if dont_throw:
+            return []
+        else:
+            raise KeyError(f"key: {key} not found")
 
     return ds1['matched_values']
 
 
-def _get_path(ct: dict, key: str) -> str:
+def get_path(ct: dict, key: str) -> str:
 
-    all_paths = _get_all_paths(ct, key)
+    all_paths = get_all_paths(ct, key)
 
     return all_paths.pop()
 
 
-def _path_to_typed_tokens(path: str) -> list:
+def split_python_style_path(path: str) -> list:
+    """
+    Will parse `get_path` output (`root['some']['access']['path']`)
+    to a list of typed (int/str) tokens
+
+    >>> list(split_python_style_path("root['some']['access']['path']"))
+    ['some', 'access', 'path']
+
+    >>> list(split_python_style_path("root['with'][0]['integers'][1]['too']"))
+    ['with', 0, 'integers', 1, 'too']
+
+    """
 
     # strip "root[]"
     assert path.startswith("root[")
@@ -50,7 +68,7 @@ def _path_to_typed_tokens(path: str) -> list:
 
 
 
-def _get_source(ct: dict, key: str, skip_last=None) -> dict:
+def get_source(ct: dict, key: str, skip_last=None) -> dict:
     """
     extract the object in the dicitionary specified by
     the supplied key (or one of its parents.)
@@ -64,7 +82,7 @@ def _get_source(ct: dict, key: str, skip_last=None) -> dict:
         arg1: string describing the location of the key
     """
 
-    tokens = _path_to_typed_tokens(key)
+    tokens = split_python_style_path(key)
 
     if skip_last:
         tokens = list(tokens)[0:-1*skip_last]

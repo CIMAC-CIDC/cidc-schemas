@@ -495,8 +495,8 @@ def test_prismify_wes_only():
     validator.validate(merged)
 
 
-    merger = Merger(schema)
-    merged_wo_needed_participants = merger.merge(MINIMAL_TEST_TRIAL, md_patch)
+    merged_wo_needed_participants = copy.deepcopy(merged)
+    merged_wo_needed_participants['participants'][0]['samples'].pop()
 
     # assert in_doc_ref constraints work
     with pytest.raises(InDocRefNotFoundError):

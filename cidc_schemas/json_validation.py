@@ -8,6 +8,7 @@ import copy
 import fnmatch
 import collections.abc
 from typing import Optional, List, Callable, Union
+JSON = Union[dict, list, str, int, float]
 
 import dateparser
 import jsonschema
@@ -84,7 +85,7 @@ class _Validator(jsonschema.Draft7Validator):
 
     def iter_errors(
         self,
-        instance: Union[dict, list, str, int, float], # anything JSON can be
+        instance: JSON,
         _schema: Optional[dict] = None,
     ):
         """ 
@@ -129,7 +130,7 @@ class _Validator(jsonschema.Draft7Validator):
         self,
         ref: str,
         ref_path_pattern: str,
-        doc: Union[dict, list, str, int, float] # basically anything JSON can be
+        doc: JSON 
     ):
         """
         This checks that a `ref` (think foreign key) can be found within a `doc` (JSON object),

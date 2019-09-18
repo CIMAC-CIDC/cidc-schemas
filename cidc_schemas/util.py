@@ -7,7 +7,7 @@ from typing import Union, BinaryIO, List
 
 from deepdiff import grep
 
-def get_all_paths(ct: dict, key: str, dont_throw=False) -> str:
+def get_all_paths(ct: dict, key: str, dont_throw=False) -> List[str]:
     """
     find all paths to the given key in the dictionary
 

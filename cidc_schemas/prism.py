@@ -685,6 +685,29 @@ class InvalidMergeTargetException(ValueError):
     """Exception raised for target of merge_clinical_trial_metadata being non schema compliant."""
 
 
+def merge_artifact_extra_metadata(patch: dict) -> dict:
+    """
+    merges parsed extra metadata returned by extra_metadata_parsing to corresponding artifact objects within the patch
+
+    Args:
+        patch: preliminary patch from upload_assay
+    Returns:
+        merged_patch: patch after merging with with extra metadata
+    """
+
+    # TODO
+    """
+    patch['job_id']
+    patch['gcs_uris']
+    patch['url_mapping']
+
+    md_patch = extra_metadata_parsing()
+
+    merged_patch = Merger(patch).merge(patch, md_patch)
+
+    return merged_patch
+    """
+
 def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
     """
     merges two clinical trial metadata objects together

@@ -758,6 +758,19 @@ def _set_data_format(ct: dict, artifact: dict):
 
 
 
+
+def _get_uuid_info(ct: dict, artifact_uuid: str) -> dict:
+
+    # Using uuids to find path in CT where corresponding artifact is located. Uuids are unique.
+    uuid_field_path = _get_path(ct, artifact_uuid)
+
+    # As "uuid_field_path" contains path to a field with uuid,
+    # we're looking for an artifact that contains it, not the "string" field itself
+    # That's why we need skip_last=1, to get 1 "level" higher
+    # from 'uuid_field_path' field to it's parent - existing_artifact obj
+    return _get_source(ct, uuid_field_path, skip_last=1)
+
+
 def merge_artifact(
     ct: dict,
     assay_type: str,
@@ -795,20 +808,10 @@ def merge_artifact(
         "uploaded_timestamp": uploaded_timestamp
     }
 
-    # We're using uuids to find path in CT where corresponding artifact is located
-    # As uuids are unique, this should be fine.
-    uuid_field_path = get_path(ct, artifact_uuid)
+    existing_artifact = _get_uuid_info(ct, artifact_uuid)
 
-    # As "uuid_field_path" contains path to a field with uuid,
-    # we're looking for an artifact that contains it, not the "string" field itself
-    # That's why we need skip_last=1, to get 1 "level" higher 
-    # from 'uuid_field_path' field to it's parent - existing_artifact obj. 
-    existing_artifact = get_source(ct, uuid_field_path, skip_last=1)
-
-    # TODO this might be better like this - with merger:
     # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")
     # artifact_parent[file_name] = Merger(artifact_schema).merge(existing_artifact, artifact)
-    # TODO but for now like this
     existing_artifact.update(artifact)
 
     _set_data_format(ct, existing_artifact)
@@ -821,28 +824,32 @@ class InvalidMergeTargetException(ValueError):
     """Exception raised for target of merge_clinical_trial_metadata being non schema compliant."""
 
 
-def merge_artifact_extra_metadata(patch: dict) -> dict:
+def merge_artifact_extra_metadata(ct: dict, artifact_uuid: str) -> (dict, dict):
     """
-    merges parsed extra metadata returned by extra_metadata_parsing to corresponding artifact objects within the patch
+    Merges parsed extra metadata returned by extra_metadata_parsing to
+    corresponding artifact objects within the patch.
 
     Args:
-        patch: preliminary patch from upload_assay
+        ct: preliminary patch from upload_assay
+        artifact_uuid: passed from upload assay
     Returns:
-        merged_patch: patch after merging with with extra metadata
+        existing_patch: patch after merging with with extra metadata
     """
 
-    # TODO
-    """
-    patch['job_id']
-    patch['gcs_uris']
-    patch['url_mapping']
+    md_patches = extra_metadata_parsing()
+    for m in md_patches:
+        existing_patch = _get_uuid_info(ct, artifact_uuid)
 
-    md_patch = extra_metadata_parsing()
+        # TODO this might be better with merger:
+        # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")
+        # artifact_parent[file_name] = Merger(artifact_schema).merge(existing_artifact, artifact)
+        existing_patch.update(m)
 
-    merged_patch = Merger(patch).merge(patch, md_patch)
+        _set_data_format(ct, existing_patch)
 
-    return merged_patch
-    """
+        # return the artifact that was merged and the new object
+        return ct, existing_patch
+
 
 def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
     """
@@ -965,5 +972,3 @@ def extra_metadata_parsing(extra_files: List[BinaryIO], assay_hint: str) -> List
         raise Exception(f"Assay {assay_hint} doesn't support extra metadata parsing")
 
     return [_EXTRA_METADATA_PARSERS[assay_hint](f) for f in extra_files]
-
-

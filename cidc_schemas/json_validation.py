@@ -328,7 +328,10 @@ def validate_instance(instance: str, schema: dict, is_required=False) -> Optiona
         instance = convert(stype, instance)
 
         jsonschema.validate(
-            instance, schema, cls=_Validator, format_checker=jsonschema.FormatChecker()
+            # we're using this to validate only 'basic' values that come from Template cells 
+            # that's why we don't want to check for ref integrity with _Validator here
+            # so a Validator specified in this schema will be used, or a default one
+            instance, schema, format_checker=jsonschema.FormatChecker()
         )
         return None
     except jsonschema.ValidationError as error:

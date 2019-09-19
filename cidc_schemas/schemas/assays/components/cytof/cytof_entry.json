@@ -14,11 +14,8 @@
             "$ref": "sample.json#properties/cimac_sample_id"
         },
         "cimac_aliquot_id": {
-            "type:": {
-              "$ref": "aliquot.json#properties/cimac_aliquot_id/type"
-            }, 
-            "in_doc_ref_pattern": "/participants/*/samples/*/aliquots/*/cimac_aliquot_id",
-            "description": "Id of an aliquot within this clinical trial, that this assay record is based upon." 
+            "$comment": "Id of an aliquot within this clinical trial, that this assay record is based upon.",
+            "$ref": "aliquot.json#properties/cimac_aliquot_id"
         },
         "panel_name": {
             "description": "Standardized CyTOF panel name used for antibody sample development.",

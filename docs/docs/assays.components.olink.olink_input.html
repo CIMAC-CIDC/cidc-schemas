@@ -235,9 +235,11 @@
                 {
                     "properties": {
                         "aliquots": {
+                            "description": "Ids of the aliquot(s) within this file.",
                             "items": {
-                                "$comment": "Ids of the aliquot(s) within this assay.",
+                                "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_aliquot_id is $refed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_aliquot_id $ref.Ids of the aliquot(s) within this file.",
                                 "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
+                                "in_doc_ref_pattern": "/participants/*/samples/*/aliquots/*/cimac_aliquot_id",
                                 "type": "string"
                             },
                             "type": "array"
@@ -247,7 +249,7 @@
                             "description": "Data format."
                         },
                         "number_of_aliquots": {
-                            "description": "Number of aliquots within this assay.",
+                            "description": "Number of aliquots within this file.",
                             "type": "integer"
                         }
                     }

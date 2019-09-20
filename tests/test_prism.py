@@ -852,25 +852,25 @@ def test_prism_joining_tabs(monkeypatch):
     cell = namedtuple("cell", ["value"])
     wb["samples"].iter_rows.return_value = [
         map(cell, ["#h", "PA id", "SA id",  "SA prop"]),
-        # map(cell, ["#d", "PA_0",  "SA_0.1", "01"]),
+        map(cell, ["#d", "PA_0",  "SA_0.1", "01"]),
         map(cell, ["#d", "PA_0",  "SA_0.0", "00"]),
         map(cell, ["#d", "PA_1",  "SA_1.0", "10"]),
     ]
     wb["aliquots"].iter_rows.return_value = [
-        map(cell, ["#h", "SA_id",   "AL id",    "AL prop"]),
-        # map(cell, ["#d", "SA_1.0",  "AL_1.0.0", "100"]),
-        # map(cell, ["#d", "SA_1.0",  "AL_1.0.1", "101"]),
-        # map(cell, ["#d", "SA_0.0",  "AL_0.0.0", "000"]),
-        # map(cell, ["#d", "SA_0.1",  "AL_0.1.0", "010"]),
+        map(cell, ["#h", "PA_id", "SA_id",   "AL id",    "AL prop"]),
+        map(cell, ["#d", "PA_1", "SA_1.0",  "AL_1.0.0", "100"]),
+        map(cell, ["#d", "PA_1", "SA_1.0",  "AL_1.0.1", "101"]),
+        map(cell, ["#d", "PA_0", "SA_0.0",  "AL_0.0.0", "000"]),
+        map(cell, ["#d", "PA_0", "SA_0.1",  "AL_0.1.0", "010"]),
     ]
 
     
     monkeypatch.setattr("cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_ship"])
 
-    patch, file_maps = prismify("whatever", "templates/manifests/test_ship_template.json", assay_hint="test_ship", verb=True)
-    # patch, file_maps = prismify("whatever", "templates/manifests/test_ship_template.json", assay_hint="test_ship", verb=False)
+    # patch, file_maps = prismify("whatever", "templates/manifests/test_ship_template.json", assay_hint="test_ship", verb=True)
+    patch, file_maps = prismify("whatever", "templates/manifests/test_ship_template.json", assay_hint="test_ship", verb=False)
 
-    assert 0, json.dumps(patch, indent=4)
+    # assert 0, json.dumps(patch, indent=4)
     
         
 

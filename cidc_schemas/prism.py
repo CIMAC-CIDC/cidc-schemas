@@ -277,11 +277,11 @@ def _process_property(
     """
 
     if verb:
-        print(f"processing property {key!r} - {raw_val!r}")
+        print(f"    processing property {key!r} - {raw_val!r}")
     # coerce value
     field_def = key_lu[key.lower()]
     if verb:
-        print(f'found def {field_def}')
+        print(f'      found def {field_def}')
     
     val = field_def['coerce'](raw_val)
 
@@ -312,13 +312,13 @@ def _process_property(
         _set_val(pointer, val, data_obj, root_obj, data_obj_pointer, verb=verb)
 
     if verb:
-        print(f'current {data_obj}')
-        print(f'current root {root_obj}')
+        print(f'      current {data_obj}')
+        print(f'      current root {root_obj}')
 
     if field_def.get('is_artifact') == 1:
 
         if verb:
-            print(f'collecting local_file_path {field_def}')
+            print(f'      collecting local_file_path {field_def}')
 
         gs_key = field_def['gcs_uri_format'].format_map(format_context)
 
@@ -332,7 +332,7 @@ def _process_property(
     elif field_def.get('is_artifact') == "multi":
 
         if verb:
-            print(f'collecting multi local_file_path {field_def}')
+            print(f'      collecting multi local_file_path {field_def}')
     
         # loop over each path
         files = []
@@ -492,8 +492,9 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     # get the root CT schema
     root_ct_schema = load_and_validate_schema("clinical_trial.json")
     # create the result CT dictionary
-    root_ct_obj = {"_root_ct_obj": assay_hint} if verb else {}
+    root_ct_obj = {f"__{assay_hint[0]}": "as root_ct_obj"} if verb else {}
     # and merger for it
+    root_ct_merger = Merger(root_ct_schema)
     # and where to collect all local file refs
     collected_files = []
 
@@ -522,7 +523,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         data_object_pointer = templ_ws['prism_data_object_pointer']
 
         # creating preamble obj 
-        preamble_obj = {"_preamble_obj": f"{assay_hint}:{ws_name}"} if verb else {}
+        preamble_obj = {f"__{assay_hint[0]}:{ws_name[0]}" : "as preamble"} if verb else {}
         
 
         # Processing data rows first
@@ -535,11 +536,11 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
             for i, row in enumerate(data):
 
                 if verb:
-                    print(f'next data row {i} {row}')
+                    print(f'  next data row {i} {row}')
 
                 # creating data obj 
-                data_obj = {"_data_obj": f"{assay_hint}:{ws_name}:row_{i}"} if verb else {}
-                copy_of_preamble = {"_preamble_obj": f"copy_for:{assay_hint}:{ws_name}:row_{i}"} if verb else {}
+                data_obj = {f"__{assay_hint[0]}:{ws_name[0]}:{i}" : "as data_obj"} if verb else {}
+                copy_of_preamble = {f"__{assay_hint[0]}:{ws_name[0]}:{i}" : "as copy_of_preamble"} if verb else {}
                 _set_val(data_object_pointer, data_obj, copy_of_preamble, root_ct_obj, preamble_object_pointer, verb=verb)
 
                 # We create this "data record dict" (all key-value pairs) prior to processing
@@ -565,17 +566,16 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                             collected_files.append(new_file)
 
                 if verb:
-                    print('merging preambles')
+                    print('  merging preambles')
                     print(f'   {preamble_obj}')
                     print(f'   {copy_of_preamble}')
                 preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
                 if verb:
-                    print(f'merged - {preamble_obj}')
-
-
         # set the value of the something TODO: write a better comment
         _set_val(preamble_object_pointer, preamble_obj, root_ct_obj, verb=verb)
+                    print(f'  merged - {preamble_obj}')
 
+        
         # Now processing preamble rows 
         for row in ws[RowType.PREAMBLE]:
             # process this property

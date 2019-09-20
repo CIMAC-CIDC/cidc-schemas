@@ -3,7 +3,7 @@
     "properties": {
         "worksheets": {
             "samples": {
-                "prism_preamble_object_schema" : "participant.json",
+                "prism_preamble_object_schema" : "clinical_trial.json",
                 "prism_preamble_object_pointer" : "#",
                 "prism_data_object_pointer" : "/participants/0/samples/0",
                 "preamble_rows": {
@@ -13,7 +13,6 @@
                         "PA id": {
                             "merge_pointer": "2/cimac_participant_id",
                             "type_ref": "participant.json#properties/cimac_participant_id"
-
                         },
                         "SA id": {
                             "merge_pointer": "0/cimac_sample_id",
@@ -27,13 +26,17 @@
                 }
             },
             "aliquots": {
-                "prism_preamble_object_schema" : "participant.json",
-                "prism_preamble_object_pointer" : "/participants/0",
-                "prism_data_object_pointer" : "/samples/0/aliquots/0",
+                "prism_preamble_object_schema" : "clinical_trial.json",
+                "prism_preamble_object_pointer" : "#",
+                "prism_data_object_pointer" : "/participants/0/samples/0/aliquots/0",
                 "preamble_rows": {
                 },
                 "data_columns": {
                     "Samples": {
+                        "PA_id": {
+                            "merge_pointer": "4/cimac_participant_id",
+                            "type_ref": "participant.json#properties/cimac_participant_id"
+                        },
                         "SA_id": {
                             "merge_pointer": "2/cimac_sample_id",
                             "type_ref": "sample.json#properties/cimac_sample_id"

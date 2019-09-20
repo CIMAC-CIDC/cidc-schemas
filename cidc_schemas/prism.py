@@ -571,8 +571,6 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                     print(f'   {copy_of_preamble}')
                 preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
                 if verb:
-        # set the value of the something TODO: write a better comment
-        _set_val(preamble_object_pointer, preamble_obj, root_ct_obj, verb=verb)
                     print(f'  merged - {preamble_obj}')
 
         
@@ -594,6 +592,17 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
             if new_files:
                 for new_file in new_files:
                     collected_files.append(new_file)
+
+        # Now pushing it up / merging with the whole thing
+        copy_of_root = {f"__{assay_hint[0]}:{ws_name[0]}" : "as copy_of_root"} if verb else {}
+        _set_val(preamble_object_pointer, preamble_obj, copy_of_root, verb=verb)
+        if verb:
+            print('merging root objs')
+            print(f' {root_ct_obj}')
+            print(f' {copy_of_root}')
+        root_ct_obj = root_ct_merger.merge(root_ct_obj, copy_of_root)
+        if verb:
+            print(f'merged - {preamble_obj}')
 
     # return root object and files list
     return root_ct_obj, collected_files

@@ -154,10 +154,11 @@ class Template:
         referer = {'$ref': ref}
 
         resolver_cache = {}
+        schemas_dir = f'file://{SCHEMA_DIR}/schemas'
         while '$ref' in referer:
             # get the entry
             resolver = jsonschema.RefResolver(
-                f'file://{SCHEMA_DIR}/schemas', referer, resolver_cache)
+                schemas_dir, referer, resolver_cache)
             _, referer = resolver.resolve(referer['$ref'])
 
         entry = referer

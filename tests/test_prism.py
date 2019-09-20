@@ -10,7 +10,10 @@ import jsonschema
 import json
 from deepdiff import grep, DeepDiff
 from pprint import pprint
+from collections import namedtuple
 from jsonmerge import Merger
+from unittest.mock import MagicMock, patch as mock_patch
+
 
 from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
@@ -835,3 +838,39 @@ def test_merge_stuff():
     merger = Merger(schema)
     xyz = merger.merge(obj1, obj2)
     assert len(xyz['slices']) == 1
+
+
+def test_prism_joining_tabs(monkeypatch):
+    """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
+
+    load_workbook = MagicMock(name="load_workbook")
+    monkeypatch.setattr("openpyxl.load_workbook", load_workbook)
+    workbook = load_workbook.return_value = MagicMock(name="workbook")
+    wb= {"samples": MagicMock(name="samples"), "aliquots": MagicMock(name="aliquots"), }
+    workbook.__getitem__.side_effect = wb.__getitem__
+    workbook.sheetnames = wb.keys()
+    cell = namedtuple("cell", ["value"])
+    wb["samples"].iter_rows.return_value = [
+        map(cell, ["#h", "PA id", "SA id",  "SA prop"]),
+        # map(cell, ["#d", "PA_0",  "SA_0.1", "01"]),
+        map(cell, ["#d", "PA_0",  "SA_0.0", "00"]),
+        map(cell, ["#d", "PA_1",  "SA_1.0", "10"]),
+    ]
+    wb["aliquots"].iter_rows.return_value = [
+        map(cell, ["#h", "SA_id",   "AL id",    "AL prop"]),
+        # map(cell, ["#d", "SA_1.0",  "AL_1.0.0", "100"]),
+        # map(cell, ["#d", "SA_1.0",  "AL_1.0.1", "101"]),
+        # map(cell, ["#d", "SA_0.0",  "AL_0.0.0", "000"]),
+        # map(cell, ["#d", "SA_0.1",  "AL_0.1.0", "010"]),
+    ]
+
+    
+    monkeypatch.setattr("cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_ship"])
+
+    patch, file_maps = prismify("whatever", "templates/manifests/test_ship_template.json", assay_hint="test_ship", verb=True)
+    # patch, file_maps = prismify("whatever", "templates/manifests/test_ship_template.json", assay_hint="test_ship", verb=False)
+
+    assert 0, json.dumps(patch, indent=4)
+    
+        
+

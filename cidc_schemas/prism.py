@@ -524,6 +524,8 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         # creating preamble obj 
         preamble_obj = {"_preamble_obj": f"{assay_hint}:{ws_name}"} if verb else {}
         
+
+        # Processing data rows first
         data = ws[RowType.DATA]
         if data:
             # get the data
@@ -574,7 +576,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         # set the value of the something TODO: write a better comment
         _set_val(preamble_object_pointer, preamble_obj, root_ct_obj, verb=verb)
 
-        # TODO: What are we doing here?
+        # Now processing preamble rows 
         for row in ws[RowType.PREAMBLE]:
             # process this property
             new_files = _process_property(

@@ -94,7 +94,7 @@ class XlTemplateReader:
                 # Filter empty cells from the end of a data row
                 if row_type == RowType.DATA:
                     assert header_width, "Encountered data row before header row"
-                    values = values[:header_width]
+                    assert len(values) <= header_width, "Encountered data row wider than header row"
 
                 # Reassemble parsed row and add to rows
                 new_row = TemplateRow(row_num, row_type, values)

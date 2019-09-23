@@ -154,10 +154,11 @@ class Template:
         referer = {'$ref': ref}
 
         resolver_cache = {}
+        schemas_dir = f'file://{SCHEMA_DIR}/schemas'
         while '$ref' in referer:
             # get the entry
             resolver = jsonschema.RefResolver(
-                f'file://{SCHEMA_DIR}/schemas', referer, resolver_cache)
+                schemas_dir, referer, resolver_cache)
             _, referer = resolver.resolve(referer['$ref'])
 
         entry = referer
@@ -206,9 +207,7 @@ class Template:
         key_lu = {}
 
         def _add_coerce(field_def: dict) -> dict:
-            # checks if we have a cast func for that 'type_ref'
-            if 'value_template_format' in field_def:
-                coerce = lambda x: field_def['value_template_format'].format_map(x)
+            """ Checks if we have a cast func for that 'type_ref' """
             if 'type' in field_def:
                 if '$id' in field_def:
                     coerce = self._get_coerce(

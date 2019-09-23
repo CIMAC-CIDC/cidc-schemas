@@ -89,12 +89,14 @@ class XlTemplateReader:
                     rev_values = values[::-1]
                     clean = list(dropwhile(lambda v: v is None, rev_values))
                     values = clean[::-1]
+                    header = values
                     header_width = len(values)
 
                 # Filter empty cells from the end of a data row
                 if row_type == RowType.DATA:
                     assert header_width, "Encountered data row before header row"
-                    assert len(values) <= header_width, "Encountered data row wider than header row"
+                    values_width = len(values)
+                    assert values_width <= header_width, "Encountered data row wider than header row"
 
                 # Reassemble parsed row and add to rows
                 new_row = TemplateRow(row_num, row_type, values)
@@ -190,7 +192,6 @@ class XlTemplateReader:
 
         # If no worksheet is found, return only that error.
         if not worksheet_name in self.grouped_rows:
-            raise Exception(f'No worksheet found with name {worksheet_name}')
             return [f'No worksheet found with name {worksheet_name}']
         row_groups = self.grouped_rows[worksheet_name]
 

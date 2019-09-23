@@ -3,11 +3,11 @@
     "$id": "CYTOF",
     "title": "Metadata file for CYTOF",
     "description": "Metadata information for mass-cytometry (CYTOF).",
+    "prism_template_root_object_schema": "assays/cytof_assay.json",
+    "prism_template_root_object_pointer": "/assays/cytof/0",
     "properties": {
         "worksheets": {
             "Acquisition and Preprocessing": {
-                "prism_preamble_object_schema": "assays/cytof_assay.json",
-                "prism_preamble_object_pointer": "/assays/cytof/0",
                 "prism_data_object_pointer": "/records/-",
                 "preamble_rows": {
                     "lead organization study id": {
@@ -107,8 +107,6 @@
                 }
             },
             "Antibody Information": {
-                "prism_preamble_object_schema": "assays/cytof_assay.json",
-                "prism_preamble_object_pointer": "/assays/cytof/0",
                 "prism_data_object_pointer": "/cytof_antibodies/-",
                 "data_columns": {
                     "Samples": {

@@ -3,7 +3,7 @@
     "$id": "cytof_entry",
     "title": "CyTOF assay record",
     "type": "object",
-    "description": "A single data record from CyTOF assay batch",
+    "description": "A single data record from CyTOF assay batch.",
     "properties": {
         "cimac_participant_id": {
             "$comment": "Id of an participant within this clinical trial, that this assay record is based upon.",

@@ -11,10 +11,12 @@
     },
     "Mapping Artifacts": {
       "type": "array",
+      "description": "Regions of interest obtained from image mapping.",
       "items": { "$ref": "assays/components/mapping.json" }
     },
     "Composite Image Artifacts": {
       "type": "array",
+      "description": "Regions of interest obtained from composite images.",
       "items": { "$ref": "assays/components/composite_image.json" }
     }
   },

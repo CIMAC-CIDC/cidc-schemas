@@ -16,6 +16,7 @@
     },
     "records": {
       "type": "array",
+      "description": "A single data record from WES assay.",
       "items": {
         "$ref": "assays/components/ngs/wes_assay_record.json"
       },
@@ -26,6 +27,7 @@
     },
     "analysis":{
       "type":"array",
+      "description": "A single export data record from WES assay.",
       "items":{
         "$ref": "assays/components/ngs/wes_export.json"
       }

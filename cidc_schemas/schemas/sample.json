@@ -110,6 +110,7 @@
     },
     "aliquots": {
       "type": "array",
+      "description": "Pertaining to a portion (volume or weight) of the whole.",
       "items": {
         "$ref": "aliquot.json"
       },

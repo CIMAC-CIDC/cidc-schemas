@@ -12,6 +12,7 @@
   "properties": {
     "records": {
       "type": "array",
+      "description": "A single data record from mIF assay.",
       "items": {
         "$ref": "assays/components/imaging/mif_entry.json"
       }

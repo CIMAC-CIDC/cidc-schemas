@@ -118,7 +118,7 @@
     </td>
     <td width=55%>
         
-            
+            The collection of all data related to a specific participant in the context of a specific clinical trial.
         
     </td>
     <td>
@@ -395,6 +395,7 @@
             "mergeStrategy": "objectMerge",
             "properties": {
                 "cytof": {
+                    "description": "Base information about the acquisition and analysis of CyTOF data.",
                     "items": {
                         "$id": "cytof",
                         "$schema": "http://json-schema.org/draft-07/schema#",
@@ -402,6 +403,7 @@
                         "mergeStrategy": "objectMerge",
                         "properties": {
                             "cytof_antibodies": {
+                                "description": "Data specific to antibody preparation on the CyTOF assay.",
                                 "items": {
                                     "$id": "cytof_antibody",
                                     "$schema": "http://json-schema.org/draft-07/schema#",
@@ -486,10 +488,11 @@
                                 "type": "array"
                             },
                             "records": {
+                                "description": "A single data record from CyTOF assay batch.",
                                 "items": {
                                     "$id": "cytof_entry",
                                     "$schema": "http://json-schema.org/draft-07/schema#",
-                                    "description": "A single data record from CyTOF assay batch",
+                                    "description": "A single data record from CyTOF assay batch.",
                                     "mergeStrategy": "objectMerge",
                                     "properties": {
                                         "acquisition_buffer": {
@@ -1238,6 +1241,7 @@
                     "type": "array"
                 },
                 "micsss": {
+                    "description": "Multiplexed immunohistochemical consecutive staining on single slide.",
                     "items": {
                         "$id": "micsss",
                         "$schema": "http://json-schema.org/draft-07/schema#",
@@ -1491,6 +1495,7 @@
                         "description": "Multiplexed immunohistochemical consecutive staining on single slide.",
                         "properties": {
                             "records": {
+                                "description": "A single data record from micsss assay.",
                                 "items": {
                                     "$id": "micsss_assay_record",
                                     "$schema": "http://json-schema.org/draft-07/schema#",
@@ -1502,6 +1507,7 @@
                                             "description": "micsss assay input files.",
                                             "properties": {
                                                 "Composite Image Artifacts": {
+                                                    "description": "Regions of interest obtained from composite images.",
                                                     "items": {
                                                         "$id": "composite_image",
                                                         "$schema": "http://json-schema.org/draft-07/schema#",
@@ -1796,6 +1802,7 @@
                                                     "type": "array"
                                                 },
                                                 "Mapping Artifacts": {
+                                                    "description": "Regions of interest obtained from image mapping.",
                                                     "items": {
                                                         "$id": "image_mapping",
                                                         "$schema": "http://json-schema.org/draft-07/schema#",
@@ -2787,6 +2794,7 @@
                     "type": "array"
                 },
                 "mif": {
+                    "description": "Multiplex immunofluorescence.",
                     "items": {
                         "$id": "mif",
                         "$schema": "http://json-schema.org/draft-07/schema#",
@@ -3007,6 +3015,7 @@
                         "mergeStrategy": "objectMerge",
                         "properties": {
                             "records": {
+                                "description": "A single data record from mIF assay.",
                                 "items": {
                                     "$id": "mif_assay_record",
                                     "$schema": "http://json-schema.org/draft-07/schema#",
@@ -5114,6 +5123,7 @@
                     "type": "object"
                 },
                 "rna_expression": {
+                    "description": "RNA assay for expression analysis.",
                     "items": {
                         "$schema": "http://json-schema.org/draft-07/schema#",
                         "allOf": [
@@ -6098,6 +6108,7 @@
                     "type": "array"
                 },
                 "wes": {
+                    "description": "Whole exome sequencing.",
                     "items": {
                         "$id": "wes_assay",
                         "$schema": "http://json-schema.org/draft-07/schema#",
@@ -6177,6 +6188,7 @@
                         "mergeStrategy": "objectMerge",
                         "properties": {
                             "analysis": {
+                                "description": "A single export data record from WES assay.",
                                 "items": {
                                     "$id": "wes_export",
                                     "$schema": "http://json-schema.org/draft-07/schema#",
@@ -7358,6 +7370,7 @@
                                 "type": "string"
                             },
                             "records": {
+                                "description": "A single data record from WES assay.",
                                 "items": {
                                     "$id": "wes_assay_record",
                                     "$schema": "http://json-schema.org/draft-07/schema#",
@@ -7853,6 +7866,7 @@
             "type": "string"
         },
         "participants": {
+            "description": "The collection of all data related to a specific participant in the context of a specific clinical trial.",
             "items": {
                 "$id": "participant",
                 "$schema": "http://json-schema.org/draft-07/schema#",
@@ -7912,6 +7926,7 @@
                             "description": "Any material sample taken from a biological entity for testing, diagnostic, propagation, treatment or research purposes, including a sample obtained from a living organism or taken from the biological object after halting of all its life functions. Biospecimen can contain one or more components including but not limited to cellular molecules, cells, tissues, organs, body fluids, embryos, and body excretory products.",
                             "properties": {
                                 "aliquots": {
+                                    "description": "Pertaining to a portion (volume or weight) of the whole.",
                                     "items": {
                                         "$id": "aliquot",
                                         "$schema": "http://json-schema.org/draft-07/schema#",

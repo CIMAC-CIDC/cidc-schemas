@@ -89,14 +89,12 @@ class XlTemplateReader:
                     rev_values = values[::-1]
                     clean = list(dropwhile(lambda v: v is None, rev_values))
                     values = clean[::-1]
-                    header = values
                     header_width = len(values)
 
                 # Filter empty cells from the end of a data row
                 if row_type == RowType.DATA:
                     assert header_width, "Encountered data row before header row"
-                    values_width = len(values)
-                    assert values_width <= header_width, "Encountered data row wider than header row"
+                    assert len(values) <= header_width, "Encountered data row wider than header row"
 
                 # Reassemble parsed row and add to rows
                 new_row = TemplateRow(row_num, row_type, values)

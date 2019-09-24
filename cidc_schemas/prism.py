@@ -352,7 +352,7 @@ def _process_property(
         return files
 
 
-SUPPORTED_ASSAYS = ["wes", "olink", "cytof"]
+SUPPORTED_ASSAYS = ["olink", "cytof"]
 SUPPORTED_MANIFESTS = ["pbmc", "plasma"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
 

@@ -10,6 +10,7 @@ from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader, ValidationError
+from cidc_schemas.prism import SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES
 
 from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR
 
@@ -35,6 +36,18 @@ def template_paths():
         xlsx = f'{name}.xlsx'
         xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, xlsx)
         template_paths[i] = (schema_path, xlsx_path)
+
+    # skip unsupported
+    keepers = []
+    for sp, xp in template_paths:
+        skip = False
+        for y in SUPPORTED_TEMPLATES:
+            if sp.count(y) > 0:
+                skip = True
+                break
+        if not skip:
+            keepers.append((sp, xp))
+    template_paths = keepers
 
     return template_paths
 

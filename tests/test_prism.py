@@ -172,7 +172,7 @@ def test_merge_core():
 
     # create aliquot
     aliquot = {
-        "cimac_aliquot_id": "1234",
+        "slide_number": "1234",
         "units": "Other",
         "material_used": 1,
         "material_remaining": 0,
@@ -183,7 +183,7 @@ def test_merge_core():
 
     # create the sample.
     sample = {
-        "cimac_sample_id": "S1234",
+        "cimac_id": "CM-TRIA-PA12-34",
         "site_sample_id": "blank",
         "aliquots": [aliquot],
         "time_point": "---",
@@ -228,8 +228,7 @@ def test_merge_core():
 
     # now lets add a new sample to one of the participants
     ct4 = copy.deepcopy(ct3)
-    sample2 = ct4['participants'][0]['samples'][0]
-    sample2['cimac_sample_id'] = 'new_id_1'
+    ct4['participants'][0]['samples'][0]['cimac_id'] = 'new_id_1'
 
     ct5 = merger.merge(ct3, ct4)
     assert len(ct5['participants'][0]['samples']) == 2
@@ -237,7 +236,7 @@ def test_merge_core():
     # now lets add a new aliquot to one of the samples.
     ct6 = copy.deepcopy(ct5)
     aliquot2 = ct6['participants'][0]['samples'][0]['aliquots'][0]
-    aliquot2['cimac_aliquot_id'] = 'new_ali_id_1'
+    aliquot2['slide_number'] = 'new_ali_id_1'
 
     ct7 = merger.merge(ct5, ct6)
     assert len(ct7['participants'][0]['samples'][0]['aliquots']) == 2
@@ -285,7 +284,7 @@ def test_samples_merge():
     
     # create a2 and modify ids to trigger merge behavior
     a2 = copy.deepcopy(a1)
-    a2['participants'][0]['samples'][0]['cimac_sample_id'] = "something different"
+    a2['participants'][0]['samples'][0]['cimac_id'] = "something different"
 
     # create validator assert schema is valid.
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)

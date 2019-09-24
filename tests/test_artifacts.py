@@ -150,6 +150,6 @@ def test_npx():
         at_validator.validate(obj)
 
     # add the required properties
-    obj["number_of_aliquots"] = 7
-    obj["aliquots"] = ["no", "referential", "integrity", "here"]
+    obj["number_of_samples"] = 7
+    obj["samples"] = ["CM-NONE-REFE-RE", "CM-NTIA-INTE-GR"]
     at_validator.validate(obj)

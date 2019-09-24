@@ -367,7 +367,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     [
         {
             'local_path': '/path/to/fwd.fastq',
-            'gs_key': '10021/Patient_1/sample_1/wes_forward.fastq'
+            'gs_key': '10021/CM-TRIA-PART-SA/wes_forward.fastq'
         }
     ]
 

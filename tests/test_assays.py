@@ -94,9 +94,7 @@ def test_wes():
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
-        "cimac_participant_id": "PAid",
-        "cimac_sample_id": "SAid",
-        "cimac_aliquot_id": "ALid",
+        "cimac_id": "CM-TRIA-PART-SA",
         "files": {
             "r1": r1,
             "r2": r1,
@@ -162,9 +160,7 @@ def test_rna_expression():
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
-        "cimac_participant_id": "PAid",
-        "cimac_sample_id": "SAid",
-        "cimac_aliquot_id": "ALid",
+        "cimac_id": "CM-TRIA-PART-SA",
         "files": {
             "r1": r1,
             "r2": r1,
@@ -241,7 +237,7 @@ def test_cytof():
     fcs_2 = ARTIFACT_OBJ.copy()
     fcs_2['data_format'] = 'BINARY'
     record = {
-        "cimac_aliquot_id": "ABC",
+        "cimac_id": "CM-TRIA-PART-SA",
         "files": {
                 "processed_fcs": fcs_1,
                 "source_fcs": [fcs_2.copy(), fcs_2.copy()]
@@ -390,8 +386,8 @@ def test_olink():
     # create the olink object
     npx = ARTIFACT_OBJ.copy()
     npx['data_format'] = 'NPX'
-    npx['aliquots'] = ['a', 'b', 'c']
-    npx['number_of_aliquots'] = 3
+    npx['samples'] = ['CM-TRIA-PART-S1', 'CM-TRIA-PART-S2', 'CM-TRIA-PART-S3']
+    npx['number_of_samples'] = 3
     xlsx = ARTIFACT_OBJ.copy()
     xlsx['data_format'] = 'XLSX'
     record = OLINK_RECORD.copy()

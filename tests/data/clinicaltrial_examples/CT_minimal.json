@@ -8,7 +8,7 @@
             "arm_id": "---",
             "samples": [
                 {
-                    "cimac_sample_id": "SA.1.1.1",
+                    "cimac_id": "CM-TRIA-PA11-S1",
                     "site_sample_id": "site.SA.1.1.1",
                     "time_point": "---",
                     "sample_location": "---",
@@ -17,7 +17,7 @@
                     "genomic_source": "Normal",
                     "aliquots": [
                         {
-                            "cimac_aliquot_id": "AL 1.1.1.1",
+                            "slide_number": "AL 1.1.1.1",
                             "units": "Other",
                             "material_used": 1,
                             "material_remaining": 0,
@@ -28,7 +28,7 @@
                     ] 
                 }, 
                 {
-                    "cimac_sample_id": "SA.1.1.2",
+                    "cimac_id": "CM-TRIA-PA11-S2",
                     "site_sample_id": "site.SA.1.1.2",
                     "time_point": "---",
                     "sample_location": "---",
@@ -37,7 +37,7 @@
                     "genomic_source": "Tumor",
                     "aliquots": [
                         {
-                            "cimac_aliquot_id": "AL.1.1.2.2",
+                            "slide_number": "AL.1.1.2.2",
                             "units": "Other",
                             "material_used": 1,
                             "material_remaining": 0,

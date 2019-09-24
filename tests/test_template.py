@@ -110,8 +110,13 @@ def generate_all_templates(target_dir: str):
                     generate_empty_template(schema_path, target_path)
 
 
+
 def test_generate_empty_template(pbmc_schema_path, pbmc_template, tmpdir):
     """Check that generate_empty_template generates the correct template."""
+    # TODO: I think this test as it seems to be sub-optimal. Any change
+    # to the PBMC template.json will require that this empty test be
+    # updated. I think there are better ways to do this.
+
     # Generate the xlsx file with the convenience method
     target_path = tmpdir.join('pbmc_target.xlsx')
     generate_empty_template(pbmc_schema_path, target_path)

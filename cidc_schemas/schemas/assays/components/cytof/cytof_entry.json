@@ -5,17 +5,9 @@
     "type": "object",
     "description": "A single data record from CyTOF assay batch",
     "properties": {
-        "cimac_participant_id": {
-            "$comment": "Id of an participant within this clinical trial, that this assay record is based upon.",
-            "$ref": "participant.json#properties/cimac_participant_id"
-        },
-        "cimac_sample_id": {
-            "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
-            "$ref": "sample.json#properties/cimac_sample_id"
-        },
-        "cimac_aliquot_id": {
-            "$comment": "Id of an aliquot within this clinical trial, that this assay record is based upon.",
-            "$ref": "aliquot.json#properties/cimac_aliquot_id"
+        "cimac_id": {
+            "$comment": "Id of a sample within this clinical trial, that this assay record is based upon.",
+            "$ref": "sample.json#properties/cimac_id"
         },
         "panel_name": {
             "description": "Standardized CyTOF panel name used for antibody sample development.",
@@ -95,7 +87,7 @@
     },
     "mergeStrategy": "objectMerge",
     "required": [
-        "cimac_aliquot_id",
+        "cimac_id",
         "files"
     ]
 }

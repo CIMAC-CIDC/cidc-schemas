@@ -43,17 +43,9 @@
         },
         "data_columns": {
           "Samples": {
-            "cimac participant id": {
-              "merge_pointer": "0/cimac_participant_id", 
-              "type_ref": "participant.json#properties/cimac_participant_id"
-            },
-            "cimac sample id": {
-              "merge_pointer": "0/cimac_sample_id", 
-              "type_ref": "sample.json#properties/cimac_sample_id"
-            },
-            "cimac aliquot id": {
-              "merge_pointer": "0/cimac_aliquot_id", 
-              "type_ref": "aliquot.json#properties/cimac_aliquot_id"
+            "cimac id": {
+              "merge_pointer": "0/cimac_id", 
+              "type_ref": "sample.json#properties/cimac_id"
             },
             "library kit lot": {
               "merge_pointer": "0/library_kit_lot", 
@@ -85,19 +77,19 @@
             },
             "forward fastq": {
               "merge_pointer": "0/files/r1", 
-              "gcs_uri_format": "{lead organization study id}/{cimac participant id}/{cimac sample id}/{cimac aliquot id}/wes/r1.fastq",
+              "gcs_uri_format": "{lead organization study id}/{cimac id}/wes/r1.fastq",
               "is_artifact" : 1,
               "type_ref": "assays/components/local_file.json#properties/file_path"
             },
             "reverse fastq": {
               "merge_pointer": "0/files/r2", 
-              "gcs_uri_format": "{lead organization study id}/{cimac participant id}/{cimac sample id}/{cimac aliquot id}/wes/r2.fastq",
+              "gcs_uri_format": "{lead organization study id}/{cimac id}/wes/r2.fastq",
               "is_artifact" : 1,
               "type_ref": "assays/components/local_file.json#properties/file_path"
             },
             "read group mapping file": {
               "merge_pointer": "0/files/read_group_mapping_file", 
-              "gcs_uri_format": "{lead organization study id}/{cimac participant id}/{cimac sample id}/{cimac aliquot id}/wes/rgm.txt",
+              "gcs_uri_format": "{lead organization study id}/{cimac id}/wes/rgm.txt",
               "is_artifact" : 1,
               "type_ref": "assays/components/local_file.json#properties/file_path"
             }

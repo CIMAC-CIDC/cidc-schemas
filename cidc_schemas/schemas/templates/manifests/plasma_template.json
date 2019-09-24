@@ -172,9 +172,9 @@
              "merge_pointer": "2/sample_source", 
              "type_ref": "sample.json#properties/sample_source" 
             },
-            "cimac aliquot id": {
-              "merge_pointer": "/cimac_aliquot_id",
-              "type_ref": "aliquot.json#properties/cimac_aliquot_id"
+            "cimac id": {
+              "merge_pointer": "/cimac_id",
+              "type_ref": "sample.json#properties/cimac_id"
             }
           },
           "Filled by CIMAC Lab": {

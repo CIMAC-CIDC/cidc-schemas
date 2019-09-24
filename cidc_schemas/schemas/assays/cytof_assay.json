@@ -19,7 +19,7 @@
             },
             "mergeStrategy": "arrayMergeById",
             "mergeOptions": {
-              "idRef": "cimac_aliquot_id"
+              "idRef": "cimac_id"
             }
         }
     },

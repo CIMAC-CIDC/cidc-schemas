@@ -367,7 +367,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     [
         {
             'local_path': '/path/to/fwd.fastq',
-            'gs_key': '10021/Patient_1/sample_1/aliquot_1/wes_forward.fastq'
+            'gs_key': '10021/Patient_1/sample_1/wes_forward.fastq'
         }
     ]
 
@@ -470,7 +470,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                 "assay_creator": "DFCI",
                 "records": [
                   {
-                    "cimac_aliquot_id": ...         # from "0/cimac_aliquot_id", 
+                    "cimac_id": ...                 # from "0/cimac_id", 
                     "enrichment_vendor_lot": ...    # from "0/enrichment_vendor_lot", 
                     "capture_date": ...             # from "0/capture_date", 
                   }

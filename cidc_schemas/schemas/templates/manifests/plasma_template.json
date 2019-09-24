@@ -100,10 +100,6 @@
               "merge_pointer": "4/trial_participant_id",
               "type_ref": "participant.json#properties/trial_participant_id"
             },
-            "cimac participant id": {
-              "merge_pointer": "4/cimac_participant_id",
-              "type_ref": "participant.json#properties/cimac_participant_id"
-            },
             "cohort id": {
               "merge_pointer": "4/cohort_id",
               "type_ref": "participant.json#properties/cohort_id" 
@@ -115,6 +111,10 @@
             "site sample id": {
               "merge_pointer": "2/site_sample_id",
               "type_ref": "sample.json#properties/site_sample_id"
+            },
+            "cimac id": {
+              "merge_pointer": "/cimac_id",
+              "type_ref": "sample.json#properties/cimac_id"
             },
             "time point": {
               "merge_pointer": "2/time_point", 
@@ -167,10 +167,6 @@
             "sample source": {
              "merge_pointer": "2/sample_source", 
              "type_ref": "sample.json#properties/sample_source" 
-            },
-            "cimac id": {
-              "merge_pointer": "/cimac_id",
-              "type_ref": "sample.json#properties/cimac_id"
             }
           },
           "Filled by CIMAC Lab": {

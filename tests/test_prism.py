@@ -483,7 +483,11 @@ def test_prismify_wes_only():
     hint = 'wes'
 
     # parse the spreadsheet and get the file maps
-    md_patch, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
+    with pytest.raises(NotImplementedError):
+        md_patch, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
+    
+    # TODO: SUPPORT FOR WES HAS BEEN DISABLED, UNCOMMENT THIS WHEN THAT IS NOT TRUE
+    return
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting

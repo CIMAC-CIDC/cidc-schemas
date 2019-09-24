@@ -283,7 +283,6 @@ def _process_property(
     if verb:
         print(f'      found def {field_def}')
     
-    val = field_def['coerce'](raw_val)
 
     # or set/update value in-place in data_obj dictionary 
     pointer = field_def['merge_pointer']
@@ -291,29 +290,43 @@ def _process_property(
         pointer += '/upload_placeholder'
 
     # deal with multiartifact
-    if field_def.get("is_artifact") == "multi":
+    if not (field_def.get("is_artifact") == "multi"):
+        val = field_def['coerce'](raw_val)
+
+    else:
 
         # tokenize value
         local_paths = raw_val.split(",")
 
         # create array container.
-        multi_val = []
-        file_ids = []
+        val = []
+        file_uuids = []
         for x in range(len(local_paths)):
-            file_id = field_def['coerce'](raw_val)
-            file_ids.append(file_id)
-            multi_val.append({"upload_placeholder": file_id})
+            file_uuid = field_def['coerce'](raw_val)
+            file_uuids.append(file_uuid)
+            val.append({"upload_placeholder": file_uuid})
 
-        # set the value
-        _set_val(pointer, multi_val, data_obj, root_obj, data_obj_pointer, verb=verb)
+    _set_val(pointer, val, data_obj, root_obj, data_obj_pointer, verb=verb)
 
-    else:
-        # set the value
-        _set_val(pointer, val, data_obj, root_obj, data_obj_pointer, verb=verb)
+
+    if 'process_as' in field_def:
+        for extra_fdef in field_def['process_as']:
+            pointer = extra_fdef['merge_pointer']
+            extra_fdef_val = val
+            if 'parse_through' in extra_fdef:
+                extra_fdef_val = eval(extra_fdef['parse_through'])(val)
+
+            _set_val(pointer, extra_fdef_val, data_obj, root_obj, data_obj_pointer, verb=verb)
+
+
 
     if verb:
-        print(f'      current {data_obj}')
-        print(f'      current root {root_obj}')
+
+        if field_def["merge_pointer"][0].isdigit():
+            # setting prop somewhere in parent hierarchy, so debug root
+            print(f'      current root {root_obj}')
+        else:
+            print(f'      current {data_obj}')
 
     if field_def.get('is_artifact') == 1:
 
@@ -336,7 +349,7 @@ def _process_property(
     
         # loop over each path
         files = []
-        for num, upload_placeholder in zip(range(len(local_paths)), file_ids):
+        for num, upload_placeholder in zip(range(len(local_paths)), file_uuids):
 
             # add number and generate key
             format_context['num'] = num

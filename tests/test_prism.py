@@ -40,7 +40,7 @@ TEST_PRISM_TRIAL = {
                     {
                         "aliquots": [
                             {
-                                "cimac_aliquot_id": "test_AL_1.1.1",
+                                "slide_number": "1",
                                 "units": "Other",
                                 "material_used": 1,
                                 "material_remaining": 0,
@@ -49,7 +49,7 @@ TEST_PRISM_TRIAL = {
                                 "aliquot_status": "Other"
                             },
                         ],
-                        "cimac_sample_id": "test_SA_1.1",
+                        "cimac_id": "CM-TEST-PAR1-11",
                         "site_sample_id": "test_sample_1",
                         "time_point": "---",
                         "sample_location": "---",
@@ -64,7 +64,7 @@ TEST_PRISM_TRIAL = {
                     {
                         "aliquots": [
                             {
-                                "cimac_aliquot_id": "test_AL_1.2.1",
+                                "slide_number": "1",
                                 "units": "Other",
                                 "material_used": 2,
                                 "material_remaining": 0,
@@ -73,7 +73,7 @@ TEST_PRISM_TRIAL = {
                                 "aliquot_status": "Other"
                             }
                         ],
-                        "cimac_sample_id": "test_SA_2.1",
+                        "cimac_id": "CM-TEST-PAR1-21",
                         "site_sample_id": "test_sample_2",
                         "time_point": "---",
                         "sample_location": "---",
@@ -106,9 +106,7 @@ TEST_PRISM_TRIAL = {
                             "input_ng": 101,
                             "library_yield_ng": 701,
                             "average_insert_size": 251,
-                            "cimac_participant_id": "test_PA_1",
-                            "cimac_sample_id": "test_SA_1.1",
-                            "cimac_aliquot_id": "test_AL_1.1.1",
+                            "cimac_id": "CM-TEST-PAR1-11",
                             "files": {
                                 "r1": {
                                     "upload_placeholder": "r1.1"
@@ -129,9 +127,7 @@ TEST_PRISM_TRIAL = {
                             "input_ng": 102,
                             "library_yield_ng": 702,
                             "average_insert_size": 252,
-                            "cimac_participant_id": "test_PA_2",
-                            "cimac_sample_id": "test_SA_2.1",
-                            "cimac_aliquot_id": "test_AL_1.2.1",
+                            "cimac_id": "CM-TEST-PAR1-21",
                             "files": {
                                 "r1": {
                                     "upload_placeholder": "r1.2"
@@ -153,26 +149,34 @@ TEST_PRISM_TRIAL = {
 
 # corresponding list of gs_urls.
 WES_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/test_PA_1/test_SA_1.1/test_AL_1.1.1/wes/r1.fastq': 
+    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/CM-TEST-PAR1-11/wes/r1.fastq': 
     "r1.1",
-    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/test_PA_1/test_SA_1.1/test_AL_1.1.1/wes/r2.fastq': 
+    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/CM-TEST-PAR1-11/wes/r2.fastq': 
     "r2.1",
-    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/test_PA_1/test_SA_1.1/test_AL_1.1.1/wes/rgm.txt': 
+    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/CM-TEST-PAR1-11/wes/rgm.txt': 
     "read_group_mapping_file.1",
-    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/test_PA_2/test_SA_2.1/test_AL_1.2.1/wes/r1.fastq': 
+    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/CM-TEST-PAR1-21/wes/r1.fastq': 
     "r1.2",
-    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/test_PA_2/test_SA_2.1/test_AL_1.2.1/wes/r2.fastq': 
+    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/CM-TEST-PAR1-21/wes/r2.fastq': 
     "r2.2",
-    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/test_PA_2/test_SA_2.1/test_AL_1.2.1/wes/rgm.txt': 
+    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/CM-TEST-PAR1-21/wes/rgm.txt': 
     "read_group_mapping_file.2"
 }
+
+
+def test_test_data():
+
+    # create validators
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+
+    validator.validate(TEST_PRISM_TRIAL)
 
 
 def test_merge_core():
 
     # create aliquot
     aliquot = {
-        "slide_number": "1234",
+        "slide_number": "12",
         "units": "Other",
         "material_used": 1,
         "material_remaining": 0,
@@ -250,7 +254,7 @@ MINIMAL_TEST_TRIAL = {
                 {
                     "aliquots": [
                         {
-                            "cimac_aliquot_id": "test_min_AL_1.1.1",
+                            "slide_number": "1",
                             "units": "Other",
                             "material_used": 1,
                             "material_remaining": 0,
@@ -265,7 +269,7 @@ MINIMAL_TEST_TRIAL = {
                     "specimen_type": "Other",
                     "specimen_format": "Other",
                     "site_sample_id": "test_min_Sample_1",
-                    "cimac_sample_id": "test_min_SA_1.1"
+                    "cimac_id": "CM-TEST-PAR1-01"
                 }
             ],
             "cimac_participant_id": "test_min_PA_1",
@@ -275,6 +279,14 @@ MINIMAL_TEST_TRIAL = {
         }
     ]
 }
+
+
+
+def test_minimal_test_data():
+    # create validators
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+
+    validator.validate(MINIMAL_TEST_TRIAL)
 
 
 def test_samples_merge():
@@ -406,12 +418,9 @@ def test_filepath_gen(schema_path, xlsx_path):
         # all that with
         # 1 trial id
         assert 1 == len(set([x.gs_key.split("/")[0] for x in file_maps]))
-        # 2 participants
-        assert 2 == len(set([x.gs_key.split("/")[1] for x in file_maps]))
         # 2 samples
-        assert 2 == len(set([x.gs_key.split("/")[2] for x in file_maps]))
-        # 2 aliquots
-        assert 2 == len(set([x.gs_key.split("/")[3] for x in file_maps]))
+        assert ['CM-TEST-PAR1-11', 'CM-TEST-PAR1-21'] == list(set([x.gs_key.split("/")[1] for x in file_maps]))
+        
 
     elif hint == 'olink':
 
@@ -595,6 +604,7 @@ def test_merge_ct_meta():
 
     # assert the patch over-writes the original value
     # when value is present in both objects
+    # TODO add 'discard' mergeStrategy from lead_organization_study_id 
     ct1['trial_name'] = 'name ABC'
     ct2['trial_name'] = 'CBA eman'
 
@@ -613,8 +623,8 @@ def test_merge_ct_meta():
     ct1["lead_organization_study_id"] = ct2["lead_organization_study_id"] 
     ct1['participants'][0]['cimac_participant_id'] = \
         ct2['participants'][0]['cimac_participant_id']
-    ct1['participants'][0]['samples'][0]['cimac_sample_id'] = 'new_id_1'
-    ct1['participants'][1]['samples'][0]['cimac_sample_id'] = 'new_id_2'
+    ct1['participants'][0]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N1'
+    ct1['participants'][1]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N2'
  
     ct_merge = merge_clinical_trial_metadata(ct1, ct2)
     assert len(ct_merge['participants']) == len(TEST_PRISM_TRIAL['participants'])
@@ -644,15 +654,14 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
             assert (prism_patch['shipments'][0]['request']) == "R123"
 
             assert len(prism_patch['participants']) == 2
-            assert len(prism_patch['participants'][0]['samples']) == 2
-            assert len(prism_patch['participants'][1]['samples']) == 2
-            assert sum(len(s["aliquots"]) for p in prism_patch['participants'] for s in p['samples']) == 6
+            assert len(prism_patch['participants'][0]['samples']) == 3
+            assert len(prism_patch['participants'][1]['samples']) == 3
 
         elif hint == 'plasma':
             assert (prism_patch['shipments'][0]['request']) == "a123"
             assert len(prism_patch['participants']) == 1
             assert len(prism_patch['participants'][0]['samples']) == 1
-            assert len(prism_patch['participants'][0]['samples'][0]['aliquots']) == 1
+            assert 'aliquots' not in prism_patch['participants'][0]['samples'][0]
 
         else: 
             assert False, f'add {hint} specific asserts'
@@ -845,22 +854,21 @@ def test_prism_joining_tabs(monkeypatch):
     load_workbook = MagicMock(name="load_workbook")
     monkeypatch.setattr("openpyxl.load_workbook", load_workbook)
     workbook = load_workbook.return_value = MagicMock(name="workbook")
-    wb= {"samples": MagicMock(name="samples"), "aliquots": MagicMock(name="aliquots"), }
+    wb= {"participants": MagicMock(name="participants"), "samples": MagicMock(name="samples"), }
     workbook.__getitem__.side_effect = wb.__getitem__
     workbook.sheetnames = wb.keys()
     cell = namedtuple("cell", ["value"])
-    wb["samples"].iter_rows.return_value = [
-        map(cell, ["#h", "PA id", "SA id",  "SA prop"]),
-        map(cell, ["#d", "PA_0",  "SA_0.1", "01"]),
-        map(cell, ["#d", "PA_0",  "SA_0.0", "00"]),
-        map(cell, ["#d", "PA_1",  "SA_1.0", "10"]),
+    wb["participants"].iter_rows.return_value = [
+        map(cell, ["#h", "PA id", "PA prop"]),
+        map(cell, ["#d", "CM-PA0",  "0"]),
+        map(cell, ["#d", "CM-PA1",  "1"]),
     ]
-    wb["aliquots"].iter_rows.return_value = [
-        map(cell, ["#h", "PA_id", "SA_id",   "AL id",    "AL prop"]),
-        map(cell, ["#d", "PA_1", "SA_1.0",  "AL_1.0.0", "100"]),
-        map(cell, ["#d", "PA_1", "SA_1.0",  "AL_1.0.1", "101"]),
-        map(cell, ["#d", "PA_0", "SA_0.0",  "AL_0.0.0", "000"]),
-        map(cell, ["#d", "PA_0", "SA_0.1",  "AL_0.1.0", "010"]),
+    wb["samples"].iter_rows.return_value = [
+        map(cell, ["#h", "SA_id",   "SA_prop"]),
+        map(cell, ["#d", "CM-PA1-SA0",  "100"]),
+        map(cell, ["#d", "CM-PA1-SA1",  "101"]),
+        map(cell, ["#d", "CM-PA0-SA0",  "000"]),
+        map(cell, ["#d", "CM-PA0-SA1",  "001"]),
     ]
 
     Template_from_json = MagicMock(name="Template_from_json")
@@ -870,7 +878,7 @@ def test_prism_joining_tabs(monkeypatch):
         "title": "participants and shipment",
         "properties": {
             "worksheets": {
-                "samples": {
+                "participants": {
                     "prism_preamble_object_schema" : "clinical_trial.json",
                     "prism_preamble_object_pointer" : "#",
                     "prism_data_object_pointer" : "/participants/0/samples/0",
@@ -882,40 +890,32 @@ def test_prism_joining_tabs(monkeypatch):
                                 "merge_pointer": "2/cimac_participant_id",
                                 "type_ref": "participant.json#properties/cimac_participant_id"
                             },
-                            "SA id": {
-                                "merge_pointer": "0/cimac_sample_id",
-                                "type_ref": "sample.json#properties/cimac_sample_id"
-                            },
-                            "SA prop": {
-                              "merge_pointer": "0/site_sample_id",
-                              "type_ref": "sample.json#properties/site_sample_id"
+                            "PA prop": {
+                              "merge_pointer": "0/trial_participant_id",
+                              "type_ref": "participant.json#properties/trial_participant_id"
                             }
                         }
                     }
                 },
-                "aliquots": {
+                "samples": {
                     "prism_preamble_object_schema" : "clinical_trial.json",
                     "prism_preamble_object_pointer" : "#",
-                    "prism_data_object_pointer" : "/participants/0/samples/0/aliquots/0",
+                    "prism_data_object_pointer" : "/participants/0/samples/0",
                     "preamble_rows": {
                     },
                     "data_columns": {
                         "Samples": {
-                            "PA_id": {
-                                "merge_pointer": "4/cimac_participant_id",
-                                "type_ref": "participant.json#properties/cimac_participant_id"
-                            },
                             "SA_id": {
-                                "merge_pointer": "2/cimac_sample_id",
-                                "type_ref": "sample.json#properties/cimac_sample_id"
+                                "merge_pointer": "/cimac_id",
+                                "type_ref": "sample.json#properties/cimac_id",
+                                "process_as": [{
+                                  "merge_pointer": "2/cimac_participant_id",
+                                  "parse_through": "lambda x: '-'.join(x.split('-')[:2])"
+                                }]
                             },
-                            "AL id": {
-                              "merge_pointer": "0/cimac_aliquot_id",
-                              "type_ref": "aliquot.json#properties/cimac_aliquot_id"
-                            },
-                            "AL prop": {
-                              "merge_pointer": "0/aliquot_amount",
-                              "type_ref": "aliquot.json#properties/aliquot_amount"
+                            "SA_prop": {
+                              "merge_pointer": "0/site_sample_id",
+                              "type_ref": "sample.json#properties/site_sample_id"
                             }
 
                         }
@@ -934,21 +934,17 @@ def test_prism_joining_tabs(monkeypatch):
 
     assert 2 == len(patch["participants"])
     
-    assert "PA_0" == patch["participants"][0]["cimac_participant_id"]
+    assert "CM-PA0" == patch["participants"][0]["cimac_participant_id"]
     assert 2 == len(patch["participants"][0]["samples"])
     
-    assert "SA_0.1"  == patch["participants"][0]["samples"][0]["cimac_sample_id"]
-    assert "01"  == patch["participants"][0]["samples"][0]["site_sample_id"]
-    assert 1 == len(patch["participants"][0]["samples"][0]["aliquots"])
+    assert "CM-PA0-SA0"  == patch["participants"][0]["samples"][0]["cimac_id"]
+    assert "000"  == patch["participants"][0]["samples"][0]["site_sample_id"]
 
-    assert "SA_0.0"  == patch["participants"][0]["samples"][1]["cimac_sample_id"]
-    assert "00"  == patch["participants"][0]["samples"][1]["site_sample_id"]
-    assert 1 == len(patch["participants"][0]["samples"][1]["aliquots"])
-    assert "000" == patch["participants"][0]["samples"][1]["aliquots"][0]["aliquot_amount"]
+    assert "CM-PA0-SA1"  == patch["participants"][0]["samples"][1]["cimac_id"]
+    assert "001"  == patch["participants"][0]["samples"][1]["site_sample_id"]
     
-    assert "PA_1" == patch["participants"][1]["cimac_participant_id"]
-    assert 1 == len(patch["participants"][1]["samples"])
-    assert 2 == len(patch["participants"][1]["samples"][0]["aliquots"])
+    assert "CM-PA1" == patch["participants"][1]["cimac_participant_id"]
+    assert 2 == len(patch["participants"][1]["samples"])
 
     assert 0 == len(file_maps)
     

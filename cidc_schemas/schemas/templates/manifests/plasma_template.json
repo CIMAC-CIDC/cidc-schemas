@@ -92,64 +92,68 @@
         
         "prism_preamble_object_schema" : "clinical_trial.json",
         "prism_preamble_object_pointer" : "#",
-        "prism_data_object_pointer" : "/participants/0/samples/0/aliquots/0",
+        "prism_data_object_pointer" : "/participants/0/samples/0",
         
         "data_columns": {
           "Filled by Biorepository": {
             "trial participant id": {
-              "merge_pointer": "4/trial_participant_id",
+              "merge_pointer": "2/trial_participant_id",
               "type_ref": "participant.json#properties/trial_participant_id"
             },
             "cohort id": {
-              "merge_pointer": "4/cohort_id",
+              "merge_pointer": "2/cohort_id",
               "type_ref": "participant.json#properties/cohort_id" 
             },
             "arm id": {
-              "merge_pointer": "4/arm_id",
+              "merge_pointer": "2/arm_id",
               "type_ref": "participant.json#properties/arm_id" 
             },
             "site sample id": {
-              "merge_pointer": "2/site_sample_id",
-              "type_ref": "sample.json#properties/site_sample_id"
+              "merge_pointer": "/site_sample_id",
+              "type_ref": "sample.json#properties/site_sample_id",
+              "process_as": [{
+                "merge_pointer": "2/cimac_participant_id",
+                "parse_through": "lambda x: '-'.join(x.split('-')[:3])"
+              }]
             },
             "cimac id": {
               "merge_pointer": "/cimac_id",
               "type_ref": "sample.json#properties/cimac_id"
             },
             "time point": {
-              "merge_pointer": "2/time_point", 
+              "merge_pointer": "/time_point", 
               "type_ref": "sample.json#properties/time_point" 
             },
             "genomic source": {
-              "merge_pointer": "2/genomic_source", 
+              "merge_pointer": "/genomic_source", 
               "type_ref": "sample.json#properties/genomic_source" 
             },
             "blood collection date": {
-              "merge_pointer": "2/blood_collection_date",
+              "merge_pointer": "/blood_collection_date",
               "type_ref": "sample.json#properties/blood_collection_date"
             },
             "blood collection time": {
-              "merge_pointer": "2/blood_collection_time",
+              "merge_pointer": "/blood_collection_time",
               "type_ref": "sample.json#properties/blood_collection_time"
             },
             "blood processing date": {
-              "merge_pointer": "2/blood_processing_date",
+              "merge_pointer": "/blood_processing_date",
               "type_ref": "sample.json#properties/blood_processing_date"
             },
             "blood processing time": {
-              "merge_pointer": "2/blood_processing_time",
+              "merge_pointer": "/blood_processing_time",
               "type_ref": "sample.json#properties/blood_processing_time"
             },
             "sample location": {
-              "merge_pointer": "2/sample_location",
+              "merge_pointer": "/sample_location",
               "type_ref": "sample.json#properties/sample_location"
             },
             "specimen type": {
-             "merge_pointer": "2/specimen_type", 
+             "merge_pointer": "/specimen_type", 
              "type_ref": "sample.json#properties/specimen_type" 
             },
             "specimen format": {
-              "merge_pointer": "2/specimen_format",
+              "merge_pointer": "/specimen_format",
               "type_ref": "sample.json#properties/specimen_format"
             },
             "quantity": {
@@ -165,7 +169,7 @@
              "type_ref": "aliquot.json#properties/units" 
             },
             "sample source": {
-             "merge_pointer": "2/sample_source", 
+             "merge_pointer": "/sample_source", 
              "type_ref": "sample.json#properties/sample_source" 
             }
           },

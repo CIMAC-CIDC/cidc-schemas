@@ -10,7 +10,10 @@ import jsonschema
 import json
 from deepdiff import grep, DeepDiff
 from pprint import pprint
+from collections import namedtuple
 from jsonmerge import Merger
+from unittest.mock import MagicMock, patch as mock_patch
+
 
 from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
@@ -310,7 +313,7 @@ def test_prism(schema_path, xlsx_path):
         return
 
     # turn into object.
-    ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
+    ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
     if hint == 'cytof':
         assert "CYTOF_TEST1" == ct['lead_organization_study_id']
         ct['lead_organization_study_id'] = 'test_prism_trial_id'
@@ -839,3 +842,120 @@ def test_merge_stuff():
     merger = Merger(schema)
     xyz = merger.merge(obj1, obj2)
     assert len(xyz['slices']) == 1
+
+
+def test_prism_joining_tabs(monkeypatch):
+    """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
+
+    load_workbook = MagicMock(name="load_workbook")
+    monkeypatch.setattr("openpyxl.load_workbook", load_workbook)
+    workbook = load_workbook.return_value = MagicMock(name="workbook")
+    wb= {"samples": MagicMock(name="samples"), "aliquots": MagicMock(name="aliquots"), }
+    workbook.__getitem__.side_effect = wb.__getitem__
+    workbook.sheetnames = wb.keys()
+    cell = namedtuple("cell", ["value"])
+    wb["samples"].iter_rows.return_value = [
+        map(cell, ["#h", "PA id", "SA id",  "SA prop"]),
+        map(cell, ["#d", "PA_0",  "SA_0.1", "01"]),
+        map(cell, ["#d", "PA_0",  "SA_0.0", "00"]),
+        map(cell, ["#d", "PA_1",  "SA_1.0", "10"]),
+    ]
+    wb["aliquots"].iter_rows.return_value = [
+        map(cell, ["#h", "PA_id", "SA_id",   "AL id",    "AL prop"]),
+        map(cell, ["#d", "PA_1", "SA_1.0",  "AL_1.0.0", "100"]),
+        map(cell, ["#d", "PA_1", "SA_1.0",  "AL_1.0.1", "101"]),
+        map(cell, ["#d", "PA_0", "SA_0.0",  "AL_0.0.0", "000"]),
+        map(cell, ["#d", "PA_0", "SA_0.1",  "AL_0.1.0", "010"]),
+    ]
+
+    Template_from_json = MagicMock(name="Template_from_json")
+    monkeypatch.setattr("cidc_schemas.template.Template.from_json", Template_from_json)
+    Template_from_json.return_value = Template({
+        "$id": "test_ship",
+        "title": "participants and shipment",
+        "properties": {
+            "worksheets": {
+                "samples": {
+                    "prism_preamble_object_schema" : "clinical_trial.json",
+                    "prism_preamble_object_pointer" : "#",
+                    "prism_data_object_pointer" : "/participants/0/samples/0",
+                    "preamble_rows": {
+                    },
+                    "data_columns": {
+                        "Samples": {
+                            "PA id": {
+                                "merge_pointer": "2/cimac_participant_id",
+                                "type_ref": "participant.json#properties/cimac_participant_id"
+                            },
+                            "SA id": {
+                                "merge_pointer": "0/cimac_sample_id",
+                                "type_ref": "sample.json#properties/cimac_sample_id"
+                            },
+                            "SA prop": {
+                              "merge_pointer": "0/site_sample_id",
+                              "type_ref": "sample.json#properties/site_sample_id"
+                            }
+                        }
+                    }
+                },
+                "aliquots": {
+                    "prism_preamble_object_schema" : "clinical_trial.json",
+                    "prism_preamble_object_pointer" : "#",
+                    "prism_data_object_pointer" : "/participants/0/samples/0/aliquots/0",
+                    "preamble_rows": {
+                    },
+                    "data_columns": {
+                        "Samples": {
+                            "PA_id": {
+                                "merge_pointer": "4/cimac_participant_id",
+                                "type_ref": "participant.json#properties/cimac_participant_id"
+                            },
+                            "SA_id": {
+                                "merge_pointer": "2/cimac_sample_id",
+                                "type_ref": "sample.json#properties/cimac_sample_id"
+                            },
+                            "AL id": {
+                              "merge_pointer": "0/cimac_aliquot_id",
+                              "type_ref": "aliquot.json#properties/cimac_aliquot_id"
+                            },
+                            "AL prop": {
+                              "merge_pointer": "0/aliquot_amount",
+                              "type_ref": "aliquot.json#properties/aliquot_amount"
+                            }
+
+                        }
+                    }
+                }
+
+            }
+        }
+    })
+
+
+    
+    monkeypatch.setattr("cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_ship"])
+
+    patch, file_maps = prismify("workbook", "Template_from_json", assay_hint="test_ship", verb=False)
+
+    assert 2 == len(patch["participants"])
+    
+    assert "PA_0" == patch["participants"][0]["cimac_participant_id"]
+    assert 2 == len(patch["participants"][0]["samples"])
+    
+    assert "SA_0.1"  == patch["participants"][0]["samples"][0]["cimac_sample_id"]
+    assert "01"  == patch["participants"][0]["samples"][0]["site_sample_id"]
+    assert 1 == len(patch["participants"][0]["samples"][0]["aliquots"])
+
+    assert "SA_0.0"  == patch["participants"][0]["samples"][1]["cimac_sample_id"]
+    assert "00"  == patch["participants"][0]["samples"][1]["site_sample_id"]
+    assert 1 == len(patch["participants"][0]["samples"][1]["aliquots"])
+    assert "000" == patch["participants"][0]["samples"][1]["aliquots"][0]["aliquot_amount"]
+    
+    assert "PA_1" == patch["participants"][1]["cimac_participant_id"]
+    assert 1 == len(patch["participants"][1]["samples"])
+    assert 2 == len(patch["participants"][1]["samples"][0]["aliquots"])
+
+    assert 0 == len(file_maps)
+    
+        
+

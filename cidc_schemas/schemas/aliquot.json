@@ -7,7 +7,7 @@
   "properties": {
     "slide_number": {
       "description": "Two digit number that indicates the sequential order of slide cuts, assigned by the CIMAC-CIDC Network.",
-      "pattern": "[0-9]{1,2}",
+      "pattern": "^[0-9]{1,2}$",
       "type": "string"
     },
     "quantity": {

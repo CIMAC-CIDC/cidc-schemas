@@ -43,7 +43,7 @@ def test_aliquot():
 
     # create basic aliquot
     aliquot = {
-        "cimac_aliquot_id": "1234",
+        "slide_number": "12",
         "units": "Other",
         "material_used": 1,
         "material_remaining": 0,
@@ -66,7 +66,7 @@ def test_clinicaltrial_simple():
 
     # create aliquot
     aliquot = {
-        "cimac_aliquot_id": "1234",
+        "slide_number": "34",
         "assay": assays,
         "units": "Other",
         "material_used": 1,
@@ -78,7 +78,7 @@ def test_clinicaltrial_simple():
 
     # create the sample.
     sample = {
-        "cimac_sample_id": "S1234",
+        "cimac_id": "CM-TEST-1234-00",
         "site_sample_id": "blank",
         "aliquots": [aliquot],
         "time_point": "---",
@@ -90,7 +90,7 @@ def test_clinicaltrial_simple():
 
     # create the participant
     participant = {
-        "cimac_participant_id": "P1234",
+        "cimac_participant_id": "CM-TEST-1234",
         "trial_participant_id": "blank",
         "samples": [sample],
         "cohort_id": "---",
@@ -112,7 +112,7 @@ def test_clinicaltrial_olink():
 
     # create 2 aliquots
     aliquot1 = {
-        "cimac_aliquot_id": "1234",
+        "slide_number": "13",
         "units": "Other",
         "material_used": 1,
         "material_remaining": 0,
@@ -121,7 +121,7 @@ def test_clinicaltrial_olink():
         "aliquot_status": "Other"
     }
     aliquot2 = {
-        "cimac_aliquot_id": "1234",
+        "slide_number": "14",
         "units": "Other",
         "material_used": 1,
         "material_remaining": 0,
@@ -132,7 +132,7 @@ def test_clinicaltrial_olink():
 
     # create the sample.
     sample1 = {
-        "cimac_sample_id": "S1234",
+        "cimac_id": "CM-TEST-PA12-34",
         "site_sample_id": "blank",
         "aliquots": [aliquot1],
         "time_point": "---",
@@ -142,7 +142,7 @@ def test_clinicaltrial_olink():
         "genomic_source": "Normal",
     }
     sample2 = {
-        "cimac_sample_id": "SABCD",
+        "cimac_id": "CM-TEST-PAAB-CD",
         "site_sample_id": "blank",
         "aliquots": [aliquot2],
         "time_point": "---",
@@ -154,14 +154,14 @@ def test_clinicaltrial_olink():
 
     # create the participant
     participant1 = {
-        "cimac_participant_id": "P1234",
+        "cimac_participant_id": "CM-TEST-1234",
         "trial_participant_id": "blank",
         "samples": [sample1],
         "cohort_id": "---",
         "arm_id": "---",    
     }
     participant2 = {
-        "cimac_participant_id": "PABCD",
+        "cimac_participant_id": "CM-TEST-2222",
         "trial_participant_id": "blank",
         "samples": [sample2],
         "cohort_id": "---",

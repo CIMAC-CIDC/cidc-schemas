@@ -2,14 +2,14 @@
     "lead_organization_study_id": "10021",
     "participants": [
         {
-            "cimac_participant_id": "PA.1",
+            "cimac_participant_id": "CM-TEST-PAR1",
             "trial_participant_id": "trial.PA.1",
             "cohort_id": "---",
             "arm_id": "---",
             "samples": [
                 {
-                    "cimac_sample_id": "SA.1.1",
-                    "site_sample_id": "site.SA.1.1",
+                    "cimac_id": "CM-TEST-PAR1-S1",
+                    "site_sample_id": "SA.1.1",
                     "time_point": "---",
                     "sample_location": "---",
                     "specimen_type": "Other",
@@ -17,7 +17,7 @@
                     "genomic_source": "Tumor",
                     "aliquots": [
                         {
-                            "cimac_aliquot_id": "AL.1.1.1",
+                            "slide_number": "1",
                             "units": "Other",
                             "material_used": 1,
                             "material_remaining": 0,
@@ -28,8 +28,8 @@
                     ] 
                 }, 
                 {
-                    "cimac_sample_id": "SA.1.2",
-                    "site_sample_id": "site.SA.1.2",
+                    "cimac_id": "CM-TEST-PAR1-S2",
+                    "site_sample_id": "SA.1.2",
                     "time_point": "---",
                     "sample_location": "---",
                     "specimen_type": "Other",
@@ -37,7 +37,7 @@
                     "genomic_source": "Normal",
                     "aliquots": [
                         {
-                            "cimac_aliquot_id": "AL.1.2.1",
+                            "slide_number": "1",
                             "units": "Other",
                             "material_used": 1,
                             "material_remaining": 0,
@@ -50,14 +50,14 @@
             ]
         },
         {
-            "cimac_participant_id": "PA.2",
+            "cimac_participant_id": "CM-TEST-PAR2",
             "trial_participant_id": "trial.PA.2",
             "cohort_id": "---",
             "arm_id": "---",
             "samples": [
                 {
-                    "cimac_sample_id": "SA.2.1",
-                    "site_sample_id": "site.SA.2.1",
+                    "cimac_id": "CM-TEST-PAR2-S1",
+                    "site_sample_id": "SA.2.1",
                     "time_point": "---",
                     "sample_location": "---",
                     "specimen_type": "Other",
@@ -65,7 +65,7 @@
                     "genomic_source": "Tumor",
                     "aliquots": [
                         {
-                            "cimac_aliquot_id": "AL.2.1.1",
+                            "slide_number": "1",
                             "units": "Other",
                             "material_used": 1,
                             "material_remaining": 0,
@@ -76,8 +76,8 @@
                     ]
                 },
                 {
-                    "cimac_sample_id": "SA.2.2",
-                    "site_sample_id": "site.SA.2.2",
+                    "cimac_id": "CM-TEST-PAR2-S2",
+                    "site_sample_id": "SA.2.2",
                     "time_point": "---",
                     "sample_location": "---",
                     "specimen_type": "Other",
@@ -85,7 +85,7 @@
                     "genomic_source": "Normal",
                     "aliquots": [
                         {
-                            "cimac_aliquot_id": "AL.2.2.1",
+                            "slide_number": "1",
                             "units": "Other",
                             "material_used": 1,
                             "material_remaining": 0,
@@ -118,8 +118,8 @@
                             "md5_hash" :            "...",
                             "artifact_category" :   "Assay Artifact from CIMAC",
                             "data_format" :           "NPX",
-                            "number_of_aliquots":   3,
-                            "aliquots": ["a", "b", "c"]
+                            "number_of_samples":   3,
+                            "samples": ["CM-TEST-PAR2-S2", "CM-TEST-PAR1-S1", "CM-TEST-PAR2-S1"]
                         },
                         "assay_raw_ct": {
                             "file_name" :           "...",
@@ -146,8 +146,8 @@
                             "md5_hash" :            "...",
                             "artifact_category" :   "Assay Artifact from CIMAC",
                             "data_format" :           "NPX",
-                            "number_of_aliquots":   3,
-                            "aliquots": ["a", "b", "c"]
+                            "number_of_samples":   3,
+                            "samples": ["CM-TEST-PAR2-S2", "CM-TEST-PAR1-S1", "CM-TEST-PAR2-S1"]
                         },
                         "assay_raw_ct": {
                             "file_name" :           "...",
@@ -174,9 +174,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_participant_id":     "PA 1",
-                        "cimac_sample_id":          "SA 1.1",
-                        "cimac_aliquot_id":         "AL 1.1.1",
+                        "cimac_id":          "CM-TEST-PAR1-S1",
                         "files": {
                             "r1":{
                                 "file_name" :           "...",
@@ -211,9 +209,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_participant_id":     "PA 1",
-                        "cimac_sample_id":          "SA 1.2",
-                        "cimac_aliquot_id":         "AL 1.2.1",
+                        "cimac_id":          "CM-TEST-PAR1-S2",
                         "files": {
                             "r1":{
                                 "file_name" :           "...",
@@ -257,9 +253,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_participant_id":     "PA 2",
-                        "cimac_sample_id":          "SA 2.1",
-                        "cimac_aliquot_id":         "AL 2.1.1",
+                        "cimac_id":          "CM-TEST-PAR2-S1",
                         "files": {
                             "r1":{
                                 "file_name" :           "...",
@@ -294,9 +288,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_participant_id":     "PA 2",
-                        "cimac_sample_id":          "SA 2.2",
-                        "cimac_aliquot_id":         "AL 2.2.1",
+                        "cimac_id":          "CM-TEST-PAR2-S2",
                         "files": {
                             "r1":{
                                 "file_name" :           "...",

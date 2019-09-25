@@ -5,17 +5,9 @@
   "type": "object",
   "description": "A single data record from an NGS assay.",
   "properties": {
-    "cimac_participant_id": {
-        "$comment": "Id of an participant within this clinical trial, that this assay record is based upon.",
-        "$ref": "participant.json#properties/cimac_participant_id"
-    },
-    "cimac_sample_id": {
+    "cimac_id": {
         "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
-        "$ref": "sample.json#properties/cimac_sample_id"
-    },
-    "cimac_aliquot_id": {
-        "$comment": "Id of an aliquot within this clinical trial, that this assay record is based upon.",
-        "$ref": "aliquot.json#properties/cimac_aliquot_id"
+        "$ref": "sample.json#properties/cimac_id"
     },
     "files": {
       "$comment": "Fastq and read group mapping files produced by the assay for that .",
@@ -52,9 +44,7 @@
   "required": [
     "library_kit_lot",
     "library_prep_date",
-    "cimac_participant_id",
-    "cimac_sample_id",
-    "cimac_aliquot_id",
+    "cimac_id",
     "files"
   ]
 }

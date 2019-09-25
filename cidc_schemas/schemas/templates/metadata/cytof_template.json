@@ -29,17 +29,9 @@
                 },
                 "data_columns": {
                     "Run info": {
-                        "cimac participant id": {
-                            "merge_pointer": "0/cimac_participant_id",
-                            "type_ref": "participant.json#properties/cimac_participant_id"
-                        },
-                        "cimac sample id": {
-                            "merge_pointer": "0/cimac_sample_id",
-                            "type_ref": "sample.json#properties/cimac_sample_id"
-                        },
-                        "cimac aliquot id": {
-                            "merge_pointer": "0/cimac_aliquot_id",
-                            "type_ref": "aliquot.json#properties/cimac_aliquot_id"
+                        "cimac id": {
+                            "merge_pointer": "0/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id"
                         },
                         "batch_id": {
                             "merge_pointer": "0/batch_id",
@@ -48,7 +40,7 @@
                         "original fcs filename(s)": {
                             "merge_pointer": "0/files/source_fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{lead organization study id}/{cimac participant id}/{cimac sample id}/{cimac aliquot id}/cytof/source_{num}.fcs",
+                            "gcs_uri_format": "{lead organization study id}/{cimac id}/cytof/source_{num}.fcs",
                             "is_artifact": "multi"
                         },
                         "date of acquisition": {
@@ -76,7 +68,7 @@
                         "processed fcs filename": {
                             "merge_pointer": "0/files/processed_fcs",
                             "is_artifact": 1,
-                            "gcs_uri_format": "{lead organization study id}/{cimac participant id}/{cimac sample id}/{cimac aliquot id}/cytof/processed.fcs",
+                            "gcs_uri_format": "{lead organization study id}/{cimac id}/cytof/processed.fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path"
                         },
                         "concatenation version": {

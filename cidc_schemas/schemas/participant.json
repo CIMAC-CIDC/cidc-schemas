@@ -6,7 +6,11 @@
   "properties": {
     "cimac_participant_id": {
       "type": "string",
-      "description": "Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234."
+      "in_doc_ref_pattern": "/participants/*/cimac_participant_id",
+      "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_participant_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_participant_id $ref.",
+      "pattern": "^CM-[A-Z0-9]{4}-[A-Z0-9]{4}$",
+      "example": "CM-TEST-PA01",
+      "description": "Participant identifier assigned by the CIMAC-CIDC Network. Formated as: CM-????-????."
     },
     "trial_participant_id": {
       "type": "string",

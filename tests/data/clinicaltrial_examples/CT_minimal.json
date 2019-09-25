@@ -2,13 +2,13 @@
     "lead_organization_study_id": "1/minimal",
     "participants": [
         {
-            "cimac_participant_id": "PA.1.1",
+            "cimac_participant_id": "CM-TEST-PA11",
             "trial_participant_id": "trial.PA.1.1",
             "cohort_id": "---",
             "arm_id": "---",
             "samples": [
                 {
-                    "cimac_id": "CM-TRIA-PA11-S1",
+                    "cimac_id": "CM-TEST-PA11-S1",
                     "site_sample_id": "site.SA.1.1.1",
                     "time_point": "---",
                     "sample_location": "---",
@@ -28,7 +28,7 @@
                     ] 
                 }, 
                 {
-                    "cimac_id": "CM-TRIA-PA11-S2",
+                    "cimac_id": "CM-TEST-PA11-S2",
                     "site_sample_id": "site.SA.1.1.2",
                     "time_point": "---",
                     "sample_location": "---",

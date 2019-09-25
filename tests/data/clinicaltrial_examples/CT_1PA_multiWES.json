@@ -2,13 +2,13 @@
     "lead_organization_study_id": "2/1PA_multiWES",
     "participants": [
         {
-            "cimac_participant_id": "PA_2.1",
+            "cimac_participant_id": "CM-TEST-PA21",
             "trial_participant_id": "trial_PA_2.1",
             "cohort_id": "---",
             "arm_id": "---",
             "samples": [
                 {
-                    "cimac_id":  "CM-TRIA-PA21-S1",
+                    "cimac_id":  "CM-TEST-PA21-S1",
                     "site_sample_id":  "site_SA_2.1.1",
                     "time_point":       "---",
                     "sample_location": "---",
@@ -28,7 +28,7 @@
                          ]
                 },
                 {
-                    "cimac_id":  "CM-TRIA-PA21-S2",
+                    "cimac_id":  "CM-TEST-PA21-S2",
                     "site_sample_id":  "site_SA_2.1.2",
                     "time_point":       "---",
                     "sample_location": "---",
@@ -48,7 +48,7 @@
                     ] 
                 },
                 {
-                    "cimac_id":  "CM-TRIA-PA21-S3",
+                    "cimac_id":  "CM-TEST-PA21-S3",
                     "site_sample_id":  "site_SA_2.1.3",
                     "time_point":       "---",
                     "sample_location": "---",
@@ -81,7 +81,7 @@
                 "records": [
                     {
                         "enrichment_vendor_lot":    "$ enrichment_vendor_lot",
-                        "cimac_id":                 "CM-TRIA-PA21-S1",
+                        "cimac_id":                 "CM-TEST-PA21-S1",
                         "library_kit_lot":          "$ library_kit_lot",
                         "library_prep_date":        "4_12_2012",
                         "files": {
@@ -116,7 +116,7 @@
                     },
                     {
                         "enrichment_vendor_lot":    "$ enrichment_vendor_lot",
-                        "cimac_id":                 "CM-TRIA-PA21-S2",
+                        "cimac_id":                 "CM-TEST-PA21-S2",
                         "library_kit_lot":          "$ library_kit_lot",
                         "library_prep_date":        "4_12_2012",
                         "files": {
@@ -160,7 +160,7 @@
                 "records": [
                     {
                         "enrichment_vendor_lot":    "$ enrichment_vendor_lot",
-                        "cimac_id":                 "CM-TRIA-PA21-S1",
+                        "cimac_id":                 "CM-TEST-PA21-S1",
                         "library_kit_lot":          "$ library_kit_lot",
                         "library_prep_date":        "4_12_2012",
                         "files": {
@@ -195,7 +195,7 @@
                     },
                     {
                         "enrichment_vendor_lot":    "$ enrichment_vendor_lot",
-                        "cimac_id":                 "CM-TRIA-PA21-S3",
+                        "cimac_id":                 "CM-TEST-PA21-S3",
                         "library_kit_lot":          "$ library_kit_lot",
                         "library_prep_date":        "4_12_2012",
                         "files": {

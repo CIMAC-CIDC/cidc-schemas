@@ -309,14 +309,23 @@ def _process_property(
     _set_val(pointer, val, data_obj, root_obj, data_obj_pointer, verb=verb)
 
 
+    # "process_as" allows to define additional places/ways to put that match
+    # somewhere in the resulting doc, with additional processing.
+    # E.g. we need to strip cimac_id='CM-TEST-0001-01' to 'CM-TEST-0001'
+    # and put it in this sample parent's cimac_participant_id
     if 'process_as' in field_def:
         for extra_fdef in field_def['process_as']:
-            pointer = extra_fdef['merge_pointer']
+
+            # where to put it additionally  
+            extra_pointer = extra_fdef['merge_pointer']
             extra_fdef_val = val
+
+            # how to process it before putting
             if 'parse_through' in extra_fdef:
+                # Should be fine, as we're controlling `eval` argument == code
                 extra_fdef_val = eval(extra_fdef['parse_through'])(val)
 
-            _set_val(pointer, extra_fdef_val, data_obj, root_obj, data_obj_pointer, verb=verb)
+            _set_val(extra_pointer, extra_fdef_val, data_obj, root_obj, data_obj_pointer, verb=verb)
 
 
 
@@ -380,7 +389,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     [
         {
             'local_path': '/path/to/fwd.fastq',
-            'gs_key': '10021/CM-TRIA-PART-SA/wes_forward.fastq'
+            'gs_key': '10021/CM-TEST-PART-SA/wes_forward.fastq'
         }
     ]
 

@@ -32,7 +32,7 @@ TEST_PRISM_TRIAL = {
         "lead_organization_study_id": "test_prism_trial_id",
         "participants": [
             {
-                "cimac_participant_id": "test_PA_1",
+                "cimac_participant_id": "CM-TEST-PAR1",
                 "trial_participant_id": "test_trial_patient_1",
                 "cohort_id": "---",
                 "arm_id": "---",
@@ -82,7 +82,7 @@ TEST_PRISM_TRIAL = {
                         "genomic_source": "Tumor",
                     }
                 ],
-                "cimac_participant_id": "test_PA_2",
+                "cimac_participant_id": "CM-TEST-PAR2",
                 "trial_participant_id": "test_trial_patient_2",
                 "cohort_id": "---",
                 "arm_id": "---"
@@ -187,7 +187,7 @@ def test_merge_core():
 
     # create the sample.
     sample = {
-        "cimac_id": "CM-TRIA-PA12-34",
+        "cimac_id": "CM-TEST-PA12-34",
         "site_sample_id": "blank",
         "aliquots": [aliquot],
         "time_point": "---",
@@ -199,7 +199,7 @@ def test_merge_core():
 
     # create the participant
     participant = {
-        "cimac_participant_id": "P1234",
+        "cimac_participant_id": "CM-TEST-1234",
         "trial_participant_id": "blank",
         "samples": [sample],
         "cohort_id": "---",
@@ -269,10 +269,10 @@ MINIMAL_TEST_TRIAL = {
                     "specimen_type": "Other",
                     "specimen_format": "Other",
                     "site_sample_id": "test_min_Sample_1",
-                    "cimac_id": "CM-TEST-PAR1-01"
+                    "cimac_id": "CM-TEST-MIN1-01"
                 }
             ],
-            "cimac_participant_id": "test_min_PA_1",
+            "cimac_participant_id": "CM-TEST-MIN1",
             "trial_participant_id": "test_min_Patient_1",
             "cohort_id": "---",
             "arm_id": "---"
@@ -614,7 +614,7 @@ def test_merge_ct_meta():
     # now change the participant ids
     # this should cause the merge to have two
     # participants.
-    ct1['participants'][0]['cimac_participant_id'] = 'different_id'
+    ct1['participants'][0]['cimac_participant_id'] = 'CM-TEST-DIF1'
 
     ct_merge = merge_clinical_trial_metadata(ct1, ct2)
     assert len(ct_merge['participants']) == 1+len(TEST_PRISM_TRIAL['participants'])

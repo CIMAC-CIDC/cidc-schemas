@@ -893,20 +893,12 @@
                                             ],
                                             "type": "string"
                                         },
-                                        "cimac_aliquot_id": {
-                                            "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_aliquot_id is $refed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_aliquot_id $ref.Id of an aliquot within this clinical trial, that this assay record is based upon.",
-                                            "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
-                                            "in_doc_ref_pattern": "/participants/*/samples/*/aliquots/*/cimac_aliquot_id",
-                                            "type": "string"
-                                        },
-                                        "cimac_participant_id": {
-                                            "$comment": "Id of an participant within this clinical trial, that this assay record is based upon.",
-                                            "description": "Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234.",
-                                            "type": "string"
-                                        },
-                                        "cimac_sample_id": {
-                                            "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
-                                            "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
+                                        "cimac_id": {
+                                            "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.Id of a sample within this clinical trial, that this assay record is based upon.",
+                                            "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formated as CM-????-????-??",
+                                            "example": "CM-TEST-PA01-A1",
+                                            "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
+                                            "pattern": "^CM-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{2}$",
                                             "type": "string"
                                         },
                                         "concatenation_version": {
@@ -1214,14 +1206,14 @@
                                         }
                                     },
                                     "required": [
-                                        "cimac_aliquot_id",
+                                        "cimac_id",
                                         "files"
                                     ],
                                     "title": "CyTOF assay record",
                                     "type": "object"
                                 },
                                 "mergeOptions": {
-                                    "idRef": "cimac_aliquot_id"
+                                    "idRef": "cimac_id"
                                 },
                                 "mergeStrategy": "arrayMergeById",
                                 "type": "array"
@@ -4709,23 +4701,25 @@
                                                     },
                                                     {
                                                         "properties": {
-                                                            "aliquots": {
-                                                                "description": "Ids of the aliquot(s) within this file.",
-                                                                "items": {
-                                                                    "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_aliquot_id is $refed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_aliquot_id $ref.Ids of the aliquot(s) within this file.",
-                                                                    "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
-                                                                    "in_doc_ref_pattern": "/participants/*/samples/*/aliquots/*/cimac_aliquot_id",
-                                                                    "type": "string"
-                                                                },
-                                                                "type": "array"
-                                                            },
                                                             "data_format": {
                                                                 "const": "NPX",
                                                                 "description": "Data format."
                                                             },
-                                                            "number_of_aliquots": {
-                                                                "description": "Number of aliquots within this file.",
+                                                            "number_of_samples": {
+                                                                "description": "Number of samples within this file.",
                                                                 "type": "integer"
+                                                            },
+                                                            "samples": {
+                                                                "description": "Ids of the sample(s) within this file.",
+                                                                "items": {
+                                                                    "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.Ids of the sample(s) within this file.",
+                                                                    "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formated as CM-????-????-??",
+                                                                    "example": "CM-TEST-PA01-A1",
+                                                                    "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
+                                                                    "pattern": "^CM-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{2}$",
+                                                                    "type": "string"
+                                                                },
+                                                                "type": "array"
                                                             }
                                                         }
                                                     }
@@ -4733,8 +4727,8 @@
                                                 "anyOf": [
                                                     {
                                                         "required": [
-                                                            "number_of_aliquots",
-                                                            "aliquots"
+                                                            "number_of_samples",
+                                                            "samples"
                                                         ]
                                                     },
                                                     {
@@ -5058,23 +5052,25 @@
                                         },
                                         {
                                             "properties": {
-                                                "aliquots": {
-                                                    "description": "Ids of the aliquot(s) within this file.",
-                                                    "items": {
-                                                        "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_aliquot_id is $refed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_aliquot_id $ref.Ids of the aliquot(s) within this file.",
-                                                        "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
-                                                        "in_doc_ref_pattern": "/participants/*/samples/*/aliquots/*/cimac_aliquot_id",
-                                                        "type": "string"
-                                                    },
-                                                    "type": "array"
-                                                },
                                                 "data_format": {
                                                     "const": "NPX",
                                                     "description": "Data format."
                                                 },
-                                                "number_of_aliquots": {
-                                                    "description": "Number of aliquots within this file.",
+                                                "number_of_samples": {
+                                                    "description": "Number of samples within this file.",
                                                     "type": "integer"
+                                                },
+                                                "samples": {
+                                                    "description": "Ids of the sample(s) within this file.",
+                                                    "items": {
+                                                        "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.Ids of the sample(s) within this file.",
+                                                        "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formated as CM-????-????-??",
+                                                        "example": "CM-TEST-PA01-A1",
+                                                        "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
+                                                        "pattern": "^CM-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{2}$",
+                                                        "type": "string"
+                                                    },
+                                                    "type": "array"
                                                 }
                                             }
                                         }
@@ -5082,8 +5078,8 @@
                                     "anyOf": [
                                         {
                                             "required": [
-                                                "number_of_aliquots",
-                                                "aliquots"
+                                                "number_of_samples",
+                                                "samples"
                                             ]
                                         },
                                         {
@@ -5240,20 +5236,12 @@
                                                     "maximum": 10000,
                                                     "type": "integer"
                                                 },
-                                                "cimac_aliquot_id": {
-                                                    "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_aliquot_id is $refed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_aliquot_id $ref.Id of an aliquot within this clinical trial, that this assay record is based upon.",
-                                                    "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
-                                                    "in_doc_ref_pattern": "/participants/*/samples/*/aliquots/*/cimac_aliquot_id",
-                                                    "type": "string"
-                                                },
-                                                "cimac_participant_id": {
-                                                    "$comment": "Id of an participant within this clinical trial, that this assay record is based upon.",
-                                                    "description": "Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234.",
-                                                    "type": "string"
-                                                },
-                                                "cimac_sample_id": {
-                                                    "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
-                                                    "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
+                                                "cimac_id": {
+                                                    "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.Id of an sample within this clinical trial, that this assay record is based upon.",
+                                                    "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formated as CM-????-????-??",
+                                                    "example": "CM-TEST-PA01-A1",
+                                                    "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
+                                                    "pattern": "^CM-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{2}$",
                                                     "type": "string"
                                                 },
                                                 "files": {
@@ -5660,9 +5648,7 @@
                                             "required": [
                                                 "library_kit_lot",
                                                 "library_prep_date",
-                                                "cimac_participant_id",
-                                                "cimac_sample_id",
-                                                "cimac_aliquot_id",
+                                                "cimac_id",
                                                 "files"
                                             ],
                                             "title": "NGS assay record",
@@ -7373,20 +7359,12 @@
                                                     "maximum": 10000,
                                                     "type": "integer"
                                                 },
-                                                "cimac_aliquot_id": {
-                                                    "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_aliquot_id is $refed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_aliquot_id $ref.Id of an aliquot within this clinical trial, that this assay record is based upon.",
-                                                    "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
-                                                    "in_doc_ref_pattern": "/participants/*/samples/*/aliquots/*/cimac_aliquot_id",
-                                                    "type": "string"
-                                                },
-                                                "cimac_participant_id": {
-                                                    "$comment": "Id of an participant within this clinical trial, that this assay record is based upon.",
-                                                    "description": "Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234.",
-                                                    "type": "string"
-                                                },
-                                                "cimac_sample_id": {
-                                                    "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
-                                                    "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
+                                                "cimac_id": {
+                                                    "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.Id of an sample within this clinical trial, that this assay record is based upon.",
+                                                    "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formated as CM-????-????-??",
+                                                    "example": "CM-TEST-PA01-A1",
+                                                    "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
+                                                    "pattern": "^CM-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{2}$",
                                                     "type": "string"
                                                 },
                                                 "files": {
@@ -7793,9 +7771,7 @@
                                             "required": [
                                                 "library_kit_lot",
                                                 "library_prep_date",
-                                                "cimac_participant_id",
-                                                "cimac_sample_id",
-                                                "cimac_aliquot_id",
+                                                "cimac_id",
                                                 "files"
                                             ],
                                             "title": "NGS assay record",
@@ -7822,7 +7798,7 @@
                                     "type": "object"
                                 },
                                 "mergeOptions": {
-                                    "idRef": "cimac_aliquot_id"
+                                    "idRef": "cimac_id"
                                 },
                                 "mergeStrategy": "arrayMergeById",
                                 "type": "array"
@@ -7863,7 +7839,11 @@
                         "type": "string"
                     },
                     "cimac_participant_id": {
-                        "description": "Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234.",
+                        "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_participant_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_participant_id $ref.",
+                        "description": "Participant identifier assigned by the CIMAC-CIDC Network. Formated as: CM-????-????.",
+                        "example": "CM-TEST-PA01",
+                        "in_doc_ref_pattern": "/participants/*/cimac_participant_id",
+                        "pattern": "^CM-[A-Z0-9]{4}-[A-Z0-9]{4}$",
                         "type": "string"
                     },
                     "cohort_id": {
@@ -7952,12 +7932,6 @@
                                                 ],
                                                 "type": "string"
                                             },
-                                            "cimac_aliquot_id": {
-                                                "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_aliquot_id is $refed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_aliquot_id $ref.",
-                                                "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
-                                                "in_doc_ref_pattern": "/participants/*/samples/*/aliquots/*/cimac_aliquot_id",
-                                                "type": "string"
-                                            },
                                             "extracted_concentration": {
                                                 "description": "The concentration of biological material that was extracted from this aliquot.",
                                                 "type": "string"
@@ -8004,6 +7978,11 @@
                                                 "description": "Quantity of each aliquot shipped.",
                                                 "type": "integer"
                                             },
+                                            "slide_number": {
+                                                "description": "Two digit number that indicates the sequential order of slide cuts, assigned by the CIMAC-CIDC Network.",
+                                                "pattern": "^[0-9]{1,2}$",
+                                                "type": "string"
+                                            },
                                             "units": {
                                                 "description": "The unit of biological material from this aliquot.",
                                                 "enum": [
@@ -8036,7 +8015,7 @@
                                             }
                                         },
                                         "required": [
-                                            "cimac_aliquot_id",
+                                            "slide_number",
                                             "units",
                                             "material_used",
                                             "material_remaining",
@@ -8048,7 +8027,7 @@
                                         "type": "object"
                                     },
                                     "mergeOptions": {
-                                        "idRef": "/cimac_aliquot_id"
+                                        "idRef": "/slide_number"
                                     },
                                     "mergeStrategy": "arrayMergeById",
                                     "type": "array"
@@ -8073,8 +8052,12 @@
                                     "format": "time",
                                     "type": "string"
                                 },
-                                "cimac_sample_id": {
-                                    "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
+                                "cimac_id": {
+                                    "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.",
+                                    "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formated as CM-????-????-??",
+                                    "example": "CM-TEST-PA01-A1",
+                                    "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
+                                    "pattern": "^CM-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{2}$",
                                     "type": "string"
                                 },
                                 "genomic_source": {
@@ -8168,20 +8151,19 @@
                                 }
                             },
                             "required": [
-                                "cimac_sample_id",
+                                "cimac_id",
                                 "site_sample_id",
                                 "time_point",
                                 "sample_location",
                                 "specimen_type",
                                 "specimen_format",
-                                "aliquots",
                                 "genomic_source"
                             ],
                             "title": "Sample",
                             "type": "object"
                         },
                         "mergeOptions": {
-                            "idRef": "/cimac_sample_id"
+                            "idRef": "/cimac_id"
                         },
                         "mergeStrategy": "arrayMergeById",
                         "type": "array"

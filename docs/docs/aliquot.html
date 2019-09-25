@@ -61,8 +61,8 @@
                 <tr>
     <td>
         
-            <span id="cimac_aliquot_id">
-                cimac_aliquot_id
+            <span id="slide_number">
+                slide_number
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -71,7 +71,7 @@
     </td>
     <td width=55%>
         
-            Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.
+            Two digit number that indicates the sequential order of slide cuts, assigned by the CIMAC-CIDC Network.
         
     </td>
     <td>
@@ -79,7 +79,7 @@
             &lt; 
                 string 
     
-    
+     : <code>^[0-9]{1,2}$</code> 
     
             &gt;
             <ul>
@@ -840,12 +840,6 @@
             ],
             "type": "string"
         },
-        "cimac_aliquot_id": {
-            "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_aliquot_id is $refed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_aliquot_id $ref.",
-            "description": "Aliquot identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-12453.",
-            "in_doc_ref_pattern": "/participants/*/samples/*/aliquots/*/cimac_aliquot_id",
-            "type": "string"
-        },
         "extracted_concentration": {
             "description": "The concentration of biological material that was extracted from this aliquot.",
             "type": "string"
@@ -892,6 +886,11 @@
             "description": "Quantity of each aliquot shipped.",
             "type": "integer"
         },
+        "slide_number": {
+            "description": "Two digit number that indicates the sequential order of slide cuts, assigned by the CIMAC-CIDC Network.",
+            "pattern": "^[0-9]{1,2}$",
+            "type": "string"
+        },
         "units": {
             "description": "The unit of biological material from this aliquot.",
             "enum": [
@@ -924,7 +923,7 @@
         }
     },
     "required": [
-        "cimac_aliquot_id",
+        "slide_number",
         "units",
         "material_used",
         "material_remaining",

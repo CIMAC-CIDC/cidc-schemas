@@ -110,15 +110,15 @@
             },
             "site sample id": {
               "merge_pointer": "/site_sample_id",
-              "type_ref": "sample.json#properties/site_sample_id",
+              "type_ref": "sample.json#properties/site_sample_id"
+            },
+            "cimac id": {
+              "merge_pointer": "/cimac_id",
+              "type_ref": "sample.json#properties/cimac_id",
               "process_as": [{
                 "merge_pointer": "2/cimac_participant_id",
                 "parse_through": "lambda x: '-'.join(x.split('-')[:3])"
               }]
-            },
-            "cimac id": {
-              "merge_pointer": "/cimac_id",
-              "type_ref": "sample.json#properties/cimac_id"
             },
             "time point": {
               "merge_pointer": "/time_point", 

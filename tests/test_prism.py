@@ -419,7 +419,7 @@ def test_filepath_gen(schema_path, xlsx_path):
         # 1 trial id
         assert 1 == len(set([x.gs_key.split("/")[0] for x in file_maps]))
         # 2 samples
-        assert ['CM-TEST-PAR1-11', 'CM-TEST-PAR1-21'] == list(set([x.gs_key.split("/")[1] for x in file_maps]))
+        assert ['CM-TEST-PAR1-11', 'CM-TEST-PAR1-21'] == list(sorted(set([x.gs_key.split("/")[1] for x in file_maps])))
         
 
     elif hint == 'olink':

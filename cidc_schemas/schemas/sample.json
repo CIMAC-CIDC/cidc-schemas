@@ -2506,7 +2506,7 @@
             "format": "time"
         },
         "sample_processing_compliance": {
-            "description": "Time of blood processing.",
+            "description": "Records if a sample processing (blood or tissue) is not compliant with protocol.",
             "type": "string",
             "enum": [
                 "Compliant_processing",

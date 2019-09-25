@@ -7,7 +7,7 @@
     "description": "Shipping / receiving manifest for transferring Plasma samples.\n",
     "properties": {
         "worksheets": {
-            "shipment": {
+            "Shipment": {
                 "prism_preamble_object_schema": "clinical_trial.json",
                 "prism_preamble_object_pointer": "/shipments/0",
                 "prism_data_object_pointer": "/shipped",
@@ -90,7 +90,68 @@
                     }
                 }
             },
-            "aliquots": {
+
+            "Essential Patient Data": {
+                "prism_preamble_object_schema": "clinical_trial.json",
+                "prism_preamble_object_pointer": "#",
+                "prism_data_object_pointer": "/participants/0/samples/0",
+                "data_columns": {
+                    "Path Concordance Verification": {
+                        "cimac id": {
+                            "merge_pointer": "/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id",
+                            "process_as": [
+                                {
+                                    "merge_pointer": "2/cimac_participant_id",
+                                    "parse_through": "lambda x: '-'.join(x.split('-')[:3])"
+                                }
+                            ]
+                        },
+                        "collection event name": {
+                            "merge_pointer": "/collection_event_name",
+                            "type_ref": "sample.json#properties/collection_event_name"
+                        }
+                    },
+                    "ICD-0-3 Code/Description": {
+                        "Site Description": {
+                            "merge_pointer": "/site_description",
+                            "type_ref": "sample.json#properties/site_description"
+                        },
+                        "Topography Code": {
+                            "merge_pointer": "/topography_code",
+                            "type_ref": "sample.json#properties/topography_code"
+                        },
+                        "Topography Description": {
+                            "merge_pointer": "/topography_description",
+                            "type_ref": "sample.json#properties/topography_description"
+                        },
+                        "Histology/Behavior": {
+                            "merge_pointer": "/histology_behavior",
+                            "type_ref": "sample.json#properties/histology_behavior"
+                        },
+                        "Histology/Behavior Description": {
+                            "merge_pointer": "/histology_behavior_description",
+                            "type_ref": "sample.json#properties/histology_behavior_description"
+                        }
+                    },
+                    "Demographics": {
+                        "Sex": {
+                            "merge_pointer": "2/gender",
+                            "type_ref": "participant.json#properties/gender"
+                        },
+                        "Race": {
+                            "merge_pointer": "2/race",
+                            "type_ref": "participant.json#properties/race"
+                        },
+                        "Ethnic Group": {
+                            "merge_pointer": "2/ethnicity",
+                            "type_ref": "participant.json#properties/ethnicity"
+                        }
+                    }
+                }
+            },
+
+            "Samples": {
                 "prism_preamble_object_schema": "clinical_trial.json",
                 "prism_preamble_object_pointer": "#",
                 "prism_data_object_pointer": "/participants/0/samples/0",
@@ -150,7 +211,7 @@
                             "merge_pointer": "/blood_processing_time",
                             "type_ref": "sample.json#properties/blood_processing_time"
                         },
-                        "sample_processing_compliance": {
+                        "sample processing compliance": {
                             "merge_pointer": "/sample_processing_compliance",
                             "type_ref": "sample.json#properties/sample_processing_compliance"
                         },

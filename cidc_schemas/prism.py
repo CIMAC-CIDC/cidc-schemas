@@ -432,12 +432,12 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     "parent/preamble" object to determine exact location where to set value. 
     In most cases it's just "0/field_name". Where "0" denotes that "field_name"
     is a field in the current object. 
-    With exception - "3/lead_organization_study_id" which says basically 
+    With exception - "3/protocol_id" which says basically 
     "go 3 levels up in the hierarchy and take lead_org_study_id field". 
 
     E.g. WES:
         {
-          "lead_organization_study_id": "4412" # from `3/lead_organization_study_id`
+          "protocol_id": "4412" # from `3/protocol_id`
           "assays": {
             "wes": [
               {
@@ -764,11 +764,11 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
     # next assert the un-mutable fields are equal
     # these fields are required in the schema
     # so previous validation assert they exist
-    key_details = ["lead_organization_study_id"]
+    key_details = ["protocol_id"]
     for d in key_details:
         if patch.get(d) != target.get(d):
             raise RuntimeError("unable to merge trials with different \
-                lead_organization_study_id")
+                protocol_id")
 
     # merge the two documents
     merger = Merger(schema)

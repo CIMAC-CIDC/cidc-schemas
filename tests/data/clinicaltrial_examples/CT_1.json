@@ -1,27 +1,27 @@
 {
-    "lead_organization_study_id": "10021",
+    "protocol_id": "10021",
     "participants": [
         {
             "cimac_participant_id": "PA.1",
             "trial_participant_id": "trial.PA.1",
-            "cohort_id": "---",
+            "cohort_name": "---",
             "arm_id": "---",
             "samples": [
                 {
                     "cimac_id": "CM-TRIA-PAR1-S1",
-                    "site_sample_id": "SA.1.1",
-                    "time_point": "---",
+                    "parent_sample_id": "SA.1.1",
+                    "collection_event_name": "---",
                     "sample_location": "---",
-                    "specimen_type": "Other",
-                    "specimen_format": "Other",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
                     "genomic_source": "Tumor",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "units": "Other",
+                            "sample_volume_units": "Other",
                             "material_used": 1,
                             "material_remaining": 0,
-                            "aliquot_quality_status": "Other",
+                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other"
                         }
@@ -29,19 +29,19 @@
                 }, 
                 {
                     "cimac_id": "CM-TRIA-PAR1-S2",
-                    "site_sample_id": "SA.1.2",
-                    "time_point": "---",
+                    "parent_sample_id": "SA.1.2",
+                    "collection_event_name": "---",
                     "sample_location": "---",
-                    "specimen_type": "Other",
-                    "specimen_format": "Other",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
                     "genomic_source": "Normal",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "units": "Other",
+                            "sample_volume_units": "Other",
                             "material_used": 1,
                             "material_remaining": 0,
-                            "aliquot_quality_status": "Other",
+                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other"
                         }
@@ -52,24 +52,24 @@
         {
             "cimac_participant_id": "PA.2",
             "trial_participant_id": "trial.PA.2",
-            "cohort_id": "---",
+            "cohort_name": "---",
             "arm_id": "---",
             "samples": [
                 {
                     "cimac_id": "CM-TRIA-PAR2-S1",
-                    "site_sample_id": "SA.2.1",
-                    "time_point": "---",
+                    "parent_sample_id": "SA.2.1",
+                    "collection_event_name": "---",
                     "sample_location": "---",
-                    "specimen_type": "Other",
-                    "specimen_format": "Other",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
                     "genomic_source": "Tumor",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "units": "Other",
+                            "sample_volume_units": "Other",
                             "material_used": 1,
                             "material_remaining": 0,
-                            "aliquot_quality_status": "Other",
+                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other"
                         }
@@ -77,19 +77,19 @@
                 },
                 {
                     "cimac_id": "CM-TRIA-PAR2-S2",
-                    "site_sample_id": "SA.2.2",
-                    "time_point": "---",
+                    "parent_sample_id": "SA.2.2",
+                    "collection_event_name": "---",
                     "sample_location": "---",
-                    "specimen_type": "Other",
-                    "specimen_format": "Other",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
                     "genomic_source": "Normal",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "units": "Other",
+                            "sample_volume_units": "Other",
                             "material_used": 1,
                             "material_remaining": 0,
-                            "aliquot_quality_status": "Other",
+                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other"
                         }

@@ -65,10 +65,10 @@ def test_trial_core():
     shipment = {"request": "DFCI"}
     aliquot1 = {
         "slide_number": "99",
-        "units": "Other",
+        "sample_volume_units": "Other",
         "material_used": 1,
         "material_remaining": 0,
-        "aliquot_quality_status": "Other",
+        "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
         "aliquot_status": "Other",
     }
@@ -76,10 +76,10 @@ def test_trial_core():
 
     aliquot2 = {
         "slide_number": "98",
-        "units": "Other",
+        "sample_volume_units": "Other",
         "material_used": 1,
         "material_remaining": 0,
-        "aliquot_quality_status": "Other",
+        "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
         "aliquot_status": "Other",
     }
@@ -88,22 +88,22 @@ def test_trial_core():
     # create some samples.
     sample1 = {
         "cimac_id": "CM-TRIA-PART-12",
-        "site_sample_id": "ssida",
+        "parent_sample_id": "ssida",
         "aliquots": [aliquot1],
-        "time_point": "---",
+        "collection_event_name": "---",
         "sample_location": "---",
-        "specimen_type": "Other",
+        "type_of_sample": "Other",
         "specimen_format": "Other",
         "genomic_source": "Normal",
     }
     sm_validator.validate(sample1)
     sample2 = {
         "cimac_id": "CM-TRIA-PART-12",
-        "site_sample_id": "ssidb",
+        "parent_sample_id": "ssidb",
         "aliquots": [aliquot2],
-        "time_point": "---",
+        "collection_event_name": "---",
         "sample_location": "---",
-        "specimen_type": "Other",
+        "type_of_sample": "Other",
         "specimen_format": "Other",
         "genomic_source": "Normal",
     }
@@ -113,7 +113,7 @@ def test_trial_core():
     participant = {
         "cimac_participant_id": "cpid_1",
         "trial_participant_id": "tpid_a",
-        "cohort_id": "---",
+        "cohort_name": "---",
         "arm_id": "---",
     }
     with pytest.raises(jsonschema.ValidationError):
@@ -125,7 +125,7 @@ def test_trial_core():
 
     # validate the positive version works.
     clinical_trial = {
-        "lead_organization_study_id": "trial1",
+        "protocol_id": "trial1",
         "participants": [participant],
         "shipments": [shipment],
     }

@@ -80,6 +80,11 @@
       "type": "string",
       "format": "date"
     },
+    "date_recieved": {
+        "description": "Date of reciept.",
+        "type": "string",
+        "format": "date"
+      },
     "num_of_samples_shipped": {
       "description": "Count of specimen(s) distributed by site.",
       "type": "integer"

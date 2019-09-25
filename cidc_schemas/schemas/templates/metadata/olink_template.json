@@ -17,9 +17,9 @@
         
         "preamble_rows": {
           "lead organization study id": {
-            "merge_pointer": "2/lead_organization_study_id",
-            "$comment": "Only 2 jumps up to lead_organization_study_id, because olink is not an array assay, see available_assays.json",
-            "type_ref": "clinical_trial.json#properties/lead_organization_study_id"
+            "merge_pointer": "2/protocol_id",
+            "$comment": "Only 2 jumps up to protocol_id, because olink is not an array assay, see available_assays.json",
+            "type_ref": "clinical_trial.json#properties/protocol_id"
           },
           "assay creator": {
             "merge_pointer": "0/assay_creator",

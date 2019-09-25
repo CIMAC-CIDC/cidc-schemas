@@ -44,10 +44,10 @@ def test_aliquot():
     # create basic aliquot
     aliquot = {
         "slide_number": "12",
-        "units": "Other",
+        "sample_volume_units": "Other",
         "material_used": 1,
         "material_remaining": 0,
-        "aliquot_quality_status": "Other",
+        "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
         "aliquot_status": "Other"
     }
@@ -68,10 +68,10 @@ def test_clinicaltrial_simple():
     aliquot = {
         "slide_number": "34",
         "assay": assays,
-        "units": "Other",
+        "sample_volume_units": "Other",
         "material_used": 1,
         "material_remaining": 0,
-        "aliquot_quality_status": "Other",
+        "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
         "aliquot_status": "Other"
     }
@@ -79,12 +79,12 @@ def test_clinicaltrial_simple():
     # create the sample.
     sample = {
         "cimac_id": "CM-TEST-1234-00",
-        "site_sample_id": "blank",
+        "parent_sample_id": "blank",
         "aliquots": [aliquot],
-        "time_point": "---",
+        "collection_event_name": "---",
         "sample_location": "---",
-        "specimen_type": "Other",
-        "specimen_format": "Other",
+        "type_of_sample": "Other",
+        "type_of_primary_container": "Other",
         "genomic_source": "Normal",
     }
 
@@ -93,13 +93,13 @@ def test_clinicaltrial_simple():
         "cimac_participant_id": "P1234",
         "trial_participant_id": "blank",
         "samples": [sample],
-        "cohort_id": "---",
+        "cohort_name": "---",
         "arm_id": "---",    
     }
 
     # create the trial
     ct = {
-        "lead_organization_study_id": "test",
+        "protocol_id": "test",
         "participants": [participant]
     }
 
@@ -113,19 +113,19 @@ def test_clinicaltrial_olink():
     # create 2 aliquots
     aliquot1 = {
         "slide_number": "13",
-        "units": "Other",
+        "sample_volume_units": "Other",
         "material_used": 1,
         "material_remaining": 0,
-        "aliquot_quality_status": "Other",
+        "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
         "aliquot_status": "Other"
     }
     aliquot2 = {
         "slide_number": "14",
-        "units": "Other",
+        "sample_volume_units": "Other",
         "material_used": 1,
         "material_remaining": 0,
-        "aliquot_quality_status": "Other",
+        "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
         "aliquot_status": "Other"
     }
@@ -133,22 +133,22 @@ def test_clinicaltrial_olink():
     # create the sample.
     sample1 = {
         "cimac_id": "CM-TEST-PA12-34",
-        "site_sample_id": "blank",
+        "parent_sample_id": "blank",
         "aliquots": [aliquot1],
-        "time_point": "---",
+        "collection_event_name": "---",
         "sample_location": "---",
-        "specimen_type": "Other",
-        "specimen_format": "Other",
+        "type_of_sample": "Other",
+        "type_of_primary_container": "Other",
         "genomic_source": "Normal",
     }
     sample2 = {
         "cimac_id": "CM-TEST-PAAB-CD",
-        "site_sample_id": "blank",
+        "parent_sample_id": "blank",
         "aliquots": [aliquot2],
-        "time_point": "---",
+        "collection_event_name": "---",
         "sample_location": "---",
-        "specimen_type": "Other",
-        "specimen_format": "Other",
+        "type_of_sample": "Other",
+        "type_of_primary_container": "Other",
         "genomic_source": "Normal",
     }
 
@@ -157,20 +157,20 @@ def test_clinicaltrial_olink():
         "cimac_participant_id": "P1234",
         "trial_participant_id": "blank",
         "samples": [sample1],
-        "cohort_id": "---",
+        "cohort_name": "---",
         "arm_id": "---",    
     }
     participant2 = {
         "cimac_participant_id": "PABCD",
         "trial_participant_id": "blank",
         "samples": [sample2],
-        "cohort_id": "---",
+        "cohort_name": "---",
         "arm_id": "---",    
     }
 
     # create the trial
     ct = {
-        "lead_organization_study_id": "test",
+        "protocol_id": "test",
         "participants": [participant1, participant2]
     }
 

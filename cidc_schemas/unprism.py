@@ -8,7 +8,7 @@ def unprism_participants(trial_metadata: dict):
 
     participants.drop('samples', axis=1, inplace=True)
 
-    return participants.to_csv()
+    return participants.to_csv(index=False)
 
 
 def unprism_samples(assay_type: str):
@@ -18,4 +18,4 @@ def unprism_samples(assay_type: str):
 
     samples.drop('aliquots', axis=1, inplace=True)
 
-    return samples.to_csv()
+    return samples.to_csv(index=False)

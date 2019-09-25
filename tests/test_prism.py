@@ -541,6 +541,8 @@ def test_prismify_olink_only():
     # assert works
     validator.validate(merged)
 
+    assert 0, "add cimac_id ref testing"
+
     
 def test_merge_artifact_wes_only():
 

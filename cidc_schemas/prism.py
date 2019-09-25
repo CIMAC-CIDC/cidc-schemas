@@ -664,61 +664,6 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     return root_ct_obj, collected_files
 
 
-def _get_path(ct: dict, key: str) -> str:
-    """
-    find the path to the given key in the dictionary
-
-    Args:
-        ct: clinical_trial object to be modified
-        key: the identifier we are looking for in the dictionary
-
-    Returns:
-        arg1: string describing the location of the key
-    """
-
-    # first look for key as is
-    ds1 = ct | grep(key, match_string=True)
-    count1 = 0
-    if 'matched_values' in ds1:
-        count1 = len(ds1['matched_values'])
-
-    # the hack fails if both work... probably need to deal with this
-    if count1 == 0:
-        raise KeyError(f"key: {key} not found")
-
-    # get the keypath
-    return ds1['matched_values'].pop()
-
-
-def _get_source(ct: dict, key: str, skip_last=None) -> dict:
-    """
-    extract the object in the dictionary specified by
-    the supplied key (or one of its parents.)
-
-    Args:
-        ct: clinical_trial object to be searched
-        key: the identifier we are looking for in the dictionary,
-        skip_last: how many levels at the end of key path we want to skip.
-
-    Returns:
-        arg1: string describing the location of the key
-    """
-
-    # tokenize.
-    key = key.replace("root", "").replace("'", "")
-    tokens = re.findall(r"\[(.*?)\]", key)
-
-    if skip_last:
-        tokens = tokens[0:-1*skip_last]
-    
-    # keep getting based on the key.
-    cur_obj = ct
-    for token in tokens:
-        try:
-            token = int(token)
-        except ValueError:
-            pass
-
 def _set_data_format(ct: dict, artifact: dict):
     """
     Discover the correct data format for the given artifact.
@@ -762,13 +707,13 @@ def _set_data_format(ct: dict, artifact: dict):
 def _get_uuid_info(ct: dict, artifact_uuid: str) -> dict:
 
     # Using uuids to find path in CT where corresponding artifact is located. Uuids are unique.
-    uuid_field_path = _get_path(ct, artifact_uuid)
+    uuid_field_path = get_path(ct, artifact_uuid)
 
     # As "uuid_field_path" contains path to a field with uuid,
     # we're looking for an artifact that contains it, not the "string" field itself
     # That's why we need skip_last=1, to get 1 "level" higher
     # from 'uuid_field_path' field to it's parent - existing_artifact obj
-    return _get_source(ct, uuid_field_path, skip_last=1)
+    return get_source(ct, uuid_field_path, skip_last=1)
 
 
 def merge_artifact(

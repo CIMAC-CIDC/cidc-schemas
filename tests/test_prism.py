@@ -496,7 +496,7 @@ def test_prismify_wes_only():
     hint = 'wes'
 
     # parse the spreadsheet and get the file maps
-    ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
+    md_patch, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -525,13 +525,16 @@ def test_prismify_olink_only():
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
     merger = Merger(schema)
-    merged = merger.merge(MINIMAL_CT_1PA1SA1AL, ct)
+    merged = merger.merge(MINIMAL_TEST_TRIAL, ct)
 
     # assert works
     validator.validate(merged)
 
     merged_wo_needed_participants = copy.deepcopy(merged)
-    merged_wo_needed_participants['participants'][0]['samples'].pop()
+    merged_wo_needed_participants['participants'][0]['samples'][0]['cimac_id'] = "CM-TEST-NAAA-DA"
+
+
+    _debug_rec_cim_ids = [r for r in ct["assays"]["olink"]["records"]]
 
     # assert in_doc_ref constraints work
     with pytest.raises(InDocRefNotFoundError):

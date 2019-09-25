@@ -507,6 +507,17 @@ def test_prismify_wes_only():
     # assert works
     validator.validate(merged)
 
+    merged_wo_needed_participants = copy.deepcopy(merged)
+    merged_wo_needed_participants['participants'][0]['samples'][0]['cimac_id'] = "CM-TEST-NAAA-DA"
+
+    # assert in_doc_ref constraints work
+    with pytest.raises(InDocRefNotFoundError):
+        validator.validate(merged_wo_needed_participants)
+
+    # 2 record = 2 missing aliquot refs = 2 errors
+    assert 2 == len(list(validator.iter_errors(merged_wo_needed_participants)))
+
+
 def test_prismify_olink_only():
 
     # create validators
@@ -530,21 +541,7 @@ def test_prismify_olink_only():
     # assert works
     validator.validate(merged)
 
-    merged_wo_needed_participants = copy.deepcopy(merged)
-    merged_wo_needed_participants['participants'][0]['samples'][0]['cimac_id'] = "CM-TEST-NAAA-DA"
-
-
-    _debug_rec_cim_ids = [r for r in ct["assays"]["olink"]["records"]]
-
-    # assert in_doc_ref constraints work
-    with pytest.raises(InDocRefNotFoundError):
-        validator.validate(merged_wo_needed_participants)
-
-    # 2 record = 2 missing aliquot refs = 2 errors
-    assert 2 == len(list(validator.iter_errors(merged_wo_needed_participants)))
     
-
-
 def test_merge_artifact_wes_only():
 
     # create the clinical trial.

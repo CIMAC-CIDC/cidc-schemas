@@ -17,6 +17,7 @@ from cidc_schemas.template_reader import XlTemplateReader
 from cidc_schemas.constants import SCHEMA_DIR, TEMPLATE_DIR
 from .util import get_path, get_source
 
+PROTOCOL_ID_FIELD_NAME = "protocol_id"
 
 def _set_val(
         pointer: str, 
@@ -773,11 +774,8 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
     # next assert the un-mutable fields are equal
     # these fields are required in the schema
     # so previous validation assert they exist
-    key_details = ["protocol_id"]
-    for d in key_details:
-        if patch.get(d) != target.get(d):
-            raise RuntimeError("unable to merge trials with different \
-                protocol_id")
+    if patch.get(PROTOCOL_ID_FIELD_NAME) != target.get(PROTOCOL_ID_FIELD_NAME):
+        raise RuntimeError("unable to merge trials with different "+ PROTOCOL_ID_FIELD_NAME)
 
     # merge the two documents
     merger = Merger(schema)

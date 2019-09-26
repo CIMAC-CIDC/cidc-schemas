@@ -91,6 +91,7 @@ def test_trial_core():
         "parent_sample_id": "ssida",
         "aliquots": [aliquot1],
         "collection_event_name": "---",
+        "type_of_primary_container":  "Sodium heparin",
         "sample_location": "---",
         "type_of_sample": "Other",
         "specimen_format": "Other",
@@ -102,6 +103,7 @@ def test_trial_core():
         "parent_sample_id": "ssidb",
         "aliquots": [aliquot2],
         "collection_event_name": "---",
+        "type_of_primary_container":  "Sodium heparin",
         "sample_location": "---",
         "type_of_sample": "Other",
         "specimen_format": "Other",
@@ -111,7 +113,7 @@ def test_trial_core():
 
     # create a bad participant, then make it good.
     participant = {
-        "cimac_participant_id": "cpid_1",
+        "cimac_participant_id": "CM-TRIA-PART",
         "participant_id": "tpid_a",
         "cohort_name": "---",
         "arm_id": "---",

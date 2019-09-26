@@ -29,32 +29,32 @@ from .test_assays import ARTIFACT_OBJ
 
 
 TEST_PRISM_TRIAL = {
-        "lead_organization_study_id": "test_prism_trial_id",
+        "protocol_id": "test_prism_trial_id",
         "participants": [
             {
                 "cimac_participant_id": "CM-TEST-PAR1",
-                "trial_participant_id": "test_trial_patient_1",
-                "cohort_id": "---",
+                "participant_id": "test_trial_patient_1",
+                "cohort_name": "---",
                 "arm_id": "---",
                 "samples": [
                     {
                         "aliquots": [
                             {
                                 "slide_number": "1",
-                                "units": "Other",
+                                "sample_volume_units": "Other",
                                 "material_used": 1,
                                 "material_remaining": 0,
-                                "aliquot_quality_status": "Other",
+                                "quality_of_shipment": "Other",
                                 "aliquot_replacement": "N/A",
                                 "aliquot_status": "Other"
                             },
                         ],
                         "cimac_id": "CM-TEST-PAR1-11",
-                        "site_sample_id": "test_sample_1",
-                        "time_point": "---",
+                        "parent_sample_id": "test_sample_1",
+                        "collection_event_name": "---",
                         "sample_location": "---",
-                        "specimen_type": "Other",
-                        "specimen_format": "Other",
+                        "type_of_sample": "Other",
+                        "type_of_primary_container": "Other",
                         "genomic_source": "Tumor",
                     }
                 ],
@@ -65,26 +65,26 @@ TEST_PRISM_TRIAL = {
                         "aliquots": [
                             {
                                 "slide_number": "1",
-                                "units": "Other",
+                                "sample_volume_units": "Other",
                                 "material_used": 2,
                                 "material_remaining": 0,
-                                "aliquot_quality_status": "Other",
+                                "quality_of_shipment": "Other",
                                 "aliquot_replacement": "N/A",
                                 "aliquot_status": "Other"
                             }
                         ],
                         "cimac_id": "CM-TEST-PAR1-21",
-                        "site_sample_id": "test_sample_2",
-                        "time_point": "---",
+                        "parent_sample_id": "test_sample_2",
+                        "collection_event_name": "---",
                         "sample_location": "---",
-                        "specimen_type": "Other",
-                        "specimen_format": "Other",
+                        "type_of_sample": "Other",
+                        "type_of_primary_container": "Other",
                         "genomic_source": "Tumor",
                     }
                 ],
                 "cimac_participant_id": "CM-TEST-PAR2",
-                "trial_participant_id": "test_trial_patient_2",
-                "cohort_id": "---",
+                "participant_id": "test_trial_patient_2",
+                "cohort_name": "---",
                 "arm_id": "---"
             }
         ],
@@ -149,17 +149,17 @@ TEST_PRISM_TRIAL = {
 
 # corresponding list of gs_urls.
 WES_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/CM-TEST-PAR1-11/wes/r1.fastq': 
+    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-11/wes/r1.fastq': 
     "r1.1",
-    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/CM-TEST-PAR1-11/wes/r2.fastq': 
+    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-11/wes/r2.fastq': 
     "r2.1",
-    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/CM-TEST-PAR1-11/wes/rgm.txt': 
+    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-11/wes/rgm.txt': 
     "read_group_mapping_file.1",
-    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/CM-TEST-PAR1-21/wes/r1.fastq': 
+    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-21/wes/r1.fastq': 
     "r1.2",
-    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/CM-TEST-PAR1-21/wes/r2.fastq': 
+    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-21/wes/r2.fastq': 
     "r2.2",
-    TEST_PRISM_TRIAL["lead_organization_study_id"]+'/CM-TEST-PAR1-21/wes/rgm.txt': 
+    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-21/wes/rgm.txt': 
     "read_group_mapping_file.2"
 }
 
@@ -177,38 +177,38 @@ def test_merge_core():
     # create aliquot
     aliquot = {
         "slide_number": "12",
-        "units": "Other",
+        "sample_volume_units": "Other",
         "material_used": 1,
         "material_remaining": 0,
-        "aliquot_quality_status": "Other",
+        "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
         "aliquot_status": "Other"
     }
 
     # create the sample.
     sample = {
-        "cimac_id": "CM-TEST-PA12-34",
-        "site_sample_id": "blank",
+        "cimac_id": "CM-TRIA-PA12-34",
+        "parent_sample_id": "blank",
         "aliquots": [aliquot],
-        "time_point": "---",
+        "collection_event_name": "---",
         "sample_location": "---",
-        "specimen_type": "Other",
-        "specimen_format": "Other",
+        "type_of_sample": "Other",
+        "type_of_primary_container": "Other",
         "genomic_source": "Tumor",
     }
 
     # create the participant
     participant = {
-        "cimac_participant_id": "CM-TEST-1234",
-        "trial_participant_id": "blank",
+        "cimac_participant_id": "CM-TEST-PART",
+        "participant_id": "blank",
         "samples": [sample],
-        "cohort_id": "---",
+        "cohort_name": "---",
         "arm_id": "---"
     }
 
     # create the trial
     ct1 = {
-        "lead_organization_study_id": "test",
+        "protocol_id": "test",
         "participants": [participant]
     }
 
@@ -247,7 +247,7 @@ def test_merge_core():
 
 
 MINIMAL_TEST_TRIAL = {
-    "lead_organization_study_id": "minimal",
+    "protocol_id": "minimal",
     "participants": [
         {
             "samples": [
@@ -255,26 +255,26 @@ MINIMAL_TEST_TRIAL = {
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "units": "Other",
+                            "sample_volume_units": "Other",
                             "material_used": 1,
                             "material_remaining": 0,
-                            "aliquot_quality_status": "Other",
+                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other"
                         }
                     ],
                     "genomic_source": "Tumor",
-                    "time_point": "---",
+                    "collection_event_name": "---",
                     "sample_location": "---",
-                    "specimen_type": "Other",
-                    "specimen_format": "Other",
-                    "site_sample_id": "test_min_Sample_1",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
+                    "parent_sample_id": "test_min_Sample_1",
                     "cimac_id": "CM-TEST-MIN1-01"
                 }
             ],
             "cimac_participant_id": "CM-TEST-MIN1",
-            "trial_participant_id": "test_min_Patient_1",
-            "cohort_id": "---",
+            "participant_id": "test_min_Patient_1",
+            "cohort_name": "---",
             "arm_id": "---"
         }
     ]
@@ -326,8 +326,8 @@ def test_prism(schema_path, xlsx_path):
     # turn into object.
     ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
     if hint == 'cytof':
-        assert "CYTOF_TEST1" == ct['lead_organization_study_id']
-        ct['lead_organization_study_id'] = 'test_prism_trial_id'
+        assert "CYTOF_TEST1" == ct['protocol_id']
+        ct['protocol_id'] = 'test_prism_trial_id'
 
     if hint in SUPPORTED_ASSAYS:
         # olink is different - is will never have array of assay "runs" - only one
@@ -352,9 +352,9 @@ def test_prism(schema_path, xlsx_path):
     assert not errors 
 
     if hint in SUPPORTED_ASSAYS :
-        assert merged["lead_organization_study_id"] == "test_prism_trial_id"
+        assert merged["protocol_id"] == "test_prism_trial_id"
     else:
-        assert TEST_PRISM_TRIAL["lead_organization_study_id"] == merged["lead_organization_study_id"]
+        assert TEST_PRISM_TRIAL["protocol_id"] == merged["protocol_id"]
 
 
 @pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
@@ -413,7 +413,7 @@ def test_filepath_gen(schema_path, xlsx_path):
 
         # 4 in total
         assert len(file_maps) == 6
-        assert 6 == sum([x.gs_key.startswith(TEST_PRISM_TRIAL["lead_organization_study_id"]) for x in file_maps])
+        assert 6 == sum([x.gs_key.startswith(TEST_PRISM_TRIAL["protocol_id"]) for x in file_maps])
 
         # all that with
         # 1 trial id
@@ -481,6 +481,35 @@ def test_prismify_cytof_only():
     validator.validate(merged)
 
 
+def test_prismify_plasma():
+
+    # create validators
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
+
+    # create the example template.
+    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'manifests', 'plasma_template.json')
+    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, "plasma_template.xlsx")
+    hint = 'plasma'
+
+    # parse the spreadsheet and get the file maps
+    md_patch, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
+    validator.validate(md_patch)
+
+    assert file_maps == []
+    assert 1 == len(md_patch["participants"])
+    assert 1 == len(md_patch["participants"][0]["samples"])
+    assert md_patch["participants"][0]["samples"][0]["cimac_id"][:-3] == \
+        md_patch["participants"][0]["cimac_participant_id"]
+    assert 1 == len(md_patch["participants"][0]["samples"])
+
+    assert md_patch["participants"][0]["gender"]        # filled from 1 tab
+    assert md_patch["participants"][0]["cohort_name"]   # filled from another
+
+    assert md_patch["participants"][0]["samples"][0]["processed_sample_id"] # filled from 1 tab
+    assert md_patch["participants"][0]["samples"][0]["topography_code"]     # filled from the second tab
+    assert md_patch["participants"][0]["samples"][0]["site_description"]    # filled from the second tab
+
 
 def test_prismify_wes_only():
 
@@ -496,6 +525,9 @@ def test_prismify_wes_only():
     # parse the spreadsheet and get the file maps
     md_patch, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
 
+    for e in validator.iter_errors(md_patch):
+        assert isinstance(e, InDocRefNotFoundError) or ("'participants'" in str(e) and "required" in str(e))
+
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
@@ -504,7 +536,6 @@ def test_prismify_wes_only():
 
     # assert works
     validator.validate(merged)
-
 
     merged_wo_needed_participants = copy.deepcopy(merged)
     merged_wo_needed_participants['participants'][0]['samples'].pop()
@@ -585,7 +616,7 @@ def test_merge_ct_meta():
         merge_clinical_trial_metadata(ct1, {})
 
     # next assert the merge is only happening on the same trial
-    ct1["lead_organization_study_id"] = "not_the_same"
+    ct1["protocol_id"] = "not_the_same"
     ct2 = copy.deepcopy(TEST_PRISM_TRIAL)
     with pytest.raises(RuntimeError):
         merge_clinical_trial_metadata(ct1, ct2)
@@ -594,7 +625,7 @@ def test_merge_ct_meta():
     # include data in 1 that is missing in the other
     # at the trial level and assert the merge
     # does not clobber any
-    ct1["lead_organization_study_id"] = ct2["lead_organization_study_id"] 
+    ct1["protocol_id"] = ct2["protocol_id"] 
     ct1['trial_name'] = 'name ABC'
     ct2['nci_id'] = 'xyz1234'
 
@@ -604,7 +635,7 @@ def test_merge_ct_meta():
 
     # assert the patch over-writes the original value
     # when value is present in both objects
-    # TODO add 'discard' mergeStrategy from lead_organization_study_id 
+    # TODO add 'discard' mergeStrategy from protocol_id 
     ct1['trial_name'] = 'name ABC'
     ct2['trial_name'] = 'CBA eman'
 
@@ -620,7 +651,7 @@ def test_merge_ct_meta():
     assert len(ct_merge['participants']) == 1+len(TEST_PRISM_TRIAL['participants'])
 
     # now lets have the same participant but adding multiple samples.
-    ct1["lead_organization_study_id"] = ct2["lead_organization_study_id"] 
+    ct1["protocol_id"] = ct2["protocol_id"] 
     ct1['participants'][0]['cimac_participant_id'] = \
         ct2['participants'][0]['cimac_participant_id']
     ct1['participants'][0]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N1'
@@ -661,7 +692,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
             assert len(prism_patch['participants'][1]['samples']) == 3
 
         elif hint == 'plasma':
-            assert (prism_patch['shipments'][0]['request']) == "a123"
+            assert (prism_patch['shipments'][0]['request']) == "value"
             assert len(prism_patch['participants']) == 1
             assert len(prism_patch['participants'][0]['samples']) == 1
             assert 'aliquots' not in prism_patch['participants'][0]['samples'][0]
@@ -690,12 +721,12 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     for f in file_maps:
         assert f'{hint}/' in f.gs_key, f"No {hint} hint found"
 
-    # And we need set lead_organization_study_id to be the same for testing
+    # And we need set protocol_id to be the same for testing
     original_ct = copy.deepcopy(TEST_PRISM_TRIAL) 
-    if hint in ["olink", "cytof"]:
-        original_ct['lead_organization_study_id'] = 'test_prism_trial_id'
-        prism_patch['lead_organization_study_id'] = 'test_prism_trial_id'
 
+    # so we can merge
+    original_ct['protocol_id'] = prism_patch['protocol_id']
+    
     # "prismify" provides only a patch so we need to merge it into a "full" ct
     full_after_prism = merge_clinical_trial_metadata(prism_patch, original_ct)
 
@@ -894,8 +925,8 @@ def test_prism_joining_tabs(monkeypatch):
                                 "type_ref": "participant.json#properties/cimac_participant_id"
                             },
                             "PA prop": {
-                              "merge_pointer": "0/trial_participant_id",
-                              "type_ref": "participant.json#properties/trial_participant_id"
+                              "merge_pointer": "0/participant_id",
+                              "type_ref": "participant.json#properties/participant_id"
                             }
                         }
                     }
@@ -917,8 +948,8 @@ def test_prism_joining_tabs(monkeypatch):
                                 }]
                             },
                             "SA_prop": {
-                              "merge_pointer": "0/site_sample_id",
-                              "type_ref": "sample.json#properties/site_sample_id"
+                              "merge_pointer": "0/parent_sample_id",
+                              "type_ref": "sample.json#properties/parent_sample_id"
                             }
 
                         }
@@ -941,10 +972,10 @@ def test_prism_joining_tabs(monkeypatch):
     assert 2 == len(patch["participants"][0]["samples"])
     
     assert "CM-PA0-SA0"  == patch["participants"][0]["samples"][0]["cimac_id"]
-    assert "000"  == patch["participants"][0]["samples"][0]["site_sample_id"]
+    assert "000"  == patch["participants"][0]["samples"][0]["parent_sample_id"]
 
     assert "CM-PA0-SA1"  == patch["participants"][0]["samples"][1]["cimac_id"]
-    assert "001"  == patch["participants"][0]["samples"][1]["site_sample_id"]
+    assert "001"  == patch["participants"][0]["samples"][1]["parent_sample_id"]
     
     assert "CM-PA1" == patch["participants"][1]["cimac_participant_id"]
     assert 2 == len(patch["participants"][1]["samples"])

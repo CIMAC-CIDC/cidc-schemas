@@ -1,27 +1,27 @@
 {
-    "lead_organization_study_id": "2/1PA_multiWES",
+    "protocol_id": "2/1PA_multiWES",
     "participants": [
         {
             "cimac_participant_id": "CM-TEST-PA21",
-            "trial_participant_id": "trial_PA_2.1",
-            "cohort_id": "---",
+            "participant_id": "trial_PA_2.1",
+            "cohort_name": "---",
             "arm_id": "---",
             "samples": [
                 {
-                    "cimac_id":  "CM-TEST-PA21-S1",
-                    "site_sample_id":  "site_SA_2.1.1",
-                    "time_point":       "---",
+                    "cimac_id":  "CM-TRIA-PA21-S1",
+                    "parent_sample_id":  "site_SA_2.1.1",
+                    "collection_event_name":       "---",
                     "sample_location": "---",
-                    "specimen_type": "Other",
-                    "specimen_format": "Other",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
                     "genomic_source":   "Normal",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "units": "Other",
+                            "sample_volume_units": "Other",
                             "material_used": 1,
                             "material_remaining": 0,
-                            "aliquot_quality_status": "Other",
+                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other"
                         }
@@ -29,39 +29,39 @@
                 },
                 {
                     "cimac_id":  "CM-TEST-PA21-S2",
-                    "site_sample_id":  "site_SA_2.1.2",
-                    "time_point":       "---",
+                    "parent_sample_id":  "site_SA_2.1.2",
+                    "collection_event_name":       "---",
                     "sample_location": "---",
-                    "specimen_type": "Other",
-                    "specimen_format": "Other",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
                     "genomic_source":   "Tumor",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "units": "Other",
+                            "sample_volume_units": "Other",
                             "material_used": 1,
                             "material_remaining": 0,
-                            "aliquot_quality_status": "Other",
+                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other"
                         }
                     ] 
                 },
                 {
-                    "cimac_id":  "CM-TEST-PA21-S3",
-                    "site_sample_id":  "site_SA_2.1.3",
-                    "time_point":       "---",
+                    "cimac_id":  "CM-TRIA-PA21-S3",
+                    "parent_sample_id":  "site_SA_2.1.3",
+                    "collection_event_name":       "---",
                     "sample_location": "---",
-                    "specimen_type": "Other",
-                    "specimen_format": "Other",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
                     "genomic_source":   "Tumor",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "units": "Other",
+                            "sample_volume_units": "Other",
                             "material_used": 1,
                             "material_remaining": 0,
-                            "aliquot_quality_status": "Other",
+                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other"
                         }

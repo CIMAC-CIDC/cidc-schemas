@@ -1,0 +1,8 @@
+"","Path Concordance Verification","","ICD-0-3 Code/Description","","","","","Demographics"
+"#h","CIMAC ID","COLLECTION EVENT NAME","SITE DESCRIPTION","TOPOGRAPHY CODE","TOPOGRAPHY DESCRIPTION","HISTOLOGY/BEHAVIOR","HISTOLOGY/BEHAVIOR DESCRIPTION","SEX","RACE","ETHNIC GROUP"
+"#d","CM-TEST-PAR1-01","Baseline ","ANAL CANAL & ANUS","C00.1","LIP","8004/3","Neoplasm, malignant","Female","Asian","Hispanic or Latino"
+"#d","CM-TEST-PAR1-02","Baseline ","ANAL CANAL & ANUS","C00.1","LIP","8004/3","Neoplasm, malignant","Female","Asian","Hispanic or Latino"
+"#d","CM-TEST-PAR1-03","Progression","ANAL CANAL & ANUS","C00.1","LIP","8004/3","Neoplasm, malignant","Female","Asian","Hispanic or Latino"
+"#d","CM-TEST-PAR2-01","Baseline ","ANAL CANAL & ANUS","C00.1","LIP","8004/3","Neoplasm, malignant","Male","Native Hawaiian/Pacific Islander","Unknown"
+"#d","CM-TEST-PAR2-02","Baseline ","ANAL CANAL & ANUS","C00.1","LIP","8004/3","Neoplasm, malignant","Male","Native Hawaiian/Pacific Islander","Unknown"
+"#d","CM-TEST-PAR2-03","Progression","ANAL CANAL & ANUS","C00.1","LIP","8004/3","Neoplasm, malignant","Male","Native Hawaiian/Pacific Islander","Unknown"

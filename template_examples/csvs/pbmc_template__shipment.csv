@@ -13,6 +13,7 @@
 "#p","SHIPPING CONDITION","Ambient (Ice Pack)"
 "#p","DATE SHIPPED","2013-11-12 00:00:00"
 "#p","DATE RECIEVED","2013-11-12 00:00:00"
+"#p","QUALITY OF SHIPMENT","Specimen shipment received in good condition"
 "#p","NUM OF SAMPLES SHIPPED","8"
 "#p","NUM OF SAMPLES GOOD","8"
 "#p","NUM OF PATH REPORT","8"

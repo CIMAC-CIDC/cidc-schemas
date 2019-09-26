@@ -68,6 +68,10 @@
                         "merge_pointer": "/date_recieved",
                         "type_ref": "shipping_core.json#properties/date_recieved"
                     },
+                    "quality of shipment": {
+                        "merge_pointer": "/quality_of_shipment",
+                        "type_ref": "shipping_core.json#properties/quality_of_shipment"
+                    },
                     "num of samples shipped": {
                         "merge_pointer": "/num_of_samples_shipped",
                         "type_ref": "shipping_core.json#properties/num_of_samples_shipped"
@@ -260,10 +264,6 @@
                         "material remaining units": {
                             "merge_pointer": "/material_remaining_units",
                             "type_ref": "sample.json#properties/material_remaining_units"
-                        },
-                        "quality of shipment": {
-                            "merge_pointer": "/quality_of_shipment",
-                            "type_ref": "sample.json#properties/quality_of_shipment"
                         },
                         "quality of sample": {
                             "merge_pointer": "/quality_of_sample",

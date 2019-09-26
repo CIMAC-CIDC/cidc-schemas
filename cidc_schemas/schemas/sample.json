@@ -343,16 +343,6 @@
             "mergeOptions": {
                 "idRef": "/slide_number"
             }
-        },
-        "quality_of_shipment": {
-            "description": "Final status of aliquot after QC and pathology review.",
-            "type": "string",
-            "enum": [
-                "Specimen shipment received in good condition",
-                "Specimen shipment received in poor condition",
-                "Not Reported",
-                "Other"
-            ]
         }
     },
     "required": [

@@ -2,7 +2,7 @@
     "protocol_id": "1/minimal",
     "participants": [
         {
-            "cimac_participant_id": "PA.1.1",
+            "cimac_participant_id": "CM-TEST-PA11",
             "participant_id": "trial.PA.1.1",
             "cohort_name": "---",
             "arm_id": "---",
@@ -28,7 +28,7 @@
                     ] 
                 }, 
                 {
-                    "cimac_id": "CM-TRIA-PA11-S2",
+                    "cimac_id": "CM-TEST-PA11-S2",
                     "parent_sample_id": "site.SA.1.1.2",
                     "collection_event_name": "---",
                     "sample_location": "---",

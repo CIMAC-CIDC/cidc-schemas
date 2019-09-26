@@ -2,7 +2,7 @@
     "protocol_id": "2/1PA_multiWES",
     "participants": [
         {
-            "cimac_participant_id": "PA_2.1",
+            "cimac_participant_id": "CM-TEST-PA21",
             "participant_id": "trial_PA_2.1",
             "cohort_name": "---",
             "arm_id": "---",
@@ -28,7 +28,7 @@
                          ]
                 },
                 {
-                    "cimac_id":  "CM-TRIA-PA21-S2",
+                    "cimac_id":  "CM-TEST-PA21-S2",
                     "parent_sample_id":  "site_SA_2.1.2",
                     "collection_event_name":       "---",
                     "sample_location": "---",

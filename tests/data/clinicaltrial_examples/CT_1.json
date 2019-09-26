@@ -2,13 +2,13 @@
     "protocol_id": "10021",
     "participants": [
         {
-            "cimac_participant_id": "PA.1",
+            "cimac_participant_id": "CM-TEST-PAR1",
             "participant_id": "trial.PA.1",
             "cohort_name": "---",
             "arm_id": "---",
             "samples": [
                 {
-                    "cimac_id": "CM-TRIA-PAR1-S1",
+                    "cimac_id": "CM-TEST-PAR1-S1",
                     "parent_sample_id": "SA.1.1",
                     "collection_event_name": "---",
                     "sample_location": "---",
@@ -28,7 +28,7 @@
                     ] 
                 }, 
                 {
-                    "cimac_id": "CM-TRIA-PAR1-S2",
+                    "cimac_id": "CM-TEST-PAR1-S2",
                     "parent_sample_id": "SA.1.2",
                     "collection_event_name": "---",
                     "sample_location": "---",
@@ -50,13 +50,13 @@
             ]
         },
         {
-            "cimac_participant_id": "PA.2",
+            "cimac_participant_id": "CM-TEST-PAR2",
             "participant_id": "trial.PA.2",
             "cohort_name": "---",
             "arm_id": "---",
             "samples": [
                 {
-                    "cimac_id": "CM-TRIA-PAR2-S1",
+                    "cimac_id": "CM-TEST-PAR2-S1",
                     "parent_sample_id": "SA.2.1",
                     "collection_event_name": "---",
                     "sample_location": "---",
@@ -76,7 +76,7 @@
                     ]
                 },
                 {
-                    "cimac_id": "CM-TRIA-PAR2-S2",
+                    "cimac_id": "CM-TEST-PAR2-S2",
                     "parent_sample_id": "SA.2.2",
                     "collection_event_name": "---",
                     "sample_location": "---",

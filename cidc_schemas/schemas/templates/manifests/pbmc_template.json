@@ -7,12 +7,12 @@
     "description": "Shipping / receiving manifest for transferring PBMC samples.\n",
     "properties": {
         "worksheets": {
-            "shipment": {
+            "Shipment": {
                 "prism_preamble_object_schema": "clinical_trial.json",
                 "prism_preamble_object_pointer": "/shipments/0",
                 "prism_data_object_pointer": "/shipped",
                 "preamble_rows": {
-                    "lead organization study id": {
+                    "protocol id": {
                         "merge_pointer": "2/protocol_id",
                         "type_ref": "clinical_trial.json#properties/protocol_id"
                     },
@@ -64,6 +64,10 @@
                         "merge_pointer": "/date_shipped",
                         "type_ref": "shipping_core.json#properties/date_shipped"
                     },
+                    "date recieved": {
+                        "merge_pointer": "/date_recieved",
+                        "type_ref": "shipping_core.json#properties/date_recieved"
+                    },
                     "num of samples shipped": {
                         "merge_pointer": "/num_of_samples_shipped",
                         "type_ref": "shipping_core.json#properties/num_of_samples_shipped"
@@ -86,7 +90,68 @@
                     }
                 }
             },
-            "aliquots": {
+
+            "Essential Patient Data": {
+                "prism_preamble_object_schema": "clinical_trial.json",
+                "prism_preamble_object_pointer": "#",
+                "prism_data_object_pointer": "/participants/0/samples/0",
+                "data_columns": {
+                    "Path Concordance Verification": {
+                        "cimac id": {
+                            "merge_pointer": "/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id",
+                            "process_as": [
+                                {
+                                    "merge_pointer": "2/cimac_participant_id",
+                                    "parse_through": "lambda x: '-'.join(x.split('-')[:3])"
+                                }
+                            ]
+                        },
+                        "collection event name": {
+                            "merge_pointer": "/collection_event_name",
+                            "type_ref": "sample.json#properties/collection_event_name"
+                        }
+                    },
+                    "ICD-0-3 Code/Description": {
+                        "Site Description": {
+                            "merge_pointer": "/site_description",
+                            "type_ref": "sample.json#properties/site_description"
+                        },
+                        "Topography Code": {
+                            "merge_pointer": "/topography_code",
+                            "type_ref": "sample.json#properties/topography_code"
+                        },
+                        "Topography Description": {
+                            "merge_pointer": "/topography_description",
+                            "type_ref": "sample.json#properties/topography_description"
+                        },
+                        "Histology/Behavior": {
+                            "merge_pointer": "/histology_behavior",
+                            "type_ref": "sample.json#properties/histology_behavior"
+                        },
+                        "Histology/Behavior Description": {
+                            "merge_pointer": "/histology_behavior_description",
+                            "type_ref": "sample.json#properties/histology_behavior_description"
+                        }
+                    },
+                    "Demographics": {
+                        "Sex": {
+                            "merge_pointer": "2/gender",
+                            "type_ref": "participant.json#properties/gender"
+                        },
+                        "Race": {
+                            "merge_pointer": "2/race",
+                            "type_ref": "participant.json#properties/race"
+                        },
+                        "Ethnic Group": {
+                            "merge_pointer": "2/ethnicity",
+                            "type_ref": "participant.json#properties/ethnicity"
+                        }
+                    }
+                }
+            },
+
+            "Samples": {
                 "prism_preamble_object_schema": "clinical_trial.json",
                 "prism_preamble_object_pointer": "#",
                 "prism_data_object_pointer": "/participants/0/samples/0",
@@ -107,6 +172,10 @@
                         "parent sample id": {
                             "merge_pointer": "0/parent_sample_id",
                             "type_ref": "sample.json#properties/parent_sample_id"
+                        },
+                        "processed sample id": {
+                            "merge_pointer": "/processed_sample_id",
+                            "type_ref": "sample.json#properties/processed_sample_id"
                         },
                         "cimac id": {
                             "merge_pointer": "/cimac_id",
@@ -142,6 +211,10 @@
                             "merge_pointer": "0/blood_processing_time",
                             "type_ref": "sample.json#properties/blood_processing_time"
                         },
+                        "sample processing compliance": {
+                            "merge_pointer": "/sample_processing_compliance",
+                            "type_ref": "sample.json#properties/sample_processing_compliance"
+                        },
                         "sample location": {
                             "merge_pointer": "0/sample_location",
                             "type_ref": "sample.json#properties/sample_location"
@@ -150,7 +223,7 @@
                             "merge_pointer": "0/type_of_sample",
                             "type_ref": "sample.json#properties/type_of_sample"
                         },
-                        "sample_collection_procedure": {
+                        "sample collection procedure": {
                             "merge_pointer": "/sample_collection_procedure",
                             "type_ref": "sample.json#properties/sample_collection_procedure"
                         },
@@ -171,7 +244,7 @@
                             "type_ref": "sample.json#properties/sample_volume_units"
                         },
                         "pbmc frozen": {
-                            "merge_pointer": "/pbmc_aliquoted",
+                            "merge_pointer": "/pbmc_frozen",
                             "type_ref": "sample.json#properties/pbmc_frozen"
                         }
                     },
@@ -184,29 +257,21 @@
                             "merge_pointer": "/material_used",
                             "type_ref": "sample.json#properties/material_used"
                         },
-                        "material used units": {
-                            "merge_pointer": "/material_used_units",
-                            "type_ref": "sample.json#properties/material_used_units"
-                        },
                         "material remaining": {
                             "merge_pointer": "/material_remaining",
                             "type_ref": "sample.json#properties/material_remaining"
                         },
-                        "material remaining units": {
-                            "merge_pointer": "/material_remaining_units",
-                            "type_ref": "sample.json#properties/material_remaining_units"
+                        "sample replacement": {
+                            "merge_pointer": "/sample_replacement",
+                            "type_ref": "sample.json#properties/sample_replacement"
                         },
-                        "quality of shipment": {
-                            "merge_pointer": "/quality_of_shipment",
-                            "type_ref": "sample.json#properties/quality_of_shipment"
+                        "residual sample use": {
+                            "merge_pointer": "/residual_sample_use",
+                            "type_ref": "sample.json#properties/residual_sample_use"
                         },
-                        "aliquot replacement": {
-                            "merge_pointer": "/aliquot_replacement",
-                            "type_ref": "aliquot.json#properties/aliquot_replacement"
-                        },
-                        "aliquot status": {
-                            "merge_pointer": "/aliquot_status",
-                            "type_ref": "aliquot.json#properties/aliquot_status"
+                        "comments": {
+                            "merge_pointer": "/comments",
+                            "type_ref": "sample.json#properties/comments"
                         }
                     }
                 }

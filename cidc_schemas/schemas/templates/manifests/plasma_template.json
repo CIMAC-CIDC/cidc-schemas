@@ -223,7 +223,7 @@
                             "merge_pointer": "/type_of_sample",
                             "type_ref": "sample.json#properties/type_of_sample"
                         },
-                        "sample_collection_procedure": {
+                        "sample collection procedure": {
                             "merge_pointer": "/sample_collection_procedure",
                             "type_ref": "sample.json#properties/sample_collection_procedure"
                         },

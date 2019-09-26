@@ -496,6 +496,20 @@ def test_prismify_plasma():
     md_patch, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
     validator.validate(md_patch)
 
+    assert file_maps == []
+    assert 1 == len(md_patch["participants"])
+    assert 1 == len(md_patch["participants"][0]["samples"])
+    assert md_patch["participants"][0]["samples"][0]["cimac_id"][:-3] == \
+        md_patch["participants"][0]["cimac_participant_id"]
+    assert 1 == len(md_patch["participants"][0]["samples"])
+
+    assert md_patch["participants"][0]["gender"]        # filled from 1 tab
+    assert md_patch["participants"][0]["cohort_name"]   # filled from another
+
+    assert md_patch["participants"][0]["samples"][0]["processed_sample_id"] # filled from 1 tab
+    assert md_patch["participants"][0]["samples"][0]["topography_code"]     # filled from the second tab
+    assert md_patch["participants"][0]["samples"][0]["site_description"]    # filled from the second tab
+
 
 def test_prismify_wes_only():
 
@@ -709,9 +723,10 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
 
     # And we need set protocol_id to be the same for testing
     original_ct = copy.deepcopy(TEST_PRISM_TRIAL) 
-    
-    original_ct['protocol_id'] = prism_patch['protocol_id']
 
+    # so we can merge
+    original_ct['protocol_id'] = prism_patch['protocol_id']
+    
     # "prismify" provides only a patch so we need to merge it into a "full" ct
     full_after_prism = merge_clinical_trial_metadata(prism_patch, original_ct)
 

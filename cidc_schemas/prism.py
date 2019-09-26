@@ -607,7 +607,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
 
         
         # Now processing preamble rows 
-        print(f'  preamble for {ws_name!r}')
+        if verb: print(f'  preamble for {ws_name!r}')
         for row in ws[RowType.PREAMBLE]:
             # process this property
             new_files = _process_property(

@@ -33,7 +33,7 @@ TEST_PRISM_TRIAL = {
         "participants": [
             {
                 "cimac_participant_id": "test_PA_1",
-                "trial_participant_id": "test_trial_patient_1",
+                "participant_id": "test_trial_patient_1",
                 "cohort_name": "---",
                 "arm_id": "---",
                 "samples": [
@@ -83,7 +83,7 @@ TEST_PRISM_TRIAL = {
                     }
                 ],
                 "cimac_participant_id": "test_PA_2",
-                "trial_participant_id": "test_trial_patient_2",
+                "participant_id": "test_trial_patient_2",
                 "cohort_name": "---",
                 "arm_id": "---"
             }
@@ -200,7 +200,7 @@ def test_merge_core():
     # create the participant
     participant = {
         "cimac_participant_id": "P1234",
-        "trial_participant_id": "blank",
+        "participant_id": "blank",
         "samples": [sample],
         "cohort_name": "---",
         "arm_id": "---"
@@ -273,7 +273,7 @@ MINIMAL_TEST_TRIAL = {
                 }
             ],
             "cimac_participant_id": "test_min_PA_1",
-            "trial_participant_id": "test_min_Patient_1",
+            "participant_id": "test_min_Patient_1",
             "cohort_name": "---",
             "arm_id": "---"
         }
@@ -913,8 +913,8 @@ def test_prism_joining_tabs(monkeypatch):
                                 "type_ref": "participant.json#properties/cimac_participant_id"
                             },
                             "PA prop": {
-                              "merge_pointer": "0/trial_participant_id",
-                              "type_ref": "participant.json#properties/trial_participant_id"
+                              "merge_pointer": "0/participant_id",
+                              "type_ref": "participant.json#properties/participant_id"
                             }
                         }
                     }

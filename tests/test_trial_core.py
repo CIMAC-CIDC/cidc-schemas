@@ -91,7 +91,7 @@ def test_clinicaltrial_simple():
     # create the participant
     participant = {
         "cimac_participant_id": "P1234",
-        "trial_participant_id": "blank",
+        "participant_id": "blank",
         "samples": [sample],
         "cohort_name": "---",
         "arm_id": "---",    
@@ -155,14 +155,14 @@ def test_clinicaltrial_olink():
     # create the participant
     participant1 = {
         "cimac_participant_id": "P1234",
-        "trial_participant_id": "blank",
+        "participant_id": "blank",
         "samples": [sample1],
         "cohort_name": "---",
         "arm_id": "---",    
     }
     participant2 = {
         "cimac_participant_id": "PABCD",
-        "trial_participant_id": "blank",
+        "participant_id": "blank",
         "samples": [sample2],
         "cohort_name": "---",
         "arm_id": "---",    

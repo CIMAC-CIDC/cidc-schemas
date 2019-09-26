@@ -3,7 +3,7 @@
     "participants": [
         {
             "cimac_participant_id": "PA.1",
-            "trial_participant_id": "trial.PA.1",
+            "participant_id": "trial.PA.1",
             "cohort_name": "---",
             "arm_id": "---",
             "samples": [
@@ -51,7 +51,7 @@
         },
         {
             "cimac_participant_id": "PA.2",
-            "trial_participant_id": "trial.PA.2",
+            "participant_id": "trial.PA.2",
             "cohort_name": "---",
             "arm_id": "---",
             "samples": [

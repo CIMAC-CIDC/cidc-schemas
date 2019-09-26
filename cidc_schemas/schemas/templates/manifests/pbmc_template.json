@@ -92,9 +92,9 @@
                 "prism_data_object_pointer": "/participants/0/samples/0",
                 "data_columns": {
                     "Filled by Biorepository": {
-                        "trial participant id": {
-                            "merge_pointer": "2/trial_participant_id",
-                            "type_ref": "participant.json#properties/trial_participant_id"
+                        "participant id": {
+                            "merge_pointer": "2/participant_id",
+                            "type_ref": "participant.json#properties/participant_id"
                         },
                         "cohort name": {
                             "merge_pointer": "2/cohort_name",

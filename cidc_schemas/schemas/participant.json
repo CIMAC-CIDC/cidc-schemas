@@ -8,7 +8,7 @@
       "type": "string",
       "description": "Participant identifier assigned by the CIMAC-CIDC Network. Example: CIMAC-1234."
     },
-    "trial_participant_id": {
+    "participant_id": {
       "type": "string",
       "description": "Trial Participant Identifier. Example: PT123."
     },
@@ -63,7 +63,7 @@
   },
   "required": [
     "cimac_participant_id",
-    "trial_participant_id",
+    "participant_id",
     "cohort_name",
     "arm_id",
     "samples"]

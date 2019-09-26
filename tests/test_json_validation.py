@@ -112,7 +112,7 @@ def test_trial_core():
     # create a bad participant, then make it good.
     participant = {
         "cimac_participant_id": "cpid_1",
-        "trial_participant_id": "tpid_a",
+        "participant_id": "tpid_a",
         "cohort_name": "---",
         "arm_id": "---",
     }

@@ -32,7 +32,7 @@ TEST_PRISM_TRIAL = {
         "protocol_id": "test_prism_trial_id",
         "participants": [
             {
-                "cimac_participant_id": "test_PA_1",
+                "cimac_participant_id": "CM-TEST-PAR1",
                 "participant_id": "test_trial_patient_1",
                 "cohort_name": "---",
                 "arm_id": "---",
@@ -82,7 +82,7 @@ TEST_PRISM_TRIAL = {
                         "genomic_source": "Tumor",
                     }
                 ],
-                "cimac_participant_id": "test_PA_2",
+                "cimac_participant_id": "CM-TEST-PAR2",
                 "participant_id": "test_trial_patient_2",
                 "cohort_name": "---",
                 "arm_id": "---"
@@ -199,7 +199,7 @@ def test_merge_core():
 
     # create the participant
     participant = {
-        "cimac_participant_id": "P1234",
+        "cimac_participant_id": "CM-TEST-PART",
         "participant_id": "blank",
         "samples": [sample],
         "cohort_name": "---",
@@ -269,10 +269,10 @@ MINIMAL_TEST_TRIAL = {
                     "type_of_sample": "Other",
                     "type_of_primary_container": "Other",
                     "parent_sample_id": "test_min_Sample_1",
-                    "cimac_id": "CM-TEST-PAR1-01"
+                    "cimac_id": "CM-TEST-MIN1-01"
                 }
             ],
-            "cimac_participant_id": "test_min_PA_1",
+            "cimac_participant_id": "CM-TEST-MIN1",
             "participant_id": "test_min_Patient_1",
             "cohort_name": "---",
             "arm_id": "---"
@@ -510,7 +510,9 @@ def test_prismify_wes_only():
 
     # parse the spreadsheet and get the file maps
     md_patch, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
-    validator.validate(md_patch)
+
+    for e in validator.iter_errors(md_patch):
+        assert isinstance(e, InDocRefNotFoundError) or ("'participants'" in str(e) and "required" in str(e))
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -520,13 +522,6 @@ def test_prismify_wes_only():
 
     # assert works
     validator.validate(merged)
-
-    print(json.dumps(merged))
-    print()
-    print(merged.keys())
-    assert False
-
-
 
     merged_wo_needed_participants = copy.deepcopy(merged)
     merged_wo_needed_participants['participants'][0]['samples'].pop()
@@ -683,7 +678,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
             assert len(prism_patch['participants'][1]['samples']) == 3
 
         elif hint == 'plasma':
-            assert (prism_patch['shipments'][0]['request']) == "a123"
+            assert (prism_patch['shipments'][0]['request']) == "value"
             assert len(prism_patch['participants']) == 1
             assert len(prism_patch['participants'][0]['samples']) == 1
             assert 'aliquots' not in prism_patch['participants'][0]['samples'][0]
@@ -714,9 +709,8 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
 
     # And we need set protocol_id to be the same for testing
     original_ct = copy.deepcopy(TEST_PRISM_TRIAL) 
-    if hint in ["olink", "cytof"]:
-        original_ct['protocol_id'] = 'test_prism_trial_id'
-        prism_patch['protocol_id'] = 'test_prism_trial_id'
+    
+    original_ct['protocol_id'] = prism_patch['protocol_id']
 
     # "prismify" provides only a patch so we need to merge it into a "full" ct
     full_after_prism = merge_clinical_trial_metadata(prism_patch, original_ct)

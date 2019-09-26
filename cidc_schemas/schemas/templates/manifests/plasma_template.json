@@ -171,13 +171,7 @@
                         },
                         "parent sample id": {
                             "merge_pointer": "/parent_sample_id",
-                            "type_ref": "sample.json#properties/parent_sample_id",
-                            "process_as": [
-                                {
-                                    "merge_pointer": "2/cimac_participant_id",
-                                    "parse_through": "lambda x: '-'.join(x.split('-')[:3])"
-                                }
-                            ]
+                            "type_ref": "sample.json#properties/parent_sample_id"
                         },
                         "processed sample id": {
                             "merge_pointer": "/processed_sample_id",
@@ -185,7 +179,13 @@
                         },
                         "cimac id": {
                             "merge_pointer": "/cimac_id",
-                            "type_ref": "sample.json#properties/cimac_id"
+                            "type_ref": "sample.json#properties/cimac_id",
+                            "process_as": [
+                                {
+                                    "merge_pointer": "2/cimac_participant_id",
+                                    "parse_through": "lambda x: '-'.join(x.split('-')[:3])"
+                                }
+                            ]
                         },
                         "collection event name": {
                             "merge_pointer": "/collection_event_name",

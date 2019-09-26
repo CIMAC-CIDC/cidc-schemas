@@ -81,7 +81,7 @@
                 "records": [
                     {
                         "enrichment_vendor_lot":    "$ enrichment_vendor_lot",
-                        "cimac_id":                 "CM-TRIA-PA21-S1",
+                        "cimac_id":                 "CM-TEST-PA21-S1",
                         "library_kit_lot":          "$ library_kit_lot",
                         "library_prep_date":        "4_12_2012",
                         "files": {
@@ -116,7 +116,7 @@
                     },
                     {
                         "enrichment_vendor_lot":    "$ enrichment_vendor_lot",
-                        "cimac_id":                 "CM-TRIA-PA21-S2",
+                        "cimac_id":                 "CM-TEST-PA21-S2",
                         "library_kit_lot":          "$ library_kit_lot",
                         "library_prep_date":        "4_12_2012",
                         "files": {
@@ -160,7 +160,7 @@
                 "records": [
                     {
                         "enrichment_vendor_lot":    "$ enrichment_vendor_lot",
-                        "cimac_id":                 "CM-TRIA-PA21-S1",
+                        "cimac_id":                 "CM-TEST-PA21-S1",
                         "library_kit_lot":          "$ library_kit_lot",
                         "library_prep_date":        "4_12_2012",
                         "files": {
@@ -195,7 +195,7 @@
                     },
                     {
                         "enrichment_vendor_lot":    "$ enrichment_vendor_lot",
-                        "cimac_id":                 "CM-TRIA-PA21-S3",
+                        "cimac_id":                 "CM-TEST-PA21-S3",
                         "library_kit_lot":          "$ library_kit_lot",
                         "library_prep_date":        "4_12_2012",
                         "files": {

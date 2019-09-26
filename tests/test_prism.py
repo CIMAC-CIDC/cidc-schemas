@@ -419,7 +419,7 @@ def test_filepath_gen(schema_path, xlsx_path):
         # 1 trial id
         assert 1 == len(set([x.gs_key.split("/")[0] for x in file_maps]))
         # 2 samples
-        assert ['CM-TEST-PAR1-11', 'CM-TEST-PAR1-21'] == list(set([x.gs_key.split("/")[1] for x in file_maps]))
+        assert ['CM-TEST-PAR1-11', 'CM-TEST-PAR1-21'] == list(sorted(set([x.gs_key.split("/")[1] for x in file_maps])))
         
 
     elif hint == 'olink':
@@ -636,7 +636,7 @@ def test_merge_ct_meta():
     # now change the participant ids
     # this should cause the merge to have two
     # participants.
-    ct1['participants'][0]['cimac_participant_id'] = 'different_id'
+    ct1['participants'][0]['cimac_participant_id'] = 'CM-TEST-DIF1'
 
     ct_merge = merge_clinical_trial_metadata(ct1, ct2)
     assert len(ct_merge['participants']) == 1+len(TEST_PRISM_TRIAL['participants'])
@@ -671,6 +671,9 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
 
     if hint in SUPPORTED_MANIFESTS:
         assert len(prism_patch['shipments']) == 1
+        
+        assert prism_patch['participants'][0]['samples'][0]["cimac_id"].split("-")[:3] == \
+            prism_patch['participants'][0]['cimac_participant_id'].split("-")
 
         if hint == 'pbmc':
             assert (prism_patch['shipments'][0]['request']) == "R123"

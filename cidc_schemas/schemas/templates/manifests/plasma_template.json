@@ -265,6 +265,10 @@
                             "merge_pointer": "/material_remaining_units",
                             "type_ref": "sample.json#properties/material_remaining_units"
                         },
+                        "material storage condition": {
+                            "merge_pointer": "/material_storage_condition",
+                            "type_ref": "sample.json#properties/material_storage_condition"
+                        },
                         "quality of sample": {
                             "merge_pointer": "/quality_of_sample",
                             "type_ref": "sample.json#properties/quality_of_sample"

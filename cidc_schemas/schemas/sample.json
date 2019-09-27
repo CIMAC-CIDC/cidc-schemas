@@ -256,7 +256,13 @@
         },
         "pbmc_resting_period_used": {
             "description": "Receiving site indicates if a resting period was used after PBMC recovery.",
-            "type": "number"
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No",
+                "Not Reported",
+                "Other"
+            ]
         },
         "material_used": {
             "description": "Receiving site indicates how much material was used for assay purposes.",

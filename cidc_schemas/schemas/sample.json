@@ -246,12 +246,16 @@
                 "Other"
             ]
         },
-        "pbmc_frozen": {
-            "description": "Site or biobank provides the final number of PBMCs per vial that were frozen.",
+        "pbmc_viability": {
+            "description": "Receiving site determines the percent recovered cells that are viable after thawing.",
             "type": "number"
         },
-        "pbmc_recovered": {
-            "description": "Receiving site determines number fo PBMCs per vial recovered upon receipt.",
+        "pbmc_recovery": {
+            "description": "Receiving site determines number for PBMCs per vial recovered upon receipt.",
+            "type": "number"
+        },
+        "pbmc_resting_period_used": {
+            "description": "Receiving site indicates if a resting period was used after PBMC recovery.",
             "type": "number"
         },
         "material_used": {

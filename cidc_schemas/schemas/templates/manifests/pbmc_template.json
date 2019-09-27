@@ -246,16 +246,20 @@
                         "sample volume units": {
                             "merge_pointer": "/sample_volume_units",
                             "type_ref": "sample.json#properties/sample_volume_units"
-                        },
-                        "pbmc frozen": {
-                            "merge_pointer": "/pbmc_frozen",
-                            "type_ref": "sample.json#properties/pbmc_frozen"
                         }
                     },
                     "Filled by CIMAC Lab": {
-                        "pbmc recovered": {
-                            "merge_pointer": "/pbmc_recovered",
-                            "type_ref": "sample.json#properties/pbmc_recovered"
+                        "pbmc viability": {
+                            "merge_pointer": "/pbmc_viability",
+                            "type_ref": "sample.json#properties/pbmc_viability"
+                        },
+                        "pbmc recovery": {
+                            "merge_pointer": "/pbmc_recovery",
+                            "type_ref": "sample.json#properties/pbmc_recovery"
+                        },
+                        "pbmc resting period used": {
+                            "merge_pointer": "/pbmc_resting_period_used",
+                            "type_ref": "sample.json#properties/pbmc_resting_period_used"
                         },
                         "material used": {
                             "merge_pointer": "/material_used",

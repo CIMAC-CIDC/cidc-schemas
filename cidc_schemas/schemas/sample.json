@@ -290,6 +290,19 @@
                 "Other"
             ]
         },
+        "material_storage_condition": {
+            "description": "Units for the amount of material remaining.",
+            "type": "string",
+            "enum": [
+                "RT",
+                "4oC",
+                "(-20)oC",
+                "(-80)oC",
+                "LN",
+                "Not Reported",
+                "Other"
+            ]
+        },
         "quality_of_sample": {
             "description": "Final status of sample after QC and pathology review.",
             "type": "string",

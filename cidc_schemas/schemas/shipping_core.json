@@ -80,6 +80,21 @@
       "type": "string",
       "format": "date"
     },
+    "date_recieved": {
+        "description": "Date of receipt.",
+        "type": "string",
+        "format": "date"
+      },
+      "quality_of_shipment": {
+          "description": "Final status of aliquot after QC and pathology review.",
+          "type": "string",
+          "enum": [
+              "Specimen shipment received in good condition",
+              "Specimen shipment received in poor condition",
+              "Not Reported",
+              "Other"
+          ]
+      },
     "num_of_samples_shipped": {
       "description": "Count of specimen(s) distributed by site.",
       "type": "integer"

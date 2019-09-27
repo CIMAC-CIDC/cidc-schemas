@@ -14,31 +14,6 @@
       "description": "Quantity of each aliquot shipped.",
       "type": "integer"
     },
-    "volume_quantity": {
-      "description": "Volume of aliquot shipped.",
-      "type": "number"
-    },
-    "pbmc_aliquoted": {
-      "description": "Site or biobank provides the final number of PBMCs per vial that were frozen.",
-      "type": "number"
-    },
-    "pbmc_recovered": {
-      "description": "Receiving site determines number fo PBMCs per vial recovered upon receipt.",
-      "type": "number"
-    },
-    "material_used": {
-      "description": "Receiving site indicates how much material was used for assay purposes.",
-      "type": "number"
-    },
-    "material_remaining": {
-      "description": "Receiving site indicates how much material remains after assay use.",
-      "type": "number"
-    },
-    "aliquot_quality_status": {
-      "description": "Final status of aliquot after QC and pathology review.",
-      "type": "string",
-      "enum": ["Usable for Assay", "Not Usable for Assay", "Verifying", "Other"]
-    },
     "aliquot_replacement": {
       "description": "Status of aliquot if replacement is/was requested.",
       "type": "string",
@@ -63,24 +38,6 @@
     "extracted_concentration": {
       "description": "The concentration of biological material that was extracted from this aliquot.",
       "type": "string"
-    },
-    "units": {
-      "description": "The unit of biological material from this aliquot.",
-      "type": "string",
-      "enum": [
-        "\u00b5L",
-        "mL",
-        "mg",
-        "ng",
-        "Vials",
-        "Slides",
-        "Scrolls",
-        "Blocks",
-        "ng/\u00b5L",
-        "cells/ml",
-        "N/A",
-        "Other"
-      ]
     },
     "aliquot_amount": {
       "$comment": "RECHECK Should this be moved to the sample level or renamed?",
@@ -110,10 +67,6 @@
   },
   "required": [
     "slide_number",
-    "units",
-    "material_used",
-    "material_remaining",
-    "aliquot_quality_status",
     "aliquot_replacement",
     "aliquot_status"
   ]

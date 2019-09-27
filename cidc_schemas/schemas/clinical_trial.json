@@ -12,7 +12,7 @@
       "type": "string",
       "description": "NCI Trial Identifier. Example: NCI22345."
     },
-    "lead_organization_study_id": {
+    "protocol_id": {
       "type": "string",
       "description": "Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412."
     },
@@ -50,5 +50,5 @@
       "$ref": "assays/components/available_assays.json"
     }
   },
-  "required": ["lead_organization_study_id", "participants"]
+  "required": ["protocol_id", "participants"]
 }

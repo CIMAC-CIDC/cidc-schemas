@@ -15,7 +15,7 @@ from .constants import ROOT_DIR, SCHEMA_DIR
 
 def example_paths():
     """Get the path to every .json in the 'data/clinicaltrial_examples' directory"""    
-    for root, _, paths in os.walk(os.path.join(os.path.dirname(__file__),'data/clinicaltrial_examples')):
+    for root, _, paths in os.walk(os.path.join(os.path.dirname(__file__), 'data/clinicaltrial_examples')):
         for path in paths:
             if not path.endswith('.json'):
                 continue

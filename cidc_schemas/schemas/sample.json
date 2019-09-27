@@ -1,134 +1,357 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "sample",
-  "title": "Sample",
-  "type": "object",
-  "description": "Any material sample taken from a biological entity for testing, diagnostic, propagation, treatment or research purposes, including a sample obtained from a living organism or taken from the biological object after halting of all its life functions. Biospecimen can contain one or more components including but not limited to cellular molecules, cells, tissues, organs, body fluids, embryos, and body excretory products.",
-  "properties": {
-    "cimac_id": {
-      "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formated as CM-????-????-??",
-      "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
-      "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.",
-      "pattern": "^CM-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{2}$",
-      "example": "CM-TEST-PA01-A1",
-      "type": "string"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "sample",
+    "title": "Sample",
+    "type": "object",
+    "description": "Any material sample taken from a biological entity for testing, diagnostic, propagation, treatment or research purposes, including a sample obtained from a living organism or taken from the biological object after halting of all its life functions. Biospecimen can contain one or more components including but not limited to cellular molecules, cells, tissues, organs, body fluids, embryos, and body excretory products.",
+    "properties": {
+        "surgical_pathology_report_id": {
+            "description": "A unique identifier so someone can find the surgical pathology report.",
+            "type": "string"
+        },
+        "clinical_report_id": {
+            "description": "A unique identifier so someone can find the clinical report.",
+            "type": "string"
+        },
+        "parent_sample_id": {
+            "description": "Sample identifier assigned by the biorepository site. Example: EA123-45.",
+            "type": "string"
+        },
+        "processed_sample_id": {
+            "description": "Aliquot identifier assigned by the biorepository site: EA123-45-1",
+            "type": "string"
+        },
+        "cimac_id": {
+            "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formated as CM-????-????-??",
+            "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
+            "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.",
+            "pattern": "^CM-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{2}$",
+            "example": "CM-TEST-PA01-A1",
+            "type": "string"
+        },
+        "site_description": {
+            "description": "Descritpion of the topography category. e.g LUNG AND BRONCHUS",
+            "type": "string",
+            "enum": [
+                "ACCESSORY SINUS, NOS",
+                "ADRENAL GLANDS",
+                "ANAL CANAL & ANUS",
+                "APPENDIX",
+                "BASE OF TONGUE"
+            ]
+        },
+        "topography_code": {
+            "description": "ICD-0-3 topography site code from which a specimen was isolated. e.g. C34.1",
+            "type": "string",
+            "enum": [
+                "C00",
+                "C00.0",
+                "C00.1",
+                "C00.2",
+                "C00.3",
+                "C00.4",
+                "C00.5",
+                "C00.6",
+                "C00.8",
+                "C00.9",
+                "C01",
+                "C01.9"
+            ]
+        },
+        "topography_description": {
+            "description": "ICD-0-3 site code description. e.g. Upper lobe, lung",
+            "type": "string",
+            "enum": [
+                "LIP",
+                "External upper lip",
+                "External lower lip",
+                "External lip, NOS",
+                "Mucosa of upper lip",
+                "Mucosa of lower lip",
+                "Mucosa of lip, NOS",
+                "Commissure of lip",
+                "Overlapping lesion of lip",
+                "Lip, NOS"
+            ]
+        },
+        "histology_behavior": {
+            "description": "ICD-0-3 code for histology and behavior. e.g. 9665/3",
+            "type": "string",
+            "enum": [
+                "8000/3",
+                "8001/3",
+                "8002/3",
+                "8003/3",
+                "8004/3",
+                "8005/3",
+                "8010/2",
+                "8010/3",
+                "8011/3"
+            ]
+        },
+        "histology_behavior_description": {
+            "description": "ICD-0-3 histology and behavior code description. e.g. Hodgkin lymphoma, nod. scler., grade 1",
+            "type": "string",
+            "enum": [
+                "Neoplasm, malignant",
+                "Tumor cells, malignant",
+                "Malignant tumor, small cell type",
+                "Malignant tumor, giant cell type",
+                "Malignant tumor, spindle cell type",
+                "Malignant tumor, clear cell type"
+            ]
+        },
+        "collection_event_name": {
+            "title": "Collection Event Name",
+            "description": "Categorical description of timepoint at which the sample was taken.",
+            "type": "string"
+        },
+        "blood_collection_date": {
+            "description": "Date of blood collection.",
+            "type": "string",
+            "format": "date"
+        },
+        "blood_collection_time": {
+            "description": "Time of blood collection.",
+            "type": "string",
+            "format": "time"
+        },
+        "blood_processing_date": {
+            "description": "Date of blood processing.",
+            "type": "string",
+            "format": "date"
+        },
+        "blood_processing_time": {
+            "description": "Time of blood processing.",
+            "type": "string",
+            "format": "time"
+        },
+        "sample_processing_compliance": {
+            "description": "Records if a sample processing (blood or tissue) is not compliant with protocol.",
+            "type": "string",
+            "enum": [
+                "Compliant_processing",
+                "Noncompliant_tissue_fixation_24_to_36_hrs",
+                "Noncompliant_tissue_fixation_over_36_hrs",
+                "Noncompliant_blood_processing_ 24_to_48_hrs",
+                "Noncompliant_blood_processing_over_48_hrs",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "sample_location": {
+            "description": "Sample location within the shipping container. Example: A1.",
+            "type": "string"
+        },
+        "type_of_sample": {
+            "description": "Type of sample sent.",
+            "type": "string",
+            "enum": [
+                "Tumor Tissue",
+                "Normal Tissue",
+                "Skin Tissue",
+                "Blood",
+                "Bone Marrow",
+                "Cerebrospinal Fluid",
+                "Stool",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "sample_collection_procedure": {
+            "description": "Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52",
+            "type": "string",
+            "enum": [
+                "Blood Draw",
+                "Excision",
+                "Core Biopsy",
+                "Punch Biopsy",
+                "Endoscopic Biopsy",
+                "Bone Marrow Core Biopsy",
+                "Bone Marrow Aspirate",
+                "Lumbar Puncture",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "type_of_primary_container": {
+            "description": "The format in which the sample was sent.",
+            "type": "string",
+            "enum": [
+                "Sodium heparin",
+                "Blood specimen container with EDTA",
+                "Potassium EDTA",
+                "Streck Blood Collection Tube",
+                "Stool collection container with DNA stabilizer",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "sample_volume": {
+            "description": "Volume of aliquot shipped.",
+            "type": "number"
+        },
+        "sample_volume_units": {
+            "description": "The unit of biological material from this sample.",
+            "type": "string",
+            "enum": [
+                "Microliter",
+                "Milliliter",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "processed_sample_type": {
+            "description": "The type of processing that was performed on the collected specimen by the Biobank for storage. e.g. Plasma",
+            "type": "string",
+            "enum": [
+                "Whole Blood",
+                "Plasma",
+                "PBMC",
+                "Buffy Coat",
+                "Bone Marrow Mononuclear Cell",
+                "Supernatant",
+                "Cell Pellet",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "processed_sample_volume": {
+            "description": "Volume of sample shipped.",
+            "type": "number"
+        },
+        "processed_sample_volume_units": {
+            "description": "Volume units of each liquid sample.",
+            "type": "string",
+            "enum": [
+                "µL",
+                "mL",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "processed_sample_concentration": {
+            "description": "Volume units of each liquid sample.",
+            "type": "number"
+        },
+        "processed_sample_concentration_units": {
+            "description": "Volume units of each liquid sample.",
+            "type": "string",
+            "enum": [
+                "Nanogram per Microliter",
+                "Milligram per Milliliter",
+                "Micrograms per Microliter",
+                "Cells per Vial",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "pbmc_frozen": {
+            "description": "Site or biobank provides the final number of PBMCs per vial that were frozen.",
+            "type": "number"
+        },
+        "pbmc_recovered": {
+            "description": "Receiving site determines number fo PBMCs per vial recovered upon receipt.",
+            "type": "number"
+        },
+        "material_used": {
+            "description": "Receiving site indicates how much material was used for assay purposes.",
+            "type": "number"
+        },
+        "material_used_units": {
+            "description": "Units for the amount of material used; should be the same value as Specimen Analyte units.",
+            "type": "string",
+            "enum": [
+                "Microliters",
+                "Milliliters",
+                "Nanogram per Microliter",
+                "Milligram per Milliliter",
+                "Micrograms per Microliter",
+                "Cells per Vial",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "material_remaining": {
+            "description": "Receiving site indicates how much material remains after assay use.",
+            "type": "number"
+        },
+        "material_remaining_units": {
+            "description": "Units for the amount of material remaining.",
+            "type": "string",
+            "enum": [
+                "Microliters",
+                "Milliliters",
+                "Nanogram per Microliter",
+                "Milligram per Milliliter",
+                "Micrograms per Microliter",
+                "Cells per Vial",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "quality_of_sample": {
+            "description": "Final status of sample after QC and pathology review.",
+            "type": "string",
+            "enum": [
+                "Pass",
+                "Fail",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "sample_replacement": {
+            "description": "Indication if sample replacement is/was requested.",
+            "type": "string",
+            "enum": [
+                "Sample Sent to Another Lab",
+                "Sample received from CIMAC",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "residual_sample_use": {
+            "description": "Indication if sample was sent to another location or returned back to biorepository.",
+            "type": "string",
+            "enum": [
+                "Sample Returned",
+                "Sample Sent to Another Lab",
+                "Sample received from CIMAC",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "comments": {
+            "description": "Comments on sample testing.",
+            "type": "string"
+        },
+        "genomic_source": {
+            "description": "The type of material submitted - tumor/normal/etc",
+            "type": "string",
+            "enum": [
+                "Tumor",
+                "Normal",
+                "Metastasis"
+            ]
+        },
+        "aliquots": {
+            "type": "array",
+            "items": {
+                "$ref": "aliquot.json"
+            },
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": {
+                "idRef": "/slide_number"
+            }
+        }
     },
-    "site_sample_id": {
-      "description": "Sample identifier assigned by the biorepository site. Example: EA123-45.",
-      "type": "string"
-    },
-    "time_point": {
-      "title": "Time Point",
-      "description": "Study related collection time point, as described in the protocol intake form. Example: Progression.",
-      "type": "string"
-    },
-    "blood_collection_date": {
-      "description": "Date of blood collection.",
-      "type": "string",
-      "format": "date"
-    },
-    "blood_collection_time": {
-      "description": "Time of blood collection.",
-      "type": "string",
-      "format": "time"
-    },
-    "blood_processing_date": {
-      "description": "Date of blood processing.",
-      "type": "string",
-      "format": "date"
-    },
-    "blood_processing_time": {
-      "description": "Time of blood processing.",
-      "type": "string",
-      "format": "time"
-    },
-    "sample_location": {
-      "description": "Sample location within the shipping container. Example: A1.",
-      "type": "string"
-    },
-    "sample_source": {
-      "$comment": "RECHECK Moved here from aliquot level.",
-      "description": "Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52",
-      "type": "string"
-    },
-    "specimen_type": {
-      "description": "Type of sample sent.",
-      "type": "string",
-      "enum": [
-        "Core Needle Biopsy",
-        "Surgical Resection",
-        "Endoscopic Biopsy",
-        "Punch Biopsy",
-        "Plasma",
-        "PBMC",
-        "Whole Blood",
-        "Stool Sample",
-        "Bone Marrow Aspirate",
-        "Other"
-      ]
-    },
-    "specimen_format": {
-      "description": "The format in which the sample was sent.",
-      "type": "string",
-      "enum": [
-        "FFPE Block",
-        "FFPE Scroll",
-        "FFPE Core Punch",
-        "Unstained Slide",
-        "Frozen Tissue",
-        "Sodium Heparin Green-Top Tube",
-        "Streck Tube",
-        "EDTA Tube",
-        "Archival FFPE Block",
-        "Archival FFPE Slides",
-        "Archival FFPE Core Punch",
-        "Archival FFPE Scroll",
-        "Frozen Stool",
-        "DNA-Preserved Stool",
-        "Other"
-      ]
-    },
-    "specimen_analyte": {
-      "description": "The format of the substance to be measured.",
-      "type": "string",
-      "enum": ["H&E slide", "Unstained slide", "DNA", "RNA", "Protein Lysate"]
-    },
-    "tissue_type_submitted": {
-      "description": "The type of tissue that was obtained for the study.",
-      "type": "string",
-      "enum": [
-        "Primary Tumor",
-        "Residual Tumor",
-        "Recurrence",
-        "Metastatic Tumor",
-        "Lymph Node",
-        "Bone Marrow",
-        "Normal Adjacent",
-        "Other"
-      ]
-    },
-    "genomic_source": {
-      "description": "The type of material submitted - tumor/normal/etc",
-      "type": "string",
-      "enum": ["Tumor", "Normal", "Metastasis"]
-    },
-    "aliquots": {
-      "type": "array",
-      "items": {
-        "$ref": "aliquot.json"
-      },
-      "mergeStrategy": "arrayMergeById",
-      "mergeOptions": {
-        "idRef": "/slide_number"
-      }
-    }
-  },
-  "required": [
-    "cimac_id",
-    "site_sample_id",
-    "time_point",
-    "sample_location",
-    "specimen_type",
-    "specimen_format",
-    "genomic_source"]
+    "required": [
+        "cimac_id",
+        "parent_sample_id",
+        "collection_event_name",
+        "sample_location",
+        "type_of_sample",
+        "type_of_primary_container",
+        "genomic_source"
+    ]
 }

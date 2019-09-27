@@ -11,8 +11,8 @@
                 "prism_data_object_pointer": "/records/-",
                 "preamble_rows": {
                     "lead organization study id": {
-                        "merge_pointer": "3/lead_organization_study_id",
-                        "type_ref": "clinical_trial.json#properties/lead_organization_study_id"
+                        "merge_pointer": "3/protocol_id",
+                        "type_ref": "clinical_trial.json#properties/protocol_id"
                     },
                     "assay creator": {
                         "merge_pointer": "0/assay_creator",

@@ -1,6 +1,6 @@
 "#t","SHIPPING MANIFEST FOR PBMC SAMPLES"
-"#p","LEAD ORGANIZATION STUDY ID","test_prism_trial_id"
-"#p","MANIFEST ID","54321"
+"#p","PROTOCOL ID","TEST123"
+"#p","MANIFEST ID","test123-pbmc-1"
 "#p","REQUEST","R123"
 "#p","ASSAY PRIORITY","Assay-5"
 "#p","ASSAY TYPE","Green-top Tube - Plasma (Olink)"
@@ -12,16 +12,12 @@
 "#p","ACCOUNT NUMBER","A109123"
 "#p","SHIPPING CONDITION","Ambient (Ice Pack)"
 "#p","DATE SHIPPED","2013-11-12 00:00:00"
+"#p","DATE RECIEVED","2013-11-12 00:00:00"
+"#p","QUALITY OF SHIPMENT","Specimen shipment received in good condition"
 "#p","NUM OF SAMPLES SHIPPED","8"
 "#p","NUM OF SAMPLES GOOD","8"
 "#p","NUM OF PATH REPORT","8"
 "#p","SHIP FROM","Stanford"
 "#p","SHIP TO","DFCI"
-
-
-
-
-
-
 
 

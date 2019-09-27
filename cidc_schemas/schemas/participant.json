@@ -12,7 +12,7 @@
       "example": "CM-TEST-PA01",
       "description": "Participant identifier assigned by the CIMAC-CIDC Network. Formated as: CM-????-????."
     },
-    "trial_participant_id": {
+    "participant_id": {
       "type": "string",
       "description": "Trial Participant Identifier. Example: PT123."
     },
@@ -20,9 +20,9 @@
       "type": "string",
       "description": "Identifies the trial arm to which the participant belongs. Example: Arm A."
     },
-    "cohort_id": {
+    "cohort_name": {
       "type": "string",
-      "description": "Identifies the treatment cohort to which the participant belongs. Example: Cohort A."
+      "description": "Categorical description of cohorts, arms, and treatment groups. Example: Cohort A."
     },
     "gender": {
       "type": "string",
@@ -67,8 +67,8 @@
   },
   "required": [
     "cimac_participant_id",
-    "trial_participant_id",
-    "cohort_id",
+    "participant_id",
+    "cohort_name",
     "arm_id",
     "samples"]
 }

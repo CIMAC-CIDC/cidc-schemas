@@ -369,6 +369,7 @@
             }
         }
     },
+
     "required": [
         "cimac_id",
         "parent_sample_id",

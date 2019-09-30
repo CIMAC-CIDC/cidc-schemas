@@ -17,7 +17,7 @@ from cidc_schemas.template_reader import XlTemplateReader
 from cidc_schemas.constants import SCHEMA_DIR, TEMPLATE_DIR
 from .util import get_path, get_source
 
-PROTOCOL_ID_FIELD_NAME = "protocol_id"
+PROTOCOL_ID_FIELD_NAME = "protocol_identifier"
 
 def _set_val(
         pointer: str, 
@@ -442,12 +442,12 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     "parent/preamble" object to determine exact location where to set value. 
     In most cases it's just "0/field_name". Where "0" denotes that "field_name"
     is a field in the current object. 
-    With exception - "3/protocol_id" which says basically 
-    "go 3 levels up in the hierarchy and take lead_org_study_id field". 
+    With exceptions like - "3/protocol_identifier" which says basically 
+    "go 3 levels up in the hierarchy and take protocol_identifier field of the root". 
 
     E.g. WES:
         {
-          "protocol_id": "4412" # from `3/protocol_id`
+          "protocol_identifier": "4412" # from `3/protocol_identifier`
           "assays": {
             "wes": [
               {

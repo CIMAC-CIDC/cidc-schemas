@@ -17,7 +17,8 @@ from unittest.mock import MagicMock, patch as mock_patch
 
 from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
-    SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES
+    SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES, \
+    PROTOCOL_ID_FIELD_NAME
 from cidc_schemas.json_validation import load_and_validate_schema, InDocRefNotFoundError
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
@@ -29,7 +30,7 @@ from .test_assays import ARTIFACT_OBJ
 
 
 TEST_PRISM_TRIAL = {
-        "protocol_id": "test_prism_trial_id",
+        PROTOCOL_ID_FIELD_NAME: "test_prism_trial_id",
         "participants": [
             {
                 "cimac_participant_id": "CM-TEST-PAR1",
@@ -149,17 +150,17 @@ TEST_PRISM_TRIAL = {
 
 # corresponding list of gs_urls.
 WES_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-11/wes/r1.fastq': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/r1.fastq': 
     "r1.1",
-    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-11/wes/r2.fastq': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/r2.fastq': 
     "r2.1",
-    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-11/wes/rgm.txt': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/rgm.txt': 
     "read_group_mapping_file.1",
-    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-21/wes/r1.fastq': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/r1.fastq': 
     "r1.2",
-    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-21/wes/r2.fastq': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/r2.fastq': 
     "r2.2",
-    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-21/wes/rgm.txt': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/rgm.txt': 
     "read_group_mapping_file.2"
 }
 
@@ -208,7 +209,7 @@ def test_merge_core():
 
     # create the trial
     ct1 = {
-        "protocol_id": "test",
+        PROTOCOL_ID_FIELD_NAME: "test",
         "participants": [participant]
     }
 
@@ -247,7 +248,7 @@ def test_merge_core():
 
 
 MINIMAL_TEST_TRIAL = {
-    "protocol_id": "minimal",
+    PROTOCOL_ID_FIELD_NAME: "minimal",
     "participants": [
         {
             "samples": [
@@ -326,8 +327,8 @@ def test_prism(schema_path, xlsx_path):
     # turn into object.
     ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
     if hint == 'cytof':
-        assert "CYTOF_TEST1" == ct['protocol_id']
-        ct['protocol_id'] = 'test_prism_trial_id'
+        assert "CYTOF_TEST1" == ct[PROTOCOL_ID_FIELD_NAME]
+        ct[PROTOCOL_ID_FIELD_NAME] = 'test_prism_trial_id'
 
     if hint in SUPPORTED_ASSAYS:
         # olink is different - is will never have array of assay "runs" - only one
@@ -352,9 +353,9 @@ def test_prism(schema_path, xlsx_path):
     assert not errors 
 
     if hint in SUPPORTED_ASSAYS :
-        assert merged["protocol_id"] == "test_prism_trial_id"
+        assert merged[PROTOCOL_ID_FIELD_NAME] == "test_prism_trial_id"
     else:
-        assert TEST_PRISM_TRIAL["protocol_id"] == merged["protocol_id"]
+        assert TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] == merged[PROTOCOL_ID_FIELD_NAME]
 
 
 @pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
@@ -413,7 +414,7 @@ def test_filepath_gen(schema_path, xlsx_path):
 
         # 4 in total
         assert len(file_maps) == 6
-        assert 6 == sum([x.gs_key.startswith(TEST_PRISM_TRIAL["protocol_id"]) for x in file_maps])
+        assert 6 == sum([x.gs_key.startswith(TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]) for x in file_maps])
 
         # all that with
         # 1 trial id
@@ -616,7 +617,7 @@ def test_merge_ct_meta():
         merge_clinical_trial_metadata(ct1, {})
 
     # next assert the merge is only happening on the same trial
-    ct1["protocol_id"] = "not_the_same"
+    ct1[PROTOCOL_ID_FIELD_NAME] = "not_the_same"
     ct2 = copy.deepcopy(TEST_PRISM_TRIAL)
     with pytest.raises(RuntimeError):
         merge_clinical_trial_metadata(ct1, ct2)
@@ -625,7 +626,7 @@ def test_merge_ct_meta():
     # include data in 1 that is missing in the other
     # at the trial level and assert the merge
     # does not clobber any
-    ct1["protocol_id"] = ct2["protocol_id"] 
+    ct1[PROTOCOL_ID_FIELD_NAME] = ct2[PROTOCOL_ID_FIELD_NAME] 
     ct1['trial_name'] = 'name ABC'
     ct2['nci_id'] = 'xyz1234'
 
@@ -635,7 +636,7 @@ def test_merge_ct_meta():
 
     # assert the patch over-writes the original value
     # when value is present in both objects
-    # TODO add 'discard' mergeStrategy from protocol_id 
+    # TODO add 'discard' mergeStrategy from PROTOCOL_ID_FIELD_NAME 
     ct1['trial_name'] = 'name ABC'
     ct2['trial_name'] = 'CBA eman'
 
@@ -651,7 +652,7 @@ def test_merge_ct_meta():
     assert len(ct_merge['participants']) == 1+len(TEST_PRISM_TRIAL['participants'])
 
     # now lets have the same participant but adding multiple samples.
-    ct1["protocol_id"] = ct2["protocol_id"] 
+    ct1[PROTOCOL_ID_FIELD_NAME] = ct2[PROTOCOL_ID_FIELD_NAME] 
     ct1['participants'][0]['cimac_participant_id'] = \
         ct2['participants'][0]['cimac_participant_id']
     ct1['participants'][0]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N1'
@@ -721,11 +722,11 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     for f in file_maps:
         assert f'{hint}/' in f.gs_key, f"No {hint} hint found"
 
-    # And we need set protocol_id to be the same for testing
+    # And we need set PROTOCOL_ID_FIELD_NAME to be the same for testing
     original_ct = copy.deepcopy(TEST_PRISM_TRIAL) 
 
     # so we can merge
-    original_ct['protocol_id'] = prism_patch['protocol_id']
+    original_ct[PROTOCOL_ID_FIELD_NAME] = prism_patch[PROTOCOL_ID_FIELD_NAME]
     
     # "prismify" provides only a patch so we need to merge it into a "full" ct
     full_after_prism = merge_clinical_trial_metadata(prism_patch, original_ct)

@@ -12,9 +12,9 @@
                 "prism_preamble_object_pointer": "/shipments/0",
                 "prism_data_object_pointer": "/shipped",
                 "preamble_rows": {
-                    "protocol id": {
-                        "merge_pointer": "2/protocol_id",
-                        "type_ref": "clinical_trial.json#properties/protocol_id"
+                    "protocol identifier": {
+                        "merge_pointer": "2/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
                     },
                     "manifest id": {
                         "merge_pointer": "/manifest_id",

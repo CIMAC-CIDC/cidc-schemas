@@ -1,5 +1,5 @@
 {
-    "protocol_id": "10021",
+    "protocol_identifier": "10021",
     "participants": [
         {
             "cimac_participant_id": "CM-TEST-PAR1",

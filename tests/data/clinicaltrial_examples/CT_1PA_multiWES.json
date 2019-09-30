@@ -1,5 +1,5 @@
 {
-    "protocol_id": "2/1PA_multiWES",
+    "protocol_identifier": "2/1PA_multiWES",
     "participants": [
         {
             "cimac_participant_id": "CM-TEST-PA21",

@@ -1,5 +1,5 @@
 {
-    "protocol_id": "1/minimal",
+    "protocol_identifier": "1/minimal",
     "participants": [
         {
             "cimac_participant_id": "CM-TEST-PA11",

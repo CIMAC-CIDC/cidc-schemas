@@ -16,6 +16,7 @@ from cidc_schemas.json_validation import (
     _Validator,
     InDocRefNotFoundError,
 )
+from cidc_schemas.prism import PROTOCOL_ID_FIELD_NAME
 from .constants import SCHEMA_DIR, ROOT_DIR, TEST_SCHEMA_DIR
 
 
@@ -127,7 +128,7 @@ def test_trial_core():
 
     # validate the positive version works.
     clinical_trial = {
-        "protocol_id": "trial1",
+        PROTOCOL_ID_FIELD_NAME: "trial1",
         "participants": [participant],
         "shipments": [shipment],
     }

@@ -36,6 +36,7 @@
     },
     "records": {
       "type": "array",
+      "description": "A single data record from RNAseq assay.",
       "items": {
         "$ref": "assays/components/ngs/rna_expression_entry.json"
       }

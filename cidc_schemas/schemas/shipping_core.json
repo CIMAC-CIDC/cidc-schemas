@@ -13,27 +13,33 @@
       "description": "Priority of the assay as it appears on the intake form.",
       "type": "string",
       "enum": [
-        "Assay-1",
-        "Assay-2",
-        "Assay-3",
-        "Assay-4",
-        "Assay-5",
-        "Assay-6",
-        "Assay-7",
-        "Assay-8",
-        "Assay-9",
-        "Assay-10",
-        "Assay-11",
-        "Assay-12",
-        "Assay-13",
-        "Assay-14",
-        "Assay-15",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "Not Reported",
         "Other"
       ]
     },
     "assay_type": {
-      "description": "Assay and sample type used. Example: Green-top tube - Plasma (Olink).",
-      "type": "string"
+      "description": "Assay and sample type used.",
+      "type": "string",
+      "enum": [
+        "Olink",
+        "Not Reported",
+        "Other"
+      ]
     },
     "box_number": {
       "description": "Box identifier for samples, if sample shipment container includes multiple boxes for each sample/assay type.",
@@ -56,10 +62,11 @@
       "description": "Type of shipment made.",
       "type": "string",
       "enum": [
-        "Frozen (Dry Ice)",
-        "Frozen (Dry Shipper)",
-        "Ambient (Ice Pack)",
+        "Frozen_Dry_Ice",
+        "Frozen_Shipper",
+        "Ice_Pack",
         "Ambient",
+        "Not Reported",
         "Other"
       ]
     },
@@ -83,17 +90,29 @@
             "Other"
         ]
     },
-    "num_of_samples_shipped": {
-      "description": "Count of specimen(s) distributed by site.",
-      "type": "integer"
-    },
     "ship_from": {
-      "description": "Shipping from [free text: person or organization, address, phone number, email address.]",
+      "description": "Contact information for shipment.",
       "type": "string"
     },
     "ship_to": {
-      "description": "Shipping to [free text: person or organization, address, phone number, email address.]",
+      "description": "Physical shipping address of the destination.",
       "type": "string"
+    },
+    "receiving_party": {
+      "description": "Site where sample was shipped to be assayed.",
+      "type": "string",
+      "enum": [
+        "MDA_CIMAC",
+        "MSSM_CIMAC",
+        "STAN_CIMAC",
+        "DFCI_CIMAC",
+        "Broad_CIMAC",
+        "FNLCR_MoCha",
+        "Nationwide Children's Hospital",
+        "Adaptive Biotechnologies",
+        "Not Reported",
+        "Other"
+      ]
     }
   },
   "required": [
@@ -105,11 +124,11 @@
     "date_recieved",
     "date_shipped",
     "manifest_id",
-    "num_of_samples_shipped",
     "quality_of_shipment",
     "ship_from",
     "ship_to",
     "shipping_condition",
-    "tracking_number"
+    "tracking_number",
+    "receiving_party"
   ]
 }

@@ -12,13 +12,13 @@
                 "prism_preamble_object_pointer": "/shipments/0",
                 "prism_data_object_pointer": "/shipped",
                 "preamble_rows": {
-                    "protocol identifier": {
-                        "merge_pointer": "2/protocol_identifier",
-                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
-                    },
                     "manifest id": {
                         "merge_pointer": "/manifest_id",
                         "type_ref": "shipping_core.json#properties/manifest_id"
+                    },
+                    "protocol identifier": {
+                        "merge_pointer": "2/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
                     },
                     "assay priority": {
                         "merge_pointer": "/assay_priority",
@@ -27,6 +27,10 @@
                     "assay type": {
                         "merge_pointer": "/assay_type",
                         "type_ref": "shipping_core.json#properties/assay_type"
+                    },
+                    "receiving party": {
+                        "merge_pointer": "/receiving_party",
+                        "type_ref": "shipping_core.json#properties/receiving_party"
                     },
                     "box number": {
                         "merge_pointer": "/box_number",
@@ -59,10 +63,6 @@
                     "quality of shipment": {
                         "merge_pointer": "/quality_of_shipment",
                         "type_ref": "shipping_core.json#properties/quality_of_shipment"
-                    },
-                    "num of samples shipped": {
-                        "merge_pointer": "/num_of_samples_shipped",
-                        "type_ref": "shipping_core.json#properties/num_of_samples_shipped"
                     },
                     "ship from": {
                         "merge_pointer": "/ship_from",

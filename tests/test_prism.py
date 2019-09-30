@@ -682,7 +682,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
             prism_patch['participants'][0]['cimac_participant_id'].split("-")
 
         if hint == 'pbmc':
-            assert (prism_patch['shipments'][0]['manifest_id']) == "test123-pbmc-1"
+            assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_pbmc"
 
             assert len(prism_patch['participants']) == 2
             assert len(prism_patch['participants'][0]['samples']) == 3

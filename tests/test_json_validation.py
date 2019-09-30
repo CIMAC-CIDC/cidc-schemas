@@ -63,7 +63,22 @@ def test_trial_core():
     al_validator.check_schema(al_schema)
 
     # create some aliquots.
-    shipment = {"request": "DFCI"}
+    shipment = {
+        "account_number": "account_number",
+        "assay_priority": "1",
+        "assay_type": "Olink",
+        "box_number": 1,
+        "courier": "USPS",
+        "date_recieved": "date_recieved",
+        "date_shipped": "date_shipped",
+        "manifest_id": "manifest_id",
+        "quality_of_shipment": "Specimen shipment received in good condition",
+        "ship_from": "ship_from",
+        "ship_to": "ship_to",
+        "shipping_condition": "Ice_Pack",
+        "tracking_number": "tracking_number",
+        "receiving_party": "MSSM_CIMAC",
+    }
     aliquot1 = {
         "slide_number": "99",
         "sample_volume_units": "Other",

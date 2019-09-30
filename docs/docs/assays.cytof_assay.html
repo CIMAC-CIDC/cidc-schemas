@@ -71,7 +71,7 @@
     </td>
     <td width=55%>
         
-            
+            Data specific to antibody preparation on the CyTOF assay.
         
     </td>
     <td>
@@ -110,7 +110,7 @@
     </td>
     <td width=55%>
         
-            
+            A single data record from CyTOF assay batch.
         
     </td>
     <td>
@@ -154,6 +154,7 @@
     "mergeStrategy": "objectMerge",
     "properties": {
         "cytof_antibodies": {
+            "description": "Data specific to antibody preparation on the CyTOF assay.",
             "items": {
                 "$id": "cytof_antibody",
                 "$schema": "http://json-schema.org/draft-07/schema#",
@@ -238,10 +239,11 @@
             "type": "array"
         },
         "records": {
+            "description": "A single data record from CyTOF assay batch.",
             "items": {
                 "$id": "cytof_entry",
                 "$schema": "http://json-schema.org/draft-07/schema#",
-                "description": "A single data record from CyTOF assay batch",
+                "description": "A single data record from CyTOF assay batch.",
                 "mergeStrategy": "objectMerge",
                 "properties": {
                     "acquisition_buffer": {

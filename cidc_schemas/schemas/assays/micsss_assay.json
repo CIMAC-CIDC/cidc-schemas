@@ -12,6 +12,7 @@
   "properties": {
     "records": {
       "type": "array",
+      "description": "A single data record from micsss assay.",
       "items": {
         "$ref": "assays/components/imaging/micsss_entry.json"
       }

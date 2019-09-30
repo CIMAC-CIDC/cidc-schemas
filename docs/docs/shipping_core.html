@@ -124,6 +124,10 @@
         
             
         
+            
+        
+            
+        
         
             
                 <tr>
@@ -542,6 +546,80 @@
                 <tr>
     <td>
         
+            <span id="date_recieved">
+                date_recieved
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Date of receipt.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+     :  date
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="quality_of_shipment">
+                quality_of_shipment
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Final status of aliquot after QC and pathology review.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Specimen shipment received in good condition"</li>
+                
+                    <li>"Specimen shipment received in poor condition"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
             <span id="num_of_samples_shipped">
                 num_of_samples_shipped
             </span>
@@ -766,6 +844,11 @@
             ],
             "type": "string"
         },
+        "date_recieved": {
+            "description": "Date of receipt.",
+            "format": "date",
+            "type": "string"
+        },
         "date_shipped": {
             "description": "Date of shipment.",
             "format": "date",
@@ -786,6 +869,16 @@
         "num_of_samples_shipped": {
             "description": "Count of specimen(s) distributed by site.",
             "type": "integer"
+        },
+        "quality_of_shipment": {
+            "description": "Final status of aliquot after QC and pathology review.",
+            "enum": [
+                "Specimen shipment received in good condition",
+                "Specimen shipment received in poor condition",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
         },
         "request": {
             "description": "Assigns a request identifier (mandatory or optional) for the assay.",

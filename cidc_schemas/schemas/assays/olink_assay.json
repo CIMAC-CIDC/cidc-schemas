@@ -7,6 +7,7 @@
   "properties": {
     "records": {
       "type": "array",
+      "description": "A single data record from Olink assay.",
       "items": {
         "$ref": "assays/components/olink/olink_entry.json"
       }, 

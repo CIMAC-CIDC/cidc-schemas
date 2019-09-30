@@ -37,6 +37,7 @@
     },
     "participants": {
       "type": "array",
+      "description": "The collection of all data related to a specific participant in the context of a specific clinical trial.",
       "items": {
         "$ref": "participant.json"
       },

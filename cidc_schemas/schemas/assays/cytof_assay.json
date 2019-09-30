@@ -7,6 +7,7 @@
     "properties": {
         "cytof_antibodies": {
             "type": "array",
+            "description": "Data specific to antibody preparation on the CyTOF assay.",
             "items": {
                 "$ref": "assays/components/cytof/cytof_antibody.json"
             },
@@ -14,6 +15,7 @@
         },
         "records": {
             "type": "array",
+            "description": "A single data record from CyTOF assay batch.",
             "items": {
                 "$ref": "assays/components/cytof/cytof_entry.json"
             },

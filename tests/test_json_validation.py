@@ -117,7 +117,6 @@ def test_trial_core():
         "cimac_participant_id": "CM-TRIA-PART",
         "participant_id": "tpid_a",
         "cohort_name": "---",
-        "arm_id": "---",
     }
     with pytest.raises(jsonschema.ValidationError):
         pt_validator.validate(participant)

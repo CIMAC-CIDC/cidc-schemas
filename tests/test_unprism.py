@@ -21,9 +21,9 @@ def test_unprism_participants(ct):
     csv = unprism_participants(ct)
 
     expected = (
-        f"cimac_participant_id,participant_id,cohort_name,arm_id,{PROTOCOL_ID_FIELD_NAME}\n"
-        "CM-TEST-PAR1,trial.PA.1,---,---,10021\n"
-        "CM-TEST-PAR2,trial.PA.2,---,---,10021\n"
+        f"cimac_participant_id,participant_id,cohort_name,{PROTOCOL_ID_FIELD_NAME}\n"
+        "CM-TEST-PAR1,trial.PA.1,---,10021\n"
+        "CM-TEST-PAR2,trial.PA.2,---,10021\n"
     )
 
     assert csv == expected

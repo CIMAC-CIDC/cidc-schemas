@@ -106,26 +106,6 @@
             "description": "Categorical description of timepoint at which the sample was taken.",
             "type": "string"
         },
-        "blood_collection_date": {
-            "description": "Date of blood collection.",
-            "type": "string",
-            "format": "date"
-        },
-        "blood_collection_time": {
-            "description": "Time of blood collection.",
-            "type": "string",
-            "format": "time"
-        },
-        "blood_processing_date": {
-            "description": "Date of blood processing.",
-            "type": "string",
-            "format": "date"
-        },
-        "blood_processing_time": {
-            "description": "Time of blood processing.",
-            "type": "string",
-            "format": "time"
-        },
         "sample_processing_compliance": {
             "description": "Records if a sample processing (blood or tissue) is not compliant with protocol.",
             "type": "string",

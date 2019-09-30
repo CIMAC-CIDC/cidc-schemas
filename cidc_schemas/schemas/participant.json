@@ -14,15 +14,27 @@
     },
     "participant_id": {
       "type": "string",
-      "description": "Trial Participant Identifier. Example: PT123."
-    },
-    "arm_id": {
-      "type": "string",
-      "description": "Identifies the trial arm to which the participant belongs. Example: Arm A."
+      "description": "Trial Participant Identifier.",
+      "example": "PT123"
     },
     "cohort_name": {
       "type": "string",
-      "description": "Categorical description of cohorts, arms, and treatment groups. Example: Cohort A."
+      "description": "Categorical description of cohorts, arms, and treatment groups.",
+      "example": "Arm_Z",
+      "examples": [
+        "Arm_Z",
+        "Arm_A",
+        "Arm_B",
+        "Arm_C",
+        "Arm_Y",
+        "Arm_D", 
+        "Arm_E",
+        "Arm_F",
+        "Arm_X",
+        "Arm_G",
+        "Arm_H",
+        "Arm_I"
+      ]
     },
     "gender": {
       "type": "string",
@@ -69,6 +81,5 @@
     "cimac_participant_id",
     "participant_id",
     "cohort_name",
-    "arm_id",
     "samples"]
 }

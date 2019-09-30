@@ -36,7 +36,6 @@ TEST_PRISM_TRIAL = {
                 "cimac_participant_id": "CM-TEST-PAR1",
                 "participant_id": "test_trial_patient_1",
                 "cohort_name": "---",
-                "arm_id": "---",
                 "samples": [
                     {
                         "aliquots": [
@@ -85,8 +84,7 @@ TEST_PRISM_TRIAL = {
                 ],
                 "cimac_participant_id": "CM-TEST-PAR2",
                 "participant_id": "test_trial_patient_2",
-                "cohort_name": "---",
-                "arm_id": "---"
+                "cohort_name": "---"
             }
         ],
         "assays": {
@@ -203,8 +201,7 @@ def test_merge_core():
         "cimac_participant_id": "CM-TEST-PART",
         "participant_id": "blank",
         "samples": [sample],
-        "cohort_name": "---",
-        "arm_id": "---"
+        "cohort_name": "---"
     }
 
     # create the trial
@@ -275,8 +272,7 @@ MINIMAL_TEST_TRIAL = {
             ],
             "cimac_participant_id": "CM-TEST-MIN1",
             "participant_id": "test_min_Patient_1",
-            "cohort_name": "---",
-            "arm_id": "---"
+            "cohort_name": "---"
         }
     ]
 }
@@ -686,14 +682,14 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
             prism_patch['participants'][0]['cimac_participant_id'].split("-")
 
         if hint == 'pbmc':
-            assert (prism_patch['shipments'][0]['request']) == "R123"
+            assert (prism_patch['shipments'][0]['manifest_id']) == "test123-pbmc-1"
 
             assert len(prism_patch['participants']) == 2
             assert len(prism_patch['participants'][0]['samples']) == 3
             assert len(prism_patch['participants'][1]['samples']) == 3
 
         elif hint == 'plasma':
-            assert (prism_patch['shipments'][0]['request']) == "value"
+            assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_plasma"
             assert len(prism_patch['participants']) == 1
             assert len(prism_patch['participants'][0]['samples']) == 1
             assert 'aliquots' not in prism_patch['participants'][0]['samples'][0]

@@ -9,10 +9,6 @@
       "description": "Filename of the manifest used to ship this sample. Example: E4412_PBMC.",
       "type": "string"
     },
-    "request": {
-      "description": "Assigns a request identifier (mandatory or optional) for the assay.",
-      "type": "string"
-    },
     "assay_priority": {
       "description": "Priority of the assay as it appears on the intake form.",
       "type": "string",
@@ -39,16 +35,8 @@
       "description": "Assay and sample type used. Example: Green-top tube - Plasma (Olink).",
       "type": "string"
     },
-    "batch_number": {
-      "description": "The number corresponding to the batch sent for this assay.",
-      "type": "integer"
-    },
     "box_number": {
       "description": "Box identifier for samples, if sample shipment container includes multiple boxes for each sample/assay type.",
-      "type": "integer"
-    },
-    "assay_run_number": {
-      "description": "Assay run number for samples received.",
       "type": "integer"
     },
     "courier": {
@@ -85,26 +73,18 @@
         "type": "string",
         "format": "date"
       },
-      "quality_of_shipment": {
-          "description": "Final status of aliquot after QC and pathology review.",
-          "type": "string",
-          "enum": [
-              "Specimen shipment received in good condition",
-              "Specimen shipment received in poor condition",
-              "Not Reported",
-              "Other"
-          ]
-      },
+    "quality_of_shipment": {
+        "description": "Indication that specimens were received in good condition.",
+        "type": "string",
+        "enum": [
+            "Specimen shipment received in good condition",
+            "Specimen shipment received in poor condition",
+            "Not Reported",
+            "Other"
+        ]
+    },
     "num_of_samples_shipped": {
       "description": "Count of specimen(s) distributed by site.",
-      "type": "integer"
-    },
-    "num_of_samples_good": {
-      "description": "Number of Sample(s) Received in Good Condition.",
-      "type": "integer"
-    },
-    "num_of_path_report": {
-      "description": "Number of pathology report(s) received.",
       "type": "integer"
     },
     "ship_from": {
@@ -116,5 +96,20 @@
       "type": "string"
     }
   },
-  "required": ["request"]
+  "required": [
+    "account_number",
+    "assay_priority",
+    "assay_type",
+    "box_number",
+    "courier",
+    "date_recieved",
+    "date_shipped",
+    "manifest_id",
+    "num_of_samples_shipped",
+    "quality_of_shipment",
+    "ship_from",
+    "ship_to",
+    "shipping_condition",
+    "tracking_number"
+  ]
 }

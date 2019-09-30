@@ -95,7 +95,6 @@ def test_clinicaltrial_simple():
         "participant_id": "blank",
         "samples": [sample],
         "cohort_name": "---",
-        "arm_id": "---",    
     }
 
     # create the trial
@@ -159,14 +158,12 @@ def test_clinicaltrial_olink():
         "participant_id": "blank",
         "samples": [sample1],
         "cohort_name": "---",
-        "arm_id": "---",    
     }
     participant2 = {
         "cimac_participant_id": "CM-TEST-2222",
         "participant_id": "blank",
         "samples": [sample2],
         "cohort_name": "---",
-        "arm_id": "---",    
     }
 
     # create the trial

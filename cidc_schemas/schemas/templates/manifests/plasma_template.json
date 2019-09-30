@@ -20,10 +20,6 @@
                         "merge_pointer": "/manifest_id",
                         "type_ref": "shipping_core.json#properties/manifest_id"
                     },
-                    "request": {
-                        "merge_pointer": "/request",
-                        "type_ref": "shipping_core.json#properties/request"
-                    },
                     "assay priority": {
                         "merge_pointer": "/assay_priority",
                         "type_ref": "shipping_core.json#properties/assay_priority"
@@ -32,17 +28,9 @@
                         "merge_pointer": "/assay_type",
                         "type_ref": "shipping_core.json#properties/assay_type"
                     },
-                    "batch number": {
-                        "merge_pointer": "/batch_number",
-                        "type_ref": "shipping_core.json#properties/batch_number"
-                    },
                     "box number": {
                         "merge_pointer": "/box_number",
                         "type_ref": "shipping_core.json#properties/box_number"
-                    },
-                    "assay run number": {
-                        "merge_pointer": "/assay_run_number",
-                        "type_ref": "shipping_core.json#properties/assay_run_number"
                     },
                     "courier": {
                         "merge_pointer": "/courier",
@@ -75,14 +63,6 @@
                     "num of samples shipped": {
                         "merge_pointer": "/num_of_samples_shipped",
                         "type_ref": "shipping_core.json#properties/num_of_samples_shipped"
-                    },
-                    "num of samples good": {
-                        "merge_pointer": "/num_of_samples_good",
-                        "type_ref": "shipping_core.json#properties/num_of_samples_good"
-                    },
-                    "num of path report": {
-                        "merge_pointer": "/num_of_path_report",
-                        "type_ref": "shipping_core.json#properties/num_of_path_report"
                     },
                     "ship from": {
                         "merge_pointer": "/ship_from",
@@ -169,10 +149,6 @@
                             "merge_pointer": "2/cohort_name",
                             "type_ref": "participant.json#properties/cohort_name"
                         },
-                        "arm id": {
-                            "merge_pointer": "2/arm_id",
-                            "type_ref": "participant.json#properties/arm_id"
-                        },
                         "parent sample id": {
                             "merge_pointer": "/parent_sample_id",
                             "type_ref": "sample.json#properties/parent_sample_id"
@@ -198,22 +174,6 @@
                         "genomic source": {
                             "merge_pointer": "/genomic_source",
                             "type_ref": "sample.json#properties/genomic_source"
-                        },
-                        "blood collection date": {
-                            "merge_pointer": "/blood_collection_date",
-                            "type_ref": "sample.json#properties/blood_collection_date"
-                        },
-                        "blood collection time": {
-                            "merge_pointer": "/blood_collection_time",
-                            "type_ref": "sample.json#properties/blood_collection_time"
-                        },
-                        "blood processing date": {
-                            "merge_pointer": "/blood_processing_date",
-                            "type_ref": "sample.json#properties/blood_processing_date"
-                        },
-                        "blood processing time": {
-                            "merge_pointer": "/blood_processing_time",
-                            "type_ref": "sample.json#properties/blood_processing_time"
                         },
                         "sample processing compliance": {
                             "merge_pointer": "/sample_processing_compliance",

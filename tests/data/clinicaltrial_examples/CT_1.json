@@ -5,7 +5,6 @@
             "cimac_participant_id": "CM-TEST-PAR1",
             "participant_id": "trial.PA.1",
             "cohort_name": "---",
-            "arm_id": "---",
             "samples": [
                 {
                     "cimac_id": "CM-TEST-PAR1-S1",
@@ -53,7 +52,6 @@
             "cimac_participant_id": "CM-TEST-PAR2",
             "participant_id": "trial.PA.2",
             "cohort_name": "---",
-            "arm_id": "---",
             "samples": [
                 {
                     "cimac_id": "CM-TEST-PAR2-S1",

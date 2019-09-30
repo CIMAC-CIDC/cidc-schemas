@@ -177,10 +177,13 @@ class XlTemplateReader:
         return True
 
     def _make_validation_error(self, worksheet_name: str, field_name: str, row_num: int, message: str) -> str:
-        return f'Error in worksheet "{worksheet_name}", field "{field_name}", row {row_num}: {message}'
+        return f'Error in worksheet "{worksheet_name}", row {row_num}, field "{field_name}": {message}'
 
     def _validate_instance(self, value, schema):
         # All fields in an Excel template are required
+        # except for "allow_empty"
+        if schema.get('allow_empty'):
+            return validate_instance(value, schema, is_required=False)
         return validate_instance(value, schema, is_required=True)
 
     def _validate_worksheet(self, worksheet_name: str, ws_schema: dict) -> List[str]:

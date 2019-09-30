@@ -494,11 +494,10 @@ def test_prismify_plasma():
     validator.validate(md_patch)
 
     assert file_maps == []
-    assert 1 == len(md_patch["participants"])
-    assert 1 == len(md_patch["participants"][0]["samples"])
+    assert 2 == len(md_patch["participants"])
+    assert 3 == len(md_patch["participants"][0]["samples"])
     assert md_patch["participants"][0]["samples"][0]["cimac_id"][:-3] == \
         md_patch["participants"][0]["cimac_participant_id"]
-    assert 1 == len(md_patch["participants"][0]["samples"])
 
     assert md_patch["participants"][0]["gender"]        # filled from 1 tab
     assert md_patch["participants"][0]["cohort_name"]   # filled from another
@@ -690,8 +689,8 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
 
         elif hint == 'plasma':
             assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_plasma"
-            assert len(prism_patch['participants']) == 1
-            assert len(prism_patch['participants'][0]['samples']) == 1
+            assert len(prism_patch['participants']) == 2
+            assert len(prism_patch['participants'][0]['samples']) == 3
             assert 'aliquots' not in prism_patch['participants'][0]['samples'][0]
 
         else: 

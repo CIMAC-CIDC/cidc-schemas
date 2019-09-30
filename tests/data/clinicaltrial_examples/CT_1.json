@@ -13,7 +13,6 @@
                     "sample_location": "---",
                     "type_of_sample": "Other",
                     "type_of_primary_container": "Other",
-                    "genomic_source": "Tumor",
                     "aliquots": [
                         {
                             "slide_number": "1",
@@ -33,7 +32,6 @@
                     "sample_location": "---",
                     "type_of_sample": "Other",
                     "type_of_primary_container": "Other",
-                    "genomic_source": "Normal",
                     "aliquots": [
                         {
                             "slide_number": "1",
@@ -60,7 +58,6 @@
                     "sample_location": "---",
                     "type_of_sample": "Other",
                     "type_of_primary_container": "Other",
-                    "genomic_source": "Tumor",
                     "aliquots": [
                         {
                             "slide_number": "1",
@@ -80,7 +77,6 @@
                     "sample_location": "---",
                     "type_of_sample": "Other",
                     "type_of_primary_container": "Other",
-                    "genomic_source": "Normal",
                     "aliquots": [
                         {
                             "slide_number": "1",

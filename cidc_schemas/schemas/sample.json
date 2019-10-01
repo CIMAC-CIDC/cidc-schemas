@@ -35,80 +35,35 @@
         },
         "site_description": {
             "description": "Descritpion of the topography category. e.g LUNG AND BRONCHUS",
-            "type": "string",
-            "enum": [
-                "ACCESSORY SINUS, NOS",
-                "ADRENAL GLANDS",
-                "ANAL CANAL & ANUS",
-                "APPENDIX",
-                "BASE OF TONGUE"
-            ]
+            "type": "string"
         },
         "topography_code": {
             "description": "ICD-0-3 topography site code from which a specimen was isolated. e.g. C34.1",
-            "type": "string",
-            "enum": [
-                "C00",
-                "C00.0",
-                "C00.1",
-                "C00.2",
-                "C00.3",
-                "C00.4",
-                "C00.5",
-                "C00.6",
-                "C00.8",
-                "C00.9",
-                "C01",
-                "C01.9"
-            ]
+            "type": "string"
         },
         "topography_description": {
             "description": "ICD-0-3 site code description. e.g. Upper lobe, lung",
-            "type": "string",
-            "enum": [
-                "LIP",
-                "External upper lip",
-                "External lower lip",
-                "External lip, NOS",
-                "Mucosa of upper lip",
-                "Mucosa of lower lip",
-                "Mucosa of lip, NOS",
-                "Commissure of lip",
-                "Overlapping lesion of lip",
-                "Lip, NOS"
-            ]
+            "type": "string"
         },
         "histology_behavior": {
             "description": "ICD-0-3 code for histology and behavior. e.g. 9665/3",
-            "type": "string",
-            "enum": [
-                "8000/3",
-                "8001/3",
-                "8002/3",
-                "8003/3",
-                "8004/3",
-                "8005/3",
-                "8010/2",
-                "8010/3",
-                "8011/3"
-            ]
+            "type": "string"
         },
         "histology_behavior_description": {
             "description": "ICD-0-3 histology and behavior code description. e.g. Hodgkin lymphoma, nod. scler., grade 1",
-            "type": "string",
-            "enum": [
-                "Neoplasm, malignant",
-                "Tumor cells, malignant",
-                "Malignant tumor, small cell type",
-                "Malignant tumor, giant cell type",
-                "Malignant tumor, spindle cell type",
-                "Malignant tumor, clear cell type"
-            ]
+            "type": "string"
         },
         "collection_event_name": {
             "title": "Collection Event Name",
             "description": "Categorical description of timepoint at which the sample was taken.",
-            "type": "string"
+            "type": "string",
+            "$comment": "This is enum with E4412 values only as a temp solution.",
+            "enum": [
+                "Baseline",
+                "Pre_Day_1_Cycle_2",
+                "Restaging",
+                "Off_study"
+            ]
         },
         "sample_location": {
             "description": "Sample location within the shipping container. Example: A1.",
@@ -124,8 +79,18 @@
                 "Blood",
                 "Bone Marrow",
                 "Cerebrospinal Fluid",
+                "Lymph Node",
                 "Stool",
                 "Not Reported",
+                "Other"
+            ]
+        },
+        "type_of_tumor_sample": {
+            "description": "The type of tumor sample obtained (primary or metastatic).",
+            "type": "string",
+            "enum": [
+                "Metastatic Tumor",
+                "Primary Tumor",
                 "Other"
             ]
         },
@@ -141,6 +106,8 @@
                 "Bone Marrow Core Biopsy",
                 "Bone Marrow Aspirate",
                 "Lumbar Puncture",
+                "Aspirate",
+                "Fine-Needle Aspiration",
                 "Not Reported",
                 "Other"
             ]
@@ -159,11 +126,11 @@
             ]
         },
         "sample_volume": {
-            "description": "Volume of aliquot shipped.",
+            "description": "Volume of the parent sample (e.g. Heparin tube volume)",
             "type": "number"
         },
         "sample_volume_units": {
-            "description": "The unit of biological material from this sample.",
+            "description": "Unit for the parent sample volume.",
             "type": "string",
             "enum": [
                 "Microliter",

@@ -21,7 +21,8 @@
       "type": "string",
       "description": "Categorical description of cohorts, arms, and treatment groups.",
       "example": "Arm_Z",
-      "examples": [
+      "$comment": "This is enum with E4412 values only as a temp solution.",
+      "enum": [
         "Arm_Z",
         "Arm_A",
         "Arm_B",
@@ -35,6 +36,10 @@
         "Arm_H",
         "Arm_I"
       ]
+    },
+    "essential_patient_entry_number": {
+        "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
+        "type": "number"
     },
     "gender": {
       "type": "string",

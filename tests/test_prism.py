@@ -35,7 +35,7 @@ TEST_PRISM_TRIAL = {
             {
                 "cimac_participant_id": "CM-TEST-PAR1",
                 "participant_id": "test_trial_patient_1",
-                "cohort_name": "---",
+                "cohort_name": "Arm_Z",
                 "samples": [
                     {
                         "aliquots": [
@@ -51,11 +51,10 @@ TEST_PRISM_TRIAL = {
                         ],
                         "cimac_id": "CM-TEST-PAR1-11",
                         "parent_sample_id": "test_sample_1",
-                        "collection_event_name": "---",
+                        "collection_event_name": "Baseline",
                         "sample_location": "---",
                         "type_of_sample": "Other",
                         "type_of_primary_container": "Other",
-                        "genomic_source": "Tumor",
                     }
                 ],
             },
@@ -75,16 +74,15 @@ TEST_PRISM_TRIAL = {
                         ],
                         "cimac_id": "CM-TEST-PAR1-21",
                         "parent_sample_id": "test_sample_2",
-                        "collection_event_name": "---",
+                        "collection_event_name": "Baseline",
                         "sample_location": "---",
                         "type_of_sample": "Other",
                         "type_of_primary_container": "Other",
-                        "genomic_source": "Tumor",
                     }
                 ],
                 "cimac_participant_id": "CM-TEST-PAR2",
                 "participant_id": "test_trial_patient_2",
-                "cohort_name": "---"
+                "cohort_name": "Arm_Z"
             }
         ],
         "assays": {
@@ -189,11 +187,10 @@ def test_merge_core():
         "cimac_id": "CM-TRIA-PA12-34",
         "parent_sample_id": "blank",
         "aliquots": [aliquot],
-        "collection_event_name": "---",
+        "collection_event_name": "Baseline",
         "sample_location": "---",
         "type_of_sample": "Other",
         "type_of_primary_container": "Other",
-        "genomic_source": "Tumor",
     }
 
     # create the participant
@@ -201,7 +198,7 @@ def test_merge_core():
         "cimac_participant_id": "CM-TEST-PART",
         "participant_id": "blank",
         "samples": [sample],
-        "cohort_name": "---"
+        "cohort_name": "Arm_Z"
     }
 
     # create the trial
@@ -261,8 +258,7 @@ MINIMAL_TEST_TRIAL = {
                             "aliquot_status": "Other"
                         }
                     ],
-                    "genomic_source": "Tumor",
-                    "collection_event_name": "---",
+                    "collection_event_name": "Baseline",
                     "sample_location": "---",
                     "type_of_sample": "Other",
                     "type_of_primary_container": "Other",
@@ -272,7 +268,7 @@ MINIMAL_TEST_TRIAL = {
             ],
             "cimac_participant_id": "CM-TEST-MIN1",
             "participant_id": "test_min_Patient_1",
-            "cohort_name": "---"
+            "cohort_name": "Arm_Z"
         }
     ]
 }

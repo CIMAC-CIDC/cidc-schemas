@@ -97,4 +97,4 @@ def compare_templates(schema_path: str, generated: XlTemplateReader, reference: 
             # Compare data headers
             for (gen_h, ref_h) in zip(gen_headers.values, ref_headers.values):
                 assert (gen_h and gen_h.lower()) == (ref_h and ref_h.lower()), error(
-                    f'data: generated template had header {gen_h} where reference had {ref_h}')
+                    f'data: generated template had header {gen_h!r} where reference had {ref_h!r}')

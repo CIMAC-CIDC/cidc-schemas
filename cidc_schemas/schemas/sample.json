@@ -17,6 +17,10 @@
             "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
             "type": "number"
         },
+        "box_number": {
+          "description": "Identifier if sample shipment container includes multiple boxes for each assay.",
+          "type": "integer"
+        },
         "surgical_pathology_report_id": {
             "description": "A unique identifier so someone can find the surgical pathology report.",
             "type": "string"

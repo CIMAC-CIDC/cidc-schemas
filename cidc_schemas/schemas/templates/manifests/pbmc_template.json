@@ -32,10 +32,6 @@
                         "merge_pointer": "/receiving_party",
                         "type_ref": "shipping_core.json#properties/receiving_party"
                     },
-                    "box number": {
-                        "merge_pointer": "/box_number",
-                        "type_ref": "shipping_core.json#properties/box_number"
-                    },
                     "courier": {
                         "merge_pointer": "/courier",
                         "type_ref": "shipping_core.json#properties/courier"
@@ -193,6 +189,10 @@
                         }
                     },
                     "Filled by Biorepository": {
+                        "box number": {
+                            "merge_pointer": "/box_number",
+                            "type_ref": "sample.json#properties/box_number"
+                        },
                         "sample location": {
                             "merge_pointer": "0/sample_location",
                             "type_ref": "sample.json#properties/sample_location"

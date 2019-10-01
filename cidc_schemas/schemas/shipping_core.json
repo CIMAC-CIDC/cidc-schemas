@@ -41,10 +41,6 @@
         "Other"
       ]
     },
-    "box_number": {
-      "description": "Box identifier for samples, if sample shipment container includes multiple boxes for each sample/assay type.",
-      "type": "integer"
-    },
     "courier": {
       "description": "Courier utilized for shipment.",
       "type": "string",
@@ -119,7 +115,6 @@
     "account_number",
     "assay_priority",
     "assay_type",
-    "box_number",
     "courier",
     "date_recieved",
     "date_shipped",

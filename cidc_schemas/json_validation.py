@@ -163,12 +163,6 @@ class _Validator(jsonschema.Draft7Validator):
         # get_all_paths will find any occurrences of `ref` in doc
         found_id_paths = get_all_paths(doc, ref, dont_throw=True)
 
-
-        # pattern like "/this/*/that" will match on "/this/multi/level/nested/that"
-        # as we don't want that - we replace "*" with "[!/]"
-        # latter will match anything but "/", disallowing those nested matches. 
-        fixed_path_pattern = ref_path_pattern.replace("*", "[!/]")
-
         found_id_jpointers = [
             # as get_all_paths returns results in `root['access']['path']` form
             # we need to convert that to `/json/pointer/style/path`
@@ -177,7 +171,7 @@ class _Validator(jsonschema.Draft7Validator):
         ]
 
         # fnmatch.filter has better performance than a naive for loop
-        if fnmatch.filter(found_id_jpointers, fixed_path_pattern):
+        if fnmatch.filter(found_id_jpointers, ref_path_pattern):
             # id ref found and matched
             return True
 

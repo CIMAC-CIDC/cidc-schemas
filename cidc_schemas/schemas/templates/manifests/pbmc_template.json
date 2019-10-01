@@ -81,7 +81,15 @@
                 "prism_data_object_pointer": "/participants/0/samples/0",
                 "data_columns": {
                     "Path Concordance Verification": {
-                        "cimac id": {
+                        "entry (#)": {
+                            "merge_pointer": "2/essential_patient_entry_number",
+                            "type_ref": "participant.json#properties/essential_patient_entry_number"
+                        },
+                        "participant ID": {
+                            "merge_pointer": "2/participant_id",
+                            "type_ref": "participant.json#properties/participant_id"
+                        },
+                        "CIMAC ID": {
                             "merge_pointer": "/cimac_id",
                             "type_ref": "sample.json#properties/cimac_id",
                             "process_as": [
@@ -90,6 +98,14 @@
                                     "parse_through": "lambda x: '-'.join(x.split('-')[:3])"
                                 }
                             ]
+                        },
+                        "surgical pathology report id": {
+                            "merge_pointer": "/surgical_pathology_report_id",
+                            "type_ref": "sample.json#properties/surgical_pathology_report_id"
+                        },
+                        "clinical report id": {
+                            "merge_pointer": "/clinical_report_id",
+                            "type_ref": "sample.json#properties/clinical_report_id"
                         },
                         "collection event name": {
                             "merge_pointer": "/collection_event_name",

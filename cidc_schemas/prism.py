@@ -782,6 +782,10 @@ def merge_artifact_extra_metadata(ct: dict, artifact_uuid: str) -> (dict, dict):
         existing_patch: patch after merging with with extra metadata
     """
 
+    # here this extra patch should be merged into a corresponding
+    # AssayUpload.assay_patch, hence we also need to know get the
+    # AssayUpload.id (passed by CLI?)
+
     md_patches = extra_metadata_parsing()
     for m in md_patches:
         existing_patch = _get_uuid_info(ct, artifact_uuid)

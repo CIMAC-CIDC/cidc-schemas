@@ -10,6 +10,7 @@ import pytest
 import jsonschema
 
 from cidc_schemas.json_validation import _map_refs, load_and_validate_schema, _resolve_refs
+from cidc_schemas.prism import PROTOCOL_ID_FIELD_NAME
 from .constants import SCHEMA_DIR, ROOT_DIR, TEST_SCHEMA_DIR
 
 from .test_assays import ASSAY_CORE, ARTIFACT_OBJ, OLINK_RECORD
@@ -81,7 +82,7 @@ def test_clinicaltrial_simple():
         "cimac_id": "CM-TEST-1234-00",
         "parent_sample_id": "blank",
         "aliquots": [aliquot],
-        "collection_event_name": "---",
+        "collection_event_name": "Baseline",
         "sample_location": "---",
         "type_of_sample": "Other",
         "type_of_primary_container": "Other",
@@ -93,13 +94,12 @@ def test_clinicaltrial_simple():
         "cimac_participant_id": "CM-TEST-1234",
         "participant_id": "blank",
         "samples": [sample],
-        "cohort_name": "---",
-        "arm_id": "---",    
+        "cohort_name": "Arm_Z",
     }
 
     # create the trial
     ct = {
-        "protocol_id": "test",
+        PROTOCOL_ID_FIELD_NAME: "test",
         "participants": [participant]
     }
 
@@ -135,7 +135,7 @@ def test_clinicaltrial_olink():
         "cimac_id": "CM-TEST-PA12-34",
         "parent_sample_id": "blank",
         "aliquots": [aliquot1],
-        "collection_event_name": "---",
+        "collection_event_name": "Baseline",
         "sample_location": "---",
         "type_of_sample": "Other",
         "type_of_primary_container": "Other",
@@ -145,7 +145,7 @@ def test_clinicaltrial_olink():
         "cimac_id": "CM-TEST-PAAB-CD",
         "parent_sample_id": "blank",
         "aliquots": [aliquot2],
-        "collection_event_name": "---",
+        "collection_event_name": "Baseline",
         "sample_location": "---",
         "type_of_sample": "Other",
         "type_of_primary_container": "Other",
@@ -157,20 +157,18 @@ def test_clinicaltrial_olink():
         "cimac_participant_id": "CM-TEST-1234",
         "participant_id": "blank",
         "samples": [sample1],
-        "cohort_name": "---",
-        "arm_id": "---",    
+        "cohort_name": "Arm_Z",
     }
     participant2 = {
         "cimac_participant_id": "CM-TEST-2222",
         "participant_id": "blank",
         "samples": [sample2],
-        "cohort_name": "---",
-        "arm_id": "---",    
+        "cohort_name": "Arm_Z",
     }
 
     # create the trial
     ct = {
-        "protocol_id": "test",
+        PROTOCOL_ID_FIELD_NAME: "test",
         "participants": [participant1, participant2]
     }
 

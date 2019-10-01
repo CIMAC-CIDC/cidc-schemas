@@ -1,16 +1,15 @@
 {
-    "protocol_id": "1/minimal",
+    "protocol_identifier": "1/minimal",
     "participants": [
         {
             "cimac_participant_id": "CM-TEST-PA11",
             "participant_id": "trial.PA.1.1",
-            "cohort_name": "---",
-            "arm_id": "---",
+            "cohort_name": "Arm_Z",
             "samples": [
                 {
                     "cimac_id": "CM-TRIA-PA11-S1",
                     "parent_sample_id": "site.SA.1.1.1",
-                    "collection_event_name": "---",
+                    "collection_event_name": "Baseline",
                     "sample_location": "---",
                     "type_of_sample": "Other",
                     "type_of_primary_container": "Other",
@@ -30,7 +29,7 @@
                 {
                     "cimac_id": "CM-TEST-PA11-S2",
                     "parent_sample_id": "site.SA.1.1.2",
-                    "collection_event_name": "---",
+                    "collection_event_name": "Baseline",
                     "sample_location": "---",
                     "type_of_sample": "Other",
                     "type_of_primary_container": "Other",

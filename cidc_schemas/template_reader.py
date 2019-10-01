@@ -177,10 +177,13 @@ class XlTemplateReader:
         return True
 
     def _make_validation_error(self, worksheet_name: str, field_name: str, row_num: int, message: str) -> str:
-        return f'Error in worksheet "{worksheet_name}", field "{field_name}", row {row_num}: {message}'
+        return f'Error in worksheet {worksheet_name!r}, row {row_num}, field {field_name!r}: {message}'
 
     def _validate_instance(self, value, schema):
         # All fields in an Excel template are required
+        # except for "allow_empty"
+        if schema.get('allow_empty'):
+            return validate_instance(value, schema, is_required=False)
         return validate_instance(value, schema, is_required=True)
 
     def _validate_worksheet(self, worksheet_name: str, ws_schema: dict) -> List[str]:
@@ -211,7 +214,7 @@ class XlTemplateReader:
             for name in preamble_schemas.keys():
                 if name not in self.visited_fields:
                     invalid_messages.append(
-                        f"Missing expected template row: {name}")
+                        f"Worksheet {worksheet_name!r} is missing expected template row: {name!r}")
 
         # Clear visited fields in case a data column has the same header as a preamble row
         self.visited_fields.clear()
@@ -243,7 +246,7 @@ class XlTemplateReader:
             for name in flat_data_schemas.keys():
                 if name not in self.visited_fields:
                     invalid_messages.append(
-                        f"Missing expected template column: {name}")
+                        f"Worksheet {worksheet_name!r} is missing expected template column: {name!r}")
 
             for data_row in row_groups[RowType.DATA]:
                 for col, value in enumerate(data_row.values):

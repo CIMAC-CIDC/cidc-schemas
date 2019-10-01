@@ -184,14 +184,14 @@ class XlTemplateWriter:
         preamble_range = xl_range(
             self.row, 1, self.row, self.MAIN_WIDTH)
         self.worksheet.merge_range(
-            preamble_range, title.upper(), self.TITLE_THEME)
+            preamble_range, title.capitalize(), self.TITLE_THEME)
 
     def _write_preamble_row(self, entity_name: str, entity_schema: dict):
 
         # Write row type and entity name
         self._write_type_annotation(RowType.PREAMBLE)
         self.worksheet.write(
-            self.row, 1, entity_name.upper(), self.PREAMBLE_THEME)
+            self.row, 1, entity_name.capitalize(), self.PREAMBLE_THEME)
         self._write_comment(self.row, 1, entity_schema)
 
         # Format value cells
@@ -231,7 +231,7 @@ class XlTemplateWriter:
 
     def _write_data_column(self, entity_name: str, entity_schema: dict):
         self.worksheet.write(self.row, self.col,
-                             entity_name.upper(), self.HEADER_THEME)
+                             entity_name.capitalize(), self.HEADER_THEME)
         self._write_comment(self.row, self.col, entity_schema)
 
         # Write validation to data cells below header cell

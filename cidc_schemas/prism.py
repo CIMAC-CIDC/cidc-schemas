@@ -98,7 +98,6 @@ def _set_val(
         root = context
     if context_pointer is None:
         context_pointer = "/"
-    
 
     # first we need to convert pointer to an absolute one
     # if it was a relative one (https://tools.ietf.org/id/draft-handrews-relative-json-pointer-00.html)
@@ -247,7 +246,6 @@ LocalFileUploadEntry = namedtuple('LocalFileUploadEntry',
 def _process_property(
         key: str,
         raw_val,
-        assay_hint: str,
         key_lu: dict,
         data_obj: dict,
         format_context: dict,
@@ -261,7 +259,6 @@ def _process_property(
     Args:
         key: property name,
         raw_val: value of a property being processed,
-        assay_hint: 'wes' or similar to create proper urls
         key_lu: dictionary to translate from template naming to json-schema
                 property names
         data_obj: dictionary we are building to represent data
@@ -290,14 +287,13 @@ def _process_property(
     field_def = key_lu[key.lower()]
     if verb:
         print(f'      found def {field_def}')
-    
 
     # or set/update value in-place in data_obj dictionary 
     pointer = field_def['merge_pointer']
     if field_def.get('is_artifact') == 1:
         pointer += '/upload_placeholder'
 
-    # deal with multiartifact
+    # deal with multi-artifact
     if not (field_def.get("is_artifact") == "multi"):
         val = field_def['coerce'](raw_val)
 
@@ -316,7 +312,6 @@ def _process_property(
 
     _set_val(pointer, val, data_obj, root_obj, data_obj_pointer, verb=verb)
 
-
     # "process_as" allows to define additional places/ways to put that match
     # somewhere in the resulting doc, with additional processing.
     # E.g. we need to strip cimac_id='CM-TEST-0001-01' to 'CM-TEST-0001'
@@ -334,8 +329,6 @@ def _process_property(
                 extra_fdef_val = eval(extra_fdef['parse_through'])(val)
 
             _set_val(extra_pointer, extra_fdef_val, data_obj, root_obj, data_obj_pointer, verb=verb)
-
-
 
     if verb:
 
@@ -385,9 +378,7 @@ def _process_property(
 
 SUPPORTED_ASSAYS = ["wes", "olink", "cytof"]
 SUPPORTED_MANIFESTS = ["pbmc", "plasma"]
-ASSAYS_WITH_EXTRA_METADATA = ["olink"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
-
 
 
 def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) \
@@ -537,7 +528,6 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     xlsx_template = Template.from_json(template_path)
     xslx.validate(xlsx_template)
 
-
     # get the root CT schema
     root_ct_schema_name = (xlsx_template.schema.get("prism_template_root_object_schema") or "clinical_trial.json")
     root_ct_schema = load_and_validate_schema(root_ct_schema_name)
@@ -575,7 +565,6 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
 
         # creating preamble obj 
         preamble_obj = {f"__{assay_hint}:{ws_name}" : "as preamble"} if verb else {}
-        
 
         # Processing data rows first
         data = ws[RowType.DATA]
@@ -655,7 +644,6 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         if verb:
             print(f'  merged - {template_root_obj}')
 
-
     if template_root_obj_pointer != "":
         _set_val(template_root_obj_pointer, template_root_obj, root_ct_obj, verb=verb)
     else:
@@ -703,8 +691,6 @@ def _set_data_format(ct: dict, artifact: dict):
     # data format was not set!
 
 
-
-
 def _get_uuid_info(ct: dict, artifact_uuid: str) -> dict:
 
     # Using uuids to find path in CT where corresponding artifact is located. Uuids are unique.
@@ -719,7 +705,6 @@ def _get_uuid_info(ct: dict, artifact_uuid: str) -> dict:
 
 def merge_artifact(
     ct: dict,
-    assay_type: str,
     artifact_uuid: str,
     object_url: str,
     file_size_bytes: int,
@@ -754,23 +739,19 @@ def merge_artifact(
         "uploaded_timestamp": uploaded_timestamp
     }
 
-    existing_artifact = _get_uuid_info(ct, artifact_uuid)
-
-    # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")
-    # artifact_parent[file_name] = Merger(artifact_schema).merge(existing_artifact, artifact)
-    existing_artifact.update(artifact)
-
-    _set_data_format(ct, existing_artifact)
-
-    # return new object and the artifact that was merged
-    return ct, existing_artifact
+    return _update_artifact(ct, artifact, artifact_uuid)
 
 
 class InvalidMergeTargetException(ValueError):
     """Exception raised for target of merge_clinical_trial_metadata being non schema compliant."""
 
 
-def merge_artifact_extra_metadata(ct: dict, artifact_uuid: str) -> (dict, dict):
+def merge_artifact_extra_metadata(
+        ct: dict,
+        artifact_uuid: str,
+        assay_hint: str,
+        extra_metadata_file: BinaryIO
+) -> (dict, dict):
     """
     Merges parsed extra metadata returned by extra_metadata_parsing to
     corresponding artifact objects within the patch.
@@ -778,27 +759,46 @@ def merge_artifact_extra_metadata(ct: dict, artifact_uuid: str) -> (dict, dict):
     Args:
         ct: preliminary patch from upload_assay
         artifact_uuid: passed from upload assay
+        assay_hint: assay type
+        extra_metadata_file: extra metadata file in BinaryIO
     Returns:
         existing_patch: patch after merging with with extra metadata
     """
 
-    # here this extra patch should be merged into a corresponding
-    # AssayUpload.assay_patch, hence we also need to know get the
-    # AssayUpload.id (passed by CLI?)
+    if assay_hint not in _EXTRA_METADATA_PARSERS:
+        raise Exception(f"Assay {assay_hint} does not support extra metadata parsing")
+    extract_metadata = _EXTRA_METADATA_PARSERS[assay_hint]
 
-    md_patches = extra_metadata_parsing()
-    for m in md_patches:
-        existing_patch = _get_uuid_info(ct, artifact_uuid)
+    artifact = extract_metadata(extra_metadata_file)
 
-        # TODO this might be better with merger:
-        # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")
-        # artifact_parent[file_name] = Merger(artifact_schema).merge(existing_artifact, artifact)
-        existing_patch.update(m)
+    return _update_artifact(ct, artifact, artifact_uuid)
 
-        _set_data_format(ct, existing_patch)
 
-        # return the artifact that was merged and the new object
-        return ct, existing_patch
+def _update_artifact(ct: dict, artifact: dict, artifact_uuid: str):
+
+    """ Updates the artifact with uuid `artifact_uuid` in `ct`,
+    and return the updated clinical trial and artifact objects
+
+    Args:
+        ct: clinical trial object
+        artifact: artifact object
+        artifact_uuid: artifact identifier
+    Returns:
+        ct: updated clinical trial object
+        updated_patch: updated patch
+    """
+
+    existing_patch = _get_uuid_info(ct, artifact_uuid)
+
+    # TODO this might be better with merger:
+    # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")
+    # artifact_parent[file_name] = Merger(artifact_schema).merge(existing_artifact, artifact)
+    updated_patch = existing_patch.update(artifact)
+
+    _set_data_format(ct, updated_patch)
+
+    # return the artifact that was merged and the new object
+    return ct, updated_patch
 
 
 def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
@@ -902,20 +902,3 @@ def parse_npx(xlsx: BinaryIO) -> dict:
 _EXTRA_METADATA_PARSERS = {"olink": parse_npx}
 
 ASSAYS_WITH_EXTRA_METADATA = _EXTRA_METADATA_PARSERS.keys()
-
-
-def extra_metadata_parsing(extra_files: List[BinaryIO], assay_hint: str) -> List[dict]:
-    """
-
-    Args:
-        extra_files: list of BinaryIO files
-        assay_hint: assay type
-
-    Returns:
-        artifact_patches: a list of artifact objects patches with extra metadata 
-    """
-
-    if assay_hint not in _EXTRA_METADATA_PARSERS:
-        raise Exception(f"Assay {assay_hint} doesn't support extra metadata parsing")
-
-    return [_EXTRA_METADATA_PARSERS[assay_hint](f) for f in extra_files]

@@ -20,7 +20,7 @@ from .constants import TEST_DATA_DIR
 from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
     SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES, \
-    PROTOCOL_ID_FIELD_NAME, parse_npx
+    PROTOCOL_ID_FIELD_NAME, parse_npx, merge_artifact_extra_metadata
 
 from cidc_schemas.json_validation import load_and_validate_schema, InDocRefNotFoundError
 from cidc_schemas.template import Template
@@ -566,8 +566,8 @@ def test_prismify_olink_only():
     # assert works
     validator.validate(merged)
 
-    assert 0, "add cimac_id ref testing"
-
+    # return these for use in other tests
+    return ct, file_maps
     
 def test_merge_artifact_wes_only():
 
@@ -1003,32 +1003,57 @@ def test_prism_joining_tabs(monkeypatch):
 
     assert 0 == len(file_maps)
     
-        
+@pytest.fixture
+def npx_file_path():
+    return os.path.join(TEST_DATA_DIR, 'olink', 'olink_assay_1_NPX.xlsx')
 
-def test_parse_npx_invalid():
+@pytest.fixture
+def npx_combined_file_path():
+    return os.path.join(TEST_DATA_DIR, 'olink', 'olink_assay_combined.xlsx')
+
+
+def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
+    ct, file_infos = test_prismify_olink_only()
+
+    for finfo in file_infos:
+        if finfo.metadata_availability:
+            if 'combined' in finfo.local_path:
+                local_path = npx_combined_file_path
+            else:
+                local_path = npx_file_path
+
+            with open(local_path, 'rb') as npx_file:
+                merge_artifact_extra_metadata(ct, finfo.upload_placeholder, 'olink', npx_file)
+                # TODO: verify that this seemed to work
+
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
+    merger = Merger(schema)
+    merged = merger.merge(MINIMAL_TEST_TRIAL, ct)
+
+    # assert works
+    validator.validate(merged)
+
+
+def test_parse_npx_invalid(npx_file_path):
     # test the parse function by passing a file path
-    file_path = os.path.join(TEST_DATA_DIR, 'olink', 'olink_assay_1_NPX.xlsx')
-
     with pytest.raises(TypeError):
-        aliquots = parse_npx(file_path)
+        samples = parse_npx(npx_file_path)
 
 
-def test_parse_npx_single():
+def test_parse_npx_single(npx_file_path):
     # test the parse function
-    npx_path = os.path.join(TEST_DATA_DIR, 'olink', 'olink_assay_1_NPX.xlsx')
+    f = open(npx_file_path, 'rb')
+    samples = parse_npx(f)
 
-    f = open(npx_path, 'rb')
-    aliquots = parse_npx(f)
-
-    assert aliquots["number_of_aliquots"] == 4
-    assert set(aliquots["aliquots"]) == {'HD_59', 'HD_63', 'HD_32', 'HD_50'}
+    assert samples["number_of_samples"] == 4
+    assert set(samples["samples"]) == {'HD_59', 'HD_63', 'HD_32', 'HD_50'}
 
 
-def test_parse_npx_merged():
+def test_parse_npx_merged(npx_combined_file_path):
     # test the parse function
-    npx_path = os.path.join(TEST_DATA_DIR, 'olink', 'olink_assay_combined.xlsx')
-    f = open(npx_path, 'rb')
-    aliquots = parse_npx(f)
+    f = open(npx_combined_file_path, 'rb')
+    samples = parse_npx(f)
 
-    assert aliquots["number_of_aliquots"] == 9
-    assert set(aliquots["aliquots"]) == {'HD_59', 'HD_63', 'HD_32', 'HD_50', 'HD_71', 'HD_72', 'HD_73', 'HD_80', 'HD_85'}
+    assert samples["number_of_samples"] == 9
+    assert set(samples["samples"]) == {'HD_59', 'HD_63', 'HD_32', 'HD_50', 'HD_71', 'HD_72', 'HD_73', 'HD_80', 'HD_85'}

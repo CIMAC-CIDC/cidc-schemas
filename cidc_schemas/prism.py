@@ -246,6 +246,7 @@ LocalFileUploadEntry = namedtuple('LocalFileUploadEntry',
 def _process_property(
         key: str,
         raw_val,
+        assay_hint: str,
         key_lu: dict,
         data_obj: dict,
         format_context: dict,
@@ -382,7 +383,7 @@ SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
 
 
 def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) \
-        -> (dict, dict):
+        -> (dict, List[LocalFileUploadEntry]):
     """
     Converts excel file to json object. It also identifies local files
     which need to uploaded to a google bucket and provides some logic
@@ -706,6 +707,7 @@ def _get_uuid_info(ct: dict, artifact_uuid: str) -> dict:
 def merge_artifact(
     ct: dict,
     artifact_uuid: str,
+    assay_type: str,
     object_url: str,
     file_size_bytes: int,
     uploaded_timestamp: str,
@@ -785,7 +787,7 @@ def _update_artifact(ct: dict, artifact: dict, artifact_uuid: str):
         artifact_uuid: artifact identifier
     Returns:
         ct: updated clinical trial object
-        updated_patch: updated patch
+        existing_patch: updated patch
     """
 
     existing_patch = _get_uuid_info(ct, artifact_uuid)
@@ -793,12 +795,12 @@ def _update_artifact(ct: dict, artifact: dict, artifact_uuid: str):
     # TODO this might be better with merger:
     # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")
     # artifact_parent[file_name] = Merger(artifact_schema).merge(existing_artifact, artifact)
-    updated_patch = existing_patch.update(artifact)
+    existing_patch.update(artifact)
 
-    _set_data_format(ct, updated_patch)
+    _set_data_format(ct, existing_patch)
 
     # return the artifact that was merged and the new object
-    return ct, updated_patch
+    return ct, existing_patch
 
 
 def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
@@ -889,14 +891,14 @@ def parse_npx(xlsx: BinaryIO) -> dict:
             if seen_onlinkid:
                 ids.append(vals[0])
 
-    aliquot_count = len(ids)
+    sample_count = len(ids)
 
-    aliquots = {
-        "aliquots": ids,
-        "number_of_aliquots": aliquot_count
+    samples = {
+        "samples": ids,
+        "number_of_samples": sample_count
     }
 
-    return aliquots
+    return samples
 
 
 _EXTRA_METADATA_PARSERS = {"olink": parse_npx}

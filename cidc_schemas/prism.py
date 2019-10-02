@@ -235,8 +235,8 @@ def _get_recursively(search_dict, field):
     return fields_found
 
 
-SUPPORTED_ASSAYS = ["wes", "olink"]
-SUPPORTED_MANIFESTS = ["pbmc"]
+SUPPORTED_ASSAYS = ["wes", "olink", "cytof"]
+SUPPORTED_MANIFESTS = ["pbmc", "plasma"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
 
 LocalFileUploadEntry = namedtuple('LocalFileUploadEntry',
@@ -277,7 +277,7 @@ def _process_property(
             local_path = "/local/file/from/excel/file/cell",   
             gs_key = "constructed/GCS/path/where/this/artifact/should/endup",
             upload_placeholder = 'uuiduuiduuid-uuid-uuid-uuiduuid' # unique artifact/upload_placeholder,
-            metadata_availability = boolean indicating existence of extra metadata files
+            metadata_availability = boolean to indicate whether LocalFileUploadEntry should be extracted for metadata files
         )
 
     """
@@ -377,11 +377,6 @@ def _process_property(
         return files
 
 
-SUPPORTED_ASSAYS = ["wes", "olink", "cytof"]
-SUPPORTED_MANIFESTS = ["pbmc", "plasma"]
-SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS
-
-
 def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) \
         -> (dict, List[LocalFileUploadEntry]):
     """
@@ -416,7 +411,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                     local_path = "/local/path/to/a/data/file/parsed/from/template",
                     gs_key = "constructed/relative/to/clinical/trial/GCS/path",
                     upload_placeholder = "random_uuid-for-artifact-upload",
-                    metadata_availability = boolean indicating existence of extra metadata files
+                    metadata_availability = boolean to indicate whether LocalFileUploadEntry should be extracted for metadata files
                 )
 
     Process:
@@ -515,13 +510,6 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     # data rows will require a unique identifier
     if assay_hint not in SUPPORTED_TEMPLATES:
         raise NotImplementedError(f'{assay_hint} is not supported yet, only {SUPPORTED_TEMPLATES} are supported.')
-
-    # get the root CT schema
-    # create the result CT dictionary
-    root_ct_obj = {"_root_ct_obj": assay_hint} if verb else {}
-    # and merger for it
-    # and where to collect all local file refs
-    collected_files = []
 
     # read the excel file
     xslx = XlTemplateReader.from_excel(xlsx_path)

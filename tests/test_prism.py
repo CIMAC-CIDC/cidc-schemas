@@ -1024,7 +1024,6 @@ def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
 
             with open(local_path, 'rb') as npx_file:
                 merge_artifact_extra_metadata(ct, finfo.upload_placeholder, 'olink', npx_file)
-                # TODO: verify that this seemed to work
 
     study = ct['assays']['olink']['study']
     files = ct['assays']['olink']['records'][0]['files']

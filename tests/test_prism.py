@@ -596,60 +596,62 @@ def test_merge_ct_meta():
     """
 
     # create two clinical trials
-    ct1 = copy.deepcopy(TEST_PRISM_TRIAL)
-    ct2 = copy.deepcopy(TEST_PRISM_TRIAL)
+    patch = copy.deepcopy(TEST_PRISM_TRIAL)
+    target = copy.deepcopy(TEST_PRISM_TRIAL)
 
     # first test the fact that base doc must be valid
-    del ct2['participants']
+    del target['participants']
     with pytest.raises(InvalidMergeTargetException):
-        merge_clinical_trial_metadata(ct1, ct2)
+        merge_clinical_trial_metadata(patch, target)
 
     with pytest.raises(InvalidMergeTargetException):
-        merge_clinical_trial_metadata(ct1, {})
+        merge_clinical_trial_metadata(patch, {})
 
     # next assert the merge is only happening on the same trial
-    ct1[PROTOCOL_ID_FIELD_NAME] = "not_the_same"
-    ct2 = copy.deepcopy(TEST_PRISM_TRIAL)
+    patch[PROTOCOL_ID_FIELD_NAME] = "not_the_same"
+    target = copy.deepcopy(TEST_PRISM_TRIAL)
     with pytest.raises(RuntimeError):
-        merge_clinical_trial_metadata(ct1, ct2)
+        merge_clinical_trial_metadata(patch, target)
 
     # revert the data to same key trial id but
     # include data in 1 that is missing in the other
     # at the trial level and assert the merge
     # does not clobber any
-    ct1[PROTOCOL_ID_FIELD_NAME] = ct2[PROTOCOL_ID_FIELD_NAME] 
-    ct1['trial_name'] = 'name ABC'
-    ct2['nci_id'] = 'xyz1234'
+    patch[PROTOCOL_ID_FIELD_NAME] = target[PROTOCOL_ID_FIELD_NAME] 
+    patch['trial_name'] = 'name ABC'
+    target['nci_id'] = 'xyz1234'
 
-    ct_merge = merge_clinical_trial_metadata(ct1, ct2)
+    ct_merge = merge_clinical_trial_metadata(patch, target)
     assert ct_merge['trial_name'] == 'name ABC'
     assert ct_merge['nci_id'] == 'xyz1234'
 
     # assert the patch over-writes the original value
     # when value is present in both objects
     # TODO add 'discard' mergeStrategy from PROTOCOL_ID_FIELD_NAME 
-    ct1['trial_name'] = 'name ABC'
-    ct2['trial_name'] = 'CBA eman'
+    patch['trial_name'] = 'name ABC'
+    target['trial_name'] = 'CBA eman'
 
-    ct_merge = merge_clinical_trial_metadata(ct1, ct2)
+    ct_merge = merge_clinical_trial_metadata(patch, target)
     assert ct_merge['trial_name'] == 'name ABC'
 
     # now change the participant ids
     # this should cause the merge to have two
     # participants.
-    ct1['participants'][0]['cimac_participant_id'] = 'CM-TEST-DIF1'
+    patch['participants'][0]['cimac_participant_id'] = 'CM-TEST-DIF1'
+    for i, sample in enumerate(patch['participants'][0]['samples']):
+        sample['cimac_id'] = f'CM-TEST-DIF1-D{i}'
 
-    ct_merge = merge_clinical_trial_metadata(ct1, ct2)
+    ct_merge = merge_clinical_trial_metadata(patch, target)
     assert len(ct_merge['participants']) == 1+len(TEST_PRISM_TRIAL['participants'])
 
     # now lets have the same participant but adding multiple samples.
-    ct1[PROTOCOL_ID_FIELD_NAME] = ct2[PROTOCOL_ID_FIELD_NAME] 
-    ct1['participants'][0]['cimac_participant_id'] = \
-        ct2['participants'][0]['cimac_participant_id']
-    ct1['participants'][0]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N1'
-    ct1['participants'][1]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N2'
+    patch[PROTOCOL_ID_FIELD_NAME] = target[PROTOCOL_ID_FIELD_NAME] 
+    patch['participants'][0]['cimac_participant_id'] = \
+        target['participants'][0]['cimac_participant_id']
+    patch['participants'][0]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N1'
+    patch['participants'][1]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N2'
  
-    ct_merge = merge_clinical_trial_metadata(ct1, ct2)
+    ct_merge = merge_clinical_trial_metadata(patch, target)
     assert len(ct_merge['participants']) == len(TEST_PRISM_TRIAL['participants'])
     assert sum(len(p['samples']) for p in ct_merge['participants']) == 2+sum(len(p['samples']) for p in TEST_PRISM_TRIAL['participants'])
 

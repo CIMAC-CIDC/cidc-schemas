@@ -186,6 +186,8 @@ def test_validate_in_doc_refs():
 
     assert True == v._ensure_in_doc_ref("1", "/objs/*/id", doc)
 
+    assert True == v._ensure_in_doc_ref("1", "/*/*/id", doc)
+
     assert False == v._ensure_in_doc_ref("something_else", "/objs/*/id", doc)
 
     assert False == v._ensure_in_doc_ref("something", "/objs", doc)

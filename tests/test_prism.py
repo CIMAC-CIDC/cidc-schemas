@@ -1026,13 +1026,11 @@ def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
                 merge_artifact_extra_metadata(ct, finfo.upload_placeholder, 'olink', npx_file)
                 # TODO: verify that this seemed to work
 
-    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-    schema = validator.schema
-    merger = Merger(schema)
-    merged = merger.merge(MINIMAL_TEST_TRIAL, ct)
+    study = ct['assays']['olink']['study']
+    files = ct['assays']['olink']['records'][0]['files']
 
-    # assert works
-    validator.validate(merged)
+    assert set(files['assay_npx']['samples']) == {'CM-TEST-PA01-A1', 'CM-TEST-PA02-A1', 'CM-TEST-PA03-A1', 'CM-TEST-PA04-A1'}
+    assert set(study['study_npx']['samples']) == {'CM-TEST-PA01-A1', 'CM-TEST-PA02-A1', 'CM-TEST-PA03-A1', 'CM-TEST-PA04-A1', 'CM-TEST-PA05-A1', 'CM-TEST-PA06-A1', 'CM-TEST-PA07-A1', 'CM-TEST-PA08-A1', 'CM-TEST-PA09-A1'}
 
 
 def test_parse_npx_invalid(npx_file_path):
@@ -1047,7 +1045,7 @@ def test_parse_npx_single(npx_file_path):
     samples = parse_npx(f)
 
     assert samples["number_of_samples"] == 4
-    assert set(samples["samples"]) == {'HD_59', 'HD_63', 'HD_32', 'HD_50'}
+    assert set(samples["samples"]) == {'CM-TEST-PA01-A1', 'CM-TEST-PA02-A1', 'CM-TEST-PA03-A1', 'CM-TEST-PA04-A1'}
 
 
 def test_parse_npx_merged(npx_combined_file_path):
@@ -1056,4 +1054,4 @@ def test_parse_npx_merged(npx_combined_file_path):
     samples = parse_npx(f)
 
     assert samples["number_of_samples"] == 9
-    assert set(samples["samples"]) == {'HD_59', 'HD_63', 'HD_32', 'HD_50', 'HD_71', 'HD_72', 'HD_73', 'HD_80', 'HD_85'}
+    assert set(samples["samples"]) == {'CM-TEST-PA01-A1', 'CM-TEST-PA02-A1', 'CM-TEST-PA03-A1', 'CM-TEST-PA04-A1', 'CM-TEST-PA05-A1', 'CM-TEST-PA06-A1', 'CM-TEST-PA07-A1', 'CM-TEST-PA08-A1', 'CM-TEST-PA09-A1'}

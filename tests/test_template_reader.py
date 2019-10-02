@@ -73,10 +73,10 @@ def test_missing_rows_or_columns(tiny_template):
     }
 
     search_error_message(missing_rows_and_columns, tiny_template,
-                         ValidationError, "expected template row: test_time")
+                         ValidationError, "expected template row: 'test_time")
 
     search_error_message(missing_rows_and_columns, tiny_template,
-                         ValidationError, "expected template column: test_date")
+                         ValidationError, "expected template column: 'test_date")
 
 
 def test_missing_required_value(tiny_template):
@@ -89,7 +89,7 @@ def test_missing_required_value(tiny_template):
         ]
     }
 
-    message = 'Error in worksheet "TEST_SHEET", field "test_property", row 2: found empty value'
+    message = "Error in worksheet 'TEST_SHEET', row 2, field 'test_property': found empty value"
     search_error_message(tiny_missing_value,
                          tiny_template, ValidationError, message)
 

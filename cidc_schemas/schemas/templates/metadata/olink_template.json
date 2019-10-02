@@ -16,10 +16,10 @@
         "prism_data_object_pointer" : "/records/-",
         
         "preamble_rows": {
-          "lead organization study id": {
-            "merge_pointer": "2/protocol_id",
-            "$comment": "Only 2 jumps up to protocol_id, because olink is not an array assay, see available_assays.json",
-            "type_ref": "clinical_trial.json#properties/protocol_id"
+          "protocol identifier": {
+            "merge_pointer": "2/protocol_identifier",
+            "$comment": "Only 2 jumps up to protocol_identifier, because olink is not an array assay, see available_assays.json",
+            "type_ref": "clinical_trial.json#properties/protocol_identifier"
           },
           "assay creator": {
             "merge_pointer": "0/assay_creator",
@@ -36,7 +36,7 @@
           "combined file": {
             "merge_pointer": "0/study/study_npx",
             "is_artifact" : 1,
-            "gcs_uri_format": "{lead organization study id}/olink/study_npx.xlsx",
+            "gcs_uri_format": "{protocol identifier}/olink/study_npx.xlsx",
             "type_ref": "assays/components/local_file.json#properties/file_path",
             "extra_metadata": true
           },
@@ -54,14 +54,14 @@
             "npx file": {
               "merge_pointer": "0/files/assay_npx",
               "is_artifact" : 1,
-              "gcs_uri_format": "{lead organization study id}/olink/chip_{chip barcode}/assay_npx.xlsx",
+              "gcs_uri_format": "{protocol identifier}/olink/chip_{chip barcode}/assay_npx.xlsx",
               "type_ref": "assays/components/local_file.json#properties/file_path",
               "extra_metadata": true
             },
             "raw ct file": {
               "merge_pointer": "0/files/assay_raw_ct",
               "is_artifact" : 1,
-              "gcs_uri_format": "{lead organization study id}/olink/chip_{chip barcode}/assay_raw_ct.xlsx",
+              "gcs_uri_format": "{protocol identifier}/olink/chip_{chip barcode}/assay_raw_ct.xlsx",
               "type_ref": "assays/components/local_file.json#properties/file_path"
             },
             "run date": {

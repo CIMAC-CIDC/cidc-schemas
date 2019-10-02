@@ -16,6 +16,7 @@ from cidc_schemas.json_validation import (
     _Validator,
     InDocRefNotFoundError,
 )
+from cidc_schemas.prism import PROTOCOL_ID_FIELD_NAME
 from .constants import SCHEMA_DIR, ROOT_DIR, TEST_SCHEMA_DIR
 
 
@@ -62,7 +63,22 @@ def test_trial_core():
     al_validator.check_schema(al_schema)
 
     # create some aliquots.
-    shipment = {"request": "DFCI"}
+    shipment = {
+        "account_number": "account_number",
+        "assay_priority": "1",
+        "assay_type": "Olink",
+        "box_number": 1,
+        "courier": "USPS",
+        "date_recieved": "date_recieved",
+        "date_shipped": "date_shipped",
+        "manifest_id": "manifest_id",
+        "quality_of_shipment": "Specimen shipment received in good condition",
+        "ship_from": "ship_from",
+        "ship_to": "ship_to",
+        "shipping_condition": "Ice_Pack",
+        "tracking_number": "tracking_number",
+        "receiving_party": "MSSM_CIMAC",
+    }
     aliquot1 = {
         "slide_number": "99",
         "sample_volume_units": "Other",
@@ -90,7 +106,7 @@ def test_trial_core():
         "cimac_id": "CM-TRIA-PART-12",
         "parent_sample_id": "ssida",
         "aliquots": [aliquot1],
-        "collection_event_name": "---",
+        "collection_event_name": "Baseline",
         "type_of_primary_container":  "Sodium heparin",
         "sample_location": "---",
         "type_of_sample": "Other",
@@ -102,7 +118,7 @@ def test_trial_core():
         "cimac_id": "CM-TRIA-PART-12",
         "parent_sample_id": "ssidb",
         "aliquots": [aliquot2],
-        "collection_event_name": "---",
+        "collection_event_name": "Baseline",
         "type_of_primary_container":  "Sodium heparin",
         "sample_location": "---",
         "type_of_sample": "Other",
@@ -115,8 +131,7 @@ def test_trial_core():
     participant = {
         "cimac_participant_id": "CM-TRIA-PART",
         "participant_id": "tpid_a",
-        "cohort_name": "---",
-        "arm_id": "---",
+        "cohort_name": "Arm_Z",
     }
     with pytest.raises(jsonschema.ValidationError):
         pt_validator.validate(participant)
@@ -127,7 +142,7 @@ def test_trial_core():
 
     # validate the positive version works.
     clinical_trial = {
-        "protocol_id": "trial1",
+        PROTOCOL_ID_FIELD_NAME: "trial1",
         "participants": [participant],
         "shipments": [shipment],
     }
@@ -170,6 +185,8 @@ def test_validate_in_doc_refs():
     assert True == v._ensure_in_doc_ref("something", "/objs/*/id", doc)
 
     assert True == v._ensure_in_doc_ref("1", "/objs/*/id", doc)
+
+    assert True == v._ensure_in_doc_ref("1", "/*/*/id", doc)
 
     assert False == v._ensure_in_doc_ref("something_else", "/objs/*/id", doc)
 

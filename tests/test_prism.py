@@ -19,7 +19,9 @@ from .constants import TEST_DATA_DIR
 
 from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
-    SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES, parse_npx
+    SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES, \
+    PROTOCOL_ID_FIELD_NAME, parse_npx
+
 from cidc_schemas.json_validation import load_and_validate_schema, InDocRefNotFoundError
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
@@ -31,13 +33,12 @@ from .test_assays import ARTIFACT_OBJ
 
 
 TEST_PRISM_TRIAL = {
-        "protocol_id": "test_prism_trial_id",
+        PROTOCOL_ID_FIELD_NAME: "test_prism_trial_id",
         "participants": [
             {
                 "cimac_participant_id": "CM-TEST-PAR1",
                 "participant_id": "test_trial_patient_1",
-                "cohort_name": "---",
-                "arm_id": "---",
+                "cohort_name": "Arm_Z",
                 "samples": [
                     {
                         "aliquots": [
@@ -53,11 +54,10 @@ TEST_PRISM_TRIAL = {
                         ],
                         "cimac_id": "CM-TEST-PAR1-11",
                         "parent_sample_id": "test_sample_1",
-                        "collection_event_name": "---",
+                        "collection_event_name": "Baseline",
                         "sample_location": "---",
                         "type_of_sample": "Other",
                         "type_of_primary_container": "Other",
-                        "genomic_source": "Tumor",
                     }
                 ],
             },
@@ -77,17 +77,15 @@ TEST_PRISM_TRIAL = {
                         ],
                         "cimac_id": "CM-TEST-PAR1-21",
                         "parent_sample_id": "test_sample_2",
-                        "collection_event_name": "---",
+                        "collection_event_name": "Baseline",
                         "sample_location": "---",
                         "type_of_sample": "Other",
                         "type_of_primary_container": "Other",
-                        "genomic_source": "Tumor",
                     }
                 ],
                 "cimac_participant_id": "CM-TEST-PAR2",
                 "participant_id": "test_trial_patient_2",
-                "cohort_name": "---",
-                "arm_id": "---"
+                "cohort_name": "Arm_Z"
             }
         ],
         "assays": {
@@ -151,17 +149,17 @@ TEST_PRISM_TRIAL = {
 
 # corresponding list of gs_urls.
 WES_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-11/wes/r1.fastq': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/r1.fastq': 
     "r1.1",
-    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-11/wes/r2.fastq': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/r2.fastq': 
     "r2.1",
-    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-11/wes/rgm.txt': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/rgm.txt': 
     "read_group_mapping_file.1",
-    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-21/wes/r1.fastq': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/r1.fastq': 
     "r1.2",
-    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-21/wes/r2.fastq': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/r2.fastq': 
     "r2.2",
-    TEST_PRISM_TRIAL["protocol_id"]+'/CM-TEST-PAR1-21/wes/rgm.txt': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/rgm.txt': 
     "read_group_mapping_file.2"
 }
 
@@ -192,11 +190,10 @@ def test_merge_core():
         "cimac_id": "CM-TRIA-PA12-34",
         "parent_sample_id": "blank",
         "aliquots": [aliquot],
-        "collection_event_name": "---",
+        "collection_event_name": "Baseline",
         "sample_location": "---",
         "type_of_sample": "Other",
         "type_of_primary_container": "Other",
-        "genomic_source": "Tumor",
     }
 
     # create the participant
@@ -204,13 +201,12 @@ def test_merge_core():
         "cimac_participant_id": "CM-TEST-PART",
         "participant_id": "blank",
         "samples": [sample],
-        "cohort_name": "---",
-        "arm_id": "---"
+        "cohort_name": "Arm_Z"
     }
 
     # create the trial
     ct1 = {
-        "protocol_id": "test",
+        PROTOCOL_ID_FIELD_NAME: "test",
         "participants": [participant]
     }
 
@@ -249,7 +245,7 @@ def test_merge_core():
 
 
 MINIMAL_TEST_TRIAL = {
-    "protocol_id": "minimal",
+    PROTOCOL_ID_FIELD_NAME: "minimal",
     "participants": [
         {
             "samples": [
@@ -265,8 +261,7 @@ MINIMAL_TEST_TRIAL = {
                             "aliquot_status": "Other"
                         }
                     ],
-                    "genomic_source": "Tumor",
-                    "collection_event_name": "---",
+                    "collection_event_name": "Baseline",
                     "sample_location": "---",
                     "type_of_sample": "Other",
                     "type_of_primary_container": "Other",
@@ -276,8 +271,7 @@ MINIMAL_TEST_TRIAL = {
             ],
             "cimac_participant_id": "CM-TEST-MIN1",
             "participant_id": "test_min_Patient_1",
-            "cohort_name": "---",
-            "arm_id": "---"
+            "cohort_name": "Arm_Z"
         }
     ]
 }
@@ -329,8 +323,8 @@ def test_prism(schema_path, xlsx_path):
     ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
 
     if hint == 'cytof':
-        assert "CYTOF_TEST1" == ct['protocol_id']
-        ct['protocol_id'] = 'test_prism_trial_id'
+        assert "CYTOF_TEST1" == ct[PROTOCOL_ID_FIELD_NAME]
+        ct[PROTOCOL_ID_FIELD_NAME] = 'test_prism_trial_id'
 
     if hint in SUPPORTED_ASSAYS:
         # olink is different - is will never have array of assay "runs" - only one
@@ -355,9 +349,9 @@ def test_prism(schema_path, xlsx_path):
     assert not errors 
 
     if hint in SUPPORTED_ASSAYS :
-        assert merged["protocol_id"] == "test_prism_trial_id"
+        assert merged[PROTOCOL_ID_FIELD_NAME] == "test_prism_trial_id"
     else:
-        assert TEST_PRISM_TRIAL["protocol_id"] == merged["protocol_id"]
+        assert TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] == merged[PROTOCOL_ID_FIELD_NAME]
 
 
 @pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
@@ -415,7 +409,7 @@ def test_filepath_gen(schema_path, xlsx_path):
 
         # 4 in total
         assert len(file_maps) == 6
-        assert 6 == sum([x.gs_key.startswith(TEST_PRISM_TRIAL["protocol_id"]) for x in file_maps])
+        assert 6 == sum([x.gs_key.startswith(TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]) for x in file_maps])
 
         # all that with
         # 1 trial id
@@ -499,11 +493,10 @@ def test_prismify_plasma():
     validator.validate(md_patch)
 
     assert file_maps == []
-    assert 1 == len(md_patch["participants"])
-    assert 1 == len(md_patch["participants"][0]["samples"])
+    assert 2 == len(md_patch["participants"])
+    assert 3 == len(md_patch["participants"][0]["samples"])
     assert md_patch["participants"][0]["samples"][0]["cimac_id"][:-3] == \
         md_patch["participants"][0]["cimac_participant_id"]
-    assert 1 == len(md_patch["participants"][0]["samples"])
 
     assert md_patch["participants"][0]["gender"]        # filled from 1 tab
     assert md_patch["participants"][0]["cohort_name"]   # filled from another
@@ -631,60 +624,62 @@ def test_merge_ct_meta():
     """
 
     # create two clinical trials
-    ct1 = copy.deepcopy(TEST_PRISM_TRIAL)
-    ct2 = copy.deepcopy(TEST_PRISM_TRIAL)
+    patch = copy.deepcopy(TEST_PRISM_TRIAL)
+    target = copy.deepcopy(TEST_PRISM_TRIAL)
 
     # first test the fact that base doc must be valid
-    del ct2['participants']
+    del target['participants']
     with pytest.raises(InvalidMergeTargetException):
-        merge_clinical_trial_metadata(ct1, ct2)
+        merge_clinical_trial_metadata(patch, target)
 
     with pytest.raises(InvalidMergeTargetException):
-        merge_clinical_trial_metadata(ct1, {})
+        merge_clinical_trial_metadata(patch, {})
 
     # next assert the merge is only happening on the same trial
-    ct1["protocol_id"] = "not_the_same"
-    ct2 = copy.deepcopy(TEST_PRISM_TRIAL)
+    patch[PROTOCOL_ID_FIELD_NAME] = "not_the_same"
+    target = copy.deepcopy(TEST_PRISM_TRIAL)
     with pytest.raises(RuntimeError):
-        merge_clinical_trial_metadata(ct1, ct2)
+        merge_clinical_trial_metadata(patch, target)
 
     # revert the data to same key trial id but
     # include data in 1 that is missing in the other
     # at the trial level and assert the merge
     # does not clobber any
-    ct1["protocol_id"] = ct2["protocol_id"] 
-    ct1['trial_name'] = 'name ABC'
-    ct2['nci_id'] = 'xyz1234'
+    patch[PROTOCOL_ID_FIELD_NAME] = target[PROTOCOL_ID_FIELD_NAME] 
+    patch['trial_name'] = 'name ABC'
+    target['nci_id'] = 'xyz1234'
 
-    ct_merge = merge_clinical_trial_metadata(ct1, ct2)
+    ct_merge = merge_clinical_trial_metadata(patch, target)
     assert ct_merge['trial_name'] == 'name ABC'
     assert ct_merge['nci_id'] == 'xyz1234'
 
     # assert the patch over-writes the original value
     # when value is present in both objects
-    # TODO add 'discard' mergeStrategy from protocol_id 
-    ct1['trial_name'] = 'name ABC'
-    ct2['trial_name'] = 'CBA eman'
+    # TODO add 'discard' mergeStrategy from PROTOCOL_ID_FIELD_NAME 
+    patch['trial_name'] = 'name ABC'
+    target['trial_name'] = 'CBA eman'
 
-    ct_merge = merge_clinical_trial_metadata(ct1, ct2)
+    ct_merge = merge_clinical_trial_metadata(patch, target)
     assert ct_merge['trial_name'] == 'name ABC'
 
     # now change the participant ids
     # this should cause the merge to have two
     # participants.
-    ct1['participants'][0]['cimac_participant_id'] = 'CM-TEST-DIF1'
+    patch['participants'][0]['cimac_participant_id'] = 'CM-TEST-DIF1'
+    for i, sample in enumerate(patch['participants'][0]['samples']):
+        sample['cimac_id'] = f'CM-TEST-DIF1-D{i}'
 
-    ct_merge = merge_clinical_trial_metadata(ct1, ct2)
+    ct_merge = merge_clinical_trial_metadata(patch, target)
     assert len(ct_merge['participants']) == 1+len(TEST_PRISM_TRIAL['participants'])
 
     # now lets have the same participant but adding multiple samples.
-    ct1["protocol_id"] = ct2["protocol_id"] 
-    ct1['participants'][0]['cimac_participant_id'] = \
-        ct2['participants'][0]['cimac_participant_id']
-    ct1['participants'][0]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N1'
-    ct1['participants'][1]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N2'
+    patch[PROTOCOL_ID_FIELD_NAME] = target[PROTOCOL_ID_FIELD_NAME] 
+    patch['participants'][0]['cimac_participant_id'] = \
+        target['participants'][0]['cimac_participant_id']
+    patch['participants'][0]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N1'
+    patch['participants'][1]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N2'
  
-    ct_merge = merge_clinical_trial_metadata(ct1, ct2)
+    ct_merge = merge_clinical_trial_metadata(patch, target)
     assert len(ct_merge['participants']) == len(TEST_PRISM_TRIAL['participants'])
     assert sum(len(p['samples']) for p in ct_merge['participants']) == 2+sum(len(p['samples']) for p in TEST_PRISM_TRIAL['participants'])
 
@@ -712,16 +707,16 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
             prism_patch['participants'][0]['cimac_participant_id'].split("-")
 
         if hint == 'pbmc':
-            assert (prism_patch['shipments'][0]['request']) == "R123"
+            assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_pbmc"
 
             assert len(prism_patch['participants']) == 2
             assert len(prism_patch['participants'][0]['samples']) == 3
             assert len(prism_patch['participants'][1]['samples']) == 3
 
         elif hint == 'plasma':
-            assert (prism_patch['shipments'][0]['request']) == "value"
-            assert len(prism_patch['participants']) == 1
-            assert len(prism_patch['participants'][0]['samples']) == 1
+            assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_plasma"
+            assert len(prism_patch['participants']) == 2
+            assert len(prism_patch['participants'][0]['samples']) == 3
             assert 'aliquots' not in prism_patch['participants'][0]['samples'][0]
 
         else: 
@@ -748,11 +743,11 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     for f in file_maps:
         assert f'{hint}/' in f.gs_key, f"No {hint} hint found"
 
-    # And we need set protocol_id to be the same for testing
+    # And we need set PROTOCOL_ID_FIELD_NAME to be the same for testing
     original_ct = copy.deepcopy(TEST_PRISM_TRIAL) 
 
     # so we can merge
-    original_ct['protocol_id'] = prism_patch['protocol_id']
+    original_ct[PROTOCOL_ID_FIELD_NAME] = prism_patch[PROTOCOL_ID_FIELD_NAME]
     
     # "prismify" provides only a patch so we need to merge it into a "full" ct
     full_after_prism = merge_clinical_trial_metadata(prism_patch, original_ct)

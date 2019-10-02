@@ -12,17 +12,13 @@
                 "prism_preamble_object_pointer": "/shipments/0",
                 "prism_data_object_pointer": "/shipped",
                 "preamble_rows": {
-                    "protocol id": {
-                        "merge_pointer": "2/protocol_id",
-                        "type_ref": "clinical_trial.json#properties/protocol_id"
-                    },
                     "manifest id": {
                         "merge_pointer": "/manifest_id",
                         "type_ref": "shipping_core.json#properties/manifest_id"
                     },
-                    "request": {
-                        "merge_pointer": "/request",
-                        "type_ref": "shipping_core.json#properties/request"
+                    "protocol identifier": {
+                        "merge_pointer": "2/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
                     },
                     "assay priority": {
                         "merge_pointer": "/assay_priority",
@@ -32,17 +28,9 @@
                         "merge_pointer": "/assay_type",
                         "type_ref": "shipping_core.json#properties/assay_type"
                     },
-                    "batch number": {
-                        "merge_pointer": "/batch_number",
-                        "type_ref": "shipping_core.json#properties/batch_number"
-                    },
-                    "box number": {
-                        "merge_pointer": "/box_number",
-                        "type_ref": "shipping_core.json#properties/box_number"
-                    },
-                    "assay run number": {
-                        "merge_pointer": "/assay_run_number",
-                        "type_ref": "shipping_core.json#properties/assay_run_number"
+                    "receiving party": {
+                        "merge_pointer": "/receiving_party",
+                        "type_ref": "shipping_core.json#properties/receiving_party"
                     },
                     "courier": {
                         "merge_pointer": "/courier",
@@ -72,18 +60,6 @@
                         "merge_pointer": "/quality_of_shipment",
                         "type_ref": "shipping_core.json#properties/quality_of_shipment"
                     },
-                    "num of samples shipped": {
-                        "merge_pointer": "/num_of_samples_shipped",
-                        "type_ref": "shipping_core.json#properties/num_of_samples_shipped"
-                    },
-                    "num of samples good": {
-                        "merge_pointer": "/num_of_samples_good",
-                        "type_ref": "shipping_core.json#properties/num_of_samples_good"
-                    },
-                    "num of path report": {
-                        "merge_pointer": "/num_of_path_report",
-                        "type_ref": "shipping_core.json#properties/num_of_path_report"
-                    },
                     "ship from": {
                         "merge_pointer": "/ship_from",
                         "type_ref": "shipping_core.json#properties/ship_from"
@@ -101,7 +77,15 @@
                 "prism_data_object_pointer": "/participants/0/samples/0",
                 "data_columns": {
                     "Path Concordance Verification": {
-                        "cimac id": {
+                        "entry (#)": {
+                            "merge_pointer": "2/essential_patient_entry_number",
+                            "type_ref": "participant.json#properties/essential_patient_entry_number"
+                        },
+                        "participant ID": {
+                            "merge_pointer": "2/participant_id",
+                            "type_ref": "participant.json#properties/participant_id"
+                        },
+                        "CIMAC ID": {
                             "merge_pointer": "/cimac_id",
                             "type_ref": "sample.json#properties/cimac_id",
                             "process_as": [
@@ -110,6 +94,14 @@
                                     "parse_through": "lambda x: '-'.join(x.split('-')[:3])"
                                 }
                             ]
+                        },
+                        "surgical pathology report id": {
+                            "merge_pointer": "/surgical_pathology_report_id",
+                            "type_ref": "sample.json#properties/surgical_pathology_report_id"
+                        },
+                        "clinical report id": {
+                            "merge_pointer": "/clinical_report_id",
+                            "type_ref": "sample.json#properties/clinical_report_id"
                         },
                         "collection event name": {
                             "merge_pointer": "/collection_event_name",
@@ -160,28 +152,32 @@
                 "prism_preamble_object_pointer": "#",
                 "prism_data_object_pointer": "/participants/0/samples/0",
                 "data_columns": {
-                    "Filled by Biorepository": {
-                        "participant id": {
-                            "merge_pointer": "2/participant_id",
-                            "type_ref": "participant.json#properties/participant_id"
+                    "IDs": {
+                        "entry (#)": {
+                            "merge_pointer": "/shipping_entry_number",
+                            "type_ref": "sample.json#properties/shipping_entry_number"
+                        },
+                        "collection event name": {
+                            "merge_pointer": "/collection_event_name",
+                            "type_ref": "sample.json#properties/collection_event_name"
                         },
                         "cohort name": {
                             "merge_pointer": "2/cohort_name",
                             "type_ref": "participant.json#properties/cohort_name"
                         },
-                        "arm id": {
-                            "merge_pointer": "2/arm_id",
-                            "type_ref": "participant.json#properties/arm_id"
+                        "participant ID": {
+                            "merge_pointer": "2/participant_id",
+                            "type_ref": "participant.json#properties/participant_id"
                         },
-                        "parent sample id": {
-                            "merge_pointer": "0/parent_sample_id",
+                        "parent sample ID": {
+                            "merge_pointer": "/parent_sample_id",
                             "type_ref": "sample.json#properties/parent_sample_id"
                         },
-                        "processed sample id": {
+                        "processed sample ID": {
                             "merge_pointer": "/processed_sample_id",
                             "type_ref": "sample.json#properties/processed_sample_id"
                         },
-                        "cimac id": {
+                        "CIMAC ID": {
                             "merge_pointer": "/cimac_id",
                             "type_ref": "sample.json#properties/cimac_id",
                             "process_as": [
@@ -190,34 +186,12 @@
                                     "parse_through": "lambda x: '-'.join(x.split('-')[:3])"
                                 }
                             ]
-                        },
-                        "collection event name": {
-                            "merge_pointer": "0/collection_event_name",
-                            "type_ref": "sample.json#properties/collection_event_name"
-                        },
-                        "genomic source": {
-                            "merge_pointer": "0/genomic_source",
-                            "type_ref": "sample.json#properties/genomic_source"
-                        },
-                        "blood collection date": {
-                            "merge_pointer": "0/blood_collection_date",
-                            "type_ref": "sample.json#properties/blood_collection_date"
-                        },
-                        "blood collection time": {
-                            "merge_pointer": "0/blood_collection_time",
-                            "type_ref": "sample.json#properties/blood_collection_time"
-                        },
-                        "blood processing date": {
-                            "merge_pointer": "0/blood_processing_date",
-                            "type_ref": "sample.json#properties/blood_processing_date"
-                        },
-                        "blood processing time": {
-                            "merge_pointer": "0/blood_processing_time",
-                            "type_ref": "sample.json#properties/blood_processing_time"
-                        },
-                        "sample processing compliance": {
-                            "merge_pointer": "/sample_processing_compliance",
-                            "type_ref": "sample.json#properties/sample_processing_compliance"
+                        }
+                    },
+                    "Filled by Biorepository": {
+                        "box number": {
+                            "merge_pointer": "/box_number",
+                            "type_ref": "sample.json#properties/box_number"
                         },
                         "sample location": {
                             "merge_pointer": "0/sample_location",
@@ -235,17 +209,25 @@
                             "merge_pointer": "0/type_of_primary_container",
                             "type_ref": "sample.json#properties/type_of_primary_container"
                         },
-                        "quantity": {
-                            "merge_pointer": "/quantity",
-                            "type_ref": "aliquot.json#properties/quantity"
+                        "processed sample type": {
+                            "merge_pointer": "/processed_sample_type",
+                            "type_ref": "sample.json#properties/processed_sample_type"
                         },
-                        "sample volume": {
-                            "merge_pointer": "/sample_volume",
-                            "type_ref": "sample.json#properties/sample_volume"
+                        "processed sample volume": {
+                            "merge_pointer": "/processed_sample_volume",
+                            "type_ref": "sample.json#properties/processed_sample_volume"
                         },
-                        "sample volume units": {
-                            "merge_pointer": "/sample_volume_units",
-                            "type_ref": "sample.json#properties/sample_volume_units"
+                        "processed sample volume units": {
+                            "merge_pointer": "/processed_sample_volume_units",
+                            "type_ref": "sample.json#properties/processed_sample_volume_units"
+                        },
+                        "processed sample concentration": {
+                            "merge_pointer": "/processed_sample_concentration",
+                            "type_ref": "sample.json#properties/processed_sample_concentration"
+                        },
+                        "processed sample concentration units": {
+                            "merge_pointer": "/processed_sample_concentration_units",
+                            "type_ref": "sample.json#properties/processed_sample_concentration_units"
                         }
                     },
                     "Filled by CIMAC Lab": {
@@ -269,6 +251,14 @@
                             "merge_pointer": "/material_remaining",
                             "type_ref": "sample.json#properties/material_remaining"
                         },
+                        "material storage condition": {
+                            "merge_pointer": "/material_storage_condition",
+                            "type_ref": "sample.json#properties/material_storage_condition"
+                        },
+                        "quality of sample": {
+                            "merge_pointer": "/quality_of_sample",
+                            "type_ref": "sample.json#properties/quality_of_sample"
+                        },
                         "sample replacement": {
                             "merge_pointer": "/sample_replacement",
                             "type_ref": "sample.json#properties/sample_replacement"
@@ -279,7 +269,8 @@
                         },
                         "comments": {
                             "merge_pointer": "/comments",
-                            "type_ref": "sample.json#properties/comments"
+                            "type_ref": "sample.json#properties/comments",
+                            "allow_empty": true
                         }
                     }
                 }

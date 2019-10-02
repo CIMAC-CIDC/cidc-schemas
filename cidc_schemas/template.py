@@ -227,6 +227,7 @@ class Template:
             for preamble_key, preamble_def in ws_schema.get('preamble_rows', {}).items():
 
                 # populate lookup
+                # TODO .lower() ?
                 key_lu[preamble_key] = _add_coerce(preamble_def)
                 # we expect preamble_def from `_template.json` have 2 fields
                 # (as for template.schema) - "merge_pointer" and "type_ref"
@@ -236,6 +237,7 @@ class Template:
                 for column_key, column_def in section_def.items():
 
                     # populate lookup
+                    # TODO .lower() ?
                     key_lu[column_key] = _add_coerce(column_def)
                     # we expect column_def from `_template.json` have 2 fields
                     # (as for template.schema) - "merge_pointer" and "type_ref"

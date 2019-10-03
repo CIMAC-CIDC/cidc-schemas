@@ -695,8 +695,8 @@ def _get_uuid_info(ct: dict, artifact_uuid: str) -> dict:
 def merge_artifact(
     ct: dict,
     artifact_uuid: str,
-    assay_type: str,
     object_url: str,
+    assay_type: str,
     file_size_bytes: int,
     uploaded_timestamp: str,
     md5_hash: str

@@ -21,6 +21,7 @@ from .util import get_path, get_source
 
 PROTOCOL_ID_FIELD_NAME = "protocol_identifier"
 
+
 def _set_val(
         pointer: str, 
         val: object, 
@@ -760,7 +761,6 @@ def merge_artifact_extra_metadata(
     extract_metadata = _EXTRA_METADATA_PARSERS[assay_hint]
 
     artifact = extract_metadata(extra_metadata_file)
-
     return _update_artifact(ct, artifact, artifact_uuid)
 
 
@@ -833,15 +833,14 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
 
 def parse_npx(xlsx: BinaryIO) -> dict:
     """
-    Parses the given NPX file from olink to extract a list of aliquot IDs.
+    Parses the given NPX file from olink to extract a list of sample IDs.
     If the file is not valid NPX but still xlsx the function will
     return a dict containing an empty list. The function will pass along any IO errors.
 
     Args:
         xlsx: an opened NPX file
-
     Returns:
-        arg1: a dict of containing list of aliquot IDs and number of aliquots
+        arg1: a dict of containing list of sample IDs and number of samples
     """
 
     # load the file
@@ -890,5 +889,3 @@ def parse_npx(xlsx: BinaryIO) -> dict:
 
 
 _EXTRA_METADATA_PARSERS = {"olink": parse_npx}
-
-ASSAYS_WITH_EXTRA_METADATA = _EXTRA_METADATA_PARSERS.keys()

@@ -337,7 +337,7 @@ def test_prism(schema_path, xlsx_path):
     else:
         assert False, f"Unknown template {hint}"
 
-    
+
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial

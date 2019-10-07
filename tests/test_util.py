@@ -94,13 +94,3 @@ def test_get_source_with_strings_with_quotes():
     assert "this", {'and " ': 'that'} == util.get_source(
         hier, "root['p'][0]['a'][0]['i want ' ']")
     assert "that", {} == util.get_source(hier, "root['p'][0]['and \" ']")
-
-
-def test_get_source_extra_metadata_filter():
-    """Ensure keys are omitted from source extra_metadata based on filters"""
-    hier = {
-        "a": {"1": "i", "__2": "ii", "3": "iii"},
-        "__b": 1
-    }
-
-    assert "i", {"3": "iii"} == util.get_source(hier, "root['a']['1']")

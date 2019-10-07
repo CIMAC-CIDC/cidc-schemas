@@ -69,12 +69,7 @@ def split_python_style_path(path: str) -> list:
         yield groups[2] or int(groups[1])
 
 
-def get_source(
-    ct: dict,
-    key: str,
-    skip_last=None,
-    key_filter=lambda k: not k.startswith('__')
-) -> (JSON, JSON):
+def get_source(ct: dict, key: str, skip_last=None) -> (JSON, JSON):
     """
     extract the object in the dictionary specified by
     the supplied key (or one of its parents.)
@@ -83,8 +78,6 @@ def get_source(
         ct: clinical_trial object to be searched
         key: the identifier we are looking for in the dictionary,
         skip_last: how many levels at the end of key path we want to skip.
-        key_filter: a function that returns true if a key should be included in
-            extra metadata.
     Returns:
         arg1: the value present in `ct` at the `key` path
         arg2: extra metadata collected while descending down `key` path
@@ -104,7 +97,7 @@ def get_source(
             # We collect every primitive value present on `cur_obj`
             # with keys that aren't the `token` key we are looking for
             for k, v in cur_obj.items():
-                if isinstance(v, (int, float, str)) and k != token and key_filter(k):
+                if isinstance(v, (int, float, str)) and k != token:
                     extra_metadata[k] = v
         cur_obj = cur_obj[token]
 

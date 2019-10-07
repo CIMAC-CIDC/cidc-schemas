@@ -94,3 +94,25 @@ def test_get_source_with_strings_with_quotes():
     assert "this", {'and " ': 'that'} == util.get_source(
         hier, "root['p'][0]['a'][0]['i want ' ']")
     assert "that", {} == util.get_source(hier, "root['p'][0]['and \" ']")
+
+
+def test_get_source_extra_metadata():
+    """
+    Check special cases handled by the extra_metadata functionality in get_source
+    """
+    # Duplicate keys across the hierarchy
+    hier = {
+        "a": 'foo',
+        "b": [{"a": 1, "b": 2}]
+    }
+    assert util.get_source(hier, "root['b'][0]['b']") == (
+        2, {'a': 'foo', 'b.a': 1})
+
+    # Non-primitive values at the "artifact" level
+    hier = {
+        "a": 'foo',
+        "b": [{"a": [1, 2, 3], "b": 2, "c": {"foo": "bar"}}]
+    }
+    assert util.get_source(hier, "root['b'][0]['b']") == (
+        2, {'a': 'foo', 'b.a': [1, 2, 3], 'b.c': {"foo": "bar"}}
+    )

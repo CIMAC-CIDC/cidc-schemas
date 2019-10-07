@@ -83,23 +83,35 @@ def get_source(ct: dict, key: str, skip_last=None) -> (JSON, JSON):
         arg2: extra metadata collected while descending down `key` path
     """
 
-    tokens = split_python_style_path(key)
+    tokens = list(split_python_style_path(key))
 
     if skip_last:
-        tokens = list(tokens)[0:-1*skip_last]
+        tokens = tokens[0:-1*skip_last]
 
     extra_metadata = {}
 
     # keep getting based on the key.
     cur_obj = ct
+    namespace = ""
     for token in tokens:
         if isinstance(cur_obj, dict):
             # We collect every primitive value present on `cur_obj`
-            # with keys that aren't the `token` key we are looking for
+            # with keys that aren't the `token` key we are looking for.
+            # If we are on the last token, we're at the artifact-specific
+            # metadata level, so we collect all values, not just primitves.
+            is_artifact_specific = token == tokens[-1]
             for k, v in cur_obj.items():
-                if isinstance(v, (int, float, str)) and k != token:
-                    extra_metadata[k] = v
+                if k != token:
+                    if is_artifact_specific or isinstance(v, (int, float, str)):
+                        prop_name = f"{namespace}.{k}" if namespace else k
+                        extra_metadata[prop_name] = v
         cur_obj = cur_obj[token]
+
+        # Only include string properties in namespace (no array indices)
+        try:
+            int(token)
+        except ValueError:
+            namespace = f"{namespace}.{token}" if namespace else token
 
     return cur_obj, extra_metadata
 

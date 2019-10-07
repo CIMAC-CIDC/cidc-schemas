@@ -80,8 +80,10 @@ def test_get_source():
     assert ('3', {"p.a": [{"id": 1}, {"id": 2}]}
             ) == util.get_source(hier, "root['p'][0]['id']")
 
-    assert util.get_source(
-        hier, "root['p'][0]['a'][1]['id']", skip_last=3) == util.get_source(hier, "root['p'][0]")
+    obj, extra_md = util.get_source(
+        hier, "root['p'][0]['a'][1]['id']", skip_last=3)
+    assert obj == util.get_source(hier, "root['p'][0]")[0]
+    assert extra_md == {"p.id": "3"}
 
 
 def test_get_source_with_strings_with_quotes():
@@ -120,3 +122,8 @@ def test_get_source_extra_metadata():
     assert util.get_source(hier, "root['b'][0]['b']") == (
         2, {'a': 'foo', 'b.a': [1, 2, 3], 'b.c': {"foo": "bar"}}
     )
+
+    # Handle skip_last
+    assert util.get_source(hier, "root['b'][0]['a']", skip_last=1)[1] == {
+        'a': 'foo', 'b.b': 2, 'b.c': {"foo": "bar"}
+    }

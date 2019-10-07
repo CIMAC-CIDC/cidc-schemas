@@ -86,32 +86,41 @@ def get_source(ct: dict, key: str, skip_last=None) -> (JSON, JSON):
     tokens = list(split_python_style_path(key))
 
     if skip_last:
-        tokens = tokens[0:-1*skip_last]
+        last_idx = -1*skip_last
+        last_token = tokens[last_idx]
+        tokens = tokens[0:last_idx]
+    else:
+        last_token = tokens[-1]
 
     extra_metadata = {}
-
-    # keep getting based on the key.
-    cur_obj = ct
     namespace = ""
+
+    def _update_extra_metadata(token, level):
+        nonlocal namespace
+        if not isinstance(level, dict):
+            return
+        # We collect every primitive value present on `level`
+        # with keys that aren't the `token` key we are looking for.
+        # If we are on the last token, we're at the artifact-specific
+        # metadata level, so we collect all values, not just primitives.
+        is_artifact_specific = token == last_token
+        for k, v in level.items():
+            if k != token:
+                if is_artifact_specific or isinstance(v, (int, float, str)):
+                    prop_name = f"{namespace}.{k}" if namespace else k
+                    extra_metadata[prop_name] = v
+        # Update the namespace
+        namespace = f"{namespace}.{token}" if namespace else token
+
+    # Iteratively follow the key path down into the dictionary
+    cur_obj = ct
     for token in tokens:
-        if isinstance(cur_obj, dict):
-            # We collect every primitive value present on `cur_obj`
-            # with keys that aren't the `token` key we are looking for.
-            # If we are on the last token, we're at the artifact-specific
-            # metadata level, so we collect all values, not just primitves.
-            is_artifact_specific = token == tokens[-1]
-            for k, v in cur_obj.items():
-                if k != token:
-                    if is_artifact_specific or isinstance(v, (int, float, str)):
-                        prop_name = f"{namespace}.{k}" if namespace else k
-                        extra_metadata[prop_name] = v
+        _update_extra_metadata(token, cur_obj)
         cur_obj = cur_obj[token]
 
-        # Only include string properties in namespace (no array indices)
-        try:
-            int(token)
-        except ValueError:
-            namespace = f"{namespace}.{token}" if namespace else token
+    # Extract extra_metadata from the last level if it was skipped
+    if skip_last:
+        _update_extra_metadata(last_token, cur_obj)
 
     return cur_obj, extra_metadata
 

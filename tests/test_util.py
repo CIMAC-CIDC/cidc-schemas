@@ -5,10 +5,13 @@ import cidc_schemas.util as util
 
 from .constants import TEST_DATA_DIR
 
+
 def test_split_python_style_path():
 
-    assert ['p', 0, 'a', 0, 'id'] == list(util.split_python_style_path("root['p'][0]['a'][0]['id']"))
-    assert ['p', 0, 1, 2, 'id'] == list(util.split_python_style_path("root['p'][0][1][2]['id']"))
+    assert ['p', 0, 'a', 0, 'id'] == list(
+        util.split_python_style_path("root['p'][0]['a'][0]['id']"))
+    assert ['p', 0, 1, 2, 'id'] == list(
+        util.split_python_style_path("root['p'][0][1][2]['id']"))
 
 
 def test_get_all_paths():
@@ -18,12 +21,12 @@ def test_get_all_paths():
                 "id": 1,
                 "i want": "this"
             },
-            {
+                {
                 "id": 2,
                 "and": "this"
             }],
-            "id" : "3",
-            "and" : "this"
+            "id": "3",
+            "and": "this"
         }]
     }
 
@@ -32,14 +35,14 @@ def test_get_all_paths():
     assert ["root['p'][0]['id']"] == list(util.get_all_paths(hier, "3"))
     with pytest.raises(KeyError):
         assert (util.get_all_paths(hier, 3))
-    
+
     assert ["root[0]['id']"] == list(util.get_all_paths(hier['p'], "3"))
 
     assert [
         "root['p'][0]['a'][0]['i want']",
         "root['p'][0]['a'][1]['and']",
         "root['p'][0]['and']"
-        ] == sorted(list(util.get_all_paths(hier, "this")))
+    ] == sorted(list(util.get_all_paths(hier, "this")))
 
 
 def test_get_path_with_strings_with_quotes():
@@ -48,13 +51,12 @@ def test_get_path_with_strings_with_quotes():
             "a": [{
                 "i want ' ": "this"
             }],
-            "and \" " : "that"
+            "and \" ": "that"
         }]
     }
 
     assert "root['p'][0]['a'][0]['i want ' ']" == util.get_path(hier, "this")
     assert "root['p'][0]['and \" ']" == util.get_path(hier, "that")
-
 
 
 def test_get_source():
@@ -64,19 +66,19 @@ def test_get_source():
             "a": [{
                 "id": 1
             },
-            {
+                {
                 "id": 2
             }],
-            "id" : "3"
+            "id": "3"
         }]
     }
 
     assert 1, {"id": 3} == util.get_source(hier, "root['p'][0]['a'][0]['id']")
     assert 2, {"id": 3} == util.get_source(hier, "root['p'][0]['a'][1]['id']")
     assert '3', {} == util.get_source(hier, "root['p'][0]['id']")
-    
-    assert util.get_source(hier, "root['p'][0]['a'][1]['id']", skip_last=3) == util.get_source(hier, "root['p'][0]")
 
+    assert util.get_source(
+        hier, "root['p'][0]['a'][1]['id']", skip_last=3) == util.get_source(hier, "root['p'][0]")
 
 
 def test_get_source_with_strings_with_quotes():
@@ -85,11 +87,20 @@ def test_get_source_with_strings_with_quotes():
             "a": [{
                 "i want ' ": "this"
             }],
-            "and \" " : "that"
+            "and \" ": "that"
         }]
     }
 
-    assert  "this", {'and " ': 'that'} == util.get_source(hier, "root['p'][0]['a'][0]['i want ' ']")
-    assert  "that", {} == util.get_source(hier, "root['p'][0]['and \" ']")
+    assert "this", {'and " ': 'that'} == util.get_source(
+        hier, "root['p'][0]['a'][0]['i want ' ']")
+    assert "that", {} == util.get_source(hier, "root['p'][0]['and \" ']")
 
 
+def test_get_source_extra_metadata_filter():
+    """Ensure keys are omitted from source extra_metadata based on filters"""
+    hier = {
+        "a": {"1": "i", "__2": "ii", "3": "iii"},
+        "__b": 1
+    }
+
+    assert "i", {"3": "iii"} == util.get_source(hier, "root['a']['1']")

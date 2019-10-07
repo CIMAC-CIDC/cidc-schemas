@@ -73,9 +73,12 @@ def test_get_source():
         }]
     }
 
-    assert 1, {"id": 3} == util.get_source(hier, "root['p'][0]['a'][0]['id']")
-    assert 2, {"id": 3} == util.get_source(hier, "root['p'][0]['a'][1]['id']")
-    assert '3', {} == util.get_source(hier, "root['p'][0]['id']")
+    assert (1, {"p.id": "3"}) == util.get_source(
+        hier, "root['p'][0]['a'][0]['id']")
+    assert (2, {"p.id": "3"}) == util.get_source(
+        hier, "root['p'][0]['a'][1]['id']")
+    assert ('3', {"p.a": [{"id": 1}, {"id": 2}]}
+            ) == util.get_source(hier, "root['p'][0]['id']")
 
     assert util.get_source(
         hier, "root['p'][0]['a'][1]['id']", skip_last=3) == util.get_source(hier, "root['p'][0]")
@@ -91,9 +94,10 @@ def test_get_source_with_strings_with_quotes():
         }]
     }
 
-    assert "this", {'and " ': 'that'} == util.get_source(
+    assert ("this", {'p.and " ': 'that'}) == util.get_source(
         hier, "root['p'][0]['a'][0]['i want ' ']")
-    assert "that", {} == util.get_source(hier, "root['p'][0]['and \" ']")
+    assert ("that", {"p.a": [{"i want ' ": "this"}]}) == util.get_source(
+        hier, "root['p'][0]['and \" ']")
 
 
 def test_get_source_extra_metadata():
@@ -108,7 +112,7 @@ def test_get_source_extra_metadata():
     assert util.get_source(hier, "root['b'][0]['b']") == (
         2, {'a': 'foo', 'b.a': 1})
 
-    # Non-primitive values at the "artifact" level
+    # Collect non-primitive values at the lowest level
     hier = {
         "a": 'foo',
         "b": [{"a": [1, 2, 3], "b": 2, "c": {"foo": "bar"}}]

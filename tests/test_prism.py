@@ -583,7 +583,7 @@ def test_merge_artifact_wes_only():
     for url, uuid in WES_TEMPLATE_EXAMPLE_GS_URLS.items():
 
         # attempt to merge
-        ct, artifact = merge_artifact(
+        ct, artifact, patch_metadata = merge_artifact(
                 ct,
                 assay_type="wes",
                 artifact_uuid=uuid,
@@ -762,7 +762,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     for i, fmap_entry in enumerate(file_maps):
 
         # attempt to merge
-        patch_copy_4_artifacts, artifact = merge_artifact(
+        patch_copy_4_artifacts, artifact, patch_metadata = merge_artifact(
                 patch_copy_4_artifacts,
                 artifact_uuid=fmap_entry.upload_placeholder,
                 object_url=fmap_entry.gs_key,

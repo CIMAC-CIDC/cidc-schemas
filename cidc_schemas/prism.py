@@ -681,7 +681,7 @@ def _set_data_format(ct: dict, artifact: dict):
     # data format was not set!
 
 
-def _get_uuid_info(ct: dict, artifact_uuid: str) -> dict:
+def _get_uuid_info(ct: dict, artifact_uuid: str) -> (dict, dict):
 
     # Using uuids to find path in CT where corresponding artifact is located. Uuids are unique.
     uuid_field_path = get_path(ct, artifact_uuid)
@@ -701,7 +701,7 @@ def merge_artifact(
     file_size_bytes: int,
     uploaded_timestamp: str,
     md5_hash: str
-) -> (dict, dict):
+) -> (dict, dict, dict):
     """
     create and merge an artifact into the metadata blob
     for a clinical trial. The merging process is automatically
@@ -714,7 +714,10 @@ def merge_artifact(
         uploaded_timestamp: time stamp associated with this object
         md5_hash: hash of the uploaded object, usually provided by
                     object storage
-
+    Returns:
+        ct: updated clinical trial object
+        existing_patch: updated patch
+        patch_metadata: relevant metadata collected while updating artifact
     """ 
 
     # urls are created like this in _process_property:
@@ -742,7 +745,7 @@ def merge_artifact_extra_metadata(
         artifact_uuid: str,
         assay_hint: str,
         extra_metadata_file: BinaryIO
-) -> (dict, dict):
+) -> (dict, dict, dict):
     """
     Merges parsed extra metadata returned by extra_metadata_parsing to
     corresponding artifact objects within the patch.
@@ -753,7 +756,9 @@ def merge_artifact_extra_metadata(
         assay_hint: assay type
         extra_metadata_file: extra metadata file in BinaryIO
     Returns:
-        existing_patch: patch after merging with with extra metadata
+        ct: updated clinical trial object
+        existing_patch: updated patch
+        patch_metadata: relevant metadata collected while updating artifact
     """
 
     if assay_hint not in _EXTRA_METADATA_PARSERS:
@@ -764,7 +769,7 @@ def merge_artifact_extra_metadata(
     return _update_artifact(ct, artifact, artifact_uuid)
 
 
-def _update_artifact(ct: dict, artifact: dict, artifact_uuid: str):
+def _update_artifact(ct: dict, artifact: dict, artifact_uuid: str) -> (dict, dict, dict):
 
     """ Updates the artifact with uuid `artifact_uuid` in `ct`,
     and return the updated clinical trial and artifact objects
@@ -776,9 +781,10 @@ def _update_artifact(ct: dict, artifact: dict, artifact_uuid: str):
     Returns:
         ct: updated clinical trial object
         existing_patch: updated patch
+        patch_metadata: relevant metadata collected while updating artifact
     """
 
-    existing_patch = _get_uuid_info(ct, artifact_uuid)
+    existing_patch, patch_metadata = _get_uuid_info(ct, artifact_uuid)
 
     # TODO this might be better with merger:
     # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")
@@ -788,7 +794,7 @@ def _update_artifact(ct: dict, artifact: dict, artifact_uuid: str):
     _set_data_format(ct, existing_patch)
 
     # return the artifact that was merged and the new object
-    return ct, existing_patch
+    return ct, existing_patch, patch_metadata
 
 
 def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:

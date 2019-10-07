@@ -71,9 +71,9 @@ def test_get_source():
         }]
     }
 
-    assert 1 == util.get_source(hier, "root['p'][0]['a'][0]['id']")
-    assert 2 == util.get_source(hier, "root['p'][0]['a'][1]['id']")
-    assert '3' == util.get_source(hier, "root['p'][0]['id']")
+    assert 1, {"id": 3} == util.get_source(hier, "root['p'][0]['a'][0]['id']")
+    assert 2, {"id": 3} == util.get_source(hier, "root['p'][0]['a'][1]['id']")
+    assert '3', {} == util.get_source(hier, "root['p'][0]['id']")
     
     assert util.get_source(hier, "root['p'][0]['a'][1]['id']", skip_last=3) == util.get_source(hier, "root['p'][0]")
 
@@ -89,7 +89,7 @@ def test_get_source_with_strings_with_quotes():
         }]
     }
 
-    assert  "this" == util.get_source(hier, "root['p'][0]['a'][0]['i want ' ']")
-    assert  "that" == util.get_source(hier, "root['p'][0]['and \" ']")
+    assert  "this", {'and " ': 'that'} == util.get_source(hier, "root['p'][0]['a'][0]['i want ' ']")
+    assert  "that", {} == util.get_source(hier, "root['p'][0]['and \" ']")
 
 

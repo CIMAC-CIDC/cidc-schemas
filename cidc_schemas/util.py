@@ -6,6 +6,9 @@ from typing import Union, BinaryIO, List
 
 from deepdiff import grep
 
+from cidc_schemas.json_validation import JSON
+
+
 def get_all_paths(ct: dict, key: str, dont_throw=False) -> List[str]:
     """
     find all paths to the given key in the dictionary
@@ -15,7 +18,7 @@ def get_all_paths(ct: dict, key: str, dont_throw=False) -> List[str]:
         key: the identifier we are looking for in the dictionary
 
     Throws:
-        KeyError if *key* is not found within *ct*  
+        KeyError if *key* is not found within *ct*
 
     Returns:
         arg1: string describing the location of the key
@@ -66,34 +69,46 @@ def split_python_style_path(path: str) -> list:
         yield groups[2] or int(groups[1])
 
 
-
-def get_source(ct: dict, key: str, skip_last=None) -> dict:
+def get_source(
+    ct: dict,
+    key: str,
+    skip_last=None,
+    key_filter=lambda k: not k.startswith('__')
+) -> (JSON, JSON):
     """
-    extract the object in the dicitionary specified by
+    extract the object in the dictionary specified by
     the supplied key (or one of its parents.)
 
     Args:
         ct: clinical_trial object to be searched
         key: the identifier we are looking for in the dictionary,
         skip_last: how many levels at the end of key path we want to skip.
-
+        key_filter: a function that returns true if a key should be included in
+            extra metadata.
     Returns:
-        arg1: string describing the location of the key
+        arg1: the value present in `ct` at the `key` path
+        arg2: extra metadata collected while descending down `key` path
     """
 
     tokens = split_python_style_path(key)
 
     if skip_last:
         tokens = list(tokens)[0:-1*skip_last]
-    
+
+    extra_metadata = {}
+
     # keep getting based on the key.
     cur_obj = ct
     for token in tokens:
+        if isinstance(cur_obj, dict):
+            # We collect every primitive value present on `cur_obj`
+            # with keys that aren't the `token` key we are looking for
+            for k, v in cur_obj.items():
+                if isinstance(v, (int, float, str)) and k != token and key_filter(k):
+                    extra_metadata[k] = v
         cur_obj = cur_obj[token]
 
-    return cur_obj
-
-
+    return cur_obj, extra_metadata
 
 
 def yaml_to_json(yaml_path: str) -> str:
@@ -128,5 +143,3 @@ def json_to_yaml(json_path: str) -> str:
             yaml.safe_dump(dictionary, new_file)
 
     return yaml_path
-
-

@@ -97,7 +97,13 @@ def get_source(ct: dict, key: str, skip_last=None) -> (JSON, JSON):
             # We collect every primitive value present on `cur_obj`
             # with keys that aren't the `token` key we are looking for
             for k, v in cur_obj.items():
+
+
+<< << << < HEAD
                 if isinstance(v, (int, float, str)) and k != token:
+== == == =
+                if isinstance(v, (int, float, str)) and k != token and key_filter(k):
+>>>>>> > Collect artifact metadata while finding artifact records
                     extra_metadata[k] = v
         cur_obj = cur_obj[token]
 

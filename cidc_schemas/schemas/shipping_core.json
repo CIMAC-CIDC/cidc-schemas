@@ -44,7 +44,7 @@
     "courier": {
       "description": "Courier utilized for shipment.",
       "type": "string",
-      "enum": ["FEDEX", "USPS", "UPC"]
+      "enum": ["FEDEX", "USPS", "UPS", "Inter-Site Delivery"]
     },
     "tracking_number": {
       "description": "Air bill number assigned to shipment. Example: 4567788343.",

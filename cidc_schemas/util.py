@@ -93,12 +93,10 @@ def get_source(ct: dict, key: str, skip_last=None) -> (JSON, JSON):
         last_token = tokens[-1]
 
     extra_metadata = {}
-    namespace = ""
 
-    def _update_extra_metadata(token, level):
-        nonlocal namespace
+    def _update_extra_metadata(token, level, namespace):
         if not isinstance(level, dict):
-            return
+            return namespace
         # We collect every primitive value present on `level`
         # with keys that aren't the `token` key we are looking for.
         # If we are on the last token, we're at the artifact-specific
@@ -109,18 +107,18 @@ def get_source(ct: dict, key: str, skip_last=None) -> (JSON, JSON):
                 if is_artifact_specific or isinstance(v, (int, float, str)):
                     prop_name = f"{namespace}.{k}" if namespace else k
                     extra_metadata[prop_name] = v
-        # Update the namespace
-        namespace = f"{namespace}.{token}" if namespace else token
+        return f"{namespace}.{token}" if namespace else token
 
     # Iteratively follow the key path down into the dictionary
     cur_obj = ct
+    namespace = ""
     for token in tokens:
-        _update_extra_metadata(token, cur_obj)
+        namespace = _update_extra_metadata(token, cur_obj, namespace)
         cur_obj = cur_obj[token]
 
     # Extract extra_metadata from the last level if it was skipped
     if skip_last:
-        _update_extra_metadata(last_token, cur_obj)
+        _update_extra_metadata(last_token, cur_obj, namespace)
 
     return cur_obj, extra_metadata
 

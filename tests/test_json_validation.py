@@ -77,7 +77,7 @@ def test_trial_core():
         "ship_to": "ship_to",
         "shipping_condition": "Ice_Pack",
         "tracking_number": "tracking_number",
-        "receiving_party": "MSSM_CIMAC",
+        "receiving_party": "MDA_Wistuba",
     }
     aliquot1 = {
         "slide_number": "99",

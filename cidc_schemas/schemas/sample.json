@@ -300,6 +300,10 @@
             "mergeOptions": {
                 "idRef": "/slide_number"
             }
+        },
+        "diagnosis_verification": {
+            "description": "Verified diagnosis",
+            "type": "string"
         }
     },
 

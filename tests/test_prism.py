@@ -772,6 +772,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
                 md5_hash=f"hash_{i}"
             )
 
+
         # check that the data_format was set
         assert 'data_format' in artifact
 

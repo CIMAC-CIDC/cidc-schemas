@@ -137,7 +137,6 @@ class XlTemplateReader:
         data_rows = row_groups[RowType.DATA]
 
         # Ensure every data row has the right number of entries
-        # Ensure every data row has the right number of entries
         n_columns = len(header_row.values)
         for data_row in data_rows:
             n_entries = len(data_row.values)

@@ -182,15 +182,16 @@ def test_validate_in_doc_refs():
     doc = {"objs": [{"id": "1"}, {"id": "something"}]}
 
     v = empty_schema_validator = _Validator({})
-    assert True == v._ensure_in_doc_ref("something", "/objs/*/id", doc)
+    in_doc_refs_cache = {}
+    assert True == v._ensure_in_doc_ref("something", "/objs/*/id", doc, in_doc_refs_cache)
 
-    assert True == v._ensure_in_doc_ref("1", "/objs/*/id", doc)
+    assert True == v._ensure_in_doc_ref("1", "/objs/*/id", doc, in_doc_refs_cache)
 
-    assert True == v._ensure_in_doc_ref("1", "/*/*/id", doc)
+    assert True == v._ensure_in_doc_ref("1", "/*/*/id", doc, in_doc_refs_cache)
 
-    assert False == v._ensure_in_doc_ref("something_else", "/objs/*/id", doc)
+    assert False == v._ensure_in_doc_ref("something_else", "/objs/*/id", doc, in_doc_refs_cache)
 
-    assert False == v._ensure_in_doc_ref("something", "/objs", doc)
+    assert False == v._ensure_in_doc_ref("something", "/objs", doc, in_doc_refs_cache)
 
     v = _Validator(
         {

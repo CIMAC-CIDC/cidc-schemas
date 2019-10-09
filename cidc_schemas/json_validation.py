@@ -85,6 +85,12 @@ class _Validator(jsonschema.Draft7Validator):
 
         self.in_doc_refs = {}
 
+    def validate(self, *args, **kwargs):
+        self.validate.__doc__ == super().validate.__doc__
+        self.in_doc_refs = {}
+        super().validate(*args, **kwargs)
+
+
     def iter_errors(
         self,
         instance: JSON,
@@ -96,7 +102,6 @@ class _Validator(jsonschema.Draft7Validator):
         It will be called recursively, while `.descend`ing instance and schema.
 
         """
-        self.in_doc_refs = {}
 
         # First we call usual Draft7Validator validation 
         for downstream_error in super().iter_errors(instance, _schema):
@@ -132,12 +137,9 @@ class _Validator(jsonschema.Draft7Validator):
     def _set_values_for_path_pattern(self, path, doc) -> set:
         split_path = path.strip("/").split("/")
 
-        # print("STARTING:", split_path, doc)
-
         next_docs = [doc]
         for key in split_path:
             _next_docs = []
-            # print(key, next_docs)
             for doc in next_docs:
                 if key == '*':
                     if isinstance(doc, list):
@@ -147,8 +149,6 @@ class _Validator(jsonschema.Draft7Validator):
                 elif key in doc:
                     _next_docs.append(doc[key])
             next_docs = _next_docs
-
-        # print("DONE:", next_docs)
 
         return set(val for val in next_docs if isinstance(val, (int, float, str)))
 
@@ -195,8 +195,6 @@ class _Validator(jsonschema.Draft7Validator):
                 self.in_doc_refs[ref_path_pattern] = vals
             else:
                 return False
-
-        # print(ref, ref_path_pattern, doc, self.in_doc_refs)
 
         # Check if ref value is among valid values
         return ref in self.in_doc_refs[ref_path_pattern]

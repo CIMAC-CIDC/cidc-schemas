@@ -266,6 +266,56 @@ def test_validate_in_doc_refs():
     with pytest.raises(InDocRefNotFoundError):
         v.validate({"objs": [], "refs": ["anything"]})
 
+def test_validator_speed(benchmark):
+    """Basic referential integrity validation speed test"""
+    v = _Validator(
+        {
+            "properties": {
+                "objs": {
+                    "type:": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "records": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "required": ["id"]
+                                },
+                            }
+                        },
+                        "required": ["records"]
+                    },
+                },
+                "refs": {
+                    "type:": "array",
+                    "items": {"in_doc_ref_pattern": "/objs/*/records/*/id"},
+                },
+            }
+        }
+    )
+
+    def do_validation():
+        instance = {
+            "objs": [
+                {"records": [{"id": i} for i in range(200)]}, 
+                {"records": [{"id": i} for i in range(200, 400)]}
+            ],
+            "refs": list(range(400))
+        }
+
+        # valid
+        v.validate(instance)
+        # invalid
+        try:
+            instance['refs'].append("no ref integrity :(")
+            v.validate(instance)
+        except jsonschema.exceptions.ValidationError:
+            pass
+        except:
+            raise
+
+    benchmark.pedantic(do_validation, rounds=5)
 
 def test_special_keywords():
 

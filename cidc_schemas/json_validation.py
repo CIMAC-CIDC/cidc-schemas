@@ -134,21 +134,31 @@ class _Validator(jsonschema.Draft7Validator):
                 yield in_doc_ref_not_found
 
 
-    def _set_values_for_path_pattern(self, path, doc) -> set:
+    def _get_values_for_path_pattern(self, path: str, doc: dict) -> set:
+        """
+        Search `doc` for every value matching `path`, and return those values as a set. 
+        
+        Path can contain wildcards (e.g., `/my/path/*/with/wildcard/*/hooray`) but partial 
+        matching on path subparts is NOT supported (e.g., `/my/part*/path`).
+        """
         split_path = path.strip("/").split("/")
 
-        next_docs = [doc]
+        values = [doc]
         for key in split_path:
-            _next_docs = []
-            for doc in next_docs:
+            next_values = []
+            for doc in values:
                 if key == '*':
+                    # Wild card encountered, so we'll want to search 
+                    # all values of `doc` if `doc` is a list or a dict 
                     if isinstance(doc, list):
-                        _next_docs.extend(doc)
+                        next_values.extend(doc)
                     elif isinstance(doc, dict):
-                        _next_docs.extend(doc.values())
+                        next_values.extend(doc.values())
                 elif key in doc:
-                    _next_docs.append(doc[key])
-            next_docs = _next_docs
+                    # Non-wild card key, so we'll only want to search
+                    # the value in `doc` with key `key`
+                    next_values.append(doc[key])
+            values = next_values
 
         return set(val for val in next_docs if isinstance(val, (int, float, str)))
 
@@ -187,16 +197,18 @@ class _Validator(jsonschema.Draft7Validator):
             # we can't possibly match ref_path_pattern
             return False
         
-        # Check if valid values for this ref path pattern have already been collected
+        # If there are no cached values for this ref path pattern, collect them
         if ref_path_pattern not in self.in_doc_refs:
-            # If not, collect valid values for this ref path pattern
-            vals = self._set_values_for_path_pattern(ref_path_pattern, doc)
-            if len(vals) > 0:
-                self.in_doc_refs[ref_path_pattern] = vals
-            else:
+            vals = self._get_values_for_path_pattern(ref_path_pattern, doc)
+            if len(vals) == 0:
+                # There are no values matching this pattern, so there's
+                # no way `ref` can match a value with this pattern.
                 return False
+            else:
+                # Cache the collected values for this path
+                self.in_doc_refs[ref_path_pattern] = vals
 
-        # Check if ref value is among valid values
+        # Check if `ref` is among valid values for this pattern
         return ref in self.in_doc_refs[ref_path_pattern]
         
 

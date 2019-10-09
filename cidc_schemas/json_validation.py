@@ -160,7 +160,7 @@ class _Validator(jsonschema.Draft7Validator):
                     next_values.append(doc[key])
             values = next_values
 
-        return set(val for val in next_docs if isinstance(val, (int, float, str)))
+        return set(val for val in values if isinstance(val, (int, float, str)))
 
 
     def _ensure_in_doc_ref(

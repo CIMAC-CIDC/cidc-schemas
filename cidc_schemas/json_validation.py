@@ -83,6 +83,8 @@ class _Validator(jsonschema.Draft7Validator):
             self.META_SCHEMA, validators={"in_doc_ref_pattern": _in_doc_refs_check}
         )(*args, **kwargs)
 
+        self.in_doc_refs = {}
+
     def iter_errors(
         self,
         instance: JSON,
@@ -94,6 +96,7 @@ class _Validator(jsonschema.Draft7Validator):
         It will be called recursively, while `.descend`ing instance and schema.
 
         """
+        self.in_doc_refs = {}
 
         # First we call usual Draft7Validator validation 
         for downstream_error in super().iter_errors(instance, _schema):
@@ -124,6 +127,30 @@ class _Validator(jsonschema.Draft7Validator):
                     doc = instance):
                 # and produce errors only when check wont pass 
                 yield in_doc_ref_not_found
+
+
+    def _set_values_for_path_pattern(self, path, doc) -> set:
+        split_path = path.strip("/").split("/")
+
+        # print("STARTING:", split_path, doc)
+
+        next_docs = [doc]
+        for key in split_path:
+            _next_docs = []
+            # print(key, next_docs)
+            for doc in next_docs:
+                if key == '*':
+                    if isinstance(doc, list):
+                        _next_docs.extend(doc)
+                    elif isinstance(doc, dict):
+                        _next_docs.extend(doc.values())
+                elif key in doc:
+                    _next_docs.append(doc[key])
+            next_docs = _next_docs
+
+        # print("DONE:", next_docs)
+
+        return set(val for val in next_docs if isinstance(val, (int, float, str)))
 
 
     def _ensure_in_doc_ref(
@@ -159,24 +186,21 @@ class _Validator(jsonschema.Draft7Validator):
             # if we're in a "simple" value context,
             # we can't possibly match ref_path_pattern
             return False
+        
+        # Check if valid values for this ref path pattern have already been collected
+        if ref_path_pattern not in self.in_doc_refs:
+            # If not, collect valid values for this ref path pattern
+            vals = self._set_values_for_path_pattern(ref_path_pattern, doc)
+            if len(vals) > 0:
+                self.in_doc_refs[ref_path_pattern] = vals
+            else:
+                return False
 
-        # get_all_paths will find any occurrences of `ref` in doc
-        found_id_paths = get_all_paths(doc, ref, dont_throw=True)
+        # print(ref, ref_path_pattern, doc, self.in_doc_refs)
 
-        found_id_jpointers = [
-            # as get_all_paths returns results in `root['access']['path']` form
-            # we need to convert that to `/json/pointer/style/path`
-            "/" + "/".join(map(str, split_python_style_path(id_path)))
-            for id_path in found_id_paths
-        ]
-
-        # fnmatch.filter has better performance than a naive for loop
-        if fnmatch.filter(found_id_jpointers, ref_path_pattern):
-            # id ref found and matched
-            return True
-
-        # id ref not found
-        return False
+        # Check if ref value is among valid values
+        return ref in self.in_doc_refs[ref_path_pattern]
+        
 
 
 def load_and_validate_schema(

@@ -300,6 +300,17 @@
             "mergeOptions": {
                 "idRef": "/slide_number"
             }
+        },
+        "diagnosis_verification": {
+            "description": "Indicates whether the local pathology review was consistent with the diagnostic pathology report.",
+            "type": "string",
+            "enum": [
+                "Local pathology review was not consistent",
+                "Local pathology review was consistent with site of tissue procurement diagnostic pathology report",
+                "Not Available",
+                "Not Reported",
+                "Other"
+            ]
         }
     },
 

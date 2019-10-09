@@ -106,6 +106,10 @@
                         "collection event name": {
                             "merge_pointer": "/collection_event_name",
                             "type_ref": "sample.json#properties/collection_event_name"
+                        },
+                        "diagnosis_verification": {
+                            "merge_pointer": "/diagnosis_verification",
+                            "type_ref": "sample.json#properties/diagnosis_verification"
                         }
                     },
                     "ICD-0-3 Code/Description": {
@@ -157,13 +161,13 @@
                             "merge_pointer": "/shipping_entry_number",
                             "type_ref": "sample.json#properties/shipping_entry_number"
                         },
-                        "collection event name": {
-                            "merge_pointer": "/collection_event_name",
-                            "type_ref": "sample.json#properties/collection_event_name"
-                        },
                         "cohort name": {
                             "merge_pointer": "2/cohort_name",
                             "type_ref": "participant.json#properties/cohort_name"
+                        },
+                        "collection event name": {
+                            "merge_pointer": "/collection_event_name",
+                            "type_ref": "sample.json#properties/collection_event_name"
                         },
                         "participant ID": {
                             "merge_pointer": "2/participant_id",

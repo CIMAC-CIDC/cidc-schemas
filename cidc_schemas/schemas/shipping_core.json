@@ -44,7 +44,7 @@
     "courier": {
       "description": "Courier utilized for shipment.",
       "type": "string",
-      "enum": ["FEDEX", "USPS", "UPC"]
+      "enum": ["FEDEX", "USPS", "UPS", "Inter-Site Delivery"]
     },
     "tracking_number": {
       "description": "Air bill number assigned to shipment. Example: 4567788343.",
@@ -98,14 +98,21 @@
       "description": "Site where sample was shipped to be assayed.",
       "type": "string",
       "enum": [
-        "MDA_CIMAC",
-        "MSSM_CIMAC",
-        "STAN_CIMAC",
-        "DFCI_CIMAC",
-        "Broad_CIMAC",
-        "FNLCR_MoCha",
+        "MDA_Wistuba",
+        "MDA_Bernatchez",
+        "MDA_Al-Atrash",
+        "MSSM_Gnjatic",
+        "MSSM_Rahman",
+        "MSSM_Kim-Schulze",
+        "MSSM_Bongers",
+        "DFCI_Wu",
+        "DFCI_Hodi",
+        "Broad_Cibulskis",
+        "Stanf_Maecker",
+        "Stanf_Bendall",
         "Nationwide Children's Hospital",
         "Adaptive Biotechnologies",
+        "FNLCR_MoCha",
         "Not Reported",
         "Other"
       ]

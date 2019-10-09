@@ -152,9 +152,16 @@ class _Validator(jsonschema.Draft7Validator):
                     # Non-wild card key, so we'll only want to search
                     # the value in `doc` with key `key`
                     next_values.append(doc[key])
+                else:
+                    # Handle possibility that `key` is an integer
+                    try:
+                        index = int(key)
+                        next_values.append(doc[index])
+                    except ValueError:
+                        pass
             values = next_values
 
-        return set(val for val in values if isinstance(val, (int, float, str)))
+        return set(repr(val) for val in values)
 
 
     def _ensure_in_doc_ref(
@@ -204,7 +211,7 @@ class _Validator(jsonschema.Draft7Validator):
                 in_doc_refs_cache[ref_path_pattern] = vals
 
         # Check if `ref` is among valid values for this pattern
-        return ref in in_doc_refs_cache[ref_path_pattern]
+        return repr(ref) in in_doc_refs_cache[ref_path_pattern]
         
 
 

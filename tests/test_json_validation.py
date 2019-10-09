@@ -177,6 +177,44 @@ def test_resolve_refs():
     one = do_resolve("1.json")
     assert one["properties"] == {"1_prop": {"2_prop": {"3_prop": {"type": "string"}}}}
 
+def test_get_values_for_path_pattern():
+    v = _Validator({})
+    # Absolute path, all strings
+    assert v._get_values_for_path_pattern("/a/b/c", {"a": {"b": {"c": "foo", "d": "bar"}}}) == set([repr("foo")])
+    # Absolute path, array index
+    assert v._get_values_for_path_pattern("/a/1/b", {"a": [{"b": "foo"}, {"b": "bar"}]}) == set([repr("bar")])
+    # Absolute path, integer property
+    assert v._get_values_for_path_pattern("/a/1", {"a": {1: "foo", "b": "bar"}}) == set([repr("foo")])
+    # Absolute path, non-primitive value
+    assert v._get_values_for_path_pattern("/a", {"a": [1, 2, 3]} ) == set([repr([1,2,3])])
+
+    # Path with pattern matching, array
+    assert v._get_values_for_path_pattern(
+        "/a/*/b", 
+        {"a": [{"b": 1, "c": "foo"}, {"b": 2, "c": "foo"}]}
+    ) == set([repr(1), repr(2)])
+    # Path with pattern matching, dict
+    assert v._get_values_for_path_pattern(
+        "/a/*/b", 
+        {"a": {"buzz": {"b": 1, "c": "foo"}, "bazz": {"b": 2, "c": "foo"}}}
+    ) == set([repr(1), repr(2)])
+    # Path with pattern matching, nested
+    assert v._get_values_for_path_pattern(
+        "/a/*/b/*/c",
+        {
+            "a": [
+                {
+                    "b": [{"c": 1}, {"c": 2}], 
+                    "c": "foo"
+                }, 
+                {
+                    "b": {"buzz": {"c": 3}, "bazz": {"c": 4}}
+                    , "c": "foo"
+                }
+            ]
+        }
+    ) == set([repr(1), repr(2), repr(3), repr(4)])
+
 
 def test_validate_in_doc_refs():
     doc = {"objs": [{"id": "1"}, {"id": "something"}]}

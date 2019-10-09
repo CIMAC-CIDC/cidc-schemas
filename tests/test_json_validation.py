@@ -183,6 +183,8 @@ def test_get_values_for_path_pattern():
     assert v._get_values_for_path_pattern("/a/b/c", {"a": {"b": {"c": "foo", "d": "bar"}}}) == set([repr("foo")])
     # Absolute path, array index
     assert v._get_values_for_path_pattern("/a/1/b", {"a": [{"b": "foo"}, {"b": "bar"}]}) == set([repr("bar")])
+    # Absolute path, dict with a key that looks like integer
+    assert v._get_values_for_path_pattern("/a/0/1", {"a": [{"1": "foo"}, {"1": "bar"}]}) == set([repr("foo")])
     # Absolute path, integer property
     assert v._get_values_for_path_pattern("/a/1", {"a": {1: "foo", "b": "bar"}}) == set([repr("foo")])
     # Absolute path, non-primitive value

@@ -92,8 +92,8 @@ class _Validator(jsonschema.Draft7Validator):
         This is the main validation method. `.is_valid`, `.validate` are based on this. 
     
         It will be called recursively, while `.descend`ing instance and schema.
-
         """
+        in_doc_refs_cache = {}
 
         # First we call usual Draft7Validator validation 
         for downstream_error in super().iter_errors(instance, _schema):
@@ -107,7 +107,8 @@ class _Validator(jsonschema.Draft7Validator):
                     # error.validator_value - is value of a constraint from schema, 
                     # which should be in a form of path pattern, where ref value needs to be present.  
                     ref_path_pattern = downstream_error.validator_value,
-                    doc = instance):
+                    doc = instance,
+                    in_doc_refs_cache = in_doc_refs_cache):
                 # and if the check was not passed - we propagate it
                 yield downstream_error
 
@@ -121,16 +122,54 @@ class _Validator(jsonschema.Draft7Validator):
             if not self._ensure_in_doc_ref(
                     ref = in_doc_ref_not_found.instance,
                     ref_path_pattern = in_doc_ref_not_found.validator_value,
-                    doc = instance):
+                    doc = instance,
+                    in_doc_refs_cache = in_doc_refs_cache):
                 # and produce errors only when check wont pass 
                 yield in_doc_ref_not_found
+
+
+    def _get_values_for_path_pattern(self, path: str, doc: dict) -> set:
+        """
+        Search `doc` for every value matching `path`, and return those values as a set. 
+        
+        Path can contain wildcards (e.g., `/my/path/*/with/wildcard/*/hooray`) but partial 
+        matching on path subparts is NOT supported (e.g., `/my/part*/path`).
+        """
+        split_path = path.strip("/").split("/")
+
+        values = [doc]
+        for key in split_path:
+            next_values = []
+            for doc in values:
+                if key == '*':
+                    # Wild card encountered, so we'll want to search 
+                    # all values of `doc` if `doc` is a list or a dict 
+                    if isinstance(doc, list):
+                        next_values.extend(doc)
+                    elif isinstance(doc, dict):
+                        next_values.extend(doc.values())
+                elif key in doc:
+                    # Non-wild card key, so we'll only want to search
+                    # the value in `doc` with key `key`
+                    next_values.append(doc[key])
+                else:
+                    # Handle possibility that `key` is an integer
+                    try:
+                        index = int(key)
+                        next_values.append(doc[index])
+                    except ValueError:
+                        pass
+            values = next_values
+
+        return set(repr(val) for val in values)
 
 
     def _ensure_in_doc_ref(
         self,
         ref: str,
         ref_path_pattern: str,
-        doc: JSON 
+        doc: JSON,
+        in_doc_refs_cache: dict
     ):
         """
         This checks that a `ref` (think foreign key) can be found within a `doc` (JSON object),
@@ -159,24 +198,21 @@ class _Validator(jsonschema.Draft7Validator):
             # if we're in a "simple" value context,
             # we can't possibly match ref_path_pattern
             return False
+        
+        # If there are no cached values for this ref path pattern, collect them
+        if ref_path_pattern not in in_doc_refs_cache:
+            vals = self._get_values_for_path_pattern(ref_path_pattern, doc)
+            if len(vals) == 0:
+                # There are no values matching this pattern, so there's
+                # no way `ref` can match a value with this pattern.
+                return False
+            else:
+                # Cache the collected values for this path
+                in_doc_refs_cache[ref_path_pattern] = vals
 
-        # get_all_paths will find any occurrences of `ref` in doc
-        found_id_paths = get_all_paths(doc, ref, dont_throw=True)
-
-        found_id_jpointers = [
-            # as get_all_paths returns results in `root['access']['path']` form
-            # we need to convert that to `/json/pointer/style/path`
-            "/" + "/".join(map(str, split_python_style_path(id_path)))
-            for id_path in found_id_paths
-        ]
-
-        # fnmatch.filter has better performance than a naive for loop
-        if fnmatch.filter(found_id_jpointers, ref_path_pattern):
-            # id ref found and matched
-            return True
-
-        # id ref not found
-        return False
+        # Check if `ref` is among valid values for this pattern
+        return repr(ref) in in_doc_refs_cache[ref_path_pattern]
+        
 
 
 def load_and_validate_schema(

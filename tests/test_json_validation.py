@@ -177,20 +177,61 @@ def test_resolve_refs():
     one = do_resolve("1.json")
     assert one["properties"] == {"1_prop": {"2_prop": {"3_prop": {"type": "string"}}}}
 
+def test_get_values_for_path_pattern():
+    v = _Validator({})
+    # Absolute path, all strings
+    assert v._get_values_for_path_pattern("/a/b/c", {"a": {"b": {"c": "foo", "d": "bar"}}}) == set([repr("foo")])
+    # Absolute path, array index
+    assert v._get_values_for_path_pattern("/a/1/b", {"a": [{"b": "foo"}, {"b": "bar"}]}) == set([repr("bar")])
+    # Absolute path, dict with a key that looks like integer
+    assert v._get_values_for_path_pattern("/a/0/1", {"a": [{"1": "foo"}, {"1": "bar"}]}) == set([repr("foo")])
+    # Absolute path, integer property
+    assert v._get_values_for_path_pattern("/a/1", {"a": {1: "foo", "b": "bar"}}) == set([repr("foo")])
+    # Absolute path, non-primitive value
+    assert v._get_values_for_path_pattern("/a", {"a": [1, 2, 3]} ) == set([repr([1,2,3])])
+
+    # Path with pattern matching, array
+    assert v._get_values_for_path_pattern(
+        "/a/*/b", 
+        {"a": [{"b": 1, "c": "foo"}, {"b": 2, "c": "foo"}]}
+    ) == set([repr(1), repr(2)])
+    # Path with pattern matching, dict
+    assert v._get_values_for_path_pattern(
+        "/a/*/b", 
+        {"a": {"buzz": {"b": 1, "c": "foo"}, "bazz": {"b": 2, "c": "foo"}}}
+    ) == set([repr(1), repr(2)])
+    # Path with pattern matching, nested
+    assert v._get_values_for_path_pattern(
+        "/a/*/b/*/c",
+        {
+            "a": [
+                {
+                    "b": [{"c": 1}, {"c": 2}], 
+                    "c": "foo"
+                }, 
+                {
+                    "b": {"buzz": {"c": 3}, "bazz": {"c": 4}}
+                    , "c": "foo"
+                }
+            ]
+        }
+    ) == set([repr(1), repr(2), repr(3), repr(4)])
+
 
 def test_validate_in_doc_refs():
     doc = {"objs": [{"id": "1"}, {"id": "something"}]}
 
     v = empty_schema_validator = _Validator({})
-    assert True == v._ensure_in_doc_ref("something", "/objs/*/id", doc)
+    in_doc_refs_cache = {}
+    assert True == v._ensure_in_doc_ref("something", "/objs/*/id", doc, in_doc_refs_cache)
 
-    assert True == v._ensure_in_doc_ref("1", "/objs/*/id", doc)
+    assert True == v._ensure_in_doc_ref("1", "/objs/*/id", doc, in_doc_refs_cache)
 
-    assert True == v._ensure_in_doc_ref("1", "/*/*/id", doc)
+    assert True == v._ensure_in_doc_ref("1", "/*/*/id", doc, in_doc_refs_cache)
 
-    assert False == v._ensure_in_doc_ref("something_else", "/objs/*/id", doc)
+    assert False == v._ensure_in_doc_ref("something_else", "/objs/*/id", doc, in_doc_refs_cache)
 
-    assert False == v._ensure_in_doc_ref("something", "/objs", doc)
+    assert False == v._ensure_in_doc_ref("something", "/objs", doc, in_doc_refs_cache)
 
     v = _Validator(
         {
@@ -227,6 +268,56 @@ def test_validate_in_doc_refs():
     with pytest.raises(InDocRefNotFoundError):
         v.validate({"objs": [], "refs": ["anything"]})
 
+def test_validator_speed(benchmark):
+    """Basic referential integrity validation speed test"""
+    v = _Validator(
+        {
+            "properties": {
+                "objs": {
+                    "type:": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "records": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "required": ["id"]
+                                },
+                            }
+                        },
+                        "required": ["records"]
+                    },
+                },
+                "refs": {
+                    "type:": "array",
+                    "items": {"in_doc_ref_pattern": "/objs/*/records/*/id"},
+                },
+            }
+        }
+    )
+
+    def do_validation():
+        instance = {
+            "objs": [
+                {"records": [{"id": i} for i in range(200)]}, 
+                {"records": [{"id": i} for i in range(200, 400)]}
+            ],
+            "refs": list(range(400))
+        }
+
+        # valid
+        v.validate(instance)
+        # invalid
+        try:
+            instance['refs'].append("no ref integrity :(")
+            v.validate(instance)
+        except jsonschema.exceptions.ValidationError:
+            pass
+        except:
+            raise
+
+    benchmark.pedantic(do_validation, rounds=5)
 
 def test_special_keywords():
 

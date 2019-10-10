@@ -166,8 +166,8 @@
             "description": "Volume units of each processed sample.",
             "type": "string",
             "enum": [
-                "µL",
-                "mL",
+                "Microliters",
+                "Milliliters",
                 "Not Reported",
                 "Other"
             ]

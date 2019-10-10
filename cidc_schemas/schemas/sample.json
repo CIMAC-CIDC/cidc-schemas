@@ -302,6 +302,7 @@
             }
         },
         "diagnosis_verification": {
+            "title": "Diagnosis verification",
             "description": "Indicates whether the local pathology review was consistent with the diagnostic pathology report.",
             "type": "string",
             "enum": [

@@ -269,8 +269,9 @@
             "description": "Indication if sample replacement is/was requested.",
             "type": "string",
             "enum": [
-                "Sample Sent to Another Lab",
-                "Sample received from CIMAC",
+                "Replacement Not Requested",
+                "Replacement Requested",
+                "Replacement Tested",
                 "Not Reported",
                 "Other"
             ]

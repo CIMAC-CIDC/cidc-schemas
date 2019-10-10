@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "ihc_assay_record",
+  "title": "IHC assay record",
+  "type": "object",
+  "description": "A single data record from IHC assay.",
+  "properties": {
+    "project_inform_folder": {
+      "description": "Folder path containing files produced from an image analysis.",
+      "type": "string"
+    },
+    "ihc_exported_data_folder": {
+      "description": "Folder path containing imaging files.",
+      "type": "string"
+    },
+    "files": {
+      "$ref": "assays/components/imaging/ihc_input.json"
+    }
+  },
+  "required": ["ihc_exported_data_folder"]
+}

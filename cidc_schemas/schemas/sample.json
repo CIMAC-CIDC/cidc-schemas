@@ -66,7 +66,9 @@
                 "Baseline",
                 "Pre_Day_1_Cycle_2",
                 "Restaging",
-                "Off_study"
+                "Off_study",
+                "Not Reported",
+                "Other"
             ]
         },
         "sample_location": {
@@ -95,6 +97,7 @@
             "enum": [
                 "Metastatic Tumor",
                 "Primary Tumor",
+                "Not Reported",
                 "Other"
             ]
         },
@@ -166,8 +169,8 @@
             "description": "Volume units of each processed sample.",
             "type": "string",
             "enum": [
-                "µL",
-                "mL",
+                "Microliters",
+                "Milliliters",
                 "Not Reported",
                 "Other"
             ]
@@ -269,8 +272,9 @@
             "description": "Indication if sample replacement is/was requested.",
             "type": "string",
             "enum": [
-                "Sample Sent to Another Lab",
-                "Sample received from CIMAC",
+                "Replacement Not Requested",
+                "Replacement Requested",
+                "Replacement Tested",
                 "Not Reported",
                 "Other"
             ]
@@ -302,6 +306,7 @@
             }
         },
         "diagnosis_verification": {
+            "title": "Diagnosis verification",
             "description": "Indicates whether the local pathology review was consistent with the diagnostic pathology report.",
             "type": "string",
             "enum": [

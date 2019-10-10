@@ -106,6 +106,10 @@
                         "collection event name": {
                             "merge_pointer": "/collection_event_name",
                             "type_ref": "sample.json#properties/collection_event_name"
+                        },
+                        "diagnosis verification": {
+                            "merge_pointer": "/diagnosis_verification",
+                            "type_ref": "sample.json#properties/diagnosis_verification"
                         }
                     },
                     "ICD-0-3 Code/Description": {

@@ -18,6 +18,11 @@
           { "$ref": "assays/components/composite_image.json" }
         ]
       }
+    },
+    "IHC image path": {
+      "description": "Path to the IHC image",
+      "type": "string",
+      "$ref": "assays/components/local_file.json"
     }
   },
   "required": []

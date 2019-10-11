@@ -644,7 +644,7 @@ def test_merge_ct_meta():
     # next assert the merge is only happening on the same trial
     patch[PROTOCOL_ID_FIELD_NAME] = "not_the_same"
     target = copy.deepcopy(TEST_PRISM_TRIAL)
-    with pytest.raises(RuntimeError):
+    with pytest.raises(InvalidMergeTargetException):
         merge_clinical_trial_metadata(patch, target)
 
     # revert the data to same key trial id but

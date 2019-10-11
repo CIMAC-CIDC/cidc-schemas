@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "ihc",
+  "title": "Metadata file for IHC",
+  "type": "object",
+  "category": "metadata",
+  "description": "Metadata information for Immunohistochemical analysis.\n",
+  "properties": {
+    "worksheets": {
+      "olink": {
+        "prism_preamble_object_schema" : "assays/ihc_assay.json",
+        "prism_preamble_object_pointer" : "/assays/ihc",
+        "prism_data_object_pointer" : "/records/-",
+        "preamble_rows": {
+          "protocol identifier": {
+            "merge_pointer": "3/protocol_identifier",
+            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+          },
+          "slide scanner model": {
+            "merge_pointer": "0/slide_scanner_model",
+            "type_ref": "assays/ihc_entry.json#properties/slide_scanner_model"
+          },
+          "antibody name": {
+              "merge_pointer": "0/antibody",
+              "type_ref": "assays/components/antibody.json#properties/antibody"
+          },
+          "company": {
+              "merge_pointer": "0/company",
+              "type_ref": "assays/components/antibody.json#properties/company"
+          },
+          "clone": {
+              "merge_pointer": "0/clone",
+              "type_ref": "assays/components/antibody.json#properties/clone"
+          },
+          "catalogue number": {
+              "merge_pointer": "0/cat_num",
+              "type_ref": "assays/components/antibody.json#properties/cat_num"
+          },
+          "lot number": {
+              "merge_pointer": "0/lot_num",
+              "type_ref": "assays/components/antibody.json#properties/lot_num"
+          },
+          "dilution": {
+              "merge_pointer": "0/dilution",
+              "type_ref": "assays/components/ihc_antibody.json#properties/dilution"
+          },
+          "incubation time": {
+              "merge_pointer": "0/incubation_time",
+              "type_ref": "assays/components/ihc_antibody.json#properties/incubation_time"
+          },
+          "incubation temperature": {
+              "merge_pointer": "0/incubation_temp",
+              "type_ref": "assays/components/ihc_antibody.json#properties/incubation_temp"
+          }
+        },
+        "data_columns": {
+          "Sample": {
+            "cimac id": {
+              "merge_pointer": "0/cimac_id",
+              "type_ref": "sample.json#properties/cimac_id"
+            },
+            "slide number": {
+              "merge_pointer": "0/slide_number",
+              "type_ref":"sample.json#properties/aliquots"
+            },
+            "ihc image path": {
+              "merge_pointer": "0/ihc_image_path",
+              "type_ref": "assays/componenets/imaging/ihc_input.json#properties/ihc_image_path"
+            },
+            "h and e image path": {
+              "merge_pointer": "0/h_and_e_image_path",
+              "type_ref": "assays/componenets/imaging/ihc_input.json#properties/h_and_e_image_path"
+            }
+          }
+        }
+      }
+    }
+  }
+}

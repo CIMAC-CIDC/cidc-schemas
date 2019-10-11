@@ -10,11 +10,11 @@
       "type": "string"
     },
     "incubation_time": {
-      "description": "Length of time for antibody incubation.",
+      "description": "Duration of time for antibody incubation.",
       "type": "string",
       "format": "time"
     },
-    "antibody_incubation_temp": {
+    "incubation_temp": {
       "description": "Temperature used for antibody incubation.",
       "type": "string"
     }
@@ -22,6 +22,6 @@
   "required": [
     "dilution",
     "incubation_time",
-    "antibody_incubation_temp"
+    "incubation_temp"
   ]
 }

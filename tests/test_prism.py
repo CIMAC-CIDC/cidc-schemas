@@ -320,7 +320,8 @@ def test_prism(schema_path, xlsx_path):
         return
 
     # turn into object.
-    ct, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
+    ct, file_maps, errs = prismify(xlsx_path, schema_path, assay_hint=hint)
+    assert 0 == len(errs)
 
     if hint == 'cytof':
         assert "CYTOF_TEST1" == ct[PROTOCOL_ID_FIELD_NAME]
@@ -382,7 +383,8 @@ def test_filepath_gen(schema_path, xlsx_path):
     schema = validator.schema
 
     # parse the spreadsheet and get the file maps
-    _, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint)
+    _, file_maps, errs = prismify(xlsx_path, schema_path, assay_hint=hint)
+    assert len(errs) == 0
     # we ignore and do not validate 'ct'
     # because it's only a ct patch not a full ct 
 
@@ -462,7 +464,8 @@ def test_prismify_cytof_only():
     xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, f"{hint}_template.xlsx")
 
     # parse the spreadsheet and get the file maps
-    ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint, verb=False)
+    ct, file_maps, errs = prismify(xlsx_path, temp_path, assay_hint=hint, verb=False)
+    assert len(errs) == 0
 
     # we should have 3 files, the processed fcs and two source fcs X2
     assert len(file_maps) == 6
@@ -489,7 +492,8 @@ def test_prismify_plasma():
     hint = 'plasma'
 
     # parse the spreadsheet and get the file maps
-    md_patch, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
+    md_patch, file_maps, errs = prismify(xlsx_path, temp_path, assay_hint=hint)
+    assert len(errs) == 0
     validator.validate(md_patch)
 
     assert file_maps == []
@@ -518,7 +522,8 @@ def test_prismify_wes_only():
     hint = 'wes'
 
     # parse the spreadsheet and get the file maps
-    md_patch, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
+    md_patch, file_maps, errs = prismify(xlsx_path, temp_path, assay_hint=hint)
+    assert len(errs) == 0
 
     for e in validator.iter_errors(md_patch):
         assert isinstance(e, InDocRefNotFoundError) or ("'participants'" in str(e) and "required" in str(e))
@@ -555,7 +560,8 @@ def test_prismify_olink_only():
     hint = 'olink'
 
     # parse the spreadsheet and get the file maps
-    ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
+    ct, file_maps, errs = prismify(xlsx_path, temp_path, assay_hint=hint)
+    assert len(errs) == 0
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -698,7 +704,8 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
 
     # parse the spreadsheet and get the file maps
-    prism_patch, file_maps = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
+    prism_patch, file_maps, errs = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
+    assert len(errs) == 0
 
     if hint in SUPPORTED_MANIFESTS:
         assert len(prism_patch['shipments']) == 1
@@ -986,7 +993,8 @@ def test_prism_joining_tabs(monkeypatch):
     
     monkeypatch.setattr("cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_ship"])
 
-    patch, file_maps = prismify("workbook", "Template_from_json", assay_hint="test_ship", verb=False)
+    patch, file_maps, errs = prismify("workbook", "Template_from_json", assay_hint="test_ship", verb=False)
+    assert len(errs) == 0
 
     assert 2 == len(patch["participants"])
     

@@ -11,8 +11,8 @@ from typing import Union, BinaryIO
 from .template import Template
 
 
-def validate_xlsx(xlsx: Union[str, BinaryIO], template_type: str, raise_validation_errors: bool = True):
+def validate_xlsx(xlsx: Union[str, BinaryIO], template_type: str):
     """Check if a populated .xlsx template file is valid w.r.t. the template_type"""
     template = Template.from_type(template_type)
-    validation = template.validate_excel(xlsx, raise_validation_errors)
+    validation = template.validate_excel(xlsx)
     return validation

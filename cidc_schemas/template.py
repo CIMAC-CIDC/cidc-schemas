@@ -288,8 +288,8 @@ class Template:
 
         XlTemplateWriter().write(xlsx_path, self)
 
-    def validate_excel(self, xlsx: Union[str, BinaryIO], raise_validation_errors: bool = True) -> bool:
+    def validate_excel(self, xlsx: Union[str, BinaryIO]) -> bool:
         """Validate the given Excel file (either a path or an open file) against this `Template`"""
         from .template_reader import XlTemplateReader
 
-        return XlTemplateReader.from_excel(xlsx).validate(self, raise_validation_errors)
+        return XlTemplateReader.from_excel(xlsx).validate(self)

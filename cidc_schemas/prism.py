@@ -525,10 +525,8 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     xslx = XlTemplateReader.from_excel(xlsx_path)
     # get corr xlsx schema
     xlsx_template = Template.from_json(template_path)
-    xslx.validate(xlsx_template)
+    errors_so_far = list(xslx.iter_errors(xlsx_template))
 
-    errors_so_far = []
-    
     # get the root CT schema
     root_ct_schema_name = (xlsx_template.schema.get("prism_template_root_object_schema") or "clinical_trial.json")
     root_ct_schema = load_and_validate_schema(root_ct_schema_name)
@@ -637,8 +635,6 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                     collected_files.extend(new_files)
             except ParsingException as e:
                 errors_so_far.append(e)
-    
-
     
 
         # Now pushing it up / merging with the whole thing

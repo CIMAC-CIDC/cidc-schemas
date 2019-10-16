@@ -17,6 +17,7 @@ from unittest.mock import MagicMock, patch as mock_patch
 
 from .constants import TEST_DATA_DIR
 
+from cidc_schemas import prism
 from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
     SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES, \
@@ -27,7 +28,7 @@ from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader
 
-from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR
+from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR, TEST_DATA_DIR
 from .test_templates import template_paths
 from .test_assays import ARTIFACT_OBJ
 
@@ -857,6 +858,34 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
 
     else:
         assert False, f"add {hint} assay specific asserts"
+
+
+
+def test_prismify_errors(tiny_template, monkeypatch):
+    manifest_path = os.path.join(TEST_DATA_DIR, "tiny_manifest.xlsx")
+
+    monkeypatch.setattr("cidc_schemas.prism.SUPPORTED_TEMPLATES", ["hint"])
+    
+    
+    tts = tiny_template.schema
+    for wsname, ws in tts['properties']['worksheets'].items():
+        if 'prism_data_object_pointer' not in ws:
+            ws['prism_data_object_pointer'] = '/tiny_template/test_objs/0'
+
+        for prop_name, prop in ws['preamble_rows'].items():
+            if 'merge_pointer' not in prop:
+                prop['merge_pointer'] = '/'+prop_name
+
+
+    template_from_json = MagicMock(name="template_from_json")
+    template_from_json.return_value = Template(tts)
+    monkeypatch.setattr("cidc_schemas.template.Template.from_json", template_from_json)
+
+    
+    # parse the spreadsheet and get the file maps
+    ct, file_maps, errors = prismify(manifest_path, tiny_template, assay_hint='hint')
+
+    assert errors == []
 
 
 def test_merge_stuff():

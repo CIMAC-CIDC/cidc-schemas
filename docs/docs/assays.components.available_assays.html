@@ -69,6 +69,8 @@
         
             
         
+            
+        
         
             
                 <tr>
@@ -270,6 +272,43 @@
              
                 
                     <a href="assays.micsss_assay.html">assays.micsss_assay</a>
+                
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="ihc">
+                ihc
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Immunohistochemical analysis.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                array 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+             
+                
+                    <a href="assays.ihc_assay.html">assays.ihc_assay</a>
                 
             
             
@@ -1124,6 +1163,376 @@
                     "records"
                 ],
                 "title": "CYTOF Run",
+                "type": "object"
+            },
+            "mergeStrategy": "append",
+            "type": "array"
+        },
+        "ihc": {
+            "description": "Immunohistochemical analysis.",
+            "items": {
+                "$id": "ihc",
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "allOf": [
+                    {
+                        "$id": "assay_core",
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "description": "Main properties of the assay experiment template.",
+                        "properties": {
+                            "assay_creator": {
+                                "description": "Indicates what site is filling out the assay.",
+                                "enum": [
+                                    "DFCI",
+                                    "Mount Sinai",
+                                    "Stanford",
+                                    "MD Anderson"
+                                ],
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "assay_creator"
+                        ],
+                        "title": "Assay Core",
+                        "type": "object"
+                    },
+                    {
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "description": "Base information about the acquisition and analysis of a quantitative pathology image.",
+                        "id": "image",
+                        "properties": {
+                            "autostainer_model": {
+                                "description": "Model version of the autostainer instrument.",
+                                "type": "string"
+                            },
+                            "cell_segmentation_model": {
+                                "description": "Model used for cell segmentation in an imaging experiment.",
+                                "enum": [
+                                    "proprietary",
+                                    "watershed"
+                                ],
+                                "type": "string"
+                            },
+                            "image_analysis_software": {
+                                "description": "Source software for digital pathology and image analysis.",
+                                "enum": [
+                                    "InForm",
+                                    "QuPath"
+                                ],
+                                "type": "string"
+                            },
+                            "image_analysis_software_version": {
+                                "description": "Source software version for digital pathology and image analysis.",
+                                "type": "string"
+                            },
+                            "positive_cell_detection": {
+                                "description": "Model used for positive cell detection in imaging experiment.",
+                                "enum": [
+                                    "proprietary",
+                                    "random forest classifier"
+                                ],
+                                "type": "string"
+                            },
+                            "protocol_name": {
+                                "description": "Protocol name for which imaging experiment conducted.",
+                                "type": "string"
+                            },
+                            "slide_scanner_model": {
+                                "description": "Model version of the slide scanner instrument.",
+                                "enum": [
+                                    "Vectra 2.0",
+                                    "Hamamatsu"
+                                ],
+                                "type": "string"
+                            },
+                            "staining_platform": {
+                                "description": "Staining platform used for tissue sample labeling.",
+                                "enum": [
+                                    "auto",
+                                    "manual"
+                                ],
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "slide_scanner_model",
+                            "protocol_name"
+                        ],
+                        "title": "Image"
+                    }
+                ],
+                "description": "Immunohistochemical analysis.",
+                "properties": {
+                    "antibody": {
+                        "items": {
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "allOf": [
+                                {
+                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                    "description": "Common information about an antibody used in a number of immune-oncology assays.",
+                                    "id": "antibody",
+                                    "properties": {
+                                        "antibody": {
+                                            "description": "Antibody type collected for this study.",
+                                            "type": "string"
+                                        },
+                                        "cat_num": {
+                                            "description": "Antibody registry catalog number assigned to antibody sample.",
+                                            "type": "string"
+                                        },
+                                        "clone": {
+                                            "description": "Resulting type of antibody clone from primary antibody sample.",
+                                            "type": "string"
+                                        },
+                                        "company": {
+                                            "description": "Company from which antibody sample was derived.",
+                                            "type": "string"
+                                        },
+                                        "lot_num": {
+                                            "description": "Identification number assigned to the particular quantity or lot of material from manufacturer.",
+                                            "type": "string"
+                                        },
+                                        "staining_order": {
+                                            "description": "Order in which samples were stained for procedure.",
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "antibody"
+                                    ],
+                                    "title": "Antibody"
+                                }
+                            ],
+                            "description": "Data specific to antibody preparation for immunohistochemical analysis.",
+                            "id": "ihc_antibody",
+                            "properties": {
+                                "dilution": {
+                                    "description": "Concentration ratio for antibody dilution.",
+                                    "type": "string"
+                                },
+                                "incubation_temp": {
+                                    "description": "Temperature used for antibody incubation.",
+                                    "type": "string"
+                                },
+                                "incubation_time": {
+                                    "description": "Duration of time for antibody incubation.",
+                                    "format": "time",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "dilution",
+                                "incubation_time",
+                                "incubation_temp"
+                            ],
+                            "title": "IHC antibody"
+                        },
+                        "type": "array"
+                    },
+                    "records": {
+                        "description": "A single data record from IHC assay.",
+                        "items": {
+                            "$id": "ihc_assay_record",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "description": "A single data record from IHC assay.",
+                            "properties": {
+                                "average_inflammation_marker_intensity": {
+                                    "description": "Average intensity of marker inflammation (0-3+).",
+                                    "type": "string"
+                                },
+                                "average_tumor_marker_intensity": {
+                                    "description": "Average intensity of tumor marker (0-3+).",
+                                    "type": "string"
+                                },
+                                "clinically_positive": {
+                                    "description": "Indicates whether the marker is considered positive by FDA guidelines.",
+                                    "type": "string"
+                                },
+                                "degree_lymphoid_infiltrate": {
+                                    "description": "Degree of lymphoid infiltrate (0-3+).",
+                                    "type": "string"
+                                },
+                                "files": {
+                                    "$id": "ihc_input",
+                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                    "description": "IHC assay input/output files.",
+                                    "properties": {
+                                        "ihc_output_summary": {
+                                            "$comment": "Summary of the results of the experiment.",
+                                            "$id": "csv_artifact",
+                                            "$schema": "http://json-schema.org/draft-07/schema#",
+                                            "allOf": [
+                                                {
+                                                    "$id": "artifact_core",
+                                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                                    "anyOf": [
+                                                        {
+                                                            "required": [
+                                                                "file_name",
+                                                                "object_url",
+                                                                "uploaded_timestamp",
+                                                                "file_size_bytes",
+                                                                "md5_hash",
+                                                                "artifact_category",
+                                                                "data_format"
+                                                            ]
+                                                        },
+                                                        {
+                                                            "required": [
+                                                                "upload_placeholder"
+                                                            ]
+                                                        }
+                                                    ],
+                                                    "description": "Any file artifact associated with a clinical trial.",
+                                                    "properties": {
+                                                        "artifact_category": {
+                                                            "description": "Artifact category.",
+                                                            "enum": [
+                                                                "Assay Artifact from CIMAC",
+                                                                "Pipeline Artifact",
+                                                                "Manifest File"
+                                                            ],
+                                                            "type": "string"
+                                                        },
+                                                        "artifact_creator": {
+                                                            "description": "The name of the center that created this artifact.",
+                                                            "enum": [
+                                                                "DFCI",
+                                                                "Mount Sinai",
+                                                                "Stanford",
+                                                                "MD Anderson"
+                                                            ],
+                                                            "type": "string"
+                                                        },
+                                                        "data_format": {
+                                                            "description": "Data Format.",
+                                                            "enum": [
+                                                                "FASTA",
+                                                                "FASTQ",
+                                                                "IMAGE",
+                                                                "VCF",
+                                                                "CSV",
+                                                                "XLSX",
+                                                                "NPX",
+                                                                "BAM",
+                                                                "MAF",
+                                                                "BINARY",
+                                                                "TEXT",
+                                                                "[NOT SET]"
+                                                            ],
+                                                            "type": "string"
+                                                        },
+                                                        "file_name": {
+                                                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                                            "description": "The name of the file with extension.",
+                                                            "type": "string"
+                                                        },
+                                                        "file_size_bytes": {
+                                                            "description": "File size in bytes.",
+                                                            "type": "integer"
+                                                        },
+                                                        "md5_hash": {
+                                                            "description": "MD5 Hash of artifact.",
+                                                            "type": "string"
+                                                        },
+                                                        "object_url": {
+                                                            "description": "URL to artifact within Google Bucket.",
+                                                            "type": "string"
+                                                        },
+                                                        "upload_placeholder": {
+                                                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                            "description": "A placeholder for when artifact file is being uploaded.",
+                                                            "type": "string"
+                                                        },
+                                                        "uploaded_timestamp": {
+                                                            "description": "Timestamp of when artifact was loaded into the system.",
+                                                            "format": "date-time",
+                                                            "type": "string"
+                                                        },
+                                                        "uploader": {
+                                                            "description": "The name of the person uploading the artifact.",
+                                                            "type": "string"
+                                                        },
+                                                        "uuid": {
+                                                            "description": "UUID of artifact.",
+                                                            "type": "string"
+                                                        },
+                                                        "visible": {
+                                                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "title": "Artifact Core",
+                                                    "type": "object"
+                                                },
+                                                {
+                                                    "properties": {
+                                                        "data_format": {
+                                                            "const": "CSV",
+                                                            "description": "Data format."
+                                                        },
+                                                        "header_row": {
+                                                            "description": "Number of header lines in the CSV file.",
+                                                            "type": "integer"
+                                                        },
+                                                        "separator": {
+                                                            "description": "Delimiter for separating values within the CSV file.",
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "description": "Information about CSV files.",
+                                            "required": [
+                                                "separator",
+                                                "header_row"
+                                            ],
+                                            "title": "CSV Artifact",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "required": [],
+                                    "title": "Immunohistichemical Analysis Input Files",
+                                    "type": "object"
+                                },
+                                "percent_inflammation_marker_positive": {
+                                    "description": "Percentage of positive marker inflammation.",
+                                    "type": "string"
+                                },
+                                "percentage_fibrosis": {
+                                    "description": "Percentage of fibrosis.",
+                                    "type": "string"
+                                },
+                                "percentage_tumor": {
+                                    "description": "Percentage of tumor.",
+                                    "type": "string"
+                                },
+                                "percentage_tumor_positive": {
+                                    "description": "Percentage of tumor positive.",
+                                    "type": "string"
+                                },
+                                "percentage_viable_tissue": {
+                                    "description": "Percentage of tissue that is viable.",
+                                    "type": "string"
+                                },
+                                "tumor_positive_intensity": {
+                                    "description": "Intensity of positive tumor (1+, 2+ or 3+).",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "files"
+                            ],
+                            "title": "IHC assay record",
+                            "type": "object"
+                        },
+                        "type": "array"
+                    }
+                },
+                "required": [
+                    "records"
+                ],
+                "title": "IHC Assay",
                 "type": "object"
             },
             "mergeStrategy": "append",

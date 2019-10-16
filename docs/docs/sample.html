@@ -58,47 +58,6 @@
         </thead>
         
             
-        
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="parent_sample_id">
-                parent_sample_id
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Sample identifier assigned by the biorepository site. Example: EA123-45.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-        
-            
                 <tr>
     <td>
         
@@ -142,13 +101,11 @@
             
         
             
-        
-            
                 <tr>
     <td>
         
-            <span id="collection_event_name">
-                collection_event_name
+            <span id="parent_sample_id">
+                parent_sample_id
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -157,7 +114,7 @@
     </td>
     <td width=55%>
         
-            Categorical description of timepoint at which the sample was taken.
+            Sample identifier assigned by the biorepository site. Example: EA123-45.
         
     </td>
     <td>
@@ -186,6 +143,55 @@
         
             
         
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="collection_event_name">
+                collection_event_name
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Categorical description of timepoint at which the sample was taken.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Baseline"</li>
+                
+                    <li>"Pre_Day_1_Cycle_2"</li>
+                
+                    <li>"Restaging"</li>
+                
+                    <li>"Off_study"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
             
         
             
@@ -262,6 +268,8 @@
                 
                     <li>"Cerebrospinal Fluid"</li>
                 
+                    <li>"Lymph Node"</li>
+                
                     <li>"Stool"</li>
                 
                     <li>"Not Reported"</li>
@@ -274,6 +282,8 @@
         
     </td>
 </tr>
+            
+        
             
         
             
@@ -366,37 +376,36 @@
             
         
             
+        
+            
+        
+        
+            
+        
+            
                 <tr>
     <td>
         
-            <span id="genomic_source">
-                genomic_source
+            <span id="shipping_entry_number">
+                shipping_entry_number
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
     <td width=55%>
         
-            The type of material submitted - tumor/normal/etc
+            Provides a numbered identifier for patient (sample) entry in a shipment manifest.
         
     </td>
     <td>
         
             &lt; 
-                string 
+                number 
     
     
     
             &gt;
             <ul>
-                
-                    <li>"Tumor"</li>
-                
-                    <li>"Normal"</li>
-                
-                    <li>"Metastasis"</li>
                 
             </ul>
             
@@ -407,7 +416,37 @@
             
         
             
+                <tr>
+    <td>
         
+            <span id="box_number">
+                box_number
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Identifier if sample shipment container includes multiple boxes for each assay.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                integer 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
         
             
                 <tr>
@@ -511,8 +550,6 @@
             
         
             
-        
-            
                 <tr>
     <td>
         
@@ -536,16 +573,6 @@
     
             &gt;
             <ul>
-                
-                    <li>"ACCESSORY SINUS, NOS"</li>
-                
-                    <li>"ADRENAL GLANDS"</li>
-                
-                    <li>"ANAL CANAL \u0026 ANUS"</li>
-                
-                    <li>"APPENDIX"</li>
-                
-                    <li>"BASE OF TONGUE"</li>
                 
             </ul>
             
@@ -580,30 +607,6 @@
             &gt;
             <ul>
                 
-                    <li>"C00"</li>
-                
-                    <li>"C00.0"</li>
-                
-                    <li>"C00.1"</li>
-                
-                    <li>"C00.2"</li>
-                
-                    <li>"C00.3"</li>
-                
-                    <li>"C00.4"</li>
-                
-                    <li>"C00.5"</li>
-                
-                    <li>"C00.6"</li>
-                
-                    <li>"C00.8"</li>
-                
-                    <li>"C00.9"</li>
-                
-                    <li>"C01"</li>
-                
-                    <li>"C01.9"</li>
-                
             </ul>
             
             
@@ -636,26 +639,6 @@
     
             &gt;
             <ul>
-                
-                    <li>"LIP"</li>
-                
-                    <li>"External upper lip"</li>
-                
-                    <li>"External lower lip"</li>
-                
-                    <li>"External lip, NOS"</li>
-                
-                    <li>"Mucosa of upper lip"</li>
-                
-                    <li>"Mucosa of lower lip"</li>
-                
-                    <li>"Mucosa of lip, NOS"</li>
-                
-                    <li>"Commissure of lip"</li>
-                
-                    <li>"Overlapping lesion of lip"</li>
-                
-                    <li>"Lip, NOS"</li>
                 
             </ul>
             
@@ -690,24 +673,6 @@
             &gt;
             <ul>
                 
-                    <li>"8000/3"</li>
-                
-                    <li>"8001/3"</li>
-                
-                    <li>"8002/3"</li>
-                
-                    <li>"8003/3"</li>
-                
-                    <li>"8004/3"</li>
-                
-                    <li>"8005/3"</li>
-                
-                    <li>"8010/2"</li>
-                
-                    <li>"8010/3"</li>
-                
-                    <li>"8011/3"</li>
-                
             </ul>
             
             
@@ -741,18 +706,6 @@
             &gt;
             <ul>
                 
-                    <li>"Neoplasm, malignant"</li>
-                
-                    <li>"Tumor cells, malignant"</li>
-                
-                    <li>"Malignant tumor, small cell type"</li>
-                
-                    <li>"Malignant tumor, giant cell type"</li>
-                
-                    <li>"Malignant tumor, spindle cell type"</li>
-                
-                    <li>"Malignant tumor, clear cell type"</li>
-                
             </ul>
             
             
@@ -764,150 +717,22 @@
             
         
             
-                <tr>
-    <td>
         
-            <span id="blood_collection_date">
-                blood_collection_date
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Date of blood collection.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-     :  date
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
             
         
             
                 <tr>
     <td>
         
-            <span id="blood_collection_time">
-                blood_collection_time
+            <span id="type_of_tumor_sample">
+                type_of_tumor_sample
             </span>
             
         
     </td>
     <td width=55%>
         
-            Time of blood collection.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-     :  time
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="blood_processing_date">
-                blood_processing_date
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Date of blood processing.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-     :  date
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="blood_processing_time">
-                blood_processing_time
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Time of blood processing.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-     :  time
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="sample_processing_compliance">
-                sample_processing_compliance
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Records if a sample processing (blood or tissue) is not compliant with protocol.
+            The type of tumor sample obtained (primary or metastatic).
         
     </td>
     <td>
@@ -920,15 +745,9 @@
             &gt;
             <ul>
                 
-                    <li>"Compliant_processing"</li>
+                    <li>"Metastatic Tumor"</li>
                 
-                    <li>"Noncompliant_tissue_fixation_24_to_36_hrs"</li>
-                
-                    <li>"Noncompliant_tissue_fixation_over_36_hrs"</li>
-                
-                    <li>"Noncompliant_blood_processing_ 24_to_48_hrs"</li>
-                
-                    <li>"Noncompliant_blood_processing_over_48_hrs"</li>
+                    <li>"Primary Tumor"</li>
                 
                     <li>"Not Reported"</li>
                 
@@ -940,10 +759,6 @@
         
     </td>
 </tr>
-            
-        
-            
-        
             
         
             
@@ -987,6 +802,10 @@
                 
                     <li>"Lumbar Puncture"</li>
                 
+                    <li>"Aspirate"</li>
+                
+                    <li>"Fine-Needle Aspiration"</li>
+                
                     <li>"Not Reported"</li>
                 
                     <li>"Other"</li>
@@ -1013,7 +832,7 @@
     </td>
     <td width=55%>
         
-            Volume of aliquot shipped.
+            Volume of the parent sample (e.g. Heparin tube volume)
         
     </td>
     <td>
@@ -1046,7 +865,7 @@
     </td>
     <td width=55%>
         
-            The unit of biological material from this sample.
+            Unit for the parent sample volume.
         
     </td>
     <td>
@@ -1087,7 +906,7 @@
     </td>
     <td width=55%>
         
-            The type of processing that was performed on the collected specimen by the Biobank for storage. e.g. Plasma
+            The type of processing that was performed on the collected specimen by the Biobank for storage.
         
     </td>
     <td>
@@ -1138,7 +957,7 @@
     </td>
     <td width=55%>
         
-            Volume of sample shipped.
+            Volume of the processed sample.
         
     </td>
     <td>
@@ -1171,7 +990,7 @@
     </td>
     <td width=55%>
         
-            Volume units of each liquid sample.
+            Volume units of each processed sample.
         
     </td>
     <td>
@@ -1184,9 +1003,9 @@
             &gt;
             <ul>
                 
-                    <li>"\u00b5L"</li>
+                    <li>"Microliters"</li>
                 
-                    <li>"mL"</li>
+                    <li>"Milliliters"</li>
                 
                     <li>"Not Reported"</li>
                 
@@ -1212,7 +1031,7 @@
     </td>
     <td width=55%>
         
-            Volume units of each liquid sample.
+            The concentration of the processed sample.
         
     </td>
     <td>
@@ -1245,7 +1064,7 @@
     </td>
     <td width=55%>
         
-            Volume units of each liquid sample.
+            The concentration units for the processed sample.
         
     </td>
     <td>
@@ -1561,7 +1380,7 @@
     </td>
     <td width=55%>
         
-            Units for the amount of material remaining.
+            Storage condition of the material once it was received.
         
     </td>
     <td>
@@ -1662,9 +1481,11 @@
             &gt;
             <ul>
                 
-                    <li>"Sample Sent to Another Lab"</li>
+                    <li>"Replacement Not Requested"</li>
                 
-                    <li>"Sample received from CIMAC"</li>
+                    <li>"Replacement Requested"</li>
+                
+                    <li>"Replacement Tested"</li>
                 
                     <li>"Not Reported"</li>
                 
@@ -1755,8 +1576,6 @@
             
         
             
-        
-            
                 <tr>
     <td>
         
@@ -1786,6 +1605,49 @@
                 
                     <a href="aliquot.html">aliquot</a>
                 
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="diagnosis_verification">
+                diagnosis_verification
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates whether the local pathology review was consistent with the diagnostic pathology report.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Local pathology review was not consistent"</li>
+                
+                    <li>"Local pathology review was consistent with site of tissue procurement diagnostic pathology report"</li>
+                
+                    <li>"Not Available"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
             
             
         
@@ -1895,25 +1757,9 @@
             "mergeStrategy": "arrayMergeById",
             "type": "array"
         },
-        "blood_collection_date": {
-            "description": "Date of blood collection.",
-            "format": "date",
-            "type": "string"
-        },
-        "blood_collection_time": {
-            "description": "Time of blood collection.",
-            "format": "time",
-            "type": "string"
-        },
-        "blood_processing_date": {
-            "description": "Date of blood processing.",
-            "format": "date",
-            "type": "string"
-        },
-        "blood_processing_time": {
-            "description": "Time of blood processing.",
-            "format": "time",
-            "type": "string"
+        "box_number": {
+            "description": "Identifier if sample shipment container includes multiple boxes for each assay.",
+            "type": "integer"
         },
         "cimac_id": {
             "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.",
@@ -1928,7 +1774,16 @@
             "type": "string"
         },
         "collection_event_name": {
+            "$comment": "This is enum with E4412 values only as a temp solution.",
             "description": "Categorical description of timepoint at which the sample was taken.",
+            "enum": [
+                "Baseline",
+                "Pre_Day_1_Cycle_2",
+                "Restaging",
+                "Off_study",
+                "Not Reported",
+                "Other"
+            ],
             "title": "Collection Event Name",
             "type": "string"
         },
@@ -1936,40 +1791,24 @@
             "description": "Comments on sample testing.",
             "type": "string"
         },
-        "genomic_source": {
-            "description": "The type of material submitted - tumor/normal/etc",
+        "diagnosis_verification": {
+            "description": "Indicates whether the local pathology review was consistent with the diagnostic pathology report.",
             "enum": [
-                "Tumor",
-                "Normal",
-                "Metastasis"
+                "Local pathology review was not consistent",
+                "Local pathology review was consistent with site of tissue procurement diagnostic pathology report",
+                "Not Available",
+                "Not Reported",
+                "Other"
             ],
+            "title": "Diagnosis verification",
             "type": "string"
         },
         "histology_behavior": {
             "description": "ICD-0-3 code for histology and behavior. e.g. 9665/3",
-            "enum": [
-                "8000/3",
-                "8001/3",
-                "8002/3",
-                "8003/3",
-                "8004/3",
-                "8005/3",
-                "8010/2",
-                "8010/3",
-                "8011/3"
-            ],
             "type": "string"
         },
         "histology_behavior_description": {
             "description": "ICD-0-3 histology and behavior code description. e.g. Hodgkin lymphoma, nod. scler., grade 1",
-            "enum": [
-                "Neoplasm, malignant",
-                "Tumor cells, malignant",
-                "Malignant tumor, small cell type",
-                "Malignant tumor, giant cell type",
-                "Malignant tumor, spindle cell type",
-                "Malignant tumor, clear cell type"
-            ],
             "type": "string"
         },
         "material_remaining": {
@@ -1991,7 +1830,7 @@
             "type": "string"
         },
         "material_storage_condition": {
-            "description": "Units for the amount of material remaining.",
+            "description": "Storage condition of the material once it was received.",
             "enum": [
                 "RT",
                 "4oC",
@@ -2044,11 +1883,11 @@
             "type": "number"
         },
         "processed_sample_concentration": {
-            "description": "Volume units of each liquid sample.",
+            "description": "The concentration of the processed sample.",
             "type": "number"
         },
         "processed_sample_concentration_units": {
-            "description": "Volume units of each liquid sample.",
+            "description": "The concentration units for the processed sample.",
             "enum": [
                 "Nanogram per Microliter",
                 "Milligram per Milliliter",
@@ -2064,7 +1903,7 @@
             "type": "string"
         },
         "processed_sample_type": {
-            "description": "The type of processing that was performed on the collected specimen by the Biobank for storage. e.g. Plasma",
+            "description": "The type of processing that was performed on the collected specimen by the Biobank for storage.",
             "enum": [
                 "Whole Blood",
                 "Plasma",
@@ -2079,14 +1918,14 @@
             "type": "string"
         },
         "processed_sample_volume": {
-            "description": "Volume of sample shipped.",
+            "description": "Volume of the processed sample.",
             "type": "number"
         },
         "processed_sample_volume_units": {
-            "description": "Volume units of each liquid sample.",
+            "description": "Volume units of each processed sample.",
             "enum": [
-                "\u00b5L",
-                "mL",
+                "Microliters",
+                "Milliliters",
                 "Not Reported",
                 "Other"
             ],
@@ -2124,6 +1963,8 @@
                 "Bone Marrow Core Biopsy",
                 "Bone Marrow Aspirate",
                 "Lumbar Puncture",
+                "Aspirate",
+                "Fine-Needle Aspiration",
                 "Not Reported",
                 "Other"
             ],
@@ -2133,35 +1974,23 @@
             "description": "Sample location within the shipping container. Example: A1.",
             "type": "string"
         },
-        "sample_processing_compliance": {
-            "description": "Records if a sample processing (blood or tissue) is not compliant with protocol.",
-            "enum": [
-                "Compliant_processing",
-                "Noncompliant_tissue_fixation_24_to_36_hrs",
-                "Noncompliant_tissue_fixation_over_36_hrs",
-                "Noncompliant_blood_processing_ 24_to_48_hrs",
-                "Noncompliant_blood_processing_over_48_hrs",
-                "Not Reported",
-                "Other"
-            ],
-            "type": "string"
-        },
         "sample_replacement": {
             "description": "Indication if sample replacement is/was requested.",
             "enum": [
-                "Sample Sent to Another Lab",
-                "Sample received from CIMAC",
+                "Replacement Not Requested",
+                "Replacement Requested",
+                "Replacement Tested",
                 "Not Reported",
                 "Other"
             ],
             "type": "string"
         },
         "sample_volume": {
-            "description": "Volume of aliquot shipped.",
+            "description": "Volume of the parent sample (e.g. Heparin tube volume)",
             "type": "number"
         },
         "sample_volume_units": {
-            "description": "The unit of biological material from this sample.",
+            "description": "Unit for the parent sample volume.",
             "enum": [
                 "Microliter",
                 "Milliliter",
@@ -2170,15 +1999,12 @@
             ],
             "type": "string"
         },
+        "shipping_entry_number": {
+            "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
+            "type": "number"
+        },
         "site_description": {
             "description": "Descritpion of the topography category. e.g LUNG AND BRONCHUS",
-            "enum": [
-                "ACCESSORY SINUS, NOS",
-                "ADRENAL GLANDS",
-                "ANAL CANAL & ANUS",
-                "APPENDIX",
-                "BASE OF TONGUE"
-            ],
             "type": "string"
         },
         "surgical_pathology_report_id": {
@@ -2187,36 +2013,10 @@
         },
         "topography_code": {
             "description": "ICD-0-3 topography site code from which a specimen was isolated. e.g. C34.1",
-            "enum": [
-                "C00",
-                "C00.0",
-                "C00.1",
-                "C00.2",
-                "C00.3",
-                "C00.4",
-                "C00.5",
-                "C00.6",
-                "C00.8",
-                "C00.9",
-                "C01",
-                "C01.9"
-            ],
             "type": "string"
         },
         "topography_description": {
             "description": "ICD-0-3 site code description. e.g. Upper lobe, lung",
-            "enum": [
-                "LIP",
-                "External upper lip",
-                "External lower lip",
-                "External lip, NOS",
-                "Mucosa of upper lip",
-                "Mucosa of lower lip",
-                "Mucosa of lip, NOS",
-                "Commissure of lip",
-                "Overlapping lesion of lip",
-                "Lip, NOS"
-            ],
             "type": "string"
         },
         "type_of_primary_container": {
@@ -2241,7 +2041,18 @@
                 "Blood",
                 "Bone Marrow",
                 "Cerebrospinal Fluid",
+                "Lymph Node",
                 "Stool",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "type_of_tumor_sample": {
+            "description": "The type of tumor sample obtained (primary or metastatic).",
+            "enum": [
+                "Metastatic Tumor",
+                "Primary Tumor",
                 "Not Reported",
                 "Other"
             ],
@@ -2254,8 +2065,7 @@
         "collection_event_name",
         "sample_location",
         "type_of_sample",
-        "type_of_primary_container",
-        "genomic_source"
+        "type_of_primary_container"
     ],
     "title": "Sample",
     "type": "object"

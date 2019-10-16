@@ -65,8 +65,8 @@
                 <tr>
     <td>
         
-            <span id="protocol_id">
-                protocol_id
+            <span id="protocol_identifier">
+                protocol_identifier
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -1227,6 +1227,376 @@
                             "records"
                         ],
                         "title": "CYTOF Run",
+                        "type": "object"
+                    },
+                    "mergeStrategy": "append",
+                    "type": "array"
+                },
+                "ihc": {
+                    "description": "Immunohistochemical analysis.",
+                    "items": {
+                        "$id": "ihc",
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "allOf": [
+                            {
+                                "$id": "assay_core",
+                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                "description": "Main properties of the assay experiment template.",
+                                "properties": {
+                                    "assay_creator": {
+                                        "description": "Indicates what site is filling out the assay.",
+                                        "enum": [
+                                            "DFCI",
+                                            "Mount Sinai",
+                                            "Stanford",
+                                            "MD Anderson"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "assay_creator"
+                                ],
+                                "title": "Assay Core",
+                                "type": "object"
+                            },
+                            {
+                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                "description": "Base information about the acquisition and analysis of a quantitative pathology image.",
+                                "id": "image",
+                                "properties": {
+                                    "autostainer_model": {
+                                        "description": "Model version of the autostainer instrument.",
+                                        "type": "string"
+                                    },
+                                    "cell_segmentation_model": {
+                                        "description": "Model used for cell segmentation in an imaging experiment.",
+                                        "enum": [
+                                            "proprietary",
+                                            "watershed"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "image_analysis_software": {
+                                        "description": "Source software for digital pathology and image analysis.",
+                                        "enum": [
+                                            "InForm",
+                                            "QuPath"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "image_analysis_software_version": {
+                                        "description": "Source software version for digital pathology and image analysis.",
+                                        "type": "string"
+                                    },
+                                    "positive_cell_detection": {
+                                        "description": "Model used for positive cell detection in imaging experiment.",
+                                        "enum": [
+                                            "proprietary",
+                                            "random forest classifier"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "protocol_name": {
+                                        "description": "Protocol name for which imaging experiment conducted.",
+                                        "type": "string"
+                                    },
+                                    "slide_scanner_model": {
+                                        "description": "Model version of the slide scanner instrument.",
+                                        "enum": [
+                                            "Vectra 2.0",
+                                            "Hamamatsu"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "staining_platform": {
+                                        "description": "Staining platform used for tissue sample labeling.",
+                                        "enum": [
+                                            "auto",
+                                            "manual"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "slide_scanner_model",
+                                    "protocol_name"
+                                ],
+                                "title": "Image"
+                            }
+                        ],
+                        "description": "Immunohistochemical analysis.",
+                        "properties": {
+                            "antibody": {
+                                "items": {
+                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                    "allOf": [
+                                        {
+                                            "$schema": "http://json-schema.org/draft-07/schema#",
+                                            "description": "Common information about an antibody used in a number of immune-oncology assays.",
+                                            "id": "antibody",
+                                            "properties": {
+                                                "antibody": {
+                                                    "description": "Antibody type collected for this study.",
+                                                    "type": "string"
+                                                },
+                                                "cat_num": {
+                                                    "description": "Antibody registry catalog number assigned to antibody sample.",
+                                                    "type": "string"
+                                                },
+                                                "clone": {
+                                                    "description": "Resulting type of antibody clone from primary antibody sample.",
+                                                    "type": "string"
+                                                },
+                                                "company": {
+                                                    "description": "Company from which antibody sample was derived.",
+                                                    "type": "string"
+                                                },
+                                                "lot_num": {
+                                                    "description": "Identification number assigned to the particular quantity or lot of material from manufacturer.",
+                                                    "type": "string"
+                                                },
+                                                "staining_order": {
+                                                    "description": "Order in which samples were stained for procedure.",
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "required": [
+                                                "antibody"
+                                            ],
+                                            "title": "Antibody"
+                                        }
+                                    ],
+                                    "description": "Data specific to antibody preparation for immunohistochemical analysis.",
+                                    "id": "ihc_antibody",
+                                    "properties": {
+                                        "dilution": {
+                                            "description": "Concentration ratio for antibody dilution.",
+                                            "type": "string"
+                                        },
+                                        "incubation_temp": {
+                                            "description": "Temperature used for antibody incubation.",
+                                            "type": "string"
+                                        },
+                                        "incubation_time": {
+                                            "description": "Duration of time for antibody incubation.",
+                                            "format": "time",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "dilution",
+                                        "incubation_time",
+                                        "incubation_temp"
+                                    ],
+                                    "title": "IHC antibody"
+                                },
+                                "type": "array"
+                            },
+                            "records": {
+                                "description": "A single data record from IHC assay.",
+                                "items": {
+                                    "$id": "ihc_assay_record",
+                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                    "description": "A single data record from IHC assay.",
+                                    "properties": {
+                                        "average_inflammation_marker_intensity": {
+                                            "description": "Average intensity of marker inflammation (0-3+).",
+                                            "type": "string"
+                                        },
+                                        "average_tumor_marker_intensity": {
+                                            "description": "Average intensity of tumor marker (0-3+).",
+                                            "type": "string"
+                                        },
+                                        "clinically_positive": {
+                                            "description": "Indicates whether the marker is considered positive by FDA guidelines.",
+                                            "type": "string"
+                                        },
+                                        "degree_lymphoid_infiltrate": {
+                                            "description": "Degree of lymphoid infiltrate (0-3+).",
+                                            "type": "string"
+                                        },
+                                        "files": {
+                                            "$id": "ihc_input",
+                                            "$schema": "http://json-schema.org/draft-07/schema#",
+                                            "description": "IHC assay input/output files.",
+                                            "properties": {
+                                                "ihc_output_summary": {
+                                                    "$comment": "Summary of the results of the experiment.",
+                                                    "$id": "csv_artifact",
+                                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                                    "allOf": [
+                                                        {
+                                                            "$id": "artifact_core",
+                                                            "$schema": "http://json-schema.org/draft-07/schema#",
+                                                            "anyOf": [
+                                                                {
+                                                                    "required": [
+                                                                        "file_name",
+                                                                        "object_url",
+                                                                        "uploaded_timestamp",
+                                                                        "file_size_bytes",
+                                                                        "md5_hash",
+                                                                        "artifact_category",
+                                                                        "data_format"
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "required": [
+                                                                        "upload_placeholder"
+                                                                    ]
+                                                                }
+                                                            ],
+                                                            "description": "Any file artifact associated with a clinical trial.",
+                                                            "properties": {
+                                                                "artifact_category": {
+                                                                    "description": "Artifact category.",
+                                                                    "enum": [
+                                                                        "Assay Artifact from CIMAC",
+                                                                        "Pipeline Artifact",
+                                                                        "Manifest File"
+                                                                    ],
+                                                                    "type": "string"
+                                                                },
+                                                                "artifact_creator": {
+                                                                    "description": "The name of the center that created this artifact.",
+                                                                    "enum": [
+                                                                        "DFCI",
+                                                                        "Mount Sinai",
+                                                                        "Stanford",
+                                                                        "MD Anderson"
+                                                                    ],
+                                                                    "type": "string"
+                                                                },
+                                                                "data_format": {
+                                                                    "description": "Data Format.",
+                                                                    "enum": [
+                                                                        "FASTA",
+                                                                        "FASTQ",
+                                                                        "IMAGE",
+                                                                        "VCF",
+                                                                        "CSV",
+                                                                        "XLSX",
+                                                                        "NPX",
+                                                                        "BAM",
+                                                                        "MAF",
+                                                                        "BINARY",
+                                                                        "TEXT",
+                                                                        "[NOT SET]"
+                                                                    ],
+                                                                    "type": "string"
+                                                                },
+                                                                "file_name": {
+                                                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                                                    "description": "The name of the file with extension.",
+                                                                    "type": "string"
+                                                                },
+                                                                "file_size_bytes": {
+                                                                    "description": "File size in bytes.",
+                                                                    "type": "integer"
+                                                                },
+                                                                "md5_hash": {
+                                                                    "description": "MD5 Hash of artifact.",
+                                                                    "type": "string"
+                                                                },
+                                                                "object_url": {
+                                                                    "description": "URL to artifact within Google Bucket.",
+                                                                    "type": "string"
+                                                                },
+                                                                "upload_placeholder": {
+                                                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                                                    "type": "string"
+                                                                },
+                                                                "uploaded_timestamp": {
+                                                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                                                    "format": "date-time",
+                                                                    "type": "string"
+                                                                },
+                                                                "uploader": {
+                                                                    "description": "The name of the person uploading the artifact.",
+                                                                    "type": "string"
+                                                                },
+                                                                "uuid": {
+                                                                    "description": "UUID of artifact.",
+                                                                    "type": "string"
+                                                                },
+                                                                "visible": {
+                                                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                                                    "type": "boolean"
+                                                                }
+                                                            },
+                                                            "title": "Artifact Core",
+                                                            "type": "object"
+                                                        },
+                                                        {
+                                                            "properties": {
+                                                                "data_format": {
+                                                                    "const": "CSV",
+                                                                    "description": "Data format."
+                                                                },
+                                                                "header_row": {
+                                                                    "description": "Number of header lines in the CSV file.",
+                                                                    "type": "integer"
+                                                                },
+                                                                "separator": {
+                                                                    "description": "Delimiter for separating values within the CSV file.",
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    "description": "Information about CSV files.",
+                                                    "required": [
+                                                        "separator",
+                                                        "header_row"
+                                                    ],
+                                                    "title": "CSV Artifact",
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "required": [],
+                                            "title": "Immunohistichemical Analysis Input Files",
+                                            "type": "object"
+                                        },
+                                        "percent_inflammation_marker_positive": {
+                                            "description": "Percentage of positive marker inflammation.",
+                                            "type": "string"
+                                        },
+                                        "percentage_fibrosis": {
+                                            "description": "Percentage of fibrosis.",
+                                            "type": "string"
+                                        },
+                                        "percentage_tumor": {
+                                            "description": "Percentage of tumor.",
+                                            "type": "string"
+                                        },
+                                        "percentage_tumor_positive": {
+                                            "description": "Percentage of tumor positive.",
+                                            "type": "string"
+                                        },
+                                        "percentage_viable_tissue": {
+                                            "description": "Percentage of tissue that is viable.",
+                                            "type": "string"
+                                        },
+                                        "tumor_positive_intensity": {
+                                            "description": "Intensity of positive tumor (1+, 2+ or 3+).",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "files"
+                                    ],
+                                    "title": "IHC assay record",
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            }
+                        },
+                        "required": [
+                            "records"
+                        ],
+                        "title": "IHC Assay",
                         "type": "object"
                     },
                     "mergeStrategy": "append",
@@ -7846,10 +8216,6 @@
                 "$schema": "http://json-schema.org/draft-07/schema#",
                 "description": "The collection of all data related to a specific participant in the context of a specific clinical trial.\n",
                 "properties": {
-                    "arm_id": {
-                        "description": "Identifies the trial arm to which the participant belongs. Example: Arm A.",
-                        "type": "string"
-                    },
                     "cimac_participant_id": {
                         "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_participant_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_participant_id $ref.",
                         "description": "Participant identifier assigned by the CIMAC-CIDC Network. Formated as: CM-????-????.",
@@ -7859,8 +8225,28 @@
                         "type": "string"
                     },
                     "cohort_name": {
-                        "description": "Categorical description of cohorts, arms, and treatment groups. Example: Cohort A.",
+                        "$comment": "This is enum with E4412 values only as a temp solution.",
+                        "description": "Categorical description of cohorts, arms, and treatment groups.",
+                        "enum": [
+                            "Arm_Z",
+                            "Arm_A",
+                            "Arm_B",
+                            "Arm_C",
+                            "Arm_Y",
+                            "Arm_D",
+                            "Arm_E",
+                            "Arm_F",
+                            "Arm_X",
+                            "Arm_G",
+                            "Arm_H",
+                            "Arm_I"
+                        ],
+                        "example": "Arm_Z",
                         "type": "string"
+                    },
+                    "essential_patient_entry_number": {
+                        "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
+                        "type": "number"
                     },
                     "ethnicity": {
                         "description": "'NIH Racial and Ethnic Categories and Definitions for NIH Diversity Programs and for Other Reporting Purposes (NOT-OD-15-089),  Release Date: April 8, 2015.'\n",
@@ -7884,7 +8270,8 @@
                         "type": "string"
                     },
                     "participant_id": {
-                        "description": "Trial Participant Identifier. Example: PT123.",
+                        "description": "Trial Participant Identifier.",
+                        "example": "PT123",
                         "type": "string"
                     },
                     "race": {
@@ -7997,25 +8384,9 @@
                                     "mergeStrategy": "arrayMergeById",
                                     "type": "array"
                                 },
-                                "blood_collection_date": {
-                                    "description": "Date of blood collection.",
-                                    "format": "date",
-                                    "type": "string"
-                                },
-                                "blood_collection_time": {
-                                    "description": "Time of blood collection.",
-                                    "format": "time",
-                                    "type": "string"
-                                },
-                                "blood_processing_date": {
-                                    "description": "Date of blood processing.",
-                                    "format": "date",
-                                    "type": "string"
-                                },
-                                "blood_processing_time": {
-                                    "description": "Time of blood processing.",
-                                    "format": "time",
-                                    "type": "string"
+                                "box_number": {
+                                    "description": "Identifier if sample shipment container includes multiple boxes for each assay.",
+                                    "type": "integer"
                                 },
                                 "cimac_id": {
                                     "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.",
@@ -8030,7 +8401,16 @@
                                     "type": "string"
                                 },
                                 "collection_event_name": {
+                                    "$comment": "This is enum with E4412 values only as a temp solution.",
                                     "description": "Categorical description of timepoint at which the sample was taken.",
+                                    "enum": [
+                                        "Baseline",
+                                        "Pre_Day_1_Cycle_2",
+                                        "Restaging",
+                                        "Off_study",
+                                        "Not Reported",
+                                        "Other"
+                                    ],
                                     "title": "Collection Event Name",
                                     "type": "string"
                                 },
@@ -8038,40 +8418,24 @@
                                     "description": "Comments on sample testing.",
                                     "type": "string"
                                 },
-                                "genomic_source": {
-                                    "description": "The type of material submitted - tumor/normal/etc",
+                                "diagnosis_verification": {
+                                    "description": "Indicates whether the local pathology review was consistent with the diagnostic pathology report.",
                                     "enum": [
-                                        "Tumor",
-                                        "Normal",
-                                        "Metastasis"
+                                        "Local pathology review was not consistent",
+                                        "Local pathology review was consistent with site of tissue procurement diagnostic pathology report",
+                                        "Not Available",
+                                        "Not Reported",
+                                        "Other"
                                     ],
+                                    "title": "Diagnosis verification",
                                     "type": "string"
                                 },
                                 "histology_behavior": {
                                     "description": "ICD-0-3 code for histology and behavior. e.g. 9665/3",
-                                    "enum": [
-                                        "8000/3",
-                                        "8001/3",
-                                        "8002/3",
-                                        "8003/3",
-                                        "8004/3",
-                                        "8005/3",
-                                        "8010/2",
-                                        "8010/3",
-                                        "8011/3"
-                                    ],
                                     "type": "string"
                                 },
                                 "histology_behavior_description": {
                                     "description": "ICD-0-3 histology and behavior code description. e.g. Hodgkin lymphoma, nod. scler., grade 1",
-                                    "enum": [
-                                        "Neoplasm, malignant",
-                                        "Tumor cells, malignant",
-                                        "Malignant tumor, small cell type",
-                                        "Malignant tumor, giant cell type",
-                                        "Malignant tumor, spindle cell type",
-                                        "Malignant tumor, clear cell type"
-                                    ],
                                     "type": "string"
                                 },
                                 "material_remaining": {
@@ -8093,7 +8457,7 @@
                                     "type": "string"
                                 },
                                 "material_storage_condition": {
-                                    "description": "Units for the amount of material remaining.",
+                                    "description": "Storage condition of the material once it was received.",
                                     "enum": [
                                         "RT",
                                         "4oC",
@@ -8146,11 +8510,11 @@
                                     "type": "number"
                                 },
                                 "processed_sample_concentration": {
-                                    "description": "Volume units of each liquid sample.",
+                                    "description": "The concentration of the processed sample.",
                                     "type": "number"
                                 },
                                 "processed_sample_concentration_units": {
-                                    "description": "Volume units of each liquid sample.",
+                                    "description": "The concentration units for the processed sample.",
                                     "enum": [
                                         "Nanogram per Microliter",
                                         "Milligram per Milliliter",
@@ -8166,7 +8530,7 @@
                                     "type": "string"
                                 },
                                 "processed_sample_type": {
-                                    "description": "The type of processing that was performed on the collected specimen by the Biobank for storage. e.g. Plasma",
+                                    "description": "The type of processing that was performed on the collected specimen by the Biobank for storage.",
                                     "enum": [
                                         "Whole Blood",
                                         "Plasma",
@@ -8181,14 +8545,14 @@
                                     "type": "string"
                                 },
                                 "processed_sample_volume": {
-                                    "description": "Volume of sample shipped.",
+                                    "description": "Volume of the processed sample.",
                                     "type": "number"
                                 },
                                 "processed_sample_volume_units": {
-                                    "description": "Volume units of each liquid sample.",
+                                    "description": "Volume units of each processed sample.",
                                     "enum": [
-                                        "\u00b5L",
-                                        "mL",
+                                        "Microliters",
+                                        "Milliliters",
                                         "Not Reported",
                                         "Other"
                                     ],
@@ -8226,6 +8590,8 @@
                                         "Bone Marrow Core Biopsy",
                                         "Bone Marrow Aspirate",
                                         "Lumbar Puncture",
+                                        "Aspirate",
+                                        "Fine-Needle Aspiration",
                                         "Not Reported",
                                         "Other"
                                     ],
@@ -8235,35 +8601,23 @@
                                     "description": "Sample location within the shipping container. Example: A1.",
                                     "type": "string"
                                 },
-                                "sample_processing_compliance": {
-                                    "description": "Records if a sample processing (blood or tissue) is not compliant with protocol.",
-                                    "enum": [
-                                        "Compliant_processing",
-                                        "Noncompliant_tissue_fixation_24_to_36_hrs",
-                                        "Noncompliant_tissue_fixation_over_36_hrs",
-                                        "Noncompliant_blood_processing_ 24_to_48_hrs",
-                                        "Noncompliant_blood_processing_over_48_hrs",
-                                        "Not Reported",
-                                        "Other"
-                                    ],
-                                    "type": "string"
-                                },
                                 "sample_replacement": {
                                     "description": "Indication if sample replacement is/was requested.",
                                     "enum": [
-                                        "Sample Sent to Another Lab",
-                                        "Sample received from CIMAC",
+                                        "Replacement Not Requested",
+                                        "Replacement Requested",
+                                        "Replacement Tested",
                                         "Not Reported",
                                         "Other"
                                     ],
                                     "type": "string"
                                 },
                                 "sample_volume": {
-                                    "description": "Volume of aliquot shipped.",
+                                    "description": "Volume of the parent sample (e.g. Heparin tube volume)",
                                     "type": "number"
                                 },
                                 "sample_volume_units": {
-                                    "description": "The unit of biological material from this sample.",
+                                    "description": "Unit for the parent sample volume.",
                                     "enum": [
                                         "Microliter",
                                         "Milliliter",
@@ -8272,15 +8626,12 @@
                                     ],
                                     "type": "string"
                                 },
+                                "shipping_entry_number": {
+                                    "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
+                                    "type": "number"
+                                },
                                 "site_description": {
                                     "description": "Descritpion of the topography category. e.g LUNG AND BRONCHUS",
-                                    "enum": [
-                                        "ACCESSORY SINUS, NOS",
-                                        "ADRENAL GLANDS",
-                                        "ANAL CANAL & ANUS",
-                                        "APPENDIX",
-                                        "BASE OF TONGUE"
-                                    ],
                                     "type": "string"
                                 },
                                 "surgical_pathology_report_id": {
@@ -8289,36 +8640,10 @@
                                 },
                                 "topography_code": {
                                     "description": "ICD-0-3 topography site code from which a specimen was isolated. e.g. C34.1",
-                                    "enum": [
-                                        "C00",
-                                        "C00.0",
-                                        "C00.1",
-                                        "C00.2",
-                                        "C00.3",
-                                        "C00.4",
-                                        "C00.5",
-                                        "C00.6",
-                                        "C00.8",
-                                        "C00.9",
-                                        "C01",
-                                        "C01.9"
-                                    ],
                                     "type": "string"
                                 },
                                 "topography_description": {
                                     "description": "ICD-0-3 site code description. e.g. Upper lobe, lung",
-                                    "enum": [
-                                        "LIP",
-                                        "External upper lip",
-                                        "External lower lip",
-                                        "External lip, NOS",
-                                        "Mucosa of upper lip",
-                                        "Mucosa of lower lip",
-                                        "Mucosa of lip, NOS",
-                                        "Commissure of lip",
-                                        "Overlapping lesion of lip",
-                                        "Lip, NOS"
-                                    ],
                                     "type": "string"
                                 },
                                 "type_of_primary_container": {
@@ -8343,7 +8668,18 @@
                                         "Blood",
                                         "Bone Marrow",
                                         "Cerebrospinal Fluid",
+                                        "Lymph Node",
                                         "Stool",
+                                        "Not Reported",
+                                        "Other"
+                                    ],
+                                    "type": "string"
+                                },
+                                "type_of_tumor_sample": {
+                                    "description": "The type of tumor sample obtained (primary or metastatic).",
+                                    "enum": [
+                                        "Metastatic Tumor",
+                                        "Primary Tumor",
                                         "Not Reported",
                                         "Other"
                                     ],
@@ -8356,8 +8692,7 @@
                                 "collection_event_name",
                                 "sample_location",
                                 "type_of_sample",
-                                "type_of_primary_container",
-                                "genomic_source"
+                                "type_of_primary_container"
                             ],
                             "title": "Sample",
                             "type": "object"
@@ -8373,7 +8708,6 @@
                     "cimac_participant_id",
                     "participant_id",
                     "cohort_name",
-                    "arm_id",
                     "samples"
                 ],
                 "title": "Participant"
@@ -8384,7 +8718,7 @@
             "mergeStrategy": "arrayMergeById",
             "type": "array"
         },
-        "protocol_id": {
+        "protocol_identifier": {
             "description": "Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.",
             "type": "string"
         },
@@ -8401,47 +8735,42 @@
                     "assay_priority": {
                         "description": "Priority of the assay as it appears on the intake form.",
                         "enum": [
-                            "Assay-1",
-                            "Assay-2",
-                            "Assay-3",
-                            "Assay-4",
-                            "Assay-5",
-                            "Assay-6",
-                            "Assay-7",
-                            "Assay-8",
-                            "Assay-9",
-                            "Assay-10",
-                            "Assay-11",
-                            "Assay-12",
-                            "Assay-13",
-                            "Assay-14",
-                            "Assay-15",
+                            "1",
+                            "2",
+                            "3",
+                            "4",
+                            "5",
+                            "6",
+                            "7",
+                            "8",
+                            "9",
+                            "10",
+                            "11",
+                            "12",
+                            "13",
+                            "14",
+                            "15",
+                            "Not Reported",
                             "Other"
                         ],
                         "type": "string"
                     },
-                    "assay_run_number": {
-                        "description": "Assay run number for samples received.",
-                        "type": "integer"
-                    },
                     "assay_type": {
-                        "description": "Assay and sample type used. Example: Green-top tube - Plasma (Olink).",
+                        "description": "Assay and sample type used.",
+                        "enum": [
+                            "Olink",
+                            "Not Reported",
+                            "Other"
+                        ],
                         "type": "string"
-                    },
-                    "batch_number": {
-                        "description": "The number corresponding to the batch sent for this assay.",
-                        "type": "integer"
-                    },
-                    "box_number": {
-                        "description": "Box identifier for samples, if sample shipment container includes multiple boxes for each sample/assay type.",
-                        "type": "integer"
                     },
                     "courier": {
                         "description": "Courier utilized for shipment.",
                         "enum": [
                             "FEDEX",
                             "USPS",
-                            "UPC"
+                            "UPS",
+                            "Inter-Site Delivery"
                         ],
                         "type": "string"
                     },
@@ -8459,20 +8788,8 @@
                         "description": "Filename of the manifest used to ship this sample. Example: E4412_PBMC.",
                         "type": "string"
                     },
-                    "num_of_path_report": {
-                        "description": "Number of pathology report(s) received.",
-                        "type": "integer"
-                    },
-                    "num_of_samples_good": {
-                        "description": "Number of Sample(s) Received in Good Condition.",
-                        "type": "integer"
-                    },
-                    "num_of_samples_shipped": {
-                        "description": "Count of specimen(s) distributed by site.",
-                        "type": "integer"
-                    },
                     "quality_of_shipment": {
-                        "description": "Final status of aliquot after QC and pathology review.",
+                        "description": "Indication that specimens were received in good condition.",
                         "enum": [
                             "Specimen shipment received in good condition",
                             "Specimen shipment received in poor condition",
@@ -8481,25 +8798,45 @@
                         ],
                         "type": "string"
                     },
-                    "request": {
-                        "description": "Assigns a request identifier (mandatory or optional) for the assay.",
+                    "receiving_party": {
+                        "description": "Site where sample was shipped to be assayed.",
+                        "enum": [
+                            "MDA_Wistuba",
+                            "MDA_Bernatchez",
+                            "MDA_Al-Atrash",
+                            "MSSM_Gnjatic",
+                            "MSSM_Rahman",
+                            "MSSM_Kim-Schulze",
+                            "MSSM_Bongers",
+                            "DFCI_Wu",
+                            "DFCI_Hodi",
+                            "Broad_Cibulskis",
+                            "Stanf_Maecker",
+                            "Stanf_Bendall",
+                            "Nationwide Children's Hospital",
+                            "Adaptive Biotechnologies",
+                            "FNLCR_MoCha",
+                            "Not Reported",
+                            "Other"
+                        ],
                         "type": "string"
                     },
                     "ship_from": {
-                        "description": "Shipping from [free text: person or organization, address, phone number, email address.]",
+                        "description": "Contact information for shipment.",
                         "type": "string"
                     },
                     "ship_to": {
-                        "description": "Shipping to [free text: person or organization, address, phone number, email address.]",
+                        "description": "Physical shipping address of the destination.",
                         "type": "string"
                     },
                     "shipping_condition": {
                         "description": "Type of shipment made.",
                         "enum": [
-                            "Frozen (Dry Ice)",
-                            "Frozen (Dry Shipper)",
-                            "Ambient (Ice Pack)",
+                            "Frozen_Dry_Ice",
+                            "Frozen_Shipper",
+                            "Ice_Pack",
                             "Ambient",
+                            "Not Reported",
                             "Other"
                         ],
                         "type": "string"
@@ -8510,7 +8847,19 @@
                     }
                 },
                 "required": [
-                    "request"
+                    "account_number",
+                    "assay_priority",
+                    "assay_type",
+                    "courier",
+                    "date_recieved",
+                    "date_shipped",
+                    "manifest_id",
+                    "quality_of_shipment",
+                    "ship_from",
+                    "ship_to",
+                    "shipping_condition",
+                    "tracking_number",
+                    "receiving_party"
                 ],
                 "title": "Core Shipping Details",
                 "type": "object"
@@ -8532,7 +8881,7 @@
         }
     },
     "required": [
-        "protocol_id",
+        "protocol_identifier",
         "participants"
     ],
     "title": "Clinical Trial"

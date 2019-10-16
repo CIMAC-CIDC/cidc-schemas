@@ -107,42 +107,7 @@
     </td>
     <td width=55%>
         
-            Trial Participant Identifier. Example: PT123.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="arm_id">
-                arm_id
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Identifies the trial arm to which the participant belongs. Example: Arm A.
+            Trial Participant Identifier.
         
     </td>
     <td>
@@ -177,7 +142,7 @@
     </td>
     <td width=55%>
         
-            Categorical description of cohorts, arms, and treatment groups. Example: Cohort A.
+            Categorical description of cohorts, arms, and treatment groups.
         
     </td>
     <td>
@@ -190,12 +155,38 @@
             &gt;
             <ul>
                 
+                    <li>"Arm_Z"</li>
+                
+                    <li>"Arm_A"</li>
+                
+                    <li>"Arm_B"</li>
+                
+                    <li>"Arm_C"</li>
+                
+                    <li>"Arm_Y"</li>
+                
+                    <li>"Arm_D"</li>
+                
+                    <li>"Arm_E"</li>
+                
+                    <li>"Arm_F"</li>
+                
+                    <li>"Arm_X"</li>
+                
+                    <li>"Arm_G"</li>
+                
+                    <li>"Arm_H"</li>
+                
+                    <li>"Arm_I"</li>
+                
             </ul>
             
             
         
     </td>
 </tr>
+            
+        
             
         
             
@@ -250,6 +241,37 @@
         
             
         
+            
+                <tr>
+    <td>
+        
+            <span id="essential_patient_entry_number">
+                essential_patient_entry_number
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Provides a numbered identifier for patient (sample) entry in a shipment manifest.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
             
         
             
@@ -401,10 +423,6 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "The collection of all data related to a specific participant in the context of a specific clinical trial.\n",
     "properties": {
-        "arm_id": {
-            "description": "Identifies the trial arm to which the participant belongs. Example: Arm A.",
-            "type": "string"
-        },
         "cimac_participant_id": {
             "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_participant_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_participant_id $ref.",
             "description": "Participant identifier assigned by the CIMAC-CIDC Network. Formated as: CM-????-????.",
@@ -414,8 +432,28 @@
             "type": "string"
         },
         "cohort_name": {
-            "description": "Categorical description of cohorts, arms, and treatment groups. Example: Cohort A.",
+            "$comment": "This is enum with E4412 values only as a temp solution.",
+            "description": "Categorical description of cohorts, arms, and treatment groups.",
+            "enum": [
+                "Arm_Z",
+                "Arm_A",
+                "Arm_B",
+                "Arm_C",
+                "Arm_Y",
+                "Arm_D",
+                "Arm_E",
+                "Arm_F",
+                "Arm_X",
+                "Arm_G",
+                "Arm_H",
+                "Arm_I"
+            ],
+            "example": "Arm_Z",
             "type": "string"
+        },
+        "essential_patient_entry_number": {
+            "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
+            "type": "number"
         },
         "ethnicity": {
             "description": "'NIH Racial and Ethnic Categories and Definitions for NIH Diversity Programs and for Other Reporting Purposes (NOT-OD-15-089),  Release Date: April 8, 2015.'\n",
@@ -439,7 +477,8 @@
             "type": "string"
         },
         "participant_id": {
-            "description": "Trial Participant Identifier. Example: PT123.",
+            "description": "Trial Participant Identifier.",
+            "example": "PT123",
             "type": "string"
         },
         "race": {
@@ -552,25 +591,9 @@
                         "mergeStrategy": "arrayMergeById",
                         "type": "array"
                     },
-                    "blood_collection_date": {
-                        "description": "Date of blood collection.",
-                        "format": "date",
-                        "type": "string"
-                    },
-                    "blood_collection_time": {
-                        "description": "Time of blood collection.",
-                        "format": "time",
-                        "type": "string"
-                    },
-                    "blood_processing_date": {
-                        "description": "Date of blood processing.",
-                        "format": "date",
-                        "type": "string"
-                    },
-                    "blood_processing_time": {
-                        "description": "Time of blood processing.",
-                        "format": "time",
-                        "type": "string"
+                    "box_number": {
+                        "description": "Identifier if sample shipment container includes multiple boxes for each assay.",
+                        "type": "integer"
                     },
                     "cimac_id": {
                         "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.",
@@ -585,7 +608,16 @@
                         "type": "string"
                     },
                     "collection_event_name": {
+                        "$comment": "This is enum with E4412 values only as a temp solution.",
                         "description": "Categorical description of timepoint at which the sample was taken.",
+                        "enum": [
+                            "Baseline",
+                            "Pre_Day_1_Cycle_2",
+                            "Restaging",
+                            "Off_study",
+                            "Not Reported",
+                            "Other"
+                        ],
                         "title": "Collection Event Name",
                         "type": "string"
                     },
@@ -593,40 +625,24 @@
                         "description": "Comments on sample testing.",
                         "type": "string"
                     },
-                    "genomic_source": {
-                        "description": "The type of material submitted - tumor/normal/etc",
+                    "diagnosis_verification": {
+                        "description": "Indicates whether the local pathology review was consistent with the diagnostic pathology report.",
                         "enum": [
-                            "Tumor",
-                            "Normal",
-                            "Metastasis"
+                            "Local pathology review was not consistent",
+                            "Local pathology review was consistent with site of tissue procurement diagnostic pathology report",
+                            "Not Available",
+                            "Not Reported",
+                            "Other"
                         ],
+                        "title": "Diagnosis verification",
                         "type": "string"
                     },
                     "histology_behavior": {
                         "description": "ICD-0-3 code for histology and behavior. e.g. 9665/3",
-                        "enum": [
-                            "8000/3",
-                            "8001/3",
-                            "8002/3",
-                            "8003/3",
-                            "8004/3",
-                            "8005/3",
-                            "8010/2",
-                            "8010/3",
-                            "8011/3"
-                        ],
                         "type": "string"
                     },
                     "histology_behavior_description": {
                         "description": "ICD-0-3 histology and behavior code description. e.g. Hodgkin lymphoma, nod. scler., grade 1",
-                        "enum": [
-                            "Neoplasm, malignant",
-                            "Tumor cells, malignant",
-                            "Malignant tumor, small cell type",
-                            "Malignant tumor, giant cell type",
-                            "Malignant tumor, spindle cell type",
-                            "Malignant tumor, clear cell type"
-                        ],
                         "type": "string"
                     },
                     "material_remaining": {
@@ -648,7 +664,7 @@
                         "type": "string"
                     },
                     "material_storage_condition": {
-                        "description": "Units for the amount of material remaining.",
+                        "description": "Storage condition of the material once it was received.",
                         "enum": [
                             "RT",
                             "4oC",
@@ -701,11 +717,11 @@
                         "type": "number"
                     },
                     "processed_sample_concentration": {
-                        "description": "Volume units of each liquid sample.",
+                        "description": "The concentration of the processed sample.",
                         "type": "number"
                     },
                     "processed_sample_concentration_units": {
-                        "description": "Volume units of each liquid sample.",
+                        "description": "The concentration units for the processed sample.",
                         "enum": [
                             "Nanogram per Microliter",
                             "Milligram per Milliliter",
@@ -721,7 +737,7 @@
                         "type": "string"
                     },
                     "processed_sample_type": {
-                        "description": "The type of processing that was performed on the collected specimen by the Biobank for storage. e.g. Plasma",
+                        "description": "The type of processing that was performed on the collected specimen by the Biobank for storage.",
                         "enum": [
                             "Whole Blood",
                             "Plasma",
@@ -736,14 +752,14 @@
                         "type": "string"
                     },
                     "processed_sample_volume": {
-                        "description": "Volume of sample shipped.",
+                        "description": "Volume of the processed sample.",
                         "type": "number"
                     },
                     "processed_sample_volume_units": {
-                        "description": "Volume units of each liquid sample.",
+                        "description": "Volume units of each processed sample.",
                         "enum": [
-                            "\u00b5L",
-                            "mL",
+                            "Microliters",
+                            "Milliliters",
                             "Not Reported",
                             "Other"
                         ],
@@ -781,6 +797,8 @@
                             "Bone Marrow Core Biopsy",
                             "Bone Marrow Aspirate",
                             "Lumbar Puncture",
+                            "Aspirate",
+                            "Fine-Needle Aspiration",
                             "Not Reported",
                             "Other"
                         ],
@@ -790,35 +808,23 @@
                         "description": "Sample location within the shipping container. Example: A1.",
                         "type": "string"
                     },
-                    "sample_processing_compliance": {
-                        "description": "Records if a sample processing (blood or tissue) is not compliant with protocol.",
-                        "enum": [
-                            "Compliant_processing",
-                            "Noncompliant_tissue_fixation_24_to_36_hrs",
-                            "Noncompliant_tissue_fixation_over_36_hrs",
-                            "Noncompliant_blood_processing_ 24_to_48_hrs",
-                            "Noncompliant_blood_processing_over_48_hrs",
-                            "Not Reported",
-                            "Other"
-                        ],
-                        "type": "string"
-                    },
                     "sample_replacement": {
                         "description": "Indication if sample replacement is/was requested.",
                         "enum": [
-                            "Sample Sent to Another Lab",
-                            "Sample received from CIMAC",
+                            "Replacement Not Requested",
+                            "Replacement Requested",
+                            "Replacement Tested",
                             "Not Reported",
                             "Other"
                         ],
                         "type": "string"
                     },
                     "sample_volume": {
-                        "description": "Volume of aliquot shipped.",
+                        "description": "Volume of the parent sample (e.g. Heparin tube volume)",
                         "type": "number"
                     },
                     "sample_volume_units": {
-                        "description": "The unit of biological material from this sample.",
+                        "description": "Unit for the parent sample volume.",
                         "enum": [
                             "Microliter",
                             "Milliliter",
@@ -827,15 +833,12 @@
                         ],
                         "type": "string"
                     },
+                    "shipping_entry_number": {
+                        "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
+                        "type": "number"
+                    },
                     "site_description": {
                         "description": "Descritpion of the topography category. e.g LUNG AND BRONCHUS",
-                        "enum": [
-                            "ACCESSORY SINUS, NOS",
-                            "ADRENAL GLANDS",
-                            "ANAL CANAL & ANUS",
-                            "APPENDIX",
-                            "BASE OF TONGUE"
-                        ],
                         "type": "string"
                     },
                     "surgical_pathology_report_id": {
@@ -844,36 +847,10 @@
                     },
                     "topography_code": {
                         "description": "ICD-0-3 topography site code from which a specimen was isolated. e.g. C34.1",
-                        "enum": [
-                            "C00",
-                            "C00.0",
-                            "C00.1",
-                            "C00.2",
-                            "C00.3",
-                            "C00.4",
-                            "C00.5",
-                            "C00.6",
-                            "C00.8",
-                            "C00.9",
-                            "C01",
-                            "C01.9"
-                        ],
                         "type": "string"
                     },
                     "topography_description": {
                         "description": "ICD-0-3 site code description. e.g. Upper lobe, lung",
-                        "enum": [
-                            "LIP",
-                            "External upper lip",
-                            "External lower lip",
-                            "External lip, NOS",
-                            "Mucosa of upper lip",
-                            "Mucosa of lower lip",
-                            "Mucosa of lip, NOS",
-                            "Commissure of lip",
-                            "Overlapping lesion of lip",
-                            "Lip, NOS"
-                        ],
                         "type": "string"
                     },
                     "type_of_primary_container": {
@@ -898,7 +875,18 @@
                             "Blood",
                             "Bone Marrow",
                             "Cerebrospinal Fluid",
+                            "Lymph Node",
                             "Stool",
+                            "Not Reported",
+                            "Other"
+                        ],
+                        "type": "string"
+                    },
+                    "type_of_tumor_sample": {
+                        "description": "The type of tumor sample obtained (primary or metastatic).",
+                        "enum": [
+                            "Metastatic Tumor",
+                            "Primary Tumor",
                             "Not Reported",
                             "Other"
                         ],
@@ -911,8 +899,7 @@
                     "collection_event_name",
                     "sample_location",
                     "type_of_sample",
-                    "type_of_primary_container",
-                    "genomic_source"
+                    "type_of_primary_container"
                 ],
                 "title": "Sample",
                 "type": "object"
@@ -928,7 +915,6 @@
         "cimac_participant_id",
         "participant_id",
         "cohort_name",
-        "arm_id",
         "samples"
     ],
     "title": "Participant"

@@ -6,10 +6,12 @@
   "category": "metadata",
   "description": "Metadata information for Immunohistochemical analysis.\n",
   "properties": {
+
     "worksheets": {
+
       "olink": {
         "prism_preamble_object_schema" : "assays/ihc_assay.json",
-        "prism_preamble_object_pointer" : "/assays/ihc/0",
+        "prism_preamble_object_pointer" : "/assays/imaging/0",
         "prism_data_object_pointer" : "/records/-",
 
         "preamble_rows": {
@@ -19,15 +21,15 @@
           },
           "slide scanner model": {
             "merge_pointer": "0/slide_scanner_model",
-            "type_ref": "assays/ihc_assay.json#properties/slide_scanner_model"
+            "type_ref": "assays/components/image.json#properties/slide_scanner_model"
           },
           "staining platform": {
             "merge_pointer": "0/staining_platform",
-            "type_ref": "assays/ihc_assay.json#properties/staining_platform"
+            "type_ref": "assays/components/image.json#properties/staining_platform"
           },
           "autostainer model": {
             "merge_pointer": "0/autostainer_model",
-            "type_ref": "assays/ihc_assay.json#properties/autostainer_model"
+            "type_ref": "assays/components/image.json#properties/autostainer_model"
           },
           "antibody name": {
               "merge_pointer": "0/antibody",
@@ -62,7 +64,9 @@
               "type_ref": "assays/components/ihc_antibody.json#properties/incubation_temp"
           }
         },
+
         "data_columns": {
+
           "Sample": {
             "cimac id": {
               "merge_pointer": "0/cimac_id",
@@ -74,13 +78,14 @@
             },
             "ihc image path": {
               "merge_pointer": "0/ihc_image_path",
-              "type_ref": "assays/components/imaging/ihc_input.json#properties/ihc_image_path"
+              "type_ref": "assays/components/local_file.json#properties/file_path"
             },
             "h and e image path": {
               "merge_pointer": "0/h_and_e_image_path",
-              "type_ref": "assays/components/imaging/ihc_input.json#properties/h_and_e_image_path"
+              "type_ref": "assays/components/local_file.json#properties/file_path"
             }
           },
+
           "Chromogenic IHC": {
             "percentage tumor positive": {
               "merge_pointer": "0/percentage_tumor_positive",
@@ -107,6 +112,7 @@
               "type_ref": "assays/components/imaging/ihc_entry.json#properties/clinically_positive"
             }
           },
+
           "H amd E": {
             "percentage viable tissue": {
               "merge_pointer": "0/percentage_viable_tissue",

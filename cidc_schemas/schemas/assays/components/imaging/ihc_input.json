@@ -18,16 +18,6 @@
           { "$ref": "assays/components/composite_image.json" }
         ]
       }
-    },
-    "ihc_image_path": {
-      "description": "Path to the IHC image.",
-      "type": "string",
-      "$ref": "assays/components/local_file.json"
-    },
-    "h_and_e_image_path": {
-      "description": "Patch to the H & E image.",
-      "type": "string",
-      "$ref": "assays/components/local_file.json"
     }
   },
   "required": []

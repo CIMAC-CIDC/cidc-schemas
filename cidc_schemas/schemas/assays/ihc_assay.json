@@ -5,9 +5,12 @@
   "type": "object",
   "description": "Immunohistochemical analysis.",
   "allOf": [
-    { "$ref": "assays/components/assay_core.json" },
-    { "$ref": "assays/components/image.json" },
-    { "$ref": "assays/components/imaging_data.json" }
+    {
+      "$ref": "assays/components/assay_core.json"
+    },
+    {
+      "$ref": "assays/components/image.json"
+    }
   ],
   "properties": {
     "records": {
@@ -16,34 +19,13 @@
       "items": {
         "$ref": "assays/components/imaging/ihc_entry.json"
       }
+    },
+    "antibody": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/components/ihc_antibody.json"
+      }
     }
   },
-  "antibody": {
-    "type": "array",
-    "items": {
-      "$ref": "assays/components/ihc_antibody.json"
-    }
-  },
-  "slide_scanner_model": {
-      "description": "Model Name of the slide scanner",
-      "type": "string",
-      "enum": [
-        "Hamamatsu",
-        "Vectra 2.0"
-      ]
-    },
-    "staining_platform": {
-      "description": "Type of staining platform.",
-      "type": "string",
-      "enum": [
-        "auto",
-        "manual"
-      ]
-    },
-    "autostainer_model": {
-      "description": "Model Name of the autostainer.",
-      "type": "string",
-    },
-  "required": ["records"],
-  "mergeStrategy": "objectMerge"
+  "required": ["records"]
 }

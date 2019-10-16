@@ -6,34 +6,44 @@
   "description": "A single data record from IHC assay.",
   "properties": {
     "percentage_tumor_positive": {
-      "description": "Percentage of tumor positive."
+      "description": "Percentage of tumor positive.",
+      "type": "string"
     },
     "tumor_positive_intensity": {
-      "description": "Intensity of positive tumor (1+, 2+ or 3+)."
+      "description": "Intensity of positive tumor (1+, 2+ or 3+).",
+      "type": "string"
     },
     "average_tumor_marker_intensity": {
-      "description": "Average intensity of tumor marker (0-3+)."
+      "description": "Average intensity of tumor marker (0-3+).",
+      "type": "string"
     },
     "percent_inflammation_marker_positive": {
-      "description": "Percentage of positive marker inflammation."
+      "description": "Percentage of positive marker inflammation.",
+      "type": "string"
     },
     "average_inflammation_marker_intensity": {
-      "description": "Average intensity of marker inflammation (0-3+)."
+      "description": "Average intensity of marker inflammation (0-3+).",
+      "type": "string"
     },
     "clinically_positive": {
-      "description": "Indicates whether the marker is considered positive by FDA guidelines."
+      "description": "Indicates whether the marker is considered positive by FDA guidelines.",
+      "type": "string"
     },
     "percentage_viable_tissue": {
-      "description": "Percentage of tissue that is viable."
+      "description": "Percentage of tissue that is viable.",
+      "type": "string"
     },
     "percentage_tumor": {
-      "description": "Percentage of tumor."
+      "description": "Percentage of tumor.",
+      "type": "string"
     },
     "degree_lymphoid_infiltrate": {
-      "description": "Degree of lymphoid infiltrate (0-3+)."
+      "description": "Degree of lymphoid infiltrate (0-3+).",
+      "type": "string"
     },
     "percentage_fibrosis": {
-      "description": "Percentage of fibrosis."
+      "description": "Percentage of fibrosis.",
+      "type": "string"
     },
     "files": {
       "$ref": "assays/components/imaging/ihc_input.json"

@@ -15,7 +15,7 @@
   "properties": {
     "records": {
       "type": "array",
-      "description": "A single data record from ihc assay.",
+      "description": "A single data record from IHC assay.",
       "items": {
         "$ref": "assays/components/imaging/ihc_entry.json"
       }

@@ -3,21 +3,11 @@
   "$id": "ihc_input",
   "title": "Immunohistichemical Analysis Input Files",
   "type": "object",
-  "description": "IHC assay input files.",
+  "description": "IHC assay input/output files.",
   "properties": {
     "ihc_output_summary": {
       "$comment": "Summary of the results of the experiment.",
       "$ref": "artifacts/artifact_csv.json"
-    },
-    "regions_of_interest": {
-      "description": "A region of interest (ROI) is a portion of an image which has been analyzed using image processing software.",
-      "type": "array",
-      "items": {
-        "allOf": [
-          { "$ref": "assays/components/mapping.json" },
-          { "$ref": "assays/components/composite_image.json" }
-        ]
-      }
     }
   },
   "required": []

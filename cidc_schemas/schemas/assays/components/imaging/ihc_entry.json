@@ -26,17 +26,37 @@
       "type": "string",
     },
     "antibody_name": {
-      "description": ""
+      "description": "Antibody type collected for this study."
     },
-
-
-    "project_inform_folder": {
-      "description": "Folder path containing files produced from an image analysis.",
-      "type": "string"
+    "percentage_tumor_positive": {
+      "description": "Percentage of tumor positive."
     },
-    "ihc_exported_data_folder": {
-      "description": "Folder path containing imaging files.",
-      "type": "string"
+    "tumor_positive_intensity": {
+      "description": "Intensity of positive tumor (1+, 2+ or 3+)."
+    },
+    "average_tumor_marker_intensity": {
+      "description": "Average intensity of tumor marker (0-3+)."
+    },
+    "percent_inflammation_marker_positive": {
+      "description": "Percentage of positive marker inflammation."
+    },
+    "average_inflammation_marker_intensity": {
+      "description": "Average intensity of marker inflammation (0-3+)."
+    },
+    "clinically_positive": {
+      "description": "Indicates whether the marker is considered positive by FDA guidelines."
+    },
+    "percentage_viable_tissue": {
+      "description": "Percentage of tissue that is viable."
+    },
+    "percentage_tumor": {
+      "description": "Percentage of tumor."
+    },
+    "degree_lymphoid_infiltrate": {
+      "description": "Degree of lymphoid infiltrate (0-3+)."
+    },
+    "percentage_fibrosis": {
+      "description": "Percentage of fibrosis."
     },
     "files": {
       "$ref": "assays/components/imaging/ihc_input.json"

@@ -61,15 +61,59 @@
             },
             "slide number": {
               "merge_pointer": "0/slide_number",
-              "type_ref":"sample.json#properties/aliquots"
+              "type_ref": "sample.json#properties/aliquots"
             },
             "ihc image path": {
               "merge_pointer": "0/ihc_image_path",
-              "type_ref": "assays/componenets/imaging/ihc_input.json#properties/ihc_image_path"
+              "type_ref": "assays/components/imaging/ihc_input.json#properties/ihc_image_path"
             },
             "h and e image path": {
               "merge_pointer": "0/h_and_e_image_path",
-              "type_ref": "assays/componenets/imaging/ihc_input.json#properties/h_and_e_image_path"
+              "type_ref": "assays/components/imaging/ihc_input.json#properties/h_and_e_image_path"
+            }
+          },
+          "Chromogenic IHC": {
+            "percentage tumor positive": {
+              "merge_pointer": "0/percentage_tumor_positive",
+              "type_ref": "assays/components/imaging/ihc_entry.json#properties/percentage_tumor_positive"
+            },
+            "tumor positive intensity": {
+              "merge_pointer": "0/tumor_positive_intensity",
+              "type_ref": "assays/components/imaging/ihc_entry.json#properties/tumor_positive_intensity"
+            },
+            "average tumor marker intensity": {
+              "merge_pointer": "0/average_tumor_marker_intensity",
+              "type_ref": "assays/components/imaging/ihc_entry.json#properties/average_tumor_marker_intensity"
+            },
+            "percent inflammation marker positive": {
+              "merge_pointer": "0/percent_inflammation_marker_positive",
+              "type_ref": "assays/components/imaging/ihc_entry.json#properties/percent_inflammation_marker_positive"
+            },
+            "average inflammation marker intensity": {
+              "merge_pointer": "0/average_inflammation_marker_intensity",
+              "type_ref": "assays/components/imaging/ihc_entry.json#properties/average_inflammation_marker_intensity"
+            },
+            "clinically positive": {
+              "merge_pointer": "0/clinically_positive",
+              "type_ref": "assays/components/imaging/ihc_entry.json#properties/clinically_positive"
+            }
+          },
+          "H amd E": {
+            "percentage viable tissue": {
+              "merge_pointer": "0/percentage_viable_tissue",
+              "type_ref": "assays/components/imaging/ihc_entry.json#properties/percentage_viable_tissue"
+            },
+            "percentage tumor": {
+              "merge_pointer": "0/percentage_tumor",
+              "type_ref": "assays/components/imaging/ihc_entry.json#properties/percentage_tumor"
+            },
+            "degree of lymphoid infiltrate": {
+              "merge_pointer": "0/degree_lymphoid_infiltrate",
+              "type_ref": "assays/components/imaging/ihc_entry.json#properties/degree_lymphoid_infiltrate"
+            },
+            "percentage fibrosis": {
+              "merge_pointer": "0/percentage_fibrosis",
+              "type_ref": "assays/components/imaging/ihc_entry.json#properties/percentage_fibrosis"
             }
           }
         }

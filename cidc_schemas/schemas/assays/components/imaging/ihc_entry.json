@@ -5,29 +5,6 @@
   "type": "object",
   "description": "A single data record from IHC assay.",
   "properties": {
-    "slide_scanner_model": {
-      "description": "Model Name of the slide scanner",
-      "type": "string",
-      "enum": [
-        "Hamamatsu",
-        "Vectra 2.0"
-      ]
-    },
-    "staining_platform": {
-      "description": "Type of staining platform",
-      "type": "string",
-      "enum": [
-        "auto",
-        "manual"
-      ]
-    },
-    "autostainer_model": {
-      "description": "Model Name of the autostainer",
-      "type": "string",
-    },
-    "antibody_name": {
-      "description": "Antibody type collected for this study."
-    },
     "percentage_tumor_positive": {
       "description": "Percentage of tumor positive."
     },
@@ -62,5 +39,5 @@
       "$ref": "assays/components/imaging/ihc_input.json"
     }
   },
-  "required": ["ihc_exported_data_folder"]
+  "required": ["files"]
 }

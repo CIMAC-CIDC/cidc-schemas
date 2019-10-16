@@ -9,8 +9,9 @@
     "worksheets": {
       "olink": {
         "prism_preamble_object_schema" : "assays/ihc_assay.json",
-        "prism_preamble_object_pointer" : "/assays/ihc",
+        "prism_preamble_object_pointer" : "/assays/ihc/0",
         "prism_data_object_pointer" : "/records/-",
+
         "preamble_rows": {
           "protocol identifier": {
             "merge_pointer": "3/protocol_identifier",
@@ -18,7 +19,15 @@
           },
           "slide scanner model": {
             "merge_pointer": "0/slide_scanner_model",
-            "type_ref": "assays/ihc_entry.json#properties/slide_scanner_model"
+            "type_ref": "assays/ihc_assay.json#properties/slide_scanner_model"
+          },
+          "staining platform": {
+            "merge_pointer": "0/staining_platform",
+            "type_ref": "assays/ihc_assay.json#properties/staining_platform"
+          },
+          "autostainer model": {
+            "merge_pointer": "0/autostainer_model",
+            "type_ref": "assays/ihc_assay.json#properties/autostainer_model"
           },
           "antibody name": {
               "merge_pointer": "0/antibody",

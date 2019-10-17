@@ -8,7 +8,15 @@
     "ihc_output_summary": {
       "$comment": "Summary of the results of the experiment.",
       "$ref": "artifacts/artifact_csv.json"
+    },
+    "ihc_image_path": {
+      "$comment": "Path to IHC image in TIFF format.",
+      "$ref": "artifacts/artifact_image.json"
+    },
+    "he_image_path": {
+      "$comment": "Path to H&E image in TIFF format.",
+      "$ref": "artifacts/artifact_image.json"
     }
   },
-  "required": []
+  "required": ["ihc_image_path", "he_image_path"]
 }

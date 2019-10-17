@@ -39,7 +39,7 @@
     },
     "essential_patient_entry_number": {
         "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
-        "type": "number"
+        "type": "integer"
     },
     "gender": {
       "type": "string",

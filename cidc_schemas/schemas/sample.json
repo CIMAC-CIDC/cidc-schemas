@@ -15,7 +15,7 @@
         },
         "shipping_entry_number": {
             "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
-            "type": "number"
+            "type": "integer"
         },
         "box_number": {
           "description": "Identifier if sample shipment container includes multiple boxes for each assay.",

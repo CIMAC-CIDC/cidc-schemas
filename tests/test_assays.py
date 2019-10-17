@@ -254,6 +254,51 @@ def test_cytof():
     validator.validate(obj)
 
 
+def test_ihc():
+
+    # create the IHC object
+    ihc_obj = {
+        "slide_scanner_model": "Hamamatsu",
+        "protocol_name": "E4412",
+        "staining_platform": "auto",
+    }
+
+    obj = {**ASSAY_CORE, **ihc_obj}  # merge two dictionaries
+
+    # create the artifact object
+    image_1 = ARTIFACT_OBJ.copy()
+    image_1['data_format'] = 'IMAGE'
+    image_1["height"] = 300
+    image_1["width"] = 250
+    image_1["channels"] = 3
+    image_2 = ARTIFACT_OBJ.copy()
+    image_2['data_format'] = 'IMAGE'
+    image_2["height"] = 300
+    image_2["width"] = 250
+    image_2["channels"] = 3
+    csv_1 = ARTIFACT_OBJ.copy()
+    csv_1['data_format'] = 'CSV'
+    csv_1["separator"] = ","
+    csv_1["header_row"] = 128
+    record = {
+        "cimac_id": "CM-ABCD-1234-01",
+        "files": {
+            "ihc_output_summary": csv_1,
+            "ihc_image_path": image_1,
+            "he_image_path": image_2,
+        }
+    }
+
+    # add a demo record.
+    obj['records'] = [
+        record
+    ]
+
+    # create validator assert schemas are valid.
+    validator = _fetch_validator("ihc")
+    validator.validate(obj)
+
+
 def test_mif():
 
     # create the mif object
@@ -383,7 +428,7 @@ def test_olink():
     obj = {**ASSAY_CORE}
     obj['panel'] = "panel v1"
 
-    # create the olink object
+    # create the artifact object
     npx = ARTIFACT_OBJ.copy()
     npx['data_format'] = 'NPX'
     npx['samples'] = ['CM-TEST-PART-S1', 'CM-TEST-PART-S2', 'CM-TEST-PART-S3']

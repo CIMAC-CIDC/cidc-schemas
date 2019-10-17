@@ -477,6 +477,30 @@ def test_prismify_cytof_only():
     validator.validate(merged)
 
 
+def test_prismify_ihc():
+
+    # create validators
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
+
+    # create the example template.
+    hint = 'ihc'
+    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'metadata', f'{hint}_template.json')
+    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, f"{hint}_template.xlsx")
+
+    # parse the spreadsheet and get the file maps
+    ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint, verb=False)
+
+    # we merge it with a preexisting one
+    # 1. we get all 'required' fields from this preexisting
+    # 2. we can check it didn't overwrite anything crucial
+    merger = Merger(schema)
+    merged = merger.merge(MINIMAL_TEST_TRIAL, ct)
+
+    # assert works
+    validator.validate(merged)
+
+
 def test_prismify_plasma():
 
     # create validators

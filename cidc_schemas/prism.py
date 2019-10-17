@@ -247,7 +247,6 @@ LocalFileUploadEntry = namedtuple('LocalFileUploadEntry',
 def _process_property(
         key: str,
         raw_val,
-        assay_hint: str,
         key_lu: dict,
         data_obj: dict,
         format_context: dict,
@@ -300,8 +299,8 @@ def _process_property(
     if not (field_def.get("is_artifact") == "multi"):
         try:
             val = field_def['coerce'](raw_val)
-        except (TypeError, ValueError) as e:
-            raise ParsingException(f"Can't parse value ({raw_val}) for {key} ({field_def.get('type_ref')}) which shold be {field_def.get('type')}")
+        except Exception:
+            raise ParsingException(f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type')}")
     else:
 
         # tokenize value
@@ -312,7 +311,11 @@ def _process_property(
         file_uuids = []
         for x in range(len(local_paths)):
             # ignoring coercion errors as we expect it just return uuids 
-            file_uuid = field_def['coerce'](raw_val)
+            try:
+                file_uuid = field_def['coerce'](raw_val)
+            except Exception:
+                raise ParsingException(f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type')}")
+
             file_uuids.append(file_uuid)
             val.append({"upload_placeholder": file_uuid})
 
@@ -385,8 +388,8 @@ def _process_property(
 class ParsingException(ValueError):
     pass
 
-def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) \
-        -> (dict, List[LocalFileUploadEntry], List[Exception]):
+def prismify(xlsx_path: Union[str, BinaryIO], template: Template, verb: bool = False) \
+        -> (dict, List[LocalFileUploadEntry], List[Union[Exception, str]]):
 
     """
     Converts excel file to json object. It also identifies local files
@@ -404,9 +407,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
 
     Args:
         xlsx_path: file on file system to excel file or the open file itself
-        template_path: path on file system relative to schema root of the
-                        template
-
+        
         assay_hint: string used to help identify properties in template. Must
                     be the the root of the template filename i.e.
                     wes_template.json would be wes.
@@ -517,24 +518,21 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     with respect to `mergeStrategy`es defined in that schema.
     """
 
-    # data rows will require a unique identifier
-    if assay_hint not in SUPPORTED_TEMPLATES:
-        raise NotImplementedError(f'{assay_hint} is not supported yet, only {SUPPORTED_TEMPLATES} are supported.')
+    if template.type not in SUPPORTED_TEMPLATES:
+        raise NotImplementedError(f'{template.type!r} is not supported, only {SUPPORTED_TEMPLATES} are.')
 
     # read the excel file
     xslx = XlTemplateReader.from_excel(xlsx_path)
-    # get corr xlsx schema
-    xlsx_template = Template.from_json(template_path)
-    errors_so_far = list(xslx.iter_errors(xlsx_template))
+    errors_so_far = []
 
     # get the root CT schema
-    root_ct_schema_name = (xlsx_template.schema.get("prism_template_root_object_schema") or "clinical_trial.json")
+    root_ct_schema_name = (template.schema.get("prism_template_root_object_schema") or "clinical_trial.json")
     root_ct_schema = load_and_validate_schema(root_ct_schema_name)
     # create the result CT dictionary
-    root_ct_obj = {f"__{assay_hint}": "as root_ct_obj"} if verb else {}
-    template_root_obj_pointer = xlsx_template.schema.get("prism_template_root_object_pointer", "")
+    root_ct_obj = {f"__{template.type}": "as root_ct_obj"} if verb else {}
+    template_root_obj_pointer = template.schema.get("prism_template_root_object_pointer", "")
     if template_root_obj_pointer != "":
-        template_root_obj = {f"__{assay_hint}": "as template_root_obj"} if verb else {}
+        template_root_obj = {f"__{template.type}": "as template_root_obj"} if verb else {}
         _set_val(template_root_obj_pointer, template_root_obj, root_ct_obj, verb=verb)
     else:
         template_root_obj = root_ct_obj
@@ -556,14 +554,14 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         # properties from data_columns or preamble wrt template schema definitions, because 
         # there can be a 'gcs_uri_format' that needs to have access to all values.
 
-        templ_ws = xlsx_template.schema['properties']['worksheets'][ws_name]
+        templ_ws = template.schema['properties']['worksheets'][ws_name]
         preamble_object_schema = load_and_validate_schema(templ_ws.get('prism_preamble_object_schema', root_ct_schema_name))
         preamble_merger = Merger(preamble_object_schema)
         preamble_object_pointer = templ_ws.get('prism_preamble_object_pointer', '')
         data_object_pointer = templ_ws['prism_data_object_pointer']
 
         # creating preamble obj 
-        preamble_obj = {f"__{assay_hint}:{ws_name}" : "as preamble"} if verb else {}
+        preamble_obj = {f"__{template.type}:{ws_name}" : "as preamble"} if verb else {}
 
         # Processing data rows first
         data = ws[RowType.DATA]
@@ -578,8 +576,8 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                     print(f'  next data row {i} {row}')
 
                 # creating data obj 
-                data_obj = {f"__{assay_hint}:{ws_name}:{i}" : "as data_obj"} if verb else {}
-                copy_of_preamble = {f"__{assay_hint}:{ws_name}:{i}" : "as copy_of_preamble"} if verb else {}
+                data_obj = {f"__{template.type}:{ws_name}:{i}" : "as data_obj"} if verb else {}
+                copy_of_preamble = {f"__{template.type}:{ws_name}:{i}" : "as copy_of_preamble"} if verb else {}
                 _set_val(data_object_pointer, data_obj, copy_of_preamble, template_root_obj, preamble_object_pointer, verb=verb)
 
                 # We create this "data record dict" (all key-value pairs) prior to processing
@@ -594,8 +592,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                         # get corr xsls schema type 
                         new_files = _process_property(
                             key, val,
-                            assay_hint=assay_hint,
-                            key_lu=xlsx_template.key_lu,
+                            key_lu=template.key_lu,
                             data_obj=data_obj,
                             format_context=dict(local_context, **preamble_context),  # combine contexts
                             root_obj=copy_of_preamble,
@@ -621,8 +618,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                 # process this property
                 new_files = _process_property(
                     row.values[0], row.values[1], 
-                    assay_hint=assay_hint, 
-                    key_lu=xlsx_template.key_lu, 
+                    key_lu=template.key_lu, 
                     data_obj=preamble_obj, 
                     format_context=preamble_context, 
                     root_obj=root_ct_obj, 
@@ -638,7 +634,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     
 
         # Now pushing it up / merging with the whole thing
-        copy_of_template_root = {f"__{assay_hint}:{ws_name}" : "as copy_of_template_root"} if verb else {}
+        copy_of_template_root = {f"__{template.type}:{ws_name}" : "as copy_of_template_root"} if verb else {}
         _set_val(preamble_object_pointer, preamble_obj, copy_of_template_root, verb=verb)
         if verb:
             print('merging root objs')

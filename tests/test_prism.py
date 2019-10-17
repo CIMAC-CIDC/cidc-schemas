@@ -29,7 +29,7 @@ from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader
 
 from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR, TEST_DATA_DIR
-from .test_templates import template_paths
+from .test_templates import template_set
 from .test_assays import ARTIFACT_OBJ
 
 
@@ -306,38 +306,36 @@ def test_samples_merge():
     assert len(a3['participants'][0]['samples']) == 2
 
 
-@pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
-def test_prism(schema_path, xlsx_path):
+@pytest.mark.parametrize('template, xlsx_path', template_set())
+def test_prism(template, xlsx_path):
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     schema = validator.schema
 
-    # extract hint.
-    hint = schema_path.split("/")[-1].replace("_template.json", "")
 
     # TODO: every other assay
-    if hint not in SUPPORTED_ASSAYS:
+    if template.type not in SUPPORTED_ASSAYS:
         return
 
     # turn into object.
-    ct, file_maps, errs = prismify(xlsx_path, schema_path, assay_hint=hint)
+    ct, file_maps, errs = prismify(xlsx_path, Template.from_type(template.type))
     assert 0 == len(errs)
 
-    if hint == 'cytof':
+    if template.type == 'cytof':
         assert "CYTOF_TEST1" == ct[PROTOCOL_ID_FIELD_NAME]
         ct[PROTOCOL_ID_FIELD_NAME] = 'test_prism_trial_id'
 
-    if hint in SUPPORTED_ASSAYS:
+    if template.type in SUPPORTED_ASSAYS:
         # olink is different - is will never have array of assay "runs" - only one
-        if hint != 'olink':
-            assert len(ct['assays'][hint]) == 1
+        if template.type != 'olink':
+            assert len(ct['assays'][template.type]) == 1
 
-    elif hint in SUPPORTED_MANIFESTS:
+    elif template.type in SUPPORTED_MANIFESTS:
         assert not ct.get('assays'), "Assay created during manifest prismify"
 
     else:
-        assert False, f"Unknown template {hint}"
+        assert False, f"Unknown template {template.type}"
 
 
     # we merge it with a preexisting one
@@ -350,33 +348,29 @@ def test_prism(schema_path, xlsx_path):
     errors = list(validator.iter_errors(merged))
     assert not errors 
 
-    if hint in SUPPORTED_ASSAYS :
+    if template.type in SUPPORTED_ASSAYS :
         assert merged[PROTOCOL_ID_FIELD_NAME] == "test_prism_trial_id"
     else:
         assert TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] == merged[PROTOCOL_ID_FIELD_NAME]
 
 
-@pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
-def test_unsupported_prismify(schema_path, xlsx_path):
-    # extract hint
-    hint = schema_path.split("/")[-1].replace("_template.json", "")
+@pytest.mark.parametrize('template, xlsx_path', template_set())
+def test_unsupported_prismify(template, xlsx_path):
 
     # skipp supported
-    if hint in SUPPORTED_TEMPLATES:
+    if template.type in SUPPORTED_TEMPLATES:
         return
 
     with pytest.raises(NotImplementedError):
-        prismify(xlsx_path, schema_path, assay_hint=hint)
+        prismify(xlsx_path, schema_path)
 
 
 
-@pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
-def test_filepath_gen(schema_path, xlsx_path):
-    # extract hint.
-    hint = schema_path.split("/")[-1].replace("_template.json", "")
+@pytest.mark.parametrize('template, xlsx_path', template_set())
+def test_filepath_gen(template, xlsx_path):
 
     # TODO: every other assay
-    if hint not in SUPPORTED_ASSAYS:
+    if template.type not in SUPPORTED_ASSAYS:
         return
 
     # create validators
@@ -384,7 +378,7 @@ def test_filepath_gen(schema_path, xlsx_path):
     schema = validator.schema
 
     # parse the spreadsheet and get the file maps
-    _, file_maps, errs = prismify(xlsx_path, schema_path, assay_hint=hint)
+    _, file_maps, errs = prismify(xlsx_path, template)
     assert len(errs) == 0
     # we ignore and do not validate 'ct'
     # because it's only a ct patch not a full ct 
@@ -396,7 +390,7 @@ def test_filepath_gen(schema_path, xlsx_path):
     assert len(local_to_gcs_mapping) == len(file_maps), "gcs_key/url collision"
 
     # assert we have the right file counts etc.
-    if hint == "wes":
+    if template.type == "wes":
 
         # we should have 2 fastq per sample.
         # we should have 2 tot forward.
@@ -421,7 +415,7 @@ def test_filepath_gen(schema_path, xlsx_path):
         assert ['CM-TEST-PAR1-11', 'CM-TEST-PAR1-21'] == list(sorted(set([x.gs_key.split("/")[1] for x in file_maps])))
         
 
-    elif hint == 'olink':
+    elif template.type == 'olink':
 
         # we should have 2 npx files
         assert 2 == sum([x.gs_key.endswith("assay_npx.xlsx") for x in file_maps])
@@ -439,18 +433,18 @@ def test_filepath_gen(schema_path, xlsx_path):
         assert len(file_maps) == 5
         assert 5 == sum([x.gs_key.startswith("test_prism_trial_id") for x in file_maps])
 
-    elif hint == 'cytof':
+    elif template.type == 'cytof':
         # TODO: UPdate this to assert we can handle multiple source fcs files
         for x in file_maps:
             assert x.gs_key.endswith(".fcs")
         assert len(file_maps) == 6
 
-    elif hint in SUPPORTED_MANIFESTS:
+    elif template.type in SUPPORTED_MANIFESTS:
 
         assert len(file_maps) == 0
 
     else:
-        assert False, f"add {hint} assay specific asserts"
+        assert False, f"add {template.type} assay specific asserts"
 
 
 def test_prismify_cytof_only():
@@ -460,12 +454,12 @@ def test_prismify_cytof_only():
     schema = validator.schema
 
     # create the example template.
-    hint = 'cytof'
-    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'metadata', f'{hint}_template.json')
-    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, f"{hint}_template.xlsx")
+    template_type = 'cytof'
+    template = Template.from_type(template_type)
+    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, f"{template_type}_template.xlsx")
 
     # parse the spreadsheet and get the file maps
-    ct, file_maps, errs = prismify(xlsx_path, temp_path, assay_hint=hint, verb=False)
+    ct, file_maps, errs = prismify(xlsx_path, template, verb=False)
     assert len(errs) == 0
 
     # we should have 3 files, the processed fcs and two source fcs X2
@@ -488,12 +482,11 @@ def test_prismify_plasma():
     schema = validator.schema
 
     # create the example template.
-    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'manifests', 'plasma_template.json')
     xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, "plasma_template.xlsx")
-    hint = 'plasma'
+    template = Template.from_type('plasma')
 
     # parse the spreadsheet and get the file maps
-    md_patch, file_maps, errs = prismify(xlsx_path, temp_path, assay_hint=hint)
+    md_patch, file_maps, errs = prismify(xlsx_path, template)
     assert len(errs) == 0
     validator.validate(md_patch)
 
@@ -518,12 +511,11 @@ def test_prismify_wes_only():
     schema = validator.schema
 
     # create the example template.
-    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'metadata', 'wes_template.json')
+    template = Template.from_type('wes')
     xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, "wes_template.xlsx")
-    hint = 'wes'
 
     # parse the spreadsheet and get the file maps
-    md_patch, file_maps, errs = prismify(xlsx_path, temp_path, assay_hint=hint)
+    md_patch, file_maps, errs = prismify(xlsx_path, template)
     assert len(errs) == 0
 
     for e in validator.iter_errors(md_patch):
@@ -556,12 +548,11 @@ def test_prismify_olink_only():
     schema = validator.schema
 
     # create the example template.
-    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'metadata', 'olink_template.json')
+    template = Template.from_type('olink')
     xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, "olink_template.xlsx")
-    hint = 'olink'
 
     # parse the spreadsheet and get the file maps
-    ct, file_maps, errs = prismify(xlsx_path, temp_path, assay_hint=hint)
+    ct, file_maps, errs = prismify(xlsx_path, template)
     assert len(errs) == 0
 
     # we merge it with a preexisting one
@@ -691,65 +682,63 @@ def test_merge_ct_meta():
     assert sum(len(p['samples']) for p in ct_merge['participants']) == 2+sum(len(p['samples']) for p in TEST_PRISM_TRIAL['participants'])
 
 
-@pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
-def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
+@pytest.mark.parametrize('template, xlsx_path', template_set())
+def test_end_to_end_prismify_merge_artifact_merge(template, xlsx_path):
 
-    # extract hint
-    hint = schema_path.split("/")[-1].replace("_template.json", "")
 
     # TODO: implement other assays
-    if hint not in SUPPORTED_TEMPLATES:
+    if template.type not in SUPPORTED_TEMPLATES:
         return 
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
 
     # parse the spreadsheet and get the file maps
-    prism_patch, file_maps, errs = prismify(xlsx_path, schema_path, assay_hint=hint, verb=True)
+    prism_patch, file_maps, errs = prismify(xlsx_path, template, verb=True)
     assert len(errs) == 0
 
-    if hint in SUPPORTED_MANIFESTS:
+    if template.type in SUPPORTED_MANIFESTS:
         assert len(prism_patch['shipments']) == 1
         
         assert prism_patch['participants'][0]['samples'][0]["cimac_id"].split("-")[:3] == \
             prism_patch['participants'][0]['cimac_participant_id'].split("-")
 
-        if hint == 'pbmc':
+        if template.type == 'pbmc':
             assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_pbmc"
 
             assert len(prism_patch['participants']) == 2
             assert len(prism_patch['participants'][0]['samples']) == 3
             assert len(prism_patch['participants'][1]['samples']) == 3
 
-        elif hint == 'plasma':
+        elif template.type == 'plasma':
             assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_plasma"
             assert len(prism_patch['participants']) == 2
             assert len(prism_patch['participants'][0]['samples']) == 3
             assert 'aliquots' not in prism_patch['participants'][0]['samples'][0]
 
         else: 
-            assert False, f'add {hint} specific asserts'
+            assert False, f'add {template.type} specific asserts'
 
-    if hint in SUPPORTED_ASSAYS:
+    if template.type in SUPPORTED_ASSAYS:
         # olink is different in structure - no array of assays, only one.
-        if hint == 'olink':
-            prism_patch_assay_records = prism_patch['assays'][hint]['records']
-            assert len(prism_patch['assays'][hint]['records']) == 2
+        if template.type == 'olink':
+            prism_patch_assay_records = prism_patch['assays'][template.type]['records']
+            assert len(prism_patch['assays'][template.type]['records']) == 2
 
-        elif hint == 'cytof':
-            assert len(prism_patch['assays'][hint]) == 1
-            assert 'records' in prism_patch['assays'][hint][0]
-            assert len(prism_patch['assays'][hint][0]['records']) == 2
-            assert len(prism_patch['assays'][hint][0]['cytof_antibodies']) == 2
+        elif template.type == 'cytof':
+            assert len(prism_patch['assays'][template.type]) == 1
+            assert 'records' in prism_patch['assays'][template.type][0]
+            assert len(prism_patch['assays'][template.type][0]['records']) == 2
+            assert len(prism_patch['assays'][template.type][0]['cytof_antibodies']) == 2
 
-        elif hint == 'wes':
-            assert len(prism_patch['assays'][hint][0]['records']) == 2
+        elif template.type == 'wes':
+            assert len(prism_patch['assays'][template.type][0]['records']) == 2
 
         else:
-            raise NotImplementedError(f"no support in test for this hint {hint}")
+            raise NotImplementedError(f"no support in test for this template.type {template.type}")
 
     for f in file_maps:
-        assert f'{hint}/' in f.gs_key, f"No {hint} hint found"
+        assert f'{template.type}/' in f.gs_key, f"No {template.type} template.type found"
 
     # And we need set PROTOCOL_ID_FIELD_NAME to be the same for testing
     original_ct = copy.deepcopy(TEST_PRISM_TRIAL) 
@@ -774,7 +763,7 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
                 patch_copy_4_artifacts,
                 artifact_uuid=fmap_entry.upload_placeholder,
                 object_url=fmap_entry.gs_key,
-                assay_type=hint,
+                assay_type=template.type,
                 file_size_bytes=i,
                 uploaded_timestamp="01/01/2001",
                 md5_hash=f"hash_{i}"
@@ -797,95 +786,68 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     # validate the full clinical trial object
     validator.validate(full_ct)
 
-    if hint == 'wes':
+    if template.type == 'wes':
         assert len(merged_gs_keys) == 3 * 2 # 3 files per entry in xlsx
         assert set(merged_gs_keys) == set(WES_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
-    elif hint == 'olink':
+    elif template.type == 'olink':
         assert len(merged_gs_keys) == 5 # 2 files per entry in xlsx + 1 file in preamble
 
-    elif hint in SUPPORTED_MANIFESTS:
+    elif template.type in SUPPORTED_MANIFESTS:
         assert len(merged_gs_keys) == 0
 
-    elif hint == 'cytof':
+    elif template.type == 'cytof':
         # TODO: This will need ot be updated when we accept a list of source fcs files
         assert len(merged_gs_keys) == 6
 
     else:
-        assert False, f"add {hint} assay specific asserts"
+        assert False, f"add {template.type} assay specific asserts"
 
     for file_map_entry in file_maps:
         assert len((full_ct | grep(fmap_entry.gs_key))['matched_values']) == 1 # each gs_url only once
 
     # olink is special - it's not an array
-    if hint == "olink":
-        assert len(full_ct['assays'][hint]['records']) == 2, "More records than expected"
+    if template.type == "olink":
+        assert len(full_ct['assays'][template.type]['records']) == 2, "More records than expected"
 
-    elif hint == 'wes':
-        assert len(full_ct['assays'][hint]) == 1+len(TEST_PRISM_TRIAL['assays'][hint]), f"Multiple {hint}-assays created instead of merging into one"
-        assert len(full_ct['assays'][hint][0]['records']) == 2, "More records than expected"
+    elif template.type == 'wes':
+        assert len(full_ct['assays'][template.type]) == 1+len(TEST_PRISM_TRIAL['assays'][template.type]), f"Multiple {template.type}-assays created instead of merging into one"
+        assert len(full_ct['assays'][template.type][0]['records']) == 2, "More records than expected"
 
-    elif hint in SUPPORTED_MANIFESTS:
+    elif template.type in SUPPORTED_MANIFESTS:
         assert full_ct["assays"] == original_ct["assays"]
 
-    elif hint == 'cytof':
-        assert len(full_ct['assays'][hint]) == 1
+    elif template.type == 'cytof':
+        assert len(full_ct['assays'][template.type]) == 1
 
     else:
-        assert False, f"add {hint} assay specific asserts"
+        assert False, f"add {template.type} assay specific asserts"
 
     dd = DeepDiff(full_after_prism, full_ct)
 
-    if hint=='wes':
+    if template.type=='wes':
         # 6 files * 7 artifact attributes
         assert len(dd['dictionary_item_added']) == 6*7, "Unexpected CT changes"
 
         # nothing else in diff
         assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
 
-    elif hint == "olink":
+    elif template.type == "olink":
         assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
 
         # 7 artifact attributes * 5 files (2 per record + 1 study)
         assert len(dd['dictionary_item_added']) == 7*(2*2+1), "Unexpected CT changes"
 
-    elif hint in SUPPORTED_MANIFESTS:
+    elif template.type in SUPPORTED_MANIFESTS:
         
         assert len(dd) == 0, "Unexpected CT changes"
 
-    elif hint == 'cytof':
+    elif template.type == 'cytof':
         assert len(dd['dictionary_item_added']) == 7*6, "Unexpected CT changes"
 
     else:
-        assert False, f"add {hint} assay specific asserts"
+        assert False, f"add {template.type} assay specific asserts"
 
-
-
-def test_prismify_errors(tiny_template, monkeypatch):
-    manifest_path = os.path.join(TEST_DATA_DIR, "tiny_manifest.xlsx")
-
-    monkeypatch.setattr("cidc_schemas.prism.SUPPORTED_TEMPLATES", ["hint"])
-    
-    
-    tts = tiny_template.schema
-    for wsname, ws in tts['properties']['worksheets'].items():
-        if 'prism_data_object_pointer' not in ws:
-            ws['prism_data_object_pointer'] = '/tiny_template/test_objs/0'
-
-        for prop_name, prop in ws['preamble_rows'].items():
-            if 'merge_pointer' not in prop:
-                prop['merge_pointer'] = '/'+prop_name
-
-
-    template_from_json = MagicMock(name="template_from_json")
-    template_from_json.return_value = Template(tts)
-    monkeypatch.setattr("cidc_schemas.template.Template.from_json", template_from_json)
-
-    
-    # parse the spreadsheet and get the file maps
-    ct, file_maps, errors = prismify(manifest_path, tiny_template, assay_hint='hint')
-
-    assert errors == []
 
 
 def test_merge_stuff():
@@ -963,9 +925,7 @@ def test_prism_joining_tabs(monkeypatch):
         map(cell, ["#d", "CM-PA0-SA1",  "001"]),
     ]
 
-    Template_from_json = MagicMock(name="Template_from_json")
-    monkeypatch.setattr("cidc_schemas.template.Template.from_json", Template_from_json)
-    Template_from_json.return_value = Template({
+    template = Template({
         "$id": "test_ship",
         "title": "participants and shipment",
         "properties": {
@@ -1016,13 +976,13 @@ def test_prism_joining_tabs(monkeypatch):
 
             }
         }
-    })
+    }, "test_prism_joining_tabs")
 
 
     
-    monkeypatch.setattr("cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_ship"])
+    monkeypatch.setattr("cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_prism_joining_tabs"])
 
-    patch, file_maps, errs = prismify("workbook", "Template_from_json", assay_hint="test_ship", verb=False)
+    patch, file_maps, errs = prismify("workbook", template, verb=False)
     assert len(errs) == 0
 
     assert 2 == len(patch["participants"])

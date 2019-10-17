@@ -75,21 +75,21 @@ class Template:
         worksheets {Dict[str, dict]} -- a mapping from worksheet names to worksheet schemas
     """
 
-    def __init__(self, schema: dict, name = None):
+    def __init__(self, schema: dict, type: str):
         """
         Load the schema defining a manifest or assay template.
 
         Arguments:
             schema {dict} -- a valid JSON schema describing a template
-            name -- a "name" for repr
+            type -- schema file ..._template.json prefix. Used for repr.
         """
         self.schema = schema
-        self._name = name
+        self.type = type
         self.worksheets = self._extract_worksheets()
         self.key_lu = self._load_keylookup()
 
     def __repr__(self):
-        return f"<Template({self._name if self._name else self.schema})>"
+        return f"<Template({self.type})>"
 
     def _extract_worksheets(self) -> Dict[str, dict]:
         """Build a mapping from worksheet names to worksheet section schemas"""
@@ -266,11 +266,11 @@ class Template:
         try:
             schema_path = _TEMPLATE_PATH_MAP[template_type]
         except KeyError:
-            raise Exception(f"unknown template type: {template_type}")
-        return Template.from_json(schema_path)
+            raise NotImplementedError(f"unknown template type: {template_type}")
+        return Template.from_json(schema_path, type=template_type)
 
     @staticmethod
-    def from_json(template_schema_path: str, schema_root: str = SCHEMA_DIR):
+    def from_json(template_schema_path: str, schema_root: str = SCHEMA_DIR, type: str = ""):
         """
         Load a Template from a template schema.
 
@@ -280,7 +280,8 @@ class Template:
         """
         template_schema = load_and_validate_schema(template_schema_path, schema_root)
 
-        return Template(template_schema, name=template_schema_path)
+        return Template(template_schema, 
+            type=type or os.path.basename(template_schema_path).partition('_template.json')[0])
 
     def to_excel(self, xlsx_path: str):
         """Write this `Template` to an Excel file"""

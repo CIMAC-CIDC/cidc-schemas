@@ -7,78 +7,66 @@ import os
 import pytest
 
 from cidc_schemas.json_validation import load_and_validate_schema
-from cidc_schemas.template import Template
+from cidc_schemas.template import Template, _TEMPLATE_PATH_MAP
 from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader, ValidationError
 
-from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR
+from .constants import ROOT_DIR, TEMPLATE_EXAMPLES_DIR
 
 
-def template_paths():
+def template_set():
     """
     Get the path to every template schema in the schemas/templates directory
     and their corresponding xlsx example file. 
     """
-    template_schema_dir = os.path.join(SCHEMA_DIR, 'templates')
-
-    template_paths = []
-
-    # Collect template schemas
-    for root, _, files in os.walk(template_schema_dir):
-        for f in files:
-            if f.endswith('_template.json'):
-                template_paths.append(os.path.join(root, f))
-
+    template_set = []
     # Collect template xlsx examples
-    for i, schema_path in enumerate(template_paths):
-        name = os.path.basename(schema_path).rsplit('.', 1)[0]
-        xlsx = f'{name}.xlsx'
-        xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, xlsx)
-        template_paths[i] = (schema_path, xlsx_path)
+    for templ_type in _TEMPLATE_PATH_MAP:
+        xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, f'{templ_type}_template.xlsx')
+        templ = Template.from_type(templ_type)
+        template_set.append((templ, xlsx_path))
 
-    return template_paths
+    return template_set
 
 
-@pytest.mark.parametrize('schema_path, xlsx_path', template_paths())
-def test_template(schema_path, xlsx_path, tmpdir):
+@pytest.mark.parametrize('template, xlsx_path', template_set())
+def test_template(template, xlsx_path, tmpdir):
     """
     Ensure the template schema generates a spreadsheet that looks like the given example,
     and check that the template example is valid.
     """
 
-    # Load the template and write it to a temporary file
-    template = Template.from_json(schema_path, SCHEMA_DIR)
+    # write template to a temporary file
     p = tmpdir.join('test_output.xlsx')
     template.to_excel(p)
     generated_template = XlTemplateReader.from_excel(p)
 
     # Ensure the xlsx file actually exists
     assert os.path.exists(
-        xlsx_path), f'No example Excel template provided for {schema_path}'
+        xlsx_path), f'No example Excel template provided for {template.type}'
     reference_template = XlTemplateReader.from_excel(xlsx_path)
 
     # Check that both templates have the same fields
-    compare_templates(schema_path, generated_template, reference_template)
+    compare_templates(template.type, generated_template, reference_template)
 
     # Validate the Excel template
     assert reference_template.validate(template)
 
     # Ensure the example Excel template isn't valid as any other template
-    for other_schema_path, _ in template_paths():
-        if other_schema_path == schema_path:
+    for other_template, _ in template_set():
+        if other_template.type == template.type:
             continue
-        other_template = Template.from_json(other_schema_path)
         with pytest.raises(ValidationError):
             other_template.validate_excel(xlsx_path)
 
 
-def compare_templates(schema_path: str, generated: XlTemplateReader, reference: XlTemplateReader):
+def compare_templates(template_name: str, generated: XlTemplateReader, reference: XlTemplateReader):
     """Compare a generated template to a reference template."""
 
     worksheet_names = reference.grouped_rows.keys()
 
     def error(msg):
-        return f'{schema_path}: {msg}'
+        return f'{template_name}: {msg}'
 
     for name in worksheet_names:
         assert name in generated.grouped_rows, error(

@@ -78,13 +78,13 @@
                 "IHC image path": {
                   "merge_pointer": "0/files/ihc_image_path",
                   "is_artifact" : 1,
-                  "gcs_uri_format": "{protocol identifier}/ihc/ihcimage",
+                  "gcs_uri_format": "{protocol identifier}/{cimac id}/{slide number}/ihc/ihc.tiff",
                   "type_ref": "assays/components/local_file.json#properties/file_path"
                 },
                 "H and E image path": {
                   "merge_pointer": "0/files/he_image_path",
                   "is_artifact" : 1,
-                  "gcs_uri_format": "{protocol identifier}/ihc/heimage",
+                  "gcs_uri_format": "{protocol identifier}/{cimac id}/{slide number}/ihc/HnE.tiff",
                   "type_ref": "assays/components/local_file.json#properties/file_path"
                 }
               },

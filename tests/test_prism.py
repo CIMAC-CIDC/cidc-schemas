@@ -326,6 +326,10 @@ def test_prism(schema_path, xlsx_path):
         assert "CYTOF_TEST1" == ct[PROTOCOL_ID_FIELD_NAME]
         ct[PROTOCOL_ID_FIELD_NAME] = 'test_prism_trial_id'
 
+    if hint == 'ihc':
+        assert "E4412" == ct[PROTOCOL_ID_FIELD_NAME]
+        ct[PROTOCOL_ID_FIELD_NAME] = 'test_prism_trial_id'
+
     if hint in SUPPORTED_ASSAYS:
         # olink is different - is will never have array of assay "runs" - only one
         if hint != 'olink':
@@ -336,7 +340,6 @@ def test_prism(schema_path, xlsx_path):
 
     else:
         assert False, f"Unknown template {hint}"
-
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -437,16 +440,18 @@ def test_filepath_gen(schema_path, xlsx_path):
         assert 5 == sum([x.gs_key.startswith("test_prism_trial_id") for x in file_maps])
 
     elif hint == 'cytof':
-        # TODO: UPdate this to assert we can handle multiple source fcs files
+        # TODO: Update this to assert we can handle multiple source fcs files
         for x in file_maps:
             assert x.gs_key.endswith(".fcs")
         assert len(file_maps) == 6
 
-    elif hint in SUPPORTED_MANIFESTS:
-
-        assert len(file_maps) == 0
+    elif hint == 'ihc':
+        assert 2 == sum([x.gs_key.endswith(".xlsx") for x in file_maps])
 
     else:
+        if hint in SUPPORTED_MANIFESTS:
+            assert len(file_maps) == 0
+
         assert False, f"add {hint} assay specific asserts"
 
 
@@ -495,7 +500,7 @@ def test_prismify_ihc():
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
     merger = Merger(schema)
-    merged = merger.merge(MINIMAL_TEST_TRIAL, ct)
+    merged = merger.merge(TEST_PRISM_TRIAL, ct)
 
     # assert works
     validator.validate(merged)
@@ -796,7 +801,6 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
                 md5_hash=f"hash_{i}"
             )
 
-
         # check that the data_format was set
         assert 'data_format' in artifact
 
@@ -1006,8 +1010,6 @@ def test_prism_joining_tabs(monkeypatch):
         }
     })
 
-
-    
     monkeypatch.setattr("cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_ship"])
 
     patch, file_maps = prismify("workbook", "Template_from_json", assay_hint="test_ship", verb=False)

@@ -290,9 +290,7 @@ def test_ihc():
     }
 
     # add a demo record.
-    obj['records'] = [
-        record
-    ]
+    obj['records'] = [record]
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("ihc")

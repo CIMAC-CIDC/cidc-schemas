@@ -1262,8 +1262,9 @@
                     }
                 ],
                 "description": "Immunohistochemical analysis.",
+                "mergeStrategy": "objectMerge",
                 "properties": {
-                    "antibody": {
+                    "ihc_antibody": {
                         "items": {
                             "$schema": "http://json-schema.org/draft-07/schema#",
                             "allOf": [
@@ -1305,6 +1306,10 @@
                             ],
                             "description": "Data specific to antibody preparation for immunohistochemical analysis.",
                             "id": "ihc_antibody",
+                            "mergeOptions": {
+                                "idRef": "antibody"
+                            },
+                            "mergeStrategy": "arrayMergeById",
                             "properties": {
                                 "dilution": {
                                     "description": "Concentration ratio for antibody dilution.",
@@ -1327,6 +1332,7 @@
                             ],
                             "title": "IHC antibody"
                         },
+                        "mergeStrategy": "append",
                         "type": "array"
                     },
                     "records": {
@@ -1335,6 +1341,7 @@
                             "$id": "ihc_assay_record",
                             "$schema": "http://json-schema.org/draft-07/schema#",
                             "description": "A single data record from IHC assay.",
+                            "mergeStrategy": "objectMerge",
                             "properties": {
                                 "average_inflammation_marker_intensity": {
                                     "description": "Average intensity of marker inflammation (0 - 3).",
@@ -1802,16 +1809,22 @@
                                 }
                             },
                             "required": [
+                                "cimac_id",
                                 "files"
                             ],
                             "title": "IHC assay record",
                             "type": "object"
                         },
+                        "mergeOptions": {
+                            "idRef": "cimac_id"
+                        },
+                        "mergeStrategy": "arrayMergeById",
                         "type": "array"
                     }
                 },
                 "required": [
-                    "records"
+                    "records",
+                    "ihc_antibody"
                 ],
                 "title": "IHC Assay",
                 "type": "object"

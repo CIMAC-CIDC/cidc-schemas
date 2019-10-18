@@ -49,5 +49,9 @@
       "$ref": "assays/components/imaging/ihc_input.json"
     }
   },
-  "required": ["files"]
+  "mergeStrategy": "objectMerge",
+  "required": [
+        "cimac_id",
+        "files"
+  ]
 }

@@ -19,9 +19,9 @@
       "type": "string"
     }
   },
-  "required": [
-    "dilution",
-    "incubation_time",
-    "incubation_temp"
-  ]
+  "mergeStrategy": "arrayMergeById",
+  "mergeOptions": {
+    "idRef": "antibody"
+  },
+  "required": ["dilution", "incubation_time", "incubation_temp"]
 }

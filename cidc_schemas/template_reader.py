@@ -58,12 +58,17 @@ class XlTemplateReader:
 
         Arguments:
           xlsx_path {Union[str, BinaryIO]} -- path to the Excel file or the open file itself.
+
+        Returns:
+            arg1: XlTemplateReader or None if errors
+            arg2: list of errors
         """
 
         # Load the Excel file
         workbook = openpyxl.load_workbook(xlsx_path)
 
         template = {}
+        errors = []
         for worksheet_name in workbook.sheetnames:
             worksheet = workbook[worksheet_name]
             rows = []
@@ -76,7 +81,7 @@ class XlTemplateReader:
                 # If no recognized row type found, don't parse this row
                 if not row_type:
                     logger.info(
-                        f"No recognized row type found in row {row_num} - skipping"
+                        f"No recognized row type found in row {row_num} - skipping."
                     )
                     continue
 
@@ -93,17 +98,17 @@ class XlTemplateReader:
 
                 # Filter empty cells from the end of a data row
                 if row_type == RowType.DATA:
-                    assert header_width, "Encountered data row before header row"
-                    assert (
-                        len(values) <= header_width
-                    ), "Encountered data row wider than header row"
+                    if not header_width:
+                        errors.append(f"Encountered data row (#{row_num}) before header row")
+                    if len(values) >= header_width:
+                        errors.append(f"Encountered data row (#{row_num}) wider than header row")
 
                 # Reassemble parsed row and add to rows
                 new_row = TemplateRow(row_num, row_type, values)
                 rows.append(new_row)
             template[worksheet_name] = rows
 
-        return XlTemplateReader(template)
+        return XlTemplateReader(template), errors
 
     def _group_worksheet_rows(self) -> Dict[str, RowGroup]:
         """Map worksheet names to rows grouped by row type"""

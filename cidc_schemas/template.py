@@ -294,3 +294,9 @@ class Template:
         from .template_reader import XlTemplateReader
 
         return XlTemplateReader.from_excel(xlsx).validate(self)
+    
+    def iter_errors_excel(self, xlsx: Union[str, BinaryIO]) -> bool:
+        """Produces all validation errors the given Excel file (either a path or an open file) against this `Template`"""
+        from .template_reader import XlTemplateReader
+
+        return XlTemplateReader.from_excel(xlsx).iter_errors(self)

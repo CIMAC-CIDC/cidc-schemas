@@ -388,7 +388,7 @@ def _process_property(
 class ParsingException(ValueError):
     pass
 
-def prismify(xlsx_path: Union[str, BinaryIO], template: Template, verb: bool = False) \
+def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
         -> (dict, List[LocalFileUploadEntry], List[Union[Exception, str]]):
 
     """
@@ -521,18 +521,16 @@ def prismify(xlsx_path: Union[str, BinaryIO], template: Template, verb: bool = F
     if template.type not in SUPPORTED_TEMPLATES:
         raise NotImplementedError(f'{template.type!r} is not supported, only {SUPPORTED_TEMPLATES} are.')
 
-    # read the excel file
-    xslx = XlTemplateReader.from_excel(xlsx_path)
     errors_so_far = []
 
     # get the root CT schema
     root_ct_schema_name = (template.schema.get("prism_template_root_object_schema") or "clinical_trial.json")
     root_ct_schema = load_and_validate_schema(root_ct_schema_name)
     # create the result CT dictionary
-    root_ct_obj = {f"__{template.type}": "as root_ct_obj"} if verb else {}
+    root_ct_obj = {f"__prism_origin__:///templates/{template.type}": "as root_ct_obj"} if verb else {}
     template_root_obj_pointer = template.schema.get("prism_template_root_object_pointer", "")
     if template_root_obj_pointer != "":
-        template_root_obj = {f"__{template.type}": "as template_root_obj"} if verb else {}
+        template_root_obj = {f"__prism_origin__:///templates/{template.type}": "as template_root_obj"} if verb else {}
         _set_val(template_root_obj_pointer, template_root_obj, root_ct_obj, verb=verb)
     else:
         template_root_obj = root_ct_obj
@@ -543,7 +541,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template: Template, verb: bool = F
     collected_files = []
 
     # loop over spreadsheet worksheets
-    for ws_name, ws in xslx.grouped_rows.items():
+    for ws_name, ws in xlsx.grouped_rows.items():
         if verb:
             print(f'next worksheet {ws_name!r}')
 
@@ -561,7 +559,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template: Template, verb: bool = F
         data_object_pointer = templ_ws['prism_data_object_pointer']
 
         # creating preamble obj 
-        preamble_obj = {f"__{template.type}:{ws_name}" : "as preamble"} if verb else {}
+        preamble_obj = {f"__prism_origin__:///templates/{template.type}/{ws_name}" : "as preamble"} if verb else {}
 
         # Processing data rows first
         data = ws[RowType.DATA]
@@ -570,14 +568,14 @@ def prismify(xlsx_path: Union[str, BinaryIO], template: Template, verb: bool = F
             headers = ws[RowType.HEADER][0]
 
             # for row in data:
-            for i, row in enumerate(data):
+            for row in data:
 
                 if verb:
-                    print(f'  next data row {i} {row}')
+                    print(f'  next data row {row!r}')
 
                 # creating data obj 
-                data_obj = {f"__{template.type}:{ws_name}:{i}" : "as data_obj"} if verb else {}
-                copy_of_preamble = {f"__{template.type}:{ws_name}:{i}" : "as copy_of_preamble"} if verb else {}
+                data_obj = {f"__prism_origin__:///templates/{template.type}/{ws_name}/{row.row_num}" : "as data_obj"} if verb else {}
+                copy_of_preamble = {f"__prism_origin__:///templates/{template.type}/{ws_name}/{row.row_num}" : "as copy_of_preamble"} if verb else {}
                 _set_val(data_object_pointer, data_obj, copy_of_preamble, template_root_obj, preamble_object_pointer, verb=verb)
 
                 # We create this "data record dict" (all key-value pairs) prior to processing
@@ -634,7 +632,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template: Template, verb: bool = F
     
 
         # Now pushing it up / merging with the whole thing
-        copy_of_template_root = {f"__{template.type}:{ws_name}" : "as copy_of_template_root"} if verb else {}
+        copy_of_template_root = {f"__prism_origin__:///templates/{template.type}/{ws_name}" : "as copy_of_template_root"} if verb else {}
         _set_val(preamble_object_pointer, preamble_obj, copy_of_template_root, verb=verb)
         if verb:
             print('merging root objs')
@@ -643,7 +641,8 @@ def prismify(xlsx_path: Union[str, BinaryIO], template: Template, verb: bool = F
         template_root_obj = root_ct_merger.merge(template_root_obj, copy_of_template_root)
         if verb:
             print(f'  merged - {template_root_obj}')
-
+    
+    
     if template_root_obj_pointer != "":
         _set_val(template_root_obj_pointer, template_root_obj, root_ct_obj, verb=verb)
     else:
@@ -806,7 +805,7 @@ def _update_artifact(ct: dict, artifact: dict, artifact_uuid: str) -> (dict, dic
     return ct, existing_patch, patch_metadata
 
 
-def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
+def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]):
     """
     merges two clinical trial metadata objects together
 
@@ -816,6 +815,7 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
 
     Returns:
         arg1: the merged metadata object
+        arg2: list of validation errors
     """
 
     # merge the copy with the original.
@@ -839,11 +839,8 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
     merger = Merger(schema)
     merged = merger.merge(target, patch)
 
-    # validate this
-    validator.validate(merged)
+    return merged, list(validator.iter_errors(merged))
 
-    # now return it
-    return merged
 
 
 def parse_npx(xlsx: BinaryIO) -> dict:

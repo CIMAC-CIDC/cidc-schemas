@@ -850,6 +850,54 @@ def test_end_to_end_prismify_merge_artifact_merge(template, xlsx_path):
 
 
 
+def test_prismify_errors(tiny_template, monkeypatch):
+    manifest_path = os.path.join(TEST_DATA_DIR, "erroring_tiny_manifest.xlsx")
+
+    monkeypatch.setattr("cidc_schemas.prism.SUPPORTED_TEMPLATES", [tiny_template.type])
+
+    # tr_iter_errors = MagicMock('xl_template_reader_iter_errors')
+    # tr_iter_errors.return_value = []
+    # monkeypatch.setattr("cidc_schemas.template_reader.XlTemplateReader.iter_errors",
+    #     tr_iter_errors) 
+
+    
+    tts = tiny_template.schema
+    for wsname, ws in tts['properties']['worksheets'].items():
+        if 'prism_data_object_pointer' not in ws:
+            ws['prism_data_object_pointer'] = '/test_objs/0'
+
+        for prop_name, prop in ws['preamble_rows'].items():
+            if 'merge_pointer' not in prop:
+                prop['merge_pointer'] = '/'+prop_name
+
+        for section_name, section in ws['data_columns'].items():
+            for prop_name, prop in section.items():
+                if 'merge_pointer' not in prop:
+                    prop['merge_pointer'] = '/'+prop_name
+
+    
+    tts['prism_template_root_object_schema'] = 'test_root_schema.json'
+    load_and_validate_schema = MagicMock('load_and_validate_schema')
+    monkeypatch.setattr("cidc_schemas.prism.load_and_validate_schema",
+        load_and_validate_schema)
+    load_and_validate_schema.return_value = {
+        "properties": {
+            "test_objs": {
+                "mergeStrategy": "append",
+            }
+        }
+    }
+    
+    tiny_template = Template(tts, tiny_template.type)
+
+    # parse the spreadsheet and get the file maps
+    ct, file_maps, errors = prismify(manifest_path, tiny_template, True)
+
+    assert 2 == len(ct['test_objs'])
+    assert 2 == len(errors)
+
+
+
 def test_merge_stuff():
 
     obj1 = {'_preamble_obj': 'copy_for:cytof:Antibody Information:row_0', 'cytof_antibodies': [{'_data_obj': 'cytof:Antibody Information:row_0', 'antibody': 'CD8', 'clone': 'C8/144b', 'company': 'DAKO', 'cat_num': 'C8-ABC', 'lot_num': '3983272', 'isotope': '146Nd', 'dilution': '100X', 'stain_type': 'Surface Stain'}]}

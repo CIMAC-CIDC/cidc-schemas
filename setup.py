@@ -16,9 +16,11 @@ with open('HISTORY.rst') as history_file:
 with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
+from cidc_schemas import __author__, __email__, __version__
+
 setup(
-    author="James Lindsay",
-    author_email='jlindsay@jimmy.harvard.edu',
+    author=__author__,
+    author_email=__email__,
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
@@ -40,7 +42,7 @@ setup(
     packages=find_packages(include=['cidc_schemas']),
     test_suite='tests',
     url='https://github.com/CIMAC-CIDC/schemas',
-    version='0.7.3',
+    version=__version__,
     zip_safe=False,
     entry_points={
         'console_scripts': ['cidc_schemas=cidc_schemas.cli:main']

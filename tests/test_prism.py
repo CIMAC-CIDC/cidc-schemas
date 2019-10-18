@@ -419,7 +419,6 @@ def test_filepath_gen(schema_path, xlsx_path):
         assert 1 == len(set([x.gs_key.split("/")[0] for x in file_maps]))
         # 2 samples
         assert ['CM-TEST-PAR1-11', 'CM-TEST-PAR1-21'] == list(sorted(set([x.gs_key.split("/")[1] for x in file_maps])))
-        
 
     elif hint == 'olink':
 
@@ -513,9 +512,9 @@ def test_prismify_plasma():
     schema = validator.schema
 
     # create the example template.
-    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'manifests', 'plasma_template.json')
-    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, "plasma_template.xlsx")
     hint = 'plasma'
+    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'manifests', f'{hint}_template.json')
+    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, f"{hint}_template.xlsx")
 
     # parse the spreadsheet and get the file maps
     md_patch, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
@@ -542,9 +541,9 @@ def test_prismify_wes_only():
     schema = validator.schema
 
     # create the example template.
-    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'metadata', 'wes_template.json')
-    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, "wes_template.xlsx")
     hint = 'wes'
+    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'metadata', f'{hint}_template.json')
+    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, f"{hint}_template.xlsx")
 
     # parse the spreadsheet and get the file maps
     md_patch, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
@@ -579,9 +578,9 @@ def test_prismify_olink_only():
     schema = validator.schema
 
     # create the example template.
-    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'metadata', 'olink_template.json')
-    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, "olink_template.xlsx")
     hint = 'olink'
+    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'metadata', f'{hint}_template.json')
+    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, f"{hint}_template.xlsx")
 
     # parse the spreadsheet and get the file maps
     ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint)
@@ -765,6 +764,9 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
 
         elif hint == 'wes':
             assert len(prism_patch['assays'][hint][0]['records']) == 2
+
+        elif hint =='ihc':
+            assert len(prism_patch['assays'][hint][0]['records']) == 1
 
         else:
             raise NotImplementedError(f"no support in test for this hint {hint}")

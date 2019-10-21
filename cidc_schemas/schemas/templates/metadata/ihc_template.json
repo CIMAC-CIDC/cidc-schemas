@@ -10,7 +10,7 @@
 
           "IHC": {
             "prism_preamble_object_schema" : "assays/ihc_assay.json",
-            "prism_preamble_object_pointer" : "/assays/imaging/0",
+            "prism_preamble_object_pointer" : "/assays/ihc/0",
             "prism_data_object_pointer" : "/records/-",
 
             "preamble_rows": {

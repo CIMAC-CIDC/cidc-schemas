@@ -327,7 +327,7 @@ def test_prism(schema_path, xlsx_path):
         ct[PROTOCOL_ID_FIELD_NAME] = 'test_prism_trial_id'
 
     if hint == 'ihc':
-        assert "E4412" == ct[PROTOCOL_ID_FIELD_NAME]
+        assert "ihc_test_trial" == ct[PROTOCOL_ID_FIELD_NAME]
         ct[PROTOCOL_ID_FIELD_NAME] = 'test_prism_trial_id'
 
     if hint in SUPPORTED_ASSAYS:

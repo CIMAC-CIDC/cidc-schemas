@@ -30,5 +30,6 @@
       }
     }
   ],
+  "mergeStrategy": "objectMerge",
   "required": ["height", "width", "channels"]
 }

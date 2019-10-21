@@ -33,6 +33,20 @@ from .test_templates import template_set
 from .test_assays import ARTIFACT_OBJ
 
 
+def prismify_test_set(filter = None):
+    yielded = False
+
+    for template, xlsx_path in template_set():
+        if filter and not template.type in filter:
+            continue
+        xlsx, errors = XlTemplateReader.from_excel(xlsx_path)
+        assert not errors
+        yield xlsx, template
+        yielded = True
+    
+    if not yielded:
+        raise Exception(f"no prismify test for filter {filter!r} found")
+
 TEST_PRISM_TRIAL = {
         PROTOCOL_ID_FIELD_NAME: "test_prism_trial_id",
         "participants": [
@@ -306,8 +320,8 @@ def test_samples_merge():
     assert len(a3['participants'][0]['samples']) == 2
 
 
-@pytest.mark.parametrize('template, xlsx_path', template_set())
-def test_prism(template, xlsx_path):
+@pytest.mark.parametrize('xlsx, template', prismify_test_set())
+def test_prism(xlsx, template):
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
@@ -319,7 +333,7 @@ def test_prism(template, xlsx_path):
         return
 
     # turn into object.
-    ct, file_maps, errs = prismify(xlsx_path, Template.from_type(template.type))
+    ct, file_maps, errs = prismify(xlsx, template)
     assert 0 == len(errs)
 
     if template.type == 'cytof':
@@ -366,8 +380,8 @@ def test_unsupported_prismify(template, xlsx_path):
 
 
 
-@pytest.mark.parametrize('template, xlsx_path', template_set())
-def test_filepath_gen(template, xlsx_path):
+@pytest.mark.parametrize('xlsx, template', prismify_test_set())
+def test_filepath_gen(xlsx, template):
 
     # TODO: every other assay
     if template.type not in SUPPORTED_ASSAYS:
@@ -378,7 +392,7 @@ def test_filepath_gen(template, xlsx_path):
     schema = validator.schema
 
     # parse the spreadsheet and get the file maps
-    _, file_maps, errs = prismify(xlsx_path, template)
+    _, file_maps, errs = prismify(xlsx, template)
     assert len(errs) == 0
     # we ignore and do not validate 'ct'
     # because it's only a ct patch not a full ct 
@@ -447,19 +461,15 @@ def test_filepath_gen(template, xlsx_path):
         assert False, f"add {template.type} assay specific asserts"
 
 
-def test_prismify_cytof_only():
+@pytest.mark.parametrize('xlsx, template', prismify_test_set('cytof'))
+def test_prismify_cytof_only(xlsx, template):
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     schema = validator.schema
 
-    # create the example template.
-    template_type = 'cytof'
-    template = Template.from_type(template_type)
-    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, f"{template_type}_template.xlsx")
-
     # parse the spreadsheet and get the file maps
-    ct, file_maps, errs = prismify(xlsx_path, template, verb=False)
+    ct, file_maps, errs = prismify(xlsx, template, verb=False)
     assert len(errs) == 0
 
     # we should have 3 files, the processed fcs and two source fcs X2
@@ -474,19 +484,14 @@ def test_prismify_cytof_only():
     # assert works
     validator.validate(merged)
 
-
-def test_prismify_plasma():
+@pytest.mark.parametrize('xlsx, template', prismify_test_set('plasma'))
+def test_prismify_plasma(xlsx, template):
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-    schema = validator.schema
-
-    # create the example template.
-    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, "plasma_template.xlsx")
-    template = Template.from_type('plasma')
 
     # parse the spreadsheet and get the file maps
-    md_patch, file_maps, errs = prismify(xlsx_path, template)
+    md_patch, file_maps, errs = prismify(xlsx, template)
     assert len(errs) == 0
     validator.validate(md_patch)
 
@@ -504,18 +509,15 @@ def test_prismify_plasma():
     assert md_patch["participants"][0]["samples"][0]["site_description"]    # filled from the second tab
 
 
-def test_prismify_wes_only():
+@pytest.mark.parametrize('xlsx, template', prismify_test_set('wes'))
+def test_prismify_wes_only(xlsx, template):
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     schema = validator.schema
 
-    # create the example template.
-    template = Template.from_type('wes')
-    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, "wes_template.xlsx")
-
     # parse the spreadsheet and get the file maps
-    md_patch, file_maps, errs = prismify(xlsx_path, template)
+    md_patch, file_maps, errs = prismify(xlsx, template)
     assert len(errs) == 0
 
     for e in validator.iter_errors(md_patch):
@@ -541,18 +543,15 @@ def test_prismify_wes_only():
     assert 2 == len(list(validator.iter_errors(merged_wo_needed_participants)))
 
 
-def test_prismify_olink_only():
+@pytest.mark.parametrize('xlsx, template', prismify_test_set('olink'))
+def test_prismify_olink_only(xlsx, template):
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     schema = validator.schema
 
-    # create the example template.
-    template = Template.from_type('olink')
-    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, "olink_template.xlsx")
-
     # parse the spreadsheet and get the file maps
-    ct, file_maps, errs = prismify(xlsx_path, template)
+    ct, file_maps, errs = prismify(xlsx, template)
     assert len(errs) == 0
 
     # we merge it with a preexisting one
@@ -647,7 +646,8 @@ def test_merge_ct_meta():
     patch['trial_name'] = 'name ABC'
     target['nci_id'] = 'xyz1234'
 
-    ct_merge = merge_clinical_trial_metadata(patch, target)
+    ct_merge, errs = merge_clinical_trial_metadata(patch, target)
+    assert not errs
     assert ct_merge['trial_name'] == 'name ABC'
     assert ct_merge['nci_id'] == 'xyz1234'
 
@@ -657,7 +657,8 @@ def test_merge_ct_meta():
     patch['trial_name'] = 'name ABC'
     target['trial_name'] = 'CBA eman'
 
-    ct_merge = merge_clinical_trial_metadata(patch, target)
+    ct_merge, errs = merge_clinical_trial_metadata(patch, target)
+    assert not errs
     assert ct_merge['trial_name'] == 'name ABC'
 
     # now change the participant ids
@@ -667,7 +668,8 @@ def test_merge_ct_meta():
     for i, sample in enumerate(patch['participants'][0]['samples']):
         sample['cimac_id'] = f'CM-TEST-DIF1-D{i}'
 
-    ct_merge = merge_clinical_trial_metadata(patch, target)
+    ct_merge, errs = merge_clinical_trial_metadata(patch, target)
+    assert not errs
     assert len(ct_merge['participants']) == 1+len(TEST_PRISM_TRIAL['participants'])
 
     # now lets have the same participant but adding multiple samples.
@@ -677,13 +679,14 @@ def test_merge_ct_meta():
     patch['participants'][0]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N1'
     patch['participants'][1]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N2'
  
-    ct_merge = merge_clinical_trial_metadata(patch, target)
+    ct_merge, errs = merge_clinical_trial_metadata(patch, target)
+    assert not errs
     assert len(ct_merge['participants']) == len(TEST_PRISM_TRIAL['participants'])
     assert sum(len(p['samples']) for p in ct_merge['participants']) == 2+sum(len(p['samples']) for p in TEST_PRISM_TRIAL['participants'])
 
 
-@pytest.mark.parametrize('template, xlsx_path', template_set())
-def test_end_to_end_prismify_merge_artifact_merge(template, xlsx_path):
+@pytest.mark.parametrize('xlsx, template', prismify_test_set())
+def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
 
     # TODO: implement other assays
@@ -694,7 +697,7 @@ def test_end_to_end_prismify_merge_artifact_merge(template, xlsx_path):
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
 
     # parse the spreadsheet and get the file maps
-    prism_patch, file_maps, errs = prismify(xlsx_path, template, verb=True)
+    prism_patch, file_maps, errs = prismify(xlsx, template, verb=True)
     assert len(errs) == 0
 
     if template.type in SUPPORTED_MANIFESTS:
@@ -747,7 +750,8 @@ def test_end_to_end_prismify_merge_artifact_merge(template, xlsx_path):
     original_ct[PROTOCOL_ID_FIELD_NAME] = prism_patch[PROTOCOL_ID_FIELD_NAME]
     
     # "prismify" provides only a patch so we need to merge it into a "full" ct
-    full_after_prism = merge_clinical_trial_metadata(prism_patch, original_ct)
+    full_after_prism, errs = merge_clinical_trial_metadata(prism_patch, original_ct)
+    assert not errs
 
     # Assert we still have a good clinical trial object, so we can save it.
     validator.validate(full_after_prism)
@@ -774,14 +778,17 @@ def test_end_to_end_prismify_merge_artifact_merge(template, xlsx_path):
         assert 'data_format' in artifact
 
         # assert we still have a good clinical trial object, so we can save it
-        validator.validate(merge_clinical_trial_metadata(patch_copy_4_artifacts, original_ct))
+        step_ct, errs = merge_clinical_trial_metadata(patch_copy_4_artifacts, original_ct)
+        assert not errs
+        validator.validate(step_ct)
 
         # we will than search for this url in the resulting ct, 
         # to check all artifacts were indeed merged
         merged_gs_keys.append(fmap_entry.gs_key)
 
     # `merge_artifact` modifies ct in-place, so 
-    full_ct = merge_clinical_trial_metadata(patch_copy_4_artifacts, original_ct)
+    full_ct, errs = merge_clinical_trial_metadata(patch_copy_4_artifacts, original_ct)
+    assert not errs
 
     # validate the full clinical trial object
     validator.validate(full_ct)
@@ -847,55 +854,6 @@ def test_end_to_end_prismify_merge_artifact_merge(template, xlsx_path):
 
     else:
         assert False, f"add {template.type} assay specific asserts"
-
-
-
-def test_prismify_errors(tiny_template, monkeypatch):
-    manifest_path = os.path.join(TEST_DATA_DIR, "erroring_tiny_manifest.xlsx")
-
-    monkeypatch.setattr("cidc_schemas.prism.SUPPORTED_TEMPLATES", [tiny_template.type])
-
-    # tr_iter_errors = MagicMock('xl_template_reader_iter_errors')
-    # tr_iter_errors.return_value = []
-    # monkeypatch.setattr("cidc_schemas.template_reader.XlTemplateReader.iter_errors",
-    #     tr_iter_errors) 
-
-    
-    tts = tiny_template.schema
-    for wsname, ws in tts['properties']['worksheets'].items():
-        if 'prism_data_object_pointer' not in ws:
-            ws['prism_data_object_pointer'] = '/test_objs/0'
-
-        for prop_name, prop in ws['preamble_rows'].items():
-            if 'merge_pointer' not in prop:
-                prop['merge_pointer'] = '/'+prop_name
-
-        for section_name, section in ws['data_columns'].items():
-            for prop_name, prop in section.items():
-                if 'merge_pointer' not in prop:
-                    prop['merge_pointer'] = '/'+prop_name
-
-    
-    tts['prism_template_root_object_schema'] = 'test_root_schema.json'
-    load_and_validate_schema = MagicMock('load_and_validate_schema')
-    monkeypatch.setattr("cidc_schemas.prism.load_and_validate_schema",
-        load_and_validate_schema)
-    load_and_validate_schema.return_value = {
-        "properties": {
-            "test_objs": {
-                "mergeStrategy": "append",
-            }
-        }
-    }
-    
-    tiny_template = Template(tts, tiny_template.type)
-
-    # parse the spreadsheet and get the file maps
-    ct, file_maps, errors = prismify(manifest_path, tiny_template, True)
-
-    assert 2 == len(ct['test_objs'])
-    assert 2 == len(errors)
-
 
 
 def test_merge_stuff():
@@ -1030,7 +988,10 @@ def test_prism_joining_tabs(monkeypatch):
     
     monkeypatch.setattr("cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_prism_joining_tabs"])
 
-    patch, file_maps, errs = prismify("workbook", template, verb=False)
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    patch, file_maps, errs = prismify(xlsx, template, verb=False)
     assert len(errs) == 0
 
     assert 2 == len(patch["participants"])
@@ -1059,7 +1020,8 @@ def npx_combined_file_path():
 
 
 def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
-    ct, file_infos = test_prismify_olink_only()
+    xlsx, template = list(prismify_test_set('olink'))[0]
+    ct, file_infos = test_prismify_olink_only(xlsx, template)
 
     for finfo in file_infos:
         if finfo.metadata_availability:

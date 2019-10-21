@@ -19,14 +19,11 @@ def template_set():
     Get the path to every template schema in the schemas/templates directory
     and their corresponding xlsx example file. 
     """
-    template_set = []
     # Collect template xlsx examples
     for templ_type in _TEMPLATE_PATH_MAP:
         xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, f'{templ_type}_template.xlsx')
         templ = Template.from_type(templ_type)
-        template_set.append((templ, xlsx_path))
-
-    return template_set
+        yield (templ, xlsx_path)
 
 
 @pytest.mark.parametrize('template, xlsx_path', template_set())
@@ -39,12 +36,14 @@ def test_template(template, xlsx_path, tmpdir):
     # write template to a temporary file
     p = tmpdir.join('test_output.xlsx')
     template.to_excel(p)
-    generated_template = XlTemplateReader.from_excel(p)
+    generated_template, err = XlTemplateReader.from_excel(p)
+    assert not err
 
     # Ensure the xlsx file actually exists
     assert os.path.exists(
         xlsx_path), f'No example Excel template provided for {template.type}'
-    reference_template = XlTemplateReader.from_excel(xlsx_path)
+    reference_template, err = XlTemplateReader.from_excel(xlsx_path)
+    assert not err
 
     # Check that both templates have the same fields
     compare_templates(template.type, generated_template, reference_template)

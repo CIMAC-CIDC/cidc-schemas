@@ -293,10 +293,16 @@ class Template:
         """Validate the given Excel file (either a path or an open file) against this `Template`"""
         from .template_reader import XlTemplateReader
 
-        return XlTemplateReader.from_excel(xlsx).validate(self)
+        xlsx, errs = XlTemplateReader.from_excel(xlsx)
+        if errs: 
+            return False
+        return xlsx.validate(self)
     
-    def iter_errors_excel(self, xlsx: Union[str, BinaryIO]) -> bool:
+    def iter_errors_excel(self, xlsx: Union[str, BinaryIO]) -> List[str]:
         """Produces all validation errors the given Excel file (either a path or an open file) against this `Template`"""
         from .template_reader import XlTemplateReader
 
-        return XlTemplateReader.from_excel(xlsx).iter_errors(self)
+        xlsx, errs = XlTemplateReader.from_excel(xlsx)
+        if errs: 
+            return errs
+        return xlsx.iter_errors(self)

@@ -445,7 +445,7 @@ def test_filepath_gen(schema_path, xlsx_path):
         assert len(file_maps) == 6
 
     elif hint == 'ihc':
-        assert 2 == sum([x.gs_key.endswith(".xlsx") for x in file_maps])
+        assert 2 == sum([x.gs_key.endswith(".tiff") for x in file_maps])
 
     else:
         if hint in SUPPORTED_MANIFESTS:
@@ -820,11 +820,14 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
     validator.validate(full_ct)
 
     if hint == 'wes':
-        assert len(merged_gs_keys) == 3 * 2 # 3 files per entry in xlsx
+        assert len(merged_gs_keys) == 3 * 2  # 3 files per entry in xlsx
         assert set(merged_gs_keys) == set(WES_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
+    elif hint == 'ihc':
+        assert len(merged_gs_keys) == 2
+
     elif hint == 'olink':
-        assert len(merged_gs_keys) == 5 # 2 files per entry in xlsx + 1 file in preamble
+        assert len(merged_gs_keys) == 5  # 2 files per entry in xlsx + 1 file in preamble
 
     elif hint in SUPPORTED_MANIFESTS:
         assert len(merged_gs_keys) == 0
@@ -847,6 +850,9 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
         assert len(full_ct['assays'][hint]) == 1+len(TEST_PRISM_TRIAL['assays'][hint]), f"Multiple {hint}-assays created instead of merging into one"
         assert len(full_ct['assays'][hint][0]['records']) == 2, "More records than expected"
 
+    elif hint == 'ihc':
+        assert len(full_ct['assays'][hint][0]['records']) == 1, "More records than expected"
+
     elif hint in SUPPORTED_MANIFESTS:
         assert full_ct["assays"] == original_ct["assays"]
 
@@ -858,12 +864,16 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
 
     dd = DeepDiff(full_after_prism, full_ct)
 
-    if hint=='wes':
+    if hint == 'wes':
         # 6 files * 7 artifact attributes
         assert len(dd['dictionary_item_added']) == 6*7, "Unexpected CT changes"
 
         # nothing else in diff
         assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
+
+    elif hint == 'ihc':
+        # 2 files * 7 artifact attributes
+        assert len(dd['dictionary_item_added']) == 2*7, "Unexpected CT changes"
 
     elif hint == "olink":
         assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
@@ -872,7 +882,6 @@ def test_end_to_end_prismify_merge_artifact_merge(schema_path, xlsx_path):
         assert len(dd['dictionary_item_added']) == 7*(2*2+1), "Unexpected CT changes"
 
     elif hint in SUPPORTED_MANIFESTS:
-        
         assert len(dd) == 0, "Unexpected CT changes"
 
     elif hint == 'cytof':

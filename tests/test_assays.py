@@ -228,8 +228,7 @@ def test_cytof():
         "cytof_antibodies": antibodies
     }
 
-    obj = {**ASSAY_CORE, **cytof_platform, **
-           cytof_panel}    # merge two dictionaries
+    obj = {**ASSAY_CORE, **cytof_platform, **cytof_panel}    # merge three dictionaries
 
     # create the cytof object
     fcs_1 = ARTIFACT_OBJ.copy()
@@ -256,14 +255,45 @@ def test_cytof():
 
 def test_ihc():
 
+    schema_root = SCHEMA_DIR
+    schema_path = os.path.join(SCHEMA_DIR, "assays/components/cytof/cytof_input.json")
+    schema = load_and_validate_schema(schema_path, schema_root)
+    validator = jsonschema.Draft7Validator(schema)
+
     # create the IHC object
     ihc_obj = {
         "slide_scanner_model": "Hamamatsu",
         "protocol_name": "E4412",
         "staining_platform": "auto",
     }
+    # create the IHC antibody
+    antibodies = [
+        {
+            "antibody": "PD-L1",
+            "company": "dummy",
+            "clone": "dummy",
+            "catalogue_number": 13684,
+            "lot_number": 547645,
+            "dilution": "1:200",
+            "incubation_time": "1 hr",
+            "incubation_temp": "RT"
+        },
+        {
+            "antibody": "PD-L2",
+            "company": "dummy",
+            "clone": "dummy",
+            "catalogue_number": 13684,
+            "lot_number": 547645,
+            "dilution": "1:200",
+            "incubation_time": "1 hr",
+            "incubation_temp": "RT"
+        }
+    ]
 
-    obj = {**ASSAY_CORE, **ihc_obj}  # merge two dictionaries
+    ihc_a = {
+        "ihc_antibodies": antibodies
+    }
+    obj = {**ASSAY_CORE, **ihc_obj, **ihc_a}  # merge three dictionaries
 
     # create the artifact object
     image_1 = ARTIFACT_OBJ.copy()
@@ -281,11 +311,20 @@ def test_ihc():
     csv_1["separator"] = ","
     csv_1["header_row"] = 128
     record = {
-        "cimac_id": "CM-ABCD-1234-01",
+        "percentage_tumor_positive": 80,
+        "tumor_positive_intensity": 1,
+        "average_tumor_marker_intensity": 1.5,
+        "percent_inflammation_marker_positive": 80,
+        "average_inflammation_marker_intensity": 1.5,
+        "clinically_positive": 1,
+        "percentage_viable_tissue": 80,
+        "percentage_tumor": 80,
+        "degree_lymphoid_infiltrate": 1,
+        "percentage_fibrosis": 80,
         "files": {
             "ihc_output_summary": csv_1,
-            "ihc_image_path": image_1,
-            "he_image_path": image_2,
+            "ihc_image": image_1,
+            "he_image": image_2,
         }
     }
 

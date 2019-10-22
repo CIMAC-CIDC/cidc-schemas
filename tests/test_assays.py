@@ -256,7 +256,7 @@ def test_cytof():
 def test_ihc():
 
     schema_root = SCHEMA_DIR
-    schema_path = os.path.join(SCHEMA_DIR, "assays/components/cytof/cytof_input.json")
+    schema_path = os.path.join(SCHEMA_DIR, "assays/components/imaging/ihc_input.json")
     schema = load_and_validate_schema(schema_path, schema_root)
     validator = jsonschema.Draft7Validator(schema)
 

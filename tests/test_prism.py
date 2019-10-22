@@ -493,20 +493,15 @@ def test_prismify_cytof_only(xlsx, template):
     # assert works
     validator.validate(merged)
 
-
-def test_prismify_ihc():
+@pytest.mark.parametrize('xlsx, template', prismify_test_set('ihc'))
+def test_prismify_ihc(xlsx, template):
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     schema = validator.schema
 
-    # create the example template.
-    hint = 'ihc'
-    temp_path = os.path.join(SCHEMA_DIR, 'templates', 'metadata', f'{hint}_template.json')
-    xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, f"{hint}_template.xlsx")
-
     # parse the spreadsheet and get the file maps
-    ct, file_maps = prismify(xlsx_path, temp_path, assay_hint=hint, verb=False)
+    ct, file_maps, errs = prismify(xlsx, template)
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -771,8 +766,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         elif template.type == 'wes':
             assert len(prism_patch['assays'][template.type][0]['records']) == 2
 
-        elif hint =='ihc':
-            assert len(prism_patch['assays'][hint][0]['records']) == 1
+        elif template.type =='ihc':
+            assert len(prism_patch['assays'][template.type][0]['records']) == 1
 
         else:
             raise NotImplementedError(f"no support in test for this template.type {template.type}")
@@ -839,7 +834,6 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     elif template.type == 'olink':
         assert len(merged_gs_keys) == 5 # 2 files per entry in xlsx + 1 file in preamble
 
-
     elif template.type in SUPPORTED_MANIFESTS:
         assert len(merged_gs_keys) == 0
 
@@ -862,7 +856,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(full_ct['assays'][template.type][0]['records']) == 2, "More records than expected"
 
     elif template.type == 'ihc':
-        assert len(full_ct['assays'][hint][0]['records']) == 1, "More records than expected"
+        assert len(full_ct['assays'][template.type][0]['records']) == 1, "More records than expected"
 
     elif template.type in SUPPORTED_MANIFESTS:
         assert full_ct["assays"] == original_ct["assays"]
@@ -893,7 +887,6 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
         # 7 artifact attributes * 5 files (2 per record + 1 study)
         assert len(dd['dictionary_item_added']) == 7*(2*2+1), "Unexpected CT changes"
-
 
     elif template.type in SUPPORTED_MANIFESTS:
         assert len(dd) == 0, "Unexpected CT changes"

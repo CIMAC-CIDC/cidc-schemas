@@ -272,8 +272,8 @@ def test_ihc():
             "antibody": "PD-L1",
             "company": "dummy",
             "clone": "dummy",
-            "catalogue_number": 13684,
-            "lot_number": 547645,
+            "cat_num": "13684",
+            "lot_num": "547645",
             "dilution": "1:200",
             "incubation_time": "1 hr",
             "incubation_temp": "RT"
@@ -282,8 +282,8 @@ def test_ihc():
             "antibody": "PD-L2",
             "company": "dummy",
             "clone": "dummy",
-            "catalogue_number": 13684,
-            "lot_number": 547645,
+            "cat_num": "13684",
+            "lot_num": "547645",
             "dilution": "1:200",
             "incubation_time": "1 hr",
             "incubation_temp": "RT"
@@ -291,7 +291,7 @@ def test_ihc():
     ]
 
     ihc_a = {
-        "ihc_antibodies": antibodies
+        "antibodies": antibodies
     }
     obj = {**ASSAY_CORE, **ihc_obj, **ihc_a}  # merge three dictionaries
 

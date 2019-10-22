@@ -8,14 +8,13 @@ import copy
 import fnmatch
 import collections.abc
 from typing import Optional, List, Callable, Union
-JSON = Union[dict, list, str, int, float]
 
 import dateparser
 import jsonschema
 from jsonschema.exceptions import ValidationError
 
 from .constants import SCHEMA_DIR
-from .util import get_all_paths, split_python_style_path
+from .util import get_all_paths, split_python_style_path, JSON
 
 
 class InDocRefNotFoundError(ValidationError):

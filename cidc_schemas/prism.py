@@ -547,7 +547,11 @@ def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
         # properties from data_columns or preamble wrt template schema definitions, because 
         # there can be a 'gcs_uri_format' that needs to have access to all values.
 
-        templ_ws = template.schema['properties']['worksheets'][ws_name]
+        templ_ws = template.schema['properties']['worksheets'].get(ws_name)
+        if not templ_ws:
+            errors_so_far.append(f"Unexpected worksheet {ws_name!r}.")
+            continue
+
         preamble_object_schema = load_and_validate_schema(templ_ws.get('prism_preamble_object_schema', root_ct_schema_name))
         preamble_merger = Merger(preamble_object_schema)
         preamble_object_pointer = templ_ws.get('prism_preamble_object_pointer', '')

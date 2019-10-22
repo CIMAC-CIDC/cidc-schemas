@@ -354,9 +354,7 @@ def validate_instance(instance: str, schema: dict, is_required=False) -> Optiona
                         "as 'allOf' in schema specifies."
                     )
 
-        print("before:", instance)
         instance = convert(stype, instance)
-        print("after:", instance)
 
         jsonschema.validate(
             # we're using this to validate only 'basic' values that come from Template cells 

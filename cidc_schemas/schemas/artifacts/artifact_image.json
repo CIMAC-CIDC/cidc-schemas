@@ -31,5 +31,8 @@
     }
   ],
   "mergeStrategy": "objectMerge",
-  "required": ["height", "width", "channels"]
+    "anyOf": [
+    { "required": ["height", "width", "channels"] },
+    { "required": ["upload_placeholder"] }
+  ]
 }

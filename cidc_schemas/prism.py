@@ -2,7 +2,7 @@ import json
 import os
 import copy
 import uuid
-from typing import Union, BinaryIO, List
+from typing import Union, BinaryIO, Tuple, List
 
 import openpyxl
 import jsonschema
@@ -247,7 +247,6 @@ LocalFileUploadEntry = namedtuple('LocalFileUploadEntry',
 def _process_property(
         key: str,
         raw_val,
-        assay_hint: str,
         key_lu: dict,
         data_obj: dict,
         format_context: dict,
@@ -289,16 +288,20 @@ def _process_property(
     field_def = key_lu[key.lower()]
     if verb:
         print(f'      found def {field_def}')
-
+    
+   
     # or set/update value in-place in data_obj dictionary 
     pointer = field_def['merge_pointer']
+    coerce = field_def['coerce']
     if field_def.get('is_artifact') == 1:
         pointer += '/upload_placeholder'
 
     # deal with multi-artifact
     if not (field_def.get("is_artifact") == "multi"):
-        val = field_def['coerce'](raw_val)
-
+        try:
+            val = coerce(raw_val)
+        except Exception:
+            raise ParsingException(f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type')}")
     else:
 
         # tokenize value
@@ -308,7 +311,9 @@ def _process_property(
         val = []
         file_uuids = []
         for x in range(len(local_paths)):
-            file_uuid = field_def['coerce'](raw_val)
+            # ignoring coercion errors as we expect it just return uuids 
+            file_uuid = coerce(raw_val)
+    
             file_uuids.append(file_uuid)
             val.append({"upload_placeholder": file_uuid})
 
@@ -378,8 +383,12 @@ def _process_property(
         return files
 
 
-def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: str, verb: bool = False) \
-        -> (dict, List[LocalFileUploadEntry]):
+class ParsingException(ValueError):
+    pass
+
+def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
+        -> (dict, List[LocalFileUploadEntry], List[Union[Exception, str]]):
+
     """
     Converts excel file to json object. It also identifies local files
     which need to uploaded to a google bucket and provides some logic
@@ -395,13 +404,8 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
 
 
     Args:
-        xlsx_path: file on file system to excel file or the open file itself
-        template_path: path on file system relative to schema root of the
-                        template
-
-        assay_hint: string used to help identify properties in template. Must
-                    be the the root of the template filename i.e.
-                    wes_template.json would be wes.
+        xlsx: cidc_schemas.template_reader.XlTemplateReader instance
+        template: cidc_schemas.template.Template instance
         verb: boolean indicating verbosity
 
     Returns:
@@ -414,6 +418,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                     upload_placeholder = "random_uuid-for-artifact-upload",
                     metadata_availability = boolean to indicate whether LocalFileUploadEntry should be extracted for metadata files
                 )
+            arg3: list of errors
 
     Process:
 
@@ -508,24 +513,19 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     with respect to `mergeStrategy`es defined in that schema.
     """
 
-    # data rows will require a unique identifier
-    if assay_hint not in SUPPORTED_TEMPLATES:
-        raise NotImplementedError(f'{assay_hint} is not supported yet, only {SUPPORTED_TEMPLATES} are supported.')
+    if template.type not in SUPPORTED_TEMPLATES:
+        raise NotImplementedError(f'{template.type!r} is not supported, only {SUPPORTED_TEMPLATES} are.')
 
-    # read the excel file
-    xslx = XlTemplateReader.from_excel(xlsx_path)
-    # get corr xlsx schema
-    xlsx_template = Template.from_json(template_path)
-    xslx.validate(xlsx_template)
+    errors_so_far = []
 
     # get the root CT schema
-    root_ct_schema_name = (xlsx_template.schema.get("prism_template_root_object_schema") or "clinical_trial.json")
+    root_ct_schema_name = (template.schema.get("prism_template_root_object_schema") or "clinical_trial.json")
     root_ct_schema = load_and_validate_schema(root_ct_schema_name)
     # create the result CT dictionary
-    root_ct_obj = {f"__{assay_hint}": "as root_ct_obj"} if verb else {}
-    template_root_obj_pointer = xlsx_template.schema.get("prism_template_root_object_pointer", "")
+    root_ct_obj = {f"__prism_origin__:///templates/{template.type}": "as root_ct_obj"} if verb else {}
+    template_root_obj_pointer = template.schema.get("prism_template_root_object_pointer", "")
     if template_root_obj_pointer != "":
-        template_root_obj = {f"__{assay_hint}": "as template_root_obj"} if verb else {}
+        template_root_obj = {f"__prism_origin__:///templates/{template.type}": "as template_root_obj"} if verb else {}
         _set_val(template_root_obj_pointer, template_root_obj, root_ct_obj, verb=verb)
     else:
         template_root_obj = root_ct_obj
@@ -536,7 +536,7 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
     collected_files = []
 
     # loop over spreadsheet worksheets
-    for ws_name, ws in xslx.grouped_rows.items():
+    for ws_name, ws in xlsx.grouped_rows.items():
         if verb:
             print(f'next worksheet {ws_name!r}')
 
@@ -547,14 +547,14 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         # properties from data_columns or preamble wrt template schema definitions, because 
         # there can be a 'gcs_uri_format' that needs to have access to all values.
 
-        templ_ws = xlsx_template.schema['properties']['worksheets'][ws_name]
+        templ_ws = template.schema['properties']['worksheets'][ws_name]
         preamble_object_schema = load_and_validate_schema(templ_ws.get('prism_preamble_object_schema', root_ct_schema_name))
         preamble_merger = Merger(preamble_object_schema)
         preamble_object_pointer = templ_ws.get('prism_preamble_object_pointer', '')
         data_object_pointer = templ_ws['prism_data_object_pointer']
 
         # creating preamble obj 
-        preamble_obj = {f"__{assay_hint}:{ws_name}" : "as preamble"} if verb else {}
+        preamble_obj = {f"__prism_origin__:///templates/{template.type}/{ws_name}" : "as preamble"} if verb else {}
 
         # Processing data rows first
         data = ws[RowType.DATA]
@@ -563,14 +563,14 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
             headers = ws[RowType.HEADER][0]
 
             # for row in data:
-            for i, row in enumerate(data):
+            for row in data:
 
                 if verb:
-                    print(f'  next data row {i} {row}')
+                    print(f'  next data row {row!r}')
 
                 # creating data obj 
-                data_obj = {f"__{assay_hint}:{ws_name}:{i}" : "as data_obj"} if verb else {}
-                copy_of_preamble = {f"__{assay_hint}:{ws_name}:{i}" : "as copy_of_preamble"} if verb else {}
+                data_obj = {f"__prism_origin__:///templates/{template.type}/{ws_name}/{row.row_num}" : "as data_obj"} if verb else {}
+                copy_of_preamble = {f"__prism_origin__:///templates/{template.type}/{ws_name}/{row.row_num}" : "as copy_of_preamble"} if verb else {}
                 _set_val(data_object_pointer, data_obj, copy_of_preamble, template_root_obj, preamble_object_pointer, verb=verb)
 
                 # We create this "data record dict" (all key-value pairs) prior to processing
@@ -581,19 +581,20 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
                 # create dictionary per row
                 for key, val in zip(headers.values, row.values):
                     
-                    # get corr xsls schema type 
-                    new_files = _process_property(
-                        key, val,
-                        assay_hint=assay_hint,
-                        key_lu=xlsx_template.key_lu,
-                        data_obj=data_obj,
-                        format_context=dict(local_context, **preamble_context),  # combine contexts
-                        root_obj=copy_of_preamble,
-                        data_obj_pointer=data_object_pointer,
-                        verb=verb)
-                    if new_files:
-                        for new_file in new_files:
-                            collected_files.append(new_file)
+                    try: 
+                        # get corr xsls schema type 
+                        new_files = _process_property(
+                            key, val,
+                            key_lu=template.key_lu,
+                            data_obj=data_obj,
+                            format_context=dict(local_context, **preamble_context),  # combine contexts
+                            root_obj=copy_of_preamble,
+                            data_obj_pointer=data_object_pointer,
+                            verb=verb)
+                        if new_files:
+                            collected_files.extend(new_files)
+                    except ParsingException as e:
+                        errors_so_far.append(e)
 
                 if verb:
                     print('  merging preambles')
@@ -606,25 +607,27 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         # Now processing preamble rows 
         if verb: print(f'  preamble for {ws_name!r}')
         for row in ws[RowType.PREAMBLE]:
-            # process this property
-            new_files = _process_property(
-                row.values[0], row.values[1], 
-                assay_hint=assay_hint, 
-                key_lu=xlsx_template.key_lu, 
-                data_obj=preamble_obj, 
-                format_context=preamble_context, 
-                root_obj=root_ct_obj, 
-                data_obj_pointer=template_root_obj_pointer+preamble_object_pointer, 
-                verb=verb)
-            # TODO we might want to use copy+preamble_merger here too,
-            # to for complex properties that require mergeStrategy
-            
-            if new_files:
-                for new_file in new_files:
-                    collected_files.append(new_file)
+            try: 
+                # process this property
+                new_files = _process_property(
+                    row.values[0], row.values[1], 
+                    key_lu=template.key_lu, 
+                    data_obj=preamble_obj, 
+                    format_context=preamble_context, 
+                    root_obj=root_ct_obj, 
+                    data_obj_pointer=template_root_obj_pointer+preamble_object_pointer, 
+                    verb=verb)
+                # TODO we might want to use copy+preamble_merger here too,
+                # to for complex properties that require mergeStrategy
+                
+                if new_files:
+                    collected_files.extend(new_files)
+            except ParsingException as e:
+                errors_so_far.append(e)
+    
 
         # Now pushing it up / merging with the whole thing
-        copy_of_template_root = {f"__{assay_hint}:{ws_name}" : "as copy_of_template_root"} if verb else {}
+        copy_of_template_root = {f"__prism_origin__:///templates/{template.type}/{ws_name}" : "as copy_of_template_root"} if verb else {}
         _set_val(preamble_object_pointer, preamble_obj, copy_of_template_root, verb=verb)
         if verb:
             print('merging root objs')
@@ -633,15 +636,15 @@ def prismify(xlsx_path: Union[str, BinaryIO], template_path: str, assay_hint: st
         template_root_obj = root_ct_merger.merge(template_root_obj, copy_of_template_root)
         if verb:
             print(f'  merged - {template_root_obj}')
-
+    
+    
     if template_root_obj_pointer != "":
         _set_val(template_root_obj_pointer, template_root_obj, root_ct_obj, verb=verb)
     else:
         root_ct_obj = template_root_obj 
 
-    # return root object and files list
-    return root_ct_obj, collected_files
-
+    return root_ct_obj, collected_files, errors_so_far
+    
 
 def _set_data_format(ct: dict, artifact: dict):
     """
@@ -716,14 +719,14 @@ def merge_artifact(
                     object storage
     Returns:
         ct: updated clinical trial object
-        existing_patch: updated patch
-        patch_metadata: relevant metadata collected while updating artifact
+        artifact: updated artifact
+        additional_artifact_metadata: relevant metadata collected while updating artifact
     """ 
 
     # urls are created like this in _process_property:
     file_name, uuid = object_url.split("/")[-2:]
 
-    artifact = {
+    artifact_patch = {
         # TODO 1. this artifact_category should be filled out during prismify
         "artifact_category": "Assay Artifact from CIMAC",
         "object_url": object_url,
@@ -733,7 +736,7 @@ def merge_artifact(
         "uploaded_timestamp": uploaded_timestamp
     }
 
-    return _update_artifact(ct, artifact, artifact_uuid)
+    return _update_artifact(ct, artifact_patch, artifact_uuid)
 
 
 class InvalidMergeTargetException(ValueError):
@@ -757,47 +760,47 @@ def merge_artifact_extra_metadata(
         extra_metadata_file: extra metadata file in BinaryIO
     Returns:
         ct: updated clinical trial object
-        existing_patch: updated patch
-        patch_metadata: relevant metadata collected while updating artifact
+        artifact: updated artifact
+        additional_artifact_metadata: relevant metadata collected while updating artifact
     """
 
     if assay_hint not in _EXTRA_METADATA_PARSERS:
         raise Exception(f"Assay {assay_hint} does not support extra metadata parsing")
     extract_metadata = _EXTRA_METADATA_PARSERS[assay_hint]
 
-    artifact = extract_metadata(extra_metadata_file)
-    return _update_artifact(ct, artifact, artifact_uuid)
+    artifact_extra_md_patch = extract_metadata(extra_metadata_file)
+    return _update_artifact(ct, artifact_extra_md_patch, artifact_uuid)
 
 
-def _update_artifact(ct: dict, artifact: dict, artifact_uuid: str) -> (dict, dict, dict):
+def _update_artifact(ct: dict, artifact_patch: dict, artifact_uuid: str) -> (dict, dict, dict):
 
     """ Updates the artifact with uuid `artifact_uuid` in `ct`,
     and return the updated clinical trial and artifact objects
 
     Args:
         ct: clinical trial object
-        artifact: artifact object
+        artifact_patch: artifact object patch
         artifact_uuid: artifact identifier
     Returns:
         ct: updated clinical trial object
-        existing_patch: updated patch
-        patch_metadata: relevant metadata collected while updating artifact
+        artifact: updated artifact
+        additional_artifact_metadata: relevant metadata collected while updating artifact
     """
 
-    existing_patch, patch_metadata = _get_uuid_info(ct, artifact_uuid)
+    artifact, additional_artifact_metadata = _get_uuid_info(ct, artifact_uuid)
 
     # TODO this might be better with merger:
     # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")
     # artifact_parent[file_name] = Merger(artifact_schema).merge(existing_artifact, artifact)
-    existing_patch.update(artifact)
+    artifact.update(artifact_patch)
 
-    _set_data_format(ct, existing_patch)
+    _set_data_format(ct, artifact)
 
     # return the artifact that was merged and the new object
-    return ct, existing_patch, patch_metadata
+    return ct, artifact, additional_artifact_metadata
 
 
-def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
+def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]):
     """
     merges two clinical trial metadata objects together
 
@@ -807,6 +810,7 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
 
     Returns:
         arg1: the merged metadata object
+        arg2: list of validation errors
     """
 
     # merge the copy with the original.
@@ -824,17 +828,14 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> dict:
     # these fields are required in the schema
     # so previous validation assert they exist
     if patch.get(PROTOCOL_ID_FIELD_NAME) != target.get(PROTOCOL_ID_FIELD_NAME):
-        raise RuntimeError("unable to merge trials with different "+ PROTOCOL_ID_FIELD_NAME)
+        raise InvalidMergeTargetException("Unable to merge trials with different "+ PROTOCOL_ID_FIELD_NAME)
 
     # merge the two documents
     merger = Merger(schema)
     merged = merger.merge(target, patch)
 
-    # validate this
-    validator.validate(merged)
+    return merged, list(validator.iter_errors(merged))
 
-    # now return it
-    return merged
 
 
 def parse_npx(xlsx: BinaryIO) -> dict:

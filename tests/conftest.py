@@ -24,13 +24,15 @@ def pbmc_template(pbmc_schema_path):
 def tiny_template():
     """A small, valid """
 
-    test_property = {'$id': 'success', 'type': 'string'}
+    test_property = {'$id': 'test_property', 'type': 'string'}
     test_date = {'type': 'string', 'format': 'date'}
     test_time = {'type': 'string', 'format': 'time'}
+    test_number = {'type': 'number'}
     test_fields = {
         'test_property': test_property,
         'test_date': test_date,
-        'test_time': test_time
+        'test_time': test_time,
+        'test_number': test_number
     }
 
     tiny_template_schema = {
@@ -49,4 +51,4 @@ def tiny_template():
         }
     }
 
-    return Template(tiny_template_schema)
+    return Template(tiny_template_schema, 'test_tiny')

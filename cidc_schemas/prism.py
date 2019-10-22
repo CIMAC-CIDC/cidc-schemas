@@ -292,13 +292,14 @@ def _process_property(
    
     # or set/update value in-place in data_obj dictionary 
     pointer = field_def['merge_pointer']
+    coerce = field_def['coerce']
     if field_def.get('is_artifact') == 1:
         pointer += '/upload_placeholder'
 
     # deal with multi-artifact
     if not (field_def.get("is_artifact") == "multi"):
         try:
-            val = field_def['coerce'](raw_val)
+            val = coerce(raw_val)
         except Exception:
             raise ParsingException(f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type')}")
     else:
@@ -311,11 +312,8 @@ def _process_property(
         file_uuids = []
         for x in range(len(local_paths)):
             # ignoring coercion errors as we expect it just return uuids 
-            try:
-                file_uuid = field_def['coerce'](raw_val)
-            except Exception:
-                raise ParsingException(f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type')}")
-
+            file_uuid = coerce(raw_val)
+    
             file_uuids.append(file_uuid)
             val.append({"upload_placeholder": file_uuid})
 
@@ -406,11 +404,8 @@ def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
 
 
     Args:
-        xlsx_path: file on file system to excel file or the open file itself
-        
-        assay_hint: string used to help identify properties in template. Must
-                    be the the root of the template filename i.e.
-                    wes_template.json would be wes.
+        xlsx: cidc_schemas.template_reader.XlTemplateReader instance
+        template: cidc_schemas.template.Template instance
         verb: boolean indicating verbosity
 
     Returns:

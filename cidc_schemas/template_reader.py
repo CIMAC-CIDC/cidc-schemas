@@ -5,7 +5,7 @@
 import os
 import json
 import logging
-from itertools import dropwhile
+from itertools import dropwhile, zip_longest
 from typing import Dict, List, Tuple, Union, BinaryIO, NamedTuple, Optional
 
 import openpyxl
@@ -181,7 +181,7 @@ class XlTemplateReader:
         Raises:
             ValidationError -- if the .xlsx file is invalid.
         Returns:
-            {None} -- if everything is valid, otherwise raises an exception with validation reporting
+            True -- if everything is valid, otherwise raises an exception with validation reporting
         """
 
         invalid_messages = list(self.iter_errors(template))
@@ -274,7 +274,7 @@ class XlTemplateReader:
                     )
 
             for data_row in row_groups[RowType.DATA]:
-                for head, value, schema in zip(headers, data_row.values, data_schemas):
+                for head, value, schema in zip_longest(headers, data_row.values, data_schemas):
                     if schema is None:
                         # we don't check unexpected column
                         # and we already have an error reported on that

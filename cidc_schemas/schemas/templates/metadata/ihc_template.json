@@ -18,6 +18,14 @@
                 "merge_pointer": "3/protocol_identifier",
                 "type_ref": "clinical_trial.json#properties/protocol_identifier"
               },
+              "assay creator": {
+                "merge_pointer": "0/assay_creator",
+                "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+              },
+              "protocol name": {
+                "merge_pointer": "0/protocol_name",
+                "type_ref": "assays/components/image.json#properties/protocol_name"
+              },
               "slide scanner model": {
                 "merge_pointer": "0/slide_scanner_model",
                 "type_ref": "assays/components/image.json#properties/slide_scanner_model"
@@ -52,15 +60,15 @@
               },
               "dilution": {
                   "merge_pointer": "0/dilution",
-                  "type_ref": "assays/components/ihc_antibody.json#properties/dilution"
+                  "type_ref": "assays/components/ihc_antibodies.json#properties/dilution"
               },
               "incubation time": {
                   "merge_pointer": "0/incubation_time",
-                  "type_ref": "assays/components/ihc_antibody.json#properties/incubation_time"
+                  "type_ref": "assays/components/ihc_antibodies.json#properties/incubation_time"
               },
               "incubation temperature": {
                   "merge_pointer": "0/incubation_temp",
-                  "type_ref": "assays/components/ihc_antibody.json#properties/incubation_temp"
+                  "type_ref": "assays/components/ihc_antibodies.json#properties/incubation_temp"
               }
             },
 
@@ -75,14 +83,14 @@
                   "merge_pointer": "0/slide_number",
                   "type_ref": "aliquot.json#properties/slide_number"
                 },
-                "IHC image path": {
-                  "merge_pointer": "0/files/ihc_image_path",
+                "IHC image": {
+                  "merge_pointer": "0/files/ihc_image",
                   "is_artifact" : 1,
                   "gcs_uri_format": "{protocol identifier}/{cimac id}/{slide number}/ihc/ihc.tiff",
                   "type_ref": "assays/components/local_file.json#properties/file_path"
                 },
-                "H and E image path": {
-                  "merge_pointer": "0/files/he_image_path",
+                "H and E image": {
+                  "merge_pointer": "0/files/he_image",
                   "is_artifact" : 1,
                   "gcs_uri_format": "{protocol identifier}/{cimac id}/{slide number}/ihc/HnE.tiff",
                   "type_ref": "assays/components/local_file.json#properties/file_path"

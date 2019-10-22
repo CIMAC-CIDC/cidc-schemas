@@ -6,7 +6,8 @@
   "description": "Immunohistochemical analysis.",
   "allOf": [
     {"$ref": "assays/components/assay_core.json"},
-    {"$ref": "assays/components/image.json"}
+    {"$ref": "assays/components/image.json"},
+    {"$ref": "assays/components/ihc_antibodies.json"}
   ],
   "properties": {
     "records": {
@@ -19,15 +20,8 @@
       "mergeOptions": {
         "idRef": "cimac_id"
       }
-    },
-    "ihc_antibody": {
-      "type": "array",
-      "items": {
-        "$ref": "assays/components/ihc_antibody.json"
-      },
-      "mergeStrategy": "append"
     }
   },
-  "required": ["records", "ihc_antibody"],
+  "required": ["records"],
   "mergeStrategy": "objectMerge"
 }

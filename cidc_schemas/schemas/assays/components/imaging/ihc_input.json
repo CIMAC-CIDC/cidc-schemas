@@ -9,14 +9,14 @@
       "$comment": "Summary of the results of the experiment.",
       "$ref": "artifacts/artifact_csv.json"
     },
-    "ihc_image_path": {
+    "ihc_image": {
       "$comment": "Path to IHC image in TIFF format.",
       "$ref": "artifacts/artifact_image.json"
     },
-    "he_image_path": {
+    "he_image": {
       "$comment": "Path to H&E image in TIFF format.",
       "$ref": "artifacts/artifact_image.json"
     }
   },
-  "required": ["ihc_image_path", "he_image_path"]
+  "required": ["ihc_image", "he_image"]
 }

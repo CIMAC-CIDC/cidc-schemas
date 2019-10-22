@@ -63,8 +63,8 @@
                 <tr>
     <td>
         
-            <span id="ihc_image_path">
-                ihc_image_path
+            <span id="ihc_image">
+                ihc_image
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -88,8 +88,8 @@
                 <tr>
     <td>
         
-            <span id="he_image_path">
-                he_image_path
+            <span id="he_image">
+                he_image
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -149,7 +149,7 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "IHC assay input/output files.",
     "properties": {
-        "he_image_path": {
+        "he_image": {
             "$comment": "Path to H&E image in TIFF format.",
             "$id": "image_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
@@ -279,16 +279,26 @@
                     }
                 }
             ],
-            "description": "Information about images including height and width.",
-            "required": [
-                "height",
-                "width",
-                "channels"
+            "anyOf": [
+                {
+                    "required": [
+                        "height",
+                        "width",
+                        "channels"
+                    ]
+                },
+                {
+                    "required": [
+                        "upload_placeholder"
+                    ]
+                }
             ],
+            "description": "Information about images including height and width.",
+            "mergeStrategy": "objectMerge",
             "title": "Image Artifact",
             "type": "object"
         },
-        "ihc_image_path": {
+        "ihc_image": {
             "$comment": "Path to IHC image in TIFF format.",
             "$id": "image_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
@@ -418,12 +428,22 @@
                     }
                 }
             ],
-            "description": "Information about images including height and width.",
-            "required": [
-                "height",
-                "width",
-                "channels"
+            "anyOf": [
+                {
+                    "required": [
+                        "height",
+                        "width",
+                        "channels"
+                    ]
+                },
+                {
+                    "required": [
+                        "upload_placeholder"
+                    ]
+                }
             ],
+            "description": "Information about images including height and width.",
+            "mergeStrategy": "objectMerge",
             "title": "Image Artifact",
             "type": "object"
         },
@@ -552,18 +572,28 @@
                     }
                 }
             ],
-            "description": "Information about CSV files.",
-            "required": [
-                "separator",
-                "header_row"
+            "anyOf": [
+                {
+                    "required": [
+                        "separator",
+                        "header_row"
+                    ]
+                },
+                {
+                    "required": [
+                        "upload_placeholder"
+                    ]
+                }
             ],
+            "description": "Information about CSV files.",
+            "mergeStrategy": "objectMerge",
             "title": "CSV Artifact",
             "type": "object"
         }
     },
     "required": [
-        "ihc_image_path",
-        "he_image_path"
+        "ihc_image",
+        "he_image"
     ],
     "title": "Immunohistichemical Analysis Input Files",
     "type": "object"

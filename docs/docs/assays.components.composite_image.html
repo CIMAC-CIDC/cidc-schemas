@@ -254,12 +254,22 @@
                     }
                 }
             ],
-            "description": "Information about images including height and width.",
-            "required": [
-                "height",
-                "width",
-                "channels"
+            "anyOf": [
+                {
+                    "required": [
+                        "height",
+                        "width",
+                        "channels"
+                    ]
+                },
+                {
+                    "required": [
+                        "upload_placeholder"
+                    ]
+                }
             ],
+            "description": "Information about images including height and width.",
+            "mergeStrategy": "objectMerge",
             "title": "Image Artifact",
             "type": "object"
         },
@@ -393,12 +403,22 @@
                     }
                 }
             ],
-            "description": "Information about images including height and width.",
-            "required": [
-                "height",
-                "width",
-                "channels"
+            "anyOf": [
+                {
+                    "required": [
+                        "height",
+                        "width",
+                        "channels"
+                    ]
+                },
+                {
+                    "required": [
+                        "upload_placeholder"
+                    ]
+                }
             ],
+            "description": "Information about images including height and width.",
+            "mergeStrategy": "objectMerge",
             "title": "Image Artifact",
             "type": "object"
         }

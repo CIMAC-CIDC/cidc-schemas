@@ -268,8 +268,7 @@
                 }
             },
             "required": [
-                "slide_scanner_model",
-                "protocol_name"
+                "slide_scanner_model"
             ],
             "title": "Image"
         },
@@ -584,12 +583,22 @@
                                                     }
                                                 }
                                             ],
-                                            "description": "Information about images including height and width.",
-                                            "required": [
-                                                "height",
-                                                "width",
-                                                "channels"
+                                            "anyOf": [
+                                                {
+                                                    "required": [
+                                                        "height",
+                                                        "width",
+                                                        "channels"
+                                                    ]
+                                                },
+                                                {
+                                                    "required": [
+                                                        "upload_placeholder"
+                                                    ]
+                                                }
                                             ],
+                                            "description": "Information about images including height and width.",
+                                            "mergeStrategy": "objectMerge",
                                             "title": "Image Artifact",
                                             "type": "object"
                                         },
@@ -723,12 +732,22 @@
                                                     }
                                                 }
                                             ],
-                                            "description": "Information about images including height and width.",
-                                            "required": [
-                                                "height",
-                                                "width",
-                                                "channels"
+                                            "anyOf": [
+                                                {
+                                                    "required": [
+                                                        "height",
+                                                        "width",
+                                                        "channels"
+                                                    ]
+                                                },
+                                                {
+                                                    "required": [
+                                                        "upload_placeholder"
+                                                    ]
+                                                }
                                             ],
+                                            "description": "Information about images including height and width.",
+                                            "mergeStrategy": "objectMerge",
                                             "title": "Image Artifact",
                                             "type": "object"
                                         }
@@ -874,11 +893,21 @@
                                                     }
                                                 }
                                             ],
-                                            "description": "Information about CSV files.",
-                                            "required": [
-                                                "separator",
-                                                "header_row"
+                                            "anyOf": [
+                                                {
+                                                    "required": [
+                                                        "separator",
+                                                        "header_row"
+                                                    ]
+                                                },
+                                                {
+                                                    "required": [
+                                                        "upload_placeholder"
+                                                    ]
+                                                }
                                             ],
+                                            "description": "Information about CSV files.",
+                                            "mergeStrategy": "objectMerge",
                                             "title": "CSV Artifact",
                                             "type": "object"
                                         },
@@ -1007,11 +1036,21 @@
                                                     }
                                                 }
                                             ],
-                                            "description": "Information about CSV files.",
-                                            "required": [
-                                                "separator",
-                                                "header_row"
+                                            "anyOf": [
+                                                {
+                                                    "required": [
+                                                        "separator",
+                                                        "header_row"
+                                                    ]
+                                                },
+                                                {
+                                                    "required": [
+                                                        "upload_placeholder"
+                                                    ]
+                                                }
                                             ],
+                                            "description": "Information about CSV files.",
+                                            "mergeStrategy": "objectMerge",
                                             "title": "CSV Artifact",
                                             "type": "object"
                                         },
@@ -1140,11 +1179,21 @@
                                                     }
                                                 }
                                             ],
-                                            "description": "Information about CSV files.",
-                                            "required": [
-                                                "separator",
-                                                "header_row"
+                                            "anyOf": [
+                                                {
+                                                    "required": [
+                                                        "separator",
+                                                        "header_row"
+                                                    ]
+                                                },
+                                                {
+                                                    "required": [
+                                                        "upload_placeholder"
+                                                    ]
+                                                }
                                             ],
+                                            "description": "Information about CSV files.",
+                                            "mergeStrategy": "objectMerge",
                                             "title": "CSV Artifact",
                                             "type": "object"
                                         },
@@ -1278,12 +1327,22 @@
                                                     }
                                                 }
                                             ],
-                                            "description": "Information about images including height and width.",
-                                            "required": [
-                                                "height",
-                                                "width",
-                                                "channels"
+                                            "anyOf": [
+                                                {
+                                                    "required": [
+                                                        "height",
+                                                        "width",
+                                                        "channels"
+                                                    ]
+                                                },
+                                                {
+                                                    "required": [
+                                                        "upload_placeholder"
+                                                    ]
+                                                }
                                             ],
+                                            "description": "Information about images including height and width.",
+                                            "mergeStrategy": "objectMerge",
                                             "title": "Image Artifact",
                                             "type": "object"
                                         },
@@ -1417,12 +1476,22 @@
                                                     }
                                                 }
                                             ],
-                                            "description": "Information about images including height and width.",
-                                            "required": [
-                                                "height",
-                                                "width",
-                                                "channels"
+                                            "anyOf": [
+                                                {
+                                                    "required": [
+                                                        "height",
+                                                        "width",
+                                                        "channels"
+                                                    ]
+                                                },
+                                                {
+                                                    "required": [
+                                                        "upload_placeholder"
+                                                    ]
+                                                }
                                             ],
+                                            "description": "Information about images including height and width.",
+                                            "mergeStrategy": "objectMerge",
                                             "title": "Image Artifact",
                                             "type": "object"
                                         },
@@ -1551,11 +1620,21 @@
                                                     }
                                                 }
                                             ],
-                                            "description": "Information about CSV files.",
-                                            "required": [
-                                                "separator",
-                                                "header_row"
+                                            "anyOf": [
+                                                {
+                                                    "required": [
+                                                        "separator",
+                                                        "header_row"
+                                                    ]
+                                                },
+                                                {
+                                                    "required": [
+                                                        "upload_placeholder"
+                                                    ]
+                                                }
                                             ],
+                                            "description": "Information about CSV files.",
+                                            "mergeStrategy": "objectMerge",
                                             "title": "CSV Artifact",
                                             "type": "object"
                                         }
@@ -1693,11 +1772,21 @@
                                         }
                                     }
                                 ],
-                                "description": "Information about CSV files.",
-                                "required": [
-                                    "separator",
-                                    "header_row"
+                                "anyOf": [
+                                    {
+                                        "required": [
+                                            "separator",
+                                            "header_row"
+                                        ]
+                                    },
+                                    {
+                                        "required": [
+                                            "upload_placeholder"
+                                        ]
+                                    }
                                 ],
+                                "description": "Information about CSV files.",
+                                "mergeStrategy": "objectMerge",
                                 "title": "CSV Artifact",
                                 "type": "object"
                             }

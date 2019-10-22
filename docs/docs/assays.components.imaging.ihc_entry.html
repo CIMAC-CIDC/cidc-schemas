@@ -58,58 +58,14 @@
         </thead>
         
             
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="files">
-                files
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            IHC assay input/output files.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.imaging.ihc_input.html">assays.components.imaging.ihc_input</a>
-        
-    </td>
-</tr>
-            
-        
-        
-            
                 <tr>
     <td>
         
             <span id="percentage_tumor_positive">
                 percentage_tumor_positive
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -144,6 +100,8 @@
                 tumor_positive_intensity
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
@@ -176,6 +134,8 @@
             <span id="average_tumor_marker_intensity">
                 average_tumor_marker_intensity
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -210,6 +170,8 @@
                 percent_inflammation_marker_positive
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
@@ -242,6 +204,8 @@
             <span id="average_inflammation_marker_intensity">
                 average_inflammation_marker_intensity
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -276,6 +240,8 @@
                 clinically_positive
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
@@ -286,7 +252,7 @@
     <td>
         
             &lt; 
-                string 
+                integer 
     
     
     
@@ -308,6 +274,8 @@
             <span id="percentage_viable_tissue">
                 percentage_viable_tissue
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -342,6 +310,8 @@
                 percentage_tumor
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
@@ -374,6 +344,8 @@
             <span id="degree_lymphoid_infiltrate">
                 degree_lymphoid_infiltrate
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -408,6 +380,8 @@
                 percentage_fibrosis
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
@@ -431,6 +405,52 @@
         
     </td>
 </tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="files">
+                files
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            IHC assay input/output files.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.imaging.ihc_input.html">assays.components.imaging.ihc_input</a>
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
             
         
             
@@ -458,7 +478,7 @@
         },
         "clinically_positive": {
             "description": "Indicates whether the marker is considered positive by FDA guidelines.",
-            "type": "string"
+            "type": "integer"
         },
         "degree_lymphoid_infiltrate": {
             "description": "Degree of lymphoid infiltrate (0, 1, 2, or 3).",
@@ -469,7 +489,7 @@
             "$schema": "http://json-schema.org/draft-07/schema#",
             "description": "IHC assay input/output files.",
             "properties": {
-                "he_image_path": {
+                "he_image": {
                     "$comment": "Path to H&E image in TIFF format.",
                     "$id": "image_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
@@ -599,16 +619,26 @@
                             }
                         }
                     ],
-                    "description": "Information about images including height and width.",
-                    "required": [
-                        "height",
-                        "width",
-                        "channels"
+                    "anyOf": [
+                        {
+                            "required": [
+                                "height",
+                                "width",
+                                "channels"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "upload_placeholder"
+                            ]
+                        }
                     ],
+                    "description": "Information about images including height and width.",
+                    "mergeStrategy": "objectMerge",
                     "title": "Image Artifact",
                     "type": "object"
                 },
-                "ihc_image_path": {
+                "ihc_image": {
                     "$comment": "Path to IHC image in TIFF format.",
                     "$id": "image_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
@@ -738,12 +768,22 @@
                             }
                         }
                     ],
-                    "description": "Information about images including height and width.",
-                    "required": [
-                        "height",
-                        "width",
-                        "channels"
+                    "anyOf": [
+                        {
+                            "required": [
+                                "height",
+                                "width",
+                                "channels"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "upload_placeholder"
+                            ]
+                        }
                     ],
+                    "description": "Information about images including height and width.",
+                    "mergeStrategy": "objectMerge",
                     "title": "Image Artifact",
                     "type": "object"
                 },
@@ -872,18 +912,28 @@
                             }
                         }
                     ],
-                    "description": "Information about CSV files.",
-                    "required": [
-                        "separator",
-                        "header_row"
+                    "anyOf": [
+                        {
+                            "required": [
+                                "separator",
+                                "header_row"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "upload_placeholder"
+                            ]
+                        }
                     ],
+                    "description": "Information about CSV files.",
+                    "mergeStrategy": "objectMerge",
                     "title": "CSV Artifact",
                     "type": "object"
                 }
             },
             "required": [
-                "ihc_image_path",
-                "he_image_path"
+                "ihc_image",
+                "he_image"
             ],
             "title": "Immunohistichemical Analysis Input Files",
             "type": "object"
@@ -914,7 +964,16 @@
         }
     },
     "required": [
-        "cimac_id",
+        "percentage_tumor_positive",
+        "tumor_positive_intensity",
+        "average_tumor_marker_intensity",
+        "percent_inflammation_marker_positive",
+        "average_inflammation_marker_intensity",
+        "clinically_positive",
+        "percentage_viable_tissue",
+        "percentage_tumor",
+        "degree_lymphoid_infiltrate",
+        "percentage_fibrosis",
         "files"
     ],
     "title": "IHC assay record",

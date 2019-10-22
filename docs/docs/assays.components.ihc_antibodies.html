@@ -202,7 +202,7 @@
   </div>
 
   <div class="container">
-    <h3>ihc_antibody.full.json</h3>
+    <h3>ihc_antibodies.full.json</h3>
   	<pre><code>{
     "$schema": "http://json-schema.org/draft-07/schema#",
     "allOf": [
@@ -244,10 +244,6 @@
     ],
     "description": "Data specific to antibody preparation for immunohistochemical analysis.",
     "id": "ihc_antibody",
-    "mergeOptions": {
-        "idRef": "antibody"
-    },
-    "mergeStrategy": "arrayMergeById",
     "properties": {
         "dilution": {
             "description": "Concentration ratio for antibody dilution.",

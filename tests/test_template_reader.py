@@ -24,10 +24,11 @@ def test_valid(tiny_template):
             TemplateRow(1, RowType.PREAMBLE, ('test_property', 'foo')),
             TemplateRow(2, RowType.PREAMBLE, ('test_date', '6/11/12')),
             TemplateRow(3, RowType.PREAMBLE, ('test_time', '10:44:61')),
+            TemplateRow(3, RowType.PREAMBLE, ('test_number', '432.1')),
             TemplateRow(4, RowType.HEADER, ('test_property',
-                                            'test_date', 'test_time')),
-            TemplateRow(5, RowType.DATA, ('foo', '6/11/12', '10:44:61')),
-            TemplateRow(6, RowType.DATA, ('foo', '6/12/12', '10:45:61'))
+                                            'test_date', 'test_time', 'test_number')),
+            TemplateRow(5, RowType.DATA, ('foo', '6/11/12', '10:44:61', '4.11')),
+            TemplateRow(6, RowType.DATA, ('foo', '6/12/12', '10:45:61', '5.11'))
         ]
     }
 
@@ -38,14 +39,15 @@ def test_valid(tiny_template):
 def test_valid_from_excel(tiny_template):
     """Test that the reader can load from a small xlsx file"""
     tiny_xlsx = os.path.join(TEST_DATA_DIR, 'tiny_manifest.xlsx')
-    reader = XlTemplateReader.from_excel(tiny_xlsx)
+    reader, errs = XlTemplateReader.from_excel(tiny_xlsx)
+    assert not errs
     assert reader.validate(tiny_template)
 
 
 def search_error_message(workbook, template, error, msg_fragment):
     reader = XlTemplateReader(workbook)
     with pytest.raises(error, match=msg_fragment):
-        reader.validate(template)
+        res = reader.validate(template)
 
 
 def test_empty_headers(tiny_template):
@@ -83,15 +85,26 @@ def test_missing_required_value(tiny_template):
     """Test that spreadsheet with a missing value marked required raises a validation error"""
     tiny_missing_value = {
         'TEST_SHEET': [
-            TemplateRow(1, RowType.HEADER, ('test_property',
-                                            'test_date', 'test_time')),
-            TemplateRow(2, RowType.DATA, (None, '6/11/12', '10:44:61')),
+            TemplateRow(1, RowType.PREAMBLE, ('test_date', 'foo')),
+            TemplateRow(1, RowType.PREAMBLE, ('test_time', '10:44:61')),
+            TemplateRow(2, RowType.HEADER, ('test_property', 
+                                            'test_date', 'test_time', 'something_unexpected')),
+            TemplateRow(3, RowType.DATA, (None, '6/11/12', '10:44:61')),
+            TemplateRow(4, RowType.DATA, ("foo", '6/11/12', '10:44:61', None, None)),
         ]
     }
 
-    message = "Error in worksheet 'TEST_SHEET', row 2, field 'test_property': found empty value"
-    search_error_message(tiny_missing_value,
-                         tiny_template, ValidationError, message)
+    errs = [
+        "convert .foo. to date",
+        "unexpected.*something_unexpected",
+        "is missing",
+        "Error in worksheet 'TEST_SHEET', row 3, field 'test_property': found empty value",
+        "Row 4 has 1 unexpected extra values",
+    ]
+
+    for err in errs:
+        search_error_message(tiny_missing_value, tiny_template, ValidationError, err)
+
 
 
 def test_wrong_number_of_headers(tiny_template):
@@ -127,7 +140,7 @@ def test_missing_schema(tiny_template):
     }
 
     search_error_message(tiny_missing, tiny_template,
-                         ValidationError, 'Found unexpected column "missing_property"')
+                         ValidationError, r'Found unexpected column.*missing_property')
 
 
 def test_invalid(tiny_template):

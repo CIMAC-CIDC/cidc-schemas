@@ -5,8 +5,8 @@
 import os
 import json
 import logging
-from itertools import dropwhile
-from typing import Dict, List, Tuple, Union, BinaryIO, NamedTuple
+from itertools import dropwhile, zip_longest
+from typing import Dict, List, Tuple, Union, BinaryIO, NamedTuple, Optional
 
 import openpyxl
 
@@ -14,7 +14,7 @@ from .template import Template
 from .template_writer import RowType, row_type_from_string
 from .json_validation import validate_instance
 
-logger = logging.getLogger('cidc_schemas.template_reader')
+logger = logging.getLogger("cidc_schemas.template_reader")
 
 
 # A template row is any tuple whose first member is a RowType
@@ -49,7 +49,6 @@ class XlTemplateReader:
         # Mapping from worksheet names to rows grouped by type
         self.grouped_rows: Dict[str, RowGroup] = self._group_worksheet_rows()
 
-        self.invalid_messages: List[str] = []
         self.visited_fields = set()
 
     @staticmethod
@@ -59,12 +58,17 @@ class XlTemplateReader:
 
         Arguments:
           xlsx_path {Union[str, BinaryIO]} -- path to the Excel file or the open file itself.
+
+        Returns:
+            arg1: XlTemplateReader or None if errors
+            arg2: list of errors
         """
 
         # Load the Excel file
         workbook = openpyxl.load_workbook(xlsx_path)
 
         template = {}
+        errors = []
         for worksheet_name in workbook.sheetnames:
             worksheet = workbook[worksheet_name]
             rows = []
@@ -77,7 +81,8 @@ class XlTemplateReader:
                 # If no recognized row type found, don't parse this row
                 if not row_type:
                     logger.info(
-                        f'No recognized row type found in row {row_num} - skipping')
+                        f"No recognized row type found in row {row_num} - skipping."
+                    )
                     continue
 
                 # If entire row is empty, skip it (this happens at the bottom of the data table, e.g.)
@@ -89,19 +94,22 @@ class XlTemplateReader:
                     rev_values = values[::-1]
                     clean = list(dropwhile(lambda v: v is None, rev_values))
                     values = clean[::-1]
+                    header = values
                     header_width = len(values)
 
                 # Filter empty cells from the end of a data row
                 if row_type == RowType.DATA:
-                    assert header_width, "Encountered data row before header row"
-                    assert len(values) <= header_width, "Encountered data row wider than header row"
+                    if not header_width:
+                        errors.append(f"Encountered data row (#{row_num}) before header row")
+                    if len(values) > header_width:
+                        errors.append(f"Encountered data row (#{row_num}) wider than header row")
 
                 # Reassemble parsed row and add to rows
                 new_row = TemplateRow(row_num, row_type, values)
                 rows.append(new_row)
             template[worksheet_name] = rows
 
-        return XlTemplateReader(template)
+        return XlTemplateReader(template), errors
 
     def _group_worksheet_rows(self) -> Dict[str, RowGroup]:
         """Map worksheet names to rows grouped by row type"""
@@ -114,148 +122,166 @@ class XlTemplateReader:
     def _group_rows(rows) -> RowGroup:
         """Group rows in a worksheet by their type annotation"""
         # Initialize mapping from row types to lists of row content
-        row_groups: Dict[RowType, List] = {
-            row_type: [] for row_type in RowType}
+        row_groups: Dict[RowType, List] = {row_type: [] for row_type in RowType}
 
         for row in rows:
             row_groups[row.row_type].append(row)
 
         return row_groups
 
-    def _get_schema(self, key: str, schema: Dict[str, dict]) -> dict:
+    def _get_schema(
+        self, key: str, schema: Dict[str, dict]
+    ) -> (Optional[dict], Optional[Exception]):
         """Try to find a schemas for the given template key"""
         entity_name = Template._process_fieldname(key)
         if entity_name not in schema:
-            raise ValidationError(f'Found unexpected column "{entity_name}"')
+            return None, f"Found unexpected column {entity_name!r}"
         # Add a note saying this field was accessed
         self.visited_fields.add(entity_name)
-        return schema[entity_name]
+        return schema[entity_name], None
 
-    def _get_data_schemas(self, row_groups, data_schemas: Dict[str, dict]) -> List[dict]:
+    def _get_data_schemas(
+        self, row_groups, data_schemas: Dict[str, dict]
+    ) -> (List[dict], List[str]):
         """Transform data table into a list of entity name + schema pairs"""
         header_row = row_groups[RowType.HEADER][0]
         data_rows = row_groups[RowType.DATA]
+
+        errors = []
 
         # Ensure every data row has the right number of entries
         n_columns = len(header_row.values)
         for data_row in data_rows:
             n_entries = len(data_row.values)
-            assert n_entries == n_columns, f"Row {data_row.row_num} has the wrong number of entries"
+            if n_entries > n_columns:
+                errors.append(
+                    f"Row {data_row.row_num} has {n_entries - n_columns} unexpected extra values."
+                )
 
-        schemas = [self._get_schema(header, data_schemas)
-                   for header in header_row.values if header]
-        return schemas
+        schemas = []
+        for header in header_row.values:
+            if header:
+                sch, err = self._get_schema(header, data_schemas)
+                if err:
+                    errors.append(err)
+                schemas.append(sch)
 
-    def validate(self, template: Template, raise_validation_error: bool = True) -> Union[List[str], bool]:
+        return schemas, errors
+
+    def iter_errors(self, template: Template) -> List[str]:
+        for name, schema in template.worksheets.items():
+            yield from self._validate_worksheet(name, schema)
+
+    def validate(self, template: Template) -> bool:
         """
         Validate a populated Excel template against a template schema.
 
         Arguments:
             template {Template} -- a template object containing the expected structure of the template
-            raise_validation_error {bool} -- if True, raise a validation error if template is 
-                                invalid, otherwise return the list of invalidation messages.
-
         Raises:
-            ValidationError -- if raise_validation_error is True and the .xlsx file is invalid.
-
+            ValidationError -- if the .xlsx file is invalid.
         Returns:
-            {bool} -- True if valid, otherwise raises an exception with validation reporting
+            True -- if everything is valid, otherwise raises an exception with validation reporting
         """
-        self.invalid_messages = []
 
-        for name, schema in template.worksheets.items():
-            errors = self._validate_worksheet(name, schema)
-            self.invalid_messages.extend(errors)
-
-        if self.invalid_messages:
-            if raise_validation_error:
-                feedback = '\n'.join(self.invalid_messages)
-                raise ValidationError('\n' + feedback)
-            else:
-                return self.invalid_messages
+        invalid_messages = list(self.iter_errors(template))
+        if invalid_messages:
+            feedback = "\n".join(map(str, invalid_messages))
+            raise ValidationError("\n" + feedback)
 
         return True
 
-    def _make_validation_error(self, worksheet_name: str, field_name: str, row_num: int, message: str) -> str:
-        return f'Error in worksheet {worksheet_name!r}, row {row_num}, field {field_name!r}: {message}'
+    def _make_validation_error(
+        self, worksheet_name: str, field_name: str, row_num: int, message: str
+    ) -> str:
+        return f"Error in worksheet {worksheet_name!r}, row {row_num}, field {field_name!r}: {message}"
 
     def _validate_instance(self, value, schema):
         # All fields in an Excel template are required
         # except for "allow_empty"
-        if schema.get('allow_empty'):
-            return validate_instance(value, schema, is_required=False)
-        return validate_instance(value, schema, is_required=True)
+        return validate_instance(
+            value, schema, is_required=(not schema.get("allow_empty"))
+        )
 
     def _validate_worksheet(self, worksheet_name: str, ws_schema: dict) -> List[str]:
         """Validate rows in a worksheet, returning a list of validation error messages."""
         self.visited_fields.clear()
-        invalid_messages = []
 
         # If no worksheet is found, return only that error.
         if not worksheet_name in self.grouped_rows:
-            return [f'No worksheet found with name {worksheet_name}']
+            yield f"Expected worksheet {worksheet_name!r} not found"
+            return
         row_groups = self.grouped_rows[worksheet_name]
 
-        invalid_messages = []
-        if 'preamble_rows' in ws_schema:
+        if "preamble_rows" in ws_schema:
             # Validate preamble rows
-            preamble_schemas = ws_schema['preamble_rows']
+            preamble_schemas = ws_schema["preamble_rows"]
             for row in row_groups[RowType.PREAMBLE]:
                 key, value = row.values[0], row.values[1]
-                schema = self._get_schema(key, preamble_schemas)
+                schema, error = self._get_schema(key, preamble_schemas)
+                if error:
+                    yield self._make_validation_error(
+                        worksheet_name, key, row.row_num, error
+                    )
+                    continue
                 invalid_reason = self._validate_instance(value, schema)
 
                 if invalid_reason:
-                    message = self._make_validation_error(
-                        worksheet_name, key, row.row_num, invalid_reason)
-                    invalid_messages.append(message)
+                    yield self._make_validation_error(
+                        worksheet_name, key, row.row_num, invalid_reason
+                    )
 
             # Ensure that all preamble rows are present
             for name in preamble_schemas.keys():
                 if name not in self.visited_fields:
-                    invalid_messages.append(
-                        f"Worksheet {worksheet_name!r} is missing expected template row: {name!r}")
+                    yield (
+                        f"Worksheet {worksheet_name!r} is missing expected template row: {name!r}"
+                    )
 
         # Clear visited fields in case a data column has the same header as a preamble row
         self.visited_fields.clear()
 
-        if 'data_columns' in ws_schema:
+        if "data_columns" in ws_schema:
             # Build up flat mapping of data schemas
             flat_data_schemas: Dict[str, dict] = {}
-            for section in ws_schema['data_columns'].values():
-                flat_data_schemas = {
-                    **flat_data_schemas, **section}
+            for section in ws_schema["data_columns"].values():
+                flat_data_schemas = {**flat_data_schemas, **section}
 
             # Validate data rows
             n_headers = len(row_groups[RowType.HEADER])
             if not n_headers == 1:
-                invalid_messages.append(
-                    f"Exactly one header row expected, but found {n_headers}")
-                return invalid_messages
+                yield (
+                    f"Worksheet {worksheet_name!r}: Exactly one header row expected, but found {n_headers}"
+                )
+                return
 
             headers = row_groups[RowType.HEADER][0].values
             if not all(headers):
-                invalid_messages.append(
-                    f"Found an empty header cell at index {headers.index(None)}")
-                return invalid_messages
+                yield (
+                    f"Worksheet {worksheet_name!r}: Found an empty header cell at index {headers.index(None)}"
+                )
+                return
 
-            data_schemas = self._get_data_schemas(
-                row_groups, flat_data_schemas)
+            data_schemas, errors = self._get_data_schemas(row_groups, flat_data_schemas)
+            for e in errors:
+                yield (f"Worksheet {worksheet_name!r}: {e}")
 
             # Ensure that all data columns appear to be present
             for name in flat_data_schemas.keys():
                 if name not in self.visited_fields:
-                    invalid_messages.append(
-                        f"Worksheet {worksheet_name!r} is missing expected template column: {name!r}")
+                    yield (
+                        f"Worksheet {worksheet_name!r} is missing expected template column: {name!r}"
+                    )
 
             for data_row in row_groups[RowType.DATA]:
-                for col, value in enumerate(data_row.values):
-                    invalid_reason = self._validate_instance(
-                        value, data_schemas[col])
+                for head, value, schema in zip_longest(headers, data_row.values, data_schemas):
+                    if schema is None:
+                        # we don't check unexpected column
+                        # and we already have an error reported on that
+                        continue
+                    invalid_reason = self._validate_instance(value, schema)
 
                     if invalid_reason:
-                        message = self._make_validation_error(
-                            worksheet_name, headers[col], data_row.row_num, invalid_reason)
-                        invalid_messages.append(message)
-
-        return invalid_messages
+                        yield self._make_validation_error(
+                            worksheet_name, head, data_row.row_num, invalid_reason
+                        )

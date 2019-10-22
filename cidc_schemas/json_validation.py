@@ -410,15 +410,9 @@ def convert(fmt: str, value: str) -> str:
     elif fmt == "date":
         reformatter = _to_date
     elif fmt == "string":
-
-        def reformatter(n):
-            return n and str(n)
-
+        reformatter = lambda n: n and str(n)
     elif fmt == "integer":
-
-        def reformatter(n):
-            return n and int(n)
-
+        reformatter = lambda n: n and int(n)
     elif fmt == "boolean":
         reformatter = _to_bool
     else:

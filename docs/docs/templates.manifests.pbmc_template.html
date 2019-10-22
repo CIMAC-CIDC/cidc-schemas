@@ -86,41 +86,6 @@
         
             
         
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-        
-            
-                <tr>
-    <td>
-        
-            <span id="protocol id">
-                protocol id
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
-        
-    </td>
-    <td>
-        
-            <a href="clinical_trial.html#protocol_id">clinical_trial#protocol_id</a>
-        
-    </td>
-</tr>
-            
         
             
                 <tr>
@@ -149,20 +114,20 @@
                 <tr>
     <td>
         
-            <span id="request">
-                request
+            <span id="protocol identifier">
+                protocol identifier
             </span>
             
         
     </td>
     <td width=55%>
         
-            Assigns a request identifier (mandatory or optional) for the assay.
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
         
     </td>
     <td>
         
-            <a href="shipping_core.html#request">shipping_core#request</a>
+            <a href="clinical_trial.html#protocol_identifier">clinical_trial#protocol_identifier</a>
         
     </td>
 </tr>
@@ -203,7 +168,7 @@
     </td>
     <td width=55%>
         
-            Assay and sample type used. Example: Green-top tube - Plasma (Olink).
+            Assay and sample type used.
         
     </td>
     <td>
@@ -218,66 +183,20 @@
                 <tr>
     <td>
         
-            <span id="batch number">
-                batch number
+            <span id="receiving party">
+                receiving party
             </span>
             
         
     </td>
     <td width=55%>
         
-            The number corresponding to the batch sent for this assay.
+            Site where sample was shipped to be assayed.
         
     </td>
     <td>
         
-            <a href="shipping_core.html#batch_number">shipping_core#batch_number</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="box number">
-                box number
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Box identifier for samples, if sample shipment container includes multiple boxes for each sample/assay type.
-        
-    </td>
-    <td>
-        
-            <a href="shipping_core.html#box_number">shipping_core#box_number</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="assay run number">
-                assay run number
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Assay run number for samples received.
-        
-    </td>
-    <td>
-        
-            <a href="shipping_core.html#assay_run_number">shipping_core#assay_run_number</a>
+            <a href="shipping_core.html#receiving_party">shipping_core#receiving_party</a>
         
     </td>
 </tr>
@@ -402,8 +321,8 @@
                 <tr>
     <td>
         
-            <span id="date recieved">
-                date recieved
+            <span id="date received">
+                date received
             </span>
             
         
@@ -415,7 +334,7 @@
     </td>
     <td>
         
-            <a href="shipping_core.html#date_recieved">shipping_core#date_recieved</a>
+            <a href="shipping_core.html#date_received">shipping_core#date_received</a>
         
     </td>
 </tr>
@@ -433,81 +352,12 @@
     </td>
     <td width=55%>
         
-            Final status of aliquot after QC and pathology review.
+            Indication that specimens were received in good condition.
         
     </td>
     <td>
         
             <a href="shipping_core.html#quality_of_shipment">shipping_core#quality_of_shipment</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="num of samples shipped">
-                num of samples shipped
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Count of specimen(s) distributed by site.
-        
-    </td>
-    <td>
-        
-            <a href="shipping_core.html#num_of_samples_shipped">shipping_core#num_of_samples_shipped</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="num of samples good">
-                num of samples good
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Number of Sample(s) Received in Good Condition.
-        
-    </td>
-    <td>
-        
-            <a href="shipping_core.html#num_of_samples_good">shipping_core#num_of_samples_good</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="num of path report">
-                num of path report
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Number of pathology report(s) received.
-        
-    </td>
-    <td>
-        
-            <a href="shipping_core.html#num_of_path_report">shipping_core#num_of_path_report</a>
         
     </td>
 </tr>
@@ -525,7 +375,7 @@
     </td>
     <td width=55%>
         
-            Shipping from [free text: person or organization, address, phone number, email address.]
+            Contact information for shipment.
         
     </td>
     <td>
@@ -548,7 +398,7 @@
     </td>
     <td width=55%>
         
-            Shipping to [free text: person or organization, address, phone number, email address.]
+            Physical shipping address of the destination.
         
     </td>
     <td>
@@ -587,13 +437,69 @@
         
             
         
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
         
             
                 <tr>
     <td>
         
-            <span id="cimac id">
-                cimac id
+            <span id="entry (#)">
+                entry (#)
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Provides a numbered identifier for patient (sample) entry in a shipment manifest.
+        
+    </td>
+    <td>
+        
+            <a href="participant.html#essential_patient_entry_number">participant#essential_patient_entry_number</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="participant ID">
+                participant ID
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial Participant Identifier.
+        
+    </td>
+    <td>
+        
+            <a href="participant.html#participant_id">participant#participant_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="CIMAC ID">
+                CIMAC ID
             </span>
             
         
@@ -606,6 +512,52 @@
     <td>
         
             <a href="sample.html#cimac_id">sample#cimac_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="surgical pathology report id">
+                surgical pathology report id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A unique identifier so someone can find the surgical pathology report.
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#surgical_pathology_report_id">sample#surgical_pathology_report_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="clinical report id">
+                clinical report id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A unique identifier so someone can find the clinical report.
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#clinical_report_id">sample#clinical_report_id</a>
         
     </td>
 </tr>
@@ -629,6 +581,29 @@
     <td>
         
             <a href="sample.html#collection_event_name">sample#collection_event_name</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="diagnosis verification">
+                diagnosis verification
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates whether the local pathology review was consistent with the diagnostic pathology report.
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#diagnosis_verification">sample#diagnosis_verification</a>
         
     </td>
 </tr>
@@ -881,6 +856,199 @@
   
     <h4>Data Columns</h4>
     
+      <h5 class="text-muted">IDs</h4>
+      
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="entry (#)">
+                entry (#)
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Provides a numbered identifier for patient (sample) entry in a shipment manifest.
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#shipping_entry_number">sample#shipping_entry_number</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="collection event name">
+                collection event name
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Categorical description of timepoint at which the sample was taken.
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#collection_event_name">sample#collection_event_name</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cohort name">
+                cohort name
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Categorical description of cohorts, arms, and treatment groups.
+        
+    </td>
+    <td>
+        
+            <a href="participant.html#cohort_name">participant#cohort_name</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="participant ID">
+                participant ID
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial Participant Identifier.
+        
+    </td>
+    <td>
+        
+            <a href="participant.html#participant_id">participant#participant_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="parent sample ID">
+                parent sample ID
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Sample identifier assigned by the biorepository site. Example: EA123-45.
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#parent_sample_id">sample#parent_sample_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="processed sample ID">
+                processed sample ID
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Aliquot identifier assigned by the biorepository site: EA123-45-1
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#processed_sample_id">sample#processed_sample_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="CIMAC ID">
+                CIMAC ID
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formated as CM-????-????-??
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#cimac_id">sample#cimac_id</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+    
       <h5 class="text-muted">Filled by Biorepository</h4>
       
     
@@ -916,321 +1084,25 @@
         
             
         
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
         
             
                 <tr>
     <td>
         
-            <span id="participant id">
-                participant id
+            <span id="box number">
+                box number
             </span>
             
         
     </td>
     <td width=55%>
         
-            Trial Participant Identifier. Example: PT123.
+            Identifier if sample shipment container includes multiple boxes for each assay.
         
     </td>
     <td>
         
-            <a href="participant.html#participant_id">participant#participant_id</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="cohort name">
-                cohort name
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Categorical description of cohorts, arms, and treatment groups. Example: Cohort A.
-        
-    </td>
-    <td>
-        
-            <a href="participant.html#cohort_name">participant#cohort_name</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="arm id">
-                arm id
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Identifies the trial arm to which the participant belongs. Example: Arm A.
-        
-    </td>
-    <td>
-        
-            <a href="participant.html#arm_id">participant#arm_id</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="parent sample id">
-                parent sample id
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Sample identifier assigned by the biorepository site. Example: EA123-45.
-        
-    </td>
-    <td>
-        
-            <a href="sample.html#parent_sample_id">sample#parent_sample_id</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="processed sample id">
-                processed sample id
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Aliquot identifier assigned by the biorepository site: EA123-45-1
-        
-    </td>
-    <td>
-        
-            <a href="sample.html#processed_sample_id">sample#processed_sample_id</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="cimac id">
-                cimac id
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Specimen identifier assigned by the CIMAC-CIDC Network. Formated as CM-????-????-??
-        
-    </td>
-    <td>
-        
-            <a href="sample.html#cimac_id">sample#cimac_id</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="collection event name">
-                collection event name
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Categorical description of timepoint at which the sample was taken.
-        
-    </td>
-    <td>
-        
-            <a href="sample.html#collection_event_name">sample#collection_event_name</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="genomic source">
-                genomic source
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            The type of material submitted - tumor/normal/etc
-        
-    </td>
-    <td>
-        
-            <a href="sample.html#genomic_source">sample#genomic_source</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="blood collection date">
-                blood collection date
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Date of blood collection.
-        
-    </td>
-    <td>
-        
-            <a href="sample.html#blood_collection_date">sample#blood_collection_date</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="blood collection time">
-                blood collection time
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Time of blood collection.
-        
-    </td>
-    <td>
-        
-            <a href="sample.html#blood_collection_time">sample#blood_collection_time</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="blood processing date">
-                blood processing date
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Date of blood processing.
-        
-    </td>
-    <td>
-        
-            <a href="sample.html#blood_processing_date">sample#blood_processing_date</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="blood processing time">
-                blood processing time
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Time of blood processing.
-        
-    </td>
-    <td>
-        
-            <a href="sample.html#blood_processing_time">sample#blood_processing_time</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="sample processing compliance">
-                sample processing compliance
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Records if a sample processing (blood or tissue) is not compliant with protocol.
-        
-    </td>
-    <td>
-        
-            <a href="sample.html#sample_processing_compliance">sample#sample_processing_compliance</a>
+            <a href="sample.html#box_number">sample#box_number</a>
         
     </td>
 </tr>
@@ -1332,20 +1204,20 @@
                 <tr>
     <td>
         
-            <span id="quantity">
-                quantity
+            <span id="processed sample type">
+                processed sample type
             </span>
             
         
     </td>
     <td width=55%>
         
-            Quantity of each aliquot shipped.
+            The type of processing that was performed on the collected specimen by the Biobank for storage.
         
     </td>
     <td>
         
-            <a href="aliquot.html#quantity">aliquot#quantity</a>
+            <a href="sample.html#processed_sample_type">sample#processed_sample_type</a>
         
     </td>
 </tr>
@@ -1355,20 +1227,20 @@
                 <tr>
     <td>
         
-            <span id="sample volume">
-                sample volume
+            <span id="processed sample volume">
+                processed sample volume
             </span>
             
         
     </td>
     <td width=55%>
         
-            Volume of aliquot shipped.
+            Volume of the processed sample.
         
     </td>
     <td>
         
-            <a href="sample.html#sample_volume">sample#sample_volume</a>
+            <a href="sample.html#processed_sample_volume">sample#processed_sample_volume</a>
         
     </td>
 </tr>
@@ -1378,20 +1250,66 @@
                 <tr>
     <td>
         
-            <span id="sample volume units">
-                sample volume units
+            <span id="processed sample volume units">
+                processed sample volume units
             </span>
             
         
     </td>
     <td width=55%>
         
-            The unit of biological material from this sample.
+            Volume units of each processed sample.
         
     </td>
     <td>
         
-            <a href="sample.html#sample_volume_units">sample#sample_volume_units</a>
+            <a href="sample.html#processed_sample_volume_units">sample#processed_sample_volume_units</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="processed sample concentration">
+                processed sample concentration
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The concentration of the processed sample.
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#processed_sample_concentration">sample#processed_sample_concentration</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="processed sample concentration units">
+                processed sample concentration units
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The concentration units for the processed sample.
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#processed_sample_concentration_units">sample#processed_sample_concentration_units</a>
         
     </td>
 </tr>
@@ -1413,6 +1331,10 @@
             <th>Data Type</th>
         </tr>
         </thead>
+        
+            
+        
+            
         
             
         
@@ -1541,6 +1463,52 @@
     <td>
         
             <a href="sample.html#material_remaining">sample#material_remaining</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="material storage condition">
+                material storage condition
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Storage condition of the material once it was received.
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#material_storage_condition">sample#material_storage_condition</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="quality of sample">
+                quality of sample
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Final status of sample after QC and pathology review.
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#quality_of_sample">sample#quality_of_sample</a>
         
     </td>
 </tr>

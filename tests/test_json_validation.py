@@ -69,7 +69,7 @@ def test_trial_core():
         "assay_type": "Olink",
         "box_number": 1,
         "courier": "USPS",
-        "date_recieved": "date_recieved",
+        "date_received": "date_received",
         "date_shipped": "date_shipped",
         "manifest_id": "manifest_id",
         "quality_of_shipment": "Specimen shipment received in good condition",

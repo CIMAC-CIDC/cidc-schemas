@@ -52,9 +52,9 @@
                         "merge_pointer": "/date_shipped",
                         "type_ref": "shipping_core.json#properties/date_shipped"
                     },
-                    "date recieved": {
-                        "merge_pointer": "/date_recieved",
-                        "type_ref": "shipping_core.json#properties/date_recieved"
+                    "date received": {
+                        "merge_pointer": "/date_received",
+                        "type_ref": "shipping_core.json#properties/date_received"
                     },
                     "quality of shipment": {
                         "merge_pointer": "/quality_of_shipment",

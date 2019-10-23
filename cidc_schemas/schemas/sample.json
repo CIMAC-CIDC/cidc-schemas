@@ -19,7 +19,7 @@
         },
         "box_number": {
           "description": "Identifier if sample shipment container includes multiple boxes for each assay.",
-          "type": "integer"
+          "type": "string"
         },
         "surgical_pathology_report_id": {
             "description": "A unique identifier so someone can find the surgical pathology report.",

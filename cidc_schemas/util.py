@@ -3,10 +3,9 @@ import yaml
 import openpyxl
 import re
 from typing import Union, BinaryIO, List
+JSON = Union[dict, list, str, int, float]
 
 from deepdiff import grep
-
-from cidc_schemas.json_validation import JSON
 
 
 def get_all_paths(ct: dict, key: str, dont_throw=False) -> List[str]:

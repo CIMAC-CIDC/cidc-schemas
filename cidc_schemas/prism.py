@@ -402,7 +402,7 @@ def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
     [
         {
             'local_path': '/path/to/fwd.fastq',
-            'gs_key': '10021/CM-TEST-PART-SA/wes_forward.fastq'
+            'gs_key': '10021/CTTTPPPSS.NN/wes_forward.fastq'
         }
     ]
 

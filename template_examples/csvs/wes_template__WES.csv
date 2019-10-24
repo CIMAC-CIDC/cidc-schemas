@@ -9,5 +9,5 @@
 
 "","Samples"
 "#h","CIMAC ID","LIBRARY KIT LOT","ENRICHMENT LOT","LIBRARY PREP DATE","CAPTURE DATE","DNA INPUT NG","LIBRARY YIELD NG","AVERAGE INSERT SIZE","FORWARD FASTQ","REVERSE FASTQ","READ GROUP MAPPING FILE"
-"#d","CM-TEST-PAR1-11","l lot 1.1.1","e lot 1.1.1","2019-05-01 00:00:00","2019-05-02 00:00:00","101","701","251","/local/path/to/fwd.1.1.1.fastq","/local/path/to/rev.1.1.1.fastq","/local/path/to/rgm.1.1.1.txt"
-"#d","CM-TEST-PAR1-21","l loc 1.2.1","e lot 1.2.1","2019-05-01 00:00:00","2019-05-02 00:00:00","102","702","252","/local/path/to/fwd.1.2.1.fastq","/local/path/to/rev.1.2.1.fastq","/local/path/to/rgm.1.2.1.txt"
+"#d","CTTTPPPS1","l lot 1.1.1","e lot 1.1.1","2019-05-01 00:00:00","2019-05-02 00:00:00","101","701","251","/local/path/to/fwd.1.1.1.fastq","/local/path/to/rev.1.1.1.fastq","/local/path/to/rgm.1.1.1.txt"
+"#d","CTTTPPPS2","l loc 1.2.1","e lot 1.2.1","2019-05-01 00:00:00","2019-05-02 00:00:00","102","702","252","/local/path/to/fwd.1.2.1.fastq","/local/path/to/rev.1.2.1.fastq","/local/path/to/rgm.1.2.1.txt"

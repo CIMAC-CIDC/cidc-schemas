@@ -285,7 +285,11 @@ def _process_property(
     if verb:
         print(f"    processing property {key!r} - {raw_val!r}")
     # coerce value
-    field_def = key_lu[key.lower()]
+    try:
+        field_def = key_lu[key.lower()]
+    except Exception:
+        raise ParsingException(f"Unexpected property {key!r}.")
+    
     if verb:
         print(f'      found def {field_def}')
     
@@ -826,7 +830,7 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
     try:
         validator.validate(target)
     except jsonschema.ValidationError as e:
-        raise InvalidMergeTargetException(f"Merge target is invalid: {target}") from e
+        raise InvalidMergeTargetException(f"Merge target is invalid: {target}\n{e}") from e
 
     # next assert the un-mutable fields are equal
     # these fields are required in the schema

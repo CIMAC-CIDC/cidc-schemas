@@ -38,7 +38,8 @@
             "is_artifact" : 1,
             "gcs_uri_format": "{protocol identifier}/olink/study_npx.xlsx",
             "type_ref": "assays/components/local_file.json#properties/file_path",
-            "extra_metadata": true
+            "extra_metadata": true,
+            "description": "Combined file name on a user's computer."
           },
           "combined file npx manager version": {
             "merge_pointer": "0/study/npx_manager_version",
@@ -56,13 +57,15 @@
               "is_artifact" : 1,
               "gcs_uri_format": "{protocol identifier}/olink/chip_{chip barcode}/assay_npx.xlsx",
               "type_ref": "assays/components/local_file.json#properties/file_path",
-              "extra_metadata": true
+              "extra_metadata": true,
+              "description": "NPX file name on a user's computer."
             },
             "raw ct file": {
               "merge_pointer": "0/files/assay_raw_ct",
               "is_artifact" : 1,
               "gcs_uri_format": "{protocol identifier}/olink/chip_{chip barcode}/assay_raw_ct.xlsx",
-              "type_ref": "assays/components/local_file.json#properties/file_path"
+              "type_ref": "assays/components/local_file.json#properties/file_path",
+              "description": "Raw CT file name on a user's computer."
             },
             "run date": {
               "merge_pointer": "0/run_date",

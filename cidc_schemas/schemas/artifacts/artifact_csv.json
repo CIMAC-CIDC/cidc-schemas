@@ -25,5 +25,9 @@
       }
     }
   ],
-  "required": ["separator", "header_row"]
+  "mergeStrategy": "objectMerge",
+  "anyOf": [
+    { "required": ["separator", "header_row"] },
+    { "required": ["upload_placeholder"] }
+  ]
 }

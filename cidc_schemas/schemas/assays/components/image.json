@@ -42,5 +42,5 @@
       "type": "string"
     }
   },
-  "required": ["slide_scanner_model", "protocol_name"]
+  "required": ["slide_scanner_model"]
 }

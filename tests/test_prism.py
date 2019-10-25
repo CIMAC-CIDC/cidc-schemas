@@ -334,6 +334,10 @@ def test_prism(xlsx, template):
         assert "CYTOF_TEST1" == ct[PROTOCOL_ID_FIELD_NAME]
         ct[PROTOCOL_ID_FIELD_NAME] = 'test_prism_trial_id'
 
+    if template.type == 'ihc':
+        assert "ihc_test_trial" == ct[PROTOCOL_ID_FIELD_NAME]
+        ct[PROTOCOL_ID_FIELD_NAME] = 'test_prism_trial_id'
+
     if template.type in SUPPORTED_ASSAYS:
         # olink is different - is will never have array of assay "runs" - only one
         if template.type != 'olink':
@@ -344,7 +348,6 @@ def test_prism(xlsx, template):
 
     else:
         assert False, f"Unknown template {template.type}"
-
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -420,8 +423,9 @@ def test_filepath_gen(xlsx, template):
         # 1 trial id
         assert 1 == len(set([x.gs_key.split("/")[0] for x in file_maps]))
         # 2 samples
+
         assert ['CTTTPP111.00', 'CTTTPP121.00'] == list(sorted(set([x.gs_key.split("/")[1] for x in file_maps])))
-        
+
 
     elif template.type == 'olink':
 
@@ -431,8 +435,8 @@ def test_filepath_gen(xlsx, template):
         # we should have 2 raw_ct files
         assert 2 == sum([x.gs_key.endswith("assay_raw_ct.xlsx") for x in file_maps])
 
-        # 4 assay level in tots
-        assert 4 == sum([x.local_path.startswith("Olink_assay") for x in file_maps])
+        # 4 assay level + 1 combined in tots
+        assert 5 == sum([x.local_path.startswith("olink_assay") for x in file_maps])
 
         # we should have 1 study level npx
         assert 1 == sum([x.gs_key.endswith("study_npx.xlsx") for x in file_maps])
@@ -441,11 +445,17 @@ def test_filepath_gen(xlsx, template):
         assert len(file_maps) == 5
         assert 5 == sum([x.gs_key.startswith("test_prism_trial_id") for x in file_maps])
 
+
     elif template.type == 'cytof':
         # TODO: UPdate this to assert we can handle multiple source fcs files
+
         for x in file_maps:
             assert x.gs_key.endswith(".fcs")
         assert len(file_maps) == 6
+
+    elif template.type == 'ihc':
+        assert 2 == sum([x.gs_key.endswith(".tiff") for x in file_maps])
+
 
     elif template.type in SUPPORTED_MANIFESTS:
 
@@ -453,6 +463,7 @@ def test_filepath_gen(xlsx, template):
 
     else:
         assert False, f"add {template.type} assay specific asserts"
+
 
 
 @pytest.mark.parametrize('xlsx, template', prismify_test_set('cytof'))
@@ -477,6 +488,26 @@ def test_prismify_cytof_only(xlsx, template):
 
     # assert works
     validator.validate(merged)
+
+@pytest.mark.parametrize('xlsx, template', prismify_test_set('ihc'))
+def test_prismify_ihc(xlsx, template):
+
+    # create validators
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
+
+    # parse the spreadsheet and get the file maps
+    ct, file_maps, errs = prismify(xlsx, template)
+
+    # we merge it with a preexisting one
+    # 1. we get all 'required' fields from this preexisting
+    # 2. we can check it didn't overwrite anything crucial
+    merger = Merger(schema)
+    merged = merger.merge(TEST_PRISM_TRIAL, ct)
+
+    # assert works
+    validator.validate(merged)
+
 
 @pytest.mark.parametrize('xlsx, template', prismify_test_set('plasma'))
 def test_prismify_plasma(xlsx, template):
@@ -731,6 +762,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         elif template.type == 'wes':
             assert len(prism_patch['assays'][template.type][0]['records']) == 2
 
+        elif template.type =='ihc':
+            assert len(prism_patch['assays'][template.type][0]['records']) == 1
+
         else:
             raise NotImplementedError(f"no support in test for this template.type {template.type}")
 
@@ -767,7 +801,6 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
                 md5_hash=f"hash_{i}"
             )
 
-
         # check that the data_format was set
         assert 'data_format' in artifact
 
@@ -787,7 +820,10 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     # validate the full clinical trial object
     validator.validate(full_ct)
 
-    if template.type == 'wes':
+    if template.type == 'ihc':
+        assert len(merged_gs_keys) == 2
+
+    elif template.type == 'wes':
         assert len(merged_gs_keys) == 3 * 2 # 3 files per entry in xlsx
         assert set(merged_gs_keys) == set(WES_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
@@ -815,6 +851,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(full_ct['assays'][template.type]) == 1+len(TEST_PRISM_TRIAL['assays'][template.type]), f"Multiple {template.type}-assays created instead of merging into one"
         assert len(full_ct['assays'][template.type][0]['records']) == 2, "More records than expected"
 
+    elif template.type == 'ihc':
+        assert len(full_ct['assays'][template.type][0]['records']) == 1, "More records than expected"
+
     elif template.type in SUPPORTED_MANIFESTS:
         assert full_ct["assays"] == original_ct["assays"]
 
@@ -827,20 +866,25 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     dd = DeepDiff(full_after_prism, full_ct)
 
     if template.type=='wes':
+
         # 6 files * 7 artifact attributes
         assert len(dd['dictionary_item_added']) == 6*7, "Unexpected CT changes"
 
         # nothing else in diff
         assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
 
+    elif template.type == 'ihc':
+        # 2 files * 7 artifact attributes
+        assert len(dd['dictionary_item_added']) == 2*7, "Unexpected CT changes"
+
     elif template.type == "olink":
+
         assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
 
         # 7 artifact attributes * 5 files (2 per record + 1 study)
         assert len(dd['dictionary_item_added']) == 7*(2*2+1), "Unexpected CT changes"
 
     elif template.type in SUPPORTED_MANIFESTS:
-        
         assert len(dd) == 0, "Unexpected CT changes"
 
     elif template.type == 'cytof':
@@ -978,8 +1022,6 @@ def test_prism_joining_tabs(monkeypatch):
         }
     }, "test_prism_joining_tabs")
 
-
-    
     monkeypatch.setattr("cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_prism_joining_tabs"])
 
     xlsx, errs = XlTemplateReader.from_excel("workbook")

@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "ihc_input",
+  "title": "Immunohistichemical Analysis Input Files",
+  "type": "object",
+  "description": "IHC assay input/output files.",
+  "properties": {
+    "ihc_output_summary": {
+      "$comment": "Summary of the results of the experiment.",
+      "$ref": "artifacts/artifact_csv.json"
+    },
+    "ihc_image": {
+      "$comment": "Path to IHC image in TIFF format.",
+      "$ref": "artifacts/artifact_image.json"
+    },
+    "he_image": {
+      "$comment": "Path to H&E image in TIFF format.",
+      "$ref": "artifacts/artifact_image.json"
+    }
+  },
+  "required": ["ihc_image", "he_image"]
+}

@@ -229,8 +229,7 @@ def test_cytof():
         "cytof_antibodies": antibodies
     }
 
-    obj = {**ASSAY_CORE, **cytof_platform, **
-           cytof_panel}    # merge two dictionaries
+    obj = {**ASSAY_CORE, **cytof_platform, **cytof_panel}    # merge three dictionaries
 
     # create the cytof object
     fcs_1 = ARTIFACT_OBJ.copy()
@@ -252,6 +251,89 @@ def test_cytof():
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("cytof")
+    validator.validate(obj)
+
+
+def test_ihc():
+
+    schema_root = SCHEMA_DIR
+    schema_path = os.path.join(SCHEMA_DIR, "assays/components/imaging/ihc_input.json")
+    schema = load_and_validate_schema(schema_path, schema_root)
+    validator = jsonschema.Draft7Validator(schema)
+
+    # create the IHC object
+    ihc_obj = {
+        "slide_scanner_model": "Hamamatsu",
+        "protocol_name": "E4412",
+        "staining_platform": "auto",
+    }
+    # create the IHC antibody
+    antibodies = [
+        {
+            "antibody": "PD-L1",
+            "company": "dummy",
+            "clone": "dummy",
+            "cat_num": "13684",
+            "lot_num": "547645",
+            "dilution": "1:200",
+            "incubation_time": "1 hr",
+            "incubation_temp": "RT"
+        },
+        {
+            "antibody": "PD-L2",
+            "company": "dummy",
+            "clone": "dummy",
+            "cat_num": "13684",
+            "lot_num": "547645",
+            "dilution": "1:200",
+            "incubation_time": "1 hr",
+            "incubation_temp": "RT"
+        }
+    ]
+
+    ihc_a = {
+        "antibodies": antibodies
+    }
+    obj = {**ASSAY_CORE, **ihc_obj, **ihc_a}  # merge three dictionaries
+
+    # create the artifact object
+    image_1 = ARTIFACT_OBJ.copy()
+    image_1['data_format'] = 'IMAGE'
+    image_1["height"] = 300
+    image_1["width"] = 250
+    image_1["channels"] = 3
+    image_2 = ARTIFACT_OBJ.copy()
+    image_2['data_format'] = 'IMAGE'
+    image_2["height"] = 300
+    image_2["width"] = 250
+    image_2["channels"] = 3
+    csv_1 = ARTIFACT_OBJ.copy()
+    csv_1['data_format'] = 'CSV'
+    csv_1["separator"] = ","
+    csv_1["header_row"] = 128
+    record = {
+        "percentage_tumor_positive": 80,
+        "tumor_positive_intensity": 1,
+        "average_tumor_marker_intensity": 1.5,
+        "percent_inflammation_marker_positive": 80,
+        "average_inflammation_marker_intensity": 1.5,
+        "clinically_positive": 1,
+        "percentage_viable_tissue": 80,
+        "percentage_tumor": 80,
+        "degree_lymphoid_infiltrate": 1,
+        "percentage_fibrosis": 80,
+        "files": {
+            "ihc_output_summary": csv_1,
+            "ihc_image": image_1,
+            "he_image": image_2,
+        }
+    }
+
+    # add a demo record.
+    obj['records'] = [record]
+
+    # create validator assert schemas are valid.
+    validator = _fetch_validator("ihc")
     validator.validate(obj)
 
 
@@ -384,7 +466,7 @@ def test_olink():
     obj = {**ASSAY_CORE}
     obj['panel'] = "panel v1"
 
-    # create the olink object
+    # create the artifact object
     npx = ARTIFACT_OBJ.copy()
     npx['data_format'] = 'NPX'
     npx['samples'] = ['CTTTPPPS1.00', 'CTTTPPPS2.00', 'CTTTPPPS3.00']

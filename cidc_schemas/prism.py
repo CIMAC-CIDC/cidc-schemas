@@ -38,7 +38,7 @@ def _set_val(
     may or may not have any of the intermediate structure
     to fully insert the desired property.
 
-    For example: consider 
+    For example: consider
     pointer = "0/prop1/prop2"
     val = {"more": "props"}
     context = {"Pid": 1}
@@ -46,7 +46,7 @@ def _set_val(
     context_pointer = "/participants/0"
 
 
-    First we see an `0` in pointer which denotes update 
+    First we see an `0` in pointer which denotes update
     should be within context. So no need to jump higher than context.
 
     So we truncate path to = "prop1/prop2"
@@ -59,7 +59,7 @@ def _set_val(
         }
     It's our whole Trial object, and ... here denotes our current descend.
 
-    Now we truncate path one step further to = "prop2" 
+    Now we truncate path one step further to = "prop2"
     Go down there and set `val={"more": "props"}` :
         {
             "participants": [{
@@ -174,9 +174,9 @@ def __jpointer_get_next_thing(next_part) -> Union[dict, list]:
 
 
 def __jpointer_insert_next_thing(doc, jpoint, part, next_thing):
-    """ 
+    """
     Puts next_thing into a doc (that is being `jsonpointer.walk`ed)
-    by *part* "address". *jpoint* is Jsonpointer that is walked.   
+    by *part* "address". *jpoint* is Jsonpointer that is walked.
     """
 
     if part == "-":
@@ -264,9 +264,9 @@ def _process_property(
         key_lu: dictionary to translate from template naming to json-schema
                 property names
         data_obj: dictionary we are building to represent data
-        format_context: dictionary of everything needed for 'gcs_uri_format' 
-                        in case this property has that 
-        root_obj: root dictionary we are building to represent data, 
+        format_context: dictionary of everything needed for 'gcs_uri_format'
+                        in case this property has that
+        root_obj: root dictionary we are building to represent data,
                   that holds 'data_obj' within 'data_obj_pointer'
         data_obj_pointer: pointer of 'data_obj' within 'root_obj'.
                           this will allow to process relative json-pointer properties
@@ -275,9 +275,10 @@ def _process_property(
 
     Returns:
         LocalFileUploadEntry(
-            local_path = "/local/file/from/excel/file/cell",   
+            local_path = "/local/file/from/excel/file/cell",
             gs_key = "constructed/GCS/path/where/this/artifact/should/endup",
-            upload_placeholder = 'uuiduuiduuid-uuid-uuid-uuiduuid' # unique artifact/upload_placeholder,
+            # unique artifact/upload_placeholder,
+            upload_placeholder = 'uuiduuiduuid-uuid-uuid-uuiduuid'
             metadata_availability = boolean to indicate whether LocalFileUploadEntry should be extracted for metadata files
         )
 
@@ -391,35 +392,6 @@ def _process_property(
 
 class ParsingException(ValueError):
     pass
-
-
-class MergeCollisionException(ValueError):
-    pass
-
-
-class ThrowOnCollision(strategies.Strategy):
-    """
-    Similar to the jsonmerge's built in 'discard' strategy,
-    but throws an error if the value already exists
-    """
-
-    def merge(self, walk, base, head, schema, meta, **kwargs):
-        if base.is_undef():
-            return head
-        if base.val != head.val:
-            raise MergeCollisionException(
-                f"Updates are not currently supported."
-            )
-        return base
-
-    def get_schema(self, walk, schema, **kwargs):
-        return schema
-
-
-PRISM_STRATEGIES = {
-    # This overwrites the default jsonmerge merge strategy for literal values.
-    'overwrite': ThrowOnCollision()
-}
 
 
 def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
@@ -572,7 +544,7 @@ def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
         template_root_obj = root_ct_obj
 
     # and merger for it
-    root_ct_merger = Merger(root_ct_schema, strategies=PRISM_STRATEGIES)
+    root_ct_merger = Merger(root_ct_schema)
     # and where to collect all local file refs
     collected_files = []
 
@@ -596,8 +568,7 @@ def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
 
         preamble_object_schema = load_and_validate_schema(
             templ_ws.get('prism_preamble_object_schema', root_ct_schema_name))
-        preamble_merger = Merger(
-            preamble_object_schema, strategies=PRISM_STRATEGIES)
+        preamble_merger = Merger(preamble_object_schema)
         preamble_object_pointer = templ_ws.get(
             'prism_preamble_object_pointer', '')
         data_object_pointer = templ_ws['prism_data_object_pointer']
@@ -858,6 +829,38 @@ def _update_artifact(ct: dict, artifact_patch: dict, artifact_uuid: str) -> (dic
 
     # return the artifact that was merged and the new object
     return ct, artifact, additional_artifact_metadata
+
+
+class MergeCollisionException(ValueError):
+    pass
+
+
+class ThrowOnCollision(strategies.Strategy):
+    """
+    Similar to the jsonmerge's built in 'discard' strategy,
+    but throws an error if the value already exists. This is
+    used to prevent updates in `merge_clinical_trial_metadata`.
+    """
+
+    def merge(self, walk, base, head, schema, meta, **kwargs):
+        if base.is_undef():
+            return head
+        if base.val != head.val:
+            prop = base.ref.split("/")[-1]
+            raise MergeCollisionException(
+                f"Found conflicting values for {prop}: {base.val} (current) != {head.val} (incoming). "
+                "Updates are not currently supported."
+            )
+        return base
+
+    def get_schema(self, walk, schema, **kwargs):
+        return schema
+
+
+PRISM_STRATEGIES = {
+    # This overwrites the default jsonmerge merge strategy for literal values.
+    'overwrite': ThrowOnCollision()
+}
 
 
 def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]):

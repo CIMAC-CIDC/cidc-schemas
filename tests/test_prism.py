@@ -53,8 +53,8 @@ TEST_PRISM_TRIAL = {
         "participants": [
             {
                 "cimac_participant_id": "CM-TEST-PAR1",
-                "participant_id": "test_trial_patient_1",
-                "cohort_name": "Arm_Z",
+                "participant_id": "TEST-PAR1-03",
+                "cohort_name": "Arm_A",
                 "samples": [
                     {
                         "aliquots": [
@@ -100,7 +100,7 @@ TEST_PRISM_TRIAL = {
                     }
                 ],
                 "cimac_participant_id": "CM-TEST-PAR2",
-                "participant_id": "test_trial_patient_2",
+                "participant_id": "TEST-PAR2-03",
                 "cohort_name": "Arm_Z"
             }
         ],
@@ -681,15 +681,12 @@ def test_merge_ct_meta():
     assert ct_merge['trial_name'] == 'name ABC'
     assert ct_merge['nci_id'] == 'xyz1234'
 
-    # assert the patch over-writes the original value
-    # when value is present in both objects
-    # TODO add 'discard' mergeStrategy from PROTOCOL_ID_FIELD_NAME 
+    # updates aren't allowed
     patch['trial_name'] = 'name ABC'
     target['trial_name'] = 'CBA eman'
-
-    ct_merge, errs = merge_clinical_trial_metadata(patch, target)
-    assert not errs
-    assert ct_merge['trial_name'] == 'name ABC'
+    with pytest.raises(MergeCollisionException, match="conflicting values for trial_name"):
+        merge_clinical_trial_metadata(patch, target)
+    target['trial_name'] = patch['trial_name']
 
     # now change the participant ids
     # this should cause the merge to have two

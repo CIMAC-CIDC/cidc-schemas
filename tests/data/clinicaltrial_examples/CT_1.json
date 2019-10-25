@@ -7,7 +7,7 @@
             "cohort_name": "Arm_Z",
             "samples": [
                 {
-                    "cimac_id": "CTTTPP1S1.NN",
+                    "cimac_id": "CTTTPP1S1.00",
                     "parent_sample_id": "SA.1.1",
                     "collection_event_name": "Baseline",
                     "sample_location": "---",
@@ -26,7 +26,7 @@
                     ] 
                 }, 
                 {
-                    "cimac_id": "CTTTPP1S2.NN",
+                    "cimac_id": "CTTTPP1S2.00",
                     "parent_sample_id": "SA.1.2",
                     "collection_event_name": "Baseline",
                     "sample_location": "---",
@@ -52,7 +52,7 @@
             "cohort_name": "Arm_Z",
             "samples": [
                 {
-                    "cimac_id": "CTTTPP2S1.NN",
+                    "cimac_id": "CTTTPP2S1.00",
                     "parent_sample_id": "SA.2.1",
                     "collection_event_name": "Baseline",
                     "sample_location": "---",
@@ -71,7 +71,7 @@
                     ]
                 },
                 {
-                    "cimac_id": "CTTTPP2S2.NN",
+                    "cimac_id": "CTTTPP2S2.00",
                     "parent_sample_id": "SA.2.2",
                     "collection_event_name": "Baseline",
                     "sample_location": "---",
@@ -113,7 +113,7 @@
                             "artifact_category" :   "Assay Artifact from CIMAC",
                             "data_format" :           "NPX",
                             "number_of_samples":   3,
-                            "samples": ["CTTTPP2S2.NN", "CTTTPP1S1.NN", "CTTTPP2S1.NN"]
+                            "samples": ["CTTTPP2S2.00", "CTTTPP1S1.00", "CTTTPP2S1.00"]
                         },
                         "assay_raw_ct": {
                             "file_name" :           "...",
@@ -141,7 +141,7 @@
                             "artifact_category" :   "Assay Artifact from CIMAC",
                             "data_format" :           "NPX",
                             "number_of_samples":   3,
-                            "samples": ["CTTTPP2S2.NN", "CTTTPP1S1.NN", "CTTTPP2S1.NN"]
+                            "samples": ["CTTTPP2S2.00", "CTTTPP1S1.00", "CTTTPP2S1.00"]
                         },
                         "assay_raw_ct": {
                             "file_name" :           "...",
@@ -168,7 +168,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_id":          "CTTTPP1S1.NN",
+                        "cimac_id":          "CTTTPP1S1.00",
                         "files": {
                             "r1":{
                                 "file_name" :           "...",
@@ -203,7 +203,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_id":          "CTTTPP1S2.NN",
+                        "cimac_id":          "CTTTPP1S2.00",
                         "files": {
                             "r1":{
                                 "file_name" :           "...",
@@ -247,7 +247,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_id":          "CTTTPP2S1.NN",
+                        "cimac_id":          "CTTTPP2S1.00",
                         "files": {
                             "r1":{
                                 "file_name" :           "...",
@@ -282,7 +282,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_id":          "CTTTPP2S2.NN",
+                        "cimac_id":          "CTTTPP2S2.00",
                         "files": {
                             "r1":{
                                 "file_name" :           "...",

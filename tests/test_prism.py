@@ -660,7 +660,7 @@ def test_merge_ct_meta():
     # participants.
     patch['participants'][0]['cimac_participant_id'] = 'CTTTDD1'
     for i, sample in enumerate(patch['participants'][0]['samples']):
-        sample['cimac_id'] = f'CTTTDD1S{i}'
+        sample['cimac_id'] = f'CTTTDD1S{i}.00'
 
     ct_merge, errs = merge_clinical_trial_metadata(patch, target)
     assert not errs

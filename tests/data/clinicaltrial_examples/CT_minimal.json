@@ -7,7 +7,7 @@
             "cohort_name": "Arm_Z",
             "samples": [
                 {
-                    "cimac_id": "CTTTP11S1.NN",
+                    "cimac_id": "CTTTP11S1.00",
                     "parent_sample_id": "site.SA.1.1.1",
                     "collection_event_name": "Baseline",
                     "sample_location": "---",
@@ -27,7 +27,7 @@
                     ] 
                 }, 
                 {
-                    "cimac_id": "CTTTP11S2.NN",
+                    "cimac_id": "CTTTP11S2.00",
                     "parent_sample_id": "site.SA.1.1.2",
                     "collection_event_name": "Baseline",
                     "sample_location": "---",

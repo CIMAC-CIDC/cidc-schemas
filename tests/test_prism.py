@@ -21,7 +21,8 @@ from cidc_schemas import prism
 from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
     SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES, \
-    PROTOCOL_ID_FIELD_NAME, parse_npx, merge_artifact_extra_metadata
+    PROTOCOL_ID_FIELD_NAME, parse_npx, merge_artifact_extra_metadata, \
+     PRISM_STRATEGIES, ThrowOnCollision, MergeCollisionException
 
 from cidc_schemas.json_validation import load_and_validate_schema, InDocRefNotFoundError
 from cidc_schemas.template import Template
@@ -1102,3 +1103,43 @@ def test_parse_npx_merged(npx_combined_file_path):
 
     assert samples["number_of_samples"] == 9
     assert set(samples["samples"]) == {'CM-TEST-PA01-A1', 'CM-TEST-PA02-A1', 'CM-TEST-PA03-A1', 'CM-TEST-PA04-A1', 'CM-TEST-PA05-A1', 'CM-TEST-PA06-A1', 'CM-TEST-PA07-A1', 'CM-TEST-PA08-A1', 'CM-TEST-PA09-A1'}
+
+def test_throw_on_collision():
+    """Test the custom ThrowOnCollision merge strategy"""
+    schema = {
+        "type": "object",
+        "properties": {
+            "l": {
+                "type": "array",
+                "items": {
+                    "cimac_id": {
+                        "type": "string",
+                    }, 
+                    "a": {
+                        "type": "integer"
+                    }
+                },
+                "mergeStrategy": "arrayMergeById",
+                "mergeOptions": {
+                    "idRef": "/cimac_id"
+                }
+            }
+        }
+    }
+
+    merger = Merger(schema, strategies=PRISM_STRATEGIES)
+
+    # Identical values, no collision - no error
+    base = {'l': [{'cimac_id': 'c1', 'a': 1}]}
+    assert merger.merge(base, base)
+
+    # Different values, collision - error
+    head = {'l': [{'cimac_id': 'c1', 'a': 2}]}
+    with pytest.raises(MergeCollisionException):
+        merger.merge(base, head)
+
+    # Some identical and some different values - no error, proper merge
+    base['l'].append({'cimac_id': 'c2', 'a': 2})
+    head = {'l': [base['l'][0], {'cimac_id': 'c3', 'a': 3}]}
+    assert merger.merge(base, head) == {'l': [*base['l'], head['l'][-1]]}
+    

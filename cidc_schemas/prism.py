@@ -7,7 +7,7 @@ from typing import Union, BinaryIO, Tuple, List
 import openpyxl
 import jsonschema
 import datetime
-from jsonmerge import merge, Merger, exceptions as jsonmerge_exceptions
+from jsonmerge import merge, Merger, exceptions as jsonmerge_exceptions, strategies
 from collections import namedtuple
 from jsonpointer import JsonPointer, JsonPointerException, resolve_pointer, EndOfList
 
@@ -23,11 +23,11 @@ PROTOCOL_ID_FIELD_NAME = "protocol_identifier"
 
 
 def _set_val(
-        pointer: str, 
-        val: object, 
-        context: dict, 
-        root: Union[dict, None] = None, 
-        context_pointer: Union[str, None] = None, 
+        pointer: str,
+        val: object,
+        context: dict,
+        root: Union[dict, None] = None,
+        context_pointer: Union[str, None] = None,
         verb=False):
     """
     This function given a *pointer* (jsonpointer RFC 6901 or relative json pointer)
@@ -44,11 +44,11 @@ def _set_val(
     context = {"Pid": 1}
     root = {"participants": [context]}
     context_pointer = "/participants/0"
-    
-   
+
+
     First we see an `0` in pointer which denotes update 
     should be within context. So no need to jump higher than context.
-    
+
     So we truncate path to = "prop1/prop2"
 
     We see it's a string, so we know we are entering object's *prop1* as a property:
@@ -74,7 +74,7 @@ def _set_val(
                     "prop2": {"more": "props"}
                 }
             }
-    
+
 
     Args:
         pointer: relative jsonpointer to the property being set within current `context`
@@ -93,8 +93,7 @@ def _set_val(
         context.update(val)
         return
 
-
-    #fill defaults 
+    # fill defaults
     if root is None:
         root = context
     if context_pointer is None:
@@ -114,20 +113,22 @@ def _set_val(
         except ValueError:
             jumpups = 0
 
-        # check that we don't have to jump up more than we dived in already 
+        # check that we don't have to jump up more than we dived in already
         assert jumpups <= context_pointer.rstrip('/').count('/'), \
             f"Can't set value for pointer {pointer} to many jumps up from current context."
 
         # and we'll go down remaining part of `pointer` from there
         jpoint = JsonPointer(slash+rem_pointer)
         if jumpups > 0:
-            # new context pointer 
-            higher_context_pointer = '/'.join(context_pointer.strip('/').split('/')[:-1*jumpups])
+            # new context pointer
+            higher_context_pointer = '/'.join(
+                context_pointer.strip('/').split('/')[:-1*jumpups])
             # making jumps up, by going down context_pointer but no all the way down
             if higher_context_pointer == '':
                 doc = root
-                assert len(jpoint.parts) > 0, f"Can't update root object (pointer {pointer})"
-            else: 
+                assert len(
+                    jpoint.parts) > 0, f"Can't update root object (pointer {pointer})"
+            else:
                 doc = resolve_pointer(root, '/'+higher_context_pointer)
         else:
             doc = context
@@ -143,7 +144,7 @@ def _set_val(
 
             # look ahead to figure out a proper type that needs to be created
             next_thing = __jpointer_get_next_thing(jpoint.parts[i+1])
-            
+
             # insert it
             __jpointer_insert_next_thing(doc, jpoint, part, next_thing)
 
@@ -158,7 +159,7 @@ def _set_val(
     __jpointer_insert_next_thing(doc, jpoint, jpoint.parts[-1], val)
 
 
-def  __jpointer_get_next_thing(next_part) -> Union[dict, list]:
+def __jpointer_get_next_thing(next_part) -> Union[dict, list]:
     """
     Looking at next part of pointer creates a proper object - dict or list
     to insert into a doc, that is being `jsonpointer.walk`ed.
@@ -172,7 +173,7 @@ def  __jpointer_get_next_thing(next_part) -> Union[dict, list]:
         return {}
 
 
-def  __jpointer_insert_next_thing(doc, jpoint, part, next_thing):
+def __jpointer_insert_next_thing(doc, jpoint, part, next_thing):
     """ 
     Puts next_thing into a doc (that is being `jsonpointer.walk`ed)
     by *part* "address". *jpoint* is Jsonpointer that is walked.   
@@ -197,7 +198,7 @@ def  __jpointer_insert_next_thing(doc, jpoint, part, next_thing):
                 else:
                     # assign it
                     doc[typed_part] = next_thing
-                
+
             else:
                 # assign it
                 doc[typed_part] = next_thing
@@ -289,12 +290,11 @@ def _process_property(
         field_def = key_lu[key.lower()]
     except Exception:
         raise ParsingException(f"Unexpected property {key!r}.")
-    
+
     if verb:
         print(f'      found def {field_def}')
-    
-   
-    # or set/update value in-place in data_obj dictionary 
+
+    # or set/update value in-place in data_obj dictionary
     pointer = field_def['merge_pointer']
     coerce = field_def['coerce']
     if field_def.get('is_artifact') == 1:
@@ -305,7 +305,8 @@ def _process_property(
         try:
             val = coerce(raw_val)
         except Exception:
-            raise ParsingException(f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type')}")
+            raise ParsingException(
+                f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type')}")
     else:
 
         # tokenize value
@@ -315,9 +316,9 @@ def _process_property(
         val = []
         file_uuids = []
         for x in range(len(local_paths)):
-            # ignoring coercion errors as we expect it just return uuids 
+            # ignoring coercion errors as we expect it just return uuids
             file_uuid = coerce(raw_val)
-    
+
             file_uuids.append(file_uuid)
             val.append({"upload_placeholder": file_uuid})
 
@@ -330,7 +331,7 @@ def _process_property(
     if 'process_as' in field_def:
         for extra_fdef in field_def['process_as']:
 
-            # where to put it additionally  
+            # where to put it additionally
             extra_pointer = extra_fdef['merge_pointer']
             extra_fdef_val = val
 
@@ -339,7 +340,8 @@ def _process_property(
                 # Should be fine, as we're controlling `eval` argument == code
                 extra_fdef_val = eval(extra_fdef['parse_through'])(val)
 
-            _set_val(extra_pointer, extra_fdef_val, data_obj, root_obj, data_obj_pointer, verb=verb)
+            _set_val(extra_pointer, extra_fdef_val, data_obj,
+                     root_obj, data_obj_pointer, verb=verb)
 
     if verb:
 
@@ -356,18 +358,18 @@ def _process_property(
         gs_key = field_def['gcs_uri_format'].format_map(format_context)
 
         return [LocalFileUploadEntry(
-            local_path = raw_val,
-            gs_key = gs_key,
+            local_path=raw_val,
+            gs_key=gs_key,
             # for artifacts `val` is a uuid
-            upload_placeholder = val,
-            metadata_availability = field_def.get('extra_metadata')
+            upload_placeholder=val,
+            metadata_availability=field_def.get('extra_metadata')
         )]
 
     elif field_def.get('is_artifact') == "multi":
 
         if verb:
             print(f'      collecting multi local_file_path {field_def}')
-    
+
         # loop over each path
         files = []
         for num, upload_placeholder in zip(range(len(local_paths)), file_uuids):
@@ -378,10 +380,10 @@ def _process_property(
 
             files.append(
                 LocalFileUploadEntry(
-                    local_path = local_paths[num],
-                    gs_key = gs_key,
-                    upload_placeholder = upload_placeholder,
-                    metadata_availability = field_def.get('extra_metadata')
+                    local_path=local_paths[num],
+                    gs_key=gs_key,
+                    upload_placeholder=upload_placeholder,
+                    metadata_availability=field_def.get('extra_metadata')
                 )
             )
         return files
@@ -390,9 +392,38 @@ def _process_property(
 class ParsingException(ValueError):
     pass
 
+
+class MergeCollisionException(ValueError):
+    pass
+
+
+class ThrowOnCollision(strategies.Strategy):
+    """
+    Similar to the jsonmerge's built in 'discard' strategy,
+    but throws an error if the value already exists
+    """
+
+    def merge(self, walk, base, head, schema, meta, **kwargs):
+        if base.is_undef():
+            return head
+        if base.val != head.val:
+            raise MergeCollisionException(
+                f"Updates are not currently supported."
+            )
+        return base
+
+    def get_schema(self, walk, schema, **kwargs):
+        return schema
+
+
+PRISM_STRATEGIES = {
+    # This overwrites the default jsonmerge merge strategy for literal values.
+    'overwrite': ThrowOnCollision()
+}
+
+
 def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
         -> (dict, List[LocalFileUploadEntry], List[Union[Exception, str]]):
-
     """
     Converts excel file to json object. It also identifies local files
     which need to uploaded to a google bucket and provides some logic
@@ -470,7 +501,7 @@ def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
     * then it goes in a loop over all "record" rows in .xlsx, and creates 
     an object within that "parent" object for each row. These "record-objects"
     are created at "prism_data_object_pointer" location relative to "preamble".
-    
+
     E.g. for WES: `"prism_data_object_pointer" : "/records/-"`
         {
           "assays": {
@@ -518,24 +549,30 @@ def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
     """
 
     if template.type not in SUPPORTED_TEMPLATES:
-        raise NotImplementedError(f'{template.type!r} is not supported, only {SUPPORTED_TEMPLATES} are.')
+        raise NotImplementedError(
+            f'{template.type!r} is not supported, only {SUPPORTED_TEMPLATES} are.')
 
     errors_so_far = []
 
     # get the root CT schema
-    root_ct_schema_name = (template.schema.get("prism_template_root_object_schema") or "clinical_trial.json")
+    root_ct_schema_name = (template.schema.get(
+        "prism_template_root_object_schema") or "clinical_trial.json")
     root_ct_schema = load_and_validate_schema(root_ct_schema_name)
     # create the result CT dictionary
-    root_ct_obj = {f"__prism_origin__:///templates/{template.type}": "as root_ct_obj"} if verb else {}
-    template_root_obj_pointer = template.schema.get("prism_template_root_object_pointer", "")
+    root_ct_obj = {
+        f"__prism_origin__:///templates/{template.type}": "as root_ct_obj"} if verb else {}
+    template_root_obj_pointer = template.schema.get(
+        "prism_template_root_object_pointer", "")
     if template_root_obj_pointer != "":
-        template_root_obj = {f"__prism_origin__:///templates/{template.type}": "as template_root_obj"} if verb else {}
-        _set_val(template_root_obj_pointer, template_root_obj, root_ct_obj, verb=verb)
+        template_root_obj = {
+            f"__prism_origin__:///templates/{template.type}": "as template_root_obj"} if verb else {}
+        _set_val(template_root_obj_pointer,
+                 template_root_obj, root_ct_obj, verb=verb)
     else:
         template_root_obj = root_ct_obj
 
     # and merger for it
-    root_ct_merger = Merger(root_ct_schema)
+    root_ct_merger = Merger(root_ct_schema, strategies=PRISM_STRATEGIES)
     # and where to collect all local file refs
     collected_files = []
 
@@ -546,9 +583,10 @@ def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
 
         # Here we take only first two cells from preamble as key and value respectfully,
         # lowering keys to match template schema definitions.
-        preamble_context = dict((r.values[0].lower(), r.values[1]) for r in ws.get(RowType.PREAMBLE, []))
+        preamble_context = dict(
+            (r.values[0].lower(), r.values[1]) for r in ws.get(RowType.PREAMBLE, []))
         # We need this full "preamble dict" (all key-value pairs) prior to processing
-        # properties from data_columns or preamble wrt template schema definitions, because 
+        # properties from data_columns or preamble wrt template schema definitions, because
         # there can be a 'gcs_uri_format' that needs to have access to all values.
 
         templ_ws = template.schema['properties']['worksheets'].get(ws_name)
@@ -556,13 +594,17 @@ def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
             errors_so_far.append(f"Unexpected worksheet {ws_name!r}.")
             continue
 
-        preamble_object_schema = load_and_validate_schema(templ_ws.get('prism_preamble_object_schema', root_ct_schema_name))
-        preamble_merger = Merger(preamble_object_schema)
-        preamble_object_pointer = templ_ws.get('prism_preamble_object_pointer', '')
+        preamble_object_schema = load_and_validate_schema(
+            templ_ws.get('prism_preamble_object_schema', root_ct_schema_name))
+        preamble_merger = Merger(
+            preamble_object_schema, strategies=PRISM_STRATEGIES)
+        preamble_object_pointer = templ_ws.get(
+            'prism_preamble_object_pointer', '')
         data_object_pointer = templ_ws['prism_data_object_pointer']
 
-        # creating preamble obj 
-        preamble_obj = {f"__prism_origin__:///templates/{template.type}/{ws_name}" : "as preamble"} if verb else {}
+        # creating preamble obj
+        preamble_obj = {
+            f"__prism_origin__:///templates/{template.type}/{ws_name}": "as preamble"} if verb else {}
 
         # Processing data rows first
         data = ws[RowType.DATA]
@@ -576,26 +618,32 @@ def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
                 if verb:
                     print(f'  next data row {row!r}')
 
-                # creating data obj 
-                data_obj = {f"__prism_origin__:///templates/{template.type}/{ws_name}/{row.row_num}" : "as data_obj"} if verb else {}
-                copy_of_preamble = {f"__prism_origin__:///templates/{template.type}/{ws_name}/{row.row_num}" : "as copy_of_preamble"} if verb else {}
-                _set_val(data_object_pointer, data_obj, copy_of_preamble, template_root_obj, preamble_object_pointer, verb=verb)
+                # creating data obj
+                data_obj = {
+                    f"__prism_origin__:///templates/{template.type}/{ws_name}/{row.row_num}": "as data_obj"} if verb else {}
+                copy_of_preamble = {
+                    f"__prism_origin__:///templates/{template.type}/{ws_name}/{row.row_num}": "as copy_of_preamble"} if verb else {}
+                _set_val(data_object_pointer, data_obj, copy_of_preamble,
+                         template_root_obj, preamble_object_pointer, verb=verb)
 
                 # We create this "data record dict" (all key-value pairs) prior to processing
-                # properties from data_columns wrt template schema definitions, because 
+                # properties from data_columns wrt template schema definitions, because
                 # there can be a 'gcs_uri_format' that needs to have access to all values.
-                local_context = dict(zip([h.lower() for h in headers.values], row.values))
+                local_context = dict(
+                    zip([h.lower() for h in headers.values], row.values))
 
                 # create dictionary per row
                 for key, val in zip(headers.values, row.values):
-                    
-                    try: 
-                        # get corr xsls schema type 
+
+                    try:
+                        # get corr xsls schema type
                         new_files = _process_property(
                             key, val,
                             key_lu=template.key_lu,
                             data_obj=data_obj,
-                            format_context=dict(local_context, **preamble_context),  # combine contexts
+                            # combine contexts
+                            format_context=dict(
+                                local_context, **preamble_context),
                             root_obj=copy_of_preamble,
                             data_obj_pointer=data_object_pointer,
                             verb=verb)
@@ -608,51 +656,55 @@ def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
                     print('  merging preambles')
                     print(f'   {preamble_obj}')
                     print(f'   {copy_of_preamble}')
-                preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
+                preamble_obj = preamble_merger.merge(
+                    preamble_obj, copy_of_preamble)
                 if verb:
                     print(f'    merged - {preamble_obj}')
-        
-        # Now processing preamble rows 
-        if verb: print(f'  preamble for {ws_name!r}')
+
+        # Now processing preamble rows
+        if verb:
+            print(f'  preamble for {ws_name!r}')
         for row in ws[RowType.PREAMBLE]:
-            try: 
+            try:
                 # process this property
                 new_files = _process_property(
-                    row.values[0], row.values[1], 
-                    key_lu=template.key_lu, 
-                    data_obj=preamble_obj, 
-                    format_context=preamble_context, 
-                    root_obj=root_ct_obj, 
-                    data_obj_pointer=template_root_obj_pointer+preamble_object_pointer, 
+                    row.values[0], row.values[1],
+                    key_lu=template.key_lu,
+                    data_obj=preamble_obj,
+                    format_context=preamble_context,
+                    root_obj=root_ct_obj,
+                    data_obj_pointer=template_root_obj_pointer+preamble_object_pointer,
                     verb=verb)
                 # TODO we might want to use copy+preamble_merger here too,
                 # to for complex properties that require mergeStrategy
-                
+
                 if new_files:
                     collected_files.extend(new_files)
             except ParsingException as e:
                 errors_so_far.append(e)
-    
 
         # Now pushing it up / merging with the whole thing
-        copy_of_template_root = {f"__prism_origin__:///templates/{template.type}/{ws_name}" : "as copy_of_template_root"} if verb else {}
-        _set_val(preamble_object_pointer, preamble_obj, copy_of_template_root, verb=verb)
+        copy_of_template_root = {
+            f"__prism_origin__:///templates/{template.type}/{ws_name}": "as copy_of_template_root"} if verb else {}
+        _set_val(preamble_object_pointer, preamble_obj,
+                 copy_of_template_root, verb=verb)
         if verb:
             print('merging root objs')
             print(f' {template_root_obj}')
             print(f' {copy_of_template_root}')
-        template_root_obj = root_ct_merger.merge(template_root_obj, copy_of_template_root)
+        template_root_obj = root_ct_merger.merge(
+            template_root_obj, copy_of_template_root)
         if verb:
             print(f'  merged - {template_root_obj}')
-    
-    
+
     if template_root_obj_pointer != "":
-        _set_val(template_root_obj_pointer, template_root_obj, root_ct_obj, verb=verb)
+        _set_val(template_root_obj_pointer,
+                 template_root_obj, root_ct_obj, verb=verb)
     else:
-        root_ct_obj = template_root_obj 
+        root_ct_obj = template_root_obj
 
     return root_ct_obj, collected_files, errors_so_far
-    
+
 
 def _set_data_format(ct: dict, artifact: dict):
     """
@@ -670,7 +722,7 @@ def _set_data_format(ct: dict, artifact: dict):
 
     validator: jsonschema.Draft7Validator = load_and_validate_schema(
         'clinical_trial.json', return_validator=True)
-    
+
     for error in validator.iter_errors(ct):
         if not isinstance(error, jsonschema.exceptions.ValidationError):
             continue
@@ -729,7 +781,7 @@ def merge_artifact(
         ct: updated clinical trial object
         artifact: updated artifact
         additional_artifact_metadata: relevant metadata collected while updating artifact
-    """ 
+    """
 
     # urls are created like this in _process_property:
     file_name, uuid = object_url.split("/")[-2:]
@@ -773,7 +825,8 @@ def merge_artifact_extra_metadata(
     """
 
     if assay_hint not in _EXTRA_METADATA_PARSERS:
-        raise Exception(f"Assay {assay_hint} does not support extra metadata parsing")
+        raise Exception(
+            f"Assay {assay_hint} does not support extra metadata parsing")
     extract_metadata = _EXTRA_METADATA_PARSERS[assay_hint]
 
     artifact_extra_md_patch = extract_metadata(extra_metadata_file)
@@ -781,7 +834,6 @@ def merge_artifact_extra_metadata(
 
 
 def _update_artifact(ct: dict, artifact_patch: dict, artifact_uuid: str) -> (dict, dict, dict):
-
     """ Updates the artifact with uuid `artifact_uuid` in `ct`,
     and return the updated clinical trial and artifact objects
 
@@ -830,20 +882,21 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
     try:
         validator.validate(target)
     except jsonschema.ValidationError as e:
-        raise InvalidMergeTargetException(f"Merge target is invalid: {target}\n{e}") from e
+        raise InvalidMergeTargetException(
+            f"Merge target is invalid: {target}\n{e}") from e
 
     # next assert the un-mutable fields are equal
     # these fields are required in the schema
     # so previous validation assert they exist
     if patch.get(PROTOCOL_ID_FIELD_NAME) != target.get(PROTOCOL_ID_FIELD_NAME):
-        raise InvalidMergeTargetException("Unable to merge trials with different "+ PROTOCOL_ID_FIELD_NAME)
+        raise InvalidMergeTargetException(
+            "Unable to merge trials with different " + PROTOCOL_ID_FIELD_NAME)
 
     # merge the two documents
-    merger = Merger(schema)
+    merger = Merger(schema, strategies=PRISM_STRATEGIES)
     merged = merger.merge(target, patch)
 
     return merged, list(validator.iter_errors(merged))
-
 
 
 def parse_npx(xlsx: BinaryIO) -> dict:

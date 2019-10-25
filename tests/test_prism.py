@@ -713,7 +713,6 @@ def test_merge_ct_meta():
 @pytest.mark.parametrize('xlsx, template', prismify_test_set())
 def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
-
     # TODO: implement other assays
     if template.type not in SUPPORTED_TEMPLATES:
         return 
@@ -734,9 +733,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         if template.type == 'pbmc':
             assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_pbmc"
 
-            assert len(prism_patch['participants']) == 2
-            assert len(prism_patch['participants'][0]['samples']) == 3
-            assert len(prism_patch['participants'][1]['samples']) == 3
+            assert len(prism_patch['participants']) == 6
+            assert len(prism_patch['participants'][0]['samples']) == 1
+            assert len(prism_patch['participants'][1]['samples']) == 1
 
         elif template.type == 'plasma':
             assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_plasma"
@@ -975,9 +974,9 @@ def test_prism_joining_tabs(monkeypatch):
         "properties": {
             "worksheets": {
                 "participants": {
-                    "prism_preamble_object_schema" : "clinical_trial.json",
-                    "prism_preamble_object_pointer" : "#",
-                    "prism_data_object_pointer" : "/participants/0/samples/0",
+                    "prism_preamble_object_schema": "clinical_trial.json",
+                    "prism_preamble_object_pointer": "#",
+                    "prism_data_object_pointer": "/participants/0/samples/0",
                     "preamble_rows": {
                     },
                     "data_columns": {
@@ -994,9 +993,9 @@ def test_prism_joining_tabs(monkeypatch):
                     }
                 },
                 "samples": {
-                    "prism_preamble_object_schema" : "clinical_trial.json",
-                    "prism_preamble_object_pointer" : "#",
-                    "prism_data_object_pointer" : "/participants/0/samples/0",
+                    "prism_preamble_object_schema": "clinical_trial.json",
+                    "prism_preamble_object_pointer": "#",
+                    "prism_data_object_pointer": "/participants/0/samples/0",
                     "preamble_rows": {
                     },
                     "data_columns": {

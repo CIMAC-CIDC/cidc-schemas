@@ -164,17 +164,17 @@ TEST_PRISM_TRIAL = {
 
 # corresponding list of gs_urls.
 WES_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/r1.fastq': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/r1.fastq':
     "r1.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/r2.fastq': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/r2.fastq':
     "r2.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/rgm.txt': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/rgm.txt':
     "read_group_mapping_file.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/r1.fastq': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/r1.fastq':
     "r1.2",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/r2.fastq': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/r2.fastq':
     "r2.2",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/rgm.txt': 
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/rgm.txt':
     "read_group_mapping_file.2"
 }
 
@@ -426,7 +426,7 @@ def test_filepath_gen(xlsx, template):
         # 1 trial id
         assert 1 == len(set([x.gs_key.split("/")[0] for x in file_maps]))
         # 2 samples
-        assert ['CM-TEST-PAR1-11', 'CM-TEST-PAR1-21'] == list(sorted(set([x.gs_key.split("/")[1] for x in file_maps])))
+        assert ['CTTTPPPS1', 'CTTTPPPS2'] == list(sorted(set([x.gs_key.split("/")[1] for x in file_maps])))
         
 
     elif template.type == 'olink':
@@ -533,7 +533,7 @@ def test_prismify_wes_only(xlsx, template):
     validator.validate(merged)
 
     merged_wo_needed_participants = copy.deepcopy(merged)
-    merged_wo_needed_participants['participants'][0]['samples'][0]['cimac_id'] = "CM-TEST-NAAA-DA"
+    merged_wo_needed_participants['participants'][0]['samples'][0]['cimac_id'] = "CTTTPPPSS.NN"
 
     # assert in_doc_ref constraints work
     with pytest.raises(InDocRefNotFoundError):
@@ -664,9 +664,9 @@ def test_merge_ct_meta():
     # now change the participant ids
     # this should cause the merge to have two
     # participants.
-    patch['participants'][0]['cimac_participant_id'] = 'CM-TEST-DIF1'
+    patch['participants'][0]['cimac_participant_id'] = 'CTTTPD1'
     for i, sample in enumerate(patch['participants'][0]['samples']):
-        sample['cimac_id'] = f'CM-TEST-DIF1-D{i}'
+        sample['cimac_id'] = f'CTTTPD1S{i}'
 
     ct_merge, errs = merge_clinical_trial_metadata(patch, target)
     assert not errs
@@ -676,8 +676,8 @@ def test_merge_ct_meta():
     patch[PROTOCOL_ID_FIELD_NAME] = target[PROTOCOL_ID_FIELD_NAME] 
     patch['participants'][0]['cimac_participant_id'] = \
         target['participants'][0]['cimac_participant_id']
-    patch['participants'][0]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N1'
-    patch['participants'][1]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N2'
+    patch['participants'][0]['samples'][0]['cimac_id'] = 'CTTTPP1N1'
+    patch['participants'][1]['samples'][0]['cimac_id'] = 'CTTTPP1N2'
  
     ct_merge, errs = merge_clinical_trial_metadata(patch, target)
     assert not errs
@@ -920,15 +920,15 @@ def test_prism_joining_tabs(monkeypatch):
     cell = namedtuple("cell", ["value"])
     wb["participants"].iter_rows.return_value = [
         map(cell, ["#h", "PA id", "PA prop"]),
-        map(cell, ["#d", "CM-PA0",  "0"]),
-        map(cell, ["#d", "CM-PA1",  "1"]),
+        map(cell, ["#d", "CPA0",  "0"]),
+        map(cell, ["#d", "CPA1",  "1"]),
     ]
     wb["samples"].iter_rows.return_value = [
         map(cell, ["#h", "SA_id",   "SA_prop"]),
-        map(cell, ["#d", "CM-PA1-SA0",  "100"]),
-        map(cell, ["#d", "CM-PA1-SA1",  "101"]),
-        map(cell, ["#d", "CM-PA0-SA0",  "000"]),
-        map(cell, ["#d", "CM-PA0-SA1",  "001"]),
+        map(cell, ["#d", "CPA1SA0",  "100"]),
+        map(cell, ["#d", "CPA1SA1",  "101"]),
+        map(cell, ["#d", "CPA0SA0",  "000"]),
+        map(cell, ["#d", "CPA0SA1",  "001"]),
     ]
 
     template = Template({
@@ -996,16 +996,16 @@ def test_prism_joining_tabs(monkeypatch):
 
     assert 2 == len(patch["participants"])
     
-    assert "CM-PA0" == patch["participants"][0]["cimac_participant_id"]
+    assert "CPA0" == patch["participants"][0]["cimac_participant_id"]
     assert 2 == len(patch["participants"][0]["samples"])
     
-    assert "CM-PA0-SA0"  == patch["participants"][0]["samples"][0]["cimac_id"]
+    assert "CPA0SA0"  == patch["participants"][0]["samples"][0]["cimac_id"]
     assert "000"  == patch["participants"][0]["samples"][0]["parent_sample_id"]
 
-    assert "CM-PA0-SA1"  == patch["participants"][0]["samples"][1]["cimac_id"]
+    assert "CPA0SA1"  == patch["participants"][0]["samples"][1]["cimac_id"]
     assert "001"  == patch["participants"][0]["samples"][1]["parent_sample_id"]
     
-    assert "CM-PA1" == patch["participants"][1]["cimac_participant_id"]
+    assert "CPA1" == patch["participants"][1]["cimac_participant_id"]
     assert 2 == len(patch["participants"][1]["samples"])
 
     assert 0 == len(file_maps)

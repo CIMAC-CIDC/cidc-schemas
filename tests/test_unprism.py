@@ -35,10 +35,10 @@ def test_unprism_samples(ct):
 
     expected = (
         f"cimac_id,parent_sample_id,collection_event_name,sample_location,type_of_sample,type_of_primary_container,{PROTOCOL_ID_FIELD_NAME},participants.cimac_participant_id\n"
-        "CTTTPP1S1.NN,SA.1.1,Baseline,---,Other,Other,10021,CTTTPP1\n"
-        "CTTTPP1S2.NN,SA.1.2,Baseline,---,Other,Other,10021,CTTTPP1\n"
-        "CTTTPP2S1.NN,SA.2.1,Baseline,---,Other,Other,10021,CTTTPP2\n"
-        "CTTTPP2S2.NN,SA.2.2,Baseline,---,Other,Other,10021,CTTTPP2\n"
+        "CTTTPP1S1.00,SA.1.1,Baseline,---,Other,Other,10021,CTTTPP1\n"
+        "CTTTPP1S2.00,SA.1.2,Baseline,---,Other,Other,10021,CTTTPP1\n"
+        "CTTTPP2S1.00,SA.2.1,Baseline,---,Other,Other,10021,CTTTPP2\n"
+        "CTTTPP2S2.00,SA.2.2,Baseline,---,Other,Other,10021,CTTTPP2\n"
     )
 
     assert csv == expected

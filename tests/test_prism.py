@@ -529,7 +529,7 @@ def test_prismify_plasma(xlsx, template):
     assert md_patch["participants"][0]["gender"]        # filled from 1 tab
     assert md_patch["participants"][0]["cohort_name"]   # filled from another
 
-    assert md_patch["participants"][0]["samples"][0]["processed_sample_id"] # filled from 1 tab
+    assert md_patch["participants"][0]["samples"][0]["processed_sample_id"]  # filled from 1 tab
     assert md_patch["participants"][0]["samples"][0]["topography_code"]     # filled from the second tab
     assert md_patch["participants"][0]["samples"][0]["site_description"]    # filled from the second tab
 
@@ -558,7 +558,7 @@ def test_prismify_wes_only(xlsx, template):
     validator.validate(merged)
 
     merged_wo_needed_participants = copy.deepcopy(merged)
-    merged_wo_needed_participants['participants'][0]['samples'][0]['cimac_id'] = "CTTTNAADA.00N"
+    merged_wo_needed_participants['participants'][0]['samples'][0]['cimac_id'] = "CTTTNAADA.00"
 
     # assert in_doc_ref constraints work
     with pytest.raises(InDocRefNotFoundError):

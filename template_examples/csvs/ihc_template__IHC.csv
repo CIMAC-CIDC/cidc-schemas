@@ -16,4 +16,4 @@
 
 "","Sample","","","","Chromogenic IHC","","","","","","H and E"
 "#h","Cimac id","Slide number","Ihc image","H and e image","Percentage tumor positive","Tumor positive intensity","Average tumor marker intensity","Percent inflammation marker positive","Average inflammation marker intensity","Clinically positive","Percentage viable tissue","Percentage tumor","Degree of lymphoid infiltrate","Percentage fibrosis"
-"#d","CM-ABCD-1234-01","1","/path/to/ihc.tiff","/path/to/hande.tiff","80","1","1.5","80","1.5","1","80","80","1","80"
+"#d","CTTTP01A1.00","1","/path/to/ihc.tiff","/path/to/hande.tiff","80","1","1.5","80","1.5","1","80","80","1","80"

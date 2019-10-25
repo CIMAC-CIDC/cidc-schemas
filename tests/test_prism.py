@@ -919,10 +919,10 @@ def test_prism_joining_tabs(monkeypatch):
     ]
     wb["samples"].iter_rows.return_value = [
         map(cell, ["#h", "SA_id",   "SA_prop"]),
-        map(cell, ["#d", "CPP1SA0",  "100"]),
-        map(cell, ["#d", "CPP1SA1",  "101"]),
-        map(cell, ["#d", "CPP0SA0",  "000"]),
-        map(cell, ["#d", "CPP0SA1",  "001"]),
+        map(cell, ["#d", "CPP1S0.00",  "100"]),
+        map(cell, ["#d", "CPP1S1.00",  "101"]),
+        map(cell, ["#d", "CPP0S0.00",  "000"]),
+        map(cell, ["#d", "CPP0S1.00",  "001"]),
     ]
 
     template = Template({
@@ -962,7 +962,7 @@ def test_prism_joining_tabs(monkeypatch):
                                 "type_ref": "sample.json#properties/cimac_id",
                                 "process_as": [{
                                   "merge_pointer": "2/cimac_participant_id",
-                                  "parse_through": "lambda x: '-'.join(x.split('-')[:2])"
+                                  "parse_through": "lambda x: x.split('.')[0][:4]"
                                 }]
                             },
                             "SA_prop": {
@@ -993,11 +993,14 @@ def test_prism_joining_tabs(monkeypatch):
     assert "CPP0" == patch["participants"][0]["cimac_participant_id"]
     assert 2 == len(patch["participants"][0]["samples"])
     
-    assert "CPP0SA0"  == patch["participants"][0]["samples"][0]["cimac_id"]
+    assert "CPP0S0.00"  == patch["participants"][0]["samples"][0]["cimac_id"]
     assert "000"  == patch["participants"][0]["samples"][0]["parent_sample_id"]
 
-    assert "CPP1SA1"  == patch["participants"][0]["samples"][1]["cimac_id"]
+    assert "CPP0S1.00"  == patch["participants"][0]["samples"][1]["cimac_id"]
     assert "001"  == patch["participants"][0]["samples"][1]["parent_sample_id"]
+    
+    assert "CPP1S1.00"  == patch["participants"][1]["samples"][1]["cimac_id"]
+    assert "101"  == patch["participants"][1]["samples"][1]["parent_sample_id"]
     
     assert "CPP1" == patch["participants"][1]["cimac_participant_id"]
     assert 2 == len(patch["participants"][1]["samples"])

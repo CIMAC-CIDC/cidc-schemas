@@ -48,6 +48,14 @@
         "$ref": "assays/micsss_assay.json"
       },
       "mergeStrategy": "append"
+    },
+    "ihc": {
+      "type": "array",
+      "description": "Immunohistochemical analysis.",
+      "items": {
+        "$ref": "assays/ihc_assay.json"
+      },
+      "mergeStrategy": "append"
     }
   }
 }

@@ -1,0 +1,149 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "IHC",
+    "title": "Metadata file for IHC",
+    "type": "object",
+    "category": "metadata",
+    "description": "Metadata information for Immunohistochemical (IHC) analysis.\n",
+    "properties": {
+        "worksheets": {
+
+          "IHC": {
+            "prism_preamble_object_schema" : "assays/ihc_assay.json",
+            "prism_preamble_object_pointer" : "/assays/ihc/0",
+            "prism_data_object_pointer" : "/records/-",
+
+            "preamble_rows": {
+              "protocol identifier": {
+                "merge_pointer": "3/protocol_identifier",
+                "type_ref": "clinical_trial.json#properties/protocol_identifier"
+              },
+              "assay creator": {
+                "merge_pointer": "0/assay_creator",
+                "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+              },
+              "protocol name": {
+                "merge_pointer": "0/protocol_name",
+                "type_ref": "assays/components/image.json#properties/protocol_name"
+              },
+              "slide scanner model": {
+                "merge_pointer": "0/slide_scanner_model",
+                "type_ref": "assays/components/image.json#properties/slide_scanner_model"
+              },
+              "staining platform": {
+                "merge_pointer": "0/staining_platform",
+                "type_ref": "assays/components/image.json#properties/staining_platform"
+              },
+              "autostainer model": {
+                "merge_pointer": "0/autostainer_model",
+                "type_ref": "assays/components/image.json#properties/autostainer_model"
+              },
+              "antibody name": {
+                  "merge_pointer": "0/antibody",
+                  "type_ref": "assays/components/antibody.json#properties/antibody"
+              },
+              "company": {
+                  "merge_pointer": "0/company",
+                  "type_ref": "assays/components/antibody.json#properties/company"
+              },
+              "clone": {
+                  "merge_pointer": "0/clone",
+                  "type_ref": "assays/components/antibody.json#properties/clone"
+              },
+              "catalogue number": {
+                  "merge_pointer": "0/cat_num",
+                  "type_ref": "assays/components/antibody.json#properties/cat_num"
+              },
+              "lot number": {
+                  "merge_pointer": "0/lot_num",
+                  "type_ref": "assays/components/antibody.json#properties/lot_num"
+              },
+              "dilution": {
+                  "merge_pointer": "0/dilution",
+                  "type_ref": "assays/components/ihc_antibodies.json#properties/dilution"
+              },
+              "incubation time": {
+                  "merge_pointer": "0/incubation_time",
+                  "type_ref": "assays/components/ihc_antibodies.json#properties/incubation_time"
+              },
+              "incubation temperature": {
+                  "merge_pointer": "0/incubation_temp",
+                  "type_ref": "assays/components/ihc_antibodies.json#properties/incubation_temp"
+              }
+            },
+
+            "data_columns": {
+
+              "Sample": {
+                "cimac ID": {
+                  "merge_pointer": "0/cimac_id",
+                  "type_ref": "sample.json#properties/cimac_id"
+                },
+                "slide number": {
+                  "merge_pointer": "0/slide_number",
+                  "type_ref": "aliquot.json#properties/slide_number"
+                },
+                "IHC image": {
+                  "merge_pointer": "0/files/ihc_image",
+                  "is_artifact" : 1,
+                  "gcs_uri_format": "{protocol identifier}/{cimac id}/{slide number}/ihc/ihc.tiff",
+                  "type_ref": "assays/components/local_file.json#properties/file_path"
+                },
+                "H and E image": {
+                  "merge_pointer": "0/files/he_image",
+                  "is_artifact" : 1,
+                  "gcs_uri_format": "{protocol identifier}/{cimac id}/{slide number}/ihc/HnE.tiff",
+                  "type_ref": "assays/components/local_file.json#properties/file_path"
+                }
+              },
+
+              "Chromogenic IHC": {
+                "percentage tumor positive": {
+                  "merge_pointer": "0/percentage_tumor_positive",
+                  "type_ref": "assays/components/imaging/ihc_entry.json#properties/percentage_tumor_positive"
+                },
+                "tumor positive intensity": {
+                  "merge_pointer": "0/tumor_positive_intensity",
+                  "type_ref": "assays/components/imaging/ihc_entry.json#properties/tumor_positive_intensity"
+                },
+                "average tumor marker intensity": {
+                  "merge_pointer": "0/average_tumor_marker_intensity",
+                  "type_ref": "assays/components/imaging/ihc_entry.json#properties/average_tumor_marker_intensity"
+                },
+                "percent inflammation marker positive": {
+                  "merge_pointer": "0/percent_inflammation_marker_positive",
+                  "type_ref": "assays/components/imaging/ihc_entry.json#properties/percent_inflammation_marker_positive"
+                },
+                "average inflammation marker intensity": {
+                  "merge_pointer": "0/average_inflammation_marker_intensity",
+                  "type_ref": "assays/components/imaging/ihc_entry.json#properties/average_inflammation_marker_intensity"
+                },
+                "clinically positive": {
+                  "merge_pointer": "0/clinically_positive",
+                  "type_ref": "assays/components/imaging/ihc_entry.json#properties/clinically_positive"
+                }
+              },
+
+              "H and E": {
+                "percentage viable tissue": {
+                  "merge_pointer": "0/percentage_viable_tissue",
+                  "type_ref": "assays/components/imaging/ihc_entry.json#properties/percentage_viable_tissue"
+                },
+                "percentage tumor": {
+                  "merge_pointer": "0/percentage_tumor",
+                  "type_ref": "assays/components/imaging/ihc_entry.json#properties/percentage_tumor"
+                },
+                "degree of lymphoid infiltrate": {
+                  "merge_pointer": "0/degree_lymphoid_infiltrate",
+                  "type_ref": "assays/components/imaging/ihc_entry.json#properties/degree_lymphoid_infiltrate"
+                },
+                "percentage fibrosis": {
+                  "merge_pointer": "0/percentage_fibrosis",
+                  "type_ref": "assays/components/imaging/ihc_entry.json#properties/percentage_fibrosis"
+                }
+              }
+            }
+          }
+        }
+    }
+}

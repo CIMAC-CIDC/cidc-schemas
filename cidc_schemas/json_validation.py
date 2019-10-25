@@ -414,6 +414,8 @@ def convert(fmt: str, value: str) -> str:
         reformatter = lambda n: n and int(n)
     elif fmt == "boolean":
         reformatter = _to_bool
+    elif fmt == "number":
+        reformatter = lambda n: n and float(n)
     else:
         # If we don't have a specified reformatter, use the identity function
         reformatter = id

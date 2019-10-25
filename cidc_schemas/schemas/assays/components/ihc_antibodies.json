@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "ihc_antibody",
+  "title": "IHC antibody",
+  "description": "Data specific to antibody preparation for immunohistochemical analysis.",
+  "allOf": [{ "$ref": "assays/components/antibody.json" }],
+  "properties": {
+    "dilution": {
+      "description": "Concentration ratio for antibody dilution.",
+      "type": "string"
+    },
+    "incubation_time": {
+      "description": "Duration of time for antibody incubation.",
+      "type": "string",
+      "format": "time"
+    },
+    "incubation_temp": {
+      "description": "Temperature used for antibody incubation.",
+      "type": "string"
+    }
+  },
+  "required": ["dilution", "incubation_time", "incubation_temp"]
+}

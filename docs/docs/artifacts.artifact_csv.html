@@ -86,14 +86,21 @@
             
         
             
+        
+            
+        
+            
+        
+        
+            
+        
+            
                 <tr>
     <td>
         
             <span id="separator">
                 separator
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -128,8 +135,6 @@
                 header_row
             </span>
             
-                <br><sup><mark>required</mark></sup>
-            
         
     </td>
     <td width=55%>
@@ -153,15 +158,6 @@
         
     </td>
 </tr>
-            
-        
-            
-        
-        
-            
-        
-            
-        
             
         
             
@@ -318,11 +314,21 @@
             }
         }
     ],
-    "description": "Information about CSV files.",
-    "required": [
-        "separator",
-        "header_row"
+    "anyOf": [
+        {
+            "required": [
+                "separator",
+                "header_row"
+            ]
+        },
+        {
+            "required": [
+                "upload_placeholder"
+            ]
+        }
     ],
+    "description": "Information about CSV files.",
+    "mergeStrategy": "objectMerge",
     "title": "CSV Artifact",
     "type": "object"
 }</code></pre>

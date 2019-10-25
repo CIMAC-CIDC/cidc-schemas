@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "ihc",
+  "title": "IHC Assay",
+  "type": "object",
+  "description": "Immunohistochemical analysis.",
+  "allOf": [
+    {"$ref": "assays/components/assay_core.json"},
+    {"$ref": "assays/components/image.json"}
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "description": "A single data record from IHC assay.",
+      "items": {
+        "$ref": "assays/components/imaging/ihc_entry.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "cimac_id"
+      }
+    },
+    "antibodies": {
+    "type": "array",
+    "items": {
+      "$ref": "assays/components/ihc_antibodies.json"
+    }
+  }
+  },
+  "required": ["records"],
+  "mergeStrategy": "objectMerge"
+}

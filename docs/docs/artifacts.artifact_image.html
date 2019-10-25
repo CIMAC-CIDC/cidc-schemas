@@ -86,14 +86,23 @@
             
         
             
+        
+            
+        
+            
+        
+            
+        
+        
+            
+        
+            
                 <tr>
     <td>
         
             <span id="height">
                 height
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -128,8 +137,6 @@
                 width
             </span>
             
-                <br><sup><mark>required</mark></sup>
-            
         
     </td>
     <td width=55%>
@@ -163,8 +170,6 @@
                 channels
             </span>
             
-                <br><sup><mark>required</mark></sup>
-            
         
     </td>
     <td width=55%>
@@ -188,17 +193,6 @@
         
     </td>
 </tr>
-            
-        
-            
-        
-        
-            
-        
-            
-        
-            
-        
             
         
             
@@ -360,12 +354,22 @@
             }
         }
     ],
-    "description": "Information about images including height and width.",
-    "required": [
-        "height",
-        "width",
-        "channels"
+    "anyOf": [
+        {
+            "required": [
+                "height",
+                "width",
+                "channels"
+            ]
+        },
+        {
+            "required": [
+                "upload_placeholder"
+            ]
+        }
     ],
+    "description": "Information about images including height and width.",
+    "mergeStrategy": "objectMerge",
     "title": "Image Artifact",
     "type": "object"
 }</code></pre>

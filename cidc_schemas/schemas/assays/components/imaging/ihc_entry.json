@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "ihc_assay_record",
+  "title": "IHC assay record",
+  "type": "object",
+  "description": "A single data record from IHC assay.",
+  "properties": {
+    "percentage_tumor_positive": {
+      "description": "Percentage of tumor positive (0 - 100).",
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMaximum": 100
+    },
+    "tumor_positive_intensity": {
+      "description": "Intensity of positive tumor (1, 2, or 3).",
+      "type": "integer",
+      "minimum": 1,
+      "exclusiveMaximum": 3
+    },
+    "average_tumor_marker_intensity": {
+      "description": "Average intensity of tumor marker (0 - 3).",
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMaximum": 3
+    },
+    "percent_inflammation_marker_positive": {
+      "description": "Percentage of positive marker inflammation (0 - 100).",
+      "type": "integer",
+      "minimum": 0,
+      "exclusiveMaximum": 100
+    },
+    "average_inflammation_marker_intensity": {
+      "description": "Average intensity of marker inflammation (0 - 3).",
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMaximum": 3
+    },
+    "clinically_positive": {
+      "description": "Indicates whether the marker is considered positive by FDA guidelines.",
+      "type": "integer"
+    },
+    "percentage_viable_tissue": {
+      "description": "Percentage of tissue that is viable (0 - 100).",
+      "type": "integer",
+      "minimum": 0,
+      "exclusiveMaximum": 100
+    },
+    "percentage_tumor": {
+      "description": "Percentage of tumor (0 - 100).",
+      "type": "integer",
+      "minimum": 0,
+      "exclusiveMaximum": 100
+    },
+    "degree_lymphoid_infiltrate": {
+      "description": "Degree of lymphoid infiltrate (0, 1, 2, or 3).",
+      "type": "integer",
+      "minimum": 0,
+      "exclusiveMaximum": 3
+    },
+    "percentage_fibrosis": {
+      "description": "Percentage of fibrosis (0 - 100).",
+      "type": "integer",
+      "minimum": 0,
+      "exclusiveMaximum": 100
+    },
+    "files": {
+      "$ref": "assays/components/imaging/ihc_input.json"
+    }
+  },
+  "mergeStrategy": "objectMerge",
+  "required": [
+    "percentage_tumor_positive",
+    "tumor_positive_intensity",
+    "average_tumor_marker_intensity",
+    "percent_inflammation_marker_positive",
+    "average_inflammation_marker_intensity",
+    "clinically_positive",
+    "percentage_viable_tissue",
+    "percentage_tumor",
+    "degree_lymphoid_infiltrate",
+    "percentage_fibrosis",
+    "files"
+  ]
+}

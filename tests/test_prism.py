@@ -164,18 +164,12 @@ TEST_PRISM_TRIAL = {
 
 # corresponding list of gs_urls.
 WES_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/r1.fastq':
-    "r1.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/r2.fastq':
-    "r2.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/rgm.txt':
-    "read_group_mapping_file.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/r1.fastq':
-    "r1.2",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/r2.fastq':
-    "r2.2",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/rgm.txt':
-    "read_group_mapping_file.2"
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP111.00/wes/r1.fastq': "r1.1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP111.00/wes/r2.fastq': "r2.1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP111.00/wes/rgm.txt': "read_group_mapping_file.1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP121.00/wes/r1.fastq': "r1.2",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP121.00/wes/r2.fastq': "r2.2",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP121.00/wes/rgm.txt': "read_group_mapping_file.2"
 }
 
 

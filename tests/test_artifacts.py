@@ -151,5 +151,5 @@ def test_npx():
 
     # add the required properties
     obj["number_of_samples"] = 7
-    obj["samples"] = ["CM-NONE-REFE-RE", "CM-NTIA-INTE-GR"]
+    obj["samples"] = ["CTTTREFRE.00", "CTTTINTEG.00"]
     at_validator.validate(obj)

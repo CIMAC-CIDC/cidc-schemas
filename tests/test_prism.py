@@ -51,7 +51,7 @@ TEST_PRISM_TRIAL = {
         PROTOCOL_ID_FIELD_NAME: "test_prism_trial_id",
         "participants": [
             {
-                "cimac_participant_id": "CM-TEST-PAR1",
+                "cimac_participant_id": "CTTTPP1",
                 "participant_id": "test_trial_patient_1",
                 "cohort_name": "Arm_Z",
                 "samples": [
@@ -67,7 +67,7 @@ TEST_PRISM_TRIAL = {
                                 "aliquot_status": "Other"
                             },
                         ],
-                        "cimac_id": "CM-TEST-PAR1-11",
+                        "cimac_id": "CTTTPP111.00",
                         "parent_sample_id": "test_sample_1",
                         "collection_event_name": "Baseline",
                         "sample_location": "---",
@@ -90,7 +90,7 @@ TEST_PRISM_TRIAL = {
                                 "aliquot_status": "Other"
                             }
                         ],
-                        "cimac_id": "CM-TEST-PAR1-21",
+                        "cimac_id": "CTTTPP121.00",
                         "parent_sample_id": "test_sample_2",
                         "collection_event_name": "Baseline",
                         "sample_location": "---",
@@ -98,7 +98,7 @@ TEST_PRISM_TRIAL = {
                         "type_of_primary_container": "Other",
                     }
                 ],
-                "cimac_participant_id": "CM-TEST-PAR2",
+                "cimac_participant_id": "CTTTPP2",
                 "participant_id": "test_trial_patient_2",
                 "cohort_name": "Arm_Z"
             }
@@ -121,7 +121,7 @@ TEST_PRISM_TRIAL = {
                             "input_ng": 101,
                             "library_yield_ng": 701,
                             "average_insert_size": 251,
-                            "cimac_id": "CM-TEST-PAR1-11",
+                            "cimac_id": "CTTTPP111.00",
                             "files": {
                                 "r1": {
                                     "upload_placeholder": "r1.1"
@@ -142,7 +142,7 @@ TEST_PRISM_TRIAL = {
                             "input_ng": 102,
                             "library_yield_ng": 702,
                             "average_insert_size": 252,
-                            "cimac_id": "CM-TEST-PAR1-21",
+                            "cimac_id": "CTTTPP121.00",
                             "files": {
                                 "r1": {
                                     "upload_placeholder": "r1.2"
@@ -196,7 +196,7 @@ def test_merge_core():
 
     # create the sample.
     sample = {
-        "cimac_id": "CM-TRIA-PA12-34",
+        "cimac_id": "CTTTPPP12.34",
         "parent_sample_id": "blank",
         "aliquots": [aliquot],
         "collection_event_name": "Baseline",
@@ -207,7 +207,7 @@ def test_merge_core():
 
     # create the participant
     participant = {
-        "cimac_participant_id": "CM-TEST-PART",
+        "cimac_participant_id": "CTTTPPP",
         "participant_id": "blank",
         "samples": [sample],
         "cohort_name": "Arm_Z"
@@ -1032,7 +1032,8 @@ def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
 
     assert set(files['assay_npx']['samples']) == {'CTTTP01A1.00', 'CTTTP02A1.00', 'CTTTP03A1.00', 'CTTTP04A1.00'}
     assert set(study['study_npx']['samples']) == {'CTTTP01A1.00', 'CTTTP02A1.00', 'CTTTP03A1.00', 'CTTTP04A1.00',
-                                                  'CTTTP05A1.00', 'CTTTP06A1.00', 'CTTTP07A1.00', 'CTTTP08A1.00', 'CTTTP09A1.00'}
+                                                  'CTTTP05A1.00', 'CTTTP06A1.00', 'CTTTP07A1.00', 'CTTTP08A1.00',
+                                                  'CTTTP09A1.00'}
 
 
 def test_parse_npx_invalid(npx_file_path):
@@ -1047,7 +1048,7 @@ def test_parse_npx_single(npx_file_path):
     samples = parse_npx(f)
 
     assert samples["number_of_samples"] == 4
-    assert set(samples["samples"]) == {'CM-TEST-PA01-A1', 'CM-TEST-PA02-A1', 'CM-TEST-PA03-A1', 'CM-TEST-PA04-A1'}
+    assert set(samples["samples"]) == {'CTTTP01A1.00', 'CTTTP02A1.00', 'CTTTP03A1.00', 'CTTTP04A1.00'}
 
 
 def test_parse_npx_merged(npx_combined_file_path):
@@ -1056,4 +1057,6 @@ def test_parse_npx_merged(npx_combined_file_path):
     samples = parse_npx(f)
 
     assert samples["number_of_samples"] == 9
-    assert set(samples["samples"]) == {'CM-TEST-PA01-A1', 'CM-TEST-PA02-A1', 'CM-TEST-PA03-A1', 'CM-TEST-PA04-A1', 'CM-TEST-PA05-A1', 'CM-TEST-PA06-A1', 'CM-TEST-PA07-A1', 'CM-TEST-PA08-A1', 'CM-TEST-PA09-A1'}
+    assert set(samples["samples"]) == {'CTTTP01A1.00', 'CTTTP02A1.00', 'CTTTP03A1.00', 'CTTTP04A1.00',
+                                       'CTTTP05A1.00', 'CTTTP06A1.00', 'CTTTP07A1.00', 'CTTTP08A1.00',
+                                       'CTTTP09A1.00'}

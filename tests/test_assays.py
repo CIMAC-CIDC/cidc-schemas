@@ -94,7 +94,7 @@ def test_wes():
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
-        "cimac_id": "CM-TEST-PART-SA",
+        "cimac_id": "CTTTPPPSA.00",
         "files": {
             "r1": r1,
             "r2": r1,
@@ -160,7 +160,7 @@ def test_rna_expression():
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
-        "cimac_id": "CM-TEST-PART-SA",
+        "cimac_id": "CTTTPPPSA.00",
         "files": {
             "r1": r1,
             "r2": r1,
@@ -174,6 +174,7 @@ def test_rna_expression():
     ]
 
     # create validator assert schemas are valid.
+    validator = _fetch_validator("rna_expression")
     validator = _fetch_validator("rna_expression")
     validator.validate(obj)
 
@@ -237,7 +238,7 @@ def test_cytof():
     fcs_2 = ARTIFACT_OBJ.copy()
     fcs_2['data_format'] = 'BINARY'
     record = {
-        "cimac_id": "CM-TEST-PART-SA",
+        "cimac_id": "CTTTPPPSA.00",
         "files": {
                 "processed_fcs": fcs_1,
                 "source_fcs": [fcs_2.copy(), fcs_2.copy()]
@@ -386,7 +387,7 @@ def test_olink():
     # create the olink object
     npx = ARTIFACT_OBJ.copy()
     npx['data_format'] = 'NPX'
-    npx['samples'] = ['CM-TEST-PART-S1', 'CM-TEST-PART-S2', 'CM-TEST-PART-S3']
+    npx['samples'] = ['CTTTPPPS1.00', 'CTTTPPPS2.00', 'CTTTPPPS3.00']
     npx['number_of_samples'] = 3
     xlsx = ARTIFACT_OBJ.copy()
     xlsx['data_format'] = 'XLSX'

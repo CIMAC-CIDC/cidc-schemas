@@ -275,10 +275,10 @@ MINIMAL_TEST_TRIAL = {
                     "type_of_sample": "Other",
                     "type_of_primary_container": "Other",
                     "parent_sample_id": "test_min_Sample_1",
-                    "cimac_id": "CM-TEST-MIN1-01"
+                    "cimac_id": "CTTTMIN01.00"
                 }
             ],
-            "cimac_participant_id": "CM-TEST-MIN1",
+            "cimac_participant_id": "CTTTMIN",
             "participant_id": "test_min_Patient_1",
             "cohort_name": "Arm_Z"
         }
@@ -1030,8 +1030,9 @@ def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
     study = ct['assays']['olink']['study']
     files = ct['assays']['olink']['records'][0]['files']
 
-    assert set(files['assay_npx']['samples']) == {'CM-TEST-PA01-A1', 'CM-TEST-PA02-A1', 'CM-TEST-PA03-A1', 'CM-TEST-PA04-A1'}
-    assert set(study['study_npx']['samples']) == {'CM-TEST-PA01-A1', 'CM-TEST-PA02-A1', 'CM-TEST-PA03-A1', 'CM-TEST-PA04-A1', 'CM-TEST-PA05-A1', 'CM-TEST-PA06-A1', 'CM-TEST-PA07-A1', 'CM-TEST-PA08-A1', 'CM-TEST-PA09-A1'}
+    assert set(files['assay_npx']['samples']) == {'CTTTP01A1.00', 'CTTTP02A1.00', 'CTTTP03A1.00', 'CTTTP04A1.00'}
+    assert set(study['study_npx']['samples']) == {'CTTTP01A1.00', 'CTTTP02A1.00', 'CTTTP03A1.00', 'CTTTP04A1.00',
+                                                  'CTTTP05A1.00', 'CTTTP06A1.00', 'CTTTP07A1.00', 'CTTTP08A1.00', 'CTTTP09A1.00'}
 
 
 def test_parse_npx_invalid(npx_file_path):

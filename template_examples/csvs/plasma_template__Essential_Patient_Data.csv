@@ -1,3 +1,3 @@
 "","Path Concordance Verification","","","","","","","ICD-0-3 Code/Description","","","","","Demographics"
 "#h","Entry (#)","Participant id","Cimac id","Surgical pathology report id","Clinical report id","Collection event name","Diagnosis verification","Site description","Topography code","Topography description","Histology/behavior","Histology/behavior description","Sex","Race","Ethnic group"
-"#d","1","TEST-PA01-A1","CM-TEST-PA01-A1","Surgical pathology report 1","clinical report 1","Baseline","Local pathology review was not consistent","ADRENAL GLANDS","C00.2","External lower lip","8003/3","Neoplasm, malignant","Female","Black/African American","Not Hispanic or Latino"
+"#d","1","TTTP01A1","CTTTP01A1.00","Surgical pathology report 1","clinical report 1","Baseline","Local pathology review was not consistent","ADRENAL GLANDS","C00.2","External lower lip","8003/3","Neoplasm, malignant","Female","Black/African American","Not Hispanic or Latino"

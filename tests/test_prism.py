@@ -726,14 +726,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     if template.type in SUPPORTED_MANIFESTS:
         assert len(prism_patch['shipments']) == 1
-        
-<<<<<<< HEAD
-        #assert prism_patch['participants'][0]['samples'][0]["cimac_id"].split("-")[:3] == \
-         #   prism_patch['participants'][0]['cimac_participant_id'].split("-")
-=======
+
         assert prism_patch['participants'][0]['samples'][0]["cimac_id"][:7].startswith(
                 prism_patch['participants'][0]['cimac_participant_id'])
->>>>>>> 58f892fe680a58b921e6709735b8d753034e4552
 
         if template.type == 'pbmc':
             assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_pbmc"

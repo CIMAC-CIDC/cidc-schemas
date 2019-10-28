@@ -1,3 +1,4 @@
+import re
 import json
 import os
 import copy
@@ -878,11 +879,15 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
 
 
 
+cimac_id_regex = re.compile("^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$")
+
+
 def parse_npx(xlsx: BinaryIO) -> dict:
     """
     Parses the given NPX file from olink to extract a list of sample IDs.
     If the file is not valid NPX but still xlsx the function will
-    return a dict containing an empty list. The function will pass along any IO errors.
+    return a dict containing an empty list. Sample IDs not conforming to the CIMAC ID
+    format will be skipped. The function will pass along any IO errors.
 
     Args:
         xlsx: an opened NPX file
@@ -908,22 +913,26 @@ def parse_npx(xlsx: BinaryIO) -> dict:
             # extract values from row
             vals = [col.value for col in row]
 
+            first_cell = vals[0]
+
             # skip empty
-            if len(vals) == 0 or vals[0] is None:
+            if len(vals) == 0 or first_cell is None:
                 continue
 
             # check if we are starting ids
-            if vals[0] == 'OlinkID':
+            if first_cell == 'OlinkID':
                 seen_onlinkid = True
                 continue
 
             # check if we are done.
-            if vals[0] == 'LOD':
+            if first_cell == 'LOD':
                 break
 
             # get the identifier
             if seen_onlinkid:
-                ids.append(vals[0])
+                # check that it is a CIMAC ID
+                if cimac_id_regex.match(first_cell):
+                    ids.append(first_cell)
 
     sample_count = len(ids)
 

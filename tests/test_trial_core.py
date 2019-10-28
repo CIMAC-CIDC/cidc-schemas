@@ -79,7 +79,7 @@ def test_clinicaltrial_simple():
 
     # create the sample.
     sample = {
-        "cimac_id": "CM-TEST-1234-00",
+        "cimac_id": "CTTT12300.00",
         "parent_sample_id": "blank",
         "aliquots": [aliquot],
         "collection_event_name": "Baseline",
@@ -91,7 +91,7 @@ def test_clinicaltrial_simple():
 
     # create the participant
     participant = {
-        "cimac_participant_id": "CM-TEST-1234",
+        "cimac_participant_id": "CTTT123",
         "participant_id": "blank",
         "samples": [sample],
         "cohort_name": "Arm_Z",
@@ -132,7 +132,7 @@ def test_clinicaltrial_olink():
 
     # create the sample.
     sample1 = {
-        "cimac_id": "CM-TEST-PA12-34",
+        "cimac_id": "CTTTP1234.00",
         "parent_sample_id": "blank",
         "aliquots": [aliquot1],
         "collection_event_name": "Baseline",
@@ -142,7 +142,7 @@ def test_clinicaltrial_olink():
         "genomic_source": "Normal",
     }
     sample2 = {
-        "cimac_id": "CM-TEST-PAAB-CD",
+        "cimac_id": "CTTTPABCD.00",
         "parent_sample_id": "blank",
         "aliquots": [aliquot2],
         "collection_event_name": "Baseline",
@@ -154,13 +154,13 @@ def test_clinicaltrial_olink():
 
     # create the participant
     participant1 = {
-        "cimac_participant_id": "CM-TEST-1234",
+        "cimac_participant_id": "CTTT123",
         "participant_id": "blank",
         "samples": [sample1],
         "cohort_name": "Arm_Z",
     }
     participant2 = {
-        "cimac_participant_id": "CM-TEST-2222",
+        "cimac_participant_id": "CTTT222",
         "participant_id": "blank",
         "samples": [sample2],
         "cohort_name": "Arm_Z",

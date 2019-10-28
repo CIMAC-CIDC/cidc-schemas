@@ -6,5 +6,5 @@
 
 "","Run info","","","","","","","","","","Preprocessing"
 "#h","CIMAC ID","BATCH_ID","ORIGINAL FCS FILENAME(S)","DATE OF ACQUISITION","INJECTOR","ACQUISITION_BUFFER","AVERAGE_EVENT_PER_SECOND","RUN_TIME","PROCESSED FCS FILENAME","CONCATENATION VERSION","NORMALIZATION VERSION","BEADS REMOVED","DEBARCODING PROTOCOL","DEBARCODING KEY","PREPROCESSING_NOTES"
-"#d","CM-TEST-PAR1-11","XYZ1","sample1a.fcs,sample1b.fcs","43355","HAT123","ABC","123","23","sample1.fcs","GHIL","ABC","Y","FLUIDIGM XYZ","FLUIDIGM 1234","a note like any other note"
-"#d","CM-TEST-PAR1-21","XYZ1","sample2a.fcs,sample2b.fcs","43385","HAT123","ABCD","123","28","sample2.fcs","GHIL","ABC","N","FLUIDIGM XYZ","FLUIDIGM 1234","a different note"
+"#d","CTTTPP111.00","XYZ1","sample1a.fcs,sample1b.fcs","43355","HAT123","ABC","123","23","sample1.fcs","GHIL","ABC","Y","FLUIDIGM XYZ","FLUIDIGM 1234","a note like any other note"
+"#d","CTTTPP121.00","XYZ1","sample2a.fcs,sample2b.fcs","43385","HAT123","ABCD","123","28","sample2.fcs","GHIL","ABC","N","FLUIDIGM XYZ","FLUIDIGM 1234","a different note"

@@ -52,9 +52,9 @@ TEST_PRISM_TRIAL = {
         PROTOCOL_ID_FIELD_NAME: "test_prism_trial_id",
         "participants": [
             {
-                "cimac_participant_id": "CM-TEST-PAR1",
-                "participant_id": "TEST-PAR1-03",
-                "cohort_name": "Arm_A",
+                "cimac_participant_id": "CTTTPP1",
+                "participant_id": "TTTPP103",
+                "cohort_name": "Arm_Z",
                 "samples": [
                     {
                         "aliquots": [
@@ -68,7 +68,7 @@ TEST_PRISM_TRIAL = {
                                 "aliquot_status": "Other"
                             },
                         ],
-                        "cimac_id": "CM-TEST-PAR1-11",
+                        "cimac_id": "CTTTPP111.00",
                         "parent_sample_id": "test_sample_1",
                         "collection_event_name": "Baseline",
                         "sample_location": "---",
@@ -91,7 +91,7 @@ TEST_PRISM_TRIAL = {
                                 "aliquot_status": "Other"
                             }
                         ],
-                        "cimac_id": "CM-TEST-PAR1-21",
+                        "cimac_id": "CTTTPP121.00",
                         "parent_sample_id": "test_sample_2",
                         "collection_event_name": "Baseline",
                         "sample_location": "---",
@@ -99,8 +99,8 @@ TEST_PRISM_TRIAL = {
                         "type_of_primary_container": "Other",
                     }
                 ],
-                "cimac_participant_id": "CM-TEST-PAR2",
-                "participant_id": "TEST-PAR2-03",
+                "cimac_participant_id": "CTTTPP2",
+                "participant_id": "TTTPP203",
                 "cohort_name": "Arm_Z"
             }
         ],
@@ -122,7 +122,7 @@ TEST_PRISM_TRIAL = {
                             "input_ng": 101,
                             "library_yield_ng": 701,
                             "average_insert_size": 251,
-                            "cimac_id": "CM-TEST-PAR1-11",
+                            "cimac_id": "CTTTPP111.00",
                             "files": {
                                 "r1": {
                                     "upload_placeholder": "r1.1"
@@ -143,7 +143,7 @@ TEST_PRISM_TRIAL = {
                             "input_ng": 102,
                             "library_yield_ng": 702,
                             "average_insert_size": 252,
-                            "cimac_id": "CM-TEST-PAR1-21",
+                            "cimac_id": "CTTTPP121.00",
                             "files": {
                                 "r1": {
                                     "upload_placeholder": "r1.2"
@@ -165,18 +165,12 @@ TEST_PRISM_TRIAL = {
 
 # corresponding list of gs_urls.
 WES_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/r1.fastq': 
-    "r1.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/r2.fastq': 
-    "r2.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-11/wes/rgm.txt': 
-    "read_group_mapping_file.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/r1.fastq': 
-    "r1.2",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/r2.fastq': 
-    "r2.2",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CM-TEST-PAR1-21/wes/rgm.txt': 
-    "read_group_mapping_file.2"
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP111.00/wes/r1.fastq': "r1.1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP111.00/wes/r2.fastq': "r2.1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP111.00/wes/rgm.txt': "read_group_mapping_file.1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP121.00/wes/r1.fastq': "r1.2",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP121.00/wes/r2.fastq': "r2.2",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP121.00/wes/rgm.txt': "read_group_mapping_file.2"
 }
 
 
@@ -203,7 +197,7 @@ def test_merge_core():
 
     # create the sample.
     sample = {
-        "cimac_id": "CM-TRIA-PA12-34",
+        "cimac_id": "CTTTPPP12.34",
         "parent_sample_id": "blank",
         "aliquots": [aliquot],
         "collection_event_name": "Baseline",
@@ -214,7 +208,7 @@ def test_merge_core():
 
     # create the participant
     participant = {
-        "cimac_participant_id": "CM-TEST-PART",
+        "cimac_participant_id": "CTTTPPP",
         "participant_id": "blank",
         "samples": [sample],
         "cohort_name": "Arm_Z"
@@ -282,10 +276,10 @@ MINIMAL_TEST_TRIAL = {
                     "type_of_sample": "Other",
                     "type_of_primary_container": "Other",
                     "parent_sample_id": "test_min_Sample_1",
-                    "cimac_id": "CM-TEST-MIN1-01"
+                    "cimac_id": "CTTTMIN01.00"
                 }
             ],
-            "cimac_participant_id": "CM-TEST-MIN1",
+            "cimac_participant_id": "CTTTMIN",
             "participant_id": "test_min_Patient_1",
             "cohort_name": "Arm_Z"
         }
@@ -430,7 +424,9 @@ def test_filepath_gen(xlsx, template):
         # 1 trial id
         assert 1 == len(set([x.gs_key.split("/")[0] for x in file_maps]))
         # 2 samples
-        assert ['CM-TEST-PAR1-11', 'CM-TEST-PAR1-21'] == list(sorted(set([x.gs_key.split("/")[1] for x in file_maps])))
+
+        assert ['CTTTPP111.00', 'CTTTPP121.00'] == list(sorted(set([x.gs_key.split("/")[1] for x in file_maps])))
+
 
     elif template.type == 'olink':
 
@@ -528,13 +524,13 @@ def test_prismify_plasma(xlsx, template):
     assert file_maps == []
     assert 2 == len(md_patch["participants"])
     assert 3 == len(md_patch["participants"][0]["samples"])
-    assert md_patch["participants"][0]["samples"][0]["cimac_id"][:-3] == \
-        md_patch["participants"][0]["cimac_participant_id"]
+    assert md_patch["participants"][0]["samples"][0]["cimac_id"].startswith(
+        md_patch["participants"][0]["cimac_participant_id"])
 
     assert md_patch["participants"][0]["gender"]        # filled from 1 tab
     assert md_patch["participants"][0]["cohort_name"]   # filled from another
 
-    assert md_patch["participants"][0]["samples"][0]["processed_sample_id"] # filled from 1 tab
+    assert md_patch["participants"][0]["samples"][0]["processed_sample_id"]  # filled from 1 tab
     assert md_patch["participants"][0]["samples"][0]["topography_code"]     # filled from the second tab
     assert md_patch["participants"][0]["samples"][0]["site_description"]    # filled from the second tab
 
@@ -563,7 +559,7 @@ def test_prismify_wes_only(xlsx, template):
     validator.validate(merged)
 
     merged_wo_needed_participants = copy.deepcopy(merged)
-    merged_wo_needed_participants['participants'][0]['samples'][0]['cimac_id'] = "CM-TEST-NAAA-DA"
+    merged_wo_needed_participants['participants'][0]['samples'][0]['cimac_id'] = "CTTTNAADA.00"
 
     # assert in_doc_ref constraints work
     with pytest.raises(InDocRefNotFoundError):
@@ -691,9 +687,9 @@ def test_merge_ct_meta():
     # now change the participant ids
     # this should cause the merge to have two
     # participants.
-    patch['participants'][0]['cimac_participant_id'] = 'CM-TEST-DIF1'
+    patch['participants'][0]['cimac_participant_id'] = 'CTTTDD1'
     for i, sample in enumerate(patch['participants'][0]['samples']):
-        sample['cimac_id'] = f'CM-TEST-DIF1-D{i}'
+        sample['cimac_id'] = f'CTTTDD1S{i}.00'
 
     ct_merge, errs = merge_clinical_trial_metadata(patch, target)
     assert not errs
@@ -703,8 +699,8 @@ def test_merge_ct_meta():
     patch[PROTOCOL_ID_FIELD_NAME] = target[PROTOCOL_ID_FIELD_NAME] 
     patch['participants'][0]['cimac_participant_id'] = \
         target['participants'][0]['cimac_participant_id']
-    patch['participants'][0]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N1'
-    patch['participants'][1]['samples'][0]['cimac_id'] = 'CM-TEST-PAR1-N2'
+    patch['participants'][0]['samples'][0]['cimac_id'] = 'CTTTPP1N1.00'
+    patch['participants'][1]['samples'][0]['cimac_id'] = 'CTTTPP1N2.00'
  
     ct_merge, errs = merge_clinical_trial_metadata(patch, target)
     assert not errs
@@ -714,7 +710,6 @@ def test_merge_ct_meta():
 
 @pytest.mark.parametrize('xlsx, template', prismify_test_set())
 def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
-
 
     # TODO: implement other assays
     if template.type not in SUPPORTED_TEMPLATES:
@@ -729,9 +724,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     if template.type in SUPPORTED_MANIFESTS:
         assert len(prism_patch['shipments']) == 1
-        
-        assert prism_patch['participants'][0]['samples'][0]["cimac_id"].split("-")[:3] == \
-            prism_patch['participants'][0]['cimac_participant_id'].split("-")
+
+        assert prism_patch['participants'][0]['samples'][0]["cimac_id"][:7].startswith(
+                prism_patch['participants'][0]['cimac_participant_id'])
 
         if template.type == 'pbmc':
             assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_pbmc"
@@ -960,15 +955,15 @@ def test_prism_joining_tabs(monkeypatch):
     cell = namedtuple("cell", ["value"])
     wb["participants"].iter_rows.return_value = [
         map(cell, ["#h", "PA id", "PA prop"]),
-        map(cell, ["#d", "CM-PA0",  "0"]),
-        map(cell, ["#d", "CM-PA1",  "1"]),
+        map(cell, ["#d", "CPP0",  "0"]),
+        map(cell, ["#d", "CPP1",  "1"]),
     ]
     wb["samples"].iter_rows.return_value = [
         map(cell, ["#h", "SA_id",   "SA_prop"]),
-        map(cell, ["#d", "CM-PA1-SA0",  "100"]),
-        map(cell, ["#d", "CM-PA1-SA1",  "101"]),
-        map(cell, ["#d", "CM-PA0-SA0",  "000"]),
-        map(cell, ["#d", "CM-PA0-SA1",  "001"]),
+        map(cell, ["#d", "CPP1S0.00",  "100"]),
+        map(cell, ["#d", "CPP1S1.00",  "101"]),
+        map(cell, ["#d", "CPP0S0.00",  "000"]),
+        map(cell, ["#d", "CPP0S1.00",  "001"]),
     ]
 
     template = Template({
@@ -977,9 +972,9 @@ def test_prism_joining_tabs(monkeypatch):
         "properties": {
             "worksheets": {
                 "participants": {
-                    "prism_preamble_object_schema" : "clinical_trial.json",
-                    "prism_preamble_object_pointer" : "#",
-                    "prism_data_object_pointer" : "/participants/0/samples/0",
+                    "prism_preamble_object_schema": "clinical_trial.json",
+                    "prism_preamble_object_pointer": "#",
+                    "prism_data_object_pointer": "/participants/0/samples/0",
                     "preamble_rows": {
                     },
                     "data_columns": {
@@ -996,9 +991,9 @@ def test_prism_joining_tabs(monkeypatch):
                     }
                 },
                 "samples": {
-                    "prism_preamble_object_schema" : "clinical_trial.json",
-                    "prism_preamble_object_pointer" : "#",
-                    "prism_data_object_pointer" : "/participants/0/samples/0",
+                    "prism_preamble_object_schema": "clinical_trial.json",
+                    "prism_preamble_object_pointer": "#",
+                    "prism_data_object_pointer": "/participants/0/samples/0",
                     "preamble_rows": {
                     },
                     "data_columns": {
@@ -1008,7 +1003,7 @@ def test_prism_joining_tabs(monkeypatch):
                                 "type_ref": "sample.json#properties/cimac_id",
                                 "process_as": [{
                                   "merge_pointer": "2/cimac_participant_id",
-                                  "parse_through": "lambda x: '-'.join(x.split('-')[:2])"
+                                  "parse_through": "lambda x: x[:4]"
                                 }]
                             },
                             "SA_prop": {
@@ -1034,16 +1029,19 @@ def test_prism_joining_tabs(monkeypatch):
 
     assert 2 == len(patch["participants"])
     
-    assert "CM-PA0" == patch["participants"][0]["cimac_participant_id"]
+    assert "CPP0" == patch["participants"][0]["cimac_participant_id"]
     assert 2 == len(patch["participants"][0]["samples"])
     
-    assert "CM-PA0-SA0"  == patch["participants"][0]["samples"][0]["cimac_id"]
+    assert "CPP0S0.00"  == patch["participants"][0]["samples"][0]["cimac_id"]
     assert "000"  == patch["participants"][0]["samples"][0]["parent_sample_id"]
 
-    assert "CM-PA0-SA1"  == patch["participants"][0]["samples"][1]["cimac_id"]
+    assert "CPP0S1.00"  == patch["participants"][0]["samples"][1]["cimac_id"]
     assert "001"  == patch["participants"][0]["samples"][1]["parent_sample_id"]
     
-    assert "CM-PA1" == patch["participants"][1]["cimac_participant_id"]
+    assert "CPP1S1.00"  == patch["participants"][1]["samples"][1]["cimac_id"]
+    assert "101"  == patch["participants"][1]["samples"][1]["parent_sample_id"]
+    
+    assert "CPP1" == patch["participants"][1]["cimac_participant_id"]
     assert 2 == len(patch["participants"][1]["samples"])
 
     assert 0 == len(file_maps)
@@ -1074,8 +1072,10 @@ def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
     study = ct['assays']['olink']['study']
     files = ct['assays']['olink']['records'][0]['files']
 
-    assert set(files['assay_npx']['samples']) == {'CM-TEST-PA01-A1', 'CM-TEST-PA02-A1', 'CM-TEST-PA03-A1', 'CM-TEST-PA04-A1'}
-    assert set(study['study_npx']['samples']) == {'CM-TEST-PA01-A1', 'CM-TEST-PA02-A1', 'CM-TEST-PA03-A1', 'CM-TEST-PA04-A1', 'CM-TEST-PA05-A1', 'CM-TEST-PA06-A1', 'CM-TEST-PA07-A1', 'CM-TEST-PA08-A1', 'CM-TEST-PA09-A1'}
+    assert set(files['assay_npx']['samples']) == {'CTTTP01A1.00', 'CTTTP02A1.00', 'CTTTP03A1.00', 'CTTTP04A1.00'}
+    assert set(study['study_npx']['samples']) == {'CTTTP01A1.00', 'CTTTP02A1.00', 'CTTTP03A1.00', 'CTTTP04A1.00',
+                                                  'CTTTP05A1.00', 'CTTTP06A1.00', 'CTTTP07A1.00', 'CTTTP08A1.00',
+                                                  'CTTTP09A1.00'}
 
 
 def test_parse_npx_invalid(npx_file_path):
@@ -1090,7 +1090,7 @@ def test_parse_npx_single(npx_file_path):
     samples = parse_npx(f)
 
     assert samples["number_of_samples"] == 4
-    assert set(samples["samples"]) == {'CM-TEST-PA01-A1', 'CM-TEST-PA02-A1', 'CM-TEST-PA03-A1', 'CM-TEST-PA04-A1'}
+    assert set(samples["samples"]) == {'CTTTP01A1.00', 'CTTTP02A1.00', 'CTTTP03A1.00', 'CTTTP04A1.00'}
 
 
 def test_parse_npx_merged(npx_combined_file_path):
@@ -1099,7 +1099,12 @@ def test_parse_npx_merged(npx_combined_file_path):
     samples = parse_npx(f)
 
     assert samples["number_of_samples"] == 9
-    assert set(samples["samples"]) == {'CM-TEST-PA01-A1', 'CM-TEST-PA02-A1', 'CM-TEST-PA03-A1', 'CM-TEST-PA04-A1', 'CM-TEST-PA05-A1', 'CM-TEST-PA06-A1', 'CM-TEST-PA07-A1', 'CM-TEST-PA08-A1', 'CM-TEST-PA09-A1'}
+
+
+    assert set(samples["samples"]) == {'CTTTP01A1.00', 'CTTTP02A1.00', 'CTTTP03A1.00', 'CTTTP04A1.00',
+                                       'CTTTP05A1.00', 'CTTTP06A1.00', 'CTTTP07A1.00', 'CTTTP08A1.00',
+                                       'CTTTP09A1.00'}
+
 
 def test_throw_on_collision():
     """Test the custom ThrowOnCollision merge strategy"""
@@ -1138,5 +1143,6 @@ def test_throw_on_collision():
     # Some identical and some different values - no error, proper merge
     base['l'].append({'cimac_id': 'c2', 'a': 2})
     head = {'l': [base['l'][0], {'cimac_id': 'c3', 'a': 3}]}
+
     assert merger.merge(base, head) == {'l': [*base['l'], head['l'][-1]]}
-    
+

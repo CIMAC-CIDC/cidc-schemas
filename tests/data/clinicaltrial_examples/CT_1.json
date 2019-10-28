@@ -2,12 +2,12 @@
     "protocol_identifier": "10021",
     "participants": [
         {
-            "cimac_participant_id": "CM-TEST-PAR1",
+            "cimac_participant_id": "CTTTPP1",
             "participant_id": "trial.PA.1",
             "cohort_name": "Arm_Z",
             "samples": [
                 {
-                    "cimac_id": "CM-TEST-PAR1-S1",
+                    "cimac_id": "CTTTPP1S1.00",
                     "parent_sample_id": "SA.1.1",
                     "collection_event_name": "Baseline",
                     "sample_location": "---",
@@ -26,7 +26,7 @@
                     ] 
                 }, 
                 {
-                    "cimac_id": "CM-TEST-PAR1-S2",
+                    "cimac_id": "CTTTPP1S2.00",
                     "parent_sample_id": "SA.1.2",
                     "collection_event_name": "Baseline",
                     "sample_location": "---",
@@ -47,12 +47,12 @@
             ]
         },
         {
-            "cimac_participant_id": "CM-TEST-PAR2",
+            "cimac_participant_id": "CTTTPP2",
             "participant_id": "trial.PA.2",
             "cohort_name": "Arm_Z",
             "samples": [
                 {
-                    "cimac_id": "CM-TEST-PAR2-S1",
+                    "cimac_id": "CTTTPP2S1.00",
                     "parent_sample_id": "SA.2.1",
                     "collection_event_name": "Baseline",
                     "sample_location": "---",
@@ -71,7 +71,7 @@
                     ]
                 },
                 {
-                    "cimac_id": "CM-TEST-PAR2-S2",
+                    "cimac_id": "CTTTPP2S2.00",
                     "parent_sample_id": "SA.2.2",
                     "collection_event_name": "Baseline",
                     "sample_location": "---",
@@ -113,7 +113,7 @@
                             "artifact_category" :   "Assay Artifact from CIMAC",
                             "data_format" :           "NPX",
                             "number_of_samples":   3,
-                            "samples": ["CM-TEST-PAR2-S2", "CM-TEST-PAR1-S1", "CM-TEST-PAR2-S1"]
+                            "samples": ["CTTTPP2S2.00", "CTTTPP1S1.00", "CTTTPP2S1.00"]
                         },
                         "assay_raw_ct": {
                             "file_name" :           "...",
@@ -141,7 +141,7 @@
                             "artifact_category" :   "Assay Artifact from CIMAC",
                             "data_format" :           "NPX",
                             "number_of_samples":   3,
-                            "samples": ["CM-TEST-PAR2-S2", "CM-TEST-PAR1-S1", "CM-TEST-PAR2-S1"]
+                            "samples": ["CTTTPP2S2.00", "CTTTPP1S1.00", "CTTTPP2S1.00"]
                         },
                         "assay_raw_ct": {
                             "file_name" :           "...",
@@ -168,7 +168,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_id":          "CM-TEST-PAR1-S1",
+                        "cimac_id":          "CTTTPP1S1.00",
                         "files": {
                             "r1":{
                                 "file_name" :           "...",
@@ -203,7 +203,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_id":          "CM-TEST-PAR1-S2",
+                        "cimac_id":          "CTTTPP1S2.00",
                         "files": {
                             "r1":{
                                 "file_name" :           "...",
@@ -247,7 +247,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_id":          "CM-TEST-PAR2-S1",
+                        "cimac_id":          "CTTTPP2S1.00",
                         "files": {
                             "r1":{
                                 "file_name" :           "...",
@@ -282,7 +282,7 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
-                        "cimac_id":          "CM-TEST-PAR2-S2",
+                        "cimac_id":          "CTTTPP2S2.00",
                         "files": {
                             "r1":{
                                 "file_name" :           "...",

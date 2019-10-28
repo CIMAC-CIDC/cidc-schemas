@@ -103,7 +103,7 @@ def test_trial_core():
 
     # create some samples.
     sample1 = {
-        "cimac_id": "CM-TRIA-PART-12",
+        "cimac_id": "CTTTPPP12.00",
         "parent_sample_id": "ssida",
         "aliquots": [aliquot1],
         "collection_event_name": "Baseline",
@@ -115,7 +115,7 @@ def test_trial_core():
     }
     sm_validator.validate(sample1)
     sample2 = {
-        "cimac_id": "CM-TRIA-PART-12",
+        "cimac_id": "CTTTPPP12.00",
         "parent_sample_id": "ssidb",
         "aliquots": [aliquot2],
         "collection_event_name": "Baseline",
@@ -129,7 +129,7 @@ def test_trial_core():
 
     # create a bad participant, then make it good.
     participant = {
-        "cimac_participant_id": "CM-TRIA-PART",
+        "cimac_participant_id": "CTTTPPP",
         "participant_id": "tpid_a",
         "cohort_name": "Arm_Z",
     }

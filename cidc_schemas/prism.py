@@ -878,8 +878,10 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
     return merged, list(validator.iter_errors(merged))
 
 
-
-cimac_id_regex = re.compile("^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$")
+# Build a regex from the CIMAC ID pattern in the schema
+cimac_id_regex = re.compile(
+    load_and_validate_schema("sample.json")['properties']['cimac_id']['pattern']
+)
 
 
 def parse_npx(xlsx: BinaryIO) -> dict:

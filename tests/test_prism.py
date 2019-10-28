@@ -22,7 +22,7 @@ from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
     SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES, \
     PROTOCOL_ID_FIELD_NAME, parse_npx, merge_artifact_extra_metadata, \
-     PRISM_STRATEGIES, ThrowOnCollision, MergeCollisionException
+    PRISM_STRATEGIES, ThrowOnCollision, MergeCollisionException
 
 from cidc_schemas.json_validation import load_and_validate_schema, InDocRefNotFoundError
 from cidc_schemas.template import Template
@@ -1132,7 +1132,7 @@ def test_throw_on_collision():
 
     # Different values, collision - error
     head = {'l': [{'cimac_id': 'c1', 'a': 2}]}
-    with pytest.raises(MergeCollisionException):
+    with pytest.raises(MergeCollisionException, match="1 (current) != 2 (incoming)"):
         merger.merge(base, head)
 
     # Some identical and some different values - no error, proper merge

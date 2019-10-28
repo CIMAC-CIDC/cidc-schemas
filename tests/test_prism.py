@@ -21,7 +21,8 @@ from cidc_schemas import prism
 from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
     SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES, \
-    PROTOCOL_ID_FIELD_NAME, parse_npx, merge_artifact_extra_metadata
+    PROTOCOL_ID_FIELD_NAME, parse_npx, merge_artifact_extra_metadata, \
+    PRISM_STRATEGIES, ThrowOnCollision, MergeCollisionException
 
 from cidc_schemas.json_validation import load_and_validate_schema, InDocRefNotFoundError
 from cidc_schemas.template import Template
@@ -51,8 +52,9 @@ TEST_PRISM_TRIAL = {
         PROTOCOL_ID_FIELD_NAME: "test_prism_trial_id",
         "participants": [
             {
+
                 "cimac_participant_id": "CTTTPP1",
-                "participant_id": "test_trial_patient_1",
+                "participant_id": "TTTPP103",
                 "cohort_name": "Arm_Z",
                 "samples": [
                     {
@@ -99,7 +101,7 @@ TEST_PRISM_TRIAL = {
                     }
                 ],
                 "cimac_participant_id": "CTTTPP2",
-                "participant_id": "test_trial_patient_2",
+                "participant_id": "TTTPP203",
                 "cohort_name": "Arm_Z"
             }
         ],
@@ -676,15 +678,12 @@ def test_merge_ct_meta():
     assert ct_merge['trial_name'] == 'name ABC'
     assert ct_merge['nci_id'] == 'xyz1234'
 
-    # assert the patch over-writes the original value
-    # when value is present in both objects
-    # TODO add 'discard' mergeStrategy from PROTOCOL_ID_FIELD_NAME 
+    # updates aren't allowed
     patch['trial_name'] = 'name ABC'
     target['trial_name'] = 'CBA eman'
-
-    ct_merge, errs = merge_clinical_trial_metadata(patch, target)
-    assert not errs
-    assert ct_merge['trial_name'] == 'name ABC'
+    with pytest.raises(MergeCollisionException, match="conflicting values for trial_name"):
+        merge_clinical_trial_metadata(patch, target)
+    target['trial_name'] = patch['trial_name']
 
     # now change the participant ids
     # this should cause the merge to have two
@@ -1101,6 +1100,46 @@ def test_parse_npx_merged(npx_combined_file_path):
     samples = parse_npx(f)
 
     assert samples["number_of_samples"] == 9
+
     assert set(samples["samples"]) == {'CTTTP01A1.00', 'CTTTP02A1.00', 'CTTTP03A1.00', 'CTTTP04A1.00',
                                        'CTTTP05A1.00', 'CTTTP06A1.00', 'CTTTP07A1.00', 'CTTTP08A1.00',
                                        'CTTTP09A1.00'}
+
+def test_throw_on_collision():
+    """Test the custom ThrowOnCollision merge strategy"""
+    schema = {
+        "type": "object",
+        "properties": {
+            "l": {
+                "type": "array",
+                "items": {
+                    "cimac_id": {
+                        "type": "string",
+                    }, 
+                    "a": {
+                        "type": "integer"
+                    }
+                },
+                "mergeStrategy": "arrayMergeById",
+                "mergeOptions": {
+                    "idRef": "/cimac_id"
+                }
+            }
+        }
+    }
+
+    merger = Merger(schema, strategies=PRISM_STRATEGIES)
+
+    # Identical values, no collision - no error
+    base = {'l': [{'cimac_id': 'c1', 'a': 1}]}
+    assert merger.merge(base, base)
+
+    # Different values, collision - error
+    head = {'l': [{'cimac_id': 'c1', 'a': 2}]}
+    with pytest.raises(MergeCollisionException, match="1 \(current\) != 2 \(incoming\)"):
+        merger.merge(base, head)
+
+    # Some identical and some different values - no error, proper merge
+    base['l'].append({'cimac_id': 'c2', 'a': 2})
+    head = {'l': [base['l'][0], {'cimac_id': 'c3', 'a': 3}]}
+    assert merger.merge(base, head) == {'l': [*base['l'], head['l'][-1]]}

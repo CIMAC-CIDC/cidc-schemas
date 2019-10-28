@@ -7,7 +7,7 @@ from typing import Union, BinaryIO, Tuple, List
 import openpyxl
 import jsonschema
 import datetime
-from jsonmerge import merge, Merger, exceptions as jsonmerge_exceptions
+from jsonmerge import merge, Merger, exceptions as jsonmerge_exceptions, strategies
 from collections import namedtuple
 from jsonpointer import JsonPointer, JsonPointerException, resolve_pointer, EndOfList
 
@@ -808,6 +808,38 @@ def _update_artifact(ct: dict, artifact_patch: dict, artifact_uuid: str) -> (dic
     return ct, artifact, additional_artifact_metadata
 
 
+class MergeCollisionException(ValueError):
+    pass
+
+
+class ThrowOnCollision(strategies.Strategy):
+    """
+    Similar to the jsonmerge's built in 'discard' strategy,
+    but throws an error if the value already exists. This is
+    used to prevent updates in `merge_clinical_trial_metadata`.
+    """
+
+    def merge(self, walk, base, head, schema, meta, **kwargs):
+        if base.is_undef():
+            return head
+        if base.val != head.val:
+            prop = base.ref.rsplit("/",1)[-1]
+            raise MergeCollisionException(
+                f"Found conflicting values for {prop}: {base.val} (current) != {head.val} (incoming). "
+                "Updates are not currently supported."
+            )
+        return base
+
+    def get_schema(self, walk, schema, **kwargs):
+        return schema
+
+
+PRISM_STRATEGIES = {
+    # This overwrites the default jsonmerge merge strategy for literal values.
+    'overwrite': ThrowOnCollision()
+}
+
+
 def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]):
     """
     merges two clinical trial metadata objects together
@@ -839,7 +871,7 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
         raise InvalidMergeTargetException("Unable to merge trials with different "+ PROTOCOL_ID_FIELD_NAME)
 
     # merge the two documents
-    merger = Merger(schema)
+    merger = Merger(schema, strategies=PRISM_STRATEGIES)
     merged = merger.merge(target, patch)
 
     return merged, list(validator.iter_errors(merged))

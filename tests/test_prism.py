@@ -523,8 +523,8 @@ def test_prismify_plasma(xlsx, template):
     assert file_maps == []
     assert 2 == len(md_patch["participants"])
     assert 3 == len(md_patch["participants"][0]["samples"])
-    assert md_patch["participants"][0]["samples"][0]["cimac_id"][:-3] == \
-        md_patch["participants"][0]["cimac_participant_id"]
+    assert md_patch["participants"][0]["samples"][0]["cimac_id"].startswith(
+        md_patch["participants"][0]["cimac_participant_id"])
 
     assert md_patch["participants"][0]["gender"]        # filled from 1 tab
     assert md_patch["participants"][0]["cohort_name"]   # filled from another
@@ -727,15 +727,20 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     if template.type in SUPPORTED_MANIFESTS:
         assert len(prism_patch['shipments']) == 1
         
+<<<<<<< HEAD
         #assert prism_patch['participants'][0]['samples'][0]["cimac_id"].split("-")[:3] == \
          #   prism_patch['participants'][0]['cimac_participant_id'].split("-")
+=======
+        assert prism_patch['participants'][0]['samples'][0]["cimac_id"][:7].startswith(
+                prism_patch['participants'][0]['cimac_participant_id'])
+>>>>>>> 58f892fe680a58b921e6709735b8d753034e4552
 
         if template.type == 'pbmc':
             assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_pbmc"
 
-            assert len(prism_patch['participants']) == 6
-            assert len(prism_patch['participants'][0]['samples']) == 1
-            assert len(prism_patch['participants'][1]['samples']) == 1
+            assert len(prism_patch['participants']) == 2
+            assert len(prism_patch['participants'][0]['samples']) == 3
+            assert len(prism_patch['participants'][1]['samples']) == 3
 
         elif template.type == 'plasma':
             assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_plasma"
@@ -1005,7 +1010,7 @@ def test_prism_joining_tabs(monkeypatch):
                                 "type_ref": "sample.json#properties/cimac_id",
                                 "process_as": [{
                                   "merge_pointer": "2/cimac_participant_id",
-                                  "parse_through": "lambda x: x.split('.')[0][:4]"
+                                  "parse_through": "lambda x: x[:4]"
                                 }]
                             },
                             "SA_prop": {

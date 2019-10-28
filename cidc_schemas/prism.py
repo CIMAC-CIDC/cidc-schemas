@@ -823,7 +823,7 @@ class ThrowOnCollision(strategies.Strategy):
         if base.is_undef():
             return head
         if base.val != head.val:
-            prop = base.ref.split("/")[-1]
+            prop = base.ref.rsplit("/",1)[-1]
             raise MergeCollisionException(
                 f"Found conflicting values for {prop}: {base.val} (current) != {head.val} (incoming). "
                 "Updates are not currently supported."

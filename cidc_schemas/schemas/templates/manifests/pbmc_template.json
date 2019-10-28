@@ -91,7 +91,7 @@
                             "process_as": [
                                 {
                                     "merge_pointer": "2/cimac_participant_id",
-                                    "parse_through": "lambda x: '-'.join(x.split('-')[:3])"
+                                    "parse_through": "lambda x: '-'.join(x[0:7])"
                                 }
                             ]
                         },
@@ -187,7 +187,7 @@
                             "process_as": [
                                 {
                                     "merge_pointer": "2/cimac_participant_id",
-                                    "parse_through": "lambda x: '-'.join(x.split('-')[:3])"
+                                    "parse_through": "lambda x: '-'.join(x[0:7])"
                                 }
                             ]
                         }

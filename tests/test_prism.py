@@ -1132,7 +1132,7 @@ def test_throw_on_collision():
 
     # Different values, collision - error
     head = {'l': [{'cimac_id': 'c1', 'a': 2}]}
-    with pytest.raises(MergeCollisionException, match="1 (current) != 2 (incoming)"):
+    with pytest.raises(MergeCollisionException, match="1 \(current\) != 2 \(incoming\)"):
         merger.merge(base, head)
 
     # Some identical and some different values - no error, proper merge

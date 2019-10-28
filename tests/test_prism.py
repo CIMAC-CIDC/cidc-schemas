@@ -52,7 +52,6 @@ TEST_PRISM_TRIAL = {
         PROTOCOL_ID_FIELD_NAME: "test_prism_trial_id",
         "participants": [
             {
-
                 "cimac_participant_id": "CTTTPP1",
                 "participant_id": "TTTPP103",
                 "cohort_name": "Arm_Z",
@@ -1101,9 +1100,11 @@ def test_parse_npx_merged(npx_combined_file_path):
 
     assert samples["number_of_samples"] == 9
 
+
     assert set(samples["samples"]) == {'CTTTP01A1.00', 'CTTTP02A1.00', 'CTTTP03A1.00', 'CTTTP04A1.00',
                                        'CTTTP05A1.00', 'CTTTP06A1.00', 'CTTTP07A1.00', 'CTTTP08A1.00',
                                        'CTTTP09A1.00'}
+
 
 def test_throw_on_collision():
     """Test the custom ThrowOnCollision merge strategy"""
@@ -1142,4 +1143,6 @@ def test_throw_on_collision():
     # Some identical and some different values - no error, proper merge
     base['l'].append({'cimac_id': 'c2', 'a': 2})
     head = {'l': [base['l'][0], {'cimac_id': 'c3', 'a': 3}]}
+
     assert merger.merge(base, head) == {'l': [*base['l'], head['l'][-1]]}
+

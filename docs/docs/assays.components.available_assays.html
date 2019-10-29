@@ -1303,7 +1303,7 @@
                                     "title": "Antibody"
                                 }
                             ],
-                            "description": "Data specific to antibody preparation for immunohistochemical analysis.",
+                            "description": "Data specific to antibody preparation for Immunohistochemical analysis.",
                             "id": "ihc_antibody",
                             "properties": {
                                 "dilution": {
@@ -1315,7 +1315,7 @@
                                     "type": "string"
                                 },
                                 "incubation_time": {
-                                    "description": "Duration of time for antibody incubation.",
+                                    "description": "Time duration of antibody incubation.",
                                     "format": "time",
                                     "type": "string"
                                 }
@@ -1810,7 +1810,7 @@
                                         "ihc_image",
                                         "he_image"
                                     ],
-                                    "title": "Immunohistichemical Analysis Input Files",
+                                    "title": "Immunohistochemical Analysis Input Files",
                                     "type": "object"
                                 },
                                 "percent_inflammation_marker_positive": {
@@ -5413,7 +5413,7 @@
             "properties": {
                 "assay_panel_lot": {
                     "description": "Lot number of the assay panel.",
-                    "type": "number"
+                    "type": "string"
                 },
                 "panel": {
                     "description": "Panel used for the assay.",
@@ -5785,6 +5785,7 @@
                     "$id": "Olink_assay_record",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "description": "A single data record from Olink assay.",
+                    "mergeStrategy": "overwriteAny",
                     "properties": {
                         "npx_manager_version": {
                             "description": "Version of NPX manager used for the analysis.",

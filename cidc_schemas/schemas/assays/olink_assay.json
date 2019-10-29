@@ -22,7 +22,7 @@
     },
     "assay_panel_lot": {
       "description": "Lot number of the assay panel.",
-      "type": "number"
+      "type": "string"
     },
     "study": {
       "$ref": "assays/components/olink/olink_combined.json"

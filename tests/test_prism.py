@@ -22,7 +22,8 @@ from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
     SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES, \
     PROTOCOL_ID_FIELD_NAME, parse_npx, merge_artifact_extra_metadata, \
-    PRISM_STRATEGIES, ThrowOnCollision, MergeCollisionException
+    PRISM_MERGE_STRATEGIES, PRISM_PRISMIFY_STRATEGIES, ThrowOnCollision, \
+    MergeCollisionException
 
 from cidc_schemas.json_validation import load_and_validate_schema, InDocRefNotFoundError
 from cidc_schemas.template import Template
@@ -230,7 +231,7 @@ def test_merge_core():
     ct2['participants'][0]['cimac_participant_id'] = "PABCD"
 
     # merge them
-    merger = Merger(schema)
+    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
     ct3 = merger.merge(ct1, ct2)
 
     # assert we have two participants and their ids are different.
@@ -309,7 +310,7 @@ def test_samples_merge():
     schema = validator.schema
 
     # merge them
-    merger = Merger(schema)
+    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
     a3 = merger.merge(a1, a2)
     assert len(a3['participants']) == 1
     assert len(a3['participants'][0]['samples']) == 2
@@ -353,7 +354,7 @@ def test_prism(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema)
+    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, ct)
 
     # assert works
@@ -484,7 +485,7 @@ def test_prismify_cytof_only(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema)
+    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, ct)
 
     # assert works
@@ -503,7 +504,7 @@ def test_prismify_ihc(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema)
+    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, ct)
 
     # assert works
@@ -552,7 +553,7 @@ def test_prismify_wes_only(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema)
+    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, md_patch)
 
     # assert works
@@ -583,7 +584,7 @@ def test_prismify_olink_only(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema)
+    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(MINIMAL_TEST_TRIAL, ct)
 
     # assert works
@@ -938,7 +939,7 @@ def test_merge_stuff():
     }
 
     # this merge will clobber slices because merging across allOf doesn't work
-    merger = Merger(schema)
+    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
     xyz = merger.merge(obj1, obj2)
     assert len(xyz['slices']) == 1
 
@@ -1129,7 +1130,7 @@ def test_throw_on_collision():
         }
     }
 
-    merger = Merger(schema, strategies=PRISM_STRATEGIES)
+    merger = Merger(schema, strategies=PRISM_MERGE_STRATEGIES)
 
     # Identical values, no collision - no error
     base = {'l': [{'cimac_id': 'c1', 'a': 1}]}
@@ -1137,7 +1138,7 @@ def test_throw_on_collision():
 
     # Different values, collision - error
     head = {'l': [{'cimac_id': 'c1', 'a': 2}]}
-    with pytest.raises(MergeCollisionException, match="1 \(current\) != 2 \(incoming\)"):
+    with pytest.raises(MergeCollisionException, match=r"1 \(current\) != 2 \(incoming\)"):
         merger.merge(base, head)
 
     # Some identical and some different values - no error, proper merge
@@ -1146,3 +1147,24 @@ def test_throw_on_collision():
 
     assert merger.merge(base, head) == {'l': [*base['l'], head['l'][-1]]}
 
+def test_overwrite_any():
+    """Test that the alias for jsonmerge.strategies.Overwrite is set up properly"""
+    schema = {
+        "type": "object",
+        "properties": {
+            "a": {"type": "object", "mergeStrategy": "overwriteAny"},
+            "b": {"type": "number"}
+        }
+    }
+
+    merger = Merger(schema, strategies=PRISM_MERGE_STRATEGIES)
+
+    # Updates to "a" should be allowed
+    base = {"a": {"foo": "bar"}, "b": 1}
+    head = {"a": {"foo": "buzz"}, "b": 1}
+    assert merger.merge(base, head) == head
+
+    # Updates to "b" should not be allowed
+    head["b"] = 2
+    with pytest.raises(MergeCollisionException, match=r"1 \(current\) != 2 \(incoming\)"):
+        merger.merge(base, head)

@@ -1137,7 +1137,7 @@ def test_throw_on_collision():
 
     # Different values, collision - error
     head = {'l': [{'cimac_id': 'c1', 'a': 2}]}
-    with pytest.raises(MergeCollisionException, match="1 \(current\) != 2 \(incoming\)"):
+    with pytest.raises(MergeCollisionException, match=r"1 \(current\) != 2 \(incoming\)"):
         merger.merge(base, head)
 
     # Some identical and some different values - no error, proper merge
@@ -1146,3 +1146,24 @@ def test_throw_on_collision():
 
     assert merger.merge(base, head) == {'l': [*base['l'], head['l'][-1]]}
 
+def test_overwrite_any():
+    """Test that the alias for jsonmerge.strategies.Overwrite is set up properly"""
+    schema = {
+        "type": "object",
+        "properties": {
+            "a": {"type": "object", "mergeStrategy": "overwriteAny"},
+            "b": {"type": "number"}
+        }
+    }
+
+    merger = Merger(schema, strategies=PRISM_STRATEGIES)
+
+    # Updates to "a" should be allowed
+    base = {"a": {"foo": "bar"}, "b": 1}
+    head = {"a": {"foo": "buzz"}, "b": 1}
+    assert merger.merge(base, head) == head
+
+    # Updates to "b" should not be allowed
+    head["b"] = 2
+    with pytest.raises(MergeCollisionException, match=r"1 \(current\) != 2 \(incoming\)"):
+        merger.merge(base, head)

@@ -14,8 +14,6 @@
       "$ref": "artifacts/artifact_npx.json"
     }
   },
-  "required": [
-    "npx_manager_version",
-    "study_npx"
-  ]
+  "mergeStrategy": "overwriteAny",
+  "required": ["npx_manager_version", "study_npx"]
 }

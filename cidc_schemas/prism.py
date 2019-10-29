@@ -391,6 +391,10 @@ def _process_property(
 class ParsingException(ValueError):
     pass
 
+PRISM_PRISMIFY_STRATEGIES = {
+    'overwriteAny': strategies.Overwrite()
+}
+
 def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
         -> (dict, List[LocalFileUploadEntry], List[Union[Exception, str]]):
 
@@ -536,7 +540,7 @@ def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
         template_root_obj = root_ct_obj
 
     # and merger for it
-    root_ct_merger = Merger(root_ct_schema)
+    root_ct_merger = Merger(root_ct_schema, strategies=PRISM_PRISMIFY_STRATEGIES)
     # and where to collect all local file refs
     collected_files = []
 
@@ -558,7 +562,7 @@ def prismify(xlsx: XlTemplateReader, template: Template, verb: bool = False) \
             continue
 
         preamble_object_schema = load_and_validate_schema(templ_ws.get('prism_preamble_object_schema', root_ct_schema_name))
-        preamble_merger = Merger(preamble_object_schema)
+        preamble_merger = Merger(preamble_object_schema, strategies=PRISM_PRISMIFY_STRATEGIES)
         preamble_object_pointer = templ_ws.get('prism_preamble_object_pointer', '')
         data_object_pointer = templ_ws['prism_data_object_pointer']
 
@@ -835,7 +839,7 @@ class ThrowOnCollision(strategies.Strategy):
         return schema
 
 
-PRISM_STRATEGIES = {
+PRISM_MERGE_STRATEGIES = {
     # This overwrites the default jsonmerge merge strategy for literal values.
     'overwrite': ThrowOnCollision(),
     # Alias the builtin jsonmerge overwrite strategy
@@ -874,7 +878,7 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
         raise InvalidMergeTargetException("Unable to merge trials with different "+ PROTOCOL_ID_FIELD_NAME)
 
     # merge the two documents
-    merger = Merger(schema, strategies=PRISM_STRATEGIES)
+    merger = Merger(schema, strategies=PRISM_MERGE_STRATEGIES)
     merged = merger.merge(target, patch)
 
     return merged, list(validator.iter_errors(merged))

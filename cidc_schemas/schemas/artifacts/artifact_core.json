@@ -77,6 +77,10 @@
       ]
     }
   },
+  "mergeStrategy": "arrayMergeById",
+  "mergeOptions": {
+    "idRef": "upload_placeholder"
+  },
   "anyOf": [
     {
       "required": [

@@ -158,7 +158,7 @@
     <td>
         
             &lt; 
-                number 
+                string 
     
     
     
@@ -210,7 +210,7 @@
     "properties": {
         "assay_panel_lot": {
             "description": "Lot number of the assay panel.",
-            "type": "number"
+            "type": "string"
         },
         "panel": {
             "description": "Panel used for the assay.",
@@ -297,6 +297,7 @@
                                                     "MAF",
                                                     "BINARY",
                                                     "TEXT",
+                                                    "ZIP",
                                                     "[NOT SET]"
                                                 ],
                                                 "type": "string"
@@ -448,6 +449,7 @@
                                                     "MAF",
                                                     "BINARY",
                                                     "TEXT",
+                                                    "ZIP",
                                                     "[NOT SET]"
                                                 ],
                                                 "type": "string"
@@ -582,6 +584,7 @@
             "$id": "Olink_assay_record",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "description": "A single data record from Olink assay.",
+            "mergeStrategy": "overwriteAny",
             "properties": {
                 "npx_manager_version": {
                     "description": "Version of NPX manager used for the analysis.",
@@ -648,6 +651,7 @@
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
+                                        "ZIP",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"

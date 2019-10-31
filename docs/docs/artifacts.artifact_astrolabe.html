@@ -33,7 +33,7 @@
         </p>
         <h1>Astrolabe Artifact</h1>
         <p>
-            <b>Description:</b>  A compressed archive storing results from Astrolabe analysis
+            <b>Description:</b>  A compressed archive storing analysis and results from Astrolabe analysis.
         </p>
         
     </div>
@@ -115,11 +115,11 @@
             &gt;
             <ul>
                 
-                    <li>"Gated FCS"</li>
+                    <li>"FCS File"</li>
                 
                     <li>"Reports"</li>
                 
-                    <li>"R Files"</li>
+                    <li>"Analysis"</li>
                 
             </ul>
             
@@ -196,6 +196,7 @@
                         "MAF",
                         "BINARY",
                         "TEXT",
+                        "ZIP",
                         "[NOT SET]"
                     ],
                     "type": "string"
@@ -247,16 +248,16 @@
             "properties": {
                 "analysis_type": {
                     "enum": [
-                        "Gated FCS",
+                        "FCS File",
                         "Reports",
-                        "R Files"
+                        "Analysis"
                     ],
                     "type": "string"
                 }
             }
         }
     ],
-    "description": "A compressed archive storing results from Astrolabe analysis",
+    "description": "A compressed archive storing analysis and results from Astrolabe analysis.",
     "title": "Astrolabe Artifact",
     "type": "object"
 }</code></pre>

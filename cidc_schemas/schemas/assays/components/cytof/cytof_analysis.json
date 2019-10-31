@@ -22,6 +22,15 @@
         },
         "profiling": {
             "$ref": "artifacts/artifact_csv.json"
+        },
+        "cell_counts_assignment": {
+            "$ref": "artifacts/artifact_csv.json"
+        },
+        "cell_counts_compartment": {
+            "$ref": "artifacts/artifact_csv.json"
+        },
+        "cell_counts_profiling": {
+            "$ref": "artifacts/artifact_csv.json"
         }
     }
 }

@@ -248,6 +248,18 @@ def test_cytof():
     profiling['data_format'] = 'CSV'
     profiling["separator"] = ","
     profiling["header_row"] = 128
+    cell_count_assignment = ARTIFACT_OBJ.copy()
+    cell_count_assignment['data_format'] = 'CSV'
+    cell_count_assignment["separator"] = ","
+    cell_count_assignment["header_row"] = 128
+    cell_count_compartment = ARTIFACT_OBJ.copy()
+    cell_count_compartment['data_format'] = 'CSV'
+    cell_count_compartment["separator"] = ","
+    cell_count_compartment["header_row"] = 128
+    cell_count_profiling = ARTIFACT_OBJ.copy()
+    cell_count_profiling['data_format'] = 'CSV'
+    cell_count_profiling["separator"] = ","
+    profiling["header_row"] = 128
     report = ARTIFACT_OBJ.copy()
     report['data_format'] = 'ZIP'
     analysis = ARTIFACT_OBJ.copy()
@@ -264,7 +276,10 @@ def test_cytof():
                 "astrolabe_analysis": analysis,
                 "assignment": assignment,
                 "compartment": compartment,
-                "profiling": profiling
+                "profiling": profiling,
+                "cell_count_assignment": assignment,
+                "cell_count_compartment": compartment,
+                "cell_count_profiling": profiling
         }
     }
 

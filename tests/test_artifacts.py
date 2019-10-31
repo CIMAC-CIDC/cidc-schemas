@@ -144,6 +144,7 @@ def test_fcs():
     # create a dummy info
     obj = BASE_OBJ.copy()
     obj['data_format'] = 'FCS'
+    at_validator.validate(obj)
 
 
 def test_zip():
@@ -154,6 +155,7 @@ def test_zip():
     # create a dummy info
     obj = BASE_OBJ.copy()
     obj['data_format'] = 'ZIP'
+    at_validator.validate(obj)
 
 
 def test_npx():

@@ -136,6 +136,26 @@ def test_csv():
     at_validator.validate(obj)
 
 
+def test_fcs():
+
+    # create validator assert schemas are valid.
+    at_validator = _fetch_validator("fcs")
+
+    # create a dummy info
+    obj = BASE_OBJ.copy()
+    obj['data_format'] = 'FCS'
+
+
+def test_zip():
+
+    # create validator assert schemas are valid.
+    at_validator = _fetch_validator("zip")
+
+    # create a dummy info
+    obj = BASE_OBJ.copy()
+    obj['data_format'] = 'ZIP'
+
+
 def test_npx():
 
     # create validator assert schemas are valid.

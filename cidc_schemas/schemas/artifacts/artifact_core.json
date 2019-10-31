@@ -74,6 +74,7 @@
         "BINARY",
         "TEXT",
         "ZIP",
+        "FCS",
         "[NOT SET]"
       ]
     }

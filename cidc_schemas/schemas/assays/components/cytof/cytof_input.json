@@ -6,12 +6,12 @@
     "type": "object",
     "properties": {
         "processed_fcs": {
-            "$ref": "artifacts/artifact_binary.json"
+            "$ref": "artifacts/artifact_fcs.json"
         },
         "source_fcs": {
             "type": "array",
             "items": {
-                "$ref": "artifacts/artifact_binary.json"
+                "$ref": "artifacts/artifact_fcs.json"
             }
         }
     }

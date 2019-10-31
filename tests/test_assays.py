@@ -193,12 +193,14 @@ def test_cytof():
     validator = jsonschema.Draft7Validator(schema)
 
     fcs_1 = ARTIFACT_OBJ.copy()
-    fcs_1['data_format'] = 'BINARY'
+    fcs_1['data_format'] = 'FCS'
     fcs_2 = ARTIFACT_OBJ.copy()
-    fcs_2['data_format'] = 'BINARY'
+    fcs_2['data_format'] = 'FCS'
+    fcs_3 = ARTIFACT_OBJ.copy()
+    fcs_3['data_format'] = 'FCS'
     record = {
         "processed_fcs": fcs_1,
-        "source_fcs": [fcs_2.copy(), fcs_2.copy()]
+        "source_fcs": [fcs_2, fcs_3]
     }
     validator.validate(record)
 
@@ -233,9 +235,11 @@ def test_cytof():
 
     # create the cytof object
     fcs_1 = ARTIFACT_OBJ.copy()
-    fcs_1['data_format'] = 'BINARY'
+    fcs_1['data_format'] = 'FCS'
     fcs_2 = ARTIFACT_OBJ.copy()
-    fcs_2['data_format'] = 'BINARY'
+    fcs_2['data_format'] = 'FCS'
+    fcs_3 = ARTIFACT_OBJ.copy()
+    fcs_3['data_format'] = 'FCS'
     assignment = ARTIFACT_OBJ.copy()
     assignment['data_format'] = 'CSV'
     assignment["separator"] = ","
@@ -268,11 +272,11 @@ def test_cytof():
         "cimac_id": "CTTTPPPSA.00",
         "input_files": {
                 "processed_fcs": fcs_1,
-                "source_fcs": [fcs_2.copy(), fcs_2.copy()]
+                "source_fcs": [fcs_2, fcs_3]
             },
         "output_files": {
                 "fcs_file": fcs_1,
-                "astrolabe_reports": report,
+                "astrolabe_report": report,
                 "astrolabe_analysis": analysis,
                 "assignment": assignment,
                 "compartment": compartment,

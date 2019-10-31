@@ -236,12 +236,36 @@ def test_cytof():
     fcs_1['data_format'] = 'BINARY'
     fcs_2 = ARTIFACT_OBJ.copy()
     fcs_2['data_format'] = 'BINARY'
+    assignment = ARTIFACT_OBJ.copy()
+    assignment['data_format'] = 'CSV'
+    assignment["separator"] = ","
+    assignment["header_row"] = 128
+    compartment = ARTIFACT_OBJ.copy()
+    compartment['data_format'] = 'CSV'
+    compartment["separator"] = ","
+    compartment["header_row"] = 128
+    profiling = ARTIFACT_OBJ.copy()
+    profiling['data_format'] = 'CSV'
+    profiling["separator"] = ","
+    profiling["header_row"] = 128
+    report = ARTIFACT_OBJ.copy()
+    report['data_format'] = 'ZIP'
+    analysis = ARTIFACT_OBJ.copy()
+    analysis['data_format'] = 'ZIP'
     record = {
         "cimac_id": "CTTTPPPSA.00",
-        "files": {
+        "input_files": {
                 "processed_fcs": fcs_1,
                 "source_fcs": [fcs_2.copy(), fcs_2.copy()]
-            }
+            },
+        "output_files": {
+                "fcs_file": fcs_1,
+                "astrolabe_reports": report,
+                "astrolabe_analysis": analysis,
+                "assignment": assignment,
+                "compartment": compartment,
+                "profiling": profiling
+        }
     }
 
     # add a demo record.

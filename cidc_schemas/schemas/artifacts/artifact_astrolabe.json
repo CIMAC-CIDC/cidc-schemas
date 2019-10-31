@@ -3,7 +3,7 @@
   "$id": "astrolabe_artifact",
   "title": "Astrolabe Artifact",
   "type": "object",
-  "description": "A compressed archive storing results from Astrolabe analysis",
+  "description": "A compressed archive storing analysis and results from Astrolabe analysis.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"
@@ -12,7 +12,11 @@
       "properties": {
         "analysis_type": {
             "type": "string",
-            "enum": ["Gated FCS", "Reports", "R Files"]
+            "enum": [
+              "FCS File",
+              "Reports",
+              "Analysis"
+            ]
         }
       }
     }

@@ -13,13 +13,6 @@
         "data_format": {
           "description": "Data format.",
           "const": "ZIP"
-        },
-        "analysis_type": {
-            "type": "string",
-            "enum": [
-              "Report",
-              "Analysis"
-            ]
         }
       }
     }

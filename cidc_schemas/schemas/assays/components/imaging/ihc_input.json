@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "ihc_input",
-  "title": "Immunohistichemical Analysis Input Files",
+  "title": "Immunohistochemical Analysis Input Files",
   "type": "object",
   "description": "IHC assay input/output files.",
   "properties": {

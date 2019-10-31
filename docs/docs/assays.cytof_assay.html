@@ -300,7 +300,7 @@
                         "description": "CyTOF Assay Input Files",
                         "properties": {
                             "processed_fcs": {
-                                "$id": "binary_artifact",
+                                "$id": "fcs_artifact",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "allOf": [
                                     {
@@ -360,6 +360,7 @@
                                                     "BINARY",
                                                     "TEXT",
                                                     "ZIP",
+                                                    "FCS",
                                                     "[NOT SET]"
                                                 ],
                                                 "type": "string"
@@ -410,20 +411,20 @@
                                     {
                                         "properties": {
                                             "data_format": {
-                                                "const": "BINARY",
+                                                "const": "FCS",
                                                 "description": "Data format."
                                             }
                                         }
                                     }
                                 ],
-                                "description": "Information about binary files.",
+                                "description": "Information about FCS files.",
                                 "mergeStrategy": "objectMerge",
-                                "title": "Binary Artifact",
+                                "title": "FCS Artifact",
                                 "type": "object"
                             },
                             "source_fcs": {
                                 "items": {
-                                    "$id": "binary_artifact",
+                                    "$id": "fcs_artifact",
                                     "$schema": "http://json-schema.org/draft-07/schema#",
                                     "allOf": [
                                         {
@@ -483,6 +484,7 @@
                                                         "BINARY",
                                                         "TEXT",
                                                         "ZIP",
+                                                        "FCS",
                                                         "[NOT SET]"
                                                     ],
                                                     "type": "string"
@@ -533,15 +535,15 @@
                                         {
                                             "properties": {
                                                 "data_format": {
-                                                    "const": "BINARY",
+                                                    "const": "FCS",
                                                     "description": "Data format."
                                                 }
                                             }
                                         }
                                     ],
-                                    "description": "Information about binary files.",
+                                    "description": "Information about FCS files.",
                                     "mergeStrategy": "objectMerge",
-                                    "title": "Binary Artifact",
+                                    "title": "FCS Artifact",
                                     "type": "object"
                                 },
                                 "type": "array"
@@ -628,6 +630,7 @@
                                                     "BINARY",
                                                     "TEXT",
                                                     "ZIP",
+                                                    "FCS",
                                                     "[NOT SET]"
                                                 ],
                                                 "type": "string"
@@ -711,7 +714,7 @@
                                 "type": "object"
                             },
                             "astrolabe_analysis": {
-                                "$id": "astrolabe_artifact",
+                                "$id": "zip_artifact",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "allOf": [
                                     {
@@ -771,6 +774,7 @@
                                                     "BINARY",
                                                     "TEXT",
                                                     "ZIP",
+                                                    "FCS",
                                                     "[NOT SET]"
                                                 ],
                                                 "type": "string"
@@ -822,21 +826,25 @@
                                         "properties": {
                                             "analysis_type": {
                                                 "enum": [
-                                                    "FCS File",
-                                                    "Reports",
+                                                    "Report",
                                                     "Analysis"
                                                 ],
                                                 "type": "string"
+                                            },
+                                            "data_format": {
+                                                "const": "ZIP",
+                                                "description": "Data format."
                                             }
                                         }
                                     }
                                 ],
-                                "description": "A compressed archive storing analysis and results from Astrolabe analysis.",
-                                "title": "Astrolabe Artifact",
+                                "description": "Information about ZIP files.",
+                                "mergeStrategy": "objectMerge",
+                                "title": "ZIP Artifact",
                                 "type": "object"
                             },
                             "astrolabe_reports": {
-                                "$id": "astrolabe_artifact",
+                                "$id": "zip_artifact",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "allOf": [
                                     {
@@ -896,6 +904,7 @@
                                                     "BINARY",
                                                     "TEXT",
                                                     "ZIP",
+                                                    "FCS",
                                                     "[NOT SET]"
                                                 ],
                                                 "type": "string"
@@ -947,17 +956,21 @@
                                         "properties": {
                                             "analysis_type": {
                                                 "enum": [
-                                                    "FCS File",
-                                                    "Reports",
+                                                    "Report",
                                                     "Analysis"
                                                 ],
                                                 "type": "string"
+                                            },
+                                            "data_format": {
+                                                "const": "ZIP",
+                                                "description": "Data format."
                                             }
                                         }
                                     }
                                 ],
-                                "description": "A compressed archive storing analysis and results from Astrolabe analysis.",
-                                "title": "Astrolabe Artifact",
+                                "description": "Information about ZIP files.",
+                                "mergeStrategy": "objectMerge",
+                                "title": "ZIP Artifact",
                                 "type": "object"
                             },
                             "cell_counts_assignment": {
@@ -1021,6 +1034,7 @@
                                                     "BINARY",
                                                     "TEXT",
                                                     "ZIP",
+                                                    "FCS",
                                                     "[NOT SET]"
                                                 ],
                                                 "type": "string"
@@ -1164,6 +1178,7 @@
                                                     "BINARY",
                                                     "TEXT",
                                                     "ZIP",
+                                                    "FCS",
                                                     "[NOT SET]"
                                                 ],
                                                 "type": "string"
@@ -1307,6 +1322,7 @@
                                                     "BINARY",
                                                     "TEXT",
                                                     "ZIP",
+                                                    "FCS",
                                                     "[NOT SET]"
                                                 ],
                                                 "type": "string"
@@ -1450,6 +1466,7 @@
                                                     "BINARY",
                                                     "TEXT",
                                                     "ZIP",
+                                                    "FCS",
                                                     "[NOT SET]"
                                                 ],
                                                 "type": "string"
@@ -1533,7 +1550,7 @@
                                 "type": "object"
                             },
                             "fcs_file": {
-                                "$id": "astrolabe_artifact",
+                                "$id": "fcs_artifact",
                                 "$schema": "http://json-schema.org/draft-07/schema#",
                                 "allOf": [
                                     {
@@ -1593,6 +1610,7 @@
                                                     "BINARY",
                                                     "TEXT",
                                                     "ZIP",
+                                                    "FCS",
                                                     "[NOT SET]"
                                                 ],
                                                 "type": "string"
@@ -1642,19 +1660,16 @@
                                     },
                                     {
                                         "properties": {
-                                            "analysis_type": {
-                                                "enum": [
-                                                    "FCS File",
-                                                    "Reports",
-                                                    "Analysis"
-                                                ],
-                                                "type": "string"
+                                            "data_format": {
+                                                "const": "FCS",
+                                                "description": "Data format."
                                             }
                                         }
                                     }
                                 ],
-                                "description": "A compressed archive storing analysis and results from Astrolabe analysis.",
-                                "title": "Astrolabe Artifact",
+                                "description": "Information about FCS files.",
+                                "mergeStrategy": "objectMerge",
+                                "title": "FCS Artifact",
                                 "type": "object"
                             },
                             "profiling": {
@@ -1718,6 +1733,7 @@
                                                     "BINARY",
                                                     "TEXT",
                                                     "ZIP",
+                                                    "FCS",
                                                     "[NOT SET]"
                                                 ],
                                                 "type": "string"

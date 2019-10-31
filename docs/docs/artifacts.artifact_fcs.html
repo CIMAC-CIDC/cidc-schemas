@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Excel Artifact</h1>
+        <h1>FCS Artifact</h1>
         <p>
-            <b>Description:</b>  Information about a xlsx file.
+            <b>Description:</b>  Information about FCS files.
         </p>
         
     </div>
@@ -107,7 +107,7 @@
     </td>
     <td>
         
-            &lt; const: <strong>XLSX</strong> &gt;            
+            &lt; const: <strong>FCS</strong> &gt;            
         
     </td>
 </tr>
@@ -119,9 +119,9 @@
   </div>
 
   <div class="container">
-    <h3>artifact_xlsx.full.json</h3>
+    <h3>artifact_fcs.full.json</h3>
   	<pre><code>{
-    "$id": "xlsx_artifact",
+    "$id": "fcs_artifact",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "allOf": [
         {
@@ -232,15 +232,15 @@
         {
             "properties": {
                 "data_format": {
-                    "const": "XLSX",
+                    "const": "FCS",
                     "description": "Data format."
                 }
             }
         }
     ],
-    "description": "Information about a xlsx file.",
+    "description": "Information about FCS files.",
     "mergeStrategy": "objectMerge",
-    "title": "Excel Artifact",
+    "title": "FCS Artifact",
     "type": "object"
 }</code></pre>
   </container>

@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Astrolabe Artifact</h1>
+        <h1>ZIP Artifact</h1>
         <p>
-            <b>Description:</b>  A compressed archive storing analysis and results from Astrolabe analysis.
+            <b>Description:</b>  Information about ZIP files.
         </p>
         
     </div>
@@ -87,7 +87,32 @@
         
             
         
+            
         
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="data_format">
+                data_format
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Data format.
+        
+    </td>
+    <td>
+        
+            &lt; const: <strong>ZIP</strong> &gt;            
+        
+    </td>
+</tr>
             
         
             
@@ -115,9 +140,7 @@
             &gt;
             <ul>
                 
-                    <li>"FCS File"</li>
-                
-                    <li>"Reports"</li>
+                    <li>"Report"</li>
                 
                     <li>"Analysis"</li>
                 
@@ -135,9 +158,9 @@
   </div>
 
   <div class="container">
-    <h3>artifact_astrolabe.full.json</h3>
+    <h3>artifact_zip.full.json</h3>
   	<pre><code>{
-    "$id": "astrolabe_artifact",
+    "$id": "zip_artifact",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "allOf": [
         {
@@ -197,6 +220,7 @@
                         "BINARY",
                         "TEXT",
                         "ZIP",
+                        "FCS",
                         "[NOT SET]"
                     ],
                     "type": "string"
@@ -248,17 +272,21 @@
             "properties": {
                 "analysis_type": {
                     "enum": [
-                        "FCS File",
-                        "Reports",
+                        "Report",
                         "Analysis"
                     ],
                     "type": "string"
+                },
+                "data_format": {
+                    "const": "ZIP",
+                    "description": "Data format."
                 }
             }
         }
     ],
-    "description": "A compressed archive storing analysis and results from Astrolabe analysis.",
-    "title": "Astrolabe Artifact",
+    "description": "Information about ZIP files.",
+    "mergeStrategy": "objectMerge",
+    "title": "ZIP Artifact",
     "type": "object"
 }</code></pre>
   </container>

@@ -13,6 +13,7 @@ from pprint import pprint
 from collections import namedtuple
 from jsonmerge import Merger
 from unittest.mock import MagicMock, patch as mock_patch
+from cidc_schemas.template import _TEMPLATE_PATH_MAP
 
 
 from .constants import TEST_DATA_DIR
@@ -375,6 +376,7 @@ def test_unsupported_prismify(template, xlsx_path):
         return
 
     with pytest.raises(NotImplementedError):
+        schema_path = "Non-existant_path.json"
         prismify(xlsx_path, schema_path)
 
 
@@ -776,10 +778,24 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     original_ct[PROTOCOL_ID_FIELD_NAME] = prism_patch[PROTOCOL_ID_FIELD_NAME]
     
     # "prismify" provides only a patch so we need to merge it into a "full" ct
+    if template.type=='cytof_analysis':
+
+        cytof_input_xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR,'cytof_template.xlsx')
+        cytof_input_xlsx, _ = XlTemplateReader.from_excel(cytof_input_xlsx_path)
+        cytof_input_template = Template.from_json( _TEMPLATE_PATH_MAP['cytof'])
+        cytof_input_patch, _, _ = prismify(cytof_input_xlsx, cytof_input_template)
+
+        cytof_input_patch[PROTOCOL_ID_FIELD_NAME] = original_ct[PROTOCOL_ID_FIELD_NAME]
+        original_ct, errs = merge_clinical_trial_metadata(cytof_input_patch, original_ct)
+
     full_after_prism, errs = merge_clinical_trial_metadata(prism_patch, original_ct)
-    assert not errs
+
+    # CyTOF analysis patch being invalid on it's own
+    if not template.type == 'cytof_analysis':
+        assert not errs
 
     # Assert we still have a good clinical trial object, so we can save it.
+    print("\n\n",full_after_prism)
     validator.validate(full_after_prism)
 
     patch_copy_4_artifacts = copy.deepcopy(prism_patch)
@@ -835,6 +851,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         # TODO: This will need ot be updated when we accept a list of source fcs files
         assert len(merged_gs_keys) == 6
 
+    elif template.type == 'cytof_analysis':
+        assert len(merged_gs_keys) == 9  # 9 output files
+
     else:
         assert False, f"add {template.type} assay specific asserts"
 
@@ -857,6 +876,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == 'cytof':
         assert len(full_ct['assays'][template.type]) == 1
+
+    elif template.type == 'cytof_analysis':
+        assert len(full_ct['assays']['cytof'][0]['records']) == 1, "More records than expected"
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -887,6 +909,10 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == 'cytof':
         assert len(dd['dictionary_item_added']) == 7*6, "Unexpected CT changes"
+
+    elif template.type == 'cytof_analysis':
+        # 7 artifact attributes * 9 files
+        assert len(dd['dictionary_item_added']) == 7*9, "Unexpected CT changes"
 
     else:
         assert False, f"add {template.type} assay specific asserts"

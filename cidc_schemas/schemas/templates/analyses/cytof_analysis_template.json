@@ -11,70 +11,70 @@
         "worksheets": {
             "CyTOF Analysis": {
                 "preamble_rows": {
-                      "Protocol Identifier": {
-                        "merge_pointer": "2/protocol_identifier",
+                      "protocol identifier": {
+                        "merge_pointer": "3/protocol_identifier",
                         "type_ref": "clinical_trial.json#properties/protocol_identifier"
                       }
                 },
-                "prism_data_object_pointer": "/records/0/output_files",
+                "prism_data_object_pointer": "/records/-",
                 "data_columns": {
                     "Astrolabe Runs": {
                         "Cimac ID": {
-                            "merge_pointer": "1/cimac_id",
+                            "merge_pointer": "0/cimac_id",
                             "type_ref": "sample.json#properties/cimac_id"
                         },
                         "fcs file": {
-                            "merge_pointer": "/fcs_file",
+                            "merge_pointer": "0/output_files/fcs_file",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof/source_{num}.fcs",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof_analysis/source.fcs",
                             "is_artifact": 1
                         },
                         "astrolabe reports": {
-                            "merge_pointer": "/astrolabe_reports",
+                            "merge_pointer": "0/output_files/astrolabe_reports",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof/reports_{num}.zip",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof_analysis/reports.zip",
                             "is_artifact": 1
                         },
                         "astrolabe analysis": {
-                            "merge_pointer": "/astrolabe_analysis",
+                            "merge_pointer": "0/output_files/astrolabe_analysis",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof/analysis_{num}.zip",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof_analysis/analysis.zip",
                             "is_artifact": 1
                         },
                         "assignment": {
-                            "merge_pointer": "/assignment",
+                            "merge_pointer": "0/output_files/assignment",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof/assignment.csv",
-                            "is_artifact": "1"
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof_analysis/assignment.csv",
+                            "is_artifact": 1
                         },
                         "compartment": {
-                            "merge_pointer": "/compartment",
+                            "merge_pointer": "0/output_files/compartment",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof/compartment.csv",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof_analysis/compartment.csv",
                             "is_artifact": 1
                         },
                         "profiling": {
-                            "merge_pointer": "/profiling",
+                            "merge_pointer": "0/output_files/profiling",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof/profiling.csv",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof_analysis/profiling.csv",
                             "is_artifact": 1
                         },
                         "cell counts assignment": {
-                            "merge_pointer": "/cell_counts_assignment",
+                            "merge_pointer": "0/output_files/cell_counts_assignment",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof/cell_counts_analysis.csv",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof_analysis/cell_counts_analysis.csv",
                             "is_artifact": 1
                         },
                         "cell counts compartment": {
-                            "merge_pointer": "/cell_counts_compartment",
+                            "merge_pointer": "0/output_files/cell_counts_compartment",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof/cell_counts_compartment.csv",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof_analysis/cell_counts_compartment.csv",
                             "is_artifact": 1
                         },
                         "cell counts profiling": {
-                            "merge_pointer": "cell_counts_profiling",
+                            "merge_pointer": "0/output_files/cell_counts_profiling",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof/cell_counts_profiling.csv",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof_analysis/cell_counts_profiling.csv",
                             "is_artifact": 1
                         }
                     }

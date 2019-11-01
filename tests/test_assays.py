@@ -227,6 +227,7 @@ def test_cytof():
         }
     ]
     cytof_panel = {
+        "assay_run_id": "run_1",
         "panel_name": "DFCI default",
         "cytof_antibodies": antibodies
     }

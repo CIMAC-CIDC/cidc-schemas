@@ -27,7 +27,10 @@
       "items": {
         "$ref": "assays/cytof_assay.json"
       },
-      "mergeStrategy": "append"
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "assay_run_id"
+      }
     },
     "olink": {
       "$comment": "NB This is not array as every other assay. Will update data on any olink upload.",

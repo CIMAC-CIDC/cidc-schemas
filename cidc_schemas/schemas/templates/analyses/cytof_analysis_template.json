@@ -11,10 +11,14 @@
         "worksheets": {
             "CyTOF Analysis": {
                 "preamble_rows": {
-                      "protocol identifier": {
+                    "assay run id": {
+                        "merge_pointer": "/assay_run_id",
+                        "type_ref": "assays/cytof_assay.json#properties/assay_run_id"
+                      },
+                    "protocol identifier": {
                         "merge_pointer": "3/protocol_identifier",
                         "type_ref": "clinical_trial.json#properties/protocol_identifier"
-                      }
+                    }
                 },
                 "prism_data_object_pointer": "/records/-",
                 "data_columns": {

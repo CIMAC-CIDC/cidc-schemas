@@ -795,7 +795,6 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert not errs
 
     # Assert we still have a good clinical trial object, so we can save it.
-    print("\n\n",full_after_prism)
     validator.validate(full_after_prism)
 
     patch_copy_4_artifacts = copy.deepcopy(prism_patch)
@@ -878,7 +877,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(full_ct['assays'][template.type]) == 1
 
     elif template.type == 'cytof_analysis':
-        assert len(full_ct['assays']['cytof'][0]['records']) == 1, "More records than expected"
+        # the original cytof upload had 2 records, hence after analysis, this too has 2 records
+        assert len(full_ct['assays']['cytof'][0]['records']) == 2, "More records than expected"
 
     else:
         assert False, f"add {template.type} assay specific asserts"

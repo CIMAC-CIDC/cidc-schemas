@@ -193,12 +193,14 @@ def test_cytof():
     validator = jsonschema.Draft7Validator(schema)
 
     fcs_1 = ARTIFACT_OBJ.copy()
-    fcs_1['data_format'] = 'BINARY'
+    fcs_1['data_format'] = 'FCS'
     fcs_2 = ARTIFACT_OBJ.copy()
-    fcs_2['data_format'] = 'BINARY'
+    fcs_2['data_format'] = 'FCS'
+    fcs_3 = ARTIFACT_OBJ.copy()
+    fcs_3['data_format'] = 'FCS'
     record = {
         "processed_fcs": fcs_1,
-        "source_fcs": [fcs_2.copy(), fcs_2.copy()]
+        "source_fcs": [fcs_2, fcs_3]
     }
     validator.validate(record)
 
@@ -233,15 +235,56 @@ def test_cytof():
 
     # create the cytof object
     fcs_1 = ARTIFACT_OBJ.copy()
-    fcs_1['data_format'] = 'BINARY'
+    fcs_1['data_format'] = 'FCS'
     fcs_2 = ARTIFACT_OBJ.copy()
-    fcs_2['data_format'] = 'BINARY'
+    fcs_2['data_format'] = 'FCS'
+    fcs_3 = ARTIFACT_OBJ.copy()
+    fcs_3['data_format'] = 'FCS'
+    assignment = ARTIFACT_OBJ.copy()
+    assignment['data_format'] = 'CSV'
+    assignment["separator"] = ","
+    assignment["header_row"] = 128
+    compartment = ARTIFACT_OBJ.copy()
+    compartment['data_format'] = 'CSV'
+    compartment["separator"] = ","
+    compartment["header_row"] = 128
+    profiling = ARTIFACT_OBJ.copy()
+    profiling['data_format'] = 'CSV'
+    profiling["separator"] = ","
+    profiling["header_row"] = 128
+    cell_count_assignment = ARTIFACT_OBJ.copy()
+    cell_count_assignment['data_format'] = 'CSV'
+    cell_count_assignment["separator"] = ","
+    cell_count_assignment["header_row"] = 128
+    cell_count_compartment = ARTIFACT_OBJ.copy()
+    cell_count_compartment['data_format'] = 'CSV'
+    cell_count_compartment["separator"] = ","
+    cell_count_compartment["header_row"] = 128
+    cell_count_profiling = ARTIFACT_OBJ.copy()
+    cell_count_profiling['data_format'] = 'CSV'
+    cell_count_profiling["separator"] = ","
+    profiling["header_row"] = 128
+    report = ARTIFACT_OBJ.copy()
+    report['data_format'] = 'ZIP'
+    analysis = ARTIFACT_OBJ.copy()
+    analysis['data_format'] = 'ZIP'
     record = {
         "cimac_id": "CTTTPPPSA.00",
-        "files": {
+        "input_files": {
                 "processed_fcs": fcs_1,
-                "source_fcs": [fcs_2.copy(), fcs_2.copy()]
-            }
+                "source_fcs": [fcs_2, fcs_3]
+            },
+        "output_files": {
+                "fcs_file": fcs_1,
+                "astrolabe_report": report,
+                "astrolabe_analysis": analysis,
+                "assignment": assignment,
+                "compartment": compartment,
+                "profiling": profiling,
+                "cell_count_assignment": assignment,
+                "cell_count_compartment": compartment,
+                "cell_count_profiling": profiling
+        }
     }
 
     # add a demo record.

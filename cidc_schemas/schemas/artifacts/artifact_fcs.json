@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fcs_artifact",
+  "title": "FCS Artifact",
+  "type": "object",
+  "description": "Information about FCS files.",
+  "allOf": [
+    {
+      "$ref": "artifacts/artifact_core.json"
+    },
+    {
+      "properties": {
+        "data_format": {
+          "description": "Data format.",
+          "const": "FCS"
+        }
+      }
+    }
+  ],
+  "mergeStrategy": "objectMerge"
+}

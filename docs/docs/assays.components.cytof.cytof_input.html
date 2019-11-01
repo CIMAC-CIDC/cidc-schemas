@@ -74,12 +74,12 @@
     </td>
     <td width=55%>
         
-            Information about binary files.
+            Information about FCS files.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_binary.html">artifacts.artifact_binary</a>
+            <a href="artifacts.artifact_fcs.html">artifacts.artifact_fcs</a>
         
     </td>
 </tr>
@@ -113,7 +113,7 @@
             </ul>
              
                 
-                    <a href="artifacts.artifact_binary.html">artifacts.artifact_binary</a>
+                    <a href="artifacts.artifact_fcs.html">artifacts.artifact_fcs</a>
                 
             
             
@@ -135,7 +135,7 @@
     "description": "CyTOF Assay Input Files",
     "properties": {
         "processed_fcs": {
-            "$id": "binary_artifact",
+            "$id": "fcs_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -194,6 +194,8 @@
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
+                                "ZIP",
+                                "FCS",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -244,20 +246,20 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "BINARY",
+                            "const": "FCS",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about binary files.",
+            "description": "Information about FCS files.",
             "mergeStrategy": "objectMerge",
-            "title": "Binary Artifact",
+            "title": "FCS Artifact",
             "type": "object"
         },
         "source_fcs": {
             "items": {
-                "$id": "binary_artifact",
+                "$id": "fcs_artifact",
                 "$schema": "http://json-schema.org/draft-07/schema#",
                 "allOf": [
                     {
@@ -316,6 +318,8 @@
                                     "MAF",
                                     "BINARY",
                                     "TEXT",
+                                    "ZIP",
+                                    "FCS",
                                     "[NOT SET]"
                                 ],
                                 "type": "string"
@@ -366,15 +370,15 @@
                     {
                         "properties": {
                             "data_format": {
-                                "const": "BINARY",
+                                "const": "FCS",
                                 "description": "Data format."
                             }
                         }
                     }
                 ],
-                "description": "Information about binary files.",
+                "description": "Information about FCS files.",
                 "mergeStrategy": "objectMerge",
-                "title": "Binary Artifact",
+                "title": "FCS Artifact",
                 "type": "object"
             },
             "type": "array"

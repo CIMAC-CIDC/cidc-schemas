@@ -78,17 +78,17 @@
             "description": "Any notes pertaining to preprocessing of CyTOF data.",
             "type": "string"
         },
-        "files": {
+        "input_files": {
             "$ref": "assays/components/cytof/cytof_input.json"
         },
-        "analysis": {
+        "output_files": {
             "$ref": "assays/components/cytof/cytof_analysis.json"
         }
     },
     "mergeStrategy": "objectMerge",
     "required": [
         "cimac_id",
-        "files"
+        "input_files"
     ]
 }
 

@@ -38,7 +38,7 @@
                             "type_ref": "assays/components/cytof/cytof_entry.json#properties/batch_id"
                         },
                         "original fcs filename(s)": {
-                            "merge_pointer": "0/files/source_fcs",
+                            "merge_pointer": "0/input_files/source_fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
                             "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof/source_{num}.fcs",
                             "is_artifact": "multi"
@@ -66,7 +66,7 @@
                     },
                     "Preprocessing": {
                         "processed fcs filename": {
-                            "merge_pointer": "0/files/processed_fcs",
+                            "merge_pointer": "0/input_files/processed_fcs",
                             "is_artifact": 1,
                             "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof/processed.fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path"

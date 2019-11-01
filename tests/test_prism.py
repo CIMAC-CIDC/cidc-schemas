@@ -13,7 +13,6 @@ from pprint import pprint
 from collections import namedtuple
 from jsonmerge import Merger
 from unittest.mock import MagicMock, patch as mock_patch
-from cidc_schemas.template import _TEMPLATE_PATH_MAP
 
 
 from .constants import TEST_DATA_DIR
@@ -21,7 +20,7 @@ from .constants import TEST_DATA_DIR
 from cidc_schemas import prism
 from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
-    SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES, \
+    SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES, SUPPORTED_ANALYSES, \
     PROTOCOL_ID_FIELD_NAME, parse_npx, merge_artifact_extra_metadata, \
     PRISM_MERGE_STRATEGIES, PRISM_PRISMIFY_STRATEGIES, ThrowOnCollision, \
     MergeCollisionException
@@ -776,18 +775,21 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     # so we can merge
     original_ct[PROTOCOL_ID_FIELD_NAME] = prism_patch[PROTOCOL_ID_FIELD_NAME]
-    
+
+    if template.type in SUPPORTED_ANALYSES:
+        if template.type == 'cytof_analysis':
+            # creating `cytof_input_patch` which is different from `prism_patch`
+            cytof_input_xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR,'cytof_template.xlsx')
+            cytof_input_xlsx, _ = XlTemplateReader.from_excel(cytof_input_xlsx_path)
+            cytof_input_template = Template.from_type('cytof')
+            cytof_input_patch, _, _ = prismify(cytof_input_xlsx, cytof_input_template)
+
+            # cytof_template.xlsx and cytof_analysis_template.xlsx need not have the same Protocol ID
+            cytof_input_patch[PROTOCOL_ID_FIELD_NAME] = original_ct[PROTOCOL_ID_FIELD_NAME]
+
+            original_ct, errs = merge_clinical_trial_metadata(cytof_input_patch, original_ct)
+
     # "prismify" provides only a patch so we need to merge it into a "full" ct
-    if template.type=='cytof_analysis':
-
-        cytof_input_xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR,'cytof_template.xlsx')
-        cytof_input_xlsx, _ = XlTemplateReader.from_excel(cytof_input_xlsx_path)
-        cytof_input_template = Template.from_json( _TEMPLATE_PATH_MAP['cytof'])
-        cytof_input_patch, _, _ = prismify(cytof_input_xlsx, cytof_input_template)
-
-        cytof_input_patch[PROTOCOL_ID_FIELD_NAME] = original_ct[PROTOCOL_ID_FIELD_NAME]
-        original_ct, errs = merge_clinical_trial_metadata(cytof_input_patch, original_ct)
-
     full_after_prism, errs = merge_clinical_trial_metadata(prism_patch, original_ct)
 
     # CyTOF analysis patch being invalid on it's own

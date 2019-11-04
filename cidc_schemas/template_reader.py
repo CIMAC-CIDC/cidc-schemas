@@ -100,9 +100,13 @@ class XlTemplateReader:
                 # Filter empty cells from the end of a data row
                 if row_type == RowType.DATA:
                     if not header_width:
-                        errors.append(f"Encountered data row (#{row_num} in worksheet {worksheet_name!r}) before header row")
+                        errors.append(
+                            f"Encountered data row (#{row_num} in worksheet {worksheet_name!r}) before header row"
+                        )
                     if len(values) > header_width:
-                        errors.append(f"Encountered data row (#{row_num} in worksheet {worksheet_name!r}) wider than header row")
+                        errors.append(
+                            f"Encountered data row (#{row_num} in worksheet {worksheet_name!r}) wider than header row"
+                        )
 
                 # Reassemble parsed row and add to rows
                 new_row = TemplateRow(row_num, row_type, values)
@@ -274,7 +278,9 @@ class XlTemplateReader:
                     )
 
             for data_row in row_groups[RowType.DATA]:
-                for head, value, schema in zip_longest(headers, data_row.values, data_schemas):
+                for head, value, schema in zip_longest(
+                    headers, data_row.values, data_schemas
+                ):
                     if schema is None:
                         # we don't check unexpected column
                         # and we already have an error reported on that

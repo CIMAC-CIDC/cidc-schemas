@@ -20,33 +20,29 @@ ARTIFACT_OBJ = {
     "uploaded_timestamp": "dummy",
     "uploader": "dummy",
     "uuid": "dummy",
-    "visible": True
+    "visible": True,
 }
 
 OLINK_RECORD = {
-        "assay_prefix": "dummy",
-        "filetype": "assay",
-        "run_date": "1/2/98",
-        "run_time": "12:00",
-        "instrument": "dummy",
-        "fludigm_application_version": "0.2.0",
-        "fludigm_application_build": "dummy",
-        "chip_barcode": "22129",
-        "probe_type": "dummy",
-        "passive_reference": "dummy",
-        "quality_threshold": 90,
-        "baseline_correction": "dummy",
-        "panel": "dummy",
-        "number_of_samples": 5,
-        "number_of_samples_failed": 4,
-        "npx_manager_version": "dummy",
-        "assay_panel_lot": 90,
-        "files": {
-            "assay_npx": "",
-            "assay_raw_ct": "",
-            "study_npx": ""
-        }
-    }
+    "assay_prefix": "dummy",
+    "filetype": "assay",
+    "run_date": "1/2/98",
+    "run_time": "12:00",
+    "instrument": "dummy",
+    "fludigm_application_version": "0.2.0",
+    "fludigm_application_build": "dummy",
+    "chip_barcode": "22129",
+    "probe_type": "dummy",
+    "passive_reference": "dummy",
+    "quality_threshold": 90,
+    "baseline_correction": "dummy",
+    "panel": "dummy",
+    "number_of_samples": 5,
+    "number_of_samples_failed": 4,
+    "npx_manager_version": "dummy",
+    "assay_panel_lot": 90,
+    "files": {"assay_npx": "", "assay_raw_ct": "", "study_npx": ""},
+}
 
 ASSAY_CORE = {
     "assay_creator": "DFCI",
@@ -74,20 +70,20 @@ def test_wes():
         "read_length": 200,
         "input_ng": 666,
         "library_yield_ng": 666,
-        "average_insert_size": 200
+        "average_insert_size": 200,
     }
-    obj = {**ASSAY_CORE, **ngs_obj}    # merge two dictionaries
+    obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
 
     # create the wes object
     r1 = ARTIFACT_OBJ.copy()
-    r1['data_format'] = 'FASTQ'
+    r1["data_format"] = "FASTQ"
     rgmf = ARTIFACT_OBJ.copy()
-    rgmf['data_format'] = 'TEXT'
+    rgmf["data_format"] = "TEXT"
     bam = ARTIFACT_OBJ.copy()
-    bam['data_format']= 'BAM'
+    bam["data_format"] = "BAM"
     vcf = ARTIFACT_OBJ.copy()
-    vcf['data_format'] = 'VCF'
-    rgmf['artifact_category'] = 'Assay Artifact from CIMAC'
+    vcf["data_format"] = "VCF"
+    rgmf["artifact_category"] = "Assay Artifact from CIMAC"
     record = {
         "enrichment_vendor_kit": "Twist",
         "enrichment_vendor_lot": "dummy_value",
@@ -95,38 +91,27 @@ def test_wes():
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
         "cimac_id": "CTTTPPPSA.00",
-        "files": {
-            "r1": r1,
-            "r2": r1,
-            "read_group_mapping_file": rgmf
-        }
+        "files": {"r1": r1, "r2": r1, "read_group_mapping_file": rgmf},
     }
 
-    analysis = {
-        "wes_experiment_id": "101010",
-        "capture_date": "01/02/2001"          
-    }
+    analysis = {"wes_experiment_id": "101010", "capture_date": "01/02/2001"}
 
     # add a demo record.
-    obj['records'] = [
-        record
-    ]
+    obj["records"] = [record]
 
-    obj['analysis'] = [
-        analysis
-    ]
+    obj["analysis"] = [analysis]
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("wes")
     validator.validate(obj)
 
     # assert negative behaviors
-    del obj['records'][0]['enrichment_vendor_lot']
+    del obj["records"][0]["enrichment_vendor_lot"]
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)
-    
+
     # assert negative behaviors for analysis
-    del obj['analysis'][0]['wes_experiment_id']
+    del obj["analysis"][0]["wes_experiment_id"]
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)
 
@@ -141,19 +126,19 @@ def test_rna_expression():
         "read_length": 200,
         "input_ng": 666,
         "library_yield_ng": 666,
-        "average_insert_size": 200
+        "average_insert_size": 200,
     }
-    obj = {**ASSAY_CORE, **ngs_obj}    # merge two dictionaries
+    obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
 
     # add custom entry
-    obj['enrichment_method'] = "Ribo minus"
+    obj["enrichment_method"] = "Ribo minus"
 
     # create the wes object
     r1 = ARTIFACT_OBJ.copy()
-    r1['data_format'] = 'FASTQ'
+    r1["data_format"] = "FASTQ"
     rgmf = ARTIFACT_OBJ.copy()
-    rgmf['data_format'] = 'TEXT'
-    rgmf['artifact_category'] = 'Assay Artifact from CIMAC'
+    rgmf["data_format"] = "TEXT"
+    rgmf["artifact_category"] = "Assay Artifact from CIMAC"
     record = {
         "enrichment_vendor_kit": "Twist",
         "enrichment_vendor_lot": "dummy_value",
@@ -161,17 +146,11 @@ def test_rna_expression():
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
         "cimac_id": "CTTTPPPSA.00",
-        "files": {
-            "r1": r1,
-            "r2": r1,
-            "read_group_mapping_file": rgmf
-        }
+        "files": {"r1": r1, "r2": r1, "read_group_mapping_file": rgmf},
     }
 
     # add a demo record.
-    obj['records'] = [
-        record
-    ]
+    obj["records"] = [record]
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("rna_expression")
@@ -179,7 +158,7 @@ def test_rna_expression():
     validator.validate(obj)
 
     # assert negative behaviors
-    del obj['records'][0]['enrichment_vendor_kit']
+    del obj["records"][0]["enrichment_vendor_kit"]
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)
 
@@ -193,21 +172,16 @@ def test_cytof():
     validator = jsonschema.Draft7Validator(schema)
 
     fcs_1 = ARTIFACT_OBJ.copy()
-    fcs_1['data_format'] = 'FCS'
+    fcs_1["data_format"] = "FCS"
     fcs_2 = ARTIFACT_OBJ.copy()
-    fcs_2['data_format'] = 'FCS'
+    fcs_2["data_format"] = "FCS"
     fcs_3 = ARTIFACT_OBJ.copy()
-    fcs_3['data_format'] = 'FCS'
-    record = {
-        "processed_fcs": fcs_1,
-        "source_fcs": [fcs_2, fcs_3]
-    }
+    fcs_3["data_format"] = "FCS"
+    record = {"processed_fcs": fcs_1, "source_fcs": [fcs_2, fcs_3]}
     validator.validate(record)
 
     # create the cytof object
-    cytof_platform = {
-        "instrument": "dummy"
-    }
+    cytof_platform = {"instrument": "dummy"}
 
     # create a cytof antibody object.
     antibodies = [
@@ -216,82 +190,77 @@ def test_cytof():
             "isotope": "dummy",
             "dilution": "dummy",
             "stain_type": "Intracellular",
-            "usage": "Analysis Only"
+            "usage": "Analysis Only",
         },
         {
             "antibody": "PD-L1",
             "isotope": "dummy",
             "dilution": "dummy",
             "stain_type": "Intracellular",
-            "usage": "Used"
-        }
+            "usage": "Used",
+        },
     ]
     cytof_panel = {
         "assay_run_id": "run_1",
         "panel_name": "DFCI default",
-        "cytof_antibodies": antibodies
+        "cytof_antibodies": antibodies,
     }
 
-    obj = {**ASSAY_CORE, **cytof_platform, **cytof_panel}    # merge three dictionaries
+    obj = {**ASSAY_CORE, **cytof_platform, **cytof_panel}  # merge three dictionaries
 
     # create the cytof object
     fcs_1 = ARTIFACT_OBJ.copy()
-    fcs_1['data_format'] = 'FCS'
+    fcs_1["data_format"] = "FCS"
     fcs_2 = ARTIFACT_OBJ.copy()
-    fcs_2['data_format'] = 'FCS'
+    fcs_2["data_format"] = "FCS"
     fcs_3 = ARTIFACT_OBJ.copy()
-    fcs_3['data_format'] = 'FCS'
+    fcs_3["data_format"] = "FCS"
     assignment = ARTIFACT_OBJ.copy()
-    assignment['data_format'] = 'CSV'
+    assignment["data_format"] = "CSV"
     assignment["separator"] = ","
     assignment["header_row"] = 128
     compartment = ARTIFACT_OBJ.copy()
-    compartment['data_format'] = 'CSV'
+    compartment["data_format"] = "CSV"
     compartment["separator"] = ","
     compartment["header_row"] = 128
     profiling = ARTIFACT_OBJ.copy()
-    profiling['data_format'] = 'CSV'
+    profiling["data_format"] = "CSV"
     profiling["separator"] = ","
     profiling["header_row"] = 128
     cell_count_assignment = ARTIFACT_OBJ.copy()
-    cell_count_assignment['data_format'] = 'CSV'
+    cell_count_assignment["data_format"] = "CSV"
     cell_count_assignment["separator"] = ","
     cell_count_assignment["header_row"] = 128
     cell_count_compartment = ARTIFACT_OBJ.copy()
-    cell_count_compartment['data_format'] = 'CSV'
+    cell_count_compartment["data_format"] = "CSV"
     cell_count_compartment["separator"] = ","
     cell_count_compartment["header_row"] = 128
     cell_count_profiling = ARTIFACT_OBJ.copy()
-    cell_count_profiling['data_format'] = 'CSV'
+    cell_count_profiling["data_format"] = "CSV"
     cell_count_profiling["separator"] = ","
     profiling["header_row"] = 128
     report = ARTIFACT_OBJ.copy()
-    report['data_format'] = 'ZIP'
+    report["data_format"] = "ZIP"
     analysis = ARTIFACT_OBJ.copy()
-    analysis['data_format'] = 'ZIP'
+    analysis["data_format"] = "ZIP"
     record = {
         "cimac_id": "CTTTPPPSA.00",
-        "input_files": {
-                "processed_fcs": fcs_1,
-                "source_fcs": [fcs_2, fcs_3]
-            },
+        "input_files": {"processed_fcs": fcs_1, "source_fcs": [fcs_2, fcs_3]},
         "output_files": {
-                "fcs_file": fcs_1,
-                "astrolabe_report": report,
-                "astrolabe_analysis": analysis,
-                "assignment": assignment,
-                "compartment": compartment,
-                "profiling": profiling,
-                "cell_count_assignment": assignment,
-                "cell_count_compartment": compartment,
-                "cell_count_profiling": profiling
-        }
+            "fcs_file": fcs_1,
+            "astrolabe_report": report,
+            "astrolabe_analysis": analysis,
+            "assignment": assignment,
+            "compartment": compartment,
+            "profiling": profiling,
+            "cell_count_assignment": assignment,
+            "cell_count_compartment": compartment,
+            "cell_count_profiling": profiling,
+        },
     }
 
     # add a demo record.
-    obj['records'] = [
-        record
-    ]
+    obj["records"] = [record]
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("cytof")
@@ -321,7 +290,7 @@ def test_ihc():
             "lot_num": "547645",
             "dilution": "1:200",
             "incubation_time": "1 hr",
-            "incubation_temp": "RT"
+            "incubation_temp": "RT",
         },
         {
             "antibody": "PD-L2",
@@ -331,28 +300,26 @@ def test_ihc():
             "lot_num": "547645",
             "dilution": "1:200",
             "incubation_time": "1 hr",
-            "incubation_temp": "RT"
-        }
+            "incubation_temp": "RT",
+        },
     ]
 
-    ihc_a = {
-        "antibodies": antibodies
-    }
+    ihc_a = {"antibodies": antibodies}
     obj = {**ASSAY_CORE, **ihc_obj, **ihc_a}  # merge three dictionaries
 
     # create the artifact object
     image_1 = ARTIFACT_OBJ.copy()
-    image_1['data_format'] = 'IMAGE'
+    image_1["data_format"] = "IMAGE"
     image_1["height"] = 300
     image_1["width"] = 250
     image_1["channels"] = 3
     image_2 = ARTIFACT_OBJ.copy()
-    image_2['data_format'] = 'IMAGE'
+    image_2["data_format"] = "IMAGE"
     image_2["height"] = 300
     image_2["width"] = 250
     image_2["channels"] = 3
     csv_1 = ARTIFACT_OBJ.copy()
-    csv_1['data_format'] = 'CSV'
+    csv_1["data_format"] = "CSV"
     csv_1["separator"] = ","
     csv_1["header_row"] = 128
     record = {
@@ -370,11 +337,11 @@ def test_ihc():
             "ihc_output_summary": csv_1,
             "ihc_image": image_1,
             "he_image": image_2,
-        }
+        },
     }
 
     # add a demo record.
-    obj['records'] = [record]
+    obj["records"] = [record]
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("ihc")
@@ -384,61 +351,54 @@ def test_ihc():
 def test_mif():
 
     # create the mif object
-    image = {
-        "slide_scanner_model": "Vectra 2.0",
-        "protocol_name": "E4412"
-    }
+    image = {"slide_scanner_model": "Vectra 2.0", "protocol_name": "E4412"}
 
-    imaging_data = {
-        "internal_slide_id": "a1s1e1"
-    }
-    obj = {**ASSAY_CORE, **image, **imaging_data}    # merge three dictionaries
+    imaging_data = {"internal_slide_id": "a1s1e1"}
+    obj = {**ASSAY_CORE, **image, **imaging_data}  # merge three dictionaries
 
     # create the artifact object
     image_1 = ARTIFACT_OBJ.copy()
-    image_1['data_format'] = 'IMAGE'
+    image_1["data_format"] = "IMAGE"
     image_1["height"] = 300
     image_1["width"] = 250
     image_1["channels"] = 3
     csv_1 = ARTIFACT_OBJ.copy()
-    csv_1['data_format'] = 'CSV'
+    csv_1["data_format"] = "CSV"
     csv_1["separator"] = ","
     csv_1["header_row"] = 128
     text = ARTIFACT_OBJ.copy()
-    text['data_format'] = 'TEXT'
+    text["data_format"] = "TEXT"
     record = {
         "project_inform_folder": "dummy",
         "mif_exported_data_folder": "dummy_value",
-        "files":
-            {
-                "whole_slide_imaging_file": image_1,
-                "roi_annotations": text,
-                "output_summary": csv_1,
-                "regions_of_interest": [
-                    {
-                        "binary_seg_map": csv_1,
-                        "cell_seg_data": csv_1,
-                        "cell_seg_data_summary": csv_1,
-                        "phenotype_map": image_1,
-                        "region_seg_map": image_1,
-                        "score_data": csv_1,
-                        "composite_image": image_1,
-                        "component_data": image_1
-                    }]
-            }
+        "files": {
+            "whole_slide_imaging_file": image_1,
+            "roi_annotations": text,
+            "output_summary": csv_1,
+            "regions_of_interest": [
+                {
+                    "binary_seg_map": csv_1,
+                    "cell_seg_data": csv_1,
+                    "cell_seg_data_summary": csv_1,
+                    "phenotype_map": image_1,
+                    "region_seg_map": image_1,
+                    "score_data": csv_1,
+                    "composite_image": image_1,
+                    "component_data": image_1,
+                }
+            ],
+        },
     }
 
     # add a demo record.
-    obj['records'] = [
-        record
-    ]
+    obj["records"] = [record]
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("mif")
     validator.validate(obj)
 
     # assert negative behaviors
-    del obj['records'][0]['project_inform_folder']
+    del obj["records"][0]["project_inform_folder"]
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)
 
@@ -446,60 +406,51 @@ def test_mif():
 def test_micsss():
 
     # create the micsss object
-    image = {
-        "slide_scanner_model": "Vectra 2.0",
-        "protocol_name": "E4412"
-    }
+    image = {"slide_scanner_model": "Vectra 2.0", "protocol_name": "E4412"}
 
-    imaging_data = {
-        "internal_slide_id": "a1s1e1"
-    }
-    obj = {**ASSAY_CORE, **image, **imaging_data}    # merge three dictionaries
+    imaging_data = {"internal_slide_id": "a1s1e1"}
+    obj = {**ASSAY_CORE, **image, **imaging_data}  # merge three dictionaries
 
     # create the artifact object
     image_1 = ARTIFACT_OBJ.copy()
-    image_1['data_format'] = 'IMAGE'
+    image_1["data_format"] = "IMAGE"
     image_1["height"] = 300
     image_1["width"] = 250
     image_1["channels"] = 3
     csv_1 = ARTIFACT_OBJ.copy()
-    csv_1['data_format'] = 'CSV'
+    csv_1["data_format"] = "CSV"
     csv_1["separator"] = ","
     csv_1["header_row"] = 128
     record = {
         "project_qupath_folder": "dummy",
         "micsss_exported_data_folder": "dummy_value",
-        "files":
-            {
-                "micsss_output_summary": csv_1,
-                "Mapping Artifacts": [
-                    {
-                        "binary_seg_map": csv_1,
-                        "cell_seg_data": csv_1,
-                        "cell_seg_data_summary": csv_1,
-                        "phenotype_map": image_1,
-                        "region_seg_map": image_1,
-                        "score_data": csv_1,
-                    }],
-                "Composite Image Artifacts": [
-                    {
-                        "composite_image": image_1,
-                        "component_data": image_1
-                    }]
-            }
+        "files": {
+            "micsss_output_summary": csv_1,
+            "Mapping Artifacts": [
+                {
+                    "binary_seg_map": csv_1,
+                    "cell_seg_data": csv_1,
+                    "cell_seg_data_summary": csv_1,
+                    "phenotype_map": image_1,
+                    "region_seg_map": image_1,
+                    "score_data": csv_1,
+                }
+            ],
+            "Composite Image Artifacts": [
+                {"composite_image": image_1, "component_data": image_1}
+            ],
+        },
     }
 
     # add a demo record.
-    obj['records'] = [
-        record
-    ]
+    obj["records"] = [record]
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("micsss")
     validator.validate(obj)
 
     # assert negative behaviors
-    del obj['records'][0]['project_qupath_folder']
+    del obj["records"][0]["project_qupath_folder"]
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)
 
@@ -508,30 +459,28 @@ def test_olink():
 
     # create the olink object
     obj = {**ASSAY_CORE}
-    obj['panel'] = "panel v1"
+    obj["panel"] = "panel v1"
 
     # create the artifact object
     npx = ARTIFACT_OBJ.copy()
-    npx['data_format'] = 'NPX'
-    npx['samples'] = ['CTTTPPPS1.00', 'CTTTPPPS2.00', 'CTTTPPPS3.00']
-    npx['number_of_samples'] = 3
+    npx["data_format"] = "NPX"
+    npx["samples"] = ["CTTTPPPS1.00", "CTTTPPPS2.00", "CTTTPPPS3.00"]
+    npx["number_of_samples"] = 3
     xlsx = ARTIFACT_OBJ.copy()
-    xlsx['data_format'] = 'XLSX'
+    xlsx["data_format"] = "XLSX"
     record = OLINK_RECORD.copy()
     record["files"]["assay_npx"] = npx
     record["files"]["assay_raw_ct"] = xlsx
     record["files"]["study_npx"] = npx
 
     # add a demo record.
-    obj['records'] = [
-        record
-    ]
+    obj["records"] = [record]
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("olink")
     validator.validate(obj)
 
     # assert negative behaviors
-    del obj['records'][0]['number_of_samples']
+    del obj["records"][0]["number_of_samples"]
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)

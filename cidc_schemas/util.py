@@ -3,6 +3,7 @@ import yaml
 import openpyxl
 import re
 from typing import Union, BinaryIO, List
+
 JSON = Union[dict, list, str, int, float]
 
 from deepdiff import grep
@@ -27,8 +28,8 @@ def get_all_paths(ct: dict, key: str, dont_throw=False) -> List[str]:
     # first look for key as is
     ds1 = ct | grep(key, match_string=True, case_sensitive=True)
     count1 = 0
-    if 'matched_values' in ds1:
-        count1 = len(ds1['matched_values'])
+    if "matched_values" in ds1:
+        count1 = len(ds1["matched_values"])
 
     # the hack fails if both work... probably need to deal with this
     if count1 == 0:
@@ -37,7 +38,7 @@ def get_all_paths(ct: dict, key: str, dont_throw=False) -> List[str]:
         else:
             raise KeyError(f"key: {key} not found")
 
-    return ds1['matched_values']
+    return ds1["matched_values"]
 
 
 def get_path(ct: dict, key: str) -> str:
@@ -85,7 +86,7 @@ def get_source(ct: dict, key: str, skip_last=None) -> (JSON, JSON):
     tokens = list(split_python_style_path(key))
 
     if skip_last:
-        last_idx = -1*skip_last
+        last_idx = -1 * skip_last
         last_token = tokens[last_idx]
         tokens = tokens[0:last_idx]
     else:
@@ -127,13 +128,13 @@ def yaml_to_json(yaml_path: str) -> str:
         Given a path to a yaml file, write the equivalent json
         to a file of the same name and return the new filename.
     """
-    filename, ext = yaml_path.rsplit('.', 1)
-    assert ext == 'yaml', "expected a yaml file"
+    filename, ext = yaml_path.rsplit(".", 1)
+    assert ext == "yaml", "expected a yaml file"
 
-    with open(yaml_path, 'r') as stream:
+    with open(yaml_path, "r") as stream:
         dictionary = yaml.safe_load(stream)
         json_path = f"{filename}.json"
-        with open(json_path, 'w') as new_file:
+        with open(json_path, "w") as new_file:
             json.dump(dictionary, new_file, indent=2)
 
     return json_path
@@ -144,13 +145,13 @@ def json_to_yaml(json_path: str) -> str:
         Given a path to a json file, write the equivalent yaml
         to a file of the same name and return the new filename.
     """
-    filename, ext = json_path.rsplit('.', 1)
-    assert ext == 'json', "expected a json file"
+    filename, ext = json_path.rsplit(".", 1)
+    assert ext == "json", "expected a json file"
 
-    with open(json_path, 'r') as stream:
+    with open(json_path, "r") as stream:
         dictionary = json.load(stream)
         yaml_path = f"{filename}.yaml"
-        with open(yaml_path, 'w') as new_file:
+        with open(yaml_path, "w") as new_file:
             yaml.safe_dump(dictionary, new_file)
 
     return yaml_path

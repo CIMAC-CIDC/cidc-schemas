@@ -6,8 +6,8 @@ from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.constants import SCHEMA_DIR
 
 DOCS_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT_DIR = os.path.join(DOCS_DIR, '..')
-TEMPLATES_DIR = os.path.join(DOCS_DIR, 'templates')
+ROOT_DIR = os.path.join(DOCS_DIR, "..")
+TEMPLATES_DIR = os.path.join(DOCS_DIR, "templates")
 HTML_DIR = os.path.join(DOCS_DIR, "docs")
 
 
@@ -21,32 +21,32 @@ def load_schemas() -> dict:
     for root, _, paths in os.walk(SCHEMA_DIR):
         root_schemas = {}
         for path in paths:
-            if not path.endswith('.json'):
+            if not path.endswith(".json"):
                 continue
             schema_path = os.path.join(root, path)
 
-            full_json = load_and_validate_schema(
-                schema_path, SCHEMA_DIR)
+            full_json = load_and_validate_schema(schema_path, SCHEMA_DIR)
 
-            resolver = jsonschema.RefResolver(f'file://{SCHEMA_DIR}/schemas', full_json)
+            resolver = jsonschema.RefResolver(f"file://{SCHEMA_DIR}/schemas", full_json)
 
             def json_to_html(ref: str) -> dict:
                 """Update refs to refer to the URL of the corresponding documentation."""
-                url = ref.replace('.json', '.html')
-                url = url.replace('properties/', '')
-                url = url.replace('definitions/', '')
-                url = url.replace('/', '.')
+                url = ref.replace(".json", ".html")
+                url = url.replace("properties/", "")
+                url = url.replace("definitions/", "")
+                url = url.replace("/", ".")
                 # resolve ref, extract resolved['description']
                 with resolver.resolving(ref) as resolved:
-                    if 'description' in resolved:
-                        description = resolved['description']
+                    if "description" in resolved:
+                        description = resolved["description"]
                     else:
                         description = ""
 
-                return {'url': url, 'description': description}
+                return {"url": url, "description": description}
 
             schema = load_and_validate_schema(
-                schema_path, SCHEMA_DIR, on_refs=json_to_html)
+                schema_path, SCHEMA_DIR, on_refs=json_to_html
+            )
 
             assert path.endswith(".json")
             schema_name = path[:-5].replace("/", ".")
@@ -73,18 +73,18 @@ def generate_docs(out_directory: str = HTML_DIR):
 
     # Generate index template
     schemas = load_schemas()
-    index_template = templateEnv.get_template('index.j2')
+    index_template = templateEnv.get_template("index.j2")
     index_html = index_template.render(schema_directories=schemas)
-    with open(os.path.join(out_directory, 'index.html'), 'w') as f:
+    with open(os.path.join(out_directory, "index.html"), "w") as f:
         f.write(index_html)
 
-    entity_template = templateEnv.get_template('entity.j2')
-    template_template = templateEnv.get_template('template.j2')
+    entity_template = templateEnv.get_template("entity.j2")
+    template_template = templateEnv.get_template("template.j2")
 
     for directory, entity in schemas.items():
 
         # Determine whether these are spreadsheet templates or normal entities
-        if directory in ('templates.manifests', 'templates.metadata'):
+        if directory in ("templates.manifests", "templates.metadata"):
             template = template_template
         else:
             template = entity_template
@@ -92,7 +92,7 @@ def generate_docs(out_directory: str = HTML_DIR):
         # Generate the templates
         for name, (schema, full_json) in entity.items():
 
-            full_name = f'{directory}.{name}'
+            full_name = f"{directory}.{name}"
             if full_name.startswith("."):
                 full_name = full_name[1::]
 
@@ -102,13 +102,13 @@ def generate_docs(out_directory: str = HTML_DIR):
                 full_name=full_name,
                 schema=schema,
                 scope=directory,
-                full_json_str=json.dumps(full_json, sort_keys=True, indent=4))
+                full_json_str=json.dumps(full_json, sort_keys=True, indent=4),
+            )
 
             # write this out
-            with open(os.path.join(out_directory, f'{full_name}.html'), 'w') as f:
+            with open(os.path.join(out_directory, f"{full_name}.html"), "w") as f:
                 f.write(entity_html)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     generate_docs()
-

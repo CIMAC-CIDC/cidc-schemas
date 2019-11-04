@@ -6,13 +6,14 @@ import pytest
 from cidc_schemas.unprism import unprism_participants, unprism_samples
 from cidc_schemas.prism import PROTOCOL_ID_FIELD_NAME
 
-ct_example_path = os.path.join(os.path.dirname(
-    __file__), 'data/clinicaltrial_examples/CT_1.json')
+ct_example_path = os.path.join(
+    os.path.dirname(__file__), "data/clinicaltrial_examples/CT_1.json"
+)
 
 
 @pytest.fixture
 def ct():
-    with open(ct_example_path, 'r') as ct:
+    with open(ct_example_path, "r") as ct:
         yield json.load(ct)
 
 

@@ -14,10 +14,12 @@ from .constants import ROOT_DIR, SCHEMA_DIR
 
 
 def example_paths():
-    """Get the path to every .json in the 'data/clinicaltrial_examples' directory"""    
-    for root, _, paths in os.walk(os.path.join(os.path.dirname(__file__), 'data/clinicaltrial_examples')):
+    """Get the path to every .json in the 'data/clinicaltrial_examples' directory"""
+    for root, _, paths in os.walk(
+        os.path.join(os.path.dirname(__file__), "data/clinicaltrial_examples")
+    ):
         for path in paths:
-            if not path.endswith('.json'):
+            if not path.endswith(".json"):
                 continue
 
             yield root, path
@@ -44,12 +46,14 @@ def test_schema(example_path):
         try:
             ct_example = json.load(file)
         except Exception as e:
-            raise Exception(f'Error decoding {example_path}: {e}')
+            raise Exception(f"Error decoding {example_path}: {e}")
 
         try:
             validator.validate(ct_example)
         except jsonschema.exceptions.ValidationError as e:
-            raise Exception(f'Failed to validate {fname}:{"["+"][".join(repr(p) for p in e.absolute_path)+"]"} \
+            raise Exception(
+                f'Failed to validate {fname}:{"["+"][".join(repr(p) for p in e.absolute_path)+"]"} \
                 \n {e.message} \
                 \n CT_SCHEMA{"["+"][".join(repr(p) for p in e.absolute_schema_path)+"]"} \
-                \n instance {e.instance}')
+                \n instance {e.instance}'
+            )

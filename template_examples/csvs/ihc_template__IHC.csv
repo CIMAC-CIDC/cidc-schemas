@@ -1,5 +1,5 @@
 "#t","Metadata file for ihc"
-"#p","Protocol identifier","ihc_test_trial"
+"#p","Protocol identifier","test_prism_trial_id"
 "#p","Assay creator","DFCI"
 "#p","Protocol name","ihc_test_trial_name"
 "#p","Slide scanner model","Hamamatsu"

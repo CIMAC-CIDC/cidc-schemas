@@ -20,7 +20,7 @@ from .constants import TEST_DATA_DIR
 from cidc_schemas import prism
 from cidc_schemas.prism import prismify, merge_artifact, \
     merge_clinical_trial_metadata, InvalidMergeTargetException, \
-    SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES, \
+    SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES, SUPPORTED_ANALYSES, \
     PROTOCOL_ID_FIELD_NAME, parse_npx, merge_artifact_extra_metadata, \
     PRISM_MERGE_STRATEGIES, PRISM_PRISMIFY_STRATEGIES, ThrowOnCollision, \
     MergeCollisionException
@@ -33,7 +33,6 @@ from cidc_schemas.template_reader import XlTemplateReader
 from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR, TEST_DATA_DIR
 from .test_templates import template_set
 from .test_assays import ARTIFACT_OBJ
-
 
 def prismify_test_set(filter = None):
     yielded = False
@@ -332,14 +331,6 @@ def test_prism(xlsx, template):
     ct, file_maps, errs = prismify(xlsx, template)
     assert 0 == len(errs)
 
-    if template.type == 'cytof':
-        assert "CYTOF_TEST1" == ct[PROTOCOL_ID_FIELD_NAME]
-        ct[PROTOCOL_ID_FIELD_NAME] = 'test_prism_trial_id'
-
-    if template.type == 'ihc':
-        assert "ihc_test_trial" == ct[PROTOCOL_ID_FIELD_NAME]
-        ct[PROTOCOL_ID_FIELD_NAME] = 'test_prism_trial_id'
-
     if template.type in SUPPORTED_ASSAYS:
         # olink is different - is will never have array of assay "runs" - only one
         if template.type != 'olink':
@@ -367,16 +358,13 @@ def test_prism(xlsx, template):
         assert TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] == merged[PROTOCOL_ID_FIELD_NAME]
 
 
-@pytest.mark.parametrize('template, xlsx_path', template_set())
-def test_unsupported_prismify(template, xlsx_path):
+def test_unsupported_prismify():
+    """Check that prism raises a non-implemented error for unsupported template types."""
+    mock_template = MagicMock()
+    mock_template.type = 'some-unsupported-type'
 
-    # skipp supported
-    if template.type in SUPPORTED_TEMPLATES:
-        return
-
-    with pytest.raises(NotImplementedError):
-        prismify(xlsx_path, schema_path)
-
+    with pytest.raises(NotImplementedError, match="'some-unsupported-type' is not supported"):
+        prismify(None, mock_template)
 
 
 @pytest.mark.parametrize('xlsx, template', prismify_test_set())
@@ -730,14 +718,11 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
                 prism_patch['participants'][0]['cimac_participant_id'])
 
         if template.type == 'pbmc':
-            assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_pbmc"
-
             assert len(prism_patch['participants']) == 2
             assert len(prism_patch['participants'][0]['samples']) == 3
             assert len(prism_patch['participants'][1]['samples']) == 3
 
         elif template.type == 'plasma':
-            assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_plasma"
             assert len(prism_patch['participants']) == 2
             assert len(prism_patch['participants'][0]['samples']) == 3
             assert 'aliquots' not in prism_patch['participants'][0]['samples'][0]
@@ -769,12 +754,26 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     for f in file_maps:
         assert f'{template.type}/' in f.gs_key, f"No {template.type} template.type found"
 
-    # And we need set PROTOCOL_ID_FIELD_NAME to be the same for testing
     original_ct = copy.deepcopy(TEST_PRISM_TRIAL) 
 
-    # so we can merge
-    original_ct[PROTOCOL_ID_FIELD_NAME] = prism_patch[PROTOCOL_ID_FIELD_NAME]
-    
+    if template.type in SUPPORTED_ANALYSES:
+        # we can't merge analysis info unless an associated initial assay upload exists
+        # in the clinical trial object, so we add an initial assay upload below:
+
+        if template.type == 'cytof_analysis':
+            # simulate an initial cytof upload by prismifying the initial cytof template object,
+            # and merging it with clinical trial object
+            cytof_input_xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, 'cytof_template.xlsx')
+            cytof_input_xlsx, _ = XlTemplateReader.from_excel(cytof_input_xlsx_path)
+            cytof_input_template = Template.from_type('cytof')
+            cytof_input_patch, _, _ = prismify(cytof_input_xlsx, cytof_input_template)
+
+            original_ct, errs = merge_clinical_trial_metadata(cytof_input_patch, original_ct)
+            assert len(errs) == 0
+
+        else:
+            raise NotImplementedError(f"no support in test for this template.type {template.type}")
+
     # "prismify" provides only a patch so we need to merge it into a "full" ct
     full_after_prism, errs = merge_clinical_trial_metadata(prism_patch, original_ct)
     assert not errs
@@ -835,6 +834,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         # TODO: This will need ot be updated when we accept a list of source fcs files
         assert len(merged_gs_keys) == 6
 
+    elif template.type == 'cytof_analysis':
+        assert len(merged_gs_keys) == 9  # 9 output files
+
     else:
         assert False, f"add {template.type} assay specific asserts"
 
@@ -857,6 +859,10 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == 'cytof':
         assert len(full_ct['assays'][template.type]) == 1
+
+    elif template.type == 'cytof_analysis':
+        # the original cytof upload had 2 records, hence after analysis, this too has 2 records
+        assert len(full_ct['assays']['cytof'][0]['records']) == 2, "More records than expected"
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -887,6 +893,10 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == 'cytof':
         assert len(dd['dictionary_item_added']) == 7*6, "Unexpected CT changes"
+
+    elif template.type == 'cytof_analysis':
+        # 7 artifact attributes * 9 files
+        assert len(dd['dictionary_item_added']) == 7*9, "Unexpected CT changes"
 
     else:
         assert False, f"add {template.type} assay specific asserts"

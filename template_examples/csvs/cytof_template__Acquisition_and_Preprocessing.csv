@@ -1,5 +1,6 @@
 "#t","Metadata file for cytof"
-"#p","Protocol identifier","CYTOF_TEST1"
+"#p","Assay run id","test_prism_trial_id_run_1"
+"#p","Protocol identifier","test_prism_trial_id"
 "#p","Assay creator","DFCI"
 "#p","Panel name","IMMUNE4"
 "#p","Instrument","PresNixon123"

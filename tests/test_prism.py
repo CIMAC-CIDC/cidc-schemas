@@ -34,7 +34,6 @@ from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR, TEST_DATA_DI
 from .test_templates import template_set
 from .test_assays import ARTIFACT_OBJ
 
-
 def prismify_test_set(filter = None):
     yielded = False
 
@@ -367,17 +366,13 @@ def test_prism(xlsx, template):
         assert TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] == merged[PROTOCOL_ID_FIELD_NAME]
 
 
-@pytest.mark.parametrize('template, xlsx_path', template_set())
-def test_unsupported_prismify(template, xlsx_path):
+def test_unsupported_prismify():
+    """Check that prism raises a non-implemented error for unsupported template types."""
+    mock_template = MagicMock()
+    mock_template.type = 'some-unsupported-type'
 
-    # skipp supported
-    if template.type in SUPPORTED_TEMPLATES:
-        return
-
-    with pytest.raises(NotImplementedError):
-        schema_path = "Non-existant_path.json"
-        prismify(xlsx_path, schema_path)
-
+    with pytest.raises(NotImplementedError, match="'some-unsupported-type' is not supported"):
+        prismify(None, mock_template)
 
 
 @pytest.mark.parametrize('xlsx, template', prismify_test_set())
@@ -777,24 +772,25 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     original_ct[PROTOCOL_ID_FIELD_NAME] = prism_patch[PROTOCOL_ID_FIELD_NAME]
 
     if template.type in SUPPORTED_ANALYSES:
+        # we can't merge analysis info unless an associated initial assay upload exists
+        # in the clinical trial object, so we add an initial assay upload below:
+
         if template.type == 'cytof_analysis':
-            # creating `cytof_input_patch` which is different from `prism_patch`
-            cytof_input_xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR,'cytof_template.xlsx')
+            # simulate an initial cytof upload by prismifying the initial cytof template object,
+            # and merging it with clinical trial object
+            cytof_input_xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, 'cytof_template.xlsx')
             cytof_input_xlsx, _ = XlTemplateReader.from_excel(cytof_input_xlsx_path)
             cytof_input_template = Template.from_type('cytof')
             cytof_input_patch, _, _ = prismify(cytof_input_xlsx, cytof_input_template)
 
-            # cytof_template.xlsx and cytof_analysis_template.xlsx need not have the same Protocol ID
-            cytof_input_patch[PROTOCOL_ID_FIELD_NAME] = original_ct[PROTOCOL_ID_FIELD_NAME]
-
             original_ct, errs = merge_clinical_trial_metadata(cytof_input_patch, original_ct)
+            assert len(errs) == 0
+
+        else:
+            raise NotImplementedError(f"no support in test for this template.type {template.type}")
 
     # "prismify" provides only a patch so we need to merge it into a "full" ct
     full_after_prism, errs = merge_clinical_trial_metadata(prism_patch, original_ct)
-
-    # CyTOF analysis patch being invalid on it's own
-    if not template.type == 'cytof_analysis':
-        assert not errs
 
     # Assert we still have a good clinical trial object, so we can save it.
     validator.validate(full_after_prism)

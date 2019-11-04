@@ -9,11 +9,16 @@ import json
 import pytest
 import jsonschema
 
-from cidc_schemas.json_validation import _map_refs, load_and_validate_schema, _resolve_refs
+from cidc_schemas.json_validation import (
+    _map_refs,
+    load_and_validate_schema,
+    _resolve_refs,
+)
 from cidc_schemas.prism import PROTOCOL_ID_FIELD_NAME
 from .constants import SCHEMA_DIR, ROOT_DIR, TEST_SCHEMA_DIR
 
 from .test_assays import ASSAY_CORE, ARTIFACT_OBJ, OLINK_RECORD
+
 
 def _fetch_validator(name):
 
@@ -23,6 +28,7 @@ def _fetch_validator(name):
 
     # create validator assert schemas are valid.
     return jsonschema.Draft7Validator(schema)
+
 
 def _sim_olink():
 
@@ -35,8 +41,8 @@ def _sim_olink():
     record["files"]["assay_npx"] = text
     record["files"]["assay_raw_ct"] = text
     record["files"]["study_npx"] = text
-    olink['records'] = [record]
-    
+    olink["records"] = [record]
+
     return olink
 
 
@@ -50,7 +56,7 @@ def test_aliquot():
         "material_remaining": 0,
         "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
-        "aliquot_status": "Other"
+        "aliquot_status": "Other",
     }
 
     # create validator assert schemas are valid.
@@ -61,9 +67,7 @@ def test_aliquot():
 def test_clinicaltrial_simple():
 
     # create the assay
-    assays = {
-        "olink": _sim_olink()
-    }
+    assays = {"olink": _sim_olink()}
 
     # create aliquot
     aliquot = {
@@ -74,7 +78,7 @@ def test_clinicaltrial_simple():
         "material_remaining": 0,
         "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
-        "aliquot_status": "Other"
+        "aliquot_status": "Other",
     }
 
     # create the sample.
@@ -98,10 +102,7 @@ def test_clinicaltrial_simple():
     }
 
     # create the trial
-    ct = {
-        PROTOCOL_ID_FIELD_NAME: "test",
-        "participants": [participant]
-    }
+    ct = {PROTOCOL_ID_FIELD_NAME: "test", "participants": [participant]}
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("clinical_trial")
@@ -118,7 +119,7 @@ def test_clinicaltrial_olink():
         "material_remaining": 0,
         "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
-        "aliquot_status": "Other"
+        "aliquot_status": "Other",
     }
     aliquot2 = {
         "slide_number": "14",
@@ -127,7 +128,7 @@ def test_clinicaltrial_olink():
         "material_remaining": 0,
         "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
-        "aliquot_status": "Other"
+        "aliquot_status": "Other",
     }
 
     # create the sample.
@@ -167,10 +168,7 @@ def test_clinicaltrial_olink():
     }
 
     # create the trial
-    ct = {
-        PROTOCOL_ID_FIELD_NAME: "test",
-        "participants": [participant1, participant2]
-    }
+    ct = {PROTOCOL_ID_FIELD_NAME: "test", "participants": [participant1, participant2]}
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("clinical_trial")

@@ -23,7 +23,7 @@ BASE_OBJ = {
     "uploaded_timestamp": "dummy",
     "uploader": "dummy",
     "uuid": "dummy",
-    "visible": True
+    "visible": True,
 }
 
 
@@ -61,7 +61,7 @@ def test_upload_placeholder_oneOf_required():
 
     # create validator assert schemas are valid.
     obj = BASE_OBJ.copy()
-    obj['data_format'] = 'CSV'
+    obj["data_format"] = "CSV"
     at_validator = _fetch_validator("core")
     at_validator.validate(obj)
 
@@ -75,7 +75,7 @@ def test_upload_placeholder_oneOf_required():
     with pytest.raises(jsonschema.ValidationError):
         at_validator.validate(obj)
 
-    obj['upload_placeholder'] = "some uuid or job_id"
+    obj["upload_placeholder"] = "some uuid or job_id"
     at_validator.validate(obj)
 
     del obj["upload_placeholder"]
@@ -87,12 +87,12 @@ def test_text():
 
     # create validator assert schemas are valid.
     obj = BASE_OBJ.copy()
-    obj['data_format'] = 'TEXT'
+    obj["data_format"] = "TEXT"
     at_validator = _fetch_validator("text")
     at_validator.validate(obj)
 
     # assert we can fail it.
-    del obj['md5_hash']
+    del obj["md5_hash"]
     with pytest.raises(jsonschema.ValidationError):
         at_validator.validate(obj)
 
@@ -104,10 +104,10 @@ def test_image():
 
     # create a dummy info
     obj = BASE_OBJ.copy()
-    obj['data_format'] = 'IMAGE'
-    obj['height'] = 128
-    obj['width'] = 128
-    obj['channels'] = 8
+    obj["data_format"] = "IMAGE"
+    obj["height"] = 128
+    obj["width"] = 128
+    obj["channels"] = 8
     at_validator.validate(obj)
 
 
@@ -118,8 +118,8 @@ def test_binary():
 
     # create a dummy info
     obj = BASE_OBJ.copy()
-    obj['data_format'] = 'BINARY'
-    obj['info'] = {"test": 128}
+    obj["data_format"] = "BINARY"
+    obj["info"] = {"test": 128}
     at_validator.validate(obj)
 
 
@@ -130,7 +130,7 @@ def test_csv():
 
     # create a dummy info
     obj = BASE_OBJ.copy()
-    obj['data_format'] = 'CSV'
+    obj["data_format"] = "CSV"
     obj["header_row"] = 128
     obj["separator"] = ","
     at_validator.validate(obj)
@@ -143,7 +143,7 @@ def test_fcs():
 
     # create a dummy info
     obj = BASE_OBJ.copy()
-    obj['data_format'] = 'FCS'
+    obj["data_format"] = "FCS"
     at_validator.validate(obj)
 
 
@@ -154,7 +154,7 @@ def test_zip():
 
     # create a dummy info
     obj = BASE_OBJ.copy()
-    obj['data_format'] = 'ZIP'
+    obj["data_format"] = "ZIP"
     at_validator.validate(obj)
 
 
@@ -165,7 +165,7 @@ def test_npx():
 
     # create a dummy info
     obj = BASE_OBJ.copy()
-    obj['data_format'] = 'NPX'
+    obj["data_format"] = "NPX"
 
     # should fail
     with pytest.raises(jsonschema.ValidationError):

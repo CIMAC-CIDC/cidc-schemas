@@ -14,7 +14,7 @@ from collections import OrderedDict
 from .constants import SCHEMA_DIR, TEMPLATE_DIR
 from .json_validation import load_and_validate_schema
 
-logger = logging.getLogger('cidc_schemas.template')
+logger = logging.getLogger("cidc_schemas.template")
 
 
 def _get_template_path_map() -> dict:
@@ -24,9 +24,8 @@ def _get_template_path_map() -> dict:
         abs_type_dir = os.path.join(TEMPLATE_DIR, template_type_dir)
         if os.path.isdir(abs_type_dir):
             for template_file in os.listdir(abs_type_dir):
-                template_type = template_file.replace('_template.json', '')
-                template_schema_path = os.path.join(
-                    abs_type_dir, template_file)
+                template_type = template_file.replace("_template.json", "")
+                template_schema_path = os.path.join(abs_type_dir, template_file)
                 path_map[template_type] = template_schema_path
 
     return path_map
@@ -49,22 +48,22 @@ def generate_all_templates(target_dir: str):
     """
     # We expect two directories: one for metadata schemas and one for manifests
     for template_type_dir in os.listdir(TEMPLATE_DIR):
-        if not template_type_dir.startswith('.'):
+        if not template_type_dir.startswith("."):
             # Create the directory for this template type
             target_subdir = os.path.join(target_dir, template_type_dir)
             if not os.path.exists(target_subdir):
                 os.makedirs(target_subdir)
 
-
             schema_subdir = os.path.join(TEMPLATE_DIR, template_type_dir)
 
             # Create a new empty template for each template schema in schema_subdir
             for template_schema_file in os.listdir(schema_subdir):
-                if not template_schema_file.startswith('.'):
+                if not template_schema_file.startswith("."):
                     schema_path = os.path.join(schema_subdir, template_schema_file)
-                    template_xlsx_file = template_schema_file.replace('.json', '.xlsx')
+                    template_xlsx_file = template_schema_file.replace(".json", ".xlsx")
                     target_path = os.path.join(target_subdir, template_xlsx_file)
                     generate_empty_template(schema_path, target_path)
+
 
 class Template:
     """
@@ -94,10 +93,11 @@ class Template:
     def _extract_worksheets(self) -> Dict[str, dict]:
         """Build a mapping from worksheet names to worksheet section schemas"""
 
-        template_id = self.schema['$id']
-        assert 'worksheets' in self.schema[
-            'properties'], f'{template_id} schema missing "worksheets" property'
-        worksheet_schemas = self.schema['properties']['worksheets']
+        template_id = self.schema["$id"]
+        assert (
+            "worksheets" in self.schema["properties"]
+        ), f'{template_id} schema missing "worksheets" property'
+        worksheet_schemas = self.schema["properties"]["worksheets"]
 
         worksheets = {}
         for name, schema in worksheet_schemas.items():
@@ -126,10 +126,9 @@ class Template:
         # Process field names to ensure we can match on them later
         processed_worksheet = {}
         for section_name, section_schema in worksheet.items():
-            if section_name == 'preamble_rows':
-                processed_worksheet[section_name] = process_fields(
-                    section_schema)
-            elif section_name == 'data_columns':
+            if section_name == "preamble_rows":
+                processed_worksheet[section_name] = process_fields(section_schema)
+            elif section_name == "data_columns":
                 data_schemas = {}
                 for table_name, table_schema in section_schema.items():
                     data_schemas[table_name] = process_fields(table_schema)
@@ -151,24 +150,23 @@ class Template:
             Python function pointer
         """
 
-        referer = {'$ref': ref}
+        referer = {"$ref": ref}
 
         resolver_cache = {}
-        schemas_dir = f'file://{SCHEMA_DIR}/schemas'
-        while '$ref' in referer:
+        schemas_dir = f"file://{SCHEMA_DIR}/schemas"
+        while "$ref" in referer:
             # get the entry
-            resolver = jsonschema.RefResolver(
-                schemas_dir, referer, resolver_cache)
-            _, referer = resolver.resolve(referer['$ref'])
+            resolver = jsonschema.RefResolver(schemas_dir, referer, resolver_cache)
+            _, referer = resolver.resolve(referer["$ref"])
 
         entry = referer
         # add our own type conversion
-        t = entry['type']
+        t = entry["type"]
 
         return Template._get_coerce(t, entry.get("$id"))
 
     @staticmethod
-    def _get_coerce(t: str, object_id = None):
+    def _get_coerce(t: str, object_id=None):
         """
         This function takes a json-schema style type
         and determines the best python
@@ -178,13 +176,13 @@ class Template:
         # we just return uuid as value
         if object_id == "local_file_path":
             return lambda _: str(uuid.uuid4())
-        if t == 'string':
+        if t == "string":
             return str
-        elif t == 'integer':
+        elif t == "integer":
             return int
-        elif t == 'number':
+        elif t == "number":
             return float
-        elif t == 'boolean':
+        elif t == "boolean":
             return bool
         else:
             raise NotImplementedError(f"no coercion available for type:{t}")
@@ -208,15 +206,15 @@ class Template:
 
         def _add_coerce(field_def: dict) -> dict:
             """ Checks if we have a cast func for that 'type_ref' """
-            if 'type' in field_def:
-                if '$id' in field_def:
-                    coerce = self._get_coerce(
-                        field_def['type'], field_def['$id'])
+            if "type" in field_def:
+                if "$id" in field_def:
+                    coerce = self._get_coerce(field_def["type"], field_def["$id"])
                 else:
-                    coerce = self._get_coerce(field_def['type'])
+                    coerce = self._get_coerce(field_def["type"])
             else:
                 coerce = self._get_ref_coerce(
-                    field_def.get('type_ref') or field_def['$ref'])
+                    field_def.get("type_ref") or field_def["$ref"]
+                )
 
             return dict(coerce=coerce, **field_def)
 
@@ -224,7 +222,9 @@ class Template:
         for ws_name, ws_schema in self.worksheets.items():
 
             # loop over each row in pre-amble
-            for preamble_key, preamble_def in ws_schema.get('preamble_rows', {}).items():
+            for preamble_key, preamble_def in ws_schema.get(
+                "preamble_rows", {}
+            ).items():
 
                 # populate lookup
                 # TODO .lower() ?
@@ -233,7 +233,7 @@ class Template:
                 # (as for template.schema) - "merge_pointer" and "type_ref"
 
             # load the data columns
-            for section_key, section_def in ws_schema.get('data_columns', {}).items():
+            for section_key, section_def in ws_schema.get("data_columns", {}).items():
                 for column_key, column_def in section_def.items():
 
                     # populate lookup
@@ -245,20 +245,24 @@ class Template:
         return key_lu
 
     # XlTemplateReader only knows how to format these types of sections
-    VALID_WS_SECTIONS = set(['preamble_rows',
-                             'data_columns',
-                             'prism_preamble_object_pointer',
-                             'prism_data_object_pointer',
-                             'prism_preamble_object_schema'])
+    VALID_WS_SECTIONS = set(
+        [
+            "preamble_rows",
+            "data_columns",
+            "prism_preamble_object_pointer",
+            "prism_data_object_pointer",
+            "prism_preamble_object_schema",
+        ]
+    )
 
     @staticmethod
     def _validate_worksheet(ws_title: str, ws_schema: dict):
         # Ensure all worksheet sections are supported
         ws_sections = set(ws_schema.keys())
-        unknown_props = ws_sections.difference(
-            Template.VALID_WS_SECTIONS)
-        assert not unknown_props, \
-            f'unknown worksheet sections {unknown_props} - only {Template.VALID_WS_SECTIONS} supported'
+        unknown_props = ws_sections.difference(Template.VALID_WS_SECTIONS)
+        assert (
+            not unknown_props
+        ), f"unknown worksheet sections {unknown_props} - only {Template.VALID_WS_SECTIONS} supported"
 
     @staticmethod
     def from_type(template_type: str):
@@ -270,7 +274,9 @@ class Template:
         return Template.from_json(schema_path, type=template_type)
 
     @staticmethod
-    def from_json(template_schema_path: str, schema_root: str = SCHEMA_DIR, type: str = ""):
+    def from_json(
+        template_schema_path: str, schema_root: str = SCHEMA_DIR, type: str = ""
+    ):
         """
         Load a Template from a template schema.
 
@@ -280,8 +286,11 @@ class Template:
         """
         template_schema = load_and_validate_schema(template_schema_path, schema_root)
 
-        return Template(template_schema, 
-            type=type or os.path.basename(template_schema_path).partition('_template.json')[0])
+        return Template(
+            template_schema,
+            type=type
+            or os.path.basename(template_schema_path).partition("_template.json")[0],
+        )
 
     def to_excel(self, xlsx_path: str):
         """Write this `Template` to an Excel file"""
@@ -294,15 +303,15 @@ class Template:
         from .template_reader import XlTemplateReader
 
         xlsx, errs = XlTemplateReader.from_excel(xlsx)
-        if errs: 
+        if errs:
             return False
         return xlsx.validate(self)
-    
+
     def iter_errors_excel(self, xlsx: Union[str, BinaryIO]) -> List[str]:
         """Produces all validation errors the given Excel file (either a path or an open file) against this `Template`"""
         from .template_reader import XlTemplateReader
 
         xlsx, errs = XlTemplateReader.from_excel(xlsx)
-        if errs: 
+        if errs:
             return errs
         return xlsx.iter_errors(self)

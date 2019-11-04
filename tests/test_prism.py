@@ -18,12 +18,23 @@ from unittest.mock import MagicMock, patch as mock_patch
 from .constants import TEST_DATA_DIR
 
 from cidc_schemas import prism
-from cidc_schemas.prism import prismify, merge_artifact, \
-    merge_clinical_trial_metadata, InvalidMergeTargetException, \
-    SUPPORTED_ASSAYS, SUPPORTED_MANIFESTS, SUPPORTED_TEMPLATES, SUPPORTED_ANALYSES, \
-    PROTOCOL_ID_FIELD_NAME, parse_npx, merge_artifact_extra_metadata, \
-    PRISM_MERGE_STRATEGIES, PRISM_PRISMIFY_STRATEGIES, ThrowOnCollision, \
-    MergeCollisionException
+from cidc_schemas.prism import (
+    prismify,
+    merge_artifact,
+    merge_clinical_trial_metadata,
+    InvalidMergeTargetException,
+    SUPPORTED_ASSAYS,
+    SUPPORTED_MANIFESTS,
+    SUPPORTED_TEMPLATES,
+    SUPPORTED_ANALYSES,
+    PROTOCOL_ID_FIELD_NAME,
+    parse_npx,
+    merge_artifact_extra_metadata,
+    PRISM_MERGE_STRATEGIES,
+    PRISM_PRISMIFY_STRATEGIES,
+    ThrowOnCollision,
+    MergeCollisionException,
+)
 
 from cidc_schemas.json_validation import load_and_validate_schema, InDocRefNotFoundError
 from cidc_schemas.template import Template
@@ -34,7 +45,8 @@ from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR, TEST_DATA_DI
 from .test_templates import template_set
 from .test_assays import ARTIFACT_OBJ
 
-def prismify_test_set(filter = None):
+
+def prismify_test_set(filter=None):
     yielded = False
 
     for template, xlsx_path in template_set():
@@ -44,133 +56,128 @@ def prismify_test_set(filter = None):
         assert not errors
         yield xlsx, template
         yielded = True
-    
+
     if not yielded:
         raise Exception(f"no prismify test for filter {filter!r} found")
 
+
 TEST_PRISM_TRIAL = {
-        PROTOCOL_ID_FIELD_NAME: "test_prism_trial_id",
-        "participants": [
-            {
-                "cimac_participant_id": "CTTTPP1",
-                "participant_id": "TTTPP103",
-                "cohort_name": "Arm_Z",
-                "samples": [
-                    {
-                        "aliquots": [
-                            {
-                                "slide_number": "1",
-                                "sample_volume_units": "Other",
-                                "material_used": 1,
-                                "material_remaining": 0,
-                                "quality_of_shipment": "Other",
-                                "aliquot_replacement": "N/A",
-                                "aliquot_status": "Other"
-                            },
-                        ],
-                        "cimac_id": "CTTTPP111.00",
-                        "parent_sample_id": "test_sample_1",
-                        "collection_event_name": "Baseline",
-                        "sample_location": "---",
-                        "type_of_sample": "Other",
-                        "type_of_primary_container": "Other",
-                    }
-                ],
-            },
-            {
-                "samples": [
-                    {
-                        "aliquots": [
-                            {
-                                "slide_number": "1",
-                                "sample_volume_units": "Other",
-                                "material_used": 2,
-                                "material_remaining": 0,
-                                "quality_of_shipment": "Other",
-                                "aliquot_replacement": "N/A",
-                                "aliquot_status": "Other"
-                            }
-                        ],
-                        "cimac_id": "CTTTPP121.00",
-                        "parent_sample_id": "test_sample_2",
-                        "collection_event_name": "Baseline",
-                        "sample_location": "---",
-                        "type_of_sample": "Other",
-                        "type_of_primary_container": "Other",
-                    }
-                ],
-                "cimac_participant_id": "CTTTPP2",
-                "participant_id": "TTTPP203",
-                "cohort_name": "Arm_Z"
-            }
-        ],
-        "assays": {
-            "wes": [
+    PROTOCOL_ID_FIELD_NAME: "test_prism_trial_id",
+    "participants": [
+        {
+            "cimac_participant_id": "CTTTPP1",
+            "participant_id": "TTTPP103",
+            "cohort_name": "Arm_Z",
+            "samples": [
                 {
-                    "assay_creator": "Mount Sinai",
-                    "enrichment_vendor_kit": "Twist",
-                    "library_vendor_kit": "KAPA - Hyper Prep",
-                    "sequencer_platform": "Illumina - NextSeq 550",
-                    "paired_end_reads": "Paired",
-                    "read_length": 100,
-                    "records": [
+                    "aliquots": [
                         {
-                            "library_kit_lot": "lib lot 1",
-                            "enrichment_vendor_lot": "enrich lot 1",
-                            "library_prep_date": "2019-01-01 00:00:00",
-                            "capture_date": "2019-01-01 00:00:00",
-                            "input_ng": 101,
-                            "library_yield_ng": 701,
-                            "average_insert_size": 251,
-                            "cimac_id": "CTTTPP111.00",
-                            "files": {
-                                "r1": {
-                                    "upload_placeholder": "r1.1"
-                                },
-                                "r2": {
-                                    "upload_placeholder": "r2.1"
-                                },
-                                "read_group_mapping_file": {
-                                    "upload_placeholder": "read_group_mapping_file.1"
-                                }
-                            }
+                            "slide_number": "1",
+                            "sample_volume_units": "Other",
+                            "material_used": 1,
+                            "material_remaining": 0,
+                            "quality_of_shipment": "Other",
+                            "aliquot_replacement": "N/A",
+                            "aliquot_status": "Other",
                         },
-                        {
-                            "library_kit_lot": "lib lot 2",
-                            "enrichment_vendor_lot": "enrich lot 2",
-                            "library_prep_date": "2019-02-02 00:00:00",
-                            "capture_date": "2019-02-02 00:00:00",
-                            "input_ng": 102,
-                            "library_yield_ng": 702,
-                            "average_insert_size": 252,
-                            "cimac_id": "CTTTPP121.00",
-                            "files": {
-                                "r1": {
-                                    "upload_placeholder": "r1.2"
-                                },
-                                "r2": {
-                                    "upload_placeholder": "r2.2"
-                                },
-                                "read_group_mapping_file": {
-                                    "upload_placeholder": "read_group_mapping_file.2"
-                                }
-                            }
-                        }
-                    ]
+                    ],
+                    "cimac_id": "CTTTPP111.00",
+                    "parent_sample_id": "test_sample_1",
+                    "collection_event_name": "Baseline",
+                    "sample_location": "---",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
                 }
-            ]
-        }
-    }
+            ],
+        },
+        {
+            "samples": [
+                {
+                    "aliquots": [
+                        {
+                            "slide_number": "1",
+                            "sample_volume_units": "Other",
+                            "material_used": 2,
+                            "material_remaining": 0,
+                            "quality_of_shipment": "Other",
+                            "aliquot_replacement": "N/A",
+                            "aliquot_status": "Other",
+                        }
+                    ],
+                    "cimac_id": "CTTTPP121.00",
+                    "parent_sample_id": "test_sample_2",
+                    "collection_event_name": "Baseline",
+                    "sample_location": "---",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
+                }
+            ],
+            "cimac_participant_id": "CTTTPP2",
+            "participant_id": "TTTPP203",
+            "cohort_name": "Arm_Z",
+        },
+    ],
+    "assays": {
+        "wes": [
+            {
+                "assay_creator": "Mount Sinai",
+                "enrichment_vendor_kit": "Twist",
+                "library_vendor_kit": "KAPA - Hyper Prep",
+                "sequencer_platform": "Illumina - NextSeq 550",
+                "paired_end_reads": "Paired",
+                "read_length": 100,
+                "records": [
+                    {
+                        "library_kit_lot": "lib lot 1",
+                        "enrichment_vendor_lot": "enrich lot 1",
+                        "library_prep_date": "2019-01-01 00:00:00",
+                        "capture_date": "2019-01-01 00:00:00",
+                        "input_ng": 101,
+                        "library_yield_ng": 701,
+                        "average_insert_size": 251,
+                        "cimac_id": "CTTTPP111.00",
+                        "files": {
+                            "r1": {"upload_placeholder": "r1.1"},
+                            "r2": {"upload_placeholder": "r2.1"},
+                            "read_group_mapping_file": {
+                                "upload_placeholder": "read_group_mapping_file.1"
+                            },
+                        },
+                    },
+                    {
+                        "library_kit_lot": "lib lot 2",
+                        "enrichment_vendor_lot": "enrich lot 2",
+                        "library_prep_date": "2019-02-02 00:00:00",
+                        "capture_date": "2019-02-02 00:00:00",
+                        "input_ng": 102,
+                        "library_yield_ng": 702,
+                        "average_insert_size": 252,
+                        "cimac_id": "CTTTPP121.00",
+                        "files": {
+                            "r1": {"upload_placeholder": "r1.2"},
+                            "r2": {"upload_placeholder": "r2.2"},
+                            "read_group_mapping_file": {
+                                "upload_placeholder": "read_group_mapping_file.2"
+                            },
+                        },
+                    },
+                ],
+            }
+        ]
+    },
+}
 
 
 # corresponding list of gs_urls.
 WES_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP111.00/wes/r1.fastq': "r1.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP111.00/wes/r2.fastq': "r2.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP111.00/wes/rgm.txt': "read_group_mapping_file.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP121.00/wes/r1.fastq': "r1.2",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP121.00/wes/r2.fastq': "r2.2",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]+'/CTTTPP121.00/wes/rgm.txt': "read_group_mapping_file.2"
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/r1.fastq": "r1.1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/r2.fastq": "r2.1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    + "/CTTTPP111.00/wes/rgm.txt": "read_group_mapping_file.1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/r1.fastq": "r1.2",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/r2.fastq": "r2.2",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    + "/CTTTPP121.00/wes/rgm.txt": "read_group_mapping_file.2",
 }
 
 
@@ -192,7 +199,7 @@ def test_merge_core():
         "material_remaining": 0,
         "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
-        "aliquot_status": "Other"
+        "aliquot_status": "Other",
     }
 
     # create the sample.
@@ -211,14 +218,11 @@ def test_merge_core():
         "cimac_participant_id": "CTTTPPP",
         "participant_id": "blank",
         "samples": [sample],
-        "cohort_name": "Arm_Z"
+        "cohort_name": "Arm_Z",
     }
 
     # create the trial
-    ct1 = {
-        PROTOCOL_ID_FIELD_NAME: "test",
-        "participants": [participant]
-    }
+    ct1 = {PROTOCOL_ID_FIELD_NAME: "test", "participants": [participant]}
 
     # create validator assert schemas are valid.
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
@@ -227,31 +231,37 @@ def test_merge_core():
 
     # create a copy of this, modify participant id
     ct2 = copy.deepcopy(ct1)
-    ct2['participants'][0]['cimac_participant_id'] = "PABCD"
+    ct2["participants"][0]["cimac_participant_id"] = "PABCD"
 
     # merge them
     merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
     ct3 = merger.merge(ct1, ct2)
 
     # assert we have two participants and their ids are different.
-    assert len(ct3['participants']) == 2
-    assert ct3['participants'][0]['cimac_participant_id'] == ct1['participants'][0]['cimac_participant_id']
-    assert ct3['participants'][1]['cimac_participant_id'] == ct2['participants'][0]['cimac_participant_id']
+    assert len(ct3["participants"]) == 2
+    assert (
+        ct3["participants"][0]["cimac_participant_id"]
+        == ct1["participants"][0]["cimac_participant_id"]
+    )
+    assert (
+        ct3["participants"][1]["cimac_participant_id"]
+        == ct2["participants"][0]["cimac_participant_id"]
+    )
 
     # now lets add a new sample to one of the participants
     ct4 = copy.deepcopy(ct3)
-    ct4['participants'][0]['samples'][0]['cimac_id'] = 'new_id_1'
+    ct4["participants"][0]["samples"][0]["cimac_id"] = "new_id_1"
 
     ct5 = merger.merge(ct3, ct4)
-    assert len(ct5['participants'][0]['samples']) == 2
+    assert len(ct5["participants"][0]["samples"]) == 2
 
     # now lets add a new aliquot to one of the samples.
     ct6 = copy.deepcopy(ct5)
-    aliquot2 = ct6['participants'][0]['samples'][0]['aliquots'][0]
-    aliquot2['slide_number'] = 'new_ali_id_1'
+    aliquot2 = ct6["participants"][0]["samples"][0]["aliquots"][0]
+    aliquot2["slide_number"] = "new_ali_id_1"
 
     ct7 = merger.merge(ct5, ct6)
-    assert len(ct7['participants'][0]['samples'][0]['aliquots']) == 2
+    assert len(ct7["participants"][0]["samples"][0]["aliquots"]) == 2
 
 
 MINIMAL_TEST_TRIAL = {
@@ -268,7 +278,7 @@ MINIMAL_TEST_TRIAL = {
                             "material_remaining": 0,
                             "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
-                            "aliquot_status": "Other"
+                            "aliquot_status": "Other",
                         }
                     ],
                     "collection_event_name": "Baseline",
@@ -276,16 +286,15 @@ MINIMAL_TEST_TRIAL = {
                     "type_of_sample": "Other",
                     "type_of_primary_container": "Other",
                     "parent_sample_id": "test_min_Sample_1",
-                    "cimac_id": "CTTTMIN01.00"
+                    "cimac_id": "CTTTMIN01.00",
                 }
             ],
             "cimac_participant_id": "CTTTMIN",
             "participant_id": "test_min_Patient_1",
-            "cohort_name": "Arm_Z"
+            "cohort_name": "Arm_Z",
         }
-    ]
+    ],
 }
-
 
 
 def test_minimal_test_data():
@@ -299,10 +308,10 @@ def test_samples_merge():
 
     # one with 1 sample
     a1 = copy.deepcopy(MINIMAL_TEST_TRIAL)
-    
+
     # create a2 and modify ids to trigger merge behavior
     a2 = copy.deepcopy(a1)
-    a2['participants'][0]['samples'][0]['cimac_id'] = "something different"
+    a2["participants"][0]["samples"][0]["cimac_id"] = "something different"
 
     # create validator assert schema is valid.
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
@@ -311,17 +320,16 @@ def test_samples_merge():
     # merge them
     merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
     a3 = merger.merge(a1, a2)
-    assert len(a3['participants']) == 1
-    assert len(a3['participants'][0]['samples']) == 2
+    assert len(a3["participants"]) == 1
+    assert len(a3["participants"][0]["samples"]) == 2
 
 
-@pytest.mark.parametrize('xlsx, template', prismify_test_set())
+@pytest.mark.parametrize("xlsx, template", prismify_test_set())
 def test_prism(xlsx, template):
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     schema = validator.schema
-
 
     # TODO: every other assay
     if template.type not in SUPPORTED_ASSAYS:
@@ -333,11 +341,11 @@ def test_prism(xlsx, template):
 
     if template.type in SUPPORTED_ASSAYS:
         # olink is different - is will never have array of assay "runs" - only one
-        if template.type != 'olink':
-            assert len(ct['assays'][template.type]) == 1
+        if template.type != "olink":
+            assert len(ct["assays"][template.type]) == 1
 
     elif template.type in SUPPORTED_MANIFESTS:
-        assert not ct.get('assays'), "Assay created during manifest prismify"
+        assert not ct.get("assays"), "Assay created during manifest prismify"
 
     else:
         assert False, f"Unknown template {template.type}"
@@ -350,24 +358,28 @@ def test_prism(xlsx, template):
 
     # assert works
     errors = list(validator.iter_errors(merged))
-    assert not errors 
+    assert not errors
 
-    if template.type in SUPPORTED_ASSAYS :
+    if template.type in SUPPORTED_ASSAYS:
         assert merged[PROTOCOL_ID_FIELD_NAME] == "test_prism_trial_id"
     else:
-        assert TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] == merged[PROTOCOL_ID_FIELD_NAME]
+        assert (
+            TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] == merged[PROTOCOL_ID_FIELD_NAME]
+        )
 
 
 def test_unsupported_prismify():
     """Check that prism raises a non-implemented error for unsupported template types."""
     mock_template = MagicMock()
-    mock_template.type = 'some-unsupported-type'
+    mock_template.type = "some-unsupported-type"
 
-    with pytest.raises(NotImplementedError, match="'some-unsupported-type' is not supported"):
+    with pytest.raises(
+        NotImplementedError, match="'some-unsupported-type' is not supported"
+    ):
         prismify(None, mock_template)
 
 
-@pytest.mark.parametrize('xlsx, template', prismify_test_set())
+@pytest.mark.parametrize("xlsx, template", prismify_test_set())
 def test_filepath_gen(xlsx, template):
 
     # TODO: every other assay
@@ -382,7 +394,7 @@ def test_filepath_gen(xlsx, template):
     _, file_maps, errs = prismify(xlsx, template)
     assert len(errs) == 0
     # we ignore and do not validate 'ct'
-    # because it's only a ct patch not a full ct 
+    # because it's only a ct patch not a full ct
 
     local_to_gcs_mapping = {}
     for fmap_entry in file_maps:
@@ -407,17 +419,23 @@ def test_filepath_gen(xlsx, template):
 
         # 4 in total
         assert len(file_maps) == 6
-        assert 6 == sum([x.gs_key.startswith(TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]) for x in file_maps])
+        assert 6 == sum(
+            [
+                x.gs_key.startswith(TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME])
+                for x in file_maps
+            ]
+        )
 
         # all that with
         # 1 trial id
         assert 1 == len(set([x.gs_key.split("/")[0] for x in file_maps]))
         # 2 samples
 
-        assert ['CTTTPP111.00', 'CTTTPP121.00'] == list(sorted(set([x.gs_key.split("/")[1] for x in file_maps])))
+        assert ["CTTTPP111.00", "CTTTPP121.00"] == list(
+            sorted(set([x.gs_key.split("/")[1] for x in file_maps]))
+        )
 
-
-    elif template.type == 'olink':
+    elif template.type == "olink":
 
         # we should have 2 npx files
         assert 2 == sum([x.gs_key.endswith("assay_npx.xlsx") for x in file_maps])
@@ -435,17 +453,15 @@ def test_filepath_gen(xlsx, template):
         assert len(file_maps) == 5
         assert 5 == sum([x.gs_key.startswith("test_prism_trial_id") for x in file_maps])
 
-
-    elif template.type == 'cytof':
+    elif template.type == "cytof":
         # TODO: UPdate this to assert we can handle multiple source fcs files
 
         for x in file_maps:
             assert x.gs_key.endswith(".fcs")
         assert len(file_maps) == 6
 
-    elif template.type == 'ihc':
+    elif template.type == "ihc":
         assert 2 == sum([x.gs_key.endswith(".tiff") for x in file_maps])
-
 
     elif template.type in SUPPORTED_MANIFESTS:
 
@@ -455,8 +471,7 @@ def test_filepath_gen(xlsx, template):
         assert False, f"add {template.type} assay specific asserts"
 
 
-
-@pytest.mark.parametrize('xlsx, template', prismify_test_set('cytof'))
+@pytest.mark.parametrize("xlsx, template", prismify_test_set("cytof"))
 def test_prismify_cytof_only(xlsx, template):
 
     # create validators
@@ -479,7 +494,8 @@ def test_prismify_cytof_only(xlsx, template):
     # assert works
     validator.validate(merged)
 
-@pytest.mark.parametrize('xlsx, template', prismify_test_set('ihc'))
+
+@pytest.mark.parametrize("xlsx, template", prismify_test_set("ihc"))
 def test_prismify_ihc(xlsx, template):
 
     # create validators
@@ -499,7 +515,7 @@ def test_prismify_ihc(xlsx, template):
     validator.validate(merged)
 
 
-@pytest.mark.parametrize('xlsx, template', prismify_test_set('plasma'))
+@pytest.mark.parametrize("xlsx, template", prismify_test_set("plasma"))
 def test_prismify_plasma(xlsx, template):
 
     # create validators
@@ -514,17 +530,24 @@ def test_prismify_plasma(xlsx, template):
     assert 2 == len(md_patch["participants"])
     assert 3 == len(md_patch["participants"][0]["samples"])
     assert md_patch["participants"][0]["samples"][0]["cimac_id"].startswith(
-        md_patch["participants"][0]["cimac_participant_id"])
+        md_patch["participants"][0]["cimac_participant_id"]
+    )
 
-    assert md_patch["participants"][0]["gender"]        # filled from 1 tab
-    assert md_patch["participants"][0]["cohort_name"]   # filled from another
+    assert md_patch["participants"][0]["gender"]  # filled from 1 tab
+    assert md_patch["participants"][0]["cohort_name"]  # filled from another
 
-    assert md_patch["participants"][0]["samples"][0]["processed_sample_id"]  # filled from 1 tab
-    assert md_patch["participants"][0]["samples"][0]["topography_code"]     # filled from the second tab
-    assert md_patch["participants"][0]["samples"][0]["site_description"]    # filled from the second tab
+    assert md_patch["participants"][0]["samples"][0][
+        "processed_sample_id"
+    ]  # filled from 1 tab
+    assert md_patch["participants"][0]["samples"][0][
+        "topography_code"
+    ]  # filled from the second tab
+    assert md_patch["participants"][0]["samples"][0][
+        "site_description"
+    ]  # filled from the second tab
 
 
-@pytest.mark.parametrize('xlsx, template', prismify_test_set('wes'))
+@pytest.mark.parametrize("xlsx, template", prismify_test_set("wes"))
 def test_prismify_wes_only(xlsx, template):
 
     # create validators
@@ -536,7 +559,9 @@ def test_prismify_wes_only(xlsx, template):
     assert len(errs) == 0
 
     for e in validator.iter_errors(md_patch):
-        assert isinstance(e, InDocRefNotFoundError) or ("'participants'" in str(e) and "required" in str(e))
+        assert isinstance(e, InDocRefNotFoundError) or (
+            "'participants'" in str(e) and "required" in str(e)
+        )
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -548,7 +573,9 @@ def test_prismify_wes_only(xlsx, template):
     validator.validate(merged)
 
     merged_wo_needed_participants = copy.deepcopy(merged)
-    merged_wo_needed_participants['participants'][0]['samples'][0]['cimac_id'] = "CTTTNAADA.00"
+    merged_wo_needed_participants["participants"][0]["samples"][0][
+        "cimac_id"
+    ] = "CTTTNAADA.00"
 
     # assert in_doc_ref constraints work
     with pytest.raises(InDocRefNotFoundError):
@@ -558,7 +585,7 @@ def test_prismify_wes_only(xlsx, template):
     assert 2 == len(list(validator.iter_errors(merged_wo_needed_participants)))
 
 
-@pytest.mark.parametrize('xlsx, template', prismify_test_set('olink'))
+@pytest.mark.parametrize("xlsx, template", prismify_test_set("olink"))
 def test_prismify_olink_only(xlsx, template):
 
     # create validators
@@ -580,7 +607,8 @@ def test_prismify_olink_only(xlsx, template):
 
     # return these for use in other tests
     return ct, file_maps
-    
+
+
 def test_merge_artifact_wes_only():
 
     # create the clinical trial.
@@ -596,36 +624,41 @@ def test_merge_artifact_wes_only():
 
         # attempt to merge
         ct, artifact, patch_metadata = merge_artifact(
-                ct,
-                assay_type="wes",
-                artifact_uuid=uuid,
-                object_url=url,
-                file_size_bytes=1,
-                uploaded_timestamp="01/01/2001",
-                md5_hash=f"hash_{uuid}"
-            )
+            ct,
+            assay_type="wes",
+            artifact_uuid=uuid,
+            object_url=url,
+            file_size_bytes=1,
+            uploaded_timestamp="01/01/2001",
+            md5_hash=f"hash_{uuid}",
+        )
 
         # assert we still have a good clinical trial object.
         validator.validate(ct)
 
         # check that the data_format was set
-        assert 'data_format' in artifact
+        assert "data_format" in artifact
 
         # search for this url and all previous (no clobber)
         searched_urls.append(url)
 
     for url in searched_urls:
-        assert len((ct | grep(url))['matched_values']) > 0
+        assert len((ct | grep(url))["matched_values"]) > 0
 
-    assert len(ct['assays']['wes']) == 1, "Multiple WESes created instead of merging into one"
-    assert len(ct['assays']['wes'][0]['records']) == 2, "More records than expected"
+    assert (
+        len(ct["assays"]["wes"]) == 1
+    ), "Multiple WESes created instead of merging into one"
+    assert len(ct["assays"]["wes"][0]["records"]) == 2, "More records than expected"
 
-    dd = DeepDiff(TEST_PRISM_TRIAL,ct)
+    dd = DeepDiff(TEST_PRISM_TRIAL, ct)
 
     # we add 7 required fields per artifact thus `*7`
-    assert len(dd['dictionary_item_added']) == len(WES_TEMPLATE_EXAMPLE_GS_URLS)*7, "Unexpected CT changes"
+    assert (
+        len(dd["dictionary_item_added"]) == len(WES_TEMPLATE_EXAMPLE_GS_URLS) * 7
+    ), "Unexpected CT changes"
 
-    assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
+    assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
+
 
 def test_merge_ct_meta():
     """ 
@@ -640,7 +673,7 @@ def test_merge_ct_meta():
     target = copy.deepcopy(TEST_PRISM_TRIAL)
 
     # first test the fact that base doc must be valid
-    del target['participants']
+    del target["participants"]
     with pytest.raises(InvalidMergeTargetException):
         merge_clinical_trial_metadata(patch, target)
 
@@ -657,52 +690,57 @@ def test_merge_ct_meta():
     # include data in 1 that is missing in the other
     # at the trial level and assert the merge
     # does not clobber any
-    patch[PROTOCOL_ID_FIELD_NAME] = target[PROTOCOL_ID_FIELD_NAME] 
-    patch['trial_name'] = 'name ABC'
-    target['nci_id'] = 'xyz1234'
+    patch[PROTOCOL_ID_FIELD_NAME] = target[PROTOCOL_ID_FIELD_NAME]
+    patch["trial_name"] = "name ABC"
+    target["nci_id"] = "xyz1234"
 
     ct_merge, errs = merge_clinical_trial_metadata(patch, target)
     assert not errs
-    assert ct_merge['trial_name'] == 'name ABC'
-    assert ct_merge['nci_id'] == 'xyz1234'
+    assert ct_merge["trial_name"] == "name ABC"
+    assert ct_merge["nci_id"] == "xyz1234"
 
     # updates aren't allowed
-    patch['trial_name'] = 'name ABC'
-    target['trial_name'] = 'CBA eman'
-    with pytest.raises(MergeCollisionException, match="conflicting values for trial_name"):
+    patch["trial_name"] = "name ABC"
+    target["trial_name"] = "CBA eman"
+    with pytest.raises(
+        MergeCollisionException, match="conflicting values for trial_name"
+    ):
         merge_clinical_trial_metadata(patch, target)
-    target['trial_name'] = patch['trial_name']
+    target["trial_name"] = patch["trial_name"]
 
     # now change the participant ids
     # this should cause the merge to have two
     # participants.
-    patch['participants'][0]['cimac_participant_id'] = 'CTTTDD1'
-    for i, sample in enumerate(patch['participants'][0]['samples']):
-        sample['cimac_id'] = f'CTTTDD1S{i}.00'
+    patch["participants"][0]["cimac_participant_id"] = "CTTTDD1"
+    for i, sample in enumerate(patch["participants"][0]["samples"]):
+        sample["cimac_id"] = f"CTTTDD1S{i}.00"
 
     ct_merge, errs = merge_clinical_trial_metadata(patch, target)
     assert not errs
-    assert len(ct_merge['participants']) == 1+len(TEST_PRISM_TRIAL['participants'])
+    assert len(ct_merge["participants"]) == 1 + len(TEST_PRISM_TRIAL["participants"])
 
     # now lets have the same participant but adding multiple samples.
-    patch[PROTOCOL_ID_FIELD_NAME] = target[PROTOCOL_ID_FIELD_NAME] 
-    patch['participants'][0]['cimac_participant_id'] = \
-        target['participants'][0]['cimac_participant_id']
-    patch['participants'][0]['samples'][0]['cimac_id'] = 'CTTTPP1N1.00'
-    patch['participants'][1]['samples'][0]['cimac_id'] = 'CTTTPP1N2.00'
- 
+    patch[PROTOCOL_ID_FIELD_NAME] = target[PROTOCOL_ID_FIELD_NAME]
+    patch["participants"][0]["cimac_participant_id"] = target["participants"][0][
+        "cimac_participant_id"
+    ]
+    patch["participants"][0]["samples"][0]["cimac_id"] = "CTTTPP1N1.00"
+    patch["participants"][1]["samples"][0]["cimac_id"] = "CTTTPP1N2.00"
+
     ct_merge, errs = merge_clinical_trial_metadata(patch, target)
     assert not errs
-    assert len(ct_merge['participants']) == len(TEST_PRISM_TRIAL['participants'])
-    assert sum(len(p['samples']) for p in ct_merge['participants']) == 2+sum(len(p['samples']) for p in TEST_PRISM_TRIAL['participants'])
+    assert len(ct_merge["participants"]) == len(TEST_PRISM_TRIAL["participants"])
+    assert sum(len(p["samples"]) for p in ct_merge["participants"]) == 2 + sum(
+        len(p["samples"]) for p in TEST_PRISM_TRIAL["participants"]
+    )
 
 
-@pytest.mark.parametrize('xlsx, template', prismify_test_set())
+@pytest.mark.parametrize("xlsx, template", prismify_test_set())
 def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     # TODO: implement other assays
     if template.type not in SUPPORTED_TEMPLATES:
-        return 
+        return
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
@@ -712,67 +750,78 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     assert len(errs) == 0
 
     if template.type in SUPPORTED_MANIFESTS:
-        assert len(prism_patch['shipments']) == 1
+        assert len(prism_patch["shipments"]) == 1
 
-        assert prism_patch['participants'][0]['samples'][0]["cimac_id"][:7].startswith(
-                prism_patch['participants'][0]['cimac_participant_id'])
+        assert prism_patch["participants"][0]["samples"][0]["cimac_id"][:7].startswith(
+            prism_patch["participants"][0]["cimac_participant_id"]
+        )
 
-        if template.type == 'pbmc':
-            assert len(prism_patch['participants']) == 2
-            assert len(prism_patch['participants'][0]['samples']) == 3
-            assert len(prism_patch['participants'][1]['samples']) == 3
+        if template.type == "pbmc":
+            assert len(prism_patch["participants"]) == 2
+            assert len(prism_patch["participants"][0]["samples"]) == 3
+            assert len(prism_patch["participants"][1]["samples"]) == 3
 
-        elif template.type == 'plasma':
-            assert len(prism_patch['participants']) == 2
-            assert len(prism_patch['participants'][0]['samples']) == 3
-            assert 'aliquots' not in prism_patch['participants'][0]['samples'][0]
+        elif template.type == "plasma":
+            assert len(prism_patch["participants"]) == 2
+            assert len(prism_patch["participants"][0]["samples"]) == 3
+            assert "aliquots" not in prism_patch["participants"][0]["samples"][0]
 
-        else: 
-            assert False, f'add {template.type} specific asserts'
+        else:
+            assert False, f"add {template.type} specific asserts"
 
     if template.type in SUPPORTED_ASSAYS:
         # olink is different in structure - no array of assays, only one.
-        if template.type == 'olink':
-            prism_patch_assay_records = prism_patch['assays'][template.type]['records']
-            assert len(prism_patch['assays'][template.type]['records']) == 2
+        if template.type == "olink":
+            prism_patch_assay_records = prism_patch["assays"][template.type]["records"]
+            assert len(prism_patch["assays"][template.type]["records"]) == 2
 
-        elif template.type == 'cytof':
-            assert len(prism_patch['assays'][template.type]) == 1
-            assert 'records' in prism_patch['assays'][template.type][0]
-            assert len(prism_patch['assays'][template.type][0]['records']) == 2
-            assert len(prism_patch['assays'][template.type][0]['cytof_antibodies']) == 2
+        elif template.type == "cytof":
+            assert len(prism_patch["assays"][template.type]) == 1
+            assert "records" in prism_patch["assays"][template.type][0]
+            assert len(prism_patch["assays"][template.type][0]["records"]) == 2
+            assert len(prism_patch["assays"][template.type][0]["cytof_antibodies"]) == 2
 
-        elif template.type == 'wes':
-            assert len(prism_patch['assays'][template.type][0]['records']) == 2
+        elif template.type == "wes":
+            assert len(prism_patch["assays"][template.type][0]["records"]) == 2
 
-        elif template.type =='ihc':
-            assert len(prism_patch['assays'][template.type][0]['records']) == 1
+        elif template.type == "ihc":
+            assert len(prism_patch["assays"][template.type][0]["records"]) == 1
 
         else:
-            raise NotImplementedError(f"no support in test for this template.type {template.type}")
+            raise NotImplementedError(
+                f"no support in test for this template.type {template.type}"
+            )
 
     for f in file_maps:
-        assert f'{template.type}/' in f.gs_key, f"No {template.type} template.type found"
+        assert (
+            f"{template.type}/" in f.gs_key
+        ), f"No {template.type} template.type found"
 
-    original_ct = copy.deepcopy(TEST_PRISM_TRIAL) 
+    original_ct = copy.deepcopy(TEST_PRISM_TRIAL)
 
     if template.type in SUPPORTED_ANALYSES:
         # we can't merge analysis info unless an associated initial assay upload exists
         # in the clinical trial object, so we add an initial assay upload below:
 
-        if template.type == 'cytof_analysis':
+        if template.type == "cytof_analysis":
             # simulate an initial cytof upload by prismifying the initial cytof template object,
             # and merging it with clinical trial object
-            cytof_input_xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, 'cytof_template.xlsx')
+            cytof_input_xlsx_path = os.path.join(
+                TEMPLATE_EXAMPLES_DIR, "cytof_template.xlsx"
+            )
             cytof_input_xlsx, _ = XlTemplateReader.from_excel(cytof_input_xlsx_path)
-            cytof_input_template = Template.from_type('cytof')
+            cytof_input_template = Template.from_type("cytof")
             cytof_input_patch, _, _ = prismify(cytof_input_xlsx, cytof_input_template)
 
-            original_ct, errs = merge_clinical_trial_metadata(cytof_input_patch, original_ct)
+            original_ct, errs = merge_clinical_trial_metadata(
+                cytof_input_patch, original_ct
+            )
             assert len(errs) == 0
 
         else:
-            raise NotImplementedError(f"no support in test for this template.type {template.type}")
+            raise NotImplementedError(
+                f"no support in test for this template.type {template.type}"
+            )
 
     # "prismify" provides only a patch so we need to merge it into a "full" ct
     full_after_prism, errs = merge_clinical_trial_metadata(prism_patch, original_ct)
@@ -789,114 +838,132 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
         # attempt to merge
         patch_copy_4_artifacts, artifact, patch_metadata = merge_artifact(
-                patch_copy_4_artifacts,
-                artifact_uuid=fmap_entry.upload_placeholder,
-                object_url=fmap_entry.gs_key,
-                assay_type=template.type,
-                file_size_bytes=i,
-                uploaded_timestamp="01/01/2001",
-                md5_hash=f"hash_{i}"
-            )
+            patch_copy_4_artifacts,
+            artifact_uuid=fmap_entry.upload_placeholder,
+            object_url=fmap_entry.gs_key,
+            assay_type=template.type,
+            file_size_bytes=i,
+            uploaded_timestamp="01/01/2001",
+            md5_hash=f"hash_{i}",
+        )
 
         # check that the data_format was set
-        assert 'data_format' in artifact
+        assert "data_format" in artifact
 
         # assert we still have a good clinical trial object, so we can save it
-        step_ct, errs = merge_clinical_trial_metadata(patch_copy_4_artifacts, original_ct)
+        step_ct, errs = merge_clinical_trial_metadata(
+            patch_copy_4_artifacts, original_ct
+        )
         assert not errs
         validator.validate(step_ct)
 
-        # we will than search for this url in the resulting ct, 
+        # we will than search for this url in the resulting ct,
         # to check all artifacts were indeed merged
         merged_gs_keys.append(fmap_entry.gs_key)
 
-    # `merge_artifact` modifies ct in-place, so 
+    # `merge_artifact` modifies ct in-place, so
     full_ct, errs = merge_clinical_trial_metadata(patch_copy_4_artifacts, original_ct)
     assert not errs
 
     # validate the full clinical trial object
     validator.validate(full_ct)
 
-    if template.type == 'ihc':
+    if template.type == "ihc":
         assert len(merged_gs_keys) == 2
 
-    elif template.type == 'wes':
-        assert len(merged_gs_keys) == 3 * 2 # 3 files per entry in xlsx
+    elif template.type == "wes":
+        assert len(merged_gs_keys) == 3 * 2  # 3 files per entry in xlsx
         assert set(merged_gs_keys) == set(WES_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
-    elif template.type == 'olink':
-        assert len(merged_gs_keys) == 5 # 2 files per entry in xlsx + 1 file in preamble
+    elif template.type == "olink":
+        assert (
+            len(merged_gs_keys) == 5
+        )  # 2 files per entry in xlsx + 1 file in preamble
 
     elif template.type in SUPPORTED_MANIFESTS:
         assert len(merged_gs_keys) == 0
 
-    elif template.type == 'cytof':
+    elif template.type == "cytof":
         # TODO: This will need ot be updated when we accept a list of source fcs files
         assert len(merged_gs_keys) == 6
 
-    elif template.type == 'cytof_analysis':
+    elif template.type == "cytof_analysis":
         assert len(merged_gs_keys) == 9  # 9 output files
 
     else:
         assert False, f"add {template.type} assay specific asserts"
 
     for file_map_entry in file_maps:
-        assert len((full_ct | grep(fmap_entry.gs_key))['matched_values']) == 1 # each gs_url only once
+        assert (
+            len((full_ct | grep(fmap_entry.gs_key))["matched_values"]) == 1
+        )  # each gs_url only once
 
     # olink is special - it's not an array
     if template.type == "olink":
-        assert len(full_ct['assays'][template.type]['records']) == 2, "More records than expected"
+        assert (
+            len(full_ct["assays"][template.type]["records"]) == 2
+        ), "More records than expected"
 
-    elif template.type == 'wes':
-        assert len(full_ct['assays'][template.type]) == 1+len(TEST_PRISM_TRIAL['assays'][template.type]), f"Multiple {template.type}-assays created instead of merging into one"
-        assert len(full_ct['assays'][template.type][0]['records']) == 2, "More records than expected"
+    elif template.type == "wes":
+        assert len(full_ct["assays"][template.type]) == 1 + len(
+            TEST_PRISM_TRIAL["assays"][template.type]
+        ), f"Multiple {template.type}-assays created instead of merging into one"
+        assert (
+            len(full_ct["assays"][template.type][0]["records"]) == 2
+        ), "More records than expected"
 
-    elif template.type == 'ihc':
-        assert len(full_ct['assays'][template.type][0]['records']) == 1, "More records than expected"
+    elif template.type == "ihc":
+        assert (
+            len(full_ct["assays"][template.type][0]["records"]) == 1
+        ), "More records than expected"
 
     elif template.type in SUPPORTED_MANIFESTS:
         assert full_ct["assays"] == original_ct["assays"]
 
-    elif template.type == 'cytof':
-        assert len(full_ct['assays'][template.type]) == 1
+    elif template.type == "cytof":
+        assert len(full_ct["assays"][template.type]) == 1
 
-    elif template.type == 'cytof_analysis':
+    elif template.type == "cytof_analysis":
         # the original cytof upload had 2 records, hence after analysis, this too has 2 records
-        assert len(full_ct['assays']['cytof'][0]['records']) == 2, "More records than expected"
+        assert (
+            len(full_ct["assays"]["cytof"][0]["records"]) == 2
+        ), "More records than expected"
 
     else:
         assert False, f"add {template.type} assay specific asserts"
 
     dd = DeepDiff(full_after_prism, full_ct)
 
-    if template.type=='wes':
+    if template.type == "wes":
 
         # 6 files * 7 artifact attributes
-        assert len(dd['dictionary_item_added']) == 6*7, "Unexpected CT changes"
+        assert len(dd["dictionary_item_added"]) == 6 * 7, "Unexpected CT changes"
 
         # nothing else in diff
-        assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
+        assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
 
-    elif template.type == 'ihc':
+    elif template.type == "ihc":
         # 2 files * 7 artifact attributes
-        assert len(dd['dictionary_item_added']) == 2*7, "Unexpected CT changes"
+        assert len(dd["dictionary_item_added"]) == 2 * 7, "Unexpected CT changes"
 
     elif template.type == "olink":
 
-        assert list(dd.keys()) == ['dictionary_item_added'], "Unexpected CT changes"
+        assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
 
         # 7 artifact attributes * 5 files (2 per record + 1 study)
-        assert len(dd['dictionary_item_added']) == 7*(2*2+1), "Unexpected CT changes"
+        assert len(dd["dictionary_item_added"]) == 7 * (
+            2 * 2 + 1
+        ), "Unexpected CT changes"
 
     elif template.type in SUPPORTED_MANIFESTS:
         assert len(dd) == 0, "Unexpected CT changes"
 
-    elif template.type == 'cytof':
-        assert len(dd['dictionary_item_added']) == 7*6, "Unexpected CT changes"
+    elif template.type == "cytof":
+        assert len(dd["dictionary_item_added"]) == 7 * 6, "Unexpected CT changes"
 
-    elif template.type == 'cytof_analysis':
+    elif template.type == "cytof_analysis":
         # 7 artifact attributes * 9 files
-        assert len(dd['dictionary_item_added']) == 7*9, "Unexpected CT changes"
+        assert len(dd["dictionary_item_added"]) == 7 * 9, "Unexpected CT changes"
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -904,10 +971,42 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
 def test_merge_stuff():
 
-    obj1 = {'_preamble_obj': 'copy_for:cytof:Antibody Information:row_0', 'cytof_antibodies': [{'_data_obj': 'cytof:Antibody Information:row_0', 'antibody': 'CD8', 'clone': 'C8/144b', 'company': 'DAKO', 'cat_num': 'C8-ABC', 'lot_num': '3983272', 'isotope': '146Nd', 'dilution': '100X', 'stain_type': 'Surface Stain'}]}
-    obj2 = {'_preamble_obj': 'copy_for:cytof:Antibody Information:row_1', 'cytof_antibodies': [{'_data_obj': 'cytof:Antibody Information:row_1', 'antibody': 'PD-L1', 'clone': 'C2/11p', 'company': 'DAKO', 'cat_num': 'C8-AB123', 'lot_num': '1231272', 'isotope': '146Nb', 'dilution': '100X', 'stain_type': 'Surface Stain'}]}
+    obj1 = {
+        "_preamble_obj": "copy_for:cytof:Antibody Information:row_0",
+        "cytof_antibodies": [
+            {
+                "_data_obj": "cytof:Antibody Information:row_0",
+                "antibody": "CD8",
+                "clone": "C8/144b",
+                "company": "DAKO",
+                "cat_num": "C8-ABC",
+                "lot_num": "3983272",
+                "isotope": "146Nd",
+                "dilution": "100X",
+                "stain_type": "Surface Stain",
+            }
+        ],
+    }
+    obj2 = {
+        "_preamble_obj": "copy_for:cytof:Antibody Information:row_1",
+        "cytof_antibodies": [
+            {
+                "_data_obj": "cytof:Antibody Information:row_1",
+                "antibody": "PD-L1",
+                "clone": "C2/11p",
+                "company": "DAKO",
+                "cat_num": "C8-AB123",
+                "lot_num": "1231272",
+                "isotope": "146Nb",
+                "dilution": "100X",
+                "stain_type": "Surface Stain",
+            }
+        ],
+    }
 
-    schema = load_and_validate_schema(os.path.join(SCHEMA_DIR, "assays/cytof_assay.json"))
+    schema = load_and_validate_schema(
+        os.path.join(SCHEMA_DIR, "assays/cytof_assay.json")
+    )
     obj1 = {"pizza": "peperoni", "slices": [{"topping": "123"}]}
     obj2 = {"soda": "934857", "slices": [{"topping": "abc"}]}
 
@@ -915,43 +1014,30 @@ def test_merge_stuff():
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
         "properties": {
-            "pizza": {
-                "type": "string"
-            },
+            "pizza": {"type": "string"},
             "mergeStrategy": "objectMerge",
             "allOf": [
                 {
                     "soda": {
                         "type": "object",
-                        "properties": {
-                            "prob": {
-                                "type": "number"
-                            }
-                        }
+                        "properties": {"prob": {"type": "number"}},
                     },
                 },
                 {
                     "slices": {
                         "type": "array",
-                        "items": {
-                            "properties": {
-                                "topping": {
-                                    "type": "string"
-                                }
-                            }
-                        },
-                        "mergeStrategy": "append"
+                        "items": {"properties": {"topping": {"type": "string"}}},
+                        "mergeStrategy": "append",
                     }
                 },
-
-            ]
-        }
+            ],
+        },
     }
 
     # this merge will clobber slices because merging across allOf doesn't work
     merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
     xyz = merger.merge(obj1, obj2)
-    assert len(xyz['slices']) == 1
+    assert len(xyz["slices"]) == 1
 
 
 def test_prism_joining_tabs(monkeypatch):
@@ -960,77 +1046,83 @@ def test_prism_joining_tabs(monkeypatch):
     load_workbook = MagicMock(name="load_workbook")
     monkeypatch.setattr("openpyxl.load_workbook", load_workbook)
     workbook = load_workbook.return_value = MagicMock(name="workbook")
-    wb= {"participants": MagicMock(name="participants"), "samples": MagicMock(name="samples"), }
+    wb = {
+        "participants": MagicMock(name="participants"),
+        "samples": MagicMock(name="samples"),
+    }
     workbook.__getitem__.side_effect = wb.__getitem__
     workbook.sheetnames = wb.keys()
     cell = namedtuple("cell", ["value"])
     wb["participants"].iter_rows.return_value = [
         map(cell, ["#h", "PA id", "PA prop"]),
-        map(cell, ["#d", "CPP0",  "0"]),
-        map(cell, ["#d", "CPP1",  "1"]),
+        map(cell, ["#d", "CPP0", "0"]),
+        map(cell, ["#d", "CPP1", "1"]),
     ]
     wb["samples"].iter_rows.return_value = [
-        map(cell, ["#h", "SA_id",   "SA_prop"]),
-        map(cell, ["#d", "CPP1S0.00",  "100"]),
-        map(cell, ["#d", "CPP1S1.00",  "101"]),
-        map(cell, ["#d", "CPP0S0.00",  "000"]),
-        map(cell, ["#d", "CPP0S1.00",  "001"]),
+        map(cell, ["#h", "SA_id", "SA_prop"]),
+        map(cell, ["#d", "CPP1S0.00", "100"]),
+        map(cell, ["#d", "CPP1S1.00", "101"]),
+        map(cell, ["#d", "CPP0S0.00", "000"]),
+        map(cell, ["#d", "CPP0S1.00", "001"]),
     ]
 
-    template = Template({
-        "$id": "test_ship",
-        "title": "participants and shipment",
-        "properties": {
-            "worksheets": {
-                "participants": {
-                    "prism_preamble_object_schema": "clinical_trial.json",
-                    "prism_preamble_object_pointer": "#",
-                    "prism_data_object_pointer": "/participants/0/samples/0",
-                    "preamble_rows": {
-                    },
-                    "data_columns": {
-                        "Samples": {
-                            "PA id": {
-                                "merge_pointer": "2/cimac_participant_id",
-                                "type_ref": "participant.json#properties/cimac_participant_id"
-                            },
-                            "PA prop": {
-                              "merge_pointer": "0/participant_id",
-                              "type_ref": "participant.json#properties/participant_id"
+    template = Template(
+        {
+            "$id": "test_ship",
+            "title": "participants and shipment",
+            "properties": {
+                "worksheets": {
+                    "participants": {
+                        "prism_preamble_object_schema": "clinical_trial.json",
+                        "prism_preamble_object_pointer": "#",
+                        "prism_data_object_pointer": "/participants/0/samples/0",
+                        "preamble_rows": {},
+                        "data_columns": {
+                            "Samples": {
+                                "PA id": {
+                                    "merge_pointer": "2/cimac_participant_id",
+                                    "type_ref": "participant.json#properties/cimac_participant_id",
+                                },
+                                "PA prop": {
+                                    "merge_pointer": "0/participant_id",
+                                    "type_ref": "participant.json#properties/participant_id",
+                                },
                             }
-                        }
-                    }
-                },
-                "samples": {
-                    "prism_preamble_object_schema": "clinical_trial.json",
-                    "prism_preamble_object_pointer": "#",
-                    "prism_data_object_pointer": "/participants/0/samples/0",
-                    "preamble_rows": {
+                        },
                     },
-                    "data_columns": {
-                        "Samples": {
-                            "SA_id": {
-                                "merge_pointer": "/cimac_id",
-                                "type_ref": "sample.json#properties/cimac_id",
-                                "process_as": [{
-                                  "merge_pointer": "2/cimac_participant_id",
-                                  "parse_through": "lambda x: x[:4]"
-                                }]
-                            },
-                            "SA_prop": {
-                              "merge_pointer": "0/parent_sample_id",
-                              "type_ref": "sample.json#properties/parent_sample_id"
+                    "samples": {
+                        "prism_preamble_object_schema": "clinical_trial.json",
+                        "prism_preamble_object_pointer": "#",
+                        "prism_data_object_pointer": "/participants/0/samples/0",
+                        "preamble_rows": {},
+                        "data_columns": {
+                            "Samples": {
+                                "SA_id": {
+                                    "merge_pointer": "/cimac_id",
+                                    "type_ref": "sample.json#properties/cimac_id",
+                                    "process_as": [
+                                        {
+                                            "merge_pointer": "2/cimac_participant_id",
+                                            "parse_through": "lambda x: x[:4]",
+                                        }
+                                    ],
+                                },
+                                "SA_prop": {
+                                    "merge_pointer": "0/parent_sample_id",
+                                    "type_ref": "sample.json#properties/parent_sample_id",
+                                },
                             }
-
-                        }
-                    }
+                        },
+                    },
                 }
+            },
+        },
+        "test_prism_joining_tabs",
+    )
 
-            }
-        }
-    }, "test_prism_joining_tabs")
-
-    monkeypatch.setattr("cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_prism_joining_tabs"])
+    monkeypatch.setattr(
+        "cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_prism_joining_tabs"]
+    )
 
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
@@ -1039,54 +1131,71 @@ def test_prism_joining_tabs(monkeypatch):
     assert len(errs) == 0
 
     assert 2 == len(patch["participants"])
-    
+
     assert "CPP0" == patch["participants"][0]["cimac_participant_id"]
     assert 2 == len(patch["participants"][0]["samples"])
-    
-    assert "CPP0S0.00"  == patch["participants"][0]["samples"][0]["cimac_id"]
-    assert "000"  == patch["participants"][0]["samples"][0]["parent_sample_id"]
 
-    assert "CPP0S1.00"  == patch["participants"][0]["samples"][1]["cimac_id"]
-    assert "001"  == patch["participants"][0]["samples"][1]["parent_sample_id"]
-    
-    assert "CPP1S1.00"  == patch["participants"][1]["samples"][1]["cimac_id"]
-    assert "101"  == patch["participants"][1]["samples"][1]["parent_sample_id"]
-    
+    assert "CPP0S0.00" == patch["participants"][0]["samples"][0]["cimac_id"]
+    assert "000" == patch["participants"][0]["samples"][0]["parent_sample_id"]
+
+    assert "CPP0S1.00" == patch["participants"][0]["samples"][1]["cimac_id"]
+    assert "001" == patch["participants"][0]["samples"][1]["parent_sample_id"]
+
+    assert "CPP1S1.00" == patch["participants"][1]["samples"][1]["cimac_id"]
+    assert "101" == patch["participants"][1]["samples"][1]["parent_sample_id"]
+
     assert "CPP1" == patch["participants"][1]["cimac_participant_id"]
     assert 2 == len(patch["participants"][1]["samples"])
 
     assert 0 == len(file_maps)
-    
+
+
 @pytest.fixture
 def npx_file_path():
-    return os.path.join(TEST_DATA_DIR, 'olink', 'olink_assay_1_NPX.xlsx')
+    return os.path.join(TEST_DATA_DIR, "olink", "olink_assay_1_NPX.xlsx")
+
 
 @pytest.fixture
 def npx_combined_file_path():
-    return os.path.join(TEST_DATA_DIR, 'olink', 'olink_assay_combined.xlsx')
+    return os.path.join(TEST_DATA_DIR, "olink", "olink_assay_combined.xlsx")
 
 
 def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
-    xlsx, template = list(prismify_test_set('olink'))[0]
+    xlsx, template = list(prismify_test_set("olink"))[0]
     ct, file_infos = test_prismify_olink_only(xlsx, template)
 
     for finfo in file_infos:
         if finfo.metadata_availability:
-            if 'combined' in finfo.local_path:
+            if "combined" in finfo.local_path:
                 local_path = npx_combined_file_path
             else:
                 local_path = npx_file_path
 
-            with open(local_path, 'rb') as npx_file:
-                merge_artifact_extra_metadata(ct, finfo.upload_placeholder, 'olink', npx_file)
+            with open(local_path, "rb") as npx_file:
+                merge_artifact_extra_metadata(
+                    ct, finfo.upload_placeholder, "olink", npx_file
+                )
 
-    study = ct['assays']['olink']['study']
-    files = ct['assays']['olink']['records'][0]['files']
+    study = ct["assays"]["olink"]["study"]
+    files = ct["assays"]["olink"]["records"][0]["files"]
 
-    assert set(files['assay_npx']['samples']) == {'CTTTP01A1.00', 'CTTTP02A1.00', 'CTTTP03A1.00', 'CTTTP04A1.00'}
-    assert set(study['study_npx']['samples']) == {'CTTTP01A1.00', 'CTTTP02A1.00', 'CTTTP03A1.00', 'CTTTP04A1.00',
-                                                  'CTTTP05A1.00', 'CTTTP06A1.00', 'CTTTP07A1.00', 'CTTTP08A1.00',
-                                                  'CTTTP09A1.00'}
+    assert set(files["assay_npx"]["samples"]) == {
+        "CTTTP01A1.00",
+        "CTTTP02A1.00",
+        "CTTTP03A1.00",
+        "CTTTP04A1.00",
+    }
+    assert set(study["study_npx"]["samples"]) == {
+        "CTTTP01A1.00",
+        "CTTTP02A1.00",
+        "CTTTP03A1.00",
+        "CTTTP04A1.00",
+        "CTTTP05A1.00",
+        "CTTTP06A1.00",
+        "CTTTP07A1.00",
+        "CTTTP08A1.00",
+        "CTTTP09A1.00",
+    }
 
 
 def test_parse_npx_invalid(npx_file_path):
@@ -1097,24 +1206,36 @@ def test_parse_npx_invalid(npx_file_path):
 
 def test_parse_npx_single(npx_file_path):
     # test the parse function
-    f = open(npx_file_path, 'rb')
+    f = open(npx_file_path, "rb")
     samples = parse_npx(f)
 
     assert samples["number_of_samples"] == 4
-    assert set(samples["samples"]) == {'CTTTP01A1.00', 'CTTTP02A1.00', 'CTTTP03A1.00', 'CTTTP04A1.00'}
+    assert set(samples["samples"]) == {
+        "CTTTP01A1.00",
+        "CTTTP02A1.00",
+        "CTTTP03A1.00",
+        "CTTTP04A1.00",
+    }
 
 
 def test_parse_npx_merged(npx_combined_file_path):
     # test the parse function
-    f = open(npx_combined_file_path, 'rb')
+    f = open(npx_combined_file_path, "rb")
     samples = parse_npx(f)
 
     assert samples["number_of_samples"] == 9
 
-
-    assert set(samples["samples"]) == {'CTTTP01A1.00', 'CTTTP02A1.00', 'CTTTP03A1.00', 'CTTTP04A1.00',
-                                       'CTTTP05A1.00', 'CTTTP06A1.00', 'CTTTP07A1.00', 'CTTTP08A1.00',
-                                       'CTTTP09A1.00'}
+    assert set(samples["samples"]) == {
+        "CTTTP01A1.00",
+        "CTTTP02A1.00",
+        "CTTTP03A1.00",
+        "CTTTP04A1.00",
+        "CTTTP05A1.00",
+        "CTTTP06A1.00",
+        "CTTTP07A1.00",
+        "CTTTP08A1.00",
+        "CTTTP09A1.00",
+    }
 
 
 def test_throw_on_collision():
@@ -1124,38 +1245,32 @@ def test_throw_on_collision():
         "properties": {
             "l": {
                 "type": "array",
-                "items": {
-                    "cimac_id": {
-                        "type": "string",
-                    }, 
-                    "a": {
-                        "type": "integer"
-                    }
-                },
+                "items": {"cimac_id": {"type": "string",}, "a": {"type": "integer"}},
                 "mergeStrategy": "arrayMergeById",
-                "mergeOptions": {
-                    "idRef": "/cimac_id"
-                }
+                "mergeOptions": {"idRef": "/cimac_id"},
             }
-        }
+        },
     }
 
     merger = Merger(schema, strategies=PRISM_MERGE_STRATEGIES)
 
     # Identical values, no collision - no error
-    base = {'l': [{'cimac_id': 'c1', 'a': 1}]}
+    base = {"l": [{"cimac_id": "c1", "a": 1}]}
     assert merger.merge(base, base)
 
     # Different values, collision - error
-    head = {'l': [{'cimac_id': 'c1', 'a': 2}]}
-    with pytest.raises(MergeCollisionException, match=r"1 \(current\) != 2 \(incoming\)"):
+    head = {"l": [{"cimac_id": "c1", "a": 2}]}
+    with pytest.raises(
+        MergeCollisionException, match=r"1 \(current\) != 2 \(incoming\)"
+    ):
         merger.merge(base, head)
 
     # Some identical and some different values - no error, proper merge
-    base['l'].append({'cimac_id': 'c2', 'a': 2})
-    head = {'l': [base['l'][0], {'cimac_id': 'c3', 'a': 3}]}
+    base["l"].append({"cimac_id": "c2", "a": 2})
+    head = {"l": [base["l"][0], {"cimac_id": "c3", "a": 3}]}
 
-    assert merger.merge(base, head) == {'l': [*base['l'], head['l'][-1]]}
+    assert merger.merge(base, head) == {"l": [*base["l"], head["l"][-1]]}
+
 
 def test_overwrite_any():
     """Test that the alias for jsonmerge.strategies.Overwrite is set up properly"""
@@ -1163,8 +1278,8 @@ def test_overwrite_any():
         "type": "object",
         "properties": {
             "a": {"type": "object", "mergeStrategy": "overwriteAny"},
-            "b": {"type": "number"}
-        }
+            "b": {"type": "number"},
+        },
     }
 
     merger = Merger(schema, strategies=PRISM_MERGE_STRATEGIES)
@@ -1176,5 +1291,7 @@ def test_overwrite_any():
 
     # Updates to "b" should not be allowed
     head["b"] = 2
-    with pytest.raises(MergeCollisionException, match=r"1 \(current\) != 2 \(incoming\)"):
+    with pytest.raises(
+        MergeCollisionException, match=r"1 \(current\) != 2 \(incoming\)"
+    ):
         merger.merge(base, head)

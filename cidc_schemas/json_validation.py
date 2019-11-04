@@ -83,9 +83,7 @@ class _Validator(jsonschema.Draft7Validator):
         )(*args, **kwargs)
 
     def iter_errors(
-        self,
-        instance: JSON,
-        _schema: Optional[dict] = None,
+        self, instance: JSON, _schema: Optional[dict] = None,
     ):
         """ 
         This is the main validation method. `.is_valid`, `.validate` are based on this. 
@@ -94,38 +92,38 @@ class _Validator(jsonschema.Draft7Validator):
         """
         in_doc_refs_cache = {}
 
-        # First we call usual Draft7Validator validation 
+        # First we call usual Draft7Validator validation
         for downstream_error in super().iter_errors(instance, _schema):
             # and if an error is not "ours" - just propagate it up
             if not isinstance(downstream_error, InDocRefNotFoundError):
                 yield downstream_error
             # if it is "ours" - we actually check ref
             elif not self._ensure_in_doc_ref(
-                    # error.instance - is value in doc that should satisfy a constraint
-                    ref = downstream_error.instance,
-                    # error.validator_value - is value of a constraint from schema, 
-                    # which should be in a form of path pattern, where ref value needs to be present.  
-                    ref_path_pattern = downstream_error.validator_value,
-                    doc = instance,
-                    in_doc_refs_cache = in_doc_refs_cache):
+                # error.instance - is value in doc that should satisfy a constraint
+                ref=downstream_error.instance,
+                # error.validator_value - is value of a constraint from schema,
+                # which should be in a form of path pattern, where ref value needs to be present.
+                ref_path_pattern=downstream_error.validator_value,
+                doc=instance,
+                in_doc_refs_cache=in_doc_refs_cache,
+            ):
                 # and if the check was not passed - we propagate it
                 yield downstream_error
-
 
         # Here we actually call our custom validator, that will through errors
         # on every occurrence of `in_doc_ref_pattern` constraint
         for in_doc_ref_not_found in self.in_doc_ref_validator.iter_errors(
             instance, _schema
         ):
-            # but then we actually check refs 
+            # but then we actually check refs
             if not self._ensure_in_doc_ref(
-                    ref = in_doc_ref_not_found.instance,
-                    ref_path_pattern = in_doc_ref_not_found.validator_value,
-                    doc = instance,
-                    in_doc_refs_cache = in_doc_refs_cache):
-                # and produce errors only when check wont pass 
+                ref=in_doc_ref_not_found.instance,
+                ref_path_pattern=in_doc_ref_not_found.validator_value,
+                doc=instance,
+                in_doc_refs_cache=in_doc_refs_cache,
+            ):
+                # and produce errors only when check wont pass
                 yield in_doc_ref_not_found
-
 
     def _get_values_for_path_pattern(self, path: str, doc: dict) -> set:
         """
@@ -140,9 +138,9 @@ class _Validator(jsonschema.Draft7Validator):
         for key in split_path:
             next_values = []
             for doc in values:
-                if key == '*':
-                    # Wild card encountered, so we'll want to search 
-                    # all values of `doc` if `doc` is a list or a dict 
+                if key == "*":
+                    # Wild card encountered, so we'll want to search
+                    # all values of `doc` if `doc` is a list or a dict
                     if isinstance(doc, list):
                         next_values.extend(doc)
                     elif isinstance(doc, dict):
@@ -162,13 +160,8 @@ class _Validator(jsonschema.Draft7Validator):
 
         return set(repr(val) for val in values)
 
-
     def _ensure_in_doc_ref(
-        self,
-        ref: str,
-        ref_path_pattern: str,
-        doc: JSON,
-        in_doc_refs_cache: dict
+        self, ref: str, ref_path_pattern: str, doc: JSON, in_doc_refs_cache: dict
     ):
         """
         This checks that a `ref` (think foreign key) can be found within a `doc` (JSON object),
@@ -197,7 +190,7 @@ class _Validator(jsonschema.Draft7Validator):
             # if we're in a "simple" value context,
             # we can't possibly match ref_path_pattern
             return False
-        
+
         # If there are no cached values for this ref path pattern, collect them
         if ref_path_pattern not in in_doc_refs_cache:
             vals = self._get_values_for_path_pattern(ref_path_pattern, doc)
@@ -211,7 +204,6 @@ class _Validator(jsonschema.Draft7Validator):
 
         # Check if `ref` is among valid values for this pattern
         return repr(ref) in in_doc_refs_cache[ref_path_pattern]
-        
 
 
 def load_and_validate_schema(
@@ -357,10 +349,12 @@ def validate_instance(instance: str, schema: dict, is_required=False) -> Optiona
         instance = convert(stype, instance)
 
         jsonschema.validate(
-            # we're using this to validate only 'basic' values that come from Template cells 
+            # we're using this to validate only 'basic' values that come from Template cells
             # that's why we don't want to check for ref integrity with _Validator here
             # so a Validator specified in this schema will be used, or a default one
-            instance, schema, format_checker=jsonschema.FormatChecker()
+            instance,
+            schema,
+            format_checker=jsonschema.FormatChecker(),
         )
         return None
     except jsonschema.ValidationError as error:

@@ -1,0 +1,12 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 19.3b0
+    hooks:
+      - id: black
+        language_version: python3.6
+  - repo: local
+    hooks:
+      - id: .githooks/pre-commit
+        name: .githooks/pre-commit
+        entry: .githooks/pre-commit
+        language: system

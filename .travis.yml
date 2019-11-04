@@ -3,7 +3,7 @@ install:
   - pip install -r requirements.dev.txt
 script:
   - pytest
-  - black --check cidc_schemas tests --target-version=py36
+  - black --check cidc_schemas tests docs --target-version=py36
 deploy:
   provider: pypi
   # TODO: should this be on a shared CIDC account?

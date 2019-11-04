@@ -876,6 +876,7 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
     # these fields are required in the schema
     # so previous validation assert they exist
     if patch.get(PROTOCOL_ID_FIELD_NAME) != target.get(PROTOCOL_ID_FIELD_NAME):
+        print(patch.get(PROTOCOL_ID_FIELD_NAME), target.get(PROTOCOL_ID_FIELD_NAME))
         raise InvalidMergeTargetException("Unable to merge trials with different "+ PROTOCOL_ID_FIELD_NAME)
 
     # merge the two documents

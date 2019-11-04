@@ -1,6 +1,6 @@
 "CTTTPP111.00","Cytof analysis template"
 "#p","Assay run id","run_1"
-"#p","Protocol identifier","CYTOF_TEST1"
+"#p","Protocol identifier","test_prism_trial_id"
 
 "","Astrolabe Runs"
 "#h","Cimac id","Fcs file","Astrolabe reports","Astrolabe analysis","Assignment","Compartment","Profiling","Cell counts assignment","Cell counts compartment","Cell counts profiling"

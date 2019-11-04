@@ -331,14 +331,6 @@ def test_prism(xlsx, template):
     ct, file_maps, errs = prismify(xlsx, template)
     assert 0 == len(errs)
 
-    if template.type == 'cytof':
-        assert "CYTOF_TEST1" == ct[PROTOCOL_ID_FIELD_NAME]
-        ct[PROTOCOL_ID_FIELD_NAME] = 'test_prism_trial_id'
-
-    if template.type == 'ihc':
-        assert "ihc_test_trial" == ct[PROTOCOL_ID_FIELD_NAME]
-        ct[PROTOCOL_ID_FIELD_NAME] = 'test_prism_trial_id'
-
     if template.type in SUPPORTED_ASSAYS:
         # olink is different - is will never have array of assay "runs" - only one
         if template.type != 'olink':
@@ -726,14 +718,11 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
                 prism_patch['participants'][0]['cimac_participant_id'])
 
         if template.type == 'pbmc':
-            assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_pbmc"
-
             assert len(prism_patch['participants']) == 2
             assert len(prism_patch['participants'][0]['samples']) == 3
             assert len(prism_patch['participants'][1]['samples']) == 3
 
         elif template.type == 'plasma':
-            assert (prism_patch['shipments'][0]['manifest_id']) == "TEST123_plasma"
             assert len(prism_patch['participants']) == 2
             assert len(prism_patch['participants'][0]['samples']) == 3
             assert 'aliquots' not in prism_patch['participants'][0]['samples'][0]
@@ -765,11 +754,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     for f in file_maps:
         assert f'{template.type}/' in f.gs_key, f"No {template.type} template.type found"
 
-    # And we need set PROTOCOL_ID_FIELD_NAME to be the same for testing
     original_ct = copy.deepcopy(TEST_PRISM_TRIAL) 
-
-    # so we can merge
-    original_ct[PROTOCOL_ID_FIELD_NAME] = prism_patch[PROTOCOL_ID_FIELD_NAME]
 
     if template.type in SUPPORTED_ANALYSES:
         # we can't merge analysis info unless an associated initial assay upload exists

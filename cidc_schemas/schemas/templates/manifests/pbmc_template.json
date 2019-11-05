@@ -8,6 +8,7 @@
     "properties": {
         "worksheets": {
             "Shipment": {
+                "prism_template_filename_format": "{protocol identifier}/xlsx/manifest/pbmc/{manifest id}.xlsx",
                 "prism_preamble_object_schema": "clinical_trial.json",
                 "prism_preamble_object_pointer": "/shipments/0",
                 "prism_data_object_pointer": "/shipped",

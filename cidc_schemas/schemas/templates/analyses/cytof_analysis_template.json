@@ -10,6 +10,7 @@
     "properties": {
         "worksheets": {
             "CyTOF Analysis": {
+                "prism_template_filename_format": "{protocol identifier}/xlsx/analysis/cytof/{assay run id}.xlsx",
                 "preamble_rows": {
                     "assay run id": {
                         "merge_pointer": "/assay_run_id",

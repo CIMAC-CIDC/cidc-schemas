@@ -25,7 +25,7 @@
           },
           "assay run id": {
               "merge_pointer": "/assay_run_id",
-              "type_ref": "assays/assay_core.json#properties/assay_run_id"
+              "type_ref": "assays/components/assay_core.json#properties/assay_run_id"
           },
           "assay creator": {
             "merge_pointer": "0/assay_creator",

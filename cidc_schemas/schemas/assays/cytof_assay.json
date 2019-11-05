@@ -4,6 +4,7 @@
     "title": "CYTOF Run",
     "type": "object",
     "description": "Base information about the acquisition and analysis CyTOF data.",
+    "additionalProperties": false,
     "properties": {
         "assay_run_id": {
             "type": "string",

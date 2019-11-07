@@ -8,29 +8,28 @@
     { "$ref": "assays/components/assay_core.json" },
     { "$ref": "assays/components/ngs_assay_core.json" }
    ],
-    "properties": {
-      "enrichment_vendor_kit": {
-        "description": "Vendor for the bait set used for enrichment , e.g. Twist, Agilent, IDT.",
-        "type": "string",
-        "enum": ["Agilent", "Twist", "IDT", "NEB"]
+  "properties": {
+    "enrichment_vendor_kit": {
+      "description": "Vendor for the bait set used for enrichment , e.g. Twist, Agilent, IDT.",
+      "type": "string",
+      "enum": ["Agilent", "Twist", "IDT", "NEB"]
+    },
+    "records": {
+      "type": "array",
+      "description": "A single data record from WES assay.",
+      "items": {
+        "$ref": "assays/components/ngs/wes_assay_record.json"
       },
-      "records": {
-        "type": "array",
-        "description": "A single data record from WES assay.",
-        "items": {
-          "$ref": "assays/components/ngs/wes_assay_record.json"
-        },
-        "mergeStrategy": "arrayMergeById",
-        "mergeOptions": {
-          "idRef": "cimac_id"
-        }
-      },
-      "analysis":{
-        "type":"array",
-        "description": "A single export data record from WES assay.",
-        "items":{
-          "$ref": "assays/components/ngs/wes_export.json"
-        }
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "cimac_id"
+      }
+    },
+    "analysis":{
+      "type":"array",
+      "description": "A single export data record from WES assay.",
+      "items":{
+        "$ref": "assays/components/ngs/wes_export.json"
       }
     }
   },

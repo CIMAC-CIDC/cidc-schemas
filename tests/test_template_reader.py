@@ -35,7 +35,7 @@ def test_valid(tiny_template):
         ]
     }
 
-    reader = XlTemplateReader(tiny_valid, 'tiny_valid')
+    reader = XlTemplateReader(tiny_valid)
     assert reader.validate(tiny_template)
 
 
@@ -48,7 +48,7 @@ def test_valid_from_excel(tiny_template):
 
 
 def search_error_message(workbook, template, error, msg_fragment):
-    reader = XlTemplateReader(workbook, 'test_template')
+    reader = XlTemplateReader(workbook)
     with pytest.raises(error, match=msg_fragment):
         res = reader.validate(template)
 

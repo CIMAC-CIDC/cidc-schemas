@@ -57,7 +57,7 @@ def test_empty_headers(tiny_template):
     """Test that a spreadsheet with empty headers raises a validation error"""
     tiny_missing_header = {
         "TEST_SHEET": [
-            TemplateRow(1, RowType.HEADER, ("test_property", None, "test_time")),
+            TemplateRow(1, RowType.HEADER, ("test_property", None, "test_time"))
         ]
     }
 
@@ -142,7 +142,7 @@ def test_wrong_number_of_headers(tiny_template):
 def test_missing_schema(tiny_template):
     """Test that a spreadsheet with an unknown property raises an assertion error"""
     tiny_missing = {
-        "TEST_SHEET": [TemplateRow(1, RowType.PREAMBLE, ("missing_property", "foo")),]
+        "TEST_SHEET": [TemplateRow(1, RowType.PREAMBLE, ("missing_property", "foo"))]
     }
 
     search_error_message(

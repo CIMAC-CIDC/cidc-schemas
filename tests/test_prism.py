@@ -79,7 +79,7 @@ TEST_PRISM_TRIAL = {
                             "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other",
-                        },
+                        }
                     ],
                     "cimac_id": "CTTTPP111.00",
                     "parent_sample_id": "test_sample_1",
@@ -819,7 +819,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             )
             cytof_input_xlsx, _ = XlTemplateReader.from_excel(cytof_input_xlsx_path)
             cytof_input_template = Template.from_type("cytof")
-            cytof_input_patch, _, _, _ = prismify(cytof_input_xlsx, cytof_input_template)
+            cytof_input_patch, _, _, _ = prismify(
+                cytof_input_xlsx, cytof_input_template
+            )
 
             original_ct, errs = merge_clinical_trial_metadata(
                 cytof_input_patch, original_ct
@@ -1029,7 +1031,7 @@ def test_merge_stuff():
                     "soda": {
                         "type": "object",
                         "properties": {"prob": {"type": "number"}},
-                    },
+                    }
                 },
                 {
                     "slices": {
@@ -1254,7 +1256,7 @@ def test_throw_on_collision():
         "properties": {
             "l": {
                 "type": "array",
-                "items": {"cimac_id": {"type": "string",}, "a": {"type": "integer"}},
+                "items": {"cimac_id": {"type": "string"}, "a": {"type": "integer"}},
                 "mergeStrategy": "arrayMergeById",
                 "mergeOptions": {"idRef": "/cimac_id"},
             }

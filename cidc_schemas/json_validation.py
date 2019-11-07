@@ -77,7 +77,7 @@ class _Validator(jsonschema.Draft7Validator):
 
         # if schema != _Validator.META_SCHEMA:
         #     schema["additionalProperties"] = False
-        # schema["patternProperties"] = {"__prism_origin__:///": {"type": "string"}}
+        #     schema["patternProperties"] = {"__prism_origin__:///": {"type": "string"}}
 
         super().__init__(schema)
 

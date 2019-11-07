@@ -416,7 +416,7 @@ PRISM_PRISMIFY_STRATEGIES = {"overwriteAny": strategies.Overwrite()}
 
 def prismify(
     xlsx: XlTemplateReader, template: Template, verb: bool = False
-) -> (dict, List[LocalFileUploadEntry], List[Union[Exception, str]]):
+) -> (dict, List[LocalFileUploadEntry], str, List[Union[Exception, str]]):
 
     """
     Converts excel file to json object. It also identifies local files
@@ -447,7 +447,8 @@ def prismify(
                     upload_placeholder = "random_uuid-for-artifact-upload",
                     metadata_availability = boolean to indicate whether LocalFileUploadEntry should be extracted for metadata files
                 )
-            arg3: list of errors
+            arg3: gcs uri string where this template xlsx should be uploaded
+            arg4: list of errors
 
     Process:
 
@@ -579,6 +580,8 @@ def prismify(
     # and where to collect all local file refs
     collected_files = []
 
+    template_xlsx_gcs_uri = False
+
     # loop over spreadsheet worksheets
     for ws_name, ws in xlsx.grouped_rows.items():
         if verb:
@@ -597,6 +600,9 @@ def prismify(
         if not templ_ws:
             errors_so_far.append(f"Unexpected worksheet {ws_name!r}.")
             continue
+
+        if templ_ws.get('prism_template_xlsx_gcs_uri_format'):
+            template_xlsx_gcs_uri = templ_ws['prism_template_xlsx_gcs_uri_format'].format_map(dict(preamble_context, ___REPLACE_ME___="___REPLACE_ME___"))
 
         preamble_object_schema = load_and_validate_schema(
             templ_ws.get("prism_preamble_object_schema", root_ct_schema_name)
@@ -738,7 +744,7 @@ def prismify(
     else:
         root_ct_obj = template_root_obj
 
-    return root_ct_obj, collected_files, errors_so_far
+    return root_ct_obj, collected_files, template_xlsx_gcs_uri, errors_so_far
 
 
 def _set_data_format(ct: dict, artifact: dict):

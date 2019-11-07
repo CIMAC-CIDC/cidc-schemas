@@ -336,7 +336,8 @@ def test_prism(xlsx, template):
         return
 
     # turn into object.
-    ct, file_maps, errs = prismify(xlsx, template)
+    ct, file_maps, xlsx_uri, errs = prismify(xlsx, template)
+    assert xlsx_uri
     assert 0 == len(errs)
 
     if template.type in SUPPORTED_ASSAYS:
@@ -391,7 +392,8 @@ def test_filepath_gen(xlsx, template):
     schema = validator.schema
 
     # parse the spreadsheet and get the file maps
-    _, file_maps, errs = prismify(xlsx, template)
+    _, file_maps, xlsx_uri, errs = prismify(xlsx, template)
+    assert xlsx_uri
     assert len(errs) == 0
     # we ignore and do not validate 'ct'
     # because it's only a ct patch not a full ct
@@ -479,7 +481,8 @@ def test_prismify_cytof_only(xlsx, template):
     schema = validator.schema
 
     # parse the spreadsheet and get the file maps
-    ct, file_maps, errs = prismify(xlsx, template, verb=False)
+    ct, file_maps, xlsx_uri, errs = prismify(xlsx, template, verb=False)
+    assert xlsx_uri
     assert len(errs) == 0
 
     # we should have 3 files, the processed fcs and two source fcs X2
@@ -503,7 +506,8 @@ def test_prismify_ihc(xlsx, template):
     schema = validator.schema
 
     # parse the spreadsheet and get the file maps
-    ct, file_maps, errs = prismify(xlsx, template)
+    ct, file_maps, xlsx_uri, errs = prismify(xlsx, template)
+    assert xlsx_uri
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -522,7 +526,8 @@ def test_prismify_plasma(xlsx, template):
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
 
     # parse the spreadsheet and get the file maps
-    md_patch, file_maps, errs = prismify(xlsx, template)
+    md_patch, file_maps, xlsx_uri, errs = prismify(xlsx, template)
+    assert xlsx_uri
     assert len(errs) == 0
     validator.validate(md_patch)
 
@@ -555,7 +560,8 @@ def test_prismify_wes_only(xlsx, template):
     schema = validator.schema
 
     # parse the spreadsheet and get the file maps
-    md_patch, file_maps, errs = prismify(xlsx, template)
+    md_patch, file_maps, xlsx_uri, errs = prismify(xlsx, template)
+    assert xlsx_uri
     assert len(errs) == 0
 
     for e in validator.iter_errors(md_patch):
@@ -593,7 +599,8 @@ def test_prismify_olink_only(xlsx, template):
     schema = validator.schema
 
     # parse the spreadsheet and get the file maps
-    ct, file_maps, errs = prismify(xlsx, template)
+    ct, file_maps, xlsx_uri, errs = prismify(xlsx, template)
+    assert xlsx_uri
     assert len(errs) == 0
 
     # we merge it with a preexisting one
@@ -746,7 +753,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
 
     # parse the spreadsheet and get the file maps
-    prism_patch, file_maps, errs = prismify(xlsx, template, verb=True)
+    prism_patch, file_maps, xlsx_uri, errs = prismify(xlsx, template, verb=True)
+    assert xlsx_uri
     assert len(errs) == 0
 
     if template.type in SUPPORTED_MANIFESTS:
@@ -811,7 +819,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             )
             cytof_input_xlsx, _ = XlTemplateReader.from_excel(cytof_input_xlsx_path)
             cytof_input_template = Template.from_type("cytof")
-            cytof_input_patch, _, _ = prismify(cytof_input_xlsx, cytof_input_template)
+            cytof_input_patch, _, _, _ = prismify(cytof_input_xlsx, cytof_input_template)
 
             original_ct, errs = merge_clinical_trial_metadata(
                 cytof_input_patch, original_ct
@@ -1127,7 +1135,8 @@ def test_prism_joining_tabs(monkeypatch):
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
 
-    patch, file_maps, errs = prismify(xlsx, template, verb=False)
+    patch, file_maps, _, errs = prismify(xlsx, template, verb=False)
+    # ignoring xlsx_uri - 3rd return value as our test template doesn't have any preamble
     assert len(errs) == 0
 
     assert 2 == len(patch["participants"])

@@ -13,6 +13,8 @@
             "prism_preamble_object_pointer" : "/assays/ihc/0",
             "prism_data_object_pointer" : "/records/-",
 
+            "prism_template_xlsx_gcs_uri_format": "{protocol identifier}/xlsx/assays/ihc/{___REPLACE_ME___}.xlsx",
+
             "preamble_rows": {
               "protocol identifier": {
                 "merge_pointer": "3/protocol_identifier",

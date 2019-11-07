@@ -9,7 +9,7 @@
         "worksheets": {
             "Acquisition and Preprocessing": {
                 "prism_data_object_pointer": "/records/-",
-                "prism_template_filename_format": "{protocol identifier}/xlsx/assays/cytof/{assay run id}.xlsx",
+                "prism_template_xlsx_gcs_uri_format": "{protocol identifier}/xlsx/assays/cytof/{assay run id}.xlsx",
                 "preamble_rows": {
                     "assay run id": {
                         "merge_pointer": "/assay_run_id",

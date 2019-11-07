@@ -37,7 +37,7 @@ class XlTemplateReader:
     Reader and validator for Excel templates.
     """
 
-    def __init__(self, template: Dict[str, List[TemplateRow]], filename: str):
+    def __init__(self, template: Dict[str, List[TemplateRow]]):
         """
         Initialize a template reader.
 
@@ -45,7 +45,6 @@ class XlTemplateReader:
             template {Dict[str, List[TemplateRow]]} -- a mapping from worksheet names to worksheet rows
         """
         self.template = template
-        self.filename = filename
 
         # Mapping from worksheet names to rows grouped by type
         self.grouped_rows: Dict[str, RowGroup] = self._group_worksheet_rows()
@@ -115,7 +114,7 @@ class XlTemplateReader:
             template[worksheet_name] = rows
 
         fname = xlsx_path.filename if hasattr(xlsx_path, 'filename') else str(xlsx_path)
-        return XlTemplateReader(template, fname), errors
+        return XlTemplateReader(template), errors
 
     def _group_worksheet_rows(self) -> Dict[str, RowGroup]:
         """Map worksheet names to rows grouped by row type"""

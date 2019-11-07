@@ -280,10 +280,7 @@ class XlTemplateWriter:
                 "error_message": "Please enter time in format hh:mm",
             }
         elif property_type == "boolean":
-            return {
-                "validate": "list",
-                "source": ["True", "False"],
-            }
+            return {"validate": "list", "source": ["True", "False"]}
 
         return None
 

@@ -601,8 +601,10 @@ def prismify(
             errors_so_far.append(f"Unexpected worksheet {ws_name!r}.")
             continue
 
-        if templ_ws.get('prism_template_xlsx_gcs_uri_format'):
-            template_xlsx_gcs_uri = templ_ws['prism_template_xlsx_gcs_uri_format'].format_map(dict(preamble_context, ___REPLACE_ME___="___REPLACE_ME___"))
+        if templ_ws.get("prism_template_xlsx_gcs_uri_format"):
+            template_xlsx_gcs_uri = templ_ws[
+                "prism_template_xlsx_gcs_uri_format"
+            ].format_map(dict(preamble_context, ___REPLACE_ME___="___REPLACE_ME___"))
 
         preamble_object_schema = load_and_validate_schema(
             templ_ws.get("prism_preamble_object_schema", root_ct_schema_name)

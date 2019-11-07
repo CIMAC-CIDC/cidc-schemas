@@ -82,9 +82,7 @@ class _Validator(jsonschema.Draft7Validator):
             self.META_SCHEMA, validators={"in_doc_ref_pattern": _in_doc_refs_check}
         )(*args, **kwargs)
 
-    def iter_errors(
-        self, instance: JSON, _schema: Optional[dict] = None,
-    ):
+    def iter_errors(self, instance: JSON, _schema: Optional[dict] = None):
         """ 
         This is the main validation method. `.is_valid`, `.validate` are based on this. 
     

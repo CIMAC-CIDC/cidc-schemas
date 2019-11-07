@@ -113,7 +113,7 @@ class XlTemplateReader:
                 rows.append(new_row)
             template[worksheet_name] = rows
 
-        fname = xlsx_path.filename if hasattr(xlsx_path, 'filename') else str(xlsx_path)
+        fname = xlsx_path.filename if hasattr(xlsx_path, "filename") else str(xlsx_path)
         return XlTemplateReader(template), errors
 
     def _group_worksheet_rows(self) -> Dict[str, RowGroup]:

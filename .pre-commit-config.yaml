@@ -9,3 +9,4 @@ repos:
         name: .githooks/pre-commit
         entry: .githooks/pre-commit
         language: system
+        always_run: true

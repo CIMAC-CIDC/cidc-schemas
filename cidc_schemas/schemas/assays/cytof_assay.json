@@ -17,6 +17,14 @@
             },
             "mergeStrategy": "append"
         },
+        "instrument": {
+            "description": "Name of CyTOF instrument on which experiment was conducted.",
+            "type": "string"
+        },
+        "panel_name": {
+            "description": "Standardized CyTOF panel name used for antibody sample development.",
+            "type": "string"
+        },
         "records": {
             "type": "array",
             "description": "A single data record from CyTOF assay batch.",

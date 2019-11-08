@@ -24,11 +24,11 @@
                     },
                     "panel name": {
                         "merge_pointer": "0/panel_name",
-                        "type_ref": "assays/components/cytof/cytof_entry.json#properties/panel_name"
+                        "type_ref": "assays/cytof_assay.json#properties/panel_name"
                     },
                     "instrument": {
                         "merge_pointer": "0/instrument",
-                        "type_ref": "assays/components/cytof/cytof_entry.json#properties/instrument"
+                        "type_ref": "assays/cytof_assay.json#properties/instrument"
                     }
                 },
                 "data_columns": {

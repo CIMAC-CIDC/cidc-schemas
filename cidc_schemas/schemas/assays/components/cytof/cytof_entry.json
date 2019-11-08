@@ -9,20 +9,12 @@
             "$comment": "Id of a sample within this clinical trial, that this assay record is based upon.",
             "$ref": "sample.json#properties/cimac_id"
         },
-        "panel_name": {
-            "description": "Standardized CyTOF panel name used for antibody sample development.",
-            "type": "string"
-        },
         "batch_id": {
             "description": "CyTOF batch identification number.",
             "type": "string"
         },
         "date_of_acquisition": {
             "description": "Date of CyTOF batch acquisition.",
-            "type": "string"
-        },
-        "instrument": {
-            "description": "Name of CyTOF instrument on which experiment was conducted.",
             "type": "string"
         },
         "injector": {

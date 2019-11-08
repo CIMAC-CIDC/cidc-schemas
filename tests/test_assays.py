@@ -44,7 +44,11 @@ OLINK_RECORD = {
     "files": {"assay_npx": "", "assay_raw_ct": "", "study_npx": ""},
 }
 
-ASSAY_CORE = {"assay_creator": "DFCI", "uploader": "dummy"}
+ASSAY_CORE = {
+    "assay_creator": "DFCI",
+    "assay_run_date": "01/01/2001",
+    "uploader": "dummy",
+}
 
 
 def _fetch_validator(name):

@@ -10,11 +10,11 @@
     "properties": {
         "worksheets": {
             "CyTOF Analysis": {
-                "prism_template_xlsx_gcs_uri_format": "{protocol identifier}/xlsx/analysis/cytof/{assay run id}.xlsx",
+                "prism_template_xlsx_gcs_uri_format": "{protocol identifier}/xlsx/analysis/cytof/{assay run date}.xlsx",
                 "preamble_rows": {
-                    "assay run id": {
-                        "merge_pointer": "/assay_run_id",
-                        "type_ref": "assays/cytof_assay.json#properties/assay_run_id"
+                    "assay run date": {
+                        "merge_pointer": "/assay_run_date",
+                        "type_ref": "assays/components/assay_core.json#properties/assay_run_date"
                       },
                     "protocol identifier": {
                         "merge_pointer": "3/protocol_identifier",

@@ -95,6 +95,7 @@
     "assays": {
         "olink": {
             "assay_creator": "Mount Sinai",
+            "assay_run_date": "01/01/2001",
             "panel": "ol_panel_1",
             "npx_manager_version": "ol_npx_v1",
             "records": [
@@ -159,6 +160,7 @@
         "wes": [
             {
                 "assay_creator": "Mount Sinai",
+                "assay_run_date": "01/01/2001",
                 "paired_end_reads": "Paired",
                 "read_length": 100,
                 "sequencer_platform": "Illumina - HiSeq 3000",
@@ -238,6 +240,7 @@
             },
             {
                 "assay_creator": "DFCI",
+                "assay_run_date": "01/01/2001",
                 "paired_end_reads": "Paired",
                 "read_length": 100,
                 "sequencer_platform": "Illumina - HiSeq 3000",

@@ -9,7 +9,12 @@
       "description": "Indicates what site is filling out the assay.",
       "type": "string",
       "enum": ["DFCI", "Mount Sinai", "Stanford", "MD Anderson"]
+    },
+    "assay_run_date": {
+      "description": "Indicates what site is filling out the assay.",
+      "type": "string",
+      "format": "date"
     }
   },
-  "required": ["assay_creator"]
+  "required": ["assay_creator", "assay_run_date"]
 }

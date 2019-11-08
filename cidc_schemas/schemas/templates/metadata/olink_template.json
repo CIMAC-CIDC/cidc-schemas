@@ -15,7 +15,7 @@
         "prism_preamble_object_pointer" : "/assays/olink",
         "prism_data_object_pointer" : "/records/-",
         
-        "prism_template_xlsx_gcs_uri_format": "{protocol identifier}/xlsx/assays/olink/{___REPLACE_ME___}.xlsx",
+        "prism_template_xlsx_gcs_uri_format": "{protocol identifier}/xlsx/assays/olink/{assay creator}_{assay run date}.xlsx",
         
         "preamble_rows": {
           "protocol identifier": {
@@ -23,7 +23,10 @@
             "$comment": "Only 2 jumps up to protocol_identifier, because olink is not an array assay, see available_assays.json",
             "type_ref": "clinical_trial.json#properties/protocol_identifier"
           },
-          
+          "assay run date": {
+            "merge_pointer": "0/assay_run_date",
+            "type_ref": "assays/components/assay_core.json#properties/assay_run_date"
+          },
           "assay creator": {
             "merge_pointer": "0/assay_creator",
             "type_ref": "assays/components/assay_core.json#properties/assay_creator"

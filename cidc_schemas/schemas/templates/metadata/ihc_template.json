@@ -13,12 +13,16 @@
             "prism_preamble_object_pointer" : "/assays/ihc/0",
             "prism_data_object_pointer" : "/records/-",
 
-            "prism_template_xlsx_gcs_uri_format": "{protocol identifier}/xlsx/assays/ihc/{___REPLACE_ME___}.xlsx",
+            "prism_template_xlsx_gcs_uri_format": "{protocol identifier}/xlsx/assays/ihc/{assay creator}_{assay run date}.xlsx",
 
             "preamble_rows": {
               "protocol identifier": {
                 "merge_pointer": "3/protocol_identifier",
                 "type_ref": "clinical_trial.json#properties/protocol_identifier"
+              },
+              "assay run date": {
+                "merge_pointer": "0/assay_run_date",
+                "type_ref": "assays/components/assay_core.json#properties/assay_run_date"
               },
               "assay creator": {
                 "merge_pointer": "0/assay_creator",

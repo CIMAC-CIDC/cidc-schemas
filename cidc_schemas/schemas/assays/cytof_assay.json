@@ -5,10 +5,6 @@
     "type": "object",
     "description": "Base information about the acquisition and analysis CyTOF data.",
     "properties": {
-        "assay_run_id": {
-            "type": "string",
-            "description": "User defined unique identifier for this assay run."
-        },
         "cytof_antibodies": {
             "type": "array",
             "description": "Data specific to antibody preparation on the CyTOF assay.",
@@ -39,8 +35,7 @@
     },
     "required": [
         "cytof_antibodies",
-        "records",
-        "assay_run_id"
+        "records"
     ],
     "mergeStrategy": "objectMerge"
 }

@@ -1,5 +1,6 @@
 "#t","METADATA FILE FOR WES"
 "#p","PROTOCOL IDENTIFIER","test_prism_trial_id"
+"#p","ASSAY run date","2001-01-01 00:00:00"
 "#p","ASSAY CREATOR","Mount Sinai"
 "#p","ENRICHMENT KIT","Twist"
 "#p","LIBRARY KIT VENDOR","KAPA - Hyper Prep"

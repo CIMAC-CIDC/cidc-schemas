@@ -5,6 +5,9 @@
     "type": "object",
     "description": "Base information about the acquisition and analysis CyTOF data.",
     "additionalProperties": false,
+    "allOf": [
+        {"$ref": "assays/components/assay_core.json"}
+    ],
     "properties": {
         "assay_run_id": {
             "type": "string",

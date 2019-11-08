@@ -395,6 +395,15 @@ def test_filepath_gen(xlsx, template):
     # parse the spreadsheet and get the file maps
     _, file_maps, xlsx_uri, errs = prismify(xlsx, template)
     assert xlsx_uri
+    assert template.type in xlsx_uri
+    assert ".xlsx" in xlsx_uri
+    if template.type in SUPPORTED_ASSAYS:
+        assert "assays" in xlsx_uri
+    elif template.type in SUPPORTED_MANIFESTS:
+        assert "manifests" in xlsx_uri
+    elif template.type in SUPPORTED_ANALYSES:
+        assert "analysis" in xlsx_uri
+    assert TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] in xlsx_uri
     assert len(errs) == 0
     # we ignore and do not validate 'ct'
     # because it's only a ct patch not a full ct

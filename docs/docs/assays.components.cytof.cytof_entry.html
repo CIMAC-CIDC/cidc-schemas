@@ -111,10 +111,6 @@
             
         
             
-        
-            
-        
-            
                 <tr>
     <td>
         
@@ -142,39 +138,6 @@
             
         
         
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="panel_name">
-                panel_name
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Standardized CyTOF panel name used for antibody sample development.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
             
         
             
@@ -223,39 +186,6 @@
     <td width=55%>
         
             Date of CyTOF batch acquisition.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="instrument">
-                instrument
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Name of CyTOF instrument on which experiment was conducted.
         
     </td>
     <td>
@@ -1020,10 +950,6 @@
             "title": "CyTOF Input Files",
             "type": "object"
         },
-        "instrument": {
-            "description": "Name of CyTOF instrument on which experiment was conducted.",
-            "type": "string"
-        },
         "normalization_version": {
             "description": "Version of normalization for CyTOF assay batch.",
             "type": "string"
@@ -1033,7 +959,7 @@
             "type": "string"
         },
         "output_files": {
-            "$id": "cytof_output",
+            "$id": "cytof_analysis",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "description": "Output files generated from the CyTOF assay: FCS file with enumerations for compartment, assignment and profiling cell labels; 3 CSV keys for mapping from respective enumeration indices to the cell labels; 3 CSV files providing cell count information for each of the cell labels; Analysis.zip and Results.zip containing a variety of R scripts, figures, tables and charts with QC and other information.",
             "properties": {
@@ -2273,10 +2199,6 @@
             },
             "title": "CyTOF Output Files",
             "type": "object"
-        },
-        "panel_name": {
-            "description": "Standardized CyTOF panel name used for antibody sample development.",
-            "type": "string"
         },
         "preprocessing_notes": {
             "description": "Any notes pertaining to preprocessing of CyTOF data.",

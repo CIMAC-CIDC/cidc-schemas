@@ -245,14 +245,14 @@ def test_cytof():
         "input_files": {"processed_fcs": fcs_1, "source_fcs": [fcs_2, fcs_3]},
         "output_files": {
             "fcs_file": fcs_1,
-            "astrolabe_report": report,
+            "astrolabe_reports": report,
             "astrolabe_analysis": analysis,
             "assignment": assignment,
             "compartment": compartment,
             "profiling": profiling,
-            "cell_count_assignment": assignment,
-            "cell_count_compartment": compartment,
-            "cell_count_profiling": profiling,
+            "cell_counts_assignment": assignment,
+            "cell_counts_compartment": compartment,
+            "cell_counts_profiling": profiling,
         },
     }
 

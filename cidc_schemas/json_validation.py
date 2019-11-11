@@ -73,18 +73,14 @@ class _Validator(jsonschema.Draft7Validator):
     
     """
 
-    def __init__(self, schema):
+    def __init__(self, *args, **kwargs):
 
-        # if schema != _Validator.META_SCHEMA:
-        #     schema["additionalProperties"] = False
-        #     schema["patternProperties"] = {"__prism_origin__:///": {"type": "string"}}
-
-        super().__init__(schema)
+        super().__init__(*args, **kwargs)
 
         # TODO consider adding json pointer check to metaschema for in_doc_ref_pattern values
         self.in_doc_ref_validator = jsonschema.validators.create(
             self.META_SCHEMA, validators={"in_doc_ref_pattern": _in_doc_refs_check}
-        )(schema)
+        )(*args, **kwargs)
 
     def iter_errors(self, instance: JSON, _schema: Optional[dict] = None):
         """ 

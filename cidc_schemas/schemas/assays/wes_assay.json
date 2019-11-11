@@ -7,7 +7,7 @@
   "allOf": [
     { "$ref": "assays/components/assay_core.json" },
     { "$ref": "assays/components/ngs_assay_core.json" }
-   ],
+  ],
   "properties": {
     "enrichment_vendor_kit": {
       "description": "Vendor for the bait set used for enrichment , e.g. Twist, Agilent, IDT.",

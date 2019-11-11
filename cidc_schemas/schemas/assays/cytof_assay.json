@@ -9,6 +9,7 @@
         {"$ref": "assays/components/assay_core.json"}
     ],
     "properties": {
+        "assay_creator": {"$comment": "defined in assay_core.json"},
         "assay_run_id": {
             "type": "string",
             "description": "User defined unique identifier for this assay run."

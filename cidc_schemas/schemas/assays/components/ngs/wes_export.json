@@ -6,7 +6,7 @@
   "description": "A single export data record from WES assay.",
   "properties": {
     "wes_experiment_id": {
-      "description": "Identification # for Wes Output files.",
+      "description": "Identification # for WES Output files.",
       "type": "string"
     },
     "export_date": {
@@ -15,7 +15,7 @@
       "format": "date"
     },
     "output_files": {
-      "$ref": "assays/components/ngs/wes_output.json"
+      "$ref": "assays/components/ngs/wes_analysis.json"
     }
   },
   "required": ["wes_experiment_id"]

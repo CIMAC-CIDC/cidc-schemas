@@ -18,18 +18,18 @@
       "type": "array",
       "description": "A single data record from WES assay.",
       "items": {
-        "$ref": "assays/components/ngs/wes_assay_record.json"
+        "$ref": "assays/components/ngs/wes_entry.json"
       },
       "mergeStrategy": "arrayMergeById",
       "mergeOptions": {
         "idRef": "cimac_id"
       }
     },
-    "analysis":{
+    "export":{
       "type":"array",
       "description": "A single export data record from WES assay.",
       "items":{
-        "$ref": "assays/components/ngs/wes_export.json"
+        "$ref": "assays/components/ngs/wes_analysis.json"
       }
     }
   },

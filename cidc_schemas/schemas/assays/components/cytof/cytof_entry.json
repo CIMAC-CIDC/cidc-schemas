@@ -4,6 +4,7 @@
     "title": "CyTOF assay record",
     "type": "object",
     "description": "A single data record from CyTOF assay batch.",
+    "additionalProperties": false,
     "properties": {
         "cimac_id": {
             "$comment": "Id of a sample within this clinical trial, that this assay record is based upon.",

@@ -21,7 +21,6 @@ BASE_OBJ = {
     "data_format": "FASTA",
     "md5_hash": "dummy",
     "uploaded_timestamp": "dummy",
-    "uploader": "dummy",
     "uuid": "dummy",
     "visible": True,
 }

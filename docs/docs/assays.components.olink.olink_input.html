@@ -96,12 +96,12 @@
     </td>
     <td width=55%>
         
-            Information about a xlsx file.
+            Information about CSV files.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_xlsx.html">artifacts.artifact_xlsx</a>
+            <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
         
     </td>
 </tr>
@@ -279,7 +279,7 @@
         },
         "assay_raw_ct": {
             "$comment": "Number of cycles required for the fluorescent signal to cross the threshold.",
-            "$id": "xlsx_artifact",
+            "$id": "csv_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -390,15 +390,15 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "XLSX",
+                            "const": "CSV",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a xlsx file.",
+            "description": "Information about CSV files.",
             "mergeStrategy": "objectMerge",
-            "title": "Excel Artifact",
+            "title": "CSV Artifact",
             "type": "object"
         }
     },

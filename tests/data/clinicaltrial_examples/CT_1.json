@@ -122,7 +122,7 @@
                             "file_size_bytes" :     0,
                             "md5_hash" :            "...",
                             "artifact_category" :   "Assay Artifact from CIMAC",
-                            "data_format" :           "XLSX"
+                            "data_format" :         "CSV"
                         }
                     }
                 }, 
@@ -150,7 +150,7 @@
                             "file_size_bytes" :     0,
                             "md5_hash" :            "...",
                             "artifact_category" :   "Assay Artifact from CIMAC",
-                            "data_format" :           "XLSX"
+                            "data_format" :         "CSV"
                         }
                     }
                 }

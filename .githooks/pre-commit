@@ -6,8 +6,9 @@ import os
 import sys
 import subprocess
 
+
 def system(*args, **kwargs):
-    kwargs.setdefault('stdout', subprocess.PIPE)
+    kwargs.setdefault("stdout", subprocess.PIPE)
     proc = subprocess.Popen(args, **kwargs)
     out, err = proc.communicate()
     return out, err
@@ -23,6 +24,7 @@ def rtrim(seq):
     res.extend(iter)
     return type(seq)(reversed(res))
 
+
 def csv_from_excel(xlsx_dir, xslx_fname, csv_dir):
     csv_files = []
 
@@ -30,47 +32,59 @@ def csv_from_excel(xlsx_dir, xslx_fname, csv_dir):
 
     for worksheet_name in wb.sheetnames:
         worksheet = wb[worksheet_name]
-        
-        csv_file = os.path.join(csv_dir, xslx_fname[:-5]+'__'+worksheet_name.replace(' ', '_')+'.csv')
-        with open(csv_file, 'w') as fd:
+
+        csv_file = os.path.join(
+            csv_dir, xslx_fname[:-5] + "__" + worksheet_name.replace(" ", "_") + ".csv"
+        )
+        with open(csv_file, "w") as fd:
             wr = csv.writer(fd, quoting=csv.QUOTE_ALL)
 
             for row in worksheet.iter_rows(values_only=True):
                 trimmed_row = rtrim(row)
-                if len(trimmed_row) == 1: #only first cell with row type
-                    continue #skip empty rows
+                if len(trimmed_row) == 1:  # only first cell with row type
+                    continue  # skip empty rows
                 wr.writerow(trimmed_row)
 
         csv_files.append(csv_file)
     return csv_files
 
+
 def main():
 
-    if not os.path.exists('./template_examples/csvs'):
-        os.makedirs('./template_examples/csvs')
+    if not os.path.exists("./template_examples/csvs"):
+        os.makedirs("./template_examples/csvs")
 
-    for template_example in os.listdir('./template_examples/'):
-        #remove any .csv in there, so nothing old will be left
-        if template_example.endswith('.csv'):
-            output, err = system('rm', os.path.join('./template_examples/', template_example))
-            if output: print(output)
-            if err: 
+    for template_example in os.listdir("./template_examples/"):
+        # remove any .csv in there, so nothing old will be left
+        if template_example.endswith(".csv"):
+            output, err = system(
+                "rm", os.path.join("./template_examples/", template_example)
+            )
+            if output:
+                print(output)
+            if err:
                 os.exit(err)
-            output, err = system('git', 'rm', os.path.join('./template_examples/', template_example))
-            if output: print(output)
-            if err: 
+            output, err = system(
+                "git", "rm", os.path.join("./template_examples/", template_example)
+            )
+            if output:
+                print(output)
+            if err:
                 os.exit(err)
 
         # '~$___.xlsx' is something like lockfiles for Excel
-        if not template_example.endswith('.xlsx') or template_example.startswith('~$'):
+        if not template_example.endswith(".xlsx") or template_example.startswith("~$"):
             continue
 
-        csv_fnames = csv_from_excel('./template_examples/', template_example, './template_examples/csvs/')
+        csv_fnames = csv_from_excel(
+            "./template_examples/", template_example, "./template_examples/csvs/"
+        )
         for fname in csv_fnames:
-            output, err = system('git', 'add', fname)
-            if output: print(output)
-            if err: 
+            output, err = system("git", "add", fname)
+            if output:
+                print(output)
+            if err:
                 os.exit(err)
 
-    
+
 main()

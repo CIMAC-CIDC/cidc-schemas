@@ -441,7 +441,7 @@ def test_filepath_gen(xlsx, template):
         assert 2 == sum([x.gs_key.endswith("assay_npx.xlsx") for x in file_maps])
 
         # we should have 2 raw_ct files
-        assert 2 == sum([x.gs_key.endswith("assay_raw_ct.xlsx") for x in file_maps])
+        assert 2 == sum([x.gs_key.endswith("assay_raw_ct.csv") for x in file_maps])
 
         # 4 assay level + 1 combined in tots
         assert 5 == sum([x.local_path.startswith("olink_assay") for x in file_maps])

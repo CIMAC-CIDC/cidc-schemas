@@ -463,11 +463,11 @@ def test_olink():
     npx["data_format"] = "NPX"
     npx["samples"] = ["CTTTPPPS1.00", "CTTTPPPS2.00", "CTTTPPPS3.00"]
     npx["number_of_samples"] = 3
-    xlsx = ARTIFACT_OBJ.copy()
-    xlsx["data_format"] = "XLSX"
+    csv = ARTIFACT_OBJ.copy()
+    csv["data_format"] = "CSV"
     record = OLINK_RECORD.copy()
     record["files"]["assay_npx"] = npx
-    record["files"]["assay_raw_ct"] = xlsx
+    record["files"]["assay_raw_ct"] = csv
     record["files"]["study_npx"] = npx
 
     # add a demo record.

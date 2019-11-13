@@ -335,9 +335,37 @@
             "items": {
                 "$id": "cytof",
                 "$schema": "http://json-schema.org/draft-07/schema#",
+                "additionalProperties": false,
+                "allOf": [
+                    {
+                        "$id": "assay_core",
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "description": "Main properties of the assay experiment template.",
+                        "properties": {
+                            "assay_creator": {
+                                "description": "Indicates what site is filling out the assay.",
+                                "enum": [
+                                    "DFCI",
+                                    "Mount Sinai",
+                                    "Stanford",
+                                    "MD Anderson"
+                                ],
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "assay_creator"
+                        ],
+                        "title": "Assay Core",
+                        "type": "object"
+                    }
+                ],
                 "description": "Base information about the acquisition and analysis CyTOF data.",
                 "mergeStrategy": "objectMerge",
                 "properties": {
+                    "assay_creator": {
+                        "$comment": "defined in assay_core.json"
+                    },
                     "assay_run_id": {
                         "description": "User defined unique identifier for this assay run.",
                         "type": "string"
@@ -440,6 +468,7 @@
                         "items": {
                             "$id": "cytof_entry",
                             "$schema": "http://json-schema.org/draft-07/schema#",
+                            "additionalProperties": false,
                             "description": "A single data record from CyTOF assay batch.",
                             "mergeStrategy": "objectMerge",
                             "properties": {
@@ -494,6 +523,7 @@
                                 "input_files": {
                                     "$id": "cytof_input",
                                     "$schema": "http://json-schema.org/draft-07/schema#",
+                                    "additionalProperties": false,
                                     "description": "CyTOF Assay Input Files",
                                     "properties": {
                                         "processed_fcs": {
@@ -760,6 +790,7 @@
                                 "output_files": {
                                     "$id": "cytof_analysis",
                                     "$schema": "http://json-schema.org/draft-07/schema#",
+                                    "additionalProperties": false,
                                     "description": "Output files generated from the CyTOF assay: FCS file with enumerations for compartment, assignment and profiling cell labels; 3 CSV keys for mapping from respective enumeration indices to the cell labels; 3 CSV files providing cell count information for each of the cell labels; Analysis.zip and Results.zip containing a variety of R scripts, figures, tables and charts with QC and other information.",
                                     "properties": {
                                         "assignment": {
@@ -876,29 +907,8 @@
                                                         "data_format": {
                                                             "const": "CSV",
                                                             "description": "Data format."
-                                                        },
-                                                        "header_row": {
-                                                            "description": "Number of header lines in the CSV file.",
-                                                            "type": "integer"
-                                                        },
-                                                        "separator": {
-                                                            "description": "Delimiter for separating values within the CSV file.",
-                                                            "type": "string"
                                                         }
                                                     }
-                                                }
-                                            ],
-                                            "anyOf": [
-                                                {
-                                                    "required": [
-                                                        "separator",
-                                                        "header_row"
-                                                    ]
-                                                },
-                                                {
-                                                    "required": [
-                                                        "upload_placeholder"
-                                                    ]
                                                 }
                                             ],
                                             "description": "Information about CSV files.",
@@ -1266,29 +1276,8 @@
                                                         "data_format": {
                                                             "const": "CSV",
                                                             "description": "Data format."
-                                                        },
-                                                        "header_row": {
-                                                            "description": "Number of header lines in the CSV file.",
-                                                            "type": "integer"
-                                                        },
-                                                        "separator": {
-                                                            "description": "Delimiter for separating values within the CSV file.",
-                                                            "type": "string"
                                                         }
                                                     }
-                                                }
-                                            ],
-                                            "anyOf": [
-                                                {
-                                                    "required": [
-                                                        "separator",
-                                                        "header_row"
-                                                    ]
-                                                },
-                                                {
-                                                    "required": [
-                                                        "upload_placeholder"
-                                                    ]
                                                 }
                                             ],
                                             "description": "Information about CSV files.",
@@ -1410,29 +1399,8 @@
                                                         "data_format": {
                                                             "const": "CSV",
                                                             "description": "Data format."
-                                                        },
-                                                        "header_row": {
-                                                            "description": "Number of header lines in the CSV file.",
-                                                            "type": "integer"
-                                                        },
-                                                        "separator": {
-                                                            "description": "Delimiter for separating values within the CSV file.",
-                                                            "type": "string"
                                                         }
                                                     }
-                                                }
-                                            ],
-                                            "anyOf": [
-                                                {
-                                                    "required": [
-                                                        "separator",
-                                                        "header_row"
-                                                    ]
-                                                },
-                                                {
-                                                    "required": [
-                                                        "upload_placeholder"
-                                                    ]
                                                 }
                                             ],
                                             "description": "Information about CSV files.",
@@ -1554,29 +1522,8 @@
                                                         "data_format": {
                                                             "const": "CSV",
                                                             "description": "Data format."
-                                                        },
-                                                        "header_row": {
-                                                            "description": "Number of header lines in the CSV file.",
-                                                            "type": "integer"
-                                                        },
-                                                        "separator": {
-                                                            "description": "Delimiter for separating values within the CSV file.",
-                                                            "type": "string"
                                                         }
                                                     }
-                                                }
-                                            ],
-                                            "anyOf": [
-                                                {
-                                                    "required": [
-                                                        "separator",
-                                                        "header_row"
-                                                    ]
-                                                },
-                                                {
-                                                    "required": [
-                                                        "upload_placeholder"
-                                                    ]
                                                 }
                                             ],
                                             "description": "Information about CSV files.",
@@ -1698,29 +1645,8 @@
                                                         "data_format": {
                                                             "const": "CSV",
                                                             "description": "Data format."
-                                                        },
-                                                        "header_row": {
-                                                            "description": "Number of header lines in the CSV file.",
-                                                            "type": "integer"
-                                                        },
-                                                        "separator": {
-                                                            "description": "Delimiter for separating values within the CSV file.",
-                                                            "type": "string"
                                                         }
                                                     }
-                                                }
-                                            ],
-                                            "anyOf": [
-                                                {
-                                                    "required": [
-                                                        "separator",
-                                                        "header_row"
-                                                    ]
-                                                },
-                                                {
-                                                    "required": [
-                                                        "upload_placeholder"
-                                                    ]
                                                 }
                                             ],
                                             "description": "Information about CSV files.",
@@ -1965,29 +1891,8 @@
                                                         "data_format": {
                                                             "const": "CSV",
                                                             "description": "Data format."
-                                                        },
-                                                        "header_row": {
-                                                            "description": "Number of header lines in the CSV file.",
-                                                            "type": "integer"
-                                                        },
-                                                        "separator": {
-                                                            "description": "Delimiter for separating values within the CSV file.",
-                                                            "type": "string"
                                                         }
                                                     }
-                                                }
-                                            ],
-                                            "anyOf": [
-                                                {
-                                                    "required": [
-                                                        "separator",
-                                                        "header_row"
-                                                    ]
-                                                },
-                                                {
-                                                    "required": [
-                                                        "upload_placeholder"
-                                                    ]
                                                 }
                                             ],
                                             "description": "Information about CSV files.",
@@ -2654,29 +2559,8 @@
                                                         "data_format": {
                                                             "const": "CSV",
                                                             "description": "Data format."
-                                                        },
-                                                        "header_row": {
-                                                            "description": "Number of header lines in the CSV file.",
-                                                            "type": "integer"
-                                                        },
-                                                        "separator": {
-                                                            "description": "Delimiter for separating values within the CSV file.",
-                                                            "type": "string"
                                                         }
                                                     }
-                                                }
-                                            ],
-                                            "anyOf": [
-                                                {
-                                                    "required": [
-                                                        "separator",
-                                                        "header_row"
-                                                    ]
-                                                },
-                                                {
-                                                    "required": [
-                                                        "upload_placeholder"
-                                                    ]
                                                 }
                                             ],
                                             "description": "Information about CSV files.",
@@ -3467,29 +3351,8 @@
                                                                     "data_format": {
                                                                         "const": "CSV",
                                                                         "description": "Data format."
-                                                                    },
-                                                                    "header_row": {
-                                                                        "description": "Number of header lines in the CSV file.",
-                                                                        "type": "integer"
-                                                                    },
-                                                                    "separator": {
-                                                                        "description": "Delimiter for separating values within the CSV file.",
-                                                                        "type": "string"
                                                                     }
                                                                 }
-                                                            }
-                                                        ],
-                                                        "anyOf": [
-                                                            {
-                                                                "required": [
-                                                                    "separator",
-                                                                    "header_row"
-                                                                ]
-                                                            },
-                                                            {
-                                                                "required": [
-                                                                    "upload_placeholder"
-                                                                ]
                                                             }
                                                         ],
                                                         "description": "Information about CSV files.",
@@ -3612,29 +3475,8 @@
                                                                     "data_format": {
                                                                         "const": "CSV",
                                                                         "description": "Data format."
-                                                                    },
-                                                                    "header_row": {
-                                                                        "description": "Number of header lines in the CSV file.",
-                                                                        "type": "integer"
-                                                                    },
-                                                                    "separator": {
-                                                                        "description": "Delimiter for separating values within the CSV file.",
-                                                                        "type": "string"
                                                                     }
                                                                 }
-                                                            }
-                                                        ],
-                                                        "anyOf": [
-                                                            {
-                                                                "required": [
-                                                                    "separator",
-                                                                    "header_row"
-                                                                ]
-                                                            },
-                                                            {
-                                                                "required": [
-                                                                    "upload_placeholder"
-                                                                ]
                                                             }
                                                         ],
                                                         "description": "Information about CSV files.",
@@ -3757,29 +3599,8 @@
                                                                     "data_format": {
                                                                         "const": "CSV",
                                                                         "description": "Data format."
-                                                                    },
-                                                                    "header_row": {
-                                                                        "description": "Number of header lines in the CSV file.",
-                                                                        "type": "integer"
-                                                                    },
-                                                                    "separator": {
-                                                                        "description": "Delimiter for separating values within the CSV file.",
-                                                                        "type": "string"
                                                                     }
                                                                 }
-                                                            }
-                                                        ],
-                                                        "anyOf": [
-                                                            {
-                                                                "required": [
-                                                                    "separator",
-                                                                    "header_row"
-                                                                ]
-                                                            },
-                                                            {
-                                                                "required": [
-                                                                    "upload_placeholder"
-                                                                ]
                                                             }
                                                         ],
                                                         "description": "Information about CSV files.",
@@ -4204,29 +4025,8 @@
                                                                     "data_format": {
                                                                         "const": "CSV",
                                                                         "description": "Data format."
-                                                                    },
-                                                                    "header_row": {
-                                                                        "description": "Number of header lines in the CSV file.",
-                                                                        "type": "integer"
-                                                                    },
-                                                                    "separator": {
-                                                                        "description": "Delimiter for separating values within the CSV file.",
-                                                                        "type": "string"
                                                                     }
                                                                 }
-                                                            }
-                                                        ],
-                                                        "anyOf": [
-                                                            {
-                                                                "required": [
-                                                                    "separator",
-                                                                    "header_row"
-                                                                ]
-                                                            },
-                                                            {
-                                                                "required": [
-                                                                    "upload_placeholder"
-                                                                ]
                                                             }
                                                         ],
                                                         "description": "Information about CSV files.",
@@ -4358,29 +4158,8 @@
                                                         "data_format": {
                                                             "const": "CSV",
                                                             "description": "Data format."
-                                                        },
-                                                        "header_row": {
-                                                            "description": "Number of header lines in the CSV file.",
-                                                            "type": "integer"
-                                                        },
-                                                        "separator": {
-                                                            "description": "Delimiter for separating values within the CSV file.",
-                                                            "type": "string"
                                                         }
                                                     }
-                                                }
-                                            ],
-                                            "anyOf": [
-                                                {
-                                                    "required": [
-                                                        "separator",
-                                                        "header_row"
-                                                    ]
-                                                },
-                                                {
-                                                    "required": [
-                                                        "upload_placeholder"
-                                                    ]
                                                 }
                                             ],
                                             "description": "Information about CSV files.",
@@ -4768,29 +4547,8 @@
                                                         "data_format": {
                                                             "const": "CSV",
                                                             "description": "Data format."
-                                                        },
-                                                        "header_row": {
-                                                            "description": "Number of header lines in the CSV file.",
-                                                            "type": "integer"
-                                                        },
-                                                        "separator": {
-                                                            "description": "Delimiter for separating values within the CSV file.",
-                                                            "type": "string"
                                                         }
                                                     }
-                                                }
-                                            ],
-                                            "anyOf": [
-                                                {
-                                                    "required": [
-                                                        "separator",
-                                                        "header_row"
-                                                    ]
-                                                },
-                                                {
-                                                    "required": [
-                                                        "upload_placeholder"
-                                                    ]
                                                 }
                                             ],
                                             "description": "Information about CSV files.",
@@ -4922,29 +4680,8 @@
                                                                             "data_format": {
                                                                                 "const": "CSV",
                                                                                 "description": "Data format."
-                                                                            },
-                                                                            "header_row": {
-                                                                                "description": "Number of header lines in the CSV file.",
-                                                                                "type": "integer"
-                                                                            },
-                                                                            "separator": {
-                                                                                "description": "Delimiter for separating values within the CSV file.",
-                                                                                "type": "string"
                                                                             }
                                                                         }
-                                                                    }
-                                                                ],
-                                                                "anyOf": [
-                                                                    {
-                                                                        "required": [
-                                                                            "separator",
-                                                                            "header_row"
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "required": [
-                                                                            "upload_placeholder"
-                                                                        ]
                                                                     }
                                                                 ],
                                                                 "description": "Information about CSV files.",
@@ -5067,29 +4804,8 @@
                                                                             "data_format": {
                                                                                 "const": "CSV",
                                                                                 "description": "Data format."
-                                                                            },
-                                                                            "header_row": {
-                                                                                "description": "Number of header lines in the CSV file.",
-                                                                                "type": "integer"
-                                                                            },
-                                                                            "separator": {
-                                                                                "description": "Delimiter for separating values within the CSV file.",
-                                                                                "type": "string"
                                                                             }
                                                                         }
-                                                                    }
-                                                                ],
-                                                                "anyOf": [
-                                                                    {
-                                                                        "required": [
-                                                                            "separator",
-                                                                            "header_row"
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "required": [
-                                                                            "upload_placeholder"
-                                                                        ]
                                                                     }
                                                                 ],
                                                                 "description": "Information about CSV files.",
@@ -5212,29 +4928,8 @@
                                                                             "data_format": {
                                                                                 "const": "CSV",
                                                                                 "description": "Data format."
-                                                                            },
-                                                                            "header_row": {
-                                                                                "description": "Number of header lines in the CSV file.",
-                                                                                "type": "integer"
-                                                                            },
-                                                                            "separator": {
-                                                                                "description": "Delimiter for separating values within the CSV file.",
-                                                                                "type": "string"
                                                                             }
                                                                         }
-                                                                    }
-                                                                ],
-                                                                "anyOf": [
-                                                                    {
-                                                                        "required": [
-                                                                            "separator",
-                                                                            "header_row"
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "required": [
-                                                                            "upload_placeholder"
-                                                                        ]
                                                                     }
                                                                 ],
                                                                 "description": "Information about CSV files.",
@@ -5659,29 +5354,8 @@
                                                                             "data_format": {
                                                                                 "const": "CSV",
                                                                                 "description": "Data format."
-                                                                            },
-                                                                            "header_row": {
-                                                                                "description": "Number of header lines in the CSV file.",
-                                                                                "type": "integer"
-                                                                            },
-                                                                            "separator": {
-                                                                                "description": "Delimiter for separating values within the CSV file.",
-                                                                                "type": "string"
                                                                             }
                                                                         }
-                                                                    }
-                                                                ],
-                                                                "anyOf": [
-                                                                    {
-                                                                        "required": [
-                                                                            "separator",
-                                                                            "header_row"
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "required": [
-                                                                            "upload_placeholder"
-                                                                        ]
                                                                     }
                                                                 ],
                                                                 "description": "Information about CSV files.",
@@ -6513,7 +6187,7 @@
                                     },
                                     "assay_raw_ct": {
                                         "$comment": "Number of cycles required for the fluorescent signal to cross the threshold.",
-                                        "$id": "xlsx_artifact",
+                                        "$id": "csv_artifact",
                                         "$schema": "http://json-schema.org/draft-07/schema#",
                                         "allOf": [
                                             {
@@ -6624,15 +6298,15 @@
                                             {
                                                 "properties": {
                                                     "data_format": {
-                                                        "const": "XLSX",
+                                                        "const": "CSV",
                                                         "description": "Data format."
                                                     }
                                                 }
                                             }
                                         ],
-                                        "description": "Information about a xlsx file.",
+                                        "description": "Information about CSV files.",
                                         "mergeStrategy": "objectMerge",
-                                        "title": "Excel Artifact",
+                                        "title": "CSV Artifact",
                                         "type": "object"
                                     }
                                 },

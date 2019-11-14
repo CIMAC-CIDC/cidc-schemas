@@ -1,6 +1,6 @@
 import pytest
 
-from cidc_schemas.migrations import _follow_path, v0_10_0_to_v0_10_2
+from cidc_schemas.migrations import _follow_path, v0_10_0_to_v0_10_2, MigrationError
 
 
 def test_follow_path():
@@ -19,9 +19,17 @@ def test_follow_path():
 
 def test_v0_10_0_to_v0_10_2():
 
-    urls = ["tid/olink/chip_1/assay_raw_ct.xlsx", "tid/olink/chip_2/assay_raw_ct.xlsx"]
+    # Check that upgrade doesn't modify a CT example with no olink data
+    ct_no_olink = {"assays": {"wes": {"records": []}}}
+    assert v0_10_0_to_v0_10_2.upgrade(ct_no_olink).result == ct_no_olink
+
+    # Check that upgrade throws an error if unexpected olink structure is encountered
+    ct_bad_olink = {"assays": {"olink": {"records": [{"files": {}}]}}}
+    with pytest.raises(MigrationError, match="Olink record has unexpected structure"):
+        v0_10_0_to_v0_10_2.upgrade(ct_bad_olink)
 
     # Check that the migration treats a well-behaved CT example as expected
+    urls = ["tid/olink/chip_1/assay_raw_ct.xlsx", "tid/olink/chip_2/assay_raw_ct.xlsx"]
     old_ct = {
         "assays": {
             "olink": {
@@ -56,8 +64,6 @@ def test_v0_10_0_to_v0_10_2():
 
     # Check that artifacts were successfully upgraded and
     # that file_updates track updates as expected
-    print(res.file_updates)
-    print(res.result)
     for i in range(2):
         artifact = get_artifact_path(i)
         assert artifact["data_format"] == "CSV"

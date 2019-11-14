@@ -11,6 +11,10 @@ def _follow_path(d: dict, *keys):
     return d
 
 
+class MigrationError(Exception):
+    pass
+
+
 class MigrationResult(NamedTuple):
     result: dict
     file_updates: Dict[str, dict]
@@ -65,6 +69,9 @@ class v0_10_0_to_v0_10_2(migration):
         for record in olink_records:
             # Extract artifact record
             assay_raw_ct = _follow_path(record, "files", "assay_raw_ct")
+
+            if not assay_raw_ct:
+                raise MigrationError(f"Olink record has unexpected structure: {record}")
 
             # Update the data_format
             assay_raw_ct["data_format"] = target_format

@@ -1,0 +1,76 @@
+import pytest
+
+from cidc_schemas.migrations import _follow_path, v0_10_0_to_v0_10_2, MigrationError
+
+
+def test_follow_path():
+    """Test _follow_path utility for extracting values from dict"""
+    # Existing path
+    val = "foo"
+    d = {"a": {"b": [{}, {"c": val}]}}
+    assert _follow_path(d, "a", "b", 1, "c") == val
+
+    # Non-existing paths
+    d = {"a": {"buzz": val}}
+    assert _follow_path(d, "a", "b") is None
+    d = {"a": [val]}
+    assert _follow_path(d, 1) is None
+
+
+def test_v0_10_0_to_v0_10_2():
+
+    # Check that upgrade doesn't modify a CT example with no olink data
+    ct_no_olink = {"assays": {"wes": {"records": []}}}
+    assert v0_10_0_to_v0_10_2.upgrade(ct_no_olink).result == ct_no_olink
+
+    # Check that upgrade throws an error if unexpected olink structure is encountered
+    ct_bad_olink = {"assays": {"olink": {"records": [{"files": {}}]}}}
+    with pytest.raises(MigrationError, match="Olink record has unexpected structure"):
+        v0_10_0_to_v0_10_2.upgrade(ct_bad_olink)
+
+    # Check that the migration treats a well-behaved CT example as expected
+    urls = ["tid/olink/chip_1/assay_raw_ct.xlsx", "tid/olink/chip_2/assay_raw_ct.xlsx"]
+    old_ct = {
+        "assays": {
+            "olink": {
+                "records": [
+                    {
+                        "files": {
+                            "assay_raw_ct": {
+                                "data_format": "XLSX",
+                                "object_url": urls[0],
+                            }
+                        }
+                    },
+                    {
+                        "files": {
+                            "assay_raw_ct": {
+                                "data_format": "XLSX",
+                                "object_url": urls[1],
+                            }
+                        }
+                    },
+                ]
+            }
+        }
+    }
+
+    res = v0_10_0_to_v0_10_2.upgrade(old_ct)
+
+    # Extract artifacts from migration result
+    get_artifact_path = lambda record_idx: _follow_path(
+        res.result, "assays", "olink", "records", record_idx, "files", "assay_raw_ct"
+    )
+
+    # Check that artifacts were successfully upgraded and
+    # that file_updates track updates as expected
+    for i in range(2):
+        artifact = get_artifact_path(i)
+        assert artifact["data_format"] == "CSV"
+        assert artifact["object_url"].endswith(".csv")
+
+        assert urls[i] in res.file_updates
+        assert res.file_updates[urls[i]] == artifact
+
+    # Check upgrade/downgrade inverse
+    assert v0_10_0_to_v0_10_2.downgrade(res.result).result == old_ct

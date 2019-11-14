@@ -44,10 +44,7 @@ OLINK_RECORD = {
     "files": {"assay_npx": "", "assay_raw_ct": "", "study_npx": ""},
 }
 
-ASSAY_CORE = {
-    "assay_creator": "DFCI",
-    "uploader": "dummy",
-}
+ASSAY_CORE = {"assay_creator": "DFCI"}
 
 
 def _fetch_validator(name):
@@ -248,14 +245,14 @@ def test_cytof():
         "input_files": {"processed_fcs": fcs_1, "source_fcs": [fcs_2, fcs_3]},
         "output_files": {
             "fcs_file": fcs_1,
-            "astrolabe_report": report,
+            "astrolabe_reports": report,
             "astrolabe_analysis": analysis,
             "assignment": assignment,
             "compartment": compartment,
             "profiling": profiling,
-            "cell_count_assignment": assignment,
-            "cell_count_compartment": compartment,
-            "cell_count_profiling": profiling,
+            "cell_counts_assignment": assignment,
+            "cell_counts_compartment": compartment,
+            "cell_counts_profiling": profiling,
         },
     }
 
@@ -466,11 +463,11 @@ def test_olink():
     npx["data_format"] = "NPX"
     npx["samples"] = ["CTTTPPPS1.00", "CTTTPPPS2.00", "CTTTPPPS3.00"]
     npx["number_of_samples"] = 3
-    xlsx = ARTIFACT_OBJ.copy()
-    xlsx["data_format"] = "XLSX"
+    csv = ARTIFACT_OBJ.copy()
+    csv["data_format"] = "CSV"
     record = OLINK_RECORD.copy()
     record["files"]["assay_npx"] = npx
-    record["files"]["assay_raw_ct"] = xlsx
+    record["files"]["assay_raw_ct"] = csv
     record["files"]["study_npx"] = npx
 
     # add a demo record.

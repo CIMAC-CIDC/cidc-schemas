@@ -87,77 +87,7 @@
         
             
         
-            
         
-            
-        
-        
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="separator">
-                separator
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Delimiter for separating values within the CSV file.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="header_row">
-                header_row
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Number of header lines in the CSV file.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                integer 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
             
         
             
@@ -304,29 +234,8 @@
                 "data_format": {
                     "const": "CSV",
                     "description": "Data format."
-                },
-                "header_row": {
-                    "description": "Number of header lines in the CSV file.",
-                    "type": "integer"
-                },
-                "separator": {
-                    "description": "Delimiter for separating values within the CSV file.",
-                    "type": "string"
                 }
             }
-        }
-    ],
-    "anyOf": [
-        {
-            "required": [
-                "separator",
-                "header_row"
-            ]
-        },
-        {
-            "required": [
-                "upload_placeholder"
-            ]
         }
     ],
     "description": "Information about CSV files.",

@@ -79,7 +79,7 @@ TEST_PRISM_TRIAL = {
                             "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other",
-                        },
+                        }
                     ],
                     "cimac_id": "CTTTPP111.00",
                     "parent_sample_id": "test_sample_1",
@@ -441,7 +441,7 @@ def test_filepath_gen(xlsx, template):
         assert 2 == sum([x.gs_key.endswith("assay_npx.xlsx") for x in file_maps])
 
         # we should have 2 raw_ct files
-        assert 2 == sum([x.gs_key.endswith("assay_raw_ct.xlsx") for x in file_maps])
+        assert 2 == sum([x.gs_key.endswith("assay_raw_ct.csv") for x in file_maps])
 
         # 4 assay level + 1 combined in tots
         assert 5 == sum([x.local_path.startswith("olink_assay") for x in file_maps])
@@ -746,7 +746,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
 
     # parse the spreadsheet and get the file maps
-    prism_patch, file_maps, errs = prismify(xlsx, template, verb=True)
+    prism_patch, file_maps, errs = prismify(xlsx, template)
     assert len(errs) == 0
 
     if template.type in SUPPORTED_MANIFESTS:
@@ -1021,7 +1021,7 @@ def test_merge_stuff():
                     "soda": {
                         "type": "object",
                         "properties": {"prob": {"type": "number"}},
-                    },
+                    }
                 },
                 {
                     "slices": {
@@ -1245,7 +1245,7 @@ def test_throw_on_collision():
         "properties": {
             "l": {
                 "type": "array",
-                "items": {"cimac_id": {"type": "string",}, "a": {"type": "integer"}},
+                "items": {"cimac_id": {"type": "string"}, "a": {"type": "integer"}},
                 "mergeStrategy": "arrayMergeById",
                 "mergeOptions": {"idRef": "/cimac_id"},
             }

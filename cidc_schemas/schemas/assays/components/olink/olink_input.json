@@ -10,7 +10,7 @@
       "$comment": "Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale."
     },
     "assay_raw_ct": {
-      "$ref": "artifacts/artifact_xlsx.json",
+      "$ref": "artifacts/artifact_csv.json",
       "$comment": "Number of cycles required for the fluorescent signal to cross the threshold."
     }
   },

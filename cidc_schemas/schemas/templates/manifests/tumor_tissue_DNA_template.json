@@ -1,10 +1,10 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "tissue_DNA_shipping",
-    "title": "Shipping manifest for tissue extracted normal DNA samples",
+    "$id": "tumor_tissue_DNA_shipping",
+    "title": "Shipping manifest for tissue extracted tumor DNA samples",
     "type": "object",
     "category": "manifest",
-    "description": "Shipping / receiving manifest for transferring tissue extracted normal DNA samples.\n",
+    "description": "Shipping / receiving manifest for transferring tissue extracted tumor DNA samples.\n",
     "properties": {
         "worksheets": {
             "Shipment": {
@@ -124,6 +124,10 @@
                         "type of sample": {
                             "merge_pointer": "/type_of_sample",
                             "type_ref": "sample.json#properties/type_of_sample"
+                        },
+                        "type of tumor sample": {
+                            "merge_pointer": "/type_of_tumor_sample",
+                            "type_ref": "sample.json#properties/type_of_tumor_sample"
                         },
                         "sample collection procedure": {
                             "merge_pointer": "/sample_collection_procedure",

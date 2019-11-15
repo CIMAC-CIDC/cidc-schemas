@@ -1,10 +1,10 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "normal_DNA_shipping",
-    "title": "Shipping manifest for extracted normal DNA samples",
+    "$id": "blood_DNA_shipping",
+    "title": "Shipping manifest for blood extracted normal DNA samples",
     "type": "object",
     "category": "manifest",
-    "description": "Shipping / receiving manifest for transferring extracted normal DNA samples.\n",
+    "description": "Shipping / receiving manifest for transferring blood extracted normal DNA samples.\n",
     "properties": {
         "worksheets": {
             "Shipment": {
@@ -171,15 +171,15 @@
                         }
                     },
                     "DNA quality": {
-                        "din": {
+                        "din value": {
                             "merge_pointer": "/din",
                             "type_ref": "sample.json#properties/din"
                         },
-                        "a260/a280": {
+                        "a260/a280 value": {
                             "merge_pointer": "/a260_a280",
                             "type_ref": "sample.json#properties/a260_a280"
                         },
-                        "a260/a230": {
+                        "a260/a230 value": {
                             "merge_pointer": "/a260_a230",
                             "type_ref": "sample.json#properties/a260_a230"
                         }

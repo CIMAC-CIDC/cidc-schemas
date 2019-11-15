@@ -119,6 +119,24 @@
                 "Other"
             ]
         },
+        "core_number": {
+            "description": "The biopsy core number from which the sample was used.",
+            "type": "number"
+        },
+        "fixation_stabilization_type": {
+            "description": "Type of specimen fixation or stabilization that was employed by the site directly after collection.",
+            "type": "string",
+            "enum": [
+                "Archival FFPE",
+                "Fresh Specimen",
+                "Frozen Specimen",
+                "Formalin-Fixed Paraffin-Embedded",
+                "Optimum cutting temperature medium",
+                "Thaw-Lyse",
+                "Not Reported",
+                "Other"
+            ]
+        },
         "type_of_primary_container": {
             "description": "The format in which the sample was sent.",
             "type": "string",
@@ -236,6 +254,18 @@
                 "Not Reported",
                 "Other"
             ]
+        },
+        "din": {
+            "type": "number", 
+            "description": "Provides a DNA Integrity Number as an indication of extraction quality (values of 1-10)" 
+        },
+        "a260_a280": {
+            "type": "number", 
+            "description": "Provides an absorbance percentage ratio indicating purity of DNA (values of 0 to 2)" 
+        },
+        "a260_a230": {
+            "type": "number", 
+            "description": "Provides an absorbance percentage ratio indicating presence of contaminants (values of 0 to 3)" 
         },
         "pbmc_viability": {
             "description": "Receiving site determines the percent recovered cells that are viable after thawing.",

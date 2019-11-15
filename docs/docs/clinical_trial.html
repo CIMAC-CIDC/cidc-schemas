@@ -9460,8 +9460,17 @@
                         "items": {
                             "$id": "sample",
                             "$schema": "http://json-schema.org/draft-07/schema#",
+                            "additionalProperties": false,
                             "description": "Any material sample taken from a biological entity for testing, diagnostic, propagation, treatment or research purposes, including a sample obtained from a living organism or taken from the biological object after halting of all its life functions. Biospecimen can contain one or more components including but not limited to cellular molecules, cells, tissues, organs, body fluids, embryos, and body excretory products.",
                             "properties": {
+                                "a260_a230": {
+                                    "description": "Provides an absorbance percentage ratio indicating presence of contaminants (values of 0 to 3)",
+                                    "type": "number"
+                                },
+                                "a260_a280": {
+                                    "description": "Provides an absorbance percentage ratio indicating purity of DNA (values of 0 to 2)",
+                                    "type": "number"
+                                },
                                 "aliquots": {
                                     "description": "Pertaining to a portion (volume or weight) of the whole.",
                                     "items": {
@@ -9586,6 +9595,10 @@
                                     "description": "Comments on sample testing.",
                                     "type": "string"
                                 },
+                                "core_number": {
+                                    "description": "The biopsy core number from which the sample was used.",
+                                    "type": "number"
+                                },
                                 "diagnosis_verification": {
                                     "description": "Indicates whether the local pathology review was consistent with the diagnostic pathology report.",
                                     "enum": [
@@ -9596,6 +9609,24 @@
                                         "Other"
                                     ],
                                     "title": "Diagnosis verification",
+                                    "type": "string"
+                                },
+                                "din": {
+                                    "description": "Provides a DNA Integrity Number as an indication of extraction quality (values of 1-10)",
+                                    "type": "number"
+                                },
+                                "fixation_stabilization_type": {
+                                    "description": "Type of specimen fixation or stabilization that was employed by the site directly after collection.",
+                                    "enum": [
+                                        "Archival FFPE",
+                                        "Fresh Specimen",
+                                        "Frozen Specimen",
+                                        "Formalin-Fixed Paraffin-Embedded",
+                                        "Optimum cutting temperature medium",
+                                        "Thaw-Lyse",
+                                        "Not Reported",
+                                        "Other"
+                                    ],
                                     "type": "string"
                                 },
                                 "histology_behavior": {
@@ -9693,9 +9724,25 @@
                                     ],
                                     "type": "string"
                                 },
+                                "processed_sample_derivative": {
+                                    "description": "The type of derivative or analyte extracted from the specimen to be shipped for testing.",
+                                    "enum": [
+                                        "Tumor DNA",
+                                        "Tumor RNA",
+                                        "Germline DNA",
+                                        "Circulating Tumor-Derived DNA",
+                                        "Not Reported",
+                                        "Other"
+                                    ],
+                                    "type": "string"
+                                },
                                 "processed_sample_id": {
                                     "description": "Aliquot identifier assigned by the biorepository site: EA123-45-1",
                                     "type": "string"
+                                },
+                                "processed_sample_quantity": {
+                                    "description": "Quantity of the processed sample (e.g. number of slides cut for DNA extraction).",
+                                    "type": "number"
                                 },
                                 "processed_sample_type": {
                                     "description": "The type of processing that was performed on the collected specimen by the Biobank for storage.",
@@ -9707,6 +9754,10 @@
                                         "Bone Marrow Mononuclear Cell",
                                         "Supernatant",
                                         "Cell Pellet",
+                                        "H&E-Stained Fixed Tissue Slide Specimen",
+                                        "Fixed Slide",
+                                        "Tissue Scroll",
+                                        "FFPE Punch",
                                         "Not Reported",
                                         "Other"
                                     ],
@@ -9760,6 +9811,36 @@
                                         "Lumbar Puncture",
                                         "Aspirate",
                                         "Fine-Needle Aspiration",
+                                        "Not Reported",
+                                        "Other"
+                                    ],
+                                    "type": "string"
+                                },
+                                "sample_derivative_concentration": {
+                                    "description": "The concentration of analyte or derivative shipped.",
+                                    "type": "number"
+                                },
+                                "sample_derivative_concentration_units": {
+                                    "description": "The concentration units for the analyte or derivative shipped.",
+                                    "enum": [
+                                        "Nanogram per Microliter",
+                                        "Milligram per Milliliter",
+                                        "Micrograms per Microliter",
+                                        "Cells per Vial",
+                                        "Not Reported",
+                                        "Other"
+                                    ],
+                                    "type": "string"
+                                },
+                                "sample_derivative_volume": {
+                                    "description": "Volume of the analyte or derivative shipped.",
+                                    "type": "number"
+                                },
+                                "sample_derivative_volume_units": {
+                                    "description": "Volume units of each analyte or derivative shipped.",
+                                    "enum": [
+                                        "Microliters",
+                                        "Milliliters",
                                         "Not Reported",
                                         "Other"
                                     ],

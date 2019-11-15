@@ -191,6 +191,52 @@
                 "Other"
             ]
         },
+        "processed_sample_quantity": {
+            "description": "Quantity of the processed sample (e.g. number of slides cut for DNA extraction).",
+            "type": "number"
+        },
+        "processed_sample_derivative": {
+            "description": "The type of derivative or analyte extracted from the specimen to be shipped for testing.",
+            "type": "string",
+            "enum": [
+                "Tumor DNA",
+                "Tumor RNA",
+                "Germline DNA",
+                "Circulating Tumor-Derived DNA",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "sample_derivative_volume": {
+            "description": "Volume of the analyte or derivative shipped.",
+            "type": "number"
+        },
+        "sample_derivative_volume_units": {
+            "description": "Volume units of each analyte or derivative shipped.",
+            "type": "string",
+            "enum": [
+                "Microliters",
+                "Milliliters",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "sample_derivative_concentration": {
+            "description": "The concentration of analyte or derivative shipped.",
+            "type": "number"
+        },
+        "sample_derivative_concentration_units": {
+            "description": "The concentration units for the analyte or derivative shipped.",
+            "type": "string",
+            "enum": [
+                "Nanogram per Microliter",
+                "Milligram per Milliliter",
+                "Micrograms per Microliter",
+                "Cells per Vial",
+                "Not Reported",
+                "Other"
+            ]
+        },
         "pbmc_viability": {
             "description": "Receiving site determines the percent recovered cells that are viable after thawing.",
             "type": "number"
@@ -319,6 +365,7 @@
         }
     },
 
+    "additionalProperties": false,
     "required": [
         "cimac_id",
         "parent_sample_id",

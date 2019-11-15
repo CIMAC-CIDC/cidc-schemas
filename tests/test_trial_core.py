@@ -90,7 +90,6 @@ def test_clinicaltrial_simple():
         "sample_location": "---",
         "type_of_sample": "Other",
         "type_of_primary_container": "Other",
-        "genomic_source": "Normal",
     }
 
     # create the participant
@@ -140,7 +139,6 @@ def test_clinicaltrial_olink():
         "sample_location": "---",
         "type_of_sample": "Other",
         "type_of_primary_container": "Other",
-        "genomic_source": "Normal",
     }
     sample2 = {
         "cimac_id": "CTTTPABCD.00",
@@ -150,7 +148,6 @@ def test_clinicaltrial_olink():
         "sample_location": "---",
         "type_of_sample": "Other",
         "type_of_primary_container": "Other",
-        "genomic_source": "Normal",
     }
 
     # create the participant

@@ -110,8 +110,6 @@ def test_trial_core():
         "type_of_primary_container": "Sodium heparin",
         "sample_location": "---",
         "type_of_sample": "Other",
-        "specimen_format": "Other",
-        "genomic_source": "Normal",
     }
     sm_validator.validate(sample1)
     sample2 = {
@@ -122,8 +120,6 @@ def test_trial_core():
         "type_of_primary_container": "Sodium heparin",
         "sample_location": "---",
         "type_of_sample": "Other",
-        "specimen_format": "Other",
-        "genomic_source": "Normal",
     }
     sm_validator.validate(sample2)
 

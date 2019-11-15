@@ -1,0 +1,6 @@
+"#t","Wes analysis template"
+"#p","Assay run id"
+"#p","Protocol identifier"
+
+"","WES Runs"
+"#h","Cimac id","Tumor","Normal","Somatic","Germline"

@@ -5,33 +5,40 @@
   "type": "object",
   "description": "Whole exome sequencing.",
   "allOf": [
-    { "$ref": "assays/components/assay_core.json" },
-    { "$ref": "assays/components/ngs_assay_core.json" }
+      { "$ref": "assays/components/assay_core.json" },
+      { "$ref": "assays/components/ngs_assay_core.json" }
   ],
   "properties": {
-    "enrichment_vendor_kit": {
-      "description": "Vendor for the bait set used for enrichment , e.g. Twist, Agilent, IDT.",
-      "type": "string",
-      "enum": ["Agilent", "Twist", "IDT", "NEB"]
-    },
-    "records": {
-      "type": "array",
-      "description": "A single data record from WES assay.",
-      "items": {
-        "$ref": "assays/components/ngs/wes_entry.json"
+      "assay_creator": {
+          "$comment": "defined in assay_core.json"
       },
-      "mergeStrategy": "arrayMergeById",
-      "mergeOptions": {
-        "idRef": "cimac_id"
+      "assay_run_id": {
+          "type": "string",
+          "description": "User defined unique identifier for this assay run."
+      },
+      "enrichment_vendor_kit": {
+          "description": "Vendor for the bait set used for enrichment , e.g. Twist, Agilent, IDT.",
+          "type": "string",
+          "enum": ["Agilent", "Twist", "IDT", "NEB"]
+      },
+      "records": {
+          "type": "array",
+          "description": "A single data record from WES assay.",
+          "items": {
+            "$ref": "assays/components/ngs/wes_entry.json"
+          },
+          "mergeStrategy": "arrayMergeById",
+          "mergeOptions": {
+            "idRef": "cimac_id"
+          }
+      },
+      "export":{
+          "type":"array",
+          "description": "A single export data record from WES assay.",
+          "items":{
+            "$ref": "assays/components/ngs/wes_analysis.json"
+          }
       }
-    },
-    "export":{
-      "type":"array",
-      "description": "A single export data record from WES assay.",
-      "items":{
-        "$ref": "assays/components/ngs/wes_analysis.json"
-      }
-    }
   },
   "required": ["records"],
   "mergeStrategy": "objectMerge"

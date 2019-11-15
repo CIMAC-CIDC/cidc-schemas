@@ -1,0 +1,59 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "wes_analysis",
+    "title": "WES analysis template",
+    "type": "object",
+    "category": "analysis",
+    "description": "Metadata information for WES Analysis output.",
+    "prism_template_root_object_schema": "assays/wes_assay.json",
+    "prism_template_root_object_pointer": "/assays/wes/1",
+    "properties": {
+        "worksheets": {
+            "WES Analysis": {
+                "preamble_rows": {
+                    "assay run id": {
+                        "merge_pointer": "/assay_run_id",
+                        "type_ref": "assays/wes_assay.json#properties/assay_run_id"
+                    },
+                    "protocol identifier": {
+                        "merge_pointer": "3/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    }
+                },
+                "prism_data_object_pointer": "/records/-",
+                "data_columns": {
+                    "WES Runs": {
+                        "Cimac ID": {
+                            "merge_pointer": "0/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id"
+                        },
+                        "tumor": {
+                            "merge_pointer": "0/output_files/tumor",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_analysis/tumor/",
+                            "is_artifact": 1
+                        },
+                        "normal": {
+                            "merge_pointer": "0/output_files/normal",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_analysis/normal/",
+                            "is_artifact": 1
+                        },
+                        "somatic": {
+                            "merge_pointer": "0/output_files/somatic",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_analysis/somatic/",
+                            "is_artifact": 1
+                        },
+                        "germline": {
+                            "merge_pointer": "0/output_files/germline",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_analysis/germline/",
+                            "is_artifact": 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

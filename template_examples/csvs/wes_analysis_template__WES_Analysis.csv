@@ -1,6 +1,7 @@
 "#t","Wes analysis template"
-"#p","Assay run id"
-"#p","Protocol identifier"
+"#p","Assay run id","test_prism_trial_id_run_1"
+"#p","Protocol identifier","test_prism_trial_id"
 
 "","WES Runs"
 "#h","Cimac id","Tumor","Normal","Somatic","Germline"
+"#d","CTTTPP111.00","tumor.zip","normal.zip","somatic.zip","germline.zip"

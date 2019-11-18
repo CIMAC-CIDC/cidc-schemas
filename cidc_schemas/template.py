@@ -292,11 +292,11 @@ class Template:
             or os.path.basename(template_schema_path).partition("_template.json")[0],
         )
 
-    def to_excel(self, xlsx_path: str):
+    def to_excel(self, xlsx_path: str, with_legend_and_dd: bool = False):
         """Write this `Template` to an Excel file"""
         from .template_writer import XlTemplateWriter
 
-        XlTemplateWriter().write(xlsx_path, self)
+        XlTemplateWriter(with_legend_and_dd=with_legend_and_dd).write(xlsx_path, self)
 
     def validate_excel(self, xlsx: Union[str, BinaryIO]) -> bool:
         """Validate the given Excel file (either a path or an open file) against this `Template`"""

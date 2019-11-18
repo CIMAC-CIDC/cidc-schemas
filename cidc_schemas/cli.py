@@ -60,6 +60,9 @@ def interface() -> argparse.Namespace:
         help="Where to write the resulting excel template",
         required=True,
     )
+    generate_parser.add_argument(
+        "--legend", help="Will add Legend and Data Dictionary tabs", action="store_true"
+    )
     generate_parser.set_defaults(func=generate_template)
 
     # Parser for validating an excel template
@@ -123,7 +126,7 @@ def build_manifest(args: argparse.Namespace) -> Template:
 
 def generate_template(args: argparse.Namespace):
     manifest = build_manifest(args)
-    manifest.to_excel(args.out_file)
+    manifest.to_excel(args.out_file, args.legend)
 
 
 def generate_all_templates_from_args(args: argparse.Namespace):

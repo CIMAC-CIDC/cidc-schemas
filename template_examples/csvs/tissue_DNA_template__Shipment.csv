@@ -7,7 +7,7 @@
 "#p","Courier","USPS"
 "#p","Tracking number","TrackN"
 "#p","Account number","AccN"
-"#p","Shipping condition","Frozen_Dry_Ice"
+"#p","Shipping condition","Ice_Pack"
 "#p","Date shipped","2001-10-10 00:00:00"
 "#p","Date received","2002-10-10 00:00:00"
 "#p","Quality of shipment","Specimen shipment received in good condition"

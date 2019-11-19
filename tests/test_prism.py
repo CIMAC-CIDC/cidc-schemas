@@ -738,9 +738,7 @@ def test_merge_ct_meta():
 @pytest.mark.parametrize("xlsx, template", prismify_test_set())
 def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
-    # TODO: implement other assays
-    if template.type not in SUPPORTED_TEMPLATES:
-        return
+    assert template.type in SUPPORTED_TEMPLATES
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
@@ -765,6 +763,18 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             assert len(prism_patch["participants"]) == 2
             assert len(prism_patch["participants"][0]["samples"]) == 3
             assert "aliquots" not in prism_patch["participants"][0]["samples"][0]
+
+        elif template.type == "blood_dna":
+            assert len(prism_patch["participants"]) == 2
+            assert len(prism_patch["participants"][0]["samples"]) == 3
+
+        elif template.type == "tissue_dna":
+            assert len(prism_patch["participants"]) == 2
+            assert len(prism_patch["participants"][0]["samples"]) == 3
+
+        elif template.type == "tumor_tissue_dna":
+            assert len(prism_patch["participants"]) == 2
+            assert len(prism_patch["participants"][0]["samples"]) == 3
 
         else:
             assert False, f"add {template.type} specific asserts"

@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "tissue_DNA_shipping",
+    "$id": "tissue_dna_template",
     "title": "Shipping manifest for tissue extracted normal DNA samples",
     "type": "object",
     "category": "manifest",

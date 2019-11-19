@@ -88,7 +88,7 @@ def test_clinicaltrial_simple():
         "aliquots": [aliquot],
         "collection_event_name": "Baseline",
         "sample_location": "---",
-        "type_of_sample": "Other",
+        "type_of_sample": "Blood",
         "type_of_primary_container": "Other",
     }
 

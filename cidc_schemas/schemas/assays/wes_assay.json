@@ -4,14 +4,17 @@
   "title": "Whole Exome Sequencing Assay.",
   "type": "object",
   "description": "Whole exome sequencing.",
+  "additionalProperties": false,
   "allOf": [
       { "$ref": "assays/components/assay_core.json" },
       { "$ref": "assays/components/ngs_assay_core.json" }
   ],
   "properties": {
-      "assay_creator": {
-          "$comment": "defined in assay_core.json"
-      },
+      "assay_creator": {"$comment": "defined in assay_core.json"},
+      "sequencer_platform": {"$comment": "defined in ngs_assay_core.json"},
+      "library_vendor_kit": {"$comment": "defined in ngs_assay_core.json"},
+      "paired_end_reads": {"$comment": "defined in ngs_assay_core.json"},
+      "read_length": {"$comment": "defined in ngs_assay_core.json"},
       "assay_run_id": {
           "type": "string",
           "description": "User defined unique identifier for this assay run."
@@ -40,6 +43,9 @@
           }
       }
   },
-  "required": ["records"],
+  "required": [
+    "records",
+    "assay_run_id"
+  ],
   "mergeStrategy": "objectMerge"
 }

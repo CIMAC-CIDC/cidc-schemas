@@ -4,6 +4,7 @@
   "title": "WES Output Files",
   "type": "object",
   "description": "Whole Exome Sequencing assay output files.",
+  "additionalProperties": false,
   "properties": {
     "tumor": {
       "$ref": "assays/components/alignment.json"

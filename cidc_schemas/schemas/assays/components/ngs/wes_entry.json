@@ -4,6 +4,7 @@
   "title": "WES assay record",
   "type": "object",
   "description": "A single data record from WES assay.",
+  "additionalProperties": false,
   "allOf": [
     { "$ref": "assays/components/ngs/ngs_assay_record.json" }
   ],
@@ -16,7 +17,11 @@
       "description": "Date of the hybrid capture enrichment.",
       "type": "string",
       "format": "date"
-    }
+    },
+    "sequencer_platform": {"$comment": "defined in ngs_assay_core.json"},
+    "library_vendor_kit": {"$comment": "defined in ngs_assay_core.json"},
+    "paired_end_reads": {"$comment": "defined in ngs_assay_core.json"},
+    "read_length": {"$comment": "defined in ngs_assay_core.json"}
   },
   "mergeStrategy": "objectMerge",
   "required": [

@@ -818,6 +818,21 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             )
             assert len(errs) == 0
 
+        if template.type == "wes_analysis":
+            # simulate an initial WES upload by prismifying the initial WES template object,
+            # and merging it with clinical trial object
+            wes_input_xlsx_path = os.path.join(
+                TEMPLATE_EXAMPLES_DIR, "wes_template.xlsx"
+            )
+            wes_input_xlsx, _ = XlTemplateReader.from_excel(wes_input_xlsx_path)
+            wes_input_template = Template.from_type("wes")
+            wes_input_patch, _, _ = prismify(wes_input_xlsx, wes_input_template)
+
+            original_ct, errs = merge_clinical_trial_metadata(
+                wes_input_patch, original_ct
+            )
+            assert len(errs) == 0
+
         else:
             raise NotImplementedError(
                 f"no support in test for this template.type {template.type}"
@@ -890,6 +905,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     elif template.type == "cytof_analysis":
         assert len(merged_gs_keys) == 9  # 9 output files
 
+    elif template.type == "wes_analysis":
+        assert len(merged_gs_keys) == 4  # 4 output files
+
     else:
         assert False, f"add {template.type} assay specific asserts"
 
@@ -929,6 +947,11 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             len(full_ct["assays"]["cytof"][0]["records"]) == 2
         ), "More records than expected"
 
+    elif template.type == "wes_analysis":
+        assert (
+            len(full_ct["assays"]["wes"][0]["records"]) == 2
+        ), "More records than expected"
+
     else:
         assert False, f"add {template.type} assay specific asserts"
 
@@ -964,6 +987,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     elif template.type == "cytof_analysis":
         # 7 artifact attributes * 9 files
         assert len(dd["dictionary_item_added"]) == 7 * 9, "Unexpected CT changes"
+
+    elif template.type == "wes_analysis":
+        assert len(dd["dictionary_item_added"]) == 7 * 4, "Unexpected CT changes"
 
     else:
         assert False, f"add {template.type} assay specific asserts"

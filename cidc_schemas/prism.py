@@ -244,7 +244,7 @@ def _get_recursively(search_dict, field):
 
 SUPPORTED_ASSAYS = ["wes", "olink", "cytof", "ihc"]
 SUPPORTED_MANIFESTS = ["pbmc", "plasma"]
-SUPPORTED_ANALYSES = ["cytof_analysis"]
+SUPPORTED_ANALYSES = ["cytof_analysis", "wes_analysis"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS + SUPPORTED_ANALYSES
 
 LocalFileUploadEntry = namedtuple(

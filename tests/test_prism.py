@@ -764,11 +764,11 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             assert len(prism_patch["participants"][0]["samples"]) == 3
             assert "aliquots" not in prism_patch["participants"][0]["samples"][0]
 
-        elif template.type == "blood_dna":
+        elif template.type == "normal_blood_dna":
             assert len(prism_patch["participants"]) == 2
             assert len(prism_patch["participants"][0]["samples"]) == 3
 
-        elif template.type == "tissue_dna":
+        elif template.type == "normal_tissue_dna":
             assert len(prism_patch["participants"]) == 2
             assert len(prism_patch["participants"][0]["samples"]) == 3
 

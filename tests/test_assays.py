@@ -80,7 +80,6 @@ def test_wes():
     rgmf["artifact_category"] = "Assay Artifact from CIMAC"
     record = {
         "enrichment_vendor_lot": "dummy_value",
-        "enrichment_vendor_kit": "Agilent",
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
@@ -94,6 +93,7 @@ def test_wes():
     # add a demo record.
     obj["records"] = [record]
     obj["assay_run_id"] = "run_1"
+    obj["enrichment_vendor_kit"] = "Agilent"
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("wes")
@@ -113,7 +113,6 @@ def test_rna_expression():
 
     # add custom entry
     obj["enrichment_method"] = "Ribo minus"
-    obj["assay_run_id"] = "run_1"
 
     # create the rna_expression object
     r1 = ARTIFACT_OBJ.copy()
@@ -123,7 +122,6 @@ def test_rna_expression():
     rgmf["artifact_category"] = "Assay Artifact from CIMAC"
     record = {
         "enrichment_vendor_lot": "dummy_value",
-        "enrichment_vendor_kit": "Agilent",
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",

@@ -92,12 +92,8 @@ def test_wes():
         "files": {"r1": r1, "r2": r1, "read_group_mapping_file": rgmf},
     }
 
-    analysis = {"wes_experiment_id": "101010", "capture_date": "01/02/2001"}
-
     # add a demo record.
     obj["records"] = [record]
-
-    obj["analysis"] = [analysis]
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("wes")
@@ -105,11 +101,6 @@ def test_wes():
 
     # assert negative behaviors
     del obj["records"][0]["enrichment_vendor_lot"]
-    with pytest.raises(jsonschema.ValidationError):
-        validator.validate(obj)
-
-    # assert negative behaviors for analysis
-    del obj["analysis"][0]["wes_experiment_id"]
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)
 

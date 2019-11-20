@@ -6,7 +6,7 @@
     "category": "analysis",
     "description": "Metadata information for WES Analysis output.",
     "prism_template_root_object_schema": "assays/wes_assay.json",
-    "prism_template_root_object_pointer": "/assays/wes/1",
+    "prism_template_root_object_pointer": "/assays/wes/0",
     "properties": {
         "worksheets": {
             "WES Analysis": {

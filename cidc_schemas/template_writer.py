@@ -106,7 +106,9 @@ class XlTemplateWriter:
         self.MAIN_WIDTH = min_num_cols
         self.COLUMN_WIDTH_PX = column_width_px
 
-    def write(self, outfile_path: str, template: Template):
+    def write(
+        self, outfile_path: str, template: Template, with_legend_and_dd: bool = False
+    ):
         """
         Generate an Excel file for the given template.
 
@@ -124,8 +126,143 @@ class XlTemplateWriter:
             self._write_worksheet(name, ws_schema, write_title=first_sheet)
             first_sheet = False
 
+        if with_legend_and_dd:
+            self._write_legend(self.template.worksheets)
+            self._write_data_dict(self.template.worksheets)
+
         self.workbook.close()
         self.workbook = None
+
+    def _write_data_dict(self, schemas):
+        """ Adds a "Data Dictionary" tab that lists all used enums with allowed values."""
+        dd_ws = self.workbook.add_worksheet("Data Dictionary")
+        dd_ws.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
+
+        # skipping one
+        col_counter = 1
+
+        for s_name, schema in schemas.items():
+
+            # dd_ws.write(
+            #     0, , f"Legend for tab {s_name!r}", self.TITLE_THEME
+            # )
+
+            if "preamble_rows" in schema:
+                for pre_f_name, pre_f_schema in schema["preamble_rows"].items():
+                    col_counter += self._write_data_dict_item(
+                        dd_ws,
+                        col_counter,
+                        pre_f_name,
+                        self.PREAMBLE_THEME,
+                        pre_f_schema,
+                    )
+
+            if "data_columns" in schema:
+                for section_name, section_schema in schema["data_columns"].items():
+
+                    for data_f_name, data_f_schema in section_schema.items():
+                        col_counter += self._write_data_dict_item(
+                            dd_ws,
+                            col_counter,
+                            data_f_name,
+                            self.HEADER_THEME,
+                            data_f_schema,
+                        )
+
+    @staticmethod
+    def _write_data_dict_item(ws, col_n, name, theme, prop_schema):
+        """ Writes an enum property with allowed values."""
+        if not prop_schema.get("enum"):
+            return 0
+
+        ws.write(0, col_n, name.capitalize(), theme)
+
+        if not len(prop_schema.get("enum")):
+            raise Exception(f"Enum {name} with no options detected:\n{prop_schema}")
+
+        for i, enum_option in enumerate(prop_schema.get("enum")):
+            ws.write(1 + i, col_n, enum_option)
+
+        return True
+
+    def _write_legend(self, schemas):
+        """ Adds a "Legend" tab that lists all used properties with their types and descriptions."""
+        legend_ws = self.workbook.add_worksheet("Legend")
+        legend_ws.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
+
+        row_counter = 0
+        legend_ws.write(row_counter, 1, f"LEGEND", self.DATA_THEME)
+
+        for s_name, schema in schemas.items():
+
+            row_counter += 1
+            legend_ws.write(
+                row_counter, 1, f"Legend for tab {s_name!r}", self.TITLE_THEME
+            )
+
+            if "preamble_rows" in schema:
+                for pre_f_name, pre_f_schema in schema["preamble_rows"].items():
+                    row_counter += 1
+                    self._write_legend_item(
+                        legend_ws,
+                        row_counter,
+                        pre_f_name,
+                        self.PREAMBLE_THEME,
+                        pre_f_schema,
+                    )
+
+            if "data_columns" in schema:
+                for section_name, section_schema in schema["data_columns"].items():
+                    row_counter += 1
+                    legend_ws.write(
+                        row_counter,
+                        1,
+                        f"Section {section_name!r} of tab {s_name!r}",
+                        self.DIRECTIVE_THEME,
+                    )
+
+                    for data_f_name, data_f_schema in section_schema.items():
+                        row_counter += 1
+                        self._write_legend_item(
+                            legend_ws,
+                            row_counter,
+                            data_f_name,
+                            self.HEADER_THEME,
+                            data_f_schema,
+                        )
+
+    @classmethod
+    def _write_legend_item(cls, ws, row_n, name, theme, prop_schema):
+        """ Writes a property with its type, description, and example if any."""
+
+        ws.write(row_n, 1, name.capitalize(), theme)
+        ws.write(row_n, 2, cls._get_legend_typeformat(prop_schema))
+        ws.write(row_n, 3, prop_schema.get("description"))
+        if prop_schema.get("example"):
+            ws.write(row_n, 4, f"E.g. {prop_schema['example']!r}")
+        elif prop_schema.get("enum"):
+            ws.write(row_n, 4, f"E.g. {prop_schema['enum'][0]!r}")
+
+    @staticmethod
+    def _get_legend_typeformat(property_schema: dict):
+        property_enum = property_schema.get("enum")
+        if property_enum and len(property_enum):
+            return "Enum"
+
+        try:
+            property_type = property_schema["type"].capitalize()
+        except KeyError:
+            raise KeyError(
+                f"Property schema is missing type annotation:\n{property_schema}"
+            )
+
+        if property_schema.get("format"):
+            property_type += f": {property_schema['format']} "
+
+        if property_schema.get("pattern"):
+            property_type += f": regex {property_schema['pattern']} "
+
+        return property_type
 
     def _write_worksheet(self, name, schema, write_title=False):
         """Write content to the given worksheet"""
@@ -280,10 +417,7 @@ class XlTemplateWriter:
                 "error_message": "Please enter time in format hh:mm",
             }
         elif property_type == "boolean":
-            return {
-                "validate": "list",
-                "source": ["True", "False"],
-            }
+            return {"validate": "list", "source": ["True", "False"]}
 
         return None
 

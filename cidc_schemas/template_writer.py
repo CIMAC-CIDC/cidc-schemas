@@ -98,7 +98,6 @@ class XlTemplateWriter:
         data_rows=_DATA_ROWS,
         min_num_cols=_MIN_NUM_COLS,
         column_width_px=_COLUMN_WIDTH_PX,
-        with_legend_and_dd=False,
     ):
         """
         Initialize an Excel template writer.
@@ -106,9 +105,10 @@ class XlTemplateWriter:
         self.DATA_ROWS = data_rows
         self.MAIN_WIDTH = min_num_cols
         self.COLUMN_WIDTH_PX = column_width_px
-        self.with_legend_and_dd = with_legend_and_dd
 
-    def write(self, outfile_path: str, template: Template):
+    def write(
+        self, outfile_path: str, template: Template, with_legend_and_dd: bool = False
+    ):
         """
         Generate an Excel file for the given template.
 
@@ -126,7 +126,7 @@ class XlTemplateWriter:
             self._write_worksheet(name, ws_schema, write_title=first_sheet)
             first_sheet = False
 
-        if self.with_legend_and_dd:
+        if with_legend_and_dd:
             self._write_legend(self.template.worksheets)
             self._write_data_dict(self.template.worksheets)
 
@@ -134,6 +134,7 @@ class XlTemplateWriter:
         self.workbook = None
 
     def _write_data_dict(self, schemas):
+        """ Adds a "Data Dictionary" tab that lists all used enums with allowed values."""
         dd_ws = self.workbook.add_worksheet("Data Dictionary")
         dd_ws.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
 
@@ -170,6 +171,7 @@ class XlTemplateWriter:
 
     @staticmethod
     def _write_data_dict_item(ws, col_n, name, theme, prop_schema):
+        """ Writes an enum property with allowed values."""
         if not prop_schema.get("enum"):
             return 0
 
@@ -184,6 +186,7 @@ class XlTemplateWriter:
         return True
 
     def _write_legend(self, schemas):
+        """ Adds a "Legend" tab that lists all used properties with their types and descriptions."""
         legend_ws = self.workbook.add_worksheet("Legend")
         legend_ws.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
 
@@ -230,6 +233,8 @@ class XlTemplateWriter:
 
     @classmethod
     def _write_legend_item(cls, ws, row_n, name, theme, prop_schema):
+        """ Writes a property with its type, description, and example if any."""
+
         ws.write(row_n, 1, name.capitalize(), theme)
         ws.write(row_n, 2, cls._get_legend_typeformat(prop_schema))
         ws.write(row_n, 3, prop_schema.get("description"))

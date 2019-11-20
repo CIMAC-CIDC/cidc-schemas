@@ -296,7 +296,7 @@ class Template:
         """Write this `Template` to an Excel file"""
         from .template_writer import XlTemplateWriter
 
-        XlTemplateWriter(with_legend_and_dd=with_legend_and_dd).write(xlsx_path, self)
+        XlTemplateWriter().write(xlsx_path, self, with_legend_and_dd=with_legend_and_dd)
 
     def validate_excel(self, xlsx: Union[str, BinaryIO]) -> bool:
         """Validate the given Excel file (either a path or an open file) against this `Template`"""

@@ -37,6 +37,7 @@
       "type": "string",
       "enum": [
         "Olink",
+        "WES",
         "Not Reported",
         "Other"
       ]

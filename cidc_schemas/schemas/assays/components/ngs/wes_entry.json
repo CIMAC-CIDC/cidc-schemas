@@ -18,10 +18,13 @@
       "type": "string",
       "format": "date"
     },
-    "sequencer_platform": {"$comment": "defined in ngs_assay_core.json"},
-    "library_vendor_kit": {"$comment": "defined in ngs_assay_core.json"},
-    "paired_end_reads": {"$comment": "defined in ngs_assay_core.json"},
-    "read_length": {"$comment": "defined in ngs_assay_core.json"}
+    "cimac_id": {"comment": "defined in ngs_assay_record.json"},
+    "files": {"comment": "defined in ngs_assay_record.json"},
+    "library_kit_lot": {"comment": "defined in ngs_assay_record.json"},
+    "library_prep_date": {"comment": "defined in ngs_assay_record.json"},
+    "input_ng": {"comment": "defined in ngs_assay_record.json"},
+    "library_yield_ng": {"comment": "defined in ngs_assay_record.json"},
+    "average_insert_size": {"comment": "defined in ngs_assay_record.json"}
   },
   "mergeStrategy": "objectMerge",
   "required": [

@@ -113,6 +113,7 @@ def test_rna_expression():
 
     # add custom entry
     obj["enrichment_method"] = "Ribo minus"
+    obj["enrichment_vendor_kit"] = "Agilent"
 
     # create the rna_expression object
     r1 = ARTIFACT_OBJ.copy()
@@ -138,11 +139,6 @@ def test_rna_expression():
     # create validator assert schemas are valid.
     validator = _fetch_validator("rna_expression")
     validator.validate(obj)
-
-    # assert negative behaviors
-    del obj["records"][0]["enrichment_vendor_kit"]
-    with pytest.raises(jsonschema.ValidationError):
-        validator.validate(obj)
 
 
 def test_cytof():

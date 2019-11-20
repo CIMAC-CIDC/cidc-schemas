@@ -82,6 +82,7 @@ def test_wes():
     vcf["data_format"] = "VCF"
     rgmf["artifact_category"] = "Assay Artifact from CIMAC"
     record = {
+        "assay_run_id": "run_1",
         "enrichment_vendor_kit": "Twist",
         "enrichment_vendor_lot": "dummy_value",
         "library_kit_lot": "dummy_value",
@@ -130,13 +131,14 @@ def test_rna_expression():
     # add custom entry
     obj["enrichment_method"] = "Ribo minus"
 
-    # create the wes object
+    # create the rna_expression object
     r1 = ARTIFACT_OBJ.copy()
     r1["data_format"] = "FASTQ"
     rgmf = ARTIFACT_OBJ.copy()
     rgmf["data_format"] = "TEXT"
     rgmf["artifact_category"] = "Assay Artifact from CIMAC"
     record = {
+        "assay_run_id": "run_1",
         "enrichment_vendor_kit": "Twist",
         "enrichment_vendor_lot": "dummy_value",
         "library_kit_lot": "dummy_value",

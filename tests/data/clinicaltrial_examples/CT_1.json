@@ -159,6 +159,7 @@
         "wes": [
             {
                 "assay_creator": "Mount Sinai",
+                "assay_run_id": "run_1",
                 "paired_end_reads": "Paired",
                 "read_length": 100,
                 "sequencer_platform": "Illumina - HiSeq 3000",
@@ -168,6 +169,9 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
+                        "input_ng": 666,
+                        "library_yield_ng": 666,
+                        "average_insert_size": 666,
                         "cimac_id":          "CTTTPP1S1.00",
                         "files": {
                             "r1":{
@@ -203,6 +207,9 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
+                        "library_yield_ng": 666,
+                        "input_ng": 666,
+                        "average_insert_size": 666,
                         "cimac_id":          "CTTTPP1S2.00",
                         "files": {
                             "r1":{
@@ -238,6 +245,7 @@
             },
             {
                 "assay_creator": "DFCI",
+                "assay_run_id": "run_1",
                 "paired_end_reads": "Paired",
                 "read_length": 100,
                 "sequencer_platform": "Illumina - HiSeq 3000",
@@ -246,7 +254,10 @@
                     {
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
+                        "library_yield_ng": 666,
                         "library_prep_date":        "...",
+                        "input_ng": 666,
+                        "average_insert_size": 666,
                         "cimac_id":          "CTTTPP2S1.00",
                         "files": {
                             "r1":{
@@ -282,6 +293,9 @@
                         "enrichment_vendor_lot":    "...",
                         "library_kit_lot":          "...",
                         "library_prep_date":        "...",
+                        "library_yield_ng": 666,
+                        "input_ng": 666,
+                        "average_insert_size": 666,
                         "cimac_id":          "CTTTPP2S2.00",
                         "files": {
                             "r1":{

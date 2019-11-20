@@ -70,6 +70,7 @@
         "wes": [
             {
                 "assay_creator":        "DFCI",
+                "assay_run_id": "run_1",
                 "paired_end_reads":     "Paired",
                 "read_length":          100,
                 "sequencer_platform":   "Illumina - HiSeq 3000",
@@ -77,9 +78,12 @@
                 "records": [
                     {
                         "enrichment_vendor_lot":    "$ enrichment_vendor_lot",
+                        "input_ng": 666,
                         "cimac_id":                 "CTTTP21S1.00",
                         "library_kit_lot":          "$ library_kit_lot",
                         "library_prep_date":        "4_12_2012",
+                        "library_yield_ng": 666,
+                        "average_insert_size": 666,
                         "files": {
                             "r1":{
                                 "file_name" :           "...",
@@ -112,9 +116,12 @@
                     },
                     {
                         "enrichment_vendor_lot":    "$ enrichment_vendor_lot",
+                        "input_ng": 666,
                         "cimac_id":                 "CTTTP21S2.00",
                         "library_kit_lot":          "$ library_kit_lot",
                         "library_prep_date":        "4_12_2012",
+                        "library_yield_ng": 666,
+                        "average_insert_size": 666,
                         "files": {
                             "r1":{
                                 "file_name" :           "...",
@@ -149,6 +156,7 @@
             },
             {
                 "assay_creator":        "DFCI",
+                "assay_run_id": "run_1",
                 "paired_end_reads":     "Paired",
                 "read_length":          100,
                 "sequencer_platform":   "Illumina - HiSeq 3000",
@@ -156,9 +164,12 @@
                 "records": [
                     {
                         "enrichment_vendor_lot":    "$ enrichment_vendor_lot",
+                        "input_ng": 666,
                         "cimac_id":                 "CTTTP21S1.00",
                         "library_kit_lot":          "$ library_kit_lot",
                         "library_prep_date":        "4_12_2012",
+                        "library_yield_ng": 666,
+                        "average_insert_size": 666,
                         "files": {
                             "r1":{
                                 "file_name" :           "...",
@@ -191,9 +202,12 @@
                     },
                     {
                         "enrichment_vendor_lot":    "$ enrichment_vendor_lot",
+                        "input_ng": 666,
                         "cimac_id":                 "CTTTP21S3.00",
                         "library_kit_lot":          "$ library_kit_lot",
                         "library_prep_date":        "4_12_2012",
+                        "library_yield_ng": 666,
+                        "average_insert_size": 666,
                         "files": {
                             "r1":{
                                 "file_name" :           "...",

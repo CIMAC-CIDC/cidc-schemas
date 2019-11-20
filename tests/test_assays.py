@@ -65,9 +65,6 @@ def test_wes():
         "library_vendor_kit": "KAPA - Hyper Prep",
         "paired_end_reads": "Paired",
         "read_length": 200,
-        "input_ng": 666,
-        "library_yield_ng": 666,
-        "average_insert_size": 200,
     }
     obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
 
@@ -89,6 +86,9 @@ def test_wes():
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
         "cimac_id": "CTTTPPPSA.00",
+        "input_ng": 666,
+        "library_yield_ng": 666,
+        "average_insert_size": 200,
         "files": {"r1": r1, "r2": r1, "read_group_mapping_file": rgmf},
     }
 
@@ -113,9 +113,6 @@ def test_rna_expression():
         "library_vendor_kit": "KAPA - Hyper Prep",
         "paired_end_reads": "Paired",
         "read_length": 200,
-        "input_ng": 666,
-        "library_yield_ng": 666,
-        "average_insert_size": 200,
     }
     obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
 
@@ -136,6 +133,9 @@ def test_rna_expression():
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
         "cimac_id": "CTTTPPPSA.00",
+        "input_ng": 666,
+        "library_yield_ng": 666,
+        "average_insert_size": 200,
         "files": {"r1": r1, "r2": r1, "read_group_mapping_file": rgmf},
     }
 

@@ -79,9 +79,8 @@ def test_wes():
     vcf["data_format"] = "VCF"
     rgmf["artifact_category"] = "Assay Artifact from CIMAC"
     record = {
-        "assay_run_id": "run_1",
-        "enrichment_vendor_kit": "Twist",
         "enrichment_vendor_lot": "dummy_value",
+        "enrichment_vendor_kit": "Agilent",
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
@@ -94,15 +93,11 @@ def test_wes():
 
     # add a demo record.
     obj["records"] = [record]
+    obj["assay_run_id"] = "run_1"
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("wes")
     validator.validate(obj)
-
-    # assert negative behaviors
-    del obj["records"][0]["enrichment_vendor_lot"]
-    with pytest.raises(jsonschema.ValidationError):
-        validator.validate(obj)
 
 
 def test_rna_expression():
@@ -118,6 +113,7 @@ def test_rna_expression():
 
     # add custom entry
     obj["enrichment_method"] = "Ribo minus"
+    obj["assay_run_id"] = "run_1"
 
     # create the rna_expression object
     r1 = ARTIFACT_OBJ.copy()
@@ -126,9 +122,8 @@ def test_rna_expression():
     rgmf["data_format"] = "TEXT"
     rgmf["artifact_category"] = "Assay Artifact from CIMAC"
     record = {
-        "assay_run_id": "run_1",
-        "enrichment_vendor_kit": "Twist",
         "enrichment_vendor_lot": "dummy_value",
+        "enrichment_vendor_kit": "Agilent",
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
@@ -143,7 +138,6 @@ def test_rna_expression():
     obj["records"] = [record]
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("rna_expression")
     validator = _fetch_validator("rna_expression")
     validator.validate(obj)
 

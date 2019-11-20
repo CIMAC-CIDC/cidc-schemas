@@ -819,7 +819,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             )
             assert len(errs) == 0
 
-        if template.type == "wes_analysis":
+        elif template.type == "wes_analysis":
             # simulate an initial WES upload by prismifying the initial WES template object,
             # and merging it with clinical trial object
             wes_input_xlsx_path = os.path.join(

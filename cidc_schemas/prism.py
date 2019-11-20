@@ -243,7 +243,13 @@ def _get_recursively(search_dict, field):
 
 
 SUPPORTED_ASSAYS = ["wes", "olink", "cytof", "ihc"]
-SUPPORTED_MANIFESTS = ["pbmc", "plasma"]
+SUPPORTED_MANIFESTS = [
+    "pbmc",
+    "plasma",
+    "normal_blood_dna",
+    "normal_tissue_dna",
+    "tumor_tissue_dna",
+]
 SUPPORTED_ANALYSES = ["cytof_analysis"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS + SUPPORTED_ANALYSES
 

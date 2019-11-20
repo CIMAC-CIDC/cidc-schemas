@@ -12,6 +12,10 @@
         "prism_preamble_object_pointer" : "/assays/wes/0",
         "prism_data_object_pointer" : "/records/-",
         "preamble_rows": {
+          "assay run id": {
+            "merge_pointer": "/assay_run_id",
+            "type_ref": "assays/cytof_assay.json#properties/assay_run_id"
+          },
           "protocol identifier": {
             "merge_pointer": "3/protocol_identifier",
             "type_ref": "clinical_trial.json#properties/protocol_identifier"

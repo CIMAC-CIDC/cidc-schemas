@@ -52,6 +52,7 @@ def prismify_test_set(filter=None):
     for template, xlsx_path in template_set():
         if filter and not template.type in filter:
             continue
+        print(xlsx_path)
         xlsx, errors = XlTemplateReader.from_excel(xlsx_path)
         assert not errors
         yield xlsx, template

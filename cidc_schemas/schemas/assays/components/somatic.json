@@ -5,15 +5,16 @@
   "type": "object",
   "description": "Somatic variant calling output sample files.",
   "properties": {
-    "vcf_filtered": {
-      "$ref": "artifacts/artifact_vcf.json"
+    "vcf_filtered_compressed": {
+      "$ref": "artifacts/artifact_gz.json"
     },
     "maf": {
       "$ref": "artifacts/artifact_maf.json"
+    },
+    "vcf_filtered_tabix": {
+      "$ref": "artifacts/artifact_tbi.json"
     }
   },
   "required": [
-    "vcf_filtered",
-    "maf"
   ]
 }

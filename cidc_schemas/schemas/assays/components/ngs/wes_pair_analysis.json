@@ -24,7 +24,6 @@
   "required": [
     "normal_cimac_id",
     "tumor_cimac_id",
-    "somatic",
-    "germline"
+    "somatic"
   ]
 }

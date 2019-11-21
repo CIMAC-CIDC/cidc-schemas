@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "gz_artifact",
+  "title": "GZ Artifact",
+  "type": "object",
+  "description": "Information about GZ files.",
+  "allOf": [
+    {
+      "$ref": "artifacts/artifact_core.json"
+    },
+    {
+      "properties": {
+        "data_format": {
+          "description": "Data format.",
+          "const": "GZ"
+        }
+      }
+    }
+  ],
+  "mergeStrategy": "objectMerge"
+}

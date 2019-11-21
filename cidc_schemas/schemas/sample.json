@@ -119,6 +119,24 @@
                 "Other"
             ]
         },
+        "core_number": {
+            "description": "The biopsy core number from which the sample was used.",
+            "type": "number"
+        },
+        "fixation_stabilization_type": {
+            "description": "Type of specimen fixation or stabilization that was employed by the site directly after collection.",
+            "type": "string",
+            "enum": [
+                "Archival FFPE",
+                "Fresh Specimen",
+                "Frozen Specimen",
+                "Formalin-Fixed Paraffin-Embedded",
+                "Optimum cutting temperature medium",
+                "Thaw-Lyse",
+                "Not Reported",
+                "Other"
+            ]
+        },
         "type_of_primary_container": {
             "description": "The format in which the sample was sent.",
             "type": "string",
@@ -157,6 +175,10 @@
                 "Bone Marrow Mononuclear Cell",
                 "Supernatant",
                 "Cell Pellet",
+                "H&E-Stained Fixed Tissue Slide Specimen",
+                "Fixed Slide",
+                "Tissue Scroll",
+                "FFPE Punch",
                 "Not Reported",
                 "Other"
             ]
@@ -190,6 +212,64 @@
                 "Not Reported",
                 "Other"
             ]
+        },
+        "processed_sample_quantity": {
+            "description": "Quantity of the processed sample (e.g. number of slides cut for DNA extraction).",
+            "type": "number"
+        },
+        "processed_sample_derivative": {
+            "description": "The type of derivative or analyte extracted from the specimen to be shipped for testing.",
+            "type": "string",
+            "enum": [
+                "Tumor DNA",
+                "Tumor RNA",
+                "Germline DNA",
+                "Circulating Tumor-Derived DNA",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "sample_derivative_volume": {
+            "description": "Volume of the analyte or derivative shipped.",
+            "type": "number"
+        },
+        "sample_derivative_volume_units": {
+            "description": "Volume units of each analyte or derivative shipped.",
+            "type": "string",
+            "enum": [
+                "Microliters",
+                "Milliliters",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "sample_derivative_concentration": {
+            "description": "The concentration of analyte or derivative shipped.",
+            "type": "number"
+        },
+        "sample_derivative_concentration_units": {
+            "description": "The concentration units for the analyte or derivative shipped.",
+            "type": "string",
+            "enum": [
+                "Nanogram per Microliter",
+                "Milligram per Milliliter",
+                "Micrograms per Microliter",
+                "Cells per Vial",
+                "Not Reported",
+                "Other"
+            ]
+        },
+        "din": {
+            "type": "number", 
+            "description": "Provides a DNA Integrity Number as an indication of extraction quality (values of 1-10)" 
+        },
+        "a260_a280": {
+            "type": "number", 
+            "description": "Provides an absorbance percentage ratio indicating purity of DNA (values of 0 to 2)" 
+        },
+        "a260_a230": {
+            "type": "number", 
+            "description": "Provides an absorbance percentage ratio indicating presence of contaminants (values of 0 to 3)" 
         },
         "pbmc_viability": {
             "description": "Receiving site determines the percent recovered cells that are viable after thawing.",
@@ -319,12 +399,25 @@
         }
     },
 
+    "additionalProperties": false,
     "required": [
         "cimac_id",
         "parent_sample_id",
         "collection_event_name",
         "sample_location",
-        "type_of_sample",
-        "type_of_primary_container"
-    ]
+        "type_of_sample"
+    ],
+
+    "if": {
+        "properties": { 
+            "type_of_sample": {
+                "enum": [
+                    "Blood"
+                ]
+            }
+        }
+    },
+    "then": {
+        "required": ["type_of_primary_container"]
+    }
 }

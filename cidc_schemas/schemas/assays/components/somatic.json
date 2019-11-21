@@ -13,7 +13,5 @@
     }
   },
   "required": [
-    "vcf_filtered",
-    "maf"
   ]
 }

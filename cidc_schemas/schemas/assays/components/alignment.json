@@ -16,8 +16,5 @@
     }
   },
   "required": [
-    "align_sorted",
-    "align_sorted_dedup",
-    "align_recalibrated"
   ]
 }

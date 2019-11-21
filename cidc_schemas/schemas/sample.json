@@ -61,12 +61,18 @@
             "title": "Collection Event Name",
             "description": "Categorical description of timepoint at which the sample was taken.",
             "type": "string",
-            "$comment": "This is enum with E4412 values only as a temp solution.",
+            "in_doc_ref_pattern": "/allowed_collection_event_names/*",
+            "$comment": "This enum lists a union of all possible values from all supported trials at the moment. Options are further limited by `in_doc_ref_pattern`.",
             "enum": [
                 "Baseline",
                 "Pre_Day_1_Cycle_2",
                 "Restaging",
                 "Off_study",
+                "Baseline",
+                "Cycle_2_Week_3",
+                "Cycle_4_Week_7",
+                "Cycle_5_Week_9",
+                "Progression",
                 "Not Reported",
                 "Other"
             ]

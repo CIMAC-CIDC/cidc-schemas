@@ -185,13 +185,14 @@ class _Validator(jsonschema.Draft7Validator):
 
         """
         if not (self.is_type(doc, "object") or self.is_type(doc, "array")):
-            # if we're in a "simple" value context,
+            # if we're in a "simple value" context,
             # we can't possibly match ref_path_pattern
             return False
 
         # If there are no cached values for this ref path pattern, collect them
         if ref_path_pattern not in in_doc_refs_cache:
             vals = self._get_values_for_path_pattern(ref_path_pattern, doc)
+            # print(f'values_for_path_pattern {ref_path_pattern} {vals} in {doc}')
             if len(vals) == 0:
                 # There are no values matching this pattern, so there's
                 # no way `ref` can match a value with this pattern.

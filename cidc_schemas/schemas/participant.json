@@ -21,7 +21,8 @@
       "type": "string",
       "description": "Categorical description of cohorts, arms, and treatment groups.",
       "example": "Arm_Z",
-      "$comment": "This is enum with E4412 values only as a temp solution.",
+      "in_doc_ref_pattern": "/allowed_cohort_names/*",
+      "$comment": "This enum lists a union of all possible values from all supported trials at the moment. Options are further limited by `in_doc_ref_pattern`.",
       "enum": [
         "Arm_Z",
         "Arm_A",
@@ -34,7 +35,9 @@
         "Arm_X",
         "Arm_G",
         "Arm_H",
-        "Arm_I"
+        "Arm_I",
+        "Arm_1",
+        "Arm_2"
       ]
     },
     "essential_patient_entry_number": {

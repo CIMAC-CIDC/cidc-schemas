@@ -841,7 +841,6 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     # "prismify" provides only a patch so we need to merge it into a "full" ct
     full_after_prism, errs = merge_clinical_trial_metadata(prism_patch, original_ct)
-    validator.validate(full_after_prism)
     assert not errs
 
     # Assert we still have a good clinical trial object, so we can save it.

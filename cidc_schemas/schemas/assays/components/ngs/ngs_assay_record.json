@@ -45,9 +45,6 @@
     "library_kit_lot",
     "library_prep_date",
     "cimac_id",
-    "files",
-    "input_ng",
-    "library_yield_ng",
-    "average_insert_size"
+    "files"
   ]
 }

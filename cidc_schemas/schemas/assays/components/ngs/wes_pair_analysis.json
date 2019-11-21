@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "wes_pair_analysis",
+  "title": "WES Pair Analysis Output Files",
+  "type": "object",
+  "description": "Whole Exome Sequencing assay output files for a tumor normal pair of samples.",
+  "additionalProperties": false,
+  "properties": {
+    "normal_cimac_id": {
+      "$comment": "Id of a normal sample within this clinical trial, that this analysis is based upon.",
+      "$ref": "sample.json#properties/cimac_id"
+    },
+    "tumor_cimac_id": {
+      "$comment": "Id of a tumor sample within this clinical trial, that this analysis is based upon.",
+      "$ref": "sample.json#properties/cimac_id"
+    },
+    "somatic": {
+      "$ref": "assays/components/somatic.json"
+    },
+    "germline": {
+      "$ref": "assays/components/germline.json"
+    }
+  },
+  "required": [
+    "normal_cimac_id",
+    "tumor_cimac_id",
+    "somatic",
+    "germline"
+  ]
+}

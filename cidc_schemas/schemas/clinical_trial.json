@@ -49,6 +49,9 @@
     "assays": {
       "$comment": "Assays for this trial",
       "$ref": "assays/components/available_assays.json"
+    },
+    "analysis": {
+      "$ref": "assays/components/available_analysis.json"
     }
   },
   "required": ["protocol_identifier", "participants"]

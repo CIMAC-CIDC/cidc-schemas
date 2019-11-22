@@ -37,6 +37,9 @@
     },
     "purity.json": {
       "$ref": "assays/components/purity.json"
+    },
+    "clonality.json": {
+      "$ref": "assays/components/clonality.json"
     }
   },
   "required": [

@@ -65,17 +65,38 @@
             "$comment": "This enum lists a union of all possible values from all supported trials at the moment. Options are further limited by `in_doc_ref_pattern`.",
             "enum": [
                 "Baseline",
+                
                 "Pre_Day_1_Cycle_2",
                 "Restaging",
                 "Off_study",
-                "Baseline",
+                
                 "Cycle_2_Week_3",
                 "Cycle_4_Week_7",
                 "Cycle_5_Week_9",
                 "Progression",
-                "Not Reported",
+
+                "Cycle_3",
+                "End_of_treatment",
+
+                "On_Treatment",
+                
                 "Other"
-            ]
+            ],
+            "enum_comments": {
+                "Pre_Day_1_Cycle_2": "E4412",
+                "Restaging": "E4412",
+                "Off_study": "E4412",
+                
+                "Cycle_2_Week_3": "S1400I",
+                "Cycle_4_Week_7": "S1400I",
+                "Cycle_5_Week_9": "S1400I",
+                "Progression": "S1400I",
+
+                "Cycle_3": "Z1D",
+                "End_of_treatment": "Z1D",
+
+                "On_Treatment" : "10021"
+            }
         },
         "sample_location": {
             "description": "Sample location within the shipping container. Example: A1.",

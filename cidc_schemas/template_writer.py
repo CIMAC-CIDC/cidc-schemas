@@ -172,16 +172,23 @@ class XlTemplateWriter:
     @staticmethod
     def _write_data_dict_item(ws, col_n, name, theme, prop_schema):
         """ Writes an enum property with allowed values."""
-        if not prop_schema.get("enum"):
+        enum = prop_schema.get("enum")
+        if not enum:
             return 0
 
         ws.write(0, col_n, name.capitalize(), theme)
 
-        if not len(prop_schema.get("enum")):
+        if not len(enum):
             raise Exception(f"Enum {name} with no options detected:\n{prop_schema}")
 
-        for i, enum_option in enumerate(prop_schema.get("enum")):
-            ws.write(1 + i, col_n, enum_option)
+        comments = prop_schema.get("enum_comments", {})
+
+        for i, enum_value in enumerate(enum):
+            ws.write(1 + i, col_n, enum_value)
+            if comments and enum_value in comments and comments[enum_value]:
+                ws.write_comment(
+                    1 + i, col_n, comments[enum_value], XlThemes.COMMENT_THEME
+                )
 
         return True
 

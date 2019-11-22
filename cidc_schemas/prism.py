@@ -309,34 +309,41 @@ def _process_property(
     if verb:
         print(f"      found def {field_def}")
 
+    return _process_field(
+        key=key,
+        raw_val=raw_val,
+        field_def=field_def,
+        data_obj=data_obj,
+        format_context=format_context,
+        root_obj=root_obj,
+        data_obj_pointer=data_obj_pointer,
+        verb=verb,
+    )
+
+
+def _process_field(
+    key: str,
+    raw_val,
+    field_def: dict,
+    data_obj: dict,
+    format_context: dict,
+    root_obj: Union[None, dict] = None,
+    data_obj_pointer: Union[None, str] = None,
+    verb: bool = False,
+):
+
     # or set/update value in-place in data_obj dictionary
     pointer = field_def["merge_pointer"]
-    coerce = field_def["coerce"]
     if field_def.get("is_artifact") == 1:
         pointer += "/upload_placeholder"
 
-    # deal with multi-artifact
-    if not (field_def.get("is_artifact") == "multi"):
-        try:
-            val = coerce(raw_val)
-        except Exception:
-            raise ParsingException(
-                f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type')}"
-            )
-    else:
-
-        # tokenize value
-        local_paths = raw_val.split(",")
-
-        # create array container.
-        val = []
-        file_uuids = []
-        for x in range(len(local_paths)):
-            # ignoring coercion errors as we expect it just return uuids
-            file_uuid = coerce(raw_val)
-
-            file_uuids.append(file_uuid)
-            val.append({"upload_placeholder": file_uuid})
+    try:
+        val, files = _calc_val_and_files(raw_val, field_def, format_context, verb=verb)
+    except Exception:
+        raise
+        raise ParsingException(
+            f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type')}"
+        )
 
     _set_val(pointer, val, data_obj, root_obj, data_obj_pointer, verb=verb)
 
@@ -347,56 +354,77 @@ def _process_property(
     if "process_as" in field_def:
         for extra_fdef in field_def["process_as"]:
 
-            # where to put it additionally
-            extra_pointer = extra_fdef["merge_pointer"]
-            extra_fdef_val = val
+            # Calculating new "raw" val.
+            # `eval` should be fine, as we're controlling the code argument in the templates
+            extra_fdef_raw_val = eval(extra_fdef.get("parse_through", "lambda x: x"))(
+                raw_val
+            )
 
-            # how to process it before putting
-            if "parse_through" in extra_fdef:
-                # Should be fine, as we're controlling `eval` argument == code
-                extra_fdef_val = eval(extra_fdef["parse_through"])(val)
+            # merging with parent field_def, so we won't need to repeat stuff like
+            # "type = string" etc in each "process_as" sections
+            full_extra_fdef = dict(field_def)
+            # but dropping parent's "process_as" so we'll have recursion exit
+            full_extra_fdef.pop("process_as")
+            # actual merging
+            full_extra_fdef.update(extra_fdef)
 
-            _set_val(
-                extra_pointer,
-                extra_fdef_val,
-                data_obj,
-                root_obj,
-                data_obj_pointer,
+            # recursive call
+            extra_files = _process_field(
+                key=key,
+                raw_val=extra_fdef_raw_val,  # new "raw" val
+                field_def=full_extra_fdef,  # merged field_def
+                data_obj=data_obj,
+                format_context=format_context,
+                root_obj=root_obj,
+                data_obj_pointer=data_obj_pointer,
                 verb=verb,
             )
 
-    if verb:
+            files.extend(extra_files)
 
-        if field_def["merge_pointer"][0].isdigit():
-            # setting prop somewhere in parent hierarchy, so debug root
-            print(f"      current root {root_obj}")
+    return files
+
+
+def _calc_val_and_files(raw_val, field_def: dict, format_context: dict, verb: bool):
+    coerce = field_def["coerce"]
+
+    # deal with multi-artifact
+    if not (field_def.get("is_artifact") == "multi"):
+        val = coerce(raw_val)
+
+        if not field_def.get("is_artifact"):
+            return val, []
         else:
-            print(f"      current {data_obj}")
+            if verb:
+                print(f"      collecting local_file_path {field_def}")
 
-    if field_def.get("is_artifact") == 1:
-        if verb:
-            print(f"      collecting local_file_path {field_def}")
+            gs_key = field_def["gcs_uri_format"].format_map(format_context)
 
-        gs_key = field_def["gcs_uri_format"].format_map(format_context)
-
-        return [
-            LocalFileUploadEntry(
+            file = LocalFileUploadEntry(
                 local_path=raw_val,
                 gs_key=gs_key,
                 # for artifacts `val` is a uuid
                 upload_placeholder=val,
                 metadata_availability=field_def.get("extra_metadata"),
             )
-        ]
 
-    elif field_def.get("is_artifact") == "multi":
+            return val, [file]
 
+    else:  # is_multi
         if verb:
             print(f"      collecting multi local_file_path {field_def}")
 
-        # loop over each path
+        # tokenize value
+        local_paths = raw_val.split(",")
+
+        # create array container.
+        val = []
         files = []
-        for num, upload_placeholder in zip(range(len(local_paths)), file_uuids):
+        for num, local_path in enumerate(local_paths):
+            # ignoring coercion errors as we expect it just return uuids
+            upload_placeholder = file_uuid = coerce(local_path)
+
+            val.append({"upload_placeholder": file_uuid})
 
             # add number and generate key
             format_context["num"] = num
@@ -410,7 +438,7 @@ def _process_property(
                     metadata_availability=field_def.get("extra_metadata"),
                 )
             )
-        return files
+        return val, files
 
 
 class ParsingException(ValueError):

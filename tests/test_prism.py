@@ -1160,6 +1160,125 @@ def test_prism_joining_tabs(monkeypatch):
     assert 0 == len(file_maps)
 
 
+def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
+    """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
+
+    load_workbook = MagicMock(name="load_workbook")
+    monkeypatch.setattr("openpyxl.load_workbook", load_workbook)
+    workbook = load_workbook.return_value = MagicMock(name="workbook")
+    wb = {"analysis": MagicMock(name="analysis")}
+    workbook.__getitem__.side_effect = wb.__getitem__
+    workbook.sheetnames = wb.keys()
+    cell = namedtuple("cell", ["value"])
+    wb["analysis"].iter_rows.return_value = [
+        map(cell, ["#h", "run_id", "sid1", "sid2"]),
+        map(cell, ["#d", "000", "sid1_0", "sid2_0"]),
+        map(cell, ["#d", "111", "sid1_1", "sid2_1"]),
+    ]
+
+    template = Template(
+        {
+            "$id": "test_analysis",
+            "title": "...",
+            "properties": {
+                "worksheets": {
+                    "analysis": {
+                        "prism_preamble_object_schema": "clinical_trial.json",  # TODO provide test or analysis schema
+                        "prism_preamble_object_pointer": "#",
+                        "prism_data_object_pointer": "/analysis/-",
+                        "preamble_rows": {},
+                        "data_columns": {
+                            "section name": {
+                                "run_id": {
+                                    "merge_pointer": "/run_id",
+                                    "type": "string",
+                                    "process_as": [
+                                        {
+                                            "parse_through": "lambda x: f'analysis/sorted/{x}/{x}.output.vcf'",
+                                            "merge_pointer": "/somatic_vcf",
+                                            "gcs_uri_format": "{run_id}/somatic.vcf",
+                                            "type": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/sorted/{x}/{x}.output.maf'",
+                                            "merge_pointer": "/somatic_maf",
+                                            "gcs_uri_format": "{run_id}/somatic.maf",
+                                            "type": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                    ],
+                                },
+                                "sid1": {
+                                    "merge_pointer": "/sample1/id",
+                                    "type": "string",
+                                    "process_as": [
+                                        {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.bam'",
+                                            "merge_pointer": "/sample1/sorted",
+                                            "gcs_uri_format": "{run_id}/{sid1}/sorted.bam",
+                                            "type": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.recalibrated.bam'",
+                                            "merge_pointer": "/sample1/recalibrated",
+                                            "gcs_uri_format": "{run_id}/{sid1}/recalibrated.bam",
+                                            "type": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                    ],
+                                },
+                                "sid2": {
+                                    "merge_pointer": "/sample2/id",
+                                    "type": "string",
+                                    "process_as": [
+                                        {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.bam'",
+                                            "merge_pointer": "/sample2/sorted",
+                                            "gcs_uri_format": "{run_id}/{sid2}/sorted.bam",
+                                            "type": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.recalibrated.bam'",
+                                            "merge_pointer": "/sample2/recalibrated",
+                                            "gcs_uri_format": "{run_id}/{sid2}/recalibrated.bam",
+                                            "type": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                    ],
+                                },
+                            }
+                        },
+                    }
+                }
+            },
+        },
+        "test_prism_joining_tabs",
+    )
+
+    monkeypatch.setattr(
+        "cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_prism_joining_tabs"]
+    )
+
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    patch, file_maps, errs = prismify(xlsx, template, verb=False)
+    assert len(errs) == 0
+
+    assert 12 == len(file_maps)
+
+    assert [e.local_path for e in file_maps] != [
+        e.upload_placeholder for e in file_maps
+    ]
+
+    assert 2 == len(patch["analysis"])
+
+    # TODO - multi artifact through process_as
+
+
 @pytest.fixture
 def npx_file_path():
     return os.path.join(TEST_DATA_DIR, "olink", "olink_assay_1_NPX.xlsx")

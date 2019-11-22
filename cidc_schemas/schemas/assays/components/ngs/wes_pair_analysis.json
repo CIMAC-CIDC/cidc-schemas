@@ -31,6 +31,9 @@
     },
     "coverage_metrics": {
       "$ref": "assays/components/coverage_metrics.json"
+    },
+    "copynumber.json": {
+      "$ref": "assays/components/copynumber.json"
     }
   },
   "required": [

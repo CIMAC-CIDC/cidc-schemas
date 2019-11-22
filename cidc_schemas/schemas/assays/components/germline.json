@@ -5,8 +5,8 @@
   "type": "object",
   "description": "Germline variant output sample files.",
   "properties": {
-    "SNP92_recode": {
-      "$ref": "artifacts/artifact_vcf.json"
+    "vcf_compare": {
+      "$ref": "artifacts/artifact_txt.json"
     }
   },
   "required": [

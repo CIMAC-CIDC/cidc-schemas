@@ -34,6 +34,9 @@
     },
     "copynumber.json": {
       "$ref": "assays/components/copynumber.json"
+    },
+    "purity.json": {
+      "$ref": "assays/components/purity.json"
     }
   },
   "required": [

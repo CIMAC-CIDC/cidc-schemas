@@ -35,16 +35,10 @@
                             "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_combined_analysis/normal_cimac_id/",
                             "is_artifact": 1
                         },
-                        "somatic": {
-                            "merge_pointer": "0/output_files/somatic",
+                        "root": {
+                            "merge_pointer": "",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_combined_analysis/somatic/",
-                            "is_artifact": 1
-                        },
-                        "germline": {
-                            "merge_pointer": "0/output_files/germline",
-                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_combined_analysis/germline/",
+                            "gcs_uri_format": "",
                             "is_artifact": 1
                         }
                     }

@@ -739,7 +739,6 @@ def test_merge_ct_meta():
 @pytest.mark.parametrize("xlsx, template", prismify_test_set())
 def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
-    print(SUPPORTED_TEMPLATES)
     assert template.type in SUPPORTED_TEMPLATES
 
     # create validators

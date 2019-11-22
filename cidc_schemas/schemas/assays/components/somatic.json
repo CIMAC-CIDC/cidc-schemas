@@ -8,11 +8,41 @@
     "vcf_filtered_compressed": {
       "$ref": "artifacts/artifact_gz.json"
     },
-    "maf": {
+    "vcf_tnscope_filtered": {
+      "$ref": "artifacts/artifact_vcf.json"
+    },
+    "vcf_tnhaploytper2_filtered": {
+      "$ref": "artifacts/artifact_vcf.json"
+    },
+    "vcf_tnsnv_filtered": {
+      "$ref": "artifacts/artifact_vcf.json"
+    },
+    "vcf_tnscope_output": {
+      "$ref": "artifacts/artifact_vcf.json"
+    },
+    "vcf_tnhaploytper2_output": {
+      "$ref": "artifacts/artifact_vcf.json"
+    },
+    "vcf_tnsnv_output": {
+      "$ref": "artifacts/artifact_vcf.json"
+    },
+    "maf_tnscope_filtered": {
       "$ref": "artifacts/artifact_maf.json"
     },
-    "vcf_filtered_tabix": {
-      "$ref": "artifacts/artifact_tbi.json"
+    "maf_tnhaploytper2_filtered": {
+      "$ref": "artifacts/artifact_maf.json"
+    },
+    "maf_tnsnv_filtered": {
+      "$ref": "artifacts/artifact_maf.json"
+    },
+    "maf_tnscope_output": {
+      "$ref": "artifacts/artifact_maf.json"
+    },
+    "maf_tnhaploytper2_output": {
+      "$ref": "artifacts/artifact_maf.json"
+    },
+    "maf_tnsnv_output": {
+      "$ref": "artifacts/artifact_maf.json"
     }
   },
   "required": [

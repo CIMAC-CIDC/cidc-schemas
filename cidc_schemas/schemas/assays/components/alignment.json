@@ -10,6 +10,18 @@
     },
     "align_recalibrated_index": {
       "$ref": "artifacts/artifact_bai.json"
+    },
+    "align_sorted": {
+      "$ref": "artifacts/artifact_bam.json"
+    },
+    "align_sorted_index": {
+      "$ref": "artifacts/artifact_bai.json"
+    },
+    "align_sorted_dedup": {
+      "$ref": "artifacts/artifact_bam.json"
+    },
+    "align_sorted_dedup_index": {
+      "$ref": "artifacts/artifact_bai.json"
     }
   },
   "required": [

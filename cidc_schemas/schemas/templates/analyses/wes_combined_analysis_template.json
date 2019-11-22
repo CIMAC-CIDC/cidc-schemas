@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "wes_analysis",
-    "title": "WES analysis template",
+    "$id": "wes_combined_analysis",
+    "title": "WES combined analysis template",
     "type": "object",
     "category": "analysis",
     "description": "Metadata information for WES Analysis output.",
@@ -9,7 +9,7 @@
     "prism_template_root_object_pointer": "/assays/wes/0",
     "properties": {
         "worksheets": {
-            "WES Analysis": {
+            "WES Combined Analysis": {
                 "preamble_rows": {
                     "assay run id": {
                         "merge_pointer": "/assay_run_id",
@@ -23,20 +23,16 @@
                 "prism_data_object_pointer": "/records/-",
                 "data_columns": {
                     "WES Runs": {
-                        "Cimac ID": {
-                            "merge_pointer": "0/cimac_id",
-                            "type_ref": "sample.json#properties/cimac_id"
-                        },
-                        "tumor": {
-                            "merge_pointer": "0/output_files/tumor",
+                        "tumor cimac id": {
+                            "merge_pointer": "0/output_files/tumor_cimac_id",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_combined_analysis/tumor/",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_combined_analysis/tumor_cimac_id/",
                             "is_artifact": 1
                         },
-                        "normal": {
-                            "merge_pointer": "0/output_files/normal",
+                        "normal cimac id": {
+                            "merge_pointer": "0/output_files/normal_cimac_id",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_combined_analysis/normal/",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_combined_analysis/normal_cimac_id/",
                             "is_artifact": 1
                         },
                         "somatic": {

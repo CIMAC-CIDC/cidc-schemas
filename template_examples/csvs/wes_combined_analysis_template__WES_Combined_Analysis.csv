@@ -1,0 +1,7 @@
+"#t","Wes combined analysis template"
+"#p","Assay run id","test_prism_trial_id_run_1"
+"#p","Protocol identifier","test_prism_trial_id"
+
+"","WES Runs"
+"#h","Tumor cimac id","Normal cimac id","Somatic","Germline"
+"#d","CTTTPP111.00","CTTTPP111.00","somatic","germline"

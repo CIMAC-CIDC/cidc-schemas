@@ -51,7 +51,7 @@
       "$ref": "assays/components/available_assays.json"
     },
     "analysis": {
-      "$ref": "assays/components/available_analysis.json"
+      "$ref": "assays/components/available_analyses.json"
     }
   },
   "required": ["protocol_identifier", "participants"]

@@ -25,13 +25,13 @@
                     "WES Runs": {
                         "tumor cimac id": {
                             "merge_pointer": "0/output_files/tumor_cimac_id",
-                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "type_ref": "sample.json#properties/cimac_id",
                             "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_combined_analysis/tumor_cimac_id/",
                             "is_artifact": 1
                         },
                         "normal cimac id": {
                             "merge_pointer": "0/output_files/normal_cimac_id",
-                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "type_ref": "sample.json#properties/cimac_id",
                             "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_combined_analysis/normal_cimac_id/",
                             "is_artifact": 1
                         },

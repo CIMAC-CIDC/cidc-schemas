@@ -14,11 +14,20 @@
       "$comment": "Id of a tumor sample within this clinical trial, that this analysis is based upon.",
       "$ref": "sample.json#properties/cimac_id"
     },
+    "alignment": {
+      "$ref": "assays/components/alignment.json"
+    },
     "somatic": {
       "$ref": "assays/components/somatic.json"
     },
     "germline": {
       "$ref": "assays/components/germline.json"
+    },
+    "hla": {
+      "$ref": "assays/components/hla.json"
+    },
+    "neoantigen": {
+      "$ref": "assays/components/neoantigen.json"
     }
   },
   "required": [

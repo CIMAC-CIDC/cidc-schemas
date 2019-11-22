@@ -28,6 +28,9 @@
     },
     "neoantigen": {
       "$ref": "assays/components/neoantigen.json"
+    },
+    "coverage_metrics": {
+      "$ref": "assays/components/coverage_metrics.json"
     }
   },
   "required": [

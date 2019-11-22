@@ -30,25 +30,25 @@
                         "tumor": {
                             "merge_pointer": "0/output_files/tumor",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_analysis/tumor/",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_combined_analysis/tumor/",
                             "is_artifact": 1
                         },
                         "normal": {
                             "merge_pointer": "0/output_files/normal",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_analysis/normal/",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_combined_analysis/normal/",
                             "is_artifact": 1
                         },
                         "somatic": {
                             "merge_pointer": "0/output_files/somatic",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_analysis/somatic/",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_combined_analysis/somatic/",
                             "is_artifact": 1
                         },
                         "germline": {
                             "merge_pointer": "0/output_files/germline",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_analysis/germline/",
+                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_combined_analysis/germline/",
                             "is_artifact": 1
                         }
                     }

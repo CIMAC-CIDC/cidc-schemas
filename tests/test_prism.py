@@ -52,7 +52,6 @@ def prismify_test_set(filter=None):
     for template, xlsx_path in template_set():
         if filter and not template.type in filter:
             continue
-        print(xlsx_path)
         xlsx, errors = XlTemplateReader.from_excel(xlsx_path)
         assert not errors
         yield xlsx, template
@@ -740,6 +739,7 @@ def test_merge_ct_meta():
 @pytest.mark.parametrize("xlsx, template", prismify_test_set())
 def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
+    print(SUPPORTED_TEMPLATES)
     assert template.type in SUPPORTED_TEMPLATES
 
     # create validators
@@ -830,7 +830,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             )
             assert len(errs) == 0
 
-        elif template.type == "wes_analysis":
+        elif template.type == "wes_combined_analysis":
             # simulate an initial WES upload by prismifying the initial WES template object,
             # and merging it with clinical trial object
             wes_input_xlsx_path = os.path.join(
@@ -917,7 +917,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     elif template.type == "cytof_analysis":
         assert len(merged_gs_keys) == 9  # 9 output files
 
-    elif template.type == "wes_analysis":
+    elif template.type == "wes_combined_analysis":
         assert len(merged_gs_keys) == 4  # 4 output files
 
     else:
@@ -959,7 +959,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             len(full_ct["assays"]["cytof"][0]["records"]) == 2
         ), "More records than expected"
 
-    elif template.type == "wes_analysis":
+    elif template.type == "wes_combined_analysis":
         assert (
             len(full_ct["assays"]["wes"][0]["records"]) == 2
         ), "More records than expected"
@@ -1000,7 +1000,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         # 7 artifact attributes * 9 files
         assert len(dd["dictionary_item_added"]) == 7 * 9, "Unexpected CT changes"
 
-    elif template.type == "wes_analysis":
+    elif template.type == "wes_combined_analysis":
         assert len(dd["dictionary_item_added"]) == 7 * 4, "Unexpected CT changes"
 
     else:

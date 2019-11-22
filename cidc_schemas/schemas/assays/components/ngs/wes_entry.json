@@ -19,7 +19,7 @@
       "format": "date"
     },
     "output_files": {
-            "$ref": "assays/components/ngs/wes_analysis.json"
+            "$ref": "assays/components/ngs/wes_combined_analysis.json"
     },
     "cimac_id": {"comment": "defined in ngs_assay_record.json"},
     "files": {"comment": "defined in ngs_assay_record.json"},

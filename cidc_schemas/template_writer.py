@@ -106,9 +106,7 @@ class XlTemplateWriter:
         self.MAIN_WIDTH = min_num_cols
         self.COLUMN_WIDTH_PX = column_width_px
 
-    def write(
-        self, outfile_path: str, template: Template, with_legend_and_dd: bool = False
-    ):
+    def write(self, outfile_path: str, template: Template):
         """
         Generate an Excel file for the given template.
 
@@ -126,9 +124,8 @@ class XlTemplateWriter:
             self._write_worksheet(name, ws_schema, write_title=first_sheet)
             first_sheet = False
 
-        if with_legend_and_dd:
-            self._write_legend(self.template.worksheets)
-            self._write_data_dict(self.template.worksheets)
+        self._write_legend(self.template.worksheets)
+        self._write_data_dict(self.template.worksheets)
 
         self.workbook.close()
         self.workbook = None
@@ -136,6 +133,7 @@ class XlTemplateWriter:
     def _write_data_dict(self, schemas):
         """ Adds a "Data Dictionary" tab that lists all used enums with allowed values."""
         dd_ws = self.workbook.add_worksheet("Data Dictionary")
+        dd_ws.protect()
         dd_ws.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
 
         # skipping one
@@ -195,6 +193,7 @@ class XlTemplateWriter:
     def _write_legend(self, schemas):
         """ Adds a "Legend" tab that lists all used properties with their types and descriptions."""
         legend_ws = self.workbook.add_worksheet("Legend")
+        legend_ws.protect()
         legend_ws.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
 
         row_counter = 0

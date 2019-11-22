@@ -5,19 +5,13 @@
   "type": "object",
   "description": "WES output align files.",
   "properties": {
-    "align_sorted": {
-      "$ref": "artifacts/artifact_bam.json"
-    },
-    "align_sorted_dedup": {
-      "$ref": "artifacts/artifact_bam.json"
-    },
     "align_recalibrated": {
       "$ref": "artifacts/artifact_bam.json"
+    },
+    "align_recalibrated_index": {
+      "$ref": "artifacts/artifact_bai.json"
     }
   },
   "required": [
-    "align_sorted",
-    "align_sorted_dedup",
-    "align_recalibrated"
   ]
 }

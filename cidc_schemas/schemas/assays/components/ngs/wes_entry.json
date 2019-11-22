@@ -18,6 +18,9 @@
       "type": "string",
       "format": "date"
     },
+    "output_files": {
+            "$ref": "assays/components/ngs/wes_analysis.json"
+    },
     "cimac_id": {"comment": "defined in ngs_assay_record.json"},
     "files": {"comment": "defined in ngs_assay_record.json"},
     "library_kit_lot": {"comment": "defined in ngs_assay_record.json"},

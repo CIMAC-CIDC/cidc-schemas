@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "csv_artifact",
-  "title": "CSV Artifact",
+  "$id": "tsv_artifact",
+  "title": "TSV Artifact",
   "type": "object",
-  "description": "Information about Comma separated files.",
+  "description": "Information about Tab Separated files.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"
@@ -12,10 +12,11 @@
       "properties": {
         "data_format": {
           "description": "Data format.",
-          "const": "CSV"
+          "const": "TSV"
         }
       }
     }
   ],
   "mergeStrategy": "objectMerge"
 }
+

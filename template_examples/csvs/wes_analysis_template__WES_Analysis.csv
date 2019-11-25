@@ -3,3 +3,5 @@
 
 "","WES Runs"
 "#h","Tumor cimac id","Normal cimac id","Root dir"
+"#d","CTTTPP111.00","CTTTPP112.00","wes/analysis/1/"
+"#d","CTTTPP113.00","CTTTPP114.00","wes/analysis/2/"

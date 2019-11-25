@@ -90,7 +90,7 @@ class XlTemplateWriter:
     """A wrapper around xlsxwriter that can create Excel templates from template schemas"""
 
     _DATA_ROWS = 200
-    _MIN_NUM_COLS = 5
+    _MIN_NUM_COLS = 3
     _COLUMN_WIDTH_PX = 30
 
     def __init__(

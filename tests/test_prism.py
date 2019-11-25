@@ -1185,7 +1185,7 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                     "analysis": {
                         "prism_preamble_object_schema": "clinical_trial.json",  # TODO provide test or analysis schema
                         "prism_preamble_object_pointer": "#",
-                        "prism_data_object_pointer": "/analysis/-",
+                        "prism_data_object_pointer": "/assays/wes/-",  # TODO remove - using this as a work around ^ TODO on schema
                         "preamble_rows": {},
                         "data_columns": {
                             "section name": {
@@ -1268,15 +1268,33 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     patch, file_maps, errs = prismify(xlsx, template, verb=False)
     assert len(errs) == 0
 
+    local_paths = [e.local_path for e in file_maps]
+    uuids = [e.upload_placeholder for e in file_maps]
+
     assert 12 == len(file_maps)
+    assert 12 == len(set(uuids))
 
-    assert [e.local_path for e in file_maps] != [
-        e.upload_placeholder for e in file_maps
+    assert local_paths != uuids
+
+    assert 2 == len(patch["assays"]["wes"])
+    run_uuids_in_json = [
+        art["upload_placeholder"]
+        for wes in patch["assays"]["wes"]
+        for art in wes.values()
+        if "upload_placeholder" in art
     ]
-
-    assert 2 == len(patch["analysis"])
-
-    # TODO - multi artifact through process_as
+    sample_uuids_in_json = [
+        v["upload_placeholder"]
+        for wes in patch["assays"]["wes"]
+        for sample in wes.values()
+        if "id" in sample
+        for v in sample.values()
+        if "upload_placeholder" in v
+    ]
+    assert len(uuids) == len(run_uuids_in_json + sample_uuids_in_json)
+    assert set(uuids) == set(
+        run_uuids_in_json + sample_uuids_in_json
+    )  # set instead of sorting
 
 
 @pytest.fixture

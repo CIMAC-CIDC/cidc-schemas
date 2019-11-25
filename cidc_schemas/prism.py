@@ -360,19 +360,11 @@ def _process_field(
                 raw_val
             )
 
-            # merging with parent field_def, so we won't need to repeat stuff like
-            # "type = string" etc in each "process_as" sections
-            full_extra_fdef = dict(field_def)
-            # but dropping parent's "process_as" so we'll have recursion exit
-            full_extra_fdef.pop("process_as")
-            # actual merging
-            full_extra_fdef.update(extra_fdef)
-
             # recursive call
             extra_files = _process_field(
                 key=key,
                 raw_val=extra_fdef_raw_val,  # new "raw" val
-                field_def=full_extra_fdef,  # merged field_def
+                field_def=extra_fdef,  # merged field_def
                 data_obj=data_obj,
                 format_context=format_context,
                 root_obj=root_obj,

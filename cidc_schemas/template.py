@@ -245,7 +245,9 @@ class Template:
 
                 # populate lookup
                 # TODO .lower() ?
-                key_lu[preamble_key] = _add_coerce(preamble_def)
+                key_lu[preamble_key] = _add_coerce(
+                    dict(preamble_def, key_name=preamble_key)
+                )
                 # we expect preamble_def from `_template.json` have 2 fields
                 # (as for template.schema) - "merge_pointer" and "type_ref"
 
@@ -255,7 +257,9 @@ class Template:
 
                     # populate lookup
                     # TODO .lower() ?
-                    key_lu[column_key] = _add_coerce(column_def)
+                    key_lu[column_key] = _add_coerce(
+                        dict(column_def, key_name=column_key)
+                    )
                     # we expect column_def from `_template.json` have 2 fields
                     # (as for template.schema) - "merge_pointer" and "type_ref"
 

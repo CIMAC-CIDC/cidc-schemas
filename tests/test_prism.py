@@ -1286,7 +1286,7 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                         {
                                             "parse_through": "lambda x: f'analysis/sorted/{x}/{x}.output.vcf'",
                                             "merge_pointer": "/somatic_vcf",
-                                            "gcs_uri_format": "{run_id}/somatic.vcf_ref",
+                                            "gcs_uri_format": "{run_id}/somatic.vcf",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },

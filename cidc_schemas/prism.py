@@ -303,7 +303,6 @@ def _process_property(
     # coerce value
     try:
         field_def = key_lu[key.lower()]
-        field_def["key_name"] = key.lower()
     except Exception:
         raise ParsingException(f"Unexpected property {key!r}.")
 

@@ -621,6 +621,9 @@ def prismify(
 
         templ_ws = template.schema["properties"]["worksheets"].get(ws_name)
         if not templ_ws:
+            if ws_name in template.ignored_worksheets:
+                continue
+
             errors_so_far.append(f"Unexpected worksheet {ws_name!r}.")
             continue
 

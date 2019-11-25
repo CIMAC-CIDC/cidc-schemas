@@ -6,28 +6,28 @@
   "description": "Coverage metrics output files.",
   "properties": {
     "all_summaries": {
-      "$ref": "artifacts/artifact_txt.json"
+      "$ref": "artifacts/artifact_text.json"
     },
     "mosdepth_region_dist_broad": {
-      "$ref": "artifacts/artifact_txt.json"
+      "$ref": "artifacts/artifact_text.json"
     },
     "mosdepth_region_dist_mda": {
-      "$ref": "artifacts/artifact_txt.json"
+      "$ref": "artifacts/artifact_text.json"
     },
     "mosdepth_region_dist_mocha": {
-      "$ref": "artifacts/artifact_txt.json"
+      "$ref": "artifacts/artifact_text.json"
     },
     "coverage_metrics": {
-      "$ref": "artifacts/artifact_txt.json"
+      "$ref": "artifacts/artifact_text.json"
     },
     "coverage_metrics_summary": {
-      "$ref": "artifacts/artifact_txt.json"
+      "$ref": "artifacts/artifact_text.json"
     },
     "target_metrics": {
-      "$ref": "artifacts/artifact_txt.json"
+      "$ref": "artifacts/artifact_text.json"
     },
     "target_metrics_summary": {
-      "$ref": "artifacts/artifact_txt.json"
+      "$ref": "artifacts/artifact_text.json"
     }
   },
   "required": [

@@ -6,7 +6,7 @@
   "description": "Copy number output files.",
   "properties": {
     "copynumber_cnv_calls": {
-      "$ref": "artifacts/artifact_txt.json"
+      "$ref": "artifacts/artifact_text.json"
     },
     "copynumber_cnv_calls_tsv": {
       "$ref": "artifacts/artifact_tsv.json"

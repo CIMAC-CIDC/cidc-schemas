@@ -16,6 +16,12 @@
       "items": {
         "$ref": "assays/components/ngs/wes_pair_analysis.json"
       }
+    },
+    "sample_based": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/components/ngs/wes_sample_analysis.json"
+      }
     }
   }
 }

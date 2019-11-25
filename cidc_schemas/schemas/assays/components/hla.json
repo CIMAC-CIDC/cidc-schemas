@@ -6,7 +6,7 @@
   "description": "HLA output files.",
   "properties": {
     "optitype_results": {
-      "$ref": "artifacts/artifact_txt.json"
+      "$ref": "artifacts/artifact_text.json"
     },
     "xhla_report_hla": {
       "$ref": "artifacts/artifact_json.json"

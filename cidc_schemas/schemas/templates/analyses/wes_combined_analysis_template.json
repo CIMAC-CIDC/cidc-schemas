@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "wes_combined_analysis",
-    "title": "WES combined analysis template",
+    "title": "WES analysis template",
     "type": "object",
     "category": "analysis",
     "description": "Metadata information for WES Analysis output.",
@@ -9,12 +9,8 @@
     "prism_template_root_object_pointer": "/assays/wes/0",
     "properties": {
         "worksheets": {
-            "WES Combined Analysis": {
+            "WES Analysis": {
                 "preamble_rows": {
-                    "assay run id": {
-                        "merge_pointer": "/assay_run_id",
-                        "type_ref": "assays/wes_assay.json#properties/assay_run_id"
-                    },
                     "protocol identifier": {
                         "merge_pointer": "3/protocol_identifier",
                         "type_ref": "clinical_trial.json#properties/protocol_identifier"
@@ -25,21 +21,15 @@
                     "WES Runs": {
                         "tumor cimac id": {
                             "merge_pointer": "0/output_files/tumor_cimac_id",
-                            "type_ref": "sample.json#properties/cimac_id",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_combined_analysis/tumor_cimac_id/",
-                            "is_artifact": 1
+                            "type_ref": "sample.json#properties/cimac_id"
                         },
                         "normal cimac id": {
                             "merge_pointer": "0/output_files/normal_cimac_id",
-                            "type_ref": "sample.json#properties/cimac_id",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/wes_combined_analysis/normal_cimac_id/",
-                            "is_artifact": 1
+                            "type_ref": "sample.json#properties/cimac_id"
                         },
-                        "root": {
-                            "merge_pointer": "",
-                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "",
-                            "is_artifact": 1
+                        "root dir": {
+                            "merge_pointer": "0/output_files",
+                            "type_ref": "assays/components/local_file.json#properties/file_path"
                         }
                     }
                 }

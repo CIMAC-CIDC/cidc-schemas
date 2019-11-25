@@ -6,7 +6,7 @@
   "description": "Germline variant output sample files.",
   "properties": {
     "vcf_compare": {
-      "$ref": "artifacts/artifact_txt.json"
+      "$ref": "artifacts/artifact_text.json"
     }
   },
   "required": [

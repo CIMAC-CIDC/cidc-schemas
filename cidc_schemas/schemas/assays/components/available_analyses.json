@@ -5,8 +5,11 @@
   "description": "Reference for every available assay in network.",
   "mergeStrategy": "objectMerge",
   "properties": {
-    "wes": {
+    "wes_combined": {
       "$ref": "assays/components/ngs/wes_combined_analysis.json"
+    },
+    "wes_sample": {
+      "$ref": "assays/components/ngs/wes_sample_analysis.json"
     }
   }
 }

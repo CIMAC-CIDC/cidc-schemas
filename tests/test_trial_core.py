@@ -101,7 +101,12 @@ def test_clinicaltrial_simple():
     }
 
     # create the trial
-    ct = {PROTOCOL_ID_FIELD_NAME: "test", "participants": [participant]}
+    ct = {
+        PROTOCOL_ID_FIELD_NAME: "test",
+        "allowed_collection_event_names": ["Baseline"],
+        "allowed_cohort_names": ["Arm_Z"],
+        "participants": [participant],
+    }
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("clinical_trial")
@@ -165,7 +170,12 @@ def test_clinicaltrial_olink():
     }
 
     # create the trial
-    ct = {PROTOCOL_ID_FIELD_NAME: "test", "participants": [participant1, participant2]}
+    ct = {
+        PROTOCOL_ID_FIELD_NAME: "test",
+        "allowed_collection_event_names": ["Baseline"],
+        "allowed_cohort_names": ["Arm_Z"],
+        "participants": [participant1, participant2],
+    }
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("clinical_trial")

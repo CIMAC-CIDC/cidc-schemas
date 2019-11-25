@@ -1,5 +1,11 @@
 {
     "protocol_identifier": "10021",
+    "allowed_collection_event_names": [
+        "Baseline"
+    ],
+    "allowed_cohort_names": [
+        "Arm_Z"
+    ],
     "participants": [
         {
             "cimac_participant_id": "CTTTPP1",

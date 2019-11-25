@@ -63,6 +63,8 @@ def prismify_test_set(filter=None):
 
 TEST_PRISM_TRIAL = {
     PROTOCOL_ID_FIELD_NAME: "test_prism_trial_id",
+    "allowed_collection_event_names": ["Baseline", "Pre_Day_1_Cycle_2"],
+    "allowed_cohort_names": ["Arm_Z", "Arm_A"],
     "participants": [
         {
             "cimac_participant_id": "CTTTPP1",
@@ -222,7 +224,12 @@ def test_merge_core():
     }
 
     # create the trial
-    ct1 = {PROTOCOL_ID_FIELD_NAME: "test", "participants": [participant]}
+    ct1 = {
+        PROTOCOL_ID_FIELD_NAME: "test",
+        "participants": [participant],
+        "allowed_collection_event_names": ["Baseline"],
+        "allowed_cohort_names": ["Arm_Z"],
+    }
 
     # create validator assert schemas are valid.
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
@@ -266,6 +273,8 @@ def test_merge_core():
 
 MINIMAL_TEST_TRIAL = {
     PROTOCOL_ID_FIELD_NAME: "minimal",
+    "allowed_collection_event_names": ["Baseline"],
+    "allowed_cohort_names": ["Arm_Z"],
     "participants": [
         {
             "samples": [
@@ -524,6 +533,13 @@ def test_prismify_plasma(xlsx, template):
     # parse the spreadsheet and get the file maps
     md_patch, file_maps, errs = prismify(xlsx, template)
     assert len(errs) == 0
+    with pytest.raises(Exception):
+        validator.validate(md_patch)
+
+    md_patch["allowed_collection_event_names"] = TEST_PRISM_TRIAL[
+        "allowed_collection_event_names"
+    ]
+    md_patch["allowed_cohort_names"] = TEST_PRISM_TRIAL["allowed_cohort_names"]
     validator.validate(md_patch)
 
     assert file_maps == []

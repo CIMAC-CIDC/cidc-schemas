@@ -40,6 +40,43 @@ class migration:
         raise NotImplementedError
 
 
+class v0_10_2_to_v0_11_0(migration):
+    """
+    v0.11.0 allowed_cohort_names and allowed_collection_event_names were
+    introduced as required fields in clinical_trial.json.
+    They are designed to impose further enum constraints on participant/cohort_name
+    and sample/collection_event_name correspondingly.
+    """
+
+    @classmethod
+    def upgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+        cohorts = set(metadata.get("allowed_cohort_names", []))
+        collection_names = set(metadata.get("allowed_collection_event_names", []))
+
+        for p in metadata.get("participants", []):
+            cohorts.add(p["cohort_name"])
+
+            for s in p.get("samples", []):
+                collection_names.add(s["collection_event_name"])
+
+        return MigrationResult(
+            dict(
+                metadata,
+                allowed_cohort_names=list(cohorts),
+                allowed_collection_event_names=list(collection_names),
+            ),
+            {},
+        )
+
+    @classmethod
+    def downgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+
+        metadata.pop("allowed_cohort_names")
+        metadata.pop("allowed_collection_event_names")
+
+        return MigrationResult(metadata, {})
+
+
 class v0_10_0_to_v0_10_2(migration):
     """
     v0.10.0 and previous wrongly treat assay_raw_ct files as XLSX.

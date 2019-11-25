@@ -185,7 +185,7 @@ class _Validator(jsonschema.Draft7Validator):
 
         """
         if not (self.is_type(doc, "object") or self.is_type(doc, "array")):
-            # if we're in a "simple" value context,
+            # if we're in a "simple value" context,
             # we can't possibly match ref_path_pattern
             return False
 

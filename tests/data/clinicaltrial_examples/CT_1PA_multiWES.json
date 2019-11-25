@@ -69,21 +69,19 @@
     "assays": {
         "wes": [
             {
-                "assay_creator":        "DFCI",
                 "assay_run_id": "run_1",
-                "paired_end_reads":     "Paired",
-                "read_length":          100,
-                "sequencer_platform":   "Illumina - HiSeq 3000",
-                "library_vendor_kit":   "KAPA - Hyper Prep",
+                "assay_creator": "Mount Sinai",
+                "paired_end_reads": "Paired",
+                "read_length": 100,
+                "sequencer_platform": "Illumina - HiSeq 3000",
+                "library_kit": "Hyper Prep ICE Exome Express: 1.0",
+                "sequencing_protocol": "Express Somatic Human WES (Deep Coverage) v1.1",
+                "bait_set": "whole_exome_illumina_coding_v1",
                 "records": [
                     {
-                        "enrichment_vendor_lot":    "$ enrichment_vendor_lot",
-                        "input_ng": 666,
-                        "cimac_id":                 "CTTTP21S1.00",
-                        "library_kit_lot":          "$ library_kit_lot",
-                        "library_prep_date":        "4_12_2012",
-                        "library_yield_ng": 666,
-                        "average_insert_size": 666,
+                        "cimac_id":          "CTTTP21S1.00",
+                        "sequencing_date": "...",
+                        "quality_flag": 1,
                         "files": {
                             "r1":{
                                 "file_name" :           "...",
@@ -102,26 +100,13 @@
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
                                 "data_format" :           "FASTQ"
-                            },
-                            "read_group_mapping_file":{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "TEXT"
                             }
                         }
                     },
                     {
-                        "enrichment_vendor_lot":    "$ enrichment_vendor_lot",
-                        "input_ng": 666,
-                        "cimac_id":                 "CTTTP21S2.00",
-                        "library_kit_lot":          "$ library_kit_lot",
-                        "library_prep_date":        "4_12_2012",
-                        "library_yield_ng": 666,
-                        "average_insert_size": 666,
+                        "cimac_id":          "CTTTP21S2.00",
+                        "sequencing_date": "...",
+                        "quality_flag": 1,
                         "files": {
                             "r1":{
                                 "file_name" :           "...",
@@ -140,36 +125,25 @@
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
                                 "data_format" :           "FASTQ"
-                            },
-                            "read_group_mapping_file":{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "TEXT"
                             }
                         }
                     }
                 ]
             },
             {
-                "assay_creator":        "DFCI",
                 "assay_run_id": "run_1",
-                "paired_end_reads":     "Paired",
-                "read_length":          100,
-                "sequencer_platform":   "Illumina - HiSeq 3000",
-                "library_vendor_kit":   "KAPA - Hyper Prep",
+                "assay_creator": "Mount Sinai",
+                "paired_end_reads": "Paired",
+                "read_length": 100,
+                "sequencer_platform": "Illumina - HiSeq 3000",
+                "library_kit": "Hyper Prep ICE Exome Express: 1.0",
+                "sequencing_protocol": "Express Somatic Human WES (Deep Coverage) v1.1",
+                "bait_set": "whole_exome_illumina_coding_v1",
                 "records": [
                     {
-                        "enrichment_vendor_lot":    "$ enrichment_vendor_lot",
-                        "input_ng": 666,
-                        "cimac_id":                 "CTTTP21S1.00",
-                        "library_kit_lot":          "$ library_kit_lot",
-                        "library_prep_date":        "4_12_2012",
-                        "library_yield_ng": 666,
-                        "average_insert_size": 666,
+                        "cimac_id":          "CTTTP21S1.00",
+                        "sequencing_date": "...",
+                        "quality_flag": 1,
                         "files": {
                             "r1":{
                                 "file_name" :           "...",
@@ -201,13 +175,9 @@
                         }
                     },
                     {
-                        "enrichment_vendor_lot":    "$ enrichment_vendor_lot",
-                        "input_ng": 666,
-                        "cimac_id":                 "CTTTP21S3.00",
-                        "library_kit_lot":          "$ library_kit_lot",
-                        "library_prep_date":        "4_12_2012",
-                        "library_yield_ng": 666,
-                        "average_insert_size": 666,
+                        "cimac_id":          "CTTTP21S3.00",
+                        "sequencing_date": "...",
+                        "quality_flag": 1,
                         "files": {
                             "r1":{
                                 "file_name" :           "...",

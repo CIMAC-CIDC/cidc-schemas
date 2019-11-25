@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "available_ngs_analysis",
+  "title": "Analysis outputs for assays for this trial.",
+  "description": "Reference for every available assay in network.",
+  "mergeStrategy": "objectMerge",
+  "properties": {
+    "wes_analysis": {
+      "$ref": "assays/components/ngs/wes_analysis.json"
+    }
+  }
+}

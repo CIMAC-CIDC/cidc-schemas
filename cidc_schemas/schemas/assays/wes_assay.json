@@ -39,7 +39,7 @@
           "type":"array",
           "description": "A single export data record from WES assay.",
           "items":{
-            "$ref": "assays/components/ngs/wes_combined_analysis.json"
+            "$ref": "assays/components/ngs/wes_analysis.json"
           }
       }
   },

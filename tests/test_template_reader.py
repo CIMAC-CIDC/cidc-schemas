@@ -57,7 +57,7 @@ def test_empty_headers(tiny_template):
     """Test that a spreadsheet with empty headers raises a validation error"""
     tiny_missing_header = {
         "TEST_SHEET": [
-            TemplateRow(1, RowType.HEADER, ("test_property", None, "test_time")),
+            TemplateRow(1, RowType.HEADER, ("test_property", None, "test_time"))
         ]
     }
 
@@ -142,7 +142,7 @@ def test_wrong_number_of_headers(tiny_template):
 def test_missing_schema(tiny_template):
     """Test that a spreadsheet with an unknown property raises an assertion error"""
     tiny_missing = {
-        "TEST_SHEET": [TemplateRow(1, RowType.PREAMBLE, ("missing_property", "foo")),]
+        "TEST_SHEET": [TemplateRow(1, RowType.PREAMBLE, ("missing_property", "foo"))]
     }
 
     search_error_message(
@@ -171,16 +171,14 @@ def test_invalid(tiny_template):
 
 def test_pbmc_validation(pbmc_template):
     """Test that the provided pbmc shipping manifest is valid"""
-    # TODO: THIS NEEDS TO BE RE-ENABLED AFTER PBMC MAJOR CHANGES ARE FIXED
-    return
+
     pbmc_xlsx_path = os.path.join(TEMPLATE_EXAMPLES_DIR, "pbmc_template.xlsx")
     assert pbmc_template.validate_excel(pbmc_xlsx_path)
 
 
 def test_pbmc_invalidation(pbmc_template):
     """Test that a deliberately invalid pbmc shipping manifest is invalid"""
-    # TODO: THIS NEEDS TO BE RE-ENABLED AFTER PBMC MAJOR CHANGES ARE FIXED
-    return
+
     pbmc_xlsx_path = os.path.join(TEST_DATA_DIR, "pbmc_invalid.xlsx")
     with pytest.raises(ValidationError):
         pbmc_template.validate_excel(pbmc_xlsx_path)

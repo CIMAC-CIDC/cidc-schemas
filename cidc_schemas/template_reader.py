@@ -93,8 +93,9 @@ class XlTemplateReader:
                 if row_type == RowType.HEADER:
                     rev_values = values[::-1]
                     clean = list(dropwhile(lambda v: v is None, rev_values))
-                    values = list(filter(None, clean))
-                    header_width = len(values) + len(list(filter(None, values)))
+                    values = clean[::-1]
+                    header = values
+                    header_width = len(values)
 
                 # Filter empty cells from the end of a data row
                 if row_type == RowType.DATA:
@@ -102,7 +103,6 @@ class XlTemplateReader:
                         errors.append(
                             f"Encountered data row (#{row_num} in worksheet {worksheet_name!r}) before header row"
                         )
-
                     if len(values) > header_width:
                         errors.append(
                             f"Encountered data row (#{row_num} in worksheet {worksheet_name!r}) wider than header row"

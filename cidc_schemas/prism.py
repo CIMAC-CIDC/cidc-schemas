@@ -250,7 +250,7 @@ SUPPORTED_MANIFESTS = [
     "normal_tissue_dna",
     "tumor_tissue_dna",
 ]
-SUPPORTED_ANALYSES = ["cytof_analysis", "wes_analysis"]
+SUPPORTED_ANALYSES = ["cytof_analysis", "wes_combined_analysis"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS + SUPPORTED_ANALYSES
 
 LocalFileUploadEntry = namedtuple(

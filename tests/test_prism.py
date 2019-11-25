@@ -1122,8 +1122,10 @@ def test_prism_local_files_format_extension(monkeypatch):
     patch, file_maps, errs = prismify(xlsx, template, verb=False)
 
     assert len(errs) == 1
-    assert "local_file_col_name" in errs[0]
-    assert "expected .csv" in errs[0]
+    assert "local_file_col_name" in str(errs[0])
+    assert "expected .csv" in str(errs[0]).lower()
+
+    assert len(file_maps) == 1
 
 
 def mock_XlTemplateReader_from_excel(sheets: dict, monkeypatch):

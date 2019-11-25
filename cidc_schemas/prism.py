@@ -303,6 +303,7 @@ def _process_property(
     # coerce value
     try:
         field_def = key_lu[key.lower()]
+        field_def["key_name"] = key.lower()
     except Exception:
         raise ParsingException(f"Unexpected property {key!r}.")
 
@@ -352,6 +353,8 @@ def _process_field_value(
 
     try:
         val, files = _calc_val_and_files(raw_val, field_def, format_context, verb=verb)
+    except ParsingException:
+        raise
     except Exception:
         raise ParsingException(
             f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type')}"
@@ -387,11 +390,22 @@ def _process_field_value(
     return changes, files
 
 
+def _get_file_ext(fname):
+    return fname.rsplit(".")[-1]
+
+
 def _format_single_artifact(
     local_path: str, uuid: str, field_def: dict, format_context: dict
 ):
 
     gs_key = field_def["gcs_uri_format"].format_map(format_context)
+
+    expected_extension = _get_file_ext(gs_key)
+    provided_extension = _get_file_ext(local_path)
+    if provided_extension != expected_extension:
+        raise ParsingException(
+            f"Expected {'.'+expected_extension} for {field_def['key_name']!r} but got {'.'+provided_extension!r} instead."
+        )
 
     return LocalFileUploadEntry(
         local_path=local_path,

@@ -309,27 +309,22 @@ def _process_property(
     if verb:
         print(f"      found def {field_def}")
 
-    return _process_field(
+    changes, files = _process_field(
         key=key,
         raw_val=raw_val,
         field_def=field_def,
-        data_obj=data_obj,
         format_context=format_context,
-        root_obj=root_obj,
-        data_obj_pointer=data_obj_pointer,
         verb=verb,
     )
 
+    for val, pointer in changes:
+        _set_val(pointer, val, data_obj, root_obj, data_obj_pointer, verb=verb)
+
+    return files
+
 
 def _process_field(
-    key: str,
-    raw_val,
-    field_def: dict,
-    data_obj: dict,
-    format_context: dict,
-    root_obj: Union[None, dict] = None,
-    data_obj_pointer: Union[None, str] = None,
-    verb: bool = False,
+    key: str, raw_val, field_def: dict, format_context: dict, verb: bool = False
 ):
 
     # or set/update value in-place in data_obj dictionary
@@ -340,12 +335,11 @@ def _process_field(
     try:
         val, files = _calc_val_and_files(raw_val, field_def, format_context, verb=verb)
     except Exception:
-        raise
         raise ParsingException(
             f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type')}"
         )
 
-    _set_val(pointer, val, data_obj, root_obj, data_obj_pointer, verb=verb)
+    changes = [(val, pointer)]
 
     # "process_as" allows to define additional places/ways to put that match
     # somewhere in the resulting doc, with additional processing.
@@ -361,20 +355,32 @@ def _process_field(
             )
 
             # recursive call
-            extra_files = _process_field(
+            extra_changes, extra_files = _process_field(
                 key=key,
                 raw_val=extra_fdef_raw_val,  # new "raw" val
                 field_def=extra_fdef,  # merged field_def
-                data_obj=data_obj,
                 format_context=format_context,
-                root_obj=root_obj,
-                data_obj_pointer=data_obj_pointer,
                 verb=verb,
             )
 
             files.extend(extra_files)
+            changes.extend(extra_changes)
 
-    return files
+    return changes, files
+
+
+def _calc_single_artifact(
+    local_path: str, uuid: str, field_def: dict, format_context: dict
+):
+
+    gs_key = field_def["gcs_uri_format"].format_map(format_context)
+
+    return LocalFileUploadEntry(
+        local_path=local_path,
+        gs_key=gs_key,
+        upload_placeholder=uuid,
+        metadata_availability=field_def.get("extra_metadata"),
+    )
 
 
 def _calc_val_and_files(raw_val, field_def: dict, format_context: dict, verb: bool):
@@ -384,50 +390,41 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict, verb: bo
     if not (field_def.get("is_artifact") == "multi"):
         val = coerce(raw_val)
 
-        if not field_def.get("is_artifact"):
-            return val, []
-        else:
+        if field_def.get("is_artifact"):
             if verb:
                 print(f"      collecting local_file_path {field_def}")
 
-            gs_key = field_def["gcs_uri_format"].format_map(format_context)
-
-            file = LocalFileUploadEntry(
+            file = _calc_single_artifact(
                 local_path=raw_val,
-                gs_key=gs_key,
-                # for artifacts `val` is a uuid
-                upload_placeholder=val,
-                metadata_availability=field_def.get("extra_metadata"),
+                uuid=val,
+                field_def=field_def,
+                format_context=format_context,
             )
 
             return val, [file]
+        else:
+            return val, []
 
     else:  # is_multi
         if verb:
             print(f"      collecting multi local_file_path {field_def}")
 
-        # tokenize value
-        local_paths = raw_val.split(",")
-
-        # create array container.
         val = []
         files = []
-        for num, local_path in enumerate(local_paths):
+        for num, local_path in enumerate(raw_val.split(",")):
             # ignoring coercion errors as we expect it just return uuids
-            upload_placeholder = file_uuid = coerce(local_path)
+            file_uuid = coerce(local_path)
 
             val.append({"upload_placeholder": file_uuid})
 
-            # add number and generate key
-            format_context["num"] = num
-            gs_key = field_def["gcs_uri_format"].format_map(format_context)
-
             files.append(
-                LocalFileUploadEntry(
-                    local_path=local_paths[num],
-                    gs_key=gs_key,
-                    upload_placeholder=upload_placeholder,
-                    metadata_availability=field_def.get("extra_metadata"),
+                _calc_single_artifact(
+                    local_path=local_path,
+                    uuid=file_uuid,
+                    field_def=field_def,
+                    format_context=dict(
+                        format_context, num=num
+                    ),  # add number to differentiate gcs key
                 )
             )
         return val, files

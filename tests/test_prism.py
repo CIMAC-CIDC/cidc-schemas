@@ -1271,11 +1271,12 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                 }
             },
         },
-        "test_prism_joining_tabs",
+        "test_prism_many_artifacts_from_process_as_on_one_record",
     )
 
     monkeypatch.setattr(
-        "cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_prism_joining_tabs"]
+        "cidc_schemas.prism.SUPPORTED_TEMPLATES",
+        ["test_prism_many_artifacts_from_process_as_on_one_record"],
     )
 
     xlsx, errs = XlTemplateReader.from_excel("workbook")

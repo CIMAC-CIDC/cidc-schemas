@@ -423,8 +423,8 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict, verb: bo
                     uuid=file_uuid,
                     field_def=field_def,
                     format_context=dict(
-                        format_context, num=num
-                    ),  # add number to differentiate gcs key
+                        format_context, num=num  # add number to differentiate gcs key
+                    ),
                 )
             )
         return val, files

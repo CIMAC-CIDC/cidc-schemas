@@ -1066,31 +1066,44 @@ def test_merge_stuff():
     assert len(xyz["slices"]) == 1
 
 
-def test_prism_joining_tabs(monkeypatch):
-    """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
+def mock_XlTemplateReader_from_excel(sheets: dict, monkeypatch):
 
     load_workbook = MagicMock(name="load_workbook")
     monkeypatch.setattr("openpyxl.load_workbook", load_workbook)
     workbook = load_workbook.return_value = MagicMock(name="workbook")
-    wb = {
-        "participants": MagicMock(name="participants"),
-        "samples": MagicMock(name="samples"),
-    }
+
+    wb = {k: MagicMock(name=k) for k in sheets}
+
     workbook.__getitem__.side_effect = wb.__getitem__
-    workbook.sheetnames = wb.keys()
+    workbook.sheetnames = sheets.keys()
     cell = namedtuple("cell", ["value"])
-    wb["participants"].iter_rows.return_value = [
-        map(cell, ["#h", "PA id", "PA prop"]),
-        map(cell, ["#d", "CPP0", "0"]),
-        map(cell, ["#d", "CPP1", "1"]),
-    ]
-    wb["samples"].iter_rows.return_value = [
-        map(cell, ["#h", "SA_id", "SA_prop"]),
-        map(cell, ["#d", "CPP1S0.00", "100"]),
-        map(cell, ["#d", "CPP1S1.00", "101"]),
-        map(cell, ["#d", "CPP0S0.00", "000"]),
-        map(cell, ["#d", "CPP0S1.00", "001"]),
-    ]
+
+    for k, rows in sheets.items():
+        wb[k].iter_rows.return_value = [map(cell, r) for r in rows]
+
+    return
+
+
+def test_prism_joining_tabs(monkeypatch):
+    """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
+
+    mock_XlTemplateReader_from_excel(
+        {
+            "participants": [
+                ["#h", "PA id", "PA prop"],
+                ["#d", "CPP0", "0"],
+                ["#d", "CPP1", "1"],
+            ],
+            "samples": [
+                ["#h", "SA_id", "SA_prop"],
+                ["#d", "CPP1S0.00", "100"],
+                ["#d", "CPP1S1.00", "101"],
+                ["#d", "CPP0S0.00", "000"],
+                ["#d", "CPP0S1.00", "001"],
+            ],
+        },
+        monkeypatch,
+    )
 
     template = Template(
         {
@@ -1180,18 +1193,16 @@ def test_prism_joining_tabs(monkeypatch):
 def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
 
-    load_workbook = MagicMock(name="load_workbook")
-    monkeypatch.setattr("openpyxl.load_workbook", load_workbook)
-    workbook = load_workbook.return_value = MagicMock(name="workbook")
-    wb = {"analysis": MagicMock(name="analysis")}
-    workbook.__getitem__.side_effect = wb.__getitem__
-    workbook.sheetnames = wb.keys()
-    cell = namedtuple("cell", ["value"])
-    wb["analysis"].iter_rows.return_value = [
-        map(cell, ["#h", "run_id", "sid1", "sid2"]),
-        map(cell, ["#d", "000", "sid1_0", "sid2_0"]),
-        map(cell, ["#d", "111", "sid1_1", "sid2_1"]),
-    ]
+    mock_XlTemplateReader_from_excel(
+        {
+            "analysis": [
+                ["#h", "run_id", "sid1", "sid2"],
+                ["#d", "000", "sid1_0", "sid2_0"],
+                ["#d", "111", "sid1_1", "sid2_1"],
+            ]
+        },
+        monkeypatch,
+    )
 
     template = Template(
         {

@@ -1,6 +1,11 @@
 import pytest
 
-from cidc_schemas.migrations import _follow_path, v0_10_0_to_v0_10_2, MigrationError
+from cidc_schemas.migrations import (
+    _follow_path,
+    v0_10_0_to_v0_10_2,
+    MigrationError,
+    v0_10_2_to_v0_11_0,
+)
 
 
 def test_follow_path():
@@ -15,6 +20,33 @@ def test_follow_path():
     assert _follow_path(d, "a", "b") is None
     d = {"a": [val]}
     assert _follow_path(d, 1) is None
+
+
+def test_v0_10_2_to_v0_11_0():
+
+    empty_ct = {}
+
+    assert v0_10_2_to_v0_11_0.upgrade(empty_ct).result == {
+        "allowed_collection_event_names": [],
+        "allowed_cohort_names": [],
+    }
+
+    ct_2 = {
+        "participants": [
+            {"cohort_name": "cohort_1"},
+            {
+                "cohort_name": "cohort_2",
+                "samples": [
+                    {"collection_event_name": "event_1"},
+                    {"collection_event_name": "event_2"},
+                ],
+            },
+        ]
+    }
+
+    upgraded = v0_10_2_to_v0_11_0.upgrade(ct_2).result
+    assert sorted(upgraded["allowed_collection_event_names"]) == ["event_1", "event_2"]
+    assert sorted(upgraded["allowed_cohort_names"]) == ["cohort_1", "cohort_2"]
 
 
 def test_v0_10_0_to_v0_10_2():

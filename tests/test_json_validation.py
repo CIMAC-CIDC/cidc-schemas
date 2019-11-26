@@ -139,6 +139,8 @@ def test_trial_core():
     # validate the positive version works.
     clinical_trial = {
         PROTOCOL_ID_FIELD_NAME: "trial1",
+        "allowed_collection_event_names": ["Baseline"],
+        "allowed_cohort_names": ["Arm_Z"],
         "participants": [participant],
         "shipments": [shipment],
     }

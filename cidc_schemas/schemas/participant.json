@@ -21,7 +21,8 @@
       "type": "string",
       "description": "Categorical description of cohorts, arms, and treatment groups.",
       "example": "Arm_Z",
-      "$comment": "This is enum with E4412 values only as a temp solution.",
+      "in_doc_ref_pattern": "/allowed_cohort_names/*",
+      "$comment": "This enum lists a union of all possible values from all supported trials at the moment. Options are further limited by `in_doc_ref_pattern`.",
       "enum": [
         "Arm_Z",
         "Arm_A",
@@ -34,8 +35,42 @@
         "Arm_X",
         "Arm_G",
         "Arm_H",
-        "Arm_I"
-      ]
+        "Arm_I",
+
+        "Arm_1",
+        "Arm_2",
+
+        "Z1D",
+
+        "NSCLC_A",
+        "NSCLC_B",
+        "NSCLC_C",
+        "CRC_A",
+        "CRC_B"
+      ],
+      "enum_comments": {
+        "Arm_Z": "E4412",
+        "Arm_A": "E4412",
+        "Arm_B": "E4412",
+        "Arm_C": "E4412",
+        "Arm_Y": "E4412",
+        "Arm_D": "E4412", 
+        "Arm_E": "E4412",
+        "Arm_F": "E4412",
+        "Arm_X": "E4412",
+        "Arm_G": "E4412",
+        "Arm_H": "E4412",
+        "Arm_I": "E4412",
+
+        "Arm_1": "S1400I",
+        "Arm_2": "S1400I",
+
+        "NSCLC_A": "10021",
+        "NSCLC_B": "10021",
+        "NSCLC_C": "10021",
+        "CRC_A": "10021",
+        "CRC_B": "10021"
+      }
     },
     "essential_patient_entry_number": {
         "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",

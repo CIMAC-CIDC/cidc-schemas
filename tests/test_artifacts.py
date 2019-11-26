@@ -30,10 +30,12 @@ def _fetch_validator(name):
 
     schema_root = SCHEMA_DIR
     schema_path = os.path.join(SCHEMA_DIR, "artifacts/artifact_%s.json" % name)
-    schema = load_and_validate_schema(schema_path, schema_root)
+    validator = load_and_validate_schema(
+        schema_path, schema_root, return_validator=True
+    )
 
     # create validator assert schemas are valid.
-    return jsonschema.Draft7Validator(schema)
+    return validator
 
 
 def test_upload_placeholder_oneOf_required():
@@ -160,7 +162,7 @@ def test_zip():
 def test_npx():
 
     # create validator assert schemas are valid.
-    at_validator = _fetch_validator("npx")
+    full_validator = _fetch_validator("npx")
 
     # create a dummy info
     obj = BASE_OBJ.copy()
@@ -168,9 +170,17 @@ def test_npx():
 
     # should fail
     with pytest.raises(jsonschema.ValidationError):
-        at_validator.validate(obj)
+        full_validator.validate(obj)
 
     # add the required properties
     obj["number_of_samples"] = 7
     obj["samples"] = ["CTTTREFRE.00", "CTTTINTEG.00"]
-    at_validator.validate(obj)
+
+    # as full_validator expects us to validate full CT obj,
+    # and we're validating a participant obj
+    # it will through error on cimac_id in_doc_ref's
+    with pytest.raises(jsonschema.ValidationError, match="cimac_id"):
+        full_validator.validate(obj)
+
+    no_custom_validations_validator = jsonschema.Draft7Validator(full_validator.schema)
+    no_custom_validations_validator.validate(obj)

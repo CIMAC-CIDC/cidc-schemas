@@ -74,6 +74,8 @@ class Template:
         worksheets {Dict[str, dict]} -- a mapping from worksheet names to worksheet schemas
     """
 
+    ignored_worksheets = ["Legend", "Data Dictionary"]
+
     def __init__(self, schema: dict, type: str):
         """
         Load the schema defining a manifest or assay template.
@@ -292,11 +294,11 @@ class Template:
             or os.path.basename(template_schema_path).partition("_template.json")[0],
         )
 
-    def to_excel(self, xlsx_path: str, with_legend_and_dd: bool = False):
+    def to_excel(self, xlsx_path: str):
         """Write this `Template` to an Excel file"""
         from .template_writer import XlTemplateWriter
 
-        XlTemplateWriter().write(xlsx_path, self, with_legend_and_dd=with_legend_and_dd)
+        XlTemplateWriter().write(xlsx_path, self)
 
     def validate_excel(self, xlsx: Union[str, BinaryIO]) -> bool:
         """Validate the given Excel file (either a path or an open file) against this `Template`"""

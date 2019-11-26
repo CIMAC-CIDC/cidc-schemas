@@ -28,6 +28,22 @@
       "description": "Name of the primary organization that oversees the clinical trial. Example: ECOG-ACRIN, SWOG, etc.",
       "type": "string"
     },
+    "allowed_collection_event_names": {
+        "description": "Allowed values for sample.json#properties/collection_event_name for this trial.",
+        "type": "array",
+        "$comment": "This works together with sample.json#properties/collection_event_name/in_doc_ref_pattern.",
+        "items": {
+            "type": "string"
+        }
+    },
+    "allowed_cohort_names": {
+        "description": "Allowed values for sample.json#properties/cohort_name for this trial.",
+        "type": "array",
+        "$comment": "This works together with sample.json#properties/cohort_name/in_doc_ref_pattern.",
+        "items": {
+            "type": "string"
+        }
+    },
     "shipments": {
       "type": "array",
       "items": {
@@ -54,5 +70,5 @@
       "$ref": "assays/components/available_ngs_analyses.json"
     }
   },
-  "required": ["protocol_identifier", "participants"]
+  "required": ["protocol_identifier", "participants", "allowed_cohort_names", "allowed_collection_event_names"]
 }

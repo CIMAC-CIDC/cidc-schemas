@@ -1069,18 +1069,16 @@ def test_merge_stuff():
 def test_prism_local_files_format_extension(monkeypatch):
     """ Tests prism alert on different extensions of a local file vs gcs_uri """
 
-    load_workbook = MagicMock(name="load_workbook")
-    monkeypatch.setattr("openpyxl.load_workbook", load_workbook)
-    workbook = load_workbook.return_value = MagicMock(name="workbook")
-    wb = {"files": MagicMock(name="files")}
-    workbook.__getitem__.side_effect = wb.__getitem__
-    workbook.sheetnames = wb.keys()
-    cell = namedtuple("cell", ["value"])
-    wb["files"].iter_rows.return_value = [
-        map(cell, ["#h", "record", "local_file_col_name"]),
-        map(cell, ["#d", "1", "somewhere/on/my/computer.csv"]),
-        map(cell, ["#d", "2", "somewhere/on/my/computer.xlsx"]),
-    ]
+    mock_XlTemplateReader_from_excel(
+        {
+            "files": [
+                ["#h", "record", "local_file_col_name"],
+                ["#d", "1", "somewhere/on/my/computer.csv"],
+                ["#d", "2", "somewhere/on/my/computer.xlsx"],
+            ]
+        },
+        monkeypatch,
+    )
 
     template = Template(
         {

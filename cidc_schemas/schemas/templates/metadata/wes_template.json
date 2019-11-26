@@ -24,7 +24,7 @@
             "merge_pointer": "0/assay_creator",
             "type_ref": "assays/components/assay_core.json#properties/assay_creator"
           },
-          "sequencing_protocol": {
+          "sequencing protocol": {
             "merge_pointer": "0/sequencing_protocol",
             "type_ref": "assays/wes_assay.json#properties/sequencing_protocol"
           },
@@ -67,11 +67,11 @@
               "is_artifact" : 1,
               "type_ref": "assays/components/local_file.json#properties/file_path"
             },
-            "sequencing_date": {
+            "sequencing date": {
               "merge_pointer": "0/sequencing_date",
               "type_ref": "assays/components/ngs/wes_entry.json#properties/sequencing_date"
             },
-            "quality_flag": {
+            "quality flag": {
               "merge_pointer": "0/quality_flag",
               "type_ref": "assays/components/ngs/wes_entry.json#properties/quality_flag"
             }

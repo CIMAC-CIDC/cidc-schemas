@@ -6,13 +6,15 @@
   "description": "Whole Exome Sequencing assay output files for a tumor normal pair of samples.",
   "additionalProperties": false,
   "properties": {
-    "normal_cimac_id": {
-      "$comment": "Id of a normal sample within this clinical trial, that this analysis is based upon.",
-      "$ref": "sample.json#properties/cimac_id"
+    "normal": {
+        "$ref": "assays/components/ngs/wes_sample_analysis.json"
     },
-    "tumor_cimac_id": {
-      "$comment": "Id of a tumor sample within this clinical trial, that this analysis is based upon.",
-      "$ref": "sample.json#properties/cimac_id"
+    "tumor": {
+        "$ref": "assays/components/ngs/wes_sample_analysis.json"
+    },
+    "run_id": {
+        "type": "string",
+        "description": "An id used for a paired analysis run."
     },
     "somatic": {
       "$ref": "assays/components/somatic.json"
@@ -34,8 +36,8 @@
     }
   },
   "required": [
-    "normal_cimac_id",
-    "tumor_cimac_id",
+    "normal",
+    "tumor",
     "somatic",
     "germline"
   ]

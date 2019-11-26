@@ -6,6 +6,10 @@
   "description": "Sample wise analysis files for the WES assay.",
   "additionalProperties": false,
   "properties": {
+    "cimac_id": {
+        "$comment": "Id of a sample within this clinical trial, that this record is based upon.",
+        "$ref": "sample.json#properties/cimac_id"
+    },
     "alignment": {
       "$ref": "assays/components/alignment.json"
     },

@@ -6,21 +6,15 @@
   "description": "Combined analysis files for the whole WES assay.",
   "additionalProperties": false,
   "properties": {
-    "update_date": {
-      "description": "Date files were updated.",
-      "type": "string",
-      "format": "date"
-    },
-    "pair_based": {
+    "pair_runs": {
       "type": "array",
       "items": {
         "$ref": "assays/components/ngs/wes_pair_analysis.json"
-      }
-    },
-    "sample_based": {
-      "type": "array",
-      "items": {
-        "$ref": "assays/components/ngs/wes_sample_analysis.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "$comment": "TODO fix to merge by a pair of normal and tumor ids. It requires improvements to the merge strategy code.",
+        "idRef": "/run_id"
       }
     }
   }

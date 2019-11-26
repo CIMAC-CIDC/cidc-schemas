@@ -120,46 +120,31 @@ TEST_PRISM_TRIAL = {
     "assays": {
         "wes": [
             {
-                "assay_creator": "Mount Sinai",
                 "assay_run_id": "run_1",
-                "enrichment_vendor_kit": "Twist",
-                "library_vendor_kit": "KAPA - Hyper Prep",
-                "sequencer_platform": "Illumina - NextSeq 550",
+                "assay_creator": "Mount Sinai",
                 "paired_end_reads": "Paired",
                 "read_length": 100,
+                "sequencer_platform": "Illumina - HiSeq 3000",
+                "library_kit": "Hyper Prep ICE Exome Express: 1.0",
+                "sequencing_protocol": "Express Somatic Human WES (Deep Coverage) v1.1",
+                "bait_set": "whole_exome_illumina_coding_v1",
                 "records": [
                     {
-                        "library_kit_lot": "lib lot 1",
-                        "enrichment_vendor_lot": "enrich lot 1",
-                        "library_prep_date": "2019-01-01 00:00:00",
-                        "capture_date": "2019-01-01 00:00:00",
-                        "input_ng": 101,
-                        "library_yield_ng": 701,
-                        "average_insert_size": 251,
+                        "sequencing_date": "2019-01-01 00:00:00",
+                        "quality_flag": 1,
                         "cimac_id": "CTTTPP111.00",
                         "files": {
                             "r1": {"upload_placeholder": "r1.1"},
                             "r2": {"upload_placeholder": "r2.1"},
-                            "read_group_mapping_file": {
-                                "upload_placeholder": "read_group_mapping_file.1"
-                            },
                         },
                     },
                     {
-                        "library_kit_lot": "lib lot 2",
-                        "enrichment_vendor_lot": "enrich lot 2",
-                        "library_prep_date": "2019-02-02 00:00:00",
-                        "capture_date": "2019-02-02 00:00:00",
-                        "input_ng": 102,
-                        "library_yield_ng": 702,
-                        "average_insert_size": 252,
+                        "sequencing_date": "2019-01-01 00:00:00",
+                        "quality_flag": 1,
                         "cimac_id": "CTTTPP121.00",
                         "files": {
                             "r1": {"upload_placeholder": "r1.2"},
                             "r2": {"upload_placeholder": "r2.2"},
-                            "read_group_mapping_file": {
-                                "upload_placeholder": "read_group_mapping_file.2"
-                            },
                         },
                     },
                 ],
@@ -173,12 +158,8 @@ TEST_PRISM_TRIAL = {
 WES_TEMPLATE_EXAMPLE_GS_URLS = {
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/r1.fastq": "r1.1",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/r2.fastq": "r2.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP111.00/wes/rgm.txt": "read_group_mapping_file.1",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/r1.fastq": "r1.2",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/r2.fastq": "r2.2",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP121.00/wes/rgm.txt": "read_group_mapping_file.2",
 }
 
 
@@ -414,13 +395,9 @@ def test_filepath_gen(xlsx, template):
         # in total local
         assert 4 == sum([x.local_path.endswith(".fastq") for x in file_maps])
 
-        # we should have 2 text files
-        assert 2 == sum([x.gs_key.endswith("/rgm.txt") for x in file_maps])
-        assert 2 == sum([x.local_path.endswith(".txt") for x in file_maps])
-
         # 4 in total
-        assert len(file_maps) == 6
-        assert 6 == sum(
+        assert len(file_maps) == 4
+        assert 4 == sum(
             [
                 x.gs_key.startswith(TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME])
                 for x in file_maps
@@ -898,7 +875,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 2
 
     elif template.type == "wes":
-        assert len(merged_gs_keys) == 3 * 2  # 3 files per entry in xlsx
+        assert len(merged_gs_keys) == 2 * 2  # 2 files per entry in xlsx
         assert set(merged_gs_keys) == set(WES_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
     elif template.type == "olink":
@@ -953,12 +930,13 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(full_ct["assays"][template.type]) == 1
 
     elif template.type == "cytof_analysis":
-        # the original cytof upload had 2 records, hence after analysis, this too has 2 records
+        # the original cytof upload had 2 records, hence after analysis, it's analysis has 2 records
         assert (
             len(full_ct["assays"]["cytof"][0]["records"]) == 2
         ), "More records than expected"
 
     elif template.type == "wes_analysis":
+        # the original wes upload had 2 records, hence after analysis, it's analysis has 2 records
         assert (
             len(full_ct["assays"]["wes"][0]["records"]) == 2
         ), "More records than expected"
@@ -970,8 +948,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     if template.type == "wes":
 
-        # 6 files * 7 artifact attributes
-        assert len(dd["dictionary_item_added"]) == 6 * 7, "Unexpected CT changes"
+        # 4 files * 7 artifact attributes
+        assert len(dd["dictionary_item_added"]) == 4 * 7, "Unexpected CT changes"
 
         # nothing else in diff
         assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
@@ -1000,7 +978,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(dd["dictionary_item_added"]) == 7 * 9, "Unexpected CT changes"
 
     elif template.type == "wes_analysis":
-        assert len(dd["dictionary_item_added"]) == 7 * 4, "Unexpected CT changes"
+        # 7 artifact attributes * 4 files
+        assert len(dd["dictionary_item_added"]) == 28, "Unexpected CT changes"
 
     else:
         assert False, f"add {template.type} assay specific asserts"

@@ -62,38 +62,34 @@ def test_wes():
     # create the ngs object
     ngs_obj = {
         "sequencer_platform": "Illumina - NovaSeq 6000",
-        "library_vendor_kit": "KAPA - Hyper Prep",
+        "sequencing_protocol": "Express Somatic Human WES (Deep Coverage) v1.1",
+        "library_kit": "Hyper Prep ICE Exome Express: 1.0",
         "paired_end_reads": "Paired",
         "read_length": 200,
+        "bait_set": "whole_exome_illumina_coding_v1",
     }
     obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
 
     # create the wes object
     r1 = ARTIFACT_OBJ.copy()
     r1["data_format"] = "FASTQ"
-    rgmf = ARTIFACT_OBJ.copy()
-    rgmf["data_format"] = "TEXT"
+    r2 = ARTIFACT_OBJ.copy()
+    r2["data_format"] = "FASTQ"
     bam = ARTIFACT_OBJ.copy()
     bam["data_format"] = "BAM"
     vcf = ARTIFACT_OBJ.copy()
     vcf["data_format"] = "VCF"
-    rgmf["artifact_category"] = "Assay Artifact from CIMAC"
     record = {
-        "enrichment_vendor_lot": "dummy_value",
-        "library_kit_lot": "dummy_value",
-        "library_prep_date": "01/01/2001",
-        "capture_date": "01/01/2001",
         "cimac_id": "CTTTPPPSA.00",
-        "input_ng": 666,
-        "library_yield_ng": 666,
-        "average_insert_size": 200,
-        "files": {"r1": r1, "r2": r1, "read_group_mapping_file": rgmf},
+        "files": {"r1": r1, "r2": r2},
+        "sequencing_date": "...",
+        "quality_flag": 1,
     }
 
     # add a demo record.
     obj["records"] = [record]
     obj["assay_run_id"] = "run_1"
-    obj["enrichment_vendor_kit"] = "Agilent"
+    obj["assay_creator"] = "Mount Sinai"
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("wes")

@@ -1066,6 +1066,66 @@ def test_merge_stuff():
     assert len(xyz["slices"]) == 1
 
 
+def test_prism_local_files_format_extension(monkeypatch):
+    """ Tests prism alert on different extensions of a local file vs gcs_uri """
+
+    mock_XlTemplateReader_from_excel(
+        {
+            "files": [
+                ["#h", "record", "local_file_col_name"],
+                ["#d", "1", "somewhere/on/my/computer.csv"],
+                ["#d", "2", "somewhere/on/my/computer.xlsx"],
+            ]
+        },
+        monkeypatch,
+    )
+
+    template = Template(
+        {
+            "$id": "test_files",
+            "title": "files",
+            "properties": {
+                "worksheets": {
+                    "files": {
+                        "prism_preamble_object_schema": "clinical_trial.json",
+                        "prism_preamble_object_pointer": "#",
+                        "prism_data_object_pointer": "/files/-",
+                        "preamble_rows": {},
+                        "data_columns": {
+                            "Files": {
+                                "record": {"merge_pointer": "/id", "type": "number"},
+                                "local_file_col_name": {
+                                    "merge_pointer": "artifact",
+                                    "gcs_uri_format": "{record}/artifact.csv",
+                                    "is_artifact": 1,
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                },
+                            }
+                        },
+                    }
+                }
+            },
+        },
+        "test_prism_local_files_format_extension",
+    )
+
+    monkeypatch.setattr(
+        "cidc_schemas.prism.SUPPORTED_TEMPLATES",
+        ["test_prism_local_files_format_extension"],
+    )
+
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    patch, file_maps, errs = prismify(xlsx, template, verb=False)
+
+    assert len(errs) == 1
+    assert "local_file_col_name" in str(errs[0])
+    assert "expected .csv" in str(errs[0]).lower()
+
+    assert len(file_maps) == 1
+
+
 def mock_XlTemplateReader_from_excel(sheets: dict, monkeypatch):
 
     load_workbook = MagicMock(name="load_workbook")
@@ -1224,7 +1284,7 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                         {
                                             "parse_through": "lambda x: f'analysis/sorted/{x}/{x}.output.vcf'",
                                             "merge_pointer": "/somatic_vcf",
-                                            "gcs_uri_format": "{run_id}/somatic.vcf_ref",
+                                            "gcs_uri_format": "{run_id}/somatic.vcf",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },

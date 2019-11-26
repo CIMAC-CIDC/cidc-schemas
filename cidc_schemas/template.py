@@ -222,21 +222,16 @@ class Template:
                 else:
                     coerce = self._get_coerce(field_def["type"])
             else:
-                coerce = self._get_ref_coerce(
-                    field_def.get("type_ref") or field_def["$ref"]
+                raise Exception(
+                    f'Either "type" or "type_ref" or "$ref should be present '
+                    f"in each template schema field def, but not found in {field_def!r}"
                 )
 
             if "process_as" in field_def:
 
-                # we will be merging extra_fdef in "process_as" section with parent field_def,
-                # so we won't need to repeat stuff like "type = string" etc in each entry
-                parent_fdef = dict(field_def)
-                # but dropping parent's "process_as" so we'll have recursion exit
-                parent_fdef.pop("process_as")
-
-                # now recursively _add_coerce
+                # recursively _add_coerce to each sub 'process_as' item
                 for extra_fdef in field_def["process_as"]:
-                    extra_fdef.update(_add_coerce(dict(parent_fdef, **extra_fdef)))
+                    extra_fdef.update(_add_coerce(extra_fdef))
 
             return dict(coerce=coerce, **field_def)
 

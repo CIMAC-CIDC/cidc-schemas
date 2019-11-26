@@ -3,7 +3,7 @@ import json
 import os
 import copy
 import uuid
-from typing import Union, BinaryIO, Tuple, List
+from typing import Union, BinaryIO, Tuple, List, NamedTuple, Any
 
 import openpyxl
 import jsonschema
@@ -309,7 +309,7 @@ def _process_property(
     if verb:
         print(f"      found def {field_def}")
 
-    changes, files = _process_field(
+    changes, files = _process_field_value(
         key=key,
         raw_val=raw_val,
         field_def=field_def,
@@ -317,15 +317,33 @@ def _process_property(
         verb=verb,
     )
 
-    for val, pointer in changes:
-        _set_val(pointer, val, data_obj, root_obj, data_obj_pointer, verb=verb)
+    for ch in changes:
+        _set_val(ch.pointer, ch.value, data_obj, root_obj, data_obj_pointer, verb=verb)
 
     return files
 
 
-def _process_field(
+class _AtomicChange(NamedTuple):
+    """
+    Represents exactly one "value set" operation on some data object
+    `Pointer` being a json-pointer string showing where to set `value` to.  
+    """
+
+    pointer: str
+    value: Any
+
+
+def _process_field_value(
     key: str, raw_val, field_def: dict, format_context: dict, verb: bool = False
-):
+) -> Tuple[List[_AtomicChange], List[LocalFileUploadEntry]]:
+    """
+    Processes one field value based on field_def taken from a ..._template.json schema.
+    Calculates a list of `_AtomicChange`s within a context object 
+    and a list of file upload entries.
+
+    A list of values and not just one value might arise from a `process_as` section
+    in template schema, that allows for multi-processing of a single cell value.
+    """
 
     # or set/update value in-place in data_obj dictionary
     pointer = field_def["merge_pointer"]
@@ -339,7 +357,7 @@ def _process_field(
             f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type')}"
         )
 
-    changes = [(val, pointer)]
+    changes = [_AtomicChange(pointer, val)]
 
     # "process_as" allows to define additional places/ways to put that match
     # somewhere in the resulting doc, with additional processing.
@@ -355,7 +373,7 @@ def _process_field(
             )
 
             # recursive call
-            extra_changes, extra_files = _process_field(
+            extra_changes, extra_files = _process_field_value(
                 key=key,
                 raw_val=extra_fdef_raw_val,  # new "raw" val
                 field_def=extra_fdef,  # merged field_def
@@ -369,7 +387,7 @@ def _process_field(
     return changes, files
 
 
-def _calc_single_artifact(
+def _format_single_artifact(
     local_path: str, uuid: str, field_def: dict, format_context: dict
 ):
 
@@ -384,6 +402,11 @@ def _calc_single_artifact(
 
 
 def _calc_val_and_files(raw_val, field_def: dict, format_context: dict, verb: bool):
+    """
+    Processes one field value based on field_def taken from a ..._template.json schema.
+    Calculates a value and (if there's 'is_artifact') a file upload entry.
+    """
+
     coerce = field_def["coerce"]
 
     # deal with multi-artifact
@@ -394,7 +417,7 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict, verb: bo
             if verb:
                 print(f"      collecting local_file_path {field_def}")
 
-            file = _calc_single_artifact(
+            file = _format_single_artifact(
                 local_path=raw_val,
                 uuid=val,
                 field_def=field_def,
@@ -418,7 +441,7 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict, verb: bo
             val.append({"upload_placeholder": file_uuid})
 
             files.append(
-                _calc_single_artifact(
+                _format_single_artifact(
                     local_path=local_path,
                     uuid=file_uuid,
                     field_def=field_def,

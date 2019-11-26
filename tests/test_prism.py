@@ -1130,6 +1130,7 @@ def test_prism_joining_tabs(monkeypatch):
                                         {
                                             "merge_pointer": "2/cimac_participant_id",
                                             "parse_through": "lambda x: x[:4]",
+                                            "type_ref": "participant.json#properties/cimac_participant_id",
                                         }
                                     ],
                                 },

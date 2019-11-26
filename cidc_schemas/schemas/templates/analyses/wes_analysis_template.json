@@ -56,7 +56,7 @@
                                     "gcs_uri_format": "{run id}/{tumor cimac id}/recalibrated.bam",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
-                                },
+                                }
                             ]
                         },
                         "normal cimac id": {
@@ -76,7 +76,7 @@
                                     "gcs_uri_format": "{run id}/{normal cimac id}/recalibrated.bam",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
-                                },
+                                }
                             ]
                         }
                     }

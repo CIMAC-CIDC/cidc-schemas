@@ -168,6 +168,10 @@ class Template:
         return Template._get_coerce(t, entry.get("$id"))
 
     @staticmethod
+    def _gen_upload_placeholder_uuid(_):
+        return str(uuid.uuid4())
+
+    @staticmethod
     def _get_coerce(t: str, object_id=None):
         """
         This function takes a json-schema style type
@@ -177,7 +181,7 @@ class Template:
         # if it's an artifact that will be loaded through local file
         # we just return uuid as value
         if object_id == "local_file_path":
-            return lambda _: str(uuid.uuid4())
+            return Template._gen_upload_placeholder_uuid
         if t == "string":
             return str
         elif t == "integer":
@@ -208,15 +212,26 @@ class Template:
 
         def _add_coerce(field_def: dict) -> dict:
             """ Checks if we have a cast func for that 'type_ref' """
-            if "type" in field_def:
+            if "type_ref" in field_def or "$ref" in field_def:
+                coerce = self._get_ref_coerce(
+                    field_def.get("type_ref") or field_def["$ref"]
+                )
+            elif "type" in field_def:
                 if "$id" in field_def:
                     coerce = self._get_coerce(field_def["type"], field_def["$id"])
                 else:
                     coerce = self._get_coerce(field_def["type"])
             else:
-                coerce = self._get_ref_coerce(
-                    field_def.get("type_ref") or field_def["$ref"]
+                raise Exception(
+                    f'Either "type" or "type_ref" or "$ref should be present '
+                    f"in each template schema field def, but not found in {field_def!r}"
                 )
+
+            if "process_as" in field_def:
+
+                # recursively _add_coerce to each sub 'process_as' item
+                for extra_fdef in field_def["process_as"]:
+                    extra_fdef.update(_add_coerce(extra_fdef))
 
             return dict(coerce=coerce, **field_def)
 
@@ -230,7 +245,9 @@ class Template:
 
                 # populate lookup
                 # TODO .lower() ?
-                key_lu[preamble_key] = _add_coerce(preamble_def)
+                key_lu[preamble_key] = _add_coerce(
+                    dict(preamble_def, key_name=preamble_key)
+                )
                 # we expect preamble_def from `_template.json` have 2 fields
                 # (as for template.schema) - "merge_pointer" and "type_ref"
 
@@ -240,7 +257,9 @@ class Template:
 
                     # populate lookup
                     # TODO .lower() ?
-                    key_lu[column_key] = _add_coerce(column_def)
+                    key_lu[column_key] = _add_coerce(
+                        dict(column_def, key_name=column_key)
+                    )
                     # we expect column_def from `_template.json` have 2 fields
                     # (as for template.schema) - "merge_pointer" and "type_ref"
 

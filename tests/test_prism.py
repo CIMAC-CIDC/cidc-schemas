@@ -1289,8 +1289,8 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     local_paths = [e.local_path for e in file_maps]
     uuids = [e.upload_placeholder for e in file_maps]
 
-    assert 12 == len(file_maps)
-    assert 12 == len(set(uuids))
+    assert 12 == len(file_maps)  # (2 files * 3 fields from each record) * 2 records
+    assert 12 == len(set(uuids))  # (2 files * 3 fields from each record) * 2 records
 
     assert local_paths != uuids
 

@@ -268,7 +268,7 @@ def _process_property(
     root_obj: Union[None, dict] = None,
     data_obj_pointer: Union[None, str] = None,
     verb: bool = False,
-) -> LocalFileUploadEntry:
+) -> List[LocalFileUploadEntry]:
     """
     Takes a single property (key, val) from spreadsheet, determines
     where it needs to go in the final object, then inserts it.
@@ -289,12 +289,12 @@ def _process_property(
         verb: boolean indicating verbosity
 
     Returns:
-        LocalFileUploadEntry(
+        [ LocalFileUploadEntry(
             local_path = "/local/file/from/excel/file/cell",   
             gs_key = "constructed/GCS/path/where/this/artifact/should/endup",
             upload_placeholder = 'uuiduuiduuid-uuid-uuid-uuiduuid' # unique artifact/upload_placeholder,
             metadata_availability = boolean to indicate whether LocalFileUploadEntry should be extracted for metadata files
-        )
+        ) ]
 
     """
 
@@ -408,34 +408,29 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict, verb: bo
     """
 
     coerce = field_def["coerce"]
+    val = coerce(raw_val)
+    files = []
+
+    if not field_def.get("is_artifact"):
+        return val, files  # no files if it's not an artifact
 
     # deal with multi-artifact
-    if not (field_def.get("is_artifact") == "multi"):
-        val = coerce(raw_val)
-
-        if field_def.get("is_artifact"):
-            if verb:
-                print(f"      collecting local_file_path {field_def}")
-
-            file = _format_single_artifact(
-                local_path=raw_val,
-                uuid=val,
-                field_def=field_def,
-                format_context=format_context,
-            )
-
-            return val, [file]
-        else:
-            return val, []
-
-    else:  # is_multi
+    if field_def["is_artifact"] == "multi":
         if verb:
             print(f"      collecting multi local_file_path {field_def}")
 
+        # In case of is_aritfact=multi we expect the value to be a comma-separated
+        # list of local_file paths (that we will convert to uuids)
+        # and also for the corresponding DM schema to be an array of artifacts
+        # that we will fill with upload_placeholder uuids
+
+        # So our value is a list of artifact placeholders
         val = []
-        files = []
+
+        # and we iterate through local file paths:
         for num, local_path in enumerate(raw_val.split(",")):
-            # ignoring coercion errors as we expect it just return uuids
+
+            # Ignoring errors here as we're sure `coerce` will just return a uuid
             file_uuid = coerce(local_path)
 
             val.append({"upload_placeholder": file_uuid})
@@ -446,11 +441,27 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict, verb: bo
                     uuid=file_uuid,
                     field_def=field_def,
                     format_context=dict(
-                        format_context, num=num  # add number to differentiate gcs key
+                        format_context,
+                        num=num  # add num to be able to generate
+                        # different gcs keys for each multi-artifact file.
                     ),
                 )
             )
-        return val, files
+
+    else:
+        if verb:
+            print(f"      collecting local_file_path {field_def}")
+
+        files.append(
+            _format_single_artifact(
+                local_path=raw_val,
+                uuid=val,
+                field_def=field_def,
+                format_context=format_context,
+            )
+        )
+
+    return val, files
 
 
 class ParsingException(ValueError):

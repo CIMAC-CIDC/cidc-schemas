@@ -1274,12 +1274,12 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
         {
             "$id": "test_analysis",
             "title": "...",
+            "prism_template_root_object_schema": "assays/components/ngs/wes_analysis.json",
+            "prism_template_root_object_pointer": "/analysis/wes_analysis",
             "properties": {
                 "worksheets": {
                     "analysis": {
-                        "prism_preamble_object_schema": "clinical_trial.json",  # TODO provide test or analysis schema
-                        "prism_preamble_object_pointer": "#",
-                        "prism_data_object_pointer": "/assays/wes/-",  # TODO remove - using this as a work around ^ TODO on schema
+                        "prism_data_object_pointer": "/pair_runs/-",
                         "preamble_rows": {},
                         "data_columns": {
                             "section name": {
@@ -1371,16 +1371,16 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
 
     assert local_paths != uuids
 
-    assert 2 == len(patch["assays"]["wes"])
+    assert 2 == len(patch["analysis"]["wes_analysis"]["pair_runs"])
     run_uuids_in_json = [
         art["upload_placeholder"]
-        for wes in patch["assays"]["wes"]
+        for wes in patch["analysis"]["wes_analysis"]["pair_runs"]
         for art in wes.values()
         if "upload_placeholder" in art
     ]
     sample_uuids_in_json = [
         v["upload_placeholder"]
-        for wes in patch["assays"]["wes"]
+        for wes in patch["analysis"]["wes_analysis"]["pair_runs"]
         for sample in wes.values()
         if "id" in sample
         for v in sample.values()

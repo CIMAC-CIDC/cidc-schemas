@@ -39,13 +39,6 @@
           "mergeOptions": {
             "idRef": "cimac_id"
           }
-      },
-      "export":{
-          "type":"array",
-          "description": "A single export data record from WES assay.",
-          "items":{
-            "$ref": "assays/components/ngs/wes_analysis.json"
-          }
       }
   },
   "required": [

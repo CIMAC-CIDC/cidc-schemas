@@ -46,5 +46,6 @@
     }
   },
   "required": [
+    "vcf_filtered_compressed"
   ]
 }

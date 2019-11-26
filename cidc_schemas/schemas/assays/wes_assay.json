@@ -50,7 +50,9 @@
   },
   "required": [
     "records",
-    "assay_run_id"
+    "assay_run_id",
+    "sequencing_protocol",
+    "bait_set"
   ],
   "mergeStrategy": "objectMerge"
 }

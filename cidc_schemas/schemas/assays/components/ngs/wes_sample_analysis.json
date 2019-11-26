@@ -15,5 +15,10 @@
     "coverage_metrics": {
       "$ref": "assays/components/coverage_metrics.json"
     }
-  }
+  },
+  "required": [
+    "alignment",
+    "hla",
+    "coverage_metrics"
+  ]
 }

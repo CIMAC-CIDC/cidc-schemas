@@ -31,5 +31,8 @@
     }
   },
   "required": [
+    "coverage_metrics_summary",
+    "target_metrics_summary",
+    "all_summaries"
   ]
 }

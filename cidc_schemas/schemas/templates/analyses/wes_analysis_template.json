@@ -12,7 +12,7 @@
             "WES Analysis": {
                 "preamble_rows": {
                     "protocol identifier": {
-                        "merge_pointer": "3/protocol_identifier",
+                        "merge_pointer": "2/protocol_identifier",
                         "type_ref": "clinical_trial.json#properties/protocol_identifier"
                     }
                 },

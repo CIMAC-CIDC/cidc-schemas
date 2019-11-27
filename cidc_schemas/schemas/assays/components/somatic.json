@@ -46,7 +46,7 @@
     }
   },
   "required": [
-    "vcf_filtered_compressed",
-    "vcf_tnsnv_output"
+    "vcf_tnsnv_output",
+    "vcf_tnscope_output"
   ]
 }

@@ -26,14 +26,14 @@
                                 {
                                     "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.output.vcf'",
                                     "merge_pointer": "/somatic/vcf_tnscope_output",
-                                    "gcs_uri_format": "{run id}/tnscope.output.vcf",
+                                    "gcs_uri_format": "{run id}/wes_analysis/tnscope.output.vcf",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1   
                                 },
                                 {
                                     "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnsnv.output.vcf'",
                                     "merge_pointer": "/somatic/vcf_tnsnv_output",
-                                    "gcs_uri_format": "{run id}/tnsnv.output.vcf",
+                                    "gcs_uri_format": "{run id}/wes_analysis/tnsnv.output.vcf",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1   
                                 }
@@ -46,14 +46,14 @@
                                 {
                                     "parse_through": "lambda id: f'analysis/align/{id}/{id}.sorted.bam'",
                                     "merge_pointer": "/tumor/alignment/align_sorted",
-                                    "gcs_uri_format": "{run id}/{tumor cimac id}/sorted.bam",
+                                    "gcs_uri_format": "{run id}/wes_analysis/tumor/{tumor cimac id}/sorted.bam",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/align/{id}/{id}.recalibrated.bam'",
                                     "merge_pointer": "/tumor/alignment/align_recalibrated",
-                                    "gcs_uri_format": "{run id}/{tumor cimac id}/recalibrated.bam",
+                                    "gcs_uri_format": "{run id}/wes_analysis/tumor/{tumor cimac id}/recalibrated.bam",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 }
@@ -66,14 +66,14 @@
                                 {
                                     "parse_through": "lambda id: f'analysis/align/{id}/{id}.sorted.bam'",
                                     "merge_pointer": "/normal/alignment/align_sorted",
-                                    "gcs_uri_format": "{run id}/{normal cimac id}/sorted.bam",
+                                    "gcs_uri_format": "{run id}/wes_analysis/normal/{normal cimac id}/sorted.bam",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/align/{id}/{id}.recalibrated.bam'",
                                     "merge_pointer": "/normal/alignment/align_recalibrated",
-                                    "gcs_uri_format": "{run id}/{normal cimac id}/recalibrated.bam",
+                                    "gcs_uri_format": "{run id}/wes_analysis/normal/{normal cimac id}/recalibrated.bam",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 }

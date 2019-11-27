@@ -26,6 +26,6 @@
   },
   "required": [
     "align_recalibrated",
-    "align_recalibrated_index"
+    "align_sorted"
   ]
 }

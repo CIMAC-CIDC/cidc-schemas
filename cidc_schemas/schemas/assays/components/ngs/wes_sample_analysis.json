@@ -21,8 +21,6 @@
     }
   },
   "required": [
-    "alignment",
-    "hla",
-    "coverage_metrics"
+    "alignment"
   ]
 }

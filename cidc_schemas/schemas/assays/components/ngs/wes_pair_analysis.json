@@ -38,7 +38,6 @@
   "required": [
     "normal",
     "tumor",
-    "somatic",
-    "germline"
+    "somatic"
   ]
 }

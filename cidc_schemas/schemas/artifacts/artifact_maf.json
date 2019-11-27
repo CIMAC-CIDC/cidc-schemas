@@ -16,5 +16,6 @@
         }
       }
     }
-  ]
+  ],
+  "mergeStrategy": "objectMerge"
 }

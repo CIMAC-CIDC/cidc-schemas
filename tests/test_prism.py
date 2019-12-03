@@ -122,7 +122,6 @@ TEST_PRISM_TRIAL = {
     "assays": {
         "wes": [
             {
-                "assay_run_id": "run_1",
                 "assay_creator": "Mount Sinai",
                 "paired_end_reads": "Paired",
                 "read_length": 100,

@@ -44,7 +44,7 @@ OLINK_RECORD = {
     "files": {"assay_npx": "", "assay_raw_ct": "", "study_npx": ""},
 }
 
-ASSAY_CORE = {"assay_creator": "DFCI"}
+ASSAY_CORE = {"assay_creator": "DFCI", "assay_creator": "Mount Sinai"}
 
 
 def _fetch_validator(name):
@@ -88,8 +88,6 @@ def test_wes():
 
     # add a demo record.
     obj["records"] = [record]
-    obj["assay_run_id"] = "run_1"
-    obj["assay_creator"] = "Mount Sinai"
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("wes")

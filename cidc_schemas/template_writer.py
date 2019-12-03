@@ -90,7 +90,7 @@ class XlTemplateWriter:
     """A wrapper around xlsxwriter that can create Excel templates from template schemas"""
 
     _DATA_ROWS = 200
-    _MIN_NUM_COLS = 3
+    _MIN_NUM_COLS = 2
     _COLUMN_WIDTH_PX = 30
 
     def __init__(
@@ -348,7 +348,7 @@ class XlTemplateWriter:
         for section_header, section_values in data_columns.items():
             section_width = len(section_values)
             end_col = start_col + section_width - 1
-            if end_col - start_col > 1:
+            if end_col - start_col > 0:
                 self.worksheet.merge_range(
                     self.row,
                     start_col,

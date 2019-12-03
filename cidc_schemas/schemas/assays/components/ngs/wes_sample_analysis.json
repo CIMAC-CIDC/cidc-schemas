@@ -21,6 +21,6 @@
     }
   },
   "required": [
-    "alignment"
+    "cimac_id"
   ]
 }

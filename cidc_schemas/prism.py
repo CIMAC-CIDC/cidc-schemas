@@ -134,7 +134,10 @@ def _set_val(
                     len(jpoint.parts) > 0
                 ), f"Can't update root object (pointer {pointer})"
             else:
-                doc = resolve_pointer(root, "/" + higher_context_pointer)
+                try:
+                    doc = resolve_pointer(root, "/" + higher_context_pointer)
+                except Exception as e:
+                    raise Exception(e)
         else:
             doc = context
 
@@ -243,14 +246,20 @@ def _get_recursively(search_dict, field):
 
 
 SUPPORTED_ASSAYS = ["wes", "olink", "cytof", "ihc"]
-SUPPORTED_MANIFESTS = [
+
+SUPPORTED_SHIPPING_MANIFESTS = [
     "pbmc",
     "plasma",
     "normal_blood_dna",
     "normal_tissue_dna",
     "tumor_tissue_dna",
 ]
+# weird non shipping manifest
+SUPPORTED_WEIRD_MANIFESTS = ["tumor_normal_pairing"]
+SUPPORTED_MANIFESTS = SUPPORTED_SHIPPING_MANIFESTS + SUPPORTED_WEIRD_MANIFESTS
+
 SUPPORTED_ANALYSES = ["cytof_analysis", "wes_analysis"]
+
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS + SUPPORTED_ANALYSES
 
 LocalFileUploadEntry = namedtuple(

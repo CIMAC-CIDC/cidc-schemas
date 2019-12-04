@@ -15,10 +15,6 @@
       "library_kit": {"$comment": "defined in ngs_assay_core.json"},
       "paired_end_reads": {"$comment": "defined in ngs_assay_core.json"},
       "read_length": {"$comment": "defined in ngs_assay_core.json"},
-      "assay_run_id": {
-          "type": "string",
-          "description": "User defined unique identifier for this assay run."
-      },
       "sequencing_protocol": {
           "description": "Protocol and version used for the sequencing.",
           "type": "string",
@@ -43,7 +39,6 @@
   },
   "required": [
     "records",
-    "assay_run_id",
     "sequencing_protocol",
     "bait_set"
   ],

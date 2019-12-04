@@ -11,10 +11,7 @@
       "items": {
         "$ref": "assays/wes_assay.json"
       }, 
-      "mergeStrategy": "arrayMergeById",
-      "mergeOptions": {
-        "idRef": "assay_run_id"
-      }
+      "mergeStrategy": "append"
     },
     "rna_expression": {
       "type": "array",

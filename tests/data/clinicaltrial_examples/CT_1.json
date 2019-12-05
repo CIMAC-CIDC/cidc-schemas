@@ -184,7 +184,7 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format":          "FASTQ"
+                                "data_format":          "FASTQ.GZ"
                             },
                             "r2":{
                                 "file_name" :           "...",
@@ -193,7 +193,7 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format":          "FASTQ"
+                                "data_format":          "FASTQ.GZ"
                             }
                         }
                     }, 
@@ -209,7 +209,7 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ"
+                                "data_format" :           "FASTQ.GZ"
                             },
                             "r2":{
                                 "file_name" :           "...",
@@ -218,7 +218,7 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ"
+                                "data_format" :           "FASTQ.GZ"
                             }
                         }
                     }
@@ -245,7 +245,7 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ"
+                                "data_format" :           "FASTQ.GZ"
                             },
                             "r2":{
                                 "file_name" :           "...",
@@ -254,7 +254,7 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ"
+                                "data_format" :           "FASTQ.GZ"
                             }
                         }
                     }, 
@@ -270,7 +270,7 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ"
+                                "data_format" :           "FASTQ.GZ"
                             },
                             "r2":{
                                 "file_name" :           "...",
@@ -279,7 +279,7 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ"
+                                "data_format" :           "FASTQ.GZ"
                             }
                         }
                     }

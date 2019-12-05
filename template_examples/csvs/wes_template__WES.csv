@@ -10,5 +10,5 @@
 
 "","Samples"
 "#h","Cimac id","Forward fastq","Reverse fastq","Sequencing date","Quality flag"
-"#d","CTTTPP111.00","/local/path/to/fwd.1.1.1.fastq","/local/path/to/rev.1.1.1.fastq","2010-01-01 00:00:00","1"
-"#d","CTTTPP121.00","/local/path/to/fwd.1.2.1.fastq","/local/path/to/rev.1.2.1.fastq","2010-01-01 00:00:00","1"
+"#d","CTTTPP111.00","/local/path/to/fwd.1.1.1.fastq.gz","/local/path/to/rev.1.1.1.fastq.gz","2010-01-01 00:00:00","1"
+"#d","CTTTPP121.00","/local/path/to/fwd.1.2.1.fastq.gz","/local/path/to/rev.1.2.1.fastq.gz","2010-01-01 00:00:00","1"

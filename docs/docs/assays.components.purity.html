@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Germline variant output sample files</h1>
+        <h1>Purity output files</h1>
         <p>
-            <b>Description:</b>  Germline variant output sample files.
+            <b>Description:</b>  Purity output files.
         </p>
         
     </div>
@@ -58,15 +58,14 @@
         </thead>
         
             
-        
-        
-            
                 <tr>
     <td>
         
-            <span id="vcf_compare">
-                vcf_compare
+            <span id="optimal_purity_value">
+                optimal_purity_value
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -83,19 +82,22 @@
 </tr>
             
         
+        
+            
+        
     </table>
 
     
   </div>
 
   <div class="container">
-    <h3>germline.full.json</h3>
+    <h3>purity.full.json</h3>
   	<pre><code>{
-    "$id": "germline",
+    "$id": "purity",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "description": "Germline variant output sample files.",
+    "description": "Purity output files.",
     "properties": {
-        "vcf_compare": {
+        "optimal_purity_value": {
             "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
@@ -219,8 +221,10 @@
             "type": "object"
         }
     },
-    "required": [],
-    "title": "Germline variant output sample files",
+    "required": [
+        "optimal_purity_value"
+    ],
+    "title": "Purity output files",
     "type": "object"
 }</code></pre>
   </container>

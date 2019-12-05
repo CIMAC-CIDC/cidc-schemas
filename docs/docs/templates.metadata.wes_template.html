@@ -33,7 +33,7 @@
         </p>
         <h1>Metadata file for WES</h1>
         <p>
-            <b>Description:</b>  Metadata information for whole exome sequencing (WES) analysis.
+            <b>Description:</b>  Metadata information for whole exome sequencing (WES).
         </p>
         
     </div>
@@ -56,6 +56,8 @@
             <th>Data Type</th>
         </tr>
         </thead>
+        
+            
         
             
         
@@ -122,20 +124,20 @@
                 <tr>
     <td>
         
-            <span id="enrichment kit">
-                enrichment kit
+            <span id="sequencing protocol">
+                sequencing protocol
             </span>
             
         
     </td>
     <td width=55%>
         
-            Vendor for the bait set used for enrichment , e.g. Twist, Agilent, IDT.
+            Protocol and version used for the sequencing.
         
     </td>
     <td>
         
-            <a href="assays.wes_assay.html#enrichment_vendor_kit">assays.wes_assay#enrichment_vendor_kit</a>
+            <a href="assays.wes_assay.html#sequencing_protocol">assays.wes_assay#sequencing_protocol</a>
         
     </td>
 </tr>
@@ -145,20 +147,20 @@
                 <tr>
     <td>
         
-            <span id="library kit vendor">
-                library kit vendor
+            <span id="library kit">
+                library kit
             </span>
             
         
     </td>
     <td width=55%>
         
-            Vendor for the library construction kit, e.g. KAPA.
+            The library construction kit.
         
     </td>
     <td>
         
-            <a href="assays.components.ngs_assay_core.html#library_vendor_kit">assays.components.ngs_assay_core#library_vendor_kit</a>
+            <a href="assays.components.ngs_assay_core.html#library_kit">assays.components.ngs_assay_core#library_kit</a>
         
     </td>
 </tr>
@@ -233,6 +235,29 @@
 </tr>
             
         
+            
+                <tr>
+    <td>
+        
+            <span id="bait set">
+                bait set
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Bait set ID.
+        
+    </td>
+    <td>
+        
+            <a href="assays.wes_assay.html#bait_set">assays.wes_assay#bait_set</a>
+        
+    </td>
+</tr>
+            
+        
     </table>
   
   
@@ -263,18 +288,6 @@
         
             
         
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
         
             
                 <tr>
@@ -294,167 +307,6 @@
     <td>
         
             <a href="sample.html#cimac_id">sample#cimac_id</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="library kit lot">
-                library kit lot
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Lot number for the library construction kit.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.ngs.ngs_assay_record.html#library_kit_lot">assays.components.ngs.ngs_assay_record#library_kit_lot</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="enrichment lot">
-                enrichment lot
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Lot number for the bait set.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.ngs.wes_assay_record.html#enrichment_vendor_lot">assays.components.ngs.wes_assay_record#enrichment_vendor_lot</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="library prep date">
-                library prep date
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Date of library construction.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.ngs.ngs_assay_record.html#library_prep_date">assays.components.ngs.ngs_assay_record#library_prep_date</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="capture date">
-                capture date
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Date of the hybrid capture enrichment.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.ngs.wes_assay_record.html#capture_date">assays.components.ngs.wes_assay_record#capture_date</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="dna input ng">
-                dna input ng
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Amount of DNA/RNA (in ng) used for library construction.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.ngs.ngs_assay_record.html#input_ng">assays.components.ngs.ngs_assay_record#input_ng</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="library yield ng">
-                library yield ng
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Resulting yield (in ng) from library construction.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.ngs.ngs_assay_record.html#library_yield_ng">assays.components.ngs.ngs_assay_record#library_yield_ng</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="average insert size">
-                average insert size
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            The average insert size for the library.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.ngs.ngs_assay_record.html#average_insert_size">assays.components.ngs.ngs_assay_record#average_insert_size</a>
         
     </td>
 </tr>
@@ -510,20 +362,43 @@
                 <tr>
     <td>
         
-            <span id="read group mapping file">
-                read group mapping file
+            <span id="sequencing date">
+                sequencing date
             </span>
             
         
     </td>
     <td width=55%>
         
-            Path to a file on a user's computer.
+            Date of sequencing.
         
     </td>
     <td>
         
-            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+            <a href="assays.components.ngs.wes_entry.html#sequencing_date">assays.components.ngs.wes_entry#sequencing_date</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="quality flag">
+                quality flag
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Flag used for quality.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.ngs.wes_entry.html#quality_flag">assays.components.ngs.wes_entry#quality_flag</a>
         
     </td>
 </tr>

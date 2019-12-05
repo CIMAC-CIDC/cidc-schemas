@@ -360,11 +360,11 @@
             "$schema": "http://json-schema.org/draft-07/schema#",
             "description": "Common properties for NGS Assays.",
             "properties": {
-                "library_vendor_kit": {
+                "library_kit": {
                     "$comment": "This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.",
-                    "description": "Vendor for the library construction kit, e.g. KAPA.",
+                    "description": "The library construction kit.",
                     "enum": [
-                        "KAPA - Hyper Prep"
+                        "Hyper Prep ICE Exome Express: 1.0"
                     ],
                     "type": "string"
                 },
@@ -396,7 +396,6 @@
             },
             "required": [
                 "sequencer_platform",
-                "library_vendor_kit",
                 "paired_end_reads",
                 "read_length"
             ],
@@ -591,6 +590,7 @@
                                             }
                                         ],
                                         "description": "Information about a fastq file.",
+                                        "mergeStrategy": "objectMerge",
                                         "title": "FastQ Artifact",
                                         "type": "object"
                                     },
@@ -714,6 +714,7 @@
                                             }
                                         ],
                                         "description": "Information about a fastq file.",
+                                        "mergeStrategy": "objectMerge",
                                         "title": "FastQ Artifact",
                                         "type": "object"
                                     },
@@ -844,8 +845,7 @@
                                 },
                                 "required": [
                                     "r1",
-                                    "r2",
-                                    "read_group_mapping_file"
+                                    "r2"
                                 ],
                                 "title": "Fastq pair and group mapping",
                                 "type": "object"
@@ -873,8 +873,6 @@
                             }
                         },
                         "required": [
-                            "library_kit_lot",
-                            "library_prep_date",
                             "cimac_id",
                             "files"
                         ],
@@ -1022,6 +1020,7 @@
                                             }
                                         ],
                                         "description": "Information about a fastq file.",
+                                        "mergeStrategy": "objectMerge",
                                         "title": "FastQ Artifact",
                                         "type": "object"
                                     },
@@ -1145,6 +1144,7 @@
                                             }
                                         ],
                                         "description": "Information about a fastq file.",
+                                        "mergeStrategy": "objectMerge",
                                         "title": "FastQ Artifact",
                                         "type": "object"
                                     },
@@ -1275,8 +1275,7 @@
                                 },
                                 "required": [
                                     "r1",
-                                    "r2",
-                                    "read_group_mapping_file"
+                                    "r2"
                                 ],
                                 "title": "Fastq pair and group mapping",
                                 "type": "object"
@@ -1293,7 +1292,6 @@
                 },
                 "required": [
                     "enrichment_vendor_lot",
-                    "enrichment_vendor_kit",
                     "capture_date"
                 ],
                 "title": "RNAseq assay record",

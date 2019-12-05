@@ -63,7 +63,7 @@
       "type": "string",
       "enum": [
         "FASTA",
-        "FASTQ",
+        "FASTQ.GZ",
         "IMAGE",
         "VCF",
         "CSV",

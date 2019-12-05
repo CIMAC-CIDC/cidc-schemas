@@ -108,14 +108,19 @@
             
         
             
+        
+        
+            
+        
+            
+        
+            
                 <tr>
     <td>
         
             <span id="read_group_mapping_file">
                 read_group_mapping_file
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -130,13 +135,6 @@
         
     </td>
 </tr>
-            
-        
-        
-            
-        
-            
-        
             
         
     </table>
@@ -271,6 +269,7 @@
                 }
             ],
             "description": "Information about a fastq file.",
+            "mergeStrategy": "objectMerge",
             "title": "FastQ Artifact",
             "type": "object"
         },
@@ -394,6 +393,7 @@
                 }
             ],
             "description": "Information about a fastq file.",
+            "mergeStrategy": "objectMerge",
             "title": "FastQ Artifact",
             "type": "object"
         },
@@ -524,8 +524,7 @@
     },
     "required": [
         "r1",
-        "r2",
-        "read_group_mapping_file"
+        "r2"
     ],
     "title": "Fastq pair and group mapping",
     "type": "object"

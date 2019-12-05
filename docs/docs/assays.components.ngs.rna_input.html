@@ -219,6 +219,7 @@
                         }
                     ],
                     "description": "Information about a fastq file.",
+                    "mergeStrategy": "objectMerge",
                     "title": "FastQ Artifact",
                     "type": "object"
                 },
@@ -342,6 +343,7 @@
                         }
                     ],
                     "description": "Information about a fastq file.",
+                    "mergeStrategy": "objectMerge",
                     "title": "FastQ Artifact",
                     "type": "object"
                 },
@@ -472,8 +474,7 @@
             },
             "required": [
                 "r1",
-                "r2",
-                "read_group_mapping_file"
+                "r2"
             ],
             "title": "Fastq pair and group mapping",
             "type": "object"

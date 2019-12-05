@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "wes_pair_analysis",
+  "title": "WES Pair Analysis Output Files",
+  "type": "object",
+  "description": "Whole Exome Sequencing assay output files for a tumor normal pair of samples.",
+  "additionalProperties": false,
+  "properties": {
+    "normal": {
+        "$ref": "assays/components/ngs/wes_sample_analysis.json"
+    },
+    "tumor": {
+        "$ref": "assays/components/ngs/wes_sample_analysis.json"
+    },
+    "run_id": {
+        "type": "string",
+        "description": "An id used for a paired analysis run."
+    },
+    "somatic": {
+      "$ref": "assays/components/somatic.json"
+    },
+    "germline": {
+      "$ref": "assays/components/germline.json"
+    },
+    "neoantigen": {
+      "$ref": "assays/components/neoantigen.json"
+    },
+    "copynumber.json": {
+      "$ref": "assays/components/copynumber.json"
+    },
+    "purity.json": {
+      "$ref": "assays/components/purity.json"
+    },
+    "clonality.json": {
+      "$ref": "assays/components/clonality.json"
+    }
+  },
+  "required": [
+    "normal",
+    "tumor",
+    "somatic"
+  ]
+}

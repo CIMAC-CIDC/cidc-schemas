@@ -3,7 +3,7 @@ import json
 import os
 import copy
 import uuid
-from typing import Union, BinaryIO, Tuple, List
+from typing import Union, BinaryIO, Tuple, List, NamedTuple, Any
 
 import openpyxl
 import jsonschema
@@ -250,7 +250,7 @@ SUPPORTED_MANIFESTS = [
     "normal_tissue_dna",
     "tumor_tissue_dna",
 ]
-SUPPORTED_ANALYSES = ["cytof_analysis"]
+SUPPORTED_ANALYSES = ["cytof_analysis", "wes_analysis"]
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS + SUPPORTED_ANALYSES
 
 LocalFileUploadEntry = namedtuple(
@@ -268,7 +268,7 @@ def _process_property(
     root_obj: Union[None, dict] = None,
     data_obj_pointer: Union[None, str] = None,
     verb: bool = False,
-) -> LocalFileUploadEntry:
+) -> List[LocalFileUploadEntry]:
     """
     Takes a single property (key, val) from spreadsheet, determines
     where it needs to go in the final object, then inserts it.
@@ -289,12 +289,12 @@ def _process_property(
         verb: boolean indicating verbosity
 
     Returns:
-        LocalFileUploadEntry(
+        [ LocalFileUploadEntry(
             local_path = "/local/file/from/excel/file/cell",   
             gs_key = "constructed/GCS/path/where/this/artifact/should/endup",
             upload_placeholder = 'uuiduuiduuid-uuid-uuid-uuiduuid' # unique artifact/upload_placeholder,
             metadata_availability = boolean to indicate whether LocalFileUploadEntry should be extracted for metadata files
-        )
+        ) ]
 
     """
 
@@ -309,36 +309,57 @@ def _process_property(
     if verb:
         print(f"      found def {field_def}")
 
+    changes, files = _process_field_value(
+        key=key,
+        raw_val=raw_val,
+        field_def=field_def,
+        format_context=format_context,
+        verb=verb,
+    )
+
+    for ch in changes:
+        _set_val(ch.pointer, ch.value, data_obj, root_obj, data_obj_pointer, verb=verb)
+
+    return files
+
+
+class _AtomicChange(NamedTuple):
+    """
+    Represents exactly one "value set" operation on some data object
+    `Pointer` being a json-pointer string showing where to set `value` to.  
+    """
+
+    pointer: str
+    value: Any
+
+
+def _process_field_value(
+    key: str, raw_val, field_def: dict, format_context: dict, verb: bool = False
+) -> Tuple[List[_AtomicChange], List[LocalFileUploadEntry]]:
+    """
+    Processes one field value based on field_def taken from a ..._template.json schema.
+    Calculates a list of `_AtomicChange`s within a context object 
+    and a list of file upload entries.
+
+    A list of values and not just one value might arise from a `process_as` section
+    in template schema, that allows for multi-processing of a single cell value.
+    """
+
     # or set/update value in-place in data_obj dictionary
     pointer = field_def["merge_pointer"]
-    coerce = field_def["coerce"]
     if field_def.get("is_artifact") == 1:
         pointer += "/upload_placeholder"
 
-    # deal with multi-artifact
-    if not (field_def.get("is_artifact") == "multi"):
-        try:
-            val = coerce(raw_val)
-        except Exception:
-            raise ParsingException(
-                f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type')}"
-            )
-    else:
+    try:
+        val, files = _calc_val_and_files(raw_val, field_def, format_context, verb=verb)
+    except ParsingException:
+        raise
+    except Exception:
+        raise ParsingException(
+            f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type')}"
+        )
 
-        # tokenize value
-        local_paths = raw_val.split(",")
-
-        # create array container.
-        val = []
-        file_uuids = []
-        for x in range(len(local_paths)):
-            # ignoring coercion errors as we expect it just return uuids
-            file_uuid = coerce(raw_val)
-
-            file_uuids.append(file_uuid)
-            val.append({"upload_placeholder": file_uuid})
-
-    _set_val(pointer, val, data_obj, root_obj, data_obj_pointer, verb=verb)
+    changes = [_AtomicChange(pointer, val)]
 
     # "process_as" allows to define additional places/ways to put that match
     # somewhere in the resulting doc, with additional processing.
@@ -347,70 +368,113 @@ def _process_property(
     if "process_as" in field_def:
         for extra_fdef in field_def["process_as"]:
 
-            # where to put it additionally
-            extra_pointer = extra_fdef["merge_pointer"]
-            extra_fdef_val = val
+            # Calculating new "raw" val.
+            # `eval` should be fine, as we're controlling the code argument in the templates
+            extra_fdef_raw_val = eval(extra_fdef.get("parse_through", "lambda x: x"))(
+                raw_val
+            )
 
-            # how to process it before putting
-            if "parse_through" in extra_fdef:
-                # Should be fine, as we're controlling `eval` argument == code
-                extra_fdef_val = eval(extra_fdef["parse_through"])(val)
-
-            _set_val(
-                extra_pointer,
-                extra_fdef_val,
-                data_obj,
-                root_obj,
-                data_obj_pointer,
+            # recursive call
+            extra_changes, extra_files = _process_field_value(
+                key=key,
+                raw_val=extra_fdef_raw_val,  # new "raw" val
+                field_def=extra_fdef,  # merged field_def
+                format_context=format_context,
                 verb=verb,
             )
 
-    if verb:
+            files.extend(extra_files)
+            changes.extend(extra_changes)
 
-        if field_def["merge_pointer"][0].isdigit():
-            # setting prop somewhere in parent hierarchy, so debug root
-            print(f"      current root {root_obj}")
-        else:
-            print(f"      current {data_obj}")
+    return changes, files
 
-    if field_def.get("is_artifact") == 1:
-        if verb:
-            print(f"      collecting local_file_path {field_def}")
 
-        gs_key = field_def["gcs_uri_format"].format_map(format_context)
+def _get_file_ext(fname):
+    return fname.rsplit(".")[-1]
 
-        return [
-            LocalFileUploadEntry(
-                local_path=raw_val,
-                gs_key=gs_key,
-                # for artifacts `val` is a uuid
-                upload_placeholder=val,
-                metadata_availability=field_def.get("extra_metadata"),
-            )
-        ]
 
-    elif field_def.get("is_artifact") == "multi":
+def _format_single_artifact(
+    local_path: str, uuid: str, field_def: dict, format_context: dict
+):
 
+    gs_key = field_def["gcs_uri_format"].format_map(format_context)
+
+    expected_extension = _get_file_ext(gs_key)
+    provided_extension = _get_file_ext(local_path)
+    if provided_extension != expected_extension:
+        raise ParsingException(
+            f"Expected {'.'+expected_extension} for {field_def['key_name']!r} but got {'.'+provided_extension!r} instead."
+        )
+
+    return LocalFileUploadEntry(
+        local_path=local_path,
+        gs_key=gs_key,
+        upload_placeholder=uuid,
+        metadata_availability=field_def.get("extra_metadata"),
+    )
+
+
+def _calc_val_and_files(raw_val, field_def: dict, format_context: dict, verb: bool):
+    """
+    Processes one field value based on field_def taken from a ..._template.json schema.
+    Calculates a value and (if there's 'is_artifact') a file upload entry.
+    """
+
+    coerce = field_def["coerce"]
+    val = coerce(raw_val)
+    files = []
+
+    if not field_def.get("is_artifact"):
+        return val, files  # no files if it's not an artifact
+
+    # deal with multi-artifact
+    if field_def["is_artifact"] == "multi":
         if verb:
             print(f"      collecting multi local_file_path {field_def}")
 
-        # loop over each path
-        files = []
-        for num, upload_placeholder in zip(range(len(local_paths)), file_uuids):
+        # In case of is_aritfact=multi we expect the value to be a comma-separated
+        # list of local_file paths (that we will convert to uuids)
+        # and also for the corresponding DM schema to be an array of artifacts
+        # that we will fill with upload_placeholder uuids
 
-            # add number and generate key
-            format_context["num"] = num
-            gs_key = field_def["gcs_uri_format"].format_map(format_context)
+        # So our value is a list of artifact placeholders
+        val = []
+
+        # and we iterate through local file paths:
+        for num, local_path in enumerate(raw_val.split(",")):
+
+            # Ignoring errors here as we're sure `coerce` will just return a uuid
+            file_uuid = coerce(local_path)
+
+            val.append({"upload_placeholder": file_uuid})
 
             files.append(
-                LocalFileUploadEntry(
-                    local_path=local_paths[num],
-                    gs_key=gs_key,
-                    upload_placeholder=upload_placeholder,
-                    metadata_availability=field_def.get("extra_metadata"),
+                _format_single_artifact(
+                    local_path=local_path,
+                    uuid=file_uuid,
+                    field_def=field_def,
+                    format_context=dict(
+                        format_context,
+                        num=num  # add num to be able to generate
+                        # different gcs keys for each multi-artifact file.
+                    ),
                 )
             )
-        return files
+
+    else:
+        if verb:
+            print(f"      collecting local_file_path {field_def}")
+
+        files.append(
+            _format_single_artifact(
+                local_path=raw_val,
+                uuid=val,
+                field_def=field_def,
+                format_context=format_context,
+            )
+        )
+
+    return val, files
 
 
 class ParsingException(ValueError):

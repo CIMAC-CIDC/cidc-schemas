@@ -18,5 +18,5 @@
       "$comment": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes."
     }
   },
-  "required": ["r1", "r2", "read_group_mapping_file"]
+  "required": ["r1", "r2"]
 }

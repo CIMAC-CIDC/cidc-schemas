@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "hla",
+  "title": "HLA output files",
+  "type": "object",
+  "description": "HLA output files.",
+  "properties": {
+    "optitype_results": {
+      "$ref": "artifacts/artifact_text.json"
+    },
+    "xhla_report_hla": {
+      "$ref": "artifacts/artifact_json.json"
+    }
+  },
+  "required": [
+  ]
+}

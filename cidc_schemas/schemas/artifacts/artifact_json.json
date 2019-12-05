@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "bam_artifact",
-  "title": "BAM Artifact",
+  "$id": "json_artifact",
+  "title": "JSON Artifact",
   "type": "object",
-  "description": "Information about a Bam file.",
+  "description": "Information about a JSON file.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"
@@ -12,10 +12,11 @@
       "properties": {
         "data_format": {
           "description": "Data format.",
-          "const": "BAM"
+          "const": "JSON"
         }
       }
     }
   ],
   "mergeStrategy": "objectMerge"
 }
+

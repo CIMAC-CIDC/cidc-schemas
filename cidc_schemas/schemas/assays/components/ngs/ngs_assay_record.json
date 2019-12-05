@@ -42,8 +42,6 @@
     }
   },
   "required": [
-    "library_kit_lot",
-    "library_prep_date",
     "cimac_id",
     "files"
   ]

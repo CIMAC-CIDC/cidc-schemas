@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "wes_analysis",
+  "title": "WES analysis combined files",
+  "type": "object",
+  "description": "Combined analysis files for the whole WES assay.",
+  "additionalProperties": false,
+  "properties": {
+    "pair_runs": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/components/ngs/wes_pair_analysis.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "$comment": "TODO fix to merge by a pair of normal and tumor ids. It requires improvements to the merge strategy code.",
+        "idRef": "/run_id"
+      }
+    }
+  }
+}

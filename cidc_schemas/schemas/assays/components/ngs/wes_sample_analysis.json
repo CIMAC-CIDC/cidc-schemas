@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "wes_sample_analysis",
+  "title": "WES sample analysis files",
+  "type": "object",
+  "description": "Sample wise analysis files for the WES assay.",
+  "additionalProperties": false,
+  "properties": {
+    "cimac_id": {
+        "$comment": "Id of a sample within this clinical trial, that this record is based upon.",
+        "$ref": "sample.json#properties/cimac_id"
+    },
+    "alignment": {
+      "$ref": "assays/components/alignment.json"
+    },
+    "hla": {
+      "$ref": "assays/components/hla.json"
+    },
+    "coverage_metrics": {
+      "$ref": "assays/components/coverage_metrics.json"
+    }
+  },
+  "required": [
+    "alignment"
+  ]
+}

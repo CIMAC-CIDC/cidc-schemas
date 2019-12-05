@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "neoantigen",
+  "title": "Neoantigen output files",
+  "type": "object",
+  "description": "Neoantigen output files.",
+  "properties": {
+    "mhc_class_1_epitopes": {
+      "$ref": "artifacts/artifact_tsv.json"
+    },
+    "mhc_class_2_epitopes": {
+      "$ref": "artifacts/artifact_tsv.json"
+    },
+    "mhc_class_1_filtered_condensed_ranked": {
+      "$ref": "artifacts/artifact_tsv.json"
+    },
+    "mhc_class_2_filtered_condensed_ranked": {
+      "$ref": "artifacts/artifact_tsv.json"
+    }
+  },
+  "required": [
+  ]
+}

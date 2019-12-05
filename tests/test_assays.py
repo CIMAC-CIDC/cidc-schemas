@@ -44,7 +44,7 @@ OLINK_RECORD = {
     "files": {"assay_npx": "", "assay_raw_ct": "", "study_npx": ""},
 }
 
-ASSAY_CORE = {"assay_creator": "DFCI"}
+ASSAY_CORE = {"assay_creator": "DFCI", "assay_creator": "Mount Sinai"}
 
 
 def _fetch_validator(name):
@@ -62,55 +62,36 @@ def test_wes():
     # create the ngs object
     ngs_obj = {
         "sequencer_platform": "Illumina - NovaSeq 6000",
-        "library_vendor_kit": "KAPA - Hyper Prep",
+        "sequencing_protocol": "Express Somatic Human WES (Deep Coverage) v1.1",
+        "library_kit": "Hyper Prep ICE Exome Express: 1.0",
         "paired_end_reads": "Paired",
         "read_length": 200,
-        "input_ng": 666,
-        "library_yield_ng": 666,
-        "average_insert_size": 200,
+        "bait_set": "whole_exome_illumina_coding_v1",
     }
     obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
 
     # create the wes object
     r1 = ARTIFACT_OBJ.copy()
     r1["data_format"] = "FASTQ"
-    rgmf = ARTIFACT_OBJ.copy()
-    rgmf["data_format"] = "TEXT"
+    r2 = ARTIFACT_OBJ.copy()
+    r2["data_format"] = "FASTQ"
     bam = ARTIFACT_OBJ.copy()
     bam["data_format"] = "BAM"
     vcf = ARTIFACT_OBJ.copy()
     vcf["data_format"] = "VCF"
-    rgmf["artifact_category"] = "Assay Artifact from CIMAC"
     record = {
-        "enrichment_vendor_kit": "Twist",
-        "enrichment_vendor_lot": "dummy_value",
-        "library_kit_lot": "dummy_value",
-        "library_prep_date": "01/01/2001",
-        "capture_date": "01/01/2001",
         "cimac_id": "CTTTPPPSA.00",
-        "files": {"r1": r1, "r2": r1, "read_group_mapping_file": rgmf},
+        "files": {"r1": r1, "r2": r2},
+        "sequencing_date": "...",
+        "quality_flag": 1,
     }
-
-    analysis = {"wes_experiment_id": "101010", "capture_date": "01/02/2001"}
 
     # add a demo record.
     obj["records"] = [record]
 
-    obj["analysis"] = [analysis]
-
     # create validator assert schemas are valid.
     validator = _fetch_validator("wes")
     validator.validate(obj)
-
-    # assert negative behaviors
-    del obj["records"][0]["enrichment_vendor_lot"]
-    with pytest.raises(jsonschema.ValidationError):
-        validator.validate(obj)
-
-    # assert negative behaviors for analysis
-    del obj["analysis"][0]["wes_experiment_id"]
-    with pytest.raises(jsonschema.ValidationError):
-        validator.validate(obj)
 
 
 def test_rna_expression():
@@ -121,28 +102,28 @@ def test_rna_expression():
         "library_vendor_kit": "KAPA - Hyper Prep",
         "paired_end_reads": "Paired",
         "read_length": 200,
-        "input_ng": 666,
-        "library_yield_ng": 666,
-        "average_insert_size": 200,
     }
     obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
 
     # add custom entry
     obj["enrichment_method"] = "Ribo minus"
+    obj["enrichment_vendor_kit"] = "Agilent"
 
-    # create the wes object
+    # create the rna_expression object
     r1 = ARTIFACT_OBJ.copy()
     r1["data_format"] = "FASTQ"
     rgmf = ARTIFACT_OBJ.copy()
     rgmf["data_format"] = "TEXT"
     rgmf["artifact_category"] = "Assay Artifact from CIMAC"
     record = {
-        "enrichment_vendor_kit": "Twist",
         "enrichment_vendor_lot": "dummy_value",
         "library_kit_lot": "dummy_value",
         "library_prep_date": "01/01/2001",
         "capture_date": "01/01/2001",
         "cimac_id": "CTTTPPPSA.00",
+        "input_ng": 666,
+        "library_yield_ng": 666,
+        "average_insert_size": 200,
         "files": {"r1": r1, "r2": r1, "read_group_mapping_file": rgmf},
     }
 
@@ -151,13 +132,7 @@ def test_rna_expression():
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("rna_expression")
-    validator = _fetch_validator("rna_expression")
     validator.validate(obj)
-
-    # assert negative behaviors
-    del obj["records"][0]["enrichment_vendor_kit"]
-    with pytest.raises(jsonschema.ValidationError):
-        validator.validate(obj)
 
 
 def test_cytof():

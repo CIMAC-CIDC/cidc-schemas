@@ -16,11 +16,11 @@
         "Illumina - NovaSeq 6000"
       ]
     },
-    "library_vendor_kit": {
+    "library_kit": {
       "$comment": "This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.",
-      "description": "Vendor for the library construction kit, e.g. KAPA.",
+      "description": "The library construction kit.",
       "type": "string",
-      "enum": ["KAPA - Hyper Prep"]
+      "enum": ["Hyper Prep ICE Exome Express: 1.0"]
     },
     "paired_end_reads": {
       "description": "Indicates if the sequencing was performed paired or single ended.",
@@ -36,7 +36,6 @@
   },
   "required": [
     "sequencer_platform",
-    "library_vendor_kit",
     "paired_end_reads",
     "read_length"
   ]

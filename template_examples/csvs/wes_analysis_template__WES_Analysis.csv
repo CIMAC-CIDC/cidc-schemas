@@ -1,0 +1,7 @@
+"#t","Wes analysis template"
+"#p","Protocol identifier","test_prism_trial_id"
+
+"","WES Runs"
+"#h","Run id","Tumor cimac id","Normal cimac id"
+"#d","run_1","CTTTPP111.00","CTTTPP111.00"
+"#d","run_2","CTTTPP121.00","CTTTPP121.00"

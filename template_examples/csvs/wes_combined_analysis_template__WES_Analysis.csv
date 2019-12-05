@@ -1,0 +1,5 @@
+"#t","Wes analysis template"
+"#p","Protocol identifier","test_prism_trial_id"
+
+"","WES Runs"
+"#h","Tumor cimac id","Normal cimac id","Root dir"

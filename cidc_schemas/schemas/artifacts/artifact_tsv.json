@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "bam_artifact",
-  "title": "BAM Artifact",
+  "$id": "tsv_artifact",
+  "title": "TSV Artifact",
   "type": "object",
-  "description": "Information about a Bam file.",
+  "description": "Information about Tab Separated files.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"
@@ -12,10 +12,11 @@
       "properties": {
         "data_format": {
           "description": "Data format.",
-          "const": "BAM"
+          "const": "TSV"
         }
       }
     }
   ],
   "mergeStrategy": "objectMerge"
 }
+

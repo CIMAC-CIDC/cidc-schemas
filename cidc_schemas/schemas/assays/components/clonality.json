@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "clonality",
+  "title": "Clonality output files",
+  "type": "object",
+  "description": "Clonality output files.",
+  "properties": {
+    "clonality_pyclone": {
+      "$ref": "artifacts/artifact_tsv.json"
+    }
+  },
+  "required": [
+
+  ]
+}

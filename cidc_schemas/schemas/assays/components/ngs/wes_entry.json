@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "wes_entry",
+  "title": "WES assay record",
+  "type": "object",
+  "description": "A single data record from WES assay.",
+  "additionalProperties": false,
+  "allOf": [
+    { "$ref": "assays/components/ngs/ngs_assay_record.json" }
+  ],
+  "properties": {
+    "output_files": {
+      "$ref": "assays/components/ngs/wes_sample_analysis.json"
+    },
+    "sequencing_date": {
+      "description": "Date of sequencing.",
+      "type": "string",
+      "format": "date"
+    },
+    "quality_flag": {
+       "description": "Flag used for quality.",
+      "type": "number"
+    },
+    "cimac_id": {"comment": "defined in ngs_assay_record.json"},
+    "files": {"comment": "defined in ngs_assay_record.json"}
+  },
+  "mergeStrategy": "objectMerge",
+  "required": [
+
+    ]
+}

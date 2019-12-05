@@ -4,35 +4,43 @@
   "title": "Whole Exome Sequencing Assay.",
   "type": "object",
   "description": "Whole exome sequencing.",
+  "additionalProperties": false,
   "allOf": [
-    { "$ref": "assays/components/assay_core.json" },
-    { "$ref": "assays/components/ngs_assay_core.json" }
+      { "$ref": "assays/components/assay_core.json" },
+      { "$ref": "assays/components/ngs_assay_core.json" }
   ],
   "properties": {
-    "enrichment_vendor_kit": {
-      "description": "Vendor for the bait set used for enrichment , e.g. Twist, Agilent, IDT.",
-      "type": "string",
-      "enum": ["Agilent", "Twist", "IDT", "NEB"]
-    },
-    "records": {
-      "type": "array",
-      "description": "A single data record from WES assay.",
-      "items": {
-        "$ref": "assays/components/ngs/wes_assay_record.json"
+      "assay_creator": {"$comment": "defined in assay_core.json"},
+      "sequencer_platform": {"$comment": "defined in ngs_assay_core.json"},
+      "library_kit": {"$comment": "defined in ngs_assay_core.json"},
+      "paired_end_reads": {"$comment": "defined in ngs_assay_core.json"},
+      "read_length": {"$comment": "defined in ngs_assay_core.json"},
+      "sequencing_protocol": {
+          "description": "Protocol and version used for the sequencing.",
+          "type": "string",
+          "enum": ["Express Somatic Human WES (Deep Coverage) v1.1"]
       },
-      "mergeStrategy": "arrayMergeById",
-      "mergeOptions": {
-        "idRef": "cimac_id"
+      "bait_set": {
+          "description": "Bait set ID.",
+          "type": "string",
+          "enum": ["whole_exome_illumina_coding_v1"]
+      },
+      "records": {
+          "type": "array",
+          "description": "A single data record from WES assay.",
+          "items": {
+            "$ref": "assays/components/ngs/wes_entry.json"
+          },
+          "mergeStrategy": "arrayMergeById",
+          "mergeOptions": {
+            "idRef": "cimac_id"
+          }
       }
-    },
-    "analysis":{
-      "type":"array",
-      "description": "A single export data record from WES assay.",
-      "items":{
-        "$ref": "assays/components/ngs/wes_export.json"
-      }
-    }
   },
-  "required": ["records"],
+  "required": [
+    "records",
+    "sequencing_protocol",
+    "bait_set"
+  ],
   "mergeStrategy": "objectMerge"
 }

@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "copynumber",
+  "title": "Copy number output files",
+  "type": "object",
+  "description": "Copy number output files.",
+  "properties": {
+    "copynumber_cnv_calls": {
+      "$ref": "artifacts/artifact_text.json"
+    },
+    "copynumber_cnv_calls_tsv": {
+      "$ref": "artifacts/artifact_tsv.json"
+    }
+  },
+  "required": [
+
+  ]
+}

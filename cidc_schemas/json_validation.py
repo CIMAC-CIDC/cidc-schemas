@@ -226,7 +226,10 @@ def load_and_validate_schema(
     schema_path = os.path.join(schema_root, schema_path)
     with open(schema_path) as schema_file:
         base_uri = f"file://{schema_root}/"
-        json_spec = json.load(schema_file)
+        try:
+            json_spec = json.load(schema_file)
+        except Exception as e:
+            raise Exception(f"Failed loading json {schema_file}") from e
         if on_refs:
             schema = _map_refs(json_spec, on_refs)
         else:

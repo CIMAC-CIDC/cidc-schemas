@@ -123,44 +123,29 @@ TEST_PRISM_TRIAL = {
         "wes": [
             {
                 "assay_creator": "Mount Sinai",
-                "enrichment_vendor_kit": "Twist",
-                "library_vendor_kit": "KAPA - Hyper Prep",
-                "sequencer_platform": "Illumina - NextSeq 550",
                 "paired_end_reads": "Paired",
                 "read_length": 100,
+                "sequencer_platform": "Illumina - HiSeq 3000",
+                "library_kit": "Hyper Prep ICE Exome Express: 1.0",
+                "sequencing_protocol": "Express Somatic Human WES (Deep Coverage) v1.1",
+                "bait_set": "whole_exome_illumina_coding_v1",
                 "records": [
                     {
-                        "library_kit_lot": "lib lot 1",
-                        "enrichment_vendor_lot": "enrich lot 1",
-                        "library_prep_date": "2019-01-01 00:00:00",
-                        "capture_date": "2019-01-01 00:00:00",
-                        "input_ng": 101,
-                        "library_yield_ng": 701,
-                        "average_insert_size": 251,
+                        "sequencing_date": "2019-01-01 00:00:00",
+                        "quality_flag": 1,
                         "cimac_id": "CTTTPP111.00",
                         "files": {
                             "r1": {"upload_placeholder": "r1.1"},
                             "r2": {"upload_placeholder": "r2.1"},
-                            "read_group_mapping_file": {
-                                "upload_placeholder": "read_group_mapping_file.1"
-                            },
                         },
                     },
                     {
-                        "library_kit_lot": "lib lot 2",
-                        "enrichment_vendor_lot": "enrich lot 2",
-                        "library_prep_date": "2019-02-02 00:00:00",
-                        "capture_date": "2019-02-02 00:00:00",
-                        "input_ng": 102,
-                        "library_yield_ng": 702,
-                        "average_insert_size": 252,
+                        "sequencing_date": "2019-01-01 00:00:00",
+                        "quality_flag": 1,
                         "cimac_id": "CTTTPP121.00",
                         "files": {
                             "r1": {"upload_placeholder": "r1.2"},
                             "r2": {"upload_placeholder": "r2.2"},
-                            "read_group_mapping_file": {
-                                "upload_placeholder": "read_group_mapping_file.2"
-                            },
                         },
                     },
                 ],
@@ -174,12 +159,8 @@ TEST_PRISM_TRIAL = {
 WES_TEMPLATE_EXAMPLE_GS_URLS = {
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/r1.fastq": "r1.1",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/r2.fastq": "r2.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP111.00/wes/rgm.txt": "read_group_mapping_file.1",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/r1.fastq": "r1.2",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/r2.fastq": "r2.2",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP121.00/wes/rgm.txt": "read_group_mapping_file.2",
 }
 
 
@@ -422,13 +403,9 @@ def test_filepath_gen(xlsx, template):
         # in total local
         assert 4 == sum([x.local_path.endswith(".fastq") for x in file_maps])
 
-        # we should have 2 text files
-        assert 2 == sum([x.gs_key.endswith("/rgm.txt") for x in file_maps])
-        assert 2 == sum([x.local_path.endswith(".txt") for x in file_maps])
-
         # 4 in total
-        assert len(file_maps) == 6
-        assert 6 == sum(
+        assert len(file_maps) == 4
+        assert 4 == sum(
             [
                 x.gs_key.startswith(TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME])
                 for x in file_maps
@@ -844,6 +821,21 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             )
             assert len(errs) == 0
 
+        elif template.type == "wes_analysis":
+            # simulate an initial WES upload by prismifying the initial WES template object,
+            # and merging it with clinical trial object
+            wes_input_xlsx_path = os.path.join(
+                TEMPLATE_EXAMPLES_DIR, "wes_template.xlsx"
+            )
+            wes_input_xlsx, _ = XlTemplateReader.from_excel(wes_input_xlsx_path)
+            wes_input_template = Template.from_type("wes")
+            wes_input_patch, _, _ = prismify(wes_input_xlsx, wes_input_template)
+
+            original_ct, errs = merge_clinical_trial_metadata(
+                wes_input_patch, original_ct
+            )
+            assert len(errs) == 0
+
         else:
             raise NotImplementedError(
                 f"no support in test for this template.type {template.type}"
@@ -898,7 +890,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 2
 
     elif template.type == "wes":
-        assert len(merged_gs_keys) == 3 * 2  # 3 files per entry in xlsx
+        assert len(merged_gs_keys) == 2 * 2  # 2 files per entry in xlsx
         assert set(merged_gs_keys) == set(WES_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
     elif template.type == "olink":
@@ -915,6 +907,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == "cytof_analysis":
         assert len(merged_gs_keys) == 9  # 9 output files
+
+    elif template.type == "wes_analysis":
+        assert len(merged_gs_keys) == 12  # 6 output files per entry in xlsx
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -950,9 +945,15 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(full_ct["assays"][template.type]) == 1
 
     elif template.type == "cytof_analysis":
-        # the original cytof upload had 2 records, hence after analysis, this too has 2 records
+        # the original cytof upload had 2 records, hence after analysis, it's analysis has 2 records
         assert (
             len(full_ct["assays"]["cytof"][0]["records"]) == 2
+        ), "More records than expected"
+
+    elif template.type == "wes_analysis":
+        # the original wes upload had 2 records, hence after analysis, it's analysis has 2 records
+        assert (
+            len(full_ct["assays"]["wes"][0]["records"]) == 2
         ), "More records than expected"
 
     else:
@@ -962,8 +963,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     if template.type == "wes":
 
-        # 6 files * 7 artifact attributes
-        assert len(dd["dictionary_item_added"]) == 6 * 7, "Unexpected CT changes"
+        # 4 files * 7 artifact attributes
+        assert len(dd["dictionary_item_added"]) == 4 * 7, "Unexpected CT changes"
 
         # nothing else in diff
         assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
@@ -990,6 +991,10 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     elif template.type == "cytof_analysis":
         # 7 artifact attributes * 9 files
         assert len(dd["dictionary_item_added"]) == 7 * 9, "Unexpected CT changes"
+
+    elif template.type == "wes_analysis":
+        # 7 artifact attributes * 6 * 2 files
+        assert len(dd["dictionary_item_added"]) == 84, "Unexpected CT changes"
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -1066,31 +1071,104 @@ def test_merge_stuff():
     assert len(xyz["slices"]) == 1
 
 
-def test_prism_joining_tabs(monkeypatch):
-    """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
+def test_prism_local_files_format_extension(monkeypatch):
+    """ Tests prism alert on different extensions of a local file vs gcs_uri """
+
+    mock_XlTemplateReader_from_excel(
+        {
+            "files": [
+                ["#h", "record", "local_file_col_name"],
+                ["#d", "1", "somewhere/on/my/computer.csv"],
+                ["#d", "2", "somewhere/on/my/computer.xlsx"],
+            ]
+        },
+        monkeypatch,
+    )
+
+    template = Template(
+        {
+            "$id": "test_files",
+            "title": "files",
+            "properties": {
+                "worksheets": {
+                    "files": {
+                        "prism_preamble_object_schema": "clinical_trial.json",
+                        "prism_preamble_object_pointer": "#",
+                        "prism_data_object_pointer": "/files/-",
+                        "preamble_rows": {},
+                        "data_columns": {
+                            "Files": {
+                                "record": {"merge_pointer": "/id", "type": "number"},
+                                "local_file_col_name": {
+                                    "merge_pointer": "artifact",
+                                    "gcs_uri_format": "{record}/artifact.csv",
+                                    "is_artifact": 1,
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                },
+                            }
+                        },
+                    }
+                }
+            },
+        },
+        "test_prism_local_files_format_extension",
+    )
+
+    monkeypatch.setattr(
+        "cidc_schemas.prism.SUPPORTED_TEMPLATES",
+        ["test_prism_local_files_format_extension"],
+    )
+
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    patch, file_maps, errs = prismify(xlsx, template, verb=False)
+
+    assert len(errs) == 1
+    assert "local_file_col_name" in str(errs[0])
+    assert "expected .csv" in str(errs[0]).lower()
+
+    assert len(file_maps) == 1
+
+
+def mock_XlTemplateReader_from_excel(sheets: dict, monkeypatch):
 
     load_workbook = MagicMock(name="load_workbook")
     monkeypatch.setattr("openpyxl.load_workbook", load_workbook)
     workbook = load_workbook.return_value = MagicMock(name="workbook")
-    wb = {
-        "participants": MagicMock(name="participants"),
-        "samples": MagicMock(name="samples"),
-    }
+
+    wb = {k: MagicMock(name=k) for k in sheets}
+
     workbook.__getitem__.side_effect = wb.__getitem__
-    workbook.sheetnames = wb.keys()
+    workbook.sheetnames = sheets.keys()
     cell = namedtuple("cell", ["value"])
-    wb["participants"].iter_rows.return_value = [
-        map(cell, ["#h", "PA id", "PA prop"]),
-        map(cell, ["#d", "CPP0", "0"]),
-        map(cell, ["#d", "CPP1", "1"]),
-    ]
-    wb["samples"].iter_rows.return_value = [
-        map(cell, ["#h", "SA_id", "SA_prop"]),
-        map(cell, ["#d", "CPP1S0.00", "100"]),
-        map(cell, ["#d", "CPP1S1.00", "101"]),
-        map(cell, ["#d", "CPP0S0.00", "000"]),
-        map(cell, ["#d", "CPP0S1.00", "001"]),
-    ]
+
+    for k, rows in sheets.items():
+        wb[k].iter_rows.return_value = [map(cell, r) for r in rows]
+
+    return
+
+
+def test_prism_joining_tabs(monkeypatch):
+    """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
+
+    mock_XlTemplateReader_from_excel(
+        {
+            "participants": [
+                ["#h", "PA id", "PA prop"],
+                ["#d", "CPP0", "0"],
+                ["#d", "CPP1", "1"],
+            ],
+            "samples": [
+                ["#h", "SA_id", "SA_prop"],
+                ["#d", "CPP1S0.00", "100"],
+                ["#d", "CPP1S1.00", "101"],
+                ["#d", "CPP0S0.00", "000"],
+                ["#d", "CPP0S1.00", "001"],
+            ],
+        },
+        monkeypatch,
+    )
 
     template = Template(
         {
@@ -1130,6 +1208,7 @@ def test_prism_joining_tabs(monkeypatch):
                                         {
                                             "merge_pointer": "2/cimac_participant_id",
                                             "parse_through": "lambda x: x[:4]",
+                                            "type_ref": "participant.json#properties/cimac_participant_id",
                                         }
                                     ],
                                 },
@@ -1174,6 +1253,142 @@ def test_prism_joining_tabs(monkeypatch):
     assert 2 == len(patch["participants"][1]["samples"])
 
     assert 0 == len(file_maps)
+
+
+def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
+    """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
+
+    mock_XlTemplateReader_from_excel(
+        {
+            "analysis": [
+                ["#h", "run_id", "sid1", "sid2"],
+                ["#d", "000", "sid1_0", "sid2_0"],
+                ["#d", "111", "sid1_1", "sid2_1"],
+            ]
+        },
+        monkeypatch,
+    )
+
+    template = Template(
+        {
+            "$id": "test_analysis",
+            "title": "...",
+            "prism_template_root_object_schema": "assays/components/ngs/wes_analysis.json",
+            "prism_template_root_object_pointer": "/analysis/wes_analysis",
+            "properties": {
+                "worksheets": {
+                    "analysis": {
+                        "prism_data_object_pointer": "/pair_runs/-",
+                        "preamble_rows": {},
+                        "data_columns": {
+                            "section name": {
+                                "run_id": {
+                                    "merge_pointer": "/run_id",
+                                    "type": "string",
+                                    "process_as": [
+                                        {
+                                            "parse_through": "lambda x: f'analysis/sorted/{x}/{x}.output.vcf'",
+                                            "merge_pointer": "/somatic_vcf",
+                                            "gcs_uri_format": "{run_id}/somatic.vcf",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/sorted/{x}/{x}.output.maf'",
+                                            "merge_pointer": "/somatic_maf",
+                                            "gcs_uri_format": "{run_id}/somatic.maf",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                    ],
+                                },
+                                "sid1": {
+                                    "merge_pointer": "/sample1/id",
+                                    "type": "string",
+                                    "process_as": [
+                                        {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.bam'",
+                                            "merge_pointer": "/sample1/sorted",
+                                            "gcs_uri_format": "{run_id}/{sid1}/sorted.bam",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.recalibrated.bam'",
+                                            "merge_pointer": "/sample1/recalibrated",
+                                            "gcs_uri_format": "{run_id}/{sid1}/recalibrated.bam",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                    ],
+                                },
+                                "sid2": {
+                                    "merge_pointer": "/sample2/id",
+                                    "type": "string",
+                                    "process_as": [
+                                        {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.bam'",
+                                            "merge_pointer": "/sample2/sorted",
+                                            "gcs_uri_format": "{run_id}/{sid2}/sorted.bam",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.recalibrated.bam'",
+                                            "merge_pointer": "/sample2/recalibrated",
+                                            "gcs_uri_format": "{run_id}/{sid2}/recalibrated.bam",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                    ],
+                                },
+                            }
+                        },
+                    }
+                }
+            },
+        },
+        "test_prism_many_artifacts_from_process_as_on_one_record",
+    )
+
+    monkeypatch.setattr(
+        "cidc_schemas.prism.SUPPORTED_TEMPLATES",
+        ["test_prism_many_artifacts_from_process_as_on_one_record"],
+    )
+
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    patch, file_maps, errs = prismify(xlsx, template, verb=False)
+    assert len(errs) == 0
+
+    local_paths = [e.local_path for e in file_maps]
+    uuids = [e.upload_placeholder for e in file_maps]
+
+    assert 12 == len(file_maps)  # (2 files * 3 fields from each record) * 2 records
+    assert 12 == len(set(uuids))  # (2 files * 3 fields from each record) * 2 records
+
+    assert local_paths != uuids
+
+    assert 2 == len(patch["analysis"]["wes_analysis"]["pair_runs"])
+    run_uuids_in_json = [
+        art["upload_placeholder"]
+        for wes in patch["analysis"]["wes_analysis"]["pair_runs"]
+        for art in wes.values()
+        if "upload_placeholder" in art
+    ]
+    sample_uuids_in_json = [
+        v["upload_placeholder"]
+        for wes in patch["analysis"]["wes_analysis"]["pair_runs"]
+        for sample in wes.values()
+        if "id" in sample
+        for v in sample.values()
+        if "upload_placeholder" in v
+    ]
+    assert len(uuids) == len(run_uuids_in_json + sample_uuids_in_json)
+    assert set(uuids) == set(
+        run_uuids_in_json + sample_uuids_in_json
+    )  # set instead of sorting
 
 
 @pytest.fixture

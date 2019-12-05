@@ -5,15 +5,48 @@
   "type": "object",
   "description": "Somatic variant calling output sample files.",
   "properties": {
-    "vcf_filtered": {
+    "vcf_filtered_compressed": {
+      "$ref": "artifacts/artifact_gz.json"
+    },
+    "vcf_tnscope_filtered": {
       "$ref": "artifacts/artifact_vcf.json"
     },
-    "maf": {
+    "vcf_tnhaploytper2_filtered": {
+      "$ref": "artifacts/artifact_vcf.json"
+    },
+    "vcf_tnsnv_filtered": {
+      "$ref": "artifacts/artifact_vcf.json"
+    },
+    "vcf_tnscope_output": {
+      "$ref": "artifacts/artifact_vcf.json"
+    },
+    "vcf_tnhaploytper2_output": {
+      "$ref": "artifacts/artifact_vcf.json"
+    },
+    "vcf_tnsnv_output": {
+      "$ref": "artifacts/artifact_vcf.json"
+    },
+    "maf_tnscope_filtered": {
+      "$ref": "artifacts/artifact_maf.json"
+    },
+    "maf_tnhaploytper2_filtered": {
+      "$ref": "artifacts/artifact_maf.json"
+    },
+    "maf_tnsnv_filtered": {
+      "$ref": "artifacts/artifact_maf.json"
+    },
+    "maf_tnscope_output": {
+      "$ref": "artifacts/artifact_maf.json"
+    },
+    "maf_tnhaploytper2_output": {
+      "$ref": "artifacts/artifact_maf.json"
+    },
+    "maf_tnsnv_output": {
       "$ref": "artifacts/artifact_maf.json"
     }
   },
   "required": [
-    "vcf_filtered",
-    "maf"
+    "vcf_tnsnv_output",
+    "vcf_tnscope_output"
   ]
 }

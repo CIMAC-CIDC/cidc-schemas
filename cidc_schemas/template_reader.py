@@ -94,7 +94,6 @@ class XlTemplateReader:
                     rev_values = values[::-1]
                     clean = list(dropwhile(lambda v: v is None, rev_values))
                     values = clean[::-1]
-                    header = values
                     header_width = len(values)
 
                 # Filter empty cells from the end of a data row

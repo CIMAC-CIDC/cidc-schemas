@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "bam_artifact",
-  "title": "BAM Artifact",
+  "$id": "tbi_artifact",
+  "title": "TBI Artifact",
   "type": "object",
-  "description": "Information about a Bam file.",
+  "description": "Information about Tabix index files.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"
@@ -12,7 +12,7 @@
       "properties": {
         "data_format": {
           "description": "Data format.",
-          "const": "BAM"
+          "const": "TBI"
         }
       }
     }

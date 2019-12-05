@@ -10,7 +10,7 @@
         "$ref": "sample.json#properties/cimac_id"
     },
     "files": {
-      "$comment": "Fastq and read group mapping files produced by the assay for that .",
+      "$comment": "Fastq and read group mapping files produced by the assay.",
       "$ref": "assays/components/fastq_pair.json"
     },
     "library_kit_lot": {

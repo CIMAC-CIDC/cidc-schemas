@@ -11,7 +11,7 @@
     },
     "files": {
       "$comment": "Fastq and read group mapping files produced by the assay for that .",
-      "$ref": "assays/components/fastq_pair_and_mapping.json"
+      "$ref": "assays/components/fastq_pair.json"
     },
     "library_kit_lot": {
       "description": "Lot number for the library construction kit.",

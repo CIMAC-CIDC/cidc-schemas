@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fastq_pair",
+  "title": "Fastq pair",
+  "type": "object",
+  "description": "Paired end sequencing fastq file pair.",
+  "properties": {
+    "r1": {
+      "$comment": "Fastq file for the first fragment.",
+      "$ref": "artifacts/artifact_fastq_gz.json"
+    },
+    "r2": {
+      "$comment": "Fastq file for the second fragment.",
+      "$ref": "artifacts/artifact_fastq_gz.json"
+    }
+  },
+  "required": ["r1", "r2"]
+}

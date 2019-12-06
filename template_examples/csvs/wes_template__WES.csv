@@ -9,6 +9,6 @@
 "#p","Bait set","whole_exome_illumina_coding_v1"
 
 "","Samples"
-"#h","Cimac id","Forward fastq","Reverse fastq","Sequencing date","Quality flag"
-"#d","CTTTPP111.00","/local/path/to/fwd.1.1.1.fastq.gz","/local/path/to/rev.1.1.1.fastq.gz","2010-01-01 00:00:00","1"
-"#d","CTTTPP121.00","/local/path/to/fwd.1.2.1.fastq.gz","/local/path/to/rev.1.2.1.fastq.gz","2010-01-01 00:00:00","1"
+"#h","Cimac id","Bam","Sequencing date","Quality flag"
+"#d","CTTTPP111.00","/local/path/to/data.1.bam","2010-01-01 00:00:00","1"
+"#d","CTTTPP121.00","/local/path/to/data.2.bam","2010-01-01 00:00:00","1"

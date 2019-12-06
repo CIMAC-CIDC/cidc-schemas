@@ -84,27 +84,18 @@
                 "bait_set": "whole_exome_illumina_coding_v1",
                 "records": [
                     {
-                        "cimac_id":          "CTTTP21S1.00",
+                        "cimac_id": "CTTTP21S1.00",
                         "sequencing_date": "...",
                         "quality_flag": 1,
                         "files": {
-                            "r1":{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ.GZ"
-                            },
-                            "r2":{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ.GZ"
+                            "bam": {
+                                "file_name": "...",
+                                "object_url": "...",
+                                "uploaded_timestamp": "...",
+                                "file_size_bytes": 0,
+                                "md5_hash": "...",
+                                "artifact_category": "Assay Artifact from CIMAC",
+                                "data_format": "BAM"
                             }
                         }
                     },
@@ -113,23 +104,14 @@
                         "sequencing_date": "...",
                         "quality_flag": 1,
                         "files": {
-                            "r1":{
+                            "bam":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ.GZ"
-                            },
-                            "r2":{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ.GZ"
+                                "data_format" :           "BAM"
                             }
                         }
                     }
@@ -149,32 +131,14 @@
                         "sequencing_date": "...",
                         "quality_flag": 1,
                         "files": {
-                            "r1":{
+                            "bam":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ.GZ"
-                            },
-                            "r2":{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ.GZ"
-                            },
-                            "read_group_mapping_file":{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "TEXT"
+                                "data_format" :           "BAM"
                             }
                         }
                     },
@@ -183,32 +147,14 @@
                         "sequencing_date": "...",
                         "quality_flag": 1,
                         "files": {
-                            "r1":{
+                            "bam":{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ.GZ"
-                            },
-                            "r2":{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ.GZ"
-                            },
-                            "read_group_mapping_file":{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "TEXT"
+                                "data_format" :           "BAM"
                             }
                         }
                     }

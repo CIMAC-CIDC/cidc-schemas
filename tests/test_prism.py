@@ -1371,6 +1371,27 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnscope.output.vcf'",
+                                            "merge_pointer": "/vcf_tnscope_output",
+                                            "gcs_uri_format": "{run_id}/vcf_tnscope_output.vcf",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnhaploytper2.output.vcf'",
+                                            "merge_pointer": "/vcf_tnhaploytper2_output",
+                                            "gcs_uri_format": "{run_id}/vcf_tnhaploytper2_output.vcf",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnsnv.output.vcf'",
+                                            "merge_pointer": "/vcf_tnsnv_output",
+                                            "gcs_uri_format": "{run_id}/vcf_tnsnv_output.vcf",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
                                     ],
                                 },
                                 "sid1": {

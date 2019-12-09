@@ -85,6 +85,27 @@
                                     "gcs_uri_format": "{run id}/wes_analysis/MHC_Class_1_filtered_condensed_ranked.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.output.vcf'",
+                                    "merge_pointer": "/somatic/vcf_tnscope_output",
+                                    "gcs_uri_format": "{run id}/wes_analysis/vcf_tnscope_output.vcf",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnhaploytper2.output.vcf'",
+                                    "merge_pointer": "/somatic/vcf_tnhaploytper2_output",
+                                    "gcs_uri_format": "{run id}/wes_analysis/vcf_tnhaploytper2_output.vcf",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnsnv.output.vcf'",
+                                    "merge_pointer": "/somatic/vcf_tnsnv_output",
+                                    "gcs_uri_format": "{run id}/wes_analysis/vcf_tnsnv_output.vcf",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
                                 }
                             ]
                         },

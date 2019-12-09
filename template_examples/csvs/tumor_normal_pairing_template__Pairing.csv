@@ -1,0 +1,6 @@
+"#t","Metadata manifest for tumor / normal pairing for wes assay analysis."
+"#p","Protocol identifier","test_prism_trial_id"
+
+"","Pair"
+"#h","Tumor sample cimac id","Normal sample cimac id"
+"#d","CTTTPP111.00","CTTTPP121.00"

@@ -24,6 +24,7 @@ from cidc_schemas.prism import (
     merge_clinical_trial_metadata,
     InvalidMergeTargetException,
     SUPPORTED_ASSAYS,
+    SUPPORTED_SHIPPING_MANIFESTS,
     SUPPORTED_MANIFESTS,
     SUPPORTED_TEMPLATES,
     SUPPORTED_ANALYSES,
@@ -334,7 +335,7 @@ def test_prism(xlsx, template):
         if template.type != "olink":
             assert len(ct["assays"][template.type]) == 1
 
-    elif template.type in SUPPORTED_MANIFESTS:
+    elif template.type in SUPPORTED_SHIPPING_MANIFESTS:
         assert not ct.get("assays"), "Assay created during manifest prismify"
 
     else:
@@ -449,7 +450,7 @@ def test_filepath_gen(xlsx, template):
     elif template.type == "ihc":
         assert 2 == sum([x.gs_key.endswith(".tiff") for x in file_maps])
 
-    elif template.type in SUPPORTED_MANIFESTS:
+    elif template.type in SUPPORTED_SHIPPING_MANIFESTS:
 
         assert len(file_maps) == 0
 
@@ -740,7 +741,27 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     prism_patch, file_maps, errs = prismify(xlsx, template)
     assert len(errs) == 0
 
-    if template.type in SUPPORTED_MANIFESTS:
+    if (
+        template.type in SUPPORTED_MANIFESTS
+        and template.type not in SUPPORTED_SHIPPING_MANIFESTS
+    ):
+        if template.type == "tumor_normal_pairing":
+            assert prism_patch["analysis"]["wes_analysis"]
+            assert len(prism_patch["analysis"]["wes_analysis"]["pair_runs"]) == 1
+            assert (
+                len(
+                    set(
+                        pair["run_id"]
+                        for pair in prism_patch["analysis"]["wes_analysis"]["pair_runs"]
+                    )
+                )
+                == 1
+            )
+
+        else:
+            assert 0, f"add {template.type} manifest specific test asserts"
+
+    if template.type in SUPPORTED_SHIPPING_MANIFESTS:
         assert len(prism_patch["shipments"]) == 1
 
         assert prism_patch["participants"][0]["samples"][0]["cimac_id"][:7].startswith(
@@ -912,7 +933,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 30
 
     else:
-        assert False, f"add {template.type} assay specific asserts"
+        assert False, f"add {template.type} assay specific asserts on 'merged_gs_keys'"
 
     for file_map_entry in file_maps:
         assert (
@@ -957,7 +978,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         ), "More records than expected"
 
     else:
-        assert False, f"add {template.type} assay specific asserts"
+        assert False, f"add {template.type} assay specific asserts on 'full_ct'"
 
     dd = DeepDiff(full_after_prism, full_ct)
 

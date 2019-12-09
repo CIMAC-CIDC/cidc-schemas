@@ -108,14 +108,27 @@
             
         
             
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+        
+            
+        
+            
                 <tr>
     <td>
         
             <span id="library_kit_lot">
                 library_kit_lot
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -150,8 +163,6 @@
                 library_prep_date
             </span>
             
-                <br><sup><mark>required</mark></sup>
-            
         
     </td>
     <td width=55%>
@@ -175,21 +186,6 @@
         
     </td>
 </tr>
-            
-        
-            
-        
-            
-        
-            
-        
-        
-            
-        
-            
-        
-            
-        
             
         
             
@@ -443,6 +439,7 @@
                         }
                     ],
                     "description": "Information about a fastq file.",
+                    "mergeStrategy": "objectMerge",
                     "title": "FastQ Artifact",
                     "type": "object"
                 },
@@ -566,6 +563,7 @@
                         }
                     ],
                     "description": "Information about a fastq file.",
+                    "mergeStrategy": "objectMerge",
                     "title": "FastQ Artifact",
                     "type": "object"
                 },
@@ -696,8 +694,7 @@
             },
             "required": [
                 "r1",
-                "r2",
-                "read_group_mapping_file"
+                "r2"
             ],
             "title": "Fastq pair and group mapping",
             "type": "object"
@@ -725,8 +722,6 @@
         }
     },
     "required": [
-        "library_kit_lot",
-        "library_prep_date",
         "cimac_id",
         "files"
     ],

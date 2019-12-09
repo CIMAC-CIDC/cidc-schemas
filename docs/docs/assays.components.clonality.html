@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Germline variant output sample files</h1>
+        <h1>Clonality output files</h1>
         <p>
-            <b>Description:</b>  Germline variant output sample files.
+            <b>Description:</b>  Clonality output files.
         </p>
         
     </div>
@@ -64,20 +64,20 @@
                 <tr>
     <td>
         
-            <span id="vcf_compare">
-                vcf_compare
+            <span id="clonality_pyclone">
+                clonality_pyclone
             </span>
             
         
     </td>
     <td width=55%>
         
-            Information about text files.
+            Information about Tab Separated files.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
+            <a href="artifacts.artifact_tsv.html">artifacts.artifact_tsv</a>
         
     </td>
 </tr>
@@ -89,14 +89,14 @@
   </div>
 
   <div class="container">
-    <h3>germline.full.json</h3>
+    <h3>clonality.full.json</h3>
   	<pre><code>{
-    "$id": "germline",
+    "$id": "clonality",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "description": "Germline variant output sample files.",
+    "description": "Clonality output files.",
     "properties": {
-        "vcf_compare": {
-            "$id": "text_artifact",
+        "clonality_pyclone": {
+            "$id": "tsv_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -207,20 +207,20 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "TEXT",
+                            "const": "TSV",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about text files.",
+            "description": "Information about Tab Separated files.",
             "mergeStrategy": "objectMerge",
-            "title": "Text Artifact",
+            "title": "TSV Artifact",
             "type": "object"
         }
     },
     "required": [],
-    "title": "Germline variant output sample files",
+    "title": "Clonality output files",
     "type": "object"
 }</code></pre>
   </container>

@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>FastQ Artifact</h1>
+        <h1>TBI Artifact</h1>
         <p>
-            <b>Description:</b>  Information about a fastq file.
+            <b>Description:</b>  Information about Tabix index files.
         </p>
         
     </div>
@@ -107,7 +107,7 @@
     </td>
     <td>
         
-            &lt; const: <strong>FASTQ</strong> &gt;            
+            &lt; const: <strong>TBI</strong> &gt;            
         
     </td>
 </tr>
@@ -119,9 +119,9 @@
   </div>
 
   <div class="container">
-    <h3>artifact_fastq.full.json</h3>
+    <h3>artifact_tbi.full.json</h3>
   	<pre><code>{
-    "$id": "fastq_artifact",
+    "$id": "tbi_artifact",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "allOf": [
         {
@@ -232,15 +232,15 @@
         {
             "properties": {
                 "data_format": {
-                    "const": "FASTQ",
+                    "const": "TBI",
                     "description": "Data format."
                 }
             }
         }
     ],
-    "description": "Information about a fastq file.",
+    "description": "Information about Tabix index files.",
     "mergeStrategy": "objectMerge",
-    "title": "FastQ Artifact",
+    "title": "TBI Artifact",
     "type": "object"
 }</code></pre>
   </container>

@@ -44,7 +44,7 @@ OLINK_RECORD = {
     "files": {"assay_npx": "", "assay_raw_ct": "", "study_npx": ""},
 }
 
-ASSAY_CORE = {"assay_creator": "DFCI"}
+ASSAY_CORE = {"assay_creator": "DFCI", "assay_creator": "Mount Sinai"}
 
 
 def _fetch_validator(name):
@@ -72,9 +72,9 @@ def test_wes():
 
     # create the wes object
     r1 = ARTIFACT_OBJ.copy()
-    r1["data_format"] = "FASTQ"
+    r1["data_format"] = "FASTQ.GZ"
     r2 = ARTIFACT_OBJ.copy()
-    r2["data_format"] = "FASTQ"
+    r2["data_format"] = "FASTQ.GZ"
     bam = ARTIFACT_OBJ.copy()
     bam["data_format"] = "BAM"
     vcf = ARTIFACT_OBJ.copy()
@@ -88,8 +88,6 @@ def test_wes():
 
     # add a demo record.
     obj["records"] = [record]
-    obj["assay_run_id"] = "run_1"
-    obj["assay_creator"] = "Mount Sinai"
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("wes")
@@ -113,7 +111,7 @@ def test_rna_expression():
 
     # create the rna_expression object
     r1 = ARTIFACT_OBJ.copy()
-    r1["data_format"] = "FASTQ"
+    r1["data_format"] = "FASTQ.GZ"
     rgmf = ARTIFACT_OBJ.copy()
     rgmf["data_format"] = "TEXT"
     rgmf["artifact_category"] = "Assay Artifact from CIMAC"
@@ -126,7 +124,7 @@ def test_rna_expression():
         "input_ng": 666,
         "library_yield_ng": 666,
         "average_insert_size": 200,
-        "files": {"r1": r1, "r2": r1, "read_group_mapping_file": rgmf},
+        "files": {"r1": r1, "r2": r1},
     }
 
     # add a demo record.

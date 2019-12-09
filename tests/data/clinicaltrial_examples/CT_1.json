@@ -164,7 +164,6 @@
         },
         "wes": [
             {
-                "assay_run_id": "run_1",
                 "assay_creator": "Mount Sinai",
                 "paired_end_reads": "Paired",
                 "read_length": 100,
@@ -185,7 +184,7 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format":          "FASTQ"
+                                "data_format":          "FASTQ.GZ"
                             },
                             "r2":{
                                 "file_name" :           "...",
@@ -194,7 +193,7 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format":          "FASTQ"
+                                "data_format":          "FASTQ.GZ"
                             }
                         }
                     }, 
@@ -210,7 +209,7 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ"
+                                "data_format" :           "FASTQ.GZ"
                             },
                             "r2":{
                                 "file_name" :           "...",
@@ -219,14 +218,13 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ"
+                                "data_format" :           "FASTQ.GZ"
                             }
                         }
                     }
                 ]
             },
             {
-                "assay_run_id": "run_1",
                 "assay_creator": "Mount Sinai",
                 "paired_end_reads": "Paired",
                 "read_length": 100,
@@ -247,7 +245,7 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ"
+                                "data_format" :           "FASTQ.GZ"
                             },
                             "r2":{
                                 "file_name" :           "...",
@@ -256,7 +254,7 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ"
+                                "data_format" :           "FASTQ.GZ"
                             }
                         }
                     }, 
@@ -272,7 +270,7 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ"
+                                "data_format" :           "FASTQ.GZ"
                             },
                             "r2":{
                                 "file_name" :           "...",
@@ -281,7 +279,7 @@
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
                                 "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ"
+                                "data_format" :           "FASTQ.GZ"
                             }
                         }
                     }

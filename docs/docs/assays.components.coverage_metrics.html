@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>CyTOF Output Files</h1>
+        <h1>Coverage metrics output files</h1>
         <p>
-            <b>Description:</b>  Output files generated from the CyTOF assay: FCS file with enumerations for compartment, assignment and profiling cell labels; 3 CSV keys for mapping from respective enumeration indices to the cell labels; 3 CSV files providing cell count information for each of the cell labels; Analysis.zip and Results.zip containing a variety of R scripts, figures, tables and charts with QC and other information.
+            <b>Description:</b>  Coverage metrics output files.
         </p>
         
     </div>
@@ -73,27 +73,25 @@
         
             
         
-            
-        
         
             
                 <tr>
     <td>
         
-            <span id="fcs_file">
-                fcs_file
+            <span id="all_summaries">
+                all_summaries
             </span>
             
         
     </td>
     <td width=55%>
         
-            Information about FCS files.
+            Information about text files.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_fcs.html">artifacts.artifact_fcs</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
@@ -103,20 +101,20 @@
                 <tr>
     <td>
         
-            <span id="astrolabe_reports">
-                astrolabe_reports
+            <span id="mosdepth_region_dist_broad">
+                mosdepth_region_dist_broad
             </span>
             
         
     </td>
     <td width=55%>
         
-            Information about ZIP files.
+            Information about text files.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_zip.html">artifacts.artifact_zip</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
@@ -126,20 +124,20 @@
                 <tr>
     <td>
         
-            <span id="astrolabe_analysis">
-                astrolabe_analysis
+            <span id="mosdepth_region_dist_mda">
+                mosdepth_region_dist_mda
             </span>
             
         
     </td>
     <td width=55%>
         
-            Information about ZIP files.
+            Information about text files.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_zip.html">artifacts.artifact_zip</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
@@ -149,20 +147,20 @@
                 <tr>
     <td>
         
-            <span id="assignment">
-                assignment
+            <span id="mosdepth_region_dist_mocha">
+                mosdepth_region_dist_mocha
             </span>
             
         
     </td>
     <td width=55%>
         
-            Information about Comma separated files.
+            Information about text files.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
@@ -172,20 +170,20 @@
                 <tr>
     <td>
         
-            <span id="compartment">
-                compartment
+            <span id="coverage_metrics">
+                coverage_metrics
             </span>
             
         
     </td>
     <td width=55%>
         
-            Information about Comma separated files.
+            Information about text files.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
@@ -195,20 +193,20 @@
                 <tr>
     <td>
         
-            <span id="profiling">
-                profiling
+            <span id="coverage_metrics_summary">
+                coverage_metrics_summary
             </span>
             
         
     </td>
     <td width=55%>
         
-            Information about Comma separated files.
+            Information about text files.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
@@ -218,20 +216,20 @@
                 <tr>
     <td>
         
-            <span id="cell_counts_assignment">
-                cell_counts_assignment
+            <span id="target_metrics">
+                target_metrics
             </span>
             
         
     </td>
     <td width=55%>
         
-            Information about Comma separated files.
+            Information about text files.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
@@ -241,43 +239,20 @@
                 <tr>
     <td>
         
-            <span id="cell_counts_compartment">
-                cell_counts_compartment
+            <span id="target_metrics_summary">
+                target_metrics_summary
             </span>
             
         
     </td>
     <td width=55%>
         
-            Information about Comma separated files.
+            Information about text files.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="cell_counts_profiling">
-                cell_counts_profiling
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about Comma separated files.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
@@ -289,15 +264,14 @@
   </div>
 
   <div class="container">
-    <h3>cytof_analysis.full.json</h3>
+    <h3>coverage_metrics.full.json</h3>
   	<pre><code>{
-    "$id": "cytof_analysis",
+    "$id": "coverage_metrics",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "additionalProperties": false,
-    "description": "Output files generated from the CyTOF assay: FCS file with enumerations for compartment, assignment and profiling cell labels; 3 CSV keys for mapping from respective enumeration indices to the cell labels; 3 CSV files providing cell count information for each of the cell labels; Analysis.zip and Results.zip containing a variety of R scripts, figures, tables and charts with QC and other information.",
+    "description": "Coverage metrics output files.",
     "properties": {
-        "assignment": {
-            "$id": "csv_artifact",
+        "all_summaries": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -408,19 +382,19 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "CSV",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about Comma separated files.",
+            "description": "Information about text files.",
             "mergeStrategy": "objectMerge",
-            "title": "CSV Artifact",
+            "title": "Text Artifact",
             "type": "object"
         },
-        "astrolabe_analysis": {
-            "$id": "zip_artifact",
+        "coverage_metrics": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -531,19 +505,19 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "ZIP",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about ZIP files.",
+            "description": "Information about text files.",
             "mergeStrategy": "objectMerge",
-            "title": "ZIP Artifact",
+            "title": "Text Artifact",
             "type": "object"
         },
-        "astrolabe_reports": {
-            "$id": "zip_artifact",
+        "coverage_metrics_summary": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -654,19 +628,19 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "ZIP",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about ZIP files.",
+            "description": "Information about text files.",
             "mergeStrategy": "objectMerge",
-            "title": "ZIP Artifact",
+            "title": "Text Artifact",
             "type": "object"
         },
-        "cell_counts_assignment": {
-            "$id": "csv_artifact",
+        "mosdepth_region_dist_broad": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -777,19 +751,19 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "CSV",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about Comma separated files.",
+            "description": "Information about text files.",
             "mergeStrategy": "objectMerge",
-            "title": "CSV Artifact",
+            "title": "Text Artifact",
             "type": "object"
         },
-        "cell_counts_compartment": {
-            "$id": "csv_artifact",
+        "mosdepth_region_dist_mda": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -900,19 +874,19 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "CSV",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about Comma separated files.",
+            "description": "Information about text files.",
             "mergeStrategy": "objectMerge",
-            "title": "CSV Artifact",
+            "title": "Text Artifact",
             "type": "object"
         },
-        "cell_counts_profiling": {
-            "$id": "csv_artifact",
+        "mosdepth_region_dist_mocha": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -1023,19 +997,19 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "CSV",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about Comma separated files.",
+            "description": "Information about text files.",
             "mergeStrategy": "objectMerge",
-            "title": "CSV Artifact",
+            "title": "Text Artifact",
             "type": "object"
         },
-        "compartment": {
-            "$id": "csv_artifact",
+        "target_metrics": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -1146,19 +1120,19 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "CSV",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about Comma separated files.",
+            "description": "Information about text files.",
             "mergeStrategy": "objectMerge",
-            "title": "CSV Artifact",
+            "title": "Text Artifact",
             "type": "object"
         },
-        "fcs_file": {
-            "$id": "fcs_artifact",
+        "target_metrics_summary": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -1269,142 +1243,20 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "FCS",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about FCS files.",
+            "description": "Information about text files.",
             "mergeStrategy": "objectMerge",
-            "title": "FCS Artifact",
-            "type": "object"
-        },
-        "profiling": {
-            "$id": "csv_artifact",
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "allOf": [
-                {
-                    "$id": "artifact_core",
-                    "$schema": "http://json-schema.org/draft-07/schema#",
-                    "anyOf": [
-                        {
-                            "required": [
-                                "file_name",
-                                "object_url",
-                                "uploaded_timestamp",
-                                "file_size_bytes",
-                                "md5_hash",
-                                "artifact_category",
-                                "data_format"
-                            ]
-                        },
-                        {
-                            "required": [
-                                "upload_placeholder"
-                            ]
-                        }
-                    ],
-                    "description": "Any file artifact associated with a clinical trial.",
-                    "properties": {
-                        "artifact_category": {
-                            "description": "Artifact category.",
-                            "enum": [
-                                "Assay Artifact from CIMAC",
-                                "Pipeline Artifact",
-                                "Manifest File"
-                            ],
-                            "type": "string"
-                        },
-                        "artifact_creator": {
-                            "description": "The name of the center that created this artifact.",
-                            "enum": [
-                                "DFCI",
-                                "Mount Sinai",
-                                "Stanford",
-                                "MD Anderson"
-                            ],
-                            "type": "string"
-                        },
-                        "data_format": {
-                            "description": "Data Format.",
-                            "enum": [
-                                "FASTA",
-                                "FASTQ",
-                                "IMAGE",
-                                "VCF",
-                                "CSV",
-                                "XLSX",
-                                "NPX",
-                                "BAM",
-                                "MAF",
-                                "BINARY",
-                                "TEXT",
-                                "ZIP",
-                                "FCS",
-                                "[NOT SET]"
-                            ],
-                            "type": "string"
-                        },
-                        "file_name": {
-                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                            "description": "The name of the file with extension.",
-                            "type": "string"
-                        },
-                        "file_size_bytes": {
-                            "description": "File size in bytes.",
-                            "type": "integer"
-                        },
-                        "md5_hash": {
-                            "description": "MD5 Hash of artifact.",
-                            "type": "string"
-                        },
-                        "object_url": {
-                            "description": "URL to artifact within Google Bucket.",
-                            "type": "string"
-                        },
-                        "upload_placeholder": {
-                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
-                            "description": "A placeholder for when artifact file is being uploaded.",
-                            "type": "string"
-                        },
-                        "uploaded_timestamp": {
-                            "description": "Timestamp of when artifact was loaded into the system.",
-                            "format": "date-time",
-                            "type": "string"
-                        },
-                        "uploader": {
-                            "description": "The name of the person uploading the artifact.",
-                            "type": "string"
-                        },
-                        "uuid": {
-                            "description": "UUID of artifact.",
-                            "type": "string"
-                        },
-                        "visible": {
-                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
-                            "type": "boolean"
-                        }
-                    },
-                    "title": "Artifact Core",
-                    "type": "object"
-                },
-                {
-                    "properties": {
-                        "data_format": {
-                            "const": "CSV",
-                            "description": "Data format."
-                        }
-                    }
-                }
-            ],
-            "description": "Information about Comma separated files.",
-            "mergeStrategy": "objectMerge",
-            "title": "CSV Artifact",
+            "title": "Text Artifact",
             "type": "object"
         }
     },
-    "title": "CyTOF Output Files",
+    "required": [],
+    "title": "Coverage metrics output files",
     "type": "object"
 }</code></pre>
   </container>

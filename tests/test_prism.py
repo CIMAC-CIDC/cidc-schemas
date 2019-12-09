@@ -123,7 +123,6 @@ TEST_PRISM_TRIAL = {
     "assays": {
         "wes": [
             {
-                "assay_run_id": "run_1",
                 "assay_creator": "Mount Sinai",
                 "paired_end_reads": "Paired",
                 "read_length": 100,
@@ -159,10 +158,10 @@ TEST_PRISM_TRIAL = {
 
 # corresponding list of gs_urls.
 WES_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/r1.fastq": "r1.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/r2.fastq": "r2.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/r1.fastq": "r1.2",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/r2.fastq": "r2.2",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/r1.fastq.gz": "r1.1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/r2.fastq.gz": "r2.1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/r1.fastq.gz": "r1.2",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/r2.fastq.gz": "r2.2",
 }
 
 
@@ -399,11 +398,11 @@ def test_filepath_gen(xlsx, template):
 
         # we should have 2 fastq per sample.
         # we should have 2 tot forward.
-        assert 2 == sum([x.gs_key.endswith("/r1.fastq") for x in file_maps])
+        assert 2 == sum([x.gs_key.endswith("/r1.fastq.gz") for x in file_maps])
         # we should have 2 tot rev.
-        assert 2 == sum([x.gs_key.endswith("/r2.fastq") for x in file_maps])
+        assert 2 == sum([x.gs_key.endswith("/r2.fastq.gz") for x in file_maps])
         # in total local
-        assert 4 == sum([x.local_path.endswith(".fastq") for x in file_maps])
+        assert 4 == sum([x.local_path.endswith(".fastq.gz") for x in file_maps])
 
         # 4 in total
         assert len(file_maps) == 4

@@ -179,6 +179,22 @@
                 
                     <li>"Arm_I"</li>
                 
+                    <li>"Arm_1"</li>
+                
+                    <li>"Arm_2"</li>
+                
+                    <li>"Z1D"</li>
+                
+                    <li>"NSCLC_A"</li>
+                
+                    <li>"NSCLC_B"</li>
+                
+                    <li>"NSCLC_C"</li>
+                
+                    <li>"CRC_A"</li>
+                
+                    <li>"CRC_B"</li>
+                
             </ul>
             
             
@@ -432,7 +448,7 @@
             "type": "string"
         },
         "cohort_name": {
-            "$comment": "This is enum with E4412 values only as a temp solution.",
+            "$comment": "This enum lists a union of all possible values from all supported trials at the moment. Options are further limited by `in_doc_ref_pattern`.",
             "description": "Categorical description of cohorts, arms, and treatment groups.",
             "enum": [
                 "Arm_Z",
@@ -446,9 +462,39 @@
                 "Arm_X",
                 "Arm_G",
                 "Arm_H",
-                "Arm_I"
+                "Arm_I",
+                "Arm_1",
+                "Arm_2",
+                "Z1D",
+                "NSCLC_A",
+                "NSCLC_B",
+                "NSCLC_C",
+                "CRC_A",
+                "CRC_B"
             ],
+            "enum_comments": {
+                "Arm_1": "S1400I",
+                "Arm_2": "S1400I",
+                "Arm_A": "E4412",
+                "Arm_B": "E4412",
+                "Arm_C": "E4412",
+                "Arm_D": "E4412",
+                "Arm_E": "E4412",
+                "Arm_F": "E4412",
+                "Arm_G": "E4412",
+                "Arm_H": "E4412",
+                "Arm_I": "E4412",
+                "Arm_X": "E4412",
+                "Arm_Y": "E4412",
+                "Arm_Z": "E4412",
+                "CRC_A": "10021",
+                "CRC_B": "10021",
+                "NSCLC_A": "10021",
+                "NSCLC_B": "10021",
+                "NSCLC_C": "10021"
+            },
             "example": "Arm_Z",
+            "in_doc_ref_pattern": "/allowed_cohort_names/*",
             "type": "string"
         },
         "essential_patient_entry_number": {
@@ -626,16 +672,35 @@
                         "type": "string"
                     },
                     "collection_event_name": {
-                        "$comment": "This is enum with E4412 values only as a temp solution.",
+                        "$comment": "This enum lists a union of all possible values from all supported trials at the moment. Options are further limited by `in_doc_ref_pattern`.",
                         "description": "Categorical description of timepoint at which the sample was taken.",
                         "enum": [
                             "Baseline",
                             "Pre_Day_1_Cycle_2",
                             "Restaging",
                             "Off_study",
-                            "Not Reported",
+                            "Cycle_2_Week_3",
+                            "Cycle_4_Week_7",
+                            "Cycle_5_Week_9",
+                            "Progression",
+                            "Cycle_3",
+                            "End_of_treatment",
+                            "On_Treatment",
                             "Other"
                         ],
+                        "enum_comments": {
+                            "Cycle_2_Week_3": "S1400I",
+                            "Cycle_3": "Z1D",
+                            "Cycle_4_Week_7": "S1400I",
+                            "Cycle_5_Week_9": "S1400I",
+                            "End_of_treatment": "Z1D",
+                            "Off_study": "E4412",
+                            "On_Treatment": "10021",
+                            "Pre_Day_1_Cycle_2": "E4412",
+                            "Progression": "S1400I",
+                            "Restaging": "E4412"
+                        },
+                        "in_doc_ref_pattern": "/allowed_collection_event_names/*",
                         "title": "Collection Event Name",
                         "type": "string"
                     },

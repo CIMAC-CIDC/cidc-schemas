@@ -909,7 +909,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 9  # 9 output files
 
     elif template.type == "wes_analysis":
-        assert len(merged_gs_keys) == 28
+        assert len(merged_gs_keys) == 30
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -993,8 +993,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(dd["dictionary_item_added"]) == 7 * 9, "Unexpected CT changes"
 
     elif template.type == "wes_analysis":
-
-        assert len(dd["dictionary_item_added"]) == 196, "Unexpected CT changes"
+        # 7 artifact attributes * 30 files
+        assert len(dd["dictionary_item_added"]) == 210, "Unexpected CT changes"
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -1300,6 +1300,13 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/sorted/{x}/{x}_vcfcompare.txt'",
+                                            "merge_pointer": "/germline_txt",
+                                            "gcs_uri_format": "{run_id}/germline.txt",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
                                     ],
                                 },
                                 "sid1": {
@@ -1421,8 +1428,8 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     local_paths = [e.local_path for e in file_maps]
     uuids = [e.upload_placeholder for e in file_maps]
 
-    assert 28 == len(file_maps)  # (2 files * 3 fields from each record) * 2 records
-    assert 28 == len(set(uuids))  # (2 files * 3 fields from each record) * 2 records
+    assert 30 == len(file_maps)
+    assert 30 == len(set(uuids))
 
     assert local_paths != uuids
 

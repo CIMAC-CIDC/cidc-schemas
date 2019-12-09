@@ -10,6 +10,6 @@
     }
   },
   "required": [
-
+  "vcf_compare"
   ]
 }

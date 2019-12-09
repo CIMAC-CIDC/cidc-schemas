@@ -19,5 +19,7 @@
     }
   },
   "required": [
+    "mhc_class_1_epitopes",
+    "mhc_class_1_filtered_condensed_ranked"
   ]
 }

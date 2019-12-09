@@ -930,7 +930,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 9  # 9 output files
 
     elif template.type == "wes_analysis":
-        assert len(merged_gs_keys) == 30
+        assert len(merged_gs_keys) == 32
 
     else:
         assert False, f"add {template.type} assay specific asserts on 'merged_gs_keys'"
@@ -1015,7 +1015,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == "wes_analysis":
         # 7 artifact attributes * 30 files
-        assert len(dd["dictionary_item_added"]) == 210, "Unexpected CT changes"
+        assert len(dd["dictionary_item_added"]) == 224, "Unexpected CT changes"
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -1325,6 +1325,13 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                             "parse_through": "lambda x: f'analysis/sorted/{x}/{x}_vcfcompare.txt'",
                                             "merge_pointer": "/germline_txt",
                                             "gcs_uri_format": "{run_id}/germline.txt",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/purity/{x}/{x}.optimalpurityvalue.txt'",
+                                            "merge_pointer": "/purity_txt",
+                                            "gcs_uri_format": "{run id}/optimalpurityvalue.txt",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },

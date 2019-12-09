@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "hla",
+  "$id": "optitype",
   "title": "HLA output files",
   "type": "object",
   "description": "HLA output files.",
@@ -13,5 +13,6 @@
     }
   },
   "required": [
+    "optitype_results"
   ]
 }

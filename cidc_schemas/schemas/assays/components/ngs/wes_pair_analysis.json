@@ -38,6 +38,6 @@
   "required": [
     "normal",
     "tumor",
-    "somatic"
+    "run_id"
   ]
 }

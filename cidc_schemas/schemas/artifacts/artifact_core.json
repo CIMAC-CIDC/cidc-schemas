@@ -67,6 +67,7 @@
         "IMAGE",
         "VCF",
         "CSV",
+        "TSV",
         "XLSX",
         "NPX",
         "BAM",

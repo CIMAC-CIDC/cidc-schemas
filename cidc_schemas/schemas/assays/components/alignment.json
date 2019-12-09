@@ -26,6 +26,10 @@
   },
   "required": [
     "align_recalibrated",
-    "align_sorted"
+    "align_recalibrated_index",
+    "align_sorted",
+    "align_sorted_index",
+    "align_sorted_dedup",
+    "align_sorted_dedup_index"
   ]
 }

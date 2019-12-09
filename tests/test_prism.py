@@ -909,7 +909,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 9  # 9 output files
 
     elif template.type == "wes_analysis":
-        assert len(merged_gs_keys) == 12  # 6 output files per entry in xlsx
+        assert len(merged_gs_keys) == 28
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -993,8 +993,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(dd["dictionary_item_added"]) == 7 * 9, "Unexpected CT changes"
 
     elif template.type == "wes_analysis":
-        # 7 artifact attributes * 6 * 2 files
-        assert len(dd["dictionary_item_added"]) == 84, "Unexpected CT changes"
+
+        assert len(dd["dictionary_item_added"]) == 196, "Unexpected CT changes"
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -1314,9 +1314,37 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                             "is_artifact": 1,
                                         },
                                         {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.bai'",
+                                            "merge_pointer": "/sample1/sorted_index",
+                                            "gcs_uri_format": "{run_id}/{sid1}/sorted.bai",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
                                             "parse_through": "lambda x: f'analysis/align/{x}/{x}.recalibrated.bam'",
                                             "merge_pointer": "/sample1/recalibrated",
                                             "gcs_uri_format": "{run_id}/{sid1}/recalibrated.bam",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.recalibrated.bai'",
+                                            "merge_pointer": "/sample1/recalibrated_index",
+                                            "gcs_uri_format": "{run_id}/{sid1}/recalibrated.bai",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.dedup.bam'",
+                                            "merge_pointer": "/sample1/sorted_dedup",
+                                            "gcs_uri_format": "{run_id}/{sid1}/sorted.dedup.bam",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.dedup.bai'",
+                                            "merge_pointer": "/sample1/sorted_dedup_index",
+                                            "gcs_uri_format": "{run_id}/{sid1}/sorted.dedup.bai",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
@@ -1334,9 +1362,37 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                             "is_artifact": 1,
                                         },
                                         {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.bai'",
+                                            "merge_pointer": "/sample2/sorted_index",
+                                            "gcs_uri_format": "{run_id}/{sid2}/sorted.bai",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
                                             "parse_through": "lambda x: f'analysis/align/{x}/{x}.recalibrated.bam'",
                                             "merge_pointer": "/sample2/recalibrated",
                                             "gcs_uri_format": "{run_id}/{sid2}/recalibrated.bam",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.recalibrated.bai'",
+                                            "merge_pointer": "/sample2/recalibrated_index",
+                                            "gcs_uri_format": "{run_id}/{sid2}/recalibrated.bai",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.dedup.bam'",
+                                            "merge_pointer": "/sample2/sorted_dedup",
+                                            "gcs_uri_format": "{run_id}/{sid2}/sorted.dedup.bam",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.dedup.bai'",
+                                            "merge_pointer": "/sample2/sorted_dedup_index",
+                                            "gcs_uri_format": "{run_id}/{sid2}/sorted.dedup.bai",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
@@ -1365,8 +1421,8 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     local_paths = [e.local_path for e in file_maps]
     uuids = [e.upload_placeholder for e in file_maps]
 
-    assert 12 == len(file_maps)  # (2 files * 3 fields from each record) * 2 records
-    assert 12 == len(set(uuids))  # (2 files * 3 fields from each record) * 2 records
+    assert 28 == len(file_maps)  # (2 files * 3 fields from each record) * 2 records
+    assert 28 == len(set(uuids))  # (2 files * 3 fields from each record) * 2 records
 
     assert local_paths != uuids
 

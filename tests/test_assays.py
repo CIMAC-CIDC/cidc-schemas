@@ -71,11 +71,17 @@ def test_wes():
     obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
 
     # create the wes object
+    r1 = ARTIFACT_OBJ.copy()
+    r1["data_format"] = "FASTQ.GZ"
+    r2 = ARTIFACT_OBJ.copy()
+    r2["data_format"] = "FASTQ.GZ"
     bam = ARTIFACT_OBJ.copy()
     bam["data_format"] = "BAM"
+    vcf = ARTIFACT_OBJ.copy()
+    vcf["data_format"] = "VCF"
     record = {
         "cimac_id": "CTTTPPPSA.00",
-        "files": {"bam": bam},
+        "files": {"r1": r1, "r2": r2},
         "sequencing_date": "...",
         "quality_flag": 1,
     }

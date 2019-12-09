@@ -134,13 +134,19 @@ TEST_PRISM_TRIAL = {
                         "sequencing_date": "2019-01-01 00:00:00",
                         "quality_flag": 1,
                         "cimac_id": "CTTTPP111.00",
-                        "files": {"bam": {"upload_placeholder": "bam.1"}},
+                        "files": {
+                            "r1": {"upload_placeholder": "r1.1"},
+                            "r2": {"upload_placeholder": "r2.1"},
+                        },
                     },
                     {
                         "sequencing_date": "2019-01-01 00:00:00",
                         "quality_flag": 1,
                         "cimac_id": "CTTTPP121.00",
-                        "files": {"bam": {"upload_placeholder": "bam.2"}},
+                        "files": {
+                            "r1": {"upload_placeholder": "r1.2"},
+                            "r2": {"upload_placeholder": "r2.2"},
+                        },
                     },
                 ],
             }
@@ -151,8 +157,10 @@ TEST_PRISM_TRIAL = {
 
 # corresponding list of gs_urls.
 WES_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/data.bam": "bam.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/data.bam": "bam.2",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/r1.fastq.gz": "r1.1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/r2.fastq.gz": "r2.1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/r1.fastq.gz": "r1.2",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/r2.fastq.gz": "r2.2",
 }
 
 

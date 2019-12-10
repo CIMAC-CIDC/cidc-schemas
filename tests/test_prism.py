@@ -929,7 +929,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 9  # 9 output files
 
     elif template.type == "wes_analysis":
-        assert len(merged_gs_keys) == 44  # 42 (run + sample) output files
+        assert len(merged_gs_keys) == 62  # 62 (run + sample) output files
 
     else:
         assert False, f"add {template.type} assay specific asserts on 'merged_gs_keys'"
@@ -1014,8 +1014,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(dd["dictionary_item_added"]) == 7 * 9, "Unexpected CT changes"
 
     elif template.type == "wes_analysis":
-        # 7 artifact attributes * 44 files
-        assert len(dd["dictionary_item_added"]) == 308, "Unexpected CT changes"
+        # 7 artifact attributes * 62 files
+        assert len(dd["dictionary_item_added"]) == 434, "Unexpected CT changes"
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -1377,6 +1377,69 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnscope.output.maf'",
+                                            "merge_pointer": "/somatic_tnscope_output_maf",
+                                            "gcs_uri_format": "{run_id}/vcf_tnscope_output.maf",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnhaploytper2.output.maf'",
+                                            "merge_pointer": "/somatic_tnhaploytper2_output_maf",
+                                            "gcs_uri_format": "{run_id}/vcf_tnhaploytper2_output.maf",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnsnv.output.maf'",
+                                            "merge_pointer": "/somatic_tnsnv_output_maf",
+                                            "gcs_uri_format": "{run_id}/vcf_tnsnv_output.maf",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnscope.filter.vcf'",
+                                            "merge_pointer": "/somatic_tnscope_filter_vcf",
+                                            "gcs_uri_format": "{run_id}/vcf_tnscope_filter.vcf",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnhaploytper2.filter.vcf'",
+                                            "merge_pointer": "/somatic_tnhaploytper2_filter_vcf",
+                                            "gcs_uri_format": "{run_id}/vcf_tnhaploytper2_filter.vcf",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnsnv.filter.vcf'",
+                                            "merge_pointer": "/somatic_tnsnv_filter_vcf",
+                                            "gcs_uri_format": "{run_id}/vcf_tnsnv_filter.vcf",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnscope.filter.maf'",
+                                            "merge_pointer": "/somatic_tnscope_filter_maf",
+                                            "gcs_uri_format": "{run_id}/vcf_tnscope_filter.maf",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnhaploytper2.filter.maf'",
+                                            "merge_pointer": "/somatic_tnhaploytper2_filter_maf",
+                                            "gcs_uri_format": "{run_id}/vcf_tnhaploytper2_filter.maf",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnsnv.filter.maf'",
+                                            "merge_pointer": "/somatic_tnsnv_filter_maf",
+                                            "gcs_uri_format": "{run_id}/vcf_tnsnv_filter.maf",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
                                     ],
                                 },
                                 "sid1": {
@@ -1498,8 +1561,8 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     local_paths = [e.local_path for e in file_maps]
     uuids = [e.upload_placeholder for e in file_maps]
 
-    assert 44 == len(file_maps)
-    assert 44 == len(set(uuids))
+    assert 62 == len(file_maps)
+    assert 62 == len(set(uuids))
 
     assert local_paths != uuids
 

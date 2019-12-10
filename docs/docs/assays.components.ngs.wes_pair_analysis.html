@@ -108,54 +108,14 @@
             
         
             
-        
-            
-                <tr>
-    <td>
-        
-            <span id="somatic">
-                somatic
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Somatic variant calling output sample files.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.somatic.html">assays.components.somatic</a>
-        
-    </td>
-</tr>
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-        
-            
-        
-            
-        
-            
                 <tr>
     <td>
         
             <span id="run_id">
                 run_id
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -182,6 +142,46 @@
 </tr>
             
         
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="somatic">
+                somatic
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Somatic variant calling output sample files.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.somatic.html">assays.components.somatic</a>
+        
+    </td>
+</tr>
             
         
             
@@ -234,8 +234,8 @@
                 <tr>
     <td>
         
-            <span id="copynumber.json">
-                copynumber.json
+            <span id="copynumber">
+                copynumber
             </span>
             
         
@@ -257,8 +257,8 @@
                 <tr>
     <td>
         
-            <span id="purity.json">
-                purity.json
+            <span id="purity">
+                purity
             </span>
             
         
@@ -280,8 +280,8 @@
                 <tr>
     <td>
         
-            <span id="clonality.json">
-                clonality.json
+            <span id="clonality">
+                clonality
             </span>
             
         
@@ -312,7 +312,7 @@
     "additionalProperties": false,
     "description": "Whole Exome Sequencing assay output files for a tumor normal pair of samples.",
     "properties": {
-        "clonality.json": {
+        "clonality": {
             "$id": "clonality",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "description": "Clonality output files.",
@@ -367,18 +367,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -441,11 +445,13 @@
                     "type": "object"
                 }
             },
-            "required": [],
+            "required": [
+                "clonality_pyclone"
+            ],
             "title": "Clonality output files",
             "type": "object"
         },
-        "copynumber.json": {
+        "copynumber": {
             "$id": "copynumber",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "description": "Copy number output files.",
@@ -500,18 +506,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -623,18 +633,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -697,7 +711,10 @@
                     "type": "object"
                 }
             },
-            "required": [],
+            "required": [
+                "copynumber_cnv_calls",
+                "copynumber_cnv_calls_tsv"
+            ],
             "title": "Copy number output files",
             "type": "object"
         },
@@ -756,18 +773,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -830,7 +851,9 @@
                     "type": "object"
                 }
             },
-            "required": [],
+            "required": [
+                "vcf_compare"
+            ],
             "title": "Germline variant output sample files",
             "type": "object"
         },
@@ -889,18 +912,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -1012,18 +1039,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -1135,18 +1166,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -1258,18 +1293,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -1332,7 +1371,10 @@
                     "type": "object"
                 }
             },
-            "required": [],
+            "required": [
+                "mhc_class_1_epitopes",
+                "mhc_class_1_filtered_condensed_ranked"
+            ],
             "title": "Neoantigen output files",
             "type": "object"
         },
@@ -1397,18 +1439,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -1520,18 +1566,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -1643,18 +1693,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -1766,18 +1820,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -1889,18 +1947,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2012,18 +2074,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2088,7 +2154,11 @@
                     },
                     "required": [
                         "align_recalibrated",
-                        "align_sorted"
+                        "align_recalibrated_index",
+                        "align_sorted",
+                        "align_sorted_index",
+                        "align_sorted_dedup",
+                        "align_sorted_dedup_index"
                     ],
                     "title": "WES output align files",
                     "type": "object"
@@ -2101,7 +2171,7 @@
                     "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
                     "type": "string"
                 },
-                "coverage_metrics": {
+                "metrics": {
                     "$id": "coverage_metrics",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "description": "Coverage metrics output files.",
@@ -2156,18 +2226,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2279,18 +2353,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2402,18 +2480,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2525,18 +2607,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2648,18 +2734,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2771,18 +2861,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2894,18 +2988,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -3017,18 +3115,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -3095,8 +3197,8 @@
                     "title": "Coverage metrics output files",
                     "type": "object"
                 },
-                "hla": {
-                    "$id": "hla",
+                "optitype": {
+                    "$id": "optitype",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "description": "HLA output files.",
                     "properties": {
@@ -3150,18 +3252,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -3273,18 +3379,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -3347,18 +3457,21 @@
                             "type": "object"
                         }
                     },
-                    "required": [],
+                    "required": [
+                        "optitype_results",
+                        "xhla_report_hla"
+                    ],
                     "title": "HLA output files",
                     "type": "object"
                 }
             },
             "required": [
-                "alignment"
+                "cimac_id"
             ],
             "title": "WES sample analysis files",
             "type": "object"
         },
-        "purity.json": {
+        "purity": {
             "$id": "purity",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "description": "Purity output files.",
@@ -3413,18 +3526,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -3552,18 +3669,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -3675,18 +3796,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -3798,18 +3923,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -3921,18 +4050,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -4044,18 +4177,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -4167,18 +4304,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -4290,18 +4431,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -4413,18 +4558,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -4536,18 +4685,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -4659,18 +4812,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -4782,18 +4939,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -4905,18 +5066,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -5028,18 +5193,22 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -5103,8 +5272,9 @@
                 }
             },
             "required": [
-                "vcf_tnsnv_output",
-                "vcf_tnscope_output"
+                "vcf_tnscope_output",
+                "vcf_tnhaploytper2_output",
+                "vcf_tnsnv_output"
             ],
             "title": "Somatic variant output sample files",
             "type": "object"
@@ -5170,18 +5340,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -5293,18 +5467,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -5416,18 +5594,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -5539,18 +5721,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -5662,18 +5848,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -5785,18 +5975,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -5861,7 +6055,11 @@
                     },
                     "required": [
                         "align_recalibrated",
-                        "align_sorted"
+                        "align_recalibrated_index",
+                        "align_sorted",
+                        "align_sorted_index",
+                        "align_sorted_dedup",
+                        "align_sorted_dedup_index"
                     ],
                     "title": "WES output align files",
                     "type": "object"
@@ -5874,7 +6072,7 @@
                     "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
                     "type": "string"
                 },
-                "coverage_metrics": {
+                "metrics": {
                     "$id": "coverage_metrics",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "description": "Coverage metrics output files.",
@@ -5929,18 +6127,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -6052,18 +6254,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -6175,18 +6381,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -6298,18 +6508,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -6421,18 +6635,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -6544,18 +6762,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -6667,18 +6889,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -6790,18 +7016,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -6868,8 +7098,8 @@
                     "title": "Coverage metrics output files",
                     "type": "object"
                 },
-                "hla": {
-                    "$id": "hla",
+                "optitype": {
+                    "$id": "optitype",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "description": "HLA output files.",
                     "properties": {
@@ -6923,18 +7153,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -7046,18 +7280,22 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -7120,13 +7358,16 @@
                             "type": "object"
                         }
                     },
-                    "required": [],
+                    "required": [
+                        "optitype_results",
+                        "xhla_report_hla"
+                    ],
                     "title": "HLA output files",
                     "type": "object"
                 }
             },
             "required": [
-                "alignment"
+                "cimac_id"
             ],
             "title": "WES sample analysis files",
             "type": "object"
@@ -7135,7 +7376,7 @@
     "required": [
         "normal",
         "tumor",
-        "somatic"
+        "run_id"
     ],
     "title": "WES Pair Analysis Output Files",
     "type": "object"

@@ -58,17 +58,14 @@
         </thead>
         
             
-        
-            
-        
-        
-            
                 <tr>
     <td>
         
             <span id="optitype_results">
                 optitype_results
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -93,6 +90,8 @@
                 xhla_report_hla
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
@@ -108,15 +107,20 @@
 </tr>
             
         
+        
+            
+        
+            
+        
     </table>
 
     
   </div>
 
   <div class="container">
-    <h3>hla.full.json</h3>
+    <h3>optitype.full.json</h3>
   	<pre><code>{
-    "$id": "hla",
+    "$id": "optitype",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "HLA output files.",
     "properties": {
@@ -170,18 +174,22 @@
                             "description": "Data Format.",
                             "enum": [
                                 "FASTA",
-                                "FASTQ",
+                                "FASTQ.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -293,18 +301,22 @@
                             "description": "Data Format.",
                             "enum": [
                                 "FASTA",
-                                "FASTQ",
+                                "FASTQ.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -367,7 +379,10 @@
             "type": "object"
         }
     },
-    "required": [],
+    "required": [
+        "optitype_results",
+        "xhla_report_hla"
+    ],
     "title": "HLA output files",
     "type": "object"
 }</code></pre>

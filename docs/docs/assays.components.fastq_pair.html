@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Fastq pair and group mapping</h1>
+        <h1>Fastq pair</h1>
         <p>
-            <b>Description:</b>  Paired end sequencing fastq file pair and read group mapping file.
+            <b>Description:</b>  Paired end sequencing fastq file pair.
         </p>
         
     </div>
@@ -71,12 +71,12 @@
     </td>
     <td width=55%>
         
-            Information about a fastq file.
+            Information about a gzipped fastq file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_fastq.html">artifacts.artifact_fastq</a>
+            <a href="artifacts.artifact_fastq_gz.html">artifacts.artifact_fastq_gz</a>
         
     </td>
 </tr>
@@ -96,45 +96,20 @@
     </td>
     <td width=55%>
         
-            Information about a fastq file.
+            Information about a gzipped fastq file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_fastq.html">artifacts.artifact_fastq</a>
+            <a href="artifacts.artifact_fastq_gz.html">artifacts.artifact_fastq_gz</a>
         
     </td>
 </tr>
             
         
-            
-        
         
             
         
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="read_group_mapping_file">
-                read_group_mapping_file
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about text files.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
-        
-    </td>
-</tr>
             
         
     </table>
@@ -143,15 +118,15 @@
   </div>
 
   <div class="container">
-    <h3>fastq_pair_and_mapping.full.json</h3>
+    <h3>fastq_pair.full.json</h3>
   	<pre><code>{
-    "$id": "fastq_pair_and_mapping",
+    "$id": "fastq_pair",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "description": "Paired end sequencing fastq file pair and read group mapping file.",
+    "description": "Paired end sequencing fastq file pair.",
     "properties": {
         "r1": {
             "$comment": "Fastq file for the first fragment.",
-            "$id": "fastq_artifact",
+            "$id": "artifact_fastq_gz",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -200,18 +175,22 @@
                             "description": "Data Format.",
                             "enum": [
                                 "FASTA",
-                                "FASTQ",
+                                "FASTQ.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -262,20 +241,20 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "FASTQ",
+                            "const": "FASTQ.GZ",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a fastq file.",
+            "description": "Information about a gzipped fastq file.",
             "mergeStrategy": "objectMerge",
-            "title": "FastQ Artifact",
+            "title": "Gzipped FastQ Artifact",
             "type": "object"
         },
         "r2": {
             "$comment": "Fastq file for the second fragment.",
-            "$id": "fastq_artifact",
+            "$id": "artifact_fastq_gz",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -324,18 +303,22 @@
                             "description": "Data Format.",
                             "enum": [
                                 "FASTA",
-                                "FASTQ",
+                                "FASTQ.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -386,139 +369,15 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "FASTQ",
+                            "const": "FASTQ.GZ",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a fastq file.",
+            "description": "Information about a gzipped fastq file.",
             "mergeStrategy": "objectMerge",
-            "title": "FastQ Artifact",
-            "type": "object"
-        },
-        "read_group_mapping_file": {
-            "$comment": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
-            "$id": "text_artifact",
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "allOf": [
-                {
-                    "$id": "artifact_core",
-                    "$schema": "http://json-schema.org/draft-07/schema#",
-                    "anyOf": [
-                        {
-                            "required": [
-                                "file_name",
-                                "object_url",
-                                "uploaded_timestamp",
-                                "file_size_bytes",
-                                "md5_hash",
-                                "artifact_category",
-                                "data_format"
-                            ]
-                        },
-                        {
-                            "required": [
-                                "upload_placeholder"
-                            ]
-                        }
-                    ],
-                    "description": "Any file artifact associated with a clinical trial.",
-                    "properties": {
-                        "artifact_category": {
-                            "description": "Artifact category.",
-                            "enum": [
-                                "Assay Artifact from CIMAC",
-                                "Pipeline Artifact",
-                                "Manifest File"
-                            ],
-                            "type": "string"
-                        },
-                        "artifact_creator": {
-                            "description": "The name of the center that created this artifact.",
-                            "enum": [
-                                "DFCI",
-                                "Mount Sinai",
-                                "Stanford",
-                                "MD Anderson"
-                            ],
-                            "type": "string"
-                        },
-                        "data_format": {
-                            "description": "Data Format.",
-                            "enum": [
-                                "FASTA",
-                                "FASTQ",
-                                "IMAGE",
-                                "VCF",
-                                "CSV",
-                                "XLSX",
-                                "NPX",
-                                "BAM",
-                                "MAF",
-                                "BINARY",
-                                "TEXT",
-                                "ZIP",
-                                "FCS",
-                                "[NOT SET]"
-                            ],
-                            "type": "string"
-                        },
-                        "file_name": {
-                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                            "description": "The name of the file with extension.",
-                            "type": "string"
-                        },
-                        "file_size_bytes": {
-                            "description": "File size in bytes.",
-                            "type": "integer"
-                        },
-                        "md5_hash": {
-                            "description": "MD5 Hash of artifact.",
-                            "type": "string"
-                        },
-                        "object_url": {
-                            "description": "URL to artifact within Google Bucket.",
-                            "type": "string"
-                        },
-                        "upload_placeholder": {
-                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
-                            "description": "A placeholder for when artifact file is being uploaded.",
-                            "type": "string"
-                        },
-                        "uploaded_timestamp": {
-                            "description": "Timestamp of when artifact was loaded into the system.",
-                            "format": "date-time",
-                            "type": "string"
-                        },
-                        "uploader": {
-                            "description": "The name of the person uploading the artifact.",
-                            "type": "string"
-                        },
-                        "uuid": {
-                            "description": "UUID of artifact.",
-                            "type": "string"
-                        },
-                        "visible": {
-                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
-                            "type": "boolean"
-                        }
-                    },
-                    "title": "Artifact Core",
-                    "type": "object"
-                },
-                {
-                    "properties": {
-                        "data_format": {
-                            "const": "TEXT",
-                            "description": "Data format."
-                        }
-                    }
-                }
-            ],
-            "description": "Information about text files.",
-            "mergeStrategy": "objectMerge",
-            "title": "Text Artifact",
+            "title": "Gzipped FastQ Artifact",
             "type": "object"
         }
     },
@@ -526,7 +385,7 @@
         "r1",
         "r2"
     ],
-    "title": "Fastq pair and group mapping",
+    "title": "Fastq pair",
     "type": "object"
 }</code></pre>
   </container>

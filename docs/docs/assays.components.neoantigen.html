@@ -58,21 +58,14 @@
         </thead>
         
             
-        
-            
-        
-            
-        
-            
-        
-        
-            
                 <tr>
     <td>
         
             <span id="mhc_class_1_epitopes">
                 mhc_class_1_epitopes
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -87,6 +80,38 @@
         
     </td>
 </tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="mhc_class_1_filtered_condensed_ranked">
+                mhc_class_1_filtered_condensed_ranked
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about Tab Separated files.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_tsv.html">artifacts.artifact_tsv</a>
+        
+    </td>
+</tr>
+            
+        
+            
+        
+        
             
         
             
@@ -112,27 +137,6 @@
 </tr>
             
         
-            
-                <tr>
-    <td>
-        
-            <span id="mhc_class_1_filtered_condensed_ranked">
-                mhc_class_1_filtered_condensed_ranked
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about Tab Separated files.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_tsv.html">artifacts.artifact_tsv</a>
-        
-    </td>
-</tr>
             
         
             
@@ -220,18 +224,22 @@
                             "description": "Data Format.",
                             "enum": [
                                 "FASTA",
-                                "FASTQ",
+                                "FASTQ.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -343,18 +351,22 @@
                             "description": "Data Format.",
                             "enum": [
                                 "FASTA",
-                                "FASTQ",
+                                "FASTQ.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -466,18 +478,22 @@
                             "description": "Data Format.",
                             "enum": [
                                 "FASTA",
-                                "FASTQ",
+                                "FASTQ.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -589,18 +605,22 @@
                             "description": "Data Format.",
                             "enum": [
                                 "FASTA",
-                                "FASTQ",
+                                "FASTQ.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -663,7 +683,10 @@
             "type": "object"
         }
     },
-    "required": [],
+    "required": [
+        "mhc_class_1_epitopes",
+        "mhc_class_1_filtered_condensed_ranked"
+    ],
     "title": "Neoantigen output files",
     "type": "object"
 }</code></pre>

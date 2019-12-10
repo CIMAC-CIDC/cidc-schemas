@@ -83,6 +83,29 @@
             
         
             
+                <tr>
+    <td>
+        
+            <span id="align_recalibrated_index">
+                align_recalibrated_index
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a Bam index file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_bai.html">artifacts.artifact_bai</a>
+        
+    </td>
+</tr>
+            
         
             
                 <tr>
@@ -110,46 +133,14 @@
             
         
             
-        
-            
-        
-            
-        
-        
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="align_recalibrated_index">
-                align_recalibrated_index
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a Bam index file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_bai.html">artifacts.artifact_bai</a>
-        
-    </td>
-</tr>
-            
-        
-            
-        
-            
                 <tr>
     <td>
         
             <span id="align_sorted_index">
                 align_sorted_index
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -174,6 +165,8 @@
                 align_sorted_dedup
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
@@ -197,6 +190,8 @@
                 align_sorted_dedup_index
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
@@ -210,6 +205,19 @@
         
     </td>
 </tr>
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
             
         
     </table>
@@ -274,18 +282,22 @@
                             "description": "Data Format.",
                             "enum": [
                                 "FASTA",
-                                "FASTQ",
+                                "FASTQ.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -397,18 +409,22 @@
                             "description": "Data Format.",
                             "enum": [
                                 "FASTA",
-                                "FASTQ",
+                                "FASTQ.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -520,18 +536,22 @@
                             "description": "Data Format.",
                             "enum": [
                                 "FASTA",
-                                "FASTQ",
+                                "FASTQ.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -643,18 +663,22 @@
                             "description": "Data Format.",
                             "enum": [
                                 "FASTA",
-                                "FASTQ",
+                                "FASTQ.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -766,18 +790,22 @@
                             "description": "Data Format.",
                             "enum": [
                                 "FASTA",
-                                "FASTQ",
+                                "FASTQ.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -889,18 +917,22 @@
                             "description": "Data Format.",
                             "enum": [
                                 "FASTA",
-                                "FASTQ",
+                                "FASTQ.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -965,7 +997,11 @@
     },
     "required": [
         "align_recalibrated",
-        "align_sorted"
+        "align_recalibrated_index",
+        "align_sorted",
+        "align_sorted_index",
+        "align_sorted_dedup",
+        "align_sorted_dedup_index"
     ],
     "title": "WES output align files",
     "type": "object"

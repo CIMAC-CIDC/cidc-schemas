@@ -58,15 +58,14 @@
         </thead>
         
             
-        
-        
-            
                 <tr>
     <td>
         
             <span id="vcf_compare">
                 vcf_compare
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -81,6 +80,9 @@
         
     </td>
 </tr>
+            
+        
+        
             
         
     </table>
@@ -145,18 +147,22 @@
                             "description": "Data Format.",
                             "enum": [
                                 "FASTA",
-                                "FASTQ",
+                                "FASTQ.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -219,7 +225,9 @@
             "type": "object"
         }
     },
-    "required": [],
+    "required": [
+        "vcf_compare"
+    ],
     "title": "Germline variant output sample files",
     "type": "object"
 }</code></pre>

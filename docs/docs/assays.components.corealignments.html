@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Clonality output files</h1>
+        <h1>Core-alignments output files</h1>
         <p>
-            <b>Description:</b>  Clonality output files.
+            <b>Description:</b>  Core-alignments output files.
         </p>
         
     </div>
@@ -61,8 +61,8 @@
                 <tr>
     <td>
         
-            <span id="clonality_pyclone">
-                clonality_pyclone
+            <span id="tn_corealigned">
+                tn_corealigned
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -71,12 +71,12 @@
     </td>
     <td width=55%>
         
-            Information about Tab Separated files.
+            Information about a Bam file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_tsv.html">artifacts.artifact_tsv</a>
+            <a href="artifacts.artifact_bam.html">artifacts.artifact_bam</a>
         
     </td>
 </tr>
@@ -91,14 +91,14 @@
   </div>
 
   <div class="container">
-    <h3>clonality.full.json</h3>
+    <h3>corealignments.full.json</h3>
   	<pre><code>{
-    "$id": "clonality",
+    "$id": "core_alignments",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "description": "Clonality output files.",
+    "description": "Core-alignments output files.",
     "properties": {
-        "clonality_pyclone": {
-            "$id": "tsv_artifact",
+        "tn_corealigned": {
+            "$id": "bam_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -213,22 +213,22 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "TSV",
+                            "const": "BAM",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about Tab Separated files.",
+            "description": "Information about a Bam file.",
             "mergeStrategy": "objectMerge",
-            "title": "TSV Artifact",
+            "title": "BAM Artifact",
             "type": "object"
         }
     },
     "required": [
-        "clonality_pyclone"
+        "tn_corealigned"
     ],
-    "title": "Clonality output files",
+    "title": "Core-alignments output files",
     "type": "object"
 }</code></pre>
   </container>

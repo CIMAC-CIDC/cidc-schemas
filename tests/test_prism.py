@@ -929,7 +929,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 9  # 9 output files
 
     elif template.type == "wes_analysis":
-        assert len(merged_gs_keys) == 112  # 112 (run + sample) output files
+        assert len(merged_gs_keys) == 122  # 122 (run + sample) output files
 
     else:
         assert False, f"add {template.type} assay specific asserts on 'merged_gs_keys'"
@@ -1014,8 +1014,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(dd["dictionary_item_added"]) == 7 * 9, "Unexpected CT changes"
 
     elif template.type == "wes_analysis":
-        # 7 artifact attributes * 112 files
-        assert len(dd["dictionary_item_added"]) == 784, "Unexpected CT changes"
+        # 7 artifact attributes * 122 files
+        assert len(dd["dictionary_item_added"]) == 854, "Unexpected CT changes"
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -1455,6 +1455,27 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                             "is_artifact": 1,
                                         },
                                         {
+                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnscope.filter.exons.broad.vcf.gz'",
+                                            "merge_pointer": "/somatic_tnscope_exons_broad_gz",
+                                            "gcs_uri_format": "{run_id}/gz_tnscope_exons_broad.gz",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnhaploytper2.filter.exons.broad.vcf.gz'",
+                                            "merge_pointer": "/somatic_tnhaploytper2_exons_broad_gz",
+                                            "gcs_uri_format": "{run_id}/gz_tnhaploytper2_exons_broad.gz",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnsnv.filter.exons.broad.vcf.gz'",
+                                            "merge_pointer": "/somatic_tnsnv_exons_broad_gz",
+                                            "gcs_uri_format": "{run_id}/gz_tnsnv_exons_broad.gz",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
                                             "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnscope.filter.exons.mda.vcf.gz'",
                                             "merge_pointer": "/somatic_tnscope_exons_mda_gz",
                                             "gcs_uri_format": "{run_id}/gz_tnscope_exons_mda.gz",
@@ -1580,6 +1601,13 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                             "is_artifact": 1,
                                         },
                                         {
+                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.broad.mosdepth.region.dist.txt'",
+                                            "merge_pointer": "/sample1/mosdepth_region_dist_broad",
+                                            "gcs_uri_format": "{run_id}/{sid1}/mosdepth_region_dist_broad.txt",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
                                             "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.mda.mosdepth.region.dist.txt'",
                                             "merge_pointer": "/sample1/mosdepth_region_dist_mda",
                                             "gcs_uri_format": "{run_id}/{sid1}/mosdepth_region_dist_mda.txt",
@@ -1684,6 +1712,13 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                             "is_artifact": 1,
                                         },
                                         {
+                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.broad.mosdepth.region.dist.txt'",
+                                            "merge_pointer": "/sample2/mosdepth_region_dist_broad",
+                                            "gcs_uri_format": "{run_id}/{sid2}/mosdepth_region_dist_broad.txt",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
                                             "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.mda.mosdepth.region.dist.txt'",
                                             "merge_pointer": "/sample2/mosdepth_region_dist_mda",
                                             "gcs_uri_format": "{run_id}/{sid2}/mosdepth_region_dist_mda.txt",
@@ -1736,8 +1771,8 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     local_paths = [e.local_path for e in file_maps]
     uuids = [e.upload_placeholder for e in file_maps]
 
-    assert 112 == len(file_maps)
-    assert 112 == len(set(uuids))
+    assert 122 == len(file_maps)
+    assert 122 == len(set(uuids))
 
     assert local_paths != uuids
 

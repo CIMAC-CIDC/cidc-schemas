@@ -170,6 +170,27 @@
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
+                              {
+                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.exons.broad.vcf.gz'",
+                                    "merge_pointer": "/somatic/gz_tnscope_exons_broad",
+                                    "gcs_uri_format": "{run id}/wes_analysis/gz_tnscope_exons_broad.gz",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnhaploytper2.filter.exons.broad.vcf.gz'",
+                                    "merge_pointer": "/somatic/gz_tnhaploytper2_exons_broad",
+                                    "gcs_uri_format": "{run id}/wes_analysis/gz_tnhaploytper2_exons_broad.gz",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnsnv.filter.exons.broad.vcf.gz'",
+                                    "merge_pointer": "/somatic/gz_tnsnv_exons_broad",
+                                    "gcs_uri_format": "{run id}/wes_analysis/gz_tnsnv_exons_broad.gz",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
                                 {
                                     "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.exons.mda.vcf.gz'",
                                     "merge_pointer": "/somatic/gz_tnscope_exons_mda",
@@ -296,6 +317,13 @@
                                     "is_artifact": 1
                                 },
                                 {
+                                    "parse_through": "lambda id: f'analysis/metrics/{id}/{id}.broad.mosdepth.region.dist.txt'",
+                                    "merge_pointer": "/tumor/metrics/mosdepth_region_dist_broad",
+                                    "gcs_uri_format": "{run id}/wes_analysis/tumor/{tumor cimac id}/mosdepth_region_dist_broad.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}.mda.mosdepth.region.dist.txt'",
                                     "merge_pointer": "/tumor/metrics/mosdepth_region_dist_mda",
                                     "gcs_uri_format": "{run id}/wes_analysis/tumor/{tumor cimac id}/mosdepth_region_dist_mda.txt",
@@ -396,6 +424,13 @@
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_target_metrics.txt.sample_summary.txt'",
                                     "merge_pointer": "/normal/metrics/target_metrics_summary",
                                     "gcs_uri_format": "{run id}/wes_analysis/normal/{normal cimac id}/target_metrics_summary.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/metrics/{id}/{id}.broad.mosdepth.region.dist.txt'",
+                                    "merge_pointer": "/normal/metrics/mosdepth_region_dist_broad",
+                                    "gcs_uri_format": "{run id}/wes_analysis/normal/{normal cimac id}/mosdepth_region_dist_broad.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },

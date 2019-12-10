@@ -197,6 +197,13 @@
                                     "gcs_uri_format": "{run id}/wes_analysis/gz_tnsnv_exons_mocha.gz",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'analysis/corealignments/{run}/{run}_tn_corealigned.bam'",
+                                    "merge_pointer": "/somatic/tn_corealigned",
+                                    "gcs_uri_format": "{run id}/wes_analysis/tn_corealigned.bam",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
                                 }
                             ]
                         },

@@ -929,7 +929,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 9  # 9 output files
 
     elif template.type == "wes_analysis":
-        assert len(merged_gs_keys) == 74  # 74 (run + sample) output files
+        assert len(merged_gs_keys) == 76  # 76 (run + sample) output files
 
     else:
         assert False, f"add {template.type} assay specific asserts on 'merged_gs_keys'"
@@ -1014,8 +1014,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(dd["dictionary_item_added"]) == 7 * 9, "Unexpected CT changes"
 
     elif template.type == "wes_analysis":
-        # 7 artifact attributes * 74 files
-        assert len(dd["dictionary_item_added"]) == 518, "Unexpected CT changes"
+        # 7 artifact attributes * 76 files
+        assert len(dd["dictionary_item_added"]) == 532, "Unexpected CT changes"
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -1482,6 +1482,13 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/corealignments/{x}/{x}_tn_corealigned.bam'",
+                                            "merge_pointer": "/somatic_tn_corealigned",
+                                            "gcs_uri_format": "{run_id}/bam_tn_corealigned.bam",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
                                     ],
                                 },
                                 "sid1": {
@@ -1603,8 +1610,8 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     local_paths = [e.local_path for e in file_maps]
     uuids = [e.upload_placeholder for e in file_maps]
 
-    assert 74 == len(file_maps)
-    assert 74 == len(set(uuids))
+    assert 76 == len(file_maps)
+    assert 76 == len(set(uuids))
 
     assert local_paths != uuids
 

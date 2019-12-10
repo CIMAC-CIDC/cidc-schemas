@@ -331,42 +331,42 @@
                                 {
                                     "gcs_uri_format": "{run id}/wes_analysis/vcf_tnscope_filter.vcf",
                                     "is_artifact": 1,
-                                    "merge_pointer": "/somatic/vcf_tnscope_filter",
+                                    "merge_pointer": "/somatic/vcf_tnscope_filtered",
                                     "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.vcf'",
                                     "type_ref": "assays/components/local_file.json#properties/file_path"
                                 },
                                 {
                                     "gcs_uri_format": "{run id}/wes_analysis/vcf_tnhaploytper2_filter.vcf",
                                     "is_artifact": 1,
-                                    "merge_pointer": "/somatic/vcf_tnhaploytper2_filter",
+                                    "merge_pointer": "/somatic/vcf_tnhaploytper2_filtered",
                                     "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnhaploytper2.filter.vcf'",
                                     "type_ref": "assays/components/local_file.json#properties/file_path"
                                 },
                                 {
                                     "gcs_uri_format": "{run id}/wes_analysis/vcf_tnsnv_filter.vcf",
                                     "is_artifact": 1,
-                                    "merge_pointer": "/somatic/vcf_tnsnv_filter",
+                                    "merge_pointer": "/somatic/vcf_tnsnv_filtered",
                                     "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnsnv.filter.vcf'",
                                     "type_ref": "assays/components/local_file.json#properties/file_path"
                                 },
                                 {
                                     "gcs_uri_format": "{run id}/wes_analysis/maf_tnscope_filter.maf",
                                     "is_artifact": 1,
-                                    "merge_pointer": "/somatic/maf_tnscope_filter",
+                                    "merge_pointer": "/somatic/maf_tnscope_filtered",
                                     "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.maf'",
                                     "type_ref": "assays/components/local_file.json#properties/file_path"
                                 },
                                 {
                                     "gcs_uri_format": "{run id}/wes_analysis/maf_tnhaploytper2_filter.maf",
                                     "is_artifact": 1,
-                                    "merge_pointer": "/somatic/maf_tnhaploytper2_filter",
+                                    "merge_pointer": "/somatic/maf_tnhaploytper2_filtered",
                                     "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnhaploytper2.filter.maf'",
                                     "type_ref": "assays/components/local_file.json#properties/file_path"
                                 },
                                 {
                                     "gcs_uri_format": "{run id}/wes_analysis/maf_tnsnv_filter.maf",
                                     "is_artifact": 1,
-                                    "merge_pointer": "/somatic/maf_tnsnv_filter",
+                                    "merge_pointer": "/somatic/maf_tnsnv_filtered",
                                     "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnsnv.filter.maf'",
                                     "type_ref": "assays/components/local_file.json#properties/file_path"
                                 },
@@ -438,6 +438,13 @@
                                     "is_artifact": 1,
                                     "merge_pointer": "/somatic/tn_corealigned",
                                     "parse_through": "lambda run: f'analysis/corealignments/{run}/{run}_tn_corealigned.bam'",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path"
+                                },
+                                {
+                                    "gcs_uri_format": "{run id}/wes_analysis/tn_corealigned.bai",
+                                    "is_artifact": 1,
+                                    "merge_pointer": "/somatic/tn_corealigned_index",
+                                    "parse_through": "lambda run: f'analysis/corealignments/{run}/{run}_tn_corealigned.bai'",
                                     "type_ref": "assays/components/local_file.json#properties/file_path"
                                 }
                             ],

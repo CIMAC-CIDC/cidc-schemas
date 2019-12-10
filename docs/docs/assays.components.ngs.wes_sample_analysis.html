@@ -300,7 +300,7 @@
                             }
                         }
                     ],
-                    "description": "Information about a Bam file.",
+                    "description": "Information about a BAM file.",
                     "mergeStrategy": "objectMerge",
                     "title": "BAM Artifact",
                     "type": "object"
@@ -554,7 +554,7 @@
                             }
                         }
                     ],
-                    "description": "Information about a Bam file.",
+                    "description": "Information about a BAM file.",
                     "mergeStrategy": "objectMerge",
                     "title": "BAM Artifact",
                     "type": "object"
@@ -681,7 +681,7 @@
                             }
                         }
                     ],
-                    "description": "Information about a Bam file.",
+                    "description": "Information about a BAM file.",
                     "mergeStrategy": "objectMerge",
                     "title": "BAM Artifact",
                     "type": "object"
@@ -949,7 +949,7 @@
                 "align_sorted_dedup",
                 "align_sorted_dedup_index"
             ],
-            "title": "WES output align files",
+            "title": "WES Alignment Output Files",
             "type": "object"
         },
         "cimac_id": {
@@ -1087,7 +1087,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -1214,7 +1214,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -1341,7 +1341,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -1468,7 +1468,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -1595,7 +1595,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -1722,7 +1722,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -1849,7 +1849,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -1976,14 +1976,22 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
                 }
             },
-            "required": [],
-            "title": "Coverage metrics output files",
+            "required": [
+                "mosdepth_region_dist_broad",
+                "mosdepth_region_dist_mda",
+                "mosdepth_region_dist_mocha",
+                "coverage_metrics",
+                "coverage_metrics_summary",
+                "target_metrics",
+                "target_metrics_summary"
+            ],
+            "title": "WES Metric Output Files",
             "type": "object"
         },
         "optitype": {
@@ -2113,7 +2121,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -2250,7 +2258,7 @@
                 "optitype_results",
                 "xhla_report_hla"
             ],
-            "title": "HLA output files",
+            "title": "WES Optitype/HLA Output Files",
             "type": "object"
         }
     },

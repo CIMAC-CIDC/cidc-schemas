@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Coverage metrics output files</h1>
+        <h1>WES Metric Output Files</h1>
         <p>
             <b>Description:</b>  Coverage metrics output files.
         </p>
@@ -60,44 +60,6 @@
             
         
             
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-        
-            
-                <tr>
-    <td>
-        
-            <span id="all_summaries">
-                all_summaries
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about text files.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
-        
-    </td>
-</tr>
-            
-        
-            
                 <tr>
     <td>
         
@@ -105,11 +67,13 @@
                 mosdepth_region_dist_broad
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
         
-            Information about text files.
+            Information about a text file.
         
     </td>
     <td>
@@ -128,11 +92,13 @@
                 mosdepth_region_dist_mda
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
         
-            Information about text files.
+            Information about a text file.
         
     </td>
     <td>
@@ -151,11 +117,13 @@
                 mosdepth_region_dist_mocha
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
         
-            Information about text files.
+            Information about a text file.
         
     </td>
     <td>
@@ -174,11 +142,13 @@
                 coverage_metrics
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
         
-            Information about text files.
+            Information about a text file.
         
     </td>
     <td>
@@ -197,11 +167,13 @@
                 coverage_metrics_summary
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
         
-            Information about text files.
+            Information about a text file.
         
     </td>
     <td>
@@ -220,11 +192,13 @@
                 target_metrics
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
         
-            Information about text files.
+            Information about a text file.
         
     </td>
     <td>
@@ -243,11 +217,13 @@
                 target_metrics_summary
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
         
-            Information about text files.
+            Information about a text file.
         
     </td>
     <td>
@@ -256,6 +232,44 @@
         
     </td>
 </tr>
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="all_summaries">
+                all_summaries
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a text file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
             
         
     </table>
@@ -392,7 +406,7 @@
                     }
                 }
             ],
-            "description": "Information about text files.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
             "title": "Text Artifact",
             "type": "object"
@@ -519,7 +533,7 @@
                     }
                 }
             ],
-            "description": "Information about text files.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
             "title": "Text Artifact",
             "type": "object"
@@ -646,7 +660,7 @@
                     }
                 }
             ],
-            "description": "Information about text files.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
             "title": "Text Artifact",
             "type": "object"
@@ -773,7 +787,7 @@
                     }
                 }
             ],
-            "description": "Information about text files.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
             "title": "Text Artifact",
             "type": "object"
@@ -900,7 +914,7 @@
                     }
                 }
             ],
-            "description": "Information about text files.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
             "title": "Text Artifact",
             "type": "object"
@@ -1027,7 +1041,7 @@
                     }
                 }
             ],
-            "description": "Information about text files.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
             "title": "Text Artifact",
             "type": "object"
@@ -1154,7 +1168,7 @@
                     }
                 }
             ],
-            "description": "Information about text files.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
             "title": "Text Artifact",
             "type": "object"
@@ -1281,14 +1295,22 @@
                     }
                 }
             ],
-            "description": "Information about text files.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
             "title": "Text Artifact",
             "type": "object"
         }
     },
-    "required": [],
-    "title": "Coverage metrics output files",
+    "required": [
+        "mosdepth_region_dist_broad",
+        "mosdepth_region_dist_mda",
+        "mosdepth_region_dist_mocha",
+        "coverage_metrics",
+        "coverage_metrics_summary",
+        "target_metrics",
+        "target_metrics_summary"
+    ],
+    "title": "WES Metric Output Files",
     "type": "object"
 }</code></pre>
   </container>

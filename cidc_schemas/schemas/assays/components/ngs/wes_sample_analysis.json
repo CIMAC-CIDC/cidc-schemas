@@ -16,7 +16,7 @@
     "hla": {
       "$ref": "assays/components/hla.json"
     },
-    "coverage_metrics": {
+    "metrics": {
       "$ref": "assays/components/coverage_metrics.json"
     }
   },

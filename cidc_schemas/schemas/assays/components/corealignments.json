@@ -7,6 +7,9 @@
   "properties": {
     "tn_corealigned": {
       "$ref": "artifacts/artifact_bam.json"
+    },
+    "tn_corealigned_index": {
+      "$ref": "artifacts/artifact_bai.json"
     }
   },
     "required": [

@@ -3,7 +3,7 @@
   "$id": "binary_artifact",
   "title": "Binary Artifact",
   "type": "object",
-  "description": "Information about binary files.",
+  "description": "Information about a binary file.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

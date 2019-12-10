@@ -3,7 +3,7 @@
   "$id": "tbi_artifact",
   "title": "TBI Artifact",
   "type": "object",
-  "description": "Information about Tabix index files.",
+  "description": "Information about a Tabix index file.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

@@ -3,7 +3,7 @@
   "$id": "maf_artifact",
   "title": "MAF Artifact",
   "type": "object",
-  "description": "Information about a Maf file.",
+  "description": "Information about a MAF file.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

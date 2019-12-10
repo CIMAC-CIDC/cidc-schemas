@@ -3,7 +3,7 @@
   "$id": "fcs_artifact",
   "title": "FCS Artifact",
   "type": "object",
-  "description": "Information about FCS files.",
+  "description": "Information about a FCS file.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

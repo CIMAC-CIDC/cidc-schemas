@@ -3,7 +3,7 @@
   "$id": "csv_artifact",
   "title": "CSV Artifact",
   "type": "object",
-  "description": "Information about Comma separated files.",
+  "description": "Information about a comma separated file.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

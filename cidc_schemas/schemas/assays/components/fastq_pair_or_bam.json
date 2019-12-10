@@ -6,16 +6,28 @@
   "description": "Paired end sequencing in a .fastq file pair or in a .bam",
   "properties": {
     "r1": {
-      "$comment": "Fastq file for the first fragment.",
-      "$ref": "artifacts/artifact_fastq_gz.json"
+      "type": "array",
+      "items": {
+        "$comment": "Fastq file for the first fragment.",
+        "$ref": "artifacts/artifact_fastq_gz.json"
+      },
+      "minItems": 1
     },
     "r2": {
-      "$comment": "Fastq file for the second fragment.",
-      "$ref": "artifacts/artifact_fastq_gz.json"
+      "type": "array",
+      "items": {
+        "$comment": "Fastq file for the first fragment.",
+        "$ref": "artifacts/artifact_fastq_gz.json"
+      },
+      "minItems": 1
     },
     "bam": {
+      "type": "array",
+      "items": {
         "$comment": "A BAM file, aligned or not, which contains both pairs of sequencing libraries",
         "$ref": "artifacts/artifact_bam.json" 
+      },
+      "minItems": 1
     }
   },
   "anyOf": [

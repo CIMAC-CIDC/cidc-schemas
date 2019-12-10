@@ -138,8 +138,11 @@ TEST_PRISM_TRIAL = {
                         "quality_flag": 1,
                         "cimac_id": "CTTTPP111.00",
                         "files": {
-                            "r1": {"upload_placeholder": "r1.1"},
-                            "r2": {"upload_placeholder": "r2.1"},
+                            "r1": [
+                                {"upload_placeholder": "r1.1_0"},
+                                {"upload_placeholder": "r1.1_1"},
+                            ],
+                            "r2": [{"upload_placeholder": "r2.1_0"}],
                         },
                     },
                     {
@@ -147,8 +150,11 @@ TEST_PRISM_TRIAL = {
                         "quality_flag": 1,
                         "cimac_id": "CTTTPP121.00",
                         "files": {
-                            "r1": {"upload_placeholder": "r1.2"},
-                            "r2": {"upload_placeholder": "r2.2"},
+                            "r1": [
+                                {"upload_placeholder": "r1.2_0"},
+                                {"upload_placeholder": "r1.2_1"},
+                            ],
+                            "r2": [{"upload_placeholder": "r2.2_0"}],
                         },
                     },
                 ],
@@ -160,10 +166,18 @@ TEST_PRISM_TRIAL = {
 
 # corresponding list of gs_urls.
 WES_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/r1.fastq.gz": "r1.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/r2.fastq.gz": "r2.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/r1.fastq.gz": "r1.2",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/r2.fastq.gz": "r2.2",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    + "/CTTTPP111.00/wes/r1_0.fastq.gz": "r1.1_0",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    + "/CTTTPP111.00/wes/r1_1.fastq.gz": "r1.1_1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    + "/CTTTPP111.00/wes/r2_0.fastq.gz": "r2.1_0",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    + "/CTTTPP121.00/wes/r1_0.fastq.gz": "r1.2_0",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    + "/CTTTPP121.00/wes/r1_1.fastq.gz": "r1.2_1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    + "/CTTTPP121.00/wes/r2_0.fastq.gz": "r2.2_0",
 }
 
 WESBAM_TEMPLATE_EXAMPLE_GS_URLS = {
@@ -411,17 +425,24 @@ def test_filepath_gen(xlsx, template):
     # assert we have the right file counts etc.
     if template.type == "wes_fastq":
 
-        # we should have 2 fastq per sample.
-        # we should have 2 tot forward.
-        assert 2 == sum([x.gs_key.endswith("/r1.fastq.gz") for x in file_maps])
-        # we should have 2 tot rev.
-        assert 2 == sum([x.gs_key.endswith("/r2.fastq.gz") for x in file_maps])
-        # in total local
-        assert 4 == sum([x.local_path.endswith(".fastq.gz") for x in file_maps])
-
-        # 4 in total
-        assert len(file_maps) == 4
+        # we should have 2 .fastq files per sample.
+        assert 2 == sum([x.gs_key.endswith("/r1_0.fastq.gz") for x in file_maps])
+        # we should have 4 file total for forward, because we have
+        # a list of two local files for each sample in wes example xlsx.
         assert 4 == sum(
+            [
+                x.gs_key.endswith("/r1_0.fastq.gz")
+                or x.gs_key.endswith("/r1_1.fastq.gz")
+                for x in file_maps
+            ]
+        )
+        # and only 2 total for reverse (r2) - each sample has just 1.
+        assert 2 == sum([x.gs_key.endswith("/r2_0.fastq.gz") for x in file_maps])
+
+        # Local files in total:
+        assert 6 == sum([x.local_path.endswith(".fastq.gz") for x in file_maps])
+        assert len(file_maps) == 6
+        assert 6 == sum(
             [
                 x.gs_key.startswith(TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME])
                 for x in file_maps
@@ -1000,7 +1021,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 2
 
     elif template.type == "wes_fastq":
-        assert len(merged_gs_keys) == 2 * 2  # 2 files per entry in xlsx
+        assert (
+            len(merged_gs_keys) == 3 * 2
+        )  # 2 files for forward + 1 for rev, per entry/sample in xlsx
         assert set(merged_gs_keys) == set(WES_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
     elif template.type == "wes_bam":
@@ -1078,8 +1101,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     if template.type == "wes_fastq":
 
-        # 4 files * 7 artifact attributes
-        assert len(dd["dictionary_item_added"]) == 4 * 7, "Unexpected CT changes"
+        # 6 files * 7 artifact attributes
+        assert len(dd["dictionary_item_added"]) == 6 * 7, "Unexpected CT changes"
 
         # nothing else in diff
         assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"

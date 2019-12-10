@@ -36,6 +36,7 @@ def get_all_paths(ct: dict, key: str, dont_throw=False) -> List[str]:
         if dont_throw:
             return []
         else:
+            print("key:", key, "ct:", ct)
             raise KeyError(f"key: {key} not found")
 
     return ds1["matched_values"]

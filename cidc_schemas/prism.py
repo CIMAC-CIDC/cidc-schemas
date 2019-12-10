@@ -853,6 +853,7 @@ def merge_artifact(
     determined by inspecting the gs url path.
     Args:
         ct: clinical_trial object to be searched
+        artifact_uuid: artifact identifier
         object_url: the gs url pointing to the object being added
         file_size_bytes: integer specifying the number of bytes in the file
         uploaded_timestamp: time stamp associated with this object
@@ -860,7 +861,7 @@ def merge_artifact(
                     object storage
     Returns:
         ct: updated clinical trial object
-        artifact: updated artifact
+        artifact: updated artifactf
         additional_artifact_metadata: relevant metadata collected while updating artifact
     """
 

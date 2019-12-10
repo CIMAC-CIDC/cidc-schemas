@@ -46,7 +46,7 @@ def tiny_template():
                         "first table": test_fields,
                         "another table": test_fields,
                     },
-                },
+                }
             }
         },
     }

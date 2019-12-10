@@ -50,9 +50,18 @@ from .test_assays import ARTIFACT_OBJ
 def prismify_test_set(filter=None):
     yielded = False
 
+    print("WIHIUHEJIHE")
+    print("WIHIUHEJIHE")
+    print("WIHIUHEJIHE")
+    print("WIHIUHEJIHE")
+    print("WIHIUHEJIHE")
+    print("WIHIUHEJIHE")
+
     for template, xlsx_path in template_set():
-        if filter and not template.type in filter:
+
+        if filter and template.type not in filter:
             continue
+        print("AAA", template.type, filter)
         xlsx, errors = XlTemplateReader.from_excel(xlsx_path)
         assert not errors
         yield xlsx, template
@@ -341,10 +350,10 @@ def test_prism(xlsx, template):
 
             # also handle WES differently due to two templates mapping to one assay
             ttype = template.type
-            if template.type == 'wes_bam':
-                ttype = 'wes'
+            if template.type == "wes_bam":
+                ttype = "wes"
 
-            # this assert the merging of rows in the template is happening properly 
+            # this assert the merging of rows in the template is happening properly
             # multiple entries means the merge didn't work
             assert len(ct["assays"][ttype]) == 1
 
@@ -439,7 +448,7 @@ def test_filepath_gen(xlsx, template):
 
         # we should have 1 bam per sample.
         assert 2 == sum([x.gs_key.endswith(".bam") for x in file_maps])
-        
+
         # in total local
         assert 2 == sum([x.local_path.endswith(".bam") for x in file_maps])
 
@@ -578,6 +587,51 @@ def test_prismify_plasma(xlsx, template):
     assert md_patch["participants"][0]["samples"][0][
         "site_description"
     ]  # filled from the second tab
+
+
+@pytest.mark.parametrize("xlsx, template", prismify_test_set(filter=["wes_bam"]))
+def test_prismify_wesbam_only(xlsx, template):
+
+    # create validators
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
+
+    # parse the spreadsheet and get the file maps
+    md_patch, file_maps, errs = prismify(xlsx, template)
+    assert len(errs) == 0
+
+    print(file_maps)
+    print()
+    for x in file_maps:
+        print(x)
+        print()
+    # assert False
+
+    for e in validator.iter_errors(md_patch):
+        assert isinstance(e, InDocRefNotFoundError) or (
+            "'participants'" in str(e) and "required" in str(e)
+        )
+
+    # we merge it with a preexisting one
+    # 1. we get all 'required' fields from this preexisting
+    # 2. we can check it didn't overwrite anything crucial
+    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merged = merger.merge(TEST_PRISM_TRIAL, md_patch)
+
+    # assert works
+    validator.validate(merged)
+
+    merged_wo_needed_participants = copy.deepcopy(merged)
+    merged_wo_needed_participants["participants"][0]["samples"][0][
+        "cimac_id"
+    ] = "CTTTNAADA.00"
+
+    # assert in_doc_ref constraints work
+    with pytest.raises(InDocRefNotFoundError):
+        validator.validate(merged_wo_needed_participants)
+
+    # 2 record = 2 missing aliquot refs = 2 errors
+    assert 2 == len(list(validator.iter_errors(merged_wo_needed_participants)))
 
 
 @pytest.mark.parametrize("xlsx, template", prismify_test_set("wes"))
@@ -861,9 +915,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         ttype = template.type
         if ttype == "wes_bam":
             ttype = "wes"
-        assert (
-            f"{ttype}/" in f.gs_key
-        ), f"No {ttype} template.type found"
+        assert f"{ttype}/" in f.gs_key, f"No {ttype} template.type found"
 
     original_ct = copy.deepcopy(TEST_PRISM_TRIAL)
 

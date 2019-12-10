@@ -78,6 +78,7 @@
         "ZIP",
         "FCS",
         "GZ",
+        "JSON",
         "[NOT SET]"
       ]
     }

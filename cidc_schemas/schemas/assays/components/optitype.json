@@ -13,6 +13,7 @@
     }
   },
   "required": [
-    "optitype_results"
+    "optitype_results",
+    "xhla_report_hla"
   ]
 }

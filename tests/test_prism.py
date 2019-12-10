@@ -929,7 +929,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 9  # 9 output files
 
     elif template.type == "wes_analysis":
-        assert len(merged_gs_keys) == 100  # 100 (run + sample) output files
+        assert len(merged_gs_keys) == 112  # 112 (run + sample) output files
 
     else:
         assert False, f"add {template.type} assay specific asserts on 'merged_gs_keys'"
@@ -1014,8 +1014,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(dd["dictionary_item_added"]) == 7 * 9, "Unexpected CT changes"
 
     elif template.type == "wes_analysis":
-        # 7 artifact attributes * 100 files
-        assert len(dd["dictionary_item_added"]) == 700, "Unexpected CT changes"
+        # 7 artifact attributes * 112 files
+        assert len(dd["dictionary_item_added"]) == 784, "Unexpected CT changes"
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -1357,6 +1357,20 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                             "is_artifact": 1,
                                         },
                                         {
+                                            "parse_through": "lambda x: f'analysis/neoantigen/{x}/MHC_Class_2/{x}.all_epitopes.tsv'",
+                                            "merge_pointer": "/neoantigen_mhc_class_2_epitopes_tsv",
+                                            "gcs_uri_format": "{run_id}/MHC_Class_2_all_epitopes.tsv",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/neoantigen/{x}/MHC_Class_2/{x}.filtered.condensed.ranked.tsv'",
+                                            "merge_pointer": "/neoantigen_mhc_class_2_filtered_condensed_ranked_tsv",
+                                            "gcs_uri_format": "{run_id}/MHC_Class_2_filtered_condensed_ranked.tsv",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
                                             "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnscope.output.vcf'",
                                             "merge_pointer": "/somatic_tnscope_output_vcf",
                                             "gcs_uri_format": "{run_id}/vcf_tnscope_output.vcf",
@@ -1579,6 +1593,20 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/optitype/{x}/{x}_results.tsv'",
+                                            "merge_pointer": "/sample1/optitype_results",
+                                            "gcs_uri_format": "{run_id}/{sid1}/optitype_results.tsv",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/xhla/{x}/{x}_report-{x}-optitype.json'",
+                                            "merge_pointer": "/sample1/xhla_report_hla",
+                                            "gcs_uri_format": "{run_id}/{sid1}/xhla_report_hla.json",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
                                     ],
                                 },
                                 "sid2": {
@@ -1669,6 +1697,20 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/optitype/{x}/{x}_results.tsv'",
+                                            "merge_pointer": "/sample2/optitype_results",
+                                            "gcs_uri_format": "{run_id}/{sid2}/optitype_results.tsv",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/xhla/{x}/{x}_report-{x}-optitype.json'",
+                                            "merge_pointer": "/sample2/xhla_report_hla",
+                                            "gcs_uri_format": "{run_id}/{sid2}/xhla_report_hla.json",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
                                     ],
                                 },
                             }
@@ -1694,8 +1736,8 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     local_paths = [e.local_path for e in file_maps]
     uuids = [e.upload_placeholder for e in file_maps]
 
-    assert 100 == len(file_maps)
-    assert 100 == len(set(uuids))
+    assert 112 == len(file_maps)
+    assert 112 == len(set(uuids))
 
     assert local_paths != uuids
 

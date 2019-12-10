@@ -48,6 +48,15 @@
   "required": [
     "vcf_tnscope_output",
     "vcf_tnhaploytper2_output",
-    "vcf_tnsnv_output"
+    "vcf_tnsnv_output",
+    "vcf_tnscope_filtered",
+    "vcf_tnhaploytper2_filtered",
+    "vcf_tnsnv_filtered",
+    "maf_tnscope_output",
+    "maf_tnhaploytper2_output"
+    "maf_tnsnv_output",
+    "maf_tnscope_filtered",
+    "maf_tnhaploytper2_filtered",
+    "maf_tnsnv_filtered"
   ]
 }

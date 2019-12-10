@@ -164,6 +164,11 @@ WES_TEMPLATE_EXAMPLE_GS_URLS = {
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/r2.fastq.gz": "r2.2",
 }
 
+WESBAM_TEMPLATE_EXAMPLE_GS_URLS = {
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/reads.bam": "r1.1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/reads.bam": "r1.2",
+}
+
 
 def test_test_data():
 
@@ -333,7 +338,15 @@ def test_prism(xlsx, template):
     if template.type in SUPPORTED_ASSAYS:
         # olink is different - is will never have array of assay "runs" - only one
         if template.type != "olink":
-            assert len(ct["assays"][template.type]) == 1
+
+            # also handle WES differently due to two templates mapping to one assay
+            ttype = template.type
+            if template.type == 'wes_bam':
+                ttype = 'wes'
+
+            # this assert the merging of rows in the template is happening properly 
+            # multiple entries means the merge didn't work
+            assert len(ct["assays"][ttype]) == 1
 
     elif template.type in SUPPORTED_SHIPPING_MANIFESTS:
         assert not ct.get("assays"), "Assay created during manifest prismify"
@@ -407,6 +420,32 @@ def test_filepath_gen(xlsx, template):
         # 4 in total
         assert len(file_maps) == 4
         assert 4 == sum(
+            [
+                x.gs_key.startswith(TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME])
+                for x in file_maps
+            ]
+        )
+
+        # all that with
+        # 1 trial id
+        assert 1 == len(set([x.gs_key.split("/")[0] for x in file_maps]))
+        # 2 samples
+
+        assert ["CTTTPP111.00", "CTTTPP121.00"] == list(
+            sorted(set([x.gs_key.split("/")[1] for x in file_maps]))
+        )
+
+    elif template.type == "wes_bam":
+
+        # we should have 1 bam per sample.
+        assert 2 == sum([x.gs_key.endswith(".bam") for x in file_maps])
+        
+        # in total local
+        assert 2 == sum([x.local_path.endswith(".bam") for x in file_maps])
+
+        # 2 in total
+        assert len(file_maps) == 2
+        assert 2 == sum(
             [
                 x.gs_key.startswith(TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME])
                 for x in file_maps
@@ -807,6 +846,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
         elif template.type == "wes":
             assert len(prism_patch["assays"][template.type][0]["records"]) == 2
+        elif template.type == "wes_bam":
+            assert len(prism_patch["assays"]["wes"][0]["records"]) == 2
 
         elif template.type == "ihc":
             assert len(prism_patch["assays"][template.type][0]["records"]) == 1
@@ -817,9 +858,12 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             )
 
     for f in file_maps:
+        ttype = template.type
+        if ttype == "wes_bam":
+            ttype = "wes"
         assert (
-            f"{template.type}/" in f.gs_key
-        ), f"No {template.type} template.type found"
+            f"{ttype}/" in f.gs_key
+        ), f"No {ttype} template.type found"
 
     original_ct = copy.deepcopy(TEST_PRISM_TRIAL)
 
@@ -914,6 +958,11 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 2 * 2  # 2 files per entry in xlsx
         assert set(merged_gs_keys) == set(WES_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
+    elif template.type == "wes_bam":
+        assert len(merged_gs_keys) == 2 * 1  # 1 files per entry in xlsx
+        print(set(merged_gs_keys))
+        assert set(merged_gs_keys) == set(WESBAM_TEMPLATE_EXAMPLE_GS_URLS.keys())
+
     elif template.type == "olink":
         assert (
             len(merged_gs_keys) == 5
@@ -946,12 +995,13 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             len(full_ct["assays"][template.type]["records"]) == 2
         ), "More records than expected"
 
-    elif template.type == "wes":
-        assert len(full_ct["assays"][template.type]) == 1 + len(
-            TEST_PRISM_TRIAL["assays"][template.type]
-        ), f"Multiple {template.type}-assays created instead of merging into one"
+    elif template.type == "wes_bam" or template.type == "wes":
+        ttype = "wes"
+        assert len(full_ct["assays"][ttype]) == 1 + len(
+            TEST_PRISM_TRIAL["assays"][ttype]
+        ), f"Multiple {ttype}-assays created instead of merging into one"
         assert (
-            len(full_ct["assays"][template.type][0]["records"]) == 2
+            len(full_ct["assays"][ttype][0]["records"]) == 2
         ), "More records than expected"
 
     elif template.type == "ihc":
@@ -986,6 +1036,14 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
         # 4 files * 7 artifact attributes
         assert len(dd["dictionary_item_added"]) == 4 * 7, "Unexpected CT changes"
+
+        # nothing else in diff
+        assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
+
+    elif template.type == "wes_bam":
+
+        # 2 files * 7 artifact attributes
+        assert len(dd["dictionary_item_added"]) == 2 * 7, "Unexpected CT changes"
 
         # nothing else in diff
         assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"

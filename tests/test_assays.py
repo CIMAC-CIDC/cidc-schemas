@@ -57,7 +57,7 @@ def _fetch_validator(name):
     return jsonschema.Draft7Validator(schema)
 
 
-def test_wes():
+def test_wes_fastq():
 
     # create the ngs object
     ngs_obj = {
@@ -75,13 +75,40 @@ def test_wes():
     r1["data_format"] = "FASTQ.GZ"
     r2 = ARTIFACT_OBJ.copy()
     r2["data_format"] = "FASTQ.GZ"
-    bam = ARTIFACT_OBJ.copy()
-    bam["data_format"] = "BAM"
-    vcf = ARTIFACT_OBJ.copy()
-    vcf["data_format"] = "VCF"
     record = {
         "cimac_id": "CTTTPPPSA.00",
         "files": {"r1": r1, "r2": r2},
+        "sequencing_date": "...",
+        "quality_flag": 1,
+    }
+
+    # add a demo record.
+    obj["records"] = [record]
+
+    # create validator assert schemas are valid.
+    validator = _fetch_validator("wes")
+    validator.validate(obj)
+
+
+def test_wes_bam():
+
+    # create the ngs object
+    ngs_obj = {
+        "sequencer_platform": "Illumina - NovaSeq 6000",
+        "sequencing_protocol": "Express Somatic Human WES (Deep Coverage) v1.1",
+        "library_kit": "Hyper Prep ICE Exome Express: 1.0",
+        "paired_end_reads": "Paired",
+        "read_length": 200,
+        "bait_set": "whole_exome_illumina_coding_v1",
+    }
+    obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
+
+    # create the wes object
+    bam = ARTIFACT_OBJ.copy()
+    bam["data_format"] = "BAM"
+    record = {
+        "cimac_id": "CTTTPPPSA.00",
+        "files": {"bam": bam},
         "sequencing_date": "...",
         "quality_flag": 1,
     }

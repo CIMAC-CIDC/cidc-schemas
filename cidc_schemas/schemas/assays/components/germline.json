@@ -11,5 +11,6 @@
   },
   "required": [
   "vcf_compare"
-  ]
+  ],
+  "additionalProperties": false
 }

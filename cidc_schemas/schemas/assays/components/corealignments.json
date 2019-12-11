@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "core_alignments",
+  "$id": "corealignments",
   "title": "WES Corealignment Output Files",
   "type": "object",
   "description": "Core-alignments output files.",

@@ -5,9 +5,6 @@
   "type": "object",
   "description": "Somatic variant calling output sample files.",
   "properties": {
-    "vcf_filtered_compressed": {
-      "$ref": "artifacts/artifact_gz.json"
-    },
     "vcf_tnscope_filtered": {
       "$ref": "artifacts/artifact_vcf.json"
     },
@@ -43,6 +40,33 @@
     },
     "maf_tnsnv_output": {
       "$ref": "artifacts/artifact_maf.json"
+    },
+    "gz_tnscope_exons_broad": {
+      "$ref": "artifacts/artifact_gz.json"
+    },
+    "gz_tnhaploytper2_exons_broad": {
+      "$ref": "artifacts/artifact_gz.json"
+    },
+    "gz_tnsnv_exons_broad": {
+      "$ref": "artifacts/artifact_gz.json"
+    },
+    "gz_tnscope_exons_mda": {
+      "$ref": "artifacts/artifact_gz.json"
+    },
+    "gz_tnhaploytper2_exons_mda": {
+      "$ref": "artifacts/artifact_gz.json"
+    },
+    "gz_tnsnv_exons_mda": {
+      "$ref": "artifacts/artifact_gz.json"
+    },
+    "gz_tnscope_exons_mocha": {
+      "$ref": "artifacts/artifact_gz.json"
+    },
+    "gz_tnhaploytper2_exons_mocha": {
+      "$ref": "artifacts/artifact_gz.json"
+    },
+    "gz_tnsnv_exons_mocha": {
+      "$ref": "artifacts/artifact_gz.json"
     }
   },
   "required": [
@@ -57,6 +81,16 @@
     "maf_tnsnv_output",
     "maf_tnscope_filtered",
     "maf_tnhaploytper2_filtered",
-    "maf_tnsnv_filtered"
-  ]
+    "maf_tnsnv_filtered",
+    "gz_tnscope_exons_broad",
+    "gz_tnhaploytper2_exons_broad",
+    "gz_tnsnv_exons_broad",
+    "gz_tnscope_exons_mda",
+    "gz_tnhaploytper2_exons_mda",
+    "gz_tnsnv_exons_mda",
+    "gz_tnscope_exons_mocha",
+    "gz_tnhaploytper2_exons_mocha",
+    "gz_tnsnv_exons_mocha"
+  ],
+  "additionalProperties": false
 }

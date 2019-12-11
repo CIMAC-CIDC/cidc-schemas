@@ -31,5 +31,6 @@
     "align_sorted_index",
     "align_sorted_dedup",
     "align_sorted_dedup_index"
-  ]
+  ],
+  "additionalProperties": false
 }

@@ -33,6 +33,9 @@
     },
     "clonality": {
       "$ref": "assays/components/clonality.json"
+    },
+    "corealignments": {
+      "$ref": "assays/components/corealignments.json"
     }
   },
   "required": [

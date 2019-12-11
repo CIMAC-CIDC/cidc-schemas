@@ -15,5 +15,6 @@
   "required": [
     "optitype_results",
     "xhla_report_hla"
-  ]
+  ],
+  "additionalProperties": false
 }

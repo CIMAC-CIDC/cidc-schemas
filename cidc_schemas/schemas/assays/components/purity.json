@@ -11,5 +11,6 @@
   },
   "required": [
     "optimal_purity_value"
-  ]
+  ],
+  "additionalProperties": false
 }

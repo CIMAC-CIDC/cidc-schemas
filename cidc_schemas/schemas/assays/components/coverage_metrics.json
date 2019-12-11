@@ -38,5 +38,6 @@
     "coverage_metrics_summary",
     "target_metrics",
     "target_metrics_summary"
-  ]
+  ],
+  "additionalProperties": false
 }

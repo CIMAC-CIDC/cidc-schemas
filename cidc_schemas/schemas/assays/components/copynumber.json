@@ -15,5 +15,6 @@
   "required": [
     "copynumber_cnv_calls",
     "copynumber_cnv_calls_tsv"
-  ]
+  ],
+  "additionalProperties": false
 }

@@ -58,44 +58,14 @@
         </thead>
         
             
-        
-            
-                <tr>
-    <td>
-        
-            <span id="alignment">
-                alignment
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            WES output align files.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.alignment.html">assays.components.alignment</a>
-        
-    </td>
-</tr>
-            
-        
-            
-        
-            
-        
-        
-            
                 <tr>
     <td>
         
             <span id="cimac_id">
                 cimac_id
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -112,6 +82,36 @@
 </tr>
             
         
+            
+        
+            
+        
+            
+        
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="alignment">
+                alignment
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            WES output align files.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.alignment.html">assays.components.alignment</a>
+        
+    </td>
+</tr>
             
         
             
@@ -228,7 +228,7 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
@@ -351,7 +351,7 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
@@ -474,7 +474,7 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
@@ -597,7 +597,7 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
@@ -720,7 +720,7 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
@@ -843,7 +843,7 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
@@ -987,7 +987,7 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
@@ -1110,7 +1110,7 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
@@ -1233,7 +1233,7 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
@@ -1356,7 +1356,7 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
@@ -1479,7 +1479,7 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
@@ -1602,7 +1602,7 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
@@ -1725,7 +1725,7 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
@@ -1848,7 +1848,7 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
@@ -1981,7 +1981,7 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
@@ -2104,7 +2104,7 @@
                                     "description": "Data Format.",
                                     "enum": [
                                         "FASTA",
-                                        "FASTQ",
+                                        "FASTQ.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
@@ -2184,7 +2184,7 @@
         }
     },
     "required": [
-        "alignment"
+        "cimac_id"
     ],
     "title": "WES sample analysis files",
     "type": "object"

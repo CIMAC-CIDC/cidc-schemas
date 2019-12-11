@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fastq_pair_or_bam",
+  "title": "Fastq pair or a bam",
+  "type": "object",
+  "description": "Paired end sequencing in a .fastq file pair or in a .bam",
+  "properties": {
+    "r1": {
+      "type": "array",
+      "items": {
+        "$comment": "Fastq file for the first fragment.",
+        "$ref": "artifacts/artifact_fastq_gz.json"
+      },
+      "minItems": 1
+    },
+    "r2": {
+      "type": "array",
+      "items": {
+        "$comment": "Fastq file for the first fragment.",
+        "$ref": "artifacts/artifact_fastq_gz.json"
+      },
+      "minItems": 1
+    },
+    "bam": {
+      "type": "array",
+      "items": {
+        "$comment": "A BAM file, aligned or not, which contains both pairs of sequencing libraries",
+        "$ref": "artifacts/artifact_bam.json" 
+      },
+      "minItems": 1
+    }
+  },
+  "anyOf": [
+    {
+      "required": ["r1", "r2"]
+    },
+    {
+      "required": ["bam"]
+    }
+  ],
+  "additionalProperties": false
+}

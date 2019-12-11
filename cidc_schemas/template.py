@@ -180,7 +180,7 @@ class Template:
         """
         # if it's an artifact that will be loaded through local file
         # we just return uuid as value
-        if object_id == "local_file_path":
+        if object_id in ["local_file_path", "local_file_path_list"]:
             return Template._gen_upload_placeholder_uuid
         if t == "string":
             return str

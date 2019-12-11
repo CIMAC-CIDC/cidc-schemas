@@ -30,7 +30,7 @@ def test_tiny_loaded(tiny_template):
 def test_from_type():
     assert "Shipment" in Template.from_type("pbmc").worksheets
     assert "Samples" in Template.from_type("pbmc").worksheets
-    assert "WES" in Template.from_type("wes").worksheets
+    assert "WES" in Template.from_type("wes_fastq").worksheets
 
     with pytest.raises(Exception, match="unknown template type"):
         Template.from_type("foo")

@@ -262,14 +262,28 @@
                     "type": "string"
                 },
                 "files": {
-                    "$comment": "Fastq and read group mapping files produced by the assay for that .",
-                    "$id": "fastq_pair_and_mapping",
+                    "$comment": "Fastq files or a bam file produced by the assay.",
+                    "$id": "fastq_pair_or_bam",
                     "$schema": "http://json-schema.org/draft-07/schema#",
-                    "description": "Paired end sequencing fastq file pair and read group mapping file.",
+                    "additionalProperties": false,
+                    "anyOf": [
+                        {
+                            "required": [
+                                "r1",
+                                "r2"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "bam"
+                            ]
+                        }
+                    ],
+                    "description": "Paired end sequencing in a .fastq file pair or in a .bam",
                     "properties": {
-                        "r1": {
-                            "$comment": "Fastq file for the first fragment.",
-                            "$id": "fastq_artifact",
+                        "bam": {
+                            "$comment": "A BAM file, aligned or not, which contains both pairs of sequencing libraries",
+                            "$id": "bam_artifact",
                             "$schema": "http://json-schema.org/draft-07/schema#",
                             "allOf": [
                                 {
@@ -318,7 +332,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -380,20 +394,144 @@
                                 {
                                     "properties": {
                                         "data_format": {
-                                            "const": "FASTQ",
+                                            "const": "BAM",
                                             "description": "Data format."
                                         }
                                     }
                                 }
                             ],
-                            "description": "Information about a fastq file.",
+                            "description": "Information about a Bam file.",
                             "mergeStrategy": "objectMerge",
-                            "title": "FastQ Artifact",
+                            "title": "BAM Artifact",
+                            "type": "object"
+                        },
+                        "r1": {
+                            "$comment": "Fastq file for the first fragment.",
+                            "$id": "artifact_fastq_gz",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "allOf": [
+                                {
+                                    "$id": "artifact_core",
+                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                    "anyOf": [
+                                        {
+                                            "required": [
+                                                "file_name",
+                                                "object_url",
+                                                "uploaded_timestamp",
+                                                "file_size_bytes",
+                                                "md5_hash",
+                                                "artifact_category",
+                                                "data_format"
+                                            ]
+                                        },
+                                        {
+                                            "required": [
+                                                "upload_placeholder"
+                                            ]
+                                        }
+                                    ],
+                                    "description": "Any file artifact associated with a clinical trial.",
+                                    "properties": {
+                                        "artifact_category": {
+                                            "description": "Artifact category.",
+                                            "enum": [
+                                                "Assay Artifact from CIMAC",
+                                                "Pipeline Artifact",
+                                                "Manifest File"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "artifact_creator": {
+                                            "description": "The name of the center that created this artifact.",
+                                            "enum": [
+                                                "DFCI",
+                                                "Mount Sinai",
+                                                "Stanford",
+                                                "MD Anderson"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "data_format": {
+                                            "description": "Data Format.",
+                                            "enum": [
+                                                "FASTA",
+                                                "FASTQ.GZ",
+                                                "IMAGE",
+                                                "VCF",
+                                                "CSV",
+                                                "XLSX",
+                                                "NPX",
+                                                "BAM",
+                                                "MAF",
+                                                "BINARY",
+                                                "TEXT",
+                                                "ZIP",
+                                                "FCS",
+                                                "[NOT SET]"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "file_name": {
+                                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                            "description": "The name of the file with extension.",
+                                            "type": "string"
+                                        },
+                                        "file_size_bytes": {
+                                            "description": "File size in bytes.",
+                                            "type": "integer"
+                                        },
+                                        "md5_hash": {
+                                            "description": "MD5 Hash of artifact.",
+                                            "type": "string"
+                                        },
+                                        "object_url": {
+                                            "description": "URL to artifact within Google Bucket.",
+                                            "type": "string"
+                                        },
+                                        "upload_placeholder": {
+                                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                            "description": "A placeholder for when artifact file is being uploaded.",
+                                            "type": "string"
+                                        },
+                                        "uploaded_timestamp": {
+                                            "description": "Timestamp of when artifact was loaded into the system.",
+                                            "format": "date-time",
+                                            "type": "string"
+                                        },
+                                        "uploader": {
+                                            "description": "The name of the person uploading the artifact.",
+                                            "type": "string"
+                                        },
+                                        "uuid": {
+                                            "description": "UUID of artifact.",
+                                            "type": "string"
+                                        },
+                                        "visible": {
+                                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "title": "Artifact Core",
+                                    "type": "object"
+                                },
+                                {
+                                    "properties": {
+                                        "data_format": {
+                                            "const": "FASTQ.GZ",
+                                            "description": "Data format."
+                                        }
+                                    }
+                                }
+                            ],
+                            "description": "Information about a gzipped fastq file.",
+                            "mergeStrategy": "objectMerge",
+                            "title": "Gzipped FastQ Artifact",
                             "type": "object"
                         },
                         "r2": {
                             "$comment": "Fastq file for the second fragment.",
-                            "$id": "fastq_artifact",
+                            "$id": "artifact_fastq_gz",
                             "$schema": "http://json-schema.org/draft-07/schema#",
                             "allOf": [
                                 {
@@ -442,7 +580,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -504,147 +642,19 @@
                                 {
                                     "properties": {
                                         "data_format": {
-                                            "const": "FASTQ",
+                                            "const": "FASTQ.GZ",
                                             "description": "Data format."
                                         }
                                     }
                                 }
                             ],
-                            "description": "Information about a fastq file.",
+                            "description": "Information about a gzipped fastq file.",
                             "mergeStrategy": "objectMerge",
-                            "title": "FastQ Artifact",
-                            "type": "object"
-                        },
-                        "read_group_mapping_file": {
-                            "$comment": "Stores read group information for each read in the fastq files.  Needed for when samples are run across multiple lanes.",
-                            "$id": "text_artifact",
-                            "$schema": "http://json-schema.org/draft-07/schema#",
-                            "allOf": [
-                                {
-                                    "$id": "artifact_core",
-                                    "$schema": "http://json-schema.org/draft-07/schema#",
-                                    "anyOf": [
-                                        {
-                                            "required": [
-                                                "file_name",
-                                                "object_url",
-                                                "uploaded_timestamp",
-                                                "file_size_bytes",
-                                                "md5_hash",
-                                                "artifact_category",
-                                                "data_format"
-                                            ]
-                                        },
-                                        {
-                                            "required": [
-                                                "upload_placeholder"
-                                            ]
-                                        }
-                                    ],
-                                    "description": "Any file artifact associated with a clinical trial.",
-                                    "properties": {
-                                        "artifact_category": {
-                                            "description": "Artifact category.",
-                                            "enum": [
-                                                "Assay Artifact from CIMAC",
-                                                "Pipeline Artifact",
-                                                "Manifest File"
-                                            ],
-                                            "type": "string"
-                                        },
-                                        "artifact_creator": {
-                                            "description": "The name of the center that created this artifact.",
-                                            "enum": [
-                                                "DFCI",
-                                                "Mount Sinai",
-                                                "Stanford",
-                                                "MD Anderson"
-                                            ],
-                                            "type": "string"
-                                        },
-                                        "data_format": {
-                                            "description": "Data Format.",
-                                            "enum": [
-                                                "FASTA",
-                                                "FASTQ",
-                                                "IMAGE",
-                                                "VCF",
-                                                "CSV",
-                                                "XLSX",
-                                                "NPX",
-                                                "BAM",
-                                                "MAF",
-                                                "BINARY",
-                                                "TEXT",
-                                                "ZIP",
-                                                "FCS",
-                                                "[NOT SET]"
-                                            ],
-                                            "type": "string"
-                                        },
-                                        "file_name": {
-                                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                            "description": "The name of the file with extension.",
-                                            "type": "string"
-                                        },
-                                        "file_size_bytes": {
-                                            "description": "File size in bytes.",
-                                            "type": "integer"
-                                        },
-                                        "md5_hash": {
-                                            "description": "MD5 Hash of artifact.",
-                                            "type": "string"
-                                        },
-                                        "object_url": {
-                                            "description": "URL to artifact within Google Bucket.",
-                                            "type": "string"
-                                        },
-                                        "upload_placeholder": {
-                                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
-                                            "description": "A placeholder for when artifact file is being uploaded.",
-                                            "type": "string"
-                                        },
-                                        "uploaded_timestamp": {
-                                            "description": "Timestamp of when artifact was loaded into the system.",
-                                            "format": "date-time",
-                                            "type": "string"
-                                        },
-                                        "uploader": {
-                                            "description": "The name of the person uploading the artifact.",
-                                            "type": "string"
-                                        },
-                                        "uuid": {
-                                            "description": "UUID of artifact.",
-                                            "type": "string"
-                                        },
-                                        "visible": {
-                                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
-                                            "type": "boolean"
-                                        }
-                                    },
-                                    "title": "Artifact Core",
-                                    "type": "object"
-                                },
-                                {
-                                    "properties": {
-                                        "data_format": {
-                                            "const": "TEXT",
-                                            "description": "Data format."
-                                        }
-                                    }
-                                }
-                            ],
-                            "description": "Information about text files.",
-                            "mergeStrategy": "objectMerge",
-                            "title": "Text Artifact",
+                            "title": "Gzipped FastQ Artifact",
                             "type": "object"
                         }
                     },
-                    "required": [
-                        "r1",
-                        "r2"
-                    ],
-                    "title": "Fastq pair and group mapping",
+                    "title": "Fastq pair or a bam",
                     "type": "object"
                 },
                 "input_ng": {
@@ -747,7 +757,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -870,7 +880,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -993,7 +1003,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -1116,7 +1126,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -1239,7 +1249,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -1362,7 +1372,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -1506,7 +1516,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -1629,7 +1639,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -1752,7 +1762,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -1875,7 +1885,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -1998,7 +2008,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -2121,7 +2131,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -2244,7 +2254,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -2367,7 +2377,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -2500,7 +2510,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -2623,7 +2633,7 @@
                                             "description": "Data Format.",
                                             "enum": [
                                                 "FASTA",
-                                                "FASTQ",
+                                                "FASTQ.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
@@ -2703,7 +2713,7 @@
                 }
             },
             "required": [
-                "alignment"
+                "cimac_id"
             ],
             "title": "WES sample analysis files",
             "type": "object"

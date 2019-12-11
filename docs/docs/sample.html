@@ -1,0 +1,2646 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CIDC Schemas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main role="main">
+      
+
+  
+    <div class="container">
+        <p>
+            <a href="index.html">CIDC Data Model</a>
+        </p>
+        <h1>Sample</h1>
+        <p>
+            <b>Description:</b>  Any material sample taken from a biological entity for testing, diagnostic, propagation, treatment or research purposes, including a sample obtained from a living organism or taken from the biological object after halting of all its life functions. Biospecimen can contain one or more components including but not limited to cellular molecules, cells, tissues, organs, body fluids, embryos, and body excretory products.
+        </p>
+        
+    </div>
+
+  <div class="container">
+    <h3>Properties</h3>
+    
+    
+        
+        
+            
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cimac_id">
+                cimac_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+     : <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code> 
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="parent_sample_id">
+                parent_sample_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Sample identifier assigned by the biorepository site. Example: EA123-45.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="collection_event_name">
+                collection_event_name
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Categorical description of timepoint at which the sample was taken.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Baseline"</li>
+                
+                    <li>"Pre_Day_1_Cycle_2"</li>
+                
+                    <li>"Restaging"</li>
+                
+                    <li>"Off_study"</li>
+                
+                    <li>"Cycle_2_Week_3"</li>
+                
+                    <li>"Cycle_4_Week_7"</li>
+                
+                    <li>"Cycle_5_Week_9"</li>
+                
+                    <li>"Progression"</li>
+                
+                    <li>"Cycle_3"</li>
+                
+                    <li>"End_of_treatment"</li>
+                
+                    <li>"On_Treatment"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="sample_location">
+                sample_location
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Sample location within the shipping container. Example: A1.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="type_of_sample">
+                type_of_sample
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Type of sample sent.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Tumor Tissue"</li>
+                
+                    <li>"Normal Tissue"</li>
+                
+                    <li>"Skin Tissue"</li>
+                
+                    <li>"Blood"</li>
+                
+                    <li>"Bone Marrow"</li>
+                
+                    <li>"Cerebrospinal Fluid"</li>
+                
+                    <li>"Lymph Node"</li>
+                
+                    <li>"Stool"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="shipping_entry_number">
+                shipping_entry_number
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Provides a numbered identifier for patient (sample) entry in a shipment manifest.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                integer 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="box_number">
+                box_number
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Identifier if sample shipment container includes multiple boxes for each assay.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="surgical_pathology_report_id">
+                surgical_pathology_report_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A unique identifier so someone can find the surgical pathology report.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="clinical_report_id">
+                clinical_report_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A unique identifier so someone can find the clinical report.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="processed_sample_id">
+                processed_sample_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Aliquot identifier assigned by the biorepository site: EA123-45-1
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="site_description">
+                site_description
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Descritpion of the topography category. e.g LUNG AND BRONCHUS
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="topography_code">
+                topography_code
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            ICD-0-3 topography site code from which a specimen was isolated. e.g. C34.1
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="topography_description">
+                topography_description
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            ICD-0-3 site code description. e.g. Upper lobe, lung
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="histology_behavior">
+                histology_behavior
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            ICD-0-3 code for histology and behavior. e.g. 9665/3
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="histology_behavior_description">
+                histology_behavior_description
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            ICD-0-3 histology and behavior code description. e.g. Hodgkin lymphoma, nod. scler., grade 1
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="type_of_tumor_sample">
+                type_of_tumor_sample
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The type of tumor sample obtained (primary or metastatic).
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Metastatic Tumor"</li>
+                
+                    <li>"Primary Tumor"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="sample_collection_procedure">
+                sample_collection_procedure
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Blood Draw"</li>
+                
+                    <li>"Excision"</li>
+                
+                    <li>"Core Biopsy"</li>
+                
+                    <li>"Punch Biopsy"</li>
+                
+                    <li>"Endoscopic Biopsy"</li>
+                
+                    <li>"Bone Marrow Core Biopsy"</li>
+                
+                    <li>"Bone Marrow Aspirate"</li>
+                
+                    <li>"Lumbar Puncture"</li>
+                
+                    <li>"Aspirate"</li>
+                
+                    <li>"Fine-Needle Aspiration"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="core_number">
+                core_number
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The biopsy core number from which the sample was used.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="fixation_stabilization_type">
+                fixation_stabilization_type
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Type of specimen fixation or stabilization that was employed by the site directly after collection.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Archival FFPE"</li>
+                
+                    <li>"Fresh Specimen"</li>
+                
+                    <li>"Frozen Specimen"</li>
+                
+                    <li>"Formalin-Fixed Paraffin-Embedded"</li>
+                
+                    <li>"Optimum cutting temperature medium"</li>
+                
+                    <li>"Thaw-Lyse"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="type_of_primary_container">
+                type_of_primary_container
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The format in which the sample was sent.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Sodium heparin"</li>
+                
+                    <li>"Blood specimen container with EDTA"</li>
+                
+                    <li>"Potassium EDTA"</li>
+                
+                    <li>"Streck Blood Collection Tube"</li>
+                
+                    <li>"Stool collection container with DNA stabilizer"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="sample_volume">
+                sample_volume
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Volume of the parent sample (e.g. Heparin tube volume)
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="sample_volume_units">
+                sample_volume_units
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Unit for the parent sample volume.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Microliter"</li>
+                
+                    <li>"Milliliter"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="processed_sample_type">
+                processed_sample_type
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The type of processing that was performed on the collected specimen by the Biobank for storage.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Whole Blood"</li>
+                
+                    <li>"Plasma"</li>
+                
+                    <li>"PBMC"</li>
+                
+                    <li>"Buffy Coat"</li>
+                
+                    <li>"Bone Marrow Mononuclear Cell"</li>
+                
+                    <li>"Supernatant"</li>
+                
+                    <li>"Cell Pellet"</li>
+                
+                    <li>"H\u0026E-Stained Fixed Tissue Slide Specimen"</li>
+                
+                    <li>"Fixed Slide"</li>
+                
+                    <li>"Tissue Scroll"</li>
+                
+                    <li>"FFPE Punch"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="processed_sample_volume">
+                processed_sample_volume
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Volume of the processed sample.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="processed_sample_volume_units">
+                processed_sample_volume_units
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Volume units of each processed sample.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Microliters"</li>
+                
+                    <li>"Milliliters"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="processed_sample_concentration">
+                processed_sample_concentration
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The concentration of the processed sample.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="processed_sample_concentration_units">
+                processed_sample_concentration_units
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The concentration units for the processed sample.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Nanogram per Microliter"</li>
+                
+                    <li>"Milligram per Milliliter"</li>
+                
+                    <li>"Micrograms per Microliter"</li>
+                
+                    <li>"Cells per Vial"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="processed_sample_quantity">
+                processed_sample_quantity
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Quantity of the processed sample (e.g. number of slides cut for DNA extraction).
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="processed_sample_derivative">
+                processed_sample_derivative
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The type of derivative or analyte extracted from the specimen to be shipped for testing.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Tumor DNA"</li>
+                
+                    <li>"Tumor RNA"</li>
+                
+                    <li>"Germline DNA"</li>
+                
+                    <li>"Circulating Tumor-Derived DNA"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="sample_derivative_volume">
+                sample_derivative_volume
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Volume of the analyte or derivative shipped.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="sample_derivative_volume_units">
+                sample_derivative_volume_units
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Volume units of each analyte or derivative shipped.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Microliters"</li>
+                
+                    <li>"Milliliters"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="sample_derivative_concentration">
+                sample_derivative_concentration
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The concentration of analyte or derivative shipped.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="sample_derivative_concentration_units">
+                sample_derivative_concentration_units
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The concentration units for the analyte or derivative shipped.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Nanogram per Microliter"</li>
+                
+                    <li>"Milligram per Milliliter"</li>
+                
+                    <li>"Micrograms per Microliter"</li>
+                
+                    <li>"Cells per Vial"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="din">
+                din
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Provides a DNA Integrity Number as an indication of extraction quality (values of 1-10)
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="a260_a280">
+                a260_a280
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Provides an absorbance percentage ratio indicating purity of DNA (values of 0 to 2)
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="a260_a230">
+                a260_a230
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Provides an absorbance percentage ratio indicating presence of contaminants (values of 0 to 3)
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="pbmc_viability">
+                pbmc_viability
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Receiving site determines the percent recovered cells that are viable after thawing.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="pbmc_recovery">
+                pbmc_recovery
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Receiving site determines number for PBMCs per vial recovered upon receipt.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="pbmc_resting_period_used">
+                pbmc_resting_period_used
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Receiving site indicates if a resting period was used after PBMC recovery.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Yes"</li>
+                
+                    <li>"No"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="material_used">
+                material_used
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Receiving site indicates how much material was used for assay purposes.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="material_used_units">
+                material_used_units
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Units for the amount of material used; should be the same value as Specimen Analyte units.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Microliters"</li>
+                
+                    <li>"Milliliters"</li>
+                
+                    <li>"Nanogram per Microliter"</li>
+                
+                    <li>"Milligram per Milliliter"</li>
+                
+                    <li>"Micrograms per Microliter"</li>
+                
+                    <li>"Cells per Vial"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="material_remaining">
+                material_remaining
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Receiving site indicates how much material remains after assay use.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="material_remaining_units">
+                material_remaining_units
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Units for the amount of material remaining.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Microliters"</li>
+                
+                    <li>"Milliliters"</li>
+                
+                    <li>"Nanogram per Microliter"</li>
+                
+                    <li>"Milligram per Milliliter"</li>
+                
+                    <li>"Micrograms per Microliter"</li>
+                
+                    <li>"Cells per Vial"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="material_storage_condition">
+                material_storage_condition
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Storage condition of the material once it was received.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"RT"</li>
+                
+                    <li>"4oC"</li>
+                
+                    <li>"(-20)oC"</li>
+                
+                    <li>"(-80)oC"</li>
+                
+                    <li>"LN"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="quality_of_sample">
+                quality_of_sample
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Final status of sample after QC and pathology review.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Pass"</li>
+                
+                    <li>"Fail"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="sample_replacement">
+                sample_replacement
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indication if sample replacement is/was requested.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Replacement Not Requested"</li>
+                
+                    <li>"Replacement Requested"</li>
+                
+                    <li>"Replacement Tested"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="residual_sample_use">
+                residual_sample_use
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indication if sample was sent to another location or returned back to biorepository.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Sample Returned"</li>
+                
+                    <li>"Sample Sent to Another Lab"</li>
+                
+                    <li>"Sample received from CIMAC"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="comments">
+                comments
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Comments on sample testing.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="aliquots">
+                aliquots
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Pertaining to a portion (volume or weight) of the whole.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                array 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+             
+                
+                    <a href="aliquot.html">aliquot</a>
+                
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="diagnosis_verification">
+                diagnosis_verification
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates whether the local pathology review was consistent with the diagnostic pathology report.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Local pathology review was not consistent"</li>
+                
+                    <li>"Local pathology review was consistent with site of tissue procurement diagnostic pathology report"</li>
+                
+                    <li>"Not Available"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+    </table>
+
+    
+  </div>
+
+  <div class="container">
+    <h3>sample.full.json</h3>
+  	<pre><code>{
+    "$id": "sample",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "description": "Any material sample taken from a biological entity for testing, diagnostic, propagation, treatment or research purposes, including a sample obtained from a living organism or taken from the biological object after halting of all its life functions. Biospecimen can contain one or more components including but not limited to cellular molecules, cells, tissues, organs, body fluids, embryos, and body excretory products.",
+    "if": {
+        "properties": {
+            "type_of_sample": {
+                "enum": [
+                    "Blood"
+                ]
+            }
+        }
+    },
+    "properties": {
+        "a260_a230": {
+            "description": "Provides an absorbance percentage ratio indicating presence of contaminants (values of 0 to 3)",
+            "type": "number"
+        },
+        "a260_a280": {
+            "description": "Provides an absorbance percentage ratio indicating purity of DNA (values of 0 to 2)",
+            "type": "number"
+        },
+        "aliquots": {
+            "description": "Pertaining to a portion (volume or weight) of the whole.",
+            "items": {
+                "$id": "aliquot",
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "description": "Pertaining to a portion (volume or weight) of the whole.",
+                "properties": {
+                    "aliquot_amount": {
+                        "$comment": "RECHECK Should this be moved to the sample level or renamed?",
+                        "description": "The amount of extracted aliquot shipped. Example: 400 ng",
+                        "type": "string"
+                    },
+                    "aliquot_replacement": {
+                        "description": "Status of aliquot if replacement is/was requested.",
+                        "enum": [
+                            "Replacement Requested",
+                            "Replacement Tested",
+                            "N/A"
+                        ],
+                        "type": "string"
+                    },
+                    "aliquot_status": {
+                        "description": "Status of aliquot used for other assay, exhausted, destroyed, or returned.",
+                        "enum": [
+                            "Aliquot Returned",
+                            "Aliquot Exhausted",
+                            "Remainder used for other Assay",
+                            "Other",
+                            "Aliquot Leftover"
+                        ],
+                        "type": "string"
+                    },
+                    "extracted_concentration": {
+                        "description": "The concentration of biological material that was extracted from this aliquot.",
+                        "type": "string"
+                    },
+                    "fibrosis_percent_area": {
+                        "description": "Percent area of fibrotic area. Example: 15",
+                        "type": "number"
+                    },
+                    "lymphocyte_influx": {
+                        "description": "Extent of lymphocytic infiltration into the tumor stroma or surrounding environment. Example: 2",
+                        "type": "string"
+                    },
+                    "material_extracted": {
+                        "description": "The type of biological material that was extracted from this aliquot.",
+                        "enum": [
+                            "DNA",
+                            "RNA",
+                            "cfDNA",
+                            "Other"
+                        ],
+                        "type": "string"
+                    },
+                    "necrosis_percent_area": {
+                        "description": "Percent area of necrotic tissue. Example: 5",
+                        "type": "number"
+                    },
+                    "quantity": {
+                        "description": "Quantity of each aliquot shipped.",
+                        "type": "integer"
+                    },
+                    "slide_number": {
+                        "description": "Two digit number that indicates the sequential order of slide cuts, assigned by the CIMAC-CIDC Network.",
+                        "pattern": "^[0-9]{1,2}$",
+                        "type": "string"
+                    },
+                    "viable_stroma_percent_area": {
+                        "description": "Percent area of viable tissue. Example: 10",
+                        "type": "string"
+                    },
+                    "viable_tumor_percent_area": {
+                        "description": "Percent area that contains viable tumor cells. Example: 60",
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "slide_number",
+                    "aliquot_replacement",
+                    "aliquot_status"
+                ],
+                "title": "Aliquot",
+                "type": "object"
+            },
+            "mergeOptions": {
+                "idRef": "/slide_number"
+            },
+            "mergeStrategy": "arrayMergeById",
+            "type": "array"
+        },
+        "box_number": {
+            "description": "Identifier if sample shipment container includes multiple boxes for each assay.",
+            "type": "string"
+        },
+        "cimac_id": {
+            "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.",
+            "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??",
+            "example": "CTTTP01A1.00",
+            "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
+            "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
+            "type": "string"
+        },
+        "clinical_report_id": {
+            "description": "A unique identifier so someone can find the clinical report.",
+            "type": "string"
+        },
+        "collection_event_name": {
+            "$comment": "This enum lists a union of all possible values from all supported trials at the moment. Options are further limited by `in_doc_ref_pattern`.",
+            "description": "Categorical description of timepoint at which the sample was taken.",
+            "enum": [
+                "Baseline",
+                "Pre_Day_1_Cycle_2",
+                "Restaging",
+                "Off_study",
+                "Cycle_2_Week_3",
+                "Cycle_4_Week_7",
+                "Cycle_5_Week_9",
+                "Progression",
+                "Cycle_3",
+                "End_of_treatment",
+                "On_Treatment",
+                "Other"
+            ],
+            "enum_comments": {
+                "Cycle_2_Week_3": "S1400I",
+                "Cycle_3": "Z1D",
+                "Cycle_4_Week_7": "S1400I",
+                "Cycle_5_Week_9": "S1400I",
+                "End_of_treatment": "Z1D",
+                "Off_study": "E4412",
+                "On_Treatment": "10021",
+                "Pre_Day_1_Cycle_2": "E4412",
+                "Progression": "S1400I",
+                "Restaging": "E4412"
+            },
+            "in_doc_ref_pattern": "/allowed_collection_event_names/*",
+            "title": "Collection Event Name",
+            "type": "string"
+        },
+        "comments": {
+            "description": "Comments on sample testing.",
+            "type": "string"
+        },
+        "core_number": {
+            "description": "The biopsy core number from which the sample was used.",
+            "type": "number"
+        },
+        "diagnosis_verification": {
+            "description": "Indicates whether the local pathology review was consistent with the diagnostic pathology report.",
+            "enum": [
+                "Local pathology review was not consistent",
+                "Local pathology review was consistent with site of tissue procurement diagnostic pathology report",
+                "Not Available",
+                "Not Reported",
+                "Other"
+            ],
+            "title": "Diagnosis verification",
+            "type": "string"
+        },
+        "din": {
+            "description": "Provides a DNA Integrity Number as an indication of extraction quality (values of 1-10)",
+            "type": "number"
+        },
+        "fixation_stabilization_type": {
+            "description": "Type of specimen fixation or stabilization that was employed by the site directly after collection.",
+            "enum": [
+                "Archival FFPE",
+                "Fresh Specimen",
+                "Frozen Specimen",
+                "Formalin-Fixed Paraffin-Embedded",
+                "Optimum cutting temperature medium",
+                "Thaw-Lyse",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "histology_behavior": {
+            "description": "ICD-0-3 code for histology and behavior. e.g. 9665/3",
+            "type": "string"
+        },
+        "histology_behavior_description": {
+            "description": "ICD-0-3 histology and behavior code description. e.g. Hodgkin lymphoma, nod. scler., grade 1",
+            "type": "string"
+        },
+        "material_remaining": {
+            "description": "Receiving site indicates how much material remains after assay use.",
+            "type": "number"
+        },
+        "material_remaining_units": {
+            "description": "Units for the amount of material remaining.",
+            "enum": [
+                "Microliters",
+                "Milliliters",
+                "Nanogram per Microliter",
+                "Milligram per Milliliter",
+                "Micrograms per Microliter",
+                "Cells per Vial",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "material_storage_condition": {
+            "description": "Storage condition of the material once it was received.",
+            "enum": [
+                "RT",
+                "4oC",
+                "(-20)oC",
+                "(-80)oC",
+                "LN",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "material_used": {
+            "description": "Receiving site indicates how much material was used for assay purposes.",
+            "type": "number"
+        },
+        "material_used_units": {
+            "description": "Units for the amount of material used; should be the same value as Specimen Analyte units.",
+            "enum": [
+                "Microliters",
+                "Milliliters",
+                "Nanogram per Microliter",
+                "Milligram per Milliliter",
+                "Micrograms per Microliter",
+                "Cells per Vial",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "parent_sample_id": {
+            "description": "Sample identifier assigned by the biorepository site. Example: EA123-45.",
+            "type": "string"
+        },
+        "pbmc_recovery": {
+            "description": "Receiving site determines number for PBMCs per vial recovered upon receipt.",
+            "type": "number"
+        },
+        "pbmc_resting_period_used": {
+            "description": "Receiving site indicates if a resting period was used after PBMC recovery.",
+            "enum": [
+                "Yes",
+                "No",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "pbmc_viability": {
+            "description": "Receiving site determines the percent recovered cells that are viable after thawing.",
+            "type": "number"
+        },
+        "processed_sample_concentration": {
+            "description": "The concentration of the processed sample.",
+            "type": "number"
+        },
+        "processed_sample_concentration_units": {
+            "description": "The concentration units for the processed sample.",
+            "enum": [
+                "Nanogram per Microliter",
+                "Milligram per Milliliter",
+                "Micrograms per Microliter",
+                "Cells per Vial",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "processed_sample_derivative": {
+            "description": "The type of derivative or analyte extracted from the specimen to be shipped for testing.",
+            "enum": [
+                "Tumor DNA",
+                "Tumor RNA",
+                "Germline DNA",
+                "Circulating Tumor-Derived DNA",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "processed_sample_id": {
+            "description": "Aliquot identifier assigned by the biorepository site: EA123-45-1",
+            "type": "string"
+        },
+        "processed_sample_quantity": {
+            "description": "Quantity of the processed sample (e.g. number of slides cut for DNA extraction).",
+            "type": "number"
+        },
+        "processed_sample_type": {
+            "description": "The type of processing that was performed on the collected specimen by the Biobank for storage.",
+            "enum": [
+                "Whole Blood",
+                "Plasma",
+                "PBMC",
+                "Buffy Coat",
+                "Bone Marrow Mononuclear Cell",
+                "Supernatant",
+                "Cell Pellet",
+                "H&E-Stained Fixed Tissue Slide Specimen",
+                "Fixed Slide",
+                "Tissue Scroll",
+                "FFPE Punch",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "processed_sample_volume": {
+            "description": "Volume of the processed sample.",
+            "type": "number"
+        },
+        "processed_sample_volume_units": {
+            "description": "Volume units of each processed sample.",
+            "enum": [
+                "Microliters",
+                "Milliliters",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "quality_of_sample": {
+            "description": "Final status of sample after QC and pathology review.",
+            "enum": [
+                "Pass",
+                "Fail",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "residual_sample_use": {
+            "description": "Indication if sample was sent to another location or returned back to biorepository.",
+            "enum": [
+                "Sample Returned",
+                "Sample Sent to Another Lab",
+                "Sample received from CIMAC",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "sample_collection_procedure": {
+            "description": "Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52",
+            "enum": [
+                "Blood Draw",
+                "Excision",
+                "Core Biopsy",
+                "Punch Biopsy",
+                "Endoscopic Biopsy",
+                "Bone Marrow Core Biopsy",
+                "Bone Marrow Aspirate",
+                "Lumbar Puncture",
+                "Aspirate",
+                "Fine-Needle Aspiration",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "sample_derivative_concentration": {
+            "description": "The concentration of analyte or derivative shipped.",
+            "type": "number"
+        },
+        "sample_derivative_concentration_units": {
+            "description": "The concentration units for the analyte or derivative shipped.",
+            "enum": [
+                "Nanogram per Microliter",
+                "Milligram per Milliliter",
+                "Micrograms per Microliter",
+                "Cells per Vial",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "sample_derivative_volume": {
+            "description": "Volume of the analyte or derivative shipped.",
+            "type": "number"
+        },
+        "sample_derivative_volume_units": {
+            "description": "Volume units of each analyte or derivative shipped.",
+            "enum": [
+                "Microliters",
+                "Milliliters",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "sample_location": {
+            "description": "Sample location within the shipping container. Example: A1.",
+            "type": "string"
+        },
+        "sample_replacement": {
+            "description": "Indication if sample replacement is/was requested.",
+            "enum": [
+                "Replacement Not Requested",
+                "Replacement Requested",
+                "Replacement Tested",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "sample_volume": {
+            "description": "Volume of the parent sample (e.g. Heparin tube volume)",
+            "type": "number"
+        },
+        "sample_volume_units": {
+            "description": "Unit for the parent sample volume.",
+            "enum": [
+                "Microliter",
+                "Milliliter",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "shipping_entry_number": {
+            "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
+            "type": "integer"
+        },
+        "site_description": {
+            "description": "Descritpion of the topography category. e.g LUNG AND BRONCHUS",
+            "type": "string"
+        },
+        "surgical_pathology_report_id": {
+            "description": "A unique identifier so someone can find the surgical pathology report.",
+            "type": "string"
+        },
+        "topography_code": {
+            "description": "ICD-0-3 topography site code from which a specimen was isolated. e.g. C34.1",
+            "type": "string"
+        },
+        "topography_description": {
+            "description": "ICD-0-3 site code description. e.g. Upper lobe, lung",
+            "type": "string"
+        },
+        "type_of_primary_container": {
+            "description": "The format in which the sample was sent.",
+            "enum": [
+                "Sodium heparin",
+                "Blood specimen container with EDTA",
+                "Potassium EDTA",
+                "Streck Blood Collection Tube",
+                "Stool collection container with DNA stabilizer",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "type_of_sample": {
+            "description": "Type of sample sent.",
+            "enum": [
+                "Tumor Tissue",
+                "Normal Tissue",
+                "Skin Tissue",
+                "Blood",
+                "Bone Marrow",
+                "Cerebrospinal Fluid",
+                "Lymph Node",
+                "Stool",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "type_of_tumor_sample": {
+            "description": "The type of tumor sample obtained (primary or metastatic).",
+            "enum": [
+                "Metastatic Tumor",
+                "Primary Tumor",
+                "Not Reported",
+                "Other"
+            ],
+            "type": "string"
+        }
+    },
+    "required": [
+        "cimac_id",
+        "parent_sample_id",
+        "collection_event_name",
+        "sample_location",
+        "type_of_sample"
+    ],
+    "then": {
+        "required": [
+            "type_of_primary_container"
+        ]
+    },
+    "title": "Sample",
+    "type": "object"
+}</code></pre>
+  </container>
+
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+    

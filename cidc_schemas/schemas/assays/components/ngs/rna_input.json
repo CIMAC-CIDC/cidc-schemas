@@ -5,6 +5,6 @@
   "type": "object",
   "description": "RNASeq assay input files.",
   "allOf": [
-    { "$ref": "assays/components/fastq_pair.json" }
+    { "$ref": "assays/components/fastq_pair_or_bam.json" }
   ]
 }

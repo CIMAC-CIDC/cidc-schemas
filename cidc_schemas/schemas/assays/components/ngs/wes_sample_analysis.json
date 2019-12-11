@@ -13,10 +13,10 @@
     "alignment": {
       "$ref": "assays/components/alignment.json"
     },
-    "hla": {
-      "$ref": "assays/components/hla.json"
+    "optitype": {
+      "$ref": "assays/components/optitype.json"
     },
-    "coverage_metrics": {
+    "metrics": {
       "$ref": "assays/components/coverage_metrics.json"
     }
   },

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "coverage_metrics",
-  "title": "Coverage metrics output files",
+  "title": "WES Metric Output Files",
   "type": "object",
   "description": "Coverage metrics output files.",
   "properties": {
@@ -31,6 +31,13 @@
     }
   },
   "required": [
-
-  ]
+    "mosdepth_region_dist_broad",
+    "mosdepth_region_dist_mda",
+    "mosdepth_region_dist_mocha",
+    "coverage_metrics",
+    "coverage_metrics_summary",
+    "target_metrics",
+    "target_metrics_summary"
+  ],
+  "additionalProperties": false
 }

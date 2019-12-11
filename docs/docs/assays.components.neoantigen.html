@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Neoantigen output files</h1>
+        <h1>WES Neoantigen Output Files</h1>
         <p>
             <b>Description:</b>  Neoantigen output files.
         </p>
@@ -58,15 +58,6 @@
         </thead>
         
             
-        
-            
-        
-            
-        
-            
-        
-        
-            
                 <tr>
     <td>
         
@@ -74,11 +65,13 @@
                 mhc_class_1_epitopes
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
         
-            Information about Tab Separated files.
+            Information about a tab Separated file.
         
     </td>
     <td>
@@ -87,6 +80,38 @@
         
     </td>
 </tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="mhc_class_1_filtered_condensed_ranked">
+                mhc_class_1_filtered_condensed_ranked
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a tab Separated file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_tsv.html">artifacts.artifact_tsv</a>
+        
+    </td>
+</tr>
+            
+        
+            
+        
+        
             
         
             
@@ -101,7 +126,7 @@
     </td>
     <td width=55%>
         
-            Information about Tab Separated files.
+            Information about a tab Separated file.
         
     </td>
     <td>
@@ -112,27 +137,6 @@
 </tr>
             
         
-            
-                <tr>
-    <td>
-        
-            <span id="mhc_class_1_filtered_condensed_ranked">
-                mhc_class_1_filtered_condensed_ranked
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about Tab Separated files.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_tsv.html">artifacts.artifact_tsv</a>
-        
-    </td>
-</tr>
             
         
             
@@ -147,7 +151,7 @@
     </td>
     <td width=55%>
         
-            Information about Tab Separated files.
+            Information about a tab Separated file.
         
     </td>
     <td>
@@ -168,6 +172,7 @@
   	<pre><code>{
     "$id": "neoantigen",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
     "description": "Neoantigen output files.",
     "properties": {
         "mhc_class_1_epitopes": {
@@ -221,17 +226,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -288,7 +298,7 @@
                     }
                 }
             ],
-            "description": "Information about Tab Separated files.",
+            "description": "Information about a tab Separated file.",
             "mergeStrategy": "objectMerge",
             "title": "TSV Artifact",
             "type": "object"
@@ -344,17 +354,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -411,7 +426,7 @@
                     }
                 }
             ],
-            "description": "Information about Tab Separated files.",
+            "description": "Information about a tab Separated file.",
             "mergeStrategy": "objectMerge",
             "title": "TSV Artifact",
             "type": "object"
@@ -467,17 +482,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -534,7 +554,7 @@
                     }
                 }
             ],
-            "description": "Information about Tab Separated files.",
+            "description": "Information about a tab Separated file.",
             "mergeStrategy": "objectMerge",
             "title": "TSV Artifact",
             "type": "object"
@@ -590,17 +610,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -657,14 +682,17 @@
                     }
                 }
             ],
-            "description": "Information about Tab Separated files.",
+            "description": "Information about a tab Separated file.",
             "mergeStrategy": "objectMerge",
             "title": "TSV Artifact",
             "type": "object"
         }
     },
-    "required": [],
-    "title": "Neoantigen output files",
+    "required": [
+        "mhc_class_1_epitopes",
+        "mhc_class_1_filtered_condensed_ranked"
+    ],
+    "title": "WES Neoantigen Output Files",
     "type": "object"
 }</code></pre>
   </container>

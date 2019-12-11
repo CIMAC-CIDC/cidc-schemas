@@ -154,6 +154,8 @@
         
             
         
+            
+        
         
             
         
@@ -234,8 +236,8 @@
                 <tr>
     <td>
         
-            <span id="copynumber.json">
-                copynumber.json
+            <span id="copynumber">
+                copynumber
             </span>
             
         
@@ -257,8 +259,8 @@
                 <tr>
     <td>
         
-            <span id="purity.json">
-                purity.json
+            <span id="purity">
+                purity
             </span>
             
         
@@ -280,8 +282,8 @@
                 <tr>
     <td>
         
-            <span id="clonality.json">
-                clonality.json
+            <span id="clonality">
+                clonality
             </span>
             
         
@@ -294,6 +296,29 @@
     <td>
         
             <a href="assays.components.clonality.html">assays.components.clonality</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="corealignments">
+                corealignments
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Core-alignments output files.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.corealignments.html">assays.components.corealignments</a>
         
     </td>
 </tr>
@@ -312,9 +337,10 @@
     "additionalProperties": false,
     "description": "Whole Exome Sequencing assay output files for a tumor normal pair of samples.",
     "properties": {
-        "clonality.json": {
-            "$id": "clonality",
+        "clonality": {
+            "$id": "WES Clonality Output Files",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "description": "Clonality output files.",
             "properties": {
                 "clonality_pyclone": {
@@ -368,17 +394,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -435,19 +466,22 @@
                             }
                         }
                     ],
-                    "description": "Information about Tab Separated files.",
+                    "description": "Information about a tab Separated file.",
                     "mergeStrategy": "objectMerge",
                     "title": "TSV Artifact",
                     "type": "object"
                 }
             },
-            "required": [],
+            "required": [
+                "clonality_pyclone"
+            ],
             "title": "Clonality output files",
             "type": "object"
         },
-        "copynumber.json": {
+        "copynumber": {
             "$id": "copynumber",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "description": "Copy number output files.",
             "properties": {
                 "copynumber_cnv_calls": {
@@ -501,17 +535,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -568,7 +607,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -624,17 +663,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -691,19 +735,292 @@
                             }
                         }
                     ],
-                    "description": "Information about Tab Separated files.",
+                    "description": "Information about a tab Separated file.",
                     "mergeStrategy": "objectMerge",
                     "title": "TSV Artifact",
                     "type": "object"
                 }
             },
-            "required": [],
-            "title": "Copy number output files",
+            "required": [
+                "copynumber_cnv_calls",
+                "copynumber_cnv_calls_tsv"
+            ],
+            "title": "WES Copynumber Output Files",
+            "type": "object"
+        },
+        "corealignments": {
+            "$id": "corealignments",
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
+            "description": "Core-alignments output files.",
+            "properties": {
+                "tn_corealigned": {
+                    "$id": "bam_artifact",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "anyOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category",
+                                        "data_format"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artifact.",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "description": "Data Format.",
+                                    "enum": [
+                                        "FASTA",
+                                        "FASTQ.GZ",
+                                        "VCF.GZ",
+                                        "IMAGE",
+                                        "VCF",
+                                        "CSV",
+                                        "TSV",
+                                        "XLSX",
+                                        "NPX",
+                                        "BAM",
+                                        "BAI",
+                                        "MAF",
+                                        "BINARY",
+                                        "TEXT",
+                                        "ZIP",
+                                        "FCS",
+                                        "GZ",
+                                        "JSON",
+                                        "[NOT SET]"
+                                    ],
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                    "description": "The name of the file with extension.",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "data_format": {
+                                    "const": "BAM",
+                                    "description": "Data format."
+                                }
+                            }
+                        }
+                    ],
+                    "description": "Information about a BAM file.",
+                    "mergeStrategy": "objectMerge",
+                    "title": "BAM Artifact",
+                    "type": "object"
+                },
+                "tn_corealigned_index": {
+                    "$id": "bai_artifact",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "anyOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category",
+                                        "data_format"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artifact.",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "description": "Data Format.",
+                                    "enum": [
+                                        "FASTA",
+                                        "FASTQ.GZ",
+                                        "VCF.GZ",
+                                        "IMAGE",
+                                        "VCF",
+                                        "CSV",
+                                        "TSV",
+                                        "XLSX",
+                                        "NPX",
+                                        "BAM",
+                                        "BAI",
+                                        "MAF",
+                                        "BINARY",
+                                        "TEXT",
+                                        "ZIP",
+                                        "FCS",
+                                        "GZ",
+                                        "JSON",
+                                        "[NOT SET]"
+                                    ],
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                    "description": "The name of the file with extension.",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "data_format": {
+                                    "const": "BAI",
+                                    "description": "Data format."
+                                }
+                            }
+                        }
+                    ],
+                    "description": "Information about a Bam index file.",
+                    "mergeStrategy": "objectMerge",
+                    "title": "BAI Artifact",
+                    "type": "object"
+                }
+            },
+            "required": [
+                "tn_corealigned"
+            ],
+            "title": "WES Corealignment Output Files",
             "type": "object"
         },
         "germline": {
             "$id": "germline",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "description": "Germline variant output sample files.",
             "properties": {
                 "vcf_compare": {
@@ -757,17 +1074,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -824,19 +1146,22 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
                 }
             },
-            "required": [],
-            "title": "Germline variant output sample files",
+            "required": [
+                "vcf_compare"
+            ],
+            "title": "WES Germline Output Files",
             "type": "object"
         },
         "neoantigen": {
             "$id": "neoantigen",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "description": "Neoantigen output files.",
             "properties": {
                 "mhc_class_1_epitopes": {
@@ -890,17 +1215,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -957,7 +1287,7 @@
                             }
                         }
                     ],
-                    "description": "Information about Tab Separated files.",
+                    "description": "Information about a tab Separated file.",
                     "mergeStrategy": "objectMerge",
                     "title": "TSV Artifact",
                     "type": "object"
@@ -1013,17 +1343,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -1080,7 +1415,7 @@
                             }
                         }
                     ],
-                    "description": "Information about Tab Separated files.",
+                    "description": "Information about a tab Separated file.",
                     "mergeStrategy": "objectMerge",
                     "title": "TSV Artifact",
                     "type": "object"
@@ -1136,17 +1471,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -1203,7 +1543,7 @@
                             }
                         }
                     ],
-                    "description": "Information about Tab Separated files.",
+                    "description": "Information about a tab Separated file.",
                     "mergeStrategy": "objectMerge",
                     "title": "TSV Artifact",
                     "type": "object"
@@ -1259,17 +1599,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -1326,14 +1671,17 @@
                             }
                         }
                     ],
-                    "description": "Information about Tab Separated files.",
+                    "description": "Information about a tab Separated file.",
                     "mergeStrategy": "objectMerge",
                     "title": "TSV Artifact",
                     "type": "object"
                 }
             },
-            "required": [],
-            "title": "Neoantigen output files",
+            "required": [
+                "mhc_class_1_epitopes",
+                "mhc_class_1_filtered_condensed_ranked"
+            ],
+            "title": "WES Neoantigen Output Files",
             "type": "object"
         },
         "normal": {
@@ -1345,6 +1693,7 @@
                 "alignment": {
                     "$id": "alignment",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "description": "WES output align files.",
                     "properties": {
                         "align_recalibrated": {
@@ -1398,17 +1747,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -1465,7 +1819,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about a Bam file.",
+                            "description": "Information about a BAM file.",
                             "mergeStrategy": "objectMerge",
                             "title": "BAM Artifact",
                             "type": "object"
@@ -1521,17 +1875,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -1644,17 +2003,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -1711,7 +2075,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about a Bam file.",
+                            "description": "Information about a BAM file.",
                             "mergeStrategy": "objectMerge",
                             "title": "BAM Artifact",
                             "type": "object"
@@ -1767,17 +2131,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -1834,7 +2203,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about a Bam file.",
+                            "description": "Information about a BAM file.",
                             "mergeStrategy": "objectMerge",
                             "title": "BAM Artifact",
                             "type": "object"
@@ -1890,17 +2259,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2013,17 +2387,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2088,9 +2467,13 @@
                     },
                     "required": [
                         "align_recalibrated",
-                        "align_sorted"
+                        "align_recalibrated_index",
+                        "align_sorted",
+                        "align_sorted_index",
+                        "align_sorted_dedup",
+                        "align_sorted_dedup_index"
                     ],
-                    "title": "WES output align files",
+                    "title": "WES Alignment Output Files",
                     "type": "object"
                 },
                 "cimac_id": {
@@ -2101,9 +2484,10 @@
                     "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
                     "type": "string"
                 },
-                "coverage_metrics": {
+                "metrics": {
                     "$id": "coverage_metrics",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "description": "Coverage metrics output files.",
                     "properties": {
                         "all_summaries": {
@@ -2157,17 +2541,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2224,7 +2613,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -2280,17 +2669,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2347,7 +2741,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -2403,17 +2797,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2470,7 +2869,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -2526,17 +2925,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2593,7 +2997,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -2649,17 +3053,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2716,7 +3125,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -2772,17 +3181,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2839,7 +3253,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -2895,17 +3309,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -2962,7 +3381,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -3018,17 +3437,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -3085,19 +3509,28 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
                         }
                     },
-                    "required": [],
-                    "title": "Coverage metrics output files",
+                    "required": [
+                        "mosdepth_region_dist_broad",
+                        "mosdepth_region_dist_mda",
+                        "mosdepth_region_dist_mocha",
+                        "coverage_metrics",
+                        "coverage_metrics_summary",
+                        "target_metrics",
+                        "target_metrics_summary"
+                    ],
+                    "title": "WES Metric Output Files",
                     "type": "object"
                 },
-                "hla": {
-                    "$id": "hla",
+                "optitype": {
+                    "$id": "optitype",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "description": "HLA output files.",
                     "properties": {
                         "optitype_results": {
@@ -3151,17 +3584,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -3218,7 +3656,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -3274,17 +3712,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -3347,8 +3790,11 @@
                             "type": "object"
                         }
                     },
-                    "required": [],
-                    "title": "HLA output files",
+                    "required": [
+                        "optitype_results",
+                        "xhla_report_hla"
+                    ],
+                    "title": "WES Optitype/HLA Output Files",
                     "type": "object"
                 }
             },
@@ -3358,9 +3804,10 @@
             "title": "WES sample analysis files",
             "type": "object"
         },
-        "purity.json": {
+        "purity": {
             "$id": "purity",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "description": "Purity output files.",
             "properties": {
                 "optimal_purity_value": {
@@ -3414,17 +3861,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -3481,7 +3933,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -3490,7 +3942,7 @@
             "required": [
                 "optimal_purity_value"
             ],
-            "title": "Purity output files",
+            "title": "WES Purity Output Files",
             "type": "object"
         },
         "run_id": {
@@ -3500,9 +3952,10 @@
         "somatic": {
             "$id": "somatic",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "description": "Somatic variant calling output sample files.",
             "properties": {
-                "maf_tnhaploytper2_filtered": {
+                "maf_tnhaploytper2_filter": {
                     "$id": "maf_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "allOf": [
@@ -3553,17 +4006,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -3620,7 +4078,7 @@
                             }
                         }
                     ],
-                    "description": "Information about a Maf file.",
+                    "description": "Information about a MAF file.",
                     "mergeStrategy": "objectMerge",
                     "title": "MAF Artifact",
                     "type": "object"
@@ -3676,17 +4134,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -3743,12 +4206,12 @@
                             }
                         }
                     ],
-                    "description": "Information about a Maf file.",
+                    "description": "Information about a MAF file.",
                     "mergeStrategy": "objectMerge",
                     "title": "MAF Artifact",
                     "type": "object"
                 },
-                "maf_tnscope_filtered": {
+                "maf_tnscope_filter": {
                     "$id": "maf_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "allOf": [
@@ -3799,17 +4262,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -3866,7 +4334,7 @@
                             }
                         }
                     ],
-                    "description": "Information about a Maf file.",
+                    "description": "Information about a MAF file.",
                     "mergeStrategy": "objectMerge",
                     "title": "MAF Artifact",
                     "type": "object"
@@ -3922,17 +4390,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -3989,12 +4462,12 @@
                             }
                         }
                     ],
-                    "description": "Information about a Maf file.",
+                    "description": "Information about a MAF file.",
                     "mergeStrategy": "objectMerge",
                     "title": "MAF Artifact",
                     "type": "object"
                 },
-                "maf_tnsnv_filtered": {
+                "maf_tnsnv_filter": {
                     "$id": "maf_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "allOf": [
@@ -4045,17 +4518,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -4112,7 +4590,7 @@
                             }
                         }
                     ],
-                    "description": "Information about a Maf file.",
+                    "description": "Information about a MAF file.",
                     "mergeStrategy": "objectMerge",
                     "title": "MAF Artifact",
                     "type": "object"
@@ -4168,17 +4646,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -4235,13 +4718,13 @@
                             }
                         }
                     ],
-                    "description": "Information about a Maf file.",
+                    "description": "Information about a MAF file.",
                     "mergeStrategy": "objectMerge",
                     "title": "MAF Artifact",
                     "type": "object"
                 },
-                "vcf_filtered_compressed": {
-                    "$id": "gz_artifact",
+                "tnhaploytper2_exons_broad": {
+                    "$id": "vcf_gz_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "allOf": [
                         {
@@ -4291,17 +4774,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -4352,18 +4840,1042 @@
                         {
                             "properties": {
                                 "data_format": {
-                                    "const": "GZ",
+                                    "const": "VCF.GZ",
                                     "description": "Data format."
                                 }
                             }
                         }
                     ],
-                    "description": "Information about GZ files.",
+                    "description": "Information about a Gzipped VCF file.",
                     "mergeStrategy": "objectMerge",
-                    "title": "GZ Artifact",
+                    "title": "Gzipped VCF Artifact",
                     "type": "object"
                 },
-                "vcf_tnhaploytper2_filtered": {
+                "tnhaploytper2_exons_mda": {
+                    "$id": "vcf_gz_artifact",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "anyOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category",
+                                        "data_format"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artifact.",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "description": "Data Format.",
+                                    "enum": [
+                                        "FASTA",
+                                        "FASTQ.GZ",
+                                        "VCF.GZ",
+                                        "IMAGE",
+                                        "VCF",
+                                        "CSV",
+                                        "TSV",
+                                        "XLSX",
+                                        "NPX",
+                                        "BAM",
+                                        "BAI",
+                                        "MAF",
+                                        "BINARY",
+                                        "TEXT",
+                                        "ZIP",
+                                        "FCS",
+                                        "GZ",
+                                        "JSON",
+                                        "[NOT SET]"
+                                    ],
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                    "description": "The name of the file with extension.",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "data_format": {
+                                    "const": "VCF.GZ",
+                                    "description": "Data format."
+                                }
+                            }
+                        }
+                    ],
+                    "description": "Information about a Gzipped VCF file.",
+                    "mergeStrategy": "objectMerge",
+                    "title": "Gzipped VCF Artifact",
+                    "type": "object"
+                },
+                "tnhaploytper2_exons_mocha": {
+                    "$id": "vcf_gz_artifact",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "anyOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category",
+                                        "data_format"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artifact.",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "description": "Data Format.",
+                                    "enum": [
+                                        "FASTA",
+                                        "FASTQ.GZ",
+                                        "VCF.GZ",
+                                        "IMAGE",
+                                        "VCF",
+                                        "CSV",
+                                        "TSV",
+                                        "XLSX",
+                                        "NPX",
+                                        "BAM",
+                                        "BAI",
+                                        "MAF",
+                                        "BINARY",
+                                        "TEXT",
+                                        "ZIP",
+                                        "FCS",
+                                        "GZ",
+                                        "JSON",
+                                        "[NOT SET]"
+                                    ],
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                    "description": "The name of the file with extension.",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "data_format": {
+                                    "const": "VCF.GZ",
+                                    "description": "Data format."
+                                }
+                            }
+                        }
+                    ],
+                    "description": "Information about a Gzipped VCF file.",
+                    "mergeStrategy": "objectMerge",
+                    "title": "Gzipped VCF Artifact",
+                    "type": "object"
+                },
+                "tnscope_exons_broad": {
+                    "$id": "vcf_gz_artifact",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "anyOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category",
+                                        "data_format"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artifact.",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "description": "Data Format.",
+                                    "enum": [
+                                        "FASTA",
+                                        "FASTQ.GZ",
+                                        "VCF.GZ",
+                                        "IMAGE",
+                                        "VCF",
+                                        "CSV",
+                                        "TSV",
+                                        "XLSX",
+                                        "NPX",
+                                        "BAM",
+                                        "BAI",
+                                        "MAF",
+                                        "BINARY",
+                                        "TEXT",
+                                        "ZIP",
+                                        "FCS",
+                                        "GZ",
+                                        "JSON",
+                                        "[NOT SET]"
+                                    ],
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                    "description": "The name of the file with extension.",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "data_format": {
+                                    "const": "VCF.GZ",
+                                    "description": "Data format."
+                                }
+                            }
+                        }
+                    ],
+                    "description": "Information about a Gzipped VCF file.",
+                    "mergeStrategy": "objectMerge",
+                    "title": "Gzipped VCF Artifact",
+                    "type": "object"
+                },
+                "tnscope_exons_mda": {
+                    "$id": "vcf_gz_artifact",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "anyOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category",
+                                        "data_format"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artifact.",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "description": "Data Format.",
+                                    "enum": [
+                                        "FASTA",
+                                        "FASTQ.GZ",
+                                        "VCF.GZ",
+                                        "IMAGE",
+                                        "VCF",
+                                        "CSV",
+                                        "TSV",
+                                        "XLSX",
+                                        "NPX",
+                                        "BAM",
+                                        "BAI",
+                                        "MAF",
+                                        "BINARY",
+                                        "TEXT",
+                                        "ZIP",
+                                        "FCS",
+                                        "GZ",
+                                        "JSON",
+                                        "[NOT SET]"
+                                    ],
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                    "description": "The name of the file with extension.",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "data_format": {
+                                    "const": "VCF.GZ",
+                                    "description": "Data format."
+                                }
+                            }
+                        }
+                    ],
+                    "description": "Information about a Gzipped VCF file.",
+                    "mergeStrategy": "objectMerge",
+                    "title": "Gzipped VCF Artifact",
+                    "type": "object"
+                },
+                "tnscope_exons_mocha": {
+                    "$id": "vcf_gz_artifact",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "anyOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category",
+                                        "data_format"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artifact.",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "description": "Data Format.",
+                                    "enum": [
+                                        "FASTA",
+                                        "FASTQ.GZ",
+                                        "VCF.GZ",
+                                        "IMAGE",
+                                        "VCF",
+                                        "CSV",
+                                        "TSV",
+                                        "XLSX",
+                                        "NPX",
+                                        "BAM",
+                                        "BAI",
+                                        "MAF",
+                                        "BINARY",
+                                        "TEXT",
+                                        "ZIP",
+                                        "FCS",
+                                        "GZ",
+                                        "JSON",
+                                        "[NOT SET]"
+                                    ],
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                    "description": "The name of the file with extension.",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "data_format": {
+                                    "const": "VCF.GZ",
+                                    "description": "Data format."
+                                }
+                            }
+                        }
+                    ],
+                    "description": "Information about a Gzipped VCF file.",
+                    "mergeStrategy": "objectMerge",
+                    "title": "Gzipped VCF Artifact",
+                    "type": "object"
+                },
+                "tnsnv_exons_broad": {
+                    "$id": "vcf_gz_artifact",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "anyOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category",
+                                        "data_format"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artifact.",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "description": "Data Format.",
+                                    "enum": [
+                                        "FASTA",
+                                        "FASTQ.GZ",
+                                        "VCF.GZ",
+                                        "IMAGE",
+                                        "VCF",
+                                        "CSV",
+                                        "TSV",
+                                        "XLSX",
+                                        "NPX",
+                                        "BAM",
+                                        "BAI",
+                                        "MAF",
+                                        "BINARY",
+                                        "TEXT",
+                                        "ZIP",
+                                        "FCS",
+                                        "GZ",
+                                        "JSON",
+                                        "[NOT SET]"
+                                    ],
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                    "description": "The name of the file with extension.",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "data_format": {
+                                    "const": "VCF.GZ",
+                                    "description": "Data format."
+                                }
+                            }
+                        }
+                    ],
+                    "description": "Information about a Gzipped VCF file.",
+                    "mergeStrategy": "objectMerge",
+                    "title": "Gzipped VCF Artifact",
+                    "type": "object"
+                },
+                "tnsnv_exons_mda": {
+                    "$id": "vcf_gz_artifact",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "anyOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category",
+                                        "data_format"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artifact.",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "description": "Data Format.",
+                                    "enum": [
+                                        "FASTA",
+                                        "FASTQ.GZ",
+                                        "VCF.GZ",
+                                        "IMAGE",
+                                        "VCF",
+                                        "CSV",
+                                        "TSV",
+                                        "XLSX",
+                                        "NPX",
+                                        "BAM",
+                                        "BAI",
+                                        "MAF",
+                                        "BINARY",
+                                        "TEXT",
+                                        "ZIP",
+                                        "FCS",
+                                        "GZ",
+                                        "JSON",
+                                        "[NOT SET]"
+                                    ],
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                    "description": "The name of the file with extension.",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "data_format": {
+                                    "const": "VCF.GZ",
+                                    "description": "Data format."
+                                }
+                            }
+                        }
+                    ],
+                    "description": "Information about a Gzipped VCF file.",
+                    "mergeStrategy": "objectMerge",
+                    "title": "Gzipped VCF Artifact",
+                    "type": "object"
+                },
+                "tnsnv_exons_mocha": {
+                    "$id": "vcf_gz_artifact",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "anyOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "md5_hash",
+                                        "artifact_category",
+                                        "data_format"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artifact.",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "description": "Data Format.",
+                                    "enum": [
+                                        "FASTA",
+                                        "FASTQ.GZ",
+                                        "VCF.GZ",
+                                        "IMAGE",
+                                        "VCF",
+                                        "CSV",
+                                        "TSV",
+                                        "XLSX",
+                                        "NPX",
+                                        "BAM",
+                                        "BAI",
+                                        "MAF",
+                                        "BINARY",
+                                        "TEXT",
+                                        "ZIP",
+                                        "FCS",
+                                        "GZ",
+                                        "JSON",
+                                        "[NOT SET]"
+                                    ],
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                    "description": "The name of the file with extension.",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        },
+                        {
+                            "properties": {
+                                "data_format": {
+                                    "const": "VCF.GZ",
+                                    "description": "Data format."
+                                }
+                            }
+                        }
+                    ],
+                    "description": "Information about a Gzipped VCF file.",
+                    "mergeStrategy": "objectMerge",
+                    "title": "Gzipped VCF Artifact",
+                    "type": "object"
+                },
+                "vcf_tnhaploytper2_filter": {
                     "$id": "vcf_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "allOf": [
@@ -4414,17 +5926,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -4537,17 +6054,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -4609,7 +6131,7 @@
                     "title": "VCF Artifact",
                     "type": "object"
                 },
-                "vcf_tnscope_filtered": {
+                "vcf_tnscope_filter": {
                     "$id": "vcf_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "allOf": [
@@ -4660,17 +6182,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -4783,17 +6310,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -4855,7 +6387,7 @@
                     "title": "VCF Artifact",
                     "type": "object"
                 },
-                "vcf_tnsnv_filtered": {
+                "vcf_tnsnv_filter": {
                     "$id": "vcf_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "allOf": [
@@ -4906,17 +6438,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -5029,17 +6566,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -5103,10 +6645,29 @@
                 }
             },
             "required": [
+                "vcf_tnscope_output",
+                "vcf_tnhaploytper2_output",
                 "vcf_tnsnv_output",
-                "vcf_tnscope_output"
+                "vcf_tnscope_filter",
+                "vcf_tnhaploytper2_filter",
+                "vcf_tnsnv_filter",
+                "maf_tnscope_output",
+                "maf_tnhaploytper2_output",
+                "maf_tnsnv_output",
+                "maf_tnscope_filter",
+                "maf_tnhaploytper2_filter",
+                "maf_tnsnv_filter",
+                "tnscope_exons_broad",
+                "tnhaploytper2_exons_broad",
+                "tnsnv_exons_broad",
+                "tnscope_exons_mda",
+                "tnhaploytper2_exons_mda",
+                "tnsnv_exons_mda",
+                "tnscope_exons_mocha",
+                "tnhaploytper2_exons_mocha",
+                "tnsnv_exons_mocha"
             ],
-            "title": "Somatic variant output sample files",
+            "title": "WES Somatic Output Files",
             "type": "object"
         },
         "tumor": {
@@ -5118,6 +6679,7 @@
                 "alignment": {
                     "$id": "alignment",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "description": "WES output align files.",
                     "properties": {
                         "align_recalibrated": {
@@ -5171,17 +6733,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -5238,7 +6805,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about a Bam file.",
+                            "description": "Information about a BAM file.",
                             "mergeStrategy": "objectMerge",
                             "title": "BAM Artifact",
                             "type": "object"
@@ -5294,17 +6861,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -5417,17 +6989,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -5484,7 +7061,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about a Bam file.",
+                            "description": "Information about a BAM file.",
                             "mergeStrategy": "objectMerge",
                             "title": "BAM Artifact",
                             "type": "object"
@@ -5540,17 +7117,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -5607,7 +7189,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about a Bam file.",
+                            "description": "Information about a BAM file.",
                             "mergeStrategy": "objectMerge",
                             "title": "BAM Artifact",
                             "type": "object"
@@ -5663,17 +7245,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -5786,17 +7373,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -5861,9 +7453,13 @@
                     },
                     "required": [
                         "align_recalibrated",
-                        "align_sorted"
+                        "align_recalibrated_index",
+                        "align_sorted",
+                        "align_sorted_index",
+                        "align_sorted_dedup",
+                        "align_sorted_dedup_index"
                     ],
-                    "title": "WES output align files",
+                    "title": "WES Alignment Output Files",
                     "type": "object"
                 },
                 "cimac_id": {
@@ -5874,9 +7470,10 @@
                     "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
                     "type": "string"
                 },
-                "coverage_metrics": {
+                "metrics": {
                     "$id": "coverage_metrics",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "description": "Coverage metrics output files.",
                     "properties": {
                         "all_summaries": {
@@ -5930,17 +7527,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -5997,7 +7599,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -6053,17 +7655,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -6120,7 +7727,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -6176,17 +7783,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -6243,7 +7855,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -6299,17 +7911,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -6366,7 +7983,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -6422,17 +8039,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -6489,7 +8111,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -6545,17 +8167,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -6612,7 +8239,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -6668,17 +8295,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -6735,7 +8367,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -6791,17 +8423,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -6858,19 +8495,28 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
                         }
                     },
-                    "required": [],
-                    "title": "Coverage metrics output files",
+                    "required": [
+                        "mosdepth_region_dist_broad",
+                        "mosdepth_region_dist_mda",
+                        "mosdepth_region_dist_mocha",
+                        "coverage_metrics",
+                        "coverage_metrics_summary",
+                        "target_metrics",
+                        "target_metrics_summary"
+                    ],
+                    "title": "WES Metric Output Files",
                     "type": "object"
                 },
-                "hla": {
-                    "$id": "hla",
+                "optitype": {
+                    "$id": "optitype",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "description": "HLA output files.",
                     "properties": {
                         "optitype_results": {
@@ -6924,17 +8570,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -6991,7 +8642,7 @@
                                     }
                                 }
                             ],
-                            "description": "Information about text files.",
+                            "description": "Information about a text file.",
                             "mergeStrategy": "objectMerge",
                             "title": "Text Artifact",
                             "type": "object"
@@ -7047,17 +8698,22 @@
                                             "enum": [
                                                 "FASTA",
                                                 "FASTQ.GZ",
+                                                "VCF.GZ",
                                                 "IMAGE",
                                                 "VCF",
                                                 "CSV",
+                                                "TSV",
                                                 "XLSX",
                                                 "NPX",
                                                 "BAM",
+                                                "BAI",
                                                 "MAF",
                                                 "BINARY",
                                                 "TEXT",
                                                 "ZIP",
                                                 "FCS",
+                                                "GZ",
+                                                "JSON",
                                                 "[NOT SET]"
                                             ],
                                             "type": "string"
@@ -7120,8 +8776,11 @@
                             "type": "object"
                         }
                     },
-                    "required": [],
-                    "title": "HLA output files",
+                    "required": [
+                        "optitype_results",
+                        "xhla_report_hla"
+                    ],
+                    "title": "WES Optitype/HLA Output Files",
                     "type": "object"
                 }
             },

@@ -71,7 +71,7 @@
     </td>
     <td width=55%>
         
-            Information about a xlsx file.
+            Information about an NPX file.
         
     </td>
     <td>
@@ -96,7 +96,7 @@
     </td>
     <td width=55%>
         
-            Information about Comma separated files.
+            Information about a comma separated file.
         
     </td>
     <td>
@@ -176,17 +176,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -272,7 +277,7 @@
                     ]
                 }
             ],
-            "description": "Information about a xlsx file.",
+            "description": "Information about an NPX file.",
             "mergeStrategy": "objectMerge",
             "title": "NPX Artifact",
             "type": "object"
@@ -329,17 +334,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -396,7 +406,7 @@
                     }
                 }
             ],
-            "description": "Information about Comma separated files.",
+            "description": "Information about a comma separated file.",
             "mergeStrategy": "objectMerge",
             "title": "CSV Artifact",
             "type": "object"

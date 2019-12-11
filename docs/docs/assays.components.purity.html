@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Purity output files</h1>
+        <h1>WES Purity Output Files</h1>
         <p>
             <b>Description:</b>  Purity output files.
         </p>
@@ -71,7 +71,7 @@
     </td>
     <td width=55%>
         
-            Information about text files.
+            Information about a text file.
         
     </td>
     <td>
@@ -95,6 +95,7 @@
   	<pre><code>{
     "$id": "purity",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
     "description": "Purity output files.",
     "properties": {
         "optimal_purity_value": {
@@ -148,17 +149,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -215,7 +221,7 @@
                     }
                 }
             ],
-            "description": "Information about text files.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
             "title": "Text Artifact",
             "type": "object"
@@ -224,7 +230,7 @@
     "required": [
         "optimal_purity_value"
     ],
-    "title": "Purity output files",
+    "title": "WES Purity Output Files",
     "type": "object"
 }</code></pre>
   </container>

@@ -24,8 +24,5 @@
     "cimac_id": {"comment": "defined in ngs_assay_record.json"},
     "files": {"comment": "defined in ngs_assay_record.json"}
   },
-  "mergeStrategy": "objectMerge",
-  "required": [
-
-    ]
+  "mergeStrategy": "objectMerge"
 }

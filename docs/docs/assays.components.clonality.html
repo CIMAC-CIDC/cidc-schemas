@@ -58,9 +58,6 @@
         </thead>
         
             
-        
-        
-            
                 <tr>
     <td>
         
@@ -68,11 +65,13 @@
                 clonality_pyclone
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
         
-            Information about Tab Separated files.
+            Information about a tab Separated file.
         
     </td>
     <td>
@@ -83,6 +82,9 @@
 </tr>
             
         
+        
+            
+        
     </table>
 
     
@@ -91,8 +93,9 @@
   <div class="container">
     <h3>clonality.full.json</h3>
   	<pre><code>{
-    "$id": "clonality",
+    "$id": "WES Clonality Output Files",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
     "description": "Clonality output files.",
     "properties": {
         "clonality_pyclone": {
@@ -146,17 +149,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -213,13 +221,15 @@
                     }
                 }
             ],
-            "description": "Information about Tab Separated files.",
+            "description": "Information about a tab Separated file.",
             "mergeStrategy": "objectMerge",
             "title": "TSV Artifact",
             "type": "object"
         }
     },
-    "required": [],
+    "required": [
+        "clonality_pyclone"
+    ],
     "title": "Clonality output files",
     "type": "object"
 }</code></pre>

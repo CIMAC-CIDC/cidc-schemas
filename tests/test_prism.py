@@ -993,7 +993,6 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     # now we simulate that upload was successful
     merged_gs_keys = []
     for i, fmap_entry in enumerate(file_maps):
-
         # attempt to merge
         patch_copy_4_artifacts, artifact, patch_metadata = merge_artifact(
             patch_copy_4_artifacts,
@@ -1049,13 +1048,14 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == "cytof":
         # TODO: This will need ot be updated when we accept a list of source fcs files
-        assert len(merged_gs_keys) == 6
+        assert len(merged_gs_keys) == 6  # 6 output files
 
     elif template.type == "cytof_analysis":
         assert len(merged_gs_keys) == 9  # 9 output files
 
     elif template.type == "wes_analysis":
-        assert len(merged_gs_keys) == 12  # 6 output files per entry in xlsx
+        # 32 (for each run) + 15 (for each tumor sample) + 15 (for each normal sample)
+        assert len(merged_gs_keys) == 2 * (32 + (15 * 2))
 
     else:
         assert False, f"add {template.type} assay specific asserts on 'merged_gs_keys'"
@@ -1092,13 +1092,13 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(full_ct["assays"][template.type]) == 1
 
     elif template.type == "cytof_analysis":
-        # the original cytof upload had 2 records, hence after analysis, it's analysis has 2 records
+        # the original CyTOF upload had 2 records, hence after analysis, it's analysis has 2 records
         assert (
             len(full_ct["assays"]["cytof"][0]["records"]) == 2
         ), "More records than expected"
 
     elif template.type == "wes_analysis":
-        # the original wes upload had 2 records, hence after analysis, it's analysis has 2 records
+        # the original WES upload had 2 records, hence after analysis, it's analysis has 2 records
         assert (
             len(full_ct["assays"]["wes"][0]["records"]) == 2
         ), "More records than expected"
@@ -1141,6 +1141,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(dd) == 0, "Unexpected CT changes"
 
     elif template.type == "cytof":
+        # 7 artifact attributes * 6 files
         assert len(dd["dictionary_item_added"]) == 7 * 6, "Unexpected CT changes"
 
     elif template.type == "cytof_analysis":
@@ -1148,8 +1149,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(dd["dictionary_item_added"]) == 7 * 9, "Unexpected CT changes"
 
     elif template.type == "wes_analysis":
-        # 7 artifact attributes * 6 * 2 files
-        assert len(dd["dictionary_item_added"]) == 84, "Unexpected CT changes"
+        # 7 artifact attributes * 124 files
+        assert len(dd["dictionary_item_added"]) == 7 * 124, "Unexpected CT changes"
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -1442,16 +1443,23 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda x: f'analysis/sorted/{x}/{x}.output.vcf'",
-                                            "merge_pointer": "/somatic_vcf",
-                                            "gcs_uri_format": "{run_id}/somatic.vcf",
+                                            "parse_through": "lambda x: f'analysis/germline/{x}/{x}-run-output-1.txt'",
+                                            "merge_pointer": "/run-output-1",
+                                            "gcs_uri_format": "{run_id}/run-output-1.txt",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'analysis/sorted/{x}/{x}.output.maf'",
-                                            "merge_pointer": "/somatic_maf",
-                                            "gcs_uri_format": "{run_id}/somatic.maf",
+                                            "parse_through": "lambda x: f'analysis/purity/{x}/{x}run-output-2.txt'",
+                                            "merge_pointer": "/run-output-2",
+                                            "gcs_uri_format": "{run_id}/run-output-2.txt",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/clonality/{x}/{x}-run-output-3.tsv'",
+                                            "merge_pointer": "/run-output-3",
+                                            "gcs_uri_format": "{run_id}/run-output-3.tsv",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
@@ -1462,16 +1470,23 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.bam'",
-                                            "merge_pointer": "/sample1/sorted",
-                                            "gcs_uri_format": "{run_id}/{sid1}/sorted.bam",
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.output1.bam'",
+                                            "merge_pointer": "/sample1/output1",
+                                            "gcs_uri_format": "{run_id}/{sid1}/output1.bam",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.recalibrated.bam'",
-                                            "merge_pointer": "/sample1/recalibrated",
-                                            "gcs_uri_format": "{run_id}/{sid1}/recalibrated.bam",
+                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.output2.txt'",
+                                            "merge_pointer": "/sample1/output2",
+                                            "gcs_uri_format": "{run_id}/{sid1}/output2.txt",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/optitype/{x}/{x}output3.tsv'",
+                                            "merge_pointer": "/sample1/output3",
+                                            "gcs_uri_format": "{run_id}/{sid1}/output3.tsv",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
@@ -1482,16 +1497,23 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.bam'",
-                                            "merge_pointer": "/sample2/sorted",
-                                            "gcs_uri_format": "{run_id}/{sid2}/sorted.bam",
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.output1.bam'",
+                                            "merge_pointer": "/sample2/output1",
+                                            "gcs_uri_format": "{run_id}/{sid2}/output1.bam",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.recalibrated.bam'",
-                                            "merge_pointer": "/sample2/recalibrated",
-                                            "gcs_uri_format": "{run_id}/{sid2}/recalibrated.bam",
+                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.output2.txt'",
+                                            "merge_pointer": "/sample2/output2",
+                                            "gcs_uri_format": "{run_id}/{sid2}/output2.txt",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        },
+                                        {
+                                            "parse_through": "lambda x: f'analysis/optitype/{x}/{x}.output3.tsv'",
+                                            "merge_pointer": "/sample2/output3",
+                                            "gcs_uri_format": "{run_id}/{sid2}/output3.tsv",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
@@ -1520,8 +1542,12 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     local_paths = [e.local_path for e in file_maps]
     uuids = [e.upload_placeholder for e in file_maps]
 
-    assert 12 == len(file_maps)  # (2 files * 3 fields from each record) * 2 records
-    assert 12 == len(set(uuids))  # (2 files * 3 fields from each record) * 2 records
+    assert 3 * 3 * 2 == len(
+        file_maps
+    )  # (3 files * 3 fields from each record) * 2 records
+    assert 3 * 3 * 2 == len(
+        set(uuids)
+    )  # (3 files * 3 fields from each record) * 2 records
 
     assert local_paths != uuids
 
@@ -1540,6 +1566,7 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
         for v in sample.values()
         if "upload_placeholder" in v
     ]
+
     assert len(uuids) == len(run_uuids_in_json + sample_uuids_in_json)
     assert set(uuids) == set(
         run_uuids_in_json + sample_uuids_in_json

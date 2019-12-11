@@ -118,8 +118,8 @@
                 <tr>
     <td>
         
-            <span id="hla">
-                hla
+            <span id="optitype">
+                optitype
             </span>
             
         
@@ -131,7 +131,7 @@
     </td>
     <td>
         
-            <a href="assays.components.hla.html">assays.components.hla</a>
+            <a href="assays.components.optitype.html">assays.components.optitype</a>
         
     </td>
 </tr>
@@ -141,8 +141,8 @@
                 <tr>
     <td>
         
-            <span id="coverage_metrics">
-                coverage_metrics
+            <span id="metrics">
+                metrics
             </span>
             
         
@@ -176,6 +176,7 @@
         "alignment": {
             "$id": "alignment",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "description": "WES output align files.",
             "properties": {
                 "align_recalibrated": {
@@ -229,17 +230,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -296,7 +302,7 @@
                             }
                         }
                     ],
-                    "description": "Information about a Bam file.",
+                    "description": "Information about a BAM file.",
                     "mergeStrategy": "objectMerge",
                     "title": "BAM Artifact",
                     "type": "object"
@@ -352,17 +358,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -475,17 +486,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -542,7 +558,7 @@
                             }
                         }
                     ],
-                    "description": "Information about a Bam file.",
+                    "description": "Information about a BAM file.",
                     "mergeStrategy": "objectMerge",
                     "title": "BAM Artifact",
                     "type": "object"
@@ -598,17 +614,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -665,7 +686,7 @@
                             }
                         }
                     ],
-                    "description": "Information about a Bam file.",
+                    "description": "Information about a BAM file.",
                     "mergeStrategy": "objectMerge",
                     "title": "BAM Artifact",
                     "type": "object"
@@ -721,17 +742,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -844,17 +870,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -919,9 +950,13 @@
             },
             "required": [
                 "align_recalibrated",
-                "align_sorted"
+                "align_recalibrated_index",
+                "align_sorted",
+                "align_sorted_index",
+                "align_sorted_dedup",
+                "align_sorted_dedup_index"
             ],
-            "title": "WES output align files",
+            "title": "WES Alignment Output Files",
             "type": "object"
         },
         "cimac_id": {
@@ -932,9 +967,10 @@
             "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
             "type": "string"
         },
-        "coverage_metrics": {
+        "metrics": {
             "$id": "coverage_metrics",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "description": "Coverage metrics output files.",
             "properties": {
                 "all_summaries": {
@@ -988,17 +1024,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -1055,7 +1096,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -1111,17 +1152,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -1178,7 +1224,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -1234,17 +1280,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -1301,7 +1352,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -1357,17 +1408,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -1424,7 +1480,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -1480,17 +1536,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -1547,7 +1608,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -1603,17 +1664,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -1670,7 +1736,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -1726,17 +1792,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -1793,7 +1864,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -1849,17 +1920,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -1916,19 +1992,28 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
                 }
             },
-            "required": [],
-            "title": "Coverage metrics output files",
+            "required": [
+                "mosdepth_region_dist_broad",
+                "mosdepth_region_dist_mda",
+                "mosdepth_region_dist_mocha",
+                "coverage_metrics",
+                "coverage_metrics_summary",
+                "target_metrics",
+                "target_metrics_summary"
+            ],
+            "title": "WES Metric Output Files",
             "type": "object"
         },
-        "hla": {
-            "$id": "hla",
+        "optitype": {
+            "$id": "optitype",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "description": "HLA output files.",
             "properties": {
                 "optitype_results": {
@@ -1982,17 +2067,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -2049,7 +2139,7 @@
                             }
                         }
                     ],
-                    "description": "Information about text files.",
+                    "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
                     "title": "Text Artifact",
                     "type": "object"
@@ -2105,17 +2195,22 @@
                                     "enum": [
                                         "FASTA",
                                         "FASTQ.GZ",
+                                        "VCF.GZ",
                                         "IMAGE",
                                         "VCF",
                                         "CSV",
+                                        "TSV",
                                         "XLSX",
                                         "NPX",
                                         "BAM",
+                                        "BAI",
                                         "MAF",
                                         "BINARY",
                                         "TEXT",
                                         "ZIP",
                                         "FCS",
+                                        "GZ",
+                                        "JSON",
                                         "[NOT SET]"
                                     ],
                                     "type": "string"
@@ -2178,8 +2273,11 @@
                     "type": "object"
                 }
             },
-            "required": [],
-            "title": "HLA output files",
+            "required": [
+                "optitype_results",
+                "xhla_report_hla"
+            ],
+            "title": "WES Optitype/HLA Output Files",
             "type": "object"
         }
     },

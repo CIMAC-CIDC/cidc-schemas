@@ -33,7 +33,7 @@
         </p>
         <h1>Image Artifact</h1>
         <p>
-            <b>Description:</b>  Information about images including height and width.
+            <b>Description:</b>  Information about an image file.
         </p>
         
     </div>
@@ -276,17 +276,22 @@
                     "enum": [
                         "FASTA",
                         "FASTQ.GZ",
+                        "VCF.GZ",
                         "IMAGE",
                         "VCF",
                         "CSV",
+                        "TSV",
                         "XLSX",
                         "NPX",
                         "BAM",
+                        "BAI",
                         "MAF",
                         "BINARY",
                         "TEXT",
                         "ZIP",
                         "FCS",
+                        "GZ",
+                        "JSON",
                         "[NOT SET]"
                     ],
                     "type": "string"
@@ -370,7 +375,7 @@
             ]
         }
     ],
-    "description": "Information about images including height and width.",
+    "description": "Information about an image file.",
     "mergeStrategy": "objectMerge",
     "title": "Image Artifact",
     "type": "object"

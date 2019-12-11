@@ -33,7 +33,7 @@
         </p>
         <h1>TBI Artifact</h1>
         <p>
-            <b>Description:</b>  Information about Tabix index files.
+            <b>Description:</b>  Information about a Tabix index file.
         </p>
         
     </div>
@@ -171,17 +171,22 @@
                     "enum": [
                         "FASTA",
                         "FASTQ.GZ",
+                        "VCF.GZ",
                         "IMAGE",
                         "VCF",
                         "CSV",
+                        "TSV",
                         "XLSX",
                         "NPX",
                         "BAM",
+                        "BAI",
                         "MAF",
                         "BINARY",
                         "TEXT",
                         "ZIP",
                         "FCS",
+                        "GZ",
+                        "JSON",
                         "[NOT SET]"
                     ],
                     "type": "string"
@@ -238,7 +243,7 @@
             }
         }
     ],
-    "description": "Information about Tabix index files.",
+    "description": "Information about a Tabix index file.",
     "mergeStrategy": "objectMerge",
     "title": "TBI Artifact",
     "type": "object"

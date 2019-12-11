@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>WES output align files</h1>
+        <h1>WES Alignment Output Files</h1>
         <p>
             <b>Description:</b>  WES output align files.
         </p>
@@ -71,7 +71,7 @@
     </td>
     <td width=55%>
         
-            Information about a Bam file.
+            Information about a BAM file.
         
     </td>
     <td>
@@ -80,42 +80,6 @@
         
     </td>
 </tr>
-            
-        
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="align_sorted">
-                align_sorted
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a Bam file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_bam.html">artifacts.artifact_bam</a>
-        
-    </td>
-</tr>
-            
-        
-            
-        
-            
-        
-            
-        
-        
             
         
             
@@ -125,6 +89,8 @@
             <span id="align_recalibrated_index">
                 align_recalibrated_index
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -142,6 +108,29 @@
             
         
             
+                <tr>
+    <td>
+        
+            <span id="align_sorted">
+                align_sorted
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a BAM file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_bam.html">artifacts.artifact_bam</a>
+        
+    </td>
+</tr>
+            
         
             
                 <tr>
@@ -150,6 +139,8 @@
             <span id="align_sorted_index">
                 align_sorted_index
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -174,11 +165,13 @@
                 align_sorted_dedup
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
         
-            Information about a Bam file.
+            Information about a BAM file.
         
     </td>
     <td>
@@ -197,6 +190,8 @@
                 align_sorted_dedup_index
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
@@ -212,6 +207,19 @@
 </tr>
             
         
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
     </table>
 
     
@@ -222,6 +230,7 @@
   	<pre><code>{
     "$id": "alignment",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
     "description": "WES output align files.",
     "properties": {
         "align_recalibrated": {
@@ -275,17 +284,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -342,7 +356,7 @@
                     }
                 }
             ],
-            "description": "Information about a Bam file.",
+            "description": "Information about a BAM file.",
             "mergeStrategy": "objectMerge",
             "title": "BAM Artifact",
             "type": "object"
@@ -398,17 +412,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -521,17 +540,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -588,7 +612,7 @@
                     }
                 }
             ],
-            "description": "Information about a Bam file.",
+            "description": "Information about a BAM file.",
             "mergeStrategy": "objectMerge",
             "title": "BAM Artifact",
             "type": "object"
@@ -644,17 +668,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -711,7 +740,7 @@
                     }
                 }
             ],
-            "description": "Information about a Bam file.",
+            "description": "Information about a BAM file.",
             "mergeStrategy": "objectMerge",
             "title": "BAM Artifact",
             "type": "object"
@@ -767,17 +796,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -890,17 +924,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -965,9 +1004,13 @@
     },
     "required": [
         "align_recalibrated",
-        "align_sorted"
+        "align_recalibrated_index",
+        "align_sorted",
+        "align_sorted_index",
+        "align_sorted_dedup",
+        "align_sorted_dedup_index"
     ],
-    "title": "WES output align files",
+    "title": "WES Alignment Output Files",
     "type": "object"
 }</code></pre>
   </container>

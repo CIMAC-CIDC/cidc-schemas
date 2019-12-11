@@ -35,24 +35,21 @@ def _set_val(
     This function given a *pointer* (jsonpointer RFC 6901 or relative json pointer)
     to a property in a python object, sets the supplied value
     in-place in the *context* object within *root* object.
-
     The object we are adding data to is *root*. The object
     may or may not have any of the intermediate structure
     to fully insert the desired property.
-
-    For example: consider 
+    For example: consider
     pointer = "0/prop1/prop2"
     val = {"more": "props"}
     context = {"Pid": 1}
     root = {"participants": [context]}
     context_pointer = "/participants/0"
-    
-   
-    First we see an `0` in pointer which denotes update 
-    should be within context. So no need to jump higher than context.
-    
-    So we truncate path to = "prop1/prop2"
 
+
+    First we see an `0` in pointer which denotes update
+    should be within context. So no need to jump higher than context.
+
+    So we truncate path to = "prop1/prop2"
     We see it's a string, so we know we are entering object's *prop1* as a property:
         {
             "participants": [{
@@ -60,8 +57,7 @@ def _set_val(
             }]
         }
     It's our whole Trial object, and ... here denotes our current descend.
-
-    Now we truncate path one step further to = "prop2" 
+    Now we truncate path one step further to = "prop2"
     Go down there and set `val={"more": "props"}` :
         {
             "participants": [{
@@ -76,7 +72,6 @@ def _set_val(
                     "prop2": {"more": "props"}
                 }
             }
-    
 
     Args:
         pointer: relative jsonpointer to the property being set within current `context`
@@ -85,7 +80,6 @@ def _set_val(
         root: the whole python object being constructed, contains `context`
         context_pointer: jsonpointer of `context` within `root`. Needed to jump up.
         verb: indicates if debug logic should be printed.
-
     Returns:
        Nothing
     """
@@ -182,9 +176,9 @@ def __jpointer_get_next_thing(next_part) -> Union[dict, list]:
 
 
 def __jpointer_insert_next_thing(doc, jpoint, part, next_thing):
-    """ 
+    """
     Puts next_thing into a doc (that is being `jsonpointer.walk`ed)
-    by *part* "address". *jpoint* is Jsonpointer that is walked.   
+    by *part* "address". *jpoint* is Jsonpointer that is walked.
     """
 
     if part == "-":
@@ -281,30 +275,27 @@ def _process_property(
     """
     Takes a single property (key, val) from spreadsheet, determines
     where it needs to go in the final object, then inserts it.
-
     Args:
         key: property name,
         raw_val: value of a property being processed,
         key_lu: dictionary to translate from template naming to json-schema
                 property names
         data_obj: dictionary we are building to represent data
-        format_context: dictionary of everything needed for 'gcs_uri_format' 
-                        in case this property has that 
-        root_obj: root dictionary we are building to represent data, 
+        format_context: dictionary of everything needed for 'gcs_uri_format'
+                        in case this property has that
+        root_obj: root dictionary we are building to represent data,
                   that holds 'data_obj' within 'data_obj_pointer'
         data_obj_pointer: pointer of 'data_obj' within 'root_obj'.
                           this will allow to process relative json-pointer properties
                           to jump out of data_object
         verb: boolean indicating verbosity
-
     Returns:
         [ LocalFileUploadEntry(
-            local_path = "/local/file/from/excel/file/cell",   
+            local_path = "/local/file/from/excel/file/cell",
             gs_key = "constructed/GCS/path/where/this/artifact/should/endup",
             upload_placeholder = 'uuiduuiduuid-uuid-uuid-uuiduuid' # unique artifact/upload_placeholder,
             metadata_availability = boolean to indicate whether LocalFileUploadEntry should be extracted for metadata files
         ) ]
-
     """
 
     if verb:
@@ -335,7 +326,7 @@ def _process_property(
 class _AtomicChange(NamedTuple):
     """
     Represents exactly one "value set" operation on some data object
-    `Pointer` being a json-pointer string showing where to set `value` to.  
+    `Pointer` being a json-pointer string showing where to set `value` to.
     """
 
     pointer: str
@@ -347,9 +338,8 @@ def _process_field_value(
 ) -> Tuple[List[_AtomicChange], List[LocalFileUploadEntry]]:
     """
     Processes one field value based on field_def taken from a ..._template.json schema.
-    Calculates a list of `_AtomicChange`s within a context object 
+    Calculates a list of `_AtomicChange`s within a context object
     and a list of file upload entries.
-
     A list of values and not just one value might arise from a `process_as` section
     in template schema, that allows for multi-processing of a single cell value.
     """
@@ -376,7 +366,6 @@ def _process_field_value(
     # and put it in this sample parent's cimac_participant_id
     if "process_as" in field_def:
         for extra_fdef in field_def["process_as"]:
-
             # Calculating new "raw" val.
             # `eval` should be fine, as we're controlling the code argument in the templates
             extra_fdef_raw_val = eval(extra_fdef.get("parse_through", "lambda x: x"))(
@@ -405,14 +394,13 @@ def _get_file_ext(fname):
 def _format_single_artifact(
     local_path: str, uuid: str, field_def: dict, format_context: dict
 ):
-
     gs_key = field_def["gcs_uri_format"].format_map(format_context)
 
     expected_extension = _get_file_ext(gs_key)
     provided_extension = _get_file_ext(local_path)
     if provided_extension != expected_extension:
         raise ParsingException(
-            f"Expected {'.'+expected_extension} for {field_def['key_name']!r} but got {'.'+provided_extension!r} instead."
+            f"Expected {'.' + expected_extension} for {field_def['key_name']!r} but got {'.' + provided_extension!r} instead."
         )
 
     return LocalFileUploadEntry(
@@ -451,7 +439,6 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict, verb: bo
 
         # and we iterate through local file paths:
         for num, local_path in enumerate(raw_val.split(",")):
-
             # Ignoring errors here as we're sure `coerce` will just return a uuid
             file_uuid = coerce(local_path)
 
@@ -496,12 +483,10 @@ PRISM_PRISMIFY_STRATEGIES = {"overwriteAny": strategies.Overwrite()}
 def prismify(
     xlsx: XlTemplateReader, template: Template, verb: bool = False
 ) -> (dict, List[LocalFileUploadEntry], List[Union[Exception, str]]):
-
     """
     Converts excel file to json object. It also identifies local files
     which need to uploaded to a google bucket and provides some logic
     to help build the bucket url.
-
     e.g. file list
     [
         {
@@ -509,13 +494,10 @@ def prismify(
             'gs_key': '10021/CTTTPPPSS/wes_forward.fastq'
         }
     ]
-
-
     Args:
         xlsx: cidc_schemas.template_reader.XlTemplateReader instance
         template: cidc_schemas.template.Template instance
         verb: boolean indicating verbosity
-
     Returns:
         (tuple):
             arg1: clinical trial object with data parsed from spreadsheet
@@ -527,17 +509,11 @@ def prismify(
                     metadata_availability = boolean to indicate whether LocalFileUploadEntry should be extracted for metadata files
                 )
             arg3: list of errors
-
     Process:
-
     * checks out `prism_preamble_object_pointer` which is a "standard"/absolute
-    rfc6901 json-pointer from CT root object to a new assay location. 
-
+    rfc6901 json-pointer from CT root object to a new assay location.
     E.g. for WES it is `/assays/wes/0`, in DeepDiff terms `ct["assays"]["wes"][0]`
-
-
-    * creates such "parent/preamble" object. 
-
+    * creates such "parent/preamble" object.
     E.g. for WES an object that corresponds to a wes_assay will be created:
         {
           "assays": {
@@ -548,16 +524,13 @@ def prismify(
             ]
           }
         }
-
-
-    * then processes all "preamble_rows" properties from "..._template.json" 
-    to fill object's properties. It uses "merge_pointer"s relative to this 
-    "parent/preamble" object to determine exact location where to set value. 
+    * then processes all "preamble_rows" properties from "..._template.json"
+    to fill object's properties. It uses "merge_pointer"s relative to this
+    "parent/preamble" object to determine exact location where to set value.
     In most cases it's just "0/field_name". Where "0" denotes that "field_name"
-    is a field in the current object. 
-    With exceptions like - "3/protocol_identifier" which says basically 
-    "go 3 levels up in the hierarchy and take protocol_identifier field of the root". 
-
+    is a field in the current object.
+    With exceptions like - "3/protocol_identifier" which says basically
+    "go 3 levels up in the hierarchy and take protocol_identifier field of the root".
     E.g. WES:
         {
           "protocol_identifier": "4412" # from `3/protocol_identifier`
@@ -569,12 +542,10 @@ def prismify(
             ]
           }
         }
-
-
-    * then it goes in a loop over all "record" rows in .xlsx, and creates 
+    * then it goes in a loop over all "record" rows in .xlsx, and creates
     an object within that "parent" object for each row. These "record-objects"
     are created at "prism_data_object_pointer" location relative to "preamble".
-    
+
     E.g. for WES: `"prism_data_object_pointer" : "/records/-"`
         {
           "assays": {
@@ -591,13 +562,10 @@ def prismify(
           }
         }
     NB Minus sign at the end of "/records/-" is a special relative-json-pointer
-    notation that means we need to create new object in an 'record' array. 
+    notation that means we need to create new object in an 'record' array.
     So it's like if python's `l.append(v)` would've been `l[-] = v`.
-
-
-    * Prism now uses those "merge_pointer" relative to this "record" object, 
+    * Prism now uses those "merge_pointer" relative to this "record" object,
     to populate field values of a "record" in the same way as with "preamble".
-
     E.g. for WES: `"prism_data_object_pointer" : "/records/-"`
         {
           "assays": {
@@ -606,17 +574,16 @@ def prismify(
                 "assay_creator": "DFCI",
                 "records": [
                   {
-                    "cimac_id": ...                 # from "0/cimac_id", 
-                    "enrichment_vendor_lot": ...    # from "0/enrichment_vendor_lot", 
-                    "capture_date": ...             # from "0/capture_date", 
+                    "cimac_id": ...                 # from "0/cimac_id",
+                    "enrichment_vendor_lot": ...    # from "0/enrichment_vendor_lot",
+                    "capture_date": ...             # from "0/capture_date",
                   }
                 ]
               }
             ]
           }
         }
-
-    * Finally, as there were many "records" object created/populated, 
+    * Finally, as there were many "records" object created/populated,
     Prism now uses `prism_preamble_object_schema` to merge all that together
     with respect to `mergeStrategy`es defined in that schema.
     """
@@ -826,11 +793,9 @@ def prismify(
 def _set_data_format(ct: dict, artifact: dict):
     """
     Discover the correct data format for the given artifact.
-
     Args:
         ct: a clinical trial object with artifact inserted
         artifact: a reference to the artifact object inserted in `ct`.
-
         NOTE: in-place updates to artifact must trigger in-place updates to `ct`.
     """
     # This is invalid for all artifact types, and will
@@ -863,7 +828,6 @@ def _set_data_format(ct: dict, artifact: dict):
 
 
 def _get_uuid_info(ct: dict, artifact_uuid: str) -> (dict, dict):
-
     # Using uuids to find path in CT where corresponding artifact is located. Uuids are unique.
     uuid_field_path = get_path(ct, artifact_uuid)
 
@@ -887,9 +851,9 @@ def merge_artifact(
     create and merge an artifact into the metadata blob
     for a clinical trial. The merging process is automatically
     determined by inspecting the gs url path.
-
     Args:
         ct: clinical_trial object to be searched
+        artifact_uuid: artifact identifier
         object_url: the gs url pointing to the object being added
         file_size_bytes: integer specifying the number of bytes in the file
         uploaded_timestamp: time stamp associated with this object
@@ -897,7 +861,7 @@ def merge_artifact(
                     object storage
     Returns:
         ct: updated clinical trial object
-        artifact: updated artifact
+        artifact: updated artifactf
         additional_artifact_metadata: relevant metadata collected while updating artifact
     """
 
@@ -927,7 +891,6 @@ def merge_artifact_extra_metadata(
     """
     Merges parsed extra metadata returned by extra_metadata_parsing to
     corresponding artifact objects within the patch.
-
     Args:
         ct: preliminary patch from upload_assay
         artifact_uuid: passed from upload assay
@@ -950,10 +913,8 @@ def merge_artifact_extra_metadata(
 def _update_artifact(
     ct: dict, artifact_patch: dict, artifact_uuid: str
 ) -> (dict, dict, dict):
-
     """ Updates the artifact with uuid `artifact_uuid` in `ct`,
     and return the updated clinical trial and artifact objects
-
     Args:
         ct: clinical trial object
         artifact_patch: artifact object patch
@@ -1014,11 +975,9 @@ PRISM_MERGE_STRATEGIES = {
 def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]):
     """
     merges two clinical trial metadata objects together
-
     Args:
         patch: the metadata object to add
         target: the existing metadata object
-
     Returns:
         arg1: the merged metadata object
         arg2: list of validation errors
@@ -1063,7 +1022,6 @@ def parse_npx(xlsx: BinaryIO) -> dict:
     If the file is not valid NPX but still xlsx the function will
     return a dict containing an empty list. Sample IDs not conforming to the CIMAC ID
     format will be skipped. The function will pass along any IO errors.
-
     Args:
         xlsx: an opened NPX file
     Returns:

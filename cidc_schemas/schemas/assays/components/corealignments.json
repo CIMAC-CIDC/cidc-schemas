@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "corealignments",
+  "title": "WES Corealignment Output Files",
+  "type": "object",
+  "description": "Core-alignments output files.",
+  "properties": {
+    "tn_corealigned": {
+      "$ref": "artifacts/artifact_bam.json"
+    },
+    "tn_corealigned_index": {
+      "$ref": "artifacts/artifact_bai.json"
+    }
+  },
+    "required": [
+      "tn_corealigned"
+    ],
+    "additionalProperties": false
+}

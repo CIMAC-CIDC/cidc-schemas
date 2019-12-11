@@ -33,7 +33,7 @@
         </p>
         <h1>ZIP Artifact</h1>
         <p>
-            <b>Description:</b>  Information about ZIP files.
+            <b>Description:</b>  Information about a ZIP file.
         </p>
         
     </div>
@@ -171,17 +171,22 @@
                     "enum": [
                         "FASTA",
                         "FASTQ.GZ",
+                        "VCF.GZ",
                         "IMAGE",
                         "VCF",
                         "CSV",
+                        "TSV",
                         "XLSX",
                         "NPX",
                         "BAM",
+                        "BAI",
                         "MAF",
                         "BINARY",
                         "TEXT",
                         "ZIP",
                         "FCS",
+                        "GZ",
+                        "JSON",
                         "[NOT SET]"
                     ],
                     "type": "string"
@@ -238,7 +243,7 @@
             }
         }
     ],
-    "description": "Information about ZIP files.",
+    "description": "Information about a ZIP file.",
     "mergeStrategy": "objectMerge",
     "title": "ZIP Artifact",
     "type": "object"

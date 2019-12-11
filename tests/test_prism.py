@@ -50,18 +50,11 @@ from .test_assays import ARTIFACT_OBJ
 def prismify_test_set(filter=None):
     yielded = False
 
-    print("WIHIUHEJIHE")
-    print("WIHIUHEJIHE")
-    print("WIHIUHEJIHE")
-    print("WIHIUHEJIHE")
-    print("WIHIUHEJIHE")
-    print("WIHIUHEJIHE")
-
     for template, xlsx_path in template_set():
 
         if filter and template.type not in filter:
             continue
-        print("AAA", template.type, filter)
+
         xlsx, errors = XlTemplateReader.from_excel(xlsx_path)
         assert not errors
         yield xlsx, template
@@ -174,8 +167,8 @@ WES_TEMPLATE_EXAMPLE_GS_URLS = {
 }
 
 WESBAM_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/reads.bam": "r1.1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/reads.bam": "r1.2",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/reads.bam": "bam1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/reads.bam": "bam2",
 }
 
 
@@ -1012,7 +1005,6 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == "wes_bam":
         assert len(merged_gs_keys) == 2 * 1  # 1 files per entry in xlsx
-        print(set(merged_gs_keys))
         assert set(merged_gs_keys) == set(WESBAM_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
     elif template.type == "olink":

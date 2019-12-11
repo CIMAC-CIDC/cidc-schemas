@@ -343,7 +343,7 @@ def test_prism(xlsx, template):
 
             # also handle WES differently due to two templates mapping to one assay
             ttype = template.type
-            if template.type == "wes_bam":
+            if template.type == "wes_bam" or template.type == "wes_fastq":
                 ttype = "wes"
 
             # this assert the merging of rows in the template is happening properly
@@ -409,7 +409,7 @@ def test_filepath_gen(xlsx, template):
     assert len(local_to_gcs_mapping) == len(file_maps), "gcs_key/url collision"
 
     # assert we have the right file counts etc.
-    if template.type == "wes":
+    if template.type == "wes_fastq":
 
         # we should have 2 fastq per sample.
         # we should have 2 tot forward.
@@ -627,8 +627,8 @@ def test_prismify_wesbam_only(xlsx, template):
     assert 2 == len(list(validator.iter_errors(merged_wo_needed_participants)))
 
 
-@pytest.mark.parametrize("xlsx, template", prismify_test_set("wes"))
-def test_prismify_wes_only(xlsx, template):
+@pytest.mark.parametrize("xlsx, template", prismify_test_set("wes_fastq"))
+def test_prismify_wesfastq_only(xlsx, template):
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
@@ -689,7 +689,7 @@ def test_prismify_olink_only(xlsx, template):
     return ct, file_maps
 
 
-def test_merge_artifact_wes_only():
+def test_merge_artifact_wesfastq_only():
 
     # create the clinical trial.
     ct = copy.deepcopy(TEST_PRISM_TRIAL)
@@ -891,8 +891,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             assert len(prism_patch["assays"][template.type][0]["records"]) == 2
             assert len(prism_patch["assays"][template.type][0]["cytof_antibodies"]) == 2
 
-        elif template.type == "wes":
-            assert len(prism_patch["assays"][template.type][0]["records"]) == 2
+        elif template.type == "wes_fastq":
+            assert len(prism_patch["assays"]["wes"][0]["records"]) == 2
         elif template.type == "wes_bam":
             assert len(prism_patch["assays"]["wes"][0]["records"]) == 2
 
@@ -906,7 +906,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     for f in file_maps:
         ttype = template.type
-        if ttype == "wes_bam":
+        if ttype == "wes_bam" or ttype == "wes_fastq":
             ttype = "wes"
         assert f"{ttype}/" in f.gs_key, f"No {ttype} template.type found"
 
@@ -935,10 +935,10 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             # simulate an initial WES upload by prismifying the initial WES template object,
             # and merging it with clinical trial object
             wes_input_xlsx_path = os.path.join(
-                TEMPLATE_EXAMPLES_DIR, "wes_template.xlsx"
+                TEMPLATE_EXAMPLES_DIR, "wes_fastq_template.xlsx"
             )
             wes_input_xlsx, _ = XlTemplateReader.from_excel(wes_input_xlsx_path)
-            wes_input_template = Template.from_type("wes")
+            wes_input_template = Template.from_type("wes_fastq")
             wes_input_patch, _, _ = prismify(wes_input_xlsx, wes_input_template)
 
             original_ct, errs = merge_clinical_trial_metadata(
@@ -999,7 +999,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     if template.type == "ihc":
         assert len(merged_gs_keys) == 2
 
-    elif template.type == "wes":
+    elif template.type == "wes_fastq":
         assert len(merged_gs_keys) == 2 * 2  # 2 files per entry in xlsx
         assert set(merged_gs_keys) == set(WES_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
@@ -1039,7 +1039,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             len(full_ct["assays"][template.type]["records"]) == 2
         ), "More records than expected"
 
-    elif template.type == "wes_bam" or template.type == "wes":
+    elif template.type == "wes_bam" or template.type == "wes_fastq":
         ttype = "wes"
         assert len(full_ct["assays"][ttype]) == 1 + len(
             TEST_PRISM_TRIAL["assays"][ttype]
@@ -1076,7 +1076,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     dd = DeepDiff(full_after_prism, full_ct)
 
-    if template.type == "wes":
+    if template.type == "wes_fastq":
 
         # 4 files * 7 artifact attributes
         assert len(dd["dictionary_item_added"]) == 4 * 7, "Unexpected CT changes"

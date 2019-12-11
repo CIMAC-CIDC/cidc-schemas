@@ -389,14 +389,18 @@ class XlTemplateWriter:
         self._write_validation(data_range, entity_schema)
 
     def _write_comment(self, row: int, col: int, entity_schema: dict):
-        if "description" in entity_schema:
-            self.worksheet.write_comment(
-                row, col, entity_schema["description"], self.COMMENT_THEME
-            )
+        comment = entity_schema.get("description", "")
+
+        if "gcs_uri_format" in entity_schema:
+            comment += f'\nIn .{entity_schema["gcs_uri_format"].split(".")[-1]} format'
+
+        if comment:
+            self.worksheet.write_comment(row, col, comment, self.COMMENT_THEME)
 
     def _write_validation(self, cell: str, entity_schema: dict):
         validation = self._get_validation(cell, entity_schema)
-        validation and self.worksheet.data_validation(cell, validation)
+        if validation:
+            self.worksheet.data_validation(cell, validation)
 
     def _hide_type_annotations(self):
         self.worksheet.set_column(0, 0, None, None, {"hidden": True})

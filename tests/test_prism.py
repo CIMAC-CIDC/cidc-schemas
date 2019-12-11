@@ -181,8 +181,14 @@ WES_TEMPLATE_EXAMPLE_GS_URLS = {
 }
 
 WESBAM_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP111.00/wes/reads.bam": "bam1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] + "/CTTTPP121.00/wes/reads.bam": "bam2",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    + "/CTTTPP111.00/wes/reads_0.bam": "bam_whatever_1_0",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    + "/CTTTPP111.00/wes/reads_1.bam": "bam_whatever_1_1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    + "/CTTTPP121.00/wes/reads_0.bam": "bam_whatever_2_0",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    + "/CTTTPP121.00/wes/reads_1.bam": "bam_whatever_2_1",
 }
 
 
@@ -460,15 +466,15 @@ def test_filepath_gen(xlsx, template):
 
     elif template.type == "wes_bam":
 
-        # we should have 1 bam per sample.
-        assert 2 == sum([x.gs_key.endswith(".bam") for x in file_maps])
+        # we should have 2 bam in each (2) sample.
+        assert 4 == sum([x.gs_key.endswith(".bam") for x in file_maps])
 
         # in total local
-        assert 2 == sum([x.local_path.endswith(".bam") for x in file_maps])
+        assert 4 == sum([x.local_path.endswith(".bam") for x in file_maps])
 
         # 2 in total
-        assert len(file_maps) == 2
-        assert 2 == sum(
+        assert len(file_maps) == 4
+        assert 4 == sum(
             [
                 x.gs_key.startswith(TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME])
                 for x in file_maps
@@ -621,9 +627,12 @@ def test_prismify_wesbam_only(xlsx, template):
         print()
     # assert False
 
+    # md patch is not complete
+    # but errors should be only
     for e in validator.iter_errors(md_patch):
-        assert isinstance(e, InDocRefNotFoundError) or (
-            "'participants'" in str(e) and "required" in str(e)
+        assert isinstance(e, InDocRefNotFoundError) or (  # not found cimac_ids
+            "'participants'" in str(e)
+            and "required" in str(e)  # or no "participants" found.
         )
 
     # we merge it with a preexisting one
@@ -1027,7 +1036,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert set(merged_gs_keys) == set(WES_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
     elif template.type == "wes_bam":
-        assert len(merged_gs_keys) == 2 * 1  # 1 files per entry in xlsx
+        assert len(merged_gs_keys) == 2 * 2  # 2 files per entry in xlsx
         assert set(merged_gs_keys) == set(WESBAM_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
     elif template.type == "olink":
@@ -1109,8 +1118,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == "wes_bam":
 
-        # 2 files * 7 artifact attributes
-        assert len(dd["dictionary_item_added"]) == 2 * 7, "Unexpected CT changes"
+        # 4 files * 7 artifact attributes
+        assert len(dd["dictionary_item_added"]) == 4 * 7, "Unexpected CT changes"
 
         # nothing else in diff
         assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"

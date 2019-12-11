@@ -929,7 +929,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 9  # 9 output files
 
     elif template.type == "wes_analysis":
-        assert len(merged_gs_keys) == 124  # 124 (run + sample) output files
+        # 32 (for each run) + 15 (for each tumor sample) + 15 (for each normal sample)
+        assert len(merged_gs_keys) == 2 * (32 + (15 * 2))
 
     else:
         assert False, f"add {template.type} assay specific asserts on 'merged_gs_keys'"
@@ -1015,7 +1016,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == "wes_analysis":
         # 7 artifact attributes * 124 files
-        assert len(dd["dictionary_item_added"]) == 868, "Unexpected CT changes"
+        assert len(dd["dictionary_item_added"]) == 7 * 124, "Unexpected CT changes"
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -1308,226 +1309,23 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda x: f'analysis/germline/{x}/{x}_vcfcompare.txt'",
-                                            "merge_pointer": "/germline_txt",
-                                            "gcs_uri_format": "{run_id}/germline.txt",
+                                            "parse_through": "lambda x: f'analysis/germline/{x}/{x}-run-output-1.txt'",
+                                            "merge_pointer": "/run-output-1",
+                                            "gcs_uri_format": "{run_id}/run-output-1.txt",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'analysis/purity/{x}/{x}.optimalpurityvalue.txt'",
-                                            "merge_pointer": "/purity_txt",
-                                            "gcs_uri_format": "{run_id}/optimalpurityvalue.txt",
+                                            "parse_through": "lambda x: f'analysis/purity/{x}/{x}run-output-2.txt'",
+                                            "merge_pointer": "/run-output-2",
+                                            "gcs_uri_format": "{run_id}/run-output-2.txt",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'analysis/clonality/{x}/{x}_pyclone.tsv'",
-                                            "merge_pointer": "/clonality_tsv",
-                                            "gcs_uri_format": "{run_id}/clonality_pyclone.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/copynumber/{x}/{x}_cnvcalls.txt'",
-                                            "merge_pointer": "/cnvcalls_txt",
-                                            "gcs_uri_format": "{run_id}/copynumber_cnvcalls.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/copynumber/{x}/{x}_cnvcalls.txt.tn.tsv'",
-                                            "merge_pointer": "/cnvcalls_tsv",
-                                            "gcs_uri_format": "{run_id}/copynumber_cnvcalls.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/neoantigen/{x}/MHC_Class_1/{x}.all_epitopes.tsv'",
-                                            "merge_pointer": "/neoantigen_mhc_class_1_epitopes_tsv",
-                                            "gcs_uri_format": "{run_id}/MHC_Class_1_all_epitopes.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/neoantigen/{x}/MHC_Class_1/{x}.filtered.condensed.ranked.tsv'",
-                                            "merge_pointer": "/neoantigen_mhc_class_1_filtered_condensed_ranked_tsv",
-                                            "gcs_uri_format": "{run_id}/MHC_Class_1_filtered_condensed_ranked.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/neoantigen/{x}/MHC_Class_2/{x}.all_epitopes.tsv'",
-                                            "merge_pointer": "/neoantigen_mhc_class_2_epitopes_tsv",
-                                            "gcs_uri_format": "{run_id}/MHC_Class_2_all_epitopes.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/neoantigen/{x}/MHC_Class_2/{x}.filtered.condensed.ranked.tsv'",
-                                            "merge_pointer": "/neoantigen_mhc_class_2_filtered_condensed_ranked_tsv",
-                                            "gcs_uri_format": "{run_id}/MHC_Class_2_filtered_condensed_ranked.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnscope.output.vcf'",
-                                            "merge_pointer": "/somatic_tnscope_output_vcf",
-                                            "gcs_uri_format": "{run_id}/vcf_tnscope_output.vcf",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnhaploytper2.output.vcf'",
-                                            "merge_pointer": "/somatic_tnhaploytper2_output_vcf",
-                                            "gcs_uri_format": "{run_id}/vcf_tnhaploytper2_output.vcf",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnsnv.output.vcf'",
-                                            "merge_pointer": "/somatic_tnsnv_output_vcf",
-                                            "gcs_uri_format": "{run_id}/vcf_tnsnv_output.vcf",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnscope.output.maf'",
-                                            "merge_pointer": "/somatic_tnscope_output_maf",
-                                            "gcs_uri_format": "{run_id}/vcf_tnscope_output.maf",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnhaploytper2.output.maf'",
-                                            "merge_pointer": "/somatic_tnhaploytper2_output_maf",
-                                            "gcs_uri_format": "{run_id}/vcf_tnhaploytper2_output.maf",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnsnv.output.maf'",
-                                            "merge_pointer": "/somatic_tnsnv_output_maf",
-                                            "gcs_uri_format": "{run_id}/vcf_tnsnv_output.maf",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnscope.filter.vcf'",
-                                            "merge_pointer": "/somatic_tnscope_filtered_vcf",
-                                            "gcs_uri_format": "{run_id}/vcf_tnscope_filter.vcf",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnhaploytper2.filter.vcf'",
-                                            "merge_pointer": "/somatic_tnhaploytper2_filtered_vcf",
-                                            "gcs_uri_format": "{run_id}/vcf_tnhaploytper2_filter.vcf",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnsnv.filter.vcf'",
-                                            "merge_pointer": "/somatic_tnsnv_filtered_vcf",
-                                            "gcs_uri_format": "{run_id}/vcf_tnsnv_filter.vcf",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnscope.filter.maf'",
-                                            "merge_pointer": "/somatic_tnscope_filtered_maf",
-                                            "gcs_uri_format": "{run_id}/vcf_tnscope_filter.maf",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnhaploytper2.filter.maf'",
-                                            "merge_pointer": "/somatic_tnhaploytper2_filtered_maf",
-                                            "gcs_uri_format": "{run_id}/vcf_tnhaploytper2_filter.maf",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnsnv.filter.maf'",
-                                            "merge_pointer": "/somatic_tnsnv_filtered_maf",
-                                            "gcs_uri_format": "{run_id}/vcf_tnsnv_filter.maf",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnscope.filter.exons.broad.vcf.gz'",
-                                            "merge_pointer": "/somatic_tnscope_exons_broad_gz",
-                                            "gcs_uri_format": "{run_id}/gz_tnscope_exons_broad.gz",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnhaploytper2.filter.exons.broad.vcf.gz'",
-                                            "merge_pointer": "/somatic_tnhaploytper2_exons_broad_gz",
-                                            "gcs_uri_format": "{run_id}/gz_tnhaploytper2_exons_broad.gz",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnsnv.filter.exons.broad.vcf.gz'",
-                                            "merge_pointer": "/somatic_tnsnv_exons_broad_gz",
-                                            "gcs_uri_format": "{run_id}/gz_tnsnv_exons_broad.gz",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnscope.filter.exons.mda.vcf.gz'",
-                                            "merge_pointer": "/somatic_tnscope_exons_mda_gz",
-                                            "gcs_uri_format": "{run_id}/gz_tnscope_exons_mda.gz",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnhaploytper2.filter.exons.mda.vcf.gz'",
-                                            "merge_pointer": "/somatic_tnhaploytper2_exons_mda_gz",
-                                            "gcs_uri_format": "{run_id}/gz_tnhaploytper2_exons_mda.gz",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnsnv.filter.exons.mda.vcf.gz'",
-                                            "merge_pointer": "/somatic_tnsnv_exons_mda_gz",
-                                            "gcs_uri_format": "{run_id}/gz_tnsnv_exons_mda.gz",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnscope.filter.exons.mocha.vcf.gz'",
-                                            "merge_pointer": "/somatic_tnscope_exons_mocha_gz",
-                                            "gcs_uri_format": "{run_id}/gz_tnscope_exons_mocha.gz",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnhaploytper2.filter.exons.mocha.vcf.gz'",
-                                            "merge_pointer": "/somatic_tnhaploytper2_exons_mocha_gz",
-                                            "gcs_uri_format": "{run_id}/gz_tnhaploytper2_exons_mocha.gz",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/somatic/{x}/{x}_tnsnv.filter.exons.mocha.vcf.gz'",
-                                            "merge_pointer": "/somatic_tnsnv_exons_mocha_gz",
-                                            "gcs_uri_format": "{run_id}/gz_tnsnv_exons_mocha.gz",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/corealignments/{x}/{x}_tn_corealigned.bam'",
-                                            "merge_pointer": "/tn_corealigned",
-                                            "gcs_uri_format": "{run_id}/bam_tn_corealigned.bam",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/corealignments/{x}/{x}_tn_corealigned.bai'",
-                                            "merge_pointer": "/tn_corealigned_index",
-                                            "gcs_uri_format": "{run_id}/bam_tn_corealigned.bai",
+                                            "parse_through": "lambda x: f'analysis/clonality/{x}/{x}-run-output-3.tsv'",
+                                            "merge_pointer": "/run-output-3",
+                                            "gcs_uri_format": "{run_id}/run-output-3.tsv",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
@@ -1538,107 +1336,23 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.bam'",
-                                            "merge_pointer": "/sample1/sorted",
-                                            "gcs_uri_format": "{run_id}/{sid1}/sorted.bam",
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.output1.bam'",
+                                            "merge_pointer": "/sample1/output1",
+                                            "gcs_uri_format": "{run_id}/{sid1}/output1.bam",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.bai'",
-                                            "merge_pointer": "/sample1/sorted_index",
-                                            "gcs_uri_format": "{run_id}/{sid1}/sorted.bai",
+                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.output2.txt'",
+                                            "merge_pointer": "/sample1/output2",
+                                            "gcs_uri_format": "{run_id}/{sid1}/output2.txt",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.recalibrated.bam'",
-                                            "merge_pointer": "/sample1/recalibrated",
-                                            "gcs_uri_format": "{run_id}/{sid1}/recalibrated.bam",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.recalibrated.bai'",
-                                            "merge_pointer": "/sample1/recalibrated_index",
-                                            "gcs_uri_format": "{run_id}/{sid1}/recalibrated.bai",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.dedup.bam'",
-                                            "merge_pointer": "/sample1/sorted_dedup",
-                                            "gcs_uri_format": "{run_id}/{sid1}/sorted.dedup.bam",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.dedup.bai'",
-                                            "merge_pointer": "/sample1/sorted_dedup_index",
-                                            "gcs_uri_format": "{run_id}/{sid1}/sorted.dedup.bai",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}_coverage_metrics.txt'",
-                                            "merge_pointer": "/sample1/coverage_metrics",
-                                            "gcs_uri_format": "{run_id}/{sid1}/coverage_metrics.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}_target_metrics.txt'",
-                                            "merge_pointer": "/sample1/target_metrics",
-                                            "gcs_uri_format": "{run_id}/{sid1}/target_metrics.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}_coverage_metrics.txt.sample_summary.txt'",
-                                            "merge_pointer": "/sample1/coverage_metrics_summary",
-                                            "gcs_uri_format": "{run_id}/{sid1}/coverage_metrics_summary.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}_target_metrics.txt.sample_summary.txt'",
-                                            "merge_pointer": "/sample1/target_metrics_summary",
-                                            "gcs_uri_format": "{run_id}/{sid1}/target_metrics_summary.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.broad.mosdepth.region.dist.txt'",
-                                            "merge_pointer": "/sample1/mosdepth_region_dist_broad",
-                                            "gcs_uri_format": "{run_id}/{sid1}/mosdepth_region_dist_broad.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.mda.mosdepth.region.dist.txt'",
-                                            "merge_pointer": "/sample1/mosdepth_region_dist_mda",
-                                            "gcs_uri_format": "{run_id}/{sid1}/mosdepth_region_dist_mda.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.mocha.mosdepth.region.dist.txt'",
-                                            "merge_pointer": "/sample1/mosdepth_region_dist_mocha",
-                                            "gcs_uri_format": "{run_id}/{sid1}/mosdepth_region_dist_mocha.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/optitype/{x}/{x}_results.tsv'",
-                                            "merge_pointer": "/sample1/optitype_results",
-                                            "gcs_uri_format": "{run_id}/{sid1}/optitype_results.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/xhla/{x}/{x}_report-{x}-optitype.json'",
-                                            "merge_pointer": "/sample1/xhla_report_hla",
-                                            "gcs_uri_format": "{run_id}/{sid1}/xhla_report_hla.json",
+                                            "parse_through": "lambda x: f'analysis/optitype/{x}/{x}output3.tsv'",
+                                            "merge_pointer": "/sample1/output3",
+                                            "gcs_uri_format": "{run_id}/{sid1}/output3.tsv",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
@@ -1649,107 +1363,23 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.bam'",
-                                            "merge_pointer": "/sample2/sorted",
-                                            "gcs_uri_format": "{run_id}/{sid2}/sorted.bam",
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.output1.bam'",
+                                            "merge_pointer": "/sample2/output1",
+                                            "gcs_uri_format": "{run_id}/{sid2}/output1.bam",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.bai'",
-                                            "merge_pointer": "/sample2/sorted_index",
-                                            "gcs_uri_format": "{run_id}/{sid2}/sorted.bai",
+                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.output2.txt'",
+                                            "merge_pointer": "/sample2/output2",
+                                            "gcs_uri_format": "{run_id}/{sid2}/output2.txt",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.recalibrated.bam'",
-                                            "merge_pointer": "/sample2/recalibrated",
-                                            "gcs_uri_format": "{run_id}/{sid2}/recalibrated.bam",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.recalibrated.bai'",
-                                            "merge_pointer": "/sample2/recalibrated_index",
-                                            "gcs_uri_format": "{run_id}/{sid2}/recalibrated.bai",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.dedup.bam'",
-                                            "merge_pointer": "/sample2/sorted_dedup",
-                                            "gcs_uri_format": "{run_id}/{sid2}/sorted.dedup.bam",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.sorted.dedup.bai'",
-                                            "merge_pointer": "/sample2/sorted_dedup_index",
-                                            "gcs_uri_format": "{run_id}/{sid2}/sorted.dedup.bai",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}_coverage_metrics.txt'",
-                                            "merge_pointer": "/sample2/coverage_metrics",
-                                            "gcs_uri_format": "{run_id}/{sid2}/coverage_metrics.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}_target_metrics.txt'",
-                                            "merge_pointer": "/sample2/target_metrics",
-                                            "gcs_uri_format": "{run_id}/{sid2}/target_metrics.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}_coverage_metrics.txt.sample_summary.txt'",
-                                            "merge_pointer": "/sample2/coverage_metrics_summary",
-                                            "gcs_uri_format": "{run_id}/{sid2}/coverage_metrics_summary.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}_target_metrics.txt.sample_summary.txt'",
-                                            "merge_pointer": "/sample2/target_metrics_summary",
-                                            "gcs_uri_format": "{run_id}/{sid2}/target_metrics_summary.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.broad.mosdepth.region.dist.txt'",
-                                            "merge_pointer": "/sample2/mosdepth_region_dist_broad",
-                                            "gcs_uri_format": "{run_id}/{sid2}/mosdepth_region_dist_broad.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.mda.mosdepth.region.dist.txt'",
-                                            "merge_pointer": "/sample2/mosdepth_region_dist_mda",
-                                            "gcs_uri_format": "{run_id}/{sid2}/mosdepth_region_dist_mda.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.mocha.mosdepth.region.dist.txt'",
-                                            "merge_pointer": "/sample2/mosdepth_region_dist_mocha",
-                                            "gcs_uri_format": "{run_id}/{sid2}/mosdepth_region_dist_mocha.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/optitype/{x}/{x}_results.tsv'",
-                                            "merge_pointer": "/sample2/optitype_results",
-                                            "gcs_uri_format": "{run_id}/{sid2}/optitype_results.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/xhla/{x}/{x}_report-{x}-optitype.json'",
-                                            "merge_pointer": "/sample2/xhla_report_hla",
-                                            "gcs_uri_format": "{run_id}/{sid2}/xhla_report_hla.json",
+                                            "parse_through": "lambda x: f'analysis/optitype/{x}/{x}.output3.tsv'",
+                                            "merge_pointer": "/sample2/output3",
+                                            "gcs_uri_format": "{run_id}/{sid2}/output3.tsv",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
                                             "is_artifact": 1,
                                         },
@@ -1778,8 +1408,12 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     local_paths = [e.local_path for e in file_maps]
     uuids = [e.upload_placeholder for e in file_maps]
 
-    assert 124 == len(file_maps)
-    assert 124 == len(set(uuids))
+    assert 3 * 3 * 2 == len(
+        file_maps
+    )  # (3 files * 3 fields from each record) * 2 records
+    assert 3 * 3 * 2 == len(
+        set(uuids)
+    )  # (3 files * 3 fields from each record) * 2 records
 
     assert local_paths != uuids
 

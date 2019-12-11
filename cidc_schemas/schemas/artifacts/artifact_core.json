@@ -64,6 +64,7 @@
       "enum": [
         "FASTA",
         "FASTQ.GZ",
+        "VCF.GZ",
         "IMAGE",
         "VCF",
         "CSV",

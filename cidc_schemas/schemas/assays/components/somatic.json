@@ -42,31 +42,31 @@
       "$ref": "artifacts/artifact_maf.json"
     },
     "tnscope_exons_broad": {
-      "$ref": "artifacts/artifact_gz.json"
+      "$ref": "artifacts/artifact_vcf_gz.json"
     },
     "tnhaploytper2_exons_broad": {
-      "$ref": "artifacts/artifact_gz.json"
+      "$ref": "artifacts/artifact_vcf_gz.json"
     },
     "tnsnv_exons_broad": {
-      "$ref": "artifacts/artifact_gz.json"
+      "$ref": "artifacts/artifact_vcf_gz.json"
     },
     "tnscope_exons_mda": {
-      "$ref": "artifacts/artifact_gz.json"
+      "$ref": "artifacts/artifact_vcf_gz.json"
     },
     "tnhaploytper2_exons_mda": {
-      "$ref": "artifacts/artifact_gz.json"
+      "$ref": "artifacts/artifact_vcf_gz.json"
     },
     "tnsnv_exons_mda": {
-      "$ref": "artifacts/artifact_gz.json"
+      "$ref": "artifacts/artifact_vcf_gz.json"
     },
     "tnscope_exons_mocha": {
-      "$ref": "artifacts/artifact_gz.json"
+      "$ref": "artifacts/artifact_vcf_gz.json"
     },
     "tnhaploytper2_exons_mocha": {
-      "$ref": "artifacts/artifact_gz.json"
+      "$ref": "artifacts/artifact_vcf_gz.json"
     },
     "tnsnv_exons_mocha": {
-      "$ref": "artifacts/artifact_gz.json"
+      "$ref": "artifacts/artifact_vcf_gz.json"
     }
   },
   "required": [

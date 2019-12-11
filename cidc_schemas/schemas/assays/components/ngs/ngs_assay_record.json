@@ -10,13 +10,8 @@
         "$ref": "sample.json#properties/cimac_id"
     },
     "files": {
-<<<<<<< HEAD
-      "$comment": "Fastq and read group mapping files produced by the assay.",
-      "$ref": "assays/components/fastq_pair.json"
-=======
       "$comment": "Fastq files or a bam file produced by the assay.",
       "$ref": "assays/components/fastq_pair_or_bam.json"
->>>>>>> master
     },
     "library_kit_lot": {
       "description": "Lot number for the library construction kit.",

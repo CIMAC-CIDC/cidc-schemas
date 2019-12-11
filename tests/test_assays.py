@@ -77,7 +77,7 @@ def test_wes_fastq():
     r2["data_format"] = "FASTQ.GZ"
     record = {
         "cimac_id": "CTTTPPPSA.00",
-        "files": {"r1": r1, "r2": r2},
+        "files": {"r1": [r1], "r2": [r2]},
         "sequencing_date": "...",
         "quality_flag": 1,
     }
@@ -108,7 +108,7 @@ def test_wes_bam():
     bam["data_format"] = "BAM"
     record = {
         "cimac_id": "CTTTPPPSA.00",
-        "files": {"bam": bam},
+        "files": {"bam": [bam]},
         "sequencing_date": "...",
         "quality_flag": 1,
     }
@@ -151,7 +151,7 @@ def test_rna_expression():
         "input_ng": 666,
         "library_yield_ng": 666,
         "average_insert_size": 200,
-        "files": {"r1": r1, "r2": r1},
+        "files": {"r1": [r1], "r2": [r1]},
     }
 
     # add a demo record.

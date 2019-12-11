@@ -53,9 +53,9 @@
             },
             "BAM file": {
               "merge_pointer": "0/files/bam", 
-              "gcs_uri_format": "{protocol identifier}/{cimac id}/wes/reads.bam",
-              "is_artifact" : 1,
-              "type_ref": "assays/components/local_file.json#properties/file_path"
+              "gcs_uri_format": "{protocol identifier}/{cimac id}/wes/reads_{num}.bam",
+              "is_artifact": "multi",
+              "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"            
             },
             "sequencing date": {
               "merge_pointer": "0/sequencing_date",

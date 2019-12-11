@@ -108,7 +108,7 @@ def test_wes_bam():
     bam["data_format"] = "BAM"
     record = {
         "cimac_id": "CTTTPPPSA.00",
-        "files": {"bam": bam},
+        "files": {"bam": [bam]},
         "sequencing_date": "...",
         "quality_flag": 1,
     }

@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>FCS Artifact</h1>
+        <h1>Gzipped VCF Artifact</h1>
         <p>
-            <b>Description:</b>  Information about a FCS file.
+            <b>Description:</b>  Information about a Gzipped VCF file.
         </p>
         
     </div>
@@ -107,7 +107,7 @@
     </td>
     <td>
         
-            &lt; const: <strong>FCS</strong> &gt;            
+            &lt; const: <strong>VCF.GZ</strong> &gt;            
         
     </td>
 </tr>
@@ -119,9 +119,9 @@
   </div>
 
   <div class="container">
-    <h3>artifact_fcs.full.json</h3>
+    <h3>artifact_vcf_gz.full.json</h3>
   	<pre><code>{
-    "$id": "fcs_artifact",
+    "$id": "vcf_gz_artifact",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "allOf": [
         {
@@ -237,15 +237,15 @@
         {
             "properties": {
                 "data_format": {
-                    "const": "FCS",
+                    "const": "VCF.GZ",
                     "description": "Data format."
                 }
             }
         }
     ],
-    "description": "Information about a FCS file.",
+    "description": "Information about a Gzipped VCF file.",
     "mergeStrategy": "objectMerge",
-    "title": "FCS Artifact",
+    "title": "Gzipped VCF Artifact",
     "type": "object"
 }</code></pre>
   </container>

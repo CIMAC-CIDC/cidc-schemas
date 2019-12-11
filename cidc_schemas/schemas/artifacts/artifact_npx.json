@@ -3,7 +3,7 @@
   "$id": "npx_artifact",
   "title": "NPX Artifact",
   "type": "object",
-  "description": "Information about a xlsx file.",
+  "description": "Information about an NPX file.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

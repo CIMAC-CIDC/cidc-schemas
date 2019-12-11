@@ -3,7 +3,7 @@
   "$id": "gz_artifact",
   "title": "GZ Artifact",
   "type": "object",
-  "description": "Information about GZ files.",
+  "description": "Information about a GZ file.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

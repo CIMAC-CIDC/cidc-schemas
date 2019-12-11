@@ -64,17 +64,22 @@
       "enum": [
         "FASTA",
         "FASTQ.GZ",
+        "VCF.GZ",
         "IMAGE",
         "VCF",
         "CSV",
+        "TSV",
         "XLSX",
         "NPX",
         "BAM",
+        "BAI",
         "MAF",
         "BINARY",
         "TEXT",
         "ZIP",
         "FCS",
+        "GZ",
+        "JSON",
         "[NOT SET]"
       ]
     }

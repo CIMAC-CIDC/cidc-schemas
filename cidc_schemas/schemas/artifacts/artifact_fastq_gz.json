@@ -3,7 +3,7 @@
   "$id": "artifact_fastq_gz",
   "title": "Gzipped FastQ Artifact",
   "type": "object",
-  "description": "Information about a gzipped fastq file.",
+  "description": "Information about a Gzipped FASTQ file.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "germline",
-  "title": "Germline variant output sample files",
+  "title": "WES Germline Output Files",
   "type": "object",
   "description": "Germline variant output sample files.",
   "properties": {
@@ -10,6 +10,7 @@
     }
   },
   "required": [
-
-  ]
+  "vcf_compare"
+  ],
+  "additionalProperties": false
 }

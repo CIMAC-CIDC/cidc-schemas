@@ -3,7 +3,7 @@
   "$id": "tsv_artifact",
   "title": "TSV Artifact",
   "type": "object",
-  "description": "Information about Tab Separated files.",
+  "description": "Information about a tab Separated file.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

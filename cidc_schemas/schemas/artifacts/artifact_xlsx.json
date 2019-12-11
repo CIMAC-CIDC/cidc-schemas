@@ -3,7 +3,7 @@
   "$id": "xlsx_artifact",
   "title": "Excel Artifact",
   "type": "object",
-  "description": "Information about a xlsx file.",
+  "description": "Information about an XLSX file.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

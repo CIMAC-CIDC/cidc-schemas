@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Copy number output files</h1>
+        <h1>WES Copynumber Output Files</h1>
         <p>
             <b>Description:</b>  Copy number output files.
         </p>
@@ -58,11 +58,6 @@
         </thead>
         
             
-        
-            
-        
-        
-            
                 <tr>
     <td>
         
@@ -70,11 +65,13 @@
                 copynumber_cnv_calls
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
         
-            Information about text files.
+            Information about a text file.
         
     </td>
     <td>
@@ -93,11 +90,13 @@
                 copynumber_cnv_calls_tsv
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
         
-            Information about Tab Separated files.
+            Information about a tab Separated file.
         
     </td>
     <td>
@@ -106,6 +105,11 @@
         
     </td>
 </tr>
+            
+        
+        
+            
+        
             
         
     </table>
@@ -118,6 +122,7 @@
   	<pre><code>{
     "$id": "copynumber",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
     "description": "Copy number output files.",
     "properties": {
         "copynumber_cnv_calls": {
@@ -171,17 +176,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -238,7 +248,7 @@
                     }
                 }
             ],
-            "description": "Information about text files.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
             "title": "Text Artifact",
             "type": "object"
@@ -294,17 +304,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -361,14 +376,17 @@
                     }
                 }
             ],
-            "description": "Information about Tab Separated files.",
+            "description": "Information about a tab Separated file.",
             "mergeStrategy": "objectMerge",
             "title": "TSV Artifact",
             "type": "object"
         }
     },
-    "required": [],
-    "title": "Copy number output files",
+    "required": [
+        "copynumber_cnv_calls",
+        "copynumber_cnv_calls_tsv"
+    ],
+    "title": "WES Copynumber Output Files",
     "type": "object"
 }</code></pre>
   </container>

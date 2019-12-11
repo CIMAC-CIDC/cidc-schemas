@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>HLA output files</h1>
+        <h1>WES Corealignment Output Files</h1>
         <p>
-            <b>Description:</b>  HLA output files.
+            <b>Description:</b>  Core-alignments output files.
         </p>
         
     </div>
@@ -58,51 +58,53 @@
         </thead>
         
             
-        
-            
-        
-        
-            
                 <tr>
     <td>
         
-            <span id="optitype_results">
-                optitype_results
+            <span id="tn_corealigned">
+                tn_corealigned
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
     <td width=55%>
         
-            Information about text files.
+            Information about a BAM file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
+            <a href="artifacts.artifact_bam.html">artifacts.artifact_bam</a>
         
     </td>
 </tr>
             
         
             
+        
+        
+            
+        
+            
                 <tr>
     <td>
         
-            <span id="xhla_report_hla">
-                xhla_report_hla
+            <span id="tn_corealigned_index">
+                tn_corealigned_index
             </span>
             
         
     </td>
     <td width=55%>
         
-            Information about a JSON file.
+            Information about a Bam index file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_json.html">artifacts.artifact_json</a>
+            <a href="artifacts.artifact_bai.html">artifacts.artifact_bai</a>
         
     </td>
 </tr>
@@ -114,14 +116,15 @@
   </div>
 
   <div class="container">
-    <h3>hla.full.json</h3>
+    <h3>corealignments.full.json</h3>
   	<pre><code>{
-    "$id": "hla",
+    "$id": "corealignments",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "description": "HLA output files.",
+    "additionalProperties": false,
+    "description": "Core-alignments output files.",
     "properties": {
-        "optitype_results": {
-            "$id": "text_artifact",
+        "tn_corealigned": {
+            "$id": "bam_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -171,17 +174,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -232,19 +240,19 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "TEXT",
+                            "const": "BAM",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about text files.",
+            "description": "Information about a BAM file.",
             "mergeStrategy": "objectMerge",
-            "title": "Text Artifact",
+            "title": "BAM Artifact",
             "type": "object"
         },
-        "xhla_report_hla": {
-            "$id": "json_artifact",
+        "tn_corealigned_index": {
+            "$id": "bai_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -294,17 +302,22 @@
                             "enum": [
                                 "FASTA",
                                 "FASTQ.GZ",
+                                "VCF.GZ",
                                 "IMAGE",
                                 "VCF",
                                 "CSV",
+                                "TSV",
                                 "XLSX",
                                 "NPX",
                                 "BAM",
+                                "BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
                                 "ZIP",
                                 "FCS",
+                                "GZ",
+                                "JSON",
                                 "[NOT SET]"
                             ],
                             "type": "string"
@@ -355,20 +368,22 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "JSON",
+                            "const": "BAI",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a JSON file.",
+            "description": "Information about a Bam index file.",
             "mergeStrategy": "objectMerge",
-            "title": "JSON Artifact",
+            "title": "BAI Artifact",
             "type": "object"
         }
     },
-    "required": [],
-    "title": "HLA output files",
+    "required": [
+        "tn_corealigned"
+    ],
+    "title": "WES Corealignment Output Files",
     "type": "object"
 }</code></pre>
   </container>

@@ -25,14 +25,17 @@
     "neoantigen": {
       "$ref": "assays/components/neoantigen.json"
     },
-    "copynumber.json": {
+    "copynumber": {
       "$ref": "assays/components/copynumber.json"
     },
-    "purity.json": {
+    "purity": {
       "$ref": "assays/components/purity.json"
     },
-    "clonality.json": {
+    "clonality": {
       "$ref": "assays/components/clonality.json"
+    },
+    "corealignments": {
+      "$ref": "assays/components/corealignments.json"
     }
   },
   "required": [

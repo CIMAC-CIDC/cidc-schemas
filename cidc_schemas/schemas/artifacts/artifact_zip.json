@@ -3,7 +3,7 @@
   "$id": "zip_artifact",
   "title": "ZIP Artifact",
   "type": "object",
-  "description": "Information about ZIP files.",
+  "description": "Information about a ZIP file.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"

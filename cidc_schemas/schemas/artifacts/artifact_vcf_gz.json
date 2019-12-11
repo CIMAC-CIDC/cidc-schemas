@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "binary_artifact",
-  "title": "Binary Artifact",
+  "$id": "vcf_gz_artifact",
+  "title": "Gzipped VCF Artifact",
   "type": "object",
-  "description": "Information about a binary file.",
+  "description": "Information about a Gzipped VCF file.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"
@@ -12,7 +12,7 @@
       "properties": {
         "data_format": {
           "description": "Data format.",
-          "const": "BINARY"
+          "const": "VCF.GZ"
         }
       }
     }

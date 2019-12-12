@@ -29,7 +29,7 @@
           "type": "array",
           "description": "A single data record from WES assay.",
           "items": {
-            "$ref": "assays/components/ngs/wes_entry.json"
+            "$ref": "assays/components/ngs/wes/wes_entry.json"
           },
           "mergeStrategy": "arrayMergeById",
           "mergeOptions": {

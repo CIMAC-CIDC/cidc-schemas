@@ -1429,7 +1429,7 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
         {
             "$id": "test_analysis",
             "title": "...",
-            "prism_template_root_object_schema": "assays/components/ngs/wes_analysis.json",
+            "prism_template_root_object_schema": "assays/components/ngs/wes/wes_analysis.json",
             "prism_template_root_object_pointer": "/analysis/wes_analysis",
             "properties": {
                 "worksheets": {

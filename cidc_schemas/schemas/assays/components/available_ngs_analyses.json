@@ -6,7 +6,7 @@
   "mergeStrategy": "objectMerge",
   "properties": {
     "wes_analysis": {
-      "$ref": "assays/components/ngs/wes_analysis.json"
+      "$ref": "assays/components/ngs/wes/wes_analysis.json"
     }
   }
 }

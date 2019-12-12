@@ -123,7 +123,7 @@ TEST_PRISM_TRIAL = {
         },
     ],
     "assays": {
-        "wes": [
+        "wes_folder": [
             {
                 "assay_creator": "Mount Sinai",
                 "paired_end_reads": "Paired",
@@ -167,28 +167,28 @@ TEST_PRISM_TRIAL = {
 # corresponding list of gs_urls.
 WES_TEMPLATE_EXAMPLE_GS_URLS = {
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP111.00/wes/r1_0.fastq.gz": "r1.1_0",
+    + "/CTTTPP111.00/wes_folder/r1_0.fastq.gz": "r1.1_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP111.00/wes/r1_1.fastq.gz": "r1.1_1",
+    + "/CTTTPP111.00/wes_folder/r1_1.fastq.gz": "r1.1_1",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP111.00/wes/r2_0.fastq.gz": "r2.1_0",
+    + "/CTTTPP111.00/wes_folder/r2_0.fastq.gz": "r2.1_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP121.00/wes/r1_0.fastq.gz": "r1.2_0",
+    + "/CTTTPP121.00/wes_folder/r1_0.fastq.gz": "r1.2_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP121.00/wes/r1_1.fastq.gz": "r1.2_1",
+    + "/CTTTPP121.00/wes_folder/r1_1.fastq.gz": "r1.2_1",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP121.00/wes/r2_0.fastq.gz": "r2.2_0",
+    + "/CTTTPP121.00/wes_folder/r2_0.fastq.gz": "r2.2_0",
 }
 
 WESBAM_TEMPLATE_EXAMPLE_GS_URLS = {
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP111.00/wes/reads_0.bam": "bam_whatever_1_0",
+    + "/CTTTPP111.00/wes_folder/reads_0.bam": "bam_whatever_1_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP111.00/wes/reads_1.bam": "bam_whatever_1_1",
+    + "/CTTTPP111.00/wes_folder/reads_1.bam": "bam_whatever_1_1",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP121.00/wes/reads_0.bam": "bam_whatever_2_0",
+    + "/CTTTPP121.00/wes_folder/reads_0.bam": "bam_whatever_2_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP121.00/wes/reads_1.bam": "bam_whatever_2_1",
+    + "/CTTTPP121.00/wes_folder/reads_1.bam": "bam_whatever_2_1",
 }
 
 
@@ -364,7 +364,7 @@ def test_prism(xlsx, template):
             # also handle WES differently due to two templates mapping to one assay
             ttype = template.type
             if template.type == "wes_bam" or template.type == "wes_fastq":
-                ttype = "wes"
+                ttype = "wes_folder"
 
             # this assert the merging of rows in the template is happening properly
             # multiple entries means the merge didn't work
@@ -434,7 +434,7 @@ def test_filepath_gen(xlsx, template):
         # we should have 2 .fastq files per sample.
         assert 2 == sum([x.gs_key.endswith("/r1_0.fastq.gz") for x in file_maps])
         # we should have 4 file total for forward, because we have
-        # a list of two local files for each sample in wes example xlsx.
+        # a list of two local files for each sample in wes_folder example xlsx.
         assert 4 == sum(
             [
                 x.gs_key.endswith("/r1_0.fastq.gz")
@@ -735,7 +735,7 @@ def test_merge_artifact_wesfastq_only():
         # attempt to merge
         ct, artifact, patch_metadata = merge_artifact(
             ct,
-            assay_type="wes",
+            assay_type="wes_folder",
             artifact_uuid=uuid,
             object_url=url,
             file_size_bytes=1,
@@ -756,9 +756,11 @@ def test_merge_artifact_wesfastq_only():
         assert len((ct | grep(url))["matched_values"]) > 0
 
     assert (
-        len(ct["assays"]["wes"]) == 1
+        len(ct["assays"]["wes_folder"]) == 1
     ), "Multiple WESes created instead of merging into one"
-    assert len(ct["assays"]["wes"][0]["records"]) == 2, "More records than expected"
+    assert (
+        len(ct["assays"]["wes_folder"][0]["records"]) == 2
+    ), "More records than expected"
 
     dd = DeepDiff(TEST_PRISM_TRIAL, ct)
 
@@ -922,9 +924,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             assert len(prism_patch["assays"][template.type][0]["cytof_antibodies"]) == 2
 
         elif template.type == "wes_fastq":
-            assert len(prism_patch["assays"]["wes"][0]["records"]) == 2
+            assert len(prism_patch["assays"]["wes_folder"][0]["records"]) == 2
         elif template.type == "wes_bam":
-            assert len(prism_patch["assays"]["wes"][0]["records"]) == 2
+            assert len(prism_patch["assays"]["wes_folder"][0]["records"]) == 2
 
         elif template.type == "ihc":
             assert len(prism_patch["assays"][template.type][0]["records"]) == 1
@@ -937,7 +939,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     for f in file_maps:
         ttype = template.type
         if ttype == "wes_bam" or ttype == "wes_fastq":
-            ttype = "wes"
+            ttype = "wes_folder"
         assert f"{ttype}/" in f.gs_key, f"No {ttype} template.type found"
 
     original_ct = copy.deepcopy(TEST_PRISM_TRIAL)
@@ -1072,7 +1074,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         ), "More records than expected"
 
     elif template.type == "wes_bam" or template.type == "wes_fastq":
-        ttype = "wes"
+        ttype = "wes_folder"
         assert len(full_ct["assays"][ttype]) == 1 + len(
             TEST_PRISM_TRIAL["assays"][ttype]
         ), f"Multiple {ttype}-assays created instead of merging into one"
@@ -1100,7 +1102,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     elif template.type == "wes_analysis":
         # the original WES upload had 2 records, hence after analysis, it's analysis has 2 records
         assert (
-            len(full_ct["assays"]["wes"][0]["records"]) == 2
+            len(full_ct["assays"]["wes_folder"][0]["records"]) == 2
         ), "More records than expected"
 
     else:
@@ -1429,7 +1431,7 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
         {
             "$id": "test_analysis",
             "title": "...",
-            "prism_template_root_object_schema": "assays/components/ngs/wes/wes_analysis.json",
+            "prism_template_root_object_schema": "assays/components/ngs/wes_folder/wes_analysis.json",
             "prism_template_root_object_pointer": "/analysis/wes_analysis",
             "properties": {
                 "worksheets": {

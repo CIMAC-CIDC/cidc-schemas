@@ -70,7 +70,7 @@ def test_wes_fastq():
     }
     obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
 
-    # create the wes object
+    # create the wes_folder object
     r1 = ARTIFACT_OBJ.copy()
     r1["data_format"] = "FASTQ.GZ"
     r2 = ARTIFACT_OBJ.copy()
@@ -86,7 +86,7 @@ def test_wes_fastq():
     obj["records"] = [record]
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("wes")
+    validator = _fetch_validator("wes_folder")
     validator.validate(obj)
 
 
@@ -103,7 +103,7 @@ def test_wes_bam():
     }
     obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
 
-    # create the wes object
+    # create the wes_folder object
     bam = ARTIFACT_OBJ.copy()
     bam["data_format"] = "BAM"
     record = {
@@ -117,7 +117,7 @@ def test_wes_bam():
     obj["records"] = [record]
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("wes")
+    validator = _fetch_validator("wes_folder")
     validator.validate(obj)
 
 

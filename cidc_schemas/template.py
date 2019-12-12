@@ -287,7 +287,7 @@ class Template:
 
     @staticmethod
     def from_type(template_type: str):
-        """Load a Template from a template type, e.g., "pbmc" or "wes"."""
+        """Load a Template from a template type, e.g., "pbmc" or "wes_folder"."""
         try:
             schema_path = _TEMPLATE_PATH_MAP[template_type]
         except KeyError:

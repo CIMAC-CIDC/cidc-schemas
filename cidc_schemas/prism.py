@@ -512,12 +512,12 @@ def prismify(
     Process:
     * checks out `prism_preamble_object_pointer` which is a "standard"/absolute
     rfc6901 json-pointer from CT root object to a new assay location.
-    E.g. for WES it is `/assays/wes_folder/0`, in DeepDiff terms `ct["assays"]["wes_folder"][0]`
+    E.g. for WES it is `/assays/wes/0`, in DeepDiff terms `ct["assays"]["wes"][0]`
     * creates such "parent/preamble" object.
     E.g. for WES an object that corresponds to a wes_assay will be created:
         {
           "assays": {
-            "wes_folder": [
+            "wes": [
               {
                 ...    # we're here - this is "preamble" obj = "assay" obj
               }
@@ -535,7 +535,7 @@ def prismify(
         {
           "protocol_identifier": "4412" # from `3/protocol_identifier`
           "assays": {
-            "wes_folder": [
+            "wes": [
               {
                 "assay_creator": "DFCI" # from `0/assay_creator`
               }
@@ -549,7 +549,7 @@ def prismify(
     E.g. for WES: `"prism_data_object_pointer" : "/records/-"`
         {
           "assays": {
-            "wes_folder": [
+            "wes": [
               {
                 "assay_creator": "DFCI",
                 "records": [
@@ -569,7 +569,7 @@ def prismify(
     E.g. for WES: `"prism_data_object_pointer" : "/records/-"`
         {
           "assays": {
-            "wes_folder": [
+            "wes": [
               {
                 "assay_creator": "DFCI",
                 "records": [

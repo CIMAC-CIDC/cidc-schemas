@@ -52,7 +52,7 @@ def test_v0_10_2_to_v0_11_0():
 def test_v0_10_0_to_v0_10_2():
 
     # Check that upgrade doesn't modify a CT example with no olink data
-    ct_no_olink = {"assays": {"wes_folder": {"records": []}}}
+    ct_no_olink = {"assays": {"wes": {"records": []}}}
     assert v0_10_0_to_v0_10_2.upgrade(ct_no_olink).result == ct_no_olink
 
     # Check that upgrade throws an error if unexpected olink structure is encountered

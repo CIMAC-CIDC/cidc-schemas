@@ -42,7 +42,11 @@
       "type": "integer"
     },
     "md5_hash": {
-      "description": "MD5 Hash of artifact.",
+      "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+      "type": "string"
+    },
+    "crc32c_hash": {
+      "description": "CRC32c Hash of artifact.",
       "type": "string"
     },
     "visible": {
@@ -91,9 +95,20 @@
         "object_url",
         "uploaded_timestamp",
         "file_size_bytes",
-        "md5_hash",
         "artifact_category",
-        "data_format"
+        "data_format",
+        "md5_hash"
+      ]
+    },
+    {
+      "required": [
+        "file_name",
+        "object_url",
+        "uploaded_timestamp",
+        "file_size_bytes",
+        "artifact_category",
+        "data_format",
+        "crc32c_hash"
       ]
     },
     {

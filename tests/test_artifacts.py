@@ -19,7 +19,7 @@ BASE_OBJ = {
     "file_name": "dummy.txt",
     "file_size_bytes": 1,
     "data_format": "FASTA",
-    "md5_hash": "dummy",
+    "crc32c_hash": "dummy",
     "uploaded_timestamp": "dummy",
     "uuid": "dummy",
     "visible": True,
@@ -48,7 +48,7 @@ def test_upload_placeholder_oneOf_required():
               "object_url",
               "uploaded_timestamp",
               "file_size_bytes",
-              "md5_hash",
+              "crc32c_hash",
               "artifact_category"
             ]
           },
@@ -71,7 +71,7 @@ def test_upload_placeholder_oneOf_required():
     del obj["object_url"]
     del obj["uploaded_timestamp"]
     del obj["file_size_bytes"]
-    del obj["md5_hash"]
+    del obj["crc32c_hash"]
     del obj["artifact_category"]
     with pytest.raises(jsonschema.ValidationError):
         at_validator.validate(obj)
@@ -93,7 +93,7 @@ def test_text():
     at_validator.validate(obj)
 
     # assert we can fail it.
-    del obj["md5_hash"]
+    del obj["crc32c_hash"]
     with pytest.raises(jsonschema.ValidationError):
         at_validator.validate(obj)
 

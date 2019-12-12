@@ -865,6 +865,9 @@ def merge_artifact(
         artifact: updated artifactf
         additional_artifact_metadata: relevant metadata collected while updating artifact
     """
+    assert (
+        crc32c_hash or md5_hash
+    ), f"Either crc32c_hash or md5_hash must be provided for artifact: {object_url}"
 
     # urls are created like this in _process_property:
     file_name, uuid = object_url.split("/")[-2:]

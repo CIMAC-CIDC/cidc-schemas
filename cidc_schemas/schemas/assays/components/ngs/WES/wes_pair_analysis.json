@@ -7,35 +7,35 @@
   "additionalProperties": false,
   "properties": {
     "normal": {
-        "$ref": "assays/components/ngs/wes_sample_analysis.json"
+        "$ref": "assays/components/ngs/wes/wes_sample_analysis.json"
     },
     "tumor": {
-        "$ref": "assays/components/ngs/wes_sample_analysis.json"
+        "$ref": "assays/components/ngs/wes/wes_sample_analysis.json"
     },
     "run_id": {
         "type": "string",
         "description": "An id used for a paired analysis run."
     },
     "somatic": {
-      "$ref": "assays/components/somatic.json"
+      "$ref": "assays/components/ngs/wes/somatic.json"
     },
     "germline": {
-      "$ref": "assays/components/germline.json"
+      "$ref": "assays/components/ngs/wes/germline.json"
     },
     "neoantigen": {
-      "$ref": "assays/components/neoantigen.json"
+      "$ref": "assays/components/ngs/wes/neoantigen.json"
     },
     "copynumber": {
-      "$ref": "assays/components/copynumber.json"
+      "$ref": "assays/components/ngs/wes/copynumber.json"
     },
     "purity": {
-      "$ref": "assays/components/purity.json"
+      "$ref": "assays/components/ngs/wes/purity.json"
     },
     "clonality": {
-      "$ref": "assays/components/clonality.json"
+      "$ref": "assays/components/ngs/wes/clonality.json"
     },
     "corealignments": {
-      "$ref": "assays/components/corealignments.json"
+      "$ref": "assays/components/ngs/wes/corealignments.json"
     }
   },
   "required": [

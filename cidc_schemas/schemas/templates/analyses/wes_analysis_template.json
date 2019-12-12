@@ -246,6 +246,13 @@
                                     "gcs_uri_format": "{run id}/wes_analysis/tn_corealigned.bai",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/metrics/all_sample_summaries.txt'",
+                                    "merge_pointer": "/tumor/metrics/all_summaries",
+                                    "gcs_uri_format": "{run id}/wes_analysis/all_summaries.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
                                 }
                             ]
                         },

@@ -46,7 +46,7 @@
       "type": "string"
     },
     "crc32c_hash": {
-      "description": "CRC Hash of artifact.",
+      "description": "CRC32c Hash of artifact.",
       "type": "string"
     },
     "visible": {
@@ -90,14 +90,24 @@
   },
   "anyOf": [
     {
-      "required": [
-        "file_name",
-        "object_url",
-        "uploaded_timestamp",
-        "file_size_bytes",
-        "crc32c_hash",
-        "artifact_category",
-        "data_format"
+      "allOf": [
+        {
+          "required": [
+            "file_name",
+            "object_url",
+            "uploaded_timestamp",
+            "file_size_bytes",
+            "artifact_category",
+            "data_format"
+          ]
+        },
+        {
+          "$comment": "artifacts must have either an md5_hash or a crc32c_hash",
+          "anyOf": [
+            { "required": ["md5_hash"] },
+            { "required": ["crc32c_hash"] }
+          ]
+        }
       ]
     },
     {

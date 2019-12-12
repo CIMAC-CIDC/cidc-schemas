@@ -845,7 +845,8 @@ def merge_artifact(
     assay_type: str,
     file_size_bytes: int,
     uploaded_timestamp: str,
-    crc32c_hash: str,
+    crc32c_hash: str = None,
+    md5_hash: str = None,
 ) -> (dict, dict, dict):
     """
     create and merge an artifact into the metadata blob
@@ -857,8 +858,8 @@ def merge_artifact(
         object_url: the gs url pointing to the object being added
         file_size_bytes: integer specifying the number of bytes in the file
         uploaded_timestamp: time stamp associated with this object
-        crc32c_hash: hash of the uploaded object, usually provided by
-                    object storage
+        md5_hash: md5 hash of the uploaded object, provided by GCS for non-composite objects
+        crc32c_hash: crc32c hash of the uploaded object, provided by GCS for all objects
     Returns:
         ct: updated clinical trial object
         artifact: updated artifactf
@@ -875,6 +876,7 @@ def merge_artifact(
         "file_name": file_name,
         "file_size_bytes": file_size_bytes,
         "crc32c_hash": crc32c_hash,
+        "md5_hash": md5_hash,
         "uploaded_timestamp": uploaded_timestamp,
     }
 

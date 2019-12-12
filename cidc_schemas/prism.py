@@ -874,7 +874,7 @@ def merge_artifact(
         "object_url": object_url,
         "file_name": file_name,
         "file_size_bytes": file_size_bytes,
-        "md5_hash": md5_hash,
+        "crc32c_hash": md5_hash,
         "uploaded_timestamp": uploaded_timestamp,
     }
 

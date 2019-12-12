@@ -3,7 +3,7 @@ import json
 import os
 import copy
 import uuid
-from typing import Union, BinaryIO, Tuple, List, NamedTuple, Any
+from typing import Union, BinaryIO, Tuple, List, NamedTuple, Any, Optional
 
 import openpyxl
 import jsonschema
@@ -845,8 +845,8 @@ def merge_artifact(
     assay_type: str,
     file_size_bytes: int,
     uploaded_timestamp: str,
-    crc32c_hash: str = None,
-    md5_hash: str = None,
+    crc32c_hash: Optional[str] = None,
+    md5_hash: Optional[str] = None,
 ) -> (dict, dict, dict):
     """
     create and merge an artifact into the metadata blob

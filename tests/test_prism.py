@@ -1164,7 +1164,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         ), "Unexpected CT changes"
 
     elif template.type == "wes_analysis":
-        # 7 artifact attributes * 124 files
+        # 7 artifact attributes * 126 files
         assert (
             len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS * 126
         ), "Unexpected CT changes"

@@ -878,10 +878,13 @@ def merge_artifact(
         "object_url": object_url,
         "file_name": file_name,
         "file_size_bytes": file_size_bytes,
-        "crc32c_hash": crc32c_hash,
-        "md5_hash": md5_hash,
         "uploaded_timestamp": uploaded_timestamp,
     }
+
+    if crc32c_hash:
+        artifact_patch["crc32c_hash"] = crc32c_hash
+    if md5_hash:
+        artifact_patch["md5_hash"] = md5_hash
 
     return _update_artifact(ct, artifact_patch, artifact_uuid)
 

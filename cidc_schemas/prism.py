@@ -1075,10 +1075,9 @@ class ThrowOnCollision(strategies.Strategy):
 
 PRISM_MERGE_STRATEGIES = {
     # This overwrites the default jsonmerge merge strategy for literal values.
-    # "overwrite": ThrowOnCollision(),
+    "overwrite": ThrowOnCollision(),
     # Alias the builtin jsonmerge overwrite strategy
     "overwriteAny": strategies.Overwrite(),
-    "overwrite": strategies.Overwrite(),
 }
 
 

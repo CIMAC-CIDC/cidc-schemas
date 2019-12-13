@@ -352,9 +352,9 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/optitype/{id}/{id}_results.tsv'",
-                                    "merge_pointer": "/tumor/optitype/optitype_results",
-                                    "gcs_uri_format": "{run id}/wes_analysis/tumor/{tumor cimac id}/optitype_results.tsv",
+                                    "parse_through": "lambda id: f'analysis/optitype/{id}/{id}_result.tsv'",
+                                    "merge_pointer": "/tumor/optitype/optitype_result",
+                                    "gcs_uri_format": "{run id}/wes_analysis/tumor/{tumor cimac id}/optitype_result.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
@@ -463,9 +463,9 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/optitype/{id}/{id}_results.tsv'",
-                                    "merge_pointer": "/normal/optitype/optitype_results",
-                                    "gcs_uri_format": "{run id}/wes_analysis/normal/{normal cimac id}/optitype_results.tsv",
+                                    "parse_through": "lambda id: f'analysis/optitype/{id}/{id}_result.tsv'",
+                                    "merge_pointer": "/normal/optitype/optitype_result",
+                                    "gcs_uri_format": "{run id}/wes_analysis/normal/{normal cimac id}/optitype_result.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },

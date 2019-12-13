@@ -754,10 +754,12 @@ def test_merge_artifact_none_md5():
     validator.validate(ct_2)
 
     # when both are None
-    ct_3, artifact, patch_metadata = merge_artifact(
-        ct_3, **common_args, md5_hash=None, crc32c_hash=None
-    )
-    validator.validate(ct_3)
+    with pytest.raises(
+        AssertionError, match="Either crc32c_hash or md5_hash must be provided"
+    ):
+        ct_3, artifact, patch_metadata = merge_artifact(
+            ct_3, **common_args, md5_hash=None, crc32c_hash=None
+        )
 
 
 def test_merge_artifact_wesfastq_only():

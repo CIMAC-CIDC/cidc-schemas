@@ -3,11 +3,12 @@ import json
 import os
 import copy
 import uuid
+import datetime
 from typing import Union, BinaryIO, Tuple, List, NamedTuple, Any
 
 import openpyxl
 import jsonschema
-import datetime
+import jinja2
 from jsonmerge import merge, Merger, exceptions as jsonmerge_exceptions, strategies
 from collections import namedtuple
 from jsonpointer import JsonPointer, JsonPointerException, resolve_pointer, EndOfList
@@ -910,6 +911,106 @@ def merge_artifact_extra_metadata(
     return _update_artifact(ct, artifact_extra_md_patch, artifact_uuid)
 
 
+def _wes_pipeline_config(ttype: str):
+    """
+        Generates snakemake .yaml for each tumor/normal pair with
+        .fastq or bam uploaded. 
+
+        ttype == "assay" is for when the upload consists of .fastq/.bam assay data.
+        So sample_id's for which we now have data should be in the `patch` arg,  
+        and corresponding sample pairing info should be in the whole ct doc.
+
+        Or if ttype == "pairing" it's vice versa.
+    """
+    if ttype not in ["assay", "pairing"]:
+        raise NotImplementedError(
+            f"Not supported type:{ttype} for wes pipeline config generation."
+        )
+
+    curdir = os.path.dirname(os.path.abspath(__file__))
+    loader = jinja2.FileSystemLoader(curdir)
+    templ = jinja2.Environment(loader=loader).get_template(
+        "wes_analysis_config.yaml.j2"
+    )
+
+    def internal(full_ct: dict, patch: dict):
+
+        # to be rendered
+        runs = []
+
+        if ttype == "assay":
+            # first we search for cimac_ids for which we just got new data files
+            new_data_id = set()
+            for wes in patch["assays"]["wes"]:
+                for r in wes["records"]:
+                    new_data_id.add(r["cimac_id"])
+
+            # then we look for paired cimac_ids
+            for r in (
+                full_ct.get("analysis", {}).get("wes_analysis", {}).get("pair_runs", [])
+            ):
+                norm_i = r["normal"]["cimac_id"]
+                tum_i = r["tumor"]["cimac_id"]
+                runi = r["run_id"]
+                # we filter runs, for which we have new data for at least on of the samples:
+                if norm_i in new_data_id or tum_i in new_data_id:
+                    runs.append((norm_i, tum_i, runi))
+
+        if ttype == "pairing":
+            # first we filter cimac_ids for which we now got pairing info
+            runs = [
+                (r["normal"]["cimac_id"], r["tumor"]["cimac_id"], r["run_id"])
+                for r in patch["analysis"]["wes_analysis"]["pair_runs"]
+            ]
+
+        # now we compose contextes for all selected runs and render them
+        all_records = {r["cimac_id"]: r for r in full_ct["assays"]["wes"][0]["records"]}
+        res = []
+        for norm_i, tum_i, runi in runs:
+            # if we have data for both items in pair
+            if norm_i in all_records and tum_i in all_records:
+                res.append(
+                    templ.render(
+                        **{
+                            "run_id": runi,
+                            "tumor_sample": all_records[tum_i],
+                            "normal_sample": all_records[norm_i],
+                        }
+                    )
+                )
+
+        return res
+
+    return internal
+
+
+_ANALYSIS_CONF_GENERATORS = {
+    "wes_fastq": _wes_pipeline_config("assay"),
+    "wes_bam": _wes_pipeline_config("assay"),
+    "tumor_normal_pairing": _wes_pipeline_config("pairing"),
+}
+
+
+def generate_analysis_configs_from_upload_patch(
+    ct: dict, patch: dict, template_type: str
+) -> List[str]:
+    """
+    Merges parsed extra metadata returned by extra_metadata_parsing to
+    corresponding artifact objects within the patch.
+    Args:
+        ct: full metadata object with patch merged
+        patch: passed from upload (assay or manifest)
+        template_type: assay or manifest type
+    Returns:
+        list of pipeline configs as strings
+    """
+
+    if template_type not in _ANALYSIS_CONF_GENERATORS:
+        return []
+
+    return _ANALYSIS_CONF_GENERATORS[template_type](ct, patch)
+
+
 def _update_artifact(
     ct: dict, artifact_patch: dict, artifact_uuid: str
 ) -> (dict, dict, dict):
@@ -966,9 +1067,10 @@ class ThrowOnCollision(strategies.Strategy):
 
 PRISM_MERGE_STRATEGIES = {
     # This overwrites the default jsonmerge merge strategy for literal values.
-    "overwrite": ThrowOnCollision(),
+    # "overwrite": ThrowOnCollision(),
     # Alias the builtin jsonmerge overwrite strategy
     "overwriteAny": strategies.Overwrite(),
+    "overwrite": strategies.Overwrite(),
 }
 
 
@@ -983,9 +1085,7 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
         arg2: list of validation errors
     """
 
-    # merge the copy with the original.
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-    schema = validator.schema
 
     # first we assert original object is valid
     try:
@@ -995,7 +1095,13 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
             f"Merge target is invalid: {target}\n{e}"
         ) from e
 
-    # next assert the un-mutable fields are equal
+    return merge_clinical_trial_metadata_IGNORE_INVALID_TARGET(patch, target, validator)
+
+
+def merge_clinical_trial_metadata_IGNORE_INVALID_TARGET(
+    patch: dict, target: dict, validator=None
+) -> (dict, List[str]):
+    # assert the un-mutable fields are equal
     # these fields are required in the schema
     # so previous validation assert they exist
     if patch.get(PROTOCOL_ID_FIELD_NAME) != target.get(PROTOCOL_ID_FIELD_NAME):
@@ -1003,8 +1109,13 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
             "Unable to merge trials with different " + PROTOCOL_ID_FIELD_NAME
         )
 
+    if not validator:
+        validator = load_and_validate_schema(
+            "clinical_trial.json", return_validator=True
+        )
+
     # merge the two documents
-    merger = Merger(schema, strategies=PRISM_MERGE_STRATEGIES)
+    merger = Merger(validator.schema, strategies=PRISM_MERGE_STRATEGIES)
     merged = merger.merge(target, patch)
 
     return merged, list(validator.iter_errors(merged))

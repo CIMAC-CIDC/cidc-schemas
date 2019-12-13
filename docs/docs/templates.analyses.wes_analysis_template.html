@@ -96,7 +96,7 @@
     "category": "analysis",
     "description": "Metadata information for WES Analysis output.",
     "prism_template_root_object_pointer": "/analysis/wes_analysis",
-    "prism_template_root_object_schema": "assays/components/ngs/wes_analysis.json",
+    "prism_template_root_object_schema": "assays/components/ngs/wes/wes_analysis.json",
     "properties": {
         "worksheets": {
             "WES Analysis": {
@@ -449,7 +449,7 @@
                                 }
                             ],
                             "type": "string",
-                            "type_ref": "assays/components/ngs/wes_pair_analysis.json#properties/run_id"
+                            "type_ref": "assays/components/ngs/wes/wes_pair_analysis.json#properties/run_id"
                         },
                         "tumor cimac id": {
                             "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.",

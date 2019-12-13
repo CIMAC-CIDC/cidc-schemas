@@ -11,13 +11,13 @@
         "$ref": "sample.json#properties/cimac_id"
     },
     "alignment": {
-      "$ref": "assays/components/alignment.json"
+      "$ref": "assays/components/ngs/wes/alignment.json"
     },
     "optitype": {
-      "$ref": "assays/components/optitype.json"
+      "$ref": "assays/components/ngs/wes/optitype.json"
     },
     "metrics": {
-      "$ref": "assays/components/coverage_metrics.json"
+      "$ref": "assays/components/ngs/wes/coverage_metrics.json"
     }
   },
   "required": [

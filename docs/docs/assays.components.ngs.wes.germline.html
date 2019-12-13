@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Clonality output files</h1>
+        <h1>WES Germline Output Files</h1>
         <p>
-            <b>Description:</b>  Clonality output files.
+            <b>Description:</b>  Germline variant output sample files.
         </p>
         
     </div>
@@ -61,8 +61,8 @@
                 <tr>
     <td>
         
-            <span id="clonality_pyclone">
-                clonality_pyclone
+            <span id="vcf_compare">
+                vcf_compare
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -71,12 +71,12 @@
     </td>
     <td width=55%>
         
-            Information about a tab Separated file.
+            Information about a text file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_tsv.html">artifacts.artifact_tsv</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
@@ -91,15 +91,15 @@
   </div>
 
   <div class="container">
-    <h3>clonality.full.json</h3>
+    <h3>germline.full.json</h3>
   	<pre><code>{
-    "$id": "WES Clonality Output Files",
+    "$id": "germline",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "additionalProperties": false,
-    "description": "Clonality output files.",
+    "description": "Germline variant output sample files.",
     "properties": {
-        "clonality_pyclone": {
-            "$id": "tsv_artifact",
+        "vcf_compare": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -112,7 +112,7 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "md5_hash",
+                                "crc32c_hash",
                                 "artifact_category",
                                 "data_format"
                             ]
@@ -178,7 +178,7 @@
                             "description": "File size in bytes.",
                             "type": "integer"
                         },
-                        "md5_hash": {
+                        "crc32c_hash": {
                             "description": "MD5 Hash of artifact.",
                             "type": "string"
                         },
@@ -215,22 +215,22 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "TSV",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a tab Separated file.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
-            "title": "TSV Artifact",
+            "title": "Text Artifact",
             "type": "object"
         }
     },
     "required": [
-        "clonality_pyclone"
+        "vcf_compare"
     ],
-    "title": "Clonality output files",
+    "title": "WES Germline Output Files",
     "type": "object"
 }</code></pre>
   </container>

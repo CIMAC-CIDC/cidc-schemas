@@ -9,7 +9,7 @@
     "pair_runs": {
       "type": "array",
       "items": {
-        "$ref": "assays/components/ngs/wes_pair_analysis.json"
+        "$ref": "assays/components/ngs/wes/wes_pair_analysis.json"
       },
       "mergeStrategy": "arrayMergeById",
       "mergeOptions": {

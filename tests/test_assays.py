@@ -16,7 +16,7 @@ ARTIFACT_OBJ = {
     "file_name": "dummy.txt",
     "file_size_bytes": 1,
     "data_format": "FASTA",
-    "md5_hash": "dummy",
+    "crc32c_hash": "dummy",
     "uploaded_timestamp": "dummy",
     "uploader": "dummy",
     "uuid": "dummy",

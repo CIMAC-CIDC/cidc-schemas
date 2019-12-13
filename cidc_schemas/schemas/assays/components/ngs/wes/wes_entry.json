@@ -10,7 +10,7 @@
   ],
   "properties": {
     "output_files": {
-      "$ref": "assays/components/ngs/wes_sample_analysis.json"
+      "$ref": "assays/components/ngs/wes/wes_sample_analysis.json"
     },
     "sequencing_date": {
       "description": "Date of sequencing.",

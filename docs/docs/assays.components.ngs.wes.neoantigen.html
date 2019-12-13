@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>WES Copynumber Output Files</h1>
+        <h1>WES Neoantigen Output Files</h1>
         <p>
-            <b>Description:</b>  Copy number output files.
+            <b>Description:</b>  Neoantigen output files.
         </p>
         
     </div>
@@ -61,33 +61,8 @@
                 <tr>
     <td>
         
-            <span id="copynumber_cnv_calls">
-                copynumber_cnv_calls
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a text file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="copynumber_cnv_calls_tsv">
-                copynumber_cnv_calls_tsv
+            <span id="mhc_class_1_epitopes">
+                mhc_class_1_epitopes
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -107,9 +82,84 @@
 </tr>
             
         
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="mhc_class_1_filtered_condensed_ranked">
+                mhc_class_1_filtered_condensed_ranked
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a tab Separated file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_tsv.html">artifacts.artifact_tsv</a>
+        
+    </td>
+</tr>
+            
         
             
         
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="mhc_class_2_epitopes">
+                mhc_class_2_epitopes
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a tab Separated file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_tsv.html">artifacts.artifact_tsv</a>
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="mhc_class_2_filtered_condensed_ranked">
+                mhc_class_2_filtered_condensed_ranked
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a tab Separated file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_tsv.html">artifacts.artifact_tsv</a>
+        
+    </td>
+</tr>
             
         
     </table>
@@ -118,15 +168,15 @@
   </div>
 
   <div class="container">
-    <h3>copynumber.full.json</h3>
+    <h3>neoantigen.full.json</h3>
   	<pre><code>{
-    "$id": "copynumber",
+    "$id": "neoantigen",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "additionalProperties": false,
-    "description": "Copy number output files.",
+    "description": "Neoantigen output files.",
     "properties": {
-        "copynumber_cnv_calls": {
-            "$id": "text_artifact",
+        "mhc_class_1_epitopes": {
+            "$id": "tsv_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -139,7 +189,7 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "md5_hash",
+                                "crc32c_hash",
                                 "artifact_category",
                                 "data_format"
                             ]
@@ -205,7 +255,7 @@
                             "description": "File size in bytes.",
                             "type": "integer"
                         },
-                        "md5_hash": {
+                        "crc32c_hash": {
                             "description": "MD5 Hash of artifact.",
                             "type": "string"
                         },
@@ -242,18 +292,18 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "TEXT",
+                            "const": "TSV",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a text file.",
+            "description": "Information about a tab Separated file.",
             "mergeStrategy": "objectMerge",
-            "title": "Text Artifact",
+            "title": "TSV Artifact",
             "type": "object"
         },
-        "copynumber_cnv_calls_tsv": {
+        "mhc_class_1_filtered_condensed_ranked": {
             "$id": "tsv_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
@@ -267,7 +317,7 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "md5_hash",
+                                "crc32c_hash",
                                 "artifact_category",
                                 "data_format"
                             ]
@@ -333,7 +383,263 @@
                             "description": "File size in bytes.",
                             "type": "integer"
                         },
-                        "md5_hash": {
+                        "crc32c_hash": {
+                            "description": "MD5 Hash of artifact.",
+                            "type": "string"
+                        },
+                        "object_url": {
+                            "description": "URL to artifact within Google Bucket.",
+                            "type": "string"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "description": "A placeholder for when artifact file is being uploaded.",
+                            "type": "string"
+                        },
+                        "uploaded_timestamp": {
+                            "description": "Timestamp of when artifact was loaded into the system.",
+                            "format": "date-time",
+                            "type": "string"
+                        },
+                        "uploader": {
+                            "description": "The name of the person uploading the artifact.",
+                            "type": "string"
+                        },
+                        "uuid": {
+                            "description": "UUID of artifact.",
+                            "type": "string"
+                        },
+                        "visible": {
+                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                            "type": "boolean"
+                        }
+                    },
+                    "title": "Artifact Core",
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "data_format": {
+                            "const": "TSV",
+                            "description": "Data format."
+                        }
+                    }
+                }
+            ],
+            "description": "Information about a tab Separated file.",
+            "mergeStrategy": "objectMerge",
+            "title": "TSV Artifact",
+            "type": "object"
+        },
+        "mhc_class_2_epitopes": {
+            "$id": "tsv_artifact",
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "allOf": [
+                {
+                    "$id": "artifact_core",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "anyOf": [
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "crc32c_hash",
+                                "artifact_category",
+                                "data_format"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "upload_placeholder"
+                            ]
+                        }
+                    ],
+                    "description": "Any file artifact associated with a clinical trial.",
+                    "properties": {
+                        "artifact_category": {
+                            "description": "Artifact category.",
+                            "enum": [
+                                "Assay Artifact from CIMAC",
+                                "Pipeline Artifact",
+                                "Manifest File"
+                            ],
+                            "type": "string"
+                        },
+                        "artifact_creator": {
+                            "description": "The name of the center that created this artifact.",
+                            "enum": [
+                                "DFCI",
+                                "Mount Sinai",
+                                "Stanford",
+                                "MD Anderson"
+                            ],
+                            "type": "string"
+                        },
+                        "data_format": {
+                            "description": "Data Format.",
+                            "enum": [
+                                "FASTA",
+                                "FASTQ.GZ",
+                                "VCF.GZ",
+                                "IMAGE",
+                                "VCF",
+                                "CSV",
+                                "TSV",
+                                "XLSX",
+                                "NPX",
+                                "BAM",
+                                "BAI",
+                                "MAF",
+                                "BINARY",
+                                "TEXT",
+                                "ZIP",
+                                "FCS",
+                                "GZ",
+                                "JSON",
+                                "[NOT SET]"
+                            ],
+                            "type": "string"
+                        },
+                        "file_name": {
+                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                            "description": "The name of the file with extension.",
+                            "type": "string"
+                        },
+                        "file_size_bytes": {
+                            "description": "File size in bytes.",
+                            "type": "integer"
+                        },
+                        "crc32c_hash": {
+                            "description": "MD5 Hash of artifact.",
+                            "type": "string"
+                        },
+                        "object_url": {
+                            "description": "URL to artifact within Google Bucket.",
+                            "type": "string"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "description": "A placeholder for when artifact file is being uploaded.",
+                            "type": "string"
+                        },
+                        "uploaded_timestamp": {
+                            "description": "Timestamp of when artifact was loaded into the system.",
+                            "format": "date-time",
+                            "type": "string"
+                        },
+                        "uploader": {
+                            "description": "The name of the person uploading the artifact.",
+                            "type": "string"
+                        },
+                        "uuid": {
+                            "description": "UUID of artifact.",
+                            "type": "string"
+                        },
+                        "visible": {
+                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                            "type": "boolean"
+                        }
+                    },
+                    "title": "Artifact Core",
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "data_format": {
+                            "const": "TSV",
+                            "description": "Data format."
+                        }
+                    }
+                }
+            ],
+            "description": "Information about a tab Separated file.",
+            "mergeStrategy": "objectMerge",
+            "title": "TSV Artifact",
+            "type": "object"
+        },
+        "mhc_class_2_filtered_condensed_ranked": {
+            "$id": "tsv_artifact",
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "allOf": [
+                {
+                    "$id": "artifact_core",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "anyOf": [
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "crc32c_hash",
+                                "artifact_category",
+                                "data_format"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "upload_placeholder"
+                            ]
+                        }
+                    ],
+                    "description": "Any file artifact associated with a clinical trial.",
+                    "properties": {
+                        "artifact_category": {
+                            "description": "Artifact category.",
+                            "enum": [
+                                "Assay Artifact from CIMAC",
+                                "Pipeline Artifact",
+                                "Manifest File"
+                            ],
+                            "type": "string"
+                        },
+                        "artifact_creator": {
+                            "description": "The name of the center that created this artifact.",
+                            "enum": [
+                                "DFCI",
+                                "Mount Sinai",
+                                "Stanford",
+                                "MD Anderson"
+                            ],
+                            "type": "string"
+                        },
+                        "data_format": {
+                            "description": "Data Format.",
+                            "enum": [
+                                "FASTA",
+                                "FASTQ.GZ",
+                                "VCF.GZ",
+                                "IMAGE",
+                                "VCF",
+                                "CSV",
+                                "TSV",
+                                "XLSX",
+                                "NPX",
+                                "BAM",
+                                "BAI",
+                                "MAF",
+                                "BINARY",
+                                "TEXT",
+                                "ZIP",
+                                "FCS",
+                                "GZ",
+                                "JSON",
+                                "[NOT SET]"
+                            ],
+                            "type": "string"
+                        },
+                        "file_name": {
+                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                            "description": "The name of the file with extension.",
+                            "type": "string"
+                        },
+                        "file_size_bytes": {
+                            "description": "File size in bytes.",
+                            "type": "integer"
+                        },
+                        "crc32c_hash": {
                             "description": "MD5 Hash of artifact.",
                             "type": "string"
                         },
@@ -383,10 +689,10 @@
         }
     },
     "required": [
-        "copynumber_cnv_calls",
-        "copynumber_cnv_calls_tsv"
+        "mhc_class_1_epitopes",
+        "mhc_class_1_filtered_condensed_ranked"
     ],
-    "title": "WES Copynumber Output Files",
+    "title": "WES Neoantigen Output Files",
     "type": "object"
 }</code></pre>
   </container>

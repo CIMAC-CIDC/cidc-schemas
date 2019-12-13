@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>WES Corealignment Output Files</h1>
+        <h1>WES Copynumber Output Files</h1>
         <p>
-            <b>Description:</b>  Core-alignments output files.
+            <b>Description:</b>  Copy number output files.
         </p>
         
     </div>
@@ -61,8 +61,8 @@
                 <tr>
     <td>
         
-            <span id="tn_corealigned">
-                tn_corealigned
+            <span id="copynumber_cnv_calls">
+                copynumber_cnv_calls
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -71,43 +71,45 @@
     </td>
     <td width=55%>
         
-            Information about a BAM file.
+            Information about a text file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_bam.html">artifacts.artifact_bam</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
-            
-        
-            
-        
-        
             
         
             
                 <tr>
     <td>
         
-            <span id="tn_corealigned_index">
-                tn_corealigned_index
+            <span id="copynumber_cnv_calls_tsv">
+                copynumber_cnv_calls_tsv
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
     <td width=55%>
         
-            Information about a Bam index file.
+            Information about a tab Separated file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_bai.html">artifacts.artifact_bai</a>
+            <a href="artifacts.artifact_tsv.html">artifacts.artifact_tsv</a>
         
     </td>
 </tr>
+            
+        
+        
+            
+        
             
         
     </table>
@@ -116,15 +118,15 @@
   </div>
 
   <div class="container">
-    <h3>corealignments.full.json</h3>
+    <h3>copynumber.full.json</h3>
   	<pre><code>{
-    "$id": "corealignments",
+    "$id": "copynumber",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "additionalProperties": false,
-    "description": "Core-alignments output files.",
+    "description": "Copy number output files.",
     "properties": {
-        "tn_corealigned": {
-            "$id": "bam_artifact",
+        "copynumber_cnv_calls": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -137,7 +139,7 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "md5_hash",
+                                "crc32c_hash",
                                 "artifact_category",
                                 "data_format"
                             ]
@@ -203,7 +205,7 @@
                             "description": "File size in bytes.",
                             "type": "integer"
                         },
-                        "md5_hash": {
+                        "crc32c_hash": {
                             "description": "MD5 Hash of artifact.",
                             "type": "string"
                         },
@@ -240,19 +242,19 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "BAM",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a BAM file.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
-            "title": "BAM Artifact",
+            "title": "Text Artifact",
             "type": "object"
         },
-        "tn_corealigned_index": {
-            "$id": "bai_artifact",
+        "copynumber_cnv_calls_tsv": {
+            "$id": "tsv_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -265,7 +267,7 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "md5_hash",
+                                "crc32c_hash",
                                 "artifact_category",
                                 "data_format"
                             ]
@@ -331,7 +333,7 @@
                             "description": "File size in bytes.",
                             "type": "integer"
                         },
-                        "md5_hash": {
+                        "crc32c_hash": {
                             "description": "MD5 Hash of artifact.",
                             "type": "string"
                         },
@@ -368,22 +370,23 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "BAI",
+                            "const": "TSV",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a Bam index file.",
+            "description": "Information about a tab Separated file.",
             "mergeStrategy": "objectMerge",
-            "title": "BAI Artifact",
+            "title": "TSV Artifact",
             "type": "object"
         }
     },
     "required": [
-        "tn_corealigned"
+        "copynumber_cnv_calls",
+        "copynumber_cnv_calls_tsv"
     ],
-    "title": "WES Corealignment Output Files",
+    "title": "WES Copynumber Output Files",
     "type": "object"
 }</code></pre>
   </container>

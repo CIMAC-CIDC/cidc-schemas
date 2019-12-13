@@ -1676,6 +1676,7 @@ def test_pipeline_config_generation_after_prismify(prismify_result, template):
     # where we don't expect to have configs
     if not template.type in _ANALYSIS_CONF_GENERATORS:
         assert res == []
+        return
 
     # in other cases - 1 config
     assert len(res) == 1
@@ -1686,8 +1687,8 @@ def test_pipeline_config_generation_after_prismify(prismify_result, template):
         assert len(conf["metasheet"]) == 1  # one run
 
         assert len(conf["samples"]) == 2  # tumor and normal
-        assert len(conf["samples"].values()[0]) > 0  # at lease one data file per sample
-        assert len(conf["samples"].values()[1]) > 0  # at lease one data file per sample
+        for sample in conf["samples"].values():
+            assert len(sample) > 0  # at lease one data file per sample
 
 
 @pytest.fixture

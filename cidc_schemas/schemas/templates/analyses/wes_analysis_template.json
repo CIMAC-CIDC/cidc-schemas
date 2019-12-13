@@ -275,14 +275,14 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/align/{id}/{id}.recalibrated.bam'",
+                                    "parse_through": "lambda id: f'analysis/align/{id}/{id}_recalibrated.bam'",
                                     "merge_pointer": "/tumor/alignment/align_recalibrated",
                                     "gcs_uri_format": "{run id}/wes_analysis/tumor/{tumor cimac id}/recalibrated.bam",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/align/{id}/{id}.recalibrated.bam.bai'",
+                                    "parse_through": "lambda id: f'analysis/align/{id}/{id}_recalibrated.bam.bai'",
                                     "merge_pointer": "/tumor/alignment/align_recalibrated_index",
                                     "gcs_uri_format": "{run id}/wes_analysis/tumor/{tumor cimac id}/recalibrated.bam.bai",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
@@ -386,14 +386,14 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/align/{id}/{id}.recalibrated.bam'",
+                                    "parse_through": "lambda id: f'analysis/align/{id}/{id}_recalibrated.bam'",
                                     "merge_pointer": "/normal/alignment/align_recalibrated",
                                     "gcs_uri_format": "{run id}/wes_analysis/normal/{normal cimac id}/recalibrated.bam",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/align/{id}/{id}.recalibrated.bam.bai'",
+                                    "parse_through": "lambda id: f'analysis/align/{id}/{id}_recalibrated.bam.bai'",
                                     "merge_pointer": "/normal/alignment/align_recalibrated_index",
                                     "gcs_uri_format": "{run id}/wes_analysis/normal/{normal cimac id}/recalibrated.bam.bai",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",

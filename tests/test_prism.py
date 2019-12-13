@@ -721,6 +721,45 @@ def test_prismify_olink_only(xlsx, template):
     return ct, file_maps
 
 
+def test_merge_artifact_none_md5():
+    """Ensure merge artifact doesn't fail if either md5 or crc32c is None"""
+    # create the clinical trial.
+    ct_1 = copy.deepcopy(TEST_PRISM_TRIAL)
+    ct_2 = copy.deepcopy(TEST_PRISM_TRIAL)
+    ct_3 = copy.deepcopy(TEST_PRISM_TRIAL)
+
+    # create validator
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    validator.validate(ct_1)
+
+    url, uuid = list(WES_TEMPLATE_EXAMPLE_GS_URLS.items())[0]
+    common_args = dict(
+        assay_type="wes",
+        artifact_uuid=uuid,
+        object_url=url,
+        file_size_bytes=1,
+        uploaded_timestamp="01/01/2001",
+    )
+
+    # when md5_hash is None
+    ct_1, artifact, patch_metadata = merge_artifact(
+        ct_1, **common_args, md5_hash=None, crc32c_hash=f"hash_{uuid}"
+    )
+    validator.validate(ct_1)
+
+    # when crc32c_hash is None
+    ct_2, artifact, patch_metadata = merge_artifact(
+        ct_2, **common_args, md5_hash=f"hash_{uuid}", crc32c_hash=None
+    )
+    validator.validate(ct_2)
+
+    # when both are None
+    ct_3, artifact, patch_metadata = merge_artifact(
+        ct_3, **common_args, md5_hash=None, crc32c_hash=None
+    )
+    validator.validate(ct_3)
+
+
 def test_merge_artifact_wesfastq_only():
 
     # create the clinical trial.

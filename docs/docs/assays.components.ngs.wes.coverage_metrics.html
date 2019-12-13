@@ -160,29 +160,6 @@
             
         
             
-                <tr>
-    <td>
-        
-            <span id="coverage_metrics_summary">
-                coverage_metrics_summary
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a text file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
-        
-    </td>
-</tr>
-            
         
             
                 <tr>
@@ -267,6 +244,27 @@
             
         
             
+                <tr>
+    <td>
+        
+            <span id="coverage_metrics_summary">
+                coverage_metrics_summary
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a text file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
+        
+    </td>
+</tr>
+            
         
             
         
@@ -299,9 +297,20 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "crc32c_hash",
                                 "artifact_category",
-                                "data_format"
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
                             ]
                         },
                         {
@@ -331,6 +340,10 @@
                             ],
                             "type": "string"
                         },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
                         "data_format": {
                             "description": "Data Format.",
                             "enum": [
@@ -344,7 +357,7 @@
                                 "XLSX",
                                 "NPX",
                                 "BAM",
-                                "BAI",
+                                "BAM.BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
@@ -365,8 +378,8 @@
                             "description": "File size in bytes.",
                             "type": "integer"
                         },
-                        "crc32c_hash": {
-                            "description": "MD5 Hash of artifact.",
+                        "md5_hash": {
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
                             "type": "string"
                         },
                         "object_url": {
@@ -427,9 +440,20 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "crc32c_hash",
                                 "artifact_category",
-                                "data_format"
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
                             ]
                         },
                         {
@@ -459,6 +483,10 @@
                             ],
                             "type": "string"
                         },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
                         "data_format": {
                             "description": "Data Format.",
                             "enum": [
@@ -472,7 +500,7 @@
                                 "XLSX",
                                 "NPX",
                                 "BAM",
-                                "BAI",
+                                "BAM.BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
@@ -493,8 +521,8 @@
                             "description": "File size in bytes.",
                             "type": "integer"
                         },
-                        "crc32c_hash": {
-                            "description": "MD5 Hash of artifact.",
+                        "md5_hash": {
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
                             "type": "string"
                         },
                         "object_url": {
@@ -555,9 +583,20 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "crc32c_hash",
                                 "artifact_category",
-                                "data_format"
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
                             ]
                         },
                         {
@@ -587,6 +626,10 @@
                             ],
                             "type": "string"
                         },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
                         "data_format": {
                             "description": "Data Format.",
                             "enum": [
@@ -600,7 +643,7 @@
                                 "XLSX",
                                 "NPX",
                                 "BAM",
-                                "BAI",
+                                "BAM.BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
@@ -621,8 +664,8 @@
                             "description": "File size in bytes.",
                             "type": "integer"
                         },
-                        "crc32c_hash": {
-                            "description": "MD5 Hash of artifact.",
+                        "md5_hash": {
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
                             "type": "string"
                         },
                         "object_url": {
@@ -683,9 +726,20 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "crc32c_hash",
                                 "artifact_category",
-                                "data_format"
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
                             ]
                         },
                         {
@@ -715,6 +769,10 @@
                             ],
                             "type": "string"
                         },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
                         "data_format": {
                             "description": "Data Format.",
                             "enum": [
@@ -728,7 +786,7 @@
                                 "XLSX",
                                 "NPX",
                                 "BAM",
-                                "BAI",
+                                "BAM.BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
@@ -749,8 +807,8 @@
                             "description": "File size in bytes.",
                             "type": "integer"
                         },
-                        "crc32c_hash": {
-                            "description": "MD5 Hash of artifact.",
+                        "md5_hash": {
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
                             "type": "string"
                         },
                         "object_url": {
@@ -811,9 +869,20 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "crc32c_hash",
                                 "artifact_category",
-                                "data_format"
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
                             ]
                         },
                         {
@@ -843,6 +912,10 @@
                             ],
                             "type": "string"
                         },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
                         "data_format": {
                             "description": "Data Format.",
                             "enum": [
@@ -856,7 +929,7 @@
                                 "XLSX",
                                 "NPX",
                                 "BAM",
-                                "BAI",
+                                "BAM.BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
@@ -877,8 +950,8 @@
                             "description": "File size in bytes.",
                             "type": "integer"
                         },
-                        "crc32c_hash": {
-                            "description": "MD5 Hash of artifact.",
+                        "md5_hash": {
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
                             "type": "string"
                         },
                         "object_url": {
@@ -939,9 +1012,20 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "crc32c_hash",
                                 "artifact_category",
-                                "data_format"
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
                             ]
                         },
                         {
@@ -971,6 +1055,10 @@
                             ],
                             "type": "string"
                         },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
                         "data_format": {
                             "description": "Data Format.",
                             "enum": [
@@ -984,7 +1072,7 @@
                                 "XLSX",
                                 "NPX",
                                 "BAM",
-                                "BAI",
+                                "BAM.BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
@@ -1005,8 +1093,8 @@
                             "description": "File size in bytes.",
                             "type": "integer"
                         },
-                        "crc32c_hash": {
-                            "description": "MD5 Hash of artifact.",
+                        "md5_hash": {
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
                             "type": "string"
                         },
                         "object_url": {
@@ -1067,9 +1155,20 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "crc32c_hash",
                                 "artifact_category",
-                                "data_format"
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
                             ]
                         },
                         {
@@ -1099,6 +1198,10 @@
                             ],
                             "type": "string"
                         },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
                         "data_format": {
                             "description": "Data Format.",
                             "enum": [
@@ -1112,7 +1215,7 @@
                                 "XLSX",
                                 "NPX",
                                 "BAM",
-                                "BAI",
+                                "BAM.BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
@@ -1133,8 +1236,8 @@
                             "description": "File size in bytes.",
                             "type": "integer"
                         },
-                        "crc32c_hash": {
-                            "description": "MD5 Hash of artifact.",
+                        "md5_hash": {
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
                             "type": "string"
                         },
                         "object_url": {
@@ -1195,9 +1298,20 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "crc32c_hash",
                                 "artifact_category",
-                                "data_format"
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
                             ]
                         },
                         {
@@ -1227,6 +1341,10 @@
                             ],
                             "type": "string"
                         },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
                         "data_format": {
                             "description": "Data Format.",
                             "enum": [
@@ -1240,7 +1358,7 @@
                                 "XLSX",
                                 "NPX",
                                 "BAM",
-                                "BAI",
+                                "BAM.BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
@@ -1261,8 +1379,8 @@
                             "description": "File size in bytes.",
                             "type": "integer"
                         },
-                        "crc32c_hash": {
-                            "description": "MD5 Hash of artifact.",
+                        "md5_hash": {
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
                             "type": "string"
                         },
                         "object_url": {
@@ -1315,7 +1433,6 @@
         "mosdepth_region_dist_mda",
         "mosdepth_region_dist_mocha",
         "coverage_metrics",
-        "coverage_metrics_summary",
         "target_metrics",
         "target_metrics_summary"
     ],

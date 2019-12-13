@@ -35,7 +35,6 @@
     "mosdepth_region_dist_mda",
     "mosdepth_region_dist_mocha",
     "coverage_metrics",
-    "coverage_metrics_summary",
     "target_metrics",
     "target_metrics_summary"
   ],

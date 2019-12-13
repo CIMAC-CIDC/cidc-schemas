@@ -5,7 +5,7 @@
   "type": "object",
   "description": "HLA output files.",
   "properties": {
-    "optitype_results": {
+    "optitype_result": {
       "$ref": "artifacts/artifact_text.json"
     },
     "xhla_report_hla": {
@@ -13,8 +13,7 @@
     }
   },
   "required": [
-    "optitype_results",
-    "xhla_report_hla"
+    "optitype_result"
   ],
   "additionalProperties": false
 }

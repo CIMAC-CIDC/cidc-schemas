@@ -3,7 +3,7 @@ import json
 import os
 import copy
 import uuid
-from typing import Union, BinaryIO, Tuple, List, NamedTuple, Any
+from typing import Union, BinaryIO, Tuple, List, NamedTuple, Any, Optional
 
 import openpyxl
 import jsonschema
@@ -845,7 +845,8 @@ def merge_artifact(
     assay_type: str,
     file_size_bytes: int,
     uploaded_timestamp: str,
-    md5_hash: str,
+    crc32c_hash: Optional[str] = None,
+    md5_hash: Optional[str] = None,
 ) -> (dict, dict, dict):
     """
     create and merge an artifact into the metadata blob
@@ -857,13 +858,16 @@ def merge_artifact(
         object_url: the gs url pointing to the object being added
         file_size_bytes: integer specifying the number of bytes in the file
         uploaded_timestamp: time stamp associated with this object
-        md5_hash: hash of the uploaded object, usually provided by
-                    object storage
+        md5_hash: md5 hash of the uploaded object, provided by GCS for non-composite objects
+        crc32c_hash: crc32c hash of the uploaded object, provided by GCS for all objects
     Returns:
         ct: updated clinical trial object
         artifact: updated artifactf
         additional_artifact_metadata: relevant metadata collected while updating artifact
     """
+    assert (
+        crc32c_hash or md5_hash
+    ), f"Either crc32c_hash or md5_hash must be provided for artifact: {object_url}"
 
     # urls are created like this in _process_property:
     file_name, uuid = object_url.split("/")[-2:]
@@ -874,9 +878,13 @@ def merge_artifact(
         "object_url": object_url,
         "file_name": file_name,
         "file_size_bytes": file_size_bytes,
-        "md5_hash": md5_hash,
         "uploaded_timestamp": uploaded_timestamp,
     }
+
+    if crc32c_hash:
+        artifact_patch["crc32c_hash"] = crc32c_hash
+    if md5_hash:
+        artifact_patch["md5_hash"] = md5_hash
 
     return _update_artifact(ct, artifact_patch, artifact_uuid)
 

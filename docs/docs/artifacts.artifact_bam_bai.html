@@ -31,7 +31,7 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>BAI Artifact</h1>
+        <h1>BAM.BAI Artifact</h1>
         <p>
             <b>Description:</b>  Information about a Bam index file.
         </p>
@@ -107,7 +107,7 @@
     </td>
     <td>
         
-            &lt; const: <strong>BAI</strong> &gt;            
+            &lt; const: <strong>BAM.BAI</strong> &gt;            
         
     </td>
 </tr>
@@ -119,9 +119,9 @@
   </div>
 
   <div class="container">
-    <h3>artifact_bai.full.json</h3>
+    <h3>artifact_bam_bai.full.json</h3>
   	<pre><code>{
-    "$id": "bai_artifact",
+    "$id": "bam_bai_artifact",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "allOf": [
         {
@@ -134,9 +134,20 @@
                         "object_url",
                         "uploaded_timestamp",
                         "file_size_bytes",
-                        "md5_hash",
                         "artifact_category",
-                        "data_format"
+                        "data_format",
+                        "md5_hash"
+                    ]
+                },
+                {
+                    "required": [
+                        "file_name",
+                        "object_url",
+                        "uploaded_timestamp",
+                        "file_size_bytes",
+                        "artifact_category",
+                        "data_format",
+                        "crc32c_hash"
                     ]
                 },
                 {
@@ -166,6 +177,10 @@
                     ],
                     "type": "string"
                 },
+                "crc32c_hash": {
+                    "description": "CRC32c Hash of artifact.",
+                    "type": "string"
+                },
                 "data_format": {
                     "description": "Data Format.",
                     "enum": [
@@ -179,7 +194,7 @@
                         "XLSX",
                         "NPX",
                         "BAM",
-                        "BAI",
+                        "BAM.BAI",
                         "MAF",
                         "BINARY",
                         "TEXT",
@@ -201,7 +216,7 @@
                     "type": "integer"
                 },
                 "md5_hash": {
-                    "description": "MD5 Hash of artifact.",
+                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
                     "type": "string"
                 },
                 "object_url": {
@@ -237,7 +252,7 @@
         {
             "properties": {
                 "data_format": {
-                    "const": "BAI",
+                    "const": "BAM.BAI",
                     "description": "Data format."
                 }
             }
@@ -245,7 +260,7 @@
     ],
     "description": "Information about a Bam index file.",
     "mergeStrategy": "objectMerge",
-    "title": "BAI Artifact",
+    "title": "BAM.BAI Artifact",
     "type": "object"
 }</code></pre>
   </container>

@@ -191,6 +191,8 @@ WESBAM_TEMPLATE_EXAMPLE_GS_URLS = {
     + "/CTTTPP121.00/wes/reads_1.bam": "bam_whatever_2_1",
 }
 
+NUM_ARTIFACT_FIELDS = 8
+
 
 def test_test_data():
 
@@ -719,6 +721,47 @@ def test_prismify_olink_only(xlsx, template):
     return ct, file_maps
 
 
+def test_merge_artifact_none_md5():
+    """Ensure merge artifact doesn't fail if either md5 or crc32c is None"""
+    # create the clinical trial.
+    ct_1 = copy.deepcopy(TEST_PRISM_TRIAL)
+    ct_2 = copy.deepcopy(TEST_PRISM_TRIAL)
+    ct_3 = copy.deepcopy(TEST_PRISM_TRIAL)
+
+    # create validator
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    validator.validate(ct_1)
+
+    url, uuid = list(WES_TEMPLATE_EXAMPLE_GS_URLS.items())[0]
+    common_args = dict(
+        assay_type="wes",
+        artifact_uuid=uuid,
+        object_url=url,
+        file_size_bytes=1,
+        uploaded_timestamp="01/01/2001",
+    )
+
+    # when md5_hash is None
+    ct_1, artifact, patch_metadata = merge_artifact(
+        ct_1, **common_args, md5_hash=None, crc32c_hash=f"hash_{uuid}"
+    )
+    validator.validate(ct_1)
+
+    # when crc32c_hash is None
+    ct_2, artifact, patch_metadata = merge_artifact(
+        ct_2, **common_args, md5_hash=f"hash_{uuid}", crc32c_hash=None
+    )
+    validator.validate(ct_2)
+
+    # when both are None
+    with pytest.raises(
+        AssertionError, match="Either crc32c_hash or md5_hash must be provided"
+    ):
+        ct_3, artifact, patch_metadata = merge_artifact(
+            ct_3, **common_args, md5_hash=None, crc32c_hash=None
+        )
+
+
 def test_merge_artifact_wesfastq_only():
 
     # create the clinical trial.
@@ -741,6 +784,7 @@ def test_merge_artifact_wesfastq_only():
             file_size_bytes=1,
             uploaded_timestamp="01/01/2001",
             md5_hash=f"hash_{uuid}",
+            crc32c_hash=f"hash_{uuid}",
         )
 
         # assert we still have a good clinical trial object.
@@ -764,7 +808,8 @@ def test_merge_artifact_wesfastq_only():
 
     # we add 7 required fields per artifact thus `*7`
     assert (
-        len(dd["dictionary_item_added"]) == len(WES_TEMPLATE_EXAMPLE_GS_URLS) * 7
+        len(dd["dictionary_item_added"])
+        == len(WES_TEMPLATE_EXAMPLE_GS_URLS) * NUM_ARTIFACT_FIELDS
     ), "Unexpected CT changes"
 
     assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
@@ -1002,6 +1047,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             file_size_bytes=i,
             uploaded_timestamp="01/01/2001",
             md5_hash=f"hash_{i}",
+            crc32c_hash=f"hash_{i}",
         )
 
         # check that the data_format was set
@@ -1054,8 +1100,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 9  # 9 output files
 
     elif template.type == "wes_analysis":
-        # 32 (for each run) + 15 (for each tumor sample) + 15 (for each normal sample)
-        assert len(merged_gs_keys) == 2 * (32 + (15 * 2))
+        # 33 (for each run) + 15 (for each tumor sample) + 15 (for each normal sample)
+        assert len(merged_gs_keys) == 2 * (33 + (15 * 2))
 
     else:
         assert False, f"add {template.type} assay specific asserts on 'merged_gs_keys'"
@@ -1111,7 +1157,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     if template.type == "wes_fastq":
 
         # 6 files * 7 artifact attributes
-        assert len(dd["dictionary_item_added"]) == 6 * 7, "Unexpected CT changes"
+        assert (
+            len(dd["dictionary_item_added"]) == 6 * NUM_ARTIFACT_FIELDS
+        ), "Unexpected CT changes"
 
         # nothing else in diff
         assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
@@ -1119,21 +1167,25 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     elif template.type == "wes_bam":
 
         # 4 files * 7 artifact attributes
-        assert len(dd["dictionary_item_added"]) == 4 * 7, "Unexpected CT changes"
+        assert (
+            len(dd["dictionary_item_added"]) == 4 * NUM_ARTIFACT_FIELDS
+        ), "Unexpected CT changes"
 
         # nothing else in diff
         assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
 
     elif template.type == "ihc":
         # 2 files * 7 artifact attributes
-        assert len(dd["dictionary_item_added"]) == 2 * 7, "Unexpected CT changes"
+        assert (
+            len(dd["dictionary_item_added"]) == 2 * NUM_ARTIFACT_FIELDS
+        ), "Unexpected CT changes"
 
     elif template.type == "olink":
 
         assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
 
         # 7 artifact attributes * 5 files (2 per record + 1 study)
-        assert len(dd["dictionary_item_added"]) == 7 * (
+        assert len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS * (
             2 * 2 + 1
         ), "Unexpected CT changes"
 
@@ -1142,15 +1194,21 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == "cytof":
         # 7 artifact attributes * 6 files
-        assert len(dd["dictionary_item_added"]) == 7 * 6, "Unexpected CT changes"
+        assert (
+            len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS * 6
+        ), "Unexpected CT changes"
 
     elif template.type == "cytof_analysis":
         # 7 artifact attributes * 9 files
-        assert len(dd["dictionary_item_added"]) == 7 * 9, "Unexpected CT changes"
+        assert (
+            len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS * 9
+        ), "Unexpected CT changes"
 
     elif template.type == "wes_analysis":
-        # 7 artifact attributes * 124 files
-        assert len(dd["dictionary_item_added"]) == 7 * 124, "Unexpected CT changes"
+        # 7 artifact attributes * 126 files
+        assert (
+            len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS * 126
+        ), "Unexpected CT changes"
 
     else:
         assert False, f"add {template.type} assay specific asserts"
@@ -1429,7 +1487,7 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
         {
             "$id": "test_analysis",
             "title": "...",
-            "prism_template_root_object_schema": "assays/components/ngs/wes_analysis.json",
+            "prism_template_root_object_schema": "assays/components/ngs/wes/wes_analysis.json",
             "prism_template_root_object_pointer": "/analysis/wes_analysis",
             "properties": {
                 "worksheets": {

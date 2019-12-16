@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Clonality output files</h1>
+        <h1>WES Purity Output Files</h1>
         <p>
-            <b>Description:</b>  Clonality output files.
+            <b>Description:</b>  Purity output files.
         </p>
         
     </div>
@@ -61,8 +61,8 @@
                 <tr>
     <td>
         
-            <span id="clonality_pyclone">
-                clonality_pyclone
+            <span id="optimal_purity_value">
+                optimal_purity_value
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -71,12 +71,12 @@
     </td>
     <td width=55%>
         
-            Information about a tab Separated file.
+            Information about a text file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_tsv.html">artifacts.artifact_tsv</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
@@ -91,15 +91,15 @@
   </div>
 
   <div class="container">
-    <h3>clonality.full.json</h3>
+    <h3>purity.full.json</h3>
   	<pre><code>{
-    "$id": "WES Clonality Output Files",
+    "$id": "purity",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "additionalProperties": false,
-    "description": "Clonality output files.",
+    "description": "Purity output files.",
     "properties": {
-        "clonality_pyclone": {
-            "$id": "tsv_artifact",
+        "optimal_purity_value": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -112,9 +112,20 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "md5_hash",
                                 "artifact_category",
-                                "data_format"
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
                             ]
                         },
                         {
@@ -144,6 +155,10 @@
                             ],
                             "type": "string"
                         },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
                         "data_format": {
                             "description": "Data Format.",
                             "enum": [
@@ -157,7 +172,7 @@
                                 "XLSX",
                                 "NPX",
                                 "BAM",
-                                "BAI",
+                                "BAM.BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
@@ -179,7 +194,7 @@
                             "type": "integer"
                         },
                         "md5_hash": {
-                            "description": "MD5 Hash of artifact.",
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
                             "type": "string"
                         },
                         "object_url": {
@@ -215,22 +230,22 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "TSV",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a tab Separated file.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
-            "title": "TSV Artifact",
+            "title": "Text Artifact",
             "type": "object"
         }
     },
     "required": [
-        "clonality_pyclone"
+        "optimal_purity_value"
     ],
-    "title": "Clonality output files",
+    "title": "WES Purity Output Files",
     "type": "object"
 }</code></pre>
   </container>

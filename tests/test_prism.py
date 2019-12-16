@@ -927,9 +927,6 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
                 == 1
             )
 
-            with pytest.raises(Exception, match="been here"):
-                raise Exception("We've been here")
-
         else:
             assert 0, f"add {template.type} manifest specific test asserts"
 
@@ -1653,12 +1650,6 @@ def prismify_result(template, template_example):
 def prism_patch(prismify_result):
     prism_patch, _, _ = prismify_result
     return prism_patch
-
-
-@pytest.fixture(scope="session")
-def prism_fmap(prismify_result):
-    _, prism_fmap, _ = prismify_result
-    return prism_fmap
 
 
 def prism_patch_stage_artifacts(prismify_result, template_type):

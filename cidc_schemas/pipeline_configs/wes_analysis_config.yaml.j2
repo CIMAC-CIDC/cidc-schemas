@@ -1,4 +1,4 @@
-# Samples: a map of sample name to a list of Google bucket paths to input files, 
+# samples: a map of sample name to a list of Google bucket paths to input files, 
 # VALID INPUTS: fastq, fastq.gz
 # NOTE: for PAIRED-END fastq/fastq.gz, give both pairs to the sample
 samples:
@@ -37,7 +37,7 @@ samples:
   {% endfor %}
 {% endif %}
   
-# metahseet- Group the samples into Tumor/Normal "runs"
+# metasheet: Group the samples into Tumor/Normal "runs"
 # each run should have a name, e.g. run_1:
 # then under each run, define a tumor and a normal sample
 metasheet:

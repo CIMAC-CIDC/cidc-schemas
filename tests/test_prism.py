@@ -23,7 +23,6 @@ from cidc_schemas.prism import (
     prismify,
     merge_artifact,
     merge_clinical_trial_metadata,
-    merge_clinical_trial_metadata_IGNORE_INVALID_TARGET,
     InvalidMergeTargetException,
     SUPPORTED_ASSAYS,
     SUPPORTED_SHIPPING_MANIFESTS,
@@ -1722,31 +1721,35 @@ def test_pipeline_config_generation_after_prismify(prismify_result, template):
     prelim_assay = stage_assay_for_analysis(template.type)
     if prelim_assay:
         full_ct, errs = merge_clinical_trial_metadata(prelim_assay, full_ct)
-        # assert 0 == len(errs)
+        assert 0 == len(errs)
 
     full_ct, errs = merge_clinical_trial_metadata(patch_with_artifacts, full_ct)
     assert 0 == len(errs)
 
     res = generate_analysis_configs_from_upload_patch(
-        full_ct, patch_with_artifacts, template.type
+        full_ct, patch_with_artifacts, template.type, "my-biofx-bucket"
     )
 
     # where we don't expect to have configs
     if not template.type in _ANALYSIS_CONF_GENERATORS:
-        assert res == []
+        assert res == {}
         return
 
     # in other cases - 1 config
     assert len(res) == 1
 
-    for c in res:
-        conf = yaml.load(c)
+    for fname, conf in res.items():
+        conf = yaml.load(conf)
 
         assert len(conf["metasheet"]) == 1  # one run
 
         assert len(conf["samples"]) == 2  # tumor and normal
         for sample in conf["samples"].values():
             assert len(sample) > 0  # at lease one data file per sample
+            assert all("my-biofx-bucket" in f for f in sample)
+            assert all(f.endswith(".fastq.gz") for f in sample) or all(
+                f.endswith(".bam") for f in sample
+            )
 
 
 @pytest.fixture

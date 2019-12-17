@@ -954,7 +954,9 @@ def _wes_pipeline_config(
 
         As a result each assay or tumor_normal_pairing upload that "completes" some
         analysis run/pair (making all 3 pieces available - both samples data and a pairing)
-        will be rendered only once - right after that upload.   
+        will be rendered only once - right after that upload.
+
+        Patch is expected to be already merged into full_ct.
     """
     if upload_type not in ["assay", "pairing"]:
         raise NotImplementedError(
@@ -976,6 +978,8 @@ def _wes_pipeline_config(
         """
             Generates a map from analysis run_ids found in full_ct
             to generated snakemake wes .yaml configs. 
+
+            Patch is expected to be already merged into full_ct.
         """
 
         potential_new_runs: List[AnalysisRun] = []  # to be rendered

@@ -6,6 +6,7 @@ include README.md
 include requirements.txt
 
 graft cidc_schemas/schemas
+graft cidc_schemas/pipeline_configs
 
 recursive-include tests *
 recursive-exclude * __pycache__

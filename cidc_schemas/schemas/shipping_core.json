@@ -38,8 +38,7 @@
       "enum": [
         "Olink",
         "WES",
-        "Not Reported",
-        "Other"
+        "CyTOF"
       ]
     },
     "courier": {

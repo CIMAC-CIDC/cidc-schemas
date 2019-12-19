@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>WES Alignment Output Files</h1>
+        <h1>WES Metric Output Files</h1>
         <p>
-            <b>Description:</b>  WES output align files.
+            <b>Description:</b>  Coverage metrics output files.
         </p>
         
     </div>
@@ -58,11 +58,13 @@
         </thead>
         
             
+        
+            
                 <tr>
     <td>
         
-            <span id="align_recalibrated">
-                align_recalibrated
+            <span id="mosdepth_region_dist_broad">
+                mosdepth_region_dist_broad
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -71,12 +73,12 @@
     </td>
     <td width=55%>
         
-            Information about a BAM file.
+            Information about a text file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_bam.html">artifacts.artifact_bam</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
@@ -86,8 +88,8 @@
                 <tr>
     <td>
         
-            <span id="align_recalibrated_index">
-                align_recalibrated_index
+            <span id="mosdepth_region_dist_mda">
+                mosdepth_region_dist_mda
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -96,12 +98,12 @@
     </td>
     <td width=55%>
         
-            Information about a Bam index file.
+            Information about a text file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_bai.html">artifacts.artifact_bai</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
@@ -111,8 +113,8 @@
                 <tr>
     <td>
         
-            <span id="align_sorted">
-                align_sorted
+            <span id="mosdepth_region_dist_mocha">
+                mosdepth_region_dist_mocha
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -121,12 +123,12 @@
     </td>
     <td width=55%>
         
-            Information about a BAM file.
+            Information about a text file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_bam.html">artifacts.artifact_bam</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
@@ -136,8 +138,8 @@
                 <tr>
     <td>
         
-            <span id="align_sorted_index">
-                align_sorted_index
+            <span id="coverage_metrics">
+                coverage_metrics
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -146,12 +148,39 @@
     </td>
     <td width=55%>
         
-            Information about a Bam index file.
+            Information about a text file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_bai.html">artifacts.artifact_bai</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="target_metrics">
+                target_metrics
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a text file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
@@ -161,8 +190,8 @@
                 <tr>
     <td>
         
-            <span id="align_sorted_dedup">
-                align_sorted_dedup
+            <span id="target_metrics_summary">
+                target_metrics_summary
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -171,49 +200,70 @@
     </td>
     <td width=55%>
         
-            Information about a BAM file.
+            Information about a text file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_bam.html">artifacts.artifact_bam</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="all_summaries">
+                all_summaries
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a text file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+        
             
         
             
                 <tr>
     <td>
         
-            <span id="align_sorted_dedup_index">
-                align_sorted_dedup_index
+            <span id="coverage_metrics_summary">
+                coverage_metrics_summary
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
     <td width=55%>
         
-            Information about a Bam index file.
+            Information about a text file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_bai.html">artifacts.artifact_bai</a>
+            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
         
     </td>
 </tr>
-            
-        
-        
-            
-        
-            
-        
-            
-        
             
         
             
@@ -226,15 +276,15 @@
   </div>
 
   <div class="container">
-    <h3>alignment.full.json</h3>
+    <h3>coverage_metrics.full.json</h3>
   	<pre><code>{
-    "$id": "alignment",
+    "$id": "coverage_metrics",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "additionalProperties": false,
-    "description": "WES output align files.",
+    "description": "Coverage metrics output files.",
     "properties": {
-        "align_recalibrated": {
-            "$id": "bam_artifact",
+        "all_summaries": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -247,9 +297,20 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "md5_hash",
                                 "artifact_category",
-                                "data_format"
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
                             ]
                         },
                         {
@@ -279,6 +340,10 @@
                             ],
                             "type": "string"
                         },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
                         "data_format": {
                             "description": "Data Format.",
                             "enum": [
@@ -292,7 +357,7 @@
                                 "XLSX",
                                 "NPX",
                                 "BAM",
-                                "BAI",
+                                "BAM.BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
@@ -314,7 +379,7 @@
                             "type": "integer"
                         },
                         "md5_hash": {
-                            "description": "MD5 Hash of artifact.",
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
                             "type": "string"
                         },
                         "object_url": {
@@ -350,19 +415,19 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "BAM",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a BAM file.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
-            "title": "BAM Artifact",
+            "title": "Text Artifact",
             "type": "object"
         },
-        "align_recalibrated_index": {
-            "$id": "bai_artifact",
+        "coverage_metrics": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -375,9 +440,20 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "md5_hash",
                                 "artifact_category",
-                                "data_format"
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
                             ]
                         },
                         {
@@ -407,6 +483,10 @@
                             ],
                             "type": "string"
                         },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
                         "data_format": {
                             "description": "Data Format.",
                             "enum": [
@@ -420,7 +500,7 @@
                                 "XLSX",
                                 "NPX",
                                 "BAM",
-                                "BAI",
+                                "BAM.BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
@@ -442,7 +522,7 @@
                             "type": "integer"
                         },
                         "md5_hash": {
-                            "description": "MD5 Hash of artifact.",
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
                             "type": "string"
                         },
                         "object_url": {
@@ -478,19 +558,19 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "BAI",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a Bam index file.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
-            "title": "BAI Artifact",
+            "title": "Text Artifact",
             "type": "object"
         },
-        "align_sorted": {
-            "$id": "bam_artifact",
+        "coverage_metrics_summary": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -503,9 +583,20 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "md5_hash",
                                 "artifact_category",
-                                "data_format"
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
                             ]
                         },
                         {
@@ -535,6 +626,10 @@
                             ],
                             "type": "string"
                         },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
                         "data_format": {
                             "description": "Data Format.",
                             "enum": [
@@ -548,7 +643,7 @@
                                 "XLSX",
                                 "NPX",
                                 "BAM",
-                                "BAI",
+                                "BAM.BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
@@ -570,7 +665,7 @@
                             "type": "integer"
                         },
                         "md5_hash": {
-                            "description": "MD5 Hash of artifact.",
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
                             "type": "string"
                         },
                         "object_url": {
@@ -606,19 +701,19 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "BAM",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a BAM file.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
-            "title": "BAM Artifact",
+            "title": "Text Artifact",
             "type": "object"
         },
-        "align_sorted_dedup": {
-            "$id": "bam_artifact",
+        "mosdepth_region_dist_broad": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -631,9 +726,20 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "md5_hash",
                                 "artifact_category",
-                                "data_format"
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
                             ]
                         },
                         {
@@ -663,6 +769,10 @@
                             ],
                             "type": "string"
                         },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
                         "data_format": {
                             "description": "Data Format.",
                             "enum": [
@@ -676,7 +786,7 @@
                                 "XLSX",
                                 "NPX",
                                 "BAM",
-                                "BAI",
+                                "BAM.BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
@@ -698,7 +808,7 @@
                             "type": "integer"
                         },
                         "md5_hash": {
-                            "description": "MD5 Hash of artifact.",
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
                             "type": "string"
                         },
                         "object_url": {
@@ -734,19 +844,19 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "BAM",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a BAM file.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
-            "title": "BAM Artifact",
+            "title": "Text Artifact",
             "type": "object"
         },
-        "align_sorted_dedup_index": {
-            "$id": "bai_artifact",
+        "mosdepth_region_dist_mda": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -759,9 +869,20 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "md5_hash",
                                 "artifact_category",
-                                "data_format"
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
                             ]
                         },
                         {
@@ -791,6 +912,10 @@
                             ],
                             "type": "string"
                         },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
                         "data_format": {
                             "description": "Data Format.",
                             "enum": [
@@ -804,7 +929,7 @@
                                 "XLSX",
                                 "NPX",
                                 "BAM",
-                                "BAI",
+                                "BAM.BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
@@ -826,7 +951,7 @@
                             "type": "integer"
                         },
                         "md5_hash": {
-                            "description": "MD5 Hash of artifact.",
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
                             "type": "string"
                         },
                         "object_url": {
@@ -862,19 +987,19 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "BAI",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a Bam index file.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
-            "title": "BAI Artifact",
+            "title": "Text Artifact",
             "type": "object"
         },
-        "align_sorted_index": {
-            "$id": "bai_artifact",
+        "mosdepth_region_dist_mocha": {
+            "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "allOf": [
                 {
@@ -887,9 +1012,20 @@
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
-                                "md5_hash",
                                 "artifact_category",
-                                "data_format"
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
                             ]
                         },
                         {
@@ -919,6 +1055,10 @@
                             ],
                             "type": "string"
                         },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
                         "data_format": {
                             "description": "Data Format.",
                             "enum": [
@@ -932,7 +1072,7 @@
                                 "XLSX",
                                 "NPX",
                                 "BAM",
-                                "BAI",
+                                "BAM.BAI",
                                 "MAF",
                                 "BINARY",
                                 "TEXT",
@@ -954,7 +1094,7 @@
                             "type": "integer"
                         },
                         "md5_hash": {
-                            "description": "MD5 Hash of artifact.",
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
                             "type": "string"
                         },
                         "object_url": {
@@ -990,27 +1130,313 @@
                 {
                     "properties": {
                         "data_format": {
-                            "const": "BAI",
+                            "const": "TEXT",
                             "description": "Data format."
                         }
                     }
                 }
             ],
-            "description": "Information about a Bam index file.",
+            "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
-            "title": "BAI Artifact",
+            "title": "Text Artifact",
+            "type": "object"
+        },
+        "target_metrics": {
+            "$id": "text_artifact",
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "allOf": [
+                {
+                    "$id": "artifact_core",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "anyOf": [
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "upload_placeholder"
+                            ]
+                        }
+                    ],
+                    "description": "Any file artifact associated with a clinical trial.",
+                    "properties": {
+                        "artifact_category": {
+                            "description": "Artifact category.",
+                            "enum": [
+                                "Assay Artifact from CIMAC",
+                                "Pipeline Artifact",
+                                "Manifest File"
+                            ],
+                            "type": "string"
+                        },
+                        "artifact_creator": {
+                            "description": "The name of the center that created this artifact.",
+                            "enum": [
+                                "DFCI",
+                                "Mount Sinai",
+                                "Stanford",
+                                "MD Anderson"
+                            ],
+                            "type": "string"
+                        },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
+                        "data_format": {
+                            "description": "Data Format.",
+                            "enum": [
+                                "FASTA",
+                                "FASTQ.GZ",
+                                "VCF.GZ",
+                                "IMAGE",
+                                "VCF",
+                                "CSV",
+                                "TSV",
+                                "XLSX",
+                                "NPX",
+                                "BAM",
+                                "BAM.BAI",
+                                "MAF",
+                                "BINARY",
+                                "TEXT",
+                                "ZIP",
+                                "FCS",
+                                "GZ",
+                                "JSON",
+                                "[NOT SET]"
+                            ],
+                            "type": "string"
+                        },
+                        "file_name": {
+                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                            "description": "The name of the file with extension.",
+                            "type": "string"
+                        },
+                        "file_size_bytes": {
+                            "description": "File size in bytes.",
+                            "type": "integer"
+                        },
+                        "md5_hash": {
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                            "type": "string"
+                        },
+                        "object_url": {
+                            "description": "URL to artifact within Google Bucket.",
+                            "type": "string"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "description": "A placeholder for when artifact file is being uploaded.",
+                            "type": "string"
+                        },
+                        "uploaded_timestamp": {
+                            "description": "Timestamp of when artifact was loaded into the system.",
+                            "format": "date-time",
+                            "type": "string"
+                        },
+                        "uploader": {
+                            "description": "The name of the person uploading the artifact.",
+                            "type": "string"
+                        },
+                        "uuid": {
+                            "description": "UUID of artifact.",
+                            "type": "string"
+                        },
+                        "visible": {
+                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                            "type": "boolean"
+                        }
+                    },
+                    "title": "Artifact Core",
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "data_format": {
+                            "const": "TEXT",
+                            "description": "Data format."
+                        }
+                    }
+                }
+            ],
+            "description": "Information about a text file.",
+            "mergeStrategy": "objectMerge",
+            "title": "Text Artifact",
+            "type": "object"
+        },
+        "target_metrics_summary": {
+            "$id": "text_artifact",
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "allOf": [
+                {
+                    "$id": "artifact_core",
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "anyOf": [
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "md5_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "file_name",
+                                "object_url",
+                                "uploaded_timestamp",
+                                "file_size_bytes",
+                                "artifact_category",
+                                "data_format",
+                                "crc32c_hash"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "upload_placeholder"
+                            ]
+                        }
+                    ],
+                    "description": "Any file artifact associated with a clinical trial.",
+                    "properties": {
+                        "artifact_category": {
+                            "description": "Artifact category.",
+                            "enum": [
+                                "Assay Artifact from CIMAC",
+                                "Pipeline Artifact",
+                                "Manifest File"
+                            ],
+                            "type": "string"
+                        },
+                        "artifact_creator": {
+                            "description": "The name of the center that created this artifact.",
+                            "enum": [
+                                "DFCI",
+                                "Mount Sinai",
+                                "Stanford",
+                                "MD Anderson"
+                            ],
+                            "type": "string"
+                        },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
+                        "data_format": {
+                            "description": "Data Format.",
+                            "enum": [
+                                "FASTA",
+                                "FASTQ.GZ",
+                                "VCF.GZ",
+                                "IMAGE",
+                                "VCF",
+                                "CSV",
+                                "TSV",
+                                "XLSX",
+                                "NPX",
+                                "BAM",
+                                "BAM.BAI",
+                                "MAF",
+                                "BINARY",
+                                "TEXT",
+                                "ZIP",
+                                "FCS",
+                                "GZ",
+                                "JSON",
+                                "[NOT SET]"
+                            ],
+                            "type": "string"
+                        },
+                        "file_name": {
+                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                            "description": "The name of the file with extension.",
+                            "type": "string"
+                        },
+                        "file_size_bytes": {
+                            "description": "File size in bytes.",
+                            "type": "integer"
+                        },
+                        "md5_hash": {
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                            "type": "string"
+                        },
+                        "object_url": {
+                            "description": "URL to artifact within Google Bucket.",
+                            "type": "string"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "description": "A placeholder for when artifact file is being uploaded.",
+                            "type": "string"
+                        },
+                        "uploaded_timestamp": {
+                            "description": "Timestamp of when artifact was loaded into the system.",
+                            "format": "date-time",
+                            "type": "string"
+                        },
+                        "uploader": {
+                            "description": "The name of the person uploading the artifact.",
+                            "type": "string"
+                        },
+                        "uuid": {
+                            "description": "UUID of artifact.",
+                            "type": "string"
+                        },
+                        "visible": {
+                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                            "type": "boolean"
+                        }
+                    },
+                    "title": "Artifact Core",
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "data_format": {
+                            "const": "TEXT",
+                            "description": "Data format."
+                        }
+                    }
+                }
+            ],
+            "description": "Information about a text file.",
+            "mergeStrategy": "objectMerge",
+            "title": "Text Artifact",
             "type": "object"
         }
     },
     "required": [
-        "align_recalibrated",
-        "align_recalibrated_index",
-        "align_sorted",
-        "align_sorted_index",
-        "align_sorted_dedup",
-        "align_sorted_dedup_index"
+        "mosdepth_region_dist_broad",
+        "mosdepth_region_dist_mda",
+        "mosdepth_region_dist_mocha",
+        "coverage_metrics",
+        "target_metrics",
+        "target_metrics_summary"
     ],
-    "title": "WES Alignment Output Files",
+    "title": "WES Metric Output Files",
     "type": "object"
 }</code></pre>
   </container>

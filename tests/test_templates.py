@@ -26,8 +26,28 @@ def template_set():
         yield (templ, xlsx_path)
 
 
-@pytest.mark.parametrize("template, xlsx_path", template_set())
-def test_template(template, xlsx_path, tmpdir):
+@pytest.fixture(scope="session", params=_TEMPLATE_PATH_MAP.keys())
+def template(request):
+    return Template.from_type(request.param)
+
+
+@pytest.fixture(scope="session")
+def template_example_xlsx_path(template):
+    return os.path.join(TEMPLATE_EXAMPLES_DIR, f"{template.type}_template.xlsx")
+
+
+@pytest.fixture(scope="session")
+def template_example(template, template_example_xlsx_path):
+    # Ensure the xlsx file actually exists
+    assert os.path.exists(
+        template_example_xlsx_path
+    ), f"No example Excel template provided for {template.type}"
+    reference, err = XlTemplateReader.from_excel(template_example_xlsx_path)
+    assert not err
+    return reference
+
+
+def test_template(template, template_example, template_example_xlsx_path, tmpdir):
     """
     Ensure the template schema generates a spreadsheet that looks like the given example,
     and check that the template example is valid.
@@ -39,12 +59,7 @@ def test_template(template, xlsx_path, tmpdir):
     generated_template, err = XlTemplateReader.from_excel(p)
     assert not err
 
-    # Ensure the xlsx file actually exists
-    assert os.path.exists(
-        xlsx_path
-    ), f"No example Excel template provided for {template.type}"
-    reference_template, err = XlTemplateReader.from_excel(xlsx_path)
-    assert not err
+    reference_template = template_example
 
     # Check that both templates have the same fields
     compare_templates(template.type, generated_template, reference_template)
@@ -53,11 +68,12 @@ def test_template(template, xlsx_path, tmpdir):
     assert reference_template.validate(template)
 
     # Ensure the example Excel template isn't valid as any other template
-    for other_template, _ in template_set():
-        if other_template.type == template.type:
+    for other_template_type in _TEMPLATE_PATH_MAP:
+        if other_template_type == template.type:
             continue
+        other_template = Template.from_type(other_template_type)
         with pytest.raises(ValidationError):
-            other_template.validate_excel(xlsx_path)
+            other_template.validate_excel(template_example_xlsx_path)
 
 
 def compare_templates(

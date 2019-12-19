@@ -25,7 +25,7 @@
                             "process_as": [
                                 {
                                     "merge_pointer": "/run_id",
-                                    "type_ref": "assays/components/ngs/wes_pair_analysis.json#properties/run_id"
+                                    "type_ref": "assays/components/ngs/wes/wes_pair_analysis.json#properties/run_id"
                                 }
                             ] 
                         },

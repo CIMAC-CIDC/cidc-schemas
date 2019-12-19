@@ -1,0 +1,65 @@
+# samples: a map of sample name to a list of Google bucket paths to input files, 
+# VALID INPUTS: fastq, fastq.gz
+# NOTE: for PAIRED-END fastq/fastq.gz, give both pairs to the sample
+samples:
+  # normal
+  {{normal_sample.cimac_id}}:
+{% if normal_sample.files.r1 %}
+    # r1  
+  {% for fastq_gz_artifact in normal_sample.files.r1 %}
+    - gs://{{BIOFX_BUCKET_NAME}}/{{fastq_gz_artifact.object_url}}
+  {% endfor %}
+    # r2
+  {% for fastq_gz_artifact in normal_sample.files.r2 %}
+    - gs://{{BIOFX_BUCKET_NAME}}/{{fastq_gz_artifact.object_url}}
+  {% endfor %}
+{% else %}
+    # bam
+  {% for bam_artifact in normal_sample.files.bam %}
+    - gs://{{BIOFX_BUCKET_NAME}}/{{bam_artifact.object_url}}
+  {% endfor %}
+{% endif %}
+  # tumor
+  {{tumor_sample.cimac_id}}:
+{% if tumor_sample.files.r1 %}
+    # r1 
+  {% for fastq_gz_artifact in tumor_sample.files.r1 %}
+    - gs://{{BIOFX_BUCKET_NAME}}/{{fastq_gz_artifact.object_url}}
+  {% endfor %}
+    # r2
+  {% for fastq_gz_artifact in tumor_sample.files.r2 %}
+    - gs://{{BIOFX_BUCKET_NAME}}/{{fastq_gz_artifact.object_url}}
+  {% endfor %}
+{% else %}
+    # bam
+  {% for bam_artifact in tumor_sample.files.bam %}
+    - gs://{{BIOFX_BUCKET_NAME}}/{{bam_artifact.object_url}}
+  {% endfor %}
+{% endif %}
+  
+# metasheet: Group the samples into Tumor/Normal "runs"
+# each run should have a name, e.g. run_1:
+# then under each run, define a tumor and a normal sample
+metasheet:
+  {{run_id}}:
+    tumor: {{tumor_sample.cimac_id}}
+    normal: {{normal_sample.cimac_id}}
+
+# unique instance name
+instance_name: "{{run_id}}"
+# NOTE: "wes-auto" will automatically be prepended to this string
+
+# Number of cores for the wes instance
+# Options- 32 (default), 64, 96 
+cores: 32
+
+# Disk size to use, in GB, default 500
+disk_size: 2000
+# the name of the persistent disk will be: "wes_auto_{instance_name}_disk"
+
+# IGNORED Path to the google bucket path for the run
+# google_bucket_path: gs://...
+
+# Specific wes commit string to use
+# wes_commit: 44b17ff
+wes_commit: develop

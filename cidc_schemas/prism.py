@@ -3,11 +3,22 @@ import json
 import os
 import copy
 import uuid
-from typing import Union, BinaryIO, Tuple, List, NamedTuple, Any, Optional
+import datetime
+from typing import (
+    Union,
+    BinaryIO,
+    Tuple,
+    List,
+    NamedTuple,
+    Any,
+    Optional,
+    Dict,
+    Callable,
+)
 
 import openpyxl
 import jsonschema
-import datetime
+import jinja2
 from jsonmerge import merge, Merger, exceptions as jsonmerge_exceptions, strategies
 from collections import namedtuple
 from jsonpointer import JsonPointer, JsonPointerException, resolve_pointer, EndOfList
@@ -249,6 +260,7 @@ SUPPORTED_ASSAYS = ["wes_fastq", "wes_bam", "olink", "cytof", "ihc"]
 SUPPORTED_SHIPPING_MANIFESTS = [
     "pbmc",
     "plasma",
+    "tissue_slide",
     "normal_blood_dna",
     "normal_tissue_dna",
     "tumor_tissue_dna",
@@ -933,6 +945,156 @@ def merge_artifact_extra_metadata(
     return _update_artifact(ct, artifact_extra_md_patch, artifact_uuid)
 
 
+def _wes_pipeline_config(
+    upload_type: str,
+) -> Callable[[dict, dict, str], Dict[str, str]]:
+    """
+        Returns a function that for specified assay type will
+        generate a snakemake .yaml for each tumor/normal pair with
+        .fastq or bam available. 
+
+        upload_type == "assay" is for when the upload consists of .fastq/.bam assay data.
+        So sample_id's for which we now have data should be in the `patch` arg,  
+        and corresponding sample pairing info should be in the `full_ct` doc.
+
+        Or if upload_type == "pairing" it's vice versa - new runs/pairs are calculated 
+        from `patch` (which is a "pairing"), and then we look for sample data info in 
+        the `full_ct`  
+
+        In brush strokes it goes like this:
+        - we need to figure out what new data we've got
+        - based on that we calculate candidate analysis runs (tumor/normal pairs),
+          that we might need to run now, due to new data arived.
+        - last step actually check if for each candidate we have assay data
+          for both - normal and tumor sample - and we render pipeline configs for those.
+
+        As a result each assay or tumor_normal_pairing upload that "completes" some
+        analysis run/pair (making all 3 pieces available - both samples data and a pairing)
+        will be rendered only once - right after that upload.
+
+        Patch is expected to be already merged into full_ct.
+    """
+    if upload_type not in ["assay", "pairing"]:
+        raise NotImplementedError(
+            f"Not supported type:{upload_type} for wes pipeline config generation."
+        )
+
+    curdir = os.path.dirname(os.path.abspath(__file__))
+    loader = jinja2.FileSystemLoader(curdir)
+    templ = jinja2.Environment(loader=loader).get_template(
+        "pipeline_configs/wes_analysis_config.yaml.j2"
+    )
+
+    class AnalysisRun(NamedTuple):
+        normal_cimac_id: str
+        tumor_cimac_id: str
+        run_id: str
+
+    def internal(full_ct: dict, patch: dict, bucket: str) -> Dict[str, str]:
+        """
+            Generates a map from analysis run_ids found in full_ct
+            to generated snakemake wes .yaml configs. 
+
+            Patch is expected to be already merged into full_ct.
+        """
+
+        potential_new_runs: List[AnalysisRun] = []  # to be rendered
+
+        if upload_type == "assay":
+            # first we search for cimac_ids for which we just got new data files
+            new_data_ids = set()
+            # as we know that `patch` is a prism result of a wes upload
+            # we are sure these getitem calls should be fine
+            for wes in patch["assays"]["wes"]:
+                for r in wes["records"]:
+                    new_data_ids.add(r["cimac_id"])
+
+            # then we compose a list of all the analysis runs
+            # which are also cimac_ids tumor/normal pairs.
+            for r in (
+                full_ct.get("analysis", {})
+                .get("wes_analysis", {})
+                .get("pair_runs", [])
+                # this notation is used due to that we don't know if we have any "analyses"
+                # or any pairs in them. Thus we provide default empty containers.
+            ):
+                norm_i = r["normal"]["cimac_id"]
+                tum_i = r["tumor"]["cimac_id"]
+                runi = r["run_id"]
+                # we filter runs, for which we have new data for at least on of the samples:
+                if norm_i in new_data_ids or tum_i in new_data_ids:
+                    potential_new_runs.append(AnalysisRun(norm_i, tum_i, runi))
+
+        if upload_type == "pairing":
+            # first we filter cimac_ids for which we now got pairing info
+            # from analysis runs.
+            potential_new_runs = [
+                AnalysisRun(
+                    r["normal"]["cimac_id"], r["tumor"]["cimac_id"], r["run_id"]
+                )
+                for r in patch["analysis"]["wes_analysis"]["pair_runs"]
+            ]
+
+        # then we compose a list of all records from all assay runs,
+        # so we can filter out analysis runs for which we have data for both samples
+        all_wes_records = {}
+        for wes in full_ct["assays"]["wes"]:
+            for r in wes["records"]:
+                all_wes_records[r["cimac_id"]] = r
+
+        res = {}
+        for run in potential_new_runs:
+            # if we have data files for *both* items in a tumor/normal pair
+            if (
+                run.normal_cimac_id in all_wes_records
+                and run.tumor_cimac_id in all_wes_records
+            ):
+                # then this is a run we need, and so we render it
+                res[run.run_id + ".yaml"] = templ.render(
+                    **{
+                        "run_id": run.run_id,
+                        "tumor_sample": all_wes_records[run.normal_cimac_id],
+                        "normal_sample": all_wes_records[run.tumor_cimac_id],
+                        "BIOFX_BUCKET_NAME": bucket,
+                    }
+                )
+
+        return res
+
+    return internal
+
+
+# This is a map from a assay type to a config generators,
+# that should take (full_ct: dict, patch: dict, bucket: str) as arguments
+# and return a map {"file_name": ["whatever pipeline config is"]}
+_ANALYSIS_CONF_GENERATORS = {
+    "wes_fastq": _wes_pipeline_config("assay"),
+    "wes_bam": _wes_pipeline_config("assay"),
+    "tumor_normal_pairing": _wes_pipeline_config("pairing"),
+}
+
+
+def generate_analysis_configs_from_upload_patch(
+    ct: dict, patch: dict, template_type: str, bucket: str
+) -> Dict[str, str]:
+    """
+    Generates all needed pipeline configs, from a new upload info.
+    Args:
+        ct: full metadata object *with `patch` merged*!
+        patch: metadata patch passed from upload (assay or manifest)
+        template_type: assay or manifest type
+        bucket: a name of a bucket where data files are expected to be 
+                available for the pipeline runner
+    Returns:
+        Filename to pipeline configs as a string map.
+    """
+
+    if template_type not in _ANALYSIS_CONF_GENERATORS:
+        return {}
+
+    return _ANALYSIS_CONF_GENERATORS[template_type](ct, patch, bucket)
+
+
 def _update_artifact(
     ct: dict, artifact_patch: dict, artifact_uuid: str
 ) -> (dict, dict, dict):
@@ -997,7 +1159,7 @@ PRISM_MERGE_STRATEGIES = {
 
 def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]):
     """
-    merges two clinical trial metadata objects together
+    Merges two clinical trial metadata objects together
     Args:
         patch: the metadata object to add
         target: the existing metadata object
@@ -1006,9 +1168,7 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
         arg2: list of validation errors
     """
 
-    # merge the copy with the original.
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-    schema = validator.schema
 
     # first we assert original object is valid
     try:
@@ -1018,7 +1178,7 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
             f"Merge target is invalid: {target}\n{e}"
         ) from e
 
-    # next assert the un-mutable fields are equal
+    # assert the un-mutable fields are equal
     # these fields are required in the schema
     # so previous validation assert they exist
     if patch.get(PROTOCOL_ID_FIELD_NAME) != target.get(PROTOCOL_ID_FIELD_NAME):
@@ -1027,7 +1187,7 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
         )
 
     # merge the two documents
-    merger = Merger(schema, strategies=PRISM_MERGE_STRATEGIES)
+    merger = Merger(validator.schema, strategies=PRISM_MERGE_STRATEGIES)
     merged = merger.merge(target, patch)
 
     return merged, list(validator.iter_errors(merged))

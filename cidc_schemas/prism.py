@@ -84,6 +84,11 @@ def _set_val(
        Nothing
     """
 
+    # don't do anything for None value, asserting None is permissable
+    # is handled by the "allow_empty" functionality.
+    if val is None:
+        return
+
     # special case to set context doc itself
     if pointer.rstrip("#") == "":
         context.update(val)
@@ -344,6 +349,11 @@ def _process_field_value(
     in template schema, that allows for multi-processing of a single cell value.
     """
 
+    # skip nullable
+    if "allow_empty" in field_def:
+        if raw_val is None:
+            return [], []
+
     # or set/update value in-place in data_obj dictionary
     pointer = field_def["merge_pointer"]
     if field_def.get("is_artifact") == 1:
@@ -394,7 +404,12 @@ def _get_file_ext(fname):
 def _format_single_artifact(
     local_path: str, uuid: str, field_def: dict, format_context: dict
 ):
-    gs_key = field_def["gcs_uri_format"].format_map(format_context)
+    try:
+        gs_key = field_def["gcs_uri_format"].format_map(format_context)
+    except KeyError:
+        raise ParsingException(
+            f"Something is wrong with the gcs_uri: {field_def['gcs_uri_format']}"
+        )
 
     expected_extension = _get_file_ext(gs_key)
     provided_extension = _get_file_ext(local_path)

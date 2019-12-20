@@ -1,14 +1,14 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "ihc_input",
-  "title": "Immunohistochemical Analysis Input Files",
-  "type": "object",
-  "description": "IHC assay input/output files.",
-  "properties": {
-    "ihc_image": {
-      "$comment": "Path to IHC image in TIFF format.",
-      "$ref": "artifacts/artifact_image.json"
-    }
-  },
-  "required": ["ihc_image"]
-}
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "ihc_input",
+    "title": "Immunohistochemical Analysis Input Files",
+    "type": "object",
+    "description": "IHC assay input/output files.",
+    "properties": {
+      "ihc_image": {
+        "$comment": "Path to IHC image in TIFF format.",
+        "$ref": "artifacts/artifact_image.json"
+      }
+    },
+    "required": ["ihc_image"]
+  }

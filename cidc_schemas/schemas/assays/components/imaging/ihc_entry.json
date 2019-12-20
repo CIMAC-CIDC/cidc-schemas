@@ -47,6 +47,10 @@
       "type": "integer",
       "minimum": 0
     },
+    "comment": {
+        "description": "A text comment regarding this slide.",
+        "type": "string"
+      },
     "files": {
       "$ref": "assays/components/imaging/ihc_input.json"
     }

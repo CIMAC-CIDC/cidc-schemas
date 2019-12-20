@@ -622,13 +622,6 @@ def test_prismify_wesbam_only(xlsx, template):
     md_patch, file_maps, errs = prismify(xlsx, template)
     assert len(errs) == 0
 
-    print(file_maps)
-    print()
-    for x in file_maps:
-        print(x)
-        print()
-    # assert False
-
     # md patch is not complete
     # but errors should be only
     for e in validator.iter_errors(md_patch):
@@ -972,7 +965,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             assert len(prism_patch["assays"]["wes"][0]["records"]) == 2
 
         elif template.type == "ihc":
-            assert len(prism_patch["assays"][template.type][0]["records"]) == 1
+            assert len(prism_patch["assays"][template.type][0]["records"]) == 2
 
         else:
             raise NotImplementedError(
@@ -1128,7 +1121,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == "ihc":
         assert (
-            len(full_ct["assays"][template.type][0]["records"]) == 1
+            len(full_ct["assays"][template.type][0]["records"]) == 2
         ), "More records than expected"
 
     elif template.type in SUPPORTED_MANIFESTS:

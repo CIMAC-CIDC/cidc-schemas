@@ -98,7 +98,6 @@ def test_generate_all_templates(tmpdir):
     schema_files = []
     for _, _, fs in os.walk(TEMPLATE_DIR):
         schema_files += [f for f in fs if not f[0] == "."]
-    print(schema_files)
     generated_files = [f for _, _, fs in os.walk(tmpdir) for f in fs]
     assert len(schema_files) == len(generated_files)
 

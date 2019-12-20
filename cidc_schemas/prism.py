@@ -255,6 +255,7 @@ SUPPORTED_ASSAYS = ["wes_fastq", "wes_bam", "olink", "cytof", "ihc"]
 SUPPORTED_SHIPPING_MANIFESTS = [
     "pbmc",
     "plasma",
+    "tissue_slide",
     "normal_blood_dna",
     "normal_tissue_dna",
     "tumor_tissue_dna",

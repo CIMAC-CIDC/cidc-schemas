@@ -53,13 +53,13 @@
             },
             "forward fastq": {
               "merge_pointer": "0/files/r1", 
-              "gcs_uri_format": "{protocol identifier}/{cimac id}/wes/r1_{num}.fastq.gz",
+              "gcs_uri_format": "{protocol identifier}/wes/{cimac id}/r1_{num}.fastq.gz",
               "is_artifact": "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
             },
             "reverse fastq": {
               "merge_pointer": "0/files/r2", 
-              "gcs_uri_format": "{protocol identifier}/{cimac id}/wes/r2_{num}.fastq.gz",
+              "gcs_uri_format": "{protocol identifier}/wes/{cimac id}/r2_{num}.fastq.gz",
               "is_artifact" : "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
             },

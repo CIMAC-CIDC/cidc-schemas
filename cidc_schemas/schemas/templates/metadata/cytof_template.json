@@ -44,7 +44,7 @@
                         "original fcs filename(s)": {
                             "merge_pointer": "0/input_files/source_fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof/source_{num}.fcs",
+                            "gcs_uri_format": "{protocol identifier}/cytof/{cimac id}/source_{num}.fcs",
                             "is_artifact": "multi"
                         },
                         "date of acquisition": {
@@ -72,7 +72,7 @@
                         "processed fcs filename": {
                             "merge_pointer": "0/input_files/processed_fcs",
                             "is_artifact": 1,
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/cytof/processed.fcs",
+                            "gcs_uri_format": "{protocol identifier}/cytof/{cimac id}/processed.fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path"
                         },
                         "concatenation version": {

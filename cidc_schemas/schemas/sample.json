@@ -79,6 +79,21 @@
                 "End_of_treatment",
 
                 "On_Treatment",
+
+                "Response",
+                "Relapse",
+                "Day_8",
+                "Cycle_2_Day_1",
+
+                "T0",
+                "T1",
+                "T2",
+                "T3",
+                "T4",
+                "T5",
+                "T6",
+                "End_of_Treatment",
+                "Progression",
                 
                 "Other"
             ],
@@ -92,8 +107,23 @@
                 "Cycle_5_Week_9": "S1400I",
                 "Progression": "S1400I",
 
-                "Cycle_3": "Z1D",
-                "End_of_treatment": "Z1D",
+                "Cycle_3": "EAY131-Z1D",
+                "End_of_treatment": "EAY131-Z1D",
+
+                "Response": "9204",
+                "Relapse": "9204",
+                "Day_8": "9204",
+                "Cycle_2_Day_1": "9204",
+
+                "T0": "10026",
+                "T1": "10026",
+                "T2": "10026",
+                "T3": "10026",
+                "T4": "10026",
+                "T5": "10026",
+                "T6": "10026",
+                "End_of_Treatment": "10026",
+                "Progression": "10026",
 
                 "On_Treatment" : "10021"
             }

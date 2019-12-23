@@ -362,7 +362,7 @@ def _process_field_value(
     """
 
     # skip nullable
-    if "allow_empty" in field_def:
+    if field_def.get("allow_empty"):
         if raw_val is None:
             return [], []
 

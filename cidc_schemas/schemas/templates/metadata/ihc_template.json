@@ -74,11 +74,11 @@
                         "IHC image": {
                             "merge_pointer": "0/files/ihc_image",
                             "is_artifact": 1,
-                            "gcs_uri_format": "{protocol identifier}/{cimac id}/ihc/ihc.tiff",
+                            "gcs_uri_format": "{protocol identifier}/ihc/{cimac id}/ihc.tiff",
                             "type_ref": "assays/components/local_file.json#properties/file_path"
                         }
                     },
-                    "Chromogenic IHC": {
+                    "Chromogenic IHC (please specify one score/metric)": {
                         "marker positive": {
                             "merge_pointer": "0/marker_positive",
                             "type_ref": "assays/components/imaging/ihc_entry.json#properties/marker_positive"

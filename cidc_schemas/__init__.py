@@ -4,4 +4,4 @@
 
 __author__ = """James Lindsay"""
 __email__ = "jlindsay@jimmy.harvard.edu"
-__version__ = "0.13.0"
+__version__ = "0.13.1"

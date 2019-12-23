@@ -24,43 +24,50 @@
       "in_doc_ref_pattern": "/allowed_cohort_names/*",
       "$comment": "This enum lists a union of all possible values from all supported trials at the moment. Options are further limited by `in_doc_ref_pattern`.",
       "enum": [
-        "Arm_Z",
         "Arm_A",
         "Arm_B",
         "Arm_C",
-        "Arm_Y",
         "Arm_D", 
         "Arm_E",
         "Arm_F",
-        "Arm_X",
         "Arm_G",
         "Arm_H",
         "Arm_I",
+        "Arm_X",
+        "Arm_Y",
+        "Arm_Z",
 
         "Arm_1",
         "Arm_2",
 
-        "Z1D",
+        "EAY131-Z1D",
 
         "NSCLC_A",
         "NSCLC_B",
         "NSCLC_C",
         "CRC_A",
-        "CRC_B"
+        "CRC_B",
+
+        "Dose_A",
+        "Dose_B",
+        "Dose_C",
+        "Dose_D",
+
+        "Not reported"
       ],
       "enum_comments": {
-        "Arm_Z": "E4412",
-        "Arm_A": "E4412",
-        "Arm_B": "E4412",
+        "Arm_A": "E4412 or 10026",
+        "Arm_B": "E4412 or 10026",
         "Arm_C": "E4412",
-        "Arm_Y": "E4412",
         "Arm_D": "E4412", 
         "Arm_E": "E4412",
         "Arm_F": "E4412",
-        "Arm_X": "E4412",
         "Arm_G": "E4412",
         "Arm_H": "E4412",
         "Arm_I": "E4412",
+        "Arm_X": "E4412",
+        "Arm_Y": "E4412",
+        "Arm_Z": "E4412",
 
         "Arm_1": "S1400I",
         "Arm_2": "S1400I",
@@ -69,7 +76,14 @@
         "NSCLC_B": "10021",
         "NSCLC_C": "10021",
         "CRC_A": "10021",
-        "CRC_B": "10021"
+        "CRC_B": "10021",
+
+        "Dose_A": "9204",
+        "Dose_B": "9204",
+        "Dose_C": "9204",
+        "Dose_D": "9204",
+
+        "Not reported": "Can be used for blinded values"
       }
     },
     "essential_patient_entry_number": {

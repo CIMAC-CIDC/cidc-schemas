@@ -84,8 +84,6 @@
         
             
         
-            
-        
         
             
                 <tr>
@@ -137,29 +135,6 @@
                 <tr>
     <td>
         
-            <span id="protocol name">
-                protocol name
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Protocol name for which imaging experiment conducted.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.image.html#protocol_name">assays.components.image#protocol_name</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
             <span id="slide scanner model">
                 slide scanner model
             </span>
@@ -173,7 +148,7 @@
     </td>
     <td>
         
-            <a href="assays.components.image.html#slide_scanner_model">assays.components.image#slide_scanner_model</a>
+            <a href="assays.ihc_assay.html#slide_scanner_model">assays.ihc_assay#slide_scanner_model</a>
         
     </td>
 </tr>
@@ -196,7 +171,7 @@
     </td>
     <td>
         
-            <a href="assays.components.image.html#staining_platform">assays.components.image#staining_platform</a>
+            <a href="assays.ihc_assay.html#staining_platform">assays.ihc_assay#staining_platform</a>
         
     </td>
 </tr>
@@ -219,7 +194,7 @@
     </td>
     <td>
         
-            <a href="assays.components.image.html#autostainer_model">assays.components.image#autostainer_model</a>
+            <a href="assays.ihc_assay.html#autostainer_model">assays.ihc_assay#autostainer_model</a>
         
     </td>
 </tr>
@@ -357,7 +332,7 @@
     </td>
     <td>
         
-            <a href="assays.components.ihc_antibodies.html#dilution">assays.components.ihc_antibodies#dilution</a>
+            <a href="assays.components.imaging.ihc_antibody.html#dilution">assays.components.imaging.ihc_antibody#dilution</a>
         
     </td>
 </tr>
@@ -380,7 +355,7 @@
     </td>
     <td>
         
-            <a href="assays.components.ihc_antibodies.html#incubation_time">assays.components.ihc_antibodies#incubation_time</a>
+            <a href="assays.components.imaging.ihc_antibody.html#incubation_time">assays.components.imaging.ihc_antibody#incubation_time</a>
         
     </td>
 </tr>
@@ -403,7 +378,7 @@
     </td>
     <td>
         
-            <a href="assays.components.ihc_antibodies.html#incubation_temp">assays.components.ihc_antibodies#incubation_temp</a>
+            <a href="assays.components.imaging.ihc_antibody.html#incubation_temp">assays.components.imaging.ihc_antibody#incubation_temp</a>
         
     </td>
 </tr>
@@ -428,10 +403,6 @@
             <th>Data Type</th>
         </tr>
         </thead>
-        
-            
-        
-            
         
             
         
@@ -465,29 +436,6 @@
                 <tr>
     <td>
         
-            <span id="slide number">
-                slide number
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Two digit number that indicates the sequential order of slide cuts, assigned by the CIMAC-CIDC Network.
-        
-    </td>
-    <td>
-        
-            <a href="aliquot.html#slide_number">aliquot#slide_number</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
             <span id="IHC image">
                 IHC image
             </span>
@@ -507,32 +455,9 @@
 </tr>
             
         
-            
-                <tr>
-    <td>
-        
-            <span id="H and E image">
-                H and E image
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Path to a file on a user's computer.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
-        
-    </td>
-</tr>
-            
-        
     </table>
     
-      <h5 class="text-muted">Chromogenic IHC</h4>
+      <h5 class="text-muted">Chromogenic IHC (please specify one score/metric)</h4>
       
     
         
@@ -559,25 +484,27 @@
         
             
         
+            
+        
         
             
                 <tr>
     <td>
         
-            <span id="percentage tumor positive">
-                percentage tumor positive
+            <span id="marker positive">
+                marker positive
             </span>
             
         
     </td>
     <td width=55%>
         
-            Percentage of tumor positive (0 - 100).
+            Indicates whether the marker is considered positive by clinical trial guidelines (if applicable).
         
     </td>
     <td>
         
-            <a href="assays.components.imaging.ihc_entry.html#percentage_tumor_positive">assays.components.imaging.ihc_entry#percentage_tumor_positive</a>
+            <a href="assays.components.imaging.ihc_entry.html#marker_positive">assays.components.imaging.ihc_entry#marker_positive</a>
         
     </td>
 </tr>
@@ -587,20 +514,20 @@
                 <tr>
     <td>
         
-            <span id="tumor positive intensity">
-                tumor positive intensity
+            <span id="tumor proportion score">
+                tumor proportion score
             </span>
             
         
     </td>
     <td width=55%>
         
-            Intensity of positive tumor (1, 2, or 3).
+            Tumor Proportion Score (TPS) is the percentage of viable tumor cells showing marker staining relative to all viable tumor cells.
         
     </td>
     <td>
         
-            <a href="assays.components.imaging.ihc_entry.html#tumor_positive_intensity">assays.components.imaging.ihc_entry#tumor_positive_intensity</a>
+            <a href="assays.components.imaging.ihc_entry.html#tumor_proportion_score">assays.components.imaging.ihc_entry#tumor_proportion_score</a>
         
     </td>
 </tr>
@@ -610,20 +537,20 @@
                 <tr>
     <td>
         
-            <span id="average tumor marker intensity">
-                average tumor marker intensity
+            <span id="combined positive score">
+                combined positive score
             </span>
             
         
     </td>
     <td width=55%>
         
-            Average intensity of tumor marker (0 - 3).
+            Combined Positive Score (CPS) is the percentage of marker staining cells (tumor cells and cells that are non-tumor) relative to all viable tumor cells.
         
     </td>
     <td>
         
-            <a href="assays.components.imaging.ihc_entry.html#average_tumor_marker_intensity">assays.components.imaging.ihc_entry#average_tumor_marker_intensity</a>
+            <a href="assays.components.imaging.ihc_entry.html#combined_positive_score">assays.components.imaging.ihc_entry#combined_positive_score</a>
         
     </td>
 </tr>
@@ -633,20 +560,20 @@
                 <tr>
     <td>
         
-            <span id="percent inflammation marker positive">
-                percent inflammation marker positive
+            <span id="inflammatory cells">
+                inflammatory cells
             </span>
             
         
     </td>
     <td width=55%>
         
-            Percentage of positive marker inflammation (0 - 100).
+            Percentage of inflammatory cells (non-tumor cells) showing marker staining relative to all inflammatory cells.
         
     </td>
     <td>
         
-            <a href="assays.components.imaging.ihc_entry.html#percent_inflammation_marker_positive">assays.components.imaging.ihc_entry#percent_inflammation_marker_positive</a>
+            <a href="assays.components.imaging.ihc_entry.html#inflammatory_cells">assays.components.imaging.ihc_entry#inflammatory_cells</a>
         
     </td>
 </tr>
@@ -656,20 +583,20 @@
                 <tr>
     <td>
         
-            <span id="average inflammation marker intensity">
-                average inflammation marker intensity
+            <span id="positive inflammatory cell area">
+                positive inflammatory cell area
             </span>
             
         
     </td>
     <td width=55%>
         
-            Average intensity of marker inflammation (0 - 3).
+            Area of PD-L1+ Inflammatory Cells over the area of TSI + IT as a percentage.
         
     </td>
     <td>
         
-            <a href="assays.components.imaging.ihc_entry.html#average_inflammation_marker_intensity">assays.components.imaging.ihc_entry#average_inflammation_marker_intensity</a>
+            <a href="assays.components.imaging.ihc_entry.html#positive_inflammatory_cell_area">assays.components.imaging.ihc_entry#positive_inflammatory_cell_area</a>
         
     </td>
 </tr>
@@ -679,69 +606,20 @@
                 <tr>
     <td>
         
-            <span id="clinically positive">
-                clinically positive
+            <span id="h score">
+                h score
             </span>
             
         
     </td>
     <td width=55%>
         
-            Indicates whether the marker is considered positive by FDA guidelines.
+            A semiquantitative approach used to assign score to tumor samples based on marker staining intensity (0, 1+, 2+, or 3+) for each cell in a fixed field.
         
     </td>
     <td>
         
-            <a href="assays.components.imaging.ihc_entry.html#clinically_positive">assays.components.imaging.ihc_entry#clinically_positive</a>
-        
-    </td>
-</tr>
-            
-        
-    </table>
-    
-      <h5 class="text-muted">H and E</h4>
-      
-    
-        
-    
-
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Property</th>
-            <th>Description</th>
-            <th>Data Type</th>
-        </tr>
-        </thead>
-        
-            
-        
-            
-        
-            
-        
-            
-        
-        
-            
-                <tr>
-    <td>
-        
-            <span id="percentage viable tissue">
-                percentage viable tissue
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Percentage of tissue that is viable (0 - 100).
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.imaging.ihc_entry.html#percentage_viable_tissue">assays.components.imaging.ihc_entry#percentage_viable_tissue</a>
+            <a href="assays.components.imaging.ihc_entry.html#h_score">assays.components.imaging.ihc_entry#h_score</a>
         
     </td>
 </tr>
@@ -751,66 +629,20 @@
                 <tr>
     <td>
         
-            <span id="percentage tumor">
-                percentage tumor
+            <span id="comment">
+                comment
             </span>
             
         
     </td>
     <td width=55%>
         
-            Percentage of tumor (0 - 100).
+            A text comment regarding this slide.
         
     </td>
     <td>
         
-            <a href="assays.components.imaging.ihc_entry.html#percentage_tumor">assays.components.imaging.ihc_entry#percentage_tumor</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="degree of lymphoid infiltrate">
-                degree of lymphoid infiltrate
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Degree of lymphoid infiltrate (0, 1, 2, or 3).
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.imaging.ihc_entry.html#degree_lymphoid_infiltrate">assays.components.imaging.ihc_entry#degree_lymphoid_infiltrate</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="percentage fibrosis">
-                percentage fibrosis
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Percentage of fibrosis (0 - 100).
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.imaging.ihc_entry.html#percentage_fibrosis">assays.components.imaging.ihc_entry#percentage_fibrosis</a>
+            <a href="assays.components.imaging.ihc_entry.html#comment">assays.components.imaging.ihc_entry#comment</a>
         
     </td>
 </tr>

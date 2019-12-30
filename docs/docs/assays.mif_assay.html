@@ -214,10 +214,6 @@
             "description": "Base information about the acquisition and analysis of a quantitative pathology image.",
             "id": "image",
             "properties": {
-                "autostainer_model": {
-                    "description": "Model version of the autostainer instrument.",
-                    "type": "string"
-                },
                 "cell_segmentation_model": {
                     "description": "Model used for cell segmentation in an imaging experiment.",
                     "enum": [
@@ -255,14 +251,6 @@
                     "enum": [
                         "Vectra 2.0",
                         "Hamamatsu"
-                    ],
-                    "type": "string"
-                },
-                "staining_platform": {
-                    "description": "Staining platform used for tissue sample labeling.",
-                    "enum": [
-                        "auto",
-                        "manual"
                     ],
                     "type": "string"
                 }
@@ -338,10 +326,6 @@
                         "lot_num": {
                             "description": "Identification number assigned to the particular quantity or lot of material from manufacturer.",
                             "type": "string"
-                        },
-                        "staining_order": {
-                            "description": "Order in which samples were stained for procedure.",
-                            "type": "number"
                         }
                     },
                     "required": [

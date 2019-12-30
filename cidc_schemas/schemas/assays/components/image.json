@@ -9,15 +9,6 @@
       "type": "string",
       "enum": ["Vectra 2.0", "Hamamatsu"]
     },
-    "staining_platform": {
-      "description": "Staining platform used for tissue sample labeling.",
-      "type": "string",
-      "enum": ["auto", "manual"]
-    },
-    "autostainer_model": {
-      "description": "Model version of the autostainer instrument.",
-      "type": "string"
-    },
     "image_analysis_software": {
       "description": "Source software for digital pathology and image analysis.",
       "type": "string",

@@ -155,15 +155,11 @@
             &gt;
             <ul>
                 
-                    <li>"Arm_Z"</li>
-                
                     <li>"Arm_A"</li>
                 
                     <li>"Arm_B"</li>
                 
                     <li>"Arm_C"</li>
-                
-                    <li>"Arm_Y"</li>
                 
                     <li>"Arm_D"</li>
                 
@@ -171,19 +167,23 @@
                 
                     <li>"Arm_F"</li>
                 
-                    <li>"Arm_X"</li>
-                
                     <li>"Arm_G"</li>
                 
                     <li>"Arm_H"</li>
                 
                     <li>"Arm_I"</li>
                 
+                    <li>"Arm_X"</li>
+                
+                    <li>"Arm_Y"</li>
+                
+                    <li>"Arm_Z"</li>
+                
                     <li>"Arm_1"</li>
                 
                     <li>"Arm_2"</li>
                 
-                    <li>"Z1D"</li>
+                    <li>"EAY131-Z1D"</li>
                 
                     <li>"NSCLC_A"</li>
                 
@@ -194,6 +194,16 @@
                     <li>"CRC_A"</li>
                 
                     <li>"CRC_B"</li>
+                
+                    <li>"Dose_A"</li>
+                
+                    <li>"Dose_B"</li>
+                
+                    <li>"Dose_C"</li>
+                
+                    <li>"Dose_D"</li>
+                
+                    <li>"Not reported"</li>
                 
             </ul>
             
@@ -451,32 +461,37 @@
             "$comment": "This enum lists a union of all possible values from all supported trials at the moment. Options are further limited by `in_doc_ref_pattern`.",
             "description": "Categorical description of cohorts, arms, and treatment groups.",
             "enum": [
-                "Arm_Z",
                 "Arm_A",
                 "Arm_B",
                 "Arm_C",
-                "Arm_Y",
                 "Arm_D",
                 "Arm_E",
                 "Arm_F",
-                "Arm_X",
                 "Arm_G",
                 "Arm_H",
                 "Arm_I",
+                "Arm_X",
+                "Arm_Y",
+                "Arm_Z",
                 "Arm_1",
                 "Arm_2",
-                "Z1D",
+                "EAY131-Z1D",
                 "NSCLC_A",
                 "NSCLC_B",
                 "NSCLC_C",
                 "CRC_A",
-                "CRC_B"
+                "CRC_B",
+                "Dose_A",
+                "Dose_B",
+                "Dose_C",
+                "Dose_D",
+                "Not reported"
             ],
             "enum_comments": {
                 "Arm_1": "S1400I",
                 "Arm_2": "S1400I",
-                "Arm_A": "E4412",
-                "Arm_B": "E4412",
+                "Arm_A": "E4412 or 10026",
+                "Arm_B": "E4412 or 10026",
                 "Arm_C": "E4412",
                 "Arm_D": "E4412",
                 "Arm_E": "E4412",
@@ -489,9 +504,14 @@
                 "Arm_Z": "E4412",
                 "CRC_A": "10021",
                 "CRC_B": "10021",
+                "Dose_A": "9204",
+                "Dose_B": "9204",
+                "Dose_C": "9204",
+                "Dose_D": "9204",
                 "NSCLC_A": "10021",
                 "NSCLC_B": "10021",
-                "NSCLC_C": "10021"
+                "NSCLC_C": "10021",
+                "Not reported": "Can be used for blinded values"
             },
             "example": "Arm_Z",
             "in_doc_ref_pattern": "/allowed_cohort_names/*",
@@ -686,19 +706,44 @@
                             "Cycle_3",
                             "End_of_treatment",
                             "On_Treatment",
+                            "Response",
+                            "Relapse",
+                            "Day_8",
+                            "Cycle_2_Day_1",
+                            "T0",
+                            "T1",
+                            "T2",
+                            "T3",
+                            "T4",
+                            "T5",
+                            "T6",
+                            "End_of_Treatment",
+                            "Progression",
                             "Other"
                         ],
                         "enum_comments": {
+                            "Cycle_2_Day_1": "9204",
                             "Cycle_2_Week_3": "S1400I",
-                            "Cycle_3": "Z1D",
+                            "Cycle_3": "EAY131-Z1D",
                             "Cycle_4_Week_7": "S1400I",
                             "Cycle_5_Week_9": "S1400I",
-                            "End_of_treatment": "Z1D",
+                            "Day_8": "9204",
+                            "End_of_Treatment": "10026",
+                            "End_of_treatment": "EAY131-Z1D",
                             "Off_study": "E4412",
                             "On_Treatment": "10021",
                             "Pre_Day_1_Cycle_2": "E4412",
-                            "Progression": "S1400I",
-                            "Restaging": "E4412"
+                            "Progression": "10026",
+                            "Relapse": "9204",
+                            "Response": "9204",
+                            "Restaging": "E4412",
+                            "T0": "10026",
+                            "T1": "10026",
+                            "T2": "10026",
+                            "T3": "10026",
+                            "T4": "10026",
+                            "T5": "10026",
+                            "T6": "10026"
                         },
                         "in_doc_ref_pattern": "/allowed_collection_event_names/*",
                         "title": "Collection Event Name",

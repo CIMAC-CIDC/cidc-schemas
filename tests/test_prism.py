@@ -526,7 +526,7 @@ def test_filepath_gen(xlsx, template):
         assert len(file_maps) == 6
 
     elif template.type == "ihc":
-        assert 2 == sum([x.gs_key.endswith(".tiff") for x in file_maps])
+        assert 2 == sum([x.gs_key.endswith(".qptiff") for x in file_maps])
 
     elif template.type in SUPPORTED_SHIPPING_MANIFESTS:
 

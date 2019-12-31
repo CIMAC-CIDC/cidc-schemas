@@ -6,7 +6,7 @@
     "description": "IHC assay input/output files.",
     "properties": {
       "ihc_image": {
-        "$comment": "Path to IHC image in TIFF format.",
+        "$comment": "Path to IHC image in .QPTIFF format.",
         "$ref": "artifacts/artifact_image.json"
       }
     },

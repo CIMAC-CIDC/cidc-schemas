@@ -53,7 +53,7 @@
             },
             "BAM file": {
               "merge_pointer": "0/files/bam", 
-              "gcs_uri_format": "{protocol identifier}/{cimac id}/wes/reads_{num}.bam",
+              "gcs_uri_format": "{protocol identifier}/wes/{cimac id}/reads_{num}.bam",
               "is_artifact": "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"            
             },

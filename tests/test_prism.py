@@ -175,28 +175,28 @@ TEST_PRISM_TRIAL = {
 # corresponding list of gs_urls.
 WES_TEMPLATE_EXAMPLE_GS_URLS = {
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP111.00/wes/r1_0.fastq.gz": "r1.1_0",
+    + "/wes/CTTTPP111.00/r1_0.fastq.gz": "r1.1_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP111.00/wes/r1_1.fastq.gz": "r1.1_1",
+    + "/wes/CTTTPP111.00/r1_1.fastq.gz": "r1.1_1",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP111.00/wes/r2_0.fastq.gz": "r2.1_0",
+    + "/wes/CTTTPP111.00/r2_0.fastq.gz": "r2.1_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP121.00/wes/r1_0.fastq.gz": "r1.2_0",
+    + "/wes/CTTTPP121.00/r1_0.fastq.gz": "r1.2_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP121.00/wes/r1_1.fastq.gz": "r1.2_1",
+    + "/wes/CTTTPP121.00/r1_1.fastq.gz": "r1.2_1",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP121.00/wes/r2_0.fastq.gz": "r2.2_0",
+    + "/wes/CTTTPP121.00/r2_0.fastq.gz": "r2.2_0",
 }
 
 WESBAM_TEMPLATE_EXAMPLE_GS_URLS = {
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP111.00/wes/reads_0.bam": "bam_whatever_1_0",
+    + "/wes/CTTTPP111.00/reads_0.bam": "bam_whatever_1_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP111.00/wes/reads_1.bam": "bam_whatever_1_1",
+    + "/wes/CTTTPP111.00/reads_1.bam": "bam_whatever_1_1",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP121.00/wes/reads_0.bam": "bam_whatever_2_0",
+    + "/wes/CTTTPP121.00/reads_0.bam": "bam_whatever_2_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/CTTTPP121.00/wes/reads_1.bam": "bam_whatever_2_1",
+    + "/wes/CTTTPP121.00/reads_1.bam": "bam_whatever_2_1",
 }
 
 NUM_ARTIFACT_FIELDS = 8
@@ -471,7 +471,7 @@ def test_filepath_gen(xlsx, template):
         # 2 samples
 
         assert ["CTTTPP111.00", "CTTTPP121.00"] == list(
-            sorted(set([x.gs_key.split("/")[1] for x in file_maps]))
+            sorted(set([x.gs_key.split("/")[2] for x in file_maps]))
         )
 
     elif template.type == "wes_bam":
@@ -497,7 +497,7 @@ def test_filepath_gen(xlsx, template):
         # 2 samples
 
         assert ["CTTTPP111.00", "CTTTPP121.00"] == list(
-            sorted(set([x.gs_key.split("/")[1] for x in file_maps]))
+            sorted(set([x.gs_key.split("/")[2] for x in file_maps]))
         )
 
     elif template.type == "olink":

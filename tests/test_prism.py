@@ -438,6 +438,14 @@ def test_filepath_gen(xlsx, template):
 
     assert len(local_to_gcs_mapping) == len(file_maps), "gcs_key/url collision"
 
+    # Check that `gcs_uri_format`s in {assay}_templates.json
+    # put all artifacts within "BUCKET/{trial_id}/{assay}" folder
+    # because cloud-function access granting depends on that
+    prefixes = ["/".join(fmap_entry.gs_key.split("/")[:2]) for entry in file_maps]
+    trial_id = TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    assay_prefix = template.type.split("_")[0]
+    assert set(prefixes) == set([f"{trial_id}/{assay_prefix}"])
+
     # assert we have the right file counts etc.
     if template.type == "wes_fastq":
 

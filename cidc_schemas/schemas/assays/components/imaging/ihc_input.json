@@ -17,5 +17,11 @@
       "$comment": "Path to IHC image in a QPTIFF format.",
       "$ref": "artifacts/artifact_image.json"
     }
-  }
+  },
+  "mergeStrategy": "objectMerge",
+  "anyOf": [
+    {"required": ["ihc_image_tiff"]},
+    {"required": ["ihc_image_svs"]},
+    {"required": ["ihc_image_qptiff"]}
+  ]
 }

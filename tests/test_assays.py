@@ -291,16 +291,16 @@ def test_ihc():
     obj = {**ASSAY_CORE, **ihc_obj}
 
     # create the artifact object
-    image_1 = ARTIFACT_OBJ.copy()
-    image_1["data_format"] = "IMAGE"
-    image_1["height"] = 300
-    image_1["width"] = 250
-    image_1["channels"] = 3
+    image_1_tiff = ARTIFACT_OBJ.copy()
+    image_1_tiff["data_format"] = "IMAGE"
+    image_1_tiff["height"] = 300
+    image_1_tiff["width"] = 250
+    image_1_tiff["channels"] = 3
     record = {
         "cimac_id": "CTTTPPPSA.00",
         "tumor_proportion_score": 0,
         "h_score": 22,
-        "files": {"ihc_image": image_1},
+        "files": {"ihc_image_tiff": image_1_tiff},
     }
 
     # add a demo record.

@@ -534,7 +534,9 @@ def test_filepath_gen(xlsx, template):
         assert len(file_maps) == 6
 
     elif template.type == "ihc":
+        assert 2 == sum([x.gs_key.endswith(".tiff") for x in file_maps])
         assert 2 == sum([x.gs_key.endswith(".qptiff") for x in file_maps])
+        assert 2 == sum([x.gs_key.endswith(".svs") for x in file_maps])
 
     elif template.type in SUPPORTED_SHIPPING_MANIFESTS:
 
@@ -1085,7 +1087,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     validator.validate(full_ct)
 
     if template.type == "ihc":
-        assert len(merged_gs_keys) == 2
+        assert len(merged_gs_keys) == 6
 
     elif template.type == "wes_fastq":
         assert (
@@ -1190,7 +1192,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     elif template.type == "ihc":
         # 2 files * 7 artifact attributes
         assert (
-            len(dd["dictionary_item_added"]) == 2 * NUM_ARTIFACT_FIELDS
+            len(dd["dictionary_item_added"]) == 2 * NUM_ARTIFACT_FIELDS * 3
         ), "Unexpected CT changes"
 
     elif template.type == "olink":

@@ -71,8 +71,20 @@
                             "merge_pointer": "0/cimac_id",
                             "type_ref": "sample.json#properties/cimac_id"
                         },
-                        "IHC image": {
-                            "merge_pointer": "0/files/ihc_image",
+                        "IHC image (TIFF)": {
+                            "merge_pointer": "0/files/ihc_image_tiff",
+                            "is_artifact": 1,
+                            "gcs_uri_format": "{protocol identifier}/ihc/{cimac id}/ihc.tiff",
+                            "type_ref": "assays/components/local_file.json#properties/file_path"
+                        },
+                        "IHC image (SVS)": {
+                            "merge_pointer": "0/files/ihc_image_svs",
+                            "is_artifact": 1,
+                            "gcs_uri_format": "{protocol identifier}/ihc/{cimac id}/ihc.svs",
+                            "type_ref": "assays/components/local_file.json#properties/file_path"
+                        },
+                        "IHC image (QPTIFF)": {
+                            "merge_pointer": "0/files/ihc_image_qptiff",
                             "is_artifact": 1,
                             "gcs_uri_format": "{protocol identifier}/ihc/{cimac id}/ihc.qptiff",
                             "type_ref": "assays/components/local_file.json#properties/file_path"

@@ -390,9 +390,15 @@ def _process_field_value(
         for extra_fdef in field_def["process_as"]:
             # Calculating new "raw" val.
             # `eval` should be fine, as we're controlling the code argument in the templates
-            extra_fdef_raw_val = eval(extra_fdef.get("parse_through", "lambda x: x"))(
-                raw_val
-            )
+            try:
+                extra_fdef_raw_val = eval(
+                    extra_fdef.get("parse_through", "lambda x: x")
+                )(raw_val)
+            except:
+                extra_field_key = extra_fdef["merge_pointer"].rsplit("/", 1)[-1]
+                raise ParsingException(
+                    f"Cannot extract {extra_field_key} from {key} value: {raw_val!r}"
+                )
 
             # recursive call
             extra_changes, extra_files = _process_field_value(

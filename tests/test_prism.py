@@ -1482,6 +1482,77 @@ def test_prism_joining_tabs(monkeypatch):
     assert 0 == len(file_maps)
 
 
+def test_prism_process_as_error(monkeypatch):
+    """Tests that prismify doesn't crash when a `parse_through` function errors"""
+    mock_XlTemplateReader_from_excel(
+        {
+            "participants": [["#h", "PA_id"], ["#d", "CPP0"]],
+            "samples": [["#h", "SA_id", "SA_prop"], ["#d", None, 100]],
+        },
+        monkeypatch,
+    )
+
+    template = Template(
+        {
+            "$id": "test_ship",
+            "title": "participants and shipment",
+            "properties": {
+                "worksheets": {
+                    "participants": {
+                        "prism_preamble_object_schema": "clinical_trial.json",
+                        "prism_preamble_object_pointer": "#",
+                        "prism_data_object_pointer": "/participants/0/samples/0",
+                        "preamble_rows": {},
+                        "data_columns": {
+                            "Samples": {
+                                "PA_id": {
+                                    "merge_pointer": "2/cimac_participant_id",
+                                    "type_ref": "participant.json#properties/cimac_participant_id",
+                                }
+                            }
+                        },
+                    },
+                    "samples": {
+                        "prism_preamble_object_schema": "clinical_trial.json",
+                        "prism_preamble_object_pointer": "#",
+                        "prism_data_object_pointer": "/participants/0/samples/0",
+                        "preamble_rows": {},
+                        "data_columns": {
+                            "Samples": {
+                                "SA_id": {
+                                    "merge_pointer": "/cimac_id",
+                                    "type_ref": "sample.json#properties/cimac_id",
+                                    "process_as": [
+                                        {
+                                            "merge_pointer": "2/cimac_participant_id",
+                                            "parse_through": "lambda x: x[:4]",
+                                            "type_ref": "participant.json#properties/cimac_participant_id",
+                                        }
+                                    ],
+                                },
+                                "SA_prop": {
+                                    "merge_pointer": "0/parent_sample_id",
+                                    "type_ref": "sample.json#properties/parent_sample_id",
+                                },
+                            }
+                        },
+                    },
+                }
+            },
+        },
+        "test_prism_process_as",
+    )
+    monkeypatch.setattr(
+        "cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_prism_process_as"]
+    )
+
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    patch, file_maps, errs = prismify(xlsx, template, verb=False)
+    assert "Cannot extract cimac_participant_id from SA_id value: None" == str(errs[0])
+
+
 def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
 

@@ -32,6 +32,17 @@
         "idRef": "assay_run_id"
       }
     },
+    "elisa": {
+      "type": "array",
+      "description": "Base information about the acquisition and analysis of ELISA data.",
+      "items": {
+        "$ref": "assays/elisa_assay.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "assay_run_id"
+      }
+    },
     "olink": {
       "$comment": "NB This is not array as every other assay. Will update data on any olink upload.",
       "$ref": "assays/olink_assay.json"

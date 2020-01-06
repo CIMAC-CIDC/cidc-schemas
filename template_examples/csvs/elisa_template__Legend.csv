@@ -1,0 +1,6 @@
+"","LEGEND"
+"","Legend for tab 'ELISA'"
+"","Protocol identifier","String","Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412."
+"","Assay creator","Enum","Indicates what site is filling out the assay.","E.g. 'DFCI'"
+"","Run id","String","User defined unique identifier for this assay run."
+"","Serology file","String","XLSX ELISA results file name on a user's computer."

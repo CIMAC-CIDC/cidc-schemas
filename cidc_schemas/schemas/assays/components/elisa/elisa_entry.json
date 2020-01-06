@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "elisa_entry",
+  "title": "ELISA assay record",
+  "type": "object",
+  "description": "A single data record from ELISA assay.",
+  "properties": {
+    "number_of_samples": {
+      "description": "Number of samples analyzed in the assay.",
+      "type": "number"
+    },
+    "assay_xlsx": {
+      "$ref": "artifacts/artifact_elisa_xlsx.json"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "number_of_samples",
+    "assay_xlsx"
+  ]
+}

@@ -508,6 +508,13 @@ def test_filepath_gen(xlsx, template):
             sorted(set([x.gs_key.split("/")[2] for x in file_maps]))
         )
 
+    elif template.type == "elisa":
+
+        # we should have 1 xlsx file
+        assert 1 == len(file_maps)
+        assert file_maps[0].gs_key.endswith("/assay.xlsx")
+        assert file_maps[0].gs_key.startswith(TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME])
+
     elif template.type == "olink":
 
         # we should have 2 npx files

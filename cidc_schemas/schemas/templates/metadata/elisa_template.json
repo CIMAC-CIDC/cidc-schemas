@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "elisa",
+  "title": "Metadata file for ELISA",
+  "type": "object",
+  "category": "metadata",
+  "description": "Metadata information for ELISA analysis.",
+
+  "properties": {
+    "worksheets": {
+      "ELISA": {
+
+        "prism_preamble_object_schema" : "assays/elisa_assay.json",
+        "prism_preamble_object_pointer" : "/assays/elisa/-",
+        "prism_data_object_pointer" : "#",
+        
+        "preamble_rows": {
+          "protocol identifier": {
+            "merge_pointer": "3/protocol_identifier",
+            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+          },
+          "assay creator": {
+            "merge_pointer": "0/assay_creator",
+            "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+          },
+          "run id": {
+            "merge_pointer": "0/assay_run_id",
+            "type_ref": "assays/elisa_assay.json#properties/assay_run_id"
+          },
+          "serology file": {
+            "merge_pointer": "0/assay_xlsx",
+            "is_artifact" : 1,
+            "gcs_uri_format": "{protocol identifier}/elisa/chip_{run id}/assay.xlsx",
+            "type_ref": "assays/components/local_file.json#properties/file_path",
+            "extra_metadata": true,
+            "description": "XLSX ELISA results file name on a user's computer."
+          }
+        }
+      }
+    }
+  }
+}

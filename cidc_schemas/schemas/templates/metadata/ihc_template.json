@@ -75,19 +75,22 @@
                             "merge_pointer": "0/files/ihc_image_tiff",
                             "is_artifact": 1,
                             "gcs_uri_format": "{protocol identifier}/ihc/{cimac id}/ihc.tiff",
-                            "type_ref": "assays/components/local_file.json#properties/file_path"
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "allow_empty": true
                         },
                         "IHC image (.SVS)": {
                             "merge_pointer": "0/files/ihc_image_svs",
                             "is_artifact": 1,
                             "gcs_uri_format": "{protocol identifier}/ihc/{cimac id}/ihc.svs",
-                            "type_ref": "assays/components/local_file.json#properties/file_path"
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "allow_empty": true
                         },
                         "IHC image (.QPTIFF)": {
                             "merge_pointer": "0/files/ihc_image_qptiff",
                             "is_artifact": 1,
                             "gcs_uri_format": "{protocol identifier}/ihc/{cimac id}/ihc.qptiff",
-                            "type_ref": "assays/components/local_file.json#properties/file_path"
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "allow_empty": true
                         }
                     },
                     "Chromogenic IHC (please specify one score/metric)": {

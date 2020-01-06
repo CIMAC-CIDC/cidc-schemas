@@ -1358,6 +1358,77 @@ def test_prism_local_files_format_extension(monkeypatch):
     assert len(file_maps) == 1
 
 
+def test_prism_local_files_format_multiple_extensions(monkeypatch):
+    """ Tests prism ability to gcs_uri """
+
+    mock_XlTemplateReader_from_excel(
+        {
+            "files": [
+                ["#h", "record", "local_file_col_name"],
+                ["#d", "1", "somewhere/on/my/computer.tif"],
+                ["#d", "2", "somewhere/on/my/computer.tiff"],
+                ["#d", "3", "somewhere/on/my/computer.NONtiff"],
+                ["#d", "4", "somewhere/on/my/computer.svs"],
+                ["#d", "5", "somewhere/on/my/computer.qptiff"],
+            ]
+        },
+        monkeypatch,
+    )
+
+    template = Template(
+        {
+            "$id": "test_files",
+            "title": "files",
+            "properties": {
+                "worksheets": {
+                    "files": {
+                        "prism_preamble_object_schema": "clinical_trial.json",
+                        "prism_preamble_object_pointer": "#",
+                        "prism_data_object_pointer": "/files/-",
+                        "preamble_rows": {},
+                        "data_columns": {
+                            "Files": {
+                                "record": {"merge_pointer": "/id", "type": "number"},
+                                "local_file_col_name": {
+                                    "merge_pointer": "artifact",
+                                    "gcs_uri_format": {
+                                        "format": "lambda val, ctx: 'subfolder/'+ctx['record']+'/artifact.'+val.rsplit('.', 1)[-1]",
+                                        "check_errors": "lambda val: f'Bad file type {val!r}. It should be in one of .tiff .tif .qptiff .svs formats' if val.rsplit('.', 1)[-1] not in ['svs', 'tiff', 'tif', 'qptiff'] else None",
+                                    },
+                                    "is_artifact": 1,
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                },
+                            }
+                        },
+                    }
+                }
+            },
+        },
+        "test_prism_local_files_format_extension",
+    )
+
+    monkeypatch.setattr(
+        "cidc_schemas.prism.SUPPORTED_TEMPLATES",
+        ["test_prism_local_files_format_extension"],
+    )
+
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    patch, file_maps, errs = prismify(xlsx, template, verb=False)
+
+    assert len(errs) == 1
+    assert "Bad file type" in str(errs[0])
+    assert ".NONtiff" in str(errs[0])
+    assert "should be in one of" in str(errs[0])
+
+    assert len(file_maps) == 4
+    local_exts = [l.split(".")[-1] for l in list(zip(*file_maps))[0]]
+    gcs_exts = [g.split(".")[-1] for g in list(zip(*file_maps))[1]]
+    exts = ["tif", "tiff", "svs", "qptiff"]
+    assert exts == gcs_exts == local_exts
+
+
 def mock_XlTemplateReader_from_excel(sheets: dict, monkeypatch):
 
     load_workbook = MagicMock(name="load_workbook")

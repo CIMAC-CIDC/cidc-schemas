@@ -978,7 +978,12 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         # olink is different in structure - no array of assays, only one.
         if template.type == "olink":
             prism_patch_assay_records = prism_patch["assays"][template.type]["records"]
-            assert len(prism_patch["assays"][template.type]["records"]) == 2
+            assert len(prism_patch_assay_records) == 2
+
+        # olink is different in structure - no array of records, only one.
+        elif template.type == "elisa":
+            prism_patch_assay_records = prism_patch["assays"][template.type]
+            assert len(prism_patch_assay_records) == 1
 
         elif template.type == "cytof":
             assert len(prism_patch["assays"][template.type]) == 1
@@ -1105,9 +1110,12 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert set(merged_gs_keys) == set(WESBAM_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
     elif template.type == "olink":
-        assert (
-            len(merged_gs_keys) == 5
-        )  # 2 files per entry in xlsx + 1 file in preamble
+        # 2 files per entry in xlsx + 1 file in preamble
+        assert len(merged_gs_keys) == 5
+
+    elif template.type == "elisa":
+        # 1 xlsx file in preamble
+        assert len(merged_gs_keys) == 1
 
     elif template.type in SUPPORTED_MANIFESTS:
         assert len(merged_gs_keys) == 0
@@ -1169,6 +1177,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             len(full_ct["assays"]["wes"][0]["records"]) == 2
         ), "More records than expected"
 
+    elif template.type == "elisa":
+        assert len(full_ct["assays"]["elisa"]) == 1, "More records than expected"
+
     else:
         assert False, f"add {template.type} assay specific asserts on 'full_ct'"
 
@@ -1207,6 +1218,15 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         # 7 artifact attributes * 5 files (2 per record + 1 study)
         assert len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS * (
             2 * 2 + 1
+        ), "Unexpected CT changes"
+
+    elif template.type == "elisa":
+
+        assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
+
+        # artifact attributes + run id + assay_creator
+        assert (
+            len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS + 2
         ), "Unexpected CT changes"
 
     elif template.type in SUPPORTED_MANIFESTS:

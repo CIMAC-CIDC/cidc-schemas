@@ -38,6 +38,7 @@ from cidc_schemas.prism import (
     MergeCollisionException,
     generate_analysis_configs_from_upload_patch,
     _ANALYSIS_CONF_GENERATORS,
+    _get_file_ext,
 )
 
 from cidc_schemas.json_validation import load_and_validate_schema, InDocRefNotFoundError
@@ -1423,10 +1424,11 @@ def test_prism_local_files_format_multiple_extensions(monkeypatch):
     assert "should be in one of" in str(errs[0])
 
     assert len(file_maps) == 4
-    local_exts = [l.split(".")[-1] for l in list(zip(*file_maps))[0]]
-    gcs_exts = [g.split(".")[-1] for g in list(zip(*file_maps))[1]]
-    exts = ["tif", "tiff", "svs", "qptiff"]
-    assert exts == gcs_exts == local_exts
+    expected_extensions = ["tif", "tiff", "svs", "qptiff"]
+    # check that we have only "proper" (checked by `check_errors`) extensions
+    local_extensions = [_get_file_ext(fm.local_path) for fm in file_maps]
+    gcs_extensions = [_get_file_ext(fm.gs_key) for fm in file_maps]
+    assert expected_extensions == gcs_extensions == local_extensions
 
 
 def mock_XlTemplateReader_from_excel(sheets: dict, monkeypatch):

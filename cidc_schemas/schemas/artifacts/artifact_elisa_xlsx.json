@@ -4,13 +4,13 @@
   "title": "ELISA results artifact",
   "type": "object",
   "description": "Information about an ELISA file.",
+  "$comment": "TODO Maybe add array of antibodies parsing.",
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"
     },
     {
       "properties": {
-        "$comment": "TODO array of antibodies.",
         "number_of_samples": {
           "description": "Number of samples within this file.",
           "type": "integer"

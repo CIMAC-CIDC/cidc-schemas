@@ -130,6 +130,58 @@ TEST_PRISM_TRIAL = {
             "participant_id": "TTTPP203",
             "cohort_name": "Arm_Z",
         },
+        {
+            "samples": [
+                {
+                    "aliquots": [
+                        {
+                            "slide_number": "1",
+                            "sample_volume_units": "Other",
+                            "material_used": 2,
+                            "material_remaining": 0,
+                            "quality_of_shipment": "Other",
+                            "aliquot_replacement": "N/A",
+                            "aliquot_status": "Other",
+                        }
+                    ],
+                    "cimac_id": "CTTTPP122.00",
+                    "parent_sample_id": "test_sample_3",
+                    "collection_event_name": "Baseline",
+                    "sample_location": "---",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
+                }
+            ],
+            "cimac_participant_id": "CTTTPP3",
+            "participant_id": "TTTPP303",
+            "cohort_name": "Arm_Z",
+        },
+        {
+            "samples": [
+                {
+                    "aliquots": [
+                        {
+                            "slide_number": "1",
+                            "sample_volume_units": "Other",
+                            "material_used": 2,
+                            "material_remaining": 0,
+                            "quality_of_shipment": "Other",
+                            "aliquot_replacement": "N/A",
+                            "aliquot_status": "Other",
+                        }
+                    ],
+                    "cimac_id": "CTTTPP123.00",
+                    "parent_sample_id": "test_sample_3",
+                    "collection_event_name": "Baseline",
+                    "sample_location": "---",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
+                }
+            ],
+            "cimac_participant_id": "CTTTPP4",
+            "participant_id": "TTTPP403",
+            "cohort_name": "Arm_Z",
+        },
     ],
     "assays": {
         "wes": [
@@ -535,7 +587,10 @@ def test_filepath_gen(xlsx, template):
         assert len(file_maps) == 6
 
     elif template.type == "ihc":
-        assert 2 == sum([x.gs_key.endswith(".tiff") for x in file_maps])
+        assert 1 == sum([x.gs_key.endswith(".tif") for x in file_maps])
+        assert 1 == sum([x.gs_key.endswith(".tiff") for x in file_maps])
+        assert 1 == sum([x.gs_key.endswith(".qptiff") for x in file_maps])
+        assert 1 == sum([x.gs_key.endswith(".svs") for x in file_maps])
 
     elif template.type in SUPPORTED_SHIPPING_MANIFESTS:
 
@@ -578,6 +633,12 @@ def test_prismify_ihc(xlsx, template):
 
     # parse the spreadsheet and get the file maps
     ct, file_maps, errs = prismify(xlsx, template)
+
+    for e in validator.iter_errors(ct):
+        assert isinstance(e, InDocRefNotFoundError) or (  # not found cimac_ids
+            "'participants'" in str(e)
+            and "required" in str(e)  # or no "participants" found.
+        )
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -986,7 +1047,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             assert len(prism_patch["assays"]["wes"][0]["records"]) == 2
 
         elif template.type == "ihc":
-            assert len(prism_patch["assays"][template.type][0]["records"]) == 2
+            assert len(prism_patch["assays"][template.type][0]["records"]) == 4
 
         else:
             raise NotImplementedError(
@@ -1086,7 +1147,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     validator.validate(full_ct)
 
     if template.type == "ihc":
-        assert len(merged_gs_keys) == 2
+        assert len(merged_gs_keys) == 4
 
     elif template.type == "wes_fastq":
         assert (
@@ -1142,7 +1203,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == "ihc":
         assert (
-            len(full_ct["assays"][template.type][0]["records"]) == 2
+            len(full_ct["assays"][template.type][0]["records"]) == 4
         ), "More records than expected"
 
     elif template.type in SUPPORTED_MANIFESTS:
@@ -1191,7 +1252,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     elif template.type == "ihc":
         # 2 files * 7 artifact attributes
         assert (
-            len(dd["dictionary_item_added"]) == 2 * NUM_ARTIFACT_FIELDS
+            len(dd["dictionary_item_added"]) == 4 * NUM_ARTIFACT_FIELDS
         ), "Unexpected CT changes"
 
     elif template.type == "olink":
@@ -1393,7 +1454,7 @@ def test_prism_local_files_format_multiple_extensions(monkeypatch):
                                 "local_file_col_name": {
                                     "merge_pointer": "artifact",
                                     "gcs_uri_format": {
-                                        "format": "lambda val, ctx: 'subfolder/'+ctx['record']+'/artifact.'+val.rsplit('.', 1)[-1]",
+                                        "format": "lambda val, ctx: 'subfolder/' + ctx['record'] + '/artifact.' + val.rsplit('.', 1)[-1]",
                                         "check_errors": "lambda val: f'Bad file type {val!r}. It should be in one of .tiff .tif .qptiff .svs formats' if val.rsplit('.', 1)[-1] not in ['svs', 'tiff', 'tif', 'qptiff'] else None",
                                         "template_comment": "In one of .tiff .tif .qptiff .svs formats.",
                                     },

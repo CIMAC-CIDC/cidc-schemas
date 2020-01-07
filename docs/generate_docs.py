@@ -84,7 +84,11 @@ def generate_docs(out_directory: str = HTML_DIR):
     for directory, entity in schemas.items():
 
         # Determine whether these are spreadsheet templates or normal entities
-        if directory in ("templates.manifests", "templates.metadata"):
+        if directory in (
+            "templates.manifests",
+            "templates.metadata",
+            "templates.analyses",
+        ):
             template = template_template
         else:
             template = entity_template

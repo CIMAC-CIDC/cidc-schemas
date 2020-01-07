@@ -392,7 +392,15 @@ class XlTemplateWriter:
         comment = entity_schema.get("description", "")
 
         if "gcs_uri_format" in entity_schema:
-            comment += f'\nIn .{entity_schema["gcs_uri_format"].split(".")[-1]} format'
+            if isinstance(entity_schema["gcs_uri_format"], str):
+                comment += (
+                    f'\nIn .{entity_schema["gcs_uri_format"].split(".")[-1]} format'
+                )
+            elif isinstance(entity_schema["gcs_uri_format"], dict):
+                if "template_comment" in entity_schema["gcs_uri_format"]:
+                    comment += (
+                        "\n" + entity_schema["gcs_uri_format"]["template_comment"]
+                    )
 
         if comment:
             self.worksheet.write_comment(row, col, comment, self.COMMENT_THEME)

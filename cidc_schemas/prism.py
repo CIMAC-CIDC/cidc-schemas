@@ -375,10 +375,10 @@ def _process_field_value(
         val, files = _calc_val_and_files(raw_val, field_def, format_context, verb=verb)
     except ParsingException:
         raise
-    except Exception:
+    except Exception as e:
         raise ParsingException(
-            f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type')}"
-        )
+            f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type') or field_def.get('type_ref') }"
+        ) from e
 
     changes = [_AtomicChange(pointer, val)]
 
@@ -389,16 +389,18 @@ def _process_field_value(
     if "process_as" in field_def:
         for extra_fdef in field_def["process_as"]:
             # Calculating new "raw" val.
-            # `eval` should be fine, as we're controlling the code argument in the templates
-            try:
-                extra_fdef_raw_val = eval(
-                    extra_fdef.get("parse_through", "lambda x: x")
-                )(raw_val)
-            except:
-                extra_field_key = extra_fdef["merge_pointer"].rsplit("/", 1)[-1]
-                raise ParsingException(
-                    f"Cannot extract {extra_field_key} from {key} value: {raw_val!r}"
-                )
+            extra_fdef_raw_val = raw_val
+            # `eval` should be fine, as we're controlling the code argument in templates
+            if "parse_through" in extra_fdef:
+                try:
+                    extra_fdef_raw_val = eval(extra_fdef["parse_through"])(raw_val)
+
+                # catching everything, because of eval
+                except:
+                    extra_field_key = extra_fdef["merge_pointer"].rsplit("/", 1)[-1]
+                    raise ParsingException(
+                        f"Cannot extract {extra_field_key} from {key} value: {raw_val!r}"
+                    )
 
             # recursive call
             extra_changes, extra_files = _process_field_value(
@@ -423,18 +425,38 @@ def _format_single_artifact(
     local_path: str, uuid: str, field_def: dict, format_context: dict
 ):
     try:
-        gs_key = field_def["gcs_uri_format"].format_map(format_context)
-    except KeyError:
-        raise ParsingException(
-            f"Something is wrong with the gcs_uri: {field_def['gcs_uri_format']}"
-        )
+        gcs_uri_format = field_def["gcs_uri_format"]
+    except KeyError as e:
+        raise KeyError(f"Empty gcs_uri_format for {field_def['key_name']!r}") from e
 
-    expected_extension = _get_file_ext(gs_key)
-    provided_extension = _get_file_ext(local_path)
-    if provided_extension != expected_extension:
-        raise ParsingException(
-            f"Expected {'.' + expected_extension} for {field_def['key_name']!r} but got {'.' + provided_extension!r} instead."
-        )
+    if isinstance(gcs_uri_format, dict):
+        if "check_errors" in gcs_uri_format:
+            # `eval` should be fine, as we're controlling the code argument in templates
+            err = eval(gcs_uri_format["check_errors"])(local_path)
+            if err:
+                raise ParsingException(err)
+
+        try:
+            gs_key = eval(gcs_uri_format["format"])(local_path, format_context)
+        except Exception as e:
+            raise ValueError(
+                f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format['format']}"
+            )
+
+    elif isinstance(gcs_uri_format, str):
+        try:
+            gs_key = gcs_uri_format.format_map(format_context)
+        except KeyError as e:
+            raise KeyError(
+                f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format}"
+            )
+
+        expected_extension = _get_file_ext(gs_key)
+        provided_extension = _get_file_ext(local_path)
+        if provided_extension != expected_extension:
+            raise ParsingException(
+                f"Expected {'.' + expected_extension} for {field_def['key_name']!r} but got {'.' + provided_extension!r} instead."
+            )
 
     return LocalFileUploadEntry(
         local_path=local_path,

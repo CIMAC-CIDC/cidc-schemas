@@ -1178,7 +1178,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         ), "More records than expected"
 
     elif template.type == "elisa":
-        assert len(full_ct["assays"]["elisa"]) == 1, "More records than expected"
+        assert len(full_ct["assays"]["elisa"]) == 1, "More assay runs than expected"
 
     else:
         assert False, f"add {template.type} assay specific asserts on 'full_ct'"
@@ -1224,9 +1224,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
         assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
 
-        # artifact attributes + run id + assay_creator
+        # artifact attributes for just one artifact elisa xlsx file
         assert (
-            len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS + 2
+            len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS
         ), "Unexpected CT changes"
 
     elif template.type in SUPPORTED_MANIFESTS:

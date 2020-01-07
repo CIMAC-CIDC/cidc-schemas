@@ -439,7 +439,6 @@ def _format_single_artifact(
         try:
             gs_key = eval(gcs_uri_format["format"])(local_path, format_context)
         except Exception as e:
-            raise e
             raise ValueError(
                 f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format['format']}"
             )

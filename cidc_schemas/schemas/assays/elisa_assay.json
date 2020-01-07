@@ -15,9 +15,20 @@
     },
     "assay_xlsx": {
       "$ref": "artifacts/artifact_elisa_xlsx.json"
+    },
+    "antibodies": {
+      "type": "array",
+      "description": "Data specific to antibody preparation on the ELISA assay.",
+      "items": {
+          "$ref": "assays/components/elisa/elisa_antibody.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "antibody"
+      }
     }
   },
   "mergeStrategy": "objectMerge",
   "additionalProperties": false,
-  "required": ["assay_run_id", "assay_xlsx"]
+  "required": ["assay_run_id", "assay_xlsx", "antibodies"]
 }

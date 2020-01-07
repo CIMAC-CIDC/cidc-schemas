@@ -10,6 +10,7 @@
     },
     {
       "properties": {
+        "$comment": "TODO array of antibodies.",
         "number_of_samples": {
           "description": "Number of samples within this file.",
           "type": "integer"
@@ -21,10 +22,6 @@
             "$comment": "Ids of the sample(s) within this file.",
             "$ref": "sample.json#properties/cimac_id"
           }
-        },
-        "antibodies": {
-          "type": "string",
-          "$comment": "TODO array of antibodies."
         },
         "data_format": {
           "description": "Data format.",

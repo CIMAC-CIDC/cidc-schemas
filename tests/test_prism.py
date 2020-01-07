@@ -906,7 +906,7 @@ def test_merge_ct_meta():
     )
 
 
-@pytest.mark.parametrize("xlsx, template", prismify_test_set())
+@pytest.mark.parametrize("xlsx, template", prismify_test_set("elisa"))
 def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     assert template.type in SUPPORTED_TEMPLATES
@@ -1179,6 +1179,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == "elisa":
         assert len(full_ct["assays"]["elisa"]) == 1, "More assay runs than expected"
+        assert (
+            len(full_ct["assays"]["elisa"][0]["antibodies"]) == 2
+        ), "More antibodies than expected"
 
     else:
         assert False, f"add {template.type} assay specific asserts on 'full_ct'"

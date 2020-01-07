@@ -75,7 +75,7 @@
                             "merge_pointer": "0/files/ihc_image",
                             "is_artifact": 1,
                             "gcs_uri_format": {
-                                        "format": "lambda val, ctx: ctx['protocol identifier'] + '/ihc/' + ctx['cimac id'] + '/ihc_image.'.format_map(ctx) + val.rsplit('.', 1)[-1]",
+                                        "format": "lambda val, ctx: ctx['protocol identifier'] + '/ihc/' + ctx['cimac id'] + '/ihc_image.' + val.rsplit('.', 1)[-1]",
                                         "check_errors": "lambda val: f'Bad file type {val!r}. It should be in one of .tiff .tif .qptiff .svs formats' if val.rsplit('.', 1)[-1] not in ['svs', 'tiff', 'tif', 'qptiff'] else None",
                                         "template_comment": "In one of .tiff .tif .qptiff .svs formats."
                                     },

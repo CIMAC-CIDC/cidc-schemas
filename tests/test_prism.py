@@ -1393,7 +1393,7 @@ def test_prism_local_files_format_multiple_extensions(monkeypatch):
                                 "local_file_col_name": {
                                     "merge_pointer": "artifact",
                                     "gcs_uri_format": {
-                                        "format": "lambda val, ctx: 'subfolder/' + ctx['record'] + '/artifact.'.format_map(ctx) + val.rsplit('.', 1)[-1]",
+                                        "format": "lambda val, ctx: 'subfolder/' + ctx['record'] + '/artifact.' + val.rsplit('.', 1)[-1]",
                                         "check_errors": "lambda val: f'Bad file type {val!r}. It should be in one of .tiff .tif .qptiff .svs formats' if val.rsplit('.', 1)[-1] not in ['svs', 'tiff', 'tif', 'qptiff'] else None",
                                         "template_comment": "In one of .tiff .tif .qptiff .svs formats.",
                                     },

@@ -1,3 +1,5 @@
+"""Tools from extracting information from trial metadata blobs."""
+
 from pandas.io.json import json_normalize
 
 from .prism import PROTOCOL_ID_FIELD_NAME
@@ -14,10 +16,10 @@ def unprism_participants(trial_metadata: dict):
     return participants.to_csv(index=False)
 
 
-def unprism_samples(assay_type: str):
+def unprism_samples(trial_metadata: str):
     """Return a CSV of patient-level metadata for the given trial."""
     samples = json_normalize(
-        data=assay_type,
+        data=trial_metadata,
         record_path=["participants", "samples"],
         meta=[PROTOCOL_ID_FIELD_NAME, ["participants", "cimac_participant_id"]],
     )

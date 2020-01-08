@@ -119,3 +119,45 @@ def test_derive_files_IHC():
         recs[cimac_id] = rec
 
     assert recs == true_recs
+
+
+def test_derive_files_wes_analysis():
+    """Check that combined MAF is derived as expected"""
+    url1 = "a"
+    url2 = "b"
+    trial_id = "test-trial"
+    partial_ct = {
+        PROTOCOL_ID_FIELD_NAME: trial_id,
+        "analysis": {
+            "wes_analysis": {
+                "pair_runs": [
+                    {"somatic": {"maf_tnscope_filter": {"object_url": url1}}},
+                    {"somatic": {"maf_tnscope_filter": {"object_url": url2}}},
+                ]
+            }
+        },
+    }
+
+    version = "#version 1.0\n"
+    headers = "col1\tcol2\tcol3\n"
+    maf1 = "a\tb\tc\n" "d\t\tf\n"
+    maf2 = "c\tb\t\n" "f\te\td\n"
+
+    def fetch_artifact(url: str, as_string: bool) -> StringIO:
+        assert url in (url1, url2)
+        if url == url1:
+            return StringIO(version + headers + maf1)
+        else:
+            return StringIO(version + headers + maf2)
+
+    context = DeriveFilesContext(partial_ct, "wes_analysis", fetch_artifact)
+    result = derive_files(context)
+
+    assert result.trial_metadata == partial_ct
+    assert len(result.artifacts) == 1
+
+    combined_maf = result.artifacts[0]
+
+    assert combined_maf.data_format == "maf"
+    assert combined_maf.file_type == "combined maf"
+    assert combined_maf.data == headers + maf1 + maf2

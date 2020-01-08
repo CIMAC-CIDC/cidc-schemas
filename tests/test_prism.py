@@ -31,6 +31,7 @@ from cidc_schemas.prism import (
     SUPPORTED_ANALYSES,
     PROTOCOL_ID_FIELD_NAME,
     parse_npx,
+    parse_elisa,
     merge_artifact_extra_metadata,
     PRISM_MERGE_STRATEGIES,
     PRISM_PRISMIFY_STRATEGIES,
@@ -402,6 +403,8 @@ def test_prism(xlsx, template):
         assert (
             TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] == merged[PROTOCOL_ID_FIELD_NAME]
         )
+
+    return merged, file_maps
 
 
 def test_unsupported_prismify():
@@ -1859,6 +1862,11 @@ def npx_combined_file_path():
     return os.path.join(TEST_DATA_DIR, "olink", "olink_assay_combined.xlsx")
 
 
+@pytest.fixture
+def elisa_test_file_path():
+    return os.path.join(TEST_DATA_DIR, "elisa_test_file.xlsx")
+
+
 def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
     xlsx, template = list(prismify_test_set("olink"))[0]
     ct, file_infos = test_prismify_olink_only(xlsx, template)
@@ -1894,6 +1902,35 @@ def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
         "CTTTP07A1.00",
         "CTTTP08A1.00",
         "CTTTP09A1.00",
+    }
+
+
+def test_merge_extra_metadata_elisa(elisa_test_file_path):
+    xlsx, template = list(prismify_test_set("elisa"))[0]
+    ct, file_infos = test_prism(xlsx, template)
+
+    for finfo in file_infos:
+        if finfo.metadata_availability:
+
+            with open(elisa_test_file_path, "rb") as elisa_file:
+                merge_artifact_extra_metadata(
+                    ct, finfo.upload_placeholder, "elisa", elisa_file
+                )
+
+    artifact = ct["assays"]["elisa"][0]["assay_xlsx"]
+
+    # TODO antibodies
+
+    assert artifact["data_format"] == "ELISA"
+    assert artifact["number_of_samples"] == 7
+    assert set(artifact["samples"]) == {
+        "CTTTP01A1.00",
+        "CTTTP01A2.00",
+        "CTTTP01A3.00",
+        "CTTTP02A1.00",
+        "CTTTP02A2.00",
+        "CTTTP02A3.00",
+        "CTTTP02A4.00",
     }
 
 
@@ -1934,6 +1971,29 @@ def test_parse_npx_merged(npx_combined_file_path):
         "CTTTP07A1.00",
         "CTTTP08A1.00",
         "CTTTP09A1.00",
+    }
+
+
+def test_parse_elisa_invalid(elisa_test_file_path):
+    # test the parse function by passing a file path
+    with pytest.raises(TypeError):
+        samples = parse_elisa(elisa_test_file_path)
+
+
+def test_parse_elisa_single(elisa_test_file_path):
+    # test the parse function
+    f = open(elisa_test_file_path, "rb")
+    samples = parse_elisa(f)
+
+    assert samples["number_of_samples"] == 7
+    assert set(samples["samples"]) == {
+        "CTTTP01A1.00",
+        "CTTTP01A2.00",
+        "CTTTP01A3.00",
+        "CTTTP02A1.00",
+        "CTTTP02A2.00",
+        "CTTTP02A3.00",
+        "CTTTP02A4.00",
     }
 
 

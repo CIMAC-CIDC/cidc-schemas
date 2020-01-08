@@ -126,6 +126,10 @@
                 <li><a href="{{ref['url']}}">{{ref['url'].replace('.html', '')}}</a></li>
             {% endfor %}
             </ul>
+        {% elif "comment" in prop_schema %}
+            ({{ prop_schema["comment"] }})
+        {% elif "$comment" in prop_schema %}
+            ({{ prop_schema["$comment"] }})
         {% else %}
             (UNKNOWN PROPERTY TYPE)
         {% endif %}

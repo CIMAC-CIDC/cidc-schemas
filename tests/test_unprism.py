@@ -40,6 +40,6 @@ def test_shipping_manifest_derivation(ct):
             assert 0, f"Unexpected participants/samples CSV url: {url}"
 
     derivation = ShippingManifestDerivation()
-    derivation(
+    derivation.run(
         ct, DeriveFilesContext(fetch_artifact=None, save_artifact=fake_save_artifact)
     )

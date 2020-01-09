@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "elisa",
+  "title": "Metadata file for ELISA",
+  "type": "object",
+  "category": "metadata",
+  "description": "Metadata information for ELISA analysis.",
+
+  "properties": {
+    "worksheets": {
+      "ELISA": {
+
+        "prism_preamble_object_schema" : "assays/elisa_assay.json",
+        "prism_preamble_object_pointer" : "/assays/elisa/-",
+        "prism_data_object_pointer" : "/antibodies/-",
+        
+        "preamble_rows": {
+          "protocol identifier": {
+            "merge_pointer": "3/protocol_identifier",
+            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+          },
+          "assay creator": {
+            "merge_pointer": "0/assay_creator",
+            "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+          },
+          "run id": {
+            "merge_pointer": "0/assay_run_id",
+            "type_ref": "assays/elisa_assay.json#properties/assay_run_id"
+          },
+          "serology file": {
+            "merge_pointer": "0/assay_xlsx",
+            "is_artifact" : 1,
+            "gcs_uri_format": "{protocol identifier}/elisa/{run id}/assay.xlsx",
+            "type_ref": "assays/components/local_file.json#properties/file_path",
+            "extra_metadata": true,
+            "description": "XLSX ELISA results file name on a user's computer."
+          }
+        },
+        "data_columns": {
+            "Antibodies": {
+                "target": {
+                    "merge_pointer": "0/antibody",
+                    "type_ref": "assays/components/antibody.json#properties/antibody"
+                },
+                "clone": {
+                    "merge_pointer": "0/clone",
+                    "type_ref": "assays/components/antibody.json#properties/clone"
+                },
+                "antibody company": {
+                    "merge_pointer": "0/company",
+                    "type_ref": "assays/components/antibody.json#properties/company"
+                },
+                "catalog number": {
+                    "merge_pointer": "0/cat_num",
+                    "type_ref": "assays/components/antibody.json#properties/cat_num"
+                },
+                "lot number": {
+                    "merge_pointer": "0/lot_num",
+                    "type_ref": "assays/components/antibody.json#properties/lot_num"
+                },
+                "isotope": {
+                    "merge_pointer": "0/isotope",
+                    "type_ref": "assays/components/elisa/elisa_antibody.json#properties/isotope"
+                },
+                "dilution": {
+                    "merge_pointer": "0/dilution",
+                    "type_ref": "assays/components/elisa/elisa_antibody.json#properties/dilution"
+                },
+                "stain_type": {
+                    "merge_pointer": "0/stain_type",
+                    "type_ref": "assays/components/elisa/elisa_antibody.json#properties/stain_type"
+                },
+                "usage": {
+                    "merge_pointer": "0/usage",
+                    "type_ref": "assays/components/elisa/elisa_antibody.json#properties/usage"
+                }
+            }
+        }
+      }
+    }
+  }
+}

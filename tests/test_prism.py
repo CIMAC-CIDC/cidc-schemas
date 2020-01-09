@@ -31,6 +31,7 @@ from cidc_schemas.prism import (
     SUPPORTED_ANALYSES,
     PROTOCOL_ID_FIELD_NAME,
     parse_npx,
+    parse_elisa,
     merge_artifact_extra_metadata,
     PRISM_MERGE_STRATEGIES,
     PRISM_PRISMIFY_STRATEGIES,
@@ -456,6 +457,8 @@ def test_prism(xlsx, template):
             TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] == merged[PROTOCOL_ID_FIELD_NAME]
         )
 
+    return merged, file_maps
+
 
 def test_unsupported_prismify():
     """Check that prism raises a non-implemented error for unsupported template types."""
@@ -560,6 +563,13 @@ def test_filepath_gen(xlsx, template):
         assert ["CTTTPP111.00", "CTTTPP121.00"] == list(
             sorted(set([x.gs_key.split("/")[2] for x in file_maps]))
         )
+
+    elif template.type == "elisa":
+
+        # we should have 1 xlsx file
+        assert 1 == len(file_maps)
+        assert file_maps[0].gs_key.endswith("/assay.xlsx")
+        assert file_maps[0].gs_key.startswith(TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME])
 
     elif template.type == "olink":
 
@@ -1033,7 +1043,12 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         # olink is different in structure - no array of assays, only one.
         if template.type == "olink":
             prism_patch_assay_records = prism_patch["assays"][template.type]["records"]
-            assert len(prism_patch["assays"][template.type]["records"]) == 2
+            assert len(prism_patch_assay_records) == 2
+
+        # olink is different in structure - no array of records, only one.
+        elif template.type == "elisa":
+            prism_patch_assay_records = prism_patch["assays"][template.type]
+            assert len(prism_patch_assay_records) == 1
 
         elif template.type == "cytof":
             assert len(prism_patch["assays"][template.type]) == 1
@@ -1160,9 +1175,12 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert set(merged_gs_keys) == set(WESBAM_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
     elif template.type == "olink":
-        assert (
-            len(merged_gs_keys) == 5
-        )  # 2 files per entry in xlsx + 1 file in preamble
+        # 2 files per entry in xlsx + 1 file in preamble
+        assert len(merged_gs_keys) == 5
+
+    elif template.type == "elisa":
+        # 1 xlsx file in preamble
+        assert len(merged_gs_keys) == 1
 
     elif template.type in SUPPORTED_MANIFESTS:
         assert len(merged_gs_keys) == 0
@@ -1224,6 +1242,12 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             len(full_ct["assays"]["wes"][0]["records"]) == 2
         ), "More records than expected"
 
+    elif template.type == "elisa":
+        assert len(full_ct["assays"]["elisa"]) == 1, "More assay runs than expected"
+        assert (
+            len(full_ct["assays"]["elisa"][0]["antibodies"]) == 2
+        ), "More antibodies than expected"
+
     else:
         assert False, f"add {template.type} assay specific asserts on 'full_ct'"
 
@@ -1262,6 +1286,15 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         # 7 artifact attributes * 5 files (2 per record + 1 study)
         assert len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS * (
             2 * 2 + 1
+        ), "Unexpected CT changes"
+
+    elif template.type == "elisa":
+
+        assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
+
+        # artifact attributes for just one artifact elisa xlsx file
+        assert (
+            len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS
         ), "Unexpected CT changes"
 
     elif template.type in SUPPORTED_MANIFESTS:
@@ -1964,6 +1997,11 @@ def npx_combined_file_path():
     return os.path.join(TEST_DATA_DIR, "olink", "olink_assay_combined.xlsx")
 
 
+@pytest.fixture
+def elisa_test_file_path():
+    return os.path.join(TEST_DATA_DIR, "elisa_test_file.xlsx")
+
+
 def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
     xlsx, template = list(prismify_test_set("olink"))[0]
     ct, file_infos = test_prismify_olink_only(xlsx, template)
@@ -1999,6 +2037,35 @@ def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
         "CTTTP07A1.00",
         "CTTTP08A1.00",
         "CTTTP09A1.00",
+    }
+
+
+def test_merge_extra_metadata_elisa(elisa_test_file_path):
+    xlsx, template = list(prismify_test_set("elisa"))[0]
+    ct, file_infos = test_prism(xlsx, template)
+
+    for finfo in file_infos:
+        if finfo.metadata_availability:
+
+            with open(elisa_test_file_path, "rb") as elisa_file:
+                merge_artifact_extra_metadata(
+                    ct, finfo.upload_placeholder, "elisa", elisa_file
+                )
+
+    artifact = ct["assays"]["elisa"][0]["assay_xlsx"]
+
+    # TODO antibodies
+
+    assert artifact["data_format"] == "ELISA"
+    assert artifact["number_of_samples"] == 7
+    assert set(artifact["samples"]) == {
+        "CTTTP01A1.00",
+        "CTTTP01A2.00",
+        "CTTTP01A3.00",
+        "CTTTP02A1.00",
+        "CTTTP02A2.00",
+        "CTTTP02A3.00",
+        "CTTTP02A4.00",
     }
 
 
@@ -2039,6 +2106,29 @@ def test_parse_npx_merged(npx_combined_file_path):
         "CTTTP07A1.00",
         "CTTTP08A1.00",
         "CTTTP09A1.00",
+    }
+
+
+def test_parse_elisa_invalid(elisa_test_file_path):
+    # test the parse function by passing a file path
+    with pytest.raises(TypeError):
+        samples = parse_elisa(elisa_test_file_path)
+
+
+def test_parse_elisa_single(elisa_test_file_path):
+    # test the parse function
+    f = open(elisa_test_file_path, "rb")
+    samples = parse_elisa(f)
+
+    assert samples["number_of_samples"] == 7
+    assert set(samples["samples"]) == {
+        "CTTTP01A1.00",
+        "CTTTP01A2.00",
+        "CTTTP01A3.00",
+        "CTTTP02A1.00",
+        "CTTTP02A2.00",
+        "CTTTP02A3.00",
+        "CTTTP02A4.00",
     }
 
 

@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "artifact_elisa_xlsx",
+  "title": "ELISA results artifact",
+  "type": "object",
+  "description": "Information about an ELISA file.",
+  "$comment": "TODO Maybe add array of antibodies parsing.",
+  "allOf": [
+    {
+      "$ref": "artifacts/artifact_core.json"
+    },
+    {
+      "properties": {
+        "number_of_samples": {
+          "description": "Number of samples within this file.",
+          "type": "integer"
+        },
+        "samples": {
+          "description": "Ids of the sample(s) within this file.",
+          "type": "array",
+          "items": {
+            "$comment": "Ids of the sample(s) within this file.",
+            "$ref": "sample.json#properties/cimac_id"
+          }
+        },
+        "data_format": {
+          "description": "Data format.",
+          "const": "ELISA"
+        }
+      }
+    }
+  ],
+  "mergeStrategy": "objectMerge",
+  "anyOf": [
+    { "required": ["number_of_samples", "samples"] },
+    { "required": ["upload_placeholder"] }
+  ]
+}

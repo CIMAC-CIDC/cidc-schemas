@@ -5,8 +5,8 @@ from io import StringIO
 import pytest
 
 from cidc_schemas.unprism import (
-    FileDerivation,
-    ShippingManifestDerivation,
+    _build_artifact,
+    _shipping_manifest_derivation,
     DeriveFilesContext,
     Artifact,
 )
@@ -24,35 +24,34 @@ def ct():
 
 
 def test_build_artifact():
-    """Check that FileDerivation artifact building logic works as expected"""
+    """Check that the artifact building helper works as expected"""
     trial_id = "test-trial"
     trial_metadata = {PROTOCOL_ID_FIELD_NAME: trial_id}
     upload_type = "bar"
 
-    derivation = FileDerivation(trial_metadata, upload_type, DeriveFilesContext(None))
+    context = DeriveFilesContext(trial_metadata, upload_type, None)
 
     name = "foo.txt"
     data = "blahblah"
 
     # without extra metadata
-    assert derivation.build_artifact(name, data) == Artifact(
+    assert _build_artifact(context, name, data) == Artifact(
         f"{trial_id}/{name}", data, None
     )
-    assert derivation.build_artifact(
-        "foo.txt", data, include_upload_type=True
+    assert _build_artifact(
+        context, "foo.txt", data, include_upload_type=True
     ) == Artifact(f"{trial_id}/{upload_type}/{name}", data, None)
 
     # with extra metadata
     metadata = {1: 2}
-    assert derivation.build_artifact(name, data, metadata) == Artifact(
+    assert _build_artifact(context, name, data, metadata) == Artifact(
         f"{trial_id}/{name}", data, metadata
     )
 
 
 def test_shipping_manifest_derivation(ct):
     """Check that participants and samples CSVs are derived as expected."""
-    derivation = ShippingManifestDerivation(ct, None, DeriveFilesContext(None))
-    result = derivation.run()
+    result = _shipping_manifest_derivation(DeriveFilesContext(ct, None, None))
     assert result.artifacts == [
         Artifact(
             "10021/participants.csv",

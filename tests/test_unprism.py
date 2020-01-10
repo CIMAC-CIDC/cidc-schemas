@@ -104,7 +104,7 @@ def test_derive_files_IHC():
         PROTOCOL_ID_FIELD_NAME,
     ]
 
-    recs = {
+    true_recs = {
         "CTTTPP1S1.00": "positive,0.0,test_example_ihc",
         "CTTTPP2S1.00": "negative,0.0,test_example_ihc",
         "CTTTPP2S2.00": "no_call,0.0,test_example_ihc",
@@ -112,7 +112,10 @@ def test_derive_files_IHC():
 
     dictreader = csv.DictReader(StringIO(result.artifacts[0].data))
 
+    recs = {}
     for row in dictreader:
         cimac_id = row["cimac_id"]
         rec = ",".join(row[f] for f in req_header_fields)
-        assert rec == recs[cimac_id]
+        recs[cimac_id] = rec
+
+    assert recs == true_recs

@@ -62,7 +62,13 @@ def _build_artifact(
     else:
         object_url = f"{trial_id}/{file_name}"
 
-    return Artifact(object_url, data, file_type, data_format, metadata)
+    return Artifact(
+        object_url=object_url,
+        data=data,
+        file_type=file_type,
+        data_format=data_format,
+        metadata=metadata,
+    )
 
 
 def _shipping_manifest_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
@@ -107,13 +113,27 @@ def _ihc_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
         meta=[prism.PROTOCOL_ID_FIELD_NAME],
     )
 
-    # combined.drop("files", axis=1, inplace=True, errors="ignore")
-    # combined.drop("files.ihc_image.file_size_bytes", axis=1, inplace=True, errors="ignore")
+    # remove all artifact related columns
+    combined.drop(
+        [c for c in combined.columns if c.startswith("files.")],
+        axis=1,
+        inplace=True,
+        errors="ignore",
+    )
 
     combined_csv = combined.to_csv(index=False)
 
     return DeriveFilesResult(
-        [_build_artifact(context, "ihc/combined.csv", combined_csv)],
+        [
+            _build_artifact(
+                context,
+                "combined.csv",
+                combined_csv,
+                "ihc marker combined",
+                "csv",
+                include_upload_type=True,
+            )
+        ],
         context.trial_metadata,  # return metadata without updates
     )
 

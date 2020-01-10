@@ -24,8 +24,8 @@ def ct():
 
 def test_shipping_manifest_derivation(ct):
     """Check that participants and samples CSVs are derived as expected."""
-    derivation = ShippingManifestDerivation()
-    result = derivation.run(ct, DeriveFilesContext(None))
+    derivation = ShippingManifestDerivation(ct, None, DeriveFilesContext(None))
+    result = derivation.run()
     assert result.artifacts == [
         Artifact(
             "10021/participants.csv",
@@ -34,6 +34,7 @@ def test_shipping_manifest_derivation(ct):
                 "CTTTPP1,trial.PA.1,Arm_Z,10021\n"
                 "CTTTPP2,trial.PA.2,Arm_Z,10021\n"
             ),
+            None,
         ),
         Artifact(
             "10021/samples.csv",
@@ -44,5 +45,6 @@ def test_shipping_manifest_derivation(ct):
                 "CTTTPP2S1.00,SA.2.1,Baseline,---,Other,Other,10021,CTTTPP2\n"
                 "CTTTPP2S2.00,SA.2.2,Baseline,---,Other,Other,10021,CTTTPP2\n"
             ),
+            None,
         ),
     ]

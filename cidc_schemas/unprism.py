@@ -30,41 +30,62 @@ def derive_files(
 ) -> DeriveFilesResult:
     """Derive files from a trial_metadata blob given an `upload_type`"""
     # Select the derivation for this upload type
-    derivation: FileDerivation = FileDerivation()
+    derivation: FileDerivation = FileDerivation(trial_metadata, upload_type, context)
     if upload_type in prism.SUPPORTED_SHIPPING_MANIFESTS:
-        derivation = ShippingManifestDerivation()
+        derivation = ShippingManifestDerivation(trial_metadata, upload_type, context)
 
-    return derivation.run(trial_metadata, context)
+    return derivation.run()
 
 
 class FileDerivation:
-    def run(
-        self, trial_metadata: dict, context: DeriveFilesContext
-    ) -> DeriveFilesResult:
+    def __init__(
+        self, trial_metadata: dict, upload_type: str, context: DeriveFilesContext
+    ):
+        self.trial_metadata = trial_metadata
+        self.upload_type = upload_type
+        self.context = context
+
+    def run(self) -> DeriveFilesResult:
         """Execute the file derivation."""
         raise NotImplementedError("No derivation implemented for this upload type.")
+
+    def build_artifact(
+        self,
+        file_name: str,
+        data: StrOrBytes,
+        metadata: Optional[dict] = None,
+        include_upload_type: bool = False,
+    ) -> Artifact:
+        """Generate an Artifact object."""
+        trial_id = self.trial_metadata[prism.PROTOCOL_ID_FIELD_NAME]
+
+        if include_upload_type:
+            object_url = f"{trial_id}/{self.upload_type}/{file_name}"
+        else:
+            object_url = f"{trial_id}/{file_name}"
+
+        return Artifact(object_url, data, metadata)
 
 
 class ShippingManifestDerivation(FileDerivation):
     """Derive files from a shipping manifest upload."""
 
-    def run(self, trial_metadata: dict, context: DeriveFilesContext):
-        trial_id = trial_metadata[prism.PROTOCOL_ID_FIELD_NAME]
-        participants_csv = self._participants_csv(trial_metadata)
-        samples_csv = self._samples_csv(trial_metadata)
+    def run(self):
+        participants_csv = self._participants_csv()
+        samples_csv = self._samples_csv()
 
         return DeriveFilesResult(
             [
-                Artifact(f"{trial_id}/participants.csv", participants_csv),
-                Artifact(f"{trial_id}/samples.csv", samples_csv),
+                self.build_artifact("participants.csv", participants_csv),
+                self.build_artifact("samples.csv", samples_csv),
             ],
-            trial_metadata,  # return metadata without updates
+            self.trial_metadata,  # return metadata without updates
         )
 
-    def _participants_csv(self, trial_metadata: dict) -> str:
+    def _participants_csv(self) -> str:
         """Return a CSV of patient-level metadata for the given trial."""
         participants = json_normalize(
-            data=trial_metadata,
+            data=self.trial_metadata,
             record_path=["participants"],
             meta=[prism.PROTOCOL_ID_FIELD_NAME],
         )
@@ -73,10 +94,10 @@ class ShippingManifestDerivation(FileDerivation):
 
         return participants.to_csv(index=False)
 
-    def _samples_csv(self, trial_metadata: dict) -> str:
+    def _samples_csv(self) -> str:
         """Return a CSV of patient-level metadata for the given trial."""
         samples = json_normalize(
-            data=trial_metadata,
+            data=self.trial_metadata,
             record_path=["participants", "samples"],
             meta=[
                 prism.PROTOCOL_ID_FIELD_NAME,

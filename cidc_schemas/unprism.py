@@ -29,10 +29,16 @@ class DeriveFilesResult(NamedTuple):
     trial_metadata: dict
 
 
+_per_assay_derivations = {}
+
+
 def derive_files(context: DeriveFilesContext) -> DeriveFilesResult:
     """Derive files from a trial_metadata blob given an `upload_type`"""
     if context.upload_type in prism.SUPPORTED_SHIPPING_MANIFESTS:
         return _shipping_manifest_derivation(context)
+
+    if context.upload_type in _per_assay_derivations:
+        return _per_assay_derivations[context.upload_type](context)
 
     raise NotImplementedError(
         f"No file derivations for upload type {context.upload_type}"
@@ -91,3 +97,25 @@ def _shipping_manifest_derivation(context: DeriveFilesContext) -> DeriveFilesRes
         ],
         context.trial_metadata,  # return metadata without updates
     )
+
+
+def _ihc_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
+    """Generate a combined CSV for IHC data"""
+    combined = json_normalize(
+        data=context.trial_metadata,
+        record_path=["assays", "ihc", "records"],
+        meta=[prism.PROTOCOL_ID_FIELD_NAME],
+    )
+
+    # combined.drop("files", axis=1, inplace=True, errors="ignore")
+    # combined.drop("files.ihc_image.file_size_bytes", axis=1, inplace=True, errors="ignore")
+
+    combined_csv = combined.to_csv(index=False)
+
+    return DeriveFilesResult(
+        [_build_artifact(context, "ihc/combined.csv", combined_csv)],
+        context.trial_metadata,  # return metadata without updates
+    )
+
+
+_per_assay_derivations["ihc"] = _ihc_derivation

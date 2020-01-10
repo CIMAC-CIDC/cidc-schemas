@@ -298,6 +298,7 @@ def test_ihc():
     image_1["channels"] = 3
     record = {
         "cimac_id": "CTTTPPPSA.00",
+        "marker_positive": "no_call",
         "tumor_proportion_score": 0,
         "h_score": 22,
         "files": {"ihc_image": image_1},

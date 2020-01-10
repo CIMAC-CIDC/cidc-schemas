@@ -19,6 +19,8 @@ class DeriveFilesContext(NamedTuple):
 class Artifact(NamedTuple):
     object_url: str
     data: StrOrBytes
+    file_type: str
+    data_format: str
     metadata: Optional[dict]
 
 
@@ -41,6 +43,8 @@ def _build_artifact(
     context: DeriveFilesContext,
     file_name: str,
     data: StrOrBytes,
+    file_type: str,
+    data_format: str,
     metadata: Optional[dict] = None,
     include_upload_type: bool = False,
 ) -> Artifact:
@@ -52,7 +56,7 @@ def _build_artifact(
     else:
         object_url = f"{trial_id}/{file_name}"
 
-    return Artifact(object_url, data, metadata)
+    return Artifact(object_url, data, file_type, data_format, metadata)
 
 
 def _shipping_manifest_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
@@ -76,8 +80,14 @@ def _shipping_manifest_derivation(context: DeriveFilesContext) -> DeriveFilesRes
 
     return DeriveFilesResult(
         [
-            _build_artifact(context, "participants.csv", participants_csv),
-            _build_artifact(context, "samples.csv", samples_csv),
+            _build_artifact(
+                context,
+                "participants.csv",
+                "participants info",
+                "csv",
+                participants_csv,
+            ),
+            _build_artifact(context, "samples.csv", "samples info", "csv", samples_csv),
         ],
         context.trial_metadata,  # return metadata without updates
     )

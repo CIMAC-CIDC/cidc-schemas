@@ -33,19 +33,21 @@ def test_build_artifact():
 
     name = "foo.txt"
     data = "blahblah"
+    typ = "pbmc"
+    fmt = "csv"
 
     # without extra metadata
-    assert _build_artifact(context, name, data) == Artifact(
-        f"{trial_id}/{name}", data, None
+    assert _build_artifact(context, name, data, typ, fmt) == Artifact(
+        f"{trial_id}/{name}", data, typ, fmt, None
     )
     assert _build_artifact(
-        context, "foo.txt", data, include_upload_type=True
-    ) == Artifact(f"{trial_id}/{upload_type}/{name}", data, None)
+        context, "foo.txt", data, typ, fmt, include_upload_type=True
+    ) == Artifact(f"{trial_id}/{upload_type}/{name}", data, typ, fmt, None)
 
     # with extra metadata
     metadata = {1: 2}
-    assert _build_artifact(context, name, data, metadata) == Artifact(
-        f"{trial_id}/{name}", data, metadata
+    assert _build_artifact(context, name, data, typ, fmt, metadata) == Artifact(
+        f"{trial_id}/{name}", data, typ, fmt, metadata
     )
 
 
@@ -56,6 +58,8 @@ def test_derive_files_shipping_manifest(ct, upload_type):
     assert result.artifacts == [
         Artifact(
             "10021/participants.csv",
+            "participants info",
+            "csv",
             (
                 f"cimac_participant_id,participant_id,cohort_name,{PROTOCOL_ID_FIELD_NAME}\n"
                 "CTTTPP1,trial.PA.1,Arm_Z,10021\n"
@@ -65,6 +69,8 @@ def test_derive_files_shipping_manifest(ct, upload_type):
         ),
         Artifact(
             "10021/samples.csv",
+            "samples info",
+            "csv",
             (
                 f"cimac_id,parent_sample_id,collection_event_name,sample_location,type_of_sample,type_of_primary_container,{PROTOCOL_ID_FIELD_NAME},participants.cimac_participant_id\n"
                 "CTTTPP1S1.00,SA.1.1,Baseline,---,Other,Other,10021,CTTTPP1\n"

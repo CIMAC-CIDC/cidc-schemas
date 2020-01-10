@@ -1,15 +1,17 @@
 """Tools from extracting information from trial metadata blobs."""
-from io import StringIO
-from typing import Callable, NamedTuple, Optional
+from io import StringIO, BytesIO
+from typing import Callable, NamedTuple, Optional, Union
 
 from pandas.io.json import json_normalize
 
 from . import prism
 
+FileStream = Union[StringIO, BytesIO]
+
 
 class DeriveFilesContext(NamedTuple):
-    fetch_artifact: Callable[[str], Optional[StringIO]]
-    save_artifact: Callable[[str, StringIO], None]
+    fetch_artifact: Callable[[str], Optional[FileStream]]
+    save_artifact: Callable[[str, FileStream], None]
 
 
 class FileDerivation:

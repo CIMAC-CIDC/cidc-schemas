@@ -6,11 +6,11 @@ import pytest
 
 from cidc_schemas.unprism import (
     _build_artifact,
-    _shipping_manifest_derivation,
+    derive_files,
     DeriveFilesContext,
     Artifact,
 )
-from cidc_schemas.prism import PROTOCOL_ID_FIELD_NAME
+from cidc_schemas.prism import PROTOCOL_ID_FIELD_NAME, SUPPORTED_SHIPPING_MANIFESTS
 
 ct_example_path = os.path.join(
     os.path.dirname(__file__), "data/clinicaltrial_examples/CT_1.json"
@@ -49,9 +49,10 @@ def test_build_artifact():
     )
 
 
-def test_shipping_manifest_derivation(ct):
+@pytest.mark.parametrize("upload_type", SUPPORTED_SHIPPING_MANIFESTS)
+def test_derive_files_shipping_manifest(ct, upload_type):
     """Check that participants and samples CSVs are derived as expected."""
-    result = _shipping_manifest_derivation(DeriveFilesContext(ct, None, None))
+    result = derive_files(DeriveFilesContext(ct, upload_type, None))
     assert result.artifacts == [
         Artifact(
             "10021/participants.csv",

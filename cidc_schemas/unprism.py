@@ -17,6 +17,7 @@ class DeriveFilesContext(NamedTuple):
 class Artifact(NamedTuple):
     object_url: str
     data: StrOrBytes
+    metadata: Optional[dict]
 
 
 class DeriveFilesResult(NamedTuple):

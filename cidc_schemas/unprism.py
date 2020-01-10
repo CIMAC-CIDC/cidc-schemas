@@ -1,27 +1,83 @@
+"""Tools from extracting information from trial metadata blobs."""
+from typing import Callable, NamedTuple, Optional, AnyStr, Union, ByteString, List
+
 from pandas.io.json import json_normalize
 
-from .prism import PROTOCOL_ID_FIELD_NAME
+from . import prism
+
+StrOrBytes = Union[str, bytes]
 
 
-def unprism_participants(trial_metadata: dict):
-    """Return a CSV of patient-level metadata for the given trial."""
+class DeriveFilesContext(NamedTuple):
+    trial_metadata: dict
+    upload_type: str
+    # fetch_artifact should return None if no artifact is found
+    fetch_artifact: Callable[[str], Optional[StrOrBytes]]
+    # TODO: add new attributes as needed?
+
+
+class Artifact(NamedTuple):
+    object_url: str
+    data: StrOrBytes
+    metadata: Optional[dict]
+
+
+class DeriveFilesResult(NamedTuple):
+    artifacts: List[Artifact]
+    trial_metadata: dict
+
+
+def derive_files(context: DeriveFilesContext) -> DeriveFilesResult:
+    """Derive files from a trial_metadata blob given an `upload_type`"""
+    if context.upload_type in prism.SUPPORTED_SHIPPING_MANIFESTS:
+        return _shipping_manifest_derivation(context)
+
+    raise NotImplementedError(
+        f"No file derivations for upload type {context.upload_type}"
+    )
+
+
+def _build_artifact(
+    context: DeriveFilesContext,
+    file_name: str,
+    data: StrOrBytes,
+    metadata: Optional[dict] = None,
+    include_upload_type: bool = False,
+) -> Artifact:
+    """Generate an Artifact object for the given arguments within a DeriveFilesContext."""
+    trial_id = context.trial_metadata[prism.PROTOCOL_ID_FIELD_NAME]
+
+    if include_upload_type:
+        object_url = f"{trial_id}/{context.upload_type}/{file_name}"
+    else:
+        object_url = f"{trial_id}/{file_name}"
+
+    return Artifact(object_url, data, metadata)
+
+
+def _shipping_manifest_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
+    """Generate files derived from a shipping manifest upload."""
     participants = json_normalize(
-        data=trial_metadata, record_path=["participants"], meta=[PROTOCOL_ID_FIELD_NAME]
+        data=context.trial_metadata,
+        record_path=["participants"],
+        meta=[prism.PROTOCOL_ID_FIELD_NAME],
+    )
+    samples = json_normalize(
+        data=context.trial_metadata,
+        record_path=["participants", "samples"],
+        meta=[prism.PROTOCOL_ID_FIELD_NAME, ["participants", "cimac_participant_id"]],
     )
 
     participants.drop("samples", axis=1, inplace=True, errors="ignore")
-
-    return participants.to_csv(index=False)
-
-
-def unprism_samples(assay_type: str):
-    """Return a CSV of patient-level metadata for the given trial."""
-    samples = json_normalize(
-        data=assay_type,
-        record_path=["participants", "samples"],
-        meta=[PROTOCOL_ID_FIELD_NAME, ["participants", "cimac_participant_id"]],
-    )
-
     samples.drop("aliquots", axis=1, inplace=True, errors="ignore")
 
-    return samples.to_csv(index=False)
+    participants_csv = participants.to_csv(index=False)
+    samples_csv = samples.to_csv(index=False)
+
+    return DeriveFilesResult(
+        [
+            _build_artifact(context, "participants.csv", participants_csv),
+            _build_artifact(context, "samples.csv", samples_csv),
+        ],
+        context.trial_metadata,  # return metadata without updates
+    )

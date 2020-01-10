@@ -5,6 +5,7 @@ from io import StringIO
 import pytest
 
 from cidc_schemas.unprism import (
+    FileDerivation,
     ShippingManifestDerivation,
     DeriveFilesContext,
     Artifact,
@@ -20,6 +21,32 @@ ct_example_path = os.path.join(
 def ct():
     with open(ct_example_path, "r") as ct:
         yield json.load(ct)
+
+
+def test_build_artifact():
+    """Check that FileDerivation artifact building logic works as expected"""
+    trial_id = "test-trial"
+    trial_metadata = {PROTOCOL_ID_FIELD_NAME: trial_id}
+    upload_type = "bar"
+
+    derivation = FileDerivation(trial_metadata, upload_type, DeriveFilesContext(None))
+
+    name = "foo.txt"
+    data = "blahblah"
+
+    # without extra metadata
+    assert derivation.build_artifact(name, data) == Artifact(
+        f"{trial_id}/{name}", data, None
+    )
+    assert derivation.build_artifact(
+        "foo.txt", data, include_upload_type=True
+    ) == Artifact(f"{trial_id}/{upload_type}/{name}", data, None)
+
+    # with extra metadata
+    metadata = {1: 2}
+    assert derivation.build_artifact(name, data, metadata) == Artifact(
+        f"{trial_id}/{name}", data, metadata
+    )
 
 
 def test_shipping_manifest_derivation(ct):

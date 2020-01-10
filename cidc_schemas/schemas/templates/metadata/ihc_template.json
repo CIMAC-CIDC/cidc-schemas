@@ -85,8 +85,7 @@
                     "Chromogenic IHC (please specify one score/metric)": {
                         "marker positive": {
                             "merge_pointer": "0/marker_positive",
-                            "type_ref": "assays/components/imaging/ihc_entry.json#properties/marker_positive",
-                            "allow_empty": true
+                            "type_ref": "assays/components/imaging/ihc_entry.json#properties/marker_positive"
                         },
                         "tumor proportion score": {
                             "merge_pointer": "0/tumor_proportion_score",

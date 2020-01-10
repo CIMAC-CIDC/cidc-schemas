@@ -1,6 +1,7 @@
 import os
 import json
 from io import StringIO
+import csv
 
 import pytest
 
@@ -81,3 +82,40 @@ def test_derive_files_shipping_manifest(ct, upload_type):
             None,
         ),
     ]
+
+
+def test_derive_files_IHC():
+    """Check that IHC CSV is derived as expected."""
+
+    with open(
+        os.path.join(
+            os.path.dirname(__file__), "data/clinicaltrial_examples/CT_ihc.json"
+        ),
+        "r",
+    ) as f:
+        ct = json.load(f)
+
+    result = derive_files(DeriveFilesContext(ct, "ihc", None))
+    assert len(result.artifacts) == 1
+
+    req_header_fields = [
+        "marker_positive",
+        "tumor_proportion_score",
+        PROTOCOL_ID_FIELD_NAME,
+    ]
+
+    true_recs = {
+        "CTTTPP1S1.00": "positive,0.0,test_example_ihc",
+        "CTTTPP2S1.00": "negative,0.0,test_example_ihc",
+        "CTTTPP2S2.00": "no_call,0.0,test_example_ihc",
+    }
+
+    dictreader = csv.DictReader(StringIO(result.artifacts[0].data))
+
+    recs = {}
+    for row in dictreader:
+        cimac_id = row["cimac_id"]
+        rec = ",".join(row[f] for f in req_header_fields)
+        recs[cimac_id] = rec
+
+    assert recs == true_recs

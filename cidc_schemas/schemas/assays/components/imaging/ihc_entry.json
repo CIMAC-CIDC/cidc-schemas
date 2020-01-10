@@ -58,7 +58,8 @@
   "mergeStrategy": "objectMerge",
   "required": [
     "cimac_id",
-    "files"
+    "files",
+    "marker_positive"
   ],
   "anyOf": [
         {"required" : ["tumor_proportion_score"]},

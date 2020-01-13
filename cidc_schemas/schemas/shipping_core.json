@@ -39,7 +39,8 @@
         "Olink",
         "WES",
         "IHC",
-        "CyTOF"
+        "CyTOF",
+        "ELISA"
       ]
     },
     "courier": {

@@ -1,0 +1,189 @@
+{
+    "protocol_identifier": "test_example_ihc",
+    "allowed_collection_event_names": [
+        "Baseline"
+    ],
+    "allowed_cohort_names": [
+        "Arm_Z"
+    ],
+    "participants": [
+        {
+            "cimac_participant_id": "CTTTPP1",
+            "participant_id": "trial.PA.1",
+            "cohort_name": "Arm_Z",
+            "samples": [
+                {
+                    "cimac_id": "CTTTPP1S1.00",
+                    "parent_sample_id": "SA.1.1",
+                    "collection_event_name": "Baseline",
+                    "sample_location": "---",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
+                    "aliquots": [
+                        {
+                            "slide_number": "1",
+                            "sample_volume_units": "Other",
+                            "material_used": 1,
+                            "material_remaining": 0,
+                            "quality_of_shipment": "Other",
+                            "aliquot_replacement": "N/A",
+                            "aliquot_status": "Other"
+                        }
+                    ] 
+                }, 
+                {
+                    "cimac_id": "CTTTPP1S2.00",
+                    "parent_sample_id": "SA.1.2",
+                    "collection_event_name": "Baseline",
+                    "sample_location": "---",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
+                    "aliquots": [
+                        {
+                            "slide_number": "1",
+                            "sample_volume_units": "Other",
+                            "material_used": 1,
+                            "material_remaining": 0,
+                            "quality_of_shipment": "Other",
+                            "aliquot_replacement": "N/A",
+                            "aliquot_status": "Other"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cimac_participant_id": "CTTTPP2",
+            "participant_id": "trial.PA.2",
+            "cohort_name": "Arm_Z",
+            "samples": [
+                {
+                    "cimac_id": "CTTTPP2S1.00",
+                    "parent_sample_id": "SA.2.1",
+                    "collection_event_name": "Baseline",
+                    "sample_location": "---",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
+                    "aliquots": [
+                        {
+                            "slide_number": "1",
+                            "sample_volume_units": "Other",
+                            "material_used": 1,
+                            "material_remaining": 0,
+                            "quality_of_shipment": "Other",
+                            "aliquot_replacement": "N/A",
+                            "aliquot_status": "Other"
+                        }
+                    ]
+                },
+                {
+                    "cimac_id": "CTTTPP2S2.00",
+                    "parent_sample_id": "SA.2.2",
+                    "collection_event_name": "Baseline",
+                    "sample_location": "---",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
+                    "aliquots": [
+                        {
+                            "slide_number": "1",
+                            "sample_volume_units": "Other",
+                            "material_used": 1,
+                            "material_remaining": 0,
+                            "quality_of_shipment": "Other",
+                            "aliquot_replacement": "N/A",
+                            "aliquot_status": "Other"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "assays": {
+        "ihc": [
+            {
+                "assay_creator": "Mount Sinai",
+                "slide_scanner_model": "Vectra 2.0",
+                "staining_platform": "auto",
+                "autostainer_model": "Bond RX",
+                "antibody": {
+                    "dilution": "0/0",
+                    "incubation_time": "0s",
+                    "incubation_temp": "-1K"
+                },
+                "antibody": "unknown antibody",
+                "records": [{
+                    "cimac_id": "CTTTPP1S1.00",
+                    "marker_positive": "positive",
+                    "tumor_proportion_score": 0.0,
+                    "files": {
+                        "ihc_image": {
+                            "file_name" :           "...",
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC",
+                            "data_format" :           "IMAGE",
+                            "channels":   3,
+                            "height": 1,
+                            "width": 1
+                        }
+                    }
+                }]
+            },
+            {
+                "assay_creator": "Mount Sinai",
+                "slide_scanner_model": "Vectra 2.0",
+                "staining_platform": "auto",
+                "autostainer_model": "Bond RX",
+                "antibody": {
+                    "dilution": "0/0",
+                    "incubation_time": "0s",
+                    "incubation_temp": "-1K"
+                },
+                "antibody": "unknown antibody",
+                "records": [
+                    {
+                        "cimac_id": "CTTTPP2S1.00",
+                        "marker_positive": "negative",
+                        "tumor_proportion_score": 0.0,
+                        "files": {
+                            "ihc_image": {
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "data_format" :           "IMAGE",
+                                "channels":   3,
+                                "height": 1,
+                                "width": 1
+                            }
+                        }
+                   },
+                   {
+                        "cimac_id": "CTTTPP2S2.00",
+                        "marker_positive": "no_call",
+                        "tumor_proportion_score": 0.0,
+                        "h_score": 0,
+                        "files": {
+                            "ihc_image": {
+                                "file_name" :           "...",
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "data_format" :           "IMAGE",
+                                "channels":   3,
+                                "height": 1,
+                                "width": 1
+                            }
+                        }
+                   }
+                ]
+            }
+        ]
+    }
+}

@@ -29,10 +29,16 @@ class DeriveFilesResult(NamedTuple):
     trial_metadata: dict
 
 
+_per_assay_derivations = {}
+
+
 def derive_files(context: DeriveFilesContext) -> DeriveFilesResult:
     """Derive files from a trial_metadata blob given an `upload_type`"""
     if context.upload_type in prism.SUPPORTED_SHIPPING_MANIFESTS:
         return _shipping_manifest_derivation(context)
+
+    if context.upload_type in _per_assay_derivations:
+        return _per_assay_derivations[context.upload_type](context)
 
     raise NotImplementedError(
         f"No file derivations for upload type {context.upload_type}"
@@ -56,7 +62,13 @@ def _build_artifact(
     else:
         object_url = f"{trial_id}/{file_name}"
 
-    return Artifact(object_url, data, file_type, data_format, metadata)
+    return Artifact(
+        object_url=object_url,
+        data=data,
+        file_type=file_type,
+        data_format=data_format,
+        metadata=metadata,
+    )
 
 
 def _shipping_manifest_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
@@ -97,3 +109,39 @@ def _shipping_manifest_derivation(context: DeriveFilesContext) -> DeriveFilesRes
         ],
         context.trial_metadata,  # return metadata without updates
     )
+
+
+def _ihc_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
+    """Generate a combined CSV for IHC data"""
+    combined = json_normalize(
+        data=context.trial_metadata,
+        record_path=["assays", "ihc", "records"],
+        meta=[prism.PROTOCOL_ID_FIELD_NAME],
+    )
+
+    # remove all artifact related columns
+    combined.drop(
+        [c for c in combined.columns if c.startswith("files.")],
+        axis=1,
+        inplace=True,
+        errors="ignore",
+    )
+
+    combined_csv = combined.to_csv(index=False)
+
+    return DeriveFilesResult(
+        [
+            _build_artifact(
+                context,
+                "combined.csv",
+                combined_csv,
+                "ihc marker combined",
+                "csv",
+                include_upload_type=True,
+            )
+        ],
+        context.trial_metadata,  # return metadata without updates
+    )
+
+
+_per_assay_derivations["ihc"] = _ihc_derivation

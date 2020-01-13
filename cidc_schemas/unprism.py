@@ -94,12 +94,18 @@ def _shipping_manifest_derivation(context: DeriveFilesContext) -> DeriveFilesRes
         [
             _build_artifact(
                 context,
-                "participants.csv",
-                "participants info",
-                "csv",
-                participants_csv,
+                file_name="participants.csv",
+                data_format="participants info",
+                file_type="csv",
+                data=participants_csv,
             ),
-            _build_artifact(context, "samples.csv", "samples info", "csv", samples_csv),
+            _build_artifact(
+                context,
+                file_name="samples.csv",
+                data_format="samples info",
+                file_type="csv",
+                data=samples_csv,
+            ),
         ],
         context.trial_metadata,  # return metadata without updates
     )

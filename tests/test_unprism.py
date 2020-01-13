@@ -59,8 +59,8 @@ def test_derive_files_shipping_manifest(ct, upload_type):
     assert result.artifacts == [
         Artifact(
             object_url="10021/participants.csv",
-            data_format="participants info",
-            file_type="csv",
+            file_type="participants info",
+            data_format="csv",
             data=(
                 f"cimac_participant_id,participant_id,cohort_name,{PROTOCOL_ID_FIELD_NAME}\n"
                 "CTTTPP1,trial.PA.1,Arm_Z,10021\n"
@@ -70,8 +70,8 @@ def test_derive_files_shipping_manifest(ct, upload_type):
         ),
         Artifact(
             object_url="10021/samples.csv",
-            data_format="samples info",
-            file_type="csv",
+            file_type="samples info",
+            data_format="csv",
             data=(
                 f"cimac_id,parent_sample_id,collection_event_name,sample_location,type_of_sample,type_of_primary_container,{PROTOCOL_ID_FIELD_NAME},participants.cimac_participant_id\n"
                 "CTTTPP1S1.00,SA.1.1,Baseline,---,Other,Other,10021,CTTTPP1\n"

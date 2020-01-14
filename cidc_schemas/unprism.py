@@ -1,24 +1,27 @@
 """Tools from extracting information from trial metadata blobs."""
-from typing import Callable, NamedTuple, Optional, AnyStr, Union, ByteString, List
+from io import StringIO, BytesIO
+from typing import Callable, NamedTuple, Optional, Union, List, Dict
 
+import pandas as pd
 from pandas.io.json import json_normalize
 
 from . import prism
-
-StrOrBytes = Union[str, bytes]
 
 
 class DeriveFilesContext(NamedTuple):
     trial_metadata: dict
     upload_type: str
-    # fetch_artifact should return None if no artifact is found
-    fetch_artifact: Callable[[str], Optional[StrOrBytes]]
+    # fetch_artifact:
+    #   * should return None if no artifact is found.
+    #   * arg1 (str): object_url
+    #   * arg2 (bool): if True, return artifact as StringIO, otherwise BytesIO.
+    fetch_artifact: Callable[[str, bool], Optional[Union[StringIO, BytesIO]]]
     # TODO: add new attributes as needed?
 
 
 class Artifact(NamedTuple):
     object_url: str
-    data: StrOrBytes
+    data: Union[str, bytes]
     file_type: str
     data_format: str
     metadata: Optional[dict]
@@ -29,7 +32,19 @@ class DeriveFilesResult(NamedTuple):
     trial_metadata: dict
 
 
-_per_assay_derivations = {}
+_upload_type_derivations: Dict[
+    str, Callable[[DeriveFilesContext], DeriveFilesResult]
+] = {}
+
+
+def _register_derivation(upload_type: str):
+    """Bind an upload type to a function that generates its file derivations."""
+
+    def decorator(f):
+        _upload_type_derivations[upload_type] = f
+        return f
+
+    return decorator
 
 
 def derive_files(context: DeriveFilesContext) -> DeriveFilesResult:
@@ -37,8 +52,8 @@ def derive_files(context: DeriveFilesContext) -> DeriveFilesResult:
     if context.upload_type in prism.SUPPORTED_SHIPPING_MANIFESTS:
         return _shipping_manifest_derivation(context)
 
-    if context.upload_type in _per_assay_derivations:
-        return _per_assay_derivations[context.upload_type](context)
+    if context.upload_type in _upload_type_derivations:
+        return _upload_type_derivations[context.upload_type](context)
 
     raise NotImplementedError(
         f"No file derivations for upload type {context.upload_type}"
@@ -48,7 +63,7 @@ def derive_files(context: DeriveFilesContext) -> DeriveFilesResult:
 def _build_artifact(
     context: DeriveFilesContext,
     file_name: str,
-    data: StrOrBytes,
+    data: Union[str, bytes],
     file_type: str,
     data_format: str,
     metadata: Optional[dict] = None,
@@ -111,6 +126,7 @@ def _shipping_manifest_derivation(context: DeriveFilesContext) -> DeriveFilesRes
     )
 
 
+@_register_derivation("ihc")
 def _ihc_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
     """Generate a combined CSV for IHC data"""
     combined = json_normalize(
@@ -144,4 +160,42 @@ def _ihc_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
     )
 
 
-_per_assay_derivations["ihc"] = _ihc_derivation
+@_register_derivation("wes_analysis")
+def _wes_analysis_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
+    """Generate a combined MAF file for an entire trial"""
+    # Extract all run-level MAF URLs for this trial
+    runs = json_normalize(
+        data=context.trial_metadata,
+        record_path=["analysis", "wes_analysis", "pair_runs"],
+    )
+    maf_urls = runs["somatic.maf_tnscope_filter.object_url"]
+
+    def download_and_parse_maf(maf_url: str) -> Optional[pd.DataFrame]:
+        maf_stream = context.fetch_artifact(maf_url, True)
+        if maf_stream:
+            # First row will contain a comment, not headers, so skip it
+            return pd.read_csv(maf_stream, sep="\t", skiprows=1)
+        return None
+
+    # Download all sample-level MAF files as dataframes
+    maf_dfs = maf_urls.apply(download_and_parse_maf)
+
+    # Combine all sample-level MAF dataframes
+    combined_maf_df = pd.concat(maf_dfs.values, join="outer")
+
+    # Write the combined dataframe to tab-separated string
+    combined_maf = combined_maf_df.to_csv(sep="\t", index=False)
+
+    return DeriveFilesResult(
+        [
+            _build_artifact(
+                context,
+                file_name="combined.maf",
+                data=combined_maf,
+                file_type="combined maf",
+                data_format="maf",
+                include_upload_type=True,
+            )
+        ],
+        context.trial_metadata,  # return metadata without updates
+    )

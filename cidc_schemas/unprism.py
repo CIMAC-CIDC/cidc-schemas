@@ -201,53 +201,60 @@ def _wes_analysis_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
     )
 
 
+@_register_derivation("cytof_analysis")
 def _cytof_analysis_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
     """Generate a combined CSV for CyTOF analysis data"""
     cell_counts_analysis_csvs = json_normalize(
         data=context.trial_metadata,
         record_path=["assays", "cytof", "records"],
-        # meta=[prism.PROTOCOL_ID_FIELD_NAME],
+        meta=[prism.PROTOCOL_ID_FIELD_NAME],
     )
 
-    res = pd.DataFrame()
-    for index, row in cell_counts_analysis_csvs.iterrows():
-        # TODO FIXME use 'cell_counts_analysis' instead - awaits DM fixes
-        obj_url = row["output_files.cell_counts_assignment.object_url"]
+    artifacts = []
+    for combined_f_kind in [
+        "cell_counts_assignment",
+        "cell_counts_compartment",
+        "cell_counts_profiling",
+    ]:
+        res_df = pd.DataFrame()
+        for index, row in cell_counts_analysis_csvs.iterrows():
+            obj_url = row[f"output_files.{combined_f_kind}.object_url"]
 
-        assignment_csv = context.fetch_artifact(obj_url)
+            assignment_csv = context.fetch_artifact(obj_url, True)
 
-        if not assignment_csv:
-            raise Exception(
-                f"Failed to read {obj_url} building Cytof analysis derivation"
-            )
+            if not assignment_csv:
+                raise Exception(
+                    f"Failed to read {obj_url} building Cytof analysis derivation"
+                )
 
-        df = pd.read_csv(StringIO(assignment_csv))
+            df = pd.read_csv(assignment_csv)
 
-        # df.rename(columns={"Unnamed: 0": str(len(res))}, inplace=True)
+            # each cell_counts_... file consist of just records for one sample
+            # but in a transposed way, so we groom it to be combinable:
+            df = df.transpose()
+            df.columns = df.iloc[1]
+            df = df[2:]
 
-        df = df.transpose()
-        df.columns = df.iloc[1]
-        df = df[2:]
-        df["cimac_id"] = row["cimac_id"]
-        df["cimac_participant_id"] = row["cimac_id"][:-5]
+            # and adding meta columns from metadata, so we can distinguish different samples
+            df["cimac_id"] = row["cimac_id"]
+            df["cimac_participant_id"] = row["cimac_id"][:-5]
+            df[prism.PROTOCOL_ID_FIELD_NAME] = row[prism.PROTOCOL_ID_FIELD_NAME]
 
-        res = pd.concat([res, df])
+            # finally combine them
+            res_df = pd.concat([res_df, df])
 
-    combined_csv = res.to_csv(index=False)
-
-    return DeriveFilesResult(
-        [
+        # and add as artifact
+        artifacts.append(
             _build_artifact(
                 context=context,
-                file_name="combined.csv",
-                data=combined_csv,
-                data_format="cell counts assignment",
+                file_name=f"combined_{combined_f_kind}.csv",
+                data=res_df.to_csv(index=False),
+                data_format=combined_f_kind.replace("_", " "),
                 file_type="csv",
                 include_upload_type=True,
             )
-        ],
-        context.trial_metadata,  # return metadata without updates
+        )
+
+    return DeriveFilesResult(
+        artifacts, context.trial_metadata  # return metadata without updates
     )
-
-
-_per_assay_derivations["cytof_analysis"] = _cytof_analysis_derivation

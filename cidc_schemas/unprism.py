@@ -190,10 +190,10 @@ def _wes_analysis_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
         [
             _build_artifact(
                 context,
-                "combined.maf",
-                combined_maf,
-                "combined maf",
-                "maf",
+                file_name="combined.maf",
+                data=combined_maf,
+                file_type="combined maf",
+                data_format="maf",
                 include_upload_type=True,
             )
         ],

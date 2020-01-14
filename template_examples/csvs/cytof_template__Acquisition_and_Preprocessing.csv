@@ -4,8 +4,9 @@
 "#p","Assay creator","DFCI"
 "#p","Panel name","IMMUNE4"
 "#p","Instrument","PresNixon123"
+"#p","Batch_id","XYZ1"
 
-"","Run info","","","","","","","","Preprocessing"
-"#h","Cimac id","Batch_id","Original fcs filename(s)","Date of acquisition","Injector","Acquisition_buffer","Average_event_per_second","Run_time","Processed fcs filename","Concatenation version","Normalization version","Beads removed","Debarcoding protocol","Debarcoding key","Preprocessing_notes"
-"#d","CTTTPP111.00","XYZ1","sample1a.fcs,sample1b.fcs","43355","HAT123","ABC","123","23","sample1.fcs","GHIL","ABC","Y","FLUIDIGM XYZ","FLUIDIGM 1234","a note like any other note"
-"#d","CTTTPP121.00","XYZ1","sample2a.fcs,sample2b.fcs","43385","HAT123","ABCD","123","28","sample2.fcs","GHIL","ABC","N","FLUIDIGM XYZ","FLUIDIGM 1234","a different note"
+"","Run info","","","","","","","Preprocessing"
+"#h","Cimac id","Original fcs filename(s)","Date of acquisition","Injector","Acquisition_buffer","Average_event_per_second","Run_time","Processed fcs filename","Concatenation version","Normalization version","Beads removed","Debarcoding protocol","Debarcoding key","Preprocessing_notes"
+"#d","CTTTPP111.00","sample1a.fcs,sample1b.fcs","43355","HAT123","ABC","123","23","sample1.fcs","GHIL","ABC","Y","FLUIDIGM XYZ","FLUIDIGM 1234","a note like any other note"
+"#d","CTTTPP121.00","sample2a.fcs,sample2b.fcs","43385","HAT123","ABCD","123","28","sample2.fcs","GHIL","ABC","N","FLUIDIGM XYZ","FLUIDIGM 1234","a different note"

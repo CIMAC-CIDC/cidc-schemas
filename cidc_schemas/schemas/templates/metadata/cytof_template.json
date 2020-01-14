@@ -29,6 +29,10 @@
                     "instrument": {
                         "merge_pointer": "0/instrument",
                         "type_ref": "assays/cytof_assay.json#properties/instrument"
+                    },
+                    "batch_id": {
+                            "merge_pointer": "0/batch_id",
+                            "type_ref": "assays/cytof_assay.json#properties/batch_id"
                     }
                 },
                 "data_columns": {
@@ -36,10 +40,6 @@
                         "cimac id": {
                             "merge_pointer": "0/cimac_id",
                             "type_ref": "sample.json#properties/cimac_id"
-                        },
-                        "batch_id": {
-                            "merge_pointer": "0/batch_id",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/batch_id"
                         },
                         "original fcs filename(s)": {
                             "merge_pointer": "0/input_files/source_fcs",

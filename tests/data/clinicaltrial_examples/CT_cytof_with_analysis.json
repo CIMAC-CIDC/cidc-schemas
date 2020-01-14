@@ -8,6 +8,7 @@
             "cimac_id": "CTSTP01S1.01",
             "injector": "HAT123",
             "run_time": "23",
+            "input_files": {},
             "output_files": {
               "fcs_file": {
                 "file_name": "cytof_analysis",
@@ -106,6 +107,7 @@
             "cimac_id": "CTSTP01S2.01",
             "injector": "HAT123",
             "run_time": "23",
+            "input_files": {},
             "output_files": {
               "fcs_file": {
                 "file_name": "cytof_analysis",

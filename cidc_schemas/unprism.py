@@ -1,6 +1,5 @@
 """Tools from extracting information from trial metadata blobs."""
 from io import StringIO, BytesIO
-from functools import wraps
 from typing import Callable, NamedTuple, Optional, Union, List, Dict
 
 import pandas as pd

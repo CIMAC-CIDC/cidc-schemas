@@ -176,26 +176,49 @@ def test_derive_files_CyTOF_analysis():
     ) as f:
         ct = json.load(f)
 
-    fetch = MagicMock()
-    fetch.return_value = """"","CellSubset","N"
-    "1","B Cell (CD27-)",1111111
-    "2","B Cell (Memory)",2222222"""
-    result = derive_files(DeriveFilesContext(ct, "cytof_analysis", fetch))
-    assert len(result.artifacts) == 1
-
-    req_header_fields = ["B Cell (CD27-)", "B Cell (Memory)", "cimac_participant_id"]
-
-    true_recs = {
-        "CTSTP01S1.01": "1111111,2222222,CTSTP01",
-        "CTSTP01S2.01": "1111111,2222222,CTSTP01",
+    artifact_format_specific_data = {
+        "cell_counts_assignment": {"B Cell (CD27-)": 272727, "B Cell (Memory)": 11111},
+        "cell_counts_compartment": {"B Cell": 8888, "Granulocyte": 22222},
+        "cell_counts_profiling": {
+            "B Cell (CD27-) CD1chi CD38hi": "138hi",
+            "B Cell (CD27-) CD1chi CD38lo": "138lo",
+        },
     }
 
-    dictreader = csv.DictReader(StringIO(result.artifacts[0].data))
+    def fetch_artifact(url: str, as_string: bool) -> StringIO:
+        for (ftype, data) in artifact_format_specific_data.items():
+            if ftype in url:
+                csv = '"","CellSubset","N"\n'
+                csv += "\n".join(
+                    f'"{i}","{k}",{v}' for i, (k, v) in enumerate(data.items())
+                )
 
-    recs = {}
-    for row in dictreader:
-        cimac_id = row["cimac_id"]
-        rec = ",".join(row[f] for f in req_header_fields)
-        recs[cimac_id] = rec
+                return StringIO(csv)
+        raise Exception(f"Unknown file for url {url}")
 
-    assert recs == true_recs
+    result = derive_files(DeriveFilesContext(ct, "cytof_analysis", fetch_artifact))
+    assert len(result.artifacts) == 3
+
+    artifacts = {a.data_format.replace(" ", "_"): a for a in result.artifacts}
+    assert len(artifacts) == 3
+
+    for ar_format, artifact in artifacts.items():
+        format_specific_truth = artifact_format_specific_data[ar_format]
+        req_header_fields = list(format_specific_truth.keys())
+
+        cimac_ids = sorted(["CTSTP01S2.01", "CTSTP01S1.01"])
+
+        dictreader = csv.DictReader(StringIO(artifact.data))
+
+        recs = []
+        for row in dictreader:
+            recs.append(row)
+            rec = ",".join(row[f] for f in req_header_fields)
+            should_be = ",".join(
+                str(format_specific_truth[f]) for f in req_header_fields
+            )
+            assert rec == should_be
+        assert sorted([r["cimac_id"] for r in recs]) == cimac_ids
+        assert sorted([r["cimac_participant_id"] for r in recs]) == sorted(
+            [r[:-5] for r in cimac_ids]
+        )

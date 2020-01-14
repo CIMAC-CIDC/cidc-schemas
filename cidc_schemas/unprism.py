@@ -199,3 +199,55 @@ def _wes_analysis_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
         ],
         context.trial_metadata,  # return metadata without updates
     )
+
+
+def _cytof_analysis_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
+    """Generate a combined CSV for CyTOF analysis data"""
+    cell_counts_analysis_csvs = json_normalize(
+        data=context.trial_metadata,
+        record_path=["assays", "cytof", "records"],
+        # meta=[prism.PROTOCOL_ID_FIELD_NAME],
+    )
+
+    res = pd.DataFrame()
+    for index, row in cell_counts_analysis_csvs.iterrows():
+        # TODO FIXME use 'cell_counts_analysis' instead - awaits DM fixes
+        obj_url = row["output_files.cell_counts_assignment.object_url"]
+
+        assignment_csv = context.fetch_artifact(obj_url)
+
+        if not assignment_csv:
+            raise Exception(
+                f"Failed to read {obj_url} building Cytof analysis derivation"
+            )
+
+        df = pd.read_csv(StringIO(assignment_csv))
+
+        # df.rename(columns={"Unnamed: 0": str(len(res))}, inplace=True)
+
+        df = df.transpose()
+        df.columns = df.iloc[1]
+        df = df[2:]
+        df["cimac_id"] = row["cimac_id"]
+        df["cimac_participant_id"] = row["cimac_id"][:-5]
+
+        res = pd.concat([res, df])
+
+    combined_csv = res.to_csv(index=False)
+
+    return DeriveFilesResult(
+        [
+            _build_artifact(
+                context=context,
+                file_name="combined.csv",
+                data=combined_csv,
+                data_format="cell counts assignment",
+                file_type="csv",
+                include_upload_type=True,
+            )
+        ],
+        context.trial_metadata,  # return metadata without updates
+    )
+
+
+_per_assay_derivations["cytof_analysis"] = _cytof_analysis_derivation

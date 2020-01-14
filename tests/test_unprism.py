@@ -3,6 +3,7 @@ import json
 from io import StringIO
 import csv
 
+from unittest.mock import MagicMock
 import pytest
 
 from cidc_schemas.unprism import (
@@ -161,3 +162,40 @@ def test_derive_files_wes_analysis():
     assert combined_maf.data_format == "maf"
     assert combined_maf.file_type == "combined maf"
     assert combined_maf.data == headers + maf1 + maf2
+
+
+def test_derive_files_CyTOF_analysis():
+    """Check that CyTOF analysis CSV is derived as expected."""
+
+    with open(
+        os.path.join(
+            os.path.dirname(__file__),
+            "data/clinicaltrial_examples/CT_cytof_with_analysis.json",
+        ),
+        "r",
+    ) as f:
+        ct = json.load(f)
+
+    fetch = MagicMock()
+    fetch.return_value = """"","CellSubset","N"
+    "1","B Cell (CD27-)",1111111
+    "2","B Cell (Memory)",2222222"""
+    result = derive_files(DeriveFilesContext(ct, "cytof_analysis", fetch))
+    assert len(result.artifacts) == 1
+
+    req_header_fields = ["B Cell (CD27-)", "B Cell (Memory)", "cimac_participant_id"]
+
+    true_recs = {
+        "CTSTP01S1.01": "1111111,2222222,CTSTP01",
+        "CTSTP01S2.01": "1111111,2222222,CTSTP01",
+    }
+
+    dictreader = csv.DictReader(StringIO(result.artifacts[0].data))
+
+    recs = {}
+    for row in dictreader:
+        cimac_id = row["cimac_id"]
+        rec = ",".join(row[f] for f in req_header_fields)
+        recs[cimac_id] = rec
+
+    assert recs == true_recs

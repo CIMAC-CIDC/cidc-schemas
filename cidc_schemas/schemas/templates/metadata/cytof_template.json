@@ -41,11 +41,17 @@
                             "merge_pointer": "0/cimac_id",
                             "type_ref": "sample.json#properties/cimac_id"
                         },
-                        "original fcs filename(s)": {
+                        "raw fcs filename(s)": {
                             "merge_pointer": "0/input_files/source_fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
                             "gcs_uri_format": "{protocol identifier}/cytof/{cimac id}/source_{num}.fcs",
                             "is_artifact": "multi"
+                        },
+                        "normalized and debarcoded fcs filename": {
+                            "merge_pointer": "0/input_files/normalized_and_debarcoded_fcs",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/cytof/{cimac id}/normalized_and_debarcoded.fcs",
+                            "is_artifact": 1
                         },
                         "date of acquisition": {
                             "merge_pointer": "0/date_of_acquisition",

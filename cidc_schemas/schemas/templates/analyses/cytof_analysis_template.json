@@ -66,7 +66,7 @@
                         "cell counts assignment": {
                             "merge_pointer": "0/output_files/cell_counts_assignment",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{cimac id}/cell_counts_analysis.csv",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{cimac id}/cell_counts_assignment.csv",
                             "is_artifact": 1
                         },
                         "cell counts compartment": {

@@ -14,6 +14,9 @@
             "items": {
                 "$ref": "artifacts/artifact_fcs.json"
             }
+        },
+        "normalized_and_debarcoded_fcs": {
+            "$ref": "artifacts/artifact_fcs.json"
         }
     }
 }

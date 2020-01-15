@@ -30,6 +30,13 @@
             "description": "Standardized CyTOF panel name used for antibody sample development.",
             "type": "string"
         },
+        "spike_in_fcs": {
+            "$ref": "artifacts/artifact_fcs.json"
+        },
+        "batch_id": {
+            "description": "CyTOF batch identification number.",
+            "type": "string"
+        },
         "records": {
             "type": "array",
             "description": "A single data record from CyTOF assay batch.",

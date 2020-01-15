@@ -31,16 +31,16 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>CyTOF analysis template</h1>
+        <h1>Metadata file for ELISA</h1>
         <p>
-            <b>Description:</b>  Metadata information for CyTOF Analysis output.
+            <b>Description:</b>  Metadata information for ELISA analysis.
         </p>
         
     </div>
 
   <div class="container">
     
-      <h3>Worksheet - CyTOF Analysis</h3>
+      <h3>Worksheet - ELISA</h3>
   
     <h4>Preamble Rows</h4>
     
@@ -61,29 +61,10 @@
         
             
         
-        
-            
-                <tr>
-    <td>
-        
-            <span id="assay run id">
-                assay run id
-            </span>
             
         
-    </td>
-    <td width=55%>
-        
-            User defined unique identifier for this assay run.
-        
-    </td>
-    <td>
-        
-            <a href="assays.cytof_assay.html#assay_run_id">assays.cytof_assay#assay_run_id</a>
-        
-    </td>
-</tr>
             
+        
         
             
                 <tr>
@@ -108,12 +89,81 @@
 </tr>
             
         
+            
+                <tr>
+    <td>
+        
+            <span id="assay creator">
+                assay creator
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates what site is filling out the assay.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.assay_core.html#assay_creator">assays.components.assay_core#assay_creator</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="run id">
+                run id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            User defined unique identifier for this assay run.
+        
+    </td>
+    <td>
+        
+            <a href="assays.elisa_assay.html#assay_run_id">assays.elisa_assay#assay_run_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="serology file">
+                serology file
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            XLSX ELISA results file name on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
     </table>
   
   
     <h4>Data Columns</h4>
     
-      <h5 class="text-muted">Astrolabe Runs</h4>
+      <h5 class="text-muted">Antibodies</h4>
       
     
         
@@ -146,27 +196,25 @@
         
             
         
-            
-        
         
             
                 <tr>
     <td>
         
-            <span id="Cimac ID">
-                Cimac ID
+            <span id="target">
+                target
             </span>
             
         
     </td>
     <td width=55%>
         
-            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??
+            Antibody type collected for this study.
         
     </td>
     <td>
         
-            <a href="sample.html#cimac_id">sample#cimac_id</a>
+            <a href="assays.components.antibody.html#antibody">assays.components.antibody#antibody</a>
         
     </td>
 </tr>
@@ -176,20 +224,20 @@
                 <tr>
     <td>
         
-            <span id="fcs file">
-                fcs file
+            <span id="clone">
+                clone
             </span>
             
         
     </td>
     <td width=55%>
         
-            Path to a file on a user's computer.
+            Resulting type of antibody clone from primary antibody sample.
         
     </td>
     <td>
         
-            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+            <a href="assays.components.antibody.html#clone">assays.components.antibody#clone</a>
         
     </td>
 </tr>
@@ -199,20 +247,20 @@
                 <tr>
     <td>
         
-            <span id="astrolabe reports">
-                astrolabe reports
+            <span id="antibody company">
+                antibody company
             </span>
             
         
     </td>
     <td width=55%>
         
-            Path to a file on a user's computer.
+            Company from which antibody sample was derived.
         
     </td>
     <td>
         
-            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+            <a href="assays.components.antibody.html#company">assays.components.antibody#company</a>
         
     </td>
 </tr>
@@ -222,20 +270,20 @@
                 <tr>
     <td>
         
-            <span id="astrolabe analysis">
-                astrolabe analysis
+            <span id="catalog number">
+                catalog number
             </span>
             
         
     </td>
     <td width=55%>
         
-            Path to a file on a user's computer.
+            Antibody registry catalog number assigned to antibody sample.
         
     </td>
     <td>
         
-            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+            <a href="assays.components.antibody.html#cat_num">assays.components.antibody#cat_num</a>
         
     </td>
 </tr>
@@ -245,20 +293,20 @@
                 <tr>
     <td>
         
-            <span id="assignment">
-                assignment
+            <span id="lot number">
+                lot number
             </span>
             
         
     </td>
     <td width=55%>
         
-            Path to a file on a user's computer.
+            Identification number assigned to the particular quantity or lot of material from manufacturer.
         
     </td>
     <td>
         
-            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+            <a href="assays.components.antibody.html#lot_num">assays.components.antibody#lot_num</a>
         
     </td>
 </tr>
@@ -268,20 +316,20 @@
                 <tr>
     <td>
         
-            <span id="compartment">
-                compartment
+            <span id="isotope">
+                isotope
             </span>
             
         
     </td>
     <td width=55%>
         
-            Path to a file on a user's computer.
+            Antibody isotype used to help differentiate antibody signals.
         
     </td>
     <td>
         
-            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+            <a href="assays.components.elisa.elisa_antibody.html#isotope">assays.components.elisa.elisa_antibody#isotope</a>
         
     </td>
 </tr>
@@ -291,20 +339,20 @@
                 <tr>
     <td>
         
-            <span id="profiling">
-                profiling
+            <span id="dilution">
+                dilution
             </span>
             
         
     </td>
     <td width=55%>
         
-            Path to a file on a user's computer.
+            Concentration ratio of dilution buffer for primary antibody.
         
     </td>
     <td>
         
-            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+            <a href="assays.components.elisa.elisa_antibody.html#dilution">assays.components.elisa.elisa_antibody#dilution</a>
         
     </td>
 </tr>
@@ -314,20 +362,20 @@
                 <tr>
     <td>
         
-            <span id="cell counts assignment">
-                cell counts assignment
+            <span id="stain_type">
+                stain_type
             </span>
             
         
     </td>
     <td width=55%>
         
-            Path to a file on a user's computer.
+            Type of staining method used for antibody.
         
     </td>
     <td>
         
-            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+            <a href="assays.components.elisa.elisa_antibody.html#stain_type">assays.components.elisa.elisa_antibody#stain_type</a>
         
     </td>
 </tr>
@@ -337,43 +385,20 @@
                 <tr>
     <td>
         
-            <span id="cell counts compartment">
-                cell counts compartment
+            <span id="usage">
+                usage
             </span>
             
         
     </td>
     <td width=55%>
         
-            Path to a file on a user's computer.
+            How this antibody should be used in automatic analysis
         
     </td>
     <td>
         
-            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="cell counts profiling">
-                cell counts profiling
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Path to a file on a user's computer.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+            <a href="assays.components.elisa.elisa_antibody.html#usage">assays.components.elisa.elisa_antibody#usage</a>
         
     </td>
 </tr>

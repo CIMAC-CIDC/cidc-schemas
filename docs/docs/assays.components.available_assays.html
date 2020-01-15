@@ -71,6 +71,8 @@
         
             
         
+            
+        
         
             
                 <tr>
@@ -175,6 +177,43 @@
              
                 
                     <a href="assays.cytof_assay.html">assays.cytof_assay</a>
+                
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="elisa">
+                elisa
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Base information about the acquisition and analysis of ELISA data.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                array 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+             
+                
+                    <a href="assays.elisa_assay.html">assays.elisa_assay</a>
                 
             
             
@@ -370,6 +409,10 @@
                         "description": "User defined unique identifier for this assay run.",
                         "type": "string"
                     },
+                    "batch_id": {
+                        "description": "CyTOF batch identification number.",
+                        "type": "string"
+                    },
                     "cytof_antibodies": {
                         "description": "Data specific to antibody preparation on the CyTOF assay.",
                         "items": {
@@ -476,10 +519,6 @@
                                     "description": "Analysis rate of CyTOF expressions per second.",
                                     "type": "number"
                                 },
-                                "batch_id": {
-                                    "description": "CyTOF batch identification number.",
-                                    "type": "string"
-                                },
                                 "beads_removed": {
                                     "description": "Confirmation of beads being removed after normalization process.",
                                     "enum": [
@@ -522,6 +561,150 @@
                                     "additionalProperties": false,
                                     "description": "CyTOF Assay Input Files",
                                     "properties": {
+                                        "normalized_and_debarcoded_fcs": {
+                                            "$id": "fcs_artifact",
+                                            "$schema": "http://json-schema.org/draft-07/schema#",
+                                            "allOf": [
+                                                {
+                                                    "$id": "artifact_core",
+                                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                                    "anyOf": [
+                                                        {
+                                                            "required": [
+                                                                "file_name",
+                                                                "object_url",
+                                                                "uploaded_timestamp",
+                                                                "file_size_bytes",
+                                                                "artifact_category",
+                                                                "data_format",
+                                                                "md5_hash"
+                                                            ]
+                                                        },
+                                                        {
+                                                            "required": [
+                                                                "file_name",
+                                                                "object_url",
+                                                                "uploaded_timestamp",
+                                                                "file_size_bytes",
+                                                                "artifact_category",
+                                                                "data_format",
+                                                                "crc32c_hash"
+                                                            ]
+                                                        },
+                                                        {
+                                                            "required": [
+                                                                "upload_placeholder"
+                                                            ]
+                                                        }
+                                                    ],
+                                                    "description": "Any file artifact associated with a clinical trial.",
+                                                    "properties": {
+                                                        "artifact_category": {
+                                                            "description": "Artifact category.",
+                                                            "enum": [
+                                                                "Assay Artifact from CIMAC",
+                                                                "Pipeline Artifact",
+                                                                "Manifest File"
+                                                            ],
+                                                            "type": "string"
+                                                        },
+                                                        "artifact_creator": {
+                                                            "description": "The name of the center that created this artifact.",
+                                                            "enum": [
+                                                                "DFCI",
+                                                                "Mount Sinai",
+                                                                "Stanford",
+                                                                "MD Anderson"
+                                                            ],
+                                                            "type": "string"
+                                                        },
+                                                        "crc32c_hash": {
+                                                            "description": "CRC32c Hash of artifact.",
+                                                            "type": "string"
+                                                        },
+                                                        "data_format": {
+                                                            "description": "Data Format.",
+                                                            "enum": [
+                                                                "FASTA",
+                                                                "FASTQ.GZ",
+                                                                "VCF.GZ",
+                                                                "IMAGE",
+                                                                "VCF",
+                                                                "CSV",
+                                                                "TSV",
+                                                                "XLSX",
+                                                                "NPX",
+                                                                "ELISA",
+                                                                "BAM",
+                                                                "BAM.BAI",
+                                                                "MAF",
+                                                                "BINARY",
+                                                                "TEXT",
+                                                                "ZIP",
+                                                                "FCS",
+                                                                "GZ",
+                                                                "JSON",
+                                                                "[NOT SET]"
+                                                            ],
+                                                            "type": "string"
+                                                        },
+                                                        "file_name": {
+                                                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                                            "description": "The name of the file with extension.",
+                                                            "type": "string"
+                                                        },
+                                                        "file_size_bytes": {
+                                                            "description": "File size in bytes.",
+                                                            "type": "integer"
+                                                        },
+                                                        "md5_hash": {
+                                                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                                            "type": "string"
+                                                        },
+                                                        "object_url": {
+                                                            "description": "URL to artifact within Google Bucket.",
+                                                            "type": "string"
+                                                        },
+                                                        "upload_placeholder": {
+                                                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                            "description": "A placeholder for when artifact file is being uploaded.",
+                                                            "type": "string"
+                                                        },
+                                                        "uploaded_timestamp": {
+                                                            "description": "Timestamp of when artifact was loaded into the system.",
+                                                            "format": "date-time",
+                                                            "type": "string"
+                                                        },
+                                                        "uploader": {
+                                                            "description": "The name of the person uploading the artifact.",
+                                                            "type": "string"
+                                                        },
+                                                        "uuid": {
+                                                            "description": "UUID of artifact.",
+                                                            "type": "string"
+                                                        },
+                                                        "visible": {
+                                                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "title": "Artifact Core",
+                                                    "type": "object"
+                                                },
+                                                {
+                                                    "properties": {
+                                                        "data_format": {
+                                                            "const": "FCS",
+                                                            "description": "Data format."
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "description": "Information about a FCS file.",
+                                            "mergeStrategy": "objectMerge",
+                                            "title": "FCS Artifact",
+                                            "type": "object"
+                                        },
                                         "processed_fcs": {
                                             "$id": "fcs_artifact",
                                             "$schema": "http://json-schema.org/draft-07/schema#",
@@ -595,6 +778,7 @@
                                                                 "TSV",
                                                                 "XLSX",
                                                                 "NPX",
+                                                                "ELISA",
                                                                 "BAM",
                                                                 "BAM.BAI",
                                                                 "MAF",
@@ -739,6 +923,7 @@
                                                                     "TSV",
                                                                     "XLSX",
                                                                     "NPX",
+                                                                    "ELISA",
                                                                     "BAM",
                                                                     "BAM.BAI",
                                                                     "MAF",
@@ -902,6 +1087,7 @@
                                                                 "TSV",
                                                                 "XLSX",
                                                                 "NPX",
+                                                                "ELISA",
                                                                 "BAM",
                                                                 "BAM.BAI",
                                                                 "MAF",
@@ -1045,6 +1231,7 @@
                                                                 "TSV",
                                                                 "XLSX",
                                                                 "NPX",
+                                                                "ELISA",
                                                                 "BAM",
                                                                 "BAM.BAI",
                                                                 "MAF",
@@ -1188,6 +1375,7 @@
                                                                 "TSV",
                                                                 "XLSX",
                                                                 "NPX",
+                                                                "ELISA",
                                                                 "BAM",
                                                                 "BAM.BAI",
                                                                 "MAF",
@@ -1331,6 +1519,7 @@
                                                                 "TSV",
                                                                 "XLSX",
                                                                 "NPX",
+                                                                "ELISA",
                                                                 "BAM",
                                                                 "BAM.BAI",
                                                                 "MAF",
@@ -1474,6 +1663,7 @@
                                                                 "TSV",
                                                                 "XLSX",
                                                                 "NPX",
+                                                                "ELISA",
                                                                 "BAM",
                                                                 "BAM.BAI",
                                                                 "MAF",
@@ -1617,6 +1807,7 @@
                                                                 "TSV",
                                                                 "XLSX",
                                                                 "NPX",
+                                                                "ELISA",
                                                                 "BAM",
                                                                 "BAM.BAI",
                                                                 "MAF",
@@ -1760,6 +1951,7 @@
                                                                 "TSV",
                                                                 "XLSX",
                                                                 "NPX",
+                                                                "ELISA",
                                                                 "BAM",
                                                                 "BAM.BAI",
                                                                 "MAF",
@@ -1903,6 +2095,7 @@
                                                                 "TSV",
                                                                 "XLSX",
                                                                 "NPX",
+                                                                "ELISA",
                                                                 "BAM",
                                                                 "BAM.BAI",
                                                                 "MAF",
@@ -2046,6 +2239,7 @@
                                                                 "TSV",
                                                                 "XLSX",
                                                                 "NPX",
+                                                                "ELISA",
                                                                 "BAM",
                                                                 "BAM.BAI",
                                                                 "MAF",
@@ -2146,6 +2340,150 @@
                         },
                         "mergeStrategy": "arrayMergeById",
                         "type": "array"
+                    },
+                    "spike_in_fcs": {
+                        "$id": "fcs_artifact",
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "allOf": [
+                            {
+                                "$id": "artifact_core",
+                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                "anyOf": [
+                                    {
+                                        "required": [
+                                            "file_name",
+                                            "object_url",
+                                            "uploaded_timestamp",
+                                            "file_size_bytes",
+                                            "artifact_category",
+                                            "data_format",
+                                            "md5_hash"
+                                        ]
+                                    },
+                                    {
+                                        "required": [
+                                            "file_name",
+                                            "object_url",
+                                            "uploaded_timestamp",
+                                            "file_size_bytes",
+                                            "artifact_category",
+                                            "data_format",
+                                            "crc32c_hash"
+                                        ]
+                                    },
+                                    {
+                                        "required": [
+                                            "upload_placeholder"
+                                        ]
+                                    }
+                                ],
+                                "description": "Any file artifact associated with a clinical trial.",
+                                "properties": {
+                                    "artifact_category": {
+                                        "description": "Artifact category.",
+                                        "enum": [
+                                            "Assay Artifact from CIMAC",
+                                            "Pipeline Artifact",
+                                            "Manifest File"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "artifact_creator": {
+                                        "description": "The name of the center that created this artifact.",
+                                        "enum": [
+                                            "DFCI",
+                                            "Mount Sinai",
+                                            "Stanford",
+                                            "MD Anderson"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "crc32c_hash": {
+                                        "description": "CRC32c Hash of artifact.",
+                                        "type": "string"
+                                    },
+                                    "data_format": {
+                                        "description": "Data Format.",
+                                        "enum": [
+                                            "FASTA",
+                                            "FASTQ.GZ",
+                                            "VCF.GZ",
+                                            "IMAGE",
+                                            "VCF",
+                                            "CSV",
+                                            "TSV",
+                                            "XLSX",
+                                            "NPX",
+                                            "ELISA",
+                                            "BAM",
+                                            "BAM.BAI",
+                                            "MAF",
+                                            "BINARY",
+                                            "TEXT",
+                                            "ZIP",
+                                            "FCS",
+                                            "GZ",
+                                            "JSON",
+                                            "[NOT SET]"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "file_name": {
+                                        "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                        "description": "The name of the file with extension.",
+                                        "type": "string"
+                                    },
+                                    "file_size_bytes": {
+                                        "description": "File size in bytes.",
+                                        "type": "integer"
+                                    },
+                                    "md5_hash": {
+                                        "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                        "type": "string"
+                                    },
+                                    "object_url": {
+                                        "description": "URL to artifact within Google Bucket.",
+                                        "type": "string"
+                                    },
+                                    "upload_placeholder": {
+                                        "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                        "description": "A placeholder for when artifact file is being uploaded.",
+                                        "type": "string"
+                                    },
+                                    "uploaded_timestamp": {
+                                        "description": "Timestamp of when artifact was loaded into the system.",
+                                        "format": "date-time",
+                                        "type": "string"
+                                    },
+                                    "uploader": {
+                                        "description": "The name of the person uploading the artifact.",
+                                        "type": "string"
+                                    },
+                                    "uuid": {
+                                        "description": "UUID of artifact.",
+                                        "type": "string"
+                                    },
+                                    "visible": {
+                                        "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                        "type": "boolean"
+                                    }
+                                },
+                                "title": "Artifact Core",
+                                "type": "object"
+                            },
+                            {
+                                "properties": {
+                                    "data_format": {
+                                        "const": "FCS",
+                                        "description": "Data format."
+                                    }
+                                }
+                            }
+                        ],
+                        "description": "Information about a FCS file.",
+                        "mergeStrategy": "objectMerge",
+                        "title": "FCS Artifact",
+                        "type": "object"
                     }
                 },
                 "required": [
@@ -2154,6 +2492,316 @@
                     "assay_run_id"
                 ],
                 "title": "CYTOF Run",
+                "type": "object"
+            },
+            "mergeOptions": {
+                "idRef": "assay_run_id"
+            },
+            "mergeStrategy": "arrayMergeById",
+            "type": "array"
+        },
+        "elisa": {
+            "description": "Base information about the acquisition and analysis of ELISA data.",
+            "items": {
+                "$id": "elisa_assay",
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "additionalProperties": false,
+                "allOf": [
+                    {
+                        "$id": "assay_core",
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "description": "Main properties of the assay experiment template.",
+                        "properties": {
+                            "assay_creator": {
+                                "description": "Indicates what site is filling out the assay.",
+                                "enum": [
+                                    "DFCI",
+                                    "Mount Sinai",
+                                    "Stanford",
+                                    "MD Anderson"
+                                ],
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "assay_creator"
+                        ],
+                        "title": "Assay Core",
+                        "type": "object"
+                    }
+                ],
+                "description": "High-throughput multiplexed assays for protein biomarker discovery.",
+                "mergeStrategy": "objectMerge",
+                "properties": {
+                    "antibodies": {
+                        "description": "Data specific to antibody preparation on the ELISA assay.",
+                        "items": {
+                            "$id": "elisa_antibody",
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "allOf": [
+                                {
+                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                    "description": "Common information about an antibody used in a number of immune-oncology assays.",
+                                    "id": "antibody",
+                                    "properties": {
+                                        "antibody": {
+                                            "description": "Antibody type collected for this study.",
+                                            "type": "string"
+                                        },
+                                        "cat_num": {
+                                            "description": "Antibody registry catalog number assigned to antibody sample.",
+                                            "type": "string"
+                                        },
+                                        "clone": {
+                                            "description": "Resulting type of antibody clone from primary antibody sample.",
+                                            "type": "string"
+                                        },
+                                        "company": {
+                                            "description": "Company from which antibody sample was derived.",
+                                            "type": "string"
+                                        },
+                                        "lot_num": {
+                                            "description": "Identification number assigned to the particular quantity or lot of material from manufacturer.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "antibody"
+                                    ],
+                                    "title": "Antibody"
+                                }
+                            ],
+                            "description": "Data specific to antibody preparation on the ELISA assay.",
+                            "mergeStrategy": "objectMerge",
+                            "properties": {
+                                "dilution": {
+                                    "description": "Concentration ratio of dilution buffer for primary antibody.",
+                                    "type": "string"
+                                },
+                                "isotope": {
+                                    "description": "Antibody isotype used to help differentiate antibody signals.",
+                                    "type": "string"
+                                },
+                                "stain_type": {
+                                    "description": "Type of staining method used for antibody.",
+                                    "enum": [
+                                        "Surface Stain",
+                                        "Intracellular"
+                                    ],
+                                    "type": "string"
+                                },
+                                "usage": {
+                                    "description": "How this antibody should be used in automatic analysis",
+                                    "enum": [
+                                        "Ignored",
+                                        "Used",
+                                        "Analysis Only"
+                                    ],
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "isotope",
+                                "dilution",
+                                "stain_type",
+                                "usage"
+                            ],
+                            "title": "ELISA Antibody"
+                        },
+                        "mergeOptions": {
+                            "idRef": "antibody"
+                        },
+                        "mergeStrategy": "arrayMergeById",
+                        "type": "array"
+                    },
+                    "assay_creator": {
+                        "$comment": "defined in assay_core.json"
+                    },
+                    "assay_run_id": {
+                        "description": "User defined unique identifier for this assay run.",
+                        "type": "string"
+                    },
+                    "assay_xlsx": {
+                        "$comment": "TODO Maybe add array of antibodies parsing.",
+                        "$id": "artifact_elisa_xlsx",
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "allOf": [
+                            {
+                                "$id": "artifact_core",
+                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                "anyOf": [
+                                    {
+                                        "required": [
+                                            "file_name",
+                                            "object_url",
+                                            "uploaded_timestamp",
+                                            "file_size_bytes",
+                                            "artifact_category",
+                                            "data_format",
+                                            "md5_hash"
+                                        ]
+                                    },
+                                    {
+                                        "required": [
+                                            "file_name",
+                                            "object_url",
+                                            "uploaded_timestamp",
+                                            "file_size_bytes",
+                                            "artifact_category",
+                                            "data_format",
+                                            "crc32c_hash"
+                                        ]
+                                    },
+                                    {
+                                        "required": [
+                                            "upload_placeholder"
+                                        ]
+                                    }
+                                ],
+                                "description": "Any file artifact associated with a clinical trial.",
+                                "properties": {
+                                    "artifact_category": {
+                                        "description": "Artifact category.",
+                                        "enum": [
+                                            "Assay Artifact from CIMAC",
+                                            "Pipeline Artifact",
+                                            "Manifest File"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "artifact_creator": {
+                                        "description": "The name of the center that created this artifact.",
+                                        "enum": [
+                                            "DFCI",
+                                            "Mount Sinai",
+                                            "Stanford",
+                                            "MD Anderson"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "crc32c_hash": {
+                                        "description": "CRC32c Hash of artifact.",
+                                        "type": "string"
+                                    },
+                                    "data_format": {
+                                        "description": "Data Format.",
+                                        "enum": [
+                                            "FASTA",
+                                            "FASTQ.GZ",
+                                            "VCF.GZ",
+                                            "IMAGE",
+                                            "VCF",
+                                            "CSV",
+                                            "TSV",
+                                            "XLSX",
+                                            "NPX",
+                                            "ELISA",
+                                            "BAM",
+                                            "BAM.BAI",
+                                            "MAF",
+                                            "BINARY",
+                                            "TEXT",
+                                            "ZIP",
+                                            "FCS",
+                                            "GZ",
+                                            "JSON",
+                                            "[NOT SET]"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "file_name": {
+                                        "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                        "description": "The name of the file with extension.",
+                                        "type": "string"
+                                    },
+                                    "file_size_bytes": {
+                                        "description": "File size in bytes.",
+                                        "type": "integer"
+                                    },
+                                    "md5_hash": {
+                                        "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                        "type": "string"
+                                    },
+                                    "object_url": {
+                                        "description": "URL to artifact within Google Bucket.",
+                                        "type": "string"
+                                    },
+                                    "upload_placeholder": {
+                                        "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                        "description": "A placeholder for when artifact file is being uploaded.",
+                                        "type": "string"
+                                    },
+                                    "uploaded_timestamp": {
+                                        "description": "Timestamp of when artifact was loaded into the system.",
+                                        "format": "date-time",
+                                        "type": "string"
+                                    },
+                                    "uploader": {
+                                        "description": "The name of the person uploading the artifact.",
+                                        "type": "string"
+                                    },
+                                    "uuid": {
+                                        "description": "UUID of artifact.",
+                                        "type": "string"
+                                    },
+                                    "visible": {
+                                        "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                        "type": "boolean"
+                                    }
+                                },
+                                "title": "Artifact Core",
+                                "type": "object"
+                            },
+                            {
+                                "properties": {
+                                    "data_format": {
+                                        "const": "ELISA",
+                                        "description": "Data format."
+                                    },
+                                    "number_of_samples": {
+                                        "description": "Number of samples within this file.",
+                                        "type": "integer"
+                                    },
+                                    "samples": {
+                                        "description": "Ids of the sample(s) within this file.",
+                                        "items": {
+                                            "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.Ids of the sample(s) within this file.",
+                                            "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??",
+                                            "example": "CTTTP01A1.00",
+                                            "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
+                                            "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
+                                            "type": "string"
+                                        },
+                                        "type": "array"
+                                    }
+                                }
+                            }
+                        ],
+                        "anyOf": [
+                            {
+                                "required": [
+                                    "number_of_samples",
+                                    "samples"
+                                ]
+                            },
+                            {
+                                "required": [
+                                    "upload_placeholder"
+                                ]
+                            }
+                        ],
+                        "description": "Information about an ELISA file.",
+                        "mergeStrategy": "objectMerge",
+                        "title": "ELISA results artifact",
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "assay_run_id",
+                    "assay_xlsx",
+                    "antibodies"
+                ],
+                "title": "ELISA Assay",
                 "type": "object"
             },
             "mergeOptions": {
@@ -2393,6 +3041,7 @@
                                                                 "TSV",
                                                                 "XLSX",
                                                                 "NPX",
+                                                                "ELISA",
                                                                 "BAM",
                                                                 "BAM.BAI",
                                                                 "MAF",
@@ -2532,7 +3181,8 @@
                             },
                             "required": [
                                 "cimac_id",
-                                "files"
+                                "files",
+                                "marker_positive"
                             ],
                             "title": "IHC assay record",
                             "type": "object"
@@ -2903,6 +3553,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -3074,6 +3725,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -3262,6 +3914,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -3406,6 +4059,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -3550,6 +4204,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -3694,6 +4349,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -3865,6 +4521,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -4036,6 +4693,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -4189,6 +4847,7 @@
                                                                 "TSV",
                                                                 "XLSX",
                                                                 "NPX",
+                                                                "ELISA",
                                                                 "BAM",
                                                                 "BAM.BAI",
                                                                 "MAF",
@@ -4582,6 +5241,7 @@
                                                                 "TSV",
                                                                 "XLSX",
                                                                 "NPX",
+                                                                "ELISA",
                                                                 "BAM",
                                                                 "BAM.BAI",
                                                                 "MAF",
@@ -4735,6 +5395,7 @@
                                                                                     "TSV",
                                                                                     "XLSX",
                                                                                     "NPX",
+                                                                                    "ELISA",
                                                                                     "BAM",
                                                                                     "BAM.BAI",
                                                                                     "MAF",
@@ -4879,6 +5540,7 @@
                                                                                     "TSV",
                                                                                     "XLSX",
                                                                                     "NPX",
+                                                                                    "ELISA",
                                                                                     "BAM",
                                                                                     "BAM.BAI",
                                                                                     "MAF",
@@ -5023,6 +5685,7 @@
                                                                                     "TSV",
                                                                                     "XLSX",
                                                                                     "NPX",
+                                                                                    "ELISA",
                                                                                     "BAM",
                                                                                     "BAM.BAI",
                                                                                     "MAF",
@@ -5167,6 +5830,7 @@
                                                                                     "TSV",
                                                                                     "XLSX",
                                                                                     "NPX",
+                                                                                    "ELISA",
                                                                                     "BAM",
                                                                                     "BAM.BAI",
                                                                                     "MAF",
@@ -5338,6 +6002,7 @@
                                                                                     "TSV",
                                                                                     "XLSX",
                                                                                     "NPX",
+                                                                                    "ELISA",
                                                                                     "BAM",
                                                                                     "BAM.BAI",
                                                                                     "MAF",
@@ -5509,6 +6174,7 @@
                                                                                     "TSV",
                                                                                     "XLSX",
                                                                                     "NPX",
+                                                                                    "ELISA",
                                                                                     "BAM",
                                                                                     "BAM.BAI",
                                                                                     "MAF",
@@ -5665,6 +6331,7 @@
                                                                                     "TSV",
                                                                                     "XLSX",
                                                                                     "NPX",
+                                                                                    "ELISA",
                                                                                     "BAM",
                                                                                     "BAM.BAI",
                                                                                     "MAF",
@@ -5836,6 +6503,7 @@
                                                                                     "TSV",
                                                                                     "XLSX",
                                                                                     "NPX",
+                                                                                    "ELISA",
                                                                                     "BAM",
                                                                                     "BAM.BAI",
                                                                                     "MAF",
@@ -6019,6 +6687,7 @@
                                                                 "TSV",
                                                                 "XLSX",
                                                                 "NPX",
+                                                                "ELISA",
                                                                 "BAM",
                                                                 "BAM.BAI",
                                                                 "MAF",
@@ -6163,6 +6832,7 @@
                                                                 "TSV",
                                                                 "XLSX",
                                                                 "NPX",
+                                                                "ELISA",
                                                                 "BAM",
                                                                 "BAM.BAI",
                                                                 "MAF",
@@ -6402,6 +7072,7 @@
                                                             "TSV",
                                                             "XLSX",
                                                             "NPX",
+                                                            "ELISA",
                                                             "BAM",
                                                             "BAM.BAI",
                                                             "MAF",
@@ -6575,6 +7246,7 @@
                                                             "TSV",
                                                             "XLSX",
                                                             "NPX",
+                                                            "ELISA",
                                                             "BAM",
                                                             "BAM.BAI",
                                                             "MAF",
@@ -6798,6 +7470,7 @@
                                                 "TSV",
                                                 "XLSX",
                                                 "NPX",
+                                                "ELISA",
                                                 "BAM",
                                                 "BAM.BAI",
                                                 "MAF",
@@ -7138,6 +7811,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -7286,6 +7960,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -7434,6 +8109,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -7629,6 +8305,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -7777,6 +8454,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -7925,6 +8603,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -8250,6 +8929,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -8398,6 +9078,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -8546,6 +9227,7 @@
                                                                             "TSV",
                                                                             "XLSX",
                                                                             "NPX",
+                                                                            "ELISA",
                                                                             "BAM",
                                                                             "BAM.BAI",
                                                                             "MAF",
@@ -8726,6 +9408,7 @@
                                                                         "TSV",
                                                                         "XLSX",
                                                                         "NPX",
+                                                                        "ELISA",
                                                                         "BAM",
                                                                         "BAM.BAI",
                                                                         "MAF",
@@ -8869,6 +9552,7 @@
                                                                         "TSV",
                                                                         "XLSX",
                                                                         "NPX",
+                                                                        "ELISA",
                                                                         "BAM",
                                                                         "BAM.BAI",
                                                                         "MAF",
@@ -9012,6 +9696,7 @@
                                                                         "TSV",
                                                                         "XLSX",
                                                                         "NPX",
+                                                                        "ELISA",
                                                                         "BAM",
                                                                         "BAM.BAI",
                                                                         "MAF",
@@ -9155,6 +9840,7 @@
                                                                         "TSV",
                                                                         "XLSX",
                                                                         "NPX",
+                                                                        "ELISA",
                                                                         "BAM",
                                                                         "BAM.BAI",
                                                                         "MAF",
@@ -9298,6 +9984,7 @@
                                                                         "TSV",
                                                                         "XLSX",
                                                                         "NPX",
+                                                                        "ELISA",
                                                                         "BAM",
                                                                         "BAM.BAI",
                                                                         "MAF",
@@ -9441,6 +10128,7 @@
                                                                         "TSV",
                                                                         "XLSX",
                                                                         "NPX",
+                                                                        "ELISA",
                                                                         "BAM",
                                                                         "BAM.BAI",
                                                                         "MAF",
@@ -9610,6 +10298,7 @@
                                                                         "TSV",
                                                                         "XLSX",
                                                                         "NPX",
+                                                                        "ELISA",
                                                                         "BAM",
                                                                         "BAM.BAI",
                                                                         "MAF",
@@ -9753,6 +10442,7 @@
                                                                         "TSV",
                                                                         "XLSX",
                                                                         "NPX",
+                                                                        "ELISA",
                                                                         "BAM",
                                                                         "BAM.BAI",
                                                                         "MAF",
@@ -9896,6 +10586,7 @@
                                                                         "TSV",
                                                                         "XLSX",
                                                                         "NPX",
+                                                                        "ELISA",
                                                                         "BAM",
                                                                         "BAM.BAI",
                                                                         "MAF",
@@ -10039,6 +10730,7 @@
                                                                         "TSV",
                                                                         "XLSX",
                                                                         "NPX",
+                                                                        "ELISA",
                                                                         "BAM",
                                                                         "BAM.BAI",
                                                                         "MAF",
@@ -10182,6 +10874,7 @@
                                                                         "TSV",
                                                                         "XLSX",
                                                                         "NPX",
+                                                                        "ELISA",
                                                                         "BAM",
                                                                         "BAM.BAI",
                                                                         "MAF",
@@ -10325,6 +11018,7 @@
                                                                         "TSV",
                                                                         "XLSX",
                                                                         "NPX",
+                                                                        "ELISA",
                                                                         "BAM",
                                                                         "BAM.BAI",
                                                                         "MAF",
@@ -10468,6 +11162,7 @@
                                                                         "TSV",
                                                                         "XLSX",
                                                                         "NPX",
+                                                                        "ELISA",
                                                                         "BAM",
                                                                         "BAM.BAI",
                                                                         "MAF",
@@ -10611,6 +11306,7 @@
                                                                         "TSV",
                                                                         "XLSX",
                                                                         "NPX",
+                                                                        "ELISA",
                                                                         "BAM",
                                                                         "BAM.BAI",
                                                                         "MAF",
@@ -10772,6 +11468,7 @@
                                                                         "TSV",
                                                                         "XLSX",
                                                                         "NPX",
+                                                                        "ELISA",
                                                                         "BAM",
                                                                         "BAM.BAI",
                                                                         "MAF",
@@ -10915,6 +11612,7 @@
                                                                         "TSV",
                                                                         "XLSX",
                                                                         "NPX",
+                                                                        "ELISA",
                                                                         "BAM",
                                                                         "BAM.BAI",
                                                                         "MAF",

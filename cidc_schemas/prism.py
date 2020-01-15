@@ -1218,7 +1218,6 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
     merger = Merger(validator.schema, strategies=PRISM_MERGE_STRATEGIES)
     merged = merger.merge(target, patch)
 
-    print(list(validator.iter_errors(merged)))
     return merged, list(validator.iter_errors(merged))
 
 

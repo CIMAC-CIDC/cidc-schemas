@@ -250,11 +250,7 @@ def test_cytof():
     analysis["data_format"] = "ZIP"
     record = {
         "cimac_id": "CTTTPPPSA.00",
-        "input_files": {
-            "processed_fcs": fcs_1,
-            "source_fcs": [fcs_2, fcs_3],
-            "normalized_and_debarcoded_fcs": fcs_4,
-        },
+        "input_files": {"processed_fcs": fcs_1, "source_fcs": [fcs_2, fcs_3]},
         "output_files": {
             "fcs_file": fcs_1,
             "astrolabe_reports": report,

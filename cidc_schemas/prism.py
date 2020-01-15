@@ -377,7 +377,7 @@ def _process_field_value(
         raise
     except Exception as e:
         raise ParsingException(
-            f"Can't parse {key!r} value {str(raw_val)!r} which should be of type {field_def.get('type') or field_def.get('type_ref') }"
+            f"Can't parse {key!r} value {str(raw_val)!r}: {e}"
         ) from e
 
     changes = [_AtomicChange(pointer, val)]
@@ -1218,6 +1218,7 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
     merger = Merger(validator.schema, strategies=PRISM_MERGE_STRATEGIES)
     merged = merger.merge(target, patch)
 
+    print(list(validator.iter_errors(merged)))
     return merged, list(validator.iter_errors(merged))
 
 

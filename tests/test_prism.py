@@ -594,7 +594,7 @@ def test_filepath_gen(xlsx, template):
 
         for x in file_maps:
             assert x.gs_key.endswith(".fcs")
-        assert len(file_maps) == 8
+        assert len(file_maps) == 9
 
     elif template.type == "ihc":
         assert 1 == sum([x.gs_key.endswith(".tif") for x in file_maps])
@@ -622,7 +622,7 @@ def test_prismify_cytof_only(xlsx, template):
     assert len(errs) == 0
 
     # we should have 3 files, the processed fcs and two source fcs X2
-    assert len(file_maps) == 8
+    assert len(file_maps) == 9
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -1187,7 +1187,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == "cytof":
         # TODO: This will need ot be updated when we accept a list of source fcs files
-        assert len(merged_gs_keys) == 8  # 8 output files
+        assert len(merged_gs_keys) == 9  # 9 output files
 
     elif template.type == "cytof_analysis":
         assert len(merged_gs_keys) == 9  # 9 output files
@@ -1301,9 +1301,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(dd) == 0, "Unexpected CT changes"
 
     elif template.type == "cytof":
-        # 7 artifact attributes * 8 files
+        # 7 artifact attributes * 9 files
         assert (
-            len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS * 8
+            len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS * 9
         ), "Unexpected CT changes"
 
     elif template.type == "cytof_analysis":

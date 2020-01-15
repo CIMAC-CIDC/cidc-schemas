@@ -3,7 +3,6 @@ import json
 from io import StringIO
 import csv
 
-from unittest.mock import MagicMock
 import pytest
 
 from cidc_schemas.unprism import (
@@ -13,6 +12,7 @@ from cidc_schemas.unprism import (
     Artifact,
 )
 from cidc_schemas.prism import PROTOCOL_ID_FIELD_NAME, SUPPORTED_SHIPPING_MANIFESTS
+from cidc_schemas.util import participant_id_from_cimac
 
 ct_example_path = os.path.join(
     os.path.dirname(__file__), "data/clinicaltrial_examples/CT_1.json"
@@ -164,17 +164,20 @@ def test_derive_files_wes_analysis():
     assert combined_maf.data == headers + maf1 + maf2
 
 
-def test_derive_files_CyTOF_analysis():
-    """Check that CyTOF analysis CSV is derived as expected."""
-
+def load_ct_example(name: str) -> dict:
     with open(
         os.path.join(
-            os.path.dirname(__file__),
-            "data/clinicaltrial_examples/CT_cytof_with_analysis.json",
+            os.path.dirname(__file__), f"data/clinicaltrial_examples/{name}.json"
         ),
         "r",
     ) as f:
-        ct = json.load(f)
+        return json.load(f)
+
+
+def test_derive_files_CyTOF_analysis():
+    """Check that CyTOF analysis CSV is derived as expected."""
+
+    ct = load_ct_example("CT_cytof_with_analysis")
 
     artifact_format_specific_data = {
         "cell_counts_assignment": {"B Cell (CD27-)": 272727, "B Cell (Memory)": 11111},
@@ -199,7 +202,8 @@ def test_derive_files_CyTOF_analysis():
     result = derive_files(DeriveFilesContext(ct, "cytof_analysis", fetch_artifact))
     assert len(result.artifacts) == 3
 
-    artifacts = {a.data_format.replace(" ", "_"): a for a in result.artifacts}
+    artifacts = {a.file_type.replace(" ", "_"): a for a in result.artifacts}
+    # checking that there are 1 file per `file_type`
     assert len(artifacts) == 3
 
     for ar_format, artifact in artifacts.items():
@@ -220,5 +224,5 @@ def test_derive_files_CyTOF_analysis():
             assert rec == should_be
         assert sorted([r["cimac_id"] for r in recs]) == cimac_ids
         assert sorted([r["cimac_participant_id"] for r in recs]) == sorted(
-            [r[:-5] for r in cimac_ids]
+            list(map(participant_id_from_cimac, cimac_ids))
         )

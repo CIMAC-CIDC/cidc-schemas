@@ -9,6 +9,11 @@ JSON = Union[dict, list, str, int, float]
 from deepdiff import grep
 
 
+def participant_id_from_cimac(cimac_id: str) -> str:
+    assert len(cimac_id) == len("CTTTPPPSS.00")
+    return cimac_id[:7]
+
+
 def get_all_paths(ct: dict, key: str, dont_throw=False) -> List[str]:
     """
     find all paths to the given key in the dictionary

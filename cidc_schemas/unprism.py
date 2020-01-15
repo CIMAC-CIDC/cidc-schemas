@@ -6,6 +6,7 @@ import pandas as pd
 from pandas.io.json import json_normalize
 
 from . import prism
+from .util import participant_id_from_cimac
 
 
 class DeriveFilesContext(NamedTuple):
@@ -220,24 +221,30 @@ def _cytof_analysis_derivation(context: DeriveFilesContext) -> DeriveFilesResult
         for index, row in cell_counts_analysis_csvs.iterrows():
             obj_url = row[f"output_files.{combined_f_kind}.object_url"]
 
-            assignment_csv = context.fetch_artifact(obj_url, True)
+            cell_counts_csv = context.fetch_artifact(obj_url, True)
 
-            if not assignment_csv:
+            if not cell_counts_csv:
                 raise Exception(
                     f"Failed to read {obj_url} building Cytof analysis derivation"
                 )
 
-            df = pd.read_csv(assignment_csv)
+            df = pd.read_csv(cell_counts_csv)
 
-            # each cell_counts_... file consist of just records for one sample
-            # but in a transposed way, so we groom it to be combinable:
+            # Each cell_counts_... file consist of just records for one sample.
+            # The first column of each cell_counts_csv (CellSubset) contains cell group types
+            # and the second contains counts for those types.
+            # Create a new, transposed dataframe with cell group types as column headers
+            # and a single row of cell count data.
+            df = df.set_index("CellSubset")
+            df = df.drop(
+                columns="Unnamed: 0", axis=1
+            )  # Cell counts files contain an unnamed index column
             df = df.transpose()
-            df.columns = df.iloc[1]
-            df = df[2:]
 
-            # and adding meta columns from metadata, so we can distinguish different samples
+            # and adding metadata, so we can distinguish different samples
+            df = df.rename(index={"N": row["cimac_id"]})
             df["cimac_id"] = row["cimac_id"]
-            df["cimac_participant_id"] = row["cimac_id"][:-5]
+            df["cimac_participant_id"] = participant_id_from_cimac(row["cimac_id"])
             df[prism.PROTOCOL_ID_FIELD_NAME] = row[prism.PROTOCOL_ID_FIELD_NAME]
 
             # finally combine them
@@ -249,8 +256,8 @@ def _cytof_analysis_derivation(context: DeriveFilesContext) -> DeriveFilesResult
                 context=context,
                 file_name=f"combined_{combined_f_kind}.csv",
                 data=res_df.to_csv(index=False),
-                data_format=combined_f_kind.replace("_", " "),
-                file_type="csv",
+                data_format="csv",  # confusing, but right
+                file_type=combined_f_kind.replace("_", " "),
                 include_upload_type=True,
             )
         )

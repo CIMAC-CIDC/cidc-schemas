@@ -684,9 +684,10 @@ def test_prismify_plasma(xlsx, template):
     assert 3 == len(md_patch["participants"][0]["samples"])
 
     p = md_patch["participants"][0]
-    assert participant_id_from_cimac(p["samples"][0]["cimac_id"]) == [
-        "cimac_participant_id"
-    ]
+    assert (
+        participant_id_from_cimac(p["samples"][0]["cimac_id"])
+        == p["cimac_participant_id"]
+    )
 
     assert p["gender"]  # filled from 1 tab
     assert p["cohort_name"]  # filled from another

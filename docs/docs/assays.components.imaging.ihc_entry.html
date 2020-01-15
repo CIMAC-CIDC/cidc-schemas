@@ -83,6 +83,45 @@
             
         
             
+                <tr>
+    <td>
+        
+            <span id="marker_positive">
+                marker_positive
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates whether the marker is considered positive by clinical trial guidelines (if applicable).
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"positive"</li>
+                
+                    <li>"negative"</li>
+                
+                    <li>"no_call"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
         
             
         
@@ -124,43 +163,6 @@
         
             
         
-            
-                <tr>
-    <td>
-        
-            <span id="marker_positive">
-                marker_positive
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Indicates whether the marker is considered positive by clinical trial guidelines (if applicable).
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-                    <li>"positive"</li>
-                
-                    <li>"negative"</li>
-                
-                    <li>"no_call"</li>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
             
         
             
@@ -500,6 +502,7 @@
                                         "TSV",
                                         "XLSX",
                                         "NPX",
+                                        "ELISA",
                                         "BAM",
                                         "BAM.BAI",
                                         "MAF",
@@ -639,7 +642,8 @@
     },
     "required": [
         "cimac_id",
-        "files"
+        "files",
+        "marker_positive"
     ],
     "title": "IHC assay record",
     "type": "object"

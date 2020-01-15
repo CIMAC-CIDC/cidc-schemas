@@ -16,8 +16,7 @@
             }
         },
         "normalized_and_debarcoded_fcs": {
-            "$ref": "artifacts/artifact_fcs.json",
-            "$comment": "This .FCS file has been normalized, concatenated, and debarcoded, but has the veri-cells and has not been cleaned up."
+            "$ref": "artifacts/artifact_fcs.json"
         }
     }
 }

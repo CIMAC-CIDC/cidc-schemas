@@ -47,11 +47,12 @@
                             "gcs_uri_format": "{protocol identifier}/cytof/{cimac id}/source_{num}.fcs",
                             "is_artifact": "multi"
                         },
-                        "normalized and debarcoded fcs filename": {
+                        "normalized & debarcoded fcs filename": {
                             "merge_pointer": "0/input_files/normalized_and_debarcoded_fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
                             "gcs_uri_format": "{protocol identifier}/cytof/{cimac id}/normalized_and_debarcoded.fcs",
-                            "is_artifact": 1
+                            "is_artifact": 1,
+                            "description": "Path to a file on a User's computer. \nThis .fcs file has been normalized, concatenated, and debarcoded, but has the veri-cells and has not been cleaned up."
                         },
                         "date of acquisition": {
                             "merge_pointer": "0/date_of_acquisition",

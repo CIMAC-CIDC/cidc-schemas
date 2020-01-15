@@ -12,6 +12,7 @@ from cidc_schemas.unprism import (
     Artifact,
 )
 from cidc_schemas.prism import PROTOCOL_ID_FIELD_NAME, SUPPORTED_SHIPPING_MANIFESTS
+from cidc_schemas.util import participant_id_from_cimac
 
 ct_example_path = os.path.join(
     os.path.dirname(__file__), "data/clinicaltrial_examples/CT_1.json"
@@ -161,3 +162,67 @@ def test_derive_files_wes_analysis():
     assert combined_maf.data_format == "maf"
     assert combined_maf.file_type == "combined maf"
     assert combined_maf.data == headers + maf1 + maf2
+
+
+def load_ct_example(name: str) -> dict:
+    with open(
+        os.path.join(
+            os.path.dirname(__file__), f"data/clinicaltrial_examples/{name}.json"
+        ),
+        "r",
+    ) as f:
+        return json.load(f)
+
+
+def test_derive_files_CyTOF_analysis():
+    """Check that CyTOF analysis CSV is derived as expected."""
+
+    ct = load_ct_example("CT_cytof_with_analysis")
+
+    artifact_format_specific_data = {
+        "cell_counts_assignment": {"B Cell (CD27-)": 272727, "B Cell (Memory)": 11111},
+        "cell_counts_compartment": {"B Cell": 8888, "Granulocyte": 22222},
+        "cell_counts_profiling": {
+            "B Cell (CD27-) CD1chi CD38hi": "138hi",
+            "B Cell (CD27-) CD1chi CD38lo": "138lo",
+        },
+    }
+
+    def fetch_artifact(url: str, as_string: bool) -> StringIO:
+        for (ftype, data) in artifact_format_specific_data.items():
+            if ftype in url:
+                csv = '"","CellSubset","N"\n'
+                csv += "\n".join(
+                    f'"{i}","{k}",{v}' for i, (k, v) in enumerate(data.items())
+                )
+
+                return StringIO(csv)
+        raise Exception(f"Unknown file for url {url}")
+
+    result = derive_files(DeriveFilesContext(ct, "cytof_analysis", fetch_artifact))
+    assert len(result.artifacts) == 3
+
+    artifacts = {a.file_type.replace(" ", "_"): a for a in result.artifacts}
+    # checking that there are 1 file per `file_type`
+    assert len(artifacts) == 3
+
+    for ar_format, artifact in artifacts.items():
+        format_specific_truth = artifact_format_specific_data[ar_format]
+        req_header_fields = list(format_specific_truth.keys())
+
+        cimac_ids = sorted(["CTSTP01S2.01", "CTSTP01S1.01"])
+
+        dictreader = csv.DictReader(StringIO(artifact.data))
+
+        recs = []
+        for row in dictreader:
+            recs.append(row)
+            rec = ",".join(row[f] for f in req_header_fields)
+            should_be = ",".join(
+                str(format_specific_truth[f]) for f in req_header_fields
+            )
+            assert rec == should_be
+        assert sorted([r["cimac_id"] for r in recs]) == cimac_ids
+        assert sorted([r["cimac_participant_id"] for r in recs]) == sorted(
+            list(map(participant_id_from_cimac, cimac_ids))
+        )

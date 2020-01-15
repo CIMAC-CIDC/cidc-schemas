@@ -6,6 +6,7 @@ import pandas as pd
 from pandas.io.json import json_normalize
 
 from . import prism
+from .util import participant_id_from_cimac
 
 
 class DeriveFilesContext(NamedTuple):
@@ -198,4 +199,69 @@ def _wes_analysis_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
             )
         ],
         context.trial_metadata,  # return metadata without updates
+    )
+
+
+@_register_derivation("cytof_analysis")
+def _cytof_analysis_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
+    """Generate a combined CSV for CyTOF analysis data"""
+    cell_counts_analysis_csvs = json_normalize(
+        data=context.trial_metadata,
+        record_path=["assays", "cytof", "records"],
+        meta=[prism.PROTOCOL_ID_FIELD_NAME],
+    )
+
+    artifacts = []
+    for combined_f_kind in [
+        "cell_counts_assignment",
+        "cell_counts_compartment",
+        "cell_counts_profiling",
+    ]:
+        res_df = pd.DataFrame()
+        for index, row in cell_counts_analysis_csvs.iterrows():
+            obj_url = row[f"output_files.{combined_f_kind}.object_url"]
+
+            cell_counts_csv = context.fetch_artifact(obj_url, True)
+
+            if not cell_counts_csv:
+                raise Exception(
+                    f"Failed to read {obj_url} building Cytof analysis derivation"
+                )
+
+            df = pd.read_csv(cell_counts_csv)
+
+            # Each cell_counts_... file consist of just records for one sample.
+            # The first column of each cell_counts_csv (CellSubset) contains cell group types
+            # and the second contains counts for those types.
+            # Create a new, transposed dataframe with cell group types as column headers
+            # and a single row of cell count data.
+            df = df.set_index("CellSubset")
+            df = df.drop(
+                columns="Unnamed: 0", axis=1
+            )  # Cell counts files contain an unnamed index column
+            df = df.transpose()
+
+            # and adding metadata, so we can distinguish different samples
+            df = df.rename(index={"N": row["cimac_id"]})
+            df["cimac_id"] = row["cimac_id"]
+            df["cimac_participant_id"] = participant_id_from_cimac(row["cimac_id"])
+            df[prism.PROTOCOL_ID_FIELD_NAME] = row[prism.PROTOCOL_ID_FIELD_NAME]
+
+            # finally combine them
+            res_df = pd.concat([res_df, df])
+
+        # and add as artifact
+        artifacts.append(
+            _build_artifact(
+                context=context,
+                file_name=f"combined_{combined_f_kind}.csv",
+                data=res_df.to_csv(index=False),
+                data_format="csv",  # confusing, but right
+                file_type=combined_f_kind.replace("_", " "),
+                include_upload_type=True,
+            )
+        )
+
+    return DeriveFilesResult(
+        artifacts, context.trial_metadata  # return metadata without updates
     )

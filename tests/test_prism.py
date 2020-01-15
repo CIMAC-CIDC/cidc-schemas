@@ -45,6 +45,7 @@ from cidc_schemas.prism import (
 from cidc_schemas.json_validation import load_and_validate_schema, InDocRefNotFoundError
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
+from cidc_schemas.util import participant_id_from_cimac
 from cidc_schemas.template_reader import XlTemplateReader
 
 from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR, TEST_DATA_DIR
@@ -681,22 +682,19 @@ def test_prismify_plasma(xlsx, template):
     assert file_maps == []
     assert 2 == len(md_patch["participants"])
     assert 3 == len(md_patch["participants"][0]["samples"])
-    assert md_patch["participants"][0]["samples"][0]["cimac_id"].startswith(
-        md_patch["participants"][0]["cimac_participant_id"]
+
+    p = md_patch["participants"][0]
+    assert (
+        participant_id_from_cimac(p["samples"][0]["cimac_id"])
+        == p["cimac_participant_id"]
     )
 
-    assert md_patch["participants"][0]["gender"]  # filled from 1 tab
-    assert md_patch["participants"][0]["cohort_name"]  # filled from another
+    assert p["gender"]  # filled from 1 tab
+    assert p["cohort_name"]  # filled from another
 
-    assert md_patch["participants"][0]["samples"][0][
-        "processed_sample_id"
-    ]  # filled from 1 tab
-    assert md_patch["participants"][0]["samples"][0][
-        "topography_code"
-    ]  # filled from the second tab
-    assert md_patch["participants"][0]["samples"][0][
-        "site_description"
-    ]  # filled from the second tab
+    assert p["samples"][0]["processed_sample_id"]  # filled from 1 tab
+    assert p["samples"][0]["topography_code"]  # filled from the second tab
+    assert p["samples"][0]["site_description"]  # filled from the second tab
 
 
 @pytest.mark.parametrize("xlsx, template", prismify_test_set(filter=["wes_bam"]))
@@ -1006,35 +1004,37 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     if template.type in SUPPORTED_SHIPPING_MANIFESTS:
         assert len(prism_patch["shipments"]) == 1
 
-        assert prism_patch["participants"][0]["samples"][0]["cimac_id"][:7].startswith(
-            prism_patch["participants"][0]["cimac_participant_id"]
+        p0 = prism_patch["participants"][0]
+        assert (
+            participant_id_from_cimac(p0["samples"][0]["cimac_id"])
+            == p0["cimac_participant_id"]
         )
 
         if template.type == "pbmc":
             assert len(prism_patch["participants"]) == 2
-            assert len(prism_patch["participants"][0]["samples"]) == 3
+            assert len(p0["samples"]) == 3
             assert len(prism_patch["participants"][1]["samples"]) == 3
 
         elif template.type == "plasma":
             assert len(prism_patch["participants"]) == 2
-            assert len(prism_patch["participants"][0]["samples"]) == 3
-            assert "aliquots" not in prism_patch["participants"][0]["samples"][0]
+            assert len(p0["samples"]) == 3
+            assert "aliquots" not in p0["samples"][0]
 
         elif template.type == "normal_blood_dna":
             assert len(prism_patch["participants"]) == 2
-            assert len(prism_patch["participants"][0]["samples"]) == 3
+            assert len(p0["samples"]) == 3
 
         elif template.type == "normal_tissue_dna":
             assert len(prism_patch["participants"]) == 2
-            assert len(prism_patch["participants"][0]["samples"]) == 3
+            assert len(p0["samples"]) == 3
 
         elif template.type == "tumor_tissue_dna":
             assert len(prism_patch["participants"]) == 2
-            assert len(prism_patch["participants"][0]["samples"]) == 3
+            assert len(p0["samples"]) == 3
 
         elif template.type == "tissue_slide":
             assert len(prism_patch["participants"]) == 2
-            assert len(prism_patch["participants"][0]["samples"]) == 3
+            assert len(p0["samples"]) == 3
 
         else:
             assert False, f"add {template.type} specific asserts"

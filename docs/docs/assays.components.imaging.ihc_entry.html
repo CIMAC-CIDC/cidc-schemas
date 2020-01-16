@@ -136,6 +136,10 @@
             
         
             
+        
+            
+        
+            
                 <tr>
     <td>
         
@@ -177,7 +181,7 @@
     </td>
     <td width=55%>
         
-            Tumor Proportion Score (TPS) is the percentage of viable tumor cells showing marker staining relative to all viable tumor cells.
+            Tumor Proportion Score (TPS) is the percentage of viable tumor cells showing marker staining relative to all viable tumor cells. (0-1)
         
     </td>
     <td>
@@ -210,7 +214,7 @@
     </td>
     <td width=55%>
         
-            Combined Positive Score (CPS) is the percentage of marker staining cells (tumor cells and cells that are non-tumor) relative to all viable tumor cells.
+            Combined Positive Score (CPS) is the percentage of marker staining cells (tumor cells and cells that are non-tumor) relative to all viable tumor cells. (0-1)
         
     </td>
     <td>
@@ -243,7 +247,7 @@
     </td>
     <td width=55%>
         
-            Percentage of inflammatory cells (non-tumor cells) showing marker staining relative to all inflammatory cells.
+            Percentage of inflammatory cells (non-tumor cells) showing marker staining relative to all inflammatory cells. (0-1)
         
     </td>
     <td>
@@ -276,7 +280,73 @@
     </td>
     <td width=55%>
         
-            Area of PD-L1+ Inflammatory Cells over the area of TSI + IT as a percentage.
+            Area of PD-L1+ Inflammatory Cells over the area of TSI + IT as a percentage. (0-1)
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="intensity">
+                intensity
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A measure of the intensity or brightness of the protein. (0-3)
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="percentage_expression">
+                percentage_expression
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A percentage of the relevant cells considered positive. (0-100)
         
     </td>
     <td>
@@ -309,7 +379,7 @@
     </td>
     <td width=55%>
         
-            A semiquantitative approach used to assign score to tumor samples based on marker staining intensity (0, 1+, 2+, or 3+) for each cell in a fixed field.
+            A summation of the percentage of area stained at each intensity level multiplied by the weighted intensity. (0-300)
         
     </td>
     <td>
@@ -398,6 +468,16 @@
         },
         {
             "required": [
+                "intensity"
+            ]
+        },
+        {
+            "required": [
+                "percentage_expression"
+            ]
+        },
+        {
+            "required": [
                 "h_score"
             ]
         }
@@ -414,7 +494,7 @@
             "type": "string"
         },
         "combined_positive_score": {
-            "description": "Combined Positive Score (CPS) is the percentage of marker staining cells (tumor cells and cells that are non-tumor) relative to all viable tumor cells.",
+            "description": "Combined Positive Score (CPS) is the percentage of marker staining cells (tumor cells and cells that are non-tumor) relative to all viable tumor cells. (0-1)",
             "maximum": 1,
             "minimum": 0,
             "type": "number"
@@ -608,13 +688,20 @@
             "type": "object"
         },
         "h_score": {
-            "description": "A semiquantitative approach used to assign score to tumor samples based on marker staining intensity (0, 1+, 2+, or 3+) for each cell in a fixed field.",
+            "description": "A summation of the percentage of area stained at each intensity level multiplied by the weighted intensity. (0-300)",
+            "maximum": 300,
             "minimum": 0,
             "type": "integer"
         },
         "inflammatory_cells": {
-            "description": "Percentage of inflammatory cells (non-tumor cells) showing marker staining relative to all inflammatory cells.",
+            "description": "Percentage of inflammatory cells (non-tumor cells) showing marker staining relative to all inflammatory cells. (0-1)",
             "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+        },
+        "intensity": {
+            "description": "A measure of the intensity or brightness of the protein. (0-3)",
+            "maximum": 3,
             "minimum": 0,
             "type": "number"
         },
@@ -627,14 +714,20 @@
             ],
             "type": "string"
         },
+        "percentage_expression": {
+            "description": "A percentage of the relevant cells considered positive. (0-100)",
+            "maximum": 100,
+            "minimum": 0,
+            "type": "number"
+        },
         "positive_inflammatory_cell_area": {
-            "description": "Area of PD-L1+ Inflammatory Cells over the area of TSI + IT as a percentage.",
+            "description": "Area of PD-L1+ Inflammatory Cells over the area of TSI + IT as a percentage. (0-1)",
             "maximum": 1,
             "minimum": 0,
             "type": "number"
         },
         "tumor_proportion_score": {
-            "description": "Tumor Proportion Score (TPS) is the percentage of viable tumor cells showing marker staining relative to all viable tumor cells.",
+            "description": "Tumor Proportion Score (TPS) is the percentage of viable tumor cells showing marker staining relative to all viable tumor cells. (0-1)",
             "maximum": 1,
             "minimum": 0,
             "type": "number"

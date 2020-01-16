@@ -622,8 +622,12 @@ def test_prismify_cytof_only(xlsx, template):
     ct, file_maps, errs = prismify(xlsx, template, verb=False)
     assert len(errs) == 0
 
-    # we should have 3 files, the processed fcs and two source fcs X2
-    assert len(file_maps) == 9
+    # we should have 7 files:
+    # * 1 spike_in fcs file (batch-level)
+    # * 2 raw fcs files (batch-level)
+    # * 2 normalized and debarcoded fcs files (sample-level)
+    # * 2 processed fcs files (sample-level)
+    assert len(file_maps) == 7
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting

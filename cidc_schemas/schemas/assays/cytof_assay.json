@@ -33,6 +33,12 @@
         "spike_in_fcs": {
             "$ref": "artifacts/artifact_fcs.json"
         },
+        "source_fcs": {
+            "type": "array",
+            "items": {
+                "$ref": "artifacts/artifact_fcs.json"
+            }
+        },
         "batch_id": {
             "description": "CyTOF batch identification number.",
             "type": "string"

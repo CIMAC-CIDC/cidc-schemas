@@ -14,8 +14,8 @@
 "#p","Incubation temperature","54c"
 
 "","Sample","","Chromogenic IHC (please specify one score/metric)"
-"#h","Cimac id","Ihc image","Marker positive","Tumor proportion score","Combined positive score","Inflammatory cells","Positive inflammatory cell area","H score","Comment"
+"#h","Cimac id","Ihc image","Marker positive","Tumor proportion score","Combined positive score","Inflammatory cells","Positive inflammatory cell area","Intensity","% expression","H score","Comment"
 "#d","CTTTPP111.00","path/to/image1.tif","positive","0.67"
-"#d","CTTTPP121.00","path/to/image2.tiff","no_call","0.1"
-"#d","CTTTPP122.00","path/to/image3.svs","negative","0.1"
-"#d","CTTTPP123.00","path/to/image4.qptiff","positive","0.2"
+"#d","CTTTPP121.00","path/to/image2.tiff","no_call","0.1","","","","1","10","120"
+"#d","CTTTPP122.00","path/to/image3.svs","negative","0.1","","","","2","40","299"
+"#d","CTTTPP123.00","path/to/image4.qptiff","positive","0.2","","","","3","100","300"

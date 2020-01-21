@@ -94,37 +94,9 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnhaploytper2.output.vcf'",
-                                    "merge_pointer": "/somatic/vcf_tnhaploytper2_output",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/vcf_tnhaploytper2_output.vcf",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnsnv.output.vcf'",
-                                    "merge_pointer": "/somatic/vcf_tnsnv_output",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/vcf_tnsnv_output.vcf",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
                                     "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.output.maf'",
                                     "merge_pointer": "/somatic/maf_tnscope_output",
                                     "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/maf_tnscope_output.maf",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnhaploytper2.output.maf'",
-                                    "merge_pointer": "/somatic/maf_tnhaploytper2_output",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/maf_tnhaploytper2_output.maf",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnsnv.output.maf'",
-                                    "merge_pointer": "/somatic/maf_tnsnv_output",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/maf_tnsnv_output.maf",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
@@ -136,20 +108,6 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnhaploytper2.filter.vcf'",
-                                    "merge_pointer": "/somatic/vcf_tnhaploytper2_filter",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/vcf_tnhaploytper2_filter.vcf",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnsnv.filter.vcf'",
-                                    "merge_pointer": "/somatic/vcf_tnsnv_filter",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/vcf_tnsnv_filter.vcf",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
                                     "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.maf'",
                                     "merge_pointer": "/somatic/maf_tnscope_filter",
                                     "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/maf_tnscope_filter.maf",
@@ -157,37 +115,9 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnhaploytper2.filter.maf'",
-                                    "merge_pointer": "/somatic/maf_tnhaploytper2_filter",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/maf_tnhaploytper2_filter.maf",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnsnv.filter.maf'",
-                                    "merge_pointer": "/somatic/maf_tnsnv_filter",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/maf_tnsnv_filter.maf",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                              {
                                     "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.exons.broad.vcf.gz'",
                                     "merge_pointer": "/somatic/tnscope_exons_broad",
                                     "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/tnscope_exons_broad.gz",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnhaploytper2.filter.exons.broad.vcf.gz'",
-                                    "merge_pointer": "/somatic/tnhaploytper2_exons_broad",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/tnhaploytper2_exons_broad.gz",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnsnv.filter.exons.broad.vcf.gz'",
-                                    "merge_pointer": "/somatic/tnsnv_exons_broad",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/tnsnv_exons_broad.gz",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
@@ -199,37 +129,9 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnhaploytper2.filter.exons.mda.vcf.gz'",
-                                    "merge_pointer": "/somatic/tnhaploytper2_exons_mda",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/tnhaploytper2_exons_mda.gz",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnsnv.filter.exons.mda.vcf.gz'",
-                                    "merge_pointer": "/somatic/tnsnv_exons_mda",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/tnsnv_exons_mda.gz",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
                                     "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.exons.mocha.vcf.gz'",
                                     "merge_pointer": "/somatic/tnscope_exons_mocha",
                                     "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/tnscope_exons_mocha.gz",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnhaploytper2.filter.exons.mocha.vcf.gz'",
-                                    "merge_pointer": "/somatic/tnhaploytper2_exons_mocha",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/tnhaploytper2_exons_mocha.gz",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnsnv.filter.exons.mocha.vcf.gz'",
-                                    "merge_pointer": "/somatic/tnsnv_exons_mocha",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/tnsnv_exons_mocha.gz",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },

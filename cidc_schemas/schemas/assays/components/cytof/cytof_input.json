@@ -9,12 +9,6 @@
         "processed_fcs": {
             "$ref": "artifacts/artifact_fcs.json"
         },
-        "source_fcs": {
-            "type": "array",
-            "items": {
-                "$ref": "artifacts/artifact_fcs.json"
-            }
-        },
         "normalized_and_debarcoded_fcs": {
             "$ref": "artifacts/artifact_fcs.json"
         }

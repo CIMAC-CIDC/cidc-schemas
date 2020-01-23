@@ -53,7 +53,8 @@
         "Dose_C",
         "Dose_D",
 
-        "Not reported"
+        "Other",
+        "Not_reported"
       ],
       "enum_comments": {
         "Arm_A": "E4412 or 10026",

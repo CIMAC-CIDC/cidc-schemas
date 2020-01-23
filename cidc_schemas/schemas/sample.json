@@ -96,6 +96,7 @@
                 "Progression",
                 
                 "Other"
+                "Not_reported"
             ],
             "enum_comments": {
                 "Pre_Day_1_Cycle_2": "E4412",

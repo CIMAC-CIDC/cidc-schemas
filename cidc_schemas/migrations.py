@@ -40,6 +40,29 @@ class migration:
         raise NotImplementedError
 
 
+class v0_15_2_to_v0_15_3(migration):
+    """
+    v0.15.2: allowed_cohort_names included "Not reported" as an allowed value.
+    v0.15.3: allowed_cohort_names was updated to use "Not_reported" instead of "Not reported" for this value.
+    """
+
+    @classmethod
+    def upgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+        for p in metadata.get("participants", []):
+            if p["cohort_name"] == "Not reported":
+                p["cohort_name"] = "Not_reported"
+
+        return MigrationResult(metadata, {})
+
+    @classmethod
+    def downgrade(cls, metadata: dict, *args, **kwargs):
+        for p in metadata.get("participants", []):
+            if p["cohort_name"] == "Not_reported":
+                p["cohort_name"] == "Not reported"
+
+        return MigrationResult(metadata, {})
+
+
 class v0_10_2_to_v0_11_0(migration):
     """
     v0.11.0 allowed_cohort_names and allowed_collection_event_names were

@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "report",
+  "title": "WES Pipeline Version",
+  "type": "object",
+  "description": "WES pipeline version/commit string.",
+  "properties": {
+    "wes_version": {
+      "$ref": "artifacts/artifact_text.json"
+    }
+  },
+  "required": [
+  "wes_version"
+  ],
+  "additionalProperties": false
+}

@@ -4,7 +4,7 @@
 "#p","Assay creator","DFCI"
 "#p","Panel name","IMMUNE4"
 "#p","Instrument","PresNixon123"
-"#p","Spike in fcs filename","vericell.fcs"
+"#p","Spike in fcs filename"
 "#p","Raw fcs filename(s)","batch1f1.fcs,batch1f2.fcs"
 "#p","Batch id","XYZ1"
 

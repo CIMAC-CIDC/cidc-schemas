@@ -36,6 +36,9 @@
     },
     "corealignments": {
       "$ref": "assays/components/ngs/wes/corealignments.json"
+    },
+    "report": {
+      "$ref": "assays/components/ngs/wes/report.json"
     }
   },
   "required": [

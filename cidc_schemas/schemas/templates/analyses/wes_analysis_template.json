@@ -155,6 +155,13 @@
                                     "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/all_summaries.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/report/wes_version.txt'",
+                                    "merge_pointer": "/report/wes_version",
+                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/wes_version.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
                                 }
                             ]
                         },

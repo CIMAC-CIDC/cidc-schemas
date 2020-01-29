@@ -95,7 +95,8 @@
                 "End_of_Treatment",
                 "Progression",
                 
-                "Other"
+                "Other",
+                "Not_reported"
             ],
             "enum_comments": {
                 "Pre_Day_1_Cycle_2": "E4412",

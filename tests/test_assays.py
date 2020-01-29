@@ -178,11 +178,7 @@ def test_cytof():
     fcs_3["data_format"] = "FCS"
     fcs_4 = ARTIFACT_OBJ.copy()
     fcs_4["data_format"] = "FCS"
-    record = {
-        "processed_fcs": fcs_1,
-        "source_fcs": [fcs_2, fcs_3],
-        "normalized_and_debarcoded_fcs": fcs_4,
-    }
+    record = {"processed_fcs": fcs_1, "normalized_and_debarcoded_fcs": fcs_4}
     validator.validate(record)
 
     # create the cytof object
@@ -209,6 +205,7 @@ def test_cytof():
         "assay_run_id": "run_1",
         "panel_name": "DFCI default",
         "cytof_antibodies": antibodies,
+        "source_fcs": [fcs_2, fcs_3],
     }
 
     obj = {**ASSAY_CORE, **cytof_platform, **cytof_panel}  # merge three dictionaries
@@ -250,7 +247,7 @@ def test_cytof():
     analysis["data_format"] = "ZIP"
     record = {
         "cimac_id": "CTTTPPPSA.00",
-        "input_files": {"processed_fcs": fcs_1, "source_fcs": [fcs_2, fcs_3]},
+        "input_files": {"processed_fcs": fcs_1},
         "output_files": {
             "fcs_file": fcs_1,
             "astrolabe_reports": report,

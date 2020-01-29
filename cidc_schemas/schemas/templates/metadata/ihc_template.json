@@ -107,6 +107,16 @@
                             "type_ref": "assays/components/imaging/ihc_entry.json#properties/positive_inflammatory_cell_area",
                             "allow_empty": true
                         },
+                        "intensity": {
+                            "merge_pointer": "0/intensity",
+                            "type_ref": "assays/components/imaging/ihc_entry.json#properties/intensity",
+                            "allow_empty": true
+                        },
+                        "% expression": {
+                            "merge_pointer": "0/percentage_expression",
+                            "type_ref": "assays/components/imaging/ihc_entry.json#properties/percentage_expression",
+                            "allow_empty": true
+                        },
                         "h score": {
                             "merge_pointer": "0/h_score",
                             "type_ref": "assays/components/imaging/ihc_entry.json#properties/h_score",

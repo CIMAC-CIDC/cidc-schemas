@@ -5,6 +5,7 @@ from cidc_schemas.migrations import (
     v0_10_0_to_v0_10_2,
     MigrationError,
     v0_10_2_to_v0_11_0,
+    v0_15_2_to_v0_15_3,
 )
 
 
@@ -20,6 +21,20 @@ def test_follow_path():
     assert _follow_path(d, "a", "b") is None
     d = {"a": [val]}
     assert _follow_path(d, 1) is None
+
+
+def test_v0_15_2_to_v0_15_3():
+    assert v0_15_2_to_v0_15_3.downgrade(
+        v0_15_2_to_v0_15_3.upgrade({"foo": "bar"}).result
+    ).result == {"foo": "bar"}
+
+    ct = {"participants": [{"cohort_name": "Not reported"}, {"cohort_name": "foo"}]}
+
+    upgraded_ct = v0_15_2_to_v0_15_3.upgrade(ct).result
+    assert upgraded_ct["participants"][0]["cohort_name"] == "Not_reported"
+    assert upgraded_ct["participants"][1]["cohort_name"] == "foo"
+
+    assert ct == v0_15_2_to_v0_15_3.downgrade(upgraded_ct).result
 
 
 def test_v0_10_2_to_v0_11_0():

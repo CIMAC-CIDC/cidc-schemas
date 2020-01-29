@@ -486,6 +486,10 @@
         
             
         
+            
+        
+            
+        
         
             
                 <tr>
@@ -522,7 +526,7 @@
     </td>
     <td width=55%>
         
-            Tumor Proportion Score (TPS) is the percentage of viable tumor cells showing marker staining relative to all viable tumor cells.
+            Tumor Proportion Score (TPS) is the percentage of viable tumor cells showing marker staining relative to all viable tumor cells. (0-1)
         
     </td>
     <td>
@@ -545,7 +549,7 @@
     </td>
     <td width=55%>
         
-            Combined Positive Score (CPS) is the percentage of marker staining cells (tumor cells and cells that are non-tumor) relative to all viable tumor cells.
+            Combined Positive Score (CPS) is the percentage of marker staining cells (tumor cells and cells that are non-tumor) relative to all viable tumor cells. (0-1)
         
     </td>
     <td>
@@ -568,7 +572,7 @@
     </td>
     <td width=55%>
         
-            Percentage of inflammatory cells (non-tumor cells) showing marker staining relative to all inflammatory cells.
+            Percentage of inflammatory cells (non-tumor cells) showing marker staining relative to all inflammatory cells. (0-1)
         
     </td>
     <td>
@@ -591,12 +595,58 @@
     </td>
     <td width=55%>
         
-            Area of PD-L1+ Inflammatory Cells over the area of TSI + IT as a percentage.
+            Area of PD-L1+ Inflammatory Cells over the area of TSI + IT as a percentage. (0-1)
         
     </td>
     <td>
         
             <a href="assays.components.imaging.ihc_entry.html#positive_inflammatory_cell_area">assays.components.imaging.ihc_entry#positive_inflammatory_cell_area</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="intensity">
+                intensity
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A measure of the intensity or brightness of the protein. (0-3)
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.imaging.ihc_entry.html#intensity">assays.components.imaging.ihc_entry#intensity</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="% expression">
+                % expression
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A percentage of the relevant cells considered positive. (0-100)
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.imaging.ihc_entry.html#percentage_expression">assays.components.imaging.ihc_entry#percentage_expression</a>
         
     </td>
 </tr>
@@ -614,7 +664,7 @@
     </td>
     <td width=55%>
         
-            A semiquantitative approach used to assign score to tumor samples based on marker staining intensity (0, 1+, 2+, or 3+) for each cell in a fixed field.
+            A summation of the percentage of area stained at each intensity level multiplied by the weighted intensity. (0-300)
         
     </td>
     <td>

@@ -255,7 +255,15 @@ def _get_recursively(search_dict, field):
     return fields_found
 
 
-SUPPORTED_ASSAYS = ["wes_fastq", "wes_bam", "olink", "cytof", "ihc", "elisa"]
+SUPPORTED_ASSAYS = [
+    "wes_fastq",
+    "wes_bam",
+    "olink",
+    "cytof",
+    "ihc",
+    "elisa",
+    "rna_expression",
+]
 
 SUPPORTED_SHIPPING_MANIFESTS = [
     "pbmc",

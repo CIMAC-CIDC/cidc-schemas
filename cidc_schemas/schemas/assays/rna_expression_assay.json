@@ -19,28 +19,21 @@
       "type": "string",
       "enum": ["Agilent", "Twist", "IDT", "NEB", "Illumina - TruSeq Stranded PolyA mRNA"]
     },
-    "stranded_library": {
-      "description": "Is the RNAseq library stranded or not.",
-      "type": "boolean"
-    },
-    "library_type": {
-      "description": "The type of RNAseq library generated.",
-      "type": "string",
-      "enum": ["ff-firststrand",
-        "ff-secondstrand",
-        "ff-unstranded",
-        "fr-firststrand",
-        "fr-secondstrand",
-        "fr-unstranded",
-        "transfrags"]
-    },
     "records": {
       "type": "array",
       "description": "A single data record from RNAseq assay.",
       "items": {
-        "$ref": "assays/components/ngs/rna_expression_entry.json"
+        "$ref": "assays/components/ngs/rna/rna_expression_entry.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "cimac_id"
       }
     }
   },
-  "required": ["enrichment_method", "records"]
+  "required": [
+    "enrichment_method",
+    "records"
+  ],
+  "mergeStrategy": "objectMerge"
 }

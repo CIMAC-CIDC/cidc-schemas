@@ -1048,7 +1048,6 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             prism_patch_assay_records = prism_patch["assays"][template.type]["records"]
             assert len(prism_patch_assay_records) == 2
 
-        # olink is different in structure - no array of records, only one.
         elif template.type == "elisa":
             prism_patch_assay_records = prism_patch["assays"][template.type]
             assert len(prism_patch_assay_records) == 1
@@ -1063,6 +1062,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             assert len(prism_patch["assays"]["wes"][0]["records"]) == 2
         elif template.type == "wes_bam":
             assert len(prism_patch["assays"]["wes"][0]["records"]) == 2
+
+        elif template.type == "rna_expression":
+            assert len(prism_patch["assays"]["rna_expression"][0]["records"]) == 2
 
         elif template.type == "ihc":
             assert len(prism_patch["assays"][template.type][0]["records"]) == 4
@@ -1177,6 +1179,10 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 2 * 2  # 2 files per entry in xlsx
         assert set(merged_gs_keys) == set(WESBAM_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
+    elif template.type == "rna_expression":
+        # 2 files per entry in xlsx
+        assert len(merged_gs_keys) == 2 * 2
+
     elif template.type == "olink":
         # 2 files per entry in xlsx + 1 file in preamble
         assert len(merged_gs_keys) == 5
@@ -1275,6 +1281,12 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
         # nothing else in diff
         assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
+
+    elif template.type == "rna_expression":
+        # 4 files * 7 artifact attributes
+        assert (
+            len(dd["dictionary_item_added"]) == 4 * NUM_ARTIFACT_FIELDS
+        ), "Unexpected CT changes"
 
     elif template.type == "ihc":
         # 2 files * 7 artifact attributes

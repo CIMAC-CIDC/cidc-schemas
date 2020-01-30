@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "rna_assay_record",
+  "title": "RNAseq assay record",
+  "type": "object",
+  "description": "A single data record from RNAseq assay.",
+  "allOf": [
+    { "$ref": "assays/components/ngs/ngs_assay_record.json" }
+  ],
+  "properties": {
+    "files": {
+      "$ref": "assays/components/ngs/rna/rna_input.json"
+    }
+  },
+  "required": [
+    "files"
+  ],
+  "additionalProperties": false
+}

@@ -565,6 +565,11 @@ def test_filepath_gen(xlsx, template):
             sorted(set([x.gs_key.split("/")[2] for x in file_maps]))
         )
 
+    elif template.type == "rna_expression":
+
+        # we should have 2 .fastq files per sample.
+        assert 2 == sum([x.gs_key.endswith(".fastq.gz") for x in file_maps])
+
     elif template.type == "elisa":
 
         # we should have 1 xlsx file
@@ -1064,7 +1069,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             assert len(prism_patch["assays"]["wes"][0]["records"]) == 2
 
         elif template.type == "rna_expression":
-            assert len(prism_patch["assays"]["rna_expression"][0]["records"]) == 2
+            assert len(prism_patch["assays"]["rna_expression"][0]["records"]) == 1
 
         elif template.type == "ihc":
             assert len(prism_patch["assays"][template.type][0]["records"]) == 4

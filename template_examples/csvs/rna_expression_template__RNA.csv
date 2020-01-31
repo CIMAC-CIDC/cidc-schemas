@@ -7,5 +7,5 @@
 "#p","Paired end reads","Paired"
 
 "","Samples"
-"#h","Cimac id","Forward fastq","Reverse fastq"
-"#d","CTTTPP111.00","/local/path/to/fwd.fastq.gz","/local/path/to/rev.fastq.gz"
+"#h","Cimac id","Forward fastq","Reverse fastq","Library yield ng","Dv200","Rqs","Rin","Quality flag"
+"#d","CTTTPP111.00","/local/path/to/fwd.fastq.gz","/local/path/to/rev.fastq.gz","600","0.7","8","","1"

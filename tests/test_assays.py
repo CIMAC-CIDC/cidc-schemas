@@ -126,9 +126,7 @@ def test_rna_expression():
     # create the ngs object
     ngs_obj = {
         "sequencer_platform": "Illumina - NovaSeq 6000",
-        "library_vendor_kit": "KAPA - Hyper Prep",
         "paired_end_reads": "Paired",
-        "read_length": 200,
     }
     obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
 
@@ -143,14 +141,12 @@ def test_rna_expression():
     rgmf["data_format"] = "TEXT"
     rgmf["artifact_category"] = "Assay Artifact from CIMAC"
     record = {
-        "enrichment_vendor_lot": "dummy_value",
-        "library_kit_lot": "dummy_value",
-        "library_prep_date": "01/01/2001",
-        "capture_date": "01/01/2001",
         "cimac_id": "CTTTPPPSA.00",
-        "input_ng": 666,
         "library_yield_ng": 666,
-        "average_insert_size": 200,
+        "dv200": 0.7,
+        "rqs": 8,
+        "rin": 8,
+        "quality_flag": 1,
         "files": {"r1": [r1], "r2": [r1]},
     }
 

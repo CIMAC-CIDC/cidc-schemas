@@ -8,12 +8,35 @@
     { "$ref": "assays/components/ngs/ngs_assay_record.json" }
   ],
   "properties": {
-    "files": {
-      "$ref": "assays/components/ngs/rna/rna_input.json"
-    }
+    "library_yield_ng": {
+      "description": "Resulting yield (in ng) from library construction.",
+      "type": "number"
+    },
+    "dv200": {
+      "description": "The percentage of fragments > 200 nucleotides.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "rqs": {
+      "description": "RNA quality score. (0-10)",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "rin": {
+      "description": "RNA integrity number. (0-10)",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "quality_flag": {
+      "description": "Flag used for quality.",
+      "type": "number"
+    },
+    "cimac_id": {"comment": "defined in ngs_assay_record.json"},
+    "files": {"comment": "defined in ngs_assay_record.json"}
   },
-  "required": [
-    "files"
-  ],
+  "mergeStrategy": "objectMerge",
   "additionalProperties": false
 }

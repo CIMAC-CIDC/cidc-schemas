@@ -18,7 +18,7 @@
                     },
                     "assay creator": {
                         "merge_pointer": "0/assay_creator",
-                        "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+                        "type_ref": "assays/ihc_assay.json#properties/assay_creator"
                     },
                     "slide scanner model": {
                         "merge_pointer": "0/slide_scanner_model",

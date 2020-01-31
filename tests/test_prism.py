@@ -501,7 +501,7 @@ def test_filepath_gen(xlsx, template):
     prefixes = ["/".join(fmap_entry.gs_key.split("/")[:2]) for entry in file_maps]
     trial_id = TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
     assay_prefix = template.type.split("_")[0]
-    assert set(prefixes) == set([f"{trial_id}/{assay_prefix}"])
+    assert set(prefixes) == {f"{trial_id}/{assay_prefix}"}
 
     # assert we have the right file counts etc.
     if template.type == "wes_fastq":
@@ -1185,8 +1185,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert set(merged_gs_keys) == set(WESBAM_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
     elif template.type == "rna_expression":
-        # 2 files per entry in xlsx
-        assert len(merged_gs_keys) == 2 * 2
+        # 2 files for forward + 1 for rev, per entry/sample in xlsx
+        assert len(merged_gs_keys) == 3
 
     elif template.type == "olink":
         # 2 files per entry in xlsx + 1 file in preamble
@@ -1231,6 +1231,11 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         ), f"Multiple {ttype}-assays created instead of merging into one"
         assert (
             len(full_ct["assays"][ttype][0]["records"]) == 2
+        ), "More records than expected"
+
+    elif template.type == "rna_expression":
+        assert (
+            len(full_ct["assays"][template.type][0]["records"]) == 1
         ), "More records than expected"
 
     elif template.type == "ihc":

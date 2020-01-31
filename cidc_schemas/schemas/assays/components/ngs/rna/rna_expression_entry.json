@@ -4,6 +4,7 @@
   "title": "RNAseq assay record",
   "type": "object",
   "description": "A single data record from RNAseq assay.",
+  "additionalProperties": false,
   "allOf": [
     { "$ref": "assays/components/ngs/ngs_assay_record.json" }
   ],
@@ -37,6 +38,5 @@
     "cimac_id": {"comment": "defined in ngs_assay_record.json"},
     "files": {"comment": "defined in ngs_assay_record.json"}
   },
-  "mergeStrategy": "objectMerge",
-  "additionalProperties": false
+  "mergeStrategy": "objectMerge"
 }

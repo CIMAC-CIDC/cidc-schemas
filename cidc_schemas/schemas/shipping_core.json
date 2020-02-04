@@ -113,11 +113,9 @@
         "Broad_Cibulskis",
         "Stanf_Maecker",
         "Stanf_Bendall",
-        "Nationwide Children's Hospital",
-        "Adaptive Biotechnologies",
-        "FNLCR_MoCha",
-        "Not Reported",
-        "Other"
+        "NCH",
+        "Adaptive",
+        "FNLCR_MoCha"
       ]
     }
   },

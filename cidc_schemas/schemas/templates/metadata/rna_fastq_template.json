@@ -1,16 +1,15 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "rna_expression",
+  "$id": "rna",
   "title": "Metadata file for RNA expression",
   "type": "object",
   "category": "metadata",
   "description": "Metadata information for rna expression analysis.",
-
   "properties": {
     "worksheets": {
       "RNA": {
-        "prism_preamble_object_schema" : "assays/rna_expression_assay.json",
-        "prism_preamble_object_pointer" : "/assays/rna_expression/-",
+        "prism_preamble_object_schema" : "assays/rna_assay.json",
+        "prism_preamble_object_pointer" : "/assays/rna/-",
         "prism_data_object_pointer" : "/records/-",
 
         "preamble_rows": {
@@ -24,11 +23,11 @@
           },
           "enrichment method": {
             "merge_pointer": "0/enrichment_method",
-            "type_ref": "assays/rna_expression_assay.json#properties/enrichment_method"
+            "type_ref": "assays/rna_assay.json#properties/enrichment_method"
           },
           "enrichment kit": {
             "merge_pointer": "0/enrichment_vendor_kit",
-            "type_ref": "assays/rna_expression_assay.json#properties/enrichment_vendor_kit"
+            "type_ref": "assays/rna_assay.json#properties/enrichment_vendor_kit"
           },
           "sequencer platform": {
             "merge_pointer": "0/sequencer_platform",
@@ -47,36 +46,36 @@
             },
             "forward fastq": {
               "merge_pointer": "0/files/r1",
-              "gcs_uri_format": "{protocol identifier}/rna_expression/{cimac id}/r1_{num}.fastq.gz",
+              "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/r1_{num}.fastq.gz",
               "is_artifact": "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
             },
             "reverse fastq": {
               "merge_pointer": "0/files/r2",
-              "gcs_uri_format": "{protocol identifier}/rna_expression/{cimac id}/r2_{num}.fastq.gz",
+              "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/r2_{num}.fastq.gz",
               "is_artifact" : "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
             },
             "library yield ng": {
               "merge_pointer": "0/library_yield_ng",
-              "type_ref": "assays/components/ngs/rna/rna_expression_entry.json#properties/library_yield_ng"
+              "type_ref": "assays/components/ngs/rna/rna_entry.json#properties/library_yield_ng"
             },
             "dv200": {
               "merge_pointer": "0/dv200",
-              "type_ref": "assays/components/ngs/rna/rna_expression_entry.json#properties/dv200"
+              "type_ref": "assays/components/ngs/rna/rna_entry.json#properties/dv200"
             },
             "rqs": {
               "merge_pointer": "0/rqs",
-              "type_ref": "assays/components/ngs/rna/rna_expression_entry.json#properties/rqs"
+              "type_ref": "assays/components/ngs/rna/rna_entry.json#properties/rqs"
             },
             "rin": {
               "merge_pointer": "0/rin",
-              "type_ref": "assays/components/ngs/rna/rna_expression_entry.json#properties/rin",
+              "type_ref": "assays/components/ngs/rna/rna_entry.json#properties/rin",
               "allow_empty": true
             },
             "quality flag": {
               "merge_pointer": "0/quality_flag",
-              "type_ref": "assays/components/ngs/rna/rna_expression_entry.json#properties/quality_flag",
+              "type_ref": "assays/components/ngs/rna/rna_entry.json#properties/quality_flag",
               "type": "number"
             }
           }

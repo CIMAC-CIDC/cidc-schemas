@@ -262,7 +262,7 @@ SUPPORTED_ASSAYS = [
     "cytof",
     "ihc",
     "elisa",
-    "rna_expression",
+    "rna_fastq",
 ]
 
 SUPPORTED_SHIPPING_MANIFESTS = [

@@ -13,11 +13,11 @@
       }, 
       "mergeStrategy": "append"
     },
-    "rna_expression": {
+    "rna": {
       "type": "array",
       "description": "RNA assay for expression analysis.",
       "items": {
-        "$ref": "assays/rna_expression_assay.json"
+        "$ref": "assays/rna_assay.json"
       },
       "mergeStrategy": "append"
     },

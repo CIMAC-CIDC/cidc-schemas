@@ -121,7 +121,7 @@ def test_wes_bam():
     validator.validate(obj)
 
 
-def test_rna_expression():
+def test_rna():
 
     # create the ngs object
     ngs_obj = {
@@ -154,7 +154,7 @@ def test_rna_expression():
     obj["records"] = [record]
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("rna_expression")
+    validator = _fetch_validator("rna")
     validator.validate(obj)
 
 

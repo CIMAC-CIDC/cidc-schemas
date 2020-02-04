@@ -233,7 +233,7 @@ TEST_PRISM_TRIAL = {
                 "records": [
                     {
                         "quality_flag": 1,
-                        "cimac_id": "CTTTPP111.00",
+                        "cimac_id": "CTTTPP122.00",
                         "library_yield_ng": 666,
                         "dv200": 0.7,
                         "rqs": 8,
@@ -252,7 +252,7 @@ TEST_PRISM_TRIAL = {
                         "dv200": 0.7,
                         "rqs": 8,
                         "rin": 8,
-                        "cimac_id": "CTTTPP121.00",
+                        "cimac_id": "CTTTPP123.00",
                         "files": {
                             "r1": [
                                 {"upload_placeholder": "r1.2_0"},
@@ -297,18 +297,30 @@ WESBAM_TEMPLATE_EXAMPLE_GS_URLS = {
 
 RNA_TEMPLATE_EXAMPLE_GS_URLS = {
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/rna/CTTTPP111.00/r1_0.fastq.gz": "r1.1_0",
+    + "/rna/CTTTPP122.00/r1_0.fastq.gz": "r1.1_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/rna/CTTTPP111.00/r1_1.fastq.gz": "r1.1_1",
+    + "/rna/CTTTPP122.00/r1_1.fastq.gz": "r1.1_1",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/rna/CTTTPP111.00/r2_0.fastq.gz": "r2.1_0",
+    + "/rna/CTTTPP122.00/r2_0.fastq.gz": "r2.1_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/rna/CTTTPP121.00/r1_0.fastq.gz": "r1.2_0",
+    + "/rna/CTTTPP123.00/r1_0.fastq.gz": "r1.2_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/rna/CTTTPP121.00/r1_1.fastq.gz": "r1.2_1",
+    + "/rna/CTTTPP123.00/r1_1.fastq.gz": "r1.2_1",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/rna/CTTTPP121.00/r2_0.fastq.gz": "r2.2_0",
+    + "/rna/CTTTPP123.00/r2_0.fastq.gz": "r2.2_0",
 }
+
+RNABAM_TEMPLATE_EXAMPLE_GS_URLS = {
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    + "/rna/CTTTPP122.00/reads_0.bam": "bam_whatever_1_0",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    + "/rna/CTTTPP122.00/reads_1.bam": "bam_whatever_1_1",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    + "/rna/CTTTPP123.00/reads_0.bam": "bam_whatever_2_0",
+    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+    + "/rna/CTTTPP123.00/reads_1.bam": "bam_whatever_2_1",
+}
+
 NUM_ARTIFACT_FIELDS = 8
 
 
@@ -486,7 +498,7 @@ def test_prism(xlsx, template):
             if template.type == "wes_bam" or template.type == "wes_fastq":
                 ttype = "wes"
 
-            elif template.type == "rna_fastq":
+            elif template.type == "rna_bam" or template.type == "rna_fastq":
                 ttype = "rna"
 
             # this assert the merging of rows in the template is happening properly
@@ -654,7 +666,33 @@ def test_filepath_gen(xlsx, template):
         assert 1 == len(set([x.gs_key.split("/")[0] for x in file_maps]))
 
         # 2 samples
-        assert ["CTTTPP111.00", "CTTTPP121.00"] == list(
+        assert ["CTTTPP122.00", "CTTTPP123.00"] == list(
+            sorted(set([x.gs_key.split("/")[2] for x in file_maps]))
+        )
+
+    elif template.type == "rna_bam":
+
+        # we should have 2 bam in each (2) sample.
+        assert 4 == sum([x.gs_key.endswith(".bam") for x in file_maps])
+
+        # in total local
+        assert 4 == sum([x.local_path.endswith(".bam") for x in file_maps])
+
+        # 2 in total
+        assert len(file_maps) == 4
+        assert 4 == sum(
+            [
+                x.gs_key.startswith(TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME])
+                for x in file_maps
+            ]
+        )
+
+        # all that with
+        # 1 trial id
+        assert 1 == len(set([x.gs_key.split("/")[0] for x in file_maps]))
+        # 2 samples
+
+        assert ["CTTTPP122.00", "CTTTPP123.00"] == list(
             sorted(set([x.gs_key.split("/")[2] for x in file_maps]))
         )
 
@@ -830,8 +868,8 @@ def test_prismify_wesbam_only(xlsx, template):
     with pytest.raises(InDocRefNotFoundError):
         validator.validate(merged_wo_needed_participants)
 
-    # 3 missing aliquot refs (r1.*_0, r1.*_1, _r2.*_0) = 3 errors
-    assert 3 == len(list(validator.iter_errors(merged_wo_needed_participants)))
+    # 2 record = 2 missing aliquot refs = 2 errors
+    assert 2 == len(list(validator.iter_errors(merged_wo_needed_participants)))
 
 
 @pytest.mark.parametrize("xlsx, template", prismify_test_set("wes_fastq"))
@@ -868,8 +906,46 @@ def test_prismify_wesfastq_only(xlsx, template):
     with pytest.raises(InDocRefNotFoundError):
         validator.validate(merged_wo_needed_participants)
 
-    # 3 missing aliquot refs (r1.*_0, r1.*_1, _r2.*_0) = 3 errors
-    assert 3 == len(list(validator.iter_errors(merged_wo_needed_participants)))
+    # 2 record = 2 missing aliquot refs = 2 errors
+    assert 2 == len(list(validator.iter_errors(merged_wo_needed_participants)))
+
+
+@pytest.mark.parametrize("xlsx, template", prismify_test_set(filter=["rna_bam"]))
+def test_prismify_rnabam_only(xlsx, template):
+
+    # create validators
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    schema = validator.schema
+
+    # parse the spreadsheet and get the file maps
+    md_patch, file_maps, errs = prismify(xlsx, template)
+    assert len(errs) == 0
+
+    # md patch is not complete
+    # but errors should be only
+    for e in validator.iter_errors(md_patch):
+        assert isinstance(e, InDocRefNotFoundError) or (  # not found cimac_ids
+            "'participants'" in str(e)
+            and "required" in str(e)  # or no "participants" found.
+        )
+
+    # we merge it with a preexisting one
+    # 1. we get all 'required' fields from this preexisting
+    # 2. we can check it didn't overwrite anything crucial
+    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merged = merger.merge(TEST_PRISM_TRIAL, md_patch)
+
+    # assert works
+    validator.validate(merged)
+
+    merged_wo_needed_participants = copy.deepcopy(merged)
+    merged_wo_needed_participants["participants"][0]["samples"][0][
+        "cimac_id"
+    ] = "CTTTNAADA.00"
+
+    # assert in_doc_ref constraints work
+    with pytest.raises(InDocRefNotFoundError):
+        validator.validate(merged_wo_needed_participants)
 
 
 @pytest.mark.parametrize("xlsx, template", prismify_test_set("rna_fastq"))
@@ -905,9 +981,6 @@ def test_prismify_rnafastq_only(xlsx, template):
     # assert in_doc_ref constraints work
     with pytest.raises(InDocRefNotFoundError):
         validator.validate(merged_wo_needed_participants)
-
-    # 3 missing aliquot refs (r1.*_0, r1.*_1, _r2.*_0) = 3 errors
-    assert 3 == len(list(validator.iter_errors(merged_wo_needed_participants)))
 
 
 @pytest.mark.parametrize("xlsx, template", prismify_test_set("olink"))
@@ -1196,6 +1269,8 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
         elif template.type == "rna_fastq":
             assert len(prism_patch["assays"]["rna"][0]["records"]) == 2
+        elif template.type == "rna_bam":
+            assert len(prism_patch["assays"]["rna"][0]["records"]) == 2
 
         elif template.type == "ihc":
             assert len(prism_patch["assays"][template.type][0]["records"]) == 4
@@ -1209,7 +1284,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         ttype = template.type
         if ttype == "wes_bam" or ttype == "wes_fastq":
             ttype = "wes"
-        elif ttype == "rna_fastq":
+        elif ttype == "rna_bam" or ttype == "rna_fastq":
             ttype = "rna"
         assert f"{ttype}/" in f.gs_key, f"No {ttype} template.type found"
 
@@ -1318,6 +1393,10 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         )  # 2 files for forward + 1 for rev, per entry/sample in xlsx
         assert set(merged_gs_keys) == set(RNA_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
+    elif template.type == "rna_bam":
+        assert len(merged_gs_keys) == 2 * 2  # 2 files per entry in xlsx
+        assert set(merged_gs_keys) == set(RNABAM_TEMPLATE_EXAMPLE_GS_URLS.keys())
+
     elif template.type == "olink":
         # 2 files per entry in xlsx + 1 file in preamble
         assert len(merged_gs_keys) == 5
@@ -1363,7 +1442,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             len(full_ct["assays"][ttype][0]["records"]) == 2
         ), "More records than expected"
 
-    elif template.type == "rna_fastq":
+    elif template.type == "rna_bam" or template.type == "rna_fastq":
         ttype = "rna"
         assert len(full_ct["assays"][ttype]) == 1 + len(
             TEST_PRISM_TRIAL["assays"][ttype]
@@ -1431,6 +1510,19 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert (
             len(dd["dictionary_item_added"]) == 6 * NUM_ARTIFACT_FIELDS
         ), "Unexpected CT changes"
+
+        # nothing else in diff
+        assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
+
+    elif template.type == "rna_bam":
+
+        # 4 files * 7 artifact attributes
+        assert (
+            len(dd["dictionary_item_added"]) == 4 * NUM_ARTIFACT_FIELDS
+        ), "Unexpected CT changes"
+
+        # nothing else in diff
+        assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
 
     elif template.type == "ihc":
         # 2 files * 7 artifact attributes

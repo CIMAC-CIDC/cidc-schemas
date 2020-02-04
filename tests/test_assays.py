@@ -121,7 +121,7 @@ def test_wes_bam():
     validator.validate(obj)
 
 
-def test_rna():
+def test_rna_fastq():
 
     # create the ngs object
     ngs_obj = {
@@ -137,9 +137,6 @@ def test_rna():
     # create the rna_expression object
     r1 = ARTIFACT_OBJ.copy()
     r1["data_format"] = "FASTQ.GZ"
-    rgmf = ARTIFACT_OBJ.copy()
-    rgmf["data_format"] = "TEXT"
-    rgmf["artifact_category"] = "Assay Artifact from CIMAC"
     record = {
         "cimac_id": "CTTTPPPSA.00",
         "library_yield_ng": 666,
@@ -148,6 +145,40 @@ def test_rna():
         "rin": 8,
         "quality_flag": 1,
         "files": {"r1": [r1], "r2": [r1]},
+    }
+
+    # add a demo record.
+    obj["records"] = [record]
+
+    # create validator assert schemas are valid.
+    validator = _fetch_validator("rna")
+    validator.validate(obj)
+
+
+def test_rna_bam():
+
+    # create the ngs object
+    ngs_obj = {
+        "sequencer_platform": "Illumina - NovaSeq 6000",
+        "paired_end_reads": "Paired",
+    }
+    obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
+
+    # add custom entry
+    obj["enrichment_method"] = "Ribo minus"
+    obj["enrichment_vendor_kit"] = "Agilent"
+
+    # create the rna_expression object
+    bam = ARTIFACT_OBJ.copy()
+    bam["data_format"] = "BAM"
+    record = {
+        "cimac_id": "CTTTPPPSA.00",
+        "library_yield_ng": 666,
+        "dv200": 0.7,
+        "rqs": 8,
+        "rin": 8,
+        "quality_flag": 1,
+        "files": {"bam": [bam]},
     }
 
     # add a demo record.

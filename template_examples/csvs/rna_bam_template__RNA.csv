@@ -1,0 +1,12 @@
+"#t","Metadata file for rna expression [bam]"
+"#p","Protocol identifier","test_prism_trial_id"
+"#p","Assay creator","DFCI"
+"#p","Enrichment method","Transcriptome capture"
+"#p","Enrichment kit","Illumina - TruSeq Stranded PolyA mRNA"
+"#p","Sequencer platform","Illumina - HiSeq 3000"
+"#p","Paired end reads","Paired"
+
+"","Samples"
+"#h","Cimac id","Bam file","Library yield ng","Dv200","Rqs","Rin","Quality flag"
+"#d","CTTTPP122.00","gs://local/path/to/fwd.1.1.1.bam,gs://local/path/to/fwd.1.1.1_2.bam","600","0.7","8","","1"
+"#d","CTTTPP123.00","gs://local/path/to/fwd.1.2.1.bam,gs://local/path/to/fwd.1.2.1_2.bam","650","0.8","9","9","1"

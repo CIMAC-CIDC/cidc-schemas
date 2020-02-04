@@ -263,6 +263,7 @@ SUPPORTED_ASSAYS = [
     "ihc",
     "elisa",
     "rna_fastq",
+    "rna_bam",
 ]
 
 SUPPORTED_SHIPPING_MANIFESTS = [

@@ -1039,6 +1039,10 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
             assert len(prism_patch["participants"]) == 2
             assert len(p0["samples"]) == 3
 
+        elif template.type == "h_and_e":
+            assert len(prism_patch["participants"]) == 1
+            assert len(p0["samples"]) == 2
+
         else:
             assert False, f"add {template.type} specific asserts"
 

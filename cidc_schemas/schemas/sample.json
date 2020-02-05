@@ -317,6 +317,36 @@
                 "Other"
             ]
         },
+        "tumor_tissue_total_area_percentage": {
+            "type": "number", 
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Score the percentage of tumor (including tumor bed) tissue area of the slide (e.g. vs non-malignant or normal tissue)" 
+        },
+        "viable_tumor_area_percentage": {
+            "type": "number", 
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Score the percentage of viable tumor cells comprising the tumor bed area" 
+        },
+        "viable_stroma_area_percentage": {
+            "type": "number", 
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Score the evaluation of stromal elements (this indicates the % area of tumor bed occupied by non-tumor cells, including inflammatory cells [lymphocytes, histiocytes, etc], endothelial cells, fibroblasts, etc)"
+        },
+        "necrosis_area_percentage": {
+            "type": "number", 
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Score the percentage area of necrosis"
+        },
+        "fibrosis_area_percentage": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Score the percentage area of Fibrosis"
+        },
         "din": {
             "type": "number", 
             "description": "Provides a DNA Integrity Number as an indication of extraction quality (values of 1-10)" 

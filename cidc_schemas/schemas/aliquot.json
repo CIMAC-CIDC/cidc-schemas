@@ -47,22 +47,6 @@
     "lymphocyte_influx": {
       "description": "Extent of lymphocytic infiltration into the tumor stroma or surrounding environment. Example: 2",
       "type": "string"
-    },
-    "viable_stroma_percent_area": {
-      "description": "Percent area of viable tissue. Example: 10",
-      "type": "string"
-    },
-    "viable_tumor_percent_area": {
-      "description": "Percent area that contains viable tumor cells. Example: 60",
-      "type": "number"
-    },
-    "necrosis_percent_area": {
-      "description": "Percent area of necrotic tissue. Example: 5",
-      "type": "number"
-    },
-    "fibrosis_percent_area": {
-      "description": "Percent area of fibrotic area. Example: 15",
-      "type": "number"
     }
   },
   "required": [

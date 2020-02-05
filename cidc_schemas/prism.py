@@ -273,6 +273,7 @@ SUPPORTED_SHIPPING_MANIFESTS = [
     "normal_blood_dna",
     "normal_tissue_dna",
     "tumor_tissue_dna",
+    "h_and_e",
 ]
 # weird non shipping manifest
 SUPPORTED_WEIRD_MANIFESTS = ["tumor_normal_pairing"]

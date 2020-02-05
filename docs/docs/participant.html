@@ -624,10 +624,6 @@
                                     "description": "The concentration of biological material that was extracted from this aliquot.",
                                     "type": "string"
                                 },
-                                "fibrosis_percent_area": {
-                                    "description": "Percent area of fibrotic area. Example: 15",
-                                    "type": "number"
-                                },
                                 "lymphocyte_influx": {
                                     "description": "Extent of lymphocytic infiltration into the tumor stroma or surrounding environment. Example: 2",
                                     "type": "string"
@@ -642,10 +638,6 @@
                                     ],
                                     "type": "string"
                                 },
-                                "necrosis_percent_area": {
-                                    "description": "Percent area of necrotic tissue. Example: 5",
-                                    "type": "number"
-                                },
                                 "quantity": {
                                     "description": "Quantity of each aliquot shipped.",
                                     "type": "integer"
@@ -654,14 +646,6 @@
                                     "description": "Two digit number that indicates the sequential order of slide cuts, assigned by the CIMAC-CIDC Network.",
                                     "pattern": "^[0-9]{1,2}$",
                                     "type": "string"
-                                },
-                                "viable_stroma_percent_area": {
-                                    "description": "Percent area of viable tissue. Example: 10",
-                                    "type": "string"
-                                },
-                                "viable_tumor_percent_area": {
-                                    "description": "Percent area that contains viable tumor cells. Example: 60",
-                                    "type": "number"
                                 }
                             },
                             "required": [
@@ -777,6 +761,12 @@
                         "description": "Provides a DNA Integrity Number as an indication of extraction quality (values of 1-10)",
                         "type": "number"
                     },
+                    "fibrosis_area_percentage": {
+                        "description": "Score the percentage area of Fibrosis",
+                        "maximum": 100,
+                        "minimum": 0,
+                        "type": "number"
+                    },
                     "fixation_stabilization_type": {
                         "description": "Type of specimen fixation or stabilization that was employed by the site directly after collection.",
                         "enum": [
@@ -849,6 +839,12 @@
                             "Other"
                         ],
                         "type": "string"
+                    },
+                    "necrosis_area_percentage": {
+                        "description": "Score the percentage area of necrosis",
+                        "maximum": 100,
+                        "minimum": 0,
+                        "type": "number"
                     },
                     "parent_sample_id": {
                         "description": "Sample identifier assigned by the biorepository site. Example: EA123-45.",
@@ -1059,6 +1055,12 @@
                         "description": "ICD-0-3 site code description. e.g. Upper lobe, lung",
                         "type": "string"
                     },
+                    "tumor_tissue_total_area_percentage": {
+                        "description": "Score the percentage of tumor (including tumor bed) tissue area of the slide (e.g. vs non-malignant or normal tissue)",
+                        "maximum": 100,
+                        "minimum": 0,
+                        "type": "number"
+                    },
                     "type_of_primary_container": {
                         "description": "The format in which the sample was sent.",
                         "enum": [
@@ -1097,6 +1099,18 @@
                             "Other"
                         ],
                         "type": "string"
+                    },
+                    "viable_stroma_area_percentage": {
+                        "description": "Score the evaluation of stromal elements (this indicates the % area of tumor bed occupied by non-tumor cells, including inflammatory cells [lymphocytes, histiocytes, etc], endothelial cells, fibroblasts, etc)",
+                        "maximum": 100,
+                        "minimum": 0,
+                        "type": "number"
+                    },
+                    "viable_tumor_area_percentage": {
+                        "description": "Score the percentage of viable tumor cells comprising the tumor bed area",
+                        "maximum": 100,
+                        "minimum": 0,
+                        "type": "number"
                     }
                 },
                 "required": [

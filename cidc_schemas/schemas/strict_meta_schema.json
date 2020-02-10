@@ -1,0 +1,56 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "strict_meta_schema",
+    "title": "Strict meta-schema",
+    "allOf": [
+        {"$ref" : "http://json-schema.org/draft-07/schema"},
+        {
+            "properties": {
+                "$id": {"$comment": "defined in draft-07"},
+                "$schema": {"$comment": "defined in draft-07"},
+                "$ref": {"$comment": "defined in draft-07"},
+                "$comment": {"$comment": "defined in draft-07"},
+                "title": {"$comment": "defined in draft-07"},
+                "description": {"$comment": "defined in draft-07"},
+                "readOnly": {"$comment": "defined in draft-07"},
+                "examples": {"$comment": "defined in draft-07"},
+                "multipleOf": {"$comment": "defined in draft-07"},
+                "maximum": {"$comment": "defined in draft-07"},
+                "exclusiveMaximum": {"$comment": "defined in draft-07"},
+                "minimum": {"$comment": "defined in draft-07"},
+                "exclusiveMinimum": {"$comment": "defined in draft-07"},
+                "maxLength": {"$comment": "defined in draft-07"},
+                "minLength": {"$comment": "defined in draft-07"},
+                "pattern": {"$comment": "defined in draft-07"},
+                "additionalItems": {"$comment": "defined in draft-07"},
+                "items": {"$comment": "defined in draft-07"},
+                "maxItems": {"$comment": "defined in draft-07"},
+                "minItems": {"$comment": "defined in draft-07"},
+                "uniqueItems": {"$comment": "defined in draft-07"},
+                "contains": {"$comment": "defined in draft-07"},
+                "maxProperties": {"$comment": "defined in draft-07"},
+                "minProperties": {"$comment": "defined in draft-07"},
+                "required": {"$comment": "defined in draft-07"},
+                "additionalProperties": {"$comment": "defined in draft-07"},
+                "definitions": {"$comment": "defined in draft-07"},
+                "properties": {"$comment": "defined in draft-07"},
+                "patternProperties": {"$comment": "defined in draft-07"},
+                "dependencies": {"$comment": "defined in draft-07"},
+                "propertyNames": {"$comment": "defined in draft-07"},
+                "enum": {"$comment": "defined in draft-07"},
+                "type": {"$comment": "defined in draft-07"},
+                "format": {"$comment": "defined in draft-07"},
+                "contentMediaType": {"$comment": "defined in draft-07"},
+                "contentEncoding": {"$comment": "defined in draft-07"},
+                "if": {"$comment": "defined in draft-07"},
+                "then": {"$comment": "defined in draft-07"},
+                "else": {"$comment": "defined in draft-07"},
+                "allOf": {"$comment": "defined in draft-07"},
+                "anyOf": {"$comment": "defined in draft-07"},
+                "oneOf": {"$comment": "defined in draft-07"},
+                "not": {"$comment": "defined in draft-07"}
+            }
+        }
+    ]
+}
+  

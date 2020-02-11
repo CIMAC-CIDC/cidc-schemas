@@ -13,7 +13,7 @@ import dateparser
 import jsonschema
 from jsonschema.exceptions import ValidationError
 
-from .constants import SCHEMA_DIR
+from .constants import SCHEMA_DIR, METASCHEMA_JSON
 from .util import get_all_paths, split_python_style_path, JSON
 
 
@@ -72,6 +72,9 @@ class _Validator(jsonschema.Draft7Validator):
     and then collecting all refs and checking existence of a corresponding value.
     
     """
+
+    with open(METASCHEMA_JSON) as metaschema_file:
+        META_SCHEMA = json.load(metaschema_file)
 
     def __init__(self, *args, **kwargs):
 
@@ -204,6 +207,31 @@ class _Validator(jsonschema.Draft7Validator):
         return repr(ref) in in_doc_refs_cache[ref_path_pattern]
 
 
+def _just_load_a_schema(
+    schema_path: str,
+    schema_root: str = SCHEMA_DIR,
+    return_validator: bool = False,
+    on_refs: Optional[Callable[[dict], dict]] = None,
+) -> dict:
+
+    assert os.path.isabs(schema_root), "schema_root must be an absolute path"
+
+    # Load schema with resolved $refs
+    schema_path = os.path.join(schema_root, schema_path)
+    with open(schema_path) as schema_file:
+        base_uri = f"file://{schema_root}/"
+        try:
+            json_spec = json.load(schema_file)
+        except Exception as e:
+            raise Exception(f"Failed loading json {schema_file}") from e
+        if on_refs:
+            schema = _map_refs(json_spec, on_refs)
+        else:
+            schema = _resolve_refs(base_uri, json_spec)
+
+    return schema
+
+
 def load_and_validate_schema(
     schema_path: str,
     schema_root: str = SCHEMA_DIR,
@@ -220,21 +248,7 @@ def load_and_validate_schema(
     the validator and the schema used in the validator.
     validator.
     """
-    assert os.path.isabs(schema_root), "schema_root must be an absolute path"
-
-    # Load schema with resolved $refs
-    schema_path = os.path.join(schema_root, schema_path)
-    with open(schema_path) as schema_file:
-        base_uri = f"file://{schema_root}/"
-        try:
-            json_spec = json.load(schema_file)
-        except Exception as e:
-            raise Exception(f"Failed loading json {schema_file}") from e
-        if on_refs:
-            schema = _map_refs(json_spec, on_refs)
-        else:
-            schema = _resolve_refs(base_uri, json_spec)
-
+    schema = _just_load_a_schema(schema_path, schema_root, return_validator, on_refs)
     # Ensure schema is valid
     # NOTE: $refs were resolved above, so no need for a RefResolver here
     validator = _Validator(schema)

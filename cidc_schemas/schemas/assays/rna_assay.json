@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "id": "rna_expression_assay",
+  "id": "rna_assay",
   "title": "RNA Gene Expression Assay",
   "type": "object",
   "description": "Additional properties to describe a RNA assay for expression analysis.",
@@ -9,6 +9,9 @@
     { "$ref": "assays/components/ngs_assay_core.json" }
   ],
   "properties": {
+    "assay_creator": {"$comment": "defined in assay_core.json"},
+    "sequencer_platform": {"$comment": "defined in ngs_assay_core.json"},
+    "paired_end_reads": {"$comment": "defined in ngs_assay_core.json"},
     "enrichment_method": {
       "description": "Method used for enriching for mRNA.",
       "type": "string",
@@ -19,28 +22,21 @@
       "type": "string",
       "enum": ["Agilent", "Twist", "IDT", "NEB", "Illumina - TruSeq Stranded PolyA mRNA"]
     },
-    "stranded_library": {
-      "description": "Is the RNAseq library stranded or not.",
-      "type": "boolean"
-    },
-    "library_type": {
-      "description": "The type of RNAseq library generated.",
-      "type": "string",
-      "enum": ["ff-firststrand",
-        "ff-secondstrand",
-        "ff-unstranded",
-        "fr-firststrand",
-        "fr-secondstrand",
-        "fr-unstranded",
-        "transfrags"]
-    },
     "records": {
       "type": "array",
       "description": "A single data record from RNAseq assay.",
       "items": {
-        "$ref": "assays/components/ngs/rna_expression_entry.json"
+        "$ref": "assays/components/ngs/rna/rna_entry.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "cimac_id"
       }
     }
   },
-  "required": ["enrichment_method", "records"]
+  "required": [
+    "enrichment_method",
+    "records"
+  ],
+  "mergeStrategy": "objectMerge"
 }

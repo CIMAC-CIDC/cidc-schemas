@@ -26,17 +26,10 @@
       "description": "Indicates if the sequencing was performed paired or single ended.",
       "type": "string",
       "enum": ["Paired", "Single"]
-    },
-    "read_length": {
-      "description": "Number of cycles for each sequencing read.",
-      "type": "integer",
-      "exclusiveMinimum": 0,
-      "maximum": 1000
     }
   },
   "required": [
     "sequencer_platform",
-    "paired_end_reads",
-    "read_length"
+    "paired_end_reads"
   ]
 }

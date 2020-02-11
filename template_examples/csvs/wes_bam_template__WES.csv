@@ -1,4 +1,4 @@
-"#t","Metadata file for wes"
+"#t","Metadata file for wes [bam]"
 "#p","Protocol identifier","test_prism_trial_id"
 "#p","Assay creator","Mount Sinai"
 "#p","Sequencing protocol","Express Somatic Human WES (Deep Coverage) v1.1"
@@ -9,6 +9,6 @@
 "#p","Bait set","whole_exome_illumina_coding_v1"
 
 "","Samples"
-"#h","Cimac id","BAM file","Sequencing date","Quality flag"
+"#h","Cimac id","Bam file","Sequencing date","Quality flag"
 "#d","CTTTPP111.00","gs://local/path/to/fwd.1.1.1.bam,gs://local/path/to/fwd.1.1.1_2.bam","2010-01-01 00:00:00","1"
 "#d","CTTTPP121.00","gs://local/path/to/fwd.1.2.1.bam,gs://local/path/to/fwd.1.2.1_2.bam","2010-01-01 00:00:00","1"

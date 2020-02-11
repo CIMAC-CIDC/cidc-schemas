@@ -31,16 +31,16 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Metadata file for WES [BAM]</h1>
+        <h1>Metadata file for RNA expression [FASTQ].</h1>
         <p>
-            <b>Description:</b>  Metadata information for whole exome sequencing (WES) data submission via BAM files.
+            <b>Description:</b>  Metadata information for rna expression data submission via FASTQ files.
         </p>
         
     </div>
 
   <div class="container">
     
-      <h3>Worksheet - WES</h3>
+      <h3>Worksheet - RNA</h3>
   
     <h4>Preamble Rows</h4>
     
@@ -56,10 +56,6 @@
             <th>Data Type</th>
         </tr>
         </thead>
-        
-            
-        
-            
         
             
         
@@ -124,20 +120,20 @@
                 <tr>
     <td>
         
-            <span id="sequencing protocol">
-                sequencing protocol
+            <span id="enrichment method">
+                enrichment method
             </span>
             
         
     </td>
     <td width=55%>
         
-            Protocol and version used for the sequencing.
+            Method used for enriching for mRNA.
         
     </td>
     <td>
         
-            <a href="assays.wes_assay.html#sequencing_protocol">assays.wes_assay#sequencing_protocol</a>
+            <a href="assays.rna_assay.html#enrichment_method">assays.rna_assay#enrichment_method</a>
         
     </td>
 </tr>
@@ -147,20 +143,20 @@
                 <tr>
     <td>
         
-            <span id="library kit">
-                library kit
+            <span id="enrichment kit">
+                enrichment kit
             </span>
             
         
     </td>
     <td width=55%>
         
-            The library construction kit.
+            Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT.
         
     </td>
     <td>
         
-            <a href="assays.components.ngs_assay_core.html#library_kit">assays.components.ngs_assay_core#library_kit</a>
+            <a href="assays.rna_assay.html#enrichment_vendor_kit">assays.rna_assay#enrichment_vendor_kit</a>
         
     </td>
 </tr>
@@ -212,52 +208,6 @@
 </tr>
             
         
-            
-                <tr>
-    <td>
-        
-            <span id="read length">
-                read length
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Number of cycles for each sequencing read.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.ngs_assay_core.html#read_length">assays.components.ngs_assay_core#read_length</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="bait set">
-                bait set
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Bait set ID.
-        
-    </td>
-    <td>
-        
-            <a href="assays.wes_assay.html#bait_set">assays.wes_assay#bait_set</a>
-        
-    </td>
-</tr>
-            
-        
     </table>
   
   
@@ -277,6 +227,14 @@
             <th>Data Type</th>
         </tr>
         </thead>
+        
+            
+        
+            
+        
+            
+        
+            
         
             
         
@@ -314,8 +272,8 @@
                 <tr>
     <td>
         
-            <span id="BAM file">
-                BAM file
+            <span id="forward fastq">
+                forward fastq
             </span>
             
         
@@ -337,20 +295,112 @@
                 <tr>
     <td>
         
-            <span id="sequencing date">
-                sequencing date
+            <span id="reverse fastq">
+                reverse fastq
             </span>
             
         
     </td>
     <td width=55%>
         
-            Date of sequencing.
+            A comma-separated list of paths to files on a user's computer.
         
     </td>
     <td>
         
-            <a href="assays.components.ngs.wes.wes_entry.html#sequencing_date">assays.components.ngs.wes.wes_entry#sequencing_date</a>
+            <a href="assays.components.multiple_local_files.html#file_path_list">assays.components.multiple_local_files#file_path_list</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="library yield ng">
+                library yield ng
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Resulting yield (in ng) from library construction.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.ngs.rna.rna_entry.html#library_yield_ng">assays.components.ngs.rna.rna_entry#library_yield_ng</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="dv200">
+                dv200
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The percentage of fragments > 200 nucleotides.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.ngs.rna.rna_entry.html#dv200">assays.components.ngs.rna.rna_entry#dv200</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="rqs">
+                rqs
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            RNA quality score. (0-10)
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.ngs.rna.rna_entry.html#rqs">assays.components.ngs.rna.rna_entry#rqs</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="rin">
+                rin
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            RNA integrity number. (0-10)
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.ngs.rna.rna_entry.html#rin">assays.components.ngs.rna.rna_entry#rin</a>
         
     </td>
 </tr>
@@ -373,7 +423,17 @@
     </td>
     <td>
         
-            <a href="assays.components.ngs.wes.wes_entry.html#quality_flag">assays.components.ngs.wes.wes_entry#quality_flag</a>
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
         
     </td>
 </tr>

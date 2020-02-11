@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "rna_entry",
+  "title": "RNAseq assay record",
+  "type": "object",
+  "description": "A single data record from RNAseq assay.",
+  "additionalProperties": false,
+  "allOf": [
+    { "$ref": "assays/components/ngs/ngs_assay_record.json" }
+  ],
+  "properties": {
+    "library_yield_ng": {
+      "description": "Resulting yield (in ng) from library construction.",
+      "type": "number"
+    },
+    "dv200": {
+      "description": "The percentage of fragments > 200 nucleotides.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "rqs": {
+      "description": "RNA quality score. (0-10)",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "rin": {
+      "description": "RNA integrity number. (0-10)",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "quality_flag": {
+      "description": "Flag used for quality.",
+      "type": "number"
+    },
+    "cimac_id": {"comment": "defined in ngs_assay_record.json"},
+    "files": {"comment": "defined in ngs_assay_record.json"}
+  },
+  "mergeStrategy": "objectMerge"
+}

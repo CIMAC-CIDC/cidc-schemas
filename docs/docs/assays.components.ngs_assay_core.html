@@ -144,39 +144,6 @@
             
         
             
-                <tr>
-    <td>
-        
-            <span id="read_length">
-                read_length
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Number of cycles for each sequencing read.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                integer 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
         
         
             
@@ -218,6 +185,37 @@
         
             
         
+            
+                <tr>
+    <td>
+        
+            <span id="read_length">
+                read_length
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Number of cycles for each sequencing read.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                integer 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
             
         
     </table>
@@ -268,8 +266,7 @@
     },
     "required": [
         "sequencer_platform",
-        "paired_end_reads",
-        "read_length"
+        "paired_end_reads"
     ],
     "title": "NGS Assay Core",
     "type": "object"

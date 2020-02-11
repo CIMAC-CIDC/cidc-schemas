@@ -14,7 +14,6 @@
       "sequencer_platform": {"$comment": "defined in ngs_assay_core.json"},
       "library_kit": {"$comment": "defined in ngs_assay_core.json"},
       "paired_end_reads": {"$comment": "defined in ngs_assay_core.json"},
-      "read_length": {"$comment": "defined in ngs_assay_core.json"},
       "sequencing_protocol": {
           "description": "Protocol and version used for the sequencing.",
           "type": "string",
@@ -24,6 +23,12 @@
           "description": "Bait set ID.",
           "type": "string",
           "enum": ["whole_exome_illumina_coding_v1"]
+      },
+      "read_length": {
+          "description": "Number of cycles for each sequencing read.",
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 1000
       },
       "records": {
           "type": "array",
@@ -40,7 +45,8 @@
   "required": [
     "records",
     "sequencing_protocol",
-    "bait_set"
+    "bait_set",
+    "read_length"
   ],
   "mergeStrategy": "objectMerge"
 }

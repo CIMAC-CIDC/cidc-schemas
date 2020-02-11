@@ -38,7 +38,7 @@
           },
           "read length": {
             "merge_pointer": "0/read_length",
-            "type_ref": "assays/components/ngs_assay_core.json#properties/read_length"
+            "type_ref": "assays/wes_assay.json#properties/read_length"
           },
           "bait set": {
             "merge_pointer": "0/bait_set",

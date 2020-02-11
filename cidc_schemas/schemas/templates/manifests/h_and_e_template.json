@@ -1,0 +1,217 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "h_and_e",
+    "title": "Shipping manifest for Hematoxylin and Eosin stain",
+    "type": "object",
+    "category": "manifest",
+    "description": "Shipping / receiving manifest for transferring H&E slides.",
+    "properties": {
+        "worksheets": {
+            "Shipment": {
+                "prism_preamble_object_schema": "clinical_trial.json",
+                "prism_preamble_object_pointer": "/shipments/0",
+                "prism_data_object_pointer": "/shipped",
+                "preamble_rows": {
+                    "manifest id": {
+                        "merge_pointer": "/manifest_id",
+                        "type_ref": "shipping_core.json#properties/manifest_id"
+                    },
+                    "protocol identifier": {
+                        "merge_pointer": "2/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    },
+                    "assay priority": {
+                        "merge_pointer": "/assay_priority",
+                        "type_ref": "shipping_core.json#properties/assay_priority"
+                    },
+                    "assay type": {
+                        "merge_pointer": "/assay_type",
+                        "type_ref": "shipping_core.json#properties/assay_type"
+                    },
+                    "receiving party": {
+                        "merge_pointer": "/receiving_party",
+                        "type_ref": "shipping_core.json#properties/receiving_party"
+                    },
+                    "courier": {
+                        "merge_pointer": "/courier",
+                        "type_ref": "shipping_core.json#properties/courier"
+                    },
+                    "tracking number": {
+                        "merge_pointer": "/tracking_number",
+                        "type_ref": "shipping_core.json#properties/tracking_number"
+                    },
+                    "account number": {
+                        "merge_pointer": "/account_number",
+                        "type_ref": "shipping_core.json#properties/account_number"
+                    },
+                    "shipping condition": {
+                        "merge_pointer": "/shipping_condition",
+                        "type_ref": "shipping_core.json#properties/shipping_condition"
+                    },
+                    "date shipped": {
+                        "merge_pointer": "/date_shipped",
+                        "type_ref": "shipping_core.json#properties/date_shipped"
+                    },
+                    "date received": {
+                        "merge_pointer": "/date_received",
+                        "type_ref": "shipping_core.json#properties/date_received"
+                    },
+                    "quality of shipment": {
+                        "merge_pointer": "/quality_of_shipment",
+                        "type_ref": "shipping_core.json#properties/quality_of_shipment"
+                    },
+                    "ship from": {
+                        "merge_pointer": "/ship_from",
+                        "type_ref": "shipping_core.json#properties/ship_from"
+                    },
+                    "ship to": {
+                        "merge_pointer": "/ship_to",
+                        "type_ref": "shipping_core.json#properties/ship_to"
+                    }
+                }
+            },
+
+            "Samples": {
+                "prism_preamble_object_schema": "clinical_trial.json",
+                "prism_preamble_object_pointer": "#",
+                "prism_data_object_pointer": "/participants/0/samples/0",
+                "data_columns": {
+                    "IDs": {
+                        "entry (#)": {
+                            "merge_pointer": "/shipping_entry_number",
+                            "type_ref": "sample.json#properties/shipping_entry_number"
+                        },
+                        "collection event name": {
+                            "merge_pointer": "/collection_event_name",
+                            "type_ref": "sample.json#properties/collection_event_name"
+                        },
+                        "cohort name": {
+                            "merge_pointer": "2/cohort_name",
+                            "type_ref": "participant.json#properties/cohort_name"
+                        },
+                        "participant ID": {
+                            "merge_pointer": "2/participant_id",
+                            "type_ref": "participant.json#properties/participant_id"
+                        },
+                        "parent sample ID": {
+                            "merge_pointer": "/parent_sample_id",
+                            "type_ref": "sample.json#properties/parent_sample_id"
+                        },
+                        "processed sample ID": {
+                            "merge_pointer": "/processed_sample_id",
+                            "type_ref": "sample.json#properties/processed_sample_id"
+                        },
+                        "CIMAC ID": {
+                            "merge_pointer": "/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id",
+                            "process_as": [
+                                {
+                                    "merge_pointer": "2/cimac_participant_id",
+                                    "type_ref": "participant.json#properties/cimac_participant_id",
+                                    "parse_through": "lambda x: x[:7]"
+                                }
+                            ]
+                        }
+                    },
+                    "Specimen Info Filled by Biorepository": {
+                        "box number": {
+                            "merge_pointer": "/box_number",
+                            "type_ref": "sample.json#properties/box_number"
+                        },
+                        "sample location": {
+                            "merge_pointer": "/sample_location",
+                            "type_ref": "sample.json#properties/sample_location"
+                        },
+                        "type of sample": {
+                            "merge_pointer": "/type_of_sample",
+                            "type_ref": "sample.json#properties/type_of_sample"
+                        },
+                        "type of tumor sample": {
+                            "merge_pointer": "/type_of_tumor_sample",
+                            "type_ref": "sample.json#properties/type_of_tumor_sample"
+                        },
+                        "sample collection procedure": {
+                            "merge_pointer": "/sample_collection_procedure",
+                            "type_ref": "sample.json#properties/sample_collection_procedure"
+                        },
+                        "core number": {
+                            "merge_pointer": "/core_number",
+                            "type_ref": "sample.json#properties/core_number"
+                        },
+                        "fixation/stabilization type": {
+                            "merge_pointer": "/fixation_stabilization_type",
+                            "type_ref": "sample.json#properties/fixation_stabilization_type"
+                        },
+                        "processed sample type": {
+                            "merge_pointer": "/processed_sample_type",
+                            "type_ref": "sample.json#properties/processed_sample_type"
+                        },
+                        "processed sample quantity": {
+                            "merge_pointer": "/processed_sample_quantity",
+                            "type_ref": "sample.json#properties/processed_sample_quantity"
+                        },
+                        "tumor tissue (% total area)": {
+                            "merge_pointer": "/tumor_tissue_total_area_percentage",
+                            "type_ref": "sample.json#properties/tumor_tissue_total_area_percentage"
+                        }
+                    },
+                    "Filled by CIMAC Lab": {
+                        "viable tumor (% area)": {
+                            "merge_pointer": "/viable_tumor_area_percentage",
+                            "type_ref": "sample.json#properties/viable_tumor_area_percentage"
+                        },
+                        "viable stroma (% area)": {
+                            "merge_pointer": "/viable_stroma_area_percentage",
+                            "type_ref": "sample.json#properties/viable_stroma_area_percentage"
+                        },
+                        "necrosis (% area)": {
+                            "merge_pointer": "/necrosis_area_percentage",
+                            "type_ref": "sample.json#properties/necrosis_area_percentage"
+                        },
+                        "fibrosis (% area)": {
+                            "merge_pointer": "/fibrosis_area_percentage",
+                            "type_ref": "sample.json#properties/fibrosis_area_percentage"
+                        },
+                        "material used": {
+                            "merge_pointer": "/material_used",
+                            "type_ref": "sample.json#properties/material_used"
+                        },
+                        "material used units": {
+                            "merge_pointer": "/material_used_units",
+                            "type_ref": "sample.json#properties/material_used_units"
+                        },
+                        "material remaining": {
+                            "merge_pointer": "/material_remaining",
+                            "type_ref": "sample.json#properties/material_remaining"
+                        },
+                        "material remaining units": {
+                            "merge_pointer": "/material_remaining_units",
+                            "type_ref": "sample.json#properties/material_remaining_units"
+                        },
+                        "material storage condition": {
+                            "merge_pointer": "/material_storage_condition",
+                            "type_ref": "sample.json#properties/material_storage_condition"
+                        },
+                        "quality of sample": {
+                            "merge_pointer": "/quality_of_sample",
+                            "type_ref": "sample.json#properties/quality_of_sample"
+                        },
+                        "sample replacement": {
+                            "merge_pointer": "/sample_replacement",
+                            "type_ref": "sample.json#properties/sample_replacement"
+                        },
+                        "residual sample use": {
+                            "merge_pointer": "/residual_sample_use",
+                            "type_ref": "sample.json#properties/residual_sample_use"
+                        },
+                        "comments": {
+                            "merge_pointer": "/comments",
+                            "type_ref": "sample.json#properties/comments",
+                            "allow_empty": true
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

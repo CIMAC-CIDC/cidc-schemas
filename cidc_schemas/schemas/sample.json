@@ -75,6 +75,9 @@
                 "Cycle_5_Week_9",
                 "Progression",
 
+                "Week_5",
+                "Week_7",
+
                 "Cycle_3",
                 "End_of_treatment",
 
@@ -126,7 +129,9 @@
                 "End_of_Treatment": "10026",
                 "Progression": "10026",
 
-                "On_Treatment" : "10021"
+                "On_Treatment" : "10021",
+                "Week_5": "10021",
+                "Week_7": "10021"
             }
         },
         "sample_location": {
@@ -316,6 +321,36 @@
                 "Not Reported",
                 "Other"
             ]
+        },
+        "tumor_tissue_total_area_percentage": {
+            "type": "number", 
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Score the percentage of tumor (including tumor bed) tissue area of the slide (e.g. vs non-malignant or normal tissue)" 
+        },
+        "viable_tumor_area_percentage": {
+            "type": "number", 
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Score the percentage of viable tumor cells comprising the tumor bed area" 
+        },
+        "viable_stroma_area_percentage": {
+            "type": "number", 
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Score the evaluation of stromal elements (this indicates the % area of tumor bed occupied by non-tumor cells, including inflammatory cells [lymphocytes, histiocytes, etc], endothelial cells, fibroblasts, etc)"
+        },
+        "necrosis_area_percentage": {
+            "type": "number", 
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Score the percentage area of necrosis"
+        },
+        "fibrosis_area_percentage": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Score the percentage area of Fibrosis"
         },
         "din": {
             "type": "number", 

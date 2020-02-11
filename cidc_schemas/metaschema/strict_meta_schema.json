@@ -31,7 +31,10 @@
                 "maxProperties": {"$comment": "defined in draft-07"},
                 "minProperties": {"$comment": "defined in draft-07"},
                 "required": {"$comment": "defined in draft-07"},
-                "additionalProperties": {"$comment": "defined in draft-07"},
+                "additionalProperties": {
+                    "$comment": "defined in draft-07",
+                    "const": false
+                },
                 "definitions": {"$comment": "defined in draft-07"},
                 "properties": {"$comment": "defined in draft-07"},
                 "patternProperties": {"$comment": "defined in draft-07"},
@@ -48,8 +51,13 @@
                 "allOf": {"$comment": "defined in draft-07"},
                 "anyOf": {"$comment": "defined in draft-07"},
                 "oneOf": {"$comment": "defined in draft-07"},
-                "not": {"$comment": "defined in draft-07"}
-            }
+                "not": {"$comment": "defined in draft-07"},
+
+                "mergeStrategy": {},
+                "mergeOptions": {}                
+            },
+            "required": ["additionalProperties"],
+            "additionalProperties": false
         }
     ]
 }

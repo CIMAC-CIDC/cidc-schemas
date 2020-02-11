@@ -75,6 +75,9 @@
                 "Cycle_5_Week_9",
                 "Progression",
 
+                "Wees_5",
+                "Week_7",
+
                 "Cycle_3",
                 "End_of_treatment",
 
@@ -126,7 +129,9 @@
                 "End_of_Treatment": "10026",
                 "Progression": "10026",
 
-                "On_Treatment" : "10021"
+                "On_Treatment" : "10021",
+                "Week_5": "10021",
+                "Week_7": "10021"
             }
         },
         "sample_location": {

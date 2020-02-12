@@ -2,6 +2,7 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "strict_meta_schema",
     "title": "Strict meta-schema",
+    "$comment": "MAYBE TODO make all the sub-schema auto-refs ('$ref':'#') to be to the strict schema, following draft-07",
     "allOf": [
         {"$ref" : "http://json-schema.org/draft-07/schema"},
         {
@@ -53,11 +54,27 @@
                 "oneOf": {"$comment": "defined in draft-07"},
                 "not": {"$comment": "defined in draft-07"},
 
-                "mergeStrategy": {},
-                "mergeOptions": {}                
+                "prism_template_root_object_pointer": {"$comment": "TODO remove after template DSL migration"},
+                "prism_template_root_object_schema": {"$comment": "TODO remove after template DSL migration"},
+
+                "category": {"type": "string", "enum": ["analysis", "manifest", "metadata"]},
+
+                "mergeStrategy": {"$comment": "jsonmerge specific"},
+                "mergeOptions": {"$comment": "jsonmerge specific"},
+
+                "inheritableCore": {
+                    "$comment": "Shows that a schema is an extensible 'core' to inherit from and doesn't have `additionalProperties` set to false. No end user objects should be of that schema, only of something 'descendant' from it.",
+                    "const": true
+                }                
             },
-            "required": ["additionalProperties"],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "oneOf": [{
+                "required": ["additionalProperties"]
+            }, {
+                "not": {"required": ["additionalProperties"]},
+                "required": ["inheritableCore"],
+                "$comment": "Maybe rename inheritableCore?"
+            }]
         }
     ]
 }

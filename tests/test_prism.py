@@ -6,19 +6,12 @@
 import os
 import copy
 import pytest
-import jsonschema
-import json
 import yaml
 from deepdiff import grep, DeepDiff
-from pprint import pprint
 from collections import namedtuple
 from jsonmerge import Merger
-from unittest.mock import MagicMock, patch as mock_patch
+from unittest.mock import MagicMock
 
-
-from .constants import TEST_DATA_DIR
-
-from cidc_schemas import prism
 from cidc_schemas.prism import (
     prismify,
     merge_artifact,
@@ -35,7 +28,6 @@ from cidc_schemas.prism import (
     merge_artifact_extra_metadata,
     PRISM_MERGE_STRATEGIES,
     PRISM_PRISMIFY_STRATEGIES,
-    ThrowOnCollision,
     MergeCollisionException,
     generate_analysis_configs_from_upload_patch,
     _ANALYSIS_CONF_GENERATORS,
@@ -44,18 +36,16 @@ from cidc_schemas.prism import (
 
 from cidc_schemas.json_validation import load_and_validate_schema, InDocRefNotFoundError
 from cidc_schemas.template import Template
-from cidc_schemas.template_writer import RowType
 from cidc_schemas.util import participant_id_from_cimac
 from cidc_schemas.template_reader import XlTemplateReader
 
-from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR, TEST_DATA_DIR
+from .constants import SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR, TEST_DATA_DIR
 from .test_templates import (
     template_set,
     template,
     template_example,
     template_example_xlsx_path,
 )
-from .test_assays import ARTIFACT_OBJ
 
 
 def prismify_test_set(filter=None):

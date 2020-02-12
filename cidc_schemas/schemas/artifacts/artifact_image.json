@@ -4,34 +4,45 @@
   "title": "Image Artifact",
   "type": "object",
   "description": "Information about an image file.",
+  "additionalProperties": false,
+  "properties": {
+    "height": {
+      "description": "Height of the image.",
+      "type": "integer"
+    },
+    "width": {
+      "description": "Width of the image.",
+      "type": "integer"
+    },
+    "channels": {
+      "description": "Number of channels in the image.",
+      "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
+      "type": "integer"
+    },
+    "data_format": {
+      "description": "Data format.",
+      "const": "IMAGE"
+    },
+    "upload_placeholder": {"$comment": "defined in artifacts/artifact_core.json"},
+    "artifact_creator": {"$comment": "defined in artifacts/artifact_core.json"},
+    "uploader": {"$comment": "defined in artifacts/artifact_core.json"},
+    "uuid": {"$comment": "defined in artifacts/artifact_core.json"},
+    "file_name": {"$comment": "defined in artifacts/artifact_core.json"},
+    "object_url": {"$comment": "defined in artifacts/artifact_core.json"},
+    "uploaded_timestamp": {"$comment": "defined in artifacts/artifact_core.json"},
+    "file_size_bytes": {"$comment": "defined in artifacts/artifact_core.json"},
+    "md5_hash": {"$comment": "defined in artifacts/artifact_core.json"},
+    "crc32c_hash": {"$comment": "defined in artifacts/artifact_core.json"},
+    "visible": {"$comment": "defined in artifacts/artifact_core.json"},
+    "artifact_category": {"$comment": "defined in artifacts/artifact_core.json"}
+  },
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"
-    },
-    {
-      "properties": {
-        "height": {
-          "description": "Height of the image.",
-          "type": "integer"
-        },
-        "width": {
-          "description": "Width of the image.",
-          "type": "integer"
-        },
-        "channels": {
-          "description": "Number of channels in the image.",
-          "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
-          "type": "integer"
-        },
-        "data_format": {
-          "description": "Data format.",
-          "const": "IMAGE"
-        }
-      }
     }
   ],
   "mergeStrategy": "objectMerge",
-    "anyOf": [
+  "anyOf": [
     { "required": ["height", "width", "channels"] },
     { "required": ["upload_placeholder"] }
   ]

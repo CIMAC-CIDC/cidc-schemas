@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "artifact_core",
   "title": "Artifact Core",
+  "inheritableCore": true,
   "type": "object",
   "description": "Any file artifact associated with a clinical trial.",
   "properties": {

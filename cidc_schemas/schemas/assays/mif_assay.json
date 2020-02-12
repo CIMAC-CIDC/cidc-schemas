@@ -16,12 +16,12 @@
       "items": {
         "$ref": "assays/components/imaging/mif_entry.json"
       }
-    }
-  },
-  "antibody": {
-    "type": "array",
-    "items": {
-      "$ref": "assays/components/mif_antibody.json"
+    },
+    "antibody": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/components/mif_antibody.json"
+      }
     }
   },
   "required": ["records"],

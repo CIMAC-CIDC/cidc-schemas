@@ -16,12 +16,12 @@
       "items": {
         "$ref": "assays/components/imaging/micsss_entry.json"
       }
-    }
-  },
-  "antibody": {
-    "type": "array",
-    "items": {
-      "$ref": "assays/components/micsss_antibody.json"
+    },
+    "antibody": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/components/micsss_antibody.json"
+      }
     }
   },
   "required": ["records"]

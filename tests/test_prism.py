@@ -259,56 +259,62 @@ TEST_PRISM_TRIAL = {
 
 
 # corresponding list of gs_urls.
-WES_FASTQ_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/wes/CTTTPP111.00/r1_0.fastq.gz": "r1.1_0",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/wes/CTTTPP111.00/r1_1.fastq.gz": "r1.1_1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/wes/CTTTPP111.00/r2_0.fastq.gz": "r2.1_0",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/wes/CTTTPP121.00/r1_0.fastq.gz": "r1.2_0",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/wes/CTTTPP121.00/r1_1.fastq.gz": "r1.2_1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/wes/CTTTPP121.00/r2_0.fastq.gz": "r2.2_0",
-}
 
-WES_BAM_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/wes/CTTTPP111.00/reads_0.bam": "bam_whatever_1_0",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/wes/CTTTPP111.00/reads_1.bam": "bam_whatever_1_1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/wes/CTTTPP121.00/reads_0.bam": "bam_whatever_2_0",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/wes/CTTTPP121.00/reads_1.bam": "bam_whatever_2_1",
-}
-
-RNA_FASTQ_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/rna/CTTTPP122.00/r1_0.fastq.gz": "r1.1_0",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/rna/CTTTPP122.00/r1_1.fastq.gz": "r1.1_1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/rna/CTTTPP122.00/r2_0.fastq.gz": "r2.1_0",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/rna/CTTTPP123.00/r1_0.fastq.gz": "r1.2_0",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/rna/CTTTPP123.00/r1_1.fastq.gz": "r1.2_1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/rna/CTTTPP123.00/r2_0.fastq.gz": "r2.2_0",
-}
-
-RNA_BAM_TEMPLATE_EXAMPLE_GS_URLS = {
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/rna/CTTTPP122.00/reads_0.bam": "bam_whatever_1_0",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/rna/CTTTPP122.00/reads_1.bam": "bam_whatever_1_1",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/rna/CTTTPP123.00/reads_0.bam": "bam_whatever_2_0",
-    TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
-    + "/rna/CTTTPP123.00/reads_1.bam": "bam_whatever_2_1",
+EXAMPLE_GS_URLS = {
+    "assays": {
+        "wes": {
+            "fastq": {
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/wes/CTTTPP111.00/r1_0.fastq.gz": "r1.1_0",
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/wes/CTTTPP111.00/r1_1.fastq.gz": "r1.1_1",
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/wes/CTTTPP111.00/r2_0.fastq.gz": "r2.1_0",
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/wes/CTTTPP121.00/r1_0.fastq.gz": "r1.2_0",
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/wes/CTTTPP121.00/r1_1.fastq.gz": "r1.2_1",
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/wes/CTTTPP121.00/r2_0.fastq.gz": "r2.2_0",
+            },
+            "bam": {
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/wes/CTTTPP111.00/reads_0.bam": "bam_whatever_1_0",
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/wes/CTTTPP111.00/reads_1.bam": "bam_whatever_1_1",
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/wes/CTTTPP121.00/reads_0.bam": "bam_whatever_2_0",
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/wes/CTTTPP121.00/reads_1.bam": "bam_whatever_2_1",
+            },
+        },
+        "rna": {
+            "fastq": {
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/rna/CTTTPP122.00/r1_0.fastq.gz": "r1.1_0",
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/rna/CTTTPP122.00/r1_1.fastq.gz": "r1.1_1",
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/rna/CTTTPP122.00/r2_0.fastq.gz": "r2.1_0",
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/rna/CTTTPP123.00/r1_0.fastq.gz": "r1.2_0",
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/rna/CTTTPP123.00/r1_1.fastq.gz": "r1.2_1",
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/rna/CTTTPP123.00/r2_0.fastq.gz": "r2.2_0",
+            },
+            "bam": {
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/rna/CTTTPP122.00/reads_0.bam": "bam_whatever_1_0",
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/rna/CTTTPP122.00/reads_1.bam": "bam_whatever_1_1",
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/rna/CTTTPP123.00/reads_0.bam": "bam_whatever_2_0",
+                TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
+                + "/rna/CTTTPP123.00/reads_1.bam": "bam_whatever_2_1",
+            },
+        },
+    }
 }
 
 NUM_ARTIFACT_FIELDS = 8
@@ -1011,7 +1017,7 @@ def test_merge_artifact_none_md5():
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     validator.validate(ct_1)
 
-    url, uuid = list(WES_FASTQ_TEMPLATE_EXAMPLE_GS_URLS.items())[0]
+    url, uuid = list(EXAMPLE_GS_URLS["assays"]["wes"]["fastq"].items())[0]
     common_args = dict(
         assay_type="wes",
         artifact_uuid=uuid,
@@ -1052,7 +1058,7 @@ def test_merge_artifact_wesfastq_only():
 
     # loop over each url
     searched_urls = []
-    for url, uuid in WES_FASTQ_TEMPLATE_EXAMPLE_GS_URLS.items():
+    for url, uuid in EXAMPLE_GS_URLS["assays"]["wes"]["fastq"].items():
 
         # merge
         ct, artifact, patch_metadata = merge_artifact(
@@ -1087,7 +1093,7 @@ def test_merge_artifact_wesfastq_only():
 
     assert (
         len(dd["dictionary_item_added"])
-        == len(WES_FASTQ_TEMPLATE_EXAMPLE_GS_URLS) * NUM_ARTIFACT_FIELDS
+        == len(EXAMPLE_GS_URLS["assays"]["wes"]["fastq"]) * NUM_ARTIFACT_FIELDS
     ), "Unexpected CT changes"
 
     assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
@@ -1374,21 +1380,29 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert (
             len(merged_gs_keys) == 3 * 2
         )  # 2 files for forward + 1 for rev, per entry/sample in xlsx
-        assert set(merged_gs_keys) == set(WES_FASTQ_TEMPLATE_EXAMPLE_GS_URLS.keys())
+        assert set(merged_gs_keys) == set(
+            EXAMPLE_GS_URLS["assays"]["wes"]["fastq"].keys()
+        )
 
     elif template.type == "wes_bam":
         assert len(merged_gs_keys) == 2 * 2  # 2 files per entry in xlsx
-        assert set(merged_gs_keys) == set(WES_BAM_TEMPLATE_EXAMPLE_GS_URLS.keys())
+        assert set(merged_gs_keys) == set(
+            EXAMPLE_GS_URLS["assays"]["wes"]["bam"].keys()
+        )
 
     elif template.type == "rna_fastq":
         assert (
             len(merged_gs_keys) == 3 * 2
         )  # 2 files for forward + 1 for rev, per entry/sample in xlsx
-        assert set(merged_gs_keys) == set(RNA_FASTQ_TEMPLATE_EXAMPLE_GS_URLS.keys())
+        assert set(merged_gs_keys) == set(
+            EXAMPLE_GS_URLS["assays"]["rna"]["fastq"].keys()
+        )
 
     elif template.type == "rna_bam":
         assert len(merged_gs_keys) == 2 * 2  # 2 files per entry in xlsx
-        assert set(merged_gs_keys) == set(RNA_BAM_TEMPLATE_EXAMPLE_GS_URLS.keys())
+        assert set(merged_gs_keys) == set(
+            EXAMPLE_GS_URLS["assays"]["rna"]["bam"].keys()
+        )
 
     elif template.type == "olink":
         # 2 files per entry in xlsx + 1 file in preamble

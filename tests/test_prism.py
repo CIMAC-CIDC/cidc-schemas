@@ -259,7 +259,7 @@ TEST_PRISM_TRIAL = {
 
 
 # corresponding list of gs_urls.
-WES_TEMPLATE_EXAMPLE_GS_URLS = {
+WES_FASTQ_TEMPLATE_EXAMPLE_GS_URLS = {
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
     + "/wes/CTTTPP111.00/r1_0.fastq.gz": "r1.1_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
@@ -274,7 +274,7 @@ WES_TEMPLATE_EXAMPLE_GS_URLS = {
     + "/wes/CTTTPP121.00/r2_0.fastq.gz": "r2.2_0",
 }
 
-WESBAM_TEMPLATE_EXAMPLE_GS_URLS = {
+WES_BAM_TEMPLATE_EXAMPLE_GS_URLS = {
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
     + "/wes/CTTTPP111.00/reads_0.bam": "bam_whatever_1_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
@@ -285,7 +285,7 @@ WESBAM_TEMPLATE_EXAMPLE_GS_URLS = {
     + "/wes/CTTTPP121.00/reads_1.bam": "bam_whatever_2_1",
 }
 
-RNA_TEMPLATE_EXAMPLE_GS_URLS = {
+RNA_FASTQ_TEMPLATE_EXAMPLE_GS_URLS = {
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
     + "/rna/CTTTPP122.00/r1_0.fastq.gz": "r1.1_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
@@ -300,7 +300,7 @@ RNA_TEMPLATE_EXAMPLE_GS_URLS = {
     + "/rna/CTTTPP123.00/r2_0.fastq.gz": "r2.2_0",
 }
 
-RNABAM_TEMPLATE_EXAMPLE_GS_URLS = {
+RNA_BAM_TEMPLATE_EXAMPLE_GS_URLS = {
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
     + "/rna/CTTTPP122.00/reads_0.bam": "bam_whatever_1_0",
     TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME]
@@ -318,13 +318,12 @@ def test_test_data():
 
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-
     validator.validate(TEST_PRISM_TRIAL)
 
 
 def test_merge_core():
 
-    # create aliquot
+    # create an aliquot
     aliquot = {
         "slide_number": "12",
         "sample_volume_units": "Other",
@@ -335,7 +334,7 @@ def test_merge_core():
         "aliquot_status": "Other",
     }
 
-    # create the sample.
+    # create a sample
     sample = {
         "cimac_id": "CTTTPPP12.34",
         "parent_sample_id": "blank",
@@ -346,7 +345,7 @@ def test_merge_core():
         "type_of_primary_container": "Other",
     }
 
-    # create the participant
+    # create a participant
     participant = {
         "cimac_participant_id": "CTTTPPP",
         "participant_id": "blank",
@@ -354,7 +353,7 @@ def test_merge_core():
         "cohort_name": "Arm_Z",
     }
 
-    # create the trial
+    # create a trial
     ct1 = {
         PROTOCOL_ID_FIELD_NAME: "test",
         "participants": [participant],
@@ -362,7 +361,7 @@ def test_merge_core():
         "allowed_cohort_names": ["Arm_Z"],
     }
 
-    # create validator assert schemas are valid.
+    # create validator, assert schemas are valid
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     schema = validator.schema
     validator.validate(ct1)
@@ -375,7 +374,7 @@ def test_merge_core():
     merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
     ct3 = merger.merge(ct1, ct2)
 
-    # assert we have two participants and their ids are different.
+    # assert we have two participants and their IDs are different
     assert len(ct3["participants"]) == 2
     assert (
         ct3["participants"][0]["cimac_participant_id"]
@@ -438,22 +437,22 @@ MINIMAL_TEST_TRIAL = {
 
 
 def test_minimal_test_data():
+
     # create validators
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-
     validator.validate(MINIMAL_TEST_TRIAL)
 
 
 def test_samples_merge():
 
-    # one with 1 sample
+    # create a1 with 1 sample
     a1 = copy.deepcopy(MINIMAL_TEST_TRIAL)
 
-    # create a2 and modify ids to trigger merge behavior
+    # create a2 and modify IDs to trigger merge behavior
     a2 = copy.deepcopy(a1)
     a2["participants"][0]["samples"][0]["cimac_id"] = "something different"
 
-    # create validator assert schema is valid.
+    # create validator, assert schema is valid
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     schema = validator.schema
 
@@ -475,15 +474,16 @@ def test_prism(xlsx, template):
     if template.type not in SUPPORTED_ASSAYS:
         return
 
-    # turn into object.
+    # turn into object
     ct, file_maps, errs = prismify(xlsx, template)
     assert 0 == len(errs)
 
     if template.type in SUPPORTED_ASSAYS:
-        # olink is different - is will never have array of assay "runs" - only one
+
+        # olink will never have array of multiple assay "runs" - only single run
         if template.type != "olink":
 
-            # also handle WES & RNA differently due to two templates mapping to one assay
+            # WES & RNA have two templates mapping to one assay
             ttype = template.type
             if template.type == "wes_bam" or template.type == "wes_fastq":
                 ttype = "wes"
@@ -491,7 +491,7 @@ def test_prism(xlsx, template):
             elif template.type == "rna_bam" or template.type == "rna_fastq":
                 ttype = "rna"
 
-            # this assert the merging of rows in the template is happening properly
+            # assert that rows in template are merged accurately
             # multiple entries means the merge didn't work
             assert len(ct["assays"][ttype]) == 1
 
@@ -546,8 +546,7 @@ def test_filepath_gen(xlsx, template):
     # parse the spreadsheet and get the file maps
     _, file_maps, errs = prismify(xlsx, template)
     assert len(errs) == 0
-    # we ignore and do not validate 'ct'
-    # because it's only a ct patch not a full ct
+    # we ignore and do not validate 'ct' because it's only a ct patch not a full ct
 
     local_to_gcs_mapping = {}
     for fmap_entry in file_maps:
@@ -566,10 +565,7 @@ def test_filepath_gen(xlsx, template):
     # assert we have the right file counts etc.
     if template.type == "wes_fastq":
 
-        # we should have 2 .fastq files per sample.
-        assert 2 == sum([x.gs_key.endswith("/r1_0.fastq.gz") for x in file_maps])
-        # we should have 4 file total for forward, because we have
-        # a list of two local files for each sample in wes example xlsx.
+        # assert that there are 4 files for forward (r1) - 2 for each sample
         assert 4 == sum(
             [
                 x.gs_key.endswith("/r1_0.fastq.gz")
@@ -577,12 +573,12 @@ def test_filepath_gen(xlsx, template):
                 for x in file_maps
             ]
         )
-        # and only 2 total for reverse (r2) - each sample has just 1.
+        # assert that there are 2 files for reverse (r2) - 1 for each sample
         assert 2 == sum([x.gs_key.endswith("/r2_0.fastq.gz") for x in file_maps])
 
-        # Local files in total:
-        assert 6 == sum([x.local_path.endswith(".fastq.gz") for x in file_maps])
+        # assert that there are 4 + 2 = 6 files in total combining forward and reverse
         assert len(file_maps) == 6
+        assert 6 == sum([x.local_path.endswith(".fastq.gz") for x in file_maps])
         assert 6 == sum(
             [
                 x.gs_key.startswith(TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME])
@@ -601,8 +597,13 @@ def test_filepath_gen(xlsx, template):
 
     elif template.type == "wes_bam":
 
-        # we should have 2 bam in each (2) sample.
-        assert 4 == sum([x.gs_key.endswith(".bam") for x in file_maps])
+        # assert that there are 4 files in total - 2 for each sample
+        assert 4 == sum(
+            [
+                x.gs_key.endswith("/reads_0.bam") or x.gs_key.endswith("/reads_1.bam")
+                for x in file_maps
+            ]
+        )
 
         # in total local
         assert 4 == sum([x.local_path.endswith(".bam") for x in file_maps])
@@ -626,11 +627,8 @@ def test_filepath_gen(xlsx, template):
         )
 
     elif template.type == "rna_fastq":
-        # we should have 2 .fastq files per sample.
-        assert 2 == sum([x.gs_key.endswith("/r1_0.fastq.gz") for x in file_maps])
 
-        # we should have 4 file total for forward, because we have
-        # a list of two local files for each sample in wes example xlsx.
+        # assert that there are 4 files for forward (r1) - 2 for each sample
         assert 4 == sum(
             [
                 x.gs_key.endswith("/r1_0.fastq.gz")
@@ -639,10 +637,10 @@ def test_filepath_gen(xlsx, template):
             ]
         )
 
-        # and only 2 total for reverse (r2) - each sample has just 1.
+        # assert that there are 2 files for reverse (r2) - 1 for each sample
         assert 2 == sum([x.gs_key.endswith("/r2_0.fastq.gz") for x in file_maps])
 
-        # Local files in total:
+        # assert that there are 4 + 2 = 6 files in total combining forward and reverse
         assert 6 == sum([x.local_path.endswith(".fastq.gz") for x in file_maps])
         assert len(file_maps) == 6
         assert 6 == sum(
@@ -662,13 +660,18 @@ def test_filepath_gen(xlsx, template):
 
     elif template.type == "rna_bam":
 
-        # we should have 2 bam in each (2) sample.
-        assert 4 == sum([x.gs_key.endswith(".bam") for x in file_maps])
+        # assert that there are 4 files in total - 2 for each sample
+        assert 4 == sum(
+            [
+                x.gs_key.endswith("/reads_0.bam") or x.gs_key.endswith("/reads_1.bam")
+                for x in file_maps
+            ]
+        )
 
         # in total local
         assert 4 == sum([x.local_path.endswith(".bam") for x in file_maps])
 
-        # 2 in total
+        # 4 in total
         assert len(file_maps) == 4
         assert 4 == sum(
             [
@@ -743,7 +746,7 @@ def test_prismify_cytof_only(xlsx, template):
     ct, file_maps, errs = prismify(xlsx, template, verb=False)
     assert len(errs) == 0
 
-    # we should have 7 files:
+    # we should have 6 files:
     # * 2 raw fcs files (batch-level)
     # * 2 normalized and debarcoded fcs files (sample-level)
     # * 2 processed fcs files (sample-level)
@@ -1008,7 +1011,7 @@ def test_merge_artifact_none_md5():
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     validator.validate(ct_1)
 
-    url, uuid = list(WES_TEMPLATE_EXAMPLE_GS_URLS.items())[0]
+    url, uuid = list(WES_FASTQ_TEMPLATE_EXAMPLE_GS_URLS.items())[0]
     common_args = dict(
         assay_type="wes",
         artifact_uuid=uuid,
@@ -1040,7 +1043,7 @@ def test_merge_artifact_none_md5():
 
 def test_merge_artifact_wesfastq_only():
 
-    # create the clinical trial.
+    # create clinical trial
     ct = copy.deepcopy(TEST_PRISM_TRIAL)
 
     # create validator
@@ -1049,9 +1052,9 @@ def test_merge_artifact_wesfastq_only():
 
     # loop over each url
     searched_urls = []
-    for url, uuid in WES_TEMPLATE_EXAMPLE_GS_URLS.items():
+    for url, uuid in WES_FASTQ_TEMPLATE_EXAMPLE_GS_URLS.items():
 
-        # attempt to merge
+        # merge
         ct, artifact, patch_metadata = merge_artifact(
             ct,
             assay_type="wes",
@@ -1082,10 +1085,9 @@ def test_merge_artifact_wesfastq_only():
 
     dd = DeepDiff(TEST_PRISM_TRIAL, ct)
 
-    # we add 7 required fields per artifact thus `*7`
     assert (
         len(dd["dictionary_item_added"])
-        == len(WES_TEMPLATE_EXAMPLE_GS_URLS) * NUM_ARTIFACT_FIELDS
+        == len(WES_FASTQ_TEMPLATE_EXAMPLE_GS_URLS) * NUM_ARTIFACT_FIELDS
     ), "Unexpected CT changes"
 
     assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
@@ -1093,10 +1095,7 @@ def test_merge_artifact_wesfastq_only():
 
 def test_merge_ct_meta():
     """ 
-    tests merging of two clinical trial metadata
-    objects. Currently this test only supports
-    WES but other tests should be added in the
-    future
+    Tests merging of two clinical trial metadata objects using TEST_PRISM_TRIAL CT.
     """
 
     # create two clinical trials
@@ -1327,7 +1326,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
     full_after_prism, errs = merge_clinical_trial_metadata(prism_patch, original_ct)
     assert not errs
 
-    # Assert we still have a good clinical trial object, so we can save it.
+    # assert we still have a good clinical trial object, so we can save it
     validator.validate(full_after_prism)
 
     patch_copy_4_artifacts = copy.deepcopy(prism_patch)
@@ -1375,21 +1374,21 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert (
             len(merged_gs_keys) == 3 * 2
         )  # 2 files for forward + 1 for rev, per entry/sample in xlsx
-        assert set(merged_gs_keys) == set(WES_TEMPLATE_EXAMPLE_GS_URLS.keys())
+        assert set(merged_gs_keys) == set(WES_FASTQ_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
     elif template.type == "wes_bam":
         assert len(merged_gs_keys) == 2 * 2  # 2 files per entry in xlsx
-        assert set(merged_gs_keys) == set(WESBAM_TEMPLATE_EXAMPLE_GS_URLS.keys())
+        assert set(merged_gs_keys) == set(WES_BAM_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
     elif template.type == "rna_fastq":
         assert (
             len(merged_gs_keys) == 3 * 2
         )  # 2 files for forward + 1 for rev, per entry/sample in xlsx
-        assert set(merged_gs_keys) == set(RNA_TEMPLATE_EXAMPLE_GS_URLS.keys())
+        assert set(merged_gs_keys) == set(RNA_FASTQ_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
     elif template.type == "rna_bam":
         assert len(merged_gs_keys) == 2 * 2  # 2 files per entry in xlsx
-        assert set(merged_gs_keys) == set(RNABAM_TEMPLATE_EXAMPLE_GS_URLS.keys())
+        assert set(merged_gs_keys) == set(RNA_BAM_TEMPLATE_EXAMPLE_GS_URLS.keys())
 
     elif template.type == "olink":
         # 2 files per entry in xlsx + 1 file in preamble
@@ -1410,7 +1409,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 9  # 9 output files
 
     elif template.type == "wes_analysis":
-        # 15 (for each run) + 15 (for each tumor sample) + 15 (for each normal sample)
+        # 2 * ( 16 run level + ( 15 tumor + 15 normal)) files
         assert len(merged_gs_keys) == 2 * (16 + (15 * 2))
 
     else:
@@ -1457,13 +1456,13 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(full_ct["assays"][template.type]) == 1
 
     elif template.type == "cytof_analysis":
-        # the original CyTOF upload had 2 records, hence after analysis, it's analysis has 2 records
+        # the original CyTOF upload had 2 records, hence it's analysis has 2 records
         assert (
             len(full_ct["assays"]["cytof"][0]["records"]) == 2
         ), "More records than expected"
 
     elif template.type == "wes_analysis":
-        # the original WES upload had 2 records, hence after analysis, it's analysis has 2 records
+        # the original WES upload had 2 records, hence it's analysis has 2 records
         assert (
             len(full_ct["assays"]["wes"][0]["records"]) == 2
         ), "More records than expected"
@@ -1481,7 +1480,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     if template.type == "wes_fastq":
 
-        # 6 files * 7 artifact attributes
+        # 6 files * artifact attributes
         assert (
             len(dd["dictionary_item_added"]) == 6 * NUM_ARTIFACT_FIELDS
         ), "Unexpected CT changes"
@@ -1491,7 +1490,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == "wes_bam":
 
-        # 4 files * 7 artifact attributes
+        # 4 files * artifact attributes
         assert (
             len(dd["dictionary_item_added"]) == 4 * NUM_ARTIFACT_FIELDS
         ), "Unexpected CT changes"
@@ -1500,7 +1499,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
 
     elif template.type == "rna_fastq":
-        # 6 files * 7 artifact attributes
+        # 6 files * artifact attributes
         assert (
             len(dd["dictionary_item_added"]) == 6 * NUM_ARTIFACT_FIELDS
         ), "Unexpected CT changes"
@@ -1510,7 +1509,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     elif template.type == "rna_bam":
 
-        # 4 files * 7 artifact attributes
+        # 4 files * artifact attributes
         assert (
             len(dd["dictionary_item_added"]) == 4 * NUM_ARTIFACT_FIELDS
         ), "Unexpected CT changes"
@@ -1519,7 +1518,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
 
     elif template.type == "ihc":
-        # 2 files * 7 artifact attributes
+        # 2 files * artifact attributes
         assert (
             len(dd["dictionary_item_added"]) == 4 * NUM_ARTIFACT_FIELDS
         ), "Unexpected CT changes"
@@ -1528,7 +1527,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
         assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
 
-        # 7 artifact attributes * 5 files (2 per record + 1 study)
+        # 5 files (2 per record + 1 study) * artifact attributes
         assert len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS * (
             2 * 2 + 1
         ), "Unexpected CT changes"
@@ -1537,7 +1536,7 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
         assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
 
-        # artifact attributes for just one artifact elisa xlsx file
+        # 1 xlsx file * artifact attributes
         assert (
             len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS
         ), "Unexpected CT changes"
@@ -1546,19 +1545,19 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(dd) == 0, "Unexpected CT changes"
 
     elif template.type == "cytof":
-        # 7 artifact attributes * 6 files
+        # 6 files * artifact attributes
         assert (
             len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS * 6
         ), "Unexpected CT changes"
 
     elif template.type == "cytof_analysis":
-        # 7 artifact attributes * 9 files
+        # 9 files * artifact attributes
         assert (
             len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS * 9
         ), "Unexpected CT changes"
 
     elif template.type == "wes_analysis":
-        # 7 artifact attributes * 2*(16+(15*2)) files
+        # 2 * ( 16 run level + ( 15 tumor + 15 normal)) files * artifact attributes
         assert len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS * 2 * (
             16 + (15 * 2)
         ), "Unexpected CT changes"
@@ -1638,7 +1637,7 @@ def test_merge_stuff():
     assert len(xyz["slices"]) == 1
 
 
-def test_prism_local_files_format_extension(monkeypatch):
+def test_prism_local_file_formats(monkeypatch):
     """ Tests prism alert on different extensions of a local file vs gcs_uri """
 
     mock_XlTemplateReader_from_excel(
@@ -1678,12 +1677,11 @@ def test_prism_local_files_format_extension(monkeypatch):
                 }
             },
         },
-        "test_prism_local_files_format_extension",
+        "test_prism_local_file_formats",
     )
 
     monkeypatch.setattr(
-        "cidc_schemas.prism.SUPPORTED_TEMPLATES",
-        ["test_prism_local_files_format_extension"],
+        "cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_prism_local_file_formats"]
     )
 
     xlsx, errs = XlTemplateReader.from_excel("workbook")
@@ -1698,8 +1696,8 @@ def test_prism_local_files_format_extension(monkeypatch):
     assert len(file_maps) == 1
 
 
-def test_prism_local_files_format_multiple_extensions(monkeypatch):
-    """ Tests prism ability to gcs_uri """
+def test_prism_multiple_local_file_formats(monkeypatch):
+    """ Tests prism ability to check that expected_extensions match gcs_extensions and local_extensions"""
 
     mock_XlTemplateReader_from_excel(
         {
@@ -1745,12 +1743,12 @@ def test_prism_local_files_format_multiple_extensions(monkeypatch):
                 }
             },
         },
-        "test_prism_local_files_format_extension",
+        "test_prism_multiple_local_file_formats",
     )
 
     monkeypatch.setattr(
         "cidc_schemas.prism.SUPPORTED_TEMPLATES",
-        ["test_prism_local_files_format_extension"],
+        ["test_prism_multiple_local_file_formats"],
     )
 
     xlsx, errs = XlTemplateReader.from_excel("workbook")

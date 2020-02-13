@@ -3,6 +3,7 @@
   "$id": "participant",
   "title": "Participant",
   "description": "The collection of all data related to a specific participant in the context of a specific clinical trial.\n",
+  "additionalProperties": false,
   "properties": {
     "cimac_participant_id": {
       "type": "string",

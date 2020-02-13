@@ -4,6 +4,7 @@
   "title": "Multiplexed Immunohistochemical Input Files",
   "type": "object",
   "description": "micsss assay input files.",
+  "additionalProperties": false,
   "properties": {
     "micsss_output_summary": {
       "$comment": "Summary of the results of the experiment.",

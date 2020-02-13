@@ -4,6 +4,7 @@
   "title": "Analysis outputs for assays for this trial.",
   "description": "Reference for every available assay in network.",
   "mergeStrategy": "objectMerge",
+  "additionalProperties": false,
   "properties": {
     "wes_analysis": {
       "$ref": "assays/components/ngs/wes/wes_analysis.json"

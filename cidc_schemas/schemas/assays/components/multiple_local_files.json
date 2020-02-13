@@ -4,6 +4,7 @@
   "title": "A list of local files type",
   "type": "object",
   "description": "A type to store a comma-separated list of local file paths.",
+  "additionalProperties": false,
   "properties": {
     "file_path_list": {
       "$id": "local_file_path_list",

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "id": "rna_assay",
+  "$id": "rna_assay",
   "title": "RNA Gene Expression Assay",
   "type": "object",
   "description": "Additional properties to describe a RNA assay for expression analysis.",

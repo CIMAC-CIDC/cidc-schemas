@@ -5,8 +5,10 @@
     "type": "object",
     "category": "manifest",
     "description": "Shipping / receiving manifest for transferring H&E slides.",
+    "additionalProperties": false,
     "properties": {
         "worksheets": {
+
             "Shipment": {
                 "prism_preamble_object_schema": "clinical_trial.json",
                 "prism_preamble_object_pointer": "/shipments/0",

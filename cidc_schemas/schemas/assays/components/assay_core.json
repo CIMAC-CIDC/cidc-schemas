@@ -4,6 +4,7 @@
   "title": "Assay Core",
   "type": "object",
   "description": "Main properties of the assay experiment template.",
+  "inheritableBase": true,
   "properties": {
     "assay_creator": {
       "description": "Indicates what site is filling out the assay.",

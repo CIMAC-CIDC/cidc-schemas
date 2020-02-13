@@ -4,6 +4,7 @@
   "title": "micsss assay record",
   "type": "object",
   "description": "A single data record from micsss assay.",
+  "additionalProperties": false,
   "properties": {
     "project_qupath_folder": {
       "description": "Folder path containing files produced from a QuPath image analysis.",

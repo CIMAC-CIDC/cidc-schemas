@@ -24,8 +24,6 @@ ARTIFACT_OBJ = {
 }
 
 OLINK_RECORD = {
-    "assay_prefix": "dummy",
-    "filetype": "assay",
     "run_date": "1/2/98",
     "run_time": "12:00",
     "instrument": "dummy",
@@ -36,12 +34,10 @@ OLINK_RECORD = {
     "passive_reference": "dummy",
     "quality_threshold": 90,
     "baseline_correction": "dummy",
-    "panel": "dummy",
     "number_of_samples": 5,
     "number_of_samples_failed": 4,
     "npx_manager_version": "dummy",
-    "assay_panel_lot": 90,
-    "files": {"assay_npx": "", "assay_raw_ct": "", "study_npx": ""},
+    "files": {"assay_npx": "", "assay_raw_ct": ""},
 }
 
 ASSAY_CORE = {"assay_creator": "DFCI", "assay_creator": "Mount Sinai"}
@@ -138,12 +134,12 @@ def test_rna_fastq():
     r1 = ARTIFACT_OBJ.copy()
     r1["data_format"] = "FASTQ.GZ"
     record = {
-        "cimac_id": "CTTTPPPSA.00",
         "library_yield_ng": 666,
         "dv200": 0.7,
         "rqs": 8,
         "rin": 8,
         "quality_flag": 1,
+        "cimac_id": "CTTTPPPSA.00",
         "files": {"r1": [r1], "r2": [r1]},
     }
 
@@ -354,7 +350,7 @@ def test_mif():
         "files": {
             "whole_slide_imaging_file": image_1,
             "roi_annotations": text,
-            "output_summary": csv_1,
+            "mif_output_summary": csv_1,
             "regions_of_interest": [
                 {
                     "binary_seg_map": csv_1,
@@ -449,10 +445,10 @@ def test_olink():
     record = OLINK_RECORD.copy()
     record["files"]["assay_npx"] = npx
     record["files"]["assay_raw_ct"] = csv
-    record["files"]["study_npx"] = npx
 
     # add a demo record.
     obj["records"] = [record]
+    obj["study"] = {"npx_manager_version": "whatever", "study_npx": npx}
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("olink")

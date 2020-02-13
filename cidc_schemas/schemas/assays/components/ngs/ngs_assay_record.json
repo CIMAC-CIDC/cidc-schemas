@@ -4,6 +4,7 @@
   "title": "NGS assay record",
   "type": "object",
   "description": "A single data record from an NGS assay.",
+  "inheritableBase": true,
   "properties": {
     "cimac_id": {
         "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",

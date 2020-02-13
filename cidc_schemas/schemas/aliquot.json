@@ -4,6 +4,7 @@
   "title": "Aliquot",
   "type": "object",
   "description": "Pertaining to a portion (volume or weight) of the whole.",
+  "additionalProperties": false,
   "properties": {
     "slide_number": {
       "description": "Two digit number that indicates the sequential order of slide cuts, assigned by the CIMAC-CIDC Network.",

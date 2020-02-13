@@ -4,6 +4,7 @@
   "title": "Olink Input Files",
   "type": "object",
   "description": "Olink assay input files.",
+  "additionalProperties": false,
   "properties": {
     "assay_npx": {
       "$ref": "artifacts/artifact_npx.json",

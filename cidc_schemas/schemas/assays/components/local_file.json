@@ -4,6 +4,7 @@
   "title": "Local file type",
   "type": "object",
   "description": "A type to store local file paths.",
+  "additionalProperties": false,
   "properties": {
     "file_path": {
       "$id": "local_file_path",

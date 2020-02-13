@@ -4,6 +4,7 @@
   "title": "Olink assay record",
   "type": "object",
   "description": "A single data record from Olink assay.",
+  "additionalProperties": false,
   "properties": {
     "run_date": {
       "description": "Date when the Olink assay was run.",

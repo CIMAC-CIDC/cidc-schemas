@@ -4,10 +4,14 @@
   "title": "RNAseq assay record",
   "type": "object",
   "description": "A single data record from RNAseq assay.",
+  "additionalProperties": false,
   "allOf": [
     { "$ref": "assays/components/ngs/ngs_assay_record.json" }
   ],
   "properties": {
+    "cimac_id": {"$comment": "defined in assays/components/ngs/ngs_assay_record.json"},
+    "files": {"$comment": "defined in assays/components/ngs/ngs_assay_record.json"},
+
     "enrichment_vendor_lot": {
       "description": "Lot number for the bait set.",
       "type": "string"
@@ -20,9 +24,6 @@
     "sequencing_batch": {
       "description": "Identifier for the sequencing batch for this sample.",
       "type": "string"
-    },
-    "files": {
-      "$ref": "assays/components/ngs/rna_input.json"
     }
   },
   "required": [

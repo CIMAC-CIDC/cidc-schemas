@@ -5,6 +5,7 @@
   "type": "object",
   "category": "metadata",
   "description": "Metadata information for whole exome sequencing (WES) data submission via BAM.",
+  "additionalProperties": false,
   "properties": {
     "worksheets": {
       "WES": {

@@ -5,7 +5,7 @@
   "type": "object",
   "category": "metadata",
   "description": "Metadata information for ELISA analysis.",
-
+  "additionalProperties": false,
   "properties": {
     "worksheets": {
       "ELISA": {

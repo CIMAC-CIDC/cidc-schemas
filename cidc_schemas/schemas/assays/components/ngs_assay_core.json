@@ -4,6 +4,7 @@
   "title": "NGS Assay Core",
   "type": "object",
   "description": "Common properties for NGS Assays.",
+  "inheritableBase": true,
   "properties": {
     "sequencer_platform": {
       "description": "Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.",

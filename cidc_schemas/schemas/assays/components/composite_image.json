@@ -4,6 +4,7 @@
   "title": "Composite Image",
   "type": "object",
   "description": "Regions of interest obtained from composite images.",
+  "inheritableBase": true,
   "properties": {
     "composite_image": {
       "$comment": "Image produced from the combination of multiple imaging experiment data images.",

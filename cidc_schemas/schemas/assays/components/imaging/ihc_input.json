@@ -4,6 +4,7 @@
     "title": "Immunohistochemical Analysis Input Files",
     "type": "object",
     "description": "IHC assay input/output files.",
+    "additionalProperties": false,
     "properties": {
       "ihc_image": {
         "$comment": "Path to IHC image in TIFF format.",

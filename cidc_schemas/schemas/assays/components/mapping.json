@@ -4,6 +4,7 @@
   "title": "Image Mapping",
   "type": "object",
   "description": "Regions of interest obtained from image mapping.",
+  "inheritableBase": true,
   "properties": {
     "binary_seg_map": {
       "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.",

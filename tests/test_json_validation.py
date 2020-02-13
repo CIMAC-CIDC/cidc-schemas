@@ -67,7 +67,6 @@ def test_trial_core():
         "account_number": "account_number",
         "assay_priority": "1",
         "assay_type": "Olink",
-        "box_number": 1,
         "courier": "USPS",
         "date_received": "date_received",
         "date_shipped": "date_shipped",
@@ -81,10 +80,6 @@ def test_trial_core():
     }
     aliquot1 = {
         "slide_number": "99",
-        "sample_volume_units": "Other",
-        "material_used": 1,
-        "material_remaining": 0,
-        "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
         "aliquot_status": "Other",
     }
@@ -92,10 +87,6 @@ def test_trial_core():
 
     aliquot2 = {
         "slide_number": "98",
-        "sample_volume_units": "Other",
-        "material_used": 1,
-        "material_remaining": 0,
-        "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
         "aliquot_status": "Other",
     }
@@ -110,6 +101,11 @@ def test_trial_core():
         "type_of_primary_container": "Sodium heparin",
         "sample_location": "---",
         "type_of_sample": "Other",
+        "sample_volume_units": "Other",
+        "material_used": 1,
+        "material_remaining": 0,
+        "quality_of_sample": "Other",
+        "box_number": "1",
     }
     sm_validator.validate(sample1)
     sample2 = {

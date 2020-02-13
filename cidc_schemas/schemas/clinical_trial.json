@@ -3,6 +3,7 @@
   "$id": "clinical_trial",
   "title": "Clinical Trial",
   "description": "Encapsulates information regarding a clinical trial.",
+  "additionalProperties": false,
   "properties": {
     "nct_id": {
       "type": "string",

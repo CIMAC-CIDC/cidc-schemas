@@ -4,12 +4,28 @@
   "title": "mIF Assay",
   "type": "object",
   "description": "Multiplex immunofluorescence.",
+  "additionalProperties": false,
   "allOf": [
     { "$ref": "assays/components/assay_core.json" },
     { "$ref": "assays/components/image.json" },
     { "$ref": "assays/components/imaging_data.json" }
   ],
   "properties": {
+    "assay_creator": {"$comment": "defined in assays/components/assay_core.json"},
+
+    "slide_scanner_model": {"$comment": "defined in assays/components/image.json"},
+    "image_analysis_software": {"$comment": "defined in assays/components/image.json"},
+    "image_analysis_software_version": {"$comment": "defined in assays/components/image.json"},
+    "cell_segmentation_model": {"$comment": "defined in assays/components/image.json"},
+    "positive_cell_detection": {"$comment": "defined in assays/components/image.json"},
+    "protocol_name": {"$comment": "defined in assays/components/image.json"},
+
+    "internal_slide_id": {"$comment": "defined in assays/components/imaging_data.json"},
+    "protocol_name": {"$comment": "defined in assays/components/imaging_data.json"},
+    "staining_date": {"$comment": "defined in assays/components/imaging_data.json"},
+    "imaging_date": {"$comment": "defined in assays/components/imaging_data.json"},
+    "imaging_status": {"$comment": "defined in assays/components/imaging_data.json"},
+
     "records": {
       "type": "array",
       "description": "A single data record from mIF assay.",

@@ -51,10 +51,6 @@ def test_aliquot():
     # create basic aliquot
     aliquot = {
         "slide_number": "12",
-        "sample_volume_units": "Other",
-        "material_used": 1,
-        "material_remaining": 0,
-        "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
         "aliquot_status": "Other",
     }
@@ -72,11 +68,6 @@ def test_clinicaltrial_simple():
     # create aliquot
     aliquot = {
         "slide_number": "34",
-        "assay": assays,
-        "sample_volume_units": "Other",
-        "material_used": 1,
-        "material_remaining": 0,
-        "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
         "aliquot_status": "Other",
     }
@@ -90,6 +81,10 @@ def test_clinicaltrial_simple():
         "sample_location": "---",
         "type_of_sample": "Blood",
         "type_of_primary_container": "Other",
+        "sample_volume_units": "Other",
+        "material_used": 1,
+        "material_remaining": 0,
+        "quality_of_sample": "Other",
     }
 
     # create the participant
@@ -118,19 +113,11 @@ def test_clinicaltrial_olink():
     # create 2 aliquots
     aliquot1 = {
         "slide_number": "13",
-        "sample_volume_units": "Other",
-        "material_used": 1,
-        "material_remaining": 0,
-        "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
         "aliquot_status": "Other",
     }
     aliquot2 = {
         "slide_number": "14",
-        "sample_volume_units": "Other",
-        "material_used": 1,
-        "material_remaining": 0,
-        "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
         "aliquot_status": "Other",
     }
@@ -144,6 +131,10 @@ def test_clinicaltrial_olink():
         "sample_location": "---",
         "type_of_sample": "Other",
         "type_of_primary_container": "Other",
+        "sample_volume_units": "Other",
+        "material_used": 1,
+        "material_remaining": 0,
+        "quality_of_sample": "Other",
     }
     sample2 = {
         "cimac_id": "CTTTPABCD.00",
@@ -153,6 +144,10 @@ def test_clinicaltrial_olink():
         "sample_location": "---",
         "type_of_sample": "Other",
         "type_of_primary_container": "Other",
+        "sample_volume_units": "Other",
+        "material_used": 1,
+        "material_remaining": 0,
+        "quality_of_sample": "Other",
     }
 
     # create the participant

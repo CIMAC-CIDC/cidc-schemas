@@ -68,14 +68,17 @@
                 }                
             },
             "additionalProperties": false,
-            "oneOf": [{
-                "required": ["additionalProperties"],
-                "not": {"required": ["inheritableBase"]}
-            }, {
-                "not": {"required": ["additionalProperties"]},
-                "required": ["inheritableBase"],
-                "$comment": "Maybe rename inheritableBase?"
-            }]
+            "oneOf": [
+                {
+                    "required": ["additionalProperties"],
+                    "not": {"required": ["inheritableBase"]}
+                },
+                {
+                    "not": {"required": ["additionalProperties"]},
+                    "required": ["inheritableBase"],
+                    "$comment": "Maybe rename inheritableBase?"
+                }
+            ]
         }
     ]
 }

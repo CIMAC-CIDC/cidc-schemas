@@ -1,10 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "rna",
+  "$id": "rna_fastq",
   "title": "Metadata file for RNA expression [FASTQ].",
   "type": "object",
   "category": "metadata",
   "description": "Metadata information for rna expression data submission via FASTQ files.",
+  "additionalProperties": false,
   "properties": {
     "worksheets": {
       "RNA": {

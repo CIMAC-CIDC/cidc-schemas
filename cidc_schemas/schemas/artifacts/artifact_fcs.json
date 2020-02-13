@@ -4,17 +4,28 @@
   "title": "FCS Artifact",
   "type": "object",
   "description": "Information about a FCS file.",
+  "additionalProperties": false,
+  "properties": {
+    "data_format": {
+      "description": "Data format.",
+      "const": "FCS"
+    },
+    "upload_placeholder": {"$comment": "defined in artifacts/artifact_core.json"},
+    "artifact_creator": {"$comment": "defined in artifacts/artifact_core.json"},
+    "uploader": {"$comment": "defined in artifacts/artifact_core.json"},
+    "uuid": {"$comment": "defined in artifacts/artifact_core.json"},
+    "file_name": {"$comment": "defined in artifacts/artifact_core.json"},
+    "object_url": {"$comment": "defined in artifacts/artifact_core.json"},
+    "uploaded_timestamp": {"$comment": "defined in artifacts/artifact_core.json"},
+    "file_size_bytes": {"$comment": "defined in artifacts/artifact_core.json"},
+    "md5_hash": {"$comment": "defined in artifacts/artifact_core.json"},
+    "crc32c_hash": {"$comment": "defined in artifacts/artifact_core.json"},
+    "visible": {"$comment": "defined in artifacts/artifact_core.json"},
+    "artifact_category": {"$comment": "defined in artifacts/artifact_core.json"}
+  },
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"
-    },
-    {
-      "properties": {
-        "data_format": {
-          "description": "Data format.",
-          "const": "FCS"
-        }
-      }
     }
   ],
   "mergeStrategy": "objectMerge"

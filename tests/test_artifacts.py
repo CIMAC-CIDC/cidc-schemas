@@ -120,7 +120,6 @@ def test_binary():
     # create a dummy info
     obj = BASE_OBJ.copy()
     obj["data_format"] = "BINARY"
-    obj["info"] = {"test": 128}
     at_validator.validate(obj)
 
 
@@ -132,8 +131,6 @@ def test_csv():
     # create a dummy info
     obj = BASE_OBJ.copy()
     obj["data_format"] = "CSV"
-    obj["header_row"] = 128
-    obj["separator"] = ","
     at_validator.validate(obj)
 
 

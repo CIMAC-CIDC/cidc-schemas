@@ -4,29 +4,40 @@
   "title": "NPX Artifact",
   "type": "object",
   "description": "Information about an NPX file.",
+  "additionalProperties": false,
+  "properties": {
+    "number_of_samples": {
+      "description": "Number of samples within this file.",
+      "type": "integer"
+    },
+    "samples": {
+      "description": "Ids of the sample(s) within this file.",
+      "type": "array",
+      "items": {
+        "$comment": "Ids of the sample(s) within this file.",
+        "$ref": "sample.json#properties/cimac_id"
+      }
+    },
+    "data_format": {
+      "description": "Data format.",
+      "const": "NPX"
+    },
+    "upload_placeholder": {"$comment": "defined in artifacts/artifact_core.json"},
+    "artifact_creator": {"$comment": "defined in artifacts/artifact_core.json"},
+    "uploader": {"$comment": "defined in artifacts/artifact_core.json"},
+    "uuid": {"$comment": "defined in artifacts/artifact_core.json"},
+    "file_name": {"$comment": "defined in artifacts/artifact_core.json"},
+    "object_url": {"$comment": "defined in artifacts/artifact_core.json"},
+    "uploaded_timestamp": {"$comment": "defined in artifacts/artifact_core.json"},
+    "file_size_bytes": {"$comment": "defined in artifacts/artifact_core.json"},
+    "md5_hash": {"$comment": "defined in artifacts/artifact_core.json"},
+    "crc32c_hash": {"$comment": "defined in artifacts/artifact_core.json"},
+    "visible": {"$comment": "defined in artifacts/artifact_core.json"},
+    "artifact_category": {"$comment": "defined in artifacts/artifact_core.json"}
+  },
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"
-    },
-    {
-      "properties": {
-        "number_of_samples": {
-          "description": "Number of samples within this file.",
-          "type": "integer"
-        },
-        "samples": {
-          "description": "Ids of the sample(s) within this file.",
-          "type": "array",
-          "items": {
-            "$comment": "Ids of the sample(s) within this file.",
-            "$ref": "sample.json#properties/cimac_id"
-          }
-        },
-        "data_format": {
-          "description": "Data format.",
-          "const": "NPX"
-        }
-      }
     }
   ],
   "mergeStrategy": "objectMerge",

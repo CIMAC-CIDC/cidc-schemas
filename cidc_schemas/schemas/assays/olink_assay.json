@@ -8,6 +8,7 @@
   "allOf": [
     { "$ref": "assays/components/assay_core.json" }
   ],
+  "mergeStrategy": "objectMerge",
   "properties": {
     "assay_creator": {"$comment": "defined in assays/components/assay_core.json"},
   

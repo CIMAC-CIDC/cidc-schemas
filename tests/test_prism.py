@@ -86,13 +86,13 @@ TEST_PRISM_TRIAL = {
             "cohort_name": "Arm_Z",
             "samples": [
                 {
+                    "sample_volume_units": "Other",
+                    "material_used": 1,
+                    "material_remaining": 0,
+                    "quality_of_sample": "Other",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "sample_volume_units": "Other",
-                            "material_used": 1,
-                            "material_remaining": 0,
-                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other",
                         }
@@ -109,13 +109,13 @@ TEST_PRISM_TRIAL = {
         {
             "samples": [
                 {
+                    "sample_volume_units": "Other",
+                    "material_used": 2,
+                    "material_remaining": 0,
+                    "quality_of_sample": "Other",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "sample_volume_units": "Other",
-                            "material_used": 2,
-                            "material_remaining": 0,
-                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other",
                         }
@@ -135,13 +135,13 @@ TEST_PRISM_TRIAL = {
         {
             "samples": [
                 {
+                    "sample_volume_units": "Other",
+                    "material_used": 2,
+                    "material_remaining": 0,
+                    "quality_of_sample": "Other",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "sample_volume_units": "Other",
-                            "material_used": 2,
-                            "material_remaining": 0,
-                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other",
                         }
@@ -161,13 +161,13 @@ TEST_PRISM_TRIAL = {
         {
             "samples": [
                 {
+                    "sample_volume_units": "Other",
+                    "material_used": 2,
+                    "material_remaining": 0,
+                    "quality_of_sample": "Other",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "sample_volume_units": "Other",
-                            "material_used": 2,
-                            "material_remaining": 0,
-                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other",
                         }
@@ -270,10 +270,6 @@ def test_merge_core():
     # create aliquot
     aliquot = {
         "slide_number": "12",
-        "sample_volume_units": "Other",
-        "material_used": 1,
-        "material_remaining": 0,
-        "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
         "aliquot_status": "Other",
     }
@@ -287,6 +283,10 @@ def test_merge_core():
         "sample_location": "---",
         "type_of_sample": "Other",
         "type_of_primary_container": "Other",
+        "sample_volume_units": "Other",
+        "material_used": 1,
+        "material_remaining": 0,
+        "quality_of_sample": "Other",
     }
 
     # create the participant
@@ -356,14 +356,14 @@ MINIMAL_TEST_TRIAL = {
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "sample_volume_units": "Other",
-                            "material_used": 1,
-                            "material_remaining": 0,
-                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other",
                         }
                     ],
+                    "sample_volume_units": "Other",
+                    "material_used": 1,
+                    "material_remaining": 0,
+                    "quality_of_sample": "Other",
                     "collection_event_name": "Baseline",
                     "sample_location": "---",
                     "type_of_sample": "Other",
@@ -447,6 +447,7 @@ def test_prism(xlsx, template):
     merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, ct)
 
+    validator.validate(merged)
     # assert works
     errors = list(validator.iter_errors(merged))
     assert not errors

@@ -34,35 +34,35 @@
                         "type_ref": "assays/ihc_assay.json#properties/autostainer_model"
                     },
                     "antibody name": {
-                        "merge_pointer": "0/antibody",
+                        "merge_pointer": "0/antibody/antibody",
                         "type_ref": "assays/components/antibody.json#properties/antibody"
                     },
                     "company": {
-                        "merge_pointer": "0/company",
+                        "merge_pointer": "0/antibody/company",
                         "type_ref": "assays/components/antibody.json#properties/company"
                     },
                     "clone": {
-                        "merge_pointer": "0/clone",
+                        "merge_pointer": "0/antibody/clone",
                         "type_ref": "assays/components/antibody.json#properties/clone"
                     },
                     "catalogue number": {
-                        "merge_pointer": "0/cat_num",
+                        "merge_pointer": "0/antibody/cat_num",
                         "type_ref": "assays/components/antibody.json#properties/cat_num"
                     },
                     "lot number": {
-                        "merge_pointer": "0/lot_num",
+                        "merge_pointer": "0/antibody/lot_num",
                         "type_ref": "assays/components/antibody.json#properties/lot_num"
                     },
                     "dilution": {
-                        "merge_pointer": "0/dilution",
+                        "merge_pointer": "0/antibody/dilution",
                         "type_ref": "assays/components/imaging/ihc_antibody.json#properties/dilution"
                     },
                     "incubation time": {
-                        "merge_pointer": "0/incubation_time",
+                        "merge_pointer": "0/antibody/incubation_time",
                         "type_ref": "assays/components/imaging/ihc_antibody.json#properties/incubation_time"
                     },
                     "incubation temperature": {
-                        "merge_pointer": "0/incubation_temp",
+                        "merge_pointer": "0/antibody/incubation_temp",
                         "type_ref": "assays/components/imaging/ihc_antibody.json#properties/incubation_temp"
                     }
                 },

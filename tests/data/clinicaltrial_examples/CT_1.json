@@ -102,7 +102,20 @@
         "olink": {
             "assay_creator": "Mount Sinai",
             "panel": "ol_panel_1",
-            "npx_manager_version": "ol_npx_v1",
+            "study": {
+                "npx_manager_version": "ol_npx_v1",
+                "study_npx": {
+                    "file_name" :           "...",
+                    "object_url" :          "...",
+                    "uploaded_timestamp" :  "...",
+                    "file_size_bytes" :     0,
+                    "md5_hash" :            "...",
+                    "artifact_category" :   "Assay Artifact from CIMAC",
+                    "data_format" :           "NPX",
+                    "number_of_samples":   6,
+                    "samples": ["CTTTPP2S2.01", "CTTTPP1S1.01", "CTTTPP2S1.01", "CTTTPP2S2.00", "CTTTPP1S1.00", "CTTTPP2S1.00"]
+                }
+            },
             "records": [
                 {
                     "assay_prefix": "ol1_",
@@ -119,7 +132,7 @@
                             "artifact_category" :   "Assay Artifact from CIMAC",
                             "data_format" :           "NPX",
                             "number_of_samples":   3,
-                            "samples": ["CTTTPP2S2.00", "CTTTPP1S1.00", "CTTTPP2S1.00"]
+                            "samples": ["CTTTPP2S2.01", "CTTTPP1S1.01", "CTTTPP2S1.01"]
                         },
                         "assay_raw_ct": {
                             "file_name" :           "...",

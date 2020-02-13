@@ -4,7 +4,13 @@
   "title": "OLink Assay",
   "type": "object",
   "description": "High-throughput multiplexed assays for protein biomarker discovery.",
+  "additionalProperties": false,
+  "allOf": [
+    { "$ref": "assays/components/assay_core.json" }
+  ],
   "properties": {
+    "assay_creator": {"$comment": "defined in assays/components/assay_core.json"},
+  
     "records": {
       "type": "array",
       "description": "A single data record from Olink assay.",
@@ -28,5 +34,5 @@
       "$ref": "assays/components/olink/olink_combined.json"
     }
   },
-  "required": ["panel", "records"]
+  "required": ["panel", "records", "study"]
 }

@@ -126,7 +126,6 @@ def test_rna_expression():
     # create the ngs object
     ngs_obj = {
         "sequencer_platform": "Illumina - NovaSeq 6000",
-        "library_vendor_kit": "KAPA - Hyper Prep",
         "paired_end_reads": "Paired",
         "read_length": 200,
     }
@@ -219,28 +218,16 @@ def test_cytof():
     fcs_3["data_format"] = "FCS"
     assignment = ARTIFACT_OBJ.copy()
     assignment["data_format"] = "CSV"
-    assignment["separator"] = ","
-    assignment["header_row"] = 128
     compartment = ARTIFACT_OBJ.copy()
     compartment["data_format"] = "CSV"
-    compartment["separator"] = ","
-    compartment["header_row"] = 128
     profiling = ARTIFACT_OBJ.copy()
     profiling["data_format"] = "CSV"
-    profiling["separator"] = ","
-    profiling["header_row"] = 128
     cell_count_assignment = ARTIFACT_OBJ.copy()
     cell_count_assignment["data_format"] = "CSV"
-    cell_count_assignment["separator"] = ","
-    cell_count_assignment["header_row"] = 128
     cell_count_compartment = ARTIFACT_OBJ.copy()
     cell_count_compartment["data_format"] = "CSV"
-    cell_count_compartment["separator"] = ","
-    cell_count_compartment["header_row"] = 128
     cell_count_profiling = ARTIFACT_OBJ.copy()
     cell_count_profiling["data_format"] = "CSV"
-    cell_count_profiling["separator"] = ","
-    profiling["header_row"] = 128
     report = ARTIFACT_OBJ.copy()
     report["data_format"] = "ZIP"
     analysis = ARTIFACT_OBJ.copy()
@@ -331,8 +318,6 @@ def test_mif():
     image_1["channels"] = 3
     csv_1 = ARTIFACT_OBJ.copy()
     csv_1["data_format"] = "CSV"
-    csv_1["separator"] = ","
-    csv_1["header_row"] = 128
     text = ARTIFACT_OBJ.copy()
     text["data_format"] = "TEXT"
     record = {
@@ -386,8 +371,6 @@ def test_micsss():
     image_1["channels"] = 3
     csv_1 = ARTIFACT_OBJ.copy()
     csv_1["data_format"] = "CSV"
-    csv_1["separator"] = ","
-    csv_1["header_row"] = 128
     record = {
         "project_qupath_folder": "dummy",
         "micsss_exported_data_folder": "dummy_value",

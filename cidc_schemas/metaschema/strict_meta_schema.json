@@ -62,8 +62,8 @@
                 "mergeStrategy": {"$comment": "jsonmerge specific"},
                 "mergeOptions": {"$comment": "jsonmerge specific"},
 
-                "inheritableCore": {
-                    "$comment": "Shows that a schema is an extensible 'core' to inherit from and doesn't have `additionalProperties` set to false. No end user objects should be of that schema, only of something 'descendant' from it.",
+                "inheritableBase": {
+                    "$comment": "Shows that a schema is an extensible 'abstract base' to inherit from and doesn't have `additionalProperties` set to false. No end user objects should be of that schema, only of something 'descendant' from it.",
                     "const": true
                 }                
             },
@@ -72,8 +72,8 @@
                 "required": ["additionalProperties"]
             }, {
                 "not": {"required": ["additionalProperties"]},
-                "required": ["inheritableCore"],
-                "$comment": "Maybe rename inheritableCore?"
+                "required": ["inheritableBase"],
+                "$comment": "Maybe rename inheritableBase?"
             }]
         }
     ]

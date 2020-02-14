@@ -2,7 +2,14 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "strict_meta_schema",
     "title": "Strict meta-schema",
-    "$comment": "MAYBE TODO make all the sub-schema auto-refs ('$ref':'#') to be to the strict schema, following draft-07",
+    "definitions": {
+        "schemaArray": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "#" }
+        }
+    },
+    "type": ["object", "boolean"],
     "properties": {
         "$id": {"$comment": "defined in draft-07"},
         "$schema": {"$comment": "defined in draft-07"},
@@ -10,6 +17,7 @@
         "$comment": {"$comment": "defined in draft-07"},
         "title": {"$comment": "defined in draft-07"},
         "description": {"$comment": "defined in draft-07"},
+        "default": true,
         "readOnly": {"$comment": "defined in draft-07"},
         "examples": {"$comment": "defined in draft-07"},
         "multipleOf": {"$comment": "defined in draft-07"},
@@ -20,42 +28,108 @@
         "maxLength": {"$comment": "defined in draft-07"},
         "minLength": {"$comment": "defined in draft-07"},
         "pattern": {"$comment": "defined in draft-07"},
-        "additionalItems": {"$comment": "defined in draft-07"},
-        "items": {"$comment": "defined in draft-07"},
         "maxItems": {"$comment": "defined in draft-07"},
         "minItems": {"$comment": "defined in draft-07"},
         "uniqueItems": {"$comment": "defined in draft-07"},
-        "contains": {"$comment": "defined in draft-07"},
         "maxProperties": {"$comment": "defined in draft-07"},
         "minProperties": {"$comment": "defined in draft-07"},
         "required": {"$comment": "defined in draft-07"},
-        "definitions": {"$comment": "defined in draft-07"},
-        "properties": {"$comment": "defined in draft-07"},
-        "patternProperties": {"$comment": "defined in draft-07"},
-        "dependencies": {"$comment": "defined in draft-07"},
-        "propertyNames": {"$comment": "defined in draft-07"},
+        "const": true,
         "enum": {"$comment": "defined in draft-07"},
         "type": {"$comment": "defined in draft-07"},
         "format": {"$comment": "defined in draft-07"},
         "contentMediaType": {"$comment": "defined in draft-07"},
         "contentEncoding": {"$comment": "defined in draft-07"},
-        "if": {"$comment": "defined in draft-07"},
-        "then": {"$comment": "defined in draft-07"},
-        "else": {"$comment": "defined in draft-07"},
-        "allOf": {"$comment": "defined in draft-07"},
-        "anyOf": {"$comment": "defined in draft-07"},
-        "oneOf": {"$comment": "defined in draft-07"},
-        "not": {"$comment": "defined in draft-07"},
+        "propertyNames": {"$comment": "defined in draft-07"},
+        "if":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions"},
+        "then":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions"},
+        "else":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions"},
+        "not":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions"},
+        
+
+        "additionalItems": { 
+            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
+            "$ref": "#" 
+        },
+        "items": {
+            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
+            "anyOf": [
+                { "$ref": "#" },
+                { "$ref": "#/definitions/schemaArray" }
+            ]
+        },
+        "definitions": {
+            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
+            "additionalProperties": {"$ref": "#" } 
+        },
+        "properties": {
+            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
+            "type": "object",
+            "properties": {
+                "worksheets": {
+                    "$comment": "used in prismify templates. TODO remove after template DSL migration",
+                    "type": "object"
+                }
+            },
+            "additionalProperties": {"$ref": "#" } 
+        },
+        "patternProperties": {
+            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
+            "additionalProperties": {"$ref": "#" } 
+        },
+        "dependencies": {
+            "additionalProperties": {
+                "anyOf": [
+                    { "$ref": "#" },
+                    { "$ref": "#/definitions/stringArray" }
+                ]
+            }
+        },
+        "allOf": {
+            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
+            "$ref": "#/definitions/schemaArray" 
+        },
+        "anyOf": {
+            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
+            "$ref": "#/definitions/schemaArray" 
+        },
+        "oneOf": {
+            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
+            "$ref": "#/definitions/schemaArray" 
+        },
+        
 
         "additionalProperties": {
             "$comment": "overrides draft-07 definition",
             "const": false
         },
+        "example": {
+            "type": "string"
+        },
+        "in_doc_ref_pattern": {
+            "$comment": "used in prism custom validator for in doc refs integrity",
+            "type": "string"
+        },
+        "enum_comments": {
+            "$comment": "used in template_writer to write excel comments",
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
 
-        "prism_template_root_object_pointer": {"$comment": "TODO remove after template DSL migration"},
-        "prism_template_root_object_schema": {"$comment": "TODO remove after template DSL migration"},
+        "prism_template_root_object_pointer": {
+            "$comment": "used in prismify templates. TODO remove after template DSL migration"
+        },
+        "prism_template_root_object_schema": {
+            "$comment": "used in prismify templates. TODO remove after template DSL migration"
+        },
 
-        "category": {"type": "string", "enum": ["analysis", "manifest", "metadata"]},
+        "category": {
+            "$comment": "used in prismify templates to denote the type of a template",
+            "type": "string", 
+            "enum": ["analysis", "manifest", "metadata"]
+        },
 
         "mergeStrategy": {"$comment": "jsonmerge specific"},
         "mergeOptions": {"$comment": "jsonmerge specific"},
@@ -68,6 +142,17 @@
     "additionalProperties": false,
     "oneOf": [
         {
+            "not": {
+                "$comment": "'not' disallows matching this, making additionalProperties or inheritableBase required only for schemas describing objects",
+                "properties": {
+                    "type": {
+                        "const": "object" 
+                    }
+                }
+            }
+        },
+        {
+            "type": "object",
             "required": ["additionalProperties"],
             "not": {
                 "required": ["inheritableBase"],
@@ -75,6 +160,7 @@
             }
         },
         {
+            "type": "object",
             "not": {
                 "required": ["additionalProperties"],
                 "$comment": "'not' disallows matching this, making additionalProperties and inheritableBase mutually exclusive"

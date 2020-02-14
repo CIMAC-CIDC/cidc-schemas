@@ -2199,7 +2199,10 @@ def stage_assay_for_analysis(template_type):
     return prism_patch_stage_artifacts(prism_res, prelim_assay)
 
 
-def test_pipeline_config_generation_after_prismify(prismify_result, template):
+def test_WES_pipeline_config_generation_after_prismify(prismify_result, template):
+
+    if not template.type.startswith("wes_"):
+        return
 
     full_ct = copy.deepcopy(TEST_PRISM_TRIAL)
 
@@ -2235,6 +2238,57 @@ def test_pipeline_config_generation_after_prismify(prismify_result, template):
         assert len(conf["metasheet"]) == 1  # one run
 
         assert len(conf["samples"]) == 2  # tumor and normal
+        for sample in conf["samples"].values():
+            assert len(sample) > 0  # at lease one data file per sample
+            assert all("my-biofx-bucket" in f for f in sample)
+            assert all(f.endswith(".fastq.gz") for f in sample) or all(
+                f.endswith(".bam") for f in sample
+            )
+
+
+def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, template):
+
+    if not template.type.startswith("rna_"):
+        return
+
+    full_ct = copy.deepcopy(TEST_PRISM_TRIAL)
+
+    # drop existing wes assay as they break merging new ones
+    full_ct["assays"]["rna"] = []
+
+    patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
+
+    # if it's an analysis - we need to merge corresponding preliminary assay first
+    prelim_assay = stage_assay_for_analysis(template.type)
+    if prelim_assay:
+        full_ct, errs = merge_clinical_trial_metadata(prelim_assay, full_ct)
+        assert 0 == len(errs)
+
+    full_ct, errs = merge_clinical_trial_metadata(patch_with_artifacts, full_ct)
+    assert 0 == len(errs)
+
+    res = generate_analysis_configs_from_upload_patch(
+        full_ct, patch_with_artifacts, template.type, "my-biofx-bucket"
+    )
+
+    # where we don't expect to have configs
+    if not template.type in _ANALYSIS_CONF_GENERATORS:
+        assert res == {}
+        return
+
+    if template.type == "rna_fastq":
+        assert len(res) == 2  # two samples in example .xlsx
+    elif template.type == "rna_bam":
+        assert len(res) == 2  # two samples in example .xlsx
+    else:
+        assert False, f"Unexpected RNAseq template test {template.type}"
+
+    for fname, conf in res.items():
+        conf = yaml.load(conf)
+
+        assert len(conf["runs"]) == 1  # one run
+
+        assert len(conf["samples"]) == 1  # one sample in a run
         for sample in conf["samples"].values():
             assert len(sample) > 0  # at lease one data file per sample
             assert all("my-biofx-bucket" in f for f in sample)

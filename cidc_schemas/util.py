@@ -1,12 +1,22 @@
 import json
 import yaml
 import openpyxl
+import os
 import re
+import jinja2
 from typing import Union, BinaryIO, List
 
 JSON = Union[dict, list, str, int, float]
 
 from deepdiff import grep
+
+
+def load_pipeline_config_template(name: str):
+    curdir = os.path.dirname(os.path.abspath(__file__))
+    loader = jinja2.FileSystemLoader(curdir)
+    return jinja2.Environment(loader=loader).get_template(
+        f"pipeline_configs/{name}.yaml.j2"
+    )
 
 
 def participant_id_from_cimac(cimac_id: str) -> str:

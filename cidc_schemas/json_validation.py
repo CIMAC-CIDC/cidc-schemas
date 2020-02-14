@@ -13,7 +13,7 @@ import dateparser
 import jsonschema
 from jsonschema.exceptions import ValidationError
 
-from .constants import SCHEMA_DIR, METASCHEMA_JSON
+from .constants import SCHEMA_DIR, METASCHEMA_PATH
 from .util import get_all_paths, split_python_style_path, JSON
 
 
@@ -73,7 +73,7 @@ class _Validator(jsonschema.Draft7Validator):
     
     """
 
-    with open(METASCHEMA_JSON) as metaschema_file:
+    with open(METASCHEMA_PATH) as metaschema_file:
         META_SCHEMA = json.load(metaschema_file)
 
     def __init__(self, *args, **kwargs):
@@ -207,12 +207,21 @@ class _Validator(jsonschema.Draft7Validator):
         return repr(ref) in in_doc_refs_cache[ref_path_pattern]
 
 
-def _just_load_a_schema(
+def load_and_validate_schema(
     schema_path: str,
     schema_root: str = SCHEMA_DIR,
     return_validator: bool = False,
     on_refs: Optional[Callable[[dict], dict]] = None,
-) -> dict:
+) -> Union[dict, jsonschema.Draft7Validator]:
+    """
+    Try to load a valid schema at `schema_path`. If an `on_refs` function
+    is supplied, call that on all refs in the schema, rather than
+    resolving the refs. Note: it is shallow, i.e., if calling `on_refs` on a node produces 
+    a new node that contains refs, those refs will not be resolved.
+
+    If return validator is true it will return
+    the validator and the schema used in the validator.
+    """
 
     assert os.path.isabs(schema_root), "schema_root must be an absolute path"
 
@@ -229,25 +238,6 @@ def _just_load_a_schema(
         else:
             schema = _resolve_refs(base_uri, json_spec)
 
-    return schema
-
-
-def load_and_validate_schema(
-    schema_path: str,
-    schema_root: str = SCHEMA_DIR,
-    return_validator: bool = False,
-    on_refs: Optional[Callable[[dict], dict]] = None,
-) -> Union[dict, jsonschema.Draft7Validator]:
-    """
-    Try to load a valid schema at `schema_path`. If an `on_refs` function
-    is supplied, call that on all refs in the schema, rather than
-    resolving the refs. Note: it is shallow, i.e., if calling `on_refs` on a node produces 
-    a new node that contains refs, those refs will not be resolved.
-
-    If return validator is true it will return
-    the validator and the schema used in the validator.
-    """
-    schema = _just_load_a_schema(schema_path, schema_root, return_validator, on_refs)
     # Ensure schema is valid
     # NOTE: $refs were resolved above, so no need for a RefResolver here
     validator = _Validator(schema)

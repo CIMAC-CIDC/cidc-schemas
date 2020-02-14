@@ -71,12 +71,17 @@
             "oneOf": [
                 {
                     "required": ["additionalProperties"],
-                    "not": {"required": ["inheritableBase"]}
+                    "not": {
+                        "required": ["inheritableBase"],
+                        "$comment": "'not' disallows matching this, making additionalProperties and inheritableBase mutually exclusive"
+                    }
                 },
                 {
-                    "not": {"required": ["additionalProperties"]},
-                    "required": ["inheritableBase"],
-                    "$comment": "Maybe rename inheritableBase?"
+                    "not": {
+                        "required": ["additionalProperties"],
+                        "$comment": "'not' disallows matching this, making additionalProperties and inheritableBase mutually exclusive"
+                    },
+                    "required": ["inheritableBase"]
                 }
             ]
         }

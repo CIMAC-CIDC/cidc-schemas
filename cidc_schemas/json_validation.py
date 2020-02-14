@@ -246,7 +246,6 @@ def load_and_validate_schema(
 
     If return validator is true it will return
     the validator and the schema used in the validator.
-    validator.
     """
     schema = _just_load_a_schema(schema_path, schema_root, return_validator, on_refs)
     # Ensure schema is valid

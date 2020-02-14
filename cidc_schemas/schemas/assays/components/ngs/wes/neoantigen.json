@@ -5,22 +5,22 @@
   "type": "object",
   "description": "Neoantigen output files.",
   "properties": {
-    "mhc_class_1_epitopes": {
+    "mhc_class_I_epitopes": {
       "$ref": "artifacts/artifact_tsv.json"
     },
-    "mhc_class_2_epitopes": {
+    "mhc_class_II_epitopes": {
       "$ref": "artifacts/artifact_tsv.json"
     },
-    "mhc_class_1_filtered_condensed_ranked": {
+    "mhc_class_I_filtered_condensed_ranked": {
       "$ref": "artifacts/artifact_tsv.json"
     },
-    "mhc_class_2_filtered_condensed_ranked": {
+    "mhc_class_II_filtered_condensed_ranked": {
       "$ref": "artifacts/artifact_tsv.json"
     }
   },
   "required": [
-    "mhc_class_1_epitopes",
-    "mhc_class_1_filtered_condensed_ranked"
+    "mhc_class_I_epitopes",
+    "mhc_class_I_filtered_condensed_ranked"
   ],
   "additionalProperties": false
 }

@@ -1,6 +1,5 @@
 import re
 import json
-import os
 import copy
 import uuid
 import datetime
@@ -18,7 +17,6 @@ from typing import (
 
 import openpyxl
 import jsonschema
-import jinja2
 from jsonmerge import merge, Merger, exceptions as jsonmerge_exceptions, strategies
 from collections import namedtuple
 from jsonpointer import JsonPointer, JsonPointerException, resolve_pointer, EndOfList
@@ -29,7 +27,7 @@ from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader
 
 from cidc_schemas.constants import SCHEMA_DIR, TEMPLATE_DIR
-from .util import get_path, get_source
+from .util import get_path, get_source, load_pipeline_config_template
 
 PROTOCOL_ID_FIELD_NAME = "protocol_identifier"
 
@@ -1017,11 +1015,7 @@ def _wes_pipeline_config(
             f"Not supported type:{upload_type} for wes pipeline config generation."
         )
 
-    curdir = os.path.dirname(os.path.abspath(__file__))
-    loader = jinja2.FileSystemLoader(curdir)
-    templ = jinja2.Environment(loader=loader).get_template(
-        "pipeline_configs/wes_analysis_config.yaml.j2"
-    )
+    templ = load_pipeline_config_template("wes_analysis_config")
 
     class AnalysisRun(NamedTuple):
         normal_cimac_id: str
@@ -1102,6 +1096,28 @@ def _wes_pipeline_config(
     return internal
 
 
+def _rnaseq_pipeline_config(full_ct: dict, patch: dict, bucket: str) -> Dict[str, str]:
+    """
+        Generates a .yaml config for RNAseq pipeline 
+        
+        Patch is expected to be already merged into full_ct.
+    """
+
+    templ = load_pipeline_config_template("rnaseq_analysis_config")
+
+    # as we know that `patch` is a prism result of a rna_fastq upload
+    # we are sure these getitem calls should be fine
+    new_data = [r for assay in patch["assays"]["rna"] for r in assay["records"]]
+
+    res = {}
+    for sample_data in new_data:
+        res[sample_data["cimac_id"] + ".yaml"] = templ.render(
+            BIOFX_BUCKET_NAME=bucket, **sample_data
+        )
+
+    return res
+
+
 # This is a map from a assay type to a config generators,
 # that should take (full_ct: dict, patch: dict, bucket: str) as arguments
 # and return a map {"file_name": ["whatever pipeline config is"]}
@@ -1109,6 +1125,8 @@ _ANALYSIS_CONF_GENERATORS = {
     "wes_fastq": _wes_pipeline_config("assay"),
     "wes_bam": _wes_pipeline_config("assay"),
     "tumor_normal_pairing": _wes_pipeline_config("pairing"),
+    "rna_fastq": _rnaseq_pipeline_config,
+    "rna_bam": _rnaseq_pipeline_config,
 }
 
 

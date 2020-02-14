@@ -1,0 +1,26 @@
+# samples: a map of sample name to a list of Google bucket paths to input files, 
+# VALID INPUTS: fastq, fastq.gz, bam?
+# NOTE: for PAIRED-END fastq/fastq.gz, give both pairs to the sample
+
+samples:
+  # normal
+  {{cimac_id}}: 
+  {% if files.r1 %}
+      # r1  
+    {% for fastq_gz_artifact in files.r1 %}
+      - gs://{{BIOFX_BUCKET_NAME}}/{{fastq_gz_artifact.object_url}}
+    {% endfor %}
+      # r2
+    {% for fastq_gz_artifact in files.r2 %}
+      - gs://{{BIOFX_BUCKET_NAME}}/{{fastq_gz_artifact.object_url}}
+    {% endfor %}
+  {% else %}
+      # bam
+    {% for bam_artifact in files.bam %}
+      - gs://{{BIOFX_BUCKET_NAME}}/{{bam_artifact.object_url}}
+    {% endfor %}
+  {% endif %}
+  
+runs:
+  {{cimac_id}}:
+  - {{cimac_id}}

@@ -35,8 +35,8 @@
       "description": "Flag used for quality.",
       "type": "number"
     },
-    "cimac_id": {"comment": "defined in ngs_assay_record.json"},
-    "files": {"comment": "defined in ngs_assay_record.json"}
+    "cimac_id": {"$comment": "defined in ngs_assay_record.json"},
+    "files": {"$comment": "defined in ngs_assay_record.json"}
   },
   "mergeStrategy": "objectMerge"
 }

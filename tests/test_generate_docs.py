@@ -14,8 +14,12 @@ from cidc_schemas.constants import SCHEMA_DIR
 def count_files(directory):
     sum = 0
     for _, _, files in os.walk(directory):
-        files = [f for f in files if not f[0] == "."]
-        sum += len(files)
+        for f in files:
+            if f[0] == ".":
+                continue
+            if f.endswith("_template.json"):
+                continue
+            sum += 1
     return sum
 
 

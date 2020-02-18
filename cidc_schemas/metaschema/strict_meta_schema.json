@@ -7,6 +7,12 @@
             "type": "array",
             "minItems": 1,
             "items": { "$ref": "#" }
+        },
+        "stringArray": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true,
+            "default": []
         }
     },
     "type": ["object", "boolean"],
@@ -53,10 +59,7 @@
         },
         "items": {
             "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
-            "anyOf": [
-                { "$ref": "#" },
-                { "$ref": "#/definitions/schemaArray" }
-            ]
+            "$ref": "#"
         },
         "definitions": {
             "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
@@ -64,13 +67,6 @@
         },
         "properties": {
             "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
-            "type": "object",
-            "properties": {
-                "worksheets": {
-                    "$comment": "used in prismify templates. TODO remove after template DSL migration",
-                    "type": "object"
-                }
-            },
             "additionalProperties": {"$ref": "#" } 
         },
         "patternProperties": {
@@ -140,10 +136,10 @@
         }                
     },
     "additionalProperties": false,
-    "oneOf": [
+    "allOf": [
         {
             "not": {
-                "$comment": "'not' disallows matching this, making additionalProperties or inheritableBase required only for schemas describing objects",
+                "$comment": "'not' disallows matching this, making additionalProperties or inheritableBase required only for object-describing schemas",
                 "properties": {
                     "type": {
                         "const": "object" 

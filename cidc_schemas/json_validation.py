@@ -207,10 +207,9 @@ class _Validator(jsonschema.Draft7Validator):
         return repr(ref) in in_doc_refs_cache[ref_path_pattern]
 
 
-def load_and_validate_schema(
+def _load_dont_validate_schema(
     schema_path: str,
     schema_root: str = SCHEMA_DIR,
-    return_validator: bool = False,
     on_refs: Optional[Callable[[dict], dict]] = None,
 ) -> Union[dict, jsonschema.Draft7Validator]:
     """
@@ -237,6 +236,18 @@ def load_and_validate_schema(
             schema = _map_refs(json_spec, on_refs)
         else:
             schema = _resolve_refs(base_uri, json_spec)
+
+    return schema
+
+
+def load_and_validate_schema(
+    schema_path: str,
+    schema_root: str = SCHEMA_DIR,
+    return_validator: bool = False,
+    on_refs: Optional[Callable[[dict], dict]] = None,
+) -> Union[dict, jsonschema.Draft7Validator]:
+
+    schema = _load_dont_validate_schema(schema_path, schema_root, on_refs)
 
     # Ensure schema is valid
     # NOTE: $refs were resolved above, so no need for a RefResolver here

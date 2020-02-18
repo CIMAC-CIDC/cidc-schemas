@@ -19,6 +19,11 @@ def schema_paths():
     for root, _, files in os.walk(SCHEMA_DIR):
         files = [f for f in files if not f[0] == "."]
         for f in files:
+
+            # skipping templates
+            if f.endswith("_template.json"):
+                continue
+
             schema_paths.append(os.path.join(root, f))
 
     return schema_paths

@@ -23,6 +23,10 @@ def load_schemas() -> dict:
         for path in paths:
             if not path.endswith(".json"):
                 continue
+
+            # skipping templates because they are not schemas
+            if path.endswith("_template.json"):
+                continue
             schema_path = os.path.join(root, path)
 
             full_json = load_and_validate_schema(schema_path, SCHEMA_DIR)
@@ -42,7 +46,7 @@ def load_schemas() -> dict:
                     else:
                         description = ""
 
-                return {"url": url, "description": description}
+                return {"$ref": url, "description": description}
 
             schema = load_and_validate_schema(
                 schema_path, SCHEMA_DIR, on_refs=json_to_html

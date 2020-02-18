@@ -12,6 +12,7 @@ import jsonschema
 from cidc_schemas.json_validation import (
     _map_refs,
     load_and_validate_schema,
+    _load_dont_validate_schema,
     _resolve_refs,
     _Validator,
     InDocRefNotFoundError,
@@ -324,7 +325,7 @@ def test_special_keywords():
     # load the schema
     schema_root = SCHEMA_DIR
     schema_path = os.path.join(SCHEMA_DIR, "templates/metadata/cytof_template.json")
-    schema = load_and_validate_schema(schema_path, schema_root)
+    schema = _load_dont_validate_schema(schema_path, schema_root)
 
     tmp1 = schema["properties"]["worksheets"]["Acquisition and Preprocessing"]
     tmp2 = tmp1["data_columns"]["Preprocessing"]["processed fcs filename"]

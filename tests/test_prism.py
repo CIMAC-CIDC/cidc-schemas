@@ -47,24 +47,6 @@ from .test_templates import (
     template_example_xlsx_path,
 )
 
-
-def prismify_test_set(filter=None):
-    yielded = False
-
-    for template, xlsx_path in template_set():
-
-        if filter and template.type not in filter:
-            continue
-
-        xlsx, errors = XlTemplateReader.from_excel(xlsx_path)
-        assert not errors
-        yield xlsx, template
-        yielded = True
-
-    if not yielded:
-        raise Exception(f"no prismify test for filter {filter!r} found")
-
-
 TEST_PRISM_TRIAL = {
     PROTOCOL_ID_FIELD_NAME: "test_prism_trial_id",
     "allowed_collection_event_names": ["Baseline", "Pre_Day_1_Cycle_2"],
@@ -257,7 +239,6 @@ TEST_PRISM_TRIAL = {
     },
 }
 
-
 MINIMAL_TEST_TRIAL = {
     PROTOCOL_ID_FIELD_NAME: "minimal",
     "allowed_collection_event_names": ["Baseline"],
@@ -358,6 +339,9 @@ def test_test_data():
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     validator.validate(TEST_PRISM_TRIAL)
     validator.validate(MINIMAL_TEST_TRIAL)
+
+
+# tests related to merges
 
 
 def test_merge_core():
@@ -658,6 +642,26 @@ def test_merge_ct_meta():
     assert sum(len(p["samples"]) for p in ct_merge["participants"]) == 2 + sum(
         len(p["samples"]) for p in TEST_PRISM_TRIAL["participants"]
     )
+
+
+# tests related to prism and prismify
+
+
+def prismify_test_set(filter=None):
+    yielded = False
+
+    for template, xlsx_path in template_set():
+
+        if filter and template.type not in filter:
+            continue
+
+        xlsx, errors = XlTemplateReader.from_excel(xlsx_path)
+        assert not errors
+        yield xlsx, template
+        yielded = True
+
+    if not yielded:
+        raise Exception(f"no prismify test for filter {filter!r} found")
 
 
 @pytest.mark.parametrize("xlsx, template", prismify_test_set())
@@ -2337,6 +2341,9 @@ def test_merge_extra_metadata_elisa(elisa_test_file_path):
     }
 
 
+# tests related to parsing
+
+
 def test_parse_npx_invalid(npx_file_path):
     # test the parse function by passing a file path
     with pytest.raises(TypeError):
@@ -2398,6 +2405,9 @@ def test_parse_elisa_single(elisa_test_file_path):
         "CTTTP02A3.00",
         "CTTTP02A4.00",
     }
+
+
+# misc tests
 
 
 def test_throw_on_collision():

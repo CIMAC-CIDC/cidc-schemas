@@ -95,12 +95,14 @@
   	<pre><code>{
     "$id": "ihc_input",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
     "description": "IHC assay input/output files.",
     "properties": {
         "ihc_image": {
             "$comment": "Path to IHC image in TIFF format.",
             "$id": "image_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
@@ -135,6 +137,7 @@
                         }
                     ],
                     "description": "Any file artifact associated with a clinical trial.",
+                    "inheritableBase": true,
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -227,27 +230,6 @@
                     },
                     "title": "Artifact Core",
                     "type": "object"
-                },
-                {
-                    "properties": {
-                        "channels": {
-                            "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
-                            "description": "Number of channels in the image.",
-                            "type": "integer"
-                        },
-                        "data_format": {
-                            "const": "IMAGE",
-                            "description": "Data format."
-                        },
-                        "height": {
-                            "description": "Height of the image.",
-                            "type": "integer"
-                        },
-                        "width": {
-                            "description": "Width of the image.",
-                            "type": "integer"
-                        }
-                    }
                 }
             ],
             "anyOf": [
@@ -266,6 +248,61 @@
             ],
             "description": "Information about an image file.",
             "mergeStrategy": "objectMerge",
+            "properties": {
+                "artifact_category": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "artifact_creator": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "channels": {
+                    "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
+                    "description": "Number of channels in the image.",
+                    "type": "integer"
+                },
+                "crc32c_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "data_format": {
+                    "const": "IMAGE",
+                    "description": "Data format."
+                },
+                "file_name": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "file_size_bytes": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "height": {
+                    "description": "Height of the image.",
+                    "type": "integer"
+                },
+                "md5_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "object_url": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "upload_placeholder": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploaded_timestamp": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploader": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uuid": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "visible": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "width": {
+                    "description": "Width of the image.",
+                    "type": "integer"
+                }
+            },
             "title": "Image Artifact",
             "type": "object"
         }

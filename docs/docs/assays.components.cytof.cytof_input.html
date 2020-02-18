@@ -124,6 +124,7 @@
         "normalized_and_debarcoded_fcs": {
             "$id": "fcs_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
@@ -158,6 +159,7 @@
                         }
                     ],
                     "description": "Any file artifact associated with a clinical trial.",
+                    "inheritableBase": true,
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -250,24 +252,59 @@
                     },
                     "title": "Artifact Core",
                     "type": "object"
-                },
-                {
-                    "properties": {
-                        "data_format": {
-                            "const": "FCS",
-                            "description": "Data format."
-                        }
-                    }
                 }
             ],
             "description": "Information about a FCS file.",
             "mergeStrategy": "objectMerge",
+            "properties": {
+                "artifact_category": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "artifact_creator": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "crc32c_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "data_format": {
+                    "const": "FCS",
+                    "description": "Data format."
+                },
+                "file_name": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "file_size_bytes": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "md5_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "object_url": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "upload_placeholder": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploaded_timestamp": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploader": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uuid": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "visible": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                }
+            },
             "title": "FCS Artifact",
             "type": "object"
         },
         "processed_fcs": {
             "$id": "fcs_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
@@ -302,6 +339,7 @@
                         }
                     ],
                     "description": "Any file artifact associated with a clinical trial.",
+                    "inheritableBase": true,
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -394,18 +432,52 @@
                     },
                     "title": "Artifact Core",
                     "type": "object"
-                },
-                {
-                    "properties": {
-                        "data_format": {
-                            "const": "FCS",
-                            "description": "Data format."
-                        }
-                    }
                 }
             ],
             "description": "Information about a FCS file.",
             "mergeStrategy": "objectMerge",
+            "properties": {
+                "artifact_category": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "artifact_creator": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "crc32c_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "data_format": {
+                    "const": "FCS",
+                    "description": "Data format."
+                },
+                "file_name": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "file_size_bytes": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "md5_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "object_url": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "upload_placeholder": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploaded_timestamp": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploader": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uuid": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "visible": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                }
+            },
             "title": "FCS Artifact",
             "type": "object"
         }

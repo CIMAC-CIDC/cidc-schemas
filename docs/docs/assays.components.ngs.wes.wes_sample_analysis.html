@@ -182,6 +182,7 @@
                 "align_recalibrated": {
                     "$id": "bam_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
@@ -216,6 +217,7 @@
                                 }
                             ],
                             "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -308,24 +310,59 @@
                             },
                             "title": "Artifact Core",
                             "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "data_format": {
-                                    "const": "BAM",
-                                    "description": "Data format."
-                                }
-                            }
                         }
                     ],
                     "description": "Information about a BAM file.",
                     "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "artifact_creator": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "crc32c_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "data_format": {
+                            "const": "BAM",
+                            "description": "Data format."
+                        },
+                        "file_name": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "file_size_bytes": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "md5_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "object_url": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploaded_timestamp": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploader": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uuid": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "visible": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        }
+                    },
                     "title": "BAM Artifact",
                     "type": "object"
                 },
                 "align_recalibrated_index": {
                     "$id": "bam_bai_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
@@ -360,6 +397,7 @@
                                 }
                             ],
                             "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -452,24 +490,59 @@
                             },
                             "title": "Artifact Core",
                             "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "data_format": {
-                                    "const": "BAM.BAI",
-                                    "description": "Data format."
-                                }
-                            }
                         }
                     ],
                     "description": "Information about a Bam index file.",
                     "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "artifact_creator": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "crc32c_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "data_format": {
+                            "const": "BAM.BAI",
+                            "description": "Data format."
+                        },
+                        "file_name": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "file_size_bytes": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "md5_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "object_url": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploaded_timestamp": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploader": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uuid": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "visible": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        }
+                    },
                     "title": "BAM.BAI Artifact",
                     "type": "object"
                 },
                 "align_sorted_dedup": {
                     "$id": "bam_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
@@ -504,6 +577,7 @@
                                 }
                             ],
                             "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -596,24 +670,59 @@
                             },
                             "title": "Artifact Core",
                             "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "data_format": {
-                                    "const": "BAM",
-                                    "description": "Data format."
-                                }
-                            }
                         }
                     ],
                     "description": "Information about a BAM file.",
                     "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "artifact_creator": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "crc32c_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "data_format": {
+                            "const": "BAM",
+                            "description": "Data format."
+                        },
+                        "file_name": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "file_size_bytes": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "md5_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "object_url": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploaded_timestamp": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploader": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uuid": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "visible": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        }
+                    },
                     "title": "BAM Artifact",
                     "type": "object"
                 },
                 "align_sorted_dedup_index": {
                     "$id": "bam_bai_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
@@ -648,6 +757,7 @@
                                 }
                             ],
                             "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -740,18 +850,52 @@
                             },
                             "title": "Artifact Core",
                             "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "data_format": {
-                                    "const": "BAM.BAI",
-                                    "description": "Data format."
-                                }
-                            }
                         }
                     ],
                     "description": "Information about a Bam index file.",
                     "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "artifact_creator": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "crc32c_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "data_format": {
+                            "const": "BAM.BAI",
+                            "description": "Data format."
+                        },
+                        "file_name": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "file_size_bytes": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "md5_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "object_url": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploaded_timestamp": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploader": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uuid": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "visible": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        }
+                    },
                     "title": "BAM.BAI Artifact",
                     "type": "object"
                 }
@@ -782,6 +926,7 @@
                 "all_summaries": {
                     "$id": "text_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
@@ -816,6 +961,7 @@
                                 }
                             ],
                             "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -908,24 +1054,59 @@
                             },
                             "title": "Artifact Core",
                             "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "data_format": {
-                                    "const": "TEXT",
-                                    "description": "Data format."
-                                }
-                            }
                         }
                     ],
                     "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "artifact_creator": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "crc32c_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "data_format": {
+                            "const": "TEXT",
+                            "description": "Data format."
+                        },
+                        "file_name": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "file_size_bytes": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "md5_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "object_url": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploaded_timestamp": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploader": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uuid": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "visible": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        }
+                    },
                     "title": "Text Artifact",
                     "type": "object"
                 },
                 "coverage_metrics": {
                     "$id": "text_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
@@ -960,6 +1141,7 @@
                                 }
                             ],
                             "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -1052,24 +1234,59 @@
                             },
                             "title": "Artifact Core",
                             "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "data_format": {
-                                    "const": "TEXT",
-                                    "description": "Data format."
-                                }
-                            }
                         }
                     ],
                     "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "artifact_creator": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "crc32c_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "data_format": {
+                            "const": "TEXT",
+                            "description": "Data format."
+                        },
+                        "file_name": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "file_size_bytes": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "md5_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "object_url": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploaded_timestamp": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploader": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uuid": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "visible": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        }
+                    },
                     "title": "Text Artifact",
                     "type": "object"
                 },
                 "coverage_metrics_summary": {
                     "$id": "text_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
@@ -1104,6 +1321,7 @@
                                 }
                             ],
                             "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -1196,24 +1414,59 @@
                             },
                             "title": "Artifact Core",
                             "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "data_format": {
-                                    "const": "TEXT",
-                                    "description": "Data format."
-                                }
-                            }
                         }
                     ],
                     "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "artifact_creator": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "crc32c_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "data_format": {
+                            "const": "TEXT",
+                            "description": "Data format."
+                        },
+                        "file_name": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "file_size_bytes": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "md5_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "object_url": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploaded_timestamp": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploader": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uuid": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "visible": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        }
+                    },
                     "title": "Text Artifact",
                     "type": "object"
                 },
                 "mosdepth_region_dist_broad": {
                     "$id": "text_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
@@ -1248,6 +1501,7 @@
                                 }
                             ],
                             "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -1340,24 +1594,59 @@
                             },
                             "title": "Artifact Core",
                             "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "data_format": {
-                                    "const": "TEXT",
-                                    "description": "Data format."
-                                }
-                            }
                         }
                     ],
                     "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "artifact_creator": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "crc32c_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "data_format": {
+                            "const": "TEXT",
+                            "description": "Data format."
+                        },
+                        "file_name": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "file_size_bytes": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "md5_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "object_url": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploaded_timestamp": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploader": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uuid": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "visible": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        }
+                    },
                     "title": "Text Artifact",
                     "type": "object"
                 },
                 "mosdepth_region_dist_mda": {
                     "$id": "text_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
@@ -1392,6 +1681,7 @@
                                 }
                             ],
                             "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -1484,24 +1774,59 @@
                             },
                             "title": "Artifact Core",
                             "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "data_format": {
-                                    "const": "TEXT",
-                                    "description": "Data format."
-                                }
-                            }
                         }
                     ],
                     "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "artifact_creator": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "crc32c_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "data_format": {
+                            "const": "TEXT",
+                            "description": "Data format."
+                        },
+                        "file_name": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "file_size_bytes": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "md5_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "object_url": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploaded_timestamp": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploader": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uuid": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "visible": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        }
+                    },
                     "title": "Text Artifact",
                     "type": "object"
                 },
                 "mosdepth_region_dist_mocha": {
                     "$id": "text_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
@@ -1536,6 +1861,7 @@
                                 }
                             ],
                             "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -1628,24 +1954,59 @@
                             },
                             "title": "Artifact Core",
                             "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "data_format": {
-                                    "const": "TEXT",
-                                    "description": "Data format."
-                                }
-                            }
                         }
                     ],
                     "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "artifact_creator": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "crc32c_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "data_format": {
+                            "const": "TEXT",
+                            "description": "Data format."
+                        },
+                        "file_name": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "file_size_bytes": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "md5_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "object_url": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploaded_timestamp": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploader": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uuid": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "visible": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        }
+                    },
                     "title": "Text Artifact",
                     "type": "object"
                 },
                 "target_metrics": {
                     "$id": "text_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
@@ -1680,6 +2041,7 @@
                                 }
                             ],
                             "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -1772,24 +2134,59 @@
                             },
                             "title": "Artifact Core",
                             "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "data_format": {
-                                    "const": "TEXT",
-                                    "description": "Data format."
-                                }
-                            }
                         }
                     ],
                     "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "artifact_creator": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "crc32c_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "data_format": {
+                            "const": "TEXT",
+                            "description": "Data format."
+                        },
+                        "file_name": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "file_size_bytes": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "md5_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "object_url": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploaded_timestamp": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploader": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uuid": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "visible": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        }
+                    },
                     "title": "Text Artifact",
                     "type": "object"
                 },
                 "target_metrics_summary": {
                     "$id": "text_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
@@ -1824,6 +2221,7 @@
                                 }
                             ],
                             "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -1916,18 +2314,52 @@
                             },
                             "title": "Artifact Core",
                             "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "data_format": {
-                                    "const": "TEXT",
-                                    "description": "Data format."
-                                }
-                            }
                         }
                     ],
                     "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "artifact_creator": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "crc32c_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "data_format": {
+                            "const": "TEXT",
+                            "description": "Data format."
+                        },
+                        "file_name": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "file_size_bytes": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "md5_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "object_url": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploaded_timestamp": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploader": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uuid": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "visible": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        }
+                    },
                     "title": "Text Artifact",
                     "type": "object"
                 }
@@ -1952,6 +2384,7 @@
                 "optitype_result": {
                     "$id": "text_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
@@ -1986,6 +2419,7 @@
                                 }
                             ],
                             "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -2078,24 +2512,59 @@
                             },
                             "title": "Artifact Core",
                             "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "data_format": {
-                                    "const": "TEXT",
-                                    "description": "Data format."
-                                }
-                            }
                         }
                     ],
                     "description": "Information about a text file.",
                     "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "artifact_creator": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "crc32c_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "data_format": {
+                            "const": "TEXT",
+                            "description": "Data format."
+                        },
+                        "file_name": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "file_size_bytes": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "md5_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "object_url": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploaded_timestamp": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploader": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uuid": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "visible": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        }
+                    },
                     "title": "Text Artifact",
                     "type": "object"
                 },
                 "xhla_report_hla": {
                     "$id": "json_artifact",
                     "$schema": "http://json-schema.org/draft-07/schema#",
+                    "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
@@ -2130,6 +2599,7 @@
                                 }
                             ],
                             "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -2222,18 +2692,52 @@
                             },
                             "title": "Artifact Core",
                             "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "data_format": {
-                                    "const": "JSON",
-                                    "description": "Data format."
-                                }
-                            }
                         }
                     ],
                     "description": "Information about a JSON file.",
                     "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "artifact_creator": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "crc32c_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "data_format": {
+                            "const": "JSON",
+                            "description": "Data format."
+                        },
+                        "file_name": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "file_size_bytes": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "md5_hash": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "object_url": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploaded_timestamp": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uploader": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "uuid": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        },
+                        "visible": {
+                            "$comment": "defined in artifacts/artifact_core.json"
+                        }
+                    },
                     "title": "JSON Artifact",
                     "type": "object"
                 }

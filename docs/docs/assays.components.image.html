@@ -294,9 +294,10 @@
   <div class="container">
     <h3>image.full.json</h3>
   	<pre><code>{
+    "$id": "image",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "Base information about the acquisition and analysis of a quantitative pathology image.",
-    "id": "image",
+    "inheritableBase": true,
     "properties": {
         "cell_segmentation_model": {
             "description": "Model used for cell segmentation in an imaging experiment.",

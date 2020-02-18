@@ -83,6 +83,16 @@
             
         
             
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
                 <tr>
     <td>
         
@@ -236,6 +246,121 @@
             
         
             
+                <tr>
+    <td>
+        
+            <span id="antibody">
+                antibody
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+        
+    </td>
+    <td>
+        
+            (defined in assays/components/antibody.json)
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="clone">
+                clone
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+        
+    </td>
+    <td>
+        
+            (defined in assays/components/antibody.json)
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="company">
+                company
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+        
+    </td>
+    <td>
+        
+            (defined in assays/components/antibody.json)
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cat_num">
+                cat_num
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+        
+    </td>
+    <td>
+        
+            (defined in assays/components/antibody.json)
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="lot_num">
+                lot_num
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+        
+    </td>
+    <td>
+        
+            (defined in assays/components/antibody.json)
+        
+    </td>
+</tr>
+            
+        
+            
         
             
         
@@ -253,11 +378,13 @@
   	<pre><code>{
     "$id": "elisa_antibody",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
     "allOf": [
         {
+            "$id": "antibody",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "description": "Common information about an antibody used in a number of immune-oncology assays.",
-            "id": "antibody",
+            "inheritableBase": true,
             "properties": {
                 "antibody": {
                     "description": "Antibody type collected for this study.",
@@ -289,6 +416,18 @@
     "description": "Data specific to antibody preparation on the ELISA assay.",
     "mergeStrategy": "objectMerge",
     "properties": {
+        "antibody": {
+            "$comment": "defined in assays/components/antibody.json"
+        },
+        "cat_num": {
+            "$comment": "defined in assays/components/antibody.json"
+        },
+        "clone": {
+            "$comment": "defined in assays/components/antibody.json"
+        },
+        "company": {
+            "$comment": "defined in assays/components/antibody.json"
+        },
         "dilution": {
             "description": "Concentration ratio of dilution buffer for primary antibody.",
             "type": "string"
@@ -296,6 +435,9 @@
         "isotope": {
             "description": "Antibody isotype used to help differentiate antibody signals.",
             "type": "string"
+        },
+        "lot_num": {
+            "$comment": "defined in assays/components/antibody.json"
         },
         "stain_type": {
             "description": "Type of staining method used for antibody.",

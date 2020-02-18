@@ -449,6 +449,7 @@
   	<pre><code>{
     "$id": "participant",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
     "description": "The collection of all data related to a specific participant in the context of a specific clinical trial.\n",
     "properties": {
         "cimac_participant_id": {
@@ -593,6 +594,7 @@
                         "items": {
                             "$id": "aliquot",
                             "$schema": "http://json-schema.org/draft-07/schema#",
+                            "additionalProperties": false,
                             "description": "Pertaining to a portion (volume or weight) of the whole.",
                             "properties": {
                                 "aliquot_amount": {
@@ -689,10 +691,12 @@
                             "Cycle_2_Week_3",
                             "Cycle_4_Week_7",
                             "Cycle_5_Week_9",
-                            "Progression",
                             "Cycle_3",
                             "End_of_treatment",
+                            "Pre_PD1_therapy",
                             "On_Treatment",
+                            "Week_5",
+                            "Week_7",
                             "Response",
                             "Relapse",
                             "Day_8",
@@ -716,12 +720,12 @@
                             "Cycle_4_Week_7": "S1400I",
                             "Cycle_5_Week_9": "S1400I",
                             "Day_8": "9204",
-                            "End_of_Treatment": "10026",
-                            "End_of_treatment": "EAY131-Z1D",
+                            "End_of_treatment": "EAY131-Z1D, 10026",
                             "Off_study": "E4412",
                             "On_Treatment": "10021",
                             "Pre_Day_1_Cycle_2": "E4412",
-                            "Progression": "10026",
+                            "Pre_PD1_therapy": "10021",
+                            "Progression": "S1400I, 10021",
                             "Relapse": "9204",
                             "Response": "9204",
                             "Restaging": "E4412",
@@ -731,7 +735,9 @@
                             "T3": "10026",
                             "T4": "10026",
                             "T5": "10026",
-                            "T6": "10026"
+                            "T6": "10026",
+                            "Week_5": "10021",
+                            "Week_7": "10021"
                         },
                         "in_doc_ref_pattern": "/allowed_collection_event_names/*",
                         "title": "Collection Event Name",

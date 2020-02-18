@@ -112,6 +112,8 @@
             
         
             
+        
+            
                 <tr>
     <td>
         
@@ -215,7 +217,7 @@
     </td>
     <td>
         
-            (defined in assay_core.json)
+            (defined in assays/components/assay_core.json)
         
     </td>
 </tr>
@@ -238,7 +240,30 @@
     </td>
     <td>
         
-            (defined in ngs_assay_core.json)
+            (defined in assays/components/ngs_assay_core.json)
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="library_kit">
+                library_kit
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+        
+    </td>
+    <td>
+        
+            (defined in assays/components/ngs_assay_core.json)
         
     </td>
 </tr>
@@ -261,7 +286,7 @@
     </td>
     <td>
         
-            (defined in ngs_assay_core.json)
+            (defined in assays/components/ngs_assay_core.json)
         
     </td>
 </tr>
@@ -322,12 +347,15 @@
   <div class="container">
     <h3>rna_assay.full.json</h3>
   	<pre><code>{
+    "$id": "rna_assay",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
     "allOf": [
         {
             "$id": "assay_core",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "description": "Main properties of the assay experiment template.",
+            "inheritableBase": true,
             "properties": {
                 "assay_creator": {
                     "description": "Indicates what site is filling out the assay.",
@@ -350,6 +378,7 @@
             "$id": "ngs_assay_core",
             "$schema": "http://json-schema.org/draft-07/schema#",
             "description": "Common properties for NGS Assays.",
+            "inheritableBase": true,
             "properties": {
                 "library_kit": {
                     "$comment": "This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.",
@@ -366,12 +395,6 @@
                         "Single"
                     ],
                     "type": "string"
-                },
-                "read_length": {
-                    "description": "Number of cycles for each sequencing read.",
-                    "exclusiveMinimum": 0,
-                    "maximum": 1000,
-                    "type": "integer"
                 },
                 "sequencer_platform": {
                     "description": "Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.",
@@ -394,11 +417,10 @@
         }
     ],
     "description": "Additional properties to describe a RNA assay for expression analysis.",
-    "id": "rna_assay",
     "mergeStrategy": "objectMerge",
     "properties": {
         "assay_creator": {
-            "$comment": "defined in assay_core.json"
+            "$comment": "defined in assays/components/assay_core.json"
         },
         "enrichment_method": {
             "description": "Method used for enriching for mRNA.",
@@ -420,13 +442,16 @@
             ],
             "type": "string"
         },
+        "library_kit": {
+            "$comment": "defined in assays/components/ngs_assay_core.json"
+        },
         "paired_end_reads": {
-            "$comment": "defined in ngs_assay_core.json"
+            "$comment": "defined in assays/components/ngs_assay_core.json"
         },
         "records": {
             "description": "A single data record from RNAseq assay.",
             "items": {
-                "$id": "rna_assay_record",
+                "$id": "rna_entry",
                 "$schema": "http://json-schema.org/draft-07/schema#",
                 "additionalProperties": false,
                 "allOf": [
@@ -434,6 +459,7 @@
                         "$id": "ngs_assay_record",
                         "$schema": "http://json-schema.org/draft-07/schema#",
                         "description": "A single data record from an NGS assay.",
+                        "inheritableBase": true,
                         "properties": {
                             "cimac_id": {
                                 "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.Id of an sample within this clinical trial, that this assay record is based upon.",
@@ -468,6 +494,7 @@
                                             "$comment": "A BAM file, aligned or not, which contains both pairs of sequencing libraries",
                                             "$id": "bam_artifact",
                                             "$schema": "http://json-schema.org/draft-07/schema#",
+                                            "additionalProperties": false,
                                             "allOf": [
                                                 {
                                                     "$id": "artifact_core",
@@ -502,6 +529,7 @@
                                                         }
                                                     ],
                                                     "description": "Any file artifact associated with a clinical trial.",
+                                                    "inheritableBase": true,
                                                     "properties": {
                                                         "artifact_category": {
                                                             "description": "Artifact category.",
@@ -594,18 +622,52 @@
                                                     },
                                                     "title": "Artifact Core",
                                                     "type": "object"
-                                                },
-                                                {
-                                                    "properties": {
-                                                        "data_format": {
-                                                            "const": "BAM",
-                                                            "description": "Data format."
-                                                        }
-                                                    }
                                                 }
                                             ],
                                             "description": "Information about a BAM file.",
                                             "mergeStrategy": "objectMerge",
+                                            "properties": {
+                                                "artifact_category": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "artifact_creator": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "crc32c_hash": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "data_format": {
+                                                    "const": "BAM",
+                                                    "description": "Data format."
+                                                },
+                                                "file_name": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "file_size_bytes": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "md5_hash": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "object_url": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "upload_placeholder": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "uploaded_timestamp": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "uploader": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "uuid": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "visible": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                }
+                                            },
                                             "title": "BAM Artifact",
                                             "type": "object"
                                         },
@@ -617,6 +679,7 @@
                                             "$comment": "Fastq file for the first fragment.",
                                             "$id": "artifact_fastq_gz",
                                             "$schema": "http://json-schema.org/draft-07/schema#",
+                                            "additionalProperties": false,
                                             "allOf": [
                                                 {
                                                     "$id": "artifact_core",
@@ -651,6 +714,7 @@
                                                         }
                                                     ],
                                                     "description": "Any file artifact associated with a clinical trial.",
+                                                    "inheritableBase": true,
                                                     "properties": {
                                                         "artifact_category": {
                                                             "description": "Artifact category.",
@@ -743,18 +807,52 @@
                                                     },
                                                     "title": "Artifact Core",
                                                     "type": "object"
-                                                },
-                                                {
-                                                    "properties": {
-                                                        "data_format": {
-                                                            "const": "FASTQ.GZ",
-                                                            "description": "Data format."
-                                                        }
-                                                    }
                                                 }
                                             ],
                                             "description": "Information about a Gzipped FASTQ file.",
                                             "mergeStrategy": "objectMerge",
+                                            "properties": {
+                                                "artifact_category": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "artifact_creator": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "crc32c_hash": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "data_format": {
+                                                    "const": "FASTQ.GZ",
+                                                    "description": "Data format."
+                                                },
+                                                "file_name": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "file_size_bytes": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "md5_hash": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "object_url": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "upload_placeholder": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "uploaded_timestamp": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "uploader": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "uuid": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "visible": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                }
+                                            },
                                             "title": "Gzipped FastQ Artifact",
                                             "type": "object"
                                         },
@@ -766,6 +864,7 @@
                                             "$comment": "Fastq file for the first fragment.",
                                             "$id": "artifact_fastq_gz",
                                             "$schema": "http://json-schema.org/draft-07/schema#",
+                                            "additionalProperties": false,
                                             "allOf": [
                                                 {
                                                     "$id": "artifact_core",
@@ -800,6 +899,7 @@
                                                         }
                                                     ],
                                                     "description": "Any file artifact associated with a clinical trial.",
+                                                    "inheritableBase": true,
                                                     "properties": {
                                                         "artifact_category": {
                                                             "description": "Artifact category.",
@@ -892,18 +992,52 @@
                                                     },
                                                     "title": "Artifact Core",
                                                     "type": "object"
-                                                },
-                                                {
-                                                    "properties": {
-                                                        "data_format": {
-                                                            "const": "FASTQ.GZ",
-                                                            "description": "Data format."
-                                                        }
-                                                    }
                                                 }
                                             ],
                                             "description": "Information about a Gzipped FASTQ file.",
                                             "mergeStrategy": "objectMerge",
+                                            "properties": {
+                                                "artifact_category": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "artifact_creator": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "crc32c_hash": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "data_format": {
+                                                    "const": "FASTQ.GZ",
+                                                    "description": "Data format."
+                                                },
+                                                "file_name": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "file_size_bytes": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "md5_hash": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "object_url": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "upload_placeholder": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "uploaded_timestamp": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "uploader": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "uuid": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                },
+                                                "visible": {
+                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                }
+                                            },
                                             "title": "Gzipped FastQ Artifact",
                                             "type": "object"
                                         },
@@ -927,7 +1061,7 @@
                 "mergeStrategy": "objectMerge",
                 "properties": {
                     "cimac_id": {
-                        "comment": "defined in ngs_assay_record.json"
+                        "$comment": "defined in ngs_assay_record.json"
                     },
                     "dv200": {
                         "description": "The percentage of fragments > 200 nucleotides.",
@@ -936,7 +1070,7 @@
                         "type": "number"
                     },
                     "files": {
-                        "comment": "defined in ngs_assay_record.json"
+                        "$comment": "defined in ngs_assay_record.json"
                     },
                     "library_yield_ng": {
                         "description": "Resulting yield (in ng) from library construction.",
@@ -969,7 +1103,7 @@
             "type": "array"
         },
         "sequencer_platform": {
-            "$comment": "defined in ngs_assay_core.json"
+            "$comment": "defined in assays/components/ngs_assay_core.json"
         }
     },
     "required": [

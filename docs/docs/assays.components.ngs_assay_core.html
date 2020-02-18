@@ -143,8 +143,6 @@
 </tr>
             
         
-            
-        
         
             
         
@@ -185,39 +183,6 @@
         
             
         
-            
-                <tr>
-    <td>
-        
-            <span id="read_length">
-                read_length
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Number of cycles for each sequencing read.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                integer 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
     </table>
 
     
@@ -229,6 +194,7 @@
     "$id": "ngs_assay_core",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "Common properties for NGS Assays.",
+    "inheritableBase": true,
     "properties": {
         "library_kit": {
             "$comment": "This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.",
@@ -245,12 +211,6 @@
                 "Single"
             ],
             "type": "string"
-        },
-        "read_length": {
-            "description": "Number of cycles for each sequencing read.",
-            "exclusiveMinimum": 0,
-            "maximum": 1000,
-            "type": "integer"
         },
         "sequencer_platform": {
             "description": "Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.",

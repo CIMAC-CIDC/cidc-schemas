@@ -221,11 +221,13 @@
     "$id": "image_mapping",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "Regions of interest obtained from image mapping.",
+    "inheritableBase": true,
     "properties": {
         "binary_seg_map": {
             "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.",
             "$id": "csv_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
@@ -260,6 +262,7 @@
                         }
                     ],
                     "description": "Any file artifact associated with a clinical trial.",
+                    "inheritableBase": true,
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -352,18 +355,52 @@
                     },
                     "title": "Artifact Core",
                     "type": "object"
-                },
-                {
-                    "properties": {
-                        "data_format": {
-                            "const": "CSV",
-                            "description": "Data format."
-                        }
-                    }
                 }
             ],
             "description": "Information about a comma separated file.",
             "mergeStrategy": "objectMerge",
+            "properties": {
+                "artifact_category": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "artifact_creator": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "crc32c_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "data_format": {
+                    "const": "CSV",
+                    "description": "Data format."
+                },
+                "file_name": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "file_size_bytes": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "md5_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "object_url": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "upload_placeholder": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploaded_timestamp": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploader": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uuid": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "visible": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                }
+            },
             "title": "CSV Artifact",
             "type": "object"
         },
@@ -371,6 +408,7 @@
             "$comment": "Data produced from the analysis of cellular image.",
             "$id": "csv_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
@@ -405,6 +443,7 @@
                         }
                     ],
                     "description": "Any file artifact associated with a clinical trial.",
+                    "inheritableBase": true,
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -497,18 +536,52 @@
                     },
                     "title": "Artifact Core",
                     "type": "object"
-                },
-                {
-                    "properties": {
-                        "data_format": {
-                            "const": "CSV",
-                            "description": "Data format."
-                        }
-                    }
                 }
             ],
             "description": "Information about a comma separated file.",
             "mergeStrategy": "objectMerge",
+            "properties": {
+                "artifact_category": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "artifact_creator": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "crc32c_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "data_format": {
+                    "const": "CSV",
+                    "description": "Data format."
+                },
+                "file_name": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "file_size_bytes": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "md5_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "object_url": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "upload_placeholder": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploaded_timestamp": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploader": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uuid": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "visible": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                }
+            },
             "title": "CSV Artifact",
             "type": "object"
         },
@@ -516,6 +589,7 @@
             "$comment": "Summary of the results of a cell segmentation data experiment.",
             "$id": "csv_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
@@ -550,6 +624,7 @@
                         }
                     ],
                     "description": "Any file artifact associated with a clinical trial.",
+                    "inheritableBase": true,
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -642,18 +717,52 @@
                     },
                     "title": "Artifact Core",
                     "type": "object"
-                },
-                {
-                    "properties": {
-                        "data_format": {
-                            "const": "CSV",
-                            "description": "Data format."
-                        }
-                    }
                 }
             ],
             "description": "Information about a comma separated file.",
             "mergeStrategy": "objectMerge",
+            "properties": {
+                "artifact_category": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "artifact_creator": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "crc32c_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "data_format": {
+                    "const": "CSV",
+                    "description": "Data format."
+                },
+                "file_name": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "file_size_bytes": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "md5_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "object_url": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "upload_placeholder": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploaded_timestamp": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploader": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uuid": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "visible": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                }
+            },
             "title": "CSV Artifact",
             "type": "object"
         },
@@ -661,6 +770,7 @@
             "$comment": "Image produced from the combination of multiple imaging experiment data images.",
             "$id": "image_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
@@ -695,6 +805,7 @@
                         }
                     ],
                     "description": "Any file artifact associated with a clinical trial.",
+                    "inheritableBase": true,
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -787,27 +898,6 @@
                     },
                     "title": "Artifact Core",
                     "type": "object"
-                },
-                {
-                    "properties": {
-                        "channels": {
-                            "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
-                            "description": "Number of channels in the image.",
-                            "type": "integer"
-                        },
-                        "data_format": {
-                            "const": "IMAGE",
-                            "description": "Data format."
-                        },
-                        "height": {
-                            "description": "Height of the image.",
-                            "type": "integer"
-                        },
-                        "width": {
-                            "description": "Width of the image.",
-                            "type": "integer"
-                        }
-                    }
                 }
             ],
             "anyOf": [
@@ -826,6 +916,61 @@
             ],
             "description": "Information about an image file.",
             "mergeStrategy": "objectMerge",
+            "properties": {
+                "artifact_category": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "artifact_creator": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "channels": {
+                    "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
+                    "description": "Number of channels in the image.",
+                    "type": "integer"
+                },
+                "crc32c_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "data_format": {
+                    "const": "IMAGE",
+                    "description": "Data format."
+                },
+                "file_name": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "file_size_bytes": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "height": {
+                    "description": "Height of the image.",
+                    "type": "integer"
+                },
+                "md5_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "object_url": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "upload_placeholder": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploaded_timestamp": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploader": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uuid": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "visible": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "width": {
+                    "description": "Width of the image.",
+                    "type": "integer"
+                }
+            },
             "title": "Image Artifact",
             "type": "object"
         },
@@ -833,6 +978,7 @@
             "$comment": "Genome segmentation mapping",
             "$id": "image_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
@@ -867,6 +1013,7 @@
                         }
                     ],
                     "description": "Any file artifact associated with a clinical trial.",
+                    "inheritableBase": true,
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -959,27 +1106,6 @@
                     },
                     "title": "Artifact Core",
                     "type": "object"
-                },
-                {
-                    "properties": {
-                        "channels": {
-                            "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
-                            "description": "Number of channels in the image.",
-                            "type": "integer"
-                        },
-                        "data_format": {
-                            "const": "IMAGE",
-                            "description": "Data format."
-                        },
-                        "height": {
-                            "description": "Height of the image.",
-                            "type": "integer"
-                        },
-                        "width": {
-                            "description": "Width of the image.",
-                            "type": "integer"
-                        }
-                    }
                 }
             ],
             "anyOf": [
@@ -998,6 +1124,61 @@
             ],
             "description": "Information about an image file.",
             "mergeStrategy": "objectMerge",
+            "properties": {
+                "artifact_category": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "artifact_creator": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "channels": {
+                    "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
+                    "description": "Number of channels in the image.",
+                    "type": "integer"
+                },
+                "crc32c_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "data_format": {
+                    "const": "IMAGE",
+                    "description": "Data format."
+                },
+                "file_name": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "file_size_bytes": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "height": {
+                    "description": "Height of the image.",
+                    "type": "integer"
+                },
+                "md5_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "object_url": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "upload_placeholder": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploaded_timestamp": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploader": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uuid": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "visible": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "width": {
+                    "description": "Width of the image.",
+                    "type": "integer"
+                }
+            },
             "title": "Image Artifact",
             "type": "object"
         },
@@ -1005,6 +1186,7 @@
             "$comment": "Generation of values based on based on experiment data.",
             "$id": "csv_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
@@ -1039,6 +1221,7 @@
                         }
                     ],
                     "description": "Any file artifact associated with a clinical trial.",
+                    "inheritableBase": true,
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -1131,18 +1314,52 @@
                     },
                     "title": "Artifact Core",
                     "type": "object"
-                },
-                {
-                    "properties": {
-                        "data_format": {
-                            "const": "CSV",
-                            "description": "Data format."
-                        }
-                    }
                 }
             ],
             "description": "Information about a comma separated file.",
             "mergeStrategy": "objectMerge",
+            "properties": {
+                "artifact_category": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "artifact_creator": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "crc32c_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "data_format": {
+                    "const": "CSV",
+                    "description": "Data format."
+                },
+                "file_name": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "file_size_bytes": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "md5_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "object_url": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "upload_placeholder": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploaded_timestamp": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploader": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uuid": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "visible": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                }
+            },
             "title": "CSV Artifact",
             "type": "object"
         }

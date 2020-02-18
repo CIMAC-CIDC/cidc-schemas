@@ -101,6 +101,7 @@
         "optimal_purity_value": {
             "$id": "text_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
@@ -135,6 +136,7 @@
                         }
                     ],
                     "description": "Any file artifact associated with a clinical trial.",
+                    "inheritableBase": true,
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -227,18 +229,52 @@
                     },
                     "title": "Artifact Core",
                     "type": "object"
-                },
-                {
-                    "properties": {
-                        "data_format": {
-                            "const": "TEXT",
-                            "description": "Data format."
-                        }
-                    }
                 }
             ],
             "description": "Information about a text file.",
             "mergeStrategy": "objectMerge",
+            "properties": {
+                "artifact_category": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "artifact_creator": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "crc32c_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "data_format": {
+                    "const": "TEXT",
+                    "description": "Data format."
+                },
+                "file_name": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "file_size_bytes": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "md5_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "object_url": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "upload_placeholder": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploaded_timestamp": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploader": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uuid": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "visible": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                }
+            },
             "title": "Text Artifact",
             "type": "object"
         }

@@ -61,8 +61,8 @@
                 <tr>
     <td>
         
-            <span id="mhc_class_1_epitopes">
-                mhc_class_1_epitopes
+            <span id="mhc_class_I_epitopes">
+                mhc_class_I_epitopes
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -88,8 +88,8 @@
                 <tr>
     <td>
         
-            <span id="mhc_class_1_filtered_condensed_ranked">
-                mhc_class_1_filtered_condensed_ranked
+            <span id="mhc_class_I_filtered_condensed_ranked">
+                mhc_class_I_filtered_condensed_ranked
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -118,8 +118,8 @@
                 <tr>
     <td>
         
-            <span id="mhc_class_2_epitopes">
-                mhc_class_2_epitopes
+            <span id="mhc_class_II_epitopes">
+                mhc_class_II_epitopes
             </span>
             
         
@@ -143,8 +143,8 @@
                 <tr>
     <td>
         
-            <span id="mhc_class_2_filtered_condensed_ranked">
-                mhc_class_2_filtered_condensed_ranked
+            <span id="mhc_class_II_filtered_condensed_ranked">
+                mhc_class_II_filtered_condensed_ranked
             </span>
             
         
@@ -175,9 +175,10 @@
     "additionalProperties": false,
     "description": "Neoantigen output files.",
     "properties": {
-        "mhc_class_1_epitopes": {
+        "mhc_class_II_epitopes": {
             "$id": "tsv_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
@@ -212,6 +213,7 @@
                         }
                     ],
                     "description": "Any file artifact associated with a clinical trial.",
+                    "inheritableBase": true,
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -304,24 +306,59 @@
                     },
                     "title": "Artifact Core",
                     "type": "object"
-                },
-                {
-                    "properties": {
-                        "data_format": {
-                            "const": "TSV",
-                            "description": "Data format."
-                        }
-                    }
                 }
             ],
             "description": "Information about a tab Separated file.",
             "mergeStrategy": "objectMerge",
+            "properties": {
+                "artifact_category": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "artifact_creator": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "crc32c_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "data_format": {
+                    "const": "TSV",
+                    "description": "Data format."
+                },
+                "file_name": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "file_size_bytes": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "md5_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "object_url": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "upload_placeholder": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploaded_timestamp": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploader": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uuid": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "visible": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                }
+            },
             "title": "TSV Artifact",
             "type": "object"
         },
-        "mhc_class_1_filtered_condensed_ranked": {
+        "mhc_class_II_filtered_condensed_ranked": {
             "$id": "tsv_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
@@ -356,6 +393,7 @@
                         }
                     ],
                     "description": "Any file artifact associated with a clinical trial.",
+                    "inheritableBase": true,
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -448,24 +486,59 @@
                     },
                     "title": "Artifact Core",
                     "type": "object"
-                },
-                {
-                    "properties": {
-                        "data_format": {
-                            "const": "TSV",
-                            "description": "Data format."
-                        }
-                    }
                 }
             ],
             "description": "Information about a tab Separated file.",
             "mergeStrategy": "objectMerge",
+            "properties": {
+                "artifact_category": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "artifact_creator": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "crc32c_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "data_format": {
+                    "const": "TSV",
+                    "description": "Data format."
+                },
+                "file_name": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "file_size_bytes": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "md5_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "object_url": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "upload_placeholder": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploaded_timestamp": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploader": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uuid": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "visible": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                }
+            },
             "title": "TSV Artifact",
             "type": "object"
         },
-        "mhc_class_2_epitopes": {
+        "mhc_class_I_epitopes": {
             "$id": "tsv_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
@@ -500,6 +573,7 @@
                         }
                     ],
                     "description": "Any file artifact associated with a clinical trial.",
+                    "inheritableBase": true,
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -592,24 +666,59 @@
                     },
                     "title": "Artifact Core",
                     "type": "object"
-                },
-                {
-                    "properties": {
-                        "data_format": {
-                            "const": "TSV",
-                            "description": "Data format."
-                        }
-                    }
                 }
             ],
             "description": "Information about a tab Separated file.",
             "mergeStrategy": "objectMerge",
+            "properties": {
+                "artifact_category": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "artifact_creator": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "crc32c_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "data_format": {
+                    "const": "TSV",
+                    "description": "Data format."
+                },
+                "file_name": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "file_size_bytes": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "md5_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "object_url": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "upload_placeholder": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploaded_timestamp": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploader": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uuid": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "visible": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                }
+            },
             "title": "TSV Artifact",
             "type": "object"
         },
-        "mhc_class_2_filtered_condensed_ranked": {
+        "mhc_class_I_filtered_condensed_ranked": {
             "$id": "tsv_artifact",
             "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
@@ -644,6 +753,7 @@
                         }
                     ],
                     "description": "Any file artifact associated with a clinical trial.",
+                    "inheritableBase": true,
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -736,25 +846,59 @@
                     },
                     "title": "Artifact Core",
                     "type": "object"
-                },
-                {
-                    "properties": {
-                        "data_format": {
-                            "const": "TSV",
-                            "description": "Data format."
-                        }
-                    }
                 }
             ],
             "description": "Information about a tab Separated file.",
             "mergeStrategy": "objectMerge",
+            "properties": {
+                "artifact_category": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "artifact_creator": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "crc32c_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "data_format": {
+                    "const": "TSV",
+                    "description": "Data format."
+                },
+                "file_name": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "file_size_bytes": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "md5_hash": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "object_url": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "upload_placeholder": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploaded_timestamp": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uploader": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "uuid": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                },
+                "visible": {
+                    "$comment": "defined in artifacts/artifact_core.json"
+                }
+            },
             "title": "TSV Artifact",
             "type": "object"
         }
     },
     "required": [
-        "mhc_class_1_epitopes",
-        "mhc_class_1_filtered_condensed_ranked"
+        "mhc_class_I_epitopes",
+        "mhc_class_I_filtered_condensed_ranked"
     ],
     "title": "WES Neoantigen Output Files",
     "type": "object"

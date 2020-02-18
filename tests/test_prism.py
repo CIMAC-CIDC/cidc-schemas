@@ -1463,7 +1463,12 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     for file_map_entry in file_maps:
         assert (
-            len((full_ct | grep(fmap_entry.gs_key))["matched_values"]) == 1
+            len(
+                (full_ct | grep(file_map_entry.gs_key, match_string=True))[
+                    "matched_values"
+                ]
+            )
+            == 1
         )  # each gs_url only once
 
     # olink is special - it's not an array

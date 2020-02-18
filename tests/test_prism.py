@@ -258,6 +258,41 @@ TEST_PRISM_TRIAL = {
 }
 
 
+MINIMAL_TEST_TRIAL = {
+    PROTOCOL_ID_FIELD_NAME: "minimal",
+    "allowed_collection_event_names": ["Baseline"],
+    "allowed_cohort_names": ["Arm_Z"],
+    "participants": [
+        {
+            "samples": [
+                {
+                    "aliquots": [
+                        {
+                            "slide_number": "1",
+                            "sample_volume_units": "Other",
+                            "material_used": 1,
+                            "material_remaining": 0,
+                            "quality_of_shipment": "Other",
+                            "aliquot_replacement": "N/A",
+                            "aliquot_status": "Other",
+                        }
+                    ],
+                    "collection_event_name": "Baseline",
+                    "sample_location": "---",
+                    "type_of_sample": "Other",
+                    "type_of_primary_container": "Other",
+                    "parent_sample_id": "test_min_Sample_1",
+                    "cimac_id": "CTTTMIN01.00",
+                }
+            ],
+            "cimac_participant_id": "CTTTMIN",
+            "participant_id": "test_min_Patient_1",
+            "cohort_name": "Arm_Z",
+        }
+    ],
+}
+
+
 # corresponding list of gs_urls.
 
 EXAMPLE_GS_URLS = {
@@ -322,9 +357,10 @@ NUM_ARTIFACT_FIELDS = 8
 
 def test_test_data():
 
-    # create validators
+    # create validator, assert TEST_PRISM_TRIAL & MINIMAL_TEST_TRIAL schemas are valid
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
     validator.validate(TEST_PRISM_TRIAL)
+    validator.validate(MINIMAL_TEST_TRIAL)
 
 
 def test_merge_core():
@@ -405,48 +441,6 @@ def test_merge_core():
 
     ct7 = merger.merge(ct5, ct6)
     assert len(ct7["participants"][0]["samples"][0]["aliquots"]) == 2
-
-
-MINIMAL_TEST_TRIAL = {
-    PROTOCOL_ID_FIELD_NAME: "minimal",
-    "allowed_collection_event_names": ["Baseline"],
-    "allowed_cohort_names": ["Arm_Z"],
-    "participants": [
-        {
-            "samples": [
-                {
-                    "aliquots": [
-                        {
-                            "slide_number": "1",
-                            "sample_volume_units": "Other",
-                            "material_used": 1,
-                            "material_remaining": 0,
-                            "quality_of_shipment": "Other",
-                            "aliquot_replacement": "N/A",
-                            "aliquot_status": "Other",
-                        }
-                    ],
-                    "collection_event_name": "Baseline",
-                    "sample_location": "---",
-                    "type_of_sample": "Other",
-                    "type_of_primary_container": "Other",
-                    "parent_sample_id": "test_min_Sample_1",
-                    "cimac_id": "CTTTMIN01.00",
-                }
-            ],
-            "cimac_participant_id": "CTTTMIN",
-            "participant_id": "test_min_Patient_1",
-            "cohort_name": "Arm_Z",
-        }
-    ],
-}
-
-
-def test_minimal_test_data():
-
-    # create validators
-    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-    validator.validate(MINIMAL_TEST_TRIAL)
 
 
 def test_samples_merge():

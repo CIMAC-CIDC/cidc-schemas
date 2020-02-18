@@ -17,8 +17,6 @@ def count_files(directory):
         for f in files:
             if f[0] == ".":
                 continue
-            if f.endswith("_template.json"):
-                continue
             sum += 1
     return sum
 

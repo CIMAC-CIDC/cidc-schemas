@@ -292,9 +292,6 @@ MINIMAL_TEST_TRIAL = {
     ],
 }
 
-
-# corresponding list of gs_urls.
-
 EXAMPLE_GS_URLS = {
     "assays": {
         "wes": {
@@ -971,7 +968,8 @@ def test_prismify_ihc(xlsx, template):
 
     # parse the spreadsheet and get the file maps
     ct, file_maps, errs = prismify(xlsx, template)
-
+    assert len(errs) == 0
+    assert len(file_maps) == 4
     for e in validator.iter_errors(ct):
         assert isinstance(e, InDocRefNotFoundError) or (  # not found cimac_ids
             "'participants'" in str(e)
@@ -1187,6 +1185,7 @@ def test_prismify_olink_only(xlsx, template):
     ct, file_maps, errs = prismify(xlsx, template)
     assert len(errs) == 0
 
+    assert len(file_maps) == 5
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial

@@ -443,7 +443,7 @@ def test_merge_core():
     assert len(ct7["participants"][0]["samples"][0]["aliquots"]) == 2
 
 
-def test_samples_merge():
+def test_merge_samples():
 
     # create a1 with 1 sample
     a1 = copy.deepcopy(MINIMAL_TEST_TRIAL)
@@ -461,6 +461,206 @@ def test_samples_merge():
     a3 = merger.merge(a1, a2)
     assert len(a3["participants"]) == 1
     assert len(a3["participants"][0]["samples"]) == 2
+
+
+def test_merge_across_allOf():
+
+    obj1 = {"pizza": "peperoni", "slices": [{"topping": "123"}]}
+    obj2 = {"soda": "934857", "slices": [{"topping": "abc"}]}
+
+    schema = {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {
+            "pizza": {"type": "string"},
+            "mergeStrategy": "objectMerge",
+            "allOf": [
+                {
+                    "soda": {
+                        "type": "object",
+                        "properties": {"prob": {"type": "number"}},
+                    }
+                },
+                {
+                    "slices": {
+                        "type": "array",
+                        "items": {"properties": {"topping": {"type": "string"}}},
+                        "mergeStrategy": "append",
+                    }
+                },
+            ],
+        },
+    }
+
+    # this merge will clobber slices because merging across allOf doesn't work
+    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    xyz = merger.merge(obj1, obj2)
+    assert len(xyz["slices"]) == 1
+
+
+def test_merge_artifact_none_md5():
+    """Ensure merge artifact doesn't fail if either md5 or crc32c is None"""
+    # create the clinical trial.
+    ct_1 = copy.deepcopy(TEST_PRISM_TRIAL)
+    ct_2 = copy.deepcopy(TEST_PRISM_TRIAL)
+    ct_3 = copy.deepcopy(TEST_PRISM_TRIAL)
+
+    # create validator
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    validator.validate(ct_1)
+
+    url, uuid = list(EXAMPLE_GS_URLS["assays"]["wes"]["fastq"].items())[0]
+    common_args = dict(
+        assay_type="wes",
+        artifact_uuid=uuid,
+        object_url=url,
+        file_size_bytes=1,
+        uploaded_timestamp="01/01/2001",
+    )
+
+    # when md5_hash is None
+    ct_1, artifact, patch_metadata = merge_artifact(
+        ct_1, **common_args, md5_hash=None, crc32c_hash=f"hash_{uuid}"
+    )
+    validator.validate(ct_1)
+
+    # when crc32c_hash is None
+    ct_2, artifact, patch_metadata = merge_artifact(
+        ct_2, **common_args, md5_hash=f"hash_{uuid}", crc32c_hash=None
+    )
+    validator.validate(ct_2)
+
+    # when both are None
+    with pytest.raises(
+        AssertionError, match="Either crc32c_hash or md5_hash must be provided"
+    ):
+        ct_3, artifact, patch_metadata = merge_artifact(
+            ct_3, **common_args, md5_hash=None, crc32c_hash=None
+        )
+
+
+def test_merge_artifact_wesfastq_only():
+
+    # create clinical trial
+    ct = copy.deepcopy(TEST_PRISM_TRIAL)
+
+    # create validator
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    validator.validate(ct)
+
+    # loop over each url
+    searched_urls = []
+    for url, uuid in EXAMPLE_GS_URLS["assays"]["wes"]["fastq"].items():
+
+        # merge
+        ct, artifact, patch_metadata = merge_artifact(
+            ct,
+            assay_type="wes",
+            artifact_uuid=uuid,
+            object_url=url,
+            file_size_bytes=1,
+            uploaded_timestamp="01/01/2001",
+            md5_hash=f"hash_{uuid}",
+            crc32c_hash=f"hash_{uuid}",
+        )
+
+        # assert we still have a good clinical trial object.
+        validator.validate(ct)
+
+        # check that the data_format was set
+        assert "data_format" in artifact
+
+        # search for this url and all previous (no clobber)
+        searched_urls.append(url)
+
+    for url in searched_urls:
+        assert len((ct | grep(url))["matched_values"]) > 0
+
+    assert (
+        len(ct["assays"]["wes"]) == 1
+    ), "Multiple WESes created instead of merging into one"
+    assert len(ct["assays"]["wes"][0]["records"]) == 2, "More records than expected"
+
+    dd = DeepDiff(TEST_PRISM_TRIAL, ct)
+
+    assert (
+        len(dd["dictionary_item_added"])
+        == len(EXAMPLE_GS_URLS["assays"]["wes"]["fastq"]) * NUM_ARTIFACT_FIELDS
+    ), "Unexpected CT changes"
+
+    assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
+
+
+def test_merge_ct_meta():
+    """
+    Tests merging of two clinical trial metadata objects using TEST_PRISM_TRIAL CT.
+    """
+
+    # create two clinical trials
+    patch = copy.deepcopy(TEST_PRISM_TRIAL)
+    target = copy.deepcopy(TEST_PRISM_TRIAL)
+
+    # first test the fact that base doc must be valid
+    del target["participants"]
+    with pytest.raises(InvalidMergeTargetException):
+        merge_clinical_trial_metadata(patch, target)
+
+    with pytest.raises(InvalidMergeTargetException):
+        merge_clinical_trial_metadata(patch, {})
+
+    # next assert the merge is only happening on the same trial
+    patch[PROTOCOL_ID_FIELD_NAME] = "not_the_same"
+    target = copy.deepcopy(TEST_PRISM_TRIAL)
+    with pytest.raises(InvalidMergeTargetException):
+        merge_clinical_trial_metadata(patch, target)
+
+    # revert the data to same key trial id but
+    # include data in 1 that is missing in the other
+    # at the trial level and assert the merge
+    # does not clobber any
+    patch[PROTOCOL_ID_FIELD_NAME] = target[PROTOCOL_ID_FIELD_NAME]
+    patch["trial_name"] = "name ABC"
+    target["nci_id"] = "xyz1234"
+
+    ct_merge, errs = merge_clinical_trial_metadata(patch, target)
+    assert not errs
+    assert ct_merge["trial_name"] == "name ABC"
+    assert ct_merge["nci_id"] == "xyz1234"
+
+    # updates aren't allowed
+    patch["trial_name"] = "name ABC"
+    target["trial_name"] = "CBA eman"
+    with pytest.raises(
+        MergeCollisionException, match="conflicting values for trial_name"
+    ):
+        merge_clinical_trial_metadata(patch, target)
+    target["trial_name"] = patch["trial_name"]
+
+    # now change the participant ids
+    # this should cause the merge to have two
+    # participants.
+    patch["participants"][0]["cimac_participant_id"] = "CTTTDD1"
+    for i, sample in enumerate(patch["participants"][0]["samples"]):
+        sample["cimac_id"] = f"CTTTDD1S{i}.00"
+
+    ct_merge, errs = merge_clinical_trial_metadata(patch, target)
+    assert not errs
+    assert len(ct_merge["participants"]) == 1 + len(TEST_PRISM_TRIAL["participants"])
+
+    # now lets have the same participant but adding multiple samples.
+    patch[PROTOCOL_ID_FIELD_NAME] = target[PROTOCOL_ID_FIELD_NAME]
+    patch["participants"][0]["cimac_participant_id"] = target["participants"][0][
+        "cimac_participant_id"
+    ]
+    patch["participants"][0]["samples"][0]["cimac_id"] = "CTTTPP1N1.00"
+    patch["participants"][1]["samples"][0]["cimac_id"] = "CTTTPP1N2.00"
+
+    ct_merge, errs = merge_clinical_trial_metadata(patch, target)
+    assert not errs
+    assert len(ct_merge["participants"]) == len(TEST_PRISM_TRIAL["participants"])
+    assert sum(len(p["samples"]) for p in ct_merge["participants"]) == 2 + sum(
+        len(p["samples"]) for p in TEST_PRISM_TRIAL["participants"]
+    )
 
 
 @pytest.mark.parametrize("xlsx, template", prismify_test_set())
@@ -1000,171 +1200,6 @@ def test_prismify_olink_only(xlsx, template):
     return ct, file_maps
 
 
-def test_merge_artifact_none_md5():
-    """Ensure merge artifact doesn't fail if either md5 or crc32c is None"""
-    # create the clinical trial.
-    ct_1 = copy.deepcopy(TEST_PRISM_TRIAL)
-    ct_2 = copy.deepcopy(TEST_PRISM_TRIAL)
-    ct_3 = copy.deepcopy(TEST_PRISM_TRIAL)
-
-    # create validator
-    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-    validator.validate(ct_1)
-
-    url, uuid = list(EXAMPLE_GS_URLS["assays"]["wes"]["fastq"].items())[0]
-    common_args = dict(
-        assay_type="wes",
-        artifact_uuid=uuid,
-        object_url=url,
-        file_size_bytes=1,
-        uploaded_timestamp="01/01/2001",
-    )
-
-    # when md5_hash is None
-    ct_1, artifact, patch_metadata = merge_artifact(
-        ct_1, **common_args, md5_hash=None, crc32c_hash=f"hash_{uuid}"
-    )
-    validator.validate(ct_1)
-
-    # when crc32c_hash is None
-    ct_2, artifact, patch_metadata = merge_artifact(
-        ct_2, **common_args, md5_hash=f"hash_{uuid}", crc32c_hash=None
-    )
-    validator.validate(ct_2)
-
-    # when both are None
-    with pytest.raises(
-        AssertionError, match="Either crc32c_hash or md5_hash must be provided"
-    ):
-        ct_3, artifact, patch_metadata = merge_artifact(
-            ct_3, **common_args, md5_hash=None, crc32c_hash=None
-        )
-
-
-def test_merge_artifact_wesfastq_only():
-
-    # create clinical trial
-    ct = copy.deepcopy(TEST_PRISM_TRIAL)
-
-    # create validator
-    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-    validator.validate(ct)
-
-    # loop over each url
-    searched_urls = []
-    for url, uuid in EXAMPLE_GS_URLS["assays"]["wes"]["fastq"].items():
-
-        # merge
-        ct, artifact, patch_metadata = merge_artifact(
-            ct,
-            assay_type="wes",
-            artifact_uuid=uuid,
-            object_url=url,
-            file_size_bytes=1,
-            uploaded_timestamp="01/01/2001",
-            md5_hash=f"hash_{uuid}",
-            crc32c_hash=f"hash_{uuid}",
-        )
-
-        # assert we still have a good clinical trial object.
-        validator.validate(ct)
-
-        # check that the data_format was set
-        assert "data_format" in artifact
-
-        # search for this url and all previous (no clobber)
-        searched_urls.append(url)
-
-    for url in searched_urls:
-        assert len((ct | grep(url))["matched_values"]) > 0
-
-    assert (
-        len(ct["assays"]["wes"]) == 1
-    ), "Multiple WESes created instead of merging into one"
-    assert len(ct["assays"]["wes"][0]["records"]) == 2, "More records than expected"
-
-    dd = DeepDiff(TEST_PRISM_TRIAL, ct)
-
-    assert (
-        len(dd["dictionary_item_added"])
-        == len(EXAMPLE_GS_URLS["assays"]["wes"]["fastq"]) * NUM_ARTIFACT_FIELDS
-    ), "Unexpected CT changes"
-
-    assert list(dd.keys()) == ["dictionary_item_added"], "Unexpected CT changes"
-
-
-def test_merge_ct_meta():
-    """ 
-    Tests merging of two clinical trial metadata objects using TEST_PRISM_TRIAL CT.
-    """
-
-    # create two clinical trials
-    patch = copy.deepcopy(TEST_PRISM_TRIAL)
-    target = copy.deepcopy(TEST_PRISM_TRIAL)
-
-    # first test the fact that base doc must be valid
-    del target["participants"]
-    with pytest.raises(InvalidMergeTargetException):
-        merge_clinical_trial_metadata(patch, target)
-
-    with pytest.raises(InvalidMergeTargetException):
-        merge_clinical_trial_metadata(patch, {})
-
-    # next assert the merge is only happening on the same trial
-    patch[PROTOCOL_ID_FIELD_NAME] = "not_the_same"
-    target = copy.deepcopy(TEST_PRISM_TRIAL)
-    with pytest.raises(InvalidMergeTargetException):
-        merge_clinical_trial_metadata(patch, target)
-
-    # revert the data to same key trial id but
-    # include data in 1 that is missing in the other
-    # at the trial level and assert the merge
-    # does not clobber any
-    patch[PROTOCOL_ID_FIELD_NAME] = target[PROTOCOL_ID_FIELD_NAME]
-    patch["trial_name"] = "name ABC"
-    target["nci_id"] = "xyz1234"
-
-    ct_merge, errs = merge_clinical_trial_metadata(patch, target)
-    assert not errs
-    assert ct_merge["trial_name"] == "name ABC"
-    assert ct_merge["nci_id"] == "xyz1234"
-
-    # updates aren't allowed
-    patch["trial_name"] = "name ABC"
-    target["trial_name"] = "CBA eman"
-    with pytest.raises(
-        MergeCollisionException, match="conflicting values for trial_name"
-    ):
-        merge_clinical_trial_metadata(patch, target)
-    target["trial_name"] = patch["trial_name"]
-
-    # now change the participant ids
-    # this should cause the merge to have two
-    # participants.
-    patch["participants"][0]["cimac_participant_id"] = "CTTTDD1"
-    for i, sample in enumerate(patch["participants"][0]["samples"]):
-        sample["cimac_id"] = f"CTTTDD1S{i}.00"
-
-    ct_merge, errs = merge_clinical_trial_metadata(patch, target)
-    assert not errs
-    assert len(ct_merge["participants"]) == 1 + len(TEST_PRISM_TRIAL["participants"])
-
-    # now lets have the same participant but adding multiple samples.
-    patch[PROTOCOL_ID_FIELD_NAME] = target[PROTOCOL_ID_FIELD_NAME]
-    patch["participants"][0]["cimac_participant_id"] = target["participants"][0][
-        "cimac_participant_id"
-    ]
-    patch["participants"][0]["samples"][0]["cimac_id"] = "CTTTPP1N1.00"
-    patch["participants"][1]["samples"][0]["cimac_id"] = "CTTTPP1N2.00"
-
-    ct_merge, errs = merge_clinical_trial_metadata(patch, target)
-    assert not errs
-    assert len(ct_merge["participants"]) == len(TEST_PRISM_TRIAL["participants"])
-    assert sum(len(p["samples"]) for p in ct_merge["participants"]) == 2 + sum(
-        len(p["samples"]) for p in TEST_PRISM_TRIAL["participants"]
-    )
-
-
 @pytest.mark.parametrize("xlsx, template", prismify_test_set())
 def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
@@ -1572,77 +1607,6 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     else:
         assert False, f"add {template.type} assay specific asserts"
-
-
-def test_merge_stuff():
-
-    obj1 = {
-        "_preamble_obj": "copy_for:cytof:Antibody Information:row_0",
-        "cytof_antibodies": [
-            {
-                "_data_obj": "cytof:Antibody Information:row_0",
-                "antibody": "CD8",
-                "clone": "C8/144b",
-                "company": "DAKO",
-                "cat_num": "C8-ABC",
-                "lot_num": "3983272",
-                "isotope": "146Nd",
-                "dilution": "100X",
-                "stain_type": "Surface Stain",
-            }
-        ],
-    }
-    obj2 = {
-        "_preamble_obj": "copy_for:cytof:Antibody Information:row_1",
-        "cytof_antibodies": [
-            {
-                "_data_obj": "cytof:Antibody Information:row_1",
-                "antibody": "PD-L1",
-                "clone": "C2/11p",
-                "company": "DAKO",
-                "cat_num": "C8-AB123",
-                "lot_num": "1231272",
-                "isotope": "146Nb",
-                "dilution": "100X",
-                "stain_type": "Surface Stain",
-            }
-        ],
-    }
-
-    schema = load_and_validate_schema(
-        os.path.join(SCHEMA_DIR, "assays/cytof_assay.json")
-    )
-    obj1 = {"pizza": "peperoni", "slices": [{"topping": "123"}]}
-    obj2 = {"soda": "934857", "slices": [{"topping": "abc"}]}
-
-    schema = {
-        "$schema": "http://json-schema.org/draft-07/schema#",
-        "type": "object",
-        "properties": {
-            "pizza": {"type": "string"},
-            "mergeStrategy": "objectMerge",
-            "allOf": [
-                {
-                    "soda": {
-                        "type": "object",
-                        "properties": {"prob": {"type": "number"}},
-                    }
-                },
-                {
-                    "slices": {
-                        "type": "array",
-                        "items": {"properties": {"topping": {"type": "string"}}},
-                        "mergeStrategy": "append",
-                    }
-                },
-            ],
-        },
-    }
-
-    # this merge will clobber slices because merging across allOf doesn't work
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
-    xyz = merger.merge(obj1, obj2)
-    assert len(xyz["slices"]) == 1
 
 
 def test_prism_local_file_formats(monkeypatch):

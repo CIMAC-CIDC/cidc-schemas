@@ -18,7 +18,6 @@
     "type": ["object", "boolean"],
     "properties": {
         "$id": {"$comment": "defined in draft-07"},
-        "$schema": {"$comment": "defined in draft-07"},
         "$ref": {"$comment": "defined in draft-07"},
         "$comment": {"$comment": "defined in draft-07"},
         "title": {"$comment": "defined in draft-07"},
@@ -53,6 +52,10 @@
         "not":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions"},
         
 
+        "$schema": {
+            "$comment": "overrides draft-07 definition to point to this strict schema",
+            "const": "metaschema/strict_meta_schema.json#"
+        },
         "additionalItems": { 
             "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
             "$ref": "#" 

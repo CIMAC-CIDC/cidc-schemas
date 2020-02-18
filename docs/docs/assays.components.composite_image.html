@@ -121,19 +121,19 @@
     <h3>composite_image.full.json</h3>
   	<pre><code>{
     "$id": "composite_image",
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "description": "Regions of interest obtained from composite images.",
     "inheritableBase": true,
     "properties": {
         "component_data": {
             "$comment": "Imaging data resulting from the individual components of the imaging experiment.",
             "$id": "image_artifact",
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "anyOf": [
                         {
                             "required": [
@@ -336,12 +336,12 @@
         "composite_image": {
             "$comment": "Image produced from the combination of multiple imaging experiment data images.",
             "$id": "image_artifact",
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "anyOf": [
                         {
                             "required": [

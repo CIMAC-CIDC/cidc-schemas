@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "$id": "normal_blood_dna_template",
     "title": "Shipping manifest for DNA extracted from normal blood samples",
     "type": "object",

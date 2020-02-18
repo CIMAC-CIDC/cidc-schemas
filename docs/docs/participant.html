@@ -448,7 +448,7 @@
     <h3>participant.full.json</h3>
   	<pre><code>{
     "$id": "participant",
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
     "description": "The collection of all data related to a specific participant in the context of a specific clinical trial.\n",
     "properties": {
@@ -568,7 +568,7 @@
         "samples": {
             "items": {
                 "$id": "sample",
-                "$schema": "http://json-schema.org/draft-07/schema#",
+                "$schema": "metaschema/strict_meta_schema.json#",
                 "additionalProperties": false,
                 "description": "Any material sample taken from a biological entity for testing, diagnostic, propagation, treatment or research purposes, including a sample obtained from a living organism or taken from the biological object after halting of all its life functions. Biospecimen can contain one or more components including but not limited to cellular molecules, cells, tissues, organs, body fluids, embryos, and body excretory products.",
                 "if": {
@@ -593,7 +593,7 @@
                         "description": "Pertaining to a portion (volume or weight) of the whole.",
                         "items": {
                             "$id": "aliquot",
-                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "$schema": "metaschema/strict_meta_schema.json#",
                             "additionalProperties": false,
                             "description": "Pertaining to a portion (volume or weight) of the whole.",
                             "properties": {

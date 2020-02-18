@@ -375,12 +375,12 @@
     <h3>wes_assay.full.json</h3>
   	<pre><code>{
     "$id": "wes_assay",
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
     "allOf": [
         {
             "$id": "assay_core",
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "description": "Main properties of the assay experiment template.",
             "inheritableBase": true,
             "properties": {
@@ -403,7 +403,7 @@
         },
         {
             "$id": "ngs_assay_core",
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "description": "Common properties for NGS Assays.",
             "inheritableBase": true,
             "properties": {
@@ -472,12 +472,12 @@
             "description": "A single data record from WES assay.",
             "items": {
                 "$id": "wes_entry",
-                "$schema": "http://json-schema.org/draft-07/schema#",
+                "$schema": "metaschema/strict_meta_schema.json#",
                 "additionalProperties": false,
                 "allOf": [
                     {
                         "$id": "ngs_assay_record",
-                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "$schema": "metaschema/strict_meta_schema.json#",
                         "description": "A single data record from an NGS assay.",
                         "inheritableBase": true,
                         "properties": {
@@ -492,7 +492,7 @@
                             "files": {
                                 "$comment": "Fastq files or a bam file produced by the assay.",
                                 "$id": "fastq_pair_or_bam",
-                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                "$schema": "metaschema/strict_meta_schema.json#",
                                 "additionalProperties": false,
                                 "anyOf": [
                                     {
@@ -513,12 +513,12 @@
                                         "items": {
                                             "$comment": "A BAM file, aligned or not, which contains both pairs of sequencing libraries",
                                             "$id": "bam_artifact",
-                                            "$schema": "http://json-schema.org/draft-07/schema#",
+                                            "$schema": "metaschema/strict_meta_schema.json#",
                                             "additionalProperties": false,
                                             "allOf": [
                                                 {
                                                     "$id": "artifact_core",
-                                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                                    "$schema": "metaschema/strict_meta_schema.json#",
                                                     "anyOf": [
                                                         {
                                                             "required": [
@@ -698,12 +698,12 @@
                                         "items": {
                                             "$comment": "Fastq file for the first fragment.",
                                             "$id": "artifact_fastq_gz",
-                                            "$schema": "http://json-schema.org/draft-07/schema#",
+                                            "$schema": "metaschema/strict_meta_schema.json#",
                                             "additionalProperties": false,
                                             "allOf": [
                                                 {
                                                     "$id": "artifact_core",
-                                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                                    "$schema": "metaschema/strict_meta_schema.json#",
                                                     "anyOf": [
                                                         {
                                                             "required": [
@@ -883,12 +883,12 @@
                                         "items": {
                                             "$comment": "Fastq file for the first fragment.",
                                             "$id": "artifact_fastq_gz",
-                                            "$schema": "http://json-schema.org/draft-07/schema#",
+                                            "$schema": "metaschema/strict_meta_schema.json#",
                                             "additionalProperties": false,
                                             "allOf": [
                                                 {
                                                     "$id": "artifact_core",
-                                                    "$schema": "http://json-schema.org/draft-07/schema#",
+                                                    "$schema": "metaschema/strict_meta_schema.json#",
                                                     "anyOf": [
                                                         {
                                                             "required": [
@@ -1088,24 +1088,24 @@
                     },
                     "output_files": {
                         "$id": "wes_sample_analysis",
-                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "$schema": "metaschema/strict_meta_schema.json#",
                         "additionalProperties": false,
                         "description": "Sample wise analysis files for the WES assay.",
                         "properties": {
                             "alignment": {
                                 "$id": "alignment",
-                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                "$schema": "metaschema/strict_meta_schema.json#",
                                 "additionalProperties": false,
                                 "description": "WES output align files.",
                                 "properties": {
                                     "align_recalibrated": {
                                         "$id": "bam_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -1280,12 +1280,12 @@
                                     },
                                     "align_recalibrated_index": {
                                         "$id": "bam_bai_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -1460,12 +1460,12 @@
                                     },
                                     "align_sorted_dedup": {
                                         "$id": "bam_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -1640,12 +1640,12 @@
                                     },
                                     "align_sorted_dedup_index": {
                                         "$id": "bam_bai_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -1838,18 +1838,18 @@
                             },
                             "metrics": {
                                 "$id": "coverage_metrics",
-                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                "$schema": "metaschema/strict_meta_schema.json#",
                                 "additionalProperties": false,
                                 "description": "Coverage metrics output files.",
                                 "properties": {
                                     "all_summaries": {
                                         "$id": "text_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -2024,12 +2024,12 @@
                                     },
                                     "coverage_metrics": {
                                         "$id": "text_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -2204,12 +2204,12 @@
                                     },
                                     "coverage_metrics_summary": {
                                         "$id": "text_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -2384,12 +2384,12 @@
                                     },
                                     "mosdepth_region_dist_broad": {
                                         "$id": "text_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -2564,12 +2564,12 @@
                                     },
                                     "mosdepth_region_dist_mda": {
                                         "$id": "text_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -2744,12 +2744,12 @@
                                     },
                                     "mosdepth_region_dist_mocha": {
                                         "$id": "text_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -2924,12 +2924,12 @@
                                     },
                                     "target_metrics": {
                                         "$id": "text_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -3104,12 +3104,12 @@
                                     },
                                     "target_metrics_summary": {
                                         "$id": "text_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -3296,18 +3296,18 @@
                             },
                             "optitype": {
                                 "$id": "optitype",
-                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                "$schema": "metaschema/strict_meta_schema.json#",
                                 "additionalProperties": false,
                                 "description": "HLA output files.",
                                 "properties": {
                                     "optitype_result": {
                                         "$id": "text_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -3482,12 +3482,12 @@
                                     },
                                     "xhla_report_hla": {
                                         "$id": "json_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [

@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "$id": "plasma_shipping",
     "title": "Shipping manifest for Plasma samples",
     "type": "object",

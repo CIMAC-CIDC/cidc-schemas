@@ -164,25 +164,25 @@
     <h3>mif_entry.full.json</h3>
   	<pre><code>{
     "$id": "mif_assay_record",
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
     "description": "A single data record from mIF assay.",
     "properties": {
         "files": {
             "$id": "mif_input",
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "description": "mIF assay input files.",
             "properties": {
                 "mif_output_summary": {
                     "$comment": "Summary of the results of the experiment.",
                     "$id": "csv_artifact",
-                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
-                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "$schema": "metaschema/strict_meta_schema.json#",
                             "anyOf": [
                                 {
                                     "required": [
@@ -361,19 +361,19 @@
                         "allOf": [
                             {
                                 "$id": "image_mapping",
-                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                "$schema": "metaschema/strict_meta_schema.json#",
                                 "description": "Regions of interest obtained from image mapping.",
                                 "inheritableBase": true,
                                 "properties": {
                                     "binary_seg_map": {
                                         "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.",
                                         "$id": "csv_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -549,12 +549,12 @@
                                     "cell_seg_data": {
                                         "$comment": "Data produced from the analysis of cellular image.",
                                         "$id": "csv_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -730,12 +730,12 @@
                                     "cell_seg_data_summary": {
                                         "$comment": "Summary of the results of a cell segmentation data experiment.",
                                         "$id": "csv_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -911,12 +911,12 @@
                                     "phenotype_map": {
                                         "$comment": "Image produced from the combination of multiple imaging experiment data images.",
                                         "$id": "image_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -1119,12 +1119,12 @@
                                     "region_seg_map": {
                                         "$comment": "Genome segmentation mapping",
                                         "$id": "image_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -1327,12 +1327,12 @@
                                     "score_data": {
                                         "$comment": "Generation of values based on based on experiment data.",
                                         "$id": "csv_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -1514,19 +1514,19 @@
                             },
                             {
                                 "$id": "composite_image",
-                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                "$schema": "metaschema/strict_meta_schema.json#",
                                 "description": "Regions of interest obtained from composite images.",
                                 "inheritableBase": true,
                                 "properties": {
                                     "component_data": {
                                         "$comment": "Imaging data resulting from the individual components of the imaging experiment.",
                                         "$id": "image_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -1729,12 +1729,12 @@
                                     "composite_image": {
                                         "$comment": "Image produced from the combination of multiple imaging experiment data images.",
                                         "$id": "image_artifact",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "additionalProperties": false,
                                         "allOf": [
                                             {
                                                 "$id": "artifact_core",
-                                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                                "$schema": "metaschema/strict_meta_schema.json#",
                                                 "anyOf": [
                                                     {
                                                         "required": [
@@ -1975,12 +1975,12 @@
                 "roi_annotations": {
                     "$comment": "Text describing region of interest for experiment.",
                     "$id": "text_artifact",
-                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
-                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "$schema": "metaschema/strict_meta_schema.json#",
                             "anyOf": [
                                 {
                                     "required": [
@@ -2156,12 +2156,12 @@
                 "whole_slide_imaging_file": {
                     "$comment": "Digital slide produced from the scanning of conventional glass slides.",
                     "$id": "image_artifact",
-                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
-                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "$schema": "metaschema/strict_meta_schema.json#",
                             "anyOf": [
                                 {
                                     "required": [

@@ -224,12 +224,12 @@
     <h3>elisa_assay.full.json</h3>
   	<pre><code>{
     "$id": "elisa_assay",
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
     "allOf": [
         {
             "$id": "assay_core",
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "description": "Main properties of the assay experiment template.",
             "inheritableBase": true,
             "properties": {
@@ -258,12 +258,12 @@
             "description": "Data specific to antibody preparation on the ELISA assay.",
             "items": {
                 "$id": "elisa_antibody",
-                "$schema": "http://json-schema.org/draft-07/schema#",
+                "$schema": "metaschema/strict_meta_schema.json#",
                 "additionalProperties": false,
                 "allOf": [
                     {
                         "$id": "antibody",
-                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "$schema": "metaschema/strict_meta_schema.json#",
                         "description": "Common information about an antibody used in a number of immune-oncology assays.",
                         "inheritableBase": true,
                         "properties": {
@@ -362,12 +362,12 @@
         "assay_xlsx": {
             "$comment": "TODO Maybe add array of antibodies parsing.",
             "$id": "artifact_elisa_xlsx",
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "anyOf": [
                         {
                             "required": [

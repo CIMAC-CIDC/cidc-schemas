@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "$id": "pbmc_shipping",
     "title": "Shipping manifest for PBMC samples",
     "type": "object",

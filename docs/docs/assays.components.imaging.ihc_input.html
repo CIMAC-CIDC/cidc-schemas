@@ -94,19 +94,19 @@
     <h3>ihc_input.full.json</h3>
   	<pre><code>{
     "$id": "ihc_input",
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
     "description": "IHC assay input/output files.",
     "properties": {
         "ihc_image": {
             "$comment": "Path to IHC image in TIFF format.",
             "$id": "image_artifact",
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "anyOf": [
                         {
                             "required": [

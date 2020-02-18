@@ -555,7 +555,7 @@ def test_merge_artifact_wesfastq_only():
         searched_urls.append(url)
 
     for url in searched_urls:
-        assert len((ct | grep(url))["matched_values"]) > 0
+        assert len((ct | grep(url, match_string=True))["matched_values"]) > 0
 
     assert (
         len(ct["assays"]["wes"]) == 1

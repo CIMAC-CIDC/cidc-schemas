@@ -846,10 +846,17 @@ def test_prismify_wesbam_only(xlsx, template):
     # md patch is not complete
     # but errors should be only
     for e in validator.iter_errors(md_patch):
-        assert isinstance(e, InDocRefNotFoundError) or (  # not found cimac_ids
-            "'participants'" in str(e)
-            and "required" in str(e)  # or no "participants" found.
-        )
+        if isinstance(e, InDocRefNotFoundError):
+            # not found cimac_ids - we expect that
+            continue
+        elif "'participants' is a required" in str(e):
+            # or no "participants" found - we expect that
+            continue
+        elif "'allowed_" in str(e) and "is a required" in str(e):
+            # or allowed_cohort_names and allowed_collection_event_names defined in TEST_PRISM_TRIAL base - we expect that
+            continue
+        else:
+            raise Exception(e)
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -869,8 +876,13 @@ def test_prismify_wesbam_only(xlsx, template):
     with pytest.raises(InDocRefNotFoundError):
         validator.validate(merged_wo_needed_participants)
 
-    # 2 record = 2 missing aliquot refs = 2 errors
-    assert 2 == len(list(validator.iter_errors(merged_wo_needed_participants)))
+    assert 0 == len(
+        [
+            unexpected_ex
+            for unexpected_ex in validator.iter_errors(merged_wo_needed_participants)
+            if not isinstance(unexpected_ex, InDocRefNotFoundError)
+        ]
+    )
 
 
 @pytest.mark.parametrize("xlsx, template", prismify_test_set("wes_fastq"))

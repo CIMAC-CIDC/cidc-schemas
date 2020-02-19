@@ -6,7 +6,7 @@
     "category": "analysis",
     "description": "Metadata information for CyTOF Analysis output.",
     "prism_template_root_object_schema": "assays/cytof_assay.json",
-    "prism_template_root_object_pointer": "/assays/cytof/0",
+    "prism_template_root_object_pointer": "/assays/cytof/-",
     "properties": {
         "worksheets": {
             "CyTOF Analysis": {
@@ -20,17 +20,17 @@
                         "type_ref": "clinical_trial.json#properties/protocol_identifier"
                     },
                     "batch id": {
-                        "merge_pointer": "/batch_id",
+                        "merge_pointer": "0/batch_id",
                         "type_ref": "assays/cytof_assay.json#properties/batch_id"
                     },
                     "astrolabe reports": {
-                        "merge_pointer": "0/output_files/astrolabe_reports",
+                        "merge_pointer": "0/astrolabe_reports",
                         "type_ref": "assays/components/local_file.json#properties/file_path",
                         "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{batch id}/reports.zip",
                         "is_artifact": 1
                     },
                     "astrolabe analysis": {
-                        "merge_pointer": "0/output_files/astrolabe_analysis",
+                        "merge_pointer": "0/astrolabe_analysis",
                         "type_ref": "assays/components/local_file.json#properties/file_path",
                         "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{batch id}/analysis.zip",
                         "is_artifact": 1
@@ -47,18 +47,6 @@
                             "merge_pointer": "0/output_files/fcs_file",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
                             "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{cimac id}/source.fcs",
-                            "is_artifact": 1
-                        },
-                        "astrolabe reports": {
-                            "merge_pointer": "0/output_files/astrolabe_reports",
-                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{cimac id}/reports.zip",
-                            "is_artifact": 1
-                        },
-                        "astrolabe analysis": {
-                            "merge_pointer": "0/output_files/astrolabe_analysis",
-                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{cimac id}/analysis.zip",
                             "is_artifact": 1
                         },
                         "assignment": {

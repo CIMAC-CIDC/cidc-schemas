@@ -43,6 +43,12 @@
             "description": "CyTOF batch identification number.",
             "type": "string"
         },
+        "astrolabe_reports": {
+            "$ref": "artifacts/artifact_zip.json"
+        },
+        "astrolabe_analysis": {
+            "$ref": "artifacts/artifact_zip.json"
+        },
         "records": {
             "type": "array",
             "description": "A single data record from CyTOF assay batch.",

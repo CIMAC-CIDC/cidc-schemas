@@ -9,12 +9,6 @@
         "fcs_file": {
             "$ref": "artifacts/artifact_fcs.json"
         },
-        "astrolabe_reports": {
-            "$ref": "artifacts/artifact_zip.json"
-        },
-        "astrolabe_analysis": {
-            "$ref": "artifacts/artifact_zip.json"
-        },
         "assignment": {
             "$ref": "artifacts/artifact_csv.json"
         },
@@ -32,6 +26,12 @@
         },
         "cell_counts_profiling": {
             "$ref": "artifacts/artifact_csv.json"
+        },
+        "astrolabe_reports": {
+            "$comment": "defined in cytof_assay.json"
+        },
+        "astrolabe_analysis": {
+            "$comment": "defined in cytof_assay.json"
         }
     }
 }

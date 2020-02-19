@@ -10,11 +10,11 @@
     { "$ref": "assays/components/ngs_assay_core.json" }
   ],
   "properties": {
-    "assay_creator": {"$comment": "defined in assays/components/assay_core.json"},
+    "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
 
-    "sequencer_platform": {"$comment": "defined in assays/components/ngs_assay_core.json"},
-    "library_kit": {"$comment": "defined in assays/components/ngs_assay_core.json"},
-    "paired_end_reads": {"$comment": "defined in assays/components/ngs_assay_core.json"},
+    "sequencer_platform": {"$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"},
+    "library_kit": {"$ref": "assays/components/ngs_assay_core.json#properties/library_kit"},
+    "paired_end_reads": {"$ref": "assays/components/ngs_assay_core.json#properties/paired_end_reads"},
 
     "enrichment_method": {
       "description": "Method used for enriching for mRNA.",

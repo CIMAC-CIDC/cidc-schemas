@@ -26,16 +26,17 @@
           { "$ref": "assays/components/mapping.json" },
           { "$ref": "assays/components/composite_image.json" }
         ],
+        "additionalProperties": false,
         "properties": {
-          "binary_seg_map": {"$comment": "defined in assays/components/mapping.json" },
-          "cell_seg_data": {"$comment": "defined in assays/components/mapping.json" },
-          "cell_seg_data_summary": {"$comment": "defined in assays/components/mapping.json" },
-          "phenotype_map": {"$comment": "defined in assays/components/mapping.json" },
-          "region_seg_map": {"$comment": "defined in assays/components/mapping.json" },
-          "score_data": {"$comment": "defined in assays/components/mapping.json" },
+          "binary_seg_map": {"$ref": "assays/components/mapping.json#properties/binary_seg_map" },
+          "cell_seg_data": {"$ref": "assays/components/mapping.json#properties/cell_seg_data" },
+          "cell_seg_data_summary": {"$ref": "assays/components/mapping.json#properties/cell_seg_data_summary" },
+          "phenotype_map": {"$ref": "assays/components/mapping.json#properties/phenotype_map" },
+          "region_seg_map": {"$ref": "assays/components/mapping.json#properties/region_seg_map" },
+          "score_data": {"$ref": "assays/components/mapping.json#properties/score_data" },
 
-          "composite_image": {"$comment": "defined in assays/components/composite_image.json"},
-          "component_data": {"$comment": "defined in assays/components/composite_image.json"}
+          "composite_image": {"$ref": "assays/components/composite_image.json#properties/composite_image"},
+          "component_data": {"$ref": "assays/components/composite_image.json#properties/component_data"}
         }
       }
     }

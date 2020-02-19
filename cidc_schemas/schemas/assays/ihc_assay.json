@@ -11,7 +11,7 @@
         }
     ],
     "properties": {
-        "assay_creator": {"$comment": "defined in assays/components/assay_core.json"},
+        "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
         
         "slide_scanner_model": {
             "description": "Model version of the slide scanner instrument.",

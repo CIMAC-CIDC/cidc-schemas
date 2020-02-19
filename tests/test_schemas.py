@@ -10,7 +10,7 @@ import json
 import jsonschema
 
 from cidc_schemas.json_validation import load_and_validate_schema
-from .constants import ROOT_DIR, SCHEMA_DIR
+from .constants import SCHEMA_DIR
 
 
 def schema_paths():

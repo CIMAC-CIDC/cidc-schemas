@@ -4,14 +4,21 @@
     "title": "Strict meta-schema",
     "type": ["object", "boolean"],
     "oneOf": [
+        {"required": ["$ref"]},
+        {"required": ["const"]},
         {
-            "$comment": "'not' disallows matching this, making additionalProperties or inheritableBase required only for object-describing schemas",
-            "properties": {
-                "type": {
-                    "not": {
-                        "const": "object" 
-                    }
-                }
+            "not": {
+                "$comment": "this makes additionalProperties or inheritableBase required only for object-describing schemas",
+                "anyOf": [
+                    {
+                        "properties": {
+                            "type": {
+                                "const": "object" 
+                            }
+                       }
+                    },
+                    {"required": ["properties"]}
+                ]
             }
         },
         {
@@ -91,18 +98,6 @@
                 ]
             }
         },
-        "allOf": {
-            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
-            "$ref": "#/definitions/schemaArray" 
-        },
-        "anyOf": {
-            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
-            "$ref": "#/definitions/schemaArray" 
-        },
-        "oneOf": {
-            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
-            "$ref": "#/definitions/schemaArray" 
-        },
 
 
         "$id": {"$comment": "defined in draft-07"},
@@ -134,10 +129,13 @@
         "contentMediaType": {"$comment": "defined in draft-07"},
         "contentEncoding": {"$comment": "defined in draft-07"},
         "propertyNames": {"$comment": "defined in draft-07"},
-        "if":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because "},
-        "then":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because "},
-        "else":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because "},
-        "not":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because "}
+        "if":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
+        "then":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
+        "else":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
+        "not":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
+        "allOf": {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
+        "anyOf": {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
+        "oneOf": {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"}
     },
     "definitions": {
         "schemaArray": {

@@ -7,11 +7,11 @@
   "type": "object",
   "allOf": [{ "$ref": "assays/components/antibody.json" }],
   "properties": {
-    "antibody": {"$comment": "defined in assays/components/antibody.json"},
-    "clone": {"$comment": "defined in assays/components/antibody.json"},
-    "company": {"$comment": "defined in assays/components/antibody.json"},
-    "cat_num": {"$comment": "defined in assays/components/antibody.json"},
-    "lot_num": {"$comment": "defined in assays/components/antibody.json"},
+    "antibody": {"$ref": "assays/components/antibody.json#properties/antibody"},
+    "clone": {"$ref": "assays/components/antibody.json#properties/clone"},
+    "company": {"$ref": "assays/components/antibody.json#properties/company"},
+    "cat_num": {"$ref": "assays/components/antibody.json#properties/cat_num"},
+    "lot_num": {"$ref": "assays/components/antibody.json#properties/lot_num"},
 
     "isotope": {
       "description": "Antibody isotype used to help differentiate antibody signals.",

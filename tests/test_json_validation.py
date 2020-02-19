@@ -325,6 +325,7 @@ def test_special_keywords():
     # load the schema
     schema_root = SCHEMA_DIR
     schema_path = os.path.join(SCHEMA_DIR, "templates/metadata/cytof_template.json")
+    # we don't validate it because it's a template, not a schema
     schema = _load_dont_validate_schema(schema_path, schema_root)
 
     tmp1 = schema["properties"]["worksheets"]["Acquisition and Preprocessing"]

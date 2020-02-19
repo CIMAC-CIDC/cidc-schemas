@@ -10,7 +10,7 @@
   ],
   "mergeStrategy": "objectMerge",
   "properties": {
-    "assay_creator": {"$comment": "defined in assays/components/assay_core.json"},
+    "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
   
     "records": {
       "type": "array",

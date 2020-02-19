@@ -3,6 +3,7 @@
   "$id": "imaging_data",
   "title": "Imaging Data",
   "description": "Shared schema for experiments involving the use of imaging data.",
+  "type": "object",
   "inheritableBase": true,
   "properties": {
     "internal_slide_id": {

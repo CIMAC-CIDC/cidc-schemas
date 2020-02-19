@@ -4,6 +4,7 @@
   "title": "mIF antibody",
   "description": "Data specific to antibody preparation on the multiplex immunofluorescence platform.",
   "additionalProperties": false,
+  "type": "object",
   "allOf": [{ "$ref": "assays/components/antibody.json" }],
   "properties": {
     "fluor_wavelength": {

@@ -5,6 +5,7 @@
   "description": "Reference for every available assay in network.",
   "mergeStrategy": "objectMerge",
   "additionalProperties": false,
+  "type": "object",
   "properties": {
     "wes": {
       "type": "array",

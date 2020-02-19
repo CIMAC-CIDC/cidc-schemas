@@ -4,6 +4,7 @@
   "title": "CyTOF Conjugated Antibody",
   "description": "Data specific to antibody preparation on the CyTOF assay.",
   "additionalProperties": false,
+  "type": "object",
   "allOf": [{ "$ref": "assays/components/antibody.json" }],
   "properties": {
     "antibody": {"$comment": "defined in assays/components/antibody.json"},

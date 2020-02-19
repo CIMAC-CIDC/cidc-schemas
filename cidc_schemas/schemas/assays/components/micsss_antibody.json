@@ -4,6 +4,7 @@
   "title": "MICSSS antibody",
   "description": "Data specific to antibody preparation on the multiplex immunohistochemical platform.",
   "additionalProperties": false,
+  "type": "object",
   "allOf": [{ "$ref": "assays/components/antibody.json" }],
   "properties": {
     "primary_antibody_block": {

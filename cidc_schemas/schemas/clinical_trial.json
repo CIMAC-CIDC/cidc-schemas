@@ -4,6 +4,7 @@
   "title": "Clinical Trial",
   "description": "Encapsulates information regarding a clinical trial.",
   "additionalProperties": false,
+  "type": "object",
   "properties": {
     "nct_id": {
       "type": "string",

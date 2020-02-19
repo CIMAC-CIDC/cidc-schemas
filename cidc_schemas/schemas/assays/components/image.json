@@ -3,6 +3,7 @@
   "$id": "image",
   "title": "Image",
   "description": "Base information about the acquisition and analysis of a quantitative pathology image.",
+  "type": "object",
   "inheritableBase": true,
   "properties": {
     "slide_scanner_model": {

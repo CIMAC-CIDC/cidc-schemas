@@ -4,6 +4,7 @@
   "title": "Antibody",
   "description": "Common information about an antibody used in a number of immune-oncology assays.",
   "inheritableBase": true,
+  "type": "object",
   "properties": {
     "antibody": {
       "description": "Antibody type collected for this study.",

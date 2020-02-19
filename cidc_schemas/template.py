@@ -95,10 +95,9 @@ class Template:
     def _extract_worksheets(self) -> Dict[str, dict]:
         """Build a mapping from worksheet names to worksheet section schemas"""
 
-        template_id = self.schema["$id"]
         assert (
             "worksheets" in self.schema["properties"]
-        ), f'{template_id} schema missing "worksheets" property'
+        ), f'{self.type} schema missing "worksheets" property'
         worksheet_schemas = self.schema["properties"]["worksheets"]
 
         worksheets = {}

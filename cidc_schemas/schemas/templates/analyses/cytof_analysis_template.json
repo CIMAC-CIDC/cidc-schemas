@@ -11,9 +11,6 @@
         "worksheets": {
             "CyTOF Analysis": {
                 "preamble_rows": {
-                    "batch no": {
-                        "merge_pointer": "/batch_no",
-                        "type_ref": "assays/components/cytof/cytof_analysis.json#properties/batch_no",
                         "assay run id": {
                             "merge_pointer": "/assay_run_id",
                             "type_ref": "assays/cytof_assay.json#properties/assay_run_id"
@@ -22,24 +19,28 @@
                             "merge_pointer": "3/protocol_identifier",
                             "type_ref": "clinical_trial.json#properties/protocol_identifier"
                         },
+                        "batch id": {
+                            "merge_pointer": "/batch_id",
+                            "type_ref": "assays/cytof_assay.json#properties/batch_id"
+                        },
                         "astrolabe reports": {
                             "merge_pointer": "0/output_files/astrolabe_reports",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{batch no}/reports.zip",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{batch id}/reports.zip",
                             "is_artifact": 1
                         },
                         "astrolabe analysis": {
                             "merge_pointer": "0/output_files/astrolabe_analysis",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{batch no}/analysis.zip",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{batch id}/analysis.zip",
                             "is_artifact": 1
                         }
-                    }
+
                 },
                 "prism_data_object_pointer": "/records/-",
                 "data_columns": {
                     "Astrolabe Runs": {
-                        "Cimac ID": {
+                        "cimac ID": {
                             "merge_pointer": "0/cimac_id",
                             "type_ref": "sample.json#properties/cimac_id"
                         },

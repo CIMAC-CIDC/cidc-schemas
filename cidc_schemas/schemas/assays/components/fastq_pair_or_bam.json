@@ -30,6 +30,7 @@
       "minItems": 1
     }
   },
+  "mergeStrategy": "objectMerge",
   "anyOf": [
     {
       "required": ["r1", "r2"]

@@ -47,43 +47,43 @@
                         "fcs file": {
                             "merge_pointer": "0/output_files/fcs_file",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{cimac id}/source.fcs",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{cimac id}/source.fcs",
                             "is_artifact": 1
                         },
                         "assignment": {
                             "merge_pointer": "0/output_files/assignment",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{cimac id}/assignment.csv",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{cimac id}/assignment.csv",
                             "is_artifact": 1
                         },
                         "compartment": {
                             "merge_pointer": "0/output_files/compartment",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{cimac id}/compartment.csv",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{cimac id}/compartment.csv",
                             "is_artifact": 1
                         },
                         "profiling": {
                             "merge_pointer": "0/output_files/profiling",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{cimac id}/profiling.csv",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{cimac id}/profiling.csv",
                             "is_artifact": 1
                         },
                         "cell counts assignment": {
                             "merge_pointer": "0/output_files/cell_counts_assignment",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{cimac id}/cell_counts_assignment.csv",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{cimac id}/cell_counts_assignment.csv",
                             "is_artifact": 1
                         },
                         "cell counts compartment": {
                             "merge_pointer": "0/output_files/cell_counts_compartment",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{cimac id}/cell_counts_compartment.csv",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{cimac id}/cell_counts_compartment.csv",
                             "is_artifact": 1
                         },
                         "cell counts profiling": {
                             "merge_pointer": "0/output_files/cell_counts_profiling",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{cimac id}/cell_counts_profiling.csv",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{cimac id}/cell_counts_profiling.csv",
                             "is_artifact": 1
                         }
                     }

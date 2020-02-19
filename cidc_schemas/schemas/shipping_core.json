@@ -41,7 +41,9 @@
         "IHC",
         "CyTOF",
         "H&E",
-        "ELISA"
+        "ELISA",
+        "mIF",
+        "mIHC"
       ]
     },
     "courier": {

@@ -1,7 +1,10 @@
-"CTTTPP111.00","Cytof analysis template"
+"#t","Cytof analysis template"
 "#p","Assay run id","test_prism_trial_id_run_1"
 "#p","Protocol identifier","test_prism_trial_id"
+"#p","Batch id","1"
+"#p","Astrolabe reports","reports.zip"
+"#p","Astrolabe analysis","analysis.zip"
 
 "","Astrolabe Runs"
-"#h","Cimac id","Fcs file","Astrolabe reports","Astrolabe analysis","Assignment","Compartment","Profiling","Cell counts assignment","Cell counts compartment","Cell counts profiling"
-"#d","CTTTPP111.00","fcs.fcs","reports.zip","analysis.zip","assignment.csv","comp.csv","profiling.csv","cca.csv","ccc.csv","ccp.csv"
+"#h","Cimac id","Fcs file","Assignment","Compartment","Profiling","Cell counts assignment","Cell counts compartment","Cell counts profiling"
+"#d","CTTTPP111.00","fcs.fcs","assignment.csv","comp.csv","profiling.csv","cca.csv","ccc.csv","ccp.csv"

@@ -9270,7 +9270,8 @@
                     "type": "object"
                 }
             },
-            "title": "Analysis outputs for assays for this trial."
+            "title": "Analysis outputs for assays for this trial.",
+            "type": "object"
         },
         "assays": {
             "$comment": "Assays for this trial",
@@ -9362,7 +9363,8 @@
                                             "required": [
                                                 "antibody"
                                             ],
-                                            "title": "Antibody"
+                                            "title": "Antibody",
+                                            "type": "object"
                                         }
                                     ],
                                     "description": "Data specific to antibody preparation on the CyTOF assay.",
@@ -9418,7 +9420,8 @@
                                         "stain_type",
                                         "usage"
                                     ],
-                                    "title": "CyTOF Conjugated Antibody"
+                                    "title": "CyTOF Conjugated Antibody",
+                                    "type": "object"
                                 },
                                 "mergeStrategy": "append",
                                 "type": "array"
@@ -11968,7 +11971,8 @@
                                             "required": [
                                                 "antibody"
                                             ],
-                                            "title": "Antibody"
+                                            "title": "Antibody",
+                                            "type": "object"
                                         }
                                     ],
                                     "description": "Data specific to antibody preparation on the ELISA assay.",
@@ -12021,7 +12025,8 @@
                                         "stain_type",
                                         "usage"
                                     ],
-                                    "title": "ELISA Antibody"
+                                    "title": "ELISA Antibody",
+                                    "type": "object"
                                 },
                                 "mergeOptions": {
                                     "idRef": "antibody"
@@ -12330,7 +12335,8 @@
                                         "required": [
                                             "antibody"
                                         ],
-                                        "title": "Antibody"
+                                        "title": "Antibody",
+                                        "type": "object"
                                     }
                                 ],
                                 "description": "Data specific to antibody preparation for Immunohistochemical analysis.",
@@ -12369,7 +12375,8 @@
                                     "incubation_time",
                                     "incubation_temp"
                                 ],
-                                "title": "IHC antibody"
+                                "title": "IHC antibody",
+                                "type": "object"
                             },
                             "assay_creator": {
                                 "$comment": "defined in assays/components/assay_core.json"
@@ -12837,7 +12844,8 @@
                                 "required": [
                                     "slide_scanner_model"
                                 ],
-                                "title": "Image"
+                                "title": "Image",
+                                "type": "object"
                             },
                             {
                                 "$id": "imaging_data",
@@ -12875,7 +12883,8 @@
                                 "required": [
                                     "internal_slide_id"
                                 ],
-                                "title": "Imaging Data"
+                                "title": "Imaging Data",
+                                "type": "object"
                             }
                         ],
                         "description": "Multiplexed immunohistochemical consecutive staining on single slide.",
@@ -12916,7 +12925,8 @@
                                             "required": [
                                                 "antibody"
                                             ],
-                                            "title": "Antibody"
+                                            "title": "Antibody",
+                                            "type": "object"
                                         }
                                     ],
                                     "description": "Data specific to antibody preparation on the multiplex immunohistochemical platform.",
@@ -12996,7 +13006,8 @@
                                     "required": [
                                         "primary_antibody_block"
                                     ],
-                                    "title": "MICSSS antibody"
+                                    "title": "MICSSS antibody",
+                                    "type": "object"
                                 },
                                 "type": "array"
                             },
@@ -14932,7 +14943,8 @@
                                 "required": [
                                     "slide_scanner_model"
                                 ],
-                                "title": "Image"
+                                "title": "Image",
+                                "type": "object"
                             },
                             {
                                 "$id": "imaging_data",
@@ -14970,7 +14982,8 @@
                                 "required": [
                                     "internal_slide_id"
                                 ],
-                                "title": "Imaging Data"
+                                "title": "Imaging Data",
+                                "type": "object"
                             }
                         ],
                         "description": "Multiplex immunofluorescence.",
@@ -15012,7 +15025,8 @@
                                             "required": [
                                                 "antibody"
                                             ],
-                                            "title": "Antibody"
+                                            "title": "Antibody",
+                                            "type": "object"
                                         }
                                     ],
                                     "description": "Data specific to antibody preparation on the multiplex immunofluorescence platform.",
@@ -15058,7 +15072,8 @@
                                         "primary_incubation_time",
                                         "amplification_time"
                                     ],
-                                    "title": "mIF antibody"
+                                    "title": "mIF antibody",
+                                    "type": "object"
                                 },
                                 "type": "array"
                             },
@@ -22212,7 +22227,8 @@
                     "type": "array"
                 }
             },
-            "title": "Assays which are available in the network"
+            "title": "Assays which are available in the network",
+            "type": "object"
         },
         "nci_id": {
             "description": "NCI Trial Identifier. Example: NCI22345.",
@@ -22925,7 +22941,8 @@
                     "cohort_name",
                     "samples"
                 ],
-                "title": "Participant"
+                "title": "Participant",
+                "type": "object"
             },
             "mergeOptions": {
                 "idRef": "/cimac_participant_id"
@@ -23104,7 +23121,8 @@
         "allowed_cohort_names",
         "allowed_collection_event_names"
     ],
-    "title": "Clinical Trial"
+    "title": "Clinical Trial",
+    "type": "object"
 }</code></pre>
   </container>
 

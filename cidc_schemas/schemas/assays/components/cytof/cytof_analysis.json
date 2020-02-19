@@ -6,6 +6,10 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+        "batch_no": {
+            "type": "string",
+            "description": "Synonymous with Astrolabe #Run"
+        },
         "fcs_file": {
             "$ref": "artifacts/artifact_fcs.json"
         },

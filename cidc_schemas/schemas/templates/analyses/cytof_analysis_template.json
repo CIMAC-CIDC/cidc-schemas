@@ -11,13 +11,29 @@
         "worksheets": {
             "CyTOF Analysis": {
                 "preamble_rows": {
-                    "assay run id": {
-                        "merge_pointer": "/assay_run_id",
-                        "type_ref": "assays/cytof_assay.json#properties/assay_run_id"
-                      },
-                    "protocol identifier": {
-                        "merge_pointer": "3/protocol_identifier",
-                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    "batch no": {
+                        "merge_pointer": "/batch_no",
+                        "type_ref": "assays/components/cytof/cytof_analysis.json#properties/batch_no",
+                        "assay run id": {
+                            "merge_pointer": "/assay_run_id",
+                            "type_ref": "assays/cytof_assay.json#properties/assay_run_id"
+                        },
+                        "protocol identifier": {
+                            "merge_pointer": "3/protocol_identifier",
+                            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                        },
+                        "astrolabe reports": {
+                            "merge_pointer": "0/output_files/astrolabe_reports",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{batch no}/reports.zip",
+                            "is_artifact": 1
+                        },
+                        "astrolabe analysis": {
+                            "merge_pointer": "0/output_files/astrolabe_analysis",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{batch no}/analysis.zip",
+                            "is_artifact": 1
+                        }
                     }
                 },
                 "prism_data_object_pointer": "/records/-",
@@ -31,18 +47,6 @@
                             "merge_pointer": "0/output_files/fcs_file",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
                             "gcs_uri_format": "{protocol identifier}/cytof_analysis/{cimac id}/source.fcs",
-                            "is_artifact": 1
-                        },
-                        "astrolabe reports": {
-                            "merge_pointer": "0/output_files/astrolabe_reports",
-                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{cimac id}/reports.zip",
-                            "is_artifact": 1
-                        },
-                        "astrolabe analysis": {
-                            "merge_pointer": "0/output_files/astrolabe_analysis",
-                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{cimac id}/analysis.zip",
                             "is_artifact": 1
                         },
                         "assignment": {

@@ -1,11 +1,6 @@
 {
-    "$schema": "metaschema/strict_meta_schema.json#",
-    "$id": "tissue_slide_template",
     "title": "Shipping manifest for tissue slides",
-    "type": "object",
-    "category": "manifest",
     "description": "Shipping / receiving manifest for transferring tissue slides.\n",
-    "additionalProperties": false,
     "properties": {
         "worksheets": {
 

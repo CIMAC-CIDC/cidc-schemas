@@ -1,13 +1,8 @@
 {
-    "$schema": "metaschema/strict_meta_schema.json#",
-    "$id": "wes_analysis",
     "title": "WES analysis template",
-    "type": "object",
-    "category": "analysis",
     "description": "Metadata information for WES Analysis output.",
     "prism_template_root_object_schema": "assays/components/ngs/wes/wes_analysis.json",
     "prism_template_root_object_pointer": "/analysis/wes_analysis",
-    "additionalProperties": false,
     "properties": {
         "worksheets": {
 

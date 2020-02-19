@@ -1,11 +1,6 @@
 {
-    "$schema": "metaschema/strict_meta_schema.json#",
-    "$id": "pbmc_shipping",
     "title": "Shipping manifest for PBMC samples",
-    "type": "object",
-    "category": "manifest",
     "description": "Shipping / receiving manifest for transferring PBMC samples.\n",
-    "additionalProperties": false,
     "properties": {
         "worksheets": {
 

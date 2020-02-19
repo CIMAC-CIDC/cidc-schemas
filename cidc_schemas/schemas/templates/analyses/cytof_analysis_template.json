@@ -1,13 +1,8 @@
 {
-    "$schema": "metaschema/strict_meta_schema.json#",
-    "$id": "cytof_analysis",
     "title": "CyTOF analysis template",
-    "type": "object",
-    "category": "analysis",
     "description": "Metadata information for CyTOF Analysis output.",
     "prism_template_root_object_schema": "assays/cytof_assay.json",
     "prism_template_root_object_pointer": "/assays/cytof/0",
-    "additionalProperties": false,
     "properties": {
         "worksheets": {
 

@@ -1,11 +1,6 @@
 {
-    "$schema": "metaschema/strict_meta_schema.json#",
-    "$id": "plasma_shipping",
     "title": "Shipping manifest for Plasma samples",
-    "type": "object",
-    "category": "manifest",
     "description": "Shipping / receiving manifest for transferring Plasma samples.\n",
-    "additionalProperties": false,
     "properties": {
         "worksheets": {
 

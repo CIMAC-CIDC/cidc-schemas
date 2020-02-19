@@ -1,11 +1,6 @@
 {
-    "$schema": "metaschema/strict_meta_schema.json#",
-    "$id": "normal_blood_dna_template",
     "title": "Shipping manifest for DNA extracted from normal blood samples",
-    "type": "object",
-    "category": "manifest",
     "description": "Shipping / receiving manifest for transferring DNA extracted from normal blood samples.\n",
-    "additionalProperties": false,
     "properties": {
         "worksheets": {
 

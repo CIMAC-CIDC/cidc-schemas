@@ -1,11 +1,6 @@
 {
-    "$schema": "metaschema/strict_meta_schema.json#",
-    "$id": "tumor_tissue_dna_template",
     "title": "Shipping manifest for tissue DNA extracted from tumor tissue samples",
-    "type": "object",
-    "category": "manifest",
     "description": "Shipping / receiving manifest for transferring tissue DNA extracted from tumor tissue samples.\n",
-    "additionalProperties": false,
     "properties": {
         "worksheets": {
 

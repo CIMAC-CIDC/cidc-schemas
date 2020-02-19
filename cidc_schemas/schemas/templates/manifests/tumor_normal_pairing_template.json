@@ -1,11 +1,6 @@
 {
-    "$schema": "metaschema/strict_meta_schema.json#",
-    "$id": "tumor_normal_pairing_template",
     "title": "Metadata manifest for tumor / normal pairing for WES assay analysis.",
-    "type": "object",
-    "category": "manifest",
     "description": "Metadata manifest for tumor / normal pairing for WES assay analysis.",
-    "additionalProperties": false,
     "properties": {
         "worksheets": {
 

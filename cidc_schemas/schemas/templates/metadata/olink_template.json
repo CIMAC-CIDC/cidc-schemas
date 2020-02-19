@@ -1,12 +1,6 @@
 {
-  "$schema": "metaschema/strict_meta_schema.json#",
-  "$id": "olink",
   "title": "Metadata file for olink",
-  "type": "object",
-  "category": "metadata",
   "description": "Metadata information for olink analysis.\n",
-  "$comment": "REDO with definition for a shared between combined/assays",
-  "additionalProperties": false,
   "properties": {
     "worksheets": {
       "olink": {

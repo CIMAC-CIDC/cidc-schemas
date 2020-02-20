@@ -257,12 +257,12 @@
     </td>
     <td width=55%>
         
-            
+            Antibody type collected for this study.
         
     </td>
     <td>
         
-            (defined in assays/components/antibody.json)
+            <a href="assays.components.antibody.html#antibody">assays.components.antibody#antibody</a>
         
     </td>
 </tr>
@@ -280,12 +280,12 @@
     </td>
     <td width=55%>
         
-            
+            Resulting type of antibody clone from primary antibody sample.
         
     </td>
     <td>
         
-            (defined in assays/components/antibody.json)
+            <a href="assays.components.antibody.html#clone">assays.components.antibody#clone</a>
         
     </td>
 </tr>
@@ -303,12 +303,12 @@
     </td>
     <td width=55%>
         
-            
+            Company from which antibody sample was derived.
         
     </td>
     <td>
         
-            (defined in assays/components/antibody.json)
+            <a href="assays.components.antibody.html#company">assays.components.antibody#company</a>
         
     </td>
 </tr>
@@ -326,12 +326,12 @@
     </td>
     <td width=55%>
         
-            
+            Antibody registry catalog number assigned to antibody sample.
         
     </td>
     <td>
         
-            (defined in assays/components/antibody.json)
+            <a href="assays.components.antibody.html#cat_num">assays.components.antibody#cat_num</a>
         
     </td>
 </tr>
@@ -349,12 +349,12 @@
     </td>
     <td width=55%>
         
-            
+            Identification number assigned to the particular quantity or lot of material from manufacturer.
         
     </td>
     <td>
         
-            (defined in assays/components/antibody.json)
+            <a href="assays.components.antibody.html#lot_num">assays.components.antibody#lot_num</a>
         
     </td>
 </tr>
@@ -421,16 +421,20 @@
     "mergeStrategy": "arrayMergeById",
     "properties": {
         "antibody": {
-            "$comment": "defined in assays/components/antibody.json"
+            "description": "Antibody type collected for this study.",
+            "type": "string"
         },
         "cat_num": {
-            "$comment": "defined in assays/components/antibody.json"
+            "description": "Antibody registry catalog number assigned to antibody sample.",
+            "type": "string"
         },
         "clone": {
-            "$comment": "defined in assays/components/antibody.json"
+            "description": "Resulting type of antibody clone from primary antibody sample.",
+            "type": "string"
         },
         "company": {
-            "$comment": "defined in assays/components/antibody.json"
+            "description": "Company from which antibody sample was derived.",
+            "type": "string"
         },
         "dilution": {
             "description": "Concentration ratio of dilution buffer for primary antibody.",
@@ -441,7 +445,8 @@
             "type": "string"
         },
         "lot_num": {
-            "$comment": "defined in assays/components/antibody.json"
+            "description": "Identification number assigned to the particular quantity or lot of material from manufacturer.",
+            "type": "string"
         },
         "stain_type": {
             "description": "Type of staining method used for antibody.",

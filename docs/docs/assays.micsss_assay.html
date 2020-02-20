@@ -210,12 +210,12 @@
     </td>
     <td width=55%>
         
-            
+            Indicates what site is filling out the assay.
         
     </td>
     <td>
         
-            (defined in assays/components/assay_core.json)
+            <a href="assays.components.assay_core.html#assay_creator">assays.components.assay_core#assay_creator</a>
         
     </td>
 </tr>
@@ -233,12 +233,12 @@
     </td>
     <td width=55%>
         
-            
+            Model version of the slide scanner instrument.
         
     </td>
     <td>
         
-            (defined in assays/components/image.json)
+            <a href="assays.components.image.html#slide_scanner_model">assays.components.image#slide_scanner_model</a>
         
     </td>
 </tr>
@@ -256,12 +256,12 @@
     </td>
     <td width=55%>
         
-            
+            Source software for digital pathology and image analysis.
         
     </td>
     <td>
         
-            (defined in assays/components/image.json)
+            <a href="assays.components.image.html#image_analysis_software">assays.components.image#image_analysis_software</a>
         
     </td>
 </tr>
@@ -279,12 +279,12 @@
     </td>
     <td width=55%>
         
-            
+            Source software version for digital pathology and image analysis.
         
     </td>
     <td>
         
-            (defined in assays/components/image.json)
+            <a href="assays.components.image.html#image_analysis_software_version">assays.components.image#image_analysis_software_version</a>
         
     </td>
 </tr>
@@ -302,12 +302,12 @@
     </td>
     <td width=55%>
         
-            
+            Model used for cell segmentation in an imaging experiment.
         
     </td>
     <td>
         
-            (defined in assays/components/image.json)
+            <a href="assays.components.image.html#cell_segmentation_model">assays.components.image#cell_segmentation_model</a>
         
     </td>
 </tr>
@@ -325,12 +325,12 @@
     </td>
     <td width=55%>
         
-            
+            Model used for positive cell detection in imaging experiment.
         
     </td>
     <td>
         
-            (defined in assays/components/image.json)
+            <a href="assays.components.image.html#positive_cell_detection">assays.components.image#positive_cell_detection</a>
         
     </td>
 </tr>
@@ -348,12 +348,12 @@
     </td>
     <td width=55%>
         
-            
+            Protocol name for which imaging experiment conducted.
         
     </td>
     <td>
         
-            (defined in assays/components/imaging_data.json)
+            <a href="assays.components.imaging_data.html#protocol_name">assays.components.imaging_data#protocol_name</a>
         
     </td>
 </tr>
@@ -371,12 +371,12 @@
     </td>
     <td width=55%>
         
-            
+            Identification number used for internal imaging slide.
         
     </td>
     <td>
         
-            (defined in assays/components/imaging_data.json)
+            <a href="assays.components.imaging_data.html#internal_slide_id">assays.components.imaging_data#internal_slide_id</a>
         
     </td>
 </tr>
@@ -394,12 +394,12 @@
     </td>
     <td width=55%>
         
-            
+            Date on which slide staining was processed.
         
     </td>
     <td>
         
-            (defined in assays/components/imaging_data.json)
+            <a href="assays.components.imaging_data.html#staining_date">assays.components.imaging_data#staining_date</a>
         
     </td>
 </tr>
@@ -417,12 +417,12 @@
     </td>
     <td width=55%>
         
-            
+            Date on which imaging experiment was analyzed.
         
     </td>
     <td>
         
-            (defined in assays/components/imaging_data.json)
+            <a href="assays.components.imaging_data.html#imaging_date">assays.components.imaging_data#imaging_date</a>
         
     </td>
 </tr>
@@ -440,12 +440,12 @@
     </td>
     <td width=55%>
         
-            
+            Imaging experiment's successful completion.
         
     </td>
     <td>
         
-            (defined in assays/components/imaging_data.json)
+            <a href="assays.components.imaging_data.html#imaging_status">assays.components.imaging_data#imaging_status</a>
         
     </td>
 </tr>
@@ -743,31 +743,63 @@
             "type": "array"
         },
         "assay_creator": {
-            "$comment": "defined in assays/components/assay_core.json"
+            "description": "Indicates what site is filling out the assay.",
+            "enum": [
+                "DFCI",
+                "Mount Sinai",
+                "Stanford",
+                "MD Anderson"
+            ],
+            "type": "string"
         },
         "cell_segmentation_model": {
-            "$comment": "defined in assays/components/image.json"
+            "description": "Model used for cell segmentation in an imaging experiment.",
+            "enum": [
+                "proprietary",
+                "watershed"
+            ],
+            "type": "string"
         },
         "image_analysis_software": {
-            "$comment": "defined in assays/components/image.json"
+            "description": "Source software for digital pathology and image analysis.",
+            "enum": [
+                "InForm",
+                "QuPath"
+            ],
+            "type": "string"
         },
         "image_analysis_software_version": {
-            "$comment": "defined in assays/components/image.json"
+            "description": "Source software version for digital pathology and image analysis.",
+            "type": "string"
         },
         "imaging_date": {
-            "$comment": "defined in assays/components/imaging_data.json"
+            "description": "Date on which imaging experiment was analyzed.",
+            "format": "date",
+            "type": "string"
         },
         "imaging_status": {
-            "$comment": "defined in assays/components/imaging_data.json"
+            "description": "Imaging experiment's successful completion.",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "type": "string"
         },
         "internal_slide_id": {
-            "$comment": "defined in assays/components/imaging_data.json"
+            "description": "Identification number used for internal imaging slide.",
+            "type": "string"
         },
         "positive_cell_detection": {
-            "$comment": "defined in assays/components/image.json"
+            "description": "Model used for positive cell detection in imaging experiment.",
+            "enum": [
+                "proprietary",
+                "random forest classifier"
+            ],
+            "type": "string"
         },
         "protocol_name": {
-            "$comment": "defined in assays/components/imaging_data.json"
+            "description": "Protocol name for which imaging experiment conducted.",
+            "type": "string"
         },
         "records": {
             "description": "A single data record from micsss assay.",
@@ -943,10 +975,23 @@
                                             "mergeStrategy": "objectMerge",
                                             "properties": {
                                                 "artifact_category": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Artifact category.",
+                                                    "enum": [
+                                                        "Assay Artifact from CIMAC",
+                                                        "Pipeline Artifact",
+                                                        "Manifest File"
+                                                    ],
+                                                    "type": "string"
                                                 },
                                                 "artifact_creator": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "The name of the center that created this artifact.",
+                                                    "enum": [
+                                                        "DFCI",
+                                                        "Mount Sinai",
+                                                        "Stanford",
+                                                        "MD Anderson"
+                                                    ],
+                                                    "type": "string"
                                                 },
                                                 "channels": {
                                                     "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
@@ -954,42 +999,55 @@
                                                     "type": "integer"
                                                 },
                                                 "crc32c_hash": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "CRC32c Hash of artifact.",
+                                                    "type": "string"
                                                 },
                                                 "data_format": {
                                                     "const": "IMAGE",
                                                     "description": "Data format."
                                                 },
                                                 "file_name": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                                    "description": "The name of the file with extension.",
+                                                    "type": "string"
                                                 },
                                                 "file_size_bytes": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "File size in bytes.",
+                                                    "type": "integer"
                                                 },
                                                 "height": {
                                                     "description": "Height of the image.",
                                                     "type": "integer"
                                                 },
                                                 "md5_hash": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                                    "type": "string"
                                                 },
                                                 "object_url": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "URL to artifact within Google Bucket.",
+                                                    "type": "string"
                                                 },
                                                 "upload_placeholder": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                                    "type": "string"
                                                 },
                                                 "uploaded_timestamp": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                                    "format": "date-time",
+                                                    "type": "string"
                                                 },
                                                 "uploader": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "The name of the person uploading the artifact.",
+                                                    "type": "string"
                                                 },
                                                 "uuid": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "UUID of artifact.",
+                                                    "type": "string"
                                                 },
                                                 "visible": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                                    "type": "boolean"
                                                 },
                                                 "width": {
                                                     "description": "Width of the image.",
@@ -1151,10 +1209,23 @@
                                             "mergeStrategy": "objectMerge",
                                             "properties": {
                                                 "artifact_category": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Artifact category.",
+                                                    "enum": [
+                                                        "Assay Artifact from CIMAC",
+                                                        "Pipeline Artifact",
+                                                        "Manifest File"
+                                                    ],
+                                                    "type": "string"
                                                 },
                                                 "artifact_creator": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "The name of the center that created this artifact.",
+                                                    "enum": [
+                                                        "DFCI",
+                                                        "Mount Sinai",
+                                                        "Stanford",
+                                                        "MD Anderson"
+                                                    ],
+                                                    "type": "string"
                                                 },
                                                 "channels": {
                                                     "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
@@ -1162,42 +1233,55 @@
                                                     "type": "integer"
                                                 },
                                                 "crc32c_hash": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "CRC32c Hash of artifact.",
+                                                    "type": "string"
                                                 },
                                                 "data_format": {
                                                     "const": "IMAGE",
                                                     "description": "Data format."
                                                 },
                                                 "file_name": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                                    "description": "The name of the file with extension.",
+                                                    "type": "string"
                                                 },
                                                 "file_size_bytes": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "File size in bytes.",
+                                                    "type": "integer"
                                                 },
                                                 "height": {
                                                     "description": "Height of the image.",
                                                     "type": "integer"
                                                 },
                                                 "md5_hash": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                                    "type": "string"
                                                 },
                                                 "object_url": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "URL to artifact within Google Bucket.",
+                                                    "type": "string"
                                                 },
                                                 "upload_placeholder": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                                    "type": "string"
                                                 },
                                                 "uploaded_timestamp": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                                    "format": "date-time",
+                                                    "type": "string"
                                                 },
                                                 "uploader": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "The name of the person uploading the artifact.",
+                                                    "type": "string"
                                                 },
                                                 "uuid": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "UUID of artifact.",
+                                                    "type": "string"
                                                 },
                                                 "visible": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                                    "type": "boolean"
                                                 },
                                                 "width": {
                                                     "description": "Width of the image.",
@@ -1363,44 +1447,70 @@
                                             "mergeStrategy": "objectMerge",
                                             "properties": {
                                                 "artifact_category": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Artifact category.",
+                                                    "enum": [
+                                                        "Assay Artifact from CIMAC",
+                                                        "Pipeline Artifact",
+                                                        "Manifest File"
+                                                    ],
+                                                    "type": "string"
                                                 },
                                                 "artifact_creator": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "The name of the center that created this artifact.",
+                                                    "enum": [
+                                                        "DFCI",
+                                                        "Mount Sinai",
+                                                        "Stanford",
+                                                        "MD Anderson"
+                                                    ],
+                                                    "type": "string"
                                                 },
                                                 "crc32c_hash": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "CRC32c Hash of artifact.",
+                                                    "type": "string"
                                                 },
                                                 "data_format": {
                                                     "const": "CSV",
                                                     "description": "Data format."
                                                 },
                                                 "file_name": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                                    "description": "The name of the file with extension.",
+                                                    "type": "string"
                                                 },
                                                 "file_size_bytes": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "File size in bytes.",
+                                                    "type": "integer"
                                                 },
                                                 "md5_hash": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                                    "type": "string"
                                                 },
                                                 "object_url": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "URL to artifact within Google Bucket.",
+                                                    "type": "string"
                                                 },
                                                 "upload_placeholder": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                                    "type": "string"
                                                 },
                                                 "uploaded_timestamp": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                                    "format": "date-time",
+                                                    "type": "string"
                                                 },
                                                 "uploader": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "The name of the person uploading the artifact.",
+                                                    "type": "string"
                                                 },
                                                 "uuid": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "UUID of artifact.",
+                                                    "type": "string"
                                                 },
                                                 "visible": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                                    "type": "boolean"
                                                 }
                                             },
                                             "title": "CSV Artifact",
@@ -1544,44 +1654,70 @@
                                             "mergeStrategy": "objectMerge",
                                             "properties": {
                                                 "artifact_category": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Artifact category.",
+                                                    "enum": [
+                                                        "Assay Artifact from CIMAC",
+                                                        "Pipeline Artifact",
+                                                        "Manifest File"
+                                                    ],
+                                                    "type": "string"
                                                 },
                                                 "artifact_creator": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "The name of the center that created this artifact.",
+                                                    "enum": [
+                                                        "DFCI",
+                                                        "Mount Sinai",
+                                                        "Stanford",
+                                                        "MD Anderson"
+                                                    ],
+                                                    "type": "string"
                                                 },
                                                 "crc32c_hash": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "CRC32c Hash of artifact.",
+                                                    "type": "string"
                                                 },
                                                 "data_format": {
                                                     "const": "CSV",
                                                     "description": "Data format."
                                                 },
                                                 "file_name": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                                    "description": "The name of the file with extension.",
+                                                    "type": "string"
                                                 },
                                                 "file_size_bytes": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "File size in bytes.",
+                                                    "type": "integer"
                                                 },
                                                 "md5_hash": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                                    "type": "string"
                                                 },
                                                 "object_url": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "URL to artifact within Google Bucket.",
+                                                    "type": "string"
                                                 },
                                                 "upload_placeholder": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                                    "type": "string"
                                                 },
                                                 "uploaded_timestamp": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                                    "format": "date-time",
+                                                    "type": "string"
                                                 },
                                                 "uploader": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "The name of the person uploading the artifact.",
+                                                    "type": "string"
                                                 },
                                                 "uuid": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "UUID of artifact.",
+                                                    "type": "string"
                                                 },
                                                 "visible": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                                    "type": "boolean"
                                                 }
                                             },
                                             "title": "CSV Artifact",
@@ -1725,44 +1861,70 @@
                                             "mergeStrategy": "objectMerge",
                                             "properties": {
                                                 "artifact_category": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Artifact category.",
+                                                    "enum": [
+                                                        "Assay Artifact from CIMAC",
+                                                        "Pipeline Artifact",
+                                                        "Manifest File"
+                                                    ],
+                                                    "type": "string"
                                                 },
                                                 "artifact_creator": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "The name of the center that created this artifact.",
+                                                    "enum": [
+                                                        "DFCI",
+                                                        "Mount Sinai",
+                                                        "Stanford",
+                                                        "MD Anderson"
+                                                    ],
+                                                    "type": "string"
                                                 },
                                                 "crc32c_hash": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "CRC32c Hash of artifact.",
+                                                    "type": "string"
                                                 },
                                                 "data_format": {
                                                     "const": "CSV",
                                                     "description": "Data format."
                                                 },
                                                 "file_name": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                                    "description": "The name of the file with extension.",
+                                                    "type": "string"
                                                 },
                                                 "file_size_bytes": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "File size in bytes.",
+                                                    "type": "integer"
                                                 },
                                                 "md5_hash": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                                    "type": "string"
                                                 },
                                                 "object_url": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "URL to artifact within Google Bucket.",
+                                                    "type": "string"
                                                 },
                                                 "upload_placeholder": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                                    "type": "string"
                                                 },
                                                 "uploaded_timestamp": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                                    "format": "date-time",
+                                                    "type": "string"
                                                 },
                                                 "uploader": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "The name of the person uploading the artifact.",
+                                                    "type": "string"
                                                 },
                                                 "uuid": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "UUID of artifact.",
+                                                    "type": "string"
                                                 },
                                                 "visible": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                                    "type": "boolean"
                                                 }
                                             },
                                             "title": "CSV Artifact",
@@ -1920,10 +2082,23 @@
                                             "mergeStrategy": "objectMerge",
                                             "properties": {
                                                 "artifact_category": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Artifact category.",
+                                                    "enum": [
+                                                        "Assay Artifact from CIMAC",
+                                                        "Pipeline Artifact",
+                                                        "Manifest File"
+                                                    ],
+                                                    "type": "string"
                                                 },
                                                 "artifact_creator": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "The name of the center that created this artifact.",
+                                                    "enum": [
+                                                        "DFCI",
+                                                        "Mount Sinai",
+                                                        "Stanford",
+                                                        "MD Anderson"
+                                                    ],
+                                                    "type": "string"
                                                 },
                                                 "channels": {
                                                     "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
@@ -1931,42 +2106,55 @@
                                                     "type": "integer"
                                                 },
                                                 "crc32c_hash": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "CRC32c Hash of artifact.",
+                                                    "type": "string"
                                                 },
                                                 "data_format": {
                                                     "const": "IMAGE",
                                                     "description": "Data format."
                                                 },
                                                 "file_name": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                                    "description": "The name of the file with extension.",
+                                                    "type": "string"
                                                 },
                                                 "file_size_bytes": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "File size in bytes.",
+                                                    "type": "integer"
                                                 },
                                                 "height": {
                                                     "description": "Height of the image.",
                                                     "type": "integer"
                                                 },
                                                 "md5_hash": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                                    "type": "string"
                                                 },
                                                 "object_url": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "URL to artifact within Google Bucket.",
+                                                    "type": "string"
                                                 },
                                                 "upload_placeholder": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                                    "type": "string"
                                                 },
                                                 "uploaded_timestamp": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                                    "format": "date-time",
+                                                    "type": "string"
                                                 },
                                                 "uploader": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "The name of the person uploading the artifact.",
+                                                    "type": "string"
                                                 },
                                                 "uuid": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "UUID of artifact.",
+                                                    "type": "string"
                                                 },
                                                 "visible": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                                    "type": "boolean"
                                                 },
                                                 "width": {
                                                     "description": "Width of the image.",
@@ -2128,10 +2316,23 @@
                                             "mergeStrategy": "objectMerge",
                                             "properties": {
                                                 "artifact_category": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Artifact category.",
+                                                    "enum": [
+                                                        "Assay Artifact from CIMAC",
+                                                        "Pipeline Artifact",
+                                                        "Manifest File"
+                                                    ],
+                                                    "type": "string"
                                                 },
                                                 "artifact_creator": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "The name of the center that created this artifact.",
+                                                    "enum": [
+                                                        "DFCI",
+                                                        "Mount Sinai",
+                                                        "Stanford",
+                                                        "MD Anderson"
+                                                    ],
+                                                    "type": "string"
                                                 },
                                                 "channels": {
                                                     "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
@@ -2139,42 +2340,55 @@
                                                     "type": "integer"
                                                 },
                                                 "crc32c_hash": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "CRC32c Hash of artifact.",
+                                                    "type": "string"
                                                 },
                                                 "data_format": {
                                                     "const": "IMAGE",
                                                     "description": "Data format."
                                                 },
                                                 "file_name": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                                    "description": "The name of the file with extension.",
+                                                    "type": "string"
                                                 },
                                                 "file_size_bytes": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "File size in bytes.",
+                                                    "type": "integer"
                                                 },
                                                 "height": {
                                                     "description": "Height of the image.",
                                                     "type": "integer"
                                                 },
                                                 "md5_hash": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                                    "type": "string"
                                                 },
                                                 "object_url": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "URL to artifact within Google Bucket.",
+                                                    "type": "string"
                                                 },
                                                 "upload_placeholder": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                                    "type": "string"
                                                 },
                                                 "uploaded_timestamp": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                                    "format": "date-time",
+                                                    "type": "string"
                                                 },
                                                 "uploader": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "The name of the person uploading the artifact.",
+                                                    "type": "string"
                                                 },
                                                 "uuid": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "UUID of artifact.",
+                                                    "type": "string"
                                                 },
                                                 "visible": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                                    "type": "boolean"
                                                 },
                                                 "width": {
                                                     "description": "Width of the image.",
@@ -2322,44 +2536,70 @@
                                             "mergeStrategy": "objectMerge",
                                             "properties": {
                                                 "artifact_category": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Artifact category.",
+                                                    "enum": [
+                                                        "Assay Artifact from CIMAC",
+                                                        "Pipeline Artifact",
+                                                        "Manifest File"
+                                                    ],
+                                                    "type": "string"
                                                 },
                                                 "artifact_creator": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "The name of the center that created this artifact.",
+                                                    "enum": [
+                                                        "DFCI",
+                                                        "Mount Sinai",
+                                                        "Stanford",
+                                                        "MD Anderson"
+                                                    ],
+                                                    "type": "string"
                                                 },
                                                 "crc32c_hash": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "CRC32c Hash of artifact.",
+                                                    "type": "string"
                                                 },
                                                 "data_format": {
                                                     "const": "CSV",
                                                     "description": "Data format."
                                                 },
                                                 "file_name": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                                    "description": "The name of the file with extension.",
+                                                    "type": "string"
                                                 },
                                                 "file_size_bytes": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "File size in bytes.",
+                                                    "type": "integer"
                                                 },
                                                 "md5_hash": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                                    "type": "string"
                                                 },
                                                 "object_url": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "URL to artifact within Google Bucket.",
+                                                    "type": "string"
                                                 },
                                                 "upload_placeholder": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                                    "type": "string"
                                                 },
                                                 "uploaded_timestamp": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                                    "format": "date-time",
+                                                    "type": "string"
                                                 },
                                                 "uploader": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "The name of the person uploading the artifact.",
+                                                    "type": "string"
                                                 },
                                                 "uuid": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "UUID of artifact.",
+                                                    "type": "string"
                                                 },
                                                 "visible": {
-                                                    "$comment": "defined in artifacts/artifact_core.json"
+                                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                                    "type": "boolean"
                                                 }
                                             },
                                             "title": "CSV Artifact",
@@ -2512,44 +2752,70 @@
                                 "mergeStrategy": "objectMerge",
                                 "properties": {
                                     "artifact_category": {
-                                        "$comment": "defined in artifacts/artifact_core.json"
+                                        "description": "Artifact category.",
+                                        "enum": [
+                                            "Assay Artifact from CIMAC",
+                                            "Pipeline Artifact",
+                                            "Manifest File"
+                                        ],
+                                        "type": "string"
                                     },
                                     "artifact_creator": {
-                                        "$comment": "defined in artifacts/artifact_core.json"
+                                        "description": "The name of the center that created this artifact.",
+                                        "enum": [
+                                            "DFCI",
+                                            "Mount Sinai",
+                                            "Stanford",
+                                            "MD Anderson"
+                                        ],
+                                        "type": "string"
                                     },
                                     "crc32c_hash": {
-                                        "$comment": "defined in artifacts/artifact_core.json"
+                                        "description": "CRC32c Hash of artifact.",
+                                        "type": "string"
                                     },
                                     "data_format": {
                                         "const": "CSV",
                                         "description": "Data format."
                                     },
                                     "file_name": {
-                                        "$comment": "defined in artifacts/artifact_core.json"
+                                        "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                        "description": "The name of the file with extension.",
+                                        "type": "string"
                                     },
                                     "file_size_bytes": {
-                                        "$comment": "defined in artifacts/artifact_core.json"
+                                        "description": "File size in bytes.",
+                                        "type": "integer"
                                     },
                                     "md5_hash": {
-                                        "$comment": "defined in artifacts/artifact_core.json"
+                                        "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                        "type": "string"
                                     },
                                     "object_url": {
-                                        "$comment": "defined in artifacts/artifact_core.json"
+                                        "description": "URL to artifact within Google Bucket.",
+                                        "type": "string"
                                     },
                                     "upload_placeholder": {
-                                        "$comment": "defined in artifacts/artifact_core.json"
+                                        "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                        "description": "A placeholder for when artifact file is being uploaded.",
+                                        "type": "string"
                                     },
                                     "uploaded_timestamp": {
-                                        "$comment": "defined in artifacts/artifact_core.json"
+                                        "description": "Timestamp of when artifact was loaded into the system.",
+                                        "format": "date-time",
+                                        "type": "string"
                                     },
                                     "uploader": {
-                                        "$comment": "defined in artifacts/artifact_core.json"
+                                        "description": "The name of the person uploading the artifact.",
+                                        "type": "string"
                                     },
                                     "uuid": {
-                                        "$comment": "defined in artifacts/artifact_core.json"
+                                        "description": "UUID of artifact.",
+                                        "type": "string"
                                     },
                                     "visible": {
-                                        "$comment": "defined in artifacts/artifact_core.json"
+                                        "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                        "type": "boolean"
                                     }
                                 },
                                 "title": "CSV Artifact",
@@ -2579,10 +2845,17 @@
             "type": "array"
         },
         "slide_scanner_model": {
-            "$comment": "defined in assays/components/image.json"
+            "description": "Model version of the slide scanner instrument.",
+            "enum": [
+                "Vectra 2.0",
+                "Hamamatsu"
+            ],
+            "type": "string"
         },
         "staining_date": {
-            "$comment": "defined in assays/components/imaging_data.json"
+            "description": "Date on which slide staining was processed.",
+            "format": "date",
+            "type": "string"
         }
     },
     "required": [

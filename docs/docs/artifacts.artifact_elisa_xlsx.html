@@ -220,12 +220,12 @@
     </td>
     <td width=55%>
         
-            
+            A placeholder for when artifact file is being uploaded.
         
     </td>
     <td>
         
-            (defined in artifacts/artifact_core.json)
+            <a href="artifacts.artifact_core.html#upload_placeholder">artifacts.artifact_core#upload_placeholder</a>
         
     </td>
 </tr>
@@ -243,12 +243,12 @@
     </td>
     <td width=55%>
         
-            
+            The name of the center that created this artifact.
         
     </td>
     <td>
         
-            (defined in artifacts/artifact_core.json)
+            <a href="artifacts.artifact_core.html#artifact_creator">artifacts.artifact_core#artifact_creator</a>
         
     </td>
 </tr>
@@ -266,12 +266,12 @@
     </td>
     <td width=55%>
         
-            
+            The name of the person uploading the artifact.
         
     </td>
     <td>
         
-            (defined in artifacts/artifact_core.json)
+            <a href="artifacts.artifact_core.html#uploader">artifacts.artifact_core#uploader</a>
         
     </td>
 </tr>
@@ -289,12 +289,12 @@
     </td>
     <td width=55%>
         
-            
+            UUID of artifact.
         
     </td>
     <td>
         
-            (defined in artifacts/artifact_core.json)
+            <a href="artifacts.artifact_core.html#uuid">artifacts.artifact_core#uuid</a>
         
     </td>
 </tr>
@@ -312,12 +312,12 @@
     </td>
     <td width=55%>
         
-            
+            The name of the file with extension.
         
     </td>
     <td>
         
-            (defined in artifacts/artifact_core.json)
+            <a href="artifacts.artifact_core.html#file_name">artifacts.artifact_core#file_name</a>
         
     </td>
 </tr>
@@ -335,12 +335,12 @@
     </td>
     <td width=55%>
         
-            
+            URL to artifact within Google Bucket.
         
     </td>
     <td>
         
-            (defined in artifacts/artifact_core.json)
+            <a href="artifacts.artifact_core.html#object_url">artifacts.artifact_core#object_url</a>
         
     </td>
 </tr>
@@ -358,12 +358,12 @@
     </td>
     <td width=55%>
         
-            
+            Timestamp of when artifact was loaded into the system.
         
     </td>
     <td>
         
-            (defined in artifacts/artifact_core.json)
+            <a href="artifacts.artifact_core.html#uploaded_timestamp">artifacts.artifact_core#uploaded_timestamp</a>
         
     </td>
 </tr>
@@ -381,12 +381,12 @@
     </td>
     <td width=55%>
         
-            
+            File size in bytes.
         
     </td>
     <td>
         
-            (defined in artifacts/artifact_core.json)
+            <a href="artifacts.artifact_core.html#file_size_bytes">artifacts.artifact_core#file_size_bytes</a>
         
     </td>
 </tr>
@@ -404,12 +404,12 @@
     </td>
     <td width=55%>
         
-            
+            MD5 Hash of artifact. Not available for composite GCS objects.
         
     </td>
     <td>
         
-            (defined in artifacts/artifact_core.json)
+            <a href="artifacts.artifact_core.html#md5_hash">artifacts.artifact_core#md5_hash</a>
         
     </td>
 </tr>
@@ -427,12 +427,12 @@
     </td>
     <td width=55%>
         
-            
+            CRC32c Hash of artifact.
         
     </td>
     <td>
         
-            (defined in artifacts/artifact_core.json)
+            <a href="artifacts.artifact_core.html#crc32c_hash">artifacts.artifact_core#crc32c_hash</a>
         
     </td>
 </tr>
@@ -450,12 +450,12 @@
     </td>
     <td width=55%>
         
-            
+            Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.
         
     </td>
     <td>
         
-            (defined in artifacts/artifact_core.json)
+            <a href="artifacts.artifact_core.html#visible">artifacts.artifact_core#visible</a>
         
     </td>
 </tr>
@@ -473,12 +473,12 @@
     </td>
     <td width=55%>
         
-            
+            Artifact category.
         
     </td>
     <td>
         
-            (defined in artifacts/artifact_core.json)
+            <a href="artifacts.artifact_core.html#artifact_category">artifacts.artifact_core#artifact_category</a>
         
     </td>
 </tr>
@@ -642,33 +642,52 @@
     "mergeStrategy": "objectMerge",
     "properties": {
         "artifact_category": {
-            "$comment": "defined in artifacts/artifact_core.json"
+            "description": "Artifact category.",
+            "enum": [
+                "Assay Artifact from CIMAC",
+                "Pipeline Artifact",
+                "Manifest File"
+            ],
+            "type": "string"
         },
         "artifact_creator": {
-            "$comment": "defined in artifacts/artifact_core.json"
+            "description": "The name of the center that created this artifact.",
+            "enum": [
+                "DFCI",
+                "Mount Sinai",
+                "Stanford",
+                "MD Anderson"
+            ],
+            "type": "string"
         },
         "crc32c_hash": {
-            "$comment": "defined in artifacts/artifact_core.json"
+            "description": "CRC32c Hash of artifact.",
+            "type": "string"
         },
         "data_format": {
             "const": "ELISA",
             "description": "Data format."
         },
         "file_name": {
-            "$comment": "defined in artifacts/artifact_core.json"
+            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+            "description": "The name of the file with extension.",
+            "type": "string"
         },
         "file_size_bytes": {
-            "$comment": "defined in artifacts/artifact_core.json"
+            "description": "File size in bytes.",
+            "type": "integer"
         },
         "md5_hash": {
-            "$comment": "defined in artifacts/artifact_core.json"
+            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+            "type": "string"
         },
         "number_of_samples": {
             "description": "Number of samples within this file.",
             "type": "integer"
         },
         "object_url": {
-            "$comment": "defined in artifacts/artifact_core.json"
+            "description": "URL to artifact within Google Bucket.",
+            "type": "string"
         },
         "samples": {
             "description": "Ids of the sample(s) within this file.",
@@ -683,19 +702,26 @@
             "type": "array"
         },
         "upload_placeholder": {
-            "$comment": "defined in artifacts/artifact_core.json"
+            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+            "description": "A placeholder for when artifact file is being uploaded.",
+            "type": "string"
         },
         "uploaded_timestamp": {
-            "$comment": "defined in artifacts/artifact_core.json"
+            "description": "Timestamp of when artifact was loaded into the system.",
+            "format": "date-time",
+            "type": "string"
         },
         "uploader": {
-            "$comment": "defined in artifacts/artifact_core.json"
+            "description": "The name of the person uploading the artifact.",
+            "type": "string"
         },
         "uuid": {
-            "$comment": "defined in artifacts/artifact_core.json"
+            "description": "UUID of artifact.",
+            "type": "string"
         },
         "visible": {
-            "$comment": "defined in artifacts/artifact_core.json"
+            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+            "type": "boolean"
         }
     },
     "title": "ELISA results artifact",

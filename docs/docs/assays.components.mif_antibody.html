@@ -352,12 +352,15 @@
   <div class="container">
     <h3>mif_antibody.full.json</h3>
   	<pre><code>{
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "mif_antibody",
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "additionalProperties": false,
     "allOf": [
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$id": "antibody",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "description": "Common information about an antibody used in a number of immune-oncology assays.",
-            "id": "antibody",
+            "inheritableBase": true,
             "properties": {
                 "antibody": {
                     "description": "Antibody type collected for this study.",
@@ -383,11 +386,11 @@
             "required": [
                 "antibody"
             ],
-            "title": "Antibody"
+            "title": "Antibody",
+            "type": "object"
         }
     ],
     "description": "Data specific to antibody preparation on the multiplex immunofluorescence platform.",
-    "id": "mif_antibody",
     "properties": {
         "amplification_time": {
             "description": "Length of time required for amplified signal detection.",
@@ -430,7 +433,8 @@
         "primary_incubation_time",
         "amplification_time"
     ],
-    "title": "mIF antibody"
+    "title": "mIF antibody",
+    "type": "object"
 }</code></pre>
   </container>
 

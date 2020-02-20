@@ -1,9 +1,10 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "mif_input",
   "title": "Multiplex Immunofluorescence Input Files",
   "type": "object",
   "description": "mIF assay input files.",
+  "additionalProperties": false,
   "properties": {
     "whole_slide_imaging_file": {
       "$comment": "Digital slide produced from the scanning of conventional glass slides.",
@@ -24,7 +25,19 @@
         "allOf": [
           { "$ref": "assays/components/mapping.json" },
           { "$ref": "assays/components/composite_image.json" }
-        ]
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "binary_seg_map": {"$ref": "assays/components/mapping.json#properties/binary_seg_map" },
+          "cell_seg_data": {"$ref": "assays/components/mapping.json#properties/cell_seg_data" },
+          "cell_seg_data_summary": {"$ref": "assays/components/mapping.json#properties/cell_seg_data_summary" },
+          "phenotype_map": {"$ref": "assays/components/mapping.json#properties/phenotype_map" },
+          "region_seg_map": {"$ref": "assays/components/mapping.json#properties/region_seg_map" },
+          "score_data": {"$ref": "assays/components/mapping.json#properties/score_data" },
+
+          "composite_image": {"$ref": "assays/components/composite_image.json#properties/composite_image"},
+          "component_data": {"$ref": "assays/components/composite_image.json#properties/component_data"}
+        }
       }
     }
   },

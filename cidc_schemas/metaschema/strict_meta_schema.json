@@ -1,0 +1,158 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "strict_meta_schema",
+    "title": "Strict meta-schema",
+    "type": ["object", "boolean"],
+    "oneOf": [
+        {"required": ["$ref"]},
+        {"required": ["const"]},
+        {
+            "not": {
+                "$comment": "this makes additionalProperties or inheritableBase required only for object-describing schemas",
+                "anyOf": [
+                    {
+                        "properties": {
+                            "type": {
+                                "const": "object" 
+                            }
+                       }
+                    },
+                    {"required": ["properties"]}
+                ]
+            }
+        },
+        {
+            "type": "object",
+            "required": ["additionalProperties"],
+            "not": {
+                "required": ["inheritableBase"],
+                "$comment": "'not' disallows matching this, making additionalProperties and inheritableBase mutually exclusive"
+            }
+        },
+        {
+            "type": "object",
+            "not": {
+                "required": ["additionalProperties"],
+                "$comment": "'not' disallows matching this, making additionalProperties and inheritableBase mutually exclusive"
+            },
+            "required": ["inheritableBase"]
+        }
+    ],
+    "properties": {
+        "additionalProperties": {
+            "$comment": "overrides draft-07 definition",
+            "const": false
+        },
+        "inheritableBase": {
+            "$comment": "Shows that a schema is an extensible 'abstract base' to inherit from and doesn't have `additionalProperties` set to false. No end user objects should be of that schema, only of something 'descendant' from it.",
+            "const": true
+        },                
+        "example": {
+            "type": "string"
+        },
+        "in_doc_ref_pattern": {
+            "$comment": "used in prism custom validator for in doc refs integrity",
+            "type": "string"
+        },
+        "enum_comments": {
+            "$comment": "used in template_writer to write excel comments",
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+
+        "mergeStrategy": {"$comment": "jsonmerge specific"},
+        "mergeOptions": {"$comment": "jsonmerge specific"},
+
+        "$schema": {
+            "$comment": "overrides draft-07 definition to point to this strict schema",
+            "const": "metaschema/strict_meta_schema.json#"
+        },
+        "additionalItems": { 
+            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
+            "$ref": "#" 
+        },
+        "items": {
+            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
+            "$ref": "#"
+        },
+        "definitions": {
+            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
+            "additionalProperties": {"$ref": "#" } 
+        },
+        "properties": {
+            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
+            "additionalProperties": {"$ref": "#" } 
+        },
+        "patternProperties": {
+            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
+            "additionalProperties": {"$ref": "#" } 
+        },
+        "dependencies": {
+            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
+            "additionalProperties": {
+                "anyOf": [
+                    { "$ref": "#" },
+                    { "$ref": "#/definitions/stringArray" }
+                ]
+            }
+        },
+
+
+        "$id": {"$comment": "defined in draft-07"},
+        "$ref": {"$comment": "defined in draft-07"},
+        "$comment": {"$comment": "defined in draft-07"},
+        "title": {"$comment": "defined in draft-07"},
+        "description": {"$comment": "defined in draft-07"},
+        "default": true,
+        "readOnly": {"$comment": "defined in draft-07"},
+        "examples": {"$comment": "defined in draft-07"},
+        "multipleOf": {"$comment": "defined in draft-07"},
+        "maximum": {"$comment": "defined in draft-07"},
+        "exclusiveMaximum": {"$comment": "defined in draft-07"},
+        "minimum": {"$comment": "defined in draft-07"},
+        "exclusiveMinimum": {"$comment": "defined in draft-07"},
+        "maxLength": {"$comment": "defined in draft-07"},
+        "minLength": {"$comment": "defined in draft-07"},
+        "pattern": {"$comment": "defined in draft-07"},
+        "maxItems": {"$comment": "defined in draft-07"},
+        "minItems": {"$comment": "defined in draft-07"},
+        "uniqueItems": {"$comment": "defined in draft-07"},
+        "maxProperties": {"$comment": "defined in draft-07"},
+        "minProperties": {"$comment": "defined in draft-07"},
+        "required": {"$comment": "defined in draft-07"},
+        "const": true,
+        "enum": {"$comment": "defined in draft-07"},
+        "type": {"$comment": "defined in draft-07"},
+        "format": {"$comment": "defined in draft-07"},
+        "contentMediaType": {"$comment": "defined in draft-07"},
+        "contentEncoding": {"$comment": "defined in draft-07"},
+        "propertyNames": {"$comment": "defined in draft-07"},
+        "if":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
+        "then":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
+        "else":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
+        "not":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
+        "allOf": {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
+        "anyOf": {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
+        "oneOf": {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"}
+    },
+    "definitions": {
+        "schemaArray": {
+            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "#" }
+        },
+        "stringArray": {
+            "$comment": "repeats draft-07 definition to make refs here shorter",
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true,
+            "default": []
+        }
+    },
+    "additionalProperties": false,
+    "allOf": [{"$ref" : "http://json-schema.org/draft-07/schema"}]
+}
+  

@@ -294,9 +294,10 @@
   <div class="container">
     <h3>image.full.json</h3>
   	<pre><code>{
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "image",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "description": "Base information about the acquisition and analysis of a quantitative pathology image.",
-    "id": "image",
+    "inheritableBase": true,
     "properties": {
         "cell_segmentation_model": {
             "description": "Model used for cell segmentation in an imaging experiment.",
@@ -342,7 +343,8 @@
     "required": [
         "slide_scanner_model"
     ],
-    "title": "Image"
+    "title": "Image",
+    "type": "object"
 }</code></pre>
   </container>
 

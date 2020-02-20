@@ -2,7 +2,10 @@ import os
 import jinja2
 import json
 import jsonschema
-from cidc_schemas.json_validation import load_and_validate_schema
+from cidc_schemas.json_validation import (
+    load_and_validate_schema,
+    _load_dont_validate_schema,
+)
 from cidc_schemas.constants import SCHEMA_DIR
 
 DOCS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -23,9 +26,10 @@ def load_schemas() -> dict:
         for path in paths:
             if not path.endswith(".json"):
                 continue
+
             schema_path = os.path.join(root, path)
 
-            full_json = load_and_validate_schema(schema_path, SCHEMA_DIR)
+            full_json = _load_dont_validate_schema(schema_path, SCHEMA_DIR)
 
             resolver = jsonschema.RefResolver(f"file://{SCHEMA_DIR}/schemas", full_json)
 
@@ -44,7 +48,7 @@ def load_schemas() -> dict:
 
                 return {"url": url, "description": description}
 
-            schema = load_and_validate_schema(
+            schema = _load_dont_validate_schema(
                 schema_path, SCHEMA_DIR, on_refs=json_to_html
             )
 

@@ -83,6 +83,8 @@
             
         
             
+        
+            
                 <tr>
     <td>
         
@@ -267,6 +269,29 @@
             
         
             
+                <tr>
+    <td>
+        
+            <span id="assay_creator">
+                assay_creator
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates what site is filling out the assay.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.assay_core.html#assay_creator">assays.components.assay_core#assay_creator</a>
+        
+    </td>
+</tr>
+            
+        
+            
         
             
         
@@ -285,12 +310,14 @@
     <h3>ihc_assay.full.json</h3>
   	<pre><code>{
     "$id": "ihc",
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "additionalProperties": false,
     "allOf": [
         {
             "$id": "assay_core",
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "description": "Main properties of the assay experiment template.",
+            "inheritableBase": true,
             "properties": {
                 "assay_creator": {
                     "description": "Indicates what site is filling out the assay.",
@@ -314,12 +341,15 @@
     "mergeStrategy": "objectMerge",
     "properties": {
         "antibody": {
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$id": "ihc_antibody",
+            "$schema": "metaschema/strict_meta_schema.json#",
+            "additionalProperties": false,
             "allOf": [
                 {
-                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "$id": "antibody",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "description": "Common information about an antibody used in a number of immune-oncology assays.",
-                    "id": "antibody",
+                    "inheritableBase": true,
                     "properties": {
                         "antibody": {
                             "description": "Antibody type collected for this study.",
@@ -345,12 +375,28 @@
                     "required": [
                         "antibody"
                     ],
-                    "title": "Antibody"
+                    "title": "Antibody",
+                    "type": "object"
                 }
             ],
             "description": "Data specific to antibody preparation for Immunohistochemical analysis.",
-            "id": "ihc_antibody",
             "properties": {
+                "antibody": {
+                    "description": "Antibody type collected for this study.",
+                    "type": "string"
+                },
+                "cat_num": {
+                    "description": "Antibody registry catalog number assigned to antibody sample.",
+                    "type": "string"
+                },
+                "clone": {
+                    "description": "Resulting type of antibody clone from primary antibody sample.",
+                    "type": "string"
+                },
+                "company": {
+                    "description": "Company from which antibody sample was derived.",
+                    "type": "string"
+                },
                 "dilution": {
                     "description": "Concentration ratio for antibody dilution.",
                     "type": "string"
@@ -363,6 +409,10 @@
                     "description": "Time duration of antibody incubation.",
                     "format": "time",
                     "type": "string"
+                },
+                "lot_num": {
+                    "description": "Identification number assigned to the particular quantity or lot of material from manufacturer.",
+                    "type": "string"
                 }
             },
             "required": [
@@ -370,7 +420,18 @@
                 "incubation_time",
                 "incubation_temp"
             ],
-            "title": "IHC antibody"
+            "title": "IHC antibody",
+            "type": "object"
+        },
+        "assay_creator": {
+            "description": "Indicates what site is filling out the assay.",
+            "enum": [
+                "DFCI",
+                "Mount Sinai",
+                "Stanford",
+                "MD Anderson"
+            ],
+            "type": "string"
         },
         "autostainer_model": {
             "description": "Model version of the autostainer instrument.",
@@ -384,7 +445,8 @@
             "description": "A single data record from IHC assay.",
             "items": {
                 "$id": "ihc_assay_record",
-                "$schema": "http://json-schema.org/draft-07/schema#",
+                "$schema": "metaschema/strict_meta_schema.json#",
+                "additionalProperties": false,
                 "anyOf": [
                     {
                         "required": [
@@ -445,17 +507,19 @@
                     },
                     "files": {
                         "$id": "ihc_input",
-                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "$schema": "metaschema/strict_meta_schema.json#",
+                        "additionalProperties": false,
                         "description": "IHC assay input/output files.",
                         "properties": {
                             "ihc_image": {
                                 "$comment": "Path to IHC image in TIFF format.",
                                 "$id": "image_artifact",
-                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                "$schema": "metaschema/strict_meta_schema.json#",
+                                "additionalProperties": false,
                                 "allOf": [
                                     {
                                         "$id": "artifact_core",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "anyOf": [
                                             {
                                                 "required": [
@@ -486,6 +550,7 @@
                                             }
                                         ],
                                         "description": "Any file artifact associated with a clinical trial.",
+                                        "inheritableBase": true,
                                         "properties": {
                                             "artifact_category": {
                                                 "description": "Artifact category.",
@@ -578,27 +643,6 @@
                                         },
                                         "title": "Artifact Core",
                                         "type": "object"
-                                    },
-                                    {
-                                        "properties": {
-                                            "channels": {
-                                                "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
-                                                "description": "Number of channels in the image.",
-                                                "type": "integer"
-                                            },
-                                            "data_format": {
-                                                "const": "IMAGE",
-                                                "description": "Data format."
-                                            },
-                                            "height": {
-                                                "description": "Height of the image.",
-                                                "type": "integer"
-                                            },
-                                            "width": {
-                                                "description": "Width of the image.",
-                                                "type": "integer"
-                                            }
-                                        }
                                     }
                                 ],
                                 "anyOf": [
@@ -617,6 +661,87 @@
                                 ],
                                 "description": "Information about an image file.",
                                 "mergeStrategy": "objectMerge",
+                                "properties": {
+                                    "artifact_category": {
+                                        "description": "Artifact category.",
+                                        "enum": [
+                                            "Assay Artifact from CIMAC",
+                                            "Pipeline Artifact",
+                                            "Manifest File"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "artifact_creator": {
+                                        "description": "The name of the center that created this artifact.",
+                                        "enum": [
+                                            "DFCI",
+                                            "Mount Sinai",
+                                            "Stanford",
+                                            "MD Anderson"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "channels": {
+                                        "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
+                                        "description": "Number of channels in the image.",
+                                        "type": "integer"
+                                    },
+                                    "crc32c_hash": {
+                                        "description": "CRC32c Hash of artifact.",
+                                        "type": "string"
+                                    },
+                                    "data_format": {
+                                        "const": "IMAGE",
+                                        "description": "Data format."
+                                    },
+                                    "file_name": {
+                                        "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                        "description": "The name of the file with extension.",
+                                        "type": "string"
+                                    },
+                                    "file_size_bytes": {
+                                        "description": "File size in bytes.",
+                                        "type": "integer"
+                                    },
+                                    "height": {
+                                        "description": "Height of the image.",
+                                        "type": "integer"
+                                    },
+                                    "md5_hash": {
+                                        "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                        "type": "string"
+                                    },
+                                    "object_url": {
+                                        "description": "URL to artifact within Google Bucket.",
+                                        "type": "string"
+                                    },
+                                    "upload_placeholder": {
+                                        "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                        "description": "A placeholder for when artifact file is being uploaded.",
+                                        "type": "string"
+                                    },
+                                    "uploaded_timestamp": {
+                                        "description": "Timestamp of when artifact was loaded into the system.",
+                                        "format": "date-time",
+                                        "type": "string"
+                                    },
+                                    "uploader": {
+                                        "description": "The name of the person uploading the artifact.",
+                                        "type": "string"
+                                    },
+                                    "uuid": {
+                                        "description": "UUID of artifact.",
+                                        "type": "string"
+                                    },
+                                    "visible": {
+                                        "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                        "type": "boolean"
+                                    },
+                                    "width": {
+                                        "description": "Width of the image.",
+                                        "type": "integer"
+                                    }
+                                },
                                 "title": "Image Artifact",
                                 "type": "object"
                             }

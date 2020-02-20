@@ -1,12 +1,9 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "pbmc_shipping",
     "title": "Shipping manifest for PBMC samples",
-    "type": "object",
-    "category": "manifest",
     "description": "Shipping / receiving manifest for transferring PBMC samples.\n",
     "properties": {
         "worksheets": {
+
             "Shipment": {
                 "prism_preamble_object_schema": "clinical_trial.json",
                 "prism_preamble_object_pointer": "/shipments/0",

@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "tsv_artifact",
   "title": "TSV Artifact",
   "type": "object",
@@ -10,18 +10,18 @@
       "description": "Data format.",
       "const": "TSV"
     },
-    "upload_placeholder": {"$comment": "defined in artifacts/artifact_core.json"},
-    "artifact_creator": {"$comment": "defined in artifacts/artifact_core.json"},
-    "uploader": {"$comment": "defined in artifacts/artifact_core.json"},
-    "uuid": {"$comment": "defined in artifacts/artifact_core.json"},
-    "file_name": {"$comment": "defined in artifacts/artifact_core.json"},
-    "object_url": {"$comment": "defined in artifacts/artifact_core.json"},
-    "uploaded_timestamp": {"$comment": "defined in artifacts/artifact_core.json"},
-    "file_size_bytes": {"$comment": "defined in artifacts/artifact_core.json"},
-    "md5_hash": {"$comment": "defined in artifacts/artifact_core.json"},
-    "crc32c_hash": {"$comment": "defined in artifacts/artifact_core.json"},
-    "visible": {"$comment": "defined in artifacts/artifact_core.json"},
-    "artifact_category": {"$comment": "defined in artifacts/artifact_core.json"}
+    "upload_placeholder": {"$ref": "artifacts/artifact_core.json#properties/upload_placeholder"},
+    "artifact_creator": {"$ref": "artifacts/artifact_core.json#properties/artifact_creator"},
+    "uploader": {"$ref": "artifacts/artifact_core.json#properties/uploader"},
+    "uuid": {"$ref": "artifacts/artifact_core.json#properties/uuid"},
+    "file_name": {"$ref": "artifacts/artifact_core.json#properties/file_name"},
+    "object_url": {"$ref": "artifacts/artifact_core.json#properties/object_url"},
+    "uploaded_timestamp": {"$ref": "artifacts/artifact_core.json#properties/uploaded_timestamp"},
+    "file_size_bytes": {"$ref": "artifacts/artifact_core.json#properties/file_size_bytes"},
+    "md5_hash": {"$ref": "artifacts/artifact_core.json#properties/md5_hash"},
+    "crc32c_hash": {"$ref": "artifacts/artifact_core.json#properties/crc32c_hash"},
+    "visible": {"$ref": "artifacts/artifact_core.json#properties/visible"},
+    "artifact_category": {"$ref": "artifacts/artifact_core.json#properties/artifact_category"}
   },
   "allOf": [
     {

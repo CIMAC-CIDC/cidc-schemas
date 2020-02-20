@@ -1,9 +1,10 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "antibody",
   "title": "Antibody",
   "description": "Common information about an antibody used in a number of immune-oncology assays.",
   "inheritableBase": true,
+  "type": "object",
   "properties": {
     "antibody": {
       "description": "Antibody type collected for this study.",

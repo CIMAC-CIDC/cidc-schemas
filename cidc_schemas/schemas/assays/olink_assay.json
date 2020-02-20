@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "olink_assay",
   "title": "OLink Assay",
   "type": "object",
@@ -10,7 +10,7 @@
   ],
   "mergeStrategy": "objectMerge",
   "properties": {
-    "assay_creator": {"$comment": "defined in assays/components/assay_core.json"},
+    "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
   
     "records": {
       "type": "array",

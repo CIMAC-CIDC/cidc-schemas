@@ -207,48 +207,6 @@ class _Validator(jsonschema.Draft7Validator):
         return repr(ref) in in_doc_refs_cache[ref_path_pattern]
 
 
-def load_and_validate_schema(
-    schema_path: str,
-    schema_root: str = SCHEMA_DIR,
-    return_validator: bool = False,
-    on_refs: Optional[Callable[[dict], dict]] = None,
-) -> Union[dict, jsonschema.Draft7Validator]:
-    """
-    Try to load a valid schema at `schema_path`. If an `on_refs` function
-    is supplied, call that on all refs in the schema, rather than
-    resolving the refs. Note: it is shallow, i.e., if calling `on_refs` on a node produces 
-    a new node that contains refs, those refs will not be resolved.
-
-    If return validator is true it will return
-    the validator and the schema used in the validator.
-    """
-
-    assert os.path.isabs(schema_root), "schema_root must be an absolute path"
-
-    # Load schema with resolved $refs
-    schema_path = os.path.join(schema_root, schema_path)
-    with open(schema_path) as schema_file:
-        base_uri = f"file://{schema_root}/"
-        try:
-            json_spec = json.load(schema_file)
-        except Exception as e:
-            raise Exception(f"Failed loading json {schema_file}") from e
-        if on_refs:
-            schema = _map_refs(json_spec, on_refs)
-        else:
-            schema = _resolve_refs(base_uri, json_spec)
-
-    # Ensure schema is valid
-    # NOTE: $refs were resolved above, so no need for a RefResolver here
-    validator = _Validator(schema)
-    validator.check_schema(schema)
-
-    if not return_validator:
-        return schema
-    else:
-        return validator
-
-
 def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
     """
     Apply `on_refs` to all nodes with `$ref`, returning node with refs replaced
@@ -320,6 +278,61 @@ def _resolve_refs(base_uri: str, json_spec: dict) -> dict:
             return copy.deepcopy(res)
 
     return _map_refs(json_spec, _resolve_ref)
+
+
+def _load_dont_validate_schema(
+    schema_path: str,
+    schema_root: str = SCHEMA_DIR,
+    on_refs: Optional[Callable[[dict], dict]] = None,
+) -> Union[dict, jsonschema.Draft7Validator]:
+    """
+    Try to load a valid schema at `schema_path`. If an `on_refs` function
+    is supplied, call that on all refs in the schema, rather than
+    resolving the refs. Note: it is shallow, i.e., if calling `on_refs` on a node produces 
+    a new node that contains refs, those refs will not be resolved.
+
+    If return validator is true it will return
+    the validator and the schema used in the validator.
+    """
+
+    assert os.path.isabs(schema_root), "schema_root must be an absolute path"
+
+    # Load schema with resolved $refs
+    schema_path = os.path.join(schema_root, schema_path)
+    with open(schema_path) as schema_file:
+        base_uri = f"file://{schema_root}/"
+        try:
+            json_spec = json.load(schema_file)
+        except Exception as e:
+            raise Exception(f"Failed loading json {schema_file}") from e
+        if on_refs:
+            schema = _map_refs(json_spec, on_refs)
+        else:
+            schema = _resolve_refs(base_uri, json_spec)
+
+    return schema
+
+
+_validator_instance = _Validator({})
+
+
+def load_and_validate_schema(
+    schema_path: str,
+    schema_root: str = SCHEMA_DIR,
+    return_validator: bool = False,
+    on_refs: Optional[Callable[[dict], dict]] = None,
+) -> Union[dict, jsonschema.Draft7Validator]:
+
+    schema = _load_dont_validate_schema(schema_path, schema_root, on_refs)
+
+    # Ensure schema is valid
+    # NOTE: $refs were resolved above, so no need for a RefResolver here
+    _validator_instance.check_schema(schema)
+
+    if not return_validator:
+        return schema
+    else:
+        return _Validator(schema)
 
 
 def validate_instance(instance: str, schema: dict, is_required=False) -> Optional[str]:

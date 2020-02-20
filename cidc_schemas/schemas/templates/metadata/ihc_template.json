@@ -1,11 +1,6 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "IHC",
     "title": "Metadata file for IHC",
-    "type": "object",
-    "category": "metadata",
     "description": "Metadata information for Immunohistochemical (IHC) analysis.\n",
-    "additionalProperties": false,
     "properties": {
         "worksheets": {
             "IHC": {

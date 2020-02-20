@@ -1,11 +1,6 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "wes",
   "title": "Metadata file for WES [FASTQ]",
-  "type": "object",
-  "category": "metadata",
   "description": "Metadata information for whole exome sequencing (WES) data submission via FASTQ files.",
-  "additionalProperties": false,
   "properties": {
     "worksheets": {
       "WES": {

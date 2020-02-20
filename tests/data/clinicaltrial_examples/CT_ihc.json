@@ -106,11 +106,11 @@
                 "staining_platform": "auto",
                 "autostainer_model": "Bond RX",
                 "antibody": {
+                    "antibody": "unknown antibody",
                     "dilution": "0/0",
                     "incubation_time": "0s",
                     "incubation_temp": "-1K"
                 },
-                "antibody": "unknown antibody",
                 "records": [{
                     "cimac_id": "CTTTPP1S1.00",
                     "marker_positive": "positive",
@@ -137,11 +137,11 @@
                 "staining_platform": "auto",
                 "autostainer_model": "Bond RX",
                 "antibody": {
+                    "antibody": "unknown antibody",
                     "dilution": "0/0",
                     "incubation_time": "0s",
                     "incubation_temp": "-1K"
                 },
-                "antibody": "unknown antibody",
                 "records": [
                     {
                         "cimac_id": "CTTTPP2S1.00",

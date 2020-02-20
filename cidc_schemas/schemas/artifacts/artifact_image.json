@@ -1,37 +1,48 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "image_artifact",
   "title": "Image Artifact",
   "type": "object",
   "description": "Information about an image file.",
+  "additionalProperties": false,
+  "properties": {
+    "height": {
+      "description": "Height of the image.",
+      "type": "integer"
+    },
+    "width": {
+      "description": "Width of the image.",
+      "type": "integer"
+    },
+    "channels": {
+      "description": "Number of channels in the image.",
+      "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
+      "type": "integer"
+    },
+    "data_format": {
+      "description": "Data format.",
+      "const": "IMAGE"
+    },
+    "upload_placeholder": {"$ref": "artifacts/artifact_core.json#properties/upload_placeholder"},
+    "artifact_creator": {"$ref": "artifacts/artifact_core.json#properties/artifact_creator"},
+    "uploader": {"$ref": "artifacts/artifact_core.json#properties/uploader"},
+    "uuid": {"$ref": "artifacts/artifact_core.json#properties/uuid"},
+    "file_name": {"$ref": "artifacts/artifact_core.json#properties/file_name"},
+    "object_url": {"$ref": "artifacts/artifact_core.json#properties/object_url"},
+    "uploaded_timestamp": {"$ref": "artifacts/artifact_core.json#properties/uploaded_timestamp"},
+    "file_size_bytes": {"$ref": "artifacts/artifact_core.json#properties/file_size_bytes"},
+    "md5_hash": {"$ref": "artifacts/artifact_core.json#properties/md5_hash"},
+    "crc32c_hash": {"$ref": "artifacts/artifact_core.json#properties/crc32c_hash"},
+    "visible": {"$ref": "artifacts/artifact_core.json#properties/visible"},
+    "artifact_category": {"$ref": "artifacts/artifact_core.json#properties/artifact_category"}
+  },
   "allOf": [
     {
       "$ref": "artifacts/artifact_core.json"
-    },
-    {
-      "properties": {
-        "height": {
-          "description": "Height of the image.",
-          "type": "integer"
-        },
-        "width": {
-          "description": "Width of the image.",
-          "type": "integer"
-        },
-        "channels": {
-          "description": "Number of channels in the image.",
-          "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
-          "type": "integer"
-        },
-        "data_format": {
-          "description": "Data format.",
-          "const": "IMAGE"
-        }
-      }
     }
   ],
   "mergeStrategy": "objectMerge",
-    "anyOf": [
+  "anyOf": [
     { "required": ["height", "width", "channels"] },
     { "required": ["upload_placeholder"] }
   ]

@@ -1,11 +1,6 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "elisa",
   "title": "Metadata file for ELISA",
-  "type": "object",
-  "category": "metadata",
   "description": "Metadata information for ELISA analysis.",
-
   "properties": {
     "worksheets": {
       "ELISA": {

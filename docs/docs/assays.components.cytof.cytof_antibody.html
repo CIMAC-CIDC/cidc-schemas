@@ -83,6 +83,16 @@
             
         
             
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
                 <tr>
     <td>
         
@@ -236,6 +246,121 @@
             
         
             
+                <tr>
+    <td>
+        
+            <span id="antibody">
+                antibody
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Antibody type collected for this study.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.antibody.html#antibody">assays.components.antibody#antibody</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="clone">
+                clone
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Resulting type of antibody clone from primary antibody sample.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.antibody.html#clone">assays.components.antibody#clone</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="company">
+                company
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Company from which antibody sample was derived.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.antibody.html#company">assays.components.antibody#company</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cat_num">
+                cat_num
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Antibody registry catalog number assigned to antibody sample.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.antibody.html#cat_num">assays.components.antibody#cat_num</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="lot_num">
+                lot_num
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Identification number assigned to the particular quantity or lot of material from manufacturer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.antibody.html#lot_num">assays.components.antibody#lot_num</a>
+        
+    </td>
+</tr>
+            
+        
+            
         
             
         
@@ -252,12 +377,14 @@
     <h3>cytof_antibody.full.json</h3>
   	<pre><code>{
     "$id": "cytof_antibody",
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "additionalProperties": false,
     "allOf": [
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$id": "antibody",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "description": "Common information about an antibody used in a number of immune-oncology assays.",
-            "id": "antibody",
+            "inheritableBase": true,
             "properties": {
                 "antibody": {
                     "description": "Antibody type collected for this study.",
@@ -283,7 +410,8 @@
             "required": [
                 "antibody"
             ],
-            "title": "Antibody"
+            "title": "Antibody",
+            "type": "object"
         }
     ],
     "description": "Data specific to antibody preparation on the CyTOF assay.",
@@ -292,12 +420,32 @@
     },
     "mergeStrategy": "arrayMergeById",
     "properties": {
+        "antibody": {
+            "description": "Antibody type collected for this study.",
+            "type": "string"
+        },
+        "cat_num": {
+            "description": "Antibody registry catalog number assigned to antibody sample.",
+            "type": "string"
+        },
+        "clone": {
+            "description": "Resulting type of antibody clone from primary antibody sample.",
+            "type": "string"
+        },
+        "company": {
+            "description": "Company from which antibody sample was derived.",
+            "type": "string"
+        },
         "dilution": {
             "description": "Concentration ratio of dilution buffer for primary antibody.",
             "type": "string"
         },
         "isotope": {
             "description": "Antibody isotype used to help differentiate antibody signals.",
+            "type": "string"
+        },
+        "lot_num": {
+            "description": "Identification number assigned to the particular quantity or lot of material from manufacturer.",
             "type": "string"
         },
         "stain_type": {
@@ -324,7 +472,8 @@
         "stain_type",
         "usage"
     ],
-    "title": "CyTOF Conjugated Antibody"
+    "title": "CyTOF Conjugated Antibody",
+    "type": "object"
 }</code></pre>
   </container>
 

@@ -12,7 +12,7 @@ from typing import List, Optional, Dict, BinaryIO, Union
 from collections import OrderedDict
 
 from .constants import SCHEMA_DIR, TEMPLATE_DIR
-from .json_validation import load_and_validate_schema
+from .json_validation import _load_dont_validate_schema
 
 logger = logging.getLogger("cidc_schemas.template")
 
@@ -95,10 +95,9 @@ class Template:
     def _extract_worksheets(self) -> Dict[str, dict]:
         """Build a mapping from worksheet names to worksheet section schemas"""
 
-        template_id = self.schema["$id"]
         assert (
             "worksheets" in self.schema["properties"]
-        ), f'{template_id} schema missing "worksheets" property'
+        ), f'{self.type} schema missing "worksheets" property'
         worksheet_schemas = self.schema["properties"]["worksheets"]
 
         worksheets = {}
@@ -305,7 +304,7 @@ class Template:
             template_schema_path {str} -- path to the template schema file
             schema_root {str} -- path to the directory where all schemas are stored
         """
-        template_schema = load_and_validate_schema(template_schema_path, schema_root)
+        template_schema = _load_dont_validate_schema(template_schema_path, schema_root)
 
         return Template(
             template_schema,

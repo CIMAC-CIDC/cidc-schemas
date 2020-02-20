@@ -188,13 +188,17 @@
                 
                     <li>"Cycle_5_Week_9"</li>
                 
-                    <li>"Progression"</li>
-                
                     <li>"Cycle_3"</li>
                 
                     <li>"End_of_treatment"</li>
                 
+                    <li>"Pre_PD1_therapy"</li>
+                
                     <li>"On_Treatment"</li>
+                
+                    <li>"Week_5"</li>
+                
+                    <li>"Week_7"</li>
                 
                     <li>"Response"</li>
                 
@@ -2322,7 +2326,7 @@
     <h3>sample.full.json</h3>
   	<pre><code>{
     "$id": "sample",
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
     "description": "Any material sample taken from a biological entity for testing, diagnostic, propagation, treatment or research purposes, including a sample obtained from a living organism or taken from the biological object after halting of all its life functions. Biospecimen can contain one or more components including but not limited to cellular molecules, cells, tissues, organs, body fluids, embryos, and body excretory products.",
     "if": {
@@ -2347,7 +2351,8 @@
             "description": "Pertaining to a portion (volume or weight) of the whole.",
             "items": {
                 "$id": "aliquot",
-                "$schema": "http://json-schema.org/draft-07/schema#",
+                "$schema": "metaschema/strict_meta_schema.json#",
+                "additionalProperties": false,
                 "description": "Pertaining to a portion (volume or weight) of the whole.",
                 "properties": {
                     "aliquot_amount": {
@@ -2444,10 +2449,12 @@
                 "Cycle_2_Week_3",
                 "Cycle_4_Week_7",
                 "Cycle_5_Week_9",
-                "Progression",
                 "Cycle_3",
                 "End_of_treatment",
+                "Pre_PD1_therapy",
                 "On_Treatment",
+                "Week_5",
+                "Week_7",
                 "Response",
                 "Relapse",
                 "Day_8",
@@ -2471,12 +2478,12 @@
                 "Cycle_4_Week_7": "S1400I",
                 "Cycle_5_Week_9": "S1400I",
                 "Day_8": "9204",
-                "End_of_Treatment": "10026",
-                "End_of_treatment": "EAY131-Z1D",
+                "End_of_treatment": "EAY131-Z1D, 10026",
                 "Off_study": "E4412",
                 "On_Treatment": "10021",
                 "Pre_Day_1_Cycle_2": "E4412",
-                "Progression": "10026",
+                "Pre_PD1_therapy": "10021",
+                "Progression": "S1400I, 10021",
                 "Relapse": "9204",
                 "Response": "9204",
                 "Restaging": "E4412",
@@ -2486,7 +2493,9 @@
                 "T3": "10026",
                 "T4": "10026",
                 "T5": "10026",
-                "T6": "10026"
+                "T6": "10026",
+                "Week_5": "10021",
+                "Week_7": "10021"
             },
             "in_doc_ref_pattern": "/allowed_collection_event_names/*",
             "title": "Collection Event Name",

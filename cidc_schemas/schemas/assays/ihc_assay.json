@@ -1,15 +1,18 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "$id": "ihc",
     "title": "IHC Assay",
     "type": "object",
     "description": "Immunohistochemical analysis.",
+    "additionalProperties": false,
     "allOf": [
         {
             "$ref": "assays/components/assay_core.json"
         }
     ],
     "properties": {
+        "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
+        
         "slide_scanner_model": {
             "description": "Model version of the slide scanner instrument.",
             "type": "string",

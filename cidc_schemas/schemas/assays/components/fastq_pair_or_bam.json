@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "fastq_pair_or_bam",
   "title": "Fastq pair or a bam",
   "type": "object",
@@ -30,6 +30,7 @@
       "minItems": 1
     }
   },
+  "mergeStrategy": "objectMerge",
   "anyOf": [
     {
       "required": ["r1", "r2"]

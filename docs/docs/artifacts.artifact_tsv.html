@@ -49,12 +49,9 @@
                 
                 
             
-                
-                
-                    
-                
-            
         
+        
+            
         
     
 
@@ -87,6 +84,30 @@
         
             
         
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
         
             
         
@@ -113,6 +134,282 @@
 </tr>
             
         
+            
+                <tr>
+    <td>
+        
+            <span id="upload_placeholder">
+                upload_placeholder
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A placeholder for when artifact file is being uploaded.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_core.html#upload_placeholder">artifacts.artifact_core#upload_placeholder</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="artifact_creator">
+                artifact_creator
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The name of the center that created this artifact.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_core.html#artifact_creator">artifacts.artifact_core#artifact_creator</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="uploader">
+                uploader
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The name of the person uploading the artifact.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_core.html#uploader">artifacts.artifact_core#uploader</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="uuid">
+                uuid
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            UUID of artifact.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_core.html#uuid">artifacts.artifact_core#uuid</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="file_name">
+                file_name
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The name of the file with extension.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_core.html#file_name">artifacts.artifact_core#file_name</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="object_url">
+                object_url
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            URL to artifact within Google Bucket.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_core.html#object_url">artifacts.artifact_core#object_url</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="uploaded_timestamp">
+                uploaded_timestamp
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Timestamp of when artifact was loaded into the system.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_core.html#uploaded_timestamp">artifacts.artifact_core#uploaded_timestamp</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="file_size_bytes">
+                file_size_bytes
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            File size in bytes.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_core.html#file_size_bytes">artifacts.artifact_core#file_size_bytes</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="md5_hash">
+                md5_hash
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            MD5 Hash of artifact. Not available for composite GCS objects.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_core.html#md5_hash">artifacts.artifact_core#md5_hash</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="crc32c_hash">
+                crc32c_hash
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            CRC32c Hash of artifact.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_core.html#crc32c_hash">artifacts.artifact_core#crc32c_hash</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="visible">
+                visible
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_core.html#visible">artifacts.artifact_core#visible</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="artifact_category">
+                artifact_category
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Artifact category.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_core.html#artifact_category">artifacts.artifact_core#artifact_category</a>
+        
+    </td>
+</tr>
+            
+        
     </table>
 
     
@@ -122,11 +419,12 @@
     <h3>artifact_tsv.full.json</h3>
   	<pre><code>{
     "$id": "tsv_artifact",
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "additionalProperties": false,
     "allOf": [
         {
             "$id": "artifact_core",
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "anyOf": [
                 {
                     "required": [
@@ -157,6 +455,7 @@
                 }
             ],
             "description": "Any file artifact associated with a clinical trial.",
+            "inheritableBase": true,
             "properties": {
                 "artifact_category": {
                     "description": "Artifact category.",
@@ -249,18 +548,78 @@
             },
             "title": "Artifact Core",
             "type": "object"
-        },
-        {
-            "properties": {
-                "data_format": {
-                    "const": "TSV",
-                    "description": "Data format."
-                }
-            }
         }
     ],
     "description": "Information about a tab Separated file.",
     "mergeStrategy": "objectMerge",
+    "properties": {
+        "artifact_category": {
+            "description": "Artifact category.",
+            "enum": [
+                "Assay Artifact from CIMAC",
+                "Pipeline Artifact",
+                "Manifest File"
+            ],
+            "type": "string"
+        },
+        "artifact_creator": {
+            "description": "The name of the center that created this artifact.",
+            "enum": [
+                "DFCI",
+                "Mount Sinai",
+                "Stanford",
+                "MD Anderson"
+            ],
+            "type": "string"
+        },
+        "crc32c_hash": {
+            "description": "CRC32c Hash of artifact.",
+            "type": "string"
+        },
+        "data_format": {
+            "const": "TSV",
+            "description": "Data format."
+        },
+        "file_name": {
+            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+            "description": "The name of the file with extension.",
+            "type": "string"
+        },
+        "file_size_bytes": {
+            "description": "File size in bytes.",
+            "type": "integer"
+        },
+        "md5_hash": {
+            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+            "type": "string"
+        },
+        "object_url": {
+            "description": "URL to artifact within Google Bucket.",
+            "type": "string"
+        },
+        "upload_placeholder": {
+            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+            "description": "A placeholder for when artifact file is being uploaded.",
+            "type": "string"
+        },
+        "uploaded_timestamp": {
+            "description": "Timestamp of when artifact was loaded into the system.",
+            "format": "date-time",
+            "type": "string"
+        },
+        "uploader": {
+            "description": "The name of the person uploading the artifact.",
+            "type": "string"
+        },
+        "uuid": {
+            "description": "UUID of artifact.",
+            "type": "string"
+        },
+        "visible": {
+            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+            "type": "boolean"
+        }
+    },
     "title": "TSV Artifact",
     "type": "object"
 }</code></pre>

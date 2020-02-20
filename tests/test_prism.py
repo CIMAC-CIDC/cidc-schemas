@@ -832,6 +832,10 @@ def test_prismify_plasma(xlsx, template):
     assert p["samples"][0]["site_description"]  # filled from the second tab
 
 
+def assert_only_indocref_exceptions(exceptions: list):
+    assert 0 == len([e for e in exceptions if not isinstance(e, InDocRefNotFoundError)])
+
+
 @pytest.mark.parametrize("xlsx, template", prismify_test_set(filter=["wes_bam"]))
 def test_prismify_wesbam_only(xlsx, template):
 
@@ -876,12 +880,8 @@ def test_prismify_wesbam_only(xlsx, template):
     with pytest.raises(InDocRefNotFoundError):
         validator.validate(merged_wo_needed_participants)
 
-    assert 0 == len(
-        [
-            unexpected_ex
-            for unexpected_ex in validator.iter_errors(merged_wo_needed_participants)
-            if not isinstance(unexpected_ex, InDocRefNotFoundError)
-        ]
+    assert_only_indocref_exceptions(
+        validator.iter_errors(merged_wo_needed_participants)
     )
 
 
@@ -919,12 +919,8 @@ def test_prismify_wesfastq_only(xlsx, template):
     with pytest.raises(InDocRefNotFoundError):
         validator.validate(merged_wo_needed_participants)
 
-    assert 0 == len(
-        [
-            unexpected_ex
-            for unexpected_ex in validator.iter_errors(merged_wo_needed_participants)
-            if not isinstance(unexpected_ex, InDocRefNotFoundError)
-        ]
+    assert_only_indocref_exceptions(
+        validator.iter_errors(merged_wo_needed_participants)
     )
 
 

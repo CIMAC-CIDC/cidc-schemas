@@ -86,13 +86,13 @@ TEST_PRISM_TRIAL = {
             "cohort_name": "Arm_Z",
             "samples": [
                 {
+                    "sample_volume_units": "Other",
+                    "material_used": 1,
+                    "material_remaining": 0,
+                    "quality_of_sample": "Other",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "sample_volume_units": "Other",
-                            "material_used": 1,
-                            "material_remaining": 0,
-                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other",
                         }
@@ -109,13 +109,13 @@ TEST_PRISM_TRIAL = {
         {
             "samples": [
                 {
+                    "sample_volume_units": "Other",
+                    "material_used": 2,
+                    "material_remaining": 0,
+                    "quality_of_sample": "Other",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "sample_volume_units": "Other",
-                            "material_used": 2,
-                            "material_remaining": 0,
-                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other",
                         }
@@ -135,13 +135,13 @@ TEST_PRISM_TRIAL = {
         {
             "samples": [
                 {
+                    "sample_volume_units": "Other",
+                    "material_used": 2,
+                    "material_remaining": 0,
+                    "quality_of_sample": "Other",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "sample_volume_units": "Other",
-                            "material_used": 2,
-                            "material_remaining": 0,
-                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other",
                         }
@@ -161,13 +161,13 @@ TEST_PRISM_TRIAL = {
         {
             "samples": [
                 {
+                    "sample_volume_units": "Other",
+                    "material_used": 2,
+                    "material_remaining": 0,
+                    "quality_of_sample": "Other",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "sample_volume_units": "Other",
-                            "material_used": 2,
-                            "material_remaining": 0,
-                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other",
                         }
@@ -337,10 +337,6 @@ def test_merge_core():
     # create aliquot
     aliquot = {
         "slide_number": "12",
-        "sample_volume_units": "Other",
-        "material_used": 1,
-        "material_remaining": 0,
-        "quality_of_shipment": "Other",
         "aliquot_replacement": "N/A",
         "aliquot_status": "Other",
     }
@@ -354,6 +350,10 @@ def test_merge_core():
         "sample_location": "---",
         "type_of_sample": "Other",
         "type_of_primary_container": "Other",
+        "sample_volume_units": "Other",
+        "material_used": 1,
+        "material_remaining": 0,
+        "quality_of_sample": "Other",
     }
 
     # create the participant
@@ -423,14 +423,14 @@ MINIMAL_TEST_TRIAL = {
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "sample_volume_units": "Other",
-                            "material_used": 1,
-                            "material_remaining": 0,
-                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other",
                         }
                     ],
+                    "sample_volume_units": "Other",
+                    "material_used": 1,
+                    "material_remaining": 0,
+                    "quality_of_sample": "Other",
                     "collection_event_name": "Baseline",
                     "sample_location": "---",
                     "type_of_sample": "Other",
@@ -517,6 +517,7 @@ def test_prism(xlsx, template):
     merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, ct)
 
+    validator.validate(merged)
     # assert works
     errors = list(validator.iter_errors(merged))
     assert not errors
@@ -831,6 +832,10 @@ def test_prismify_plasma(xlsx, template):
     assert p["samples"][0]["site_description"]  # filled from the second tab
 
 
+def assert_only_indocref_exceptions(exceptions: list):
+    assert 0 == len([e for e in exceptions if not isinstance(e, InDocRefNotFoundError)])
+
+
 @pytest.mark.parametrize("xlsx, template", prismify_test_set(filter=["wes_bam"]))
 def test_prismify_wesbam_only(xlsx, template):
 
@@ -845,10 +850,17 @@ def test_prismify_wesbam_only(xlsx, template):
     # md patch is not complete
     # but errors should be only
     for e in validator.iter_errors(md_patch):
-        assert isinstance(e, InDocRefNotFoundError) or (  # not found cimac_ids
-            "'participants'" in str(e)
-            and "required" in str(e)  # or no "participants" found.
-        )
+        if isinstance(e, InDocRefNotFoundError):
+            # not found cimac_ids - we expect that
+            continue
+        elif "'participants' is a required" in str(e):
+            # or no "participants" found - we expect that
+            continue
+        elif "'allowed_" in str(e) and "is a required" in str(e):
+            # or allowed_cohort_names and allowed_collection_event_names defined in TEST_PRISM_TRIAL base - we expect that
+            continue
+        else:
+            raise Exception(e)
 
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
@@ -868,8 +880,9 @@ def test_prismify_wesbam_only(xlsx, template):
     with pytest.raises(InDocRefNotFoundError):
         validator.validate(merged_wo_needed_participants)
 
-    # 2 record = 2 missing aliquot refs = 2 errors
-    assert 2 == len(list(validator.iter_errors(merged_wo_needed_participants)))
+    assert_only_indocref_exceptions(
+        validator.iter_errors(merged_wo_needed_participants)
+    )
 
 
 @pytest.mark.parametrize("xlsx, template", prismify_test_set("wes_fastq"))
@@ -906,8 +919,9 @@ def test_prismify_wesfastq_only(xlsx, template):
     with pytest.raises(InDocRefNotFoundError):
         validator.validate(merged_wo_needed_participants)
 
-    # 2 record = 2 missing aliquot refs = 2 errors
-    assert 2 == len(list(validator.iter_errors(merged_wo_needed_participants)))
+    assert_only_indocref_exceptions(
+        validator.iter_errors(merged_wo_needed_participants)
+    )
 
 
 @pytest.mark.parametrize("xlsx, template", prismify_test_set(filter=["rna_bam"]))

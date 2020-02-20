@@ -121,17 +121,19 @@
     <h3>composite_image.full.json</h3>
   	<pre><code>{
     "$id": "composite_image",
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "description": "Regions of interest obtained from composite images.",
+    "inheritableBase": true,
     "properties": {
         "component_data": {
             "$comment": "Imaging data resulting from the individual components of the imaging experiment.",
             "$id": "image_artifact",
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
+            "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "anyOf": [
                         {
                             "required": [
@@ -162,6 +164,7 @@
                         }
                     ],
                     "description": "Any file artifact associated with a clinical trial.",
+                    "inheritableBase": true,
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -254,27 +257,6 @@
                     },
                     "title": "Artifact Core",
                     "type": "object"
-                },
-                {
-                    "properties": {
-                        "channels": {
-                            "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
-                            "description": "Number of channels in the image.",
-                            "type": "integer"
-                        },
-                        "data_format": {
-                            "const": "IMAGE",
-                            "description": "Data format."
-                        },
-                        "height": {
-                            "description": "Height of the image.",
-                            "type": "integer"
-                        },
-                        "width": {
-                            "description": "Width of the image.",
-                            "type": "integer"
-                        }
-                    }
                 }
             ],
             "anyOf": [
@@ -293,17 +275,99 @@
             ],
             "description": "Information about an image file.",
             "mergeStrategy": "objectMerge",
+            "properties": {
+                "artifact_category": {
+                    "description": "Artifact category.",
+                    "enum": [
+                        "Assay Artifact from CIMAC",
+                        "Pipeline Artifact",
+                        "Manifest File"
+                    ],
+                    "type": "string"
+                },
+                "artifact_creator": {
+                    "description": "The name of the center that created this artifact.",
+                    "enum": [
+                        "DFCI",
+                        "Mount Sinai",
+                        "Stanford",
+                        "MD Anderson"
+                    ],
+                    "type": "string"
+                },
+                "channels": {
+                    "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
+                    "description": "Number of channels in the image.",
+                    "type": "integer"
+                },
+                "crc32c_hash": {
+                    "description": "CRC32c Hash of artifact.",
+                    "type": "string"
+                },
+                "data_format": {
+                    "const": "IMAGE",
+                    "description": "Data format."
+                },
+                "file_name": {
+                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                    "description": "The name of the file with extension.",
+                    "type": "string"
+                },
+                "file_size_bytes": {
+                    "description": "File size in bytes.",
+                    "type": "integer"
+                },
+                "height": {
+                    "description": "Height of the image.",
+                    "type": "integer"
+                },
+                "md5_hash": {
+                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                    "type": "string"
+                },
+                "object_url": {
+                    "description": "URL to artifact within Google Bucket.",
+                    "type": "string"
+                },
+                "upload_placeholder": {
+                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                    "description": "A placeholder for when artifact file is being uploaded.",
+                    "type": "string"
+                },
+                "uploaded_timestamp": {
+                    "description": "Timestamp of when artifact was loaded into the system.",
+                    "format": "date-time",
+                    "type": "string"
+                },
+                "uploader": {
+                    "description": "The name of the person uploading the artifact.",
+                    "type": "string"
+                },
+                "uuid": {
+                    "description": "UUID of artifact.",
+                    "type": "string"
+                },
+                "visible": {
+                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                    "type": "boolean"
+                },
+                "width": {
+                    "description": "Width of the image.",
+                    "type": "integer"
+                }
+            },
             "title": "Image Artifact",
             "type": "object"
         },
         "composite_image": {
             "$comment": "Image produced from the combination of multiple imaging experiment data images.",
             "$id": "image_artifact",
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
+            "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "anyOf": [
                         {
                             "required": [
@@ -334,6 +398,7 @@
                         }
                     ],
                     "description": "Any file artifact associated with a clinical trial.",
+                    "inheritableBase": true,
                     "properties": {
                         "artifact_category": {
                             "description": "Artifact category.",
@@ -426,27 +491,6 @@
                     },
                     "title": "Artifact Core",
                     "type": "object"
-                },
-                {
-                    "properties": {
-                        "channels": {
-                            "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
-                            "description": "Number of channels in the image.",
-                            "type": "integer"
-                        },
-                        "data_format": {
-                            "const": "IMAGE",
-                            "description": "Data format."
-                        },
-                        "height": {
-                            "description": "Height of the image.",
-                            "type": "integer"
-                        },
-                        "width": {
-                            "description": "Width of the image.",
-                            "type": "integer"
-                        }
-                    }
                 }
             ],
             "anyOf": [
@@ -465,6 +509,87 @@
             ],
             "description": "Information about an image file.",
             "mergeStrategy": "objectMerge",
+            "properties": {
+                "artifact_category": {
+                    "description": "Artifact category.",
+                    "enum": [
+                        "Assay Artifact from CIMAC",
+                        "Pipeline Artifact",
+                        "Manifest File"
+                    ],
+                    "type": "string"
+                },
+                "artifact_creator": {
+                    "description": "The name of the center that created this artifact.",
+                    "enum": [
+                        "DFCI",
+                        "Mount Sinai",
+                        "Stanford",
+                        "MD Anderson"
+                    ],
+                    "type": "string"
+                },
+                "channels": {
+                    "$comment": "3 for RGB imagery, 1 for grayscale imagery.",
+                    "description": "Number of channels in the image.",
+                    "type": "integer"
+                },
+                "crc32c_hash": {
+                    "description": "CRC32c Hash of artifact.",
+                    "type": "string"
+                },
+                "data_format": {
+                    "const": "IMAGE",
+                    "description": "Data format."
+                },
+                "file_name": {
+                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                    "description": "The name of the file with extension.",
+                    "type": "string"
+                },
+                "file_size_bytes": {
+                    "description": "File size in bytes.",
+                    "type": "integer"
+                },
+                "height": {
+                    "description": "Height of the image.",
+                    "type": "integer"
+                },
+                "md5_hash": {
+                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                    "type": "string"
+                },
+                "object_url": {
+                    "description": "URL to artifact within Google Bucket.",
+                    "type": "string"
+                },
+                "upload_placeholder": {
+                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                    "description": "A placeholder for when artifact file is being uploaded.",
+                    "type": "string"
+                },
+                "uploaded_timestamp": {
+                    "description": "Timestamp of when artifact was loaded into the system.",
+                    "format": "date-time",
+                    "type": "string"
+                },
+                "uploader": {
+                    "description": "The name of the person uploading the artifact.",
+                    "type": "string"
+                },
+                "uuid": {
+                    "description": "UUID of artifact.",
+                    "type": "string"
+                },
+                "visible": {
+                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                    "type": "boolean"
+                },
+                "width": {
+                    "description": "Width of the image.",
+                    "type": "integer"
+                }
+            },
             "title": "Image Artifact",
             "type": "object"
         }

@@ -10,7 +10,7 @@ import json
 import jsonschema
 
 from cidc_schemas.json_validation import load_and_validate_schema
-from .constants import ROOT_DIR, SCHEMA_DIR
+from .constants import SCHEMA_DIR
 
 
 def schema_paths():
@@ -19,6 +19,11 @@ def schema_paths():
     for root, _, files in os.walk(SCHEMA_DIR):
         files = [f for f in files if not f[0] == "."]
         for f in files:
+
+            # skipping templates
+            if f.endswith("_template.json"):
+                continue
+
             schema_paths.append(os.path.join(root, f))
 
     return schema_paths

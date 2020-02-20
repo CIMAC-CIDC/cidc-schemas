@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "elisa_assay",
   "title": "ELISA Assay",
   "type": "object",
@@ -8,7 +8,7 @@
       {"$ref": "assays/components/assay_core.json"}
   ],
   "properties": {
-    "assay_creator": {"$comment": "defined in assay_core.json"},
+    "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
     "assay_run_id": {
       "type": "string",
       "description": "User defined unique identifier for this assay run."

@@ -43,6 +43,13 @@
     
     
         
+            
+                
+                    
+                
+                
+            
+        
         
             
         
@@ -56,6 +63,26 @@
             <th>Data Type</th>
         </tr>
         </thead>
+        
+            
+                <tr>
+    <td>
+        
+    </td>
+    <td width=55%>
+        
+            Inherits all properties from schema:
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.assay_core.html">assays.components.assay_core</a>
+        
+    </td>
+</tr>
+            
+        
+            
         
             
                 <tr>
@@ -134,7 +161,55 @@
             
         
             
+                <tr>
+    <td>
         
+            <span id="study">
+                study
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A single data record from Olink assay.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.olink.olink_combined.html">assays.components.olink.olink_combined</a>
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="assay_creator">
+                assay_creator
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates what site is filling out the assay.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.assay_core.html#assay_creator">assays.components.assay_core#assay_creator</a>
+        
+    </td>
+</tr>
+            
         
             
         
@@ -174,27 +249,6 @@
             
         
             
-                <tr>
-    <td>
-        
-            <span id="study">
-                study
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            A single data record from Olink assay.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.olink.olink_combined.html">assays.components.olink.olink_combined</a>
-        
-    </td>
-</tr>
-            
         
     </table>
 
@@ -205,9 +259,46 @@
     <h3>olink_assay.full.json</h3>
   	<pre><code>{
     "$id": "olink_assay",
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "additionalProperties": false,
+    "allOf": [
+        {
+            "$id": "assay_core",
+            "$schema": "metaschema/strict_meta_schema.json#",
+            "description": "Main properties of the assay experiment template.",
+            "inheritableBase": true,
+            "properties": {
+                "assay_creator": {
+                    "description": "Indicates what site is filling out the assay.",
+                    "enum": [
+                        "DFCI",
+                        "Mount Sinai",
+                        "Stanford",
+                        "MD Anderson"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "assay_creator"
+            ],
+            "title": "Assay Core",
+            "type": "object"
+        }
+    ],
     "description": "High-throughput multiplexed assays for protein biomarker discovery.",
+    "mergeStrategy": "objectMerge",
     "properties": {
+        "assay_creator": {
+            "description": "Indicates what site is filling out the assay.",
+            "enum": [
+                "DFCI",
+                "Mount Sinai",
+                "Stanford",
+                "MD Anderson"
+            ],
+            "type": "string"
+        },
         "assay_panel_lot": {
             "description": "Lot number of the assay panel.",
             "type": "string"
@@ -220,7 +311,8 @@
             "description": "A single data record from Olink assay.",
             "items": {
                 "$id": "Olink_assay_record",
-                "$schema": "http://json-schema.org/draft-07/schema#",
+                "$schema": "metaschema/strict_meta_schema.json#",
+                "additionalProperties": false,
                 "description": "A single data record from Olink assay.",
                 "properties": {
                     "baseline_correction": {
@@ -233,17 +325,19 @@
                     },
                     "files": {
                         "$id": "olink_input",
-                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "$schema": "metaschema/strict_meta_schema.json#",
+                        "additionalProperties": false,
                         "description": "Olink assay input files.",
                         "properties": {
                             "assay_npx": {
                                 "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.",
                                 "$id": "npx_artifact",
-                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                "$schema": "metaschema/strict_meta_schema.json#",
+                                "additionalProperties": false,
                                 "allOf": [
                                     {
                                         "$id": "artifact_core",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "anyOf": [
                                             {
                                                 "required": [
@@ -274,6 +368,7 @@
                                             }
                                         ],
                                         "description": "Any file artifact associated with a clinical trial.",
+                                        "inheritableBase": true,
                                         "properties": {
                                             "artifact_category": {
                                                 "description": "Artifact category.",
@@ -366,30 +461,6 @@
                                         },
                                         "title": "Artifact Core",
                                         "type": "object"
-                                    },
-                                    {
-                                        "properties": {
-                                            "data_format": {
-                                                "const": "NPX",
-                                                "description": "Data format."
-                                            },
-                                            "number_of_samples": {
-                                                "description": "Number of samples within this file.",
-                                                "type": "integer"
-                                            },
-                                            "samples": {
-                                                "description": "Ids of the sample(s) within this file.",
-                                                "items": {
-                                                    "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.Ids of the sample(s) within this file.",
-                                                    "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??",
-                                                    "example": "CTTTP01A1.00",
-                                                    "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
-                                                    "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
-                                                    "type": "string"
-                                                },
-                                                "type": "array"
-                                            }
-                                        }
                                     }
                                 ],
                                 "anyOf": [
@@ -407,17 +478,102 @@
                                 ],
                                 "description": "Information about an NPX file.",
                                 "mergeStrategy": "objectMerge",
+                                "properties": {
+                                    "artifact_category": {
+                                        "description": "Artifact category.",
+                                        "enum": [
+                                            "Assay Artifact from CIMAC",
+                                            "Pipeline Artifact",
+                                            "Manifest File"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "artifact_creator": {
+                                        "description": "The name of the center that created this artifact.",
+                                        "enum": [
+                                            "DFCI",
+                                            "Mount Sinai",
+                                            "Stanford",
+                                            "MD Anderson"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "crc32c_hash": {
+                                        "description": "CRC32c Hash of artifact.",
+                                        "type": "string"
+                                    },
+                                    "data_format": {
+                                        "const": "NPX",
+                                        "description": "Data format."
+                                    },
+                                    "file_name": {
+                                        "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                        "description": "The name of the file with extension.",
+                                        "type": "string"
+                                    },
+                                    "file_size_bytes": {
+                                        "description": "File size in bytes.",
+                                        "type": "integer"
+                                    },
+                                    "md5_hash": {
+                                        "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                        "type": "string"
+                                    },
+                                    "number_of_samples": {
+                                        "description": "Number of samples within this file.",
+                                        "type": "integer"
+                                    },
+                                    "object_url": {
+                                        "description": "URL to artifact within Google Bucket.",
+                                        "type": "string"
+                                    },
+                                    "samples": {
+                                        "description": "Ids of the sample(s) within this file.",
+                                        "items": {
+                                            "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.Ids of the sample(s) within this file.",
+                                            "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??",
+                                            "example": "CTTTP01A1.00",
+                                            "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
+                                            "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
+                                            "type": "string"
+                                        },
+                                        "type": "array"
+                                    },
+                                    "upload_placeholder": {
+                                        "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                        "description": "A placeholder for when artifact file is being uploaded.",
+                                        "type": "string"
+                                    },
+                                    "uploaded_timestamp": {
+                                        "description": "Timestamp of when artifact was loaded into the system.",
+                                        "format": "date-time",
+                                        "type": "string"
+                                    },
+                                    "uploader": {
+                                        "description": "The name of the person uploading the artifact.",
+                                        "type": "string"
+                                    },
+                                    "uuid": {
+                                        "description": "UUID of artifact.",
+                                        "type": "string"
+                                    },
+                                    "visible": {
+                                        "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                        "type": "boolean"
+                                    }
+                                },
                                 "title": "NPX Artifact",
                                 "type": "object"
                             },
                             "assay_raw_ct": {
                                 "$comment": "Number of cycles required for the fluorescent signal to cross the threshold.",
                                 "$id": "csv_artifact",
-                                "$schema": "http://json-schema.org/draft-07/schema#",
+                                "$schema": "metaschema/strict_meta_schema.json#",
+                                "additionalProperties": false,
                                 "allOf": [
                                     {
                                         "$id": "artifact_core",
-                                        "$schema": "http://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "anyOf": [
                                             {
                                                 "required": [
@@ -448,6 +604,7 @@
                                             }
                                         ],
                                         "description": "Any file artifact associated with a clinical trial.",
+                                        "inheritableBase": true,
                                         "properties": {
                                             "artifact_category": {
                                                 "description": "Artifact category.",
@@ -540,18 +697,78 @@
                                         },
                                         "title": "Artifact Core",
                                         "type": "object"
-                                    },
-                                    {
-                                        "properties": {
-                                            "data_format": {
-                                                "const": "CSV",
-                                                "description": "Data format."
-                                            }
-                                        }
                                     }
                                 ],
                                 "description": "Information about a comma separated file.",
                                 "mergeStrategy": "objectMerge",
+                                "properties": {
+                                    "artifact_category": {
+                                        "description": "Artifact category.",
+                                        "enum": [
+                                            "Assay Artifact from CIMAC",
+                                            "Pipeline Artifact",
+                                            "Manifest File"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "artifact_creator": {
+                                        "description": "The name of the center that created this artifact.",
+                                        "enum": [
+                                            "DFCI",
+                                            "Mount Sinai",
+                                            "Stanford",
+                                            "MD Anderson"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "crc32c_hash": {
+                                        "description": "CRC32c Hash of artifact.",
+                                        "type": "string"
+                                    },
+                                    "data_format": {
+                                        "const": "CSV",
+                                        "description": "Data format."
+                                    },
+                                    "file_name": {
+                                        "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                        "description": "The name of the file with extension.",
+                                        "type": "string"
+                                    },
+                                    "file_size_bytes": {
+                                        "description": "File size in bytes.",
+                                        "type": "integer"
+                                    },
+                                    "md5_hash": {
+                                        "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                        "type": "string"
+                                    },
+                                    "object_url": {
+                                        "description": "URL to artifact within Google Bucket.",
+                                        "type": "string"
+                                    },
+                                    "upload_placeholder": {
+                                        "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                        "description": "A placeholder for when artifact file is being uploaded.",
+                                        "type": "string"
+                                    },
+                                    "uploaded_timestamp": {
+                                        "description": "Timestamp of when artifact was loaded into the system.",
+                                        "format": "date-time",
+                                        "type": "string"
+                                    },
+                                    "uploader": {
+                                        "description": "The name of the person uploading the artifact.",
+                                        "type": "string"
+                                    },
+                                    "uuid": {
+                                        "description": "UUID of artifact.",
+                                        "type": "string"
+                                    },
+                                    "visible": {
+                                        "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                        "type": "boolean"
+                                    }
+                                },
                                 "title": "CSV Artifact",
                                 "type": "object"
                             }
@@ -625,8 +842,9 @@
             "type": "array"
         },
         "study": {
-            "$id": "Olink_assay_record",
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$id": "olink_combined",
+            "$schema": "metaschema/strict_meta_schema.json#",
+            "additionalProperties": false,
             "description": "A single data record from Olink assay.",
             "mergeStrategy": "overwriteAny",
             "properties": {
@@ -637,11 +855,12 @@
                 "study_npx": {
                     "$comment": "Normalized Protein eXpression is Olink\u2019s arbitrary unit which is in Log2 scale.",
                     "$id": "npx_artifact",
-                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
+                    "additionalProperties": false,
                     "allOf": [
                         {
                             "$id": "artifact_core",
-                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "$schema": "metaschema/strict_meta_schema.json#",
                             "anyOf": [
                                 {
                                     "required": [
@@ -672,6 +891,7 @@
                                 }
                             ],
                             "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
                             "properties": {
                                 "artifact_category": {
                                     "description": "Artifact category.",
@@ -764,30 +984,6 @@
                             },
                             "title": "Artifact Core",
                             "type": "object"
-                        },
-                        {
-                            "properties": {
-                                "data_format": {
-                                    "const": "NPX",
-                                    "description": "Data format."
-                                },
-                                "number_of_samples": {
-                                    "description": "Number of samples within this file.",
-                                    "type": "integer"
-                                },
-                                "samples": {
-                                    "description": "Ids of the sample(s) within this file.",
-                                    "items": {
-                                        "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.Ids of the sample(s) within this file.",
-                                        "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??",
-                                        "example": "CTTTP01A1.00",
-                                        "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
-                                        "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
-                                        "type": "string"
-                                    },
-                                    "type": "array"
-                                }
-                            }
                         }
                     ],
                     "anyOf": [
@@ -805,6 +1001,90 @@
                     ],
                     "description": "Information about an NPX file.",
                     "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "description": "Artifact category.",
+                            "enum": [
+                                "Assay Artifact from CIMAC",
+                                "Pipeline Artifact",
+                                "Manifest File"
+                            ],
+                            "type": "string"
+                        },
+                        "artifact_creator": {
+                            "description": "The name of the center that created this artifact.",
+                            "enum": [
+                                "DFCI",
+                                "Mount Sinai",
+                                "Stanford",
+                                "MD Anderson"
+                            ],
+                            "type": "string"
+                        },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
+                        "data_format": {
+                            "const": "NPX",
+                            "description": "Data format."
+                        },
+                        "file_name": {
+                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                            "description": "The name of the file with extension.",
+                            "type": "string"
+                        },
+                        "file_size_bytes": {
+                            "description": "File size in bytes.",
+                            "type": "integer"
+                        },
+                        "md5_hash": {
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                            "type": "string"
+                        },
+                        "number_of_samples": {
+                            "description": "Number of samples within this file.",
+                            "type": "integer"
+                        },
+                        "object_url": {
+                            "description": "URL to artifact within Google Bucket.",
+                            "type": "string"
+                        },
+                        "samples": {
+                            "description": "Ids of the sample(s) within this file.",
+                            "items": {
+                                "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.Ids of the sample(s) within this file.",
+                                "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??",
+                                "example": "CTTTP01A1.00",
+                                "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
+                                "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
+                                "type": "string"
+                            },
+                            "type": "array"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "description": "A placeholder for when artifact file is being uploaded.",
+                            "type": "string"
+                        },
+                        "uploaded_timestamp": {
+                            "description": "Timestamp of when artifact was loaded into the system.",
+                            "format": "date-time",
+                            "type": "string"
+                        },
+                        "uploader": {
+                            "description": "The name of the person uploading the artifact.",
+                            "type": "string"
+                        },
+                        "uuid": {
+                            "description": "UUID of artifact.",
+                            "type": "string"
+                        },
+                        "visible": {
+                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                            "type": "boolean"
+                        }
+                    },
                     "title": "NPX Artifact",
                     "type": "object"
                 }
@@ -819,7 +1099,8 @@
     },
     "required": [
         "panel",
-        "records"
+        "records",
+        "study"
     ],
     "title": "OLink Assay",
     "type": "object"

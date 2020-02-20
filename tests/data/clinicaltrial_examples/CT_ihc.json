@@ -19,13 +19,13 @@
                     "sample_location": "---",
                     "type_of_sample": "Other",
                     "type_of_primary_container": "Other",
+                    "sample_volume_units": "Other",
+                    "material_used": 1,
+                    "material_remaining": 0,
+                    "quality_of_sample": "Other",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "sample_volume_units": "Other",
-                            "material_used": 1,
-                            "material_remaining": 0,
-                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other"
                         }
@@ -38,13 +38,13 @@
                     "sample_location": "---",
                     "type_of_sample": "Other",
                     "type_of_primary_container": "Other",
+                    "sample_volume_units": "Other",
+                    "material_used": 1,
+                    "material_remaining": 0,
+                    "quality_of_sample": "Other",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "sample_volume_units": "Other",
-                            "material_used": 1,
-                            "material_remaining": 0,
-                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other"
                         }
@@ -64,13 +64,13 @@
                     "sample_location": "---",
                     "type_of_sample": "Other",
                     "type_of_primary_container": "Other",
+                    "sample_volume_units": "Other",
+                    "material_used": 1,
+                    "material_remaining": 0,
+                    "quality_of_sample": "Other",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "sample_volume_units": "Other",
-                            "material_used": 1,
-                            "material_remaining": 0,
-                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other"
                         }
@@ -83,13 +83,13 @@
                     "sample_location": "---",
                     "type_of_sample": "Other",
                     "type_of_primary_container": "Other",
+                    "sample_volume_units": "Other",
+                    "material_used": 1,
+                    "material_remaining": 0,
+                    "quality_of_sample": "Other",
                     "aliquots": [
                         {
                             "slide_number": "1",
-                            "sample_volume_units": "Other",
-                            "material_used": 1,
-                            "material_remaining": 0,
-                            "quality_of_shipment": "Other",
                             "aliquot_replacement": "N/A",
                             "aliquot_status": "Other"
                         }

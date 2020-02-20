@@ -1,12 +1,9 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "tumor_tissue_dna_template",
     "title": "Shipping manifest for tissue DNA extracted from tumor tissue samples",
-    "type": "object",
-    "category": "manifest",
     "description": "Shipping / receiving manifest for transferring tissue DNA extracted from tumor tissue samples.\n",
     "properties": {
         "worksheets": {
+
             "Shipment": {
                 "prism_preamble_object_schema": "clinical_trial.json",
                 "prism_preamble_object_pointer": "/shipments/0",

@@ -45,24 +45,6 @@
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                 "uploaded_timestamp": "2019-11-19T20:48:40.523000+00:00"
               },
-              "astrolabe_reports": {
-                "file_name": "cytof_analysis",
-                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/reports.zip",
-                "data_format": "ZIP",
-                "file_size_bytes": 0,
-                "artifact_category": "Assay Artifact from CIMAC",
-                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
-                "uploaded_timestamp": "2019-11-19T20:48:45.310000+00:00"
-              },
-              "astrolabe_analysis": {
-                "file_name": "cytof_analysis",
-                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/analysis.zip",
-                "data_format": "ZIP",
-                "file_size_bytes": 0,
-                "artifact_category": "Assay Artifact from CIMAC",
-                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
-                "uploaded_timestamp": "2019-11-19T20:49:01.309000+00:00"
-              },
               "cell_counts_profiling": {
                 "file_name": "cytof_analysis",
                 "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/cell_counts_profiling.csv",
@@ -142,24 +124,6 @@
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                 "uploaded_timestamp": "2019-11-19T20:48:40.523000+00:00"
-              },
-              "astrolabe_reports": {
-                "file_name": "cytof_analysis",
-                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/reports.zip",
-                "data_format": "ZIP",
-                "file_size_bytes": 0,
-                "artifact_category": "Assay Artifact from CIMAC",
-                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
-                "uploaded_timestamp": "2019-11-19T20:48:45.310000+00:00"
-              },
-              "astrolabe_analysis": {
-                "file_name": "cytof_analysis",
-                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/analysis.zip",
-                "data_format": "ZIP",
-                "file_size_bytes": 0,
-                "artifact_category": "Assay Artifact from CIMAC",
-                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
-                "uploaded_timestamp": "2019-11-19T20:49:01.309000+00:00"
               },
               "cell_counts_profiling": {
                 "file_name": "cytof_analysis",

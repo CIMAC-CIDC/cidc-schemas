@@ -1431,7 +1431,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert len(merged_gs_keys) == 6  # 6 output files
 
     elif template.type == "cytof_analysis":
-        assert len(merged_gs_keys) == 9  # 9 output files
+        assert (
+            len(merged_gs_keys) == 16
+        )  # 2 run level + (7 sample level * 2 samples) output files
 
     elif template.type == "wes_analysis":
         # 15 (for each run) + 15 (for each tumor sample) + 15 (for each normal sample)
@@ -1576,9 +1578,9 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         ), "Unexpected CT changes"
 
     elif template.type == "cytof_analysis":
-        # 7 artifact attributes * 9 files
+        # 7 artifact attributes * 16 files
         assert (
-            len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS * 9
+            len(dd["dictionary_item_added"]) == NUM_ARTIFACT_FIELDS * 16
         ), "Unexpected CT changes"
 
     elif template.type == "wes_analysis":

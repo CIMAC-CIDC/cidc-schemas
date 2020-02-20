@@ -919,8 +919,13 @@ def test_prismify_wesfastq_only(xlsx, template):
     with pytest.raises(InDocRefNotFoundError):
         validator.validate(merged_wo_needed_participants)
 
-    # 2 record = 2 missing aliquot refs = 2 errors
-    assert 2 == len(list(validator.iter_errors(merged_wo_needed_participants)))
+    assert 0 == len(
+        [
+            unexpected_ex
+            for unexpected_ex in validator.iter_errors(merged_wo_needed_participants)
+            if not isinstance(unexpected_ex, InDocRefNotFoundError)
+        ]
+    )
 
 
 @pytest.mark.parametrize("xlsx, template", prismify_test_set(filter=["rna_bam"]))

@@ -727,6 +727,11 @@ def test_filepath_gen(prismify_result, template):
         assert False, f"add {template.type} assay specific asserts"
 
 
+repr_if_template = (
+    lambda param: repr(param) if isinstance(param, Template) else "example"
+)
+
+
 @pytest.mark.parametrize(
     "xlsx, template", prismify_test_set("cytof"), ids=repr_if_template
 )

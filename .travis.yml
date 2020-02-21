@@ -8,7 +8,7 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script:
-  - pytest --cov=cidc_schemas -v
+  - pytest --cov=cidc_schemas -v -n 4
   - black --check cidc_schemas tests docs --target-version=py36
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

@@ -542,6 +542,10 @@ def test_unsupported_prismify():
 
 def test_filepath_gen(prismify_result, template):
 
+    # checking filepaths only for assays, not for anything else
+    if template.type not in SUPPORTED_ASSAYS:
+        return
+
     _, file_maps, errs = prismify_result
 
     local_to_gcs_mapping = {}

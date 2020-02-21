@@ -2,18 +2,12 @@
     "$schema": "metaschema/strict_meta_schema.json#",
     "$id": "cytof_analysis",
     "title": "CyTOF Output Files",
-    "description": "Output files generated from the CyTOF assay: FCS file with enumerations for compartment, assignment and profiling cell labels; 3 CSV keys for mapping from respective enumeration indices to the cell labels; 3 CSV files providing cell count information for each of the cell labels; Analysis.zip and Results.zip containing a variety of R scripts, figures, tables and charts with QC and other information.",
+    "description": "Output files generated from the CyTOF assay: FCS file with enumerations for compartment, assignment and profiling cell labels; 3 CSV keys for mapping from respective enumeration indices to the cell labels; 3 CSV files providing cell count information for each of the cell labels",
     "type": "object",
     "additionalProperties": false,
     "properties": {
         "fcs_file": {
             "$ref": "artifacts/artifact_fcs.json"
-        },
-        "astrolabe_reports": {
-            "$ref": "artifacts/artifact_zip.json"
-        },
-        "astrolabe_analysis": {
-            "$ref": "artifacts/artifact_zip.json"
         },
         "assignment": {
             "$ref": "artifacts/artifact_csv.json"

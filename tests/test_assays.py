@@ -261,8 +261,6 @@ def test_cytof():
         "input_files": {"processed_fcs": fcs_1},
         "output_files": {
             "fcs_file": fcs_1,
-            "astrolabe_reports": report,
-            "astrolabe_analysis": analysis,
             "assignment": assignment,
             "compartment": compartment,
             "profiling": profiling,

@@ -29,7 +29,7 @@ def schema_paths():
     return schema_paths
 
 
-@pytest.mark.parametrize("schema_path", schema_paths())
+@pytest.mark.parametrize("schema_path", schema_paths(), ids=lambda x: x.split("/")[-1])
 def test_schema(schema_path):
     """Ensure the schema file conforms to JSON schema draft 7"""
     assert load_and_validate_schema(schema_path)

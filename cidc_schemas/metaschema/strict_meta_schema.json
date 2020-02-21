@@ -3,7 +3,41 @@
     "$id": "strict_meta_schema",
     "title": "Strict meta-schema",
     "type": ["object", "boolean"],
-    
+    "oneOf": [
+        {"required": ["$ref"]},
+        {"required": ["const"]},
+        {
+            "not": {
+                "$comment": "this makes additionalProperties or inheritableBase required only for object-describing schemas",
+                "anyOf": [
+                    {
+                        "properties": {
+                            "type": {
+                                "const": "object" 
+                            }
+                       }
+                    },
+                    {"required": ["properties"]}
+                ]
+            }
+        },
+        {
+            "type": "object",
+            "required": ["additionalProperties"],
+            "not": {
+                "required": ["inheritableBase"],
+                "$comment": "'not' disallows matching this, making additionalProperties and inheritableBase mutually exclusive"
+            }
+        },
+        {
+            "type": "object",
+            "not": {
+                "required": ["additionalProperties"],
+                "$comment": "'not' disallows matching this, making additionalProperties and inheritableBase mutually exclusive"
+            },
+            "required": ["inheritableBase"]
+        }
+    ],
     "properties": {
         "additionalProperties": {
             "$comment": "overrides draft-07 definition",

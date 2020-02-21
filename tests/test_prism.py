@@ -42,7 +42,11 @@ from cidc_schemas.prism import (
     _get_file_ext,
 )
 
-from cidc_schemas.json_validation import load_and_validate_schema, InDocRefNotFoundError
+from cidc_schemas.json_validation import (
+    load_and_validate_schema,
+    InDocRefNotFoundError,
+    _validator_instance,
+)
 from cidc_schemas.template import Template
 from cidc_schemas.template_writer import RowType
 from cidc_schemas.util import participant_id_from_cimac
@@ -474,20 +478,13 @@ def test_samples_merge():
     assert len(a3["participants"][0]["samples"]) == 2
 
 
-@pytest.mark.parametrize("xlsx, template", prismify_test_set())
-def test_prism(xlsx, template):
+def test_prism(prismify_result, template):
 
     # create validators
-    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    validator = _validator_instance
     schema = validator.schema
 
-    # TODO: every other assay
-    if template.type not in SUPPORTED_ASSAYS:
-        return
-
-    # turn into object.
-    ct, file_maps, errs = prismify(xlsx, template)
-    assert 0 == len(errs)
+    ct, file_maps, errs = prismify_result
 
     if template.type in SUPPORTED_ASSAYS:
         # olink is different - is will never have array of assay "runs" - only one
@@ -543,22 +540,9 @@ def test_unsupported_prismify():
         prismify(None, mock_template)
 
 
-@pytest.mark.parametrize("xlsx, template", prismify_test_set())
-def test_filepath_gen(xlsx, template):
+def test_filepath_gen(prismify_result, template):
 
-    # TODO: every other assay
-    if template.type not in SUPPORTED_ASSAYS:
-        return
-
-    # create validators
-    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-    schema = validator.schema
-
-    # parse the spreadsheet and get the file maps
-    _, file_maps, errs = prismify(xlsx, template)
-    assert len(errs) == 0
-    # we ignore and do not validate 'ct'
-    # because it's only a ct patch not a full ct
+    _, file_maps, errs = prismify_result
 
     local_to_gcs_mapping = {}
     for fmap_entry in file_maps:
@@ -1190,17 +1174,11 @@ def test_merge_ct_meta():
     )
 
 
-@pytest.mark.parametrize("xlsx, template", prismify_test_set())
-def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
+def test_end_to_end_prismify_merge_artifact_merge(prismify_result, template):
 
-    assert template.type in SUPPORTED_TEMPLATES
+    validator = _validator_instance
 
-    # create validators
-    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-
-    # parse the spreadsheet and get the file maps
-    prism_patch, file_maps, errs = prismify(xlsx, template)
-    assert len(errs) == 0
+    prism_patch, file_maps, errs = prismify_result
 
     if (
         template.type in SUPPORTED_MANIFESTS
@@ -1373,13 +1351,6 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
         # check that the data_format was set
         assert "data_format" in artifact
-
-        # assert we still have a good clinical trial object, so we can save it
-        step_ct, errs = merge_clinical_trial_metadata(
-            patch_copy_4_artifacts, original_ct
-        )
-        assert not errs
-        validator.validate(step_ct)
 
         # we will than search for this url in the resulting ct,
         # to check all artifacts were indeed merged

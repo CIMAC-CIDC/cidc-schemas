@@ -474,7 +474,11 @@ def test_samples_merge():
     assert len(a3["participants"][0]["samples"]) == 2
 
 
-@pytest.mark.parametrize("xlsx, template", prismify_test_set())
+def repr_if_template(param):
+    return repr(param) if isinstance(param, Template) else "example"
+
+
+@pytest.mark.parametrize("xlsx, template", prismify_test_set(), ids=repr_if_template)
 def test_prism(xlsx, template):
 
     # create validators
@@ -543,7 +547,7 @@ def test_unsupported_prismify():
         prismify(None, mock_template)
 
 
-@pytest.mark.parametrize("xlsx, template", prismify_test_set())
+@pytest.mark.parametrize("xlsx, template", prismify_test_set(), ids=repr_if_template)
 def test_filepath_gen(xlsx, template):
 
     # TODO: every other assay
@@ -743,7 +747,9 @@ def test_filepath_gen(xlsx, template):
         assert False, f"add {template.type} assay specific asserts"
 
 
-@pytest.mark.parametrize("xlsx, template", prismify_test_set("cytof"))
+@pytest.mark.parametrize(
+    "xlsx, template", prismify_test_set("cytof"), ids=repr_if_template
+)
 def test_prismify_cytof_only(xlsx, template):
 
     # create validators
@@ -770,7 +776,9 @@ def test_prismify_cytof_only(xlsx, template):
     validator.validate(merged)
 
 
-@pytest.mark.parametrize("xlsx, template", prismify_test_set("ihc"))
+@pytest.mark.parametrize(
+    "xlsx, template", prismify_test_set("ihc"), ids=repr_if_template
+)
 def test_prismify_ihc(xlsx, template):
 
     # create validators
@@ -796,7 +804,9 @@ def test_prismify_ihc(xlsx, template):
     validator.validate(merged)
 
 
-@pytest.mark.parametrize("xlsx, template", prismify_test_set("plasma"))
+@pytest.mark.parametrize(
+    "xlsx, template", prismify_test_set("plasma"), ids=repr_if_template
+)
 def test_prismify_plasma(xlsx, template):
 
     # create validators
@@ -836,7 +846,9 @@ def assert_only_indocref_exceptions(exceptions: list):
     assert 0 == len([e for e in exceptions if not isinstance(e, InDocRefNotFoundError)])
 
 
-@pytest.mark.parametrize("xlsx, template", prismify_test_set(filter=["wes_bam"]))
+@pytest.mark.parametrize(
+    "xlsx, template", prismify_test_set(filter=["wes_bam"]), ids=repr_if_template
+)
 def test_prismify_wesbam_only(xlsx, template):
 
     # create validators
@@ -885,7 +897,9 @@ def test_prismify_wesbam_only(xlsx, template):
     )
 
 
-@pytest.mark.parametrize("xlsx, template", prismify_test_set("wes_fastq"))
+@pytest.mark.parametrize(
+    "xlsx, template", prismify_test_set("wes_fastq"), ids=repr_if_template
+)
 def test_prismify_wesfastq_only(xlsx, template):
 
     # create validators
@@ -924,7 +938,9 @@ def test_prismify_wesfastq_only(xlsx, template):
     )
 
 
-@pytest.mark.parametrize("xlsx, template", prismify_test_set(filter=["rna_bam"]))
+@pytest.mark.parametrize(
+    "xlsx, template", prismify_test_set(filter=["rna_bam"]), ids=repr_if_template
+)
 def test_prismify_rnabam_only(xlsx, template):
 
     # create validators
@@ -962,7 +978,9 @@ def test_prismify_rnabam_only(xlsx, template):
         validator.validate(merged_wo_needed_participants)
 
 
-@pytest.mark.parametrize("xlsx, template", prismify_test_set("rna_fastq"))
+@pytest.mark.parametrize(
+    "xlsx, template", prismify_test_set("rna_fastq"), ids=repr_if_template
+)
 def test_prismify_rnafastq_only(xlsx, template):
 
     # create validators
@@ -997,7 +1015,9 @@ def test_prismify_rnafastq_only(xlsx, template):
         validator.validate(merged_wo_needed_participants)
 
 
-@pytest.mark.parametrize("xlsx, template", prismify_test_set("olink"))
+@pytest.mark.parametrize(
+    "xlsx, template", prismify_test_set("olink"), ids=repr_if_template
+)
 def test_prismify_olink_only(xlsx, template):
 
     # create validators
@@ -1190,7 +1210,7 @@ def test_merge_ct_meta():
     )
 
 
-@pytest.mark.parametrize("xlsx, template", prismify_test_set())
+@pytest.mark.parametrize("xlsx, template", prismify_test_set(), ids=repr_if_template)
 def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     assert template.type in SUPPORTED_TEMPLATES

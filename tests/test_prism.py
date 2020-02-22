@@ -28,6 +28,7 @@ from cidc_schemas.prism import (
     SUPPORTED_SHIPPING_MANIFESTS,
     SUPPORTED_MANIFESTS,
     SUPPORTED_TEMPLATES,
+    SUPPORTED_WEIRD_MANIFESTS,
     SUPPORTED_ANALYSES,
     PROTOCOL_ID_FIELD_NAME,
     parse_npx,
@@ -504,6 +505,12 @@ def test_prism(prismify_result, template):
 
     elif template.type in SUPPORTED_SHIPPING_MANIFESTS:
         assert not ct.get("assays"), "Assay created during manifest prismify"
+
+    elif (
+        template.type in SUPPORTED_WEIRD_MANIFESTS
+        or template.type in SUPPORTED_ANALYSES
+    ):
+        pass
 
     else:
         assert False, f"Unknown template {template.type}"

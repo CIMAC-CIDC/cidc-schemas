@@ -271,6 +271,13 @@ def test_validate_in_doc_refs():
         v.validate({"objs": [], "refs": ["anything"]})
 
 
+def test_load_ct_schema_speed(benchmark):
+    def load():
+        load_and_validate_schema("clinical_trial.json")
+
+    benchmark.pedantic(load, rounds=3)
+
+
 def test_validator_speed(benchmark):
     """Basic referential integrity validation speed test"""
     v = _Validator(

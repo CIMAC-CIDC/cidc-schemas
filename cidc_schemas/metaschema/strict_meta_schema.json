@@ -82,60 +82,113 @@
             "additionalProperties": {"$ref": "#" } 
         },
         "properties": {
+            "type": "object",
             "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
             "additionalProperties": {"$ref": "#" } 
         },
-        "patternProperties": {
-            "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
-            "additionalProperties": {"$ref": "#" } 
-        },
+        "patternProperties": false,
         "dependencies": {
+            "type": "object",
             "$comment": "overrides draft-07 definition to make self ref link point to this strict schema",
             "additionalProperties": {
                 "anyOf": [
                     { "$ref": "#" },
-                    { "$ref": "#/definitions/stringArray" }
+                    { "$ref": "http://json-schema.org/draft-07/schema#/definitions/stringArray" }
                 ]
             }
         },
 
 
-        "$id": {"$comment": "defined in draft-07"},
-        "$ref": {"$comment": "defined in draft-07"},
-        "$comment": {"$comment": "defined in draft-07"},
-        "title": {"$comment": "defined in draft-07"},
-        "description": {"$comment": "defined in draft-07"},
+        "$id": {
+            "type": "string",
+            "format": "uri-reference"
+        },
+        "$schema": {
+            "type": "string",
+            "format": "uri"
+        },
+        "$ref": {
+            "type": "string",
+            "format": "uri-reference"
+        },
+        "$comment": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string"
+        },
         "default": true,
-        "readOnly": {"$comment": "defined in draft-07"},
-        "examples": {"$comment": "defined in draft-07"},
-        "multipleOf": {"$comment": "defined in draft-07"},
-        "maximum": {"$comment": "defined in draft-07"},
-        "exclusiveMaximum": {"$comment": "defined in draft-07"},
-        "minimum": {"$comment": "defined in draft-07"},
-        "exclusiveMinimum": {"$comment": "defined in draft-07"},
-        "maxLength": {"$comment": "defined in draft-07"},
-        "minLength": {"$comment": "defined in draft-07"},
-        "pattern": {"$comment": "defined in draft-07"},
-        "maxItems": {"$comment": "defined in draft-07"},
-        "minItems": {"$comment": "defined in draft-07"},
-        "uniqueItems": {"$comment": "defined in draft-07"},
-        "maxProperties": {"$comment": "defined in draft-07"},
-        "minProperties": {"$comment": "defined in draft-07"},
-        "required": {"$comment": "defined in draft-07"},
+        "readOnly": {
+            "type": "boolean",
+            "default": false
+        },
+        "examples": {
+            "type": "array",
+            "items": true
+        },
+        "multipleOf": {
+            "type": "number",
+            "exclusiveMinimum": 0
+        },
+        "maximum": {
+            "type": "number"
+        },
+        "exclusiveMaximum": {
+            "type": "number"
+        },
+        "minimum": {
+            "type": "number"
+        },
+        "exclusiveMinimum": {
+            "type": "number"
+        },
+        "maxLength": { "$ref": "http://json-schema.org/draft-07/schema#/definitions/nonNegativeInteger" },
+        "minLength": { "$ref": "http://json-schema.org/draft-07/schema#/definitions/nonNegativeIntegerDefault0" },
+        "pattern": {
+            "type": "string",
+            "format": "regex"
+        },
+        "maxItems": { "$ref": "http://json-schema.org/draft-07/schema#/definitions/nonNegativeInteger" },
+        "minItems": { "$ref": "http://json-schema.org/draft-07/schema#/definitions/nonNegativeIntegerDefault0" },
+        "uniqueItems": {
+            "type": "boolean",
+            "default": false
+        },
+        "contains": { "$ref": "#" },
+        "maxProperties": { "$ref": "http://json-schema.org/draft-07/schema#/definitions/nonNegativeInteger" },
+        "minProperties": { "$ref": "http://json-schema.org/draft-07/schema#/definitions/nonNegativeIntegerDefault0" },
+        "required": { "$ref": "http://json-schema.org/draft-07/schema#/definitions/stringArray" },
+        "propertyNames": { "$ref": "#" },
         "const": true,
-        "enum": {"$comment": "defined in draft-07"},
-        "type": {"$comment": "defined in draft-07"},
-        "format": {"$comment": "defined in draft-07"},
-        "contentMediaType": {"$comment": "defined in draft-07"},
-        "contentEncoding": {"$comment": "defined in draft-07"},
-        "propertyNames": {"$comment": "defined in draft-07"},
-        "if":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
-        "then":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
-        "else":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
-        "not":  {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
-        "allOf": {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
-        "anyOf": {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"},
-        "oneOf": {"$comment": "defined in draft-07. not overriding auto-refs to be strict for conditions, because we want allow them to match on a broad set of schemas"}
+        "enum": {
+            "type": "array",
+            "items": true
+        },
+        "type": {
+            "anyOf": [
+                { "$ref": "http://json-schema.org/draft-07/schema#/definitions/simpleTypes" },
+                {
+                    "type": "array",
+                    "items": { "$ref": "http://json-schema.org/draft-07/schema#/definitions/simpleTypes" },
+                    "minItems": 1,
+                    "uniqueItems": true
+                }
+            ]
+        },
+        "format": { "type": "string" },
+        "contentMediaType": { "type": "string" },
+        "contentEncoding": { "type": "string" },
+        
+        "if": {"$ref": "http://json-schema.org/draft-07/schema#"},
+        "then": {"$ref": "http://json-schema.org/draft-07/schema#"},
+        "else": {"$ref": "http://json-schema.org/draft-07/schema#"},
+        "allOf": { "$ref": "http://json-schema.org/draft-07/schema#/definitions/schemaArray" },
+        "anyOf": { "$ref": "http://json-schema.org/draft-07/schema#/definitions/schemaArray" },
+        "oneOf": { "$ref": "http://json-schema.org/draft-07/schema#/definitions/schemaArray" },
+        "not": { "$ref": "http://json-schema.org/draft-07/schema#" }
     },
     "definitions": {
         "schemaArray": {
@@ -143,16 +196,8 @@
             "type": "array",
             "minItems": 1,
             "items": { "$ref": "#" }
-        },
-        "stringArray": {
-            "$comment": "repeats draft-07 definition to make refs here shorter",
-            "type": "array",
-            "items": { "type": "string" },
-            "uniqueItems": true,
-            "default": []
         }
     },
-    "additionalProperties": false,
-    "allOf": [{"$ref" : "http://json-schema.org/draft-07/schema"}]
+    "additionalProperties": false
 }
   

@@ -53,7 +53,7 @@ def test_build_artifact():
     )
 
 
-@pytest.mark.parametrize("upload_type", SUPPORTED_SHIPPING_MANIFESTS)
+@pytest.mark.parametrize("upload_type", SUPPORTED_SHIPPING_MANIFESTS, ids=lambda x: x)
 def test_derive_files_shipping_manifest(ct, upload_type):
     """Check that participants and samples CSVs are derived as expected."""
     result = derive_files(DeriveFilesContext(ct, upload_type, None))

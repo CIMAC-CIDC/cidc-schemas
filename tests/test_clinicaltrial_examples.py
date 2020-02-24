@@ -35,7 +35,7 @@ def _fetch_validator():
     return jsonschema.Draft7Validator(schema)
 
 
-@pytest.mark.parametrize("example_path", example_paths())
+@pytest.mark.parametrize("example_path", example_paths(), ids=lambda x: x[1])
 def test_schema(example_path):
     validator = _fetch_validator()
 

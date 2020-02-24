@@ -11,7 +11,7 @@ script:
   - pytest --cov=cidc_schemas -v
   - black --check cidc_schemas tests docs --target-version=py36
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build -t coverage.py --exit-code $TRAVIS_TEST_RESULT 
 deploy:
   provider: pypi
   # TODO: should this be on a shared CIDC account?

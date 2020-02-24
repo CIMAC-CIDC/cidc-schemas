@@ -329,6 +329,11 @@ RNABAM_TEMPLATE_EXAMPLE_GS_URLS = {
 NUM_ARTIFACT_FIELDS = 8
 
 
+CLINICAL_TRIAL_VALIDATOR = load_and_validate_schema(
+    "clinical_trial.json", return_validator=True
+)
+
+
 def test_test_data():
 
     # create validators
@@ -479,6 +484,14 @@ def test_samples_merge():
     assert len(a3["participants"][0]["samples"]) == 2
 
 
+def merge_with_TEST_PRISM_TRIAL(patch):
+    merger = Merger(
+        CLINICAL_TRIAL_VALIDATOR.schema, strategies=PRISM_PRISMIFY_STRATEGIES
+    )
+    merged = merger.merge(TEST_PRISM_TRIAL, patch)
+    return merged
+
+
 def test_prism(prismify_result, template):
 
     # create validators
@@ -518,8 +531,7 @@ def test_prism(prismify_result, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
-    merged = merger.merge(TEST_PRISM_TRIAL, ct)
+    merged = merge_with_TEST_PRISM_TRIAL(ct)
 
     validator.validate(merged)
     # assert works
@@ -532,8 +544,6 @@ def test_prism(prismify_result, template):
         assert (
             TEST_PRISM_TRIAL[PROTOCOL_ID_FIELD_NAME] == merged[PROTOCOL_ID_FIELD_NAME]
         )
-
-    return merged, file_maps
 
 
 def test_unsupported_prismify():
@@ -2331,8 +2341,10 @@ def elisa_test_file_path():
 
 
 def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
-    xlsx, template = list(prismify_test_set("olink"))[0]
-    ct, file_infos = test_prismify_olink_only(xlsx, template)
+    template_example, template = list(prismify_test_set("olink"))[0]
+
+    prism_patch, file_infos, errs = prismify(template_example, template)
+    merged_ct = merge_with_TEST_PRISM_TRIAL(prism_patch)
 
     for finfo in file_infos:
         if finfo.metadata_availability:
@@ -2343,11 +2355,11 @@ def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
 
             with open(local_path, "rb") as npx_file:
                 merge_artifact_extra_metadata(
-                    ct, finfo.upload_placeholder, "olink", npx_file
+                    merged_ct, finfo.upload_placeholder, "olink", npx_file
                 )
 
-    study = ct["assays"]["olink"]["study"]
-    files = ct["assays"]["olink"]["records"][0]["files"]
+    study = merged_ct["assays"]["olink"]["study"]
+    files = merged_ct["assays"]["olink"]["records"][0]["files"]
 
     assert set(files["assay_npx"]["samples"]) == {
         "CTTTP01A1.00",
@@ -2369,18 +2381,20 @@ def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
 
 
 def test_merge_extra_metadata_elisa(elisa_test_file_path):
-    xlsx, template = list(prismify_test_set("elisa"))[0]
-    ct, file_infos = test_prism(xlsx, template)
+    template_example, template = list(prismify_test_set("elisa"))[0]
+
+    prism_patch, file_infos, errs = prismify(template_example, template)
+    merged_ct = merge_with_TEST_PRISM_TRIAL(prism_patch)
 
     for finfo in file_infos:
         if finfo.metadata_availability:
 
             with open(elisa_test_file_path, "rb") as elisa_file:
                 merge_artifact_extra_metadata(
-                    ct, finfo.upload_placeholder, "elisa", elisa_file
+                    merged_ct, finfo.upload_placeholder, "elisa", elisa_file
                 )
 
-    artifact = ct["assays"]["elisa"][0]["assay_xlsx"]
+    artifact = merged_ct["assays"]["elisa"][0]["assay_xlsx"]
 
     # TODO antibodies
 

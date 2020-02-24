@@ -8,9 +8,10 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script:
-  - pytest --cov=cidc_schemas -v --cover-xml
+  - pytest --cov=cidc_schemas -v
   - black --check cidc_schemas tests docs --target-version=py36
 after_script:
+  - coverage xml
   - ./cc-test-reporter after-build -t coverage.py --exit-code $TRAVIS_TEST_RESULT 
 deploy:
   provider: pypi

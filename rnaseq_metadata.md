@@ -16,6 +16,7 @@ Pre-sequencing RNA QC metrics:
 May include: Total RNA input for library prep (in ng)
 
 Library construction protocol/kit: Yes
+(jason- this sounds a bit light on details like poly-A selection, strand specificity, PCR amplification steps etc)
 
 Library QC method/instrument: Yes
 
@@ -52,6 +53,6 @@ Post-sequencing QC metrics: Yes
 	- Definition of failed: which QC metrics are used for pass/fail decisions
 
 Reference genome (e.g., hg38)
-
+Reference transcriptome (e.g. Gencode v33)
  
 

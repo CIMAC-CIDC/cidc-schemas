@@ -324,7 +324,7 @@ def test_validator_speed(benchmark):
         except:
             raise
 
-    benchmark.pedantic(do_validation, rounds=5)
+    benchmark.pedantic(do_validation, rounds=3)
 
 
 def test_special_keywords():

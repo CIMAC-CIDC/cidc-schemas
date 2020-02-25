@@ -7,6 +7,7 @@ import json
 import copy
 import fnmatch
 import collections.abc
+import functools
 from typing import Optional, List, Callable, Union
 
 import dateparser
@@ -316,6 +317,7 @@ def _load_dont_validate_schema(
 _validator_instance = _Validator({})
 
 
+@functools.lru_cache(maxsize=32)
 def load_and_validate_schema(
     schema_path: str,
     schema_root: str = SCHEMA_DIR,
@@ -333,6 +335,10 @@ def load_and_validate_schema(
         return schema
     else:
         return _Validator(schema)
+
+
+# Warm up the cache with a full clinical trial validator
+load_and_validate_schema("clinical_trial.json", return_validator=True)
 
 
 def validate_instance(instance: str, schema: dict, is_required=False) -> Optional[str]:

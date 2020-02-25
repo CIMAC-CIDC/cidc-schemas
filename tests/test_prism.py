@@ -1082,6 +1082,25 @@ def test_merge_artifact_none_md5():
         )
 
 
+def test_merge_artifact_wesfastq_benchmark(benchmark):
+    ct = copy.deepcopy(TEST_PRISM_TRIAL)
+    url, uuid = list(WES_TEMPLATE_EXAMPLE_GS_URLS.items())[0]
+
+    def merge():
+        merge_artifact(
+            ct,
+            assay_type="wes",
+            artifact_uuid=uuid,
+            object_url=url,
+            file_size_bytes=1,
+            uploaded_timestamp="01/01/2001",
+            md5_hash=f"hash_{uuid}",
+            crc32c_hash=f"hash_{uuid}",
+        )
+
+    benchmark.pedantic(merge, rounds=10)
+
+
 def test_merge_artifact_wesfastq_only():
 
     # create the clinical trial.

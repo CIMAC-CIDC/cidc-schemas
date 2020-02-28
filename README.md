@@ -1,7 +1,7 @@
 # cidc-schemas
-| Branch                                               | Status                                                                                                                            |
-| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| [master](https://cimac-cidc.github.io/cidc-schemas/) | [![Build Status](https://travis-ci.org/CIMAC-CIDC/cidc-schemas.svg?branch=master)](https://travis-ci.org/CIMAC-CIDC/cidc-schemas) |
+| Branch                                               | Status                                                                                                                            | Maintainability | Test Coverage |
+| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --- | --- |
+| [master](https://cimac-cidc.github.io/cidc-schemas/) | [![Build Status](https://travis-ci.org/CIMAC-CIDC/cidc-schemas.svg?branch=master)](https://travis-ci.org/CIMAC-CIDC/cidc-schemas) | [![Maintainability](https://api.codeclimate.com/v1/badges/3f989b974663df81ef45/maintainability)](https://codeclimate.com/github/CIMAC-CIDC/cidc-schemas/maintainability) | [![Test Coverage](https://api.codeclimate.com/v1/badges/3f989b974663df81ef45/test_coverage)](https://codeclimate.com/github/CIMAC-CIDC/cidc-schemas/test_coverage) |
 
 This repository contains formal definitions of the CIDC metadata model using [json-schema](https://json-schema.org/) syntax and vocabulary.
 

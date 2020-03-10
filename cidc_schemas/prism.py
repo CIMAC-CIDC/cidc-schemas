@@ -1,8 +1,10 @@
 import re
+import sys
 import json
 import copy
 import uuid
 import datetime
+import logging
 from typing import (
     Union,
     BinaryIO,
@@ -31,6 +33,8 @@ from .util import get_path, get_source, load_pipeline_config_template
 
 PROTOCOL_ID_FIELD_NAME = "protocol_identifier"
 
+logger = logging.getLogger(__file__)
+
 
 def _set_val(
     pointer: str,
@@ -38,7 +42,6 @@ def _set_val(
     context: dict,
     root: Union[dict, None] = None,
     context_pointer: Union[str, None] = None,
-    verb=False,
 ):
     """
     This function given a *pointer* (jsonpointer RFC 6901 or relative json pointer)
@@ -88,7 +91,6 @@ def _set_val(
         context: the python object relatively to which val is being set
         root: the whole python object being constructed, contains `context`
         context_pointer: jsonpointer of `context` within `root`. Needed to jump up.
-        verb: indicates if debug logic should be printed.
     Returns:
        Nothing
     """
@@ -295,7 +297,6 @@ def _process_property(
     format_context: dict,
     root_obj: Union[None, dict] = None,
     data_obj_pointer: Union[None, str] = None,
-    verb: bool = False,
 ) -> List[LocalFileUploadEntry]:
     """
     Takes a single property (key, val) from spreadsheet, determines
@@ -313,7 +314,6 @@ def _process_property(
         data_obj_pointer: pointer of 'data_obj' within 'root_obj'.
                           this will allow to process relative json-pointer properties
                           to jump out of data_object
-        verb: boolean indicating verbosity
     Returns:
         [ LocalFileUploadEntry(
             local_path = "/local/file/from/excel/file/cell",
@@ -323,27 +323,21 @@ def _process_property(
         ) ]
     """
 
-    if verb:
-        print(f"    processing property {key!r} - {raw_val!r}")
+    logger.debug(f"    processing property {key!r} - {raw_val!r}")
     # coerce value
     try:
         field_def = key_lu[key.lower()]
     except Exception:
         raise ParsingException(f"Unexpected property {key!r}.")
 
-    if verb:
-        print(f"      found def {field_def}")
+    logger.debug(f"      found def {field_def}")
 
     changes, files = _process_field_value(
-        key=key,
-        raw_val=raw_val,
-        field_def=field_def,
-        format_context=format_context,
-        verb=verb,
+        key=key, raw_val=raw_val, field_def=field_def, format_context=format_context
     )
 
     for ch in changes:
-        _set_val(ch.pointer, ch.value, data_obj, root_obj, data_obj_pointer, verb=verb)
+        _set_val(ch.pointer, ch.value, data_obj, root_obj, data_obj_pointer)
 
     return files
 
@@ -359,7 +353,7 @@ class _AtomicChange(NamedTuple):
 
 
 def _process_field_value(
-    key: str, raw_val, field_def: dict, format_context: dict, verb: bool = False
+    key: str, raw_val, field_def: dict, format_context: dict
 ) -> Tuple[List[_AtomicChange], List[LocalFileUploadEntry]]:
     """
     Processes one field value based on field_def taken from a ..._template.json schema.
@@ -380,7 +374,7 @@ def _process_field_value(
         pointer += "/upload_placeholder"
 
     try:
-        val, files = _calc_val_and_files(raw_val, field_def, format_context, verb=verb)
+        val, files = _calc_val_and_files(raw_val, field_def, format_context)
     except ParsingException:
         raise
     except Exception as e:
@@ -416,7 +410,6 @@ def _process_field_value(
                 raw_val=extra_fdef_raw_val,  # new "raw" val
                 field_def=extra_fdef,  # merged field_def
                 format_context=format_context,
-                verb=verb,
             )
 
             files.extend(extra_files)
@@ -474,7 +467,7 @@ def _format_single_artifact(
     )
 
 
-def _calc_val_and_files(raw_val, field_def: dict, format_context: dict, verb: bool):
+def _calc_val_and_files(raw_val, field_def: dict, format_context: dict):
     """
     Processes one field value based on field_def taken from a ..._template.json schema.
     Calculates a value and (if there's 'is_artifact') a file upload entry.
@@ -489,8 +482,7 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict, verb: bo
 
     # deal with multi-artifact
     if field_def["is_artifact"] == "multi":
-        if verb:
-            print(f"      collecting multi local_file_path {field_def}")
+        logger.debug(f"      collecting multi local_file_path {field_def}")
 
         # In case of is_aritfact=multi we expect the value to be a comma-separated
         # list of local_file paths (that we will convert to uuids)
@@ -521,8 +513,7 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict, verb: bo
             )
 
     else:
-        if verb:
-            print(f"      collecting local_file_path {field_def}")
+        logger.debug(f"      collecting local_file_path {field_def}")
 
         files.append(
             _format_single_artifact(
@@ -544,7 +535,7 @@ PRISM_PRISMIFY_STRATEGIES = {"overwriteAny": strategies.Overwrite()}
 
 
 def prismify(
-    xlsx: XlTemplateReader, template: Template, verb: bool = False
+    xlsx: XlTemplateReader, template: Template, debug: bool = False
 ) -> (dict, List[LocalFileUploadEntry], List[Union[Exception, str]]):
     """
     Converts excel file to json object. It also identifies local files
@@ -560,7 +551,6 @@ def prismify(
     Args:
         xlsx: cidc_schemas.template_reader.XlTemplateReader instance
         template: cidc_schemas.template.Template instance
-        verb: boolean indicating verbosity
     Returns:
         (tuple):
             arg1: clinical trial object with data parsed from spreadsheet
@@ -665,21 +655,13 @@ def prismify(
     )
     root_ct_schema = load_and_validate_schema(root_ct_schema_name)
     # create the result CT dictionary
-    root_ct_obj = (
-        {f"__prism_origin__:///templates/{template.type}": "as root_ct_obj"}
-        if verb
-        else {}
-    )
+    root_ct_obj = {}
     template_root_obj_pointer = template.schema.get(
         "prism_template_root_object_pointer", ""
     )
     if template_root_obj_pointer != "":
-        template_root_obj = (
-            {f"__prism_origin__:///templates/{template.type}": "as template_root_obj"}
-            if verb
-            else {}
-        )
-        _set_val(template_root_obj_pointer, template_root_obj, root_ct_obj, verb=verb)
+        template_root_obj = {}
+        _set_val(template_root_obj_pointer, template_root_obj, root_ct_obj)
     else:
         template_root_obj = root_ct_obj
 
@@ -690,8 +672,7 @@ def prismify(
 
     # loop over spreadsheet worksheets
     for ws_name, ws in xlsx.grouped_rows.items():
-        if verb:
-            print(f"next worksheet {ws_name!r}")
+        logger.debug(f"next worksheet {ws_name!r}")
 
         # Here we take only first two cells from preamble as key and value respectfully,
         # lowering keys to match template schema definitions.
@@ -720,11 +701,7 @@ def prismify(
         data_object_pointer = templ_ws["prism_data_object_pointer"]
 
         # creating preamble obj
-        preamble_obj = (
-            {f"__prism_origin__:///templates/{template.type}/{ws_name}": "as preamble"}
-            if verb
-            else {}
-        )
+        preamble_obj = {}
 
         # Processing data rows first
         data = ws[RowType.DATA]
@@ -735,31 +712,17 @@ def prismify(
             # for row in data:
             for row in data:
 
-                if verb:
-                    print(f"  next data row {row!r}")
+                logging.debug(f"  next data row {row!r}")
 
                 # creating data obj
-                data_obj = (
-                    {
-                        f"__prism_origin__:///templates/{template.type}/{ws_name}/{row.row_num}": "as data_obj"
-                    }
-                    if verb
-                    else {}
-                )
-                copy_of_preamble = (
-                    {
-                        f"__prism_origin__:///templates/{template.type}/{ws_name}/{row.row_num}": "as copy_of_preamble"
-                    }
-                    if verb
-                    else {}
-                )
+                data_obj = {}
+                copy_of_preamble = {}
                 _set_val(
                     data_object_pointer,
                     data_obj,
                     copy_of_preamble,
                     template_root_obj,
                     preamble_object_pointer,
-                    verb=verb,
                 )
 
                 # We create this "data record dict" (all key-value pairs) prior to processing
@@ -784,24 +747,20 @@ def prismify(
                             ),  # combine contexts
                             root_obj=copy_of_preamble,
                             data_obj_pointer=data_object_pointer,
-                            verb=verb,
                         )
                         if new_files:
                             collected_files.extend(new_files)
                     except ParsingException as e:
                         errors_so_far.append(e)
 
-                if verb:
-                    print("  merging preambles")
-                    print(f"   {preamble_obj}")
-                    print(f"   {copy_of_preamble}")
+                logger.debug("  merging preambles")
+                logger.debug(f"   {preamble_obj}")
+                logger.debug(f"   {copy_of_preamble}")
                 preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
-                if verb:
-                    print(f"    merged - {preamble_obj}")
+                logger.debug(f"    merged - {preamble_obj}")
 
         # Now processing preamble rows
-        if verb:
-            print(f"  preamble for {ws_name!r}")
+        logger.debug(f"  preamble for {ws_name!r}")
         for row in ws[RowType.PREAMBLE]:
             try:
                 # process this property
@@ -814,7 +773,6 @@ def prismify(
                     root_obj=root_ct_obj,
                     data_obj_pointer=template_root_obj_pointer
                     + preamble_object_pointer,
-                    verb=verb,
                 )
                 # TODO we might want to use copy+preamble_merger here too,
                 # to for complex properties that require mergeStrategy
@@ -825,28 +783,18 @@ def prismify(
                 errors_so_far.append(e)
 
         # Now pushing it up / merging with the whole thing
-        copy_of_template_root = (
-            {
-                f"__prism_origin__:///templates/{template.type}/{ws_name}": "as copy_of_template_root"
-            }
-            if verb
-            else {}
-        )
-        _set_val(
-            preamble_object_pointer, preamble_obj, copy_of_template_root, verb=verb
-        )
-        if verb:
-            print("merging root objs")
-            print(f" {template_root_obj}")
-            print(f" {copy_of_template_root}")
+        copy_of_template_root = {}
+        _set_val(preamble_object_pointer, preamble_obj, copy_of_template_root)
+        logger.debug("merging root objs")
+        logger.debug(f" {template_root_obj}")
+        logger.debug(f" {copy_of_template_root}")
         template_root_obj = root_ct_merger.merge(
             template_root_obj, copy_of_template_root
         )
-        if verb:
-            print(f"  merged - {template_root_obj}")
+        logger.debug(f"  merged - {template_root_obj}")
 
     if template_root_obj_pointer != "":
-        _set_val(template_root_obj_pointer, template_root_obj, root_ct_obj, verb=verb)
+        _set_val(template_root_obj_pointer, template_root_obj, root_ct_obj)
     else:
         root_ct_obj = template_root_obj
 

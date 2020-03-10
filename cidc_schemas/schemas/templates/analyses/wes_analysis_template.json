@@ -209,7 +209,7 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_coverage_metrics.txt.sample_summary.txt'",
+                                    "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_coverage_metrics.sample_summary.txt'",
                                     "merge_pointer": "/tumor/metrics/coverage_metrics_summary",
                                     "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/tumor/{tumor cimac id}/coverage_metrics_summary.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
@@ -306,7 +306,7 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_coverage_metrics.txt.sample_summary.txt'",
+                                    "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_coverage_metrics.sample_summary.txt'",
                                     "merge_pointer": "/normal/metrics/coverage_metrics_summary",
                                     "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/normal/{normal cimac id}/coverage_metrics_summary.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",

@@ -29,10 +29,6 @@
       "description": "Model used for positive cell detection in imaging experiment.",
       "type": "string",
       "enum": ["proprietary", "random forest classifier"]
-    },
-    "protocol_name": {
-      "description": "Protocol name for which imaging experiment conducted.",
-      "type": "string"
     }
   },
   "required": ["slide_scanner_model"]

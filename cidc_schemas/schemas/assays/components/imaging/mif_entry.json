@@ -6,17 +6,9 @@
   "description": "A single data record from mIF assay.",
   "additionalProperties": false,
   "properties": {
-    "project_inform_folder": {
-      "description": "Folder path containing files produced from an Inform image analysis.",
-      "type": "string"
-    },
-    "mif_exported_data_folder": {
-      "description": "Folder path containing imaging files.",
-      "type": "string"
-    },
     "files": {
       "$ref": "assays/components/imaging/mif_input.json"
     }
   },
-  "required": ["project_inform_folder"]
+  "required": ["files"]
 }

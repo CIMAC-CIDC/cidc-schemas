@@ -10,10 +10,6 @@
       "description": "Identification number used for internal imaging slide.",
       "type": "string"
     },
-    "protocol_name": {
-      "description": "Protocol name for which imaging experiment conducted.",
-      "type": "string"
-    },
     "staining_date": {
       "description": "Date on which slide staining was processed.",
       "type": "string",

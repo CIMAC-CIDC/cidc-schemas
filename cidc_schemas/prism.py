@@ -551,7 +551,6 @@ def prismify(
     Args:
         xlsx: cidc_schemas.template_reader.XlTemplateReader instance
         template: cidc_schemas.template.Template instance
-        debug: store debugging info in prismify's output object
     Returns:
         (tuple):
             arg1: clinical trial object with data parsed from spreadsheet
@@ -656,20 +655,12 @@ def prismify(
     )
     root_ct_schema = load_and_validate_schema(root_ct_schema_name)
     # create the result CT dictionary
-    root_ct_obj = (
-        {f"__prism_origin__:///templates/{template.type}": "as root_ct_obj"}
-        if debug
-        else {}
-    )
+    root_ct_obj = {}
     template_root_obj_pointer = template.schema.get(
         "prism_template_root_object_pointer", ""
     )
     if template_root_obj_pointer != "":
-        template_root_obj = (
-            {f"__prism_origin__:///templates/{template.type}": "as template_root_obj"}
-            if debug
-            else {}
-        )
+        template_root_obj = {}
         _set_val(template_root_obj_pointer, template_root_obj, root_ct_obj)
     else:
         template_root_obj = root_ct_obj
@@ -710,11 +701,7 @@ def prismify(
         data_object_pointer = templ_ws["prism_data_object_pointer"]
 
         # creating preamble obj
-        preamble_obj = (
-            {f"__prism_origin__:///templates/{template.type}/{ws_name}": "as preamble"}
-            if debug
-            else {}
-        )
+        preamble_obj = {}
 
         # Processing data rows first
         data = ws[RowType.DATA]
@@ -728,20 +715,8 @@ def prismify(
                 logging.debug(f"  next data row {row!r}")
 
                 # creating data obj
-                data_obj = (
-                    {
-                        f"__prism_origin__:///templates/{template.type}/{ws_name}/{row.row_num}": "as data_obj"
-                    }
-                    if debug
-                    else {}
-                )
-                copy_of_preamble = (
-                    {
-                        f"__prism_origin__:///templates/{template.type}/{ws_name}/{row.row_num}": "as copy_of_preamble"
-                    }
-                    if debug
-                    else {}
-                )
+                data_obj = {}
+                copy_of_preamble = {}
                 _set_val(
                     data_object_pointer,
                     data_obj,
@@ -808,13 +783,7 @@ def prismify(
                 errors_so_far.append(e)
 
         # Now pushing it up / merging with the whole thing
-        copy_of_template_root = (
-            {
-                f"__prism_origin__:///templates/{template.type}/{ws_name}": "as copy_of_template_root"
-            }
-            if debug
-            else {}
-        )
+        copy_of_template_root = {}
         _set_val(preamble_object_pointer, preamble_obj, copy_of_template_root)
         logger.debug("merging root objs")
         logger.debug(f" {template_root_obj}")

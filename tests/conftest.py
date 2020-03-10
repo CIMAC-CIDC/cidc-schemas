@@ -3,11 +3,16 @@
 """Global test configuration and shared fixtures"""
 
 import os
+import sys
+import logging
 
 import pytest
 
 from cidc_schemas.template import Template
 from cidc_schemas.constants import SCHEMA_DIR, MANIFEST_DIR
+
+# Set logger config to hide DEBUG statements for now
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 
 @pytest.fixture

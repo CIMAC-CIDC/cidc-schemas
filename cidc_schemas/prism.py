@@ -33,8 +33,7 @@ from .util import get_path, get_source, load_pipeline_config_template
 
 PROTOCOL_ID_FIELD_NAME = "protocol_identifier"
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
-logger = logging.getLogger("prism")
+logger = logging.getLogger(__file__)
 
 
 def _set_val(

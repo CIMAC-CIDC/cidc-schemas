@@ -275,7 +275,7 @@ def _process_property(
     where it needs to go in the final object, then inserts it.
     Args:
         key: property name,
-        raw_val: value of a property beng processed,
+        raw_val: value of a property being processed,
         key_lu: dictionary to translate from template naming to json-schema
                 property names
         data_obj: dictionary we are building to represent data

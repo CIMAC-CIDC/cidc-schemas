@@ -757,7 +757,7 @@ def test_prismify_cytof_only(xlsx, template):
     schema = validator.schema
 
     # parse the spreadsheet and get the file maps
-    ct, file_maps, errs = prismify(xlsx, template, verb=False)
+    ct, file_maps, errs = prismify(xlsx, template)
     assert len(errs) == 0
 
     # we should have 7 files:
@@ -1754,7 +1754,7 @@ def test_prism_local_files_format_extension(monkeypatch):
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
 
-    patch, file_maps, errs = prismify(xlsx, template, verb=False)
+    patch, file_maps, errs = prismify(xlsx, template)
 
     assert len(errs) == 1
     assert "local_file_col_name" in str(errs[0])
@@ -1821,7 +1821,7 @@ def test_prism_local_files_format_multiple_extensions(monkeypatch):
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
 
-    patch, file_maps, errs = prismify(xlsx, template, verb=False)
+    patch, file_maps, errs = prismify(xlsx, template)
 
     assert len(errs) == 1
     assert "Bad file type" in str(errs[0])
@@ -1937,7 +1937,7 @@ def test_prism_joining_tabs(monkeypatch):
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
 
-    patch, file_maps, errs = prismify(xlsx, template, verb=False)
+    patch, file_maps, errs = prismify(xlsx, template)
     assert len(errs) == 0
 
     assert 2 == len(patch["participants"])
@@ -2027,7 +2027,7 @@ def test_prism_process_as_error(monkeypatch):
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
 
-    patch, file_maps, errs = prismify(xlsx, template, verb=False)
+    patch, file_maps, errs = prismify(xlsx, template)
     assert "Cannot extract cimac_participant_id from SA_id value: None" == str(errs[0])
 
 
@@ -2156,7 +2156,7 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
 
-    patch, file_maps, errs = prismify(xlsx, template, verb=False)
+    patch, file_maps, errs = prismify(xlsx, template)
     assert len(errs) == 0
 
     local_paths = [e.local_path for e in file_maps]

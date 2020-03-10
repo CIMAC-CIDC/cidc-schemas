@@ -10,7 +10,6 @@ import jsonschema
 import json
 import yaml
 from deepdiff import grep, DeepDiff
-from pprint import pprint
 from collections import namedtuple
 from jsonmerge import Merger
 from unittest.mock import MagicMock, patch as mock_patch
@@ -1703,6 +1702,176 @@ def test_merge_stuff():
     assert len(xyz["slices"]) == 1
 
 
+## HELPER FUNCTION TESTS ##
+
+
+def test_set_val():
+    """Test the _set_val helper function directly, since it's prismify workhorse"""
+    # _set_val should handle the basic example in the _set_val docstring
+    context = {"Pid": 1}
+    root = {"prop0": [context]}
+    prism._set_val("0/prop1/prop2", {"more": "props"}, context, root, "/prop0/0")
+    assert root == {"prop0": [{"Pid": 1, "prop1": {"prop2": {"more": "props"}}}]}
+
+    # _set_val should set nested lists
+    context = []
+    root = {"prop0": context}
+    prism._set_val("0/-/-", [1, 2, 3], context, root, "/prop0")
+    assert root == {"prop0": [[[1, 2, 3]]]}
+
+    # _set_val overwrites when adding a value to particular location in a list
+    # TODO: is this the behavior we want?
+    context = [[], ["will be overwritten"]]
+    root = {"prop0": context}
+    prism._set_val("0/1", [1, 2, 3], context, root, "/prop0")
+    assert root == {"prop0": [[], [1, 2, 3]]}
+
+    # _set_val shouldn't make any modifications to `root` if `val == None`
+    context = {"Pid": 1}
+    root = {"prop0": [context]}
+    prism._set_val("0/prop1/prop2", None, context, root, "/prop0/0")
+    assert root == {"prop0": [context]}
+
+    # _set_val should throw an exception given a value pointer with too many jumps
+    with pytest.raises(AssertionError, match="too many jumps up"):
+        prism._set_val("3/prop1/prop2", {"more": "props"}, context, root, "/prop0/0")
+
+    # _set_val should throw an exception given an invalid context pointer
+    context = {"Pid": 1}
+    root = {"prop0": [context]}
+    with pytest.raises(Exception, match="member 'foo' not found"):
+        prism._set_val(
+            "1/prop1/prop2", {"more": "props"}, context, root, "foo/bar/buzz/baz"
+        )
+
+
+def test_process_property():
+    prop = "prop0"
+
+    # _process_property throws a ParsingException on properties missing from the key lookup dict
+    with pytest.raises(prism.ParsingException, match="Unexpected property"):
+        prism._process_property(prop, "123", {}, {}, {})
+
+    prop_def = {"merge_pointer": "/hello", "coerce": int, "key_name": "hello"}
+
+    # _process_property behaves as expected on a simple example
+    root = {}
+    files = prism._process_property(prop, "123", {prop: prop_def}, root, {})
+    assert root == {"hello": 123}
+    assert files == []
+
+    # _process_property catches unparseable raw values
+    with pytest.raises(prism.ParsingException, match="Can't parse 'prop0'"):
+        prism._process_property(prop, "123abcd", {prop: prop_def}, {}, {})
+
+    # _process_property catches a missing gcs_uri_format on an artifact
+    prop_def = {
+        "merge_pointer": "/hello",
+        "coerce": str,
+        "is_artifact": 1,
+        "key_name": "hello",
+    }
+    with pytest.raises(prism.ParsingException, match="Empty gcs_uri_format"):
+        prism._process_property(prop, "123", {prop: prop_def}, {}, {})
+
+    # _process property catches gcs_uri_format strings that can't be processed
+    prop_def["gcs_uri_format"] = "{foo}/{bar}"
+    with pytest.raises(prism.ParsingException, match="Can't format gcs uri"):
+        prism._process_property(prop, "123", {prop: prop_def}, {}, {})
+
+    prop_def["gcs_uri_format"] = {"format": prop_def["gcs_uri_format"]}
+    with pytest.raises(prism.ParsingException, match="Can't format gcs uri"):
+        prism._process_property(prop, "123", {prop: prop_def}, {}, {})
+
+
+def test_set_data_format_edge_cases(monkeypatch):
+    def mock_iter_errors(errs):
+        validator = MagicMock()
+        validator.iter_errors.return_value = errs
+        load_and_val = MagicMock()
+        load_and_val.return_value = validator
+        monkeypatch.setattr(prism, "load_and_validate_schema", load_and_val)
+
+    # _set_data_format bypasses exceptions that aren't jsonschema.exceptions.ValidationError instances.
+    mock_iter_errors([Exception("non-validation error")])
+    artifact = {}
+    prism._set_data_format({}, artifact)
+    assert artifact["data_format"] == "[NOT SET]"
+
+    # _set_data_format bypasses validation errors not pertaining to the "data_format" field
+    val_error = jsonschema.exceptions.ValidationError("")
+    val_error.validator = "const"
+    val_error.path = ["some_path"]
+    artifact = {}
+    prism._set_data_format({}, artifact)
+    assert artifact["data_format"] == "[NOT SET]"
+
+    # _set_data_format bypasses validation errors on unrelated fields
+    val_error = jsonschema.exceptions.ValidationError("")
+    val_error.validator = "const"
+    val_error.path = ["data_format"]
+    val_error.instance = "unrelated instance"
+    mock_iter_errors([val_error])
+    artifact = {}
+    prism._set_data_format({}, artifact)
+    assert artifact["data_format"] == "[NOT SET]"
+
+
+## END HELPER FUNCTION TESTS ##
+
+
+def test_prismify_unexpected_worksheet(monkeypatch):
+    """Check that prismify catches the presence of an unexpected worksheet in an Excel template."""
+    mock_XlTemplateReader_from_excel({"whoops": []}, monkeypatch)
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    template = Template(
+        {"title": "unexpected worksheet", "properties": {"worksheets": {}}},
+        "test_unexpected_worksheet",
+    )
+    monkeypatch.setattr(
+        "cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_unexpected_worksheet"]
+    )
+
+    _, _, errs = prismify(xlsx, template)
+    assert errs == ["Unexpected worksheet 'whoops'."]
+
+
+def test_prismify_preamble_parsing_error(monkeypatch):
+    """Check that prismify catches parsing errors in the pre"""
+    prop = "prop0"
+    raw_val = "some string"
+    mock_XlTemplateReader_from_excel({"ws1": [["#p", prop, raw_val]]}, monkeypatch)
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    template = Template(
+        {
+            "title": "parse error",
+            "properties": {
+                "worksheets": {
+                    "ws1": {
+                        "prism_preamble_object_schema": "clinical_trial.json",
+                        "prism_preamble_object_pointer": "#",
+                        "prism_data_object_pointer": "/files/-",
+                        "preamble_rows": {
+                            prop: {"merge_pointer": "/", "type": "number"}
+                        },
+                    }
+                }
+            },
+        },
+        "test_preamble_parsing_error",
+    )
+    monkeypatch.setattr(
+        "cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_preamble_parsing_error"]
+    )
+
+    _, _, errs = prismify(xlsx, template)
+    assert isinstance(errs[0], prism.ParsingException)
+
+
 def test_prism_local_files_format_extension(monkeypatch):
     """ Tests prism alert on different extensions of a local file vs gcs_uri """
 
@@ -2258,6 +2427,11 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
     if not template.type.startswith("wes_"):
         return
 
+    # Test that the config generator blocks disallowed upload types
+    upload_type = "foo"
+    with pytest.raises(NotImplementedError, match=f"Not supported type:{upload_type}"):
+        prism._wes_pipeline_config(upload_type)
+
     full_ct = copy.deepcopy(TEST_PRISM_TRIAL)
 
     # drop existing wes assay as they break merging new ones
@@ -2364,6 +2538,15 @@ def npx_combined_file_path():
 @pytest.fixture
 def elisa_test_file_path():
     return os.path.join(TEST_DATA_DIR, "elisa_test_file.xlsx")
+
+
+def test_merge_artfiact_extra_metadata_unsupported_assay():
+    """Ensure merge_artifact_extra_metadata fails gracefully for unsupported assays"""
+    assay_hint = "foo"
+    with pytest.raises(
+        Exception, match=f"Assay {assay_hint} does not support extra metadata"
+    ):
+        prism.merge_artifact_extra_metadata({}, "", assay_hint, None)
 
 
 def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):

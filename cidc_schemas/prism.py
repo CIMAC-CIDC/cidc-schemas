@@ -128,7 +128,7 @@ def _set_val(
         # check that we don't have to jump up more than we dived in already
         assert jumpups <= context_pointer.rstrip("/").count(
             "/"
-        ), f"Can't set value for pointer {pointer} to many jumps up from current context."
+        ), f"Can't set value for pointer {pointer} too many jumps up from current context."
 
         # and we'll go down remaining part of `pointer` from there
         jpoint = JsonPointer(slash + rem_pointer)
@@ -227,34 +227,6 @@ def __jpointer_insert_next_thing(doc, jpoint, part, next_thing):
             doc.append(next_thing)
 
 
-def _get_recursively(search_dict, field):
-    """
-    Takes a dict with nested lists and dicts,
-    and searches all dicts for a key of the field
-    provided.
-    """
-    fields_found = []
-
-    for key, value in search_dict.items():
-
-        if key == field:
-            fields_found.append(value)
-
-        elif isinstance(value, dict):
-            results = _get_recursively(value, field)
-            for result in results:
-                fields_found.append(result)
-
-        elif isinstance(value, list):
-            for item in value:
-                if isinstance(item, dict):
-                    more_results = _get_recursively(item, field)
-                    for another_result in more_results:
-                        fields_found.append(another_result)
-
-    return fields_found
-
-
 SUPPORTED_ASSAYS = [
     "wes_fastq",
     "wes_bam",
@@ -303,7 +275,7 @@ def _process_property(
     where it needs to go in the final object, then inserts it.
     Args:
         key: property name,
-        raw_val: value of a property being processed,
+        raw_val: value of a property beng processed,
         key_lu: dictionary to translate from template naming to json-schema
                 property names
         data_obj: dictionary we are building to represent data
@@ -514,7 +486,6 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict):
 
     else:
         logger.debug(f"      collecting local_file_path {field_def}")
-
         files.append(
             _format_single_artifact(
                 local_path=raw_val,

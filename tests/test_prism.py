@@ -18,6 +18,7 @@ from unittest.mock import MagicMock, patch as mock_patch
 from .constants import TEST_DATA_DIR
 
 from cidc_schemas import prism
+from cidc_schemas.prism import core, merger as prism_merger, pipelines
 from cidc_schemas.prism import (
     prismify,
     merge_artifact,
@@ -32,13 +33,8 @@ from cidc_schemas.prism import (
     parse_npx,
     parse_elisa,
     merge_artifact_extra_metadata,
-    PRISM_MERGE_STRATEGIES,
-    PRISM_PRISMIFY_STRATEGIES,
-    ThrowOnCollision,
     MergeCollisionException,
     generate_analysis_configs_from_upload_patch,
-    _ANALYSIS_CONF_GENERATORS,
-    _get_file_ext,
 )
 
 from cidc_schemas.json_validation import load_and_validate_schema, InDocRefNotFoundError
@@ -381,7 +377,7 @@ def test_merge_core():
     ct2["participants"][0]["cimac_participant_id"] = "PABCD"
 
     # merge them
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     ct3 = merger.merge(ct1, ct2)
 
     # assert we have two participants and their ids are different.
@@ -467,7 +463,7 @@ def test_samples_merge():
     schema = validator.schema
 
     # merge them
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     a3 = merger.merge(a1, a2)
     assert len(a3["participants"]) == 1
     assert len(a3["participants"][0]["samples"]) == 2
@@ -517,7 +513,7 @@ def test_prism(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, ct)
 
     validator.validate(merged)
@@ -768,7 +764,7 @@ def test_prismify_cytof_only(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, ct)
 
     # assert works
@@ -796,7 +792,7 @@ def test_prismify_ihc(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, ct)
 
     # assert works
@@ -876,7 +872,7 @@ def test_prismify_wesbam_only(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, md_patch)
 
     # assert works
@@ -917,7 +913,7 @@ def test_prismify_wesfastq_only(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, md_patch)
 
     # assert works
@@ -961,7 +957,7 @@ def test_prismify_rnabam_only(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, md_patch)
 
     # assert works
@@ -998,7 +994,7 @@ def test_prismify_rnafastq_only(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, md_patch)
 
     # assert works
@@ -1030,7 +1026,7 @@ def test_prismify_olink_only(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(MINIMAL_TEST_TRIAL, ct)
 
     # assert works
@@ -1697,7 +1693,7 @@ def test_merge_stuff():
     }
 
     # this merge will clobber slices because merging across allOf doesn't work
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     xyz = merger.merge(obj1, obj2)
     assert len(xyz["slices"]) == 1
 
@@ -1710,37 +1706,37 @@ def test_set_val():
     # _set_val should handle the basic example in the _set_val docstring
     context = {"Pid": 1}
     root = {"prop0": [context]}
-    prism._set_val("0/prop1/prop2", {"more": "props"}, context, root, "/prop0/0")
+    core._set_val("0/prop1/prop2", {"more": "props"}, context, root, "/prop0/0")
     assert root == {"prop0": [{"Pid": 1, "prop1": {"prop2": {"more": "props"}}}]}
 
     # _set_val should set nested lists
     context = []
     root = {"prop0": context}
-    prism._set_val("0/-/-", [1, 2, 3], context, root, "/prop0")
+    core._set_val("0/-/-", [1, 2, 3], context, root, "/prop0")
     assert root == {"prop0": [[[1, 2, 3]]]}
 
     # _set_val overwrites when adding a value to particular location in a list
     # TODO: is this the behavior we want?
     context = [[], ["will be overwritten"]]
     root = {"prop0": context}
-    prism._set_val("0/1", [1, 2, 3], context, root, "/prop0")
+    core._set_val("0/1", [1, 2, 3], context, root, "/prop0")
     assert root == {"prop0": [[], [1, 2, 3]]}
 
     # _set_val shouldn't make any modifications to `root` if `val == None`
     context = {"Pid": 1}
     root = {"prop0": [context]}
-    prism._set_val("0/prop1/prop2", None, context, root, "/prop0/0")
+    core._set_val("0/prop1/prop2", None, context, root, "/prop0/0")
     assert root == {"prop0": [context]}
 
     # _set_val should throw an exception given a value pointer with too many jumps
     with pytest.raises(AssertionError, match="too many jumps up"):
-        prism._set_val("3/prop1/prop2", {}, {}, {}, "/prop0/0")
+        core._set_val("3/prop1/prop2", {}, {}, {}, "/prop0/0")
 
     # _set_val should throw an exception given an invalid context pointer
     one_jumpup_pointer = "1/prop1"
     invalid_context_pointer = "/foo/bar"
     with pytest.raises(Exception, match="member 'foo' not found"):
-        prism._set_val(one_jumpup_pointer, {}, {}, {}, invalid_context_pointer)
+        core._set_val(one_jumpup_pointer, {}, {}, {}, invalid_context_pointer)
 
 
 def test_process_property():
@@ -1748,19 +1744,19 @@ def test_process_property():
 
     # _process_property throws a ParsingException on properties missing from the key lookup dict
     with pytest.raises(prism.ParsingException, match="Unexpected property"):
-        prism._process_property(prop, "123", {}, {}, {})
+        core._process_property(prop, "123", {}, {}, {})
 
     prop_def = {"merge_pointer": "/hello", "coerce": int, "key_name": "hello"}
 
     # _process_property behaves as expected on a simple example
     root = {}
-    files = prism._process_property(prop, "123", {prop: prop_def}, root, {})
+    files = core._process_property(prop, "123", {prop: prop_def}, root, {})
     assert root == {"hello": 123}
     assert files == []
 
     # _process_property catches unparseable raw values
     with pytest.raises(prism.ParsingException, match=f"Can't parse {prop!r}"):
-        prism._process_property(prop, "123abcd", {prop: prop_def}, {}, {})
+        core._process_property(prop, "123abcd", {prop: prop_def}, {}, {})
 
     # _process_property catches a missing gcs_uri_format on an artifact
     prop_def = {
@@ -1770,16 +1766,16 @@ def test_process_property():
         "key_name": "hello",
     }
     with pytest.raises(prism.ParsingException, match="Empty gcs_uri_format"):
-        prism._process_property(prop, "123", {prop: prop_def}, {}, {})
+        core._process_property(prop, "123", {prop: prop_def}, {}, {})
 
     # _process property catches gcs_uri_format strings that can't be processed
     prop_def["gcs_uri_format"] = "{foo}/{bar}"
     with pytest.raises(prism.ParsingException, match="Can't format gcs uri"):
-        prism._process_property(prop, "123", {prop: prop_def}, {}, {})
+        core._process_property(prop, "123", {prop: prop_def}, {}, {})
 
     prop_def["gcs_uri_format"] = {"format": prop_def["gcs_uri_format"]}
     with pytest.raises(prism.ParsingException, match="Can't format gcs uri"):
-        prism._process_property(prop, "123", {prop: prop_def}, {}, {})
+        core._process_property(prop, "123", {prop: prop_def}, {}, {})
 
 
 def test_set_data_format_edge_cases(monkeypatch):
@@ -1788,12 +1784,14 @@ def test_set_data_format_edge_cases(monkeypatch):
         validator.iter_errors.return_value = errs
         load_and_val = MagicMock()
         load_and_val.return_value = validator
-        monkeypatch.setattr(prism, "load_and_validate_schema", load_and_val)
+        monkeypatch.setattr(
+            "cidc_schemas.json_validation.load_and_validate_schema", load_and_val
+        )
 
     # _set_data_format bypasses exceptions that aren't jsonschema.exceptions.ValidationError instances.
     mock_iter_errors([Exception("non-validation error")])
     artifact = {}
-    prism._set_data_format({}, artifact)
+    prism_merger._set_data_format({}, artifact)
     assert artifact["data_format"] == "[NOT SET]"
 
     # _set_data_format bypasses validation errors not pertaining to the "data_format" field
@@ -1801,7 +1799,7 @@ def test_set_data_format_edge_cases(monkeypatch):
     val_error.validator = "const"
     val_error.path = ["some_path"]
     artifact = {}
-    prism._set_data_format({}, artifact)
+    prism_merger._set_data_format({}, artifact)
     assert artifact["data_format"] == "[NOT SET]"
 
     # _set_data_format bypasses validation errors on unrelated fields
@@ -1811,7 +1809,7 @@ def test_set_data_format_edge_cases(monkeypatch):
     val_error.instance = "unrelated instance"
     mock_iter_errors([val_error])
     artifact = {}
-    prism._set_data_format({}, artifact)
+    prism_merger._set_data_format({}, artifact)
     assert artifact["data_format"] == "[NOT SET]"
 
 
@@ -1829,7 +1827,7 @@ def test_prismify_unexpected_worksheet(monkeypatch):
         "test_unexpected_worksheet",
     )
     monkeypatch.setattr(
-        "cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_unexpected_worksheet"]
+        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES", ["test_unexpected_worksheet"]
     )
 
     _, _, errs = prismify(xlsx, template)
@@ -1863,7 +1861,7 @@ def test_prismify_preamble_parsing_error(monkeypatch):
         "test_preamble_parsing_error",
     )
     monkeypatch.setattr(
-        "cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_preamble_parsing_error"]
+        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES", ["test_preamble_parsing_error"]
     )
 
     _, _, errs = prismify(xlsx, template)
@@ -1914,7 +1912,7 @@ def test_prism_local_files_format_extension(monkeypatch):
     )
 
     monkeypatch.setattr(
-        "cidc_schemas.prism.SUPPORTED_TEMPLATES",
+        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES",
         ["test_prism_local_files_format_extension"],
     )
 
@@ -1981,7 +1979,7 @@ def test_prism_local_files_format_multiple_extensions(monkeypatch):
     )
 
     monkeypatch.setattr(
-        "cidc_schemas.prism.SUPPORTED_TEMPLATES",
+        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES",
         ["test_prism_local_files_format_extension"],
     )
 
@@ -1998,8 +1996,8 @@ def test_prism_local_files_format_multiple_extensions(monkeypatch):
     assert len(file_maps) == 4
     expected_extensions = ["tif", "tiff", "svs", "qptiff"]
     # check that we have only "proper" (checked by `check_errors`) extensions
-    local_extensions = [_get_file_ext(fm.local_path) for fm in file_maps]
-    gcs_extensions = [_get_file_ext(fm.gs_key) for fm in file_maps]
+    local_extensions = [core._get_file_ext(fm.local_path) for fm in file_maps]
+    gcs_extensions = [core._get_file_ext(fm.gs_key) for fm in file_maps]
     assert expected_extensions == gcs_extensions == local_extensions
 
 
@@ -2098,7 +2096,7 @@ def test_prism_joining_tabs(monkeypatch):
     )
 
     monkeypatch.setattr(
-        "cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_prism_joining_tabs"]
+        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES", ["test_prism_joining_tabs"]
     )
 
     xlsx, errs = XlTemplateReader.from_excel("workbook")
@@ -2188,7 +2186,7 @@ def test_prism_process_as_error(monkeypatch):
         "test_prism_process_as",
     )
     monkeypatch.setattr(
-        "cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_prism_process_as"]
+        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES", ["test_prism_process_as"]
     )
 
     xlsx, errs = XlTemplateReader.from_excel("workbook")
@@ -2316,7 +2314,7 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     )
 
     monkeypatch.setattr(
-        "cidc_schemas.prism.SUPPORTED_TEMPLATES",
+        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES",
         ["test_prism_many_artifacts_from_process_as_on_one_record"],
     )
 
@@ -2428,7 +2426,7 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
     # Test that the config generator blocks disallowed upload types
     upload_type = "foo"
     with pytest.raises(NotImplementedError, match=f"Not supported type:{upload_type}"):
-        prism._wes_pipeline_config(upload_type)
+        pipelines._wes_pipeline_config(upload_type)
 
     full_ct = copy.deepcopy(TEST_PRISM_TRIAL)
 
@@ -2451,7 +2449,7 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
     )
 
     # where we don't expect to have configs
-    if not template.type in _ANALYSIS_CONF_GENERATORS:
+    if not template.type in pipelines._ANALYSIS_CONF_GENERATORS:
         assert res == {}
         return
 
@@ -2498,7 +2496,7 @@ def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, templ
     )
 
     # where we don't expect to have configs
-    if not template.type in _ANALYSIS_CONF_GENERATORS:
+    if not template.type in pipelines._ANALYSIS_CONF_GENERATORS:
         assert res == {}
         return
 
@@ -2691,7 +2689,7 @@ def test_throw_on_collision():
         },
     }
 
-    merger = Merger(schema, strategies=PRISM_MERGE_STRATEGIES)
+    merger = Merger(schema, strategies=prism_merger.PRISM_MERGE_STRATEGIES)
 
     # Identical values, no collision - no error
     base = {"l": [{"cimac_id": "c1", "a": 1}]}
@@ -2721,7 +2719,7 @@ def test_overwrite_any():
         },
     }
 
-    merger = Merger(schema, strategies=PRISM_MERGE_STRATEGIES)
+    merger = Merger(schema, strategies=prism_merger.PRISM_MERGE_STRATEGIES)
 
     # Updates to "a" should be allowed
     base = {"a": {"foo": "bar"}, "b": 1}

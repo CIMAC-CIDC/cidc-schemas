@@ -343,7 +343,6 @@
                             ]
                         },
                         "Neoantigen MHC Class II": {
-                            "allow_empty": true,
                             "merge_pointer": "/neoantigen_class_ii_analyzed",
                             "type_ref": "assays/components/ngs/wes/wes_pair_analysis.json#properties/neoantigen_class_ii_analyzed",
                             "process_as": [

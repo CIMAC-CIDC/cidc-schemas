@@ -389,31 +389,32 @@ def _process_field_value(
     # E.g. we need to strip cimac_id='CM-TEST-0001-01' to 'CM-TEST-0001'
     # and put it in this sample parent's cimac_participant_id
     if "process_as" in field_def:
-        for extra_fdef in field_def["process_as"]:
-            # Calculating new "raw" val.
-            extra_fdef_raw_val = raw_val
-            # `eval` should be fine, as we're controlling the code argument in templates
-            if "parse_through" in extra_fdef:
-                try:
-                    extra_fdef_raw_val = eval(extra_fdef["parse_through"])(raw_val)
+        if raw_val != "FALSE":
+            for extra_fdef in field_def["process_as"]:
+                # Calculating new "raw" val.
+                extra_fdef_raw_val = raw_val
+                # `eval` should be fine, as we're controlling the code argument in templates
+                if "parse_through" in extra_fdef:
+                    try:
+                        extra_fdef_raw_val = eval(extra_fdef["parse_through"])(raw_val)
 
-                # catching everything, because of eval
-                except:
-                    extra_field_key = extra_fdef["merge_pointer"].rsplit("/", 1)[-1]
-                    raise ParsingException(
-                        f"Cannot extract {extra_field_key} from {key} value: {raw_val!r}"
-                    )
+                    # catching everything, because of eval
+                    except:
+                        extra_field_key = extra_fdef["merge_pointer"].rsplit("/", 1)[-1]
+                        raise ParsingException(
+                            f"Cannot extract {extra_field_key} from {key} value: {raw_val!r}"
+                        )
 
-            # recursive call
-            extra_changes, extra_files = _process_field_value(
-                key=key,
-                raw_val=extra_fdef_raw_val,  # new "raw" val
-                field_def=extra_fdef,  # merged field_def
-                format_context=format_context,
-            )
+                # recursive call
+                extra_changes, extra_files = _process_field_value(
+                    key=key,
+                    raw_val=extra_fdef_raw_val,  # new "raw" val
+                    field_def=extra_fdef,  # merged field_def
+                    format_context=format_context,
+                )
 
-            files.extend(extra_files)
-            changes.extend(extra_changes)
+                files.extend(extra_files)
+                changes.extend(extra_changes)
 
     return changes, files
 

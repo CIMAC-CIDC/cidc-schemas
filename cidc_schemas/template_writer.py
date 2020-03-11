@@ -114,7 +114,6 @@ class XlTemplateWriter:
         Initialize an Excel template writer.
         """
         self.DATA_ROWS = data_rows
-        self.MAIN_WIDTH = min_num_cols
         self.COLUMN_WIDTH_PX = column_width_px
 
     def write(self, outfile_path: str, template: Template):
@@ -321,7 +320,6 @@ class XlTemplateWriter:
                 name: subtable for name, subtable in schema["data_columns"].items()
             }
             num_data_columns = sum([len(columns) for columns in data_columns.values()])
-            self.MAIN_WIDTH = max(self.MAIN_WIDTH, num_data_columns)
 
         if write_title:
             self._write_title(self.template.schema["title"])
@@ -359,7 +357,7 @@ class XlTemplateWriter:
 
     def _write_title(self, title: str):
         self._write_type_annotation(RowType.TITLE)
-        preamble_range = xl_range(self.row, 1, self.row, self.MAIN_WIDTH)
+        preamble_range = xl_range(self.row, 1, self.row, 2)
         self.worksheet.merge_range(preamble_range, title.capitalize(), self.TITLE_THEME)
 
     def _write_preamble_row(self, entity_name: str, entity_schema: dict):
@@ -369,9 +367,8 @@ class XlTemplateWriter:
         self.worksheet.write(self.row, 1, entity_name.capitalize(), self.PREAMBLE_THEME)
         self._write_comment(self.row, 1, entity_schema)
 
-        # Format value cells
-        blank_row = [""] * (self.MAIN_WIDTH - 1)
-        self.worksheet.write_row(self.row, 2, blank_row, self.PREAMBLE_THEME)
+        # Format value cells next to entity name
+        self.worksheet.write(self.row, 2, "", self.PREAMBLE_THEME)
 
         # Add data validation if appropriate
         value_cell = xl_rowcol_to_cell(self.row, 2)

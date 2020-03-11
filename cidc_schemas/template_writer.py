@@ -119,25 +119,36 @@ class XlTemplateWriter:
         self.workbook = xlsxwriter.Workbook(outfile_path)
         self._init_themes()
 
-        first_sheet = True
-        for name, ws_schema in self.template.worksheets.items():
-            self._write_worksheet(name, ws_schema, write_title=first_sheet)
-            first_sheet = False
+        # pre create all sheets
+        for name in self.template.worksheets:
+            self.workbook.add_worksheet(name)
 
         self._write_legend(self.template.worksheets)
-        self._write_data_dict(self.template.worksheets)
+        self._data_dict = self._write_data_dict(self.template.worksheets)
+
+        first_sheet = True
+        for (name, ws_schema), worksheet in zip(
+            self.template.worksheets.items(), self.workbook.worksheets_objs
+        ):
+            self._write_worksheet(name, ws_schema, worksheet, write_title=first_sheet)
+            first_sheet = False
 
         self.workbook.close()
         self.workbook = None
 
+    __data_dict_worksheet = "Data Dictionary"
+
     def _write_data_dict(self, schemas):
         """ Adds a "Data Dictionary" tab that lists all used enums with allowed values."""
-        dd_ws = self.workbook.add_worksheet("Data Dictionary")
+        dd_ws = self.workbook.add_worksheet(self.__data_dict_worksheet)
         dd_ws.protect()
         dd_ws.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
 
-        # skipping one
+        # skipping the first, just because we feel like it =)
         col_counter = 1
+
+        # will return that, so we can use those enum lists for validation
+        data_dict_mapping = dict()
 
         for s_name, schema in schemas.items():
 
@@ -147,29 +158,41 @@ class XlTemplateWriter:
 
             if "preamble_rows" in schema:
                 for pre_f_name, pre_f_schema in schema["preamble_rows"].items():
-                    col_counter += self._write_data_dict_item(
+                    rows = self._write_data_dict_item(
                         dd_ws,
                         col_counter,
                         pre_f_name,
                         self.PREAMBLE_THEME,
                         pre_f_schema,
                     )
+                    # saving col num for an enum, so we'll be able to use it for validation
+                    data_dict_mapping[pre_f_name] = (col_counter, rows)
+                    col_counter += 1
 
             if "data_columns" in schema:
                 for section_name, section_schema in schema["data_columns"].items():
 
                     for data_f_name, data_f_schema in section_schema.items():
-                        col_counter += self._write_data_dict_item(
+                        rows = self._write_data_dict_item(
                             dd_ws,
                             col_counter,
                             data_f_name,
                             self.HEADER_THEME,
                             data_f_schema,
                         )
+                        # saving col num for an enum, so we'll be able to use it for validation
+                        data_dict_mapping[data_f_name] = (col_counter, rows)
+                        col_counter += 1
+
+        return data_dict_mapping
 
     @staticmethod
     def _write_data_dict_item(ws, col_n, name, theme, prop_schema):
-        """ Writes an enum property with allowed values."""
+        """
+        Writes an enum property with allowed values.
+
+        Returns: number of rows with values written
+        """
         enum = prop_schema.get("enum")
         if not enum:
             return 0
@@ -188,7 +211,7 @@ class XlTemplateWriter:
                     1 + i, col_n, comments[enum_value], XlThemes.COMMENT_THEME
                 )
 
-        return True
+        return len(enum)
 
     def _write_legend(self, schemas):
         """ Adds a "Legend" tab that lists all used properties with their types and descriptions."""
@@ -270,12 +293,12 @@ class XlTemplateWriter:
 
         return property_type
 
-    def _write_worksheet(self, name, schema, write_title=False):
+    def _write_worksheet(self, name, schema, workbook, write_title=False):
         """Write content to the given worksheet"""
         assert self.workbook, "_write_worksheet called without an initialized workbook"
         assert self.template, "_write_worksheet called without an initialized template"
 
-        self.worksheet = self.workbook.add_worksheet(name)
+        self.worksheet = workbook
         self.worksheet.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
 
         self.row = 0
@@ -341,7 +364,7 @@ class XlTemplateWriter:
 
         # Add data validation if appropriate
         value_cell = xl_rowcol_to_cell(self.row, 2)
-        self._write_validation(value_cell, entity_schema)
+        self._write_validation(value_cell, entity_name, entity_schema)
 
     def _write_data_multiheaders(self, data_columns: Dict[str, dict]):
         start_col = 1
@@ -386,7 +409,7 @@ class XlTemplateWriter:
         data_range = xl_range(
             self.row + 1, self.col, self.row + self.DATA_ROWS, self.col
         )
-        self._write_validation(data_range, entity_schema)
+        self._write_validation(data_range, entity_name, entity_schema)
 
     def _write_comment(self, row: int, col: int, entity_schema: dict):
         comment = entity_schema.get("description", "")
@@ -405,21 +428,33 @@ class XlTemplateWriter:
         if comment:
             self.worksheet.write_comment(row, col, comment, self.COMMENT_THEME)
 
-    def _write_validation(self, cell: str, entity_schema: dict):
-        validation = self._get_validation(cell, entity_schema)
+    def _write_validation(self, cell: str, entity_name: str, entity_schema: dict):
+        validation = self._get_validation(cell, entity_name, entity_schema)
         if validation:
             self.worksheet.data_validation(cell, validation)
 
     def _hide_type_annotations(self):
         self.worksheet.set_column(0, 0, None, None, {"hidden": True})
 
-    @staticmethod
-    def _get_validation(cell: str, property_schema: dict) -> Optional[dict]:
+    def _get_validation(
+        self, cell: str, entity_name: str, property_schema: dict
+    ) -> Optional[dict]:
         property_enum = property_schema.get("enum")
         property_format = property_schema.get("format")
         property_type = property_schema.get("type")
+
         if property_enum and len(property_enum) > 0:
-            return {"validate": "list", "source": property_enum}
+            col_num, validation_rows = self._data_dict[entity_name]
+
+            start = xl_rowcol_to_cell(
+                1, col_num
+            )  # 1 is to skip first row in DD sheet that is for header
+            stop = xl_rowcol_to_cell(validation_rows, col_num)
+            return {
+                "validate": "list",
+                "source": f"'{self.__data_dict_worksheet}'!{start}:{stop}",
+            }
+
         elif property_format == "date":
             return {
                 "validate": "custom",

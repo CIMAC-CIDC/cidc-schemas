@@ -176,9 +176,12 @@ class XlTemplateWriter:
                         self.PREAMBLE_THEME,
                         pre_f_schema,
                     )
-                    # saving col num for an enum, so we'll be able to use it for validation
-                    data_dict_mapping[pre_f_name] = (col_counter, rows)
-                    col_counter += 1
+                    if rows > 0:
+                        # saving col num for an enum, so we'll be able to use it for validation
+                        data_dict_mapping[pre_f_name] = _get_data_dict_mapping(
+                            rows, col_counter, self.__data_dict_worksheet_name
+                        )
+                        col_counter += 1
 
             if "data_columns" in schema:
                 for section_name, section_schema in schema["data_columns"].items():
@@ -191,11 +194,12 @@ class XlTemplateWriter:
                             self.HEADER_THEME,
                             data_f_schema,
                         )
-                        # saving col num for an enum, so we'll be able to use it for validation
-                        data_dict_mapping[data_f_name] = _get_data_dict_mapping(
-                            rows, col_counter, self.__data_dict_worksheet_name
-                        )
-                        col_counter += 1
+                        if rows > 0:
+                            # saving col num for an enum, so we'll be able to use it for validation
+                            data_dict_mapping[data_f_name] = _get_data_dict_mapping(
+                                rows, col_counter, self.__data_dict_worksheet_name
+                            )
+                            col_counter += 1
 
         return data_dict_mapping
 

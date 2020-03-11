@@ -6,9 +6,13 @@
   "description": "A single data record from mIF assay.",
   "additionalProperties": false,
   "properties": {
+    "cimac_id": {
+        "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
+        "$ref": "sample.json#properties/cimac_id"
+    },
     "files": {
       "$ref": "assays/components/imaging/mif_input.json"
     }
   },
-  "required": ["files"]
+  "required": ["cimac_id", "files"]
 }

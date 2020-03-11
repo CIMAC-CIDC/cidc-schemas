@@ -12,31 +12,25 @@
               "type_ref": "clinical_trial.json#properties/protocol_identifier"
           },
           "assay creator": {
-            "$ref": "assays/components/assay_core.json#properties/assay_creator"
+            "$ref": "assays/mif_assay.json#properties/assay_creator"
           },
           "slide scanner model": {
-            "$ref": "assays/components/image.json#properties/slide_scanner_model"
+            "$ref": "assays/mif_assay.json#properties/slide_scanner_model"
           },
-          "staining platform": {
-            "$ref": "assays/components/image.json#properties/staining_platform"
-          },
-          "autostainer model": {
-            "$ref": "assays/components/image.json#properties/autostainer_model"
+          "staining": {
+            "$ref": "assays/mif_assay.json#properties/staining"
           },
           "image analysis software": {
-            "$ref": "assays/components/image.json#properties/image_analysis_software"
+            "$ref": "assays/mif_assay.json#properties/image_analysis_software"
           },
           "image analysis software version": {
-            "$ref": "assays/components/image.json#properties/image_analysis_software_version"
+            "$ref": "assays/mif_assay.json#properties/image_analysis_software_version"
           },
           "cell segmentation model": {
-            "$ref": "assays/components/image.json#properties/cell_segmentation_model"
+            "$ref": "assays/mif_assay.json#properties/cell_segmentation_model"
           },
           "positive cell detection model": {
-            "$ref": "assays/components/image.json#properties/positive_cell_detection"
-          },
-          "protocol name": {
-            "$ref": "assays/components/image.json#properties/protocol_name"
+            "$ref": "assays/mif_assay.json#properties/positive_cell_detection"
           }
         },
         "data_columns": {
@@ -55,9 +49,6 @@
             },
             "Lot#": {
               "$ref": "assays/components/antibody.json#properties/lot_num"
-            },
-            "Staining Order": {
-              "$ref": "assays/components/antibody.json#properties/staining_order"
             },
             "Fluor Wavelength": {
               "$ref": "assays/components/mif_antibody.json#properties/fluor_wavelength"
@@ -90,16 +81,13 @@
               "$ref": "participant.json#properties/cimac_participant_id"
             },
             "cimac sample id": {
-              "$ref": "sample.json#properties/cimac_sample_id"
+              "$ref": "sample.json#properties/cimac_id"
             },
             "internal slide id": {
               "$ref": "assays/components/imaging_data.json#properties/internal_slide_id"
             },
-            "time point": {
-              "$ref": "sample.json#properties/time_point"
-            },
-            "protocol_name": {
-              "$ref": "assays/components/imaging_data.json#properties/protocol_name"
+            "collection event": {
+              "$ref": "sample.json#properties/collection_event_name"
             },
             "staining date": {
               "$ref": "assays/components/imaging_data.json#properties/staining_date"

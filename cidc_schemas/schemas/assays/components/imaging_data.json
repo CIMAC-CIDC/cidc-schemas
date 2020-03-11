@@ -6,6 +6,14 @@
   "type": "object",
   "inheritableBase": true,
   "properties": {
+    "staining": {
+      "description": "'manual' or Model version of the autostainer instrument used for tissue sample labeling.",
+      "type": "string",
+      "enum": [
+        "manual",
+        "Bond RX"
+      ]
+    },
     "internal_slide_id": {
       "description": "Identification number used for internal imaging slide.",
       "type": "string"

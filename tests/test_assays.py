@@ -327,7 +327,7 @@ def test_ihc():
 def test_mif():
 
     # create the mif object
-    image = {"slide_scanner_model": "Vectra 2.0", "protocol_name": "E4412"}
+    image = {"slide_scanner_model": "Vectra 2.0"}
 
     imaging_data = {"internal_slide_id": "a1s1e1"}
     obj = {**ASSAY_CORE, **image, **imaging_data}  # merge three dictionaries
@@ -343,8 +343,7 @@ def test_mif():
     text = ARTIFACT_OBJ.copy()
     text["data_format"] = "TEXT"
     record = {
-        "project_inform_folder": "dummy",
-        "mif_exported_data_folder": "dummy_value",
+        "cimac_id": "CTTTPPPSA.00",
         "files": {
             "whole_slide_imaging_file": image_1,
             "roi_annotations": text,
@@ -372,7 +371,7 @@ def test_mif():
     validator.validate(obj)
 
     # assert negative behaviors
-    del obj["records"][0]["project_inform_folder"]
+    del obj["records"][0]["files"]["whole_slide_imaging_file"]
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)
 

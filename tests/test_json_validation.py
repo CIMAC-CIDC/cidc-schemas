@@ -154,7 +154,7 @@ def do_resolve(schema_path):
 
     with open(os.path.join(TEST_SCHEMA_DIR, schema_path)) as f:
         spec = json.load(f)
-        return _resolve_refs(base_uri, spec)
+        return _resolve_refs(base_uri, spec, schema_path)
 
 
 def test_resolve_refs():

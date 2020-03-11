@@ -361,7 +361,7 @@ def _process_field_value(
     # E.g. we need to strip cimac_id='CM-TEST-0001-01' to 'CM-TEST-0001'
     # and put it in this sample parent's cimac_participant_id
     if "process_as" in field_def:
-        if raw_val != "FALSE":
+        if raw_val != "False":
             for extra_fdef in field_def["process_as"]:
                 # Calculating new "raw" val.
                 extra_fdef_raw_val = raw_val

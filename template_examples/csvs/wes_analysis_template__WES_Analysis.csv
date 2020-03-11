@@ -3,5 +3,5 @@
 
 "","WES Runs"
 "#h","Run id","Tumor cimac id","Normal cimac id","Neoantigen mhc class ii"
-"#d","run_1","CTTTPP111.00","CTTTPP111.00"
+"#d","run_1","CTTTPP111.00","CTTTPP111.00","True"
 "#d","run_2","CTTTPP121.00","CTTTPP121.00"

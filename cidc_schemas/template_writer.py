@@ -32,6 +32,17 @@ def row_type_from_string(maybe_type: str) -> Optional[RowType]:
         return None
 
 
+def _get_data_dict_mapping(
+    validation_rows, validation_column, data_dict_worksheet_name
+):
+    start = xl_rowcol_to_cell(
+        1, validation_column
+    )  # 1 is to skip first row in DD sheet that is for header
+    stop = xl_rowcol_to_cell(validation_rows, validation_column)
+
+    return f"'{data_dict_worksheet_name}'!{start}:{stop}"
+
+
 class XlThemes:
     """Data class containing format specifications used in `XlTemplateWriter`"""
 
@@ -181,23 +192,12 @@ class XlTemplateWriter:
                             data_f_schema,
                         )
                         # saving col num for an enum, so we'll be able to use it for validation
-                        data_dict_mapping[data_f_name] = self._get_data_dict_mapping(
+                        data_dict_mapping[data_f_name] = _get_data_dict_mapping(
                             rows, col_counter, self.__data_dict_worksheet_name
                         )
                         col_counter += 1
 
         return data_dict_mapping
-
-    @staticmethod
-    def _get_data_dict_mapping(
-        validation_rows, validation_column, data_dict_worksheet_name
-    ):
-        start = xl_rowcol_to_cell(
-            1, validation_column
-        )  # 1 is to skip first row in DD sheet that is for header
-        stop = xl_rowcol_to_cell(validation_rows, validation_column)
-
-        return f"'{data_dict_worksheet_name}'!{start}:{stop}"
 
     @staticmethod
     def _write_data_dict_item(ws, col_n, name, theme, prop_schema):

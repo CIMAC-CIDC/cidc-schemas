@@ -1,6 +1,6 @@
 # cidc-schemas
-| Branch                                               | Status                                                                                                                            | Maintainability | Test Coverage |
-| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --- | --- |
+| Branch                                               | Status                                                                                                                            | Maintainability                                                                                                                                                          | Test Coverage                                                                                                                                                      |
+| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | [master](https://cimac-cidc.github.io/cidc-schemas/) | [![Build Status](https://travis-ci.org/CIMAC-CIDC/cidc-schemas.svg?branch=master)](https://travis-ci.org/CIMAC-CIDC/cidc-schemas) | [![Maintainability](https://api.codeclimate.com/v1/badges/3f989b974663df81ef45/maintainability)](https://codeclimate.com/github/CIMAC-CIDC/cidc-schemas/maintainability) | [![Test Coverage](https://api.codeclimate.com/v1/badges/3f989b974663df81ef45/test_coverage)](https://codeclimate.com/github/CIMAC-CIDC/cidc-schemas/test_coverage) |
 
 This repository contains formal definitions of the CIDC metadata model using [json-schema](https://json-schema.org/) syntax and vocabulary.
@@ -110,12 +110,4 @@ Check that a JSON schema conforms to the JSON Schema specifications.
 
 ```bash
 cidc_schemas validate_schema -f shipping_core.json
-```
-
-### Convert between yaml and json
-
-The CLI comes with a little utility for converting between yaml and json files.
-
-```bash
-cidc_schemas convert --to_json <some_yaml_file>
 ```

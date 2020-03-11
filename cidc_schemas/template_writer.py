@@ -32,7 +32,7 @@ def row_type_from_string(maybe_type: str) -> Optional[RowType]:
         return None
 
 
-def _get_data_dict_mapping(
+def _format_validation_range(
     validation_rows, validation_column, data_dict_worksheet_name
 ):
     start = xl_rowcol_to_cell(
@@ -147,11 +147,11 @@ class XlTemplateWriter:
         self.workbook.close()
         self.workbook = None
 
-    __data_dict_worksheet_name = "Data Dictionary"
+    __data_dict_sheet_name = "Data Dictionary"
 
     def _write_data_dict(self, schemas):
         """ Adds a "Data Dictionary" tab that lists all used enums with allowed values."""
-        dd_ws = self.workbook.add_worksheet(self.__data_dict_worksheet_name)
+        dd_ws = self.workbook.add_worksheet(self.__data_dict_sheet_name)
         dd_ws.protect()
         dd_ws.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
 
@@ -167,39 +167,33 @@ class XlTemplateWriter:
             #     0, , f"Legend for tab {s_name!r}", self.TITLE_THEME
             # )
 
-            if "preamble_rows" in schema:
-                for pre_f_name, pre_f_schema in schema["preamble_rows"].items():
+            for pre_f_name, pre_f_schema in schema.get("preamble_rows", {}).items():
+                rows = self._write_data_dict_item(
+                    dd_ws, col_counter, pre_f_name, self.PREAMBLE_THEME, pre_f_schema
+                )
+                if rows > 0:
+                    # saving Data Dict range to use for validation
+                    data_dict_mapping[pre_f_name] = _format_validation_range(
+                        rows, col_counter, self.__data_dict_sheet_name
+                    )
+                    col_counter += 1
+
+            for section_name, section_schema in schema.get("data_columns", {}).items():
+
+                for data_f_name, data_f_schema in section_schema.items():
                     rows = self._write_data_dict_item(
                         dd_ws,
                         col_counter,
-                        pre_f_name,
-                        self.PREAMBLE_THEME,
-                        pre_f_schema,
+                        data_f_name,
+                        self.HEADER_THEME,
+                        data_f_schema,
                     )
                     if rows > 0:
-                        # saving col num for an enum, so we'll be able to use it for validation
-                        data_dict_mapping[pre_f_name] = _get_data_dict_mapping(
-                            rows, col_counter, self.__data_dict_worksheet_name
+                        # saving Data Dict range to use for validation
+                        data_dict_mapping[data_f_name] = _format_validation_range(
+                            rows, col_counter, self.__data_dict_sheet_name
                         )
                         col_counter += 1
-
-            if "data_columns" in schema:
-                for section_name, section_schema in schema["data_columns"].items():
-
-                    for data_f_name, data_f_schema in section_schema.items():
-                        rows = self._write_data_dict_item(
-                            dd_ws,
-                            col_counter,
-                            data_f_name,
-                            self.HEADER_THEME,
-                            data_f_schema,
-                        )
-                        if rows > 0:
-                            # saving col num for an enum, so we'll be able to use it for validation
-                            data_dict_mapping[data_f_name] = _get_data_dict_mapping(
-                                rows, col_counter, self.__data_dict_worksheet_name
-                            )
-                            col_counter += 1
 
         return data_dict_mapping
 
@@ -246,36 +240,34 @@ class XlTemplateWriter:
                 row_counter, 1, f"Legend for tab {s_name!r}", self.TITLE_THEME
             )
 
-            if "preamble_rows" in schema:
-                for pre_f_name, pre_f_schema in schema["preamble_rows"].items():
+            for pre_f_name, pre_f_schema in schema.get("preamble_rows", {}).items():
+                row_counter += 1
+                self._write_legend_item(
+                    legend_ws,
+                    row_counter,
+                    pre_f_name,
+                    self.PREAMBLE_THEME,
+                    pre_f_schema,
+                )
+
+            for section_name, section_schema in schema.get("data_columns", {}).items():
+                row_counter += 1
+                legend_ws.write(
+                    row_counter,
+                    1,
+                    f"Section {section_name!r} of tab {s_name!r}",
+                    self.DIRECTIVE_THEME,
+                )
+
+                for data_f_name, data_f_schema in section_schema.items():
                     row_counter += 1
                     self._write_legend_item(
                         legend_ws,
                         row_counter,
-                        pre_f_name,
-                        self.PREAMBLE_THEME,
-                        pre_f_schema,
+                        data_f_name,
+                        self.HEADER_THEME,
+                        data_f_schema,
                     )
-
-            if "data_columns" in schema:
-                for section_name, section_schema in schema["data_columns"].items():
-                    row_counter += 1
-                    legend_ws.write(
-                        row_counter,
-                        1,
-                        f"Section {section_name!r} of tab {s_name!r}",
-                        self.DIRECTIVE_THEME,
-                    )
-
-                    for data_f_name, data_f_schema in section_schema.items():
-                        row_counter += 1
-                        self._write_legend_item(
-                            legend_ws,
-                            row_counter,
-                            data_f_name,
-                            self.HEADER_THEME,
-                            data_f_schema,
-                        )
 
     @classmethod
     def _write_legend_item(cls, ws, row_n, name, theme, prop_schema):

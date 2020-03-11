@@ -364,6 +364,11 @@ def _process_field_value(
         for extra_fdef in field_def["process_as"]:
             # Calculating new "raw" val.
             extra_fdef_raw_val = raw_val
+
+            if extra_fdef_raw_val is False:
+                # allows to dynamically skip some `process_as`s
+                continue
+
             # `eval` should be fine, as we're controlling the code argument in templates
             if "parse_through" in extra_fdef:
                 try:
@@ -375,10 +380,6 @@ def _process_field_value(
                     raise ParsingException(
                         f"Cannot extract {extra_field_key} from {key} value: {raw_val!r}"
                     )
-
-            if extra_fdef_raw_val is False:
-                # allows to dynamically skip some `process_as`s
-                continue
 
             # recursive call
             extra_changes, extra_files = _process_field_value(

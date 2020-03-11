@@ -347,14 +347,14 @@
                             "type_ref": "assays/components/ngs/wes/wes_pair_analysis.json#properties/neoantigen_class_ii_analyzed",
                             "process_as": [
                                 {
-                                    "parse_through": "lambda analyzed: False if analyzed = 'FALSE' else f'analysis/neoantigen/{analyzed}/MHC_Class_II/{analyzed}.all_epitopes.tsv'",
+                                    "parse_through": "lambda analyzed: False if {analyzed}=='FALSE' else f'analysis/neoantigen/{analyzed}/MHC_Class_II/{analyzed}.all_epitopes.tsv'",
                                     "merge_pointer": "/neoantigen/mhc_class_II_epitopes",
                                     "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/MHC_Class_II_all_epitopes.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda analyzed: False if analyzed = 'FALSE' else f'analysis/neoantigen/{analyzed}/MHC_Class_II/{analyzed}.filtered.condensed.ranked.tsv'",
+                                    "parse_through": "lambda analyzed: False if {analyzed}=='FALSE' else f'analysis/neoantigen/{analyzed}/MHC_Class_II/{analyzed}.filtered.condensed.ranked.tsv'",
                                     "merge_pointer": "/neoantigen/mhc_class_II_filtered_condensed_ranked",
                                     "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/MHC_Class_II_filtered_condensed_ranked.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",

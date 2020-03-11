@@ -12,7 +12,7 @@ from typing import Optional, List, Callable, Union
 
 import dateparser
 import jsonschema
-from jsonschema.exceptions import ValidationError
+from jsonschema.exceptions import ValidationError, RefResolutionError
 
 from .constants import SCHEMA_DIR, METASCHEMA_PATH
 from .util import get_all_paths, split_python_style_path, JSON
@@ -259,7 +259,7 @@ def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
     return node
 
 
-def _resolve_refs(base_uri: str, json_spec: dict) -> dict:
+def _resolve_refs(base_uri: str, json_spec: dict, context: str) -> dict:
     """
     Resolve JSON Schema references in `json_spec` relative to `base_uri`,
     return `json_spec` with all references inlined.
@@ -272,13 +272,19 @@ def _resolve_refs(base_uri: str, json_spec: dict) -> dict:
             # it back to _resolve_refs to resolve them. This way,
             # we can fully resolve schemas with nested refs.
 
-            res = _resolve_refs(base_uri, resolved_spec)
+            try:
+                res = _resolve_refs(base_uri, resolved_spec, ref)
+            except RefResolutionError as e:
+                raise RefResolutionError(f"Error resolving '$ref':{ref!r}: {e}") from e
 
             # as reslover uses cache we don't want to return mutable
             # objects, so we make a copy
             return copy.deepcopy(res)
 
-    return _map_refs(json_spec, _resolve_ref)
+    try:
+        return _map_refs(json_spec, _resolve_ref)
+    except RefResolutionError as e:
+        raise RefResolutionError(f"Error resolving refs in {context!r}: {e}") from e
 
 
 def _load_dont_validate_schema(
@@ -309,7 +315,7 @@ def _load_dont_validate_schema(
         if on_refs:
             schema = _map_refs(json_spec, on_refs)
         else:
-            schema = _resolve_refs(base_uri, json_spec)
+            schema = _resolve_refs(base_uri, json_spec, schema_path)
 
     return schema
 

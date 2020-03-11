@@ -1734,15 +1734,13 @@ def test_set_val():
 
     # _set_val should throw an exception given a value pointer with too many jumps
     with pytest.raises(AssertionError, match="too many jumps up"):
-        prism._set_val("3/prop1/prop2", {"more": "props"}, context, root, "/prop0/0")
+        prism._set_val("3/prop1/prop2", {}, {}, {}, "/prop0/0")
 
     # _set_val should throw an exception given an invalid context pointer
-    context = {"Pid": 1}
-    root = {"prop0": [context]}
+    one_jumpup_pointer = "1/prop1"
+    invalid_context_pointer = "/foo/bar"
     with pytest.raises(Exception, match="member 'foo' not found"):
-        prism._set_val(
-            "1/prop1/prop2", {"more": "props"}, context, root, "foo/bar/buzz/baz"
-        )
+        prism._set_val(one_jumpup_pointer, {}, {}, {}, invalid_context_pointer)
 
 
 def test_process_property():
@@ -1761,7 +1759,7 @@ def test_process_property():
     assert files == []
 
     # _process_property catches unparseable raw values
-    with pytest.raises(prism.ParsingException, match="Can't parse 'prop0'"):
+    with pytest.raises(prism.ParsingException, match=f"Can't parse {prop!r}"):
         prism._process_property(prop, "123abcd", {prop: prop_def}, {}, {})
 
     # _process_property catches a missing gcs_uri_format on an artifact

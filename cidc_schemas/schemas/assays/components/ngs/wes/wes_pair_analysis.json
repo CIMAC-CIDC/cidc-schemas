@@ -22,6 +22,10 @@
     "germline": {
       "$ref": "assays/components/ngs/wes/germline.json"
     },
+    "neoantigen_class_ii_analyzed": {
+      "type": "boolean",
+      "description": "Boolean to indicate whether Neoantigen analysis was performed."
+    },
     "neoantigen": {
       "$ref": "assays/components/ngs/wes/neoantigen.json"
     },

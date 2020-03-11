@@ -347,7 +347,7 @@
                             "type_ref": "assays/components/ngs/wes/wes_pair_analysis.json#properties/neoantigen_class_ii_analyzed",
                             "process_as": [
                                 {
-                                    "parse_through": "lambda run: f'analysis/neoantigen/{run}/MHC_Class_II{run}.all_epitopes.tsv'",
+                                    "parse_through": "lambda run: f'analysis/neoantigen/{run}/MHC_Class_II/{run}.all_epitopes.tsv'",
                                     "merge_pointer": "/neoantigen/mhc_class_II_epitopes",
                                     "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/MHC_Class_II_all_epitopes.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",

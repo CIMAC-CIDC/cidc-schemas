@@ -136,11 +136,11 @@ class XlTemplateWriter:
         self.workbook.close()
         self.workbook = None
 
-    __data_dict_worksheet = "Data Dictionary"
+    __data_dict_worksheet_name = "Data Dictionary"
 
     def _write_data_dict(self, schemas):
         """ Adds a "Data Dictionary" tab that lists all used enums with allowed values."""
-        dd_ws = self.workbook.add_worksheet(self.__data_dict_worksheet)
+        dd_ws = self.workbook.add_worksheet(self.__data_dict_worksheet_name)
         dd_ws.protect()
         dd_ws.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
 
@@ -181,10 +181,23 @@ class XlTemplateWriter:
                             data_f_schema,
                         )
                         # saving col num for an enum, so we'll be able to use it for validation
-                        data_dict_mapping[data_f_name] = (col_counter, rows)
+                        data_dict_mapping[data_f_name] = self._get_data_dict_mapping(
+                            rows, col_counter, self.__data_dict_worksheet_name
+                        )
                         col_counter += 1
 
         return data_dict_mapping
+
+    @staticmethod
+    def _get_data_dict_mapping(
+        validation_rows, validation_column, data_dict_worksheet_name
+    ):
+        start = xl_rowcol_to_cell(
+            1, validation_column
+        )  # 1 is to skip first row in DD sheet that is for header
+        stop = xl_rowcol_to_cell(validation_rows, validation_column)
+
+        return f"'{data_dict_worksheet_name}'!{start}:{stop}"
 
     @staticmethod
     def _write_data_dict_item(ws, col_n, name, theme, prop_schema):
@@ -429,31 +442,26 @@ class XlTemplateWriter:
             self.worksheet.write_comment(row, col, comment, self.COMMENT_THEME)
 
     def _write_validation(self, cell: str, entity_name: str, entity_schema: dict):
-        validation = self._get_validation(cell, entity_name, entity_schema)
+        validation = self._get_validation(
+            cell, entity_name, entity_schema, self._data_dict
+        )
         if validation:
             self.worksheet.data_validation(cell, validation)
 
     def _hide_type_annotations(self):
         self.worksheet.set_column(0, 0, None, None, {"hidden": True})
 
+    @staticmethod
     def _get_validation(
-        self, cell: str, entity_name: str, property_schema: dict
+        cell: str, entity_name: str, property_schema: dict, data_dict_validations: dict
     ) -> Optional[dict]:
         property_enum = property_schema.get("enum")
         property_format = property_schema.get("format")
         property_type = property_schema.get("type")
 
         if property_enum and len(property_enum) > 0:
-            col_num, validation_rows = self._data_dict[entity_name]
-
-            start = xl_rowcol_to_cell(
-                1, col_num
-            )  # 1 is to skip first row in DD sheet that is for header
-            stop = xl_rowcol_to_cell(validation_rows, col_num)
-            return {
-                "validate": "list",
-                "source": f"'{self.__data_dict_worksheet}'!{start}:{stop}",
-            }
+            data_dict_validation_range = data_dict_validations[entity_name]
+            return {"validate": "list", "source": data_dict_validation_range}
 
         elif property_format == "date":
             return {

@@ -93,18 +93,6 @@ def interface() -> argparse.Namespace:
     )
     schema_parser.set_defaults(func=validate_schema)
 
-    # Parser for schema file format conversion
-    conversion_parser = subparsers.add_parser(
-        "convert", help="Convert a yaml file to a json file, or vice versa"
-    )
-    conversion_parser.add_argument(
-        "--to_json", help="Path to yaml file to convert to json"
-    )
-    conversion_parser.add_argument(
-        "--to_yaml", help="Path to json file to convert to yaml"
-    )
-    conversion_parser.set_defaults(func=convert)
-
     return parser.parse_args()
 
 
@@ -142,15 +130,6 @@ def validate_schema(args: argparse.Namespace):
     success = load_and_validate_schema(args.schema_file, abs_schemas_dir)
     if success:
         print(f"{args.schema_file} is valid")
-
-
-def convert(args: argparse.Namespace):
-    if args.to_json:
-        json_file = util.yaml_to_json(args.to_json)
-        print(f"Wrote {args.to_json} as json to {json_file}")
-    elif args.to_yaml:
-        yaml_file = util.json_to_yaml(args.to_yaml)
-        print(f"Wrote {args.to_yaml} as yaml to {yaml_file}")
 
 
 if __name__ == "__main__":

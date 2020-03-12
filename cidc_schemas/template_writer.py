@@ -147,7 +147,7 @@ class XlTemplateWriter:
         self.workbook.close()
         self.workbook = None
 
-    __data_dict_sheet_name = "Data Dictionary"
+    _data_dict_sheet_name = "Data Dictionary"
 
     def _write_data_dict(self, schemas):
         """ 
@@ -156,7 +156,7 @@ class XlTemplateWriter:
         Returns: a dict mapping field names to data dictionary sheet ranges of enum
                     values to be used for validation
         """
-        dd_ws = self.workbook.add_worksheet(self.__data_dict_sheet_name)
+        dd_ws = self.workbook.add_worksheet(self._data_dict_sheet_name)
         dd_ws.protect()
         dd_ws.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
 
@@ -180,7 +180,7 @@ class XlTemplateWriter:
                 if rows > 0:
                     # saving Data Dict range to use for validation
                     data_dict_mapping[field_name] = _format_validation_range(
-                        rows, col_counter, self.__data_dict_sheet_name
+                        rows, col_counter, self._data_dict_sheet_name
                     )
                     col_counter += 1
 
@@ -193,7 +193,7 @@ class XlTemplateWriter:
                     if rows > 0:
                         # saving Data Dict range to use for validation
                         data_dict_mapping[field_name] = _format_validation_range(
-                            rows, col_counter, self.__data_dict_sheet_name
+                            rows, col_counter, self._data_dict_sheet_name
                         )
                         col_counter += 1
 

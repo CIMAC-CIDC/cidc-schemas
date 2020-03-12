@@ -9,6 +9,8 @@ from cidc_schemas.template_writer import (
     _format_validation_range,
 )
 
+import openpyxl
+
 
 def test_get_validation():
     """Test validation information extraction for template fields"""
@@ -43,3 +45,19 @@ def test_row_type_from_string():
     assert row_type_from_string("#t") == RowType.TITLE
     assert row_type_from_string("t") == None
     assert row_type_from_string("") == None
+
+
+def test_enum_validation_in_template(tiny_template, tmpdir):
+    """Test that the reader can load from a small xlsx file"""
+    XlTemplateWriter().write(tmpdir.join("test_enum_validation.xlsx"), tiny_template)
+
+    workbook = openpyxl.load_workbook(tmpdir.join("test_enum_validation.xlsx"))
+
+    worksheet = workbook["TEST_SHEET"]
+
+    for v in worksheet.data_validations.dataValidation:
+        if v.type == "list":
+            # checking enum in .xlsx
+            assert (
+                str(v.formula1) == f"{XlTemplateWriter._data_dict_sheet_name!r}!D2:D3"
+            )

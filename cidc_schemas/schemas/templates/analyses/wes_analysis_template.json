@@ -70,20 +70,6 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda run: f'analysis/neoantigen/{run}/MHC_Class_II{run}.all_epitopes.tsv'",
-                                    "merge_pointer": "/neoantigen/mhc_class_II_epitopes",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/MHC_Class_II_all_epitopes.tsv",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'analysis/neoantigen/{run}/MHC_Class_II/{run}.filtered.condensed.ranked.tsv'",
-                                    "merge_pointer": "/neoantigen/mhc_class_II_filtered_condensed_ranked",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/MHC_Class_II_filtered_condensed_ranked.tsv",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
                                     "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.output.vcf'",
                                     "merge_pointer": "/somatic/vcf_tnscope_output",
                                     "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/vcf_tnscope_output.vcf",
@@ -209,7 +195,7 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_coverage_metrics.txt.sample_summary.txt'",
+                                    "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_coverage_metrics.sample_summary.txt'",
                                     "merge_pointer": "/tumor/metrics/coverage_metrics_summary",
                                     "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/tumor/{tumor cimac id}/coverage_metrics_summary.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
@@ -306,7 +292,7 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_coverage_metrics.txt.sample_summary.txt'",
+                                    "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_coverage_metrics.sample_summary.txt'",
                                     "merge_pointer": "/normal/metrics/coverage_metrics_summary",
                                     "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/normal/{normal cimac id}/coverage_metrics_summary.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",

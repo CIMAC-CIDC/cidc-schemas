@@ -78,15 +78,15 @@ class XlTemplateReader:
                 typ, *values = [col.value for col in row]
                 row_type = row_type_from_string(typ)
 
+                # If entire row is empty, skip it (this happens at the bottom of the data table, e.g.)
+                if not any(values):
+                    continue
+
                 # If no recognized row type found, don't parse this row
                 if not row_type:
                     logger.info(
-                        f"No recognized row type found in row {row_num} - skipping."
+                        f"No recognized row type found in row {worksheet_name}/{row_num} - skipping."
                     )
-                    continue
-
-                # If entire row is empty, skip it (this happens at the bottom of the data table, e.g.)
-                if not any(values):
                     continue
 
                 # Filter empty cells from the end of the header row

@@ -262,7 +262,8 @@ def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
 def _resolve_refs(base_uri: str, json_spec: dict, context: str) -> dict:
     """
     Resolve JSON Schema references in `json_spec` relative to `base_uri`,
-    return `json_spec` with all references inlined.
+    return `json_spec` with all references inlined. `context` is used to
+    format error to provide (wait for it) context.
     """
     resolver = jsonschema.RefResolver(base_uri, json_spec)
 

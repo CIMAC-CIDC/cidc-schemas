@@ -32,12 +32,14 @@ def tiny_template():
     test_property = {"$id": "test_property", "type": "string"}
     test_date = {"type": "string", "format": "date"}
     test_time = {"type": "string", "format": "time"}
+    test_enum = {"type": "string", "enum": ["enum_val_1", "enum_val_2"]}
     test_number = {"type": "number"}
     test_fields = {
         "test_property": test_property,
         "test_date": test_date,
         "test_time": test_time,
         "test_number": test_number,
+        "test_enum": test_enum,
     }
 
     tiny_template_schema = {

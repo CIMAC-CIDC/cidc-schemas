@@ -22,10 +22,6 @@
     "germline": {
       "$ref": "assays/components/ngs/wes/germline.json"
     },
-    "neoantigen_class_ii_analyzed": {
-      "type": "boolean",
-      "description": "Boolean to indicate whether Neoantigen MHC Class 2 analysis was performed: true/false"
-    },
     "neoantigen": {
       "$ref": "assays/components/ngs/wes/neoantigen.json"
     },

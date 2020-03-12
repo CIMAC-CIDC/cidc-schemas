@@ -365,7 +365,7 @@ def _process_field_value(
             # Calculating new "raw" val.
             extra_fdef_raw_val = raw_val
 
-            if extra_fdef_raw_val is False:
+            if extra_fdef_raw_val == "False":
                 # allows to dynamically skip some `process_as`s
                 continue
 

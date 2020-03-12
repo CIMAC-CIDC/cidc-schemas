@@ -2198,6 +2198,116 @@ def test_prism_process_as_error(monkeypatch):
     assert "Cannot extract cimac_participant_id from SA_id value: None" == str(errs[0])
 
 
+def test_prism_skip_process_as(monkeypatch):
+    """ Tests whether prism can skip process_as, if parse_through is False"""
+
+    mock_XlTemplateReader_from_excel(
+        {
+            "analysis": [
+                ["#h", "run_id", "sid1", "sid2"],
+                ["#d", "False", "sid1_0", "sid2_0"],
+            ]
+        },
+        monkeypatch,
+    )
+
+    template = Template(
+        {
+            "$id": "test_analysis",
+            "title": "...",
+            "prism_template_root_object_schema": "assays/components/ngs/wes/wes_analysis.json",
+            "prism_template_root_object_pointer": "/analysis/wes_analysis",
+            "properties": {
+                "worksheets": {
+                    "analysis": {
+                        "prism_data_object_pointer": "/pair_runs/-",
+                        "preamble_rows": {},
+                        "data_columns": {
+                            "section name": {
+                                "run_id": {
+                                    "merge_pointer": "/run_id",
+                                    "type": "string",
+                                    "process_as": [
+                                        {
+                                            "parse_through": "lamba x: False if x=='False' else lambda x: f'analysis/purity/{x}/{x}run-output-2.txt'",
+                                            "merge_pointer": "/run-output-1",
+                                            "gcs_uri_format": "{run_id}/run-output-1.txt",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        }
+                                    ],
+                                },
+                                "sid1": {
+                                    "merge_pointer": "/sample1/id",
+                                    "type": "string",
+                                    "process_as": [
+                                        {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.output1.bam'",
+                                            "merge_pointer": "/sample1/output1",
+                                            "gcs_uri_format": "{run_id}/{sid1}/output1.bam",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        }
+                                    ],
+                                },
+                                "sid2": {
+                                    "merge_pointer": "/sample2/id",
+                                    "type": "string",
+                                    "process_as": [
+                                        {
+                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.output1.bam'",
+                                            "merge_pointer": "/sample2/output1",
+                                            "gcs_uri_format": "{run_id}/{sid2}/output1.bam",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        }
+                                    ],
+                                },
+                            }
+                        },
+                    }
+                }
+            },
+        },
+        "test_prism_skip_process_as",
+    )
+
+    monkeypatch.setattr(
+        "cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_prism_skip_process_as"]
+    )
+
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    patch, file_maps, errs = prismify(xlsx, template)
+    assert len(errs) == 0
+
+    local_paths = [e.local_path for e in file_maps]
+    uuids = [e.upload_placeholder for e in file_maps]
+
+    assert local_paths != uuids
+
+    assert 1 == len(patch["analysis"]["wes_analysis"]["pair_runs"])
+
+    run_uuids_in_json = [
+        art["upload_placeholder"]
+        for wes in patch["analysis"]["wes_analysis"]["pair_runs"]
+        for art in wes.values()
+        if "upload_placeholder" in art
+    ]
+    sample_uuids_in_json = [
+        v["upload_placeholder"]
+        for wes in patch["analysis"]["wes_analysis"]["pair_runs"]
+        for sample in wes.values()
+        if "id" in sample
+        for v in sample.values()
+        if "upload_placeholder" in v
+    ]
+
+    assert 0 == len(run_uuids_in_json)
+    assert 2 == len(sample_uuids_in_json)
+
+
 def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
 

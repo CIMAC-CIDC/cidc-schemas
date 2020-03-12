@@ -16,6 +16,7 @@ from cidc_schemas.json_validation import (
     _resolve_refs,
     _Validator,
     InDocRefNotFoundError,
+    RefResolutionError,
 )
 from cidc_schemas.prism import PROTOCOL_ID_FIELD_NAME
 from .constants import SCHEMA_DIR, ROOT_DIR, TEST_SCHEMA_DIR
@@ -154,7 +155,7 @@ def do_resolve(schema_path):
 
     with open(os.path.join(TEST_SCHEMA_DIR, schema_path)) as f:
         spec = json.load(f)
-        return _resolve_refs(base_uri, spec)
+        return _resolve_refs(base_uri, spec, schema_path)
 
 
 def test_resolve_refs():
@@ -171,6 +172,9 @@ def test_resolve_refs():
     # Two levels of nesting across different directories
     one = do_resolve("1.json")
     assert one["properties"] == {"1_prop": {"2_prop": {"3_prop": {"type": "string"}}}}
+
+    with pytest.raises(RefResolutionError, match="invalid_ref.json"):
+        do_resolve("invalid_ref.json")
 
 
 def test_get_values_for_path_pattern():

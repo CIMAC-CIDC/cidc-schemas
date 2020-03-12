@@ -150,7 +150,12 @@ class XlTemplateWriter:
     __data_dict_sheet_name = "Data Dictionary"
 
     def _write_data_dict(self, schemas):
-        """ Adds a "Data Dictionary" tab that lists all used enums with allowed values."""
+        """ 
+        Adds a "Data Dictionary" tab that lists all used enums with allowed values.
+
+        Returns: a dict mapping field names to data dictionary sheet ranges of enum
+                    values to be used for validation
+        """
         dd_ws = self.workbook.add_worksheet(self.__data_dict_sheet_name)
         dd_ws.protect()
         dd_ws.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
@@ -158,8 +163,9 @@ class XlTemplateWriter:
         # skipping the first, just because we feel like it =)
         col_counter = 1
 
-        # will return that, so we can use those enum lists for validation
-        data_dict_mapping = dict()
+        # a result dictionary that maps field names to data dictionary sheet
+        # ranges of enum values to be used for validation
+        data_dict_mapping = {}
 
         for s_name, schema in schemas.items():
 
@@ -167,30 +173,26 @@ class XlTemplateWriter:
             #     0, , f"Legend for tab {s_name!r}", self.TITLE_THEME
             # )
 
-            for pre_f_name, pre_f_schema in schema.get("preamble_rows", {}).items():
+            for field_name, field_schema in schema.get("preamble_rows", {}).items():
                 rows = self._write_data_dict_item(
-                    dd_ws, col_counter, pre_f_name, self.PREAMBLE_THEME, pre_f_schema
+                    dd_ws, col_counter, field_name, self.PREAMBLE_THEME, field_schema
                 )
                 if rows > 0:
                     # saving Data Dict range to use for validation
-                    data_dict_mapping[pre_f_name] = _format_validation_range(
+                    data_dict_mapping[field_name] = _format_validation_range(
                         rows, col_counter, self.__data_dict_sheet_name
                     )
                     col_counter += 1
 
             for section_name, section_schema in schema.get("data_columns", {}).items():
 
-                for data_f_name, data_f_schema in section_schema.items():
+                for field_name, field_schema in section_schema.items():
                     rows = self._write_data_dict_item(
-                        dd_ws,
-                        col_counter,
-                        data_f_name,
-                        self.HEADER_THEME,
-                        data_f_schema,
+                        dd_ws, col_counter, field_name, self.HEADER_THEME, field_schema
                     )
                     if rows > 0:
                         # saving Data Dict range to use for validation
-                        data_dict_mapping[data_f_name] = _format_validation_range(
+                        data_dict_mapping[field_name] = _format_validation_range(
                             rows, col_counter, self.__data_dict_sheet_name
                         )
                         col_counter += 1

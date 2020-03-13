@@ -317,6 +317,7 @@ def _process_field_value(
         for extra_fdef in field_def["process_as"]:
             # Calculating new "raw" val.
             extra_fdef_raw_val = raw_val
+
             # `eval` should be fine, as we're controlling the code argument in templates
             if "parse_through" in extra_fdef:
                 try:

@@ -490,6 +490,79 @@ def test_prism_process_as_error(monkeypatch):
     assert "Cannot extract cimac_participant_id from SA_id value: None" == str(errs[0])
 
 
+def test_prism_multi_artifact_process_as(monkeypatch):
+    """ Tests whether prism can parse multi_artifact from process_as record"""
+
+    mock_XlTemplateReader_from_excel(
+        {
+            "analysis": [
+                ["#h", "participant_id", "samples_count"],
+                ["#d", "111", "1"],
+                ["#d", "222", "2"],
+                ["#d", "333", "4"],
+            ]
+        },
+        monkeypatch,
+    )
+
+    template = Template(
+        {
+            "properties": {
+                "worksheets": {
+                    "analysis": {
+                        "prism_data_object_pointer": "/participants/-",
+                        "data_columns": {
+                            "section name": {
+                                "participant_id": {
+                                    "merge_pointer": "/cimac_participant_id",  # so proper mergeStrategy kicks in
+                                    "type": "string",
+                                },
+                                "samples_count": {
+                                    "merge_pointer": "/samples_count",
+                                    "type": "integer",
+                                    "process_as": [
+                                        {
+                                            "parse_through": "lambda count: ','.join(f'results_dir/sample_{x}.txt' for x in range(int(count)))",
+                                            "merge_pointer": "/sample_artifacts",
+                                            "gcs_uri_format": "{participant_id}/sub_{num}.txt",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": "multi",
+                                        }
+                                    ],
+                                },
+                            }
+                        },
+                    }
+                }
+            }
+        },
+        "test_prism_multi_artifact_process_as",
+    )
+
+    monkeypatch.setattr(
+        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES",
+        ["test_prism_multi_artifact_process_as"],
+    )
+
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    patch, file_maps, errs = core.prismify(xlsx, template)
+    assert len(errs) == 0
+
+    assert 3 == len(patch["participants"])
+    all_artifacts = [s for p in patch["participants"] for s in p["sample_artifacts"]]
+
+    # sum of samples_count = 1 + 2 + 4
+    assert 1 + 2 + 4 == len(all_artifacts)
+    assert 1 + 2 + 4 == len(set(a["upload_placeholder"] for a in all_artifacts))
+
+    # sum of samples_count = 1 + 2 + 4
+    assert 1 + 2 + 4 == len(file_maps)
+    assert 1 + 2 + 4 == len(set(f.gs_key for f in file_maps))
+    assert 1 + 2 + 4 == len(set(f.local_path for f in file_maps))
+
+
 def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
 

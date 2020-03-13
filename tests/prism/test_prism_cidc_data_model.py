@@ -1,3 +1,5 @@
+"""Tests for CIDC data model-specific prism functionality."""
+
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -15,9 +17,8 @@ from jsonmerge import Merger
 from unittest.mock import MagicMock, patch as mock_patch
 
 
-from .constants import TEST_DATA_DIR
-
 from cidc_schemas import prism
+from cidc_schemas.prism import core, merger as prism_merger, pipelines
 from cidc_schemas.prism import (
     prismify,
     merge_artifact,
@@ -32,13 +33,8 @@ from cidc_schemas.prism import (
     parse_npx,
     parse_elisa,
     merge_artifact_extra_metadata,
-    PRISM_MERGE_STRATEGIES,
-    PRISM_PRISMIFY_STRATEGIES,
-    ThrowOnCollision,
     MergeCollisionException,
     generate_analysis_configs_from_upload_patch,
-    _ANALYSIS_CONF_GENERATORS,
-    _get_file_ext,
 )
 
 from cidc_schemas.json_validation import load_and_validate_schema, InDocRefNotFoundError
@@ -47,14 +43,20 @@ from cidc_schemas.template_writer import RowType
 from cidc_schemas.util import participant_id_from_cimac
 from cidc_schemas.template_reader import XlTemplateReader
 
-from .constants import ROOT_DIR, SCHEMA_DIR, TEMPLATE_EXAMPLES_DIR, TEST_DATA_DIR
-from .test_templates import (
+from ..constants import (
+    TEST_DATA_DIR,
+    ROOT_DIR,
+    SCHEMA_DIR,
+    TEMPLATE_EXAMPLES_DIR,
+    TEST_DATA_DIR,
+)
+from ..test_templates import (
     template_set,
     template,
     template_example,
     template_example_xlsx_path,
 )
-from .test_assays import ARTIFACT_OBJ
+from ..test_assays import ARTIFACT_OBJ
 
 
 def prismify_test_set(filter=None):
@@ -381,7 +383,7 @@ def test_merge_core():
     ct2["participants"][0]["cimac_participant_id"] = "PABCD"
 
     # merge them
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     ct3 = merger.merge(ct1, ct2)
 
     # assert we have two participants and their ids are different.
@@ -467,7 +469,7 @@ def test_samples_merge():
     schema = validator.schema
 
     # merge them
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     a3 = merger.merge(a1, a2)
     assert len(a3["participants"]) == 1
     assert len(a3["participants"][0]["samples"]) == 2
@@ -517,7 +519,7 @@ def test_prism(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, ct)
 
     validator.validate(merged)
@@ -533,17 +535,6 @@ def test_prism(xlsx, template):
         )
 
     return merged, file_maps
-
-
-def test_unsupported_prismify():
-    """Check that prism raises a non-implemented error for unsupported template types."""
-    mock_template = MagicMock()
-    mock_template.type = "some-unsupported-type"
-
-    with pytest.raises(
-        NotImplementedError, match="'some-unsupported-type' is not supported"
-    ):
-        prismify(None, mock_template)
 
 
 @pytest.mark.parametrize("xlsx, template", prismify_test_set(), ids=repr_if_template)
@@ -768,7 +759,7 @@ def test_prismify_cytof_only(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, ct)
 
     # assert works
@@ -796,7 +787,7 @@ def test_prismify_ihc(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, ct)
 
     # assert works
@@ -876,7 +867,7 @@ def test_prismify_wesbam_only(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, md_patch)
 
     # assert works
@@ -917,7 +908,7 @@ def test_prismify_wesfastq_only(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, md_patch)
 
     # assert works
@@ -961,7 +952,7 @@ def test_prismify_rnabam_only(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, md_patch)
 
     # assert works
@@ -998,7 +989,7 @@ def test_prismify_rnafastq_only(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(TEST_PRISM_TRIAL, md_patch)
 
     # assert works
@@ -1030,7 +1021,7 @@ def test_prismify_olink_only(xlsx, template):
     # we merge it with a preexisting one
     # 1. we get all 'required' fields from this preexisting
     # 2. we can check it didn't overwrite anything crucial
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    merger = Merger(schema, strategies=core.PRISM_PRISMIFY_STRATEGIES)
     merged = merger.merge(MINIMAL_TEST_TRIAL, ct)
 
     # assert works
@@ -1629,1108 +1620,3 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
     else:
         assert False, f"add {template.type} assay specific asserts"
-
-
-def test_merge_stuff():
-
-    obj1 = {
-        "_preamble_obj": "copy_for:cytof:Antibody Information:row_0",
-        "cytof_antibodies": [
-            {
-                "_data_obj": "cytof:Antibody Information:row_0",
-                "antibody": "CD8",
-                "clone": "C8/144b",
-                "company": "DAKO",
-                "cat_num": "C8-ABC",
-                "lot_num": "3983272",
-                "isotope": "146Nd",
-                "dilution": "100X",
-                "stain_type": "Surface Stain",
-            }
-        ],
-    }
-    obj2 = {
-        "_preamble_obj": "copy_for:cytof:Antibody Information:row_1",
-        "cytof_antibodies": [
-            {
-                "_data_obj": "cytof:Antibody Information:row_1",
-                "antibody": "PD-L1",
-                "clone": "C2/11p",
-                "company": "DAKO",
-                "cat_num": "C8-AB123",
-                "lot_num": "1231272",
-                "isotope": "146Nb",
-                "dilution": "100X",
-                "stain_type": "Surface Stain",
-            }
-        ],
-    }
-
-    schema = load_and_validate_schema(
-        os.path.join(SCHEMA_DIR, "assays/cytof_assay.json")
-    )
-    obj1 = {"pizza": "peperoni", "slices": [{"topping": "123"}]}
-    obj2 = {"soda": "934857", "slices": [{"topping": "abc"}]}
-
-    schema = {
-        "$schema": "http://json-schema.org/draft-07/schema#",
-        "type": "object",
-        "properties": {
-            "pizza": {"type": "string"},
-            "mergeStrategy": "objectMerge",
-            "allOf": [
-                {
-                    "soda": {
-                        "type": "object",
-                        "properties": {"prob": {"type": "number"}},
-                    }
-                },
-                {
-                    "slices": {
-                        "type": "array",
-                        "items": {"properties": {"topping": {"type": "string"}}},
-                        "mergeStrategy": "append",
-                    }
-                },
-            ],
-        },
-    }
-
-    # this merge will clobber slices because merging across allOf doesn't work
-    merger = Merger(schema, strategies=PRISM_PRISMIFY_STRATEGIES)
-    xyz = merger.merge(obj1, obj2)
-    assert len(xyz["slices"]) == 1
-
-
-## HELPER FUNCTION TESTS ##
-
-
-def test_set_val():
-    """Test the _set_val helper function directly, since it's prismify workhorse"""
-    # _set_val should handle the basic example in the _set_val docstring
-    context = {"Pid": 1}
-    root = {"prop0": [context]}
-    prism._set_val("0/prop1/prop2", {"more": "props"}, context, root, "/prop0/0")
-    assert root == {"prop0": [{"Pid": 1, "prop1": {"prop2": {"more": "props"}}}]}
-
-    # _set_val should set nested lists
-    context = []
-    root = {"prop0": context}
-    prism._set_val("0/-/-", [1, 2, 3], context, root, "/prop0")
-    assert root == {"prop0": [[[1, 2, 3]]]}
-
-    # _set_val overwrites when adding a value to particular location in a list
-    # TODO: is this the behavior we want?
-    context = [[], ["will be overwritten"]]
-    root = {"prop0": context}
-    prism._set_val("0/1", [1, 2, 3], context, root, "/prop0")
-    assert root == {"prop0": [[], [1, 2, 3]]}
-
-    # _set_val shouldn't make any modifications to `root` if `val == None`
-    context = {"Pid": 1}
-    root = {"prop0": [context]}
-    prism._set_val("0/prop1/prop2", None, context, root, "/prop0/0")
-    assert root == {"prop0": [context]}
-
-    # _set_val should throw an exception given a value pointer with too many jumps
-    with pytest.raises(AssertionError, match="too many jumps up"):
-        prism._set_val("3/prop1/prop2", {}, {}, {}, "/prop0/0")
-
-    # _set_val should throw an exception given an invalid context pointer
-    one_jumpup_pointer = "1/prop1"
-    invalid_context_pointer = "/foo/bar"
-    with pytest.raises(Exception, match="member 'foo' not found"):
-        prism._set_val(one_jumpup_pointer, {}, {}, {}, invalid_context_pointer)
-
-
-def test_process_property():
-    prop = "prop0"
-
-    # _process_property throws a ParsingException on properties missing from the key lookup dict
-    with pytest.raises(prism.ParsingException, match="Unexpected property"):
-        prism._process_property(prop, "123", {}, {}, {})
-
-    prop_def = {"merge_pointer": "/hello", "coerce": int, "key_name": "hello"}
-
-    # _process_property behaves as expected on a simple example
-    root = {}
-    files = prism._process_property(prop, "123", {prop: prop_def}, root, {})
-    assert root == {"hello": 123}
-    assert files == []
-
-    # _process_property catches unparseable raw values
-    with pytest.raises(prism.ParsingException, match=f"Can't parse {prop!r}"):
-        prism._process_property(prop, "123abcd", {prop: prop_def}, {}, {})
-
-    # _process_property catches a missing gcs_uri_format on an artifact
-    prop_def = {
-        "merge_pointer": "/hello",
-        "coerce": str,
-        "is_artifact": 1,
-        "key_name": "hello",
-    }
-    with pytest.raises(prism.ParsingException, match="Empty gcs_uri_format"):
-        prism._process_property(prop, "123", {prop: prop_def}, {}, {})
-
-    # _process property catches gcs_uri_format strings that can't be processed
-    prop_def["gcs_uri_format"] = "{foo}/{bar}"
-    with pytest.raises(prism.ParsingException, match="Can't format gcs uri"):
-        prism._process_property(prop, "123", {prop: prop_def}, {}, {})
-
-    prop_def["gcs_uri_format"] = {"format": prop_def["gcs_uri_format"]}
-    with pytest.raises(prism.ParsingException, match="Can't format gcs uri"):
-        prism._process_property(prop, "123", {prop: prop_def}, {}, {})
-
-
-def test_set_data_format_edge_cases(monkeypatch):
-    def mock_iter_errors(errs):
-        validator = MagicMock()
-        validator.iter_errors.return_value = errs
-        load_and_val = MagicMock()
-        load_and_val.return_value = validator
-        monkeypatch.setattr(prism, "load_and_validate_schema", load_and_val)
-
-    # _set_data_format bypasses exceptions that aren't jsonschema.exceptions.ValidationError instances.
-    mock_iter_errors([Exception("non-validation error")])
-    artifact = {}
-    prism._set_data_format({}, artifact)
-    assert artifact["data_format"] == "[NOT SET]"
-
-    # _set_data_format bypasses validation errors not pertaining to the "data_format" field
-    val_error = jsonschema.exceptions.ValidationError("")
-    val_error.validator = "const"
-    val_error.path = ["some_path"]
-    artifact = {}
-    prism._set_data_format({}, artifact)
-    assert artifact["data_format"] == "[NOT SET]"
-
-    # _set_data_format bypasses validation errors on unrelated fields
-    val_error = jsonschema.exceptions.ValidationError("")
-    val_error.validator = "const"
-    val_error.path = ["data_format"]
-    val_error.instance = "unrelated instance"
-    mock_iter_errors([val_error])
-    artifact = {}
-    prism._set_data_format({}, artifact)
-    assert artifact["data_format"] == "[NOT SET]"
-
-
-## END HELPER FUNCTION TESTS ##
-
-
-def test_prismify_unexpected_worksheet(monkeypatch):
-    """Check that prismify catches the presence of an unexpected worksheet in an Excel template."""
-    mock_XlTemplateReader_from_excel({"whoops": []}, monkeypatch)
-    xlsx, errs = XlTemplateReader.from_excel("workbook")
-    assert not errs
-
-    template = Template(
-        {"title": "unexpected worksheet", "properties": {"worksheets": {}}},
-        "test_unexpected_worksheet",
-    )
-    monkeypatch.setattr(
-        "cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_unexpected_worksheet"]
-    )
-
-    _, _, errs = prismify(xlsx, template)
-    assert errs == ["Unexpected worksheet 'whoops'."]
-
-
-def test_prismify_preamble_parsing_error(monkeypatch):
-    """Check that prismify catches parsing errors in the pre"""
-    prop = "prop0"
-    raw_val = "some string"
-    mock_XlTemplateReader_from_excel({"ws1": [["#p", prop, raw_val]]}, monkeypatch)
-    xlsx, errs = XlTemplateReader.from_excel("workbook")
-    assert not errs
-
-    template = Template(
-        {
-            "title": "parse error",
-            "properties": {
-                "worksheets": {
-                    "ws1": {
-                        "prism_preamble_object_schema": "clinical_trial.json",
-                        "prism_preamble_object_pointer": "#",
-                        "prism_data_object_pointer": "/files/-",
-                        "preamble_rows": {
-                            prop: {"merge_pointer": "/", "type": "number"}
-                        },
-                    }
-                }
-            },
-        },
-        "test_preamble_parsing_error",
-    )
-    monkeypatch.setattr(
-        "cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_preamble_parsing_error"]
-    )
-
-    _, _, errs = prismify(xlsx, template)
-    assert isinstance(errs[0], prism.ParsingException)
-
-
-def test_prism_local_files_format_extension(monkeypatch):
-    """ Tests prism alert on different extensions of a local file vs gcs_uri """
-
-    mock_XlTemplateReader_from_excel(
-        {
-            "files": [
-                ["#h", "record", "local_file_col_name"],
-                ["#d", "1", "somewhere/on/my/computer.csv"],
-                ["#d", "2", "somewhere/on/my/computer.xlsx"],
-            ]
-        },
-        monkeypatch,
-    )
-
-    template = Template(
-        {
-            "$id": "test_files",
-            "title": "files",
-            "properties": {
-                "worksheets": {
-                    "files": {
-                        "prism_preamble_object_schema": "clinical_trial.json",
-                        "prism_preamble_object_pointer": "#",
-                        "prism_data_object_pointer": "/files/-",
-                        "preamble_rows": {},
-                        "data_columns": {
-                            "Files": {
-                                "record": {"merge_pointer": "/id", "type": "number"},
-                                "local_file_col_name": {
-                                    "merge_pointer": "artifact",
-                                    "gcs_uri_format": "{record}/artifact.csv",
-                                    "is_artifact": 1,
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                },
-                            }
-                        },
-                    }
-                }
-            },
-        },
-        "test_prism_local_files_format_extension",
-    )
-
-    monkeypatch.setattr(
-        "cidc_schemas.prism.SUPPORTED_TEMPLATES",
-        ["test_prism_local_files_format_extension"],
-    )
-
-    xlsx, errs = XlTemplateReader.from_excel("workbook")
-    assert not errs
-
-    patch, file_maps, errs = prismify(xlsx, template)
-
-    assert len(errs) == 1
-    assert "local_file_col_name" in str(errs[0])
-    assert "expected .csv" in str(errs[0]).lower()
-
-    assert len(file_maps) == 1
-
-
-def test_prism_local_files_format_multiple_extensions(monkeypatch):
-    """ Tests prism ability to gcs_uri """
-
-    mock_XlTemplateReader_from_excel(
-        {
-            "files": [
-                ["#h", "record", "local_file_col_name"],
-                ["#d", "1", "somewhere/on/my/computer.tif"],
-                ["#d", "2", "somewhere/on/my/computer.tiff"],
-                ["#d", "3", "somewhere/on/my/computer.NONtiff"],
-                ["#d", "4", "somewhere/on/my/computer.svs"],
-                ["#d", "5", "somewhere/on/my/computer.qptiff"],
-            ]
-        },
-        monkeypatch,
-    )
-
-    template = Template(
-        {
-            "$id": "test_files",
-            "title": "files",
-            "properties": {
-                "worksheets": {
-                    "files": {
-                        "prism_preamble_object_schema": "clinical_trial.json",
-                        "prism_preamble_object_pointer": "#",
-                        "prism_data_object_pointer": "/files/-",
-                        "preamble_rows": {},
-                        "data_columns": {
-                            "Files": {
-                                "record": {"merge_pointer": "/id", "type": "number"},
-                                "local_file_col_name": {
-                                    "merge_pointer": "artifact",
-                                    "gcs_uri_format": {
-                                        "format": "lambda val, ctx: 'subfolder/' + ctx['record'] + '/artifact.' + val.rsplit('.', 1)[-1]",
-                                        "check_errors": "lambda val: f'Bad file type {val!r}. It should be in one of .tiff .tif .qptiff .svs formats' if val.rsplit('.', 1)[-1] not in ['svs', 'tiff', 'tif', 'qptiff'] else None",
-                                        "template_comment": "In one of .tiff .tif .qptiff .svs formats.",
-                                    },
-                                    "is_artifact": 1,
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                },
-                            }
-                        },
-                    }
-                }
-            },
-        },
-        "test_prism_local_files_format_extension",
-    )
-
-    monkeypatch.setattr(
-        "cidc_schemas.prism.SUPPORTED_TEMPLATES",
-        ["test_prism_local_files_format_extension"],
-    )
-
-    xlsx, errs = XlTemplateReader.from_excel("workbook")
-    assert not errs
-
-    patch, file_maps, errs = prismify(xlsx, template)
-
-    assert len(errs) == 1
-    assert "Bad file type" in str(errs[0])
-    assert ".NONtiff" in str(errs[0])
-    assert "should be in one of" in str(errs[0])
-
-    assert len(file_maps) == 4
-    expected_extensions = ["tif", "tiff", "svs", "qptiff"]
-    # check that we have only "proper" (checked by `check_errors`) extensions
-    local_extensions = [_get_file_ext(fm.local_path) for fm in file_maps]
-    gcs_extensions = [_get_file_ext(fm.gs_key) for fm in file_maps]
-    assert expected_extensions == gcs_extensions == local_extensions
-
-
-def mock_XlTemplateReader_from_excel(sheets: dict, monkeypatch):
-
-    load_workbook = MagicMock(name="load_workbook")
-    monkeypatch.setattr("openpyxl.load_workbook", load_workbook)
-    workbook = load_workbook.return_value = MagicMock(name="workbook")
-
-    wb = {k: MagicMock(name=k) for k in sheets}
-
-    workbook.__getitem__.side_effect = wb.__getitem__
-    workbook.sheetnames = sheets.keys()
-    cell = namedtuple("cell", ["value"])
-
-    for k, rows in sheets.items():
-        wb[k].iter_rows.return_value = [map(cell, r) for r in rows]
-
-    return
-
-
-def test_prism_joining_tabs(monkeypatch):
-    """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
-
-    mock_XlTemplateReader_from_excel(
-        {
-            "participants": [
-                ["#h", "PA id", "PA prop"],
-                ["#d", "CPP0", "0"],
-                ["#d", "CPP1", "1"],
-            ],
-            "samples": [
-                ["#h", "SA_id", "SA_prop"],
-                ["#d", "CPP1S0.00", "100"],
-                ["#d", "CPP1S1.00", "101"],
-                ["#d", "CPP0S0.00", "000"],
-                ["#d", "CPP0S1.00", "001"],
-            ],
-        },
-        monkeypatch,
-    )
-
-    template = Template(
-        {
-            "$id": "test_ship",
-            "title": "participants and shipment",
-            "properties": {
-                "worksheets": {
-                    "participants": {
-                        "prism_preamble_object_schema": "clinical_trial.json",
-                        "prism_preamble_object_pointer": "#",
-                        "prism_data_object_pointer": "/participants/0/samples/0",
-                        "preamble_rows": {},
-                        "data_columns": {
-                            "Samples": {
-                                "PA id": {
-                                    "merge_pointer": "2/cimac_participant_id",
-                                    "type_ref": "participant.json#properties/cimac_participant_id",
-                                },
-                                "PA prop": {
-                                    "merge_pointer": "0/participant_id",
-                                    "type_ref": "participant.json#properties/participant_id",
-                                },
-                            }
-                        },
-                    },
-                    "samples": {
-                        "prism_preamble_object_schema": "clinical_trial.json",
-                        "prism_preamble_object_pointer": "#",
-                        "prism_data_object_pointer": "/participants/0/samples/0",
-                        "preamble_rows": {},
-                        "data_columns": {
-                            "Samples": {
-                                "SA_id": {
-                                    "merge_pointer": "/cimac_id",
-                                    "type_ref": "sample.json#properties/cimac_id",
-                                    "process_as": [
-                                        {
-                                            "merge_pointer": "2/cimac_participant_id",
-                                            "parse_through": "lambda x: x[:4]",
-                                            "type_ref": "participant.json#properties/cimac_participant_id",
-                                        }
-                                    ],
-                                },
-                                "SA_prop": {
-                                    "merge_pointer": "0/parent_sample_id",
-                                    "type_ref": "sample.json#properties/parent_sample_id",
-                                },
-                            }
-                        },
-                    },
-                }
-            },
-        },
-        "test_prism_joining_tabs",
-    )
-
-    monkeypatch.setattr(
-        "cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_prism_joining_tabs"]
-    )
-
-    xlsx, errs = XlTemplateReader.from_excel("workbook")
-    assert not errs
-
-    patch, file_maps, errs = prismify(xlsx, template)
-    assert len(errs) == 0
-
-    assert 2 == len(patch["participants"])
-
-    assert "CPP0" == patch["participants"][0]["cimac_participant_id"]
-    assert 2 == len(patch["participants"][0]["samples"])
-
-    assert "CPP0S0.00" == patch["participants"][0]["samples"][0]["cimac_id"]
-    assert "000" == patch["participants"][0]["samples"][0]["parent_sample_id"]
-
-    assert "CPP0S1.00" == patch["participants"][0]["samples"][1]["cimac_id"]
-    assert "001" == patch["participants"][0]["samples"][1]["parent_sample_id"]
-
-    assert "CPP1S1.00" == patch["participants"][1]["samples"][1]["cimac_id"]
-    assert "101" == patch["participants"][1]["samples"][1]["parent_sample_id"]
-
-    assert "CPP1" == patch["participants"][1]["cimac_participant_id"]
-    assert 2 == len(patch["participants"][1]["samples"])
-
-    assert 0 == len(file_maps)
-
-
-def test_prism_process_as_error(monkeypatch):
-    """Tests that prismify doesn't crash when a `parse_through` function errors"""
-    mock_XlTemplateReader_from_excel(
-        {
-            "participants": [["#h", "PA_id"], ["#d", "CPP0"]],
-            "samples": [["#h", "SA_id", "SA_prop"], ["#d", None, 100]],
-        },
-        monkeypatch,
-    )
-
-    template = Template(
-        {
-            "$id": "test_ship",
-            "title": "participants and shipment",
-            "properties": {
-                "worksheets": {
-                    "participants": {
-                        "prism_preamble_object_schema": "clinical_trial.json",
-                        "prism_preamble_object_pointer": "#",
-                        "prism_data_object_pointer": "/participants/0/samples/0",
-                        "preamble_rows": {},
-                        "data_columns": {
-                            "Samples": {
-                                "PA_id": {
-                                    "merge_pointer": "2/cimac_participant_id",
-                                    "type_ref": "participant.json#properties/cimac_participant_id",
-                                }
-                            }
-                        },
-                    },
-                    "samples": {
-                        "prism_preamble_object_schema": "clinical_trial.json",
-                        "prism_preamble_object_pointer": "#",
-                        "prism_data_object_pointer": "/participants/0/samples/0",
-                        "preamble_rows": {},
-                        "data_columns": {
-                            "Samples": {
-                                "SA_id": {
-                                    "merge_pointer": "/cimac_id",
-                                    "type_ref": "sample.json#properties/cimac_id",
-                                    "process_as": [
-                                        {
-                                            "merge_pointer": "2/cimac_participant_id",
-                                            "parse_through": "lambda x: x[:4]",
-                                            "type_ref": "participant.json#properties/cimac_participant_id",
-                                        }
-                                    ],
-                                },
-                                "SA_prop": {
-                                    "merge_pointer": "0/parent_sample_id",
-                                    "type_ref": "sample.json#properties/parent_sample_id",
-                                },
-                            }
-                        },
-                    },
-                }
-            },
-        },
-        "test_prism_process_as",
-    )
-    monkeypatch.setattr(
-        "cidc_schemas.prism.SUPPORTED_TEMPLATES", ["test_prism_process_as"]
-    )
-
-    xlsx, errs = XlTemplateReader.from_excel("workbook")
-    assert not errs
-
-    patch, file_maps, errs = prismify(xlsx, template)
-    assert "Cannot extract cimac_participant_id from SA_id value: None" == str(errs[0])
-
-
-def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
-    """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
-
-    mock_XlTemplateReader_from_excel(
-        {
-            "analysis": [
-                ["#h", "run_id", "sid1", "sid2"],
-                ["#d", "000", "sid1_0", "sid2_0"],
-                ["#d", "111", "sid1_1", "sid2_1"],
-            ]
-        },
-        monkeypatch,
-    )
-
-    template = Template(
-        {
-            "$id": "test_analysis",
-            "title": "...",
-            "prism_template_root_object_schema": "assays/components/ngs/wes/wes_analysis.json",
-            "prism_template_root_object_pointer": "/analysis/wes_analysis",
-            "properties": {
-                "worksheets": {
-                    "analysis": {
-                        "prism_data_object_pointer": "/pair_runs/-",
-                        "preamble_rows": {},
-                        "data_columns": {
-                            "section name": {
-                                "run_id": {
-                                    "merge_pointer": "/run_id",
-                                    "type": "string",
-                                    "process_as": [
-                                        {
-                                            "parse_through": "lambda x: f'analysis/germline/{x}/{x}-run-output-1.txt'",
-                                            "merge_pointer": "/run-output-1",
-                                            "gcs_uri_format": "{run_id}/run-output-1.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/purity/{x}/{x}run-output-2.txt'",
-                                            "merge_pointer": "/run-output-2",
-                                            "gcs_uri_format": "{run_id}/run-output-2.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/clonality/{x}/{x}-run-output-3.tsv'",
-                                            "merge_pointer": "/run-output-3",
-                                            "gcs_uri_format": "{run_id}/run-output-3.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                    ],
-                                },
-                                "sid1": {
-                                    "merge_pointer": "/sample1/id",
-                                    "type": "string",
-                                    "process_as": [
-                                        {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.output1.bam'",
-                                            "merge_pointer": "/sample1/output1",
-                                            "gcs_uri_format": "{run_id}/{sid1}/output1.bam",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.output2.txt'",
-                                            "merge_pointer": "/sample1/output2",
-                                            "gcs_uri_format": "{run_id}/{sid1}/output2.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/optitype/{x}/{x}output3.tsv'",
-                                            "merge_pointer": "/sample1/output3",
-                                            "gcs_uri_format": "{run_id}/{sid1}/output3.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                    ],
-                                },
-                                "sid2": {
-                                    "merge_pointer": "/sample2/id",
-                                    "type": "string",
-                                    "process_as": [
-                                        {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.output1.bam'",
-                                            "merge_pointer": "/sample2/output1",
-                                            "gcs_uri_format": "{run_id}/{sid2}/output1.bam",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.output2.txt'",
-                                            "merge_pointer": "/sample2/output2",
-                                            "gcs_uri_format": "{run_id}/{sid2}/output2.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/optitype/{x}/{x}.output3.tsv'",
-                                            "merge_pointer": "/sample2/output3",
-                                            "gcs_uri_format": "{run_id}/{sid2}/output3.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                    ],
-                                },
-                            }
-                        },
-                    }
-                }
-            },
-        },
-        "test_prism_many_artifacts_from_process_as_on_one_record",
-    )
-
-    monkeypatch.setattr(
-        "cidc_schemas.prism.SUPPORTED_TEMPLATES",
-        ["test_prism_many_artifacts_from_process_as_on_one_record"],
-    )
-
-    xlsx, errs = XlTemplateReader.from_excel("workbook")
-    assert not errs
-
-    patch, file_maps, errs = prismify(xlsx, template)
-    assert len(errs) == 0
-
-    local_paths = [e.local_path for e in file_maps]
-    uuids = [e.upload_placeholder for e in file_maps]
-
-    assert 3 * 3 * 2 == len(
-        file_maps
-    )  # (3 files * 3 fields from each record) * 2 records
-    assert 3 * 3 * 2 == len(
-        set(uuids)
-    )  # (3 files * 3 fields from each record) * 2 records
-
-    assert local_paths != uuids
-
-    assert 2 == len(patch["analysis"]["wes_analysis"]["pair_runs"])
-    run_uuids_in_json = [
-        art["upload_placeholder"]
-        for wes in patch["analysis"]["wes_analysis"]["pair_runs"]
-        for art in wes.values()
-        if "upload_placeholder" in art
-    ]
-    sample_uuids_in_json = [
-        v["upload_placeholder"]
-        for wes in patch["analysis"]["wes_analysis"]["pair_runs"]
-        for sample in wes.values()
-        if "id" in sample
-        for v in sample.values()
-        if "upload_placeholder" in v
-    ]
-
-    assert len(uuids) == len(run_uuids_in_json + sample_uuids_in_json)
-    assert set(uuids) == set(
-        run_uuids_in_json + sample_uuids_in_json
-    )  # set instead of sorting
-
-
-@pytest.fixture(scope="session")
-def prismify_result(template, template_example):
-    prism_patch, file_maps, errs = prismify(template_example, template)
-    assert not errs
-    return prism_patch, file_maps, errs
-
-
-@pytest.fixture(scope="session")
-def prism_patch(prismify_result):
-    prism_patch, _, _ = prismify_result
-    return prism_patch
-
-
-def prism_patch_stage_artifacts(prismify_result, template_type):
-
-    prism_patch, prism_fmap, _ = prismify_result
-    patch_copy_4_artifacts = copy.deepcopy(prism_patch)
-
-    for i, fmap_entry in enumerate(prism_fmap):
-        # attempt to merge
-        patch_copy_4_artifacts, artifact, patch_metadata = merge_artifact(
-            patch_copy_4_artifacts,
-            artifact_uuid=fmap_entry.upload_placeholder,
-            object_url=fmap_entry.gs_key,
-            assay_type=template_type,
-            file_size_bytes=i,
-            uploaded_timestamp="01/01/2001",
-            md5_hash=f"hash_{i}",
-        )
-
-    return patch_copy_4_artifacts
-
-
-def stage_assay_for_analysis(template_type):
-    """
-    Simulates an initial assay upload by prismifying the initial assay template object.
-    """
-
-    staging_map = {
-        "cytof_analysis": "cytof",
-        "wes_fastq": "tumor_normal_pairing",
-        "wes_bam": "tumor_normal_pairing",
-        "tumor_normal_pairing": "wes_fastq",
-    }
-
-    if not template_type in staging_map:
-        return {}
-
-    prelim_assay = staging_map[template_type]
-
-    preassay_xlsx_path = os.path.join(
-        TEMPLATE_EXAMPLES_DIR, prelim_assay + "_template.xlsx"
-    )
-    preassay_xlsx, _ = XlTemplateReader.from_excel(preassay_xlsx_path)
-    preassay_template = Template.from_type(prelim_assay)
-    prism_res = prismify(preassay_xlsx, preassay_template)
-
-    return prism_patch_stage_artifacts(prism_res, prelim_assay)
-
-
-def test_WES_pipeline_config_generation_after_prismify(prismify_result, template):
-
-    if not template.type.startswith("wes_"):
-        return
-
-    # Test that the config generator blocks disallowed upload types
-    upload_type = "foo"
-    with pytest.raises(NotImplementedError, match=f"Not supported type:{upload_type}"):
-        prism._wes_pipeline_config(upload_type)
-
-    full_ct = copy.deepcopy(TEST_PRISM_TRIAL)
-
-    # drop existing wes assay as they break merging new ones
-    full_ct["assays"]["wes"] = []
-
-    patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
-
-    # if it's an analysis - we need to merge corresponding preliminary assay first
-    prelim_assay = stage_assay_for_analysis(template.type)
-    if prelim_assay:
-        full_ct, errs = merge_clinical_trial_metadata(prelim_assay, full_ct)
-        assert 0 == len(errs)
-
-    full_ct, errs = merge_clinical_trial_metadata(patch_with_artifacts, full_ct)
-    assert 0 == len(errs)
-
-    res = generate_analysis_configs_from_upload_patch(
-        full_ct, patch_with_artifacts, template.type, "my-biofx-bucket"
-    )
-
-    # where we don't expect to have configs
-    if not template.type in _ANALYSIS_CONF_GENERATORS:
-        assert res == {}
-        return
-
-    # in other cases - 1 config
-    assert len(res) == 1
-
-    for fname, conf in res.items():
-        conf = yaml.load(conf)
-
-        assert len(conf["metasheet"]) == 1  # one run
-
-        assert len(conf["samples"]) == 2  # tumor and normal
-        for sample in conf["samples"].values():
-            assert len(sample) > 0  # at lease one data file per sample
-            assert all("my-biofx-bucket" in f for f in sample)
-            assert all(f.endswith(".fastq.gz") for f in sample) or all(
-                f.endswith(".bam") for f in sample
-            )
-
-
-def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, template):
-
-    if not template.type.startswith("rna_"):
-        return
-
-    full_ct = copy.deepcopy(TEST_PRISM_TRIAL)
-
-    # drop existing wes assay as they break merging new ones
-    full_ct["assays"]["rna"] = []
-
-    patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
-
-    # if it's an analysis - we need to merge corresponding preliminary assay first
-    prelim_assay = stage_assay_for_analysis(template.type)
-    if prelim_assay:
-        full_ct, errs = merge_clinical_trial_metadata(prelim_assay, full_ct)
-        assert 0 == len(errs)
-
-    full_ct, errs = merge_clinical_trial_metadata(patch_with_artifacts, full_ct)
-    assert 0 == len(errs)
-
-    res = generate_analysis_configs_from_upload_patch(
-        full_ct, patch_with_artifacts, template.type, "my-biofx-bucket"
-    )
-
-    # where we don't expect to have configs
-    if not template.type in _ANALYSIS_CONF_GENERATORS:
-        assert res == {}
-        return
-
-    if template.type == "rna_fastq":
-        assert len(res) == 2  # two samples in example .xlsx
-    elif template.type == "rna_bam":
-        assert len(res) == 2  # two samples in example .xlsx
-    else:
-        assert False, f"Unexpected RNAseq template test {template.type}"
-
-    for fname, conf in res.items():
-        conf = yaml.load(conf)
-
-        assert len(conf["runs"]) == 1  # one run
-
-        assert len(conf["samples"]) == 1  # one sample in a run
-        for sample in conf["samples"].values():
-            assert len(sample) > 0  # at lease one data file per sample
-            assert all("my-biofx-bucket" in f for f in sample)
-            assert all(f.endswith(".fastq.gz") for f in sample) or all(
-                f.endswith(".bam") for f in sample
-            )
-
-
-@pytest.fixture
-def npx_file_path():
-    return os.path.join(TEST_DATA_DIR, "olink", "olink_assay_1_NPX.xlsx")
-
-
-@pytest.fixture
-def npx_combined_file_path():
-    return os.path.join(TEST_DATA_DIR, "olink", "olink_assay_combined.xlsx")
-
-
-@pytest.fixture
-def elisa_test_file_path():
-    return os.path.join(TEST_DATA_DIR, "elisa_test_file.xlsx")
-
-
-def test_merge_artfiact_extra_metadata_unsupported_assay():
-    """Ensure merge_artifact_extra_metadata fails gracefully for unsupported assays"""
-    assay_hint = "foo"
-    with pytest.raises(
-        Exception, match=f"Assay {assay_hint} does not support extra metadata"
-    ):
-        prism.merge_artifact_extra_metadata({}, "", assay_hint, None)
-
-
-def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
-    xlsx, template = list(prismify_test_set("olink"))[0]
-    ct, file_infos = test_prismify_olink_only(xlsx, template)
-
-    for finfo in file_infos:
-        if finfo.metadata_availability:
-            if "combined" in finfo.local_path:
-                local_path = npx_combined_file_path
-            else:
-                local_path = npx_file_path
-
-            with open(local_path, "rb") as npx_file:
-                merge_artifact_extra_metadata(
-                    ct, finfo.upload_placeholder, "olink", npx_file
-                )
-
-    study = ct["assays"]["olink"]["study"]
-    files = ct["assays"]["olink"]["records"][0]["files"]
-
-    assert set(files["assay_npx"]["samples"]) == {
-        "CTTTP01A1.00",
-        "CTTTP02A1.00",
-        "CTTTP03A1.00",
-        "CTTTP04A1.00",
-    }
-    assert set(study["study_npx"]["samples"]) == {
-        "CTTTP01A1.00",
-        "CTTTP02A1.00",
-        "CTTTP03A1.00",
-        "CTTTP04A1.00",
-        "CTTTP05A1.00",
-        "CTTTP06A1.00",
-        "CTTTP07A1.00",
-        "CTTTP08A1.00",
-        "CTTTP09A1.00",
-    }
-
-
-def test_merge_extra_metadata_elisa(elisa_test_file_path):
-    xlsx, template = list(prismify_test_set("elisa"))[0]
-    ct, file_infos = test_prism(xlsx, template)
-
-    for finfo in file_infos:
-        if finfo.metadata_availability:
-
-            with open(elisa_test_file_path, "rb") as elisa_file:
-                merge_artifact_extra_metadata(
-                    ct, finfo.upload_placeholder, "elisa", elisa_file
-                )
-
-    artifact = ct["assays"]["elisa"][0]["assay_xlsx"]
-
-    # TODO antibodies
-
-    assert artifact["data_format"] == "ELISA"
-    assert artifact["number_of_samples"] == 7
-    assert set(artifact["samples"]) == {
-        "CTTTP01A1.00",
-        "CTTTP01A2.00",
-        "CTTTP01A3.00",
-        "CTTTP02A1.00",
-        "CTTTP02A2.00",
-        "CTTTP02A3.00",
-        "CTTTP02A4.00",
-    }
-
-
-def test_parse_npx_invalid(npx_file_path):
-    # test the parse function by passing a file path
-    with pytest.raises(TypeError):
-        samples = parse_npx(npx_file_path)
-
-
-def test_parse_npx_single(npx_file_path):
-    # test the parse function
-    f = open(npx_file_path, "rb")
-    samples = parse_npx(f)
-
-    assert samples["number_of_samples"] == 4
-    assert set(samples["samples"]) == {
-        "CTTTP01A1.00",
-        "CTTTP02A1.00",
-        "CTTTP03A1.00",
-        "CTTTP04A1.00",
-    }
-
-
-def test_parse_npx_merged(npx_combined_file_path):
-    # test the parse function
-    f = open(npx_combined_file_path, "rb")
-    samples = parse_npx(f)
-
-    assert samples["number_of_samples"] == 9
-
-    assert set(samples["samples"]) == {
-        "CTTTP01A1.00",
-        "CTTTP02A1.00",
-        "CTTTP03A1.00",
-        "CTTTP04A1.00",
-        "CTTTP05A1.00",
-        "CTTTP06A1.00",
-        "CTTTP07A1.00",
-        "CTTTP08A1.00",
-        "CTTTP09A1.00",
-    }
-
-
-def test_parse_elisa_invalid(elisa_test_file_path):
-    # test the parse function by passing a file path
-    with pytest.raises(TypeError):
-        samples = parse_elisa(elisa_test_file_path)
-
-
-def test_parse_elisa_single(elisa_test_file_path):
-    # test the parse function
-    f = open(elisa_test_file_path, "rb")
-    samples = parse_elisa(f)
-
-    assert samples["number_of_samples"] == 7
-    assert set(samples["samples"]) == {
-        "CTTTP01A1.00",
-        "CTTTP01A2.00",
-        "CTTTP01A3.00",
-        "CTTTP02A1.00",
-        "CTTTP02A2.00",
-        "CTTTP02A3.00",
-        "CTTTP02A4.00",
-    }
-
-
-def test_throw_on_collision():
-    """Test the custom ThrowOnCollision merge strategy"""
-    schema = {
-        "type": "object",
-        "properties": {
-            "l": {
-                "type": "array",
-                "items": {"cimac_id": {"type": "string"}, "a": {"type": "integer"}},
-                "mergeStrategy": "arrayMergeById",
-                "mergeOptions": {"idRef": "/cimac_id"},
-            }
-        },
-    }
-
-    merger = Merger(schema, strategies=PRISM_MERGE_STRATEGIES)
-
-    # Identical values, no collision - no error
-    base = {"l": [{"cimac_id": "c1", "a": 1}]}
-    assert merger.merge(base, base)
-
-    # Different values, collision - error
-    head = {"l": [{"cimac_id": "c1", "a": 2}]}
-    with pytest.raises(
-        MergeCollisionException, match=r"1 \(current\) != 2 \(incoming\)"
-    ):
-        merger.merge(base, head)
-
-    # Some identical and some different values - no error, proper merge
-    base["l"].append({"cimac_id": "c2", "a": 2})
-    head = {"l": [base["l"][0], {"cimac_id": "c3", "a": 3}]}
-
-    assert merger.merge(base, head) == {"l": [*base["l"], head["l"][-1]]}
-
-
-def test_overwrite_any():
-    """Test that the alias for jsonmerge.strategies.Overwrite is set up properly"""
-    schema = {
-        "type": "object",
-        "properties": {
-            "a": {"type": "object", "mergeStrategy": "overwriteAny"},
-            "b": {"type": "number"},
-        },
-    }
-
-    merger = Merger(schema, strategies=PRISM_MERGE_STRATEGIES)
-
-    # Updates to "a" should be allowed
-    base = {"a": {"foo": "bar"}, "b": 1}
-    head = {"a": {"foo": "buzz"}, "b": 1}
-    assert merger.merge(base, head) == head
-
-    # Updates to "b" should not be allowed
-    head["b"] = 2
-    with pytest.raises(
-        MergeCollisionException, match=r"1 \(current\) != 2 \(incoming\)"
-    ):
-        merger.merge(base, head)

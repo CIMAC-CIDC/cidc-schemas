@@ -7,6 +7,10 @@
   "type": "object",
   "allOf": [{ "$ref": "assays/components/antibody.json" }],
   "properties": {
+    "staining_order": {
+      "description": "Order of staining applied",
+      "type": "integer"
+    },
     "fluor_wavelength": {
       "description": "Wavelength registered for Alexa Fluor processing.",
       "type": "number"

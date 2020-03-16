@@ -50,6 +50,9 @@
             "Lot#": {
               "$ref": "assays/components/antibody.json#properties/lot_num"
             },
+            "Staining Order": {
+              "$ref": "assays/components/mif_antibody.json#properties/staining_order"
+            }, 
             "Fluor Wavelength": {
               "$ref": "assays/components/mif_antibody.json#properties/fluor_wavelength"
             },
@@ -77,10 +80,7 @@
       "Data": {
         "data_columns": {
           "Samples": {
-            "cimac participant id": {
-              "$ref": "participant.json#properties/cimac_participant_id"
-            },
-            "cimac sample id": {
+            "cimac id": {
               "$ref": "sample.json#properties/cimac_id"
             },
             "internal slide id": {

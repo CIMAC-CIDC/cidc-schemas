@@ -379,7 +379,7 @@ def test_mif():
 def test_micsss():
 
     # create the micsss object
-    image = {"slide_scanner_model": "Vectra 2.0", "protocol_name": "E4412"}
+    image = {"slide_scanner_model": "Vectra 2.0"}
 
     imaging_data = {"internal_slide_id": "a1s1e1"}
     obj = {**ASSAY_CORE, **image, **imaging_data}  # merge three dictionaries

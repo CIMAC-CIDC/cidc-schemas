@@ -7,15 +7,9 @@ import jsonschema
 from jsonmerge import Merger
 
 from cidc_schemas.prism import merger as prism_merger
+from cidc_schemas.prism.core import LocalFileUploadEntry
 
-from ..constants import TEST_DATA_DIR
-
-# TODO: remove dependency on these tests
-from .test_prism_cidc_data_model import (
-    prismify_test_set,
-    test_prism,
-    test_prismify_olink_only,
-)
+from .test_extra_metadata import npx_file_path, npx_combined_file_path, elisa_file_path
 
 #### MERGE STRATEGY TESTS ####
 def test_throw_on_collision():
@@ -117,21 +111,6 @@ def test_set_data_format_edge_cases(monkeypatch):
 #### EXTRA METADATA TESTS ####
 
 
-@pytest.fixture
-def npx_file_path():
-    return os.path.join(TEST_DATA_DIR, "olink", "olink_assay_1_NPX.xlsx")
-
-
-@pytest.fixture
-def npx_combined_file_path():
-    return os.path.join(TEST_DATA_DIR, "olink", "olink_assay_combined.xlsx")
-
-
-@pytest.fixture
-def elisa_test_file_path():
-    return os.path.join(TEST_DATA_DIR, "elisa_test_file.xlsx")
-
-
 def test_merge_artfiact_extra_metadata_unsupported_assay():
     """Ensure merge_artifact_extra_metadata fails gracefully for unsupported assays"""
     assay_hint = "foo"
@@ -141,24 +120,56 @@ def test_merge_artfiact_extra_metadata_unsupported_assay():
         prism_merger.merge_artifact_extra_metadata({}, "", assay_hint, None)
 
 
-def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
-    xlsx, template = list(prismify_test_set("olink"))[0]
-    ct, file_infos = test_prismify_olink_only(xlsx, template)
+# upload placeholder shorthand
+up = lambda uuid: {"upload_placeholder": uuid}
 
+
+@pytest.fixture
+def olink_ct_metadata():
+    return {
+        "protocol_identifier": "test_prism_trial_id",
+        "assays": {
+            "olink": {
+                "records": [
+                    {"files": {"assay_npx": up("npx_1"), "assay_raw_ct": up("ct_1")}}
+                ],
+                "study": {"study_npx": up("study_npx")},
+            }
+        },
+    }
+
+
+@pytest.fixture
+def olink_file_infos():
+    return [
+        LocalFileUploadEntry(
+            local_path=npx_file_path,
+            gs_key="",
+            upload_placeholder="npx_1",
+            metadata_availability=True,
+        ),
+        LocalFileUploadEntry(
+            local_path=npx_combined_file_path,
+            gs_key="",
+            upload_placeholder="study_npx",
+            metadata_availability=True,
+        ),
+    ]
+
+
+def _do_extra_metadata_merge(ct, file_infos, upload_type):
     for finfo in file_infos:
-        if finfo.metadata_availability:
-            if "combined" in finfo.local_path:
-                local_path = npx_combined_file_path
-            else:
-                local_path = npx_file_path
+        with open(finfo.local_path, "rb") as data_file:
+            prism_merger.merge_artifact_extra_metadata(
+                ct, finfo.upload_placeholder, upload_type, data_file
+            )
 
-            with open(local_path, "rb") as npx_file:
-                prism_merger.merge_artifact_extra_metadata(
-                    ct, finfo.upload_placeholder, "olink", npx_file
-                )
 
-    study = ct["assays"]["olink"]["study"]
-    files = ct["assays"]["olink"]["records"][0]["files"]
+def test_merge_extra_metadata_olink(olink_ct_metadata, olink_file_infos):
+    _do_extra_metadata_merge(olink_ct_metadata, olink_file_infos, "olink")
+
+    study = olink_ct_metadata["assays"]["olink"]["study"]
+    files = olink_ct_metadata["assays"]["olink"]["records"][0]["files"]
 
     assert set(files["assay_npx"]["samples"]) == {
         "CTTTP01A1.00",
@@ -179,19 +190,30 @@ def test_merge_extra_metadata_olink(npx_file_path, npx_combined_file_path):
     }
 
 
-def test_merge_extra_metadata_elisa(elisa_test_file_path):
-    xlsx, template = list(prismify_test_set("elisa"))[0]
-    ct, file_infos = test_prism(xlsx, template)
+@pytest.fixture
+def elisa_ct_metadata():
+    return {
+        "protocol_identifier": "test_prism_trial_id",
+        "assays": {"elisa": [{"assay_xlsx": up("elisa_file")}]},
+    }
 
-    for finfo in file_infos:
-        if finfo.metadata_availability:
 
-            with open(elisa_test_file_path, "rb") as elisa_file:
-                prism_merger.merge_artifact_extra_metadata(
-                    ct, finfo.upload_placeholder, "elisa", elisa_file
-                )
+@pytest.fixture
+def elisa_file_infos():
+    return [
+        LocalFileUploadEntry(
+            local_path=elisa_file_path,
+            gs_key="",
+            upload_placeholder="elisa_file",
+            metadata_availability=True,
+        )
+    ]
 
-    artifact = ct["assays"]["elisa"][0]["assay_xlsx"]
+
+def test_merge_extra_metadata_elisa(elisa_ct_metadata, elisa_file_infos):
+    _do_extra_metadata_merge(elisa_ct_metadata, elisa_file_infos, "elisa")
+
+    artifact = elisa_ct_metadata["assays"]["elisa"][0]["assay_xlsx"]
 
     # TODO antibodies
 

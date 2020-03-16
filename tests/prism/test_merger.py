@@ -9,7 +9,14 @@ from jsonmerge import Merger
 from cidc_schemas.prism import merger as prism_merger
 from cidc_schemas.prism.core import LocalFileUploadEntry
 
-from .test_extra_metadata import npx_file_path, npx_combined_file_path, elisa_file_path
+from .test_extra_metadata import (
+    npx_file_path,
+    npx_combined_file_path,
+    elisa_file_path,
+    single_npx_metadata,
+    combined_npx_metadata,
+    elisa_metadata,
+)
 
 #### MERGE STRATEGY TESTS ####
 def test_throw_on_collision():
@@ -168,26 +175,14 @@ def _do_extra_metadata_merge(ct, file_infos, upload_type):
 def test_merge_extra_metadata_olink(olink_ct_metadata, olink_file_infos):
     _do_extra_metadata_merge(olink_ct_metadata, olink_file_infos, "olink")
 
-    study = olink_ct_metadata["assays"]["olink"]["study"]
-    files = olink_ct_metadata["assays"]["olink"]["records"][0]["files"]
+    study_npx = olink_ct_metadata["assays"]["olink"]["study"]["study_npx"]
+    assay_npx = olink_ct_metadata["assays"]["olink"]["records"][0]["files"]["assay_npx"]
 
-    assert set(files["assay_npx"]["samples"]) == {
-        "CTTTP01A1.00",
-        "CTTTP02A1.00",
-        "CTTTP03A1.00",
-        "CTTTP04A1.00",
-    }
-    assert set(study["study_npx"]["samples"]) == {
-        "CTTTP01A1.00",
-        "CTTTP02A1.00",
-        "CTTTP03A1.00",
-        "CTTTP04A1.00",
-        "CTTTP05A1.00",
-        "CTTTP06A1.00",
-        "CTTTP07A1.00",
-        "CTTTP08A1.00",
-        "CTTTP09A1.00",
-    }
+    assert assay_npx["data_format"] == "NPX"
+    assert study_npx["data_format"] == "NPX"
+    for key in ["samples", "number_of_samples"]:
+        assert assay_npx[key] == single_npx_metadata[key]
+        assert study_npx[key] == combined_npx_metadata[key]
 
 
 @pytest.fixture
@@ -216,18 +211,9 @@ def test_merge_extra_metadata_elisa(elisa_ct_metadata, elisa_file_infos):
     artifact = elisa_ct_metadata["assays"]["elisa"][0]["assay_xlsx"]
 
     # TODO antibodies
-
     assert artifact["data_format"] == "ELISA"
-    assert artifact["number_of_samples"] == 7
-    assert set(artifact["samples"]) == {
-        "CTTTP01A1.00",
-        "CTTTP01A2.00",
-        "CTTTP01A3.00",
-        "CTTTP02A1.00",
-        "CTTTP02A2.00",
-        "CTTTP02A3.00",
-        "CTTTP02A4.00",
-    }
+    for key in ["samples", "number_of_samples"]:
+        assert artifact[key] == elisa_metadata[key]
 
 
 #### END EXTRA METADATA TESTS ####

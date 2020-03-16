@@ -1,38 +1,28 @@
+import os
+from io import BytesIO
+from typing import BinaryIO
+from zipfile import BadZipFile
+
 import pytest
 
-from cidc_schemas.prism import extra_metadata
+from cidc_schemas.prism.extra_metadata import parse_elisa, parse_npx
 
-from .test_merger import npx_file_path, npx_combined_file_path, elisa_test_file_path
+from ..constants import TEST_DATA_DIR
 
+# Single NPX file and metadata
+npx_file_path = os.path.join(TEST_DATA_DIR, "olink", "olink_assay_1_NPX.xlsx")
+single_npx_metadata = {
+    "number_of_samples": 4,
+    "samples": ["CTTTP01A1.00", "CTTTP02A1.00", "CTTTP03A1.00", "CTTTP04A1.00"],
+}
 
-def test_parse_npx_invalid(npx_file_path):
-    # test the parse function by passing a file path
-    with pytest.raises(TypeError):
-        samples = extra_metadata.parse_npx(npx_file_path)
-
-
-def test_parse_npx_single(npx_file_path):
-    # test the parse function
-    f = open(npx_file_path, "rb")
-    samples = extra_metadata.parse_npx(f)
-
-    assert samples["number_of_samples"] == 4
-    assert set(samples["samples"]) == {
-        "CTTTP01A1.00",
-        "CTTTP02A1.00",
-        "CTTTP03A1.00",
-        "CTTTP04A1.00",
-    }
-
-
-def test_parse_npx_merged(npx_combined_file_path):
-    # test the parse function
-    f = open(npx_combined_file_path, "rb")
-    samples = extra_metadata.parse_npx(f)
-
-    assert samples["number_of_samples"] == 9
-
-    assert set(samples["samples"]) == {
+# Combined NPX file and metadata
+npx_combined_file_path = os.path.join(
+    TEST_DATA_DIR, "olink", "olink_assay_combined.xlsx"
+)
+combined_npx_metadata = {
+    "number_of_samples": 9,
+    "samples": [
         "CTTTP01A1.00",
         "CTTTP02A1.00",
         "CTTTP03A1.00",
@@ -42,22 +32,14 @@ def test_parse_npx_merged(npx_combined_file_path):
         "CTTTP07A1.00",
         "CTTTP08A1.00",
         "CTTTP09A1.00",
-    }
+    ],
+}
 
-
-def test_parse_elisa_invalid(elisa_test_file_path):
-    # test the parse function by passing a file path
-    with pytest.raises(TypeError):
-        samples = extra_metadata.parse_elisa(elisa_test_file_path)
-
-
-def test_parse_elisa_single(elisa_test_file_path):
-    # test the parse function
-    f = open(elisa_test_file_path, "rb")
-    samples = extra_metadata.parse_elisa(f)
-
-    assert samples["number_of_samples"] == 7
-    assert set(samples["samples"]) == {
+# ELISA file and metadata
+elisa_file_path = os.path.join(TEST_DATA_DIR, "elisa_test_file.xlsx")
+elisa_metadata = {
+    "number_of_samples": 7,
+    "samples": [
         "CTTTP01A1.00",
         "CTTTP01A2.00",
         "CTTTP01A3.00",
@@ -65,4 +47,27 @@ def test_parse_elisa_single(elisa_test_file_path):
         "CTTTP02A2.00",
         "CTTTP02A3.00",
         "CTTTP02A4.00",
-    }
+    ],
+}
+
+
+@pytest.mark.parametrize("parser", [parse_elisa, parse_npx])
+def test_parse_binaryio_only(parser):
+    """Check that the parser doesn't accept a file path as argument"""
+    file_path = "some/file/path"
+    with pytest.raises(TypeError, match="only accepts BinaryIO and not file paths"):
+        parser(file_path)
+
+
+@pytest.mark.parametrize(
+    "parser,file_path,target",
+    [
+        (parse_npx, npx_file_path, single_npx_metadata),
+        (parse_npx, npx_combined_file_path, combined_npx_metadata),
+        (parse_elisa, elisa_file_path, elisa_metadata),
+    ],
+)
+def test_parser_smoketest(parser, file_path, target):
+    """Check that the parser produces the expected output on a friendly input"""
+    with open(file_path, "rb") as f:
+        assert parser(f) == target

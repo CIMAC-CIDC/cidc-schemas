@@ -1,4 +1,4 @@
-from .core import prismify, ParsingException
+from .core import prismify, ParsingException, LocalFileUploadEntry
 from .merger import (
     merge_artifact,
     merge_artifact_extra_metadata,

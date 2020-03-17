@@ -30,9 +30,13 @@
       "description": "A single data record from mIF assay.",
       "items": {
         "$ref": "assays/components/imaging/mif_entry.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "cimac_id"
       }
     },
-    "antibody": {
+    "antibodies": {
       "type": "array",
       "items": {
         "$ref": "assays/components/mif_antibody.json"

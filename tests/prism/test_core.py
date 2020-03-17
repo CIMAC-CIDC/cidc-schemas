@@ -560,7 +560,8 @@ def test_prism_multi_artifact_process_as(monkeypatch):
     # sum of samples_count = 1 + 2 + 4
     assert 1 + 2 + 4 == len(file_maps)
     assert 1 + 2 + 4 == len(set(f.gs_key for f in file_maps))
-    assert 1 + 2 + 4 == len(set(f.local_path for f in file_maps))
+    local_paths = [f.local_path for f in file_maps]
+    assert 1 + 2 + 4 == len(set(local_paths))
 
 
 def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):

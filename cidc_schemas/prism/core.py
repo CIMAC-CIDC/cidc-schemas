@@ -131,8 +131,10 @@ def _set_val(
         else:
             doc = context
 
+    jp_parts = jpoint.parts
+
     # then we update it
-    for i, part in enumerate(jpoint.parts[:-1]):
+    for i, part in enumerate(jp_parts[:-1]):
 
         try:
             doc = jpoint.walk(doc, part)
@@ -141,7 +143,7 @@ def _set_val(
             # means that there isn't needed sub-object in place, so create one
 
             # look ahead to figure out a proper type that needs to be created
-            next_thing = __jpointer_get_next_thing(jpoint.parts[i + 1])
+            next_thing = __jpointer_get_next_thing(jp_parts[i + 1])
 
             # insert it
             __jpointer_insert_next_thing(doc, jpoint, part, next_thing)
@@ -150,11 +152,11 @@ def _set_val(
             doc = jpoint.walk(doc, part)
 
         if isinstance(doc, EndOfList):
-            actual_doc = __jpointer_get_next_thing(jpoint.parts[i + 1])
+            actual_doc = __jpointer_get_next_thing(jp_parts[i + 1])
             __jpointer_insert_next_thing(doc.list_, jpoint, "-", actual_doc)
             doc = actual_doc
 
-    __jpointer_insert_next_thing(doc, jpoint, jpoint.parts[-1], val)
+    __jpointer_insert_next_thing(doc, jpoint, jp_parts[-1], val)
 
 
 def __jpointer_get_next_thing(next_part) -> Union[dict, list]:
@@ -367,7 +369,7 @@ def _format_single_artifact(
             gs_key = eval(gcs_uri_format["format"])(local_path, format_context)
         except Exception as e:
             raise ValueError(
-                f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format['format']}"
+                f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format['format']}: {e!r}"
             )
 
     elif isinstance(gcs_uri_format, str):
@@ -375,7 +377,7 @@ def _format_single_artifact(
             gs_key = gcs_uri_format.format_map(format_context)
         except KeyError as e:
             raise KeyError(
-                f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format}"
+                f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format}: {e!r}"
             )
 
         expected_extension = _get_file_ext(gs_key)

@@ -2,7 +2,7 @@
 
 import json
 import logging
-from typing import Any, List, NamedTuple, Tuple, Union
+from typing import Any, List, NamedTuple, Tuple, Union, Optional
 
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
@@ -211,7 +211,7 @@ class LocalFileUploadEntry(NamedTuple):
     local_path: str
     gs_key: str
     upload_placeholder: str
-    metadata_availability: bool
+    metadata_availability: Optional[bool]
 
 
 def _process_property(

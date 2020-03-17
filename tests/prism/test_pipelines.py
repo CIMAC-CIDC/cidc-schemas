@@ -9,7 +9,6 @@ from cidc_schemas.template import Template, _TEMPLATE_PATH_MAP
 from cidc_schemas.template_reader import XlTemplateReader
 from cidc_schemas.prism import core, pipelines, merger
 
-from .test_prism_cidc_data_model import TEST_PRISM_TRIAL
 from ..constants import TEMPLATE_EXAMPLES_DIR
 from ..test_templates import (
     template_set,
@@ -17,6 +16,7 @@ from ..test_templates import (
     template_example,
     template_example_xlsx_path,
 )
+from .cidc_test_data import get_test_trial
 
 
 @pytest.fixture(scope="session")
@@ -83,10 +83,16 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
     with pytest.raises(NotImplementedError, match=f"Not supported type:{upload_type}"):
         pipelines._wes_pipeline_config(upload_type)
 
-    full_ct = copy.deepcopy(TEST_PRISM_TRIAL)
-
-    # drop existing wes assay as they break merging new ones
-    full_ct["assays"]["wes"] = []
+    full_ct = get_test_trial(
+        [
+            "CTTTPP111.00",
+            "CTTTPP121.00",
+            "CTTTPP122.00",
+            "CTTTPP121.00",
+            "CTTTPP123.00",
+        ],
+        assays={"wes": []},
+    )
 
     patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
 
@@ -130,10 +136,16 @@ def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, templ
     if not template.type.startswith("rna_"):
         return
 
-    full_ct = copy.deepcopy(TEST_PRISM_TRIAL)
-
-    # drop existing wes assay as they break merging new ones
-    full_ct["assays"]["rna"] = []
+    full_ct = get_test_trial(
+        [
+            "CTTTPP111.00",
+            "CTTTPP121.00",
+            "CTTTPP122.00",
+            "CTTTPP121.00",
+            "CTTTPP123.00",
+        ],
+        assays={"rna": []},
+    )
 
     patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
 

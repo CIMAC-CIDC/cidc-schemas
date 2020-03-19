@@ -5,7 +5,6 @@ from .merger import (
     merge_clinical_trial_metadata,
     InvalidMergeTargetException,
     MergeCollisionException,
-    _get_uuid_info,
 )
 from .extra_metadata import (
     parse_elisa,

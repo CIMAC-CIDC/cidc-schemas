@@ -5,7 +5,13 @@ from .merger import (
     merge_clinical_trial_metadata,
     InvalidMergeTargetException,
     MergeCollisionException,
+    _get_uuid_info,
 )
-from .extra_metadata import parse_elisa, parse_npx
+from .extra_metadata import (
+    parse_elisa,
+    parse_npx,
+    cimac_id_regex,
+    EXTRA_METADATA_PARSERS,
+)
 from .pipelines import generate_analysis_configs_from_upload_patch
 from .constants import *

@@ -7,6 +7,13 @@
   "type": "object",
   "allOf": [{ "$ref": "assays/components/antibody.json" }],
   "properties": {
+
+    "antibody": {"$ref": "assays/components/antibody.json#properties/antibody"},
+    "clone": {"$ref": "assays/components/antibody.json#properties/clone"},
+    "company": {"$ref": "assays/components/antibody.json#properties/company"},
+    "cat_num": {"$ref": "assays/components/antibody.json#properties/cat_num"},
+    "lot_num": {"$ref": "assays/components/antibody.json#properties/lot_num"},
+
     "staining_order": {
       "description": "Order of staining applied",
       "type": "integer"

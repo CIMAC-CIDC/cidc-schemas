@@ -1,5 +1,5 @@
 "#t","METADATA FILE FOR MIF"
-"#p","Protocol Identifier","test_prism_trial_id"
+"#p","Protocol Identifier","testtrial_pasha"
 "#p","ASSAY CREATOR","DFCI"
 "#p","SLIDE SCANNER MODEL","Hamamatsu"
 "#p","Staining","Bond RX"
@@ -7,6 +7,7 @@
 "#p","IMAGE ANALYSIS SOFTWARE VERSION","2.4.2"
 "#p","CELL SEGMENTATION MODEL","proprietary"
 "#p","POSITIVE CELL DETECTION MODEL","proprietary"
+"#p","internal slide id","something"
 
 "","Antibodies"
 "#h","ANTIBODY","CLONE","ANTIBODY COMPANY","CAT#","LOT#","STAINING ORDER","FLUOR WAVELENGTH","PRIMARY AB DILUTION","DILUTENT","FLUOR DILUTION","ANTIGEN RETRIEVAL TIME","PRIMARY INCUBATION TIME","AMPLIFICATION TIME"

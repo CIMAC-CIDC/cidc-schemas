@@ -42,6 +42,18 @@
           "internal slide id": {
             "merge_pointer": "0/internal_slide_id",
             "type_ref": "assays/components/imaging_data.json#properties/internal_slide_id"
+          },
+          "staining date": {
+            "merge_pointer": "0/staining_date",
+            "type_ref": "assays/components/imaging_data.json#properties/staining_date"
+          },
+          "imaging date": {
+            "merge_pointer": "0/imaging_date",
+            "type_ref": "assays/components/imaging_data.json#properties/imaging_date"
+          },
+          "imaging status": {
+            "merge_pointer": "0/imaging_status",
+            "type_ref": "assays/components/imaging_data.json#properties/imaging_status"
           }
         },
         "prism_data_object_pointer": "/antibodies/-",
@@ -110,30 +122,16 @@
               "merge_pointer": "0/cimac_id",
               "type_ref": "sample.json#properties/cimac_id"
             },
-            "collection event": {
-              "merge_pointer": "0/collection_event_name",
-              "type_ref": "sample.json#properties/collection_event_name"
-            },
-            "staining date": {
-              "merge_pointer": "0/staining_date",
-              "type_ref": "assays/components/imaging_data.json#properties/staining_date"
-            },
-            "imaging date": {
-              "merge_pointer": "0/imaging_date",
-              "type_ref": "assays/components/imaging_data.json#properties/imaging_date"
-            },
-            "imaging status": {
-              "merge_pointer": "0/imaging_status",
-              "type_ref": "assays/components/imaging_data.json#properties/imaging_status"
-            },
             "data files prefix": {
+              "do_not_merge": true,
               "merge_pointer": "0/comment",
               "type": "string",
               "process_as": [
                   {
                       "parse_through": "lambda prefix: prefix + '_binary_seg_maps.tif'",
                       "merge_pointer": "0/files/regions_of_interest/binary_seg_map",
-                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/binary_seg_maps.tif",
+                      "gcs_uri_format": "TRIAL_ID/mif/{cimac id}/binary_seg_maps.tif",
+                      "__gcs_uri_format": "{protocol identifier}/mif/{cimac id}/binary_seg_maps.tif",
                       "type_ref": "assays/components/local_file.json#properties/file_path",
                       "is_artifact": 1
                   }

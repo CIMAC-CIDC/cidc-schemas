@@ -39,7 +39,7 @@ setup(
     include_package_data=True,
     keywords="cidc_schemas",
     name="cidc_schemas",
-    packages=find_packages(include=["cidc_schemas"]),
+    packages=find_packages(include=["cidc_schemas", "cidc_schemas.prism"]),
     test_suite="tests",
     url="https://github.com/CIMAC-CIDC/schemas",
     version=__version__,

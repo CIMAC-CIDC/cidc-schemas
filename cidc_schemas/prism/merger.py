@@ -40,7 +40,6 @@ def _set_data_format(ct: dict, artifact: dict):
             continue
 
         if error.path[-1] != "data_format":
-            print("yay")
             continue
 
         if error.instance != artifact["data_format"]:

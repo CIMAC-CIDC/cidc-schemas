@@ -85,9 +85,7 @@ def test_set_data_format_edge_cases(monkeypatch):
         validator.iter_errors.return_value = errs
         load_and_val = MagicMock()
         load_and_val.return_value = validator
-        monkeypatch.setattr(
-            "cidc_schemas.json_validation.load_and_validate_schema", load_and_val
-        )
+        monkeypatch.setattr(prism_merger, "load_and_validate_schema", load_and_val)
 
     # _set_data_format bypasses exceptions that aren't jsonschema.exceptions.ValidationError instances.
     mock_iter_errors([Exception("non-validation error")])
@@ -99,6 +97,7 @@ def test_set_data_format_edge_cases(monkeypatch):
     val_error = jsonschema.exceptions.ValidationError("")
     val_error.validator = "const"
     val_error.path = ["some_path"]
+    mock_iter_errors([val_error])
     artifact = {}
     prism_merger._set_data_format({}, artifact)
     assert artifact["data_format"] == "[NOT SET]"

@@ -8,6 +8,7 @@ from jsonmerge import Merger
 
 from cidc_schemas.prism import merger as prism_merger
 from cidc_schemas.prism.core import LocalFileUploadEntry
+from cidc_schemas.prism.constants import PROTOCOL_ID_FIELD_NAME
 
 from .test_extra_metadata import (
     npx_file_path,
@@ -114,6 +115,33 @@ def test_set_data_format_edge_cases(monkeypatch):
 
 
 #### END MERGE STRATEGY TESTS ####
+
+#### MERGER TESTS ####
+
+
+def test_merge_clinical_trial_metadata_invalid_target():
+    """Ensure `merge_clinical_trial_metadata` catches expected corner cases."""
+    valid_patch = {PROTOCOL_ID_FIELD_NAME: "test_prism_trial_id"}
+
+    invalid_target = {"foo": "bar"}
+    with pytest.raises(
+        prism_merger.InvalidMergeTargetException, match="target is invalid"
+    ):
+        prism_merger.merge_clinical_trial_metadata(valid_patch, invalid_target)
+
+    wrong_trial_id_target = {
+        PROTOCOL_ID_FIELD_NAME: "foobar",
+        "participants": [],
+        "allowed_cohort_names": [],
+        "allowed_collection_event_names": [],
+    }
+    with pytest.raises(
+        prism_merger.InvalidMergeTargetException, match="merge trials with different"
+    ):
+        prism_merger.merge_clinical_trial_metadata(valid_patch, wrong_trial_id_target)
+
+
+#### END MERGER TESTS ####
 
 #### EXTRA METADATA TESTS ####
 

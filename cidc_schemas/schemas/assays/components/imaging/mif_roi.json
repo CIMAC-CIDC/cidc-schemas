@@ -21,5 +21,15 @@
 
     "composite_image": {"$ref": "assays/components/composite_image.json#properties/composite_image"},
     "component_data": {"$ref": "assays/components/composite_image.json#properties/component_data"}
-  }
+  },
+
+  "required": [
+    "binary_seg_map",
+    "cell_seg_data",
+    "cell_seg_data_summary",
+    "phenotype_map",
+    "score_data",
+    "composite_image",
+    "component_data"
+  ]
 }

@@ -365,6 +365,10 @@ def _format_single_artifact(
     except KeyError as e:
         raise KeyError(f"Empty gcs_uri_format for {field_def['key_name']!r}") from e
 
+    assert isinstance(
+        gcs_uri_format, (dict, str)
+    ), f"Unsupported gcs_uri_format for {field_def['key_name']!r}"
+
     if isinstance(gcs_uri_format, dict):
         if "check_errors" in gcs_uri_format:
             # `eval` should be fine, as we're controlling the code argument in templates

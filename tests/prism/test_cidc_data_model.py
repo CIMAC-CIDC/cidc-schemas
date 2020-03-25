@@ -18,6 +18,11 @@ def prism_test(request):
     return request.param
 
 
+@pytest.fixture
+def ct_validator():
+    return load_and_validate_schema("clinical_trial.json", return_validator=True)
+
+
 def assert_metadata_matches(received: dict, expected: dict, upload_entries: list):
     """Check that the `received` metadata dict matches the `expected` metadata dict."""
     # Take the difference of the received patch and the expected patch.
@@ -25,7 +30,7 @@ def assert_metadata_matches(received: dict, expected: dict, upload_entries: list
     # so the number of differences should equal the number of expected
     # upload entries.
     diff = DeepDiff(received, expected)
-    if "values_changed" in diff:
+    if upload_entries and diff:
         assert len(diff["values_changed"]) == len(upload_entries)
         for key in diff["values_changed"].keys():
             assert key.endswith("['upload_placeholder']")
@@ -53,7 +58,7 @@ def test_prismify(prism_test: PrismTestData):
     assert_metadata_matches(patch, prism_test.prismify_patch, upload_entries)
 
 
-def test_merge_patch_into_trial(prism_test: PrismTestData):
+def test_merge_patch_into_trial(prism_test: PrismTestData, ct_validator):
     # Merge the prismify patch into the base trial metadata
     result, errs = merge_clinical_trial_metadata(
         prism_test.prismify_patch, prism_test.base_trial
@@ -63,13 +68,12 @@ def test_merge_patch_into_trial(prism_test: PrismTestData):
     assert len(errs) == 0
 
     # Ensure that the merge result passes validation
-    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-    validator.validate(result)
+    ct_validator.validate(result)
 
     assert_metadata_matches(result, prism_test.target_trial, prism_test.upload_entries)
 
 
-def test_merge_artifacts(prism_test: PrismTestData):
+def test_merge_artifacts(prism_test: PrismTestData, ct_validator):
     # Some upload types won't have any artifacts to merge
     if len(prism_test.upload_entries) == 0:
         return
@@ -89,18 +93,17 @@ def test_merge_artifacts(prism_test: PrismTestData):
             crc32c_hash="bar",
         )
 
-        # TODO: Check that the artifact contains expected attributes
-        # TODO: Check additional_metadata has expected structure
+        # Check that artifact has expected fields for the given entry
+        assert artifact["object_url"] == entry.gs_key
+        assert artifact["upload_placeholder"] == entry.upload_placeholder
+        assert additional_metadata != {}
 
         # Keep track of the artifact metadata
-        uuids_and_artifacts.append((entry.upload_placeholder, artifact))
+        uuids_and_artifacts.append((entry.upload_placeholder, artifact, entry))
 
     # Check that the artifact objects have been merged in the right places.
-    # First, make an alias `root` for `patch`, because `deepdiff.grep` generates dictionary
-    # paths like "root['key1']['key2']['upload_placeholder']".
-    root = patch
     placeholder_key = "['upload_placeholder']"
-    for uuid, artifact in uuids_and_artifacts:
+    for uuid, artifact, entry in uuids_and_artifacts:
         # Get the path in the *original* patch to the placeholder uuid.
         paths = (prism_test.prismify_patch | grep(uuid))["matched_values"]
         assert len(paths) == 1, "UUID should only occur once in a metadata patch"
@@ -112,11 +115,11 @@ def test_merge_artifacts(prism_test: PrismTestData):
 
         # Ensure that evaluating this same path in the *new* patch gets the expected
         # artifact metadata dictionary.
-        assert eval(path) == artifact
+        assert eval(path, {}, {"root": patch}) == artifact
 
     # Merge the patch-with-artifacts into the base trial
     result, errs = merge_clinical_trial_metadata(patch, prism_test.base_trial)
+    assert len(errs) == 0
 
     # Make sure the modified patch is still valid
-    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
-    validator.validate(result)
+    ct_validator.validate(result)

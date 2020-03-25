@@ -2,7 +2,7 @@
 
 import re
 import logging
-from typing import BinaryIO, List, NamedTuple, Optional
+from typing import BinaryIO, List, NamedTuple, Optional, Callable
 
 import openpyxl
 import jsonschema

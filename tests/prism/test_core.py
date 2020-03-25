@@ -490,19 +490,11 @@ def test_prism_process_as_error(monkeypatch):
     assert "Cannot extract cimac_participant_id from SA_id value: None" == str(errs[0])
 
 
-def test_prism_multi_artifact_process_as(monkeypatch):
+def test_prism_do_not_merge(monkeypatch):
     """ Tests whether prism can parse multi_artifact from process_as record"""
 
     mock_XlTemplateReader_from_excel(
-        {
-            "analysis": [
-                ["#h", "participant_id", "samples_count"],
-                ["#d", "111", "1"],
-                ["#d", "222", "2"],
-                ["#d", "333", "4"],
-            ]
-        },
-        monkeypatch,
+        {"analysis": [["#h", "id", "comment"], ["#d", "111", "whatever"]]}, monkeypatch
     )
 
     template = Template(
@@ -513,20 +505,20 @@ def test_prism_multi_artifact_process_as(monkeypatch):
                         "prism_data_object_pointer": "/participants/-",
                         "data_columns": {
                             "section name": {
-                                "participant_id": {
+                                "id": {
                                     "merge_pointer": "/cimac_participant_id",  # so proper mergeStrategy kicks in
                                     "type": "string",
                                 },
-                                "samples_count": {
-                                    "merge_pointer": "/samples_count",
-                                    "type": "integer",
+                                "comment": {
+                                    "do_not_merge": True,
+                                    "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda count: ','.join(f'results_dir/sample_{x}.txt' for x in range(int(count)))",
-                                            "merge_pointer": "/sample_artifacts",
-                                            "gcs_uri_format": "{participant_id}/sub_{num}.txt",
+                                            "parse_through": "lambda comment: f'{comment}_some_path.txt'",
+                                            "merge_pointer": "/artifact",
+                                            "gcs_uri_format": "{id}/artifact.txt",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": "multi",
+                                            "is_artifact": 1,
                                         }
                                     ],
                                 },
@@ -536,12 +528,11 @@ def test_prism_multi_artifact_process_as(monkeypatch):
                 }
             }
         },
-        "test_prism_multi_artifact_process_as",
+        "test_prism_do_not_merge",
     )
 
     monkeypatch.setattr(
-        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES",
-        ["test_prism_multi_artifact_process_as"],
+        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES", ["test_prism_do_not_merge"]
     )
 
     xlsx, errs = XlTemplateReader.from_excel("workbook")
@@ -550,18 +541,19 @@ def test_prism_multi_artifact_process_as(monkeypatch):
     patch, file_maps, errs = core.prismify(xlsx, template)
     assert len(errs) == 0
 
-    assert 3 == len(patch["participants"])
-    all_artifacts = [s for p in patch["participants"] for s in p["sample_artifacts"]]
+    assert 1 == len(patch["participants"])
+    participant = dict(patch["participants"][0])
+    assert participant.pop("cimac_participant_id") == "111"
+    artifact = participant.pop("artifact")
 
-    # sum of samples_count = 1 + 2 + 4
-    assert 1 + 2 + 4 == len(all_artifacts)
-    assert 1 + 2 + 4 == len(set(a["upload_placeholder"] for a in all_artifacts))
+    assert participant == {}  # nothing is parsed to participant but id and artifact
 
-    # sum of samples_count = 1 + 2 + 4
-    assert 1 + 2 + 4 == len(file_maps)
-    assert 1 + 2 + 4 == len(set(f.gs_key for f in file_maps))
+    assert 1 == len(artifact)
+
+    assert 1 == len(file_maps)
+    assert 1 == len(set(f.gs_key for f in file_maps))
     local_paths = [f.local_path for f in file_maps]
-    assert 1 + 2 + 4 == len(set(local_paths))
+    assert 1 == len(set(local_paths))
 
 
 def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):

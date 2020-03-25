@@ -290,26 +290,33 @@ def _process_field_value(
     in template schema, that allows for multi-processing of a single cell value.
     """
 
+    changes, files = [], []
+
     # skip nullable
     if field_def.get("allow_empty"):
         if raw_val is None:
-            return [], []
+            return changes, files
 
-    # or set/update value in-place in data_obj dictionary
-    pointer = field_def["merge_pointer"]
-    if field_def.get("is_artifact") == 1:
-        pointer += "/upload_placeholder"
+    if field_def.get("do_not_merge") == True:
+        logger.debug(
+            f"Ignoring {field_def['key_name']!r} due to 'do_not_merge' == True"
+        )
+    else:
+        # or set/update value in-place in data_obj dictionary
+        pointer = field_def["merge_pointer"]
+        if field_def.get("is_artifact") == 1:
+            pointer += "/upload_placeholder"
 
-    try:
-        val, files = _calc_val_and_files(raw_val, field_def, format_context)
-    except ParsingException:
-        raise
-    except Exception as e:
-        raise ParsingException(
-            f"Can't parse {key!r} value {str(raw_val)!r}: {e}"
-        ) from e
+        try:
+            val, files = _calc_val_and_files(raw_val, field_def, format_context)
+        except ParsingException:
+            raise
+        except Exception as e:
+            raise ParsingException(
+                f"Can't parse {key!r} value {str(raw_val)!r}: {e}"
+            ) from e
 
-    changes = [_AtomicChange(pointer, val)]
+        changes = [_AtomicChange(pointer, val)]
 
     # "process_as" allows to define additional places/ways to put that match
     # somewhere in the resulting doc, with additional processing.

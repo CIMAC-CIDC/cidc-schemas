@@ -1474,6 +1474,10 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         # 1 xlsx file in preamble
         assert len(merged_gs_keys) == 1
 
+    elif template.type == "mif":
+        # 7 files per ROI * 3 ROIs
+        assert len(merged_gs_keys) == 7 * 3
+
     elif template.type in SUPPORTED_MANIFESTS:
         assert len(merged_gs_keys) == 0
 
@@ -1550,6 +1554,14 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
         assert (
             len(full_ct["assays"]["elisa"][0]["antibodies"]) == 2
         ), "More antibodies than expected"
+
+    elif template.type == "mif":
+        assert len(full_ct["assays"]["mif"]) == 1, "More assay runs than expected"
+        assert (
+            len(full_ct["assays"]["mif"][0]["antibodies"]) == 5
+        ), "# antibodies != expected"
+
+        assert len(full_ct["assays"]["mif"][0]["records"]) == 2, "# records != expected"
 
     else:
         assert False, f"add {template.type} assay specific asserts on 'full_ct'"

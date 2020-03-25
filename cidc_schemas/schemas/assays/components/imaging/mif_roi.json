@@ -22,7 +22,7 @@
     "composite_image": {"$ref": "assays/components/composite_image.json#properties/composite_image"},
     "component_data": {"$ref": "assays/components/composite_image.json#properties/component_data"}
   },
-
+  "mergeStrategy": "objectMerge",
   "required": [
     "binary_seg_map",
     "cell_seg_data",

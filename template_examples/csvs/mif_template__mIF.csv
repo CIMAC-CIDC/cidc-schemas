@@ -14,6 +14,6 @@
 
 "","ROIs"
 "#h","Cimac id","Roi id","Data files prefix"
-"#d","CTTTPP111.00","1","ABC_INFORM_1"
-"#d","CTTTPP121.00","2","ABC_INFORM_2"
-"#d","CTTTPP122.00","3","ABC_INFORM_3"
+"#d","CTTTPP111.00","1","ABC_INFORM_111_1"
+"#d","CTTTPP121.00","1","ABC_INFORM_121_1"
+"#d","CTTTPP121.00","2","ABC_INFORM_121_2"

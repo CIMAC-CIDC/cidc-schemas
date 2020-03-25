@@ -729,6 +729,19 @@ def test_filepath_gen(xlsx, template):
         assert 1 == sum([x.gs_key.endswith(".qptiff") for x in file_maps])
         assert 1 == sum([x.gs_key.endswith(".svs") for x in file_maps])
 
+    elif template.type == "mif":
+        file_set_per_roi = [
+            "binary_seg_map.tif",
+            "cell_seg_data.txt",
+            "cell_seg_data_summary.txt",
+            "phenotype_map.tif",
+            "score_data.tif",
+            "composite_image.tif",
+            "component_data.tif",
+        ]
+        for file_type in file_set_per_roi:
+            assert 3 == sum([x.gs_key.endswith(file_type) for x in file_maps])
+
     elif template.type in SUPPORTED_SHIPPING_MANIFESTS:
 
         assert len(file_maps) == 0
@@ -1321,6 +1334,15 @@ def test_end_to_end_prismify_merge_artifact_merge(xlsx, template):
 
         elif template.type == "ihc":
             assert len(prism_patch["assays"][template.type][0]["records"]) == 4
+
+        elif template.type == "mif":
+            records = prism_patch["assays"][template.type][0]["records"]
+            assert len(records) == 2
+            assert (
+                len(records[0]["files"]["regions_of_interest"])
+                + len(records[1]["files"]["regions_of_interest"])
+                == 3
+            )
 
         else:
             raise NotImplementedError(

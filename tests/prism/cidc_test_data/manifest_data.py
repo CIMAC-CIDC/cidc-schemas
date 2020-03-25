@@ -1,6 +1,6 @@
 from typing import List
 
-from cidc_schemas.prism.constants import SUPPORTED_SHIPPING_MANIFESTS
+from cidc_schemas.prism.constants import SUPPORTED_MANIFESTS
 
 from .utils import (
     copy_dict_with_branch,
@@ -1523,7 +1523,46 @@ def h_and_e() -> PrismTestData:
     )
 
 
-missing = set(SUPPORTED_SHIPPING_MANIFESTS).difference(
+@manifest_data_generator
+def tumor_normal_pairing():
+    upload_type = "tumor_normal_pairing"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "test_prism_trial_id",
+        "analysis": {
+            "wes_analysis": {
+                "pair_runs": [
+                    {
+                        "tumor": {"cimac_id": "CTTTPP111.00"},
+                        "run_id": "CTTTPP111.00",
+                        "normal": {"cimac_id": "CTTTPP121.00"},
+                    }
+                ]
+            }
+        },
+    }
+    upload_entries = []
+
+    cimac_ids = [
+        sample["cimac_id"]
+        for pair_run in prismify_patch["analysis"]["wes_analysis"]["pair_runs"]
+        for sample in [pair_run["tumor"], pair_run["normal"]]
+    ]
+    base_trial = get_test_trial(cimac_ids)
+
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "analysis")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
+missing = set(SUPPORTED_MANIFESTS).difference(
     [f.__name__ for f in manifest_data_generators]
 )
 assert not missing, f"Missing manifest test data generators for {missing}"

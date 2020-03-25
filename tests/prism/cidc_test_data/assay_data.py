@@ -1,3 +1,5 @@
+from cidc_schemas.prism import SUPPORTED_ASSAYS
+
 from .utils import (
     copy_dict_with_branch,
     get_prismify_args,
@@ -7,6 +9,15 @@ from .utils import (
 )
 
 
+assay_data_generators = []
+
+
+def assay_data_generator(f):
+    assay_data_generators.append(f)
+    return f
+
+
+@assay_data_generator
 def cytof() -> PrismTestData:
     upload_type = "cytof"
     prismify_args = get_prismify_args(upload_type)
@@ -156,6 +167,7 @@ def cytof() -> PrismTestData:
     )
 
 
+@assay_data_generator
 def ihc() -> PrismTestData:
     upload_type = "ihc"
     prismify_args = get_prismify_args(upload_type)
@@ -282,6 +294,7 @@ def ihc() -> PrismTestData:
     )
 
 
+@assay_data_generator
 def wes_bam() -> PrismTestData:
     upload_type = "wes_bam"
     prismify_args = get_prismify_args(upload_type)
@@ -379,6 +392,7 @@ def wes_bam() -> PrismTestData:
     )
 
 
+@assay_data_generator
 def wes_fastq() -> PrismTestData:
     upload_type = "wes_fastq"
     prismify_args = get_prismify_args(upload_type)
@@ -498,6 +512,7 @@ def wes_fastq() -> PrismTestData:
     )
 
 
+@assay_data_generator
 def rna_bam() -> PrismTestData:
     upload_type = "rna_bam"
     prismify_args = get_prismify_args(upload_type)
@@ -598,6 +613,7 @@ def rna_bam() -> PrismTestData:
     )
 
 
+@assay_data_generator
 def rna_fastq() -> PrismTestData:
     upload_type = "rna_fastq"
     prismify_args = get_prismify_args(upload_type)
@@ -720,6 +736,7 @@ def rna_fastq() -> PrismTestData:
     )
 
 
+@assay_data_generator
 def olink() -> PrismTestData:
     upload_type = "olink"
     prismify_args = get_prismify_args(upload_type)
@@ -833,6 +850,7 @@ def olink() -> PrismTestData:
     )
 
 
+@assay_data_generator
 def elisa() -> PrismTestData:
     upload_type = "elisa"
     prismify_args = get_prismify_args(upload_type)
@@ -894,3 +912,7 @@ def elisa() -> PrismTestData:
         base_trial,
         target_trial,
     )
+
+
+missing = set(SUPPORTED_ASSAYS).difference([f.__name__ for f in assay_data_generators])
+assert not missing, f"Missing assay test data generators for {missing}"

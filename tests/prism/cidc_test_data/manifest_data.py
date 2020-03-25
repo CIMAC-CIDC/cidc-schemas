@@ -1,5 +1,7 @@
 from typing import List
 
+from cidc_schemas.prism.constants import SUPPORTED_SHIPPING_MANIFESTS
+
 from .utils import (
     copy_dict_with_branch,
     get_prismify_args,
@@ -8,7 +10,15 @@ from .utils import (
     PrismTestData,
 )
 
+manifest_data_generators = []
 
+
+def manifest_data_generator(f):
+    manifest_data_generators.append(f)
+    return f
+
+
+@manifest_data_generator
 def plasma() -> PrismTestData:
     upload_type = "plasma"
     prismify_args = get_prismify_args(upload_type)
@@ -219,6 +229,7 @@ def plasma() -> PrismTestData:
     )
 
 
+@manifest_data_generator
 def pbmc() -> PrismTestData:
     upload_type = "pbmc"
     prismify_args = get_prismify_args(upload_type)
@@ -489,6 +500,7 @@ def pbmc() -> PrismTestData:
     )
 
 
+@manifest_data_generator
 def tissue_slide() -> PrismTestData:
     upload_type = "tissue_slide"
     prismify_args = get_prismify_args(upload_type)
@@ -644,6 +656,7 @@ def tissue_slide() -> PrismTestData:
     )
 
 
+@manifest_data_generator
 def normal_blood_dna() -> PrismTestData:
     upload_type = "normal_blood_dna"
     prismify_args = get_prismify_args(upload_type)
@@ -897,6 +910,7 @@ def normal_blood_dna() -> PrismTestData:
     )
 
 
+@manifest_data_generator
 def normal_tissue_dna() -> PrismTestData:
     upload_type = "normal_tissue_dna"
     prismify_args = get_prismify_args(upload_type)
@@ -1144,6 +1158,7 @@ def normal_tissue_dna() -> PrismTestData:
     )
 
 
+@manifest_data_generator
 def tumor_tissue_dna() -> PrismTestData:
     upload_type = "tumor_tissue_dna"
     prismify_args = get_prismify_args(upload_type)
@@ -1397,6 +1412,7 @@ def tumor_tissue_dna() -> PrismTestData:
     )
 
 
+@manifest_data_generator
 def h_and_e() -> PrismTestData:
     upload_type = "h_and_e"
     prismify_args = get_prismify_args(upload_type)
@@ -1505,3 +1521,9 @@ def h_and_e() -> PrismTestData:
         base_trial,
         target_trial,
     )
+
+
+missing = set(SUPPORTED_SHIPPING_MANIFESTS).difference(
+    [f.__name__ for f in manifest_data_generators]
+)
+assert not missing, f"Missing manifest test data generators for {missing}"

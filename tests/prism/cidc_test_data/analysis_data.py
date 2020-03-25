@@ -1,5 +1,7 @@
 from copy import deepcopy
 
+from cidc_schemas.prism import SUPPORTED_ANALYSES
+
 from .assay_data import cytof
 from .utils import (
     copy_dict_with_branch,
@@ -9,7 +11,15 @@ from .utils import (
     PrismTestData,
 )
 
+analysis_data_generators = []
 
+
+def analysis_data_generator(f):
+    analysis_data_generators.append(f)
+    return f
+
+
+@analysis_data_generator
 def wes_analysis() -> PrismTestData:
     upload_type = "wes_analysis"
     prismify_args = get_prismify_args(upload_type)
@@ -910,6 +920,7 @@ def wes_analysis() -> PrismTestData:
     )
 
 
+@analysis_data_generator
 def cytof_analysis() -> PrismTestData:
     upload_type = "cytof_analysis"
     prismify_args = get_prismify_args(upload_type)
@@ -1118,3 +1129,9 @@ def cytof_analysis() -> PrismTestData:
         base_trial,
         target_trial,
     )
+
+
+missing = set(SUPPORTED_ANALYSES).difference(
+    [f.__name__ for f in analysis_data_generators]
+)
+assert not missing, f"Missing analysis test data generators for {missing}"

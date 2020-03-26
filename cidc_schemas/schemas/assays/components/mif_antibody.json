@@ -20,7 +20,7 @@
     },
     "fluor_wavelength": {
       "description": "Wavelength registered for Alexa Fluor processing.",
-      "type": "number"
+      "type": "integer"
     },
     "primary_ab_dilution": {
       "description": "Concentration ratio for primary antibody dilution.",
@@ -50,6 +50,7 @@
       "format": "time"
     }
   },
+  "mergeStrategy": "objectMerge",
   "required": [
     "fluor_wavelength",
     "primary_ab_dilution",

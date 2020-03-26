@@ -40,6 +40,10 @@
       "type": "array",
       "items": {
         "$ref": "assays/components/mif_antibody.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "antibody"
       }
     }
   },

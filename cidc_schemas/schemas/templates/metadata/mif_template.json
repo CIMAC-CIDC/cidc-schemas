@@ -100,9 +100,9 @@
                       "is_artifact": 1
                   },
                   {
-                      "parse_through": "lambda prefix: prefix + 'score_data.tif'",
+                      "parse_through": "lambda prefix: prefix + 'score_data.txt'",
                       "merge_pointer": "0/score_data",
-                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}_score_data.tif",
+                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}_score_data.txt",
                       "type_ref": "assays/components/local_file.json#properties/file_path",
                       "is_artifact": 1
                   },

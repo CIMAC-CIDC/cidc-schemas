@@ -1051,8 +1051,8 @@ def mif() -> PrismTestData:
                     "positive_cell_detection": "proprietary",
                     "staining": "Bond RX",
                     "internal_slide_id": "something",
-                    "staining_date": "2001-01-01",
-                    "imaging_date": "2001-01-01",
+                    "staining_date": "2001-01-01 00:00:00",
+                    "imaging_date": "2001-01-01 00:00:00",
                     "imaging_status": "Yes",
                 }
             ]
@@ -1084,8 +1084,8 @@ def mif() -> PrismTestData:
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_111/1_score_data.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1_score_data.tif",
+            local_path="INFORM_folder_pref_111/1_score_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1_score_data.txt",
             upload_placeholder="5aaaaaaa-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
@@ -1126,8 +1126,8 @@ def mif() -> PrismTestData:
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_121/1_score_data.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1_score_data.tif",
+            local_path="INFORM_folder_pref_121/1_score_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1_score_data.txt",
             upload_placeholder="5bbbbbbb-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
@@ -1168,8 +1168,8 @@ def mif() -> PrismTestData:
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_121/2_score_data.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2_score_data.tif",
+            local_path="INFORM_folder_pref_121/2_score_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2_score_data.txt",
             upload_placeholder="5ccccccc-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
@@ -1186,7 +1186,13 @@ def mif() -> PrismTestData:
             metadata_availability=None,
         ),
     ]
-    base_trial = get_test_trial()
+
+    cimac_ids = [
+        record["cimac_id"]
+        for batch in prismify_patch["assays"]["mif"]
+        for record in batch["records"]
+    ]
+    base_trial = get_test_trial(cimac_ids)
 
     target_trial = copy_dict_with_branch(base_trial, prismify_patch, "assays")
 

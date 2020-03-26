@@ -56,7 +56,6 @@ def _set_data_format(ct: dict, artifact: dict):
 def _get_uuid_info(ct: dict, artifact_uuid: str) -> (dict, dict):
     """
         Using uuid to find path in CT where corresponding artifact is located.
-
     """
     uuid_field_path = get_path(ct, artifact_uuid)
 

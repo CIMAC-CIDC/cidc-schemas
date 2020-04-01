@@ -1050,7 +1050,6 @@ def mif() -> PrismTestData:
                     "cell_segmentation_model": "proprietary",
                     "positive_cell_detection": "proprietary",
                     "staining": "Bond RX",
-                    "internal_slide_id": "something",
                     "staining_date": "2001-01-01 00:00:00",
                     "imaging_date": "2001-01-01 00:00:00",
                     "imaging_status": "Yes",

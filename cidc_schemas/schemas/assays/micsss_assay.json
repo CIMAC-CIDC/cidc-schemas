@@ -19,7 +19,6 @@
     "cell_segmentation_model": {"$ref": "assays/components/image.json#properties/cell_segmentation_model"},
     "positive_cell_detection": {"$ref": "assays/components/image.json#properties/positive_cell_detection"},
 
-    "internal_slide_id": {"$ref": "assays/components/imaging_data.json#properties/internal_slide_id"},
     "staining_date": {"$ref": "assays/components/imaging_data.json#properties/staining_date"},
     "imaging_date": {"$ref": "assays/components/imaging_data.json#properties/imaging_date"},
     "imaging_status": {"$ref": "assays/components/imaging_data.json#properties/imaging_status"},

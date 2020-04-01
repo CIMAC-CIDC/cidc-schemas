@@ -39,10 +39,6 @@
             "merge_pointer": "0/staining",
             "type_ref": "assays/mif_assay.json#properties/staining"
           },
-          "internal slide id": {
-            "merge_pointer": "0/internal_slide_id",
-            "type_ref": "assays/components/imaging_data.json#properties/internal_slide_id"
-          },
           "staining date": {
             "merge_pointer": "0/staining_date",
             "type_ref": "assays/components/imaging_data.json#properties/staining_date"

@@ -329,8 +329,7 @@ def test_mif():
     # create the mif object
     image = {"slide_scanner_model": "Vectra 2.0"}
 
-    imaging_data = {"internal_slide_id": "a1s1e1"}
-    obj = {**ASSAY_CORE, **image, **imaging_data}  # merge three dictionaries
+    obj = {**ASSAY_CORE, **image}  # merge dictionaries
 
     # create the artifact object
     image = ARTIFACT_OBJ.copy()
@@ -375,8 +374,8 @@ def test_micsss():
     # create the micsss object
     image = {"slide_scanner_model": "Vectra 2.0"}
 
-    imaging_data = {"internal_slide_id": "a1s1e1"}
-    obj = {**ASSAY_CORE, **image, **imaging_data}  # merge three dictionaries
+    imaging_data = {}
+    obj = {**ASSAY_CORE, **image}  # merge dictionaries
 
     # create the artifact object
     image = ARTIFACT_OBJ.copy()

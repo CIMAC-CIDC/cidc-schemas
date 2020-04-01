@@ -14,10 +14,6 @@
         "Bond RX"
       ]
     },
-    "internal_slide_id": {
-      "description": "Identification number used for internal imaging slide.",
-      "type": "string"
-    },
     "staining_date": {
       "description": "Date on which slide staining was processed.",
       "type": "string",
@@ -33,6 +29,5 @@
       "type": "string",
       "enum": ["Yes", "No"]
     }
-  },
-  "required": ["internal_slide_id"]
+  }
 }

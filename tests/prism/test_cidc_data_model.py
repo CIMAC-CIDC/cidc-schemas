@@ -29,8 +29,9 @@ def assert_metadata_matches(received: dict, expected: dict, upload_entries: list
     # We expect these patchs to differ by upload placeholder UUID only,
     # so the number of differences should equal the number of expected
     # upload entries.
-    diff = DeepDiff(received, expected)
+    diff = DeepDiff(expected, received)
     if upload_entries and diff:
+        assert len(diff) == 1  # only "values_changed"
         assert len(diff["values_changed"]) == len(upload_entries)
         for key in diff["values_changed"].keys():
             assert key.endswith("['upload_placeholder']")
@@ -49,6 +50,15 @@ def test_prismify(prism_test: PrismTestData):
 
     # Compare the received upload entries with the expected upload entries.
     # These should differ by upload placeholder UUID only.
+    received = [
+        (e.local_path, e.gs_key, e.metadata_availability) for e in upload_entries
+    ]
+    expected = [
+        (e.local_path, e.gs_key, e.metadata_availability)
+        for e in prism_test.upload_entries
+    ]
+
+    assert expected == received
     for received, expected in zip(upload_entries, prism_test.upload_entries):
         assert received.local_path == expected.local_path
         assert received.gs_key == expected.gs_key

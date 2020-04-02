@@ -8,6 +8,7 @@ from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
 from cidc_schemas.template_reader import XlTemplateReader
 from cidc_schemas.template_writer import RowType
+from cidc_schemas.constants import SCHEMA_DIR
 from jsonmerge import Merger, strategies, exceptions as jsonmerge_exceptions
 from jsonpointer import EndOfList, JsonPointer, JsonPointerException, resolve_pointer
 
@@ -460,7 +461,10 @@ PRISM_PRISMIFY_STRATEGIES = {"overwriteAny": strategies.Overwrite()}
 
 
 def prismify(
-    xlsx: XlTemplateReader, template: Template, debug: bool = False
+    xlsx: XlTemplateReader,
+    template: Template,
+    schema_root: str = SCHEMA_DIR,
+    debug: bool = False,
 ) -> (dict, List[LocalFileUploadEntry], List[Union[Exception, str]]):
     """
     Converts excel file to json object. It also identifies local files
@@ -476,6 +480,7 @@ def prismify(
     Args:
         xlsx: cidc_schemas.template_reader.XlTemplateReader instance
         template: cidc_schemas.template.Template instance
+        schema_root: path to the target JSON schema, defaulting to CIDC schemas root
     Returns:
         (tuple):
             arg1: clinical trial object with data parsed from spreadsheet
@@ -578,7 +583,7 @@ def prismify(
         template.schema.get("prism_template_root_object_schema")
         or "clinical_trial.json"
     )
-    root_ct_schema = load_and_validate_schema(root_ct_schema_name)
+    root_ct_schema = load_and_validate_schema(root_ct_schema_name, schema_root)
     # create the result CT dictionary
     root_ct_obj = {}
     template_root_obj_pointer = template.schema.get(
@@ -617,7 +622,8 @@ def prismify(
             continue
 
         preamble_object_schema = load_and_validate_schema(
-            templ_ws.get("prism_preamble_object_schema", root_ct_schema_name)
+            templ_ws.get("prism_preamble_object_schema", root_ct_schema_name),
+            schema_root,
         )
         preamble_merger = Merger(
             preamble_object_schema, strategies=PRISM_PRISMIFY_STRATEGIES

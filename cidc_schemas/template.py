@@ -76,7 +76,7 @@ class Template:
 
     ignored_worksheets = ["Legend", "Data Dictionary"]
 
-    def __init__(self, schema: dict, type: str):
+    def __init__(self, schema: dict, type: str, schema_root: str = SCHEMA_DIR):
         """
         Load the schema defining a manifest or assay template.
 
@@ -86,6 +86,7 @@ class Template:
         """
         self.schema = schema
         self.type = type
+        self.schema_root = schema_root
         self.worksheets = self._extract_worksheets()
         self.key_lu = self._load_keylookup()
 
@@ -137,8 +138,7 @@ class Template:
 
         return processed_worksheet
 
-    @staticmethod
-    def _get_ref_coerce(ref: str):
+    def _get_ref_coerce(self, ref: str):
         """
         This function takes a json-schema style $ref pointer,
         opens the schema and determines the best python
@@ -154,7 +154,7 @@ class Template:
         referer = {"$ref": ref}
 
         resolver_cache = {}
-        schemas_dir = f"file://{SCHEMA_DIR}/schemas"
+        schemas_dir = f"file://{self.schema_root}/schemas"
         while "$ref" in referer:
             # get the entry
             resolver = jsonschema.RefResolver(schemas_dir, referer, resolver_cache)

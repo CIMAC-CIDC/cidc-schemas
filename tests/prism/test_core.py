@@ -461,8 +461,8 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
 
     mock_XlTemplateReader_from_excel(
         {
-            "analysis": [
-                ["#h", "run_id", "sid1", "sid2"],
+            "groups": [
+                ["#h", "group_id", "left_id", "right_id"],
                 ["#d", "000", "sid1_0", "sid2_0"],
                 ["#d", "111", "sid1_1", "sid2_1"],
             ]
@@ -470,96 +470,74 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
         monkeypatch,
     )
 
-    template = Template(
+    template = build_mock_Template(
         {
             "$id": "test_analysis",
             "title": "...",
-            "prism_template_root_object_schema": "assays/components/ngs/wes/wes_analysis.json",
-            "prism_template_root_object_pointer": "/analysis/wes_analysis",
+            "prism_template_root_object_schema": "test_schema.json",
             "properties": {
                 "worksheets": {
-                    "analysis": {
-                        "prism_data_object_pointer": "/pair_runs/-",
+                    "groups": {
+                        "prism_data_object_pointer": "/groups/-",
                         "preamble_rows": {},
                         "data_columns": {
-                            "section name": {
-                                "run_id": {
-                                    "merge_pointer": "/run_id",
+                            "groups": {
+                                "group_id": {
+                                    "merge_pointer": "/group_id",
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda x: f'analysis/germline/{x}/{x}-run-output-1.txt'",
-                                            "merge_pointer": "/run-output-1",
-                                            "gcs_uri_format": "{run_id}/run-output-1.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "parse_through": "lambda x: f'group/{x}_summary.txt'",
+                                            "merge_pointer": "/group_txt_file",
+                                            "gcs_uri_format": "group/{group_id}/summary.txt",
+                                            "type_ref": "test_schema.json#/definitions/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'analysis/purity/{x}/{x}run-output-2.txt'",
-                                            "merge_pointer": "/run-output-2",
-                                            "gcs_uri_format": "{run_id}/run-output-2.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/clonality/{x}/{x}-run-output-3.tsv'",
-                                            "merge_pointer": "/run-output-3",
-                                            "gcs_uri_format": "{run_id}/run-output-3.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "parse_through": "lambda x: f'group/{x}_summary.csv'",
+                                            "merge_pointer": "/group_csv_file",
+                                            "gcs_uri_format": "group/{group_id}/summary.csv",
+                                            "type_ref": "test_schema.json#/definitions/file_path",
                                             "is_artifact": 1,
                                         },
                                     ],
                                 },
-                                "sid1": {
-                                    "merge_pointer": "/sample1/id",
+                                "left_id": {
+                                    "merge_pointer": "/left_subgroup/left_id",
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.output1.bam'",
-                                            "merge_pointer": "/sample1/output1",
-                                            "gcs_uri_format": "{run_id}/{sid1}/output1.bam",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "parse_through": "lambda x: f'group/left_subgroup/{x}.txt'",
+                                            "merge_pointer": "/left_subgroup/left_txt_file",
+                                            "gcs_uri_format": "group/{group_id}/left_subgroup/{left_id}.txt",
+                                            "type_ref": "test_schema.json#/definitions/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.output2.txt'",
-                                            "merge_pointer": "/sample1/output2",
-                                            "gcs_uri_format": "{run_id}/{sid1}/output2.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/optitype/{x}/{x}output3.tsv'",
-                                            "merge_pointer": "/sample1/output3",
-                                            "gcs_uri_format": "{run_id}/{sid1}/output3.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "parse_through": "lambda x: f'group/left_subgroup/{x}.csv'",
+                                            "merge_pointer": "/left_subgroup/left_csv_file",
+                                            "gcs_uri_format": "group/{group_id}/left_subgroup/{left_id}.csv",
+                                            "type_ref": "test_schema.json#/definitions/file_path",
                                             "is_artifact": 1,
                                         },
                                     ],
                                 },
-                                "sid2": {
-                                    "merge_pointer": "/sample2/id",
+                                "right_id": {
+                                    "merge_pointer": "/right_subgroup/right_id",
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.output1.bam'",
-                                            "merge_pointer": "/sample2/output1",
-                                            "gcs_uri_format": "{run_id}/{sid2}/output1.bam",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "parse_through": "lambda x: f'group/right_subgroup/{x}.txt'",
+                                            "merge_pointer": "/right_subgroup/right_txt_file",
+                                            "gcs_uri_format": "group/{group_id}/right_subgroup/{right_id}.txt",
+                                            "type_ref": "test_schema.json#/definitions/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.output2.txt'",
-                                            "merge_pointer": "/sample2/output2",
-                                            "gcs_uri_format": "{run_id}/{sid2}/output2.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/optitype/{x}/{x}.output3.tsv'",
-                                            "merge_pointer": "/sample2/output3",
-                                            "gcs_uri_format": "{run_id}/{sid2}/output3.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "parse_through": "lambda x: f'group/right_subgroup/{x}.csv'",
+                                            "merge_pointer": "/right_subgroup/right_csv_file",
+                                            "gcs_uri_format": "group/{group_id}/right_subgroup/{right_id}.csv",
+                                            "type_ref": "test_schema.json#/definitions/file_path",
                                             "is_artifact": 1,
                                         },
                                     ],
@@ -571,51 +549,48 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
             },
         },
         "test_prism_many_artifacts_from_process_as_on_one_record",
+        monkeypatch,
     )
-
-    monkeypatch.setattr(
-        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES",
-        ["test_prism_many_artifacts_from_process_as_on_one_record"],
-    )
-
     xlsx, errs = XlTemplateReader.from_excel("workbook")
-    assert not errs
+    assert len(errs) == 0
 
-    patch, file_maps, errs = core.prismify(xlsx, template)
+    patch, file_maps, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
     assert len(errs) == 0
 
     local_paths = [e.local_path for e in file_maps]
-    uuids = [e.upload_placeholder for e in file_maps]
+    upload_uuids = [e.upload_placeholder for e in file_maps]
 
-    assert 3 * 3 * 2 == len(
+    assert 3 * 2 * 2 == len(
         file_maps
     )  # (3 files * 3 fields from each record) * 2 records
-    assert 3 * 3 * 2 == len(
-        set(uuids)
+    assert 3 * 2 * 2 == len(
+        set(upload_uuids)
     )  # (3 files * 3 fields from each record) * 2 records
 
-    assert local_paths != uuids
+    assert local_paths != upload_uuids
 
-    assert 2 == len(patch["analysis"]["wes_analysis"]["pair_runs"])
-    run_uuids_in_json = [
+    assert 2 == len(patch["groups"])
+
+    group_uuids = [
         art["upload_placeholder"]
-        for wes in patch["analysis"]["wes_analysis"]["pair_runs"]
-        for art in wes.values()
+        for group in patch["groups"]
+        for art in group.values()
         if "upload_placeholder" in art
     ]
-    sample_uuids_in_json = [
+
+    subgroup_uuids = [
         v["upload_placeholder"]
-        for wes in patch["analysis"]["wes_analysis"]["pair_runs"]
-        for sample in wes.values()
-        if "id" in sample
-        for v in sample.values()
+        for group in patch["groups"]
+        for subgroup in group.values()
+        if isinstance(subgroup, dict)
+        for v in subgroup.values()
         if "upload_placeholder" in v
     ]
 
-    assert len(uuids) == len(run_uuids_in_json + sample_uuids_in_json)
-    assert set(uuids) == set(
-        run_uuids_in_json + sample_uuids_in_json
-    )  # set instead of sorting
+    json_uuids = group_uuids + subgroup_uuids
+
+    assert len(upload_uuids) == len(json_uuids)
+    assert set(upload_uuids) == set(json_uuids)
 
 
 #### END PRISMIFY TESTS ####

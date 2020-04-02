@@ -6,6 +6,36 @@
       "items": { "$ref": "#/definitions/author" },
       "mergeStrategy": "arrayMergeById",
       "mergeOptions": { "idRef": "/author_id" }
+    },
+    "groups": {
+      "type": "array",
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": { "idRef": "/group_id" },
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "group_id": { "type": "string" },
+          "group_txt_file": { "$ref": "#/definitions/artifact" },
+          "group_csv_file": { "$ref": "#/definitions/artifact" },
+          "left_subgroup": {
+            "additionalProperties": false,
+            "properties": {
+              "left_id": { "type": "string" },
+              "left_txt_file": { "$ref": "#/definitions/artifact" },
+              "left_csv_file": { "$ref": "#/definitions/artifact" }
+            }
+          },
+          "right_subgroup": {
+            "additionalProperties": false,
+            "properties": {
+              "right_id": { "type": "string" },
+              "right_txt_file": { "$ref": "#/definitions/artifact" },
+              "right_csv_file": { "$ref": "#/definitions/artifact" }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {

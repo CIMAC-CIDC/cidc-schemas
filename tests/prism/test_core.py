@@ -290,7 +290,10 @@ def test_prism_local_files_format_multiple_extensions(monkeypatch):
                                     "merge_pointer": "artifact",
                                     "gcs_uri_format": {
                                         "format": "lambda val, ctx: 'subfolder/' + ctx['record'] + '/artifact.' + val.rsplit('.', 1)[-1]",
-                                        "check_errors": f"lambda val: f'{error_str}' if val.rsplit('.', 1)[-1] not in ['svs', 'tiff', 'tif', 'qptiff'] else None",
+                                        "check_errors": (
+                                            "lambda val: f'%s' if val.rsplit('.', 1)[-1] not in ['svs', 'tiff', 'tif', 'qptiff'] else None"
+                                            % error_str
+                                        ),
                                         "template_comment": "In one of .tiff .tif .qptiff .svs formats.",
                                     },
                                     "is_artifact": 1,
@@ -562,10 +565,10 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
 
     assert 3 * 2 * 2 == len(
         file_maps
-    )  # (3 files * 3 fields from each record) * 2 records
+    )  # (3 files * 2 fields from each record) * 2 records
     assert 3 * 2 * 2 == len(
         set(upload_uuids)
-    )  # (3 files * 3 fields from each record) * 2 records
+    )  # (3 files * 2 fields from each record) * 2 records
 
     assert local_paths != upload_uuids
 

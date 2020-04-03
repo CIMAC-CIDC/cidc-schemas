@@ -3,6 +3,7 @@
 TODO: some of these tests currently use the CIDC data model, but they 
 should probably use an unrelated test data model instead.
 """
+import os
 from unittest.mock import MagicMock
 from collections import namedtuple
 
@@ -128,39 +129,52 @@ def mock_XlTemplateReader_from_excel(sheets: dict, monkeypatch):
     return
 
 
+TEST_SCHEMA_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "schema")
+
+
+def build_mock_Template(spec: dict, name: str, monkeypatch) -> Template:
+    monkeypatch.setattr("cidc_schemas.prism.core.SUPPORTED_TEMPLATES", [name])
+
+    return Template(spec, name, TEST_SCHEMA_DIR)
+
+
 def test_prismify_unexpected_worksheet(monkeypatch):
     """Check that prismify catches the presence of an unexpected worksheet in an Excel template."""
     mock_XlTemplateReader_from_excel({"whoops": []}, monkeypatch)
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
 
-    template = Template(
-        {"title": "unexpected worksheet", "properties": {"worksheets": {}}},
+    template = build_mock_Template(
+        {
+            "title": "unexpected worksheet",
+            "prism_template_root_object_schema": "test_schema.json",
+            "properties": {"worksheets": {}},
+        },
         "test_unexpected_worksheet",
-    )
-    monkeypatch.setattr(
-        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES", ["test_unexpected_worksheet"]
+        monkeypatch,
     )
 
-    _, _, errs = core.prismify(xlsx, template)
+    _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
     assert errs == ["Unexpected worksheet 'whoops'."]
 
 
 def test_prismify_preamble_parsing_error(monkeypatch):
     """Check that prismify catches parsing errors in the pre"""
     prop = "prop0"
-    raw_val = "some string"
-    mock_XlTemplateReader_from_excel({"ws1": [["#p", prop, raw_val]]}, monkeypatch)
+    mock_XlTemplateReader_from_excel(
+        {"ws1": [["#p", prop, "some string"]]}, monkeypatch
+    )
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
 
-    template = Template(
+    template = build_mock_Template(
         {
             "title": "parse error",
+            "prism_template_root_object_schema": "test_schema.json",
             "properties": {
                 "worksheets": {
                     "ws1": {
-                        "prism_preamble_object_schema": "clinical_trial.json",
+                        "prism_preamble_object_schema": "test_schema.json",
                         "prism_preamble_object_pointer": "#",
                         "prism_data_object_pointer": "/files/-",
                         "preamble_rows": {
@@ -171,12 +185,10 @@ def test_prismify_preamble_parsing_error(monkeypatch):
             },
         },
         "test_preamble_parsing_error",
-    )
-    monkeypatch.setattr(
-        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES", ["test_preamble_parsing_error"]
+        monkeypatch,
     )
 
-    _, _, errs = core.prismify(xlsx, template)
+    _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
     assert isinstance(errs[0], prism.ParsingException)
 
 
@@ -194,14 +206,14 @@ def test_prism_local_files_format_extension(monkeypatch):
         monkeypatch,
     )
 
-    template = Template(
+    template = build_mock_Template(
         {
             "$id": "test_files",
             "title": "files",
+            "prism_template_root_object_schema": "test_schema.json",
             "properties": {
                 "worksheets": {
                     "files": {
-                        "prism_preamble_object_schema": "clinical_trial.json",
                         "prism_preamble_object_pointer": "#",
                         "prism_data_object_pointer": "/files/-",
                         "preamble_rows": {},
@@ -212,7 +224,7 @@ def test_prism_local_files_format_extension(monkeypatch):
                                     "merge_pointer": "artifact",
                                     "gcs_uri_format": "{record}/artifact.csv",
                                     "is_artifact": 1,
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "type_ref": "test_schema.json#/definitions/file_path",
                                 },
                             }
                         },
@@ -221,23 +233,22 @@ def test_prism_local_files_format_extension(monkeypatch):
             },
         },
         "test_prism_local_files_format_extension",
-    )
-
-    monkeypatch.setattr(
-        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES",
-        ["test_prism_local_files_format_extension"],
+        monkeypatch,
     )
 
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
 
-    patch, file_maps, errs = core.prismify(xlsx, template)
+    _, file_maps, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
 
-    assert len(errs) == 1
-    assert "local_file_col_name" in str(errs[0])
-    assert "expected .csv" in str(errs[0]).lower()
+    [error] = errs
+    assert isinstance(error, prism.ParsingException)
+    assert (
+        str(error) == "Expected .csv for 'local_file_col_name' but got '.xlsx' instead."
+    )
 
-    assert len(file_maps) == 1
+    [upload] = file_maps
+    assert upload.gs_key == "1/artifact.csv"
 
 
 def test_prism_local_files_format_multiple_extensions(monkeypatch):
@@ -257,14 +268,18 @@ def test_prism_local_files_format_multiple_extensions(monkeypatch):
         monkeypatch,
     )
 
-    template = Template(
+    error_str = (
+        "Bad file type {val!r}. It should be in one of .tiff .tif .qptiff .svs formats"
+    )
+
+    template = build_mock_Template(
         {
             "$id": "test_files",
             "title": "files",
+            "prism_template_root_object_schema": "test_schema.json",
             "properties": {
                 "worksheets": {
                     "files": {
-                        "prism_preamble_object_schema": "clinical_trial.json",
                         "prism_preamble_object_pointer": "#",
                         "prism_data_object_pointer": "/files/-",
                         "preamble_rows": {},
@@ -275,11 +290,14 @@ def test_prism_local_files_format_multiple_extensions(monkeypatch):
                                     "merge_pointer": "artifact",
                                     "gcs_uri_format": {
                                         "format": "lambda val, ctx: 'subfolder/' + ctx['record'] + '/artifact.' + val.rsplit('.', 1)[-1]",
-                                        "check_errors": "lambda val: f'Bad file type {val!r}. It should be in one of .tiff .tif .qptiff .svs formats' if val.rsplit('.', 1)[-1] not in ['svs', 'tiff', 'tif', 'qptiff'] else None",
+                                        "check_errors": (
+                                            "lambda val: f'%s' if val.rsplit('.', 1)[-1] not in ['svs', 'tiff', 'tif', 'qptiff'] else None"
+                                            % error_str
+                                        ),
                                         "template_comment": "In one of .tiff .tif .qptiff .svs formats.",
                                     },
                                     "is_artifact": 1,
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "type_ref": "test_schema.json#/definitions/file_path",
                                 },
                             }
                         },
@@ -288,22 +306,17 @@ def test_prism_local_files_format_multiple_extensions(monkeypatch):
             },
         },
         "test_prism_local_files_format_extension",
-    )
-
-    monkeypatch.setattr(
-        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES",
-        ["test_prism_local_files_format_extension"],
+        monkeypatch,
     )
 
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
 
-    patch, file_maps, errs = core.prismify(xlsx, template)
+    _, file_maps, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
 
-    assert len(errs) == 1
-    assert "Bad file type" in str(errs[0])
-    assert ".NONtiff" in str(errs[0])
-    assert "should be in one of" in str(errs[0])
+    [error] = errs
+    assert isinstance(error, prism.ParsingException)
+    assert str(error) == error_str.format(val="somewhere/on/my/computer.NONtiff")
 
     assert len(file_maps) == 4
     expected_extensions = ["tif", "tiff", "svs", "qptiff"]
@@ -313,181 +326,137 @@ def test_prism_local_files_format_multiple_extensions(monkeypatch):
     assert expected_extensions == gcs_extensions == local_extensions
 
 
+def _tab_joining_template_schema() -> dict:
+    author_pointer = "test_schema.json#definitions/author%s"
+    book_pointer = author_pointer % "/properties/books/items%s"
+
+    return {
+        "$id": "test_joining",
+        "title": "authors and books",
+        "prism_template_root_object_schema": "test_schema.json",
+        "properties": {
+            "worksheets": {
+                "authors": {
+                    "prism_preamble_object_pointer": "#",
+                    "prism_data_object_pointer": "/authors/0/books/0",
+                    "preamble_rows": {},
+                    "data_columns": {
+                        "Authors": {
+                            "author id": {
+                                "merge_pointer": "2/author_id",
+                                "type_ref": author_pointer % "/properties/author_id",
+                            },
+                            "author name": {
+                                "merge_pointer": "2/author_name",
+                                "type_ref": author_pointer % "/properties/author_name",
+                            },
+                        }
+                    },
+                },
+                "books": {
+                    "prism_preamble_object_pointer": "#",
+                    "prism_data_object_pointer": "/authors/0/books/0",
+                    "preamble_rows": {},
+                    "data_columns": {
+                        "Books": {
+                            "book id": {
+                                "merge_pointer": "/book_id",
+                                "type_ref": book_pointer % "/properties/book_id",
+                                "process_as": [
+                                    {
+                                        "merge_pointer": "2/author_id",
+                                        "parse_through": "lambda x: x[:4]",
+                                        "type_ref": (
+                                            author_pointer % "/properties/author_id"
+                                        ),
+                                    }
+                                ],
+                            },
+                            "book name": {
+                                "merge_pointer": "/book_name",
+                                "type_ref": book_pointer % "/properties/book_name",
+                            },
+                        }
+                    },
+                },
+            }
+        },
+    }
+
+
 def test_prism_joining_tabs(monkeypatch):
     """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
 
     mock_XlTemplateReader_from_excel(
         {
-            "participants": [
-                ["#h", "PA id", "PA prop"],
-                ["#d", "CPP0", "0"],
-                ["#d", "CPP1", "1"],
+            "books": [
+                ["#h", "author id", "author name"],
+                ["#d", "CPP0", "Alice"],
+                ["#d", "CPP1", "Bob"],
             ],
-            "samples": [
-                ["#h", "SA_id", "SA_prop"],
-                ["#d", "CPP1S0.00", "100"],
-                ["#d", "CPP1S1.00", "101"],
-                ["#d", "CPP0S0.00", "000"],
-                ["#d", "CPP0S1.00", "001"],
+            "authors": [
+                ["#h", "book id", "book name"],
+                ["#d", "CPP1S0.00", "Foo"],
+                ["#d", "CPP1S1.00", "Bar"],
+                ["#d", "CPP0S0.00", "Baz"],
+                ["#d", "CPP0S1.00", "Buz"],
             ],
         },
         monkeypatch,
     )
 
-    template = Template(
-        {
-            "$id": "test_ship",
-            "title": "participants and shipment",
-            "properties": {
-                "worksheets": {
-                    "participants": {
-                        "prism_preamble_object_schema": "clinical_trial.json",
-                        "prism_preamble_object_pointer": "#",
-                        "prism_data_object_pointer": "/participants/0/samples/0",
-                        "preamble_rows": {},
-                        "data_columns": {
-                            "Samples": {
-                                "PA id": {
-                                    "merge_pointer": "2/cimac_participant_id",
-                                    "type_ref": "participant.json#properties/cimac_participant_id",
-                                },
-                                "PA prop": {
-                                    "merge_pointer": "0/participant_id",
-                                    "type_ref": "participant.json#properties/participant_id",
-                                },
-                            }
-                        },
-                    },
-                    "samples": {
-                        "prism_preamble_object_schema": "clinical_trial.json",
-                        "prism_preamble_object_pointer": "#",
-                        "prism_data_object_pointer": "/participants/0/samples/0",
-                        "preamble_rows": {},
-                        "data_columns": {
-                            "Samples": {
-                                "SA_id": {
-                                    "merge_pointer": "/cimac_id",
-                                    "type_ref": "sample.json#properties/cimac_id",
-                                    "process_as": [
-                                        {
-                                            "merge_pointer": "2/cimac_participant_id",
-                                            "parse_through": "lambda x: x[:4]",
-                                            "type_ref": "participant.json#properties/cimac_participant_id",
-                                        }
-                                    ],
-                                },
-                                "SA_prop": {
-                                    "merge_pointer": "0/parent_sample_id",
-                                    "type_ref": "sample.json#properties/parent_sample_id",
-                                },
-                            }
-                        },
-                    },
-                }
-            },
-        },
-        "test_prism_joining_tabs",
-    )
-
-    monkeypatch.setattr(
-        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES", ["test_prism_joining_tabs"]
+    template = build_mock_Template(
+        _tab_joining_template_schema(), "test_prism_joining_tabs", monkeypatch
     )
 
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
 
-    patch, file_maps, errs = core.prismify(xlsx, template)
+    patch, file_maps, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
     assert len(errs) == 0
+    assert len(file_maps) == 0
 
-    assert 2 == len(patch["participants"])
-
-    assert "CPP0" == patch["participants"][0]["cimac_participant_id"]
-    assert 2 == len(patch["participants"][0]["samples"])
-
-    assert "CPP0S0.00" == patch["participants"][0]["samples"][0]["cimac_id"]
-    assert "000" == patch["participants"][0]["samples"][0]["parent_sample_id"]
-
-    assert "CPP0S1.00" == patch["participants"][0]["samples"][1]["cimac_id"]
-    assert "001" == patch["participants"][0]["samples"][1]["parent_sample_id"]
-
-    assert "CPP1S1.00" == patch["participants"][1]["samples"][1]["cimac_id"]
-    assert "101" == patch["participants"][1]["samples"][1]["parent_sample_id"]
-
-    assert "CPP1" == patch["participants"][1]["cimac_participant_id"]
-    assert 2 == len(patch["participants"][1]["samples"])
-
-    assert 0 == len(file_maps)
+    assert patch == {
+        "authors": [
+            {
+                "books": [
+                    {"book_id": "CPP0S0.00", "book_name": "Baz"},
+                    {"book_id": "CPP0S1.00", "book_name": "Buz"},
+                ],
+                "author_id": "CPP0",
+                "author_name": "Alice",
+            },
+            {
+                "books": [
+                    {"book_id": "CPP1S0.00", "book_name": "Foo"},
+                    {"book_id": "CPP1S1.00", "book_name": "Bar"},
+                ],
+                "author_id": "CPP1",
+                "author_name": "Bob",
+            },
+        ]
+    }
 
 
 def test_prism_process_as_error(monkeypatch):
     """Tests that prismify doesn't crash when a `parse_through` function errors"""
     mock_XlTemplateReader_from_excel(
         {
-            "participants": [["#h", "PA_id"], ["#d", "CPP0"]],
-            "samples": [["#h", "SA_id", "SA_prop"], ["#d", None, 100]],
+            "authors": [["#h", "author id"], ["#d", "CPP0"]],
+            "books": [["#h", "book id", "book name"], ["#d", None, 100]],
         },
         monkeypatch,
     )
 
-    template = Template(
-        {
-            "$id": "test_ship",
-            "title": "participants and shipment",
-            "properties": {
-                "worksheets": {
-                    "participants": {
-                        "prism_preamble_object_schema": "clinical_trial.json",
-                        "prism_preamble_object_pointer": "#",
-                        "prism_data_object_pointer": "/participants/0/samples/0",
-                        "preamble_rows": {},
-                        "data_columns": {
-                            "Samples": {
-                                "PA_id": {
-                                    "merge_pointer": "2/cimac_participant_id",
-                                    "type_ref": "participant.json#properties/cimac_participant_id",
-                                }
-                            }
-                        },
-                    },
-                    "samples": {
-                        "prism_preamble_object_schema": "clinical_trial.json",
-                        "prism_preamble_object_pointer": "#",
-                        "prism_data_object_pointer": "/participants/0/samples/0",
-                        "preamble_rows": {},
-                        "data_columns": {
-                            "Samples": {
-                                "SA_id": {
-                                    "merge_pointer": "/cimac_id",
-                                    "type_ref": "sample.json#properties/cimac_id",
-                                    "process_as": [
-                                        {
-                                            "merge_pointer": "2/cimac_participant_id",
-                                            "parse_through": "lambda x: x[:4]",
-                                            "type_ref": "participant.json#properties/cimac_participant_id",
-                                        }
-                                    ],
-                                },
-                                "SA_prop": {
-                                    "merge_pointer": "0/parent_sample_id",
-                                    "type_ref": "sample.json#properties/parent_sample_id",
-                                },
-                            }
-                        },
-                    },
-                }
-            },
-        },
-        "test_prism_process_as",
-    )
-    monkeypatch.setattr(
-        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES", ["test_prism_process_as"]
+    template = build_mock_Template(
+        _tab_joining_template_schema(), "test_prism_process_as", monkeypatch
     )
 
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
 
-    patch, file_maps, errs = core.prismify(xlsx, template)
-    assert "Cannot extract cimac_participant_id from SA_id value: None" == str(errs[0])
+    _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
+    assert "Cannot extract author_id from book id value: None" == str(errs[0])
 
 
 def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
@@ -495,8 +464,8 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
 
     mock_XlTemplateReader_from_excel(
         {
-            "analysis": [
-                ["#h", "run_id", "sid1", "sid2"],
+            "groups": [
+                ["#h", "group_id", "left_id", "right_id"],
                 ["#d", "000", "sid1_0", "sid2_0"],
                 ["#d", "111", "sid1_1", "sid2_1"],
             ]
@@ -504,96 +473,74 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
         monkeypatch,
     )
 
-    template = Template(
+    template = build_mock_Template(
         {
             "$id": "test_analysis",
             "title": "...",
-            "prism_template_root_object_schema": "assays/components/ngs/wes/wes_analysis.json",
-            "prism_template_root_object_pointer": "/analysis/wes_analysis",
+            "prism_template_root_object_schema": "test_schema.json",
             "properties": {
                 "worksheets": {
-                    "analysis": {
-                        "prism_data_object_pointer": "/pair_runs/-",
+                    "groups": {
+                        "prism_data_object_pointer": "/groups/-",
                         "preamble_rows": {},
                         "data_columns": {
-                            "section name": {
-                                "run_id": {
-                                    "merge_pointer": "/run_id",
+                            "groups": {
+                                "group_id": {
+                                    "merge_pointer": "/group_id",
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda x: f'analysis/germline/{x}/{x}-run-output-1.txt'",
-                                            "merge_pointer": "/run-output-1",
-                                            "gcs_uri_format": "{run_id}/run-output-1.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "parse_through": "lambda x: f'group/{x}_summary.txt'",
+                                            "merge_pointer": "/group_txt_file",
+                                            "gcs_uri_format": "group/{group_id}/summary.txt",
+                                            "type_ref": "test_schema.json#/definitions/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'analysis/purity/{x}/{x}run-output-2.txt'",
-                                            "merge_pointer": "/run-output-2",
-                                            "gcs_uri_format": "{run_id}/run-output-2.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/clonality/{x}/{x}-run-output-3.tsv'",
-                                            "merge_pointer": "/run-output-3",
-                                            "gcs_uri_format": "{run_id}/run-output-3.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "parse_through": "lambda x: f'group/{x}_summary.csv'",
+                                            "merge_pointer": "/group_csv_file",
+                                            "gcs_uri_format": "group/{group_id}/summary.csv",
+                                            "type_ref": "test_schema.json#/definitions/file_path",
                                             "is_artifact": 1,
                                         },
                                     ],
                                 },
-                                "sid1": {
-                                    "merge_pointer": "/sample1/id",
+                                "left_id": {
+                                    "merge_pointer": "/left_subgroup/left_id",
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.output1.bam'",
-                                            "merge_pointer": "/sample1/output1",
-                                            "gcs_uri_format": "{run_id}/{sid1}/output1.bam",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "parse_through": "lambda x: f'group/left_subgroup/{x}.txt'",
+                                            "merge_pointer": "/left_subgroup/left_txt_file",
+                                            "gcs_uri_format": "group/{group_id}/left_subgroup/{left_id}.txt",
+                                            "type_ref": "test_schema.json#/definitions/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.output2.txt'",
-                                            "merge_pointer": "/sample1/output2",
-                                            "gcs_uri_format": "{run_id}/{sid1}/output2.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/optitype/{x}/{x}output3.tsv'",
-                                            "merge_pointer": "/sample1/output3",
-                                            "gcs_uri_format": "{run_id}/{sid1}/output3.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "parse_through": "lambda x: f'group/left_subgroup/{x}.csv'",
+                                            "merge_pointer": "/left_subgroup/left_csv_file",
+                                            "gcs_uri_format": "group/{group_id}/left_subgroup/{left_id}.csv",
+                                            "type_ref": "test_schema.json#/definitions/file_path",
                                             "is_artifact": 1,
                                         },
                                     ],
                                 },
-                                "sid2": {
-                                    "merge_pointer": "/sample2/id",
+                                "right_id": {
+                                    "merge_pointer": "/right_subgroup/right_id",
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda x: f'analysis/align/{x}/{x}.output1.bam'",
-                                            "merge_pointer": "/sample2/output1",
-                                            "gcs_uri_format": "{run_id}/{sid2}/output1.bam",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "parse_through": "lambda x: f'group/right_subgroup/{x}.txt'",
+                                            "merge_pointer": "/right_subgroup/right_txt_file",
+                                            "gcs_uri_format": "group/{group_id}/right_subgroup/{right_id}.txt",
+                                            "type_ref": "test_schema.json#/definitions/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'analysis/metrics/{x}/{x}.output2.txt'",
-                                            "merge_pointer": "/sample2/output2",
-                                            "gcs_uri_format": "{run_id}/{sid2}/output2.txt",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                                            "is_artifact": 1,
-                                        },
-                                        {
-                                            "parse_through": "lambda x: f'analysis/optitype/{x}/{x}.output3.tsv'",
-                                            "merge_pointer": "/sample2/output3",
-                                            "gcs_uri_format": "{run_id}/{sid2}/output3.tsv",
-                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "parse_through": "lambda x: f'group/right_subgroup/{x}.csv'",
+                                            "merge_pointer": "/right_subgroup/right_csv_file",
+                                            "gcs_uri_format": "group/{group_id}/right_subgroup/{right_id}.csv",
+                                            "type_ref": "test_schema.json#/definitions/file_path",
                                             "is_artifact": 1,
                                         },
                                     ],
@@ -605,51 +552,48 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
             },
         },
         "test_prism_many_artifacts_from_process_as_on_one_record",
+        monkeypatch,
     )
-
-    monkeypatch.setattr(
-        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES",
-        ["test_prism_many_artifacts_from_process_as_on_one_record"],
-    )
-
     xlsx, errs = XlTemplateReader.from_excel("workbook")
-    assert not errs
+    assert len(errs) == 0
 
-    patch, file_maps, errs = core.prismify(xlsx, template)
+    patch, file_maps, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
     assert len(errs) == 0
 
     local_paths = [e.local_path for e in file_maps]
-    uuids = [e.upload_placeholder for e in file_maps]
+    upload_uuids = [e.upload_placeholder for e in file_maps]
 
-    assert 3 * 3 * 2 == len(
+    assert 3 * 2 * 2 == len(
         file_maps
-    )  # (3 files * 3 fields from each record) * 2 records
-    assert 3 * 3 * 2 == len(
-        set(uuids)
-    )  # (3 files * 3 fields from each record) * 2 records
+    )  # (3 files * 2 fields from each record) * 2 records
+    assert 3 * 2 * 2 == len(
+        set(upload_uuids)
+    )  # (3 files * 2 fields from each record) * 2 records
 
-    assert local_paths != uuids
+    assert local_paths != upload_uuids
 
-    assert 2 == len(patch["analysis"]["wes_analysis"]["pair_runs"])
-    run_uuids_in_json = [
+    assert 2 == len(patch["groups"])
+
+    group_uuids = [
         art["upload_placeholder"]
-        for wes in patch["analysis"]["wes_analysis"]["pair_runs"]
-        for art in wes.values()
+        for group in patch["groups"]
+        for art in group.values()
         if "upload_placeholder" in art
     ]
-    sample_uuids_in_json = [
+
+    subgroup_uuids = [
         v["upload_placeholder"]
-        for wes in patch["analysis"]["wes_analysis"]["pair_runs"]
-        for sample in wes.values()
-        if "id" in sample
-        for v in sample.values()
+        for group in patch["groups"]
+        for subgroup in group.values()
+        if isinstance(subgroup, dict)
+        for v in subgroup.values()
         if "upload_placeholder" in v
     ]
 
-    assert len(uuids) == len(run_uuids_in_json + sample_uuids_in_json)
-    assert set(uuids) == set(
-        run_uuids_in_json + sample_uuids_in_json
-    )  # set instead of sorting
+    json_uuids = group_uuids + subgroup_uuids
+
+    assert len(upload_uuids) == len(json_uuids)
+    assert set(upload_uuids) == set(json_uuids)
 
 
 #### END PRISMIFY TESTS ####

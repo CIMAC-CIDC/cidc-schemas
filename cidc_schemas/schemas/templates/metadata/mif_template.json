@@ -63,61 +63,66 @@
               "merge_pointer": "/roi_id",
               "type": "string"
             },
-            "data files prefix": {
+            "Score data files": {
+              "merge_pointer": "0/score_data",
+              "type_ref": "assays/components/local_file.json#properties/file_path",
+              "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/score_data_{num}.txt",
+              "is_artifact": "multi"
+            },
+            "inform export prefix": {
               "do_not_merge": true,
               "type": "string",
               "process_as": [
                   {
                       "parse_through": "lambda prefix: prefix + 'binary_seg_map.tif'",
                       "merge_pointer": "0/binary_seg_map",
-                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}_binary_seg_map.tif",
+                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/binary_seg_map.tif",
                       "type_ref": "assays/components/local_file.json#properties/file_path",
                       "is_artifact": 1
                   },
                   {
                       "parse_through": "lambda prefix: prefix + 'cell_seg_data.txt'",
                       "merge_pointer": "0/cell_seg_data",
-                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}_cell_seg_data.txt",
+                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/cell_seg_data.txt",
                       "type_ref": "assays/components/local_file.json#properties/file_path",
                       "is_artifact": 1
                   },
                   {
                       "parse_through": "lambda prefix: prefix + 'cell_seg_data_summary.txt'",
                       "merge_pointer": "0/cell_seg_data_summary",
-                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}_cell_seg_data_summary.txt",
+                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/cell_seg_data_summary.txt",
                       "type_ref": "assays/components/local_file.json#properties/file_path",
                       "is_artifact": 1
                   },
                   {
                       "parse_through": "lambda prefix: prefix + 'phenotype_map.tif'",
                       "merge_pointer": "0/phenotype_map",
-                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}_phenotype_map.tif",
-                      "type_ref": "assays/components/local_file.json#properties/file_path",
-                      "is_artifact": 1
-                  },
-                  {
-                      "parse_through": "lambda prefix: prefix + 'score_data.txt'",
-                      "merge_pointer": "0/score_data",
-                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}_score_data.txt",
+                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/phenotype_map.tif",
                       "type_ref": "assays/components/local_file.json#properties/file_path",
                       "is_artifact": 1
                   },
                   {
                       "parse_through": "lambda prefix: prefix + 'composite_image.tif'",
                       "merge_pointer": "0/composite_image",
-                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}_composite_image.tif",
+                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/composite_image.tif",
                       "type_ref": "assays/components/local_file.json#properties/file_path",
                       "is_artifact": 1
                   },
                   {
                       "parse_through": "lambda prefix: prefix + 'component_data.tif'",
                       "merge_pointer": "0/component_data",
-                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}_component_data.tif",
+                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/component_data.tif",
                       "type_ref": "assays/components/local_file.json#properties/file_path",
                       "is_artifact": 1
                   }
 
               ]
+            },
+            "IM3 file": {
+              "merge_pointer": "0/im3",
+              "type_ref": "assays/components/local_file.json#properties/file_path",
+              "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/multispectral.im3",
+              "is_artifact": 1
             }
           }
         }

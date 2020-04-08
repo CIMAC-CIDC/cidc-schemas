@@ -23,8 +23,11 @@
       "$ref": "artifacts/artifact_image.json"
     },
     "score_data": {
-      "$comment": "Generation of values based on experiment data.",
-      "$ref": "artifacts/artifact_text.json"
+      "type": "array",
+      "items": {
+        "$comment": "Generation of values based on experiment data.",
+        "$ref": "artifacts/artifact_text.json"
+      }
     }
   },
   "required": ["phenotype_map"]

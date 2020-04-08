@@ -974,14 +974,22 @@ def mif() -> PrismTestData:
                                         "phenotype_map": {
                                             "upload_placeholder": "4aaaaaaa-047f-4df6-b614-871289a1a2a"
                                         },
-                                        "score_data": {
-                                            "upload_placeholder": "5aaaaaaa-047f-4df6-b614-871289a1a2a"
-                                        },
+                                        "score_data": [
+                                            {
+                                                "upload_placeholder": "5aaaaaa1-047f-4df6-b614-871289a1a2a"
+                                            },
+                                            {
+                                                "upload_placeholder": "5aaaaaa2-047f-4df6-b614-871289a1a2a"
+                                            },
+                                        ],
                                         "composite_image": {
                                             "upload_placeholder": "6aaaaaaa-047f-4df6-b614-871289a1a2a"
                                         },
-                                        "component_data": {
+                                        "im3": {
                                             "upload_placeholder": "7aaaaaaa-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "component_data": {
+                                            "upload_placeholder": "8aaaaaaa-047f-4df6-b614-871289a1a2a"
                                         },
                                     }
                                 ]
@@ -1005,14 +1013,19 @@ def mif() -> PrismTestData:
                                         "phenotype_map": {
                                             "upload_placeholder": "4bbbbbbb-047f-4df6-b614-871289a1a2a"
                                         },
-                                        "score_data": {
-                                            "upload_placeholder": "5bbbbbbb-047f-4df6-b614-871289a1a2a"
-                                        },
+                                        "score_data": [
+                                            {
+                                                "upload_placeholder": "5bbbbbbb-047f-4df6-b614-871289a1a2a"
+                                            }
+                                        ],
                                         "composite_image": {
                                             "upload_placeholder": "6bbbbbbb-047f-4df6-b614-871289a1a2a"
                                         },
-                                        "component_data": {
+                                        "im3": {
                                             "upload_placeholder": "7bbbbbbb-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "component_data": {
+                                            "upload_placeholder": "8bbbbbbb-047f-4df6-b614-871289a1a2a"
                                         },
                                     },
                                     {
@@ -1029,14 +1042,19 @@ def mif() -> PrismTestData:
                                         "phenotype_map": {
                                             "upload_placeholder": "4ccccccc-047f-4df6-b614-871289a1a2a"
                                         },
-                                        "score_data": {
-                                            "upload_placeholder": "5ccccccc-047f-4df6-b614-871289a1a2a"
-                                        },
+                                        "score_data": [
+                                            {
+                                                "upload_placeholder": "5ccccccc-047f-4df6-b614-871289a1a2a"
+                                            }
+                                        ],
                                         "composite_image": {
                                             "upload_placeholder": "6ccccccc-047f-4df6-b614-871289a1a2a"
                                         },
-                                        "component_data": {
+                                        "im3": {
                                             "upload_placeholder": "7ccccccc-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "component_data": {
+                                            "upload_placeholder": "8ccccccc-047f-4df6-b614-871289a1a2a"
                                         },
                                     },
                                 ]
@@ -1059,129 +1077,153 @@ def mif() -> PrismTestData:
     }
     upload_entries = [
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_111/1_binary_seg_map.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1_binary_seg_map.tif",
+            local_path="111/1_binary_seg_map.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/binary_seg_map.tif",
             upload_placeholder="1aaaaaaa-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_111/1_cell_seg_data.txt",
-            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1_cell_seg_data.txt",
+            local_path="111/1_cell_seg_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/cell_seg_data.txt",
             upload_placeholder="2aaaaaaa-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_111/1_cell_seg_data_summary.txt",
-            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1_cell_seg_data_summary.txt",
+            local_path="111/1_cell_seg_data_summary.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/cell_seg_data_summary.txt",
             upload_placeholder="3aaaaaaa-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_111/1_phenotype_map.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1_phenotype_map.tif",
+            local_path="111/1_phenotype_map.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/phenotype_map.tif",
             upload_placeholder="4aaaaaaa-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_111/1_score_data.txt",
-            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1_score_data.txt",
-            upload_placeholder="5aaaaaaa-047f-4df6-b614-871289a1a2a",
-            metadata_availability=None,
-        ),
-        LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_111/1_composite_image.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1_composite_image.tif",
+            local_path="111/1_composite_image.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/composite_image.tif",
             upload_placeholder="6aaaaaaa-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_111/1_component_data.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1_component_data.tif",
+            local_path="111/1.im3",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/multispectral.im3",
             upload_placeholder="7aaaaaaa-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_121/1_binary_seg_map.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1_binary_seg_map.tif",
+            local_path="111/1_component_data.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/component_data.tif",
+            upload_placeholder="8aaaaaaa-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="111/1_score_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/score_data_0.txt",
+            upload_placeholder="5aaaaaa1-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="111_extra/1_score_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/score_data_1.txt",
+            upload_placeholder="5aaaaaa2-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/1_binary_seg_map.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/binary_seg_map.tif",
             upload_placeholder="2bbbbbbb-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_121/1_cell_seg_data.txt",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1_cell_seg_data.txt",
+            local_path="121/1_cell_seg_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/cell_seg_data.txt",
             upload_placeholder="1bbbbbbb-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_121/1_cell_seg_data_summary.txt",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1_cell_seg_data_summary.txt",
+            local_path="121/1_cell_seg_data_summary.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/cell_seg_data_summary.txt",
             upload_placeholder="3bbbbbbb-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_121/1_phenotype_map.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1_phenotype_map.tif",
+            local_path="121/1_phenotype_map.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/phenotype_map.tif",
             upload_placeholder="4bbbbbbb-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_121/1_score_data.txt",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1_score_data.txt",
+            local_path="121/1_score_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/score_data_0.txt",
             upload_placeholder="5bbbbbbb-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_121/1_composite_image.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1_composite_image.tif",
+            local_path="121/1_composite_image.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/composite_image.tif",
             upload_placeholder="6bbbbbbb-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_121/1_component_data.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1_component_data.tif",
+            local_path="121/1.im3",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/multispectral.im3",
             upload_placeholder="7bbbbbbb-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_121/2_binary_seg_map.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2_binary_seg_map.tif",
+            local_path="121/1_component_data.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/component_data.tif",
+            upload_placeholder="8bbbbbbb-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/2_binary_seg_map.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/binary_seg_map.tif",
             upload_placeholder="2ccccccc-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_121/2_cell_seg_data.txt",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2_cell_seg_data.txt",
+            local_path="121/2_cell_seg_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/cell_seg_data.txt",
             upload_placeholder="1ccccccc-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_121/2_cell_seg_data_summary.txt",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2_cell_seg_data_summary.txt",
+            local_path="121/2_cell_seg_data_summary.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/cell_seg_data_summary.txt",
             upload_placeholder="3ccccccc-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_121/2_phenotype_map.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2_phenotype_map.tif",
+            local_path="121/2_phenotype_map.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/phenotype_map.tif",
             upload_placeholder="4ccccccc-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_121/2_score_data.txt",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2_score_data.txt",
+            local_path="121/2_score_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/score_data_0.txt",
             upload_placeholder="5ccccccc-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_121/2_composite_image.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2_composite_image.tif",
+            local_path="121/2_composite_image.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/composite_image.tif",
             upload_placeholder="6ccccccc-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="INFORM_folder_pref_121/2_component_data.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2_component_data.tif",
+            local_path="121/2.im3",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/multispectral.im3",
             upload_placeholder="7ccccccc-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/2_component_data.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/component_data.tif",
+            upload_placeholder="8ccccccc-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
     ]

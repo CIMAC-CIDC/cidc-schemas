@@ -19,6 +19,7 @@
     "phenotype_map": {"$ref": "assays/components/mapping.json#properties/phenotype_map" },
     "score_data": {"$ref": "assays/components/mapping.json#properties/score_data" },
 
+    "im3": {"$ref": "assays/components/composite_image.json#properties/im3"},
     "composite_image": {"$ref": "assays/components/composite_image.json#properties/composite_image"},
     "component_data": {"$ref": "assays/components/composite_image.json#properties/component_data"}
   },
@@ -29,6 +30,7 @@
     "cell_seg_data_summary",
     "phenotype_map",
     "score_data",
+    "im3",
     "composite_image",
     "component_data"
   ]

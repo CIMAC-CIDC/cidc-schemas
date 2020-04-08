@@ -12,7 +12,7 @@
 "#p","Imaging status","Yes"
 
 "","ROIs"
-"#h","Cimac id","Roi id","Data files prefix"
-"#d","CTTTPP111.00","1","INFORM_folder_pref_111/1_"
-"#d","CTTTPP121.00","1","INFORM_folder_pref_121/1_"
-"#d","CTTTPP121.00","2","INFORM_folder_pref_121/2_"
+"#h","Cimac id","Roi id","Score data files","Inform export prefix","Im3 file"
+"#d","CTTTPP111.00","1","111/1_score_data.txt,111_extra/1_score_data.txt","111/1_","111/1.im3"
+"#d","CTTTPP121.00","1","121/1_score_data.txt","121/1_","121/1.im3"
+"#d","CTTTPP121.00","2","121/2_score_data.txt","121/2_","121/2.im3"

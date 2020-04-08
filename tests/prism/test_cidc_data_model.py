@@ -58,8 +58,10 @@ def test_prismify(prism_test: PrismTestData):
         for e in prism_test.upload_entries
     ]
 
-    assert expected == received
-    for received, expected in zip(upload_entries, prism_test.upload_entries):
+    assert sorted(expected) == sorted(received)
+    for received, expected in zip(
+        sorted(upload_entries), sorted(prism_test.upload_entries)
+    ):
         assert received.local_path == expected.local_path
         assert received.gs_key == expected.gs_key
         assert received.metadata_availability == expected.metadata_availability
@@ -75,6 +77,8 @@ def test_merge_patch_into_trial(prism_test: PrismTestData, ct_validator):
     )
 
     # Ensure no errors resulted from the merge
+    if errs:
+        raise errs[0]
     assert len(errs) == 0
 
     # Ensure that the merge result passes validation

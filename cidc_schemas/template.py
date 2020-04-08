@@ -231,6 +231,8 @@ class Template:
                 # recursively _add_coerce to each sub 'process_as' item
                 for extra_fdef in field_def["process_as"]:
                     extra_fdef.update(
+                        # adding "key_name" from parent field_def
+                        # so we later know what template column this came from
                         dict(_add_coerce(extra_fdef), key_name=field_def["key_name"])
                     )
 

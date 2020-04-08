@@ -471,11 +471,11 @@ def test_prism_do_not_merge(monkeypatch):
             "properties": {
                 "worksheets": {
                     "analysis": {
-                        "prism_data_object_pointer": "/participants/-",
+                        "prism_data_object_pointer": "/authors/-",
                         "data_columns": {
                             "section name": {
                                 "id": {
-                                    "merge_pointer": "/cimac_participant_id",  # so proper mergeStrategy kicks in
+                                    "merge_pointer": "/author_id",  # so proper mergeStrategy kicks in
                                     "type": "string",
                                 },
                                 "comment": {
@@ -510,19 +510,11 @@ def test_prism_do_not_merge(monkeypatch):
     patch, file_maps, errs = core.prismify(xlsx, template)
     assert len(errs) == 0
 
-    assert 1 == len(patch["participants"])
-    participant = dict(patch["participants"][0])
-    assert participant.pop("cimac_participant_id") == "111"
-    artifact = participant.pop("artifact")
+    patch["authors"][0]["artifact"]["upload_placeholder"] = "123"
 
-    assert participant == {}  # nothing is parsed to participant but id and artifact
-
-    assert 1 == len(artifact)
-
-    assert 1 == len(file_maps)
-    assert 1 == len(set(f.gs_key for f in file_maps))
-    local_paths = [f.local_path for f in file_maps]
-    assert 1 == len(set(local_paths))
+    assert patch == {
+        "authors": [{"author_id": "111", "artifact": {"upload_placeholder": "123"}}]
+    }
 
 
 def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):

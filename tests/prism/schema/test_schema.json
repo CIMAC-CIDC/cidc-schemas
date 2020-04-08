@@ -1,0 +1,77 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "authors": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/author" },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": { "idRef": "/author_id" }
+    },
+    "groups": {
+      "type": "array",
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": { "idRef": "/group_id" },
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "group_id": { "type": "string" },
+          "group_txt_file": { "$ref": "#/definitions/artifact" },
+          "group_csv_file": { "$ref": "#/definitions/artifact" },
+          "left_subgroup": {
+            "additionalProperties": false,
+            "properties": {
+              "left_id": { "type": "string" },
+              "left_txt_file": { "$ref": "#/definitions/artifact" },
+              "left_csv_file": { "$ref": "#/definitions/artifact" }
+            }
+          },
+          "right_subgroup": {
+            "additionalProperties": false,
+            "properties": {
+              "right_id": { "type": "string" },
+              "right_txt_file": { "$ref": "#/definitions/artifact" },
+              "right_csv_file": { "$ref": "#/definitions/artifact" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "author": {
+      "additionalProperties": false,
+      "properties": {
+        "author_id": {
+          "type": "string",
+          "in_doc_ref_pattern": "/authors/*/id"
+        },
+        "author_name": { "type": "string" },
+        "books": {
+          "type": "array",
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "book_id": {
+                "type": "string",
+                "in_doc_ref_pattern": "/authors/*/books/*/id"
+              },
+              "book_name": { "type": "string" }
+            }
+          },
+          "mergeStrategy": "arrayMergeById",
+          "mergeOptions": { "idRef": "/book_id" }
+        }
+      }
+    },
+    "artifact": {
+      "additionalProperties": false,
+      "properties": { "upload_placeholder": { "type": "string" } }
+    },
+    "file_path": {
+      "$id": "local_file_path",
+      "type": "string",
+      "description": "Path to a file on a user's computer."
+    }
+  }
+}

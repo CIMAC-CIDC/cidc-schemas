@@ -348,8 +348,9 @@ def test_mif():
                     "cell_seg_data": text,
                     "cell_seg_data_summary": text,
                     "phenotype_map": image,
-                    "score_data": text,
+                    "score_data": [text],
                     "composite_image": image,
+                    "im3": image,
                     "component_data": image,
                 }
             ]
@@ -398,7 +399,7 @@ def test_micsss():
                     "cell_seg_data": text,
                     "cell_seg_data_summary": text,
                     "phenotype_map": image,
-                    "score_data": text,
+                    "score_data": [text],
                     "composite_image": image,
                     "component_data": image,
                 }

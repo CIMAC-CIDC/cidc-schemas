@@ -58,20 +58,27 @@
         </thead>
         
             
+        
+            
+        
+            
+        
+            
+        
+        
+            
                 <tr>
     <td>
         
-            <span id="internal_slide_id">
-                internal_slide_id
+            <span id="staining">
+                staining
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
     <td width=55%>
         
-            Identification number used for internal imaging slide.
+            'manual' or Model version of the autostainer instrument used for tissue sample labeling.
         
     </td>
     <td>
@@ -84,49 +91,9 @@
             &gt;
             <ul>
                 
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-        
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="protocol_name">
-                protocol_name
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Protocol name for which imaging experiment conducted.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
+                    <li>"manual"</li>
+                
+                    <li>"Bond RX"</li>
                 
             </ul>
             
@@ -265,12 +232,12 @@
             ],
             "type": "string"
         },
-        "internal_slide_id": {
-            "description": "Identification number used for internal imaging slide.",
-            "type": "string"
-        },
-        "protocol_name": {
-            "description": "Protocol name for which imaging experiment conducted.",
+        "staining": {
+            "description": "'manual' or Model version of the autostainer instrument used for tissue sample labeling.",
+            "enum": [
+                "manual",
+                "Bond RX"
+            ],
             "type": "string"
         },
         "staining_date": {
@@ -279,9 +246,6 @@
             "type": "string"
         }
     },
-    "required": [
-        "internal_slide_id"
-    ],
     "title": "Imaging Data",
     "type": "object"
 }</code></pre>

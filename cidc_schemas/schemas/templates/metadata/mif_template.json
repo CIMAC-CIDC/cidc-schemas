@@ -61,16 +61,17 @@
             },
             "ROI id": {
               "merge_pointer": "/roi_id",
-              "type": "string"
+              "type_ref": "assays/components/imaging/mif_roi.json#properties/roi_id"
             },
             "Score data files": {
               "merge_pointer": "0/score_data",
-              "type_ref": "assays/components/local_file.json#properties/file_path",
+              "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list",
               "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/score_data_{num}.txt",
               "is_artifact": "multi"
             },
             "inform export prefix": {
               "do_not_merge": true,
+              "description": "Path on a user's computer to an InForm export directory with ROI's export prefix",
               "type": "string",
               "process_as": [
                   {

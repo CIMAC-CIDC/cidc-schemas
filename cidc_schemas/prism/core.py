@@ -132,8 +132,10 @@ def _set_val(
         else:
             doc = context
 
+    jp_parts = jpoint.parts
+
     # then we update it
-    for i, part in enumerate(jpoint.parts[:-1]):
+    for i, part in enumerate(jp_parts[:-1]):
 
         try:
             doc = jpoint.walk(doc, part)
@@ -142,7 +144,7 @@ def _set_val(
             # means that there isn't needed sub-object in place, so create one
 
             # look ahead to figure out a proper type that needs to be created
-            next_thing = __jpointer_get_next_thing(jpoint.parts[i + 1])
+            next_thing = __jpointer_get_next_thing(jp_parts[i + 1])
 
             # insert it
             __jpointer_insert_next_thing(doc, jpoint, part, next_thing)
@@ -151,11 +153,11 @@ def _set_val(
             doc = jpoint.walk(doc, part)
 
         if isinstance(doc, EndOfList):
-            actual_doc = __jpointer_get_next_thing(jpoint.parts[i + 1])
+            actual_doc = __jpointer_get_next_thing(jp_parts[i + 1])
             __jpointer_insert_next_thing(doc.list_, jpoint, "-", actual_doc)
             doc = actual_doc
 
-    __jpointer_insert_next_thing(doc, jpoint, jpoint.parts[-1], val)
+    __jpointer_insert_next_thing(doc, jpoint, jp_parts[-1], val)
 
 
 def __jpointer_get_next_thing(next_part) -> Union[dict, list]:
@@ -289,26 +291,33 @@ def _process_field_value(
     in template schema, that allows for multi-processing of a single cell value.
     """
 
+    changes, files = [], []
+
     # skip nullable
     if field_def.get("allow_empty"):
         if raw_val is None:
-            return [], []
+            return changes, files
 
-    # or set/update value in-place in data_obj dictionary
-    pointer = field_def["merge_pointer"]
-    if field_def.get("is_artifact") == 1:
-        pointer += "/upload_placeholder"
+    if field_def.get("do_not_merge") == True:
+        logger.debug(
+            f"Ignoring {field_def['key_name']!r} due to 'do_not_merge' == True"
+        )
+    else:
+        # or set/update value in-place in data_obj dictionary
+        pointer = field_def["merge_pointer"]
+        if field_def.get("is_artifact") == 1:
+            pointer += "/upload_placeholder"
 
-    try:
-        val, files = _calc_val_and_files(raw_val, field_def, format_context)
-    except ParsingException:
-        raise
-    except Exception as e:
-        raise ParsingException(
-            f"Can't parse {key!r} value {str(raw_val)!r}: {e}"
-        ) from e
+        try:
+            val, files = _calc_val_and_files(raw_val, field_def, format_context)
+        except ParsingException:
+            raise
+        except Exception as e:
+            raise ParsingException(
+                f"Can't parse {key!r} value {str(raw_val)!r}: {e}"
+            ) from e
 
-    changes = [_AtomicChange(pointer, val)]
+        changes = [_AtomicChange(pointer, val)]
 
     # "process_as" allows to define additional places/ways to put that match
     # somewhere in the resulting doc, with additional processing.
@@ -357,6 +366,10 @@ def _format_single_artifact(
     except KeyError as e:
         raise KeyError(f"Empty gcs_uri_format for {field_def['key_name']!r}") from e
 
+    assert isinstance(
+        gcs_uri_format, (dict, str)
+    ), f"Unsupported gcs_uri_format for {field_def['key_name']!r}"
+
     if isinstance(gcs_uri_format, dict):
         if "check_errors" in gcs_uri_format:
             # `eval` should be fine, as we're controlling the code argument in templates
@@ -368,7 +381,7 @@ def _format_single_artifact(
             gs_key = eval(gcs_uri_format["format"])(local_path, format_context)
         except Exception as e:
             raise ValueError(
-                f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format['format']}"
+                f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format['format']}: {e!r}"
             )
 
     elif isinstance(gcs_uri_format, str):
@@ -376,7 +389,7 @@ def _format_single_artifact(
             gs_key = gcs_uri_format.format_map(format_context)
         except KeyError as e:
             raise KeyError(
-                f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format}"
+                f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format}: {e!r}"
             )
 
         expected_extension = _get_file_ext(gs_key)

@@ -6,6 +6,10 @@
   "description": "Regions of interest obtained from composite images.",
   "inheritableBase": true,
   "properties": {
+    "im3": {
+      "$comment": "PerkinElmer Multispectral Images.",
+      "$ref": "artifacts/artifact_image.json"
+    },
     "composite_image": {
       "$comment": "Image produced from the combination of multiple imaging experiment data images.",
       "$ref": "artifacts/artifact_image.json"

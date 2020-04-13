@@ -327,40 +327,33 @@ def test_ihc():
 def test_mif():
 
     # create the mif object
-    image = {"slide_scanner_model": "Vectra 2.0", "protocol_name": "E4412"}
+    image = {"slide_scanner_model": "Vectra 2.0"}
 
-    imaging_data = {"internal_slide_id": "a1s1e1"}
-    obj = {**ASSAY_CORE, **image, **imaging_data}  # merge three dictionaries
+    obj = {**ASSAY_CORE, **image}  # merge dictionaries
 
     # create the artifact object
-    image_1 = ARTIFACT_OBJ.copy()
-    image_1["data_format"] = "IMAGE"
-    image_1["height"] = 300
-    image_1["width"] = 250
-    image_1["channels"] = 3
-    csv_1 = ARTIFACT_OBJ.copy()
-    csv_1["data_format"] = "CSV"
+    image = ARTIFACT_OBJ.copy()
+    image["data_format"] = "IMAGE"
+    image["height"] = 300
+    image["width"] = 250
+    image["channels"] = 3
     text = ARTIFACT_OBJ.copy()
     text["data_format"] = "TEXT"
     record = {
-        "project_inform_folder": "dummy",
-        "mif_exported_data_folder": "dummy_value",
+        "cimac_id": "CTTTPPPSA.00",
         "files": {
-            "whole_slide_imaging_file": image_1,
-            "roi_annotations": text,
-            "mif_output_summary": csv_1,
             "regions_of_interest": [
                 {
-                    "binary_seg_map": csv_1,
-                    "cell_seg_data": csv_1,
-                    "cell_seg_data_summary": csv_1,
-                    "phenotype_map": image_1,
-                    "region_seg_map": image_1,
-                    "score_data": csv_1,
-                    "composite_image": image_1,
-                    "component_data": image_1,
+                    "binary_seg_map": image,
+                    "cell_seg_data": text,
+                    "cell_seg_data_summary": text,
+                    "phenotype_map": image,
+                    "score_data": [text],
+                    "composite_image": image,
+                    "im3": image,
+                    "component_data": image,
                 }
-            ],
+            ]
         },
     }
 
@@ -372,7 +365,7 @@ def test_mif():
     validator.validate(obj)
 
     # assert negative behaviors
-    del obj["records"][0]["project_inform_folder"]
+    del obj["records"][0]["files"]["regions_of_interest"][0]["cell_seg_data_summary"]
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)
 
@@ -380,36 +373,39 @@ def test_mif():
 def test_micsss():
 
     # create the micsss object
-    image = {"slide_scanner_model": "Vectra 2.0", "protocol_name": "E4412"}
+    image = {"slide_scanner_model": "Vectra 2.0"}
 
-    imaging_data = {"internal_slide_id": "a1s1e1"}
-    obj = {**ASSAY_CORE, **image, **imaging_data}  # merge three dictionaries
+    imaging_data = {}
+    obj = {**ASSAY_CORE, **image}  # merge dictionaries
 
     # create the artifact object
-    image_1 = ARTIFACT_OBJ.copy()
-    image_1["data_format"] = "IMAGE"
-    image_1["height"] = 300
-    image_1["width"] = 250
-    image_1["channels"] = 3
-    csv_1 = ARTIFACT_OBJ.copy()
-    csv_1["data_format"] = "CSV"
+    image = ARTIFACT_OBJ.copy()
+    image["data_format"] = "IMAGE"
+    image["height"] = 300
+    image["width"] = 250
+    image["channels"] = 3
+    text = ARTIFACT_OBJ.copy()
+    text["data_format"] = "TEXT"
+    csv = ARTIFACT_OBJ.copy()
+    csv["data_format"] = "CSV"
     record = {
         "project_qupath_folder": "dummy",
         "micsss_exported_data_folder": "dummy_value",
         "files": {
-            "micsss_output_summary": csv_1,
+            "micsss_output_summary": csv,
             "Mapping Artifacts": [
                 {
-                    "binary_seg_map": csv_1,
-                    "cell_seg_data": csv_1,
-                    "cell_seg_data_summary": csv_1,
-                    "phenotype_map": image_1,
-                    "region_seg_map": image_1,
-                    "score_data": csv_1,
+                    "binary_seg_map": image,
+                    "cell_seg_data": text,
+                    "cell_seg_data_summary": text,
+                    "phenotype_map": image,
+                    "score_data": [text],
+                    "composite_image": image,
+                    "component_data": image,
                 }
             ],
             "Composite Image Artifacts": [
-                {"composite_image": image_1, "component_data": image_1}
+                {"composite_image": image, "component_data": image}
             ],
         },
     }

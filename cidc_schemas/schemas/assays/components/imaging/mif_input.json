@@ -19,27 +19,15 @@
       "$ref": "artifacts/artifact_csv.json"
     },
     "regions_of_interest": {
-      "description": "A region of interest (ROI) is a portion of an image which has been analyzed using image processing software.",
       "type": "array",
       "items": {
-        "allOf": [
-          { "$ref": "assays/components/mapping.json" },
-          { "$ref": "assays/components/composite_image.json" }
-        ],
-        "additionalProperties": false,
-        "properties": {
-          "binary_seg_map": {"$ref": "assays/components/mapping.json#properties/binary_seg_map" },
-          "cell_seg_data": {"$ref": "assays/components/mapping.json#properties/cell_seg_data" },
-          "cell_seg_data_summary": {"$ref": "assays/components/mapping.json#properties/cell_seg_data_summary" },
-          "phenotype_map": {"$ref": "assays/components/mapping.json#properties/phenotype_map" },
-          "region_seg_map": {"$ref": "assays/components/mapping.json#properties/region_seg_map" },
-          "score_data": {"$ref": "assays/components/mapping.json#properties/score_data" },
-
-          "composite_image": {"$ref": "assays/components/composite_image.json#properties/composite_image"},
-          "component_data": {"$ref": "assays/components/composite_image.json#properties/component_data"}
-        }
+        "$ref": "assays/components/imaging/mif_roi.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "/roi_id"
       }
     }
   },
-  "required": ["whole_slide_imaging_file"]
+  "required": ["regions_of_interest"]
 }

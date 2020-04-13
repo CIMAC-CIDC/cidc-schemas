@@ -1,0 +1,37 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "mif_roi",
+  "description": "A region of interest (ROI) is a portion of an image which has been analyzed using image processing software.",
+  "allOf": [
+    { "$ref": "assays/components/mapping.json" },
+    { "$ref": "assays/components/composite_image.json" }
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "roi_id": {
+        "description": "Identifier of a region of interest within one mIF slide, e.g. 1, 2, 3 or [123 x 321]",
+        "type": "string"
+    },
+
+    "binary_seg_map": {"$ref": "assays/components/mapping.json#properties/binary_seg_map" },
+    "cell_seg_data": {"$ref": "assays/components/mapping.json#properties/cell_seg_data" },
+    "cell_seg_data_summary": {"$ref": "assays/components/mapping.json#properties/cell_seg_data_summary" },
+    "phenotype_map": {"$ref": "assays/components/mapping.json#properties/phenotype_map" },
+    "score_data": {"$ref": "assays/components/mapping.json#properties/score_data" },
+
+    "im3": {"$ref": "assays/components/composite_image.json#properties/im3"},
+    "composite_image": {"$ref": "assays/components/composite_image.json#properties/composite_image"},
+    "component_data": {"$ref": "assays/components/composite_image.json#properties/component_data"}
+  },
+  "mergeStrategy": "objectMerge",
+  "required": [
+    "binary_seg_map",
+    "cell_seg_data",
+    "cell_seg_data_summary",
+    "phenotype_map",
+    "score_data",
+    "im3",
+    "composite_image",
+    "component_data"
+  ]
+}

@@ -7,9 +7,20 @@
   "type": "object",
   "allOf": [{ "$ref": "assays/components/antibody.json" }],
   "properties": {
+
+    "antibody": {"$ref": "assays/components/antibody.json#properties/antibody"},
+    "clone": {"$ref": "assays/components/antibody.json#properties/clone"},
+    "company": {"$ref": "assays/components/antibody.json#properties/company"},
+    "cat_num": {"$ref": "assays/components/antibody.json#properties/cat_num"},
+    "lot_num": {"$ref": "assays/components/antibody.json#properties/lot_num"},
+
+    "staining_order": {
+      "description": "Order of staining applied",
+      "type": "integer"
+    },
     "fluor_wavelength": {
       "description": "Wavelength registered for Alexa Fluor processing.",
-      "type": "number"
+      "type": "integer"
     },
     "primary_ab_dilution": {
       "description": "Concentration ratio for primary antibody dilution.",
@@ -39,6 +50,7 @@
       "format": "time"
     }
   },
+  "mergeStrategy": "objectMerge",
   "required": [
     "fluor_wavelength",
     "primary_ab_dilution",

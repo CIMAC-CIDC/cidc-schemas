@@ -914,5 +914,338 @@ def elisa() -> PrismTestData:
     )
 
 
+@assay_data_generator
+def mif() -> PrismTestData:
+    upload_type = "mif"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "test_prism_trial_id",
+        "assays": {
+            "mif": [
+                {
+                    "antibodies": [
+                        {
+                            "antibody": "CD8",
+                            "clone": "C8/144b",
+                            "company": "DAKO",
+                            "cat_num": "C8-ABC",
+                            "lot_num": "3983272",
+                            "staining_order": 2,
+                            "fluor_wavelength": 520,
+                            "primary_ab_dilution": "1:5,000",
+                            "dilutent": "DV",
+                            "fluor_dilution": "1:100",
+                            "antigen_retrieval_time": "00:01:00",
+                            "primary_incubation_time": "00:01:00",
+                            "amplification_time": "00:01:00",
+                        },
+                        {
+                            "antibody": "PD-L1",
+                            "clone": "9A11",
+                            "company": "CST",
+                            "cat_num": "9A-ABC",
+                            "lot_num": "29387234",
+                            "staining_order": 3,
+                            "fluor_wavelength": 540,
+                            "primary_ab_dilution": "1:500",
+                            "dilutent": "VENTANA",
+                            "fluor_dilution": "1:200",
+                            "antigen_retrieval_time": "00:01:00",
+                            "primary_incubation_time": "00:01:00",
+                            "amplification_time": "00:01:00",
+                        },
+                    ],
+                    "records": [
+                        {
+                            "cimac_id": "CTTTPP111.00",
+                            "files": {
+                                "regions_of_interest": [
+                                    {
+                                        "roi_id": "1",
+                                        "binary_seg_map": {
+                                            "upload_placeholder": "1aaaaaaa-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "cell_seg_data": {
+                                            "upload_placeholder": "2aaaaaaa-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "cell_seg_data_summary": {
+                                            "upload_placeholder": "3aaaaaaa-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "phenotype_map": {
+                                            "upload_placeholder": "4aaaaaaa-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "score_data": [
+                                            {
+                                                "upload_placeholder": "5aaaaaa1-047f-4df6-b614-871289a1a2a"
+                                            },
+                                            {
+                                                "upload_placeholder": "5aaaaaa2-047f-4df6-b614-871289a1a2a"
+                                            },
+                                        ],
+                                        "composite_image": {
+                                            "upload_placeholder": "6aaaaaaa-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "im3": {
+                                            "upload_placeholder": "7aaaaaaa-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "component_data": {
+                                            "upload_placeholder": "8aaaaaaa-047f-4df6-b614-871289a1a2a"
+                                        },
+                                    }
+                                ]
+                            },
+                        },
+                        {
+                            "cimac_id": "CTTTPP121.00",
+                            "files": {
+                                "regions_of_interest": [
+                                    {
+                                        "roi_id": "1",
+                                        "binary_seg_map": {
+                                            "upload_placeholder": "1bbbbbbb-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "cell_seg_data": {
+                                            "upload_placeholder": "2bbbbbbb-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "cell_seg_data_summary": {
+                                            "upload_placeholder": "3bbbbbbb-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "phenotype_map": {
+                                            "upload_placeholder": "4bbbbbbb-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "score_data": [
+                                            {
+                                                "upload_placeholder": "5bbbbbbb-047f-4df6-b614-871289a1a2a"
+                                            }
+                                        ],
+                                        "composite_image": {
+                                            "upload_placeholder": "6bbbbbbb-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "im3": {
+                                            "upload_placeholder": "7bbbbbbb-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "component_data": {
+                                            "upload_placeholder": "8bbbbbbb-047f-4df6-b614-871289a1a2a"
+                                        },
+                                    },
+                                    {
+                                        "roi_id": "2",
+                                        "binary_seg_map": {
+                                            "upload_placeholder": "1ccccccc-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "cell_seg_data": {
+                                            "upload_placeholder": "2ccccccc-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "cell_seg_data_summary": {
+                                            "upload_placeholder": "3ccccccc-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "phenotype_map": {
+                                            "upload_placeholder": "4ccccccc-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "score_data": [
+                                            {
+                                                "upload_placeholder": "5ccccccc-047f-4df6-b614-871289a1a2a"
+                                            }
+                                        ],
+                                        "composite_image": {
+                                            "upload_placeholder": "6ccccccc-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "im3": {
+                                            "upload_placeholder": "7ccccccc-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "component_data": {
+                                            "upload_placeholder": "8ccccccc-047f-4df6-b614-871289a1a2a"
+                                        },
+                                    },
+                                ]
+                            },
+                        },
+                    ],
+                    "assay_creator": "DFCI",
+                    "slide_scanner_model": "Hamamatsu",
+                    "image_analysis_software": "InForm",
+                    "image_analysis_software_version": "2.4.2",
+                    "cell_segmentation_model": "proprietary",
+                    "positive_cell_detection": "proprietary",
+                    "staining": "Bond RX",
+                    "staining_date": "2001-01-01 00:00:00",
+                    "imaging_date": "2001-01-01 00:00:00",
+                    "imaging_status": "Yes",
+                }
+            ]
+        },
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="111/1_binary_seg_map.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/binary_seg_map.tif",
+            upload_placeholder="1aaaaaaa-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="111/1_cell_seg_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/cell_seg_data.txt",
+            upload_placeholder="2aaaaaaa-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="111/1_cell_seg_data_summary.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/cell_seg_data_summary.txt",
+            upload_placeholder="3aaaaaaa-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="111/1_phenotype_map.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/phenotype_map.tif",
+            upload_placeholder="4aaaaaaa-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="111/1_composite_image.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/composite_image.tif",
+            upload_placeholder="6aaaaaaa-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="111/1.im3",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/multispectral.im3",
+            upload_placeholder="7aaaaaaa-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="111/1_component_data.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/component_data.tif",
+            upload_placeholder="8aaaaaaa-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="111/1_score_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/score_data_0.txt",
+            upload_placeholder="5aaaaaa1-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="111_extra/1_score_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/score_data_1.txt",
+            upload_placeholder="5aaaaaa2-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/1_binary_seg_map.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/binary_seg_map.tif",
+            upload_placeholder="2bbbbbbb-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/1_cell_seg_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/cell_seg_data.txt",
+            upload_placeholder="1bbbbbbb-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/1_cell_seg_data_summary.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/cell_seg_data_summary.txt",
+            upload_placeholder="3bbbbbbb-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/1_phenotype_map.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/phenotype_map.tif",
+            upload_placeholder="4bbbbbbb-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/1_score_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/score_data_0.txt",
+            upload_placeholder="5bbbbbbb-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/1_composite_image.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/composite_image.tif",
+            upload_placeholder="6bbbbbbb-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/1.im3",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/multispectral.im3",
+            upload_placeholder="7bbbbbbb-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/1_component_data.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/component_data.tif",
+            upload_placeholder="8bbbbbbb-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/2_binary_seg_map.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/binary_seg_map.tif",
+            upload_placeholder="2ccccccc-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/2_cell_seg_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/cell_seg_data.txt",
+            upload_placeholder="1ccccccc-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/2_cell_seg_data_summary.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/cell_seg_data_summary.txt",
+            upload_placeholder="3ccccccc-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/2_phenotype_map.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/phenotype_map.tif",
+            upload_placeholder="4ccccccc-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/2_score_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/score_data_0.txt",
+            upload_placeholder="5ccccccc-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/2_composite_image.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/composite_image.tif",
+            upload_placeholder="6ccccccc-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/2.im3",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/multispectral.im3",
+            upload_placeholder="7ccccccc-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/2_component_data.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/component_data.tif",
+            upload_placeholder="8ccccccc-047f-4df6-b614-871289a1a2a",
+            metadata_availability=None,
+        ),
+    ]
+
+    cimac_ids = [
+        record["cimac_id"]
+        for batch in prismify_patch["assays"]["mif"]
+        for record in batch["records"]
+    ]
+    base_trial = get_test_trial(cimac_ids)
+
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "assays")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
 missing = set(SUPPORTED_ASSAYS).difference([f.__name__ for f in assay_data_generators])
 assert not missing, f"Missing assay test data generators for {missing}"

@@ -6,13 +6,13 @@
   "type": "object",
   "inheritableBase": true,
   "properties": {
-    "internal_slide_id": {
-      "description": "Identification number used for internal imaging slide.",
-      "type": "string"
-    },
-    "protocol_name": {
-      "description": "Protocol name for which imaging experiment conducted.",
-      "type": "string"
+    "staining": {
+      "description": "'manual' or Model version of the autostainer instrument used for tissue sample labeling.",
+      "type": "string",
+      "enum": [
+        "manual",
+        "Bond RX"
+      ]
     },
     "staining_date": {
       "description": "Date on which slide staining was processed.",
@@ -29,6 +29,5 @@
       "type": "string",
       "enum": ["Yes", "No"]
     }
-  },
-  "required": ["internal_slide_id"]
+  }
 }

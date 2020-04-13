@@ -1,0 +1,192 @@
+{
+  "title": "Metadata file for mIF",
+  "description": "Metadata information for multiplex immunoflouresence (mIF).",
+  "prism_template_root_object_schema": "assays/mif_assay.json",
+  "prism_template_root_object_pointer": "/assays/mif/0",
+  "properties": {
+    "worksheets": {
+      "mIF": {
+        "preamble_rows": {
+          "protocol identifier": {
+              "merge_pointer": "3/protocol_identifier",
+              "type_ref": "clinical_trial.json#properties/protocol_identifier"
+          },
+          "assay creator": {
+            "merge_pointer": "0/assay_creator",
+            "type_ref": "assays/mif_assay.json#properties/assay_creator"
+          },
+          "slide scanner model": {
+            "merge_pointer": "0/slide_scanner_model",
+            "type_ref": "assays/mif_assay.json#properties/slide_scanner_model"
+          },
+          "image analysis software": {
+            "merge_pointer": "0/image_analysis_software",
+            "type_ref": "assays/mif_assay.json#properties/image_analysis_software"
+          },
+          "image analysis software version": {
+            "merge_pointer": "0/image_analysis_software_version",
+            "type_ref": "assays/mif_assay.json#properties/image_analysis_software_version"
+          },
+          "cell segmentation model": {
+            "merge_pointer": "0/cell_segmentation_model",
+            "type_ref": "assays/mif_assay.json#properties/cell_segmentation_model"
+          },
+          "positive cell detection model": {
+            "merge_pointer": "0/positive_cell_detection",
+            "type_ref": "assays/mif_assay.json#properties/positive_cell_detection"
+          },
+          "staining": {
+            "merge_pointer": "0/staining",
+            "type_ref": "assays/mif_assay.json#properties/staining"
+          },
+          "staining date": {
+            "merge_pointer": "0/staining_date",
+            "type_ref": "assays/components/imaging_data.json#properties/staining_date"
+          },
+          "imaging date": {
+            "merge_pointer": "0/imaging_date",
+            "type_ref": "assays/components/imaging_data.json#properties/imaging_date"
+          },
+          "imaging status": {
+            "merge_pointer": "0/imaging_status",
+            "type_ref": "assays/components/imaging_data.json#properties/imaging_status"
+          }
+        },
+        "prism_data_object_pointer": "/records/0/files/regions_of_interest/-",
+        "data_columns": {
+          "ROIs": {
+            "cimac id": {
+              "merge_pointer": "3/cimac_id",
+              "type_ref": "sample.json#properties/cimac_id"
+            },
+            "ROI id": {
+              "merge_pointer": "/roi_id",
+              "type_ref": "assays/components/imaging/mif_roi.json#properties/roi_id"
+            },
+            "Score data files": {
+              "merge_pointer": "0/score_data",
+              "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list",
+              "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/score_data_{num}.txt",
+              "is_artifact": "multi"
+            },
+            "inform export prefix": {
+              "do_not_merge": true,
+              "description": "Path on a user's computer to an InForm export directory with ROI's export prefix",
+              "type": "string",
+              "process_as": [
+                  {
+                      "parse_through": "lambda prefix: prefix + 'binary_seg_map.tif'",
+                      "merge_pointer": "0/binary_seg_map",
+                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/binary_seg_map.tif",
+                      "type_ref": "assays/components/local_file.json#properties/file_path",
+                      "is_artifact": 1
+                  },
+                  {
+                      "parse_through": "lambda prefix: prefix + 'cell_seg_data.txt'",
+                      "merge_pointer": "0/cell_seg_data",
+                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/cell_seg_data.txt",
+                      "type_ref": "assays/components/local_file.json#properties/file_path",
+                      "is_artifact": 1
+                  },
+                  {
+                      "parse_through": "lambda prefix: prefix + 'cell_seg_data_summary.txt'",
+                      "merge_pointer": "0/cell_seg_data_summary",
+                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/cell_seg_data_summary.txt",
+                      "type_ref": "assays/components/local_file.json#properties/file_path",
+                      "is_artifact": 1
+                  },
+                  {
+                      "parse_through": "lambda prefix: prefix + 'phenotype_map.tif'",
+                      "merge_pointer": "0/phenotype_map",
+                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/phenotype_map.tif",
+                      "type_ref": "assays/components/local_file.json#properties/file_path",
+                      "is_artifact": 1
+                  },
+                  {
+                      "parse_through": "lambda prefix: prefix + 'composite_image.tif'",
+                      "merge_pointer": "0/composite_image",
+                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/composite_image.tif",
+                      "type_ref": "assays/components/local_file.json#properties/file_path",
+                      "is_artifact": 1
+                  },
+                  {
+                      "parse_through": "lambda prefix: prefix + 'component_data.tif'",
+                      "merge_pointer": "0/component_data",
+                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/component_data.tif",
+                      "type_ref": "assays/components/local_file.json#properties/file_path",
+                      "is_artifact": 1
+                  }
+
+              ]
+            },
+            "IM3 file": {
+              "merge_pointer": "0/im3",
+              "type_ref": "assays/components/local_file.json#properties/file_path",
+              "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/multispectral.im3",
+              "is_artifact": 1
+            }
+          }
+        }
+      },
+      "Antibodies": {
+        "prism_data_object_pointer": "/antibodies/-",
+        "data_columns": {
+          "antibodies": {
+            "Antibody": {
+              "merge_pointer": "0/antibody",
+              "type_ref": "assays/components/antibody.json#properties/antibody"
+            },
+            "Clone": {
+              "merge_pointer": "0/clone",
+              "type_ref": "assays/components/antibody.json#properties/clone"
+            },
+            "Antibody Company": {
+              "merge_pointer": "0/company",
+              "type_ref": "assays/components/antibody.json#properties/company"
+            },
+            "Cat#": {
+              "merge_pointer": "0/cat_num",
+              "type_ref": "assays/components/antibody.json#properties/cat_num"
+            },
+            "Lot#": {
+              "merge_pointer": "0/lot_num",
+              "type_ref": "assays/components/antibody.json#properties/lot_num"
+            },
+            "Staining Order": {
+              "merge_pointer": "0/staining_order",
+              "type_ref": "assays/components/mif_antibody.json#properties/staining_order"
+            }, 
+            "Fluor Wavelength": {
+              "merge_pointer": "0/fluor_wavelength",
+              "type_ref": "assays/components/mif_antibody.json#properties/fluor_wavelength"
+            },
+            "Primary ab Dilution": {
+              "merge_pointer": "0/primary_ab_dilution",
+              "type_ref": "assays/components/mif_antibody.json#properties/primary_ab_dilution"
+            },
+            "Dilutent": {
+              "merge_pointer": "0/dilutent",
+              "type_ref": "assays/components/mif_antibody.json#properties/dilutent"
+            },
+            "Fluor dilution": {
+              "merge_pointer": "0/fluor_dilution",
+              "type_ref": "assays/components/mif_antibody.json#properties/fluor_dilution"
+            },
+            "Antigen Retrieval Time": {
+              "merge_pointer": "0/antigen_retrieval_time",
+              "type_ref": "assays/components/mif_antibody.json#properties/antigen_retrieval_time"
+            },
+            "Primary Incubation Time": {
+              "merge_pointer": "0/primary_incubation_time",
+              "type_ref": "assays/components/mif_antibody.json#properties/primary_incubation_time"
+            },
+            "Amplification Time": {
+              "merge_pointer": "0/amplification_time",
+              "type_ref": "assays/components/mif_antibody.json#properties/amplification_time"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -459,6 +459,64 @@ def test_prism_process_as_error(monkeypatch):
     assert "Cannot extract author_id from book id value: None" == str(errs[0])
 
 
+def test_prism_do_not_merge(monkeypatch):
+    """ Tests whether prism can parse multi_artifact from process_as record"""
+
+    mock_XlTemplateReader_from_excel(
+        {"analysis": [["#h", "id", "comment"], ["#d", "111", "whatever"]]}, monkeypatch
+    )
+
+    template = Template(
+        {
+            "properties": {
+                "worksheets": {
+                    "analysis": {
+                        "prism_data_object_pointer": "/authors/-",
+                        "data_columns": {
+                            "section name": {
+                                "id": {
+                                    "merge_pointer": "/author_id",  # so proper mergeStrategy kicks in
+                                    "type": "string",
+                                },
+                                "comment": {
+                                    "do_not_merge": True,
+                                    "type": "string",
+                                    "process_as": [
+                                        {
+                                            "parse_through": "lambda comment: f'{comment}_some_path.txt'",
+                                            "merge_pointer": "/artifact",
+                                            "gcs_uri_format": "{id}/artifact.txt",
+                                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                                            "is_artifact": 1,
+                                        }
+                                    ],
+                                },
+                            }
+                        },
+                    }
+                }
+            }
+        },
+        "test_prism_do_not_merge",
+    )
+
+    monkeypatch.setattr(
+        "cidc_schemas.prism.core.SUPPORTED_TEMPLATES", ["test_prism_do_not_merge"]
+    )
+
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    patch, file_maps, errs = core.prismify(xlsx, template)
+    assert len(errs) == 0
+
+    patch["authors"][0]["artifact"]["upload_placeholder"] = "123"
+
+    assert patch == {
+        "authors": [{"author_id": "111", "artifact": {"upload_placeholder": "123"}}]
+    }
+
+
 def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
 

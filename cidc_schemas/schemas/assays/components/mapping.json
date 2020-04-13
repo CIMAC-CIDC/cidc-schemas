@@ -8,27 +8,26 @@
   "properties": {
     "binary_seg_map": {
       "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.",
-      "$ref": "artifacts/artifact_csv.json"
+      "$ref": "artifacts/artifact_image.json"
     },
     "cell_seg_data": {
       "$comment": "Data produced from the analysis of cellular image.",
-      "$ref": "artifacts/artifact_csv.json"
+      "$ref": "artifacts/artifact_text.json"
     },
     "cell_seg_data_summary": {
       "$comment": "Summary of the results of a cell segmentation data experiment.",
-      "$ref": "artifacts/artifact_csv.json"
+      "$ref": "artifacts/artifact_text.json"
     },
     "phenotype_map": {
       "$comment": "Image produced from the combination of multiple imaging experiment data images.",
       "$ref": "artifacts/artifact_image.json"
     },
-    "region_seg_map": {
-      "$comment": "Genome segmentation mapping",
-      "$ref": "artifacts/artifact_image.json"
-    },
     "score_data": {
-      "$comment": "Generation of values based on based on experiment data.",
-      "$ref": "artifacts/artifact_csv.json"
+      "type": "array",
+      "items": {
+        "$comment": "Generation of values based on experiment data.",
+        "$ref": "artifacts/artifact_text.json"
+      }
     }
   },
   "required": ["phenotype_map"]

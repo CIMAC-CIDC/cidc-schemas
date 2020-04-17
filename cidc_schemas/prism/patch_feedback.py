@@ -8,7 +8,7 @@ from .constants import SUPPORTED_MANIFESTS
 def _gen_to_list(f):
     @wraps(f)
     def inner(*a, **kw):
-        return [item for item in f(*a, **kw)]
+        return list(f(*a, **kw))
 
     return inner
 
@@ -25,14 +25,12 @@ def _samples_extra_id(samples, extra_id_name):
 @_gen_to_list
 def _format_new_samples(new_samples):
 
-    spp = Counter([s["cimac_participant_id"] for s in new_samples])
-    spp_min = min(spp.values())
-    spp_max = max(spp.values())
-    if spp_min != spp_max:
-        spp = f"{spp_min}-{spp_max}"
-    else:
-        spp = spp_min
-    yield f'with {len(new_samples)} new samples: {spp} sample{"s" if spp_max > 1 else ""} per participant'
+    s_per_part = Counter([s["cimac_participant_id"] for s in new_samples]).values()
+    new_s_per_part_count = min(s_per_part)
+    spp_max = max(s_per_part)
+    if new_s_per_part_count != spp_max:
+        new_s_per_part_count = f"{new_s_per_part_count}-{spp_max}"
+    yield f'with {len(new_samples)} new samples: {new_s_per_part_count} sample{"s" if spp_max > 1 else ""} per participant'
 
     psid_warn = _samples_extra_id(new_samples, "parent_sample_id")
     if psid_warn:
@@ -42,16 +40,16 @@ def _format_new_samples(new_samples):
     if psid_warn:
         yield psid_warn
 
-    cc = Counter([s["collection_event_name"] for s in new_samples]).items()
+    cc = Counter([s["collection_event_name"] for s in new_samples])
     if len(cc) == 1:
-        yield f"collection_event_name event for all {len(new_samples)} - {cc[0]['collection_event_name']}"
+        yield f"collection_event_name event for all {len(new_samples)} - {new_samples[0]['collection_event_name']}"
     else:
         yield f"{len(cc)} collection events"
-        yield [f"{count} {tp}'s" for tp, count in cc]
+        yield [f"{count} {tp}'s" for tp, count in cc.items()]
 
 
 @_gen_to_list
-def patch_feedback(
+def manifest_feedback(
     template_type: str, patch: dict, current_md: dict
 ) -> List[Union[List, str]]:
     """
@@ -69,19 +67,15 @@ def patch_feedback(
     shipment = patch["shipments"][0]
     trial_id = patch["protocol_identifier"]
     participants = {p["cimac_participant_id"]: p for p in patch["participants"]}
-    samples = [
-        dict(s, cimac_participant_id=cpid)
-        for cpid, p in participants.items()
-        for s in p["samples"]
-    ]
+
+    sample_count = sum(len(p["samples"]) for p in participants.values())
 
     yield (
-        f"{len(samples)} samples from {len(participants)} participants in "
+        f"{sample_count} samples from {len(participants)} participants in "
         f"manifest {shipment['manifest_id']!r} for {trial_id}/{shipment['assay_type']}"
     )
 
     new_ps_ids = set(participants).difference(current_md)
-
     yield _format_new_participants({id: participants[id] for id in new_ps_ids})
 
     upd_ps_ids = set(participants).intersection(current_md)

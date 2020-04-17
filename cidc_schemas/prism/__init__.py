@@ -12,7 +12,7 @@ from .extra_metadata import (
     cimac_id_regex,
     EXTRA_METADATA_PARSERS,
 )
-from .patch_feedback import patch_feedback
+from .patch_feedback import manifest_feedback
 
 
 from .pipelines import generate_analysis_configs_from_upload_patch

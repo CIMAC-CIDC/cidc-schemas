@@ -53,7 +53,13 @@ TEST_SET.append(
                             "parent_sample_id": "parent_1",
                             "processed_sample_id": "processed_1",
                             "collection_event_name": "time_point_1",
-                        }
+                        },
+                        {
+                            "cimac_id": "C_____1_2.01",
+                            "parent_sample_id": "parent_1",
+                            "processed_sample_id": "processed_1",
+                            "collection_event_name": "time_point_1",
+                        },
                     ],
                 }
             ],
@@ -64,9 +70,8 @@ TEST_SET.append(
                     "cimac_participant_id": "C_____1",
                     "samples": [
                         {
-                            "cimac_id": "C_____1_0.01",
+                            "cimac_id": "C_____1_1.01",
                             "parent_sample_id": "parent_1",
-                            "processed_sample_id": "processed_1",
                             "collection_event_name": "time_point_1",
                         }
                     ],
@@ -74,7 +79,7 @@ TEST_SET.append(
             ]
         },
         [
-            "1 samples from 1 participants in manifest 'manifest' for trial/assay",
+            "2 samples from 1 participants in manifest 'manifest' for trial/assay",
             ["adds 0 new participants"],
             [
                 "updates 1 existing participants",
@@ -82,6 +87,7 @@ TEST_SET.append(
                     "with 1 new sample: 1 sample per participant",
                     "collection_event_name event for all 1 - time_point_1",
                 ],
+                ["with 1 updated existing sample"],
             ],
         ],
     )
@@ -124,6 +130,60 @@ TEST_SET.append(
                     "Found the same processed_sample_id 'processed_1' for all 2 samples",
                     "2 collection events",
                     ["1 time_point_1's", "1 time_point_2's"],
+                ],
+            ],
+        ],
+    )
+)
+
+
+TEST_SET.append(
+    (
+        {
+            "protocol_identifier": "trial",
+            "shipments": [{"manifest_id": "manifest", "assay_type": "assay"}],
+            "participants": [
+                {
+                    "cimac_participant_id": "C_____1",
+                    "samples": [
+                        {
+                            "cimac_id": "C_____1_1.01",
+                            "parent_sample_id": "parent_1",
+                            "processed_sample_id": "processed_1",
+                            "collection_event_name": "time_point_1",
+                        }
+                    ],
+                },
+                {
+                    "cimac_participant_id": "C_____2",
+                    "samples": [
+                        {
+                            "cimac_id": "C_____2_2.01",
+                            "parent_sample_id": "parent_2",
+                            "processed_sample_id": "processed_2",
+                            "collection_event_name": "time_point_1",
+                        },
+                        {
+                            "cimac_id": "C_____2_2.03",
+                            "parent_sample_id": "parent_2",
+                            "processed_sample_id": "processed_2",
+                            "collection_event_name": "time_point_2",
+                        },
+                    ],
+                },
+            ],
+        },
+        {},
+        [
+            "3 samples from 2 participants in manifest 'manifest' for trial/assay",
+            [
+                "adds 2 new participants",
+                [
+                    "with 3 new samples: 1-2 samples per participant",
+                    "Found only 2 different parent_sample_id for 3 samples",
+                    "Found only 2 different processed_sample_id for 3 samples",
+                    "2 collection events",
+                    ["2 time_point_1's", "1 time_point_2's"],
                 ],
             ],
         ],

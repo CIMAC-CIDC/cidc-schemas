@@ -139,7 +139,7 @@ def _format_updated_participants(
 
 @_gen_to_list
 def _format_upd_samples(upd_samples):
-    yield f"with {len(upd_samples)} updated existing samples"
+    yield f"with {len(upd_samples)} updated existing sample{'s' if len(upd_samples) > 1 else ''}"
 
     # #TODO
     # changes_count = 0

@@ -168,18 +168,18 @@ def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, templ
         return
 
     if template.type == "rna_fastq":
-        assert len(res) == 2  # two samples in example .xlsx
+        assert len(res) == 1  # one config for all samples in example .xlsx
     elif template.type == "rna_bam":
-        assert len(res) == 2  # two samples in example .xlsx
+        assert len(res) == 1  # one config for all samples in example .xlsx
     else:
         assert False, f"Unexpected RNAseq template test {template.type}"
 
     for fname, conf in res.items():
         conf = yaml.load(conf)
 
-        assert len(conf["runs"]) == 1  # one run
+        assert len(conf["runs"]) == 2  # two runs for two samples in example .xlsx
 
-        assert len(conf["samples"]) == 1  # one sample in a run
+        assert len(conf["samples"]) == 2  # two samples in example .xlsx
         for sample in conf["samples"].values():
             assert len(sample) > 0  # at lease one data file per sample
             assert all("my-biofx-bucket" in f for f in sample)

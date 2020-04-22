@@ -31,7 +31,7 @@ stranded: true
 
 samples:
 {% for sample in samples %}
-  {{samples.cimac_id}}: 
+  {{sample.cimac_id}}: 
   {% if sample.files.r1 %}
       # r1  
     {% for fastq_gz_artifact in sample.files.r1 %}
@@ -54,6 +54,6 @@ samples:
 ############################################################
 runs:
 {% for sample in samples %}
-  run_{{cimac_id}}:
-  - {{cimac_id}}
+  run_{{sample.cimac_id}}:
+  - {{sample.cimac_id}}
 {% endfor %}

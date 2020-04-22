@@ -1,6 +1,7 @@
 """Analysis pipeline configuration generators."""
 
 from typing import List, NamedTuple, Dict, Callable
+from datetime import datetime
 
 from ..util import load_pipeline_config_template
 
@@ -131,15 +132,20 @@ def _rnaseq_pipeline_config(full_ct: dict, patch: dict, bucket: str) -> Dict[str
 
     # as we know that `patch` is a prism result of a rna_fastq upload
     # we are sure these getitem calls should be fine
-    new_data = [r for assay in patch["assays"]["rna"] for r in assay["records"]]
+    # and that there should be just one rna assay
+    assay = patch["assays"]["rna"][0]
+    new_records = assay["records"]
 
-    res = {}
-    for sample_data in new_data:
-        res[sample_data["cimac_id"] + ".yaml"] = templ.render(
-            BIOFX_BUCKET_NAME=bucket, **sample_data
-        )
+    config_str = templ.render(
+        BIOFX_BUCKET_NAME=bucket,
+        samples=new_records,
+        paired_end_reads=assay["paired_end_reads"],
+    )
 
-    return res
+    dt = datetime.now().isoformat(timespec="minutes").replace(":", "-")
+
+    # TODO add metasheet.csv generation if bioFx will need it after all
+    return {f"rna_pipeline_config_{dt}.yaml": config_str}
 
 
 # This is a map from a assay type to a config generators,

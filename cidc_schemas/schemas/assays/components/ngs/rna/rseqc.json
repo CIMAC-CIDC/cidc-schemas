@@ -1,0 +1,36 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "star",
+  "title": "RNAseq Star Output Files",
+  "type": "object",
+  "description": "Star output sample files.",
+  "properties": {
+    "stat_tmp": {
+      "$ref": "artifacts/artifact_text.json"
+    },
+    "downsampling_housekeeping_bam": {
+      "$ref": "artifacts/artifact_bam.json"
+    },
+    "downsampling_housekeeping_bam_index": {
+      "$ref": "artifacts/artifact_bam_bai.json"
+    },
+    "read_distrib": {
+      "$ref": "artifacts/artifact_binary.json"
+    },
+    "tin_score_summary": {
+      "$ref": "artifacts/artifact_text.json"
+    },
+    "tin_score": {
+      "$ref": "artifacts/artifact_text.json"
+    }
+  },
+  "required": [
+    "stat_tmp",
+    "downsampling_housekeeping_bam",
+    "downsampling_housekeeping_bam_index",
+    "read_distrib",
+    "tin_score_summary",
+    "tin_score"
+  ],
+  "additionalProperties": false
+}

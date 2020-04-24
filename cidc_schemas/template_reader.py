@@ -52,6 +52,12 @@ class XlTemplateReader:
         self.visited_fields = set()
 
     @staticmethod
+    def _clean_value_row(values):
+        rev_values = values[::-1]
+        clean = list(dropwhile(lambda v: v is None, rev_values))
+        return clean[::-1]
+
+    @staticmethod
     def from_excel(xlsx_path: Union[str, BinaryIO]):
         """
         Initialize an Excel template reader from an excel file.
@@ -89,11 +95,10 @@ class XlTemplateReader:
                     )
                     continue
 
-                # Filter empty cells from the end of the header row
+                # Filter empty cells from the end of the row
+
                 if row_type == RowType.HEADER:
-                    rev_values = values[::-1]
-                    clean = list(dropwhile(lambda v: v is None, rev_values))
-                    values = clean[::-1]
+                    values = XlTemplateReader._clean_value_row(values)
                     header_width = len(values)
 
                 # Filter empty cells from the end of a data row
@@ -102,7 +107,7 @@ class XlTemplateReader:
                         errors.append(
                             f"Encountered data row (#{row_num} in worksheet {worksheet_name!r}) before header row"
                         )
-                    if len(values) > header_width:
+                    if len(XlTemplateReader._clean_value_row(values)) > header_width:
                         errors.append(
                             f"Encountered data row (#{row_num} in worksheet {worksheet_name!r}) wider than header row"
                         )
@@ -155,7 +160,7 @@ class XlTemplateReader:
         # Ensure every data row has the right number of entries
         n_columns = len(header_row.values)
         for data_row in data_rows:
-            n_entries = len(data_row.values)
+            n_entries = len(XlTemplateReader._clean_value_row(data_row.values))
             if n_entries > n_columns:
                 errors.append(
                     f"Row {data_row.row_num} has {n_entries - n_columns} unexpected extra values."

@@ -1,0 +1,5 @@
+"","LEGEND"
+"","Legend for tab 'RNAseq Analysis'"
+"","Protocol identifier","String","Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412."
+"","Section 'RNAseq Runs' of tab 'RNAseq Analysis'"
+"","Cimac id","String","An id used for a paired analysis run."

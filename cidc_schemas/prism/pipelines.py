@@ -2,8 +2,9 @@
 
 from typing import List, NamedTuple, Dict, Callable
 from datetime import datetime
+from collections import defaultdict
 
-from ..util import load_pipeline_config_template
+from ..util import load_pipeline_config_template, participant_id_from_cimac
 
 
 def _wes_pipeline_config(
@@ -134,18 +135,32 @@ def _rnaseq_pipeline_config(full_ct: dict, patch: dict, bucket: str) -> Dict[str
     # we are sure these getitem calls should be fine
     # and that there should be just one rna assay
     assay = patch["assays"]["rna"][0]
-    new_records = assay["records"]
 
-    config_str = templ.render(
-        BIOFX_BUCKET_NAME=bucket,
-        samples=new_records,
-        paired_end_reads=assay["paired_end_reads"],
-    )
+    # splitting samples from different participants into different groups
+    groups = defaultdict(list)
+    all_pids = []
+    all_cimac_ids = []
+    for record in assay["records"]:
+        pid = participant_id_from_cimac(record["cimac_id"])
+        all_pids.append(pid)
+        all_cimac_ids.append(record["cimac_id"])
+        groups[pid].append(record)
 
     dt = datetime.now().isoformat(timespec="minutes").replace(":", "-")
+    res = {}
+    # TODO add f"metasheet_{dt}.csv" generation with all samples/participants metadata
 
-    # TODO add metasheet.csv generation if bioFx will need it after all
-    return {f"rna_pipeline_config_{dt}.yaml": config_str}
+    for pid, samples in groups.items():
+        config_str = templ.render(
+            BIOFX_BUCKET_NAME=bucket,
+            samples=samples,
+            paired_end_reads=assay["paired_end_reads"],
+        )
+        # keying on participant id and date time, so if data for one participant
+        # comes in different uploads, those runs will be distinguishable
+        res[f"rna_pipeline_{pid}_{dt}.yaml"] = config_str
+
+    return res
 
 
 # This is a map from a assay type to a config generators,

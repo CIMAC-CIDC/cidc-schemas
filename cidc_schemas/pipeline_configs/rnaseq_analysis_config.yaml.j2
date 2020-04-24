@@ -14,16 +14,15 @@ mate: {% if paired_end_reads == "Paired" %}[1,2]{% else %}[0]{% endif %}
 
 #### star  parameters
 #Possible values are [fr-firststrand, fr-secondstrand, fr-unstranded (default), transfrags]
-library_type: 'fr-firststrand'  
+#library_type: 'fr-firststrand'  
 
 ### rseqc parameters
-rseqc_ref: house_keeping  #rseqc ref model
-
+#rseqc_ref: house_keeping  #rseqc ref model
 
 ### gene_quantification
 #run rsem or salmon. If rsem = false, then it will automatically consider salmon.
 rsem: false
-stranded: true
+stranded: false
 
 ############################################################
 #                     list samples                         #

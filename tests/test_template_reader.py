@@ -108,7 +108,9 @@ def test_missing_required_value(tiny_template):
                 ("test_property", "test_date", "test_time", "something_unexpected"),
             ),
             TemplateRow(3, RowType.DATA, (None, "6/11/12", "10:44:61")),
-            TemplateRow(4, RowType.DATA, ("foo", "6/11/12", "10:44:61", None, None)),
+            TemplateRow(
+                4, RowType.DATA, ("foo", "6/11/12", "10:44:61", None, "10:44:61")
+            ),
         ]
     }
 

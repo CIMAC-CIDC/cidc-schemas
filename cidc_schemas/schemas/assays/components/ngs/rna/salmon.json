@@ -12,7 +12,7 @@
           "$ref": "artifacts/artifact_text.json"
       },
       "aux_info_ambig_info_tsv": {
-          "$ref": "artifacts/artifact_text.json"
+          "$ref": "artifacts/artifact_tsv.json"
       },
       "aux_info_expected_bias_gz": {
           "$ref": "artifacts/artifact_gz.json"
@@ -21,7 +21,7 @@
           "$ref": "artifacts/artifact_gz.json"
       },
       "aux_info_meta_info_json": {
-          "$ref": "artifacts/artifact_text.json"
+          "$ref": "artifacts/artifact_json.json"
       },
       "aux_info_observed_bias_gz": {
           "$ref": "artifacts/artifact_gz.json"
@@ -30,7 +30,7 @@
           "$ref": "artifacts/artifact_gz.json"
       },
       "cmd_info_json": {
-          "$ref": "artifacts/artifact_text.json"
+          "$ref": "artifacts/artifact_json.json"
       },
       "salmon_quant_log": {
           "$ref": "artifacts/artifact_text.json"

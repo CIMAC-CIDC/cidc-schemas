@@ -124,7 +124,8 @@ def _wes_pipeline_config(
 
 def _rnaseq_pipeline_config(full_ct: dict, patch: dict, bucket: str) -> Dict[str, str]:
     """
-        Generates a .yaml config for RNAseq pipeline 
+        Generates .yaml configs for RNAseq pipeline and a metasheet.csv with sampels metadata.
+        Returns a filename to file content map.
         
         Patch is expected to be already merged into full_ct.
     """
@@ -137,20 +138,20 @@ def _rnaseq_pipeline_config(full_ct: dict, patch: dict, bucket: str) -> Dict[str
     assay = patch["assays"]["rna"][0]
 
     # splitting samples from different participants into different groups
-    groups = defaultdict(list)
+    participant_groups = defaultdict(list)
     all_pids = []
     all_cimac_ids = []
     for record in assay["records"]:
         pid = participant_id_from_cimac(record["cimac_id"])
         all_pids.append(pid)
         all_cimac_ids.append(record["cimac_id"])
-        groups[pid].append(record)
+        participant_groups[pid].append(record)
 
     dt = datetime.now().isoformat(timespec="minutes").replace(":", "-")
     res = {}
     # TODO add f"metasheet_{dt}.csv" generation with all samples/participants metadata
 
-    for pid, samples in groups.items():
+    for pid, samples in participant_groups.items():
         config_str = templ.render(
             BIOFX_BUCKET_NAME=bucket,
             samples=samples,

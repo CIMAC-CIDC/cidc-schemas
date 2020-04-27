@@ -949,9 +949,6 @@ def rnaseq_analysis() -> PrismTestData:
                             "sorted_bam_stat_txt": {
                                 "upload_placeholder": "05050505-0505-0505-0505-CTTTPP111.00"
                             },
-                            "sorted_driver_extract_bam": {
-                                "upload_placeholder": "06060606-0606-0606-0606-CTTTPP111.00"
-                            },
                             "transcriptome_bam": {
                                 "upload_placeholder": "07070707-0707-0707-0707-CTTTPP111.00"
                             },
@@ -1059,9 +1056,6 @@ def rnaseq_analysis() -> PrismTestData:
                             },
                             "sorted_bam_stat_txt": {
                                 "upload_placeholder": "05050505-0505-0505-0505-CTTTPP121.00"
-                            },
-                            "sorted_driver_extract_bam": {
-                                "upload_placeholder": "06060606-0606-0606-0606-CTTTPP121.00"
                             },
                             "transcriptome_bam": {
                                 "upload_placeholder": "07070707-0707-0707-0707-CTTTPP121.00"
@@ -1197,12 +1191,6 @@ def rnaseq_analysis() -> PrismTestData:
                     local_path=f"analysis/star/{cimac_id}/{cimac_id}.sorted.bam.stat.txt",
                     gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/sorted.bam.stat.txt",
                     upload_placeholder=f"05050505-0505-0505-0505-{cimac_id}",
-                    metadata_availability=None,
-                ),
-                LocalFileUploadEntry(
-                    local_path=f"analysis/star/{cimac_id}/{cimac_id}.sorted.driver.extract.bam",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/sorted.driver.extract.bam",
-                    upload_placeholder=f"06060606-0606-0606-0606-{cimac_id}",
                     metadata_availability=None,
                 ),
                 LocalFileUploadEntry(

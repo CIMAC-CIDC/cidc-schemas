@@ -12,6 +12,12 @@
     },
     "star": {
       "$ref": "assays/components/ngs/rna/star.json"
+    },
+    "rseqc": {
+      "$ref": "assays/components/ngs/rna/rseqc.json"
+    },
+    "salmon": {
+      "$ref": "assays/components/ngs/rna/salmon.json"
     }
   },
   "required": [

@@ -921,6 +921,473 @@ def wes_analysis() -> PrismTestData:
 
 
 @analysis_data_generator
+def rnaseq_analysis() -> PrismTestData:
+    upload_type = "rnaseq_analysis"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "analysis": {
+            "rnaseq_analysis": {
+                "level_1": [
+                    {
+                        "cimac_id": "CTTTPP111.00",
+                        "star": {
+                            "chimeric_out_junction": {
+                                "upload_placeholder": "00000000-0000-0000-0000-CTTTPP111.00"
+                            },
+                            "log_final_out": {
+                                "upload_placeholder": "01010101-0101-0101-0101-CTTTPP111.00"
+                            },
+                            "counts_tab": {
+                                "upload_placeholder": "02020202-0202-0202-0202-CTTTPP111.00"
+                            },
+                            "sorted_bam": {
+                                "upload_placeholder": "03030303-0303-0303-0303-CTTTPP111.00"
+                            },
+                            "sorted_bam_index": {
+                                "upload_placeholder": "04040404-0404-0404-0404-CTTTPP111.00"
+                            },
+                            "sorted_bam_stat_txt": {
+                                "upload_placeholder": "05050505-0505-0505-0505-CTTTPP111.00"
+                            },
+                            "sorted_driver_extract_bam": {
+                                "upload_placeholder": "06060606-0606-0606-0606-CTTTPP111.00"
+                            },
+                            "transcriptome_bam": {
+                                "upload_placeholder": "07070707-0707-0707-0707-CTTTPP111.00"
+                            },
+                            "unsorted_bam": {
+                                "upload_placeholder": "08080808-0808-0808-0808-CTTTPP111.00"
+                            },
+                            "log_out": {
+                                "upload_placeholder": "09090909-0909-0909-0909-CTTTPP111.00"
+                            },
+                            "log_progress_out": {
+                                "upload_placeholder": "10101010-1010-1010-1010-CTTTPP111.00"
+                            },
+                            "sj_out_tab": {
+                                "upload_placeholder": "11111111-1111-1111-1111-CTTTPP111.00"
+                            },
+                            "star_genome_sjdb_info_txt": {
+                                "upload_placeholder": "12121212-1212-1212-1212-CTTTPP111.00"
+                            },
+                            "star_genome_sjdb_list_out_tab": {
+                                "upload_placeholder": "13131313-1313-1313-1313-CTTTPP111.00"
+                            },
+                            "star_pass1_log_final_out": {
+                                "upload_placeholder": "14141414-1414-1414-1414-CTTTPP111.00"
+                            },
+                            "star_pass1_sj_out_tab": {
+                                "upload_placeholder": "15151515-1515-1515-1515-CTTTPP111.00"
+                            },
+                            "downsampling_bam": {
+                                "upload_placeholder": "16161616-1616-1616-1616-CTTTPP111.00"
+                            },
+                            "downsampling_bam_index": {
+                                "upload_placeholder": "17171717-1717-1717-1717-CTTTPP111.00"
+                            },
+                        },
+                        "rseqc": {
+                            "stat_tmp": {
+                                "upload_placeholder": "18181818-1818-1818-1818-CTTTPP111.00"
+                            },
+                            "downsampling_housekeeping_bam": {
+                                "upload_placeholder": "19191919-1919-1919-1919-CTTTPP111.00"
+                            },
+                            "downsampling_housekeeping_bam_index": {
+                                "upload_placeholder": "20202020-2020-2020-2020-CTTTPP111.00"
+                            },
+                            "read_distrib": {
+                                "upload_placeholder": "21212121-2121-2121-2121-CTTTPP111.00"
+                            },
+                            "tin_score_summary": {
+                                "upload_placeholder": "22222222-2222-2222-2222-CTTTPP111.00"
+                            },
+                            "tin_score": {
+                                "upload_placeholder": "23232323-2323-2323-2323-CTTTPP111.00"
+                            },
+                        },
+                        "salmon": {
+                            "quant_sf": {
+                                "upload_placeholder": "24242424-2424-2424-2424-CTTTPP111.00"
+                            },
+                            "transcriptome_bam_log": {
+                                "upload_placeholder": "25252525-2525-2525-2525-CTTTPP111.00"
+                            },
+                            "aux_info_ambig_info_tsv": {
+                                "upload_placeholder": "26262626-2626-2626-2626-CTTTPP111.00"
+                            },
+                            "aux_info_expected_bias_gz": {
+                                "upload_placeholder": "27272727-2727-2727-2727-CTTTPP111.00"
+                            },
+                            "aux_info_fld_gz": {
+                                "upload_placeholder": "28282828-2828-2828-2828-CTTTPP111.00"
+                            },
+                            "aux_info_meta_info_json": {
+                                "upload_placeholder": "29292929-2929-2929-2929-CTTTPP111.00"
+                            },
+                            "aux_info_observed_bias_gz": {
+                                "upload_placeholder": "30303030-3030-3030-3030-CTTTPP111.00"
+                            },
+                            "aux_info_observed_bias_3p_gz": {
+                                "upload_placeholder": "31313131-3131-3131-3131-CTTTPP111.00"
+                            },
+                            "cmd_info_json": {
+                                "upload_placeholder": "32323232-3232-3232-3232-CTTTPP111.00"
+                            },
+                            "salmon_quant_log": {
+                                "upload_placeholder": "33333333-3333-3333-3333-CTTTPP111.00"
+                            },
+                        },
+                    },
+                    {
+                        "cimac_id": "CTTTPP121.00",
+                        "star": {
+                            "chimeric_out_junction": {
+                                "upload_placeholder": "00000000-0000-0000-0000-CTTTPP121.00"
+                            },
+                            "log_final_out": {
+                                "upload_placeholder": "01010101-0101-0101-0101-CTTTPP121.00"
+                            },
+                            "counts_tab": {
+                                "upload_placeholder": "02020202-0202-0202-0202-CTTTPP121.00"
+                            },
+                            "sorted_bam": {
+                                "upload_placeholder": "03030303-0303-0303-0303-CTTTPP121.00"
+                            },
+                            "sorted_bam_index": {
+                                "upload_placeholder": "04040404-0404-0404-0404-CTTTPP121.00"
+                            },
+                            "sorted_bam_stat_txt": {
+                                "upload_placeholder": "05050505-0505-0505-0505-CTTTPP121.00"
+                            },
+                            "sorted_driver_extract_bam": {
+                                "upload_placeholder": "06060606-0606-0606-0606-CTTTPP121.00"
+                            },
+                            "transcriptome_bam": {
+                                "upload_placeholder": "07070707-0707-0707-0707-CTTTPP121.00"
+                            },
+                            "unsorted_bam": {
+                                "upload_placeholder": "08080808-0808-0808-0808-CTTTPP121.00"
+                            },
+                            "log_out": {
+                                "upload_placeholder": "09090909-0909-0909-0909-CTTTPP121.00"
+                            },
+                            "log_progress_out": {
+                                "upload_placeholder": "10101010-1010-1010-1010-CTTTPP121.00"
+                            },
+                            "sj_out_tab": {
+                                "upload_placeholder": "11111111-1111-1111-1111-CTTTPP121.00"
+                            },
+                            "star_genome_sjdb_info_txt": {
+                                "upload_placeholder": "12121212-1212-1212-1212-CTTTPP121.00"
+                            },
+                            "star_genome_sjdb_list_out_tab": {
+                                "upload_placeholder": "13131313-1313-1313-1313-CTTTPP121.00"
+                            },
+                            "star_pass1_log_final_out": {
+                                "upload_placeholder": "14141414-1414-1414-1414-CTTTPP121.00"
+                            },
+                            "star_pass1_sj_out_tab": {
+                                "upload_placeholder": "15151515-1515-1515-1515-CTTTPP121.00"
+                            },
+                            "downsampling_bam": {
+                                "upload_placeholder": "16161616-1616-1616-1616-CTTTPP121.00"
+                            },
+                            "downsampling_bam_index": {
+                                "upload_placeholder": "17171717-1717-1717-1717-CTTTPP121.00"
+                            },
+                        },
+                        "rseqc": {
+                            "stat_tmp": {
+                                "upload_placeholder": "18181818-1818-1818-1818-CTTTPP121.00"
+                            },
+                            "downsampling_housekeeping_bam": {
+                                "upload_placeholder": "19191919-1919-1919-1919-CTTTPP121.00"
+                            },
+                            "downsampling_housekeeping_bam_index": {
+                                "upload_placeholder": "20202020-2020-2020-2020-CTTTPP121.00"
+                            },
+                            "read_distrib": {
+                                "upload_placeholder": "21212121-2121-2121-2121-CTTTPP121.00"
+                            },
+                            "tin_score_summary": {
+                                "upload_placeholder": "22222222-2222-2222-2222-CTTTPP121.00"
+                            },
+                            "tin_score": {
+                                "upload_placeholder": "23232323-2323-2323-2323-CTTTPP121.00"
+                            },
+                        },
+                        "salmon": {
+                            "quant_sf": {
+                                "upload_placeholder": "24242424-2424-2424-2424-CTTTPP121.00"
+                            },
+                            "transcriptome_bam_log": {
+                                "upload_placeholder": "25252525-2525-2525-2525-CTTTPP121.00"
+                            },
+                            "aux_info_ambig_info_tsv": {
+                                "upload_placeholder": "26262626-2626-2626-2626-CTTTPP121.00"
+                            },
+                            "aux_info_expected_bias_gz": {
+                                "upload_placeholder": "27272727-2727-2727-2727-CTTTPP121.00"
+                            },
+                            "aux_info_fld_gz": {
+                                "upload_placeholder": "28282828-2828-2828-2828-CTTTPP121.00"
+                            },
+                            "aux_info_meta_info_json": {
+                                "upload_placeholder": "29292929-2929-2929-2929-CTTTPP121.00"
+                            },
+                            "aux_info_observed_bias_gz": {
+                                "upload_placeholder": "30303030-3030-3030-3030-CTTTPP121.00"
+                            },
+                            "aux_info_observed_bias_3p_gz": {
+                                "upload_placeholder": "31313131-3131-3131-3131-CTTTPP121.00"
+                            },
+                            "cmd_info_json": {
+                                "upload_placeholder": "32323232-3232-3232-3232-CTTTPP121.00"
+                            },
+                            "salmon_quant_log": {
+                                "upload_placeholder": "33333333-3333-3333-3333-CTTTPP121.00"
+                            },
+                        },
+                    },
+                ]
+            }
+        },
+        "protocol_identifier": "test_prism_trial_id",
+    }
+
+    cimac_ids = [
+        r["cimac_id"] for r in prismify_patch["analysis"]["rnaseq_analysis"]["level_1"]
+    ]
+
+    upload_entries = sum(
+        [
+            [
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}.Chimeric.out.junction",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/Chimeric.out.junction",
+                    upload_placeholder=f"00000000-0000-0000-0000-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}.Log.final.out",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/Log.final.out",
+                    upload_placeholder=f"01010101-0101-0101-0101-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}.counts.tab",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/counts.tab",
+                    upload_placeholder=f"02020202-0202-0202-0202-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}.sorted.bam",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/sorted.bam",
+                    upload_placeholder=f"03030303-0303-0303-0303-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}.sorted.bam.bai",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/sorted.bam.bai",
+                    upload_placeholder=f"04040404-0404-0404-0404-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}.sorted.bam.stat.txt",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/sorted.bam.stat.txt",
+                    upload_placeholder=f"05050505-0505-0505-0505-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}.sorted.driver.extract.bam",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/sorted.driver.extract.bam",
+                    upload_placeholder=f"06060606-0606-0606-0606-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}.transcriptome.bam",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/transcriptome.bam",
+                    upload_placeholder=f"07070707-0707-0707-0707-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}.unsorted.bam",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/unsorted.bam",
+                    upload_placeholder=f"08080808-0808-0808-0808-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}Log.out",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/Log.out",
+                    upload_placeholder=f"09090909-0909-0909-0909-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}Log.progress.out",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/Log.progress.out",
+                    upload_placeholder=f"10101010-1010-1010-1010-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}SJ.out.tab",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/SJ.out.tab",
+                    upload_placeholder=f"11111111-1111-1111-1111-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}_STARgenome/sjdbInfo.txt",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/STARgenome_sjdbInfo.txt",
+                    upload_placeholder=f"12121212-1212-1212-1212-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}_STARgenome/sjdbList.out.tab",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/STARgenome_sjdbList.out.tab",
+                    upload_placeholder=f"13131313-1313-1313-1313-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}_STARpass1/Log.final.out",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/STARpass1_Log.final.out",
+                    upload_placeholder=f"14141414-1414-1414-1414-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}_STARpass1/SJ.out.tab",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/STARpass1_SJ.out.tab",
+                    upload_placeholder=f"15151515-1515-1515-1515-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}_downsampling.bam",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/downsampling.bam",
+                    upload_placeholder=f"16161616-1616-1616-1616-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}_downsampling.bam.bai",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/downsampling.bam.bai",
+                    upload_placeholder=f"17171717-1717-1717-1717-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/rseqc/{cimac_id}/{cimac_id}.stat_tmp.txt",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/stat_tmp.txt",
+                    upload_placeholder=f"18181818-1818-1818-1818-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/rseqc/{cimac_id}/{cimac_id}_downsampling_housekeeping.bam",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/downsampling_housekeeping.bam",
+                    upload_placeholder=f"19191919-1919-1919-1919-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/rseqc/{cimac_id}/{cimac_id}_downsampling_housekeeping.bam.bai",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/downsampling_housekeeping.bam.bai",
+                    upload_placeholder=f"20202020-2020-2020-2020-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/rseqc/read_distrib/{cimac_id}/{cimac_id}.txt",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/read_distrib.txt",
+                    upload_placeholder=f"21212121-2121-2121-2121-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/rseqc/tin_score/{cimac_id}/{cimac_id}.summary.txt",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/tin_score.summary.txt",
+                    upload_placeholder=f"22222222-2222-2222-2222-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/rseqc/tin_score/{cimac_id}/{cimac_id}.tin_score.txt",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/tin_score.txt",
+                    upload_placeholder=f"23232323-2323-2323-2323-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/salmon/{cimac_id}/quant.sf",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/quant.sf",
+                    upload_placeholder=f"24242424-2424-2424-2424-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/salmon/{cimac_id}/transcriptome.bam.log",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/transcriptome.bam.log",
+                    upload_placeholder=f"25252525-2525-2525-2525-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/salmon/{cimac_id}/aux_info/ambig_info.tsv",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/aux_info_ambig_info.tsv",
+                    upload_placeholder=f"26262626-2626-2626-2626-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/salmon/{cimac_id}/aux_info/expected_bias.gz",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/aux_info_expected_bias.gz",
+                    upload_placeholder=f"27272727-2727-2727-2727-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/salmon/{cimac_id}/aux_info/fld.gz",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/aux_info_fld.gz",
+                    upload_placeholder=f"28282828-2828-2828-2828-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/salmon/{cimac_id}/aux_info/meta_info.json",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/aux_info_meta_info.json",
+                    upload_placeholder=f"29292929-2929-2929-2929-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/salmon/{cimac_id}/aux_info/observed_bias.gz",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/aux_info_observed_bias.gz",
+                    upload_placeholder=f"30303030-3030-3030-3030-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/salmon/{cimac_id}/aux_info/observed_bias_3p.gz",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/aux_info_observed_bias_3p.gz",
+                    upload_placeholder=f"31313131-3131-3131-3131-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/salmon/{cimac_id}/cmd_info.json",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/cmd_info.json",
+                    upload_placeholder=f"32323232-3232-3232-3232-{cimac_id}",
+                    metadata_availability=None,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/salmon/{cimac_id}/logs/salmon_quant.log",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/salmon_quant.log",
+                    upload_placeholder=f"33333333-3333-3333-3333-{cimac_id}",
+                    metadata_availability=None,
+                ),
+            ]
+            for cimac_id in cimac_ids
+        ],
+        [],
+    )
+
+    base_trial = get_test_trial(cimac_ids)
+
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "analysis")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
+@analysis_data_generator
 def cytof_analysis() -> PrismTestData:
     upload_type = "cytof_analysis"
     prismify_args = get_prismify_args(upload_type)

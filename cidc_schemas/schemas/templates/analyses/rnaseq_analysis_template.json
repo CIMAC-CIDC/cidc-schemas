@@ -20,15 +20,6 @@
                             "type_ref": "assays/components/ngs/wes/wes_pair_analysis.json#properties/run_id",
                             "process_as": [
                                 {
-                                    "parse_through": "lambda run: f'analysis/germline/{run}/{run}_vcfcompare.txt'",
-                                    "merge_pointer": "/germline/vcf_compare",
-                                    "gcs_uri_format": "{protocol identifier}/{run id}/wes_analysis/vcfcompare.txt",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                
-
-                                {
                                     "parse_through": "lambda id: f'analysis/star/{id}/{id}.Chimeric.out.junction'",
                                     "merge_pointer": "0/star/chimeric_out_junction",
                                     "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/Chimeric.out.junction",

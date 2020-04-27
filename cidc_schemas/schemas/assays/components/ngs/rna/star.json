@@ -23,9 +23,6 @@
     "sorted_bam_stat_txt": {
       "$ref": "artifacts/artifact_text.json"
     },
-    "sorted_driver_extract_bam": {
-      "$ref": "artifacts/artifact_bam.json"
-    },
     "transcriptome_bam": {
       "$ref": "artifacts/artifact_bam.json"
     },
@@ -67,7 +64,6 @@
     "sorted_bam",
     "sorted_bam_index",
     "sorted_bam_stat_txt",
-    "sorted_driver_extract_bam",
     "transcriptome_bam",
     "unsorted_bam",
     "log_out",

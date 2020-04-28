@@ -2,7 +2,7 @@
 #                       General                            #
 ############################################################
 
-metasheet: metasheet.csv  
+metasheet: metasheet_{{dt}}.csv  
 assembly: hg38
 ref: ref.yaml
 mate: {% if paired_end_reads == "Paired" %}[1,2]{% else %}[0]{% endif %}

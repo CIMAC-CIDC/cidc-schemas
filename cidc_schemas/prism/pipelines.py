@@ -1,4 +1,6 @@
 """Analysis pipeline configuration generators."""
+import csv
+import io
 
 from typing import List, NamedTuple, Dict, Callable
 from datetime import datetime
@@ -122,6 +124,21 @@ def _wes_pipeline_config(
     return internal
 
 
+def _csv2string(data):
+    si = io.StringIO()
+    cw = csv.writer(si)
+    cw.writerows(data)
+    return si.getvalue().strip("\r\n")
+
+
+RNA_METASHEET_KEYS = [
+    "cimac_id",
+    "collection_event_name",
+    "type_of_sample",
+    "processed_sample_derivative",
+]
+
+
 def _rnaseq_pipeline_config(full_ct: dict, patch: dict, bucket: str) -> Dict[str, str]:
     """
         Generates .yaml configs for RNAseq pipeline and a metasheet.csv with sampels metadata.
@@ -138,24 +155,39 @@ def _rnaseq_pipeline_config(full_ct: dict, patch: dict, bucket: str) -> Dict[str
     assay = patch["assays"]["rna"][0]
 
     # splitting samples from different participants into different groups
-    participant_groups = defaultdict(list)
-    all_pids = []
-    all_cimac_ids = []
+    per_participant_records = defaultdict(list)
+    per_participant_cimac_ids = defaultdict(set)
     for record in assay["records"]:
         pid = participant_id_from_cimac(record["cimac_id"])
-        all_pids.append(pid)
-        all_cimac_ids.append(record["cimac_id"])
-        participant_groups[pid].append(record)
+        per_participant_records[pid].append(record)
+        per_participant_cimac_ids[pid].add(record["cimac_id"])
 
     dt = datetime.now().isoformat(timespec="minutes").replace(":", "-")
-    res = {}
-    # TODO add f"metasheet_{dt}.csv" generation with all samples/participants metadata
 
-    for pid, samples in participant_groups.items():
+    # we expect to be guaranteed that all cimac_ids in the `patch` to be present
+    # in `full_ct` sample set, because they should have been created by previous manifest upload
+    sample_metadata = {}
+    for pid, cimac_ids_list in per_participant_cimac_ids.items():
+        for participant in full_ct["participants"]:
+            if pid == participant["cimac_participant_id"]:
+                for sample in participant["samples"]:
+                    if sample["cimac_id"] in cimac_ids_list:
+                        sample_metadata[sample["cimac_id"]] = dict(sample)
+                break
+
+    res = {
+        f"metasheet_{dt}.csv": _csv2string(
+            [RNA_METASHEET_KEYS]
+            + [[s.get(k) for k in RNA_METASHEET_KEYS] for s in sample_metadata.values()]
+        )
+    }
+
+    for pid, samples in per_participant_records.items():
         config_str = templ.render(
             BIOFX_BUCKET_NAME=bucket,
             samples=samples,
             paired_end_reads=assay["paired_end_reads"],
+            dt=dt,
         )
         # keying on participant id and date time, so if data for one participant
         # comes in different uploads, those runs will be distinguishable

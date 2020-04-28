@@ -2,6 +2,7 @@
 import os
 import copy
 import yaml
+import csv
 
 import pytest
 
@@ -168,21 +169,37 @@ def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, templ
         return
 
     if template.type == "rna_fastq":
-        assert len(res) == 1  # one config for all samples in example .xlsx
+        # one config with all samples from one participant in one example .xlsx
+        # plus one metasheet.csv
+        assert len(res) == 1 + 1
+
     elif template.type == "rna_bam":
         assert len(res) == 1  # one config for all samples in example .xlsx
     else:
         assert False, f"Unexpected RNAseq template test {template.type}"
 
-    for fname, conf in res.items():
-        conf = yaml.load(conf)
+    for fname, fcontent in res.items():
 
-        assert len(conf["runs"]) == 2  # two runs for two samples in example .xlsx
+        if not fname.endswith(".yaml"):
+            assert fname.endswith(".csv")
 
-        assert len(conf["samples"]) == 2  # two samples in example .xlsx
-        for sample in conf["samples"].values():
-            assert len(sample) > 0  # at lease one data file per sample
-            assert all("my-biofx-bucket" in f for f in sample)
-            assert all(f.endswith(".fastq.gz") for f in sample) or all(
-                f.endswith(".bam") for f in sample
+            assert (
+                fcontent
+                == "cimac_id,collection_event_name,type_of_sample,processed_sample_derivative"
+                "\r\nCTTTPP122.00,Not_reported,Not Reported,"
+                "\r\nCTTTPP123.00,Not_reported,Not Reported,"
             )
+
+        else:
+
+            conf = yaml.load(fcontent)
+
+            assert len(conf["runs"]) == 2  # two runs for two samples in example .xlsx
+
+            assert len(conf["samples"]) == 2  # two samples in example .xlsx
+            for sample in conf["samples"].values():
+                assert len(sample) > 0  # at lease one data file per sample
+                assert all("my-biofx-bucket" in f for f in sample)
+                assert all(f.endswith(".fastq.gz") for f in sample) or all(
+                    f.endswith(".bam") for f in sample
+                )

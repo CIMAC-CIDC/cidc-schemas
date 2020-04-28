@@ -168,13 +168,11 @@ def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, templ
         assert res == {}
         return
 
-    if template.type == "rna_fastq":
+    if template.type in ["rna_fastq", "rna_bam"]:
         # one config with all samples from one participant in one example .xlsx
         # plus one metasheet.csv
         assert len(res) == 1 + 1
 
-    elif template.type == "rna_bam":
-        assert len(res) == 1  # one config for all samples in example .xlsx
     else:
         assert False, f"Unexpected RNAseq template test {template.type}"
 

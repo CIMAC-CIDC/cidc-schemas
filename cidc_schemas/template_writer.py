@@ -36,9 +36,14 @@ def _format_validation_range(
     validation_rows, validation_column, data_dict_worksheet_name
 ):
     start = xl_rowcol_to_cell(
-        1, validation_column
-    )  # 1 is to skip first row in DD sheet that is for header
-    stop = xl_rowcol_to_cell(validation_rows, validation_column)
+        1,  # 1 is to skip first row in DD sheet that is for header
+        validation_column,
+        row_abs=True,
+        col_abs=True,
+    )
+    stop = xl_rowcol_to_cell(
+        validation_rows, validation_column, row_abs=True, col_abs=True
+    )
 
     return f"'{data_dict_worksheet_name}'!{start}:{stop}"
 

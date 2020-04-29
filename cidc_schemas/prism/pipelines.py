@@ -139,7 +139,7 @@ RNA_METASHEET_KEYS = [
 ]
 
 
-def _extract_sample_metadata(full_ct, records):
+def _extract_sample_metadata(participants, records):
     per_participant_cimac_ids = defaultdict(set)
     for record in records:
         cid = record["cimac_id"]
@@ -147,19 +147,19 @@ def _extract_sample_metadata(full_ct, records):
 
         per_participant_cimac_ids[pid].add(cid)
 
-    sample_metadata = {}
-
     all_participants = {
         participant["cimac_participant_id"]: participant["samples"]
-        for participant in full_ct["participants"]
+        for participant in participants
     }
 
+    sample_metadata = {}
     # we expect to be guaranteed that all cimac_ids in the `patch` to be present
     # in `full_ct` sample set, because they should have been created by previous manifest upload
     for pid, cimac_ids_list in per_participant_cimac_ids.items():
         for sample in all_participants[pid]:
-            if sample["cimac_id"] in cimac_ids_list:
-                sample_metadata[sample["cimac_id"]] = dict(sample)
+            cid = sample["cimac_id"]
+            if cid in cimac_ids_list:
+                sample_metadata[cid] = dict(sample)
 
     return sample_metadata
 
@@ -182,7 +182,9 @@ def _rnaseq_pipeline_config(full_ct: dict, patch: dict, bucket: str) -> Dict[str
     dt = datetime.now().isoformat(timespec="minutes").replace(":", "-")
 
     # now we collect metadata for every sample in the patch
-    sample_metadata = _extract_sample_metadata(full_ct, assay["records"])
+    sample_metadata = _extract_sample_metadata(
+        full_ct["participants"], assay["records"]
+    )
 
     res = {
         f"metasheet_{dt}.csv": _csv2string(

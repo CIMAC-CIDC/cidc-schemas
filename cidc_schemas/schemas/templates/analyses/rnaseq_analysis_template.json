@@ -1,0 +1,267 @@
+{
+    "title": "RNAseq level 1 analysis template",
+    "description": "Metadata information for RNAseq level 1 Analysis output.",
+    "prism_template_root_object_schema": "assays/components/ngs/rna/rnaseq_analysis.json",
+    "prism_template_root_object_pointer": "/analysis/rnaseq_analysis",
+    "properties": {
+        "worksheets": {
+            "RNAseq Analysis": {
+                "preamble_rows": {
+                    "protocol identifier": {
+                        "merge_pointer": "2/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    }
+                },
+                "prism_data_object_pointer": "/level_1/-",
+                "data_columns": {
+                    "RNAseq Runs": {
+                        "cimac id": {
+                            "merge_pointer": "/cimac_id",
+                            "type_ref": "assays/components/ngs/wes/wes_pair_analysis.json#properties/run_id",
+                            "process_as": [
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}.Chimeric.out.junction'",
+                                    "merge_pointer": "0/star/chimeric_out_junction",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/Chimeric.out.junction",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}.Log.final.out'",
+                                    "merge_pointer": "0/star/log_final_out",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/Log.final.out",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}.counts.tab'",
+                                    "merge_pointer": "0/star/counts_tab",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/counts.tab",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}.sorted.bam'",
+                                    "merge_pointer": "0/star/sorted_bam",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/sorted.bam",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}.sorted.bam.bai'",
+                                    "merge_pointer": "0/star/sorted_bam_index",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/sorted.bam.bai",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}.sorted.bam.stat.txt'",
+                                    "merge_pointer": "0/star/sorted_bam_stat_txt",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/sorted.bam.stat.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}.transcriptome.bam'",
+                                    "merge_pointer": "0/star/transcriptome_bam",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/transcriptome.bam",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}.unsorted.bam'",
+                                    "merge_pointer": "0/star/unsorted_bam",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/unsorted.bam",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}Log.out'",
+                                    "merge_pointer": "0/star/log_out",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/Log.out",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}Log.progress.out'",
+                                    "merge_pointer": "0/star/log_progress_out",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/Log.progress.out",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}SJ.out.tab'",
+                                    "merge_pointer": "0/star/sj_out_tab",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/SJ.out.tab",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}_STARgenome/sjdbInfo.txt'",
+                                    "merge_pointer": "0/star/star_genome_sjdb_info_txt",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/STARgenome_sjdbInfo.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}_STARgenome/sjdbList.out.tab'",
+                                    "merge_pointer": "0/star/star_genome_sjdb_list_out_tab",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/STARgenome_sjdbList.out.tab",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}_STARpass1/Log.final.out'",
+                                    "merge_pointer": "0/star/star_pass1_log_final_out",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/STARpass1_Log.final.out",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}_STARpass1/SJ.out.tab'",
+                                    "merge_pointer": "0/star/star_pass1_sj_out_tab",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/STARpass1_SJ.out.tab",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}_downsampling.bam'",
+                                    "merge_pointer": "0/star/downsampling_bam",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/downsampling.bam",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/star/{id}/{id}_downsampling.bam.bai'",
+                                    "merge_pointer": "0/star/downsampling_bam_index",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/downsampling.bam.bai",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+
+
+
+
+                                {
+                                    "parse_through": "lambda id: f'analysis/rseqc/{id}/{id}.stat_tmp.txt'",
+                                    "merge_pointer": "0/rseqc/stat_tmp",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/stat_tmp.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1                                    
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/rseqc/{id}/{id}_downsampling_housekeeping.bam'",
+                                    "merge_pointer": "0/rseqc/downsampling_housekeeping_bam",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/downsampling_housekeeping.bam",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1                                    
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/rseqc/{id}/{id}_downsampling_housekeeping.bam.bai'",
+                                    "merge_pointer": "0/rseqc/downsampling_housekeeping_bam_index",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/downsampling_housekeeping.bam.bai",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1                                    
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/rseqc/read_distrib/{id}/{id}.txt'",
+                                    "merge_pointer": "0/rseqc/read_distrib",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/read_distrib.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1                                    
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/rseqc/tin_score/{id}/{id}.summary.txt'",
+                                    "merge_pointer": "0/rseqc/tin_score_summary",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/tin_score.summary.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1                                    
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/rseqc/tin_score/{id}/{id}.tin_score.txt'",
+                                    "merge_pointer": "0/rseqc/tin_score",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/tin_score.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+
+
+
+                                {
+                                    "parse_through": "lambda id: f'analysis/salmon/{id}/quant.sf'",
+                                    "merge_pointer": "0/salmon/quant_sf",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/quant.sf",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/salmon/{id}/transcriptome.bam.log'",
+                                    "merge_pointer": "0/salmon/transcriptome_bam_log",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/transcriptome.bam.log",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/salmon/{id}/aux_info/ambig_info.tsv'",
+                                    "merge_pointer": "0/salmon/aux_info_ambig_info_tsv",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/aux_info_ambig_info.tsv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/salmon/{id}/aux_info/expected_bias.gz'",
+                                    "merge_pointer": "0/salmon/aux_info_expected_bias_gz",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/aux_info_expected_bias.gz",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/salmon/{id}/aux_info/fld.gz'",
+                                    "merge_pointer": "0/salmon/aux_info_fld_gz",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/aux_info_fld.gz",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/salmon/{id}/aux_info/meta_info.json'",
+                                    "merge_pointer": "0/salmon/aux_info_meta_info_json",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/aux_info_meta_info.json",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/salmon/{id}/aux_info/observed_bias.gz'",
+                                    "merge_pointer": "0/salmon/aux_info_observed_bias_gz",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/aux_info_observed_bias.gz",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/salmon/{id}/aux_info/observed_bias_3p.gz'",
+                                    "merge_pointer": "0/salmon/aux_info_observed_bias_3p_gz",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/aux_info_observed_bias_3p.gz",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/salmon/{id}/cmd_info.json'",
+                                    "merge_pointer": "0/salmon/cmd_info_json",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/cmd_info.json",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/salmon/{id}/logs/salmon_quant.log'",
+                                    "merge_pointer": "0/salmon/salmon_quant_log",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/salmon_quant.log",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

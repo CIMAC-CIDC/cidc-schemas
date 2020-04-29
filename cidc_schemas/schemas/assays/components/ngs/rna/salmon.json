@@ -1,0 +1,52 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "star",
+  "title": "RNAseq Star Output Files",
+  "type": "object",
+  "description": "Star output sample files.",
+  "properties": {
+      "quant_sf": {
+          "$ref": "artifacts/artifact_text.json"
+      },
+      "transcriptome_bam_log": {
+          "$ref": "artifacts/artifact_text.json"
+      },
+      "aux_info_ambig_info_tsv": {
+          "$ref": "artifacts/artifact_tsv.json"
+      },
+      "aux_info_expected_bias_gz": {
+          "$ref": "artifacts/artifact_gz.json"
+      },
+      "aux_info_fld_gz": {
+          "$ref": "artifacts/artifact_gz.json"
+      },
+      "aux_info_meta_info_json": {
+          "$ref": "artifacts/artifact_json.json"
+      },
+      "aux_info_observed_bias_gz": {
+          "$ref": "artifacts/artifact_gz.json"
+      },
+      "aux_info_observed_bias_3p_gz": {
+          "$ref": "artifacts/artifact_gz.json"
+      },
+      "cmd_info_json": {
+          "$ref": "artifacts/artifact_json.json"
+      },
+      "salmon_quant_log": {
+          "$ref": "artifacts/artifact_text.json"
+      }
+  },
+  "required": [
+    "quant_sf",
+    "transcriptome_bam_log",
+    "aux_info_ambig_info_tsv",
+    "aux_info_expected_bias_gz",
+    "aux_info_fld_gz",
+    "aux_info_meta_info_json",
+    "aux_info_observed_bias_gz",
+    "aux_info_observed_bias_3p_gz",
+    "cmd_info_json",
+    "salmon_quant_log"
+  ],
+  "additionalProperties": false
+}

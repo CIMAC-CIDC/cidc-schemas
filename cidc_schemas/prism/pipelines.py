@@ -1,8 +1,12 @@
 """Analysis pipeline configuration generators."""
+import csv
+import io
 
 from typing import List, NamedTuple, Dict, Callable
+from datetime import datetime
+from collections import defaultdict
 
-from ..util import load_pipeline_config_template
+from ..util import load_pipeline_config_template, participant_id_from_cimac
 
 
 def _wes_pipeline_config(
@@ -120,9 +124,50 @@ def _wes_pipeline_config(
     return internal
 
 
+def _csv2string(data):
+    si = io.StringIO()
+    cw = csv.writer(si)
+    cw.writerows(data)
+    return si.getvalue().strip("\r\n")
+
+
+RNA_METASHEET_KEYS = [
+    "cimac_id",
+    "collection_event_name",
+    "type_of_sample",
+    "processed_sample_derivative",
+]
+
+
+def _extract_sample_metadata(participants, records):
+    per_participant_cimac_ids = defaultdict(set)
+    for record in records:
+        cid = record["cimac_id"]
+        pid = participant_id_from_cimac(cid)
+
+        per_participant_cimac_ids[pid].add(cid)
+
+    all_participants = {
+        participant["cimac_participant_id"]: participant["samples"]
+        for participant in participants
+    }
+
+    sample_metadata = {}
+    # we expect to be guaranteed that all cimac_ids in the `patch` to be present
+    # in `full_ct` sample set, because they should have been created by previous manifest upload
+    for pid, cimac_ids_list in per_participant_cimac_ids.items():
+        for sample in all_participants[pid]:
+            cid = sample["cimac_id"]
+            if cid in cimac_ids_list:
+                sample_metadata[cid] = dict(sample)
+
+    return sample_metadata
+
+
 def _rnaseq_pipeline_config(full_ct: dict, patch: dict, bucket: str) -> Dict[str, str]:
     """
-        Generates a .yaml config for RNAseq pipeline 
+        Generates .yaml configs for RNAseq pipeline and a metasheet.csv with sampels metadata.
+        Returns a filename to file content map.
         
         Patch is expected to be already merged into full_ct.
     """
@@ -131,13 +176,39 @@ def _rnaseq_pipeline_config(full_ct: dict, patch: dict, bucket: str) -> Dict[str
 
     # as we know that `patch` is a prism result of a rna_fastq upload
     # we are sure these getitem calls should be fine
-    new_data = [r for assay in patch["assays"]["rna"] for r in assay["records"]]
+    # and that there should be just one rna assay
+    assay = patch["assays"]["rna"][0]
 
-    res = {}
-    for sample_data in new_data:
-        res[sample_data["cimac_id"] + ".yaml"] = templ.render(
-            BIOFX_BUCKET_NAME=bucket, **sample_data
+    dt = datetime.now().isoformat(timespec="minutes").replace(":", "-")
+
+    # now we collect metadata for every sample in the patch
+    sample_metadata = _extract_sample_metadata(
+        full_ct["participants"], assay["records"]
+    )
+
+    res = {
+        f"metasheet_{dt}.csv": _csv2string(
+            [RNA_METASHEET_KEYS]
+            + [[s.get(k) for k in RNA_METASHEET_KEYS] for s in sample_metadata.values()]
         )
+    }
+
+    # splitting samples from different participants into different runs
+    per_participant_records = defaultdict(list)
+    for record in assay["records"]:
+        pid = participant_id_from_cimac(record["cimac_id"])
+        per_participant_records[pid].append(record)
+
+    for pid, samples in per_participant_records.items():
+        config_str = templ.render(
+            BIOFX_BUCKET_NAME=bucket,
+            samples=samples,
+            paired_end_reads=assay["paired_end_reads"],
+            dt=dt,
+        )
+        # keying on participant id and date time, so if data for one participant
+        # comes in different uploads, those runs will be distinguishable
+        res[f"rna_pipeline_{pid}_{dt}.yaml"] = config_str
 
     return res
 

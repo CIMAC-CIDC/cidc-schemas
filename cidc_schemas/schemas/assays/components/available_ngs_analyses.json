@@ -9,6 +9,10 @@
   "properties": {
     "wes_analysis": {
       "$ref": "assays/components/ngs/wes/wes_analysis.json"
+    },
+    "rnaseq_analysis": {
+      "$ref": "assays/components/ngs/rna/rnaseq_analysis.json"
     }
+
   }
 }

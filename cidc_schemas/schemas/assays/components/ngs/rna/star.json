@@ -1,0 +1,80 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "star",
+  "title": "RNAseq Star Output Files",
+  "type": "object",
+  "description": "Star output sample files.",
+  "properties": {
+    "chimeric_out_junction": {
+      "$ref": "artifacts/artifact_text.json"
+    },
+    "log_final_out": {
+      "$ref": "artifacts/artifact_text.json"
+    },
+    "counts_tab": {
+      "$ref": "artifacts/artifact_text.json"
+    },
+    "sorted_bam": {
+      "$ref": "artifacts/artifact_bam.json"
+    },
+    "sorted_bam_index": {
+      "$ref": "artifacts/artifact_bam_bai.json"
+    },
+    "sorted_bam_stat_txt": {
+      "$ref": "artifacts/artifact_text.json"
+    },
+    "transcriptome_bam": {
+      "$ref": "artifacts/artifact_bam.json"
+    },
+    "unsorted_bam": {
+      "$ref": "artifacts/artifact_bam.json"
+    },
+    "log_out": {
+      "$ref": "artifacts/artifact_text.json"
+    },
+    "log_progress_out": {
+      "$ref": "artifacts/artifact_text.json"
+    },
+    "sj_out_tab": {
+      "$ref": "artifacts/artifact_text.json"
+    },
+    "star_genome_sjdb_info_txt": {
+      "$ref": "artifacts/artifact_text.json"
+    },
+    "star_genome_sjdb_list_out_tab": {
+      "$ref": "artifacts/artifact_text.json"
+    },
+    "star_pass1_log_final_out": {
+      "$ref": "artifacts/artifact_text.json"
+    },
+    "star_pass1_sj_out_tab": {
+      "$ref": "artifacts/artifact_text.json"
+    },
+    "downsampling_bam": {
+      "$ref": "artifacts/artifact_bam.json"
+    },
+    "downsampling_bam_index": {
+      "$ref": "artifacts/artifact_bam_bai.json"
+    }
+  },
+  "required": [
+    "chimeric_out_junction",
+    "log_final_out",
+    "counts_tab",
+    "sorted_bam",
+    "sorted_bam_index",
+    "sorted_bam_stat_txt",
+    "transcriptome_bam",
+    "unsorted_bam",
+    "log_out",
+    "log_progress_out",
+    "sj_out_tab",
+    "star_genome_sjdb_info_txt",
+    "star_genome_sjdb_list_out_tab",
+    "star_pass1_log_final_out",
+    "star_pass1_sj_out_tab",
+    "downsampling_bam",
+    "downsampling_bam_index"
+  ],
+  "additionalProperties": false
+}

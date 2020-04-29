@@ -1,0 +1,20 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "rnaseq_analysis",
+  "title": "RNAseq analysis combined files",
+  "type": "object",
+  "description": "Combined analysis files for the whole RNAseq assay.",
+  "additionalProperties": false,
+  "properties": {
+    "level_1": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/components/ngs/rna/rnaseq_level1_analysis.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "/cimac_id"
+      }
+    }
+  }
+}

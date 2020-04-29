@@ -14,22 +14,22 @@
       "aux_info_ambig_info_tsv": {
           "$ref": "artifacts/artifact_tsv.json"
       },
-      "aux_info_expected_bias_gz": {
+      "aux_info_expected_bias": {
           "$ref": "artifacts/artifact_gz.json"
       },
-      "aux_info_fld_gz": {
+      "aux_info_fld": {
           "$ref": "artifacts/artifact_gz.json"
       },
-      "aux_info_meta_info_json": {
+      "aux_info_meta_info": {
           "$ref": "artifacts/artifact_json.json"
       },
-      "aux_info_observed_bias_gz": {
+      "aux_info_observed_bias": {
           "$ref": "artifacts/artifact_gz.json"
       },
-      "aux_info_observed_bias_3p_gz": {
+      "aux_info_observed_bias_3p": {
           "$ref": "artifacts/artifact_gz.json"
       },
-      "cmd_info_json": {
+      "cmd_info": {
           "$ref": "artifacts/artifact_json.json"
       },
       "salmon_quant_log": {
@@ -40,12 +40,12 @@
     "quant_sf",
     "transcriptome_bam_log",
     "aux_info_ambig_info_tsv",
-    "aux_info_expected_bias_gz",
-    "aux_info_fld_gz",
-    "aux_info_meta_info_json",
-    "aux_info_observed_bias_gz",
-    "aux_info_observed_bias_3p_gz",
-    "cmd_info_json",
+    "aux_info_expected_bias",
+    "aux_info_fld",
+    "aux_info_meta_info",
+    "aux_info_observed_bias",
+    "aux_info_observed_bias_3p",
+    "cmd_info",
     "salmon_quant_log"
   ],
   "additionalProperties": false

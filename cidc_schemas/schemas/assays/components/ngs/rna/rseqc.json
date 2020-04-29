@@ -5,9 +5,6 @@
   "type": "object",
   "description": "Star output sample files.",
   "properties": {
-    "stat_tmp": {
-      "$ref": "artifacts/artifact_text.json"
-    },
     "downsampling_housekeeping_bam": {
       "$ref": "artifacts/artifact_bam.json"
     },
@@ -25,7 +22,6 @@
     }
   },
   "required": [
-    "stat_tmp",
     "downsampling_housekeeping_bam",
     "downsampling_housekeeping_bam_index",
     "read_distrib",

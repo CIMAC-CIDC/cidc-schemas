@@ -33,10 +33,12 @@ def test_format_validation_range():
     """Test validation information extraction for template fields"""
 
     res = _format_validation_range(10, 1, "data_dict_worksheet_name")
-    assert res == "'data_dict_worksheet_name'!B2:B11"  # 10 rows of the second column
+    assert (
+        res == "'data_dict_worksheet_name'!$B$2:$B$11"
+    )  # 10 rows of the second column
 
     res = _format_validation_range(2, 10, "data_dict_worksheet_name")
-    assert res == "'data_dict_worksheet_name'!K2:K3"  # 2 rows of the 10th column
+    assert res == "'data_dict_worksheet_name'!K$2:K$3"  # 2 rows of the 10th column
 
 
 def test_row_type_from_string():
@@ -59,5 +61,6 @@ def test_enum_validation_in_template(tiny_template, tmpdir):
         if v.type == "list":
             # checking enum in .xlsx
             assert (
-                str(v.formula1) == f"{XlTemplateWriter._data_dict_sheet_name!r}!D2:D3"
+                str(v.formula1)
+                == f"{XlTemplateWriter._data_dict_sheet_name!r}!$D$2:$D$3"
             )

@@ -139,6 +139,31 @@ RNA_METASHEET_KEYS = [
 ]
 
 
+def _extract_sample_metadata(full_ct, records):
+    per_participant_cimac_ids = defaultdict(set)
+    for record in records:
+        cid = record["cimac_id"]
+        pid = participant_id_from_cimac(cid)
+
+        per_participant_cimac_ids[pid].add(cid)
+
+    sample_metadata = {}
+
+    all_participants = {
+        participant["cimac_participant_id"]: participant["samples"]
+        for participant in full_ct["participants"]
+    }
+
+    # we expect to be guaranteed that all cimac_ids in the `patch` to be present
+    # in `full_ct` sample set, because they should have been created by previous manifest upload
+    for pid, cimac_ids_list in per_participant_cimac_ids.items():
+        for sample in all_participants[pid]:
+            if sample["cimac_id"] in cimac_ids_list:
+                sample_metadata[sample["cimac_id"]] = dict(sample)
+
+    return sample_metadata
+
+
 def _rnaseq_pipeline_config(full_ct: dict, patch: dict, bucket: str) -> Dict[str, str]:
     """
         Generates .yaml configs for RNAseq pipeline and a metasheet.csv with sampels metadata.
@@ -154,26 +179,10 @@ def _rnaseq_pipeline_config(full_ct: dict, patch: dict, bucket: str) -> Dict[str
     # and that there should be just one rna assay
     assay = patch["assays"]["rna"][0]
 
-    # splitting samples from different participants into different groups
-    per_participant_records = defaultdict(list)
-    per_participant_cimac_ids = defaultdict(set)
-    for record in assay["records"]:
-        pid = participant_id_from_cimac(record["cimac_id"])
-        per_participant_records[pid].append(record)
-        per_participant_cimac_ids[pid].add(record["cimac_id"])
-
     dt = datetime.now().isoformat(timespec="minutes").replace(":", "-")
 
-    # we expect to be guaranteed that all cimac_ids in the `patch` to be present
-    # in `full_ct` sample set, because they should have been created by previous manifest upload
-    sample_metadata = {}
-    for pid, cimac_ids_list in per_participant_cimac_ids.items():
-        for participant in full_ct["participants"]:
-            if pid == participant["cimac_participant_id"]:
-                for sample in participant["samples"]:
-                    if sample["cimac_id"] in cimac_ids_list:
-                        sample_metadata[sample["cimac_id"]] = dict(sample)
-                break
+    # now we collect metadata for every sample in the patch
+    sample_metadata = _extract_sample_metadata(full_ct, assay["records"])
 
     res = {
         f"metasheet_{dt}.csv": _csv2string(
@@ -181,6 +190,12 @@ def _rnaseq_pipeline_config(full_ct: dict, patch: dict, bucket: str) -> Dict[str
             + [[s.get(k) for k in RNA_METASHEET_KEYS] for s in sample_metadata.values()]
         )
     }
+
+    # splitting samples from different participants into different runs
+    per_participant_records = defaultdict(list)
+    for record in assay["records"]:
+        pid = participant_id_from_cimac(record["cimac_id"])
+        per_participant_records[pid].append(record)
 
     for pid, samples in per_participant_records.items():
         config_str = templ.render(

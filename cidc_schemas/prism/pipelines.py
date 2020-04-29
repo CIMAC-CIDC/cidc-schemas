@@ -164,7 +164,9 @@ def _extract_sample_metadata(participants, records):
     return sample_metadata
 
 
-def _rnaseq_pipeline_config(full_ct: dict, patch: dict, bucket: str) -> Dict[str, str]:
+def _rna_level1_pipeline_config(
+    full_ct: dict, patch: dict, bucket: str
+) -> Dict[str, str]:
     """
         Generates .yaml configs for RNAseq pipeline and a metasheet.csv with sampels metadata.
         Returns a filename to file content map.
@@ -172,7 +174,7 @@ def _rnaseq_pipeline_config(full_ct: dict, patch: dict, bucket: str) -> Dict[str
         Patch is expected to be already merged into full_ct.
     """
 
-    templ = load_pipeline_config_template("rnaseq_analysis_config")
+    templ = load_pipeline_config_template("rna_level1_analysis_config")
 
     # as we know that `patch` is a prism result of a rna_fastq upload
     # we are sure these getitem calls should be fine
@@ -220,8 +222,8 @@ _ANALYSIS_CONF_GENERATORS = {
     "wes_fastq": _wes_pipeline_config("assay"),
     "wes_bam": _wes_pipeline_config("assay"),
     "tumor_normal_pairing": _wes_pipeline_config("pairing"),
-    "rna_fastq": _rnaseq_pipeline_config,
-    "rna_bam": _rnaseq_pipeline_config,
+    "rna_fastq": _rna_level1_pipeline_config,
+    "rna_bam": _rna_level1_pipeline_config,
 }
 
 

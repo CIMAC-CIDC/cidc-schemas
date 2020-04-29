@@ -38,7 +38,7 @@ def test_format_validation_range():
     )  # 10 rows of the second column
 
     res = _format_validation_range(2, 10, "data_dict_worksheet_name")
-    assert res == "'data_dict_worksheet_name'!K$2:K$3"  # 2 rows of the 10th column
+    assert res == "'data_dict_worksheet_name'!$K$2:$K$3"  # 2 rows of the 10th column
 
 
 def test_row_type_from_string():

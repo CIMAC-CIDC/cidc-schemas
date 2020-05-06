@@ -69,6 +69,22 @@
       "description": "[TODO]",
       "type": "string"
     },
+    "specimen_collection_event_matrix": {
+      "description": "A list associating collection events with allowed sample types.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "collection_event": {
+            "type": "string"
+          },
+          "sample_types": {
+            "type": "array",
+            "item": { "type": "string" }
+          }
+        }
+      }
+    },
     "allowed_collection_event_names": {
       "description": "Allowed values for sample.json#properties/collection_event_name for this trial.",
       "type": "array",

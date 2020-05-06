@@ -97,14 +97,14 @@
 
 
                                 {
-                                    "parse_through": "lambda id: f'analysis/salmon/{id}/quant.sf'",
+                                    "parse_through": "lambda id: f'analysis/salmon/{id}/{id}.quant.sf'",
                                     "merge_pointer": "0/salmon/quant_sf",
                                     "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/quant.sf",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/salmon/{id}/transcriptome.bam.log'",
+                                    "parse_through": "lambda id: f'analysis/salmon/{id}/{id}.transcriptome.bam.log'",
                                     "merge_pointer": "0/salmon/transcriptome_bam_log",
                                     "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/transcriptome.bam.log",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",

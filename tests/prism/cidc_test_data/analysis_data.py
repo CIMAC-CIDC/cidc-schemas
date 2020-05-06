@@ -1140,13 +1140,13 @@ def rna_level1_analysis() -> PrismTestData:
                     metadata_availability=None,
                 ),
                 LocalFileUploadEntry(
-                    local_path=f"analysis/salmon/{cimac_id}/quant.sf",
+                    local_path=f"analysis/salmon/{cimac_id}/{cimac_id}.quant.sf",
                     gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/quant.sf",
                     upload_placeholder=f"24242424-2424-2424-2424-{cimac_id}",
                     metadata_availability=None,
                 ),
                 LocalFileUploadEntry(
-                    local_path=f"analysis/salmon/{cimac_id}/transcriptome.bam.log",
+                    local_path=f"analysis/salmon/{cimac_id}/{cimac_id}.transcriptome.bam.log",
                     gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/transcriptome.bam.log",
                     upload_placeholder=f"25252525-2525-2525-2525-{cimac_id}",
                     metadata_availability=None,

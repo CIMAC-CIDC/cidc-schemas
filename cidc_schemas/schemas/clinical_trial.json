@@ -30,21 +30,60 @@
       "description": "Name of the primary organization that oversees the clinical trial. Example: ECOG-ACRIN, SWOG, etc.",
       "type": "string"
     },
+    "grant_of_affiliated_network": {
+      "description": "[TODO]",
+      "type": "string"
+    },
+    "trial_status": {
+      "description": "Whether this trial is open to accrual or not.",
+      "type": "string",
+      "enum": ["Open", "Closed"]
+    },
+    "biobank": {
+      "description": "[TODO]",
+      "type": "string"
+    },
+    "lead_cimac_pi": {
+      "description": "[TODO]",
+      "type": "string"
+    },
+    "lead_cimac_contacts": {
+      "description": "A list of email contacts for this trial.",
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "lead_trial_staff": {
+      "description": "[TODO]",
+      "type": "string"
+    },
+    "justification": {
+      "description": "[TODO]",
+      "type": "string"
+    },
+    "schema": { "$ref": "artifacts/artifact_image.json" },
+    "biomarker_plan": {
+      "description": "[TODO]",
+      "type": "string"
+    },
+    "data_sharing_plan": {
+      "description": "[TODO]",
+      "type": "string"
+    },
     "allowed_collection_event_names": {
-        "description": "Allowed values for sample.json#properties/collection_event_name for this trial.",
-        "type": "array",
-        "$comment": "This works together with sample.json#properties/collection_event_name/in_doc_ref_pattern.",
-        "items": {
-            "type": "string"
-        }
+      "description": "Allowed values for sample.json#properties/collection_event_name for this trial.",
+      "type": "array",
+      "$comment": "This works together with sample.json#properties/collection_event_name/in_doc_ref_pattern.",
+      "items": {
+        "type": "string"
+      }
     },
     "allowed_cohort_names": {
-        "description": "Allowed values for sample.json#properties/cohort_name for this trial.",
-        "type": "array",
-        "$comment": "This works together with sample.json#properties/cohort_name/in_doc_ref_pattern.",
-        "items": {
-            "type": "string"
-        }
+      "description": "Allowed values for sample.json#properties/cohort_name for this trial.",
+      "type": "array",
+      "$comment": "This works together with sample.json#properties/cohort_name/in_doc_ref_pattern.",
+      "items": {
+        "type": "string"
+      }
     },
     "shipments": {
       "type": "array",
@@ -72,5 +111,10 @@
       "$ref": "assays/components/available_ngs_analyses.json"
     }
   },
-  "required": ["protocol_identifier", "participants", "allowed_cohort_names", "allowed_collection_event_names"]
+  "required": [
+    "protocol_identifier",
+    "participants",
+    "allowed_cohort_names",
+    "allowed_collection_event_names"
+  ]
 }

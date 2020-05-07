@@ -483,7 +483,7 @@ def test_prism_do_not_merge(monkeypatch):
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda comment, _: '{comment}_some_path.txt'",
+                                            "parse_through": "lambda comment, _: f'{comment}_some_path.txt'",
                                             "merge_pointer": "/artifact",
                                             "gcs_uri_format": "{id}/artifact.txt",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",

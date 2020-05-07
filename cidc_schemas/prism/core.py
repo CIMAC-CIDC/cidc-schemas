@@ -328,24 +328,17 @@ def _process_field_value(
             # Calculating new "raw" val.
             extra_fdef_raw_val = raw_val
 
-            if "parse_through" in extra_fdef:
-                raise Exception(
-                    "'parse_through' is not supported anymore, update template or contact CIDC team."
-                )
-                # Note: use str-based "format_through" instead
-
             # `eval` should be fine, as we're controlling the code argument in templates
-            if "format_through" in extra_fdef:
+            if "parse_through" in extra_fdef:
                 try:
-                    extra_fdef_raw_val = eval(
-                        f'f"{extra_fdef["format_through"]}"', format_context
+                    extra_fdef_raw_val = eval(extra_fdef["parse_through"])(
+                        raw_val, format_context
                     )
 
                 # catching everything, because of eval
                 except BaseException as e:
                     extra_field_key = extra_fdef["merge_pointer"].rsplit("/", 1)[-1]
-                    # raise ParsingException(
-                    raise Exception(
+                    raise ParsingException(
                         f"Cannot extract {extra_field_key} from {key} value: {raw_val!r}"
                     ) from e
 

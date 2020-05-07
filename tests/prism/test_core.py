@@ -365,7 +365,7 @@ def _tab_joining_template_schema() -> dict:
                                 "process_as": [
                                     {
                                         "merge_pointer": "2/author_id",
-                                        "parse_through": "lambda x: x[:4]",
+                                        "format_through": "{book id[:4]}",
                                         "type_ref": (
                                             author_pointer % "/properties/author_id"
                                         ),
@@ -439,7 +439,7 @@ def test_prism_joining_tabs(monkeypatch):
 
 
 def test_prism_process_as_error(monkeypatch):
-    """Tests that prismify doesn't crash when a `parse_through` function errors"""
+    """Tests that prismify doesn't crash when a `format_through` function errors"""
     mock_XlTemplateReader_from_excel(
         {
             "authors": [["#h", "author id"], ["#d", "CPP0"]],
@@ -483,7 +483,7 @@ def test_prism_do_not_merge(monkeypatch):
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda comment: f'{comment}_some_path.txt'",
+                                            "format_through": "{comment}_some_path.txt",
                                             "merge_pointer": "/artifact",
                                             "gcs_uri_format": "{id}/artifact.txt",
                                             "type_ref": "assays/components/local_file.json#properties/file_path",
@@ -548,14 +548,14 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda x: f'group/{x}_summary.txt'",
+                                            "format_through": "group/{group_id}_summary.txt",
                                             "merge_pointer": "/group_txt_file",
                                             "gcs_uri_format": "group/{group_id}/summary.txt",
                                             "type_ref": "test_schema.json#/definitions/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'group/{x}_summary.csv'",
+                                            "format_through": "group/{group_id}_summary.csv",
                                             "merge_pointer": "/group_csv_file",
                                             "gcs_uri_format": "group/{group_id}/summary.csv",
                                             "type_ref": "test_schema.json#/definitions/file_path",
@@ -568,14 +568,14 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda x: f'group/left_subgroup/{x}.txt'",
+                                            "format_through": "group/left_subgroup/{left_id}.txt",
                                             "merge_pointer": "/left_subgroup/left_txt_file",
                                             "gcs_uri_format": "group/{group_id}/left_subgroup/{left_id}.txt",
                                             "type_ref": "test_schema.json#/definitions/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'group/left_subgroup/{x}.csv'",
+                                            "format_through": "group/left_subgroup/{left_id}.csv",
                                             "merge_pointer": "/left_subgroup/left_csv_file",
                                             "gcs_uri_format": "group/{group_id}/left_subgroup/{left_id}.csv",
                                             "type_ref": "test_schema.json#/definitions/file_path",
@@ -588,14 +588,14 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
                                     "type": "string",
                                     "process_as": [
                                         {
-                                            "parse_through": "lambda x: f'group/right_subgroup/{x}.txt'",
+                                            "format_through": "group/right_subgroup/{right_id}.txt",
                                             "merge_pointer": "/right_subgroup/right_txt_file",
                                             "gcs_uri_format": "group/{group_id}/right_subgroup/{right_id}.txt",
                                             "type_ref": "test_schema.json#/definitions/file_path",
                                             "is_artifact": 1,
                                         },
                                         {
-                                            "parse_through": "lambda x: f'group/right_subgroup/{x}.csv'",
+                                            "format_through": "group/right_subgroup/{right_id}.csv",
                                             "merge_pointer": "/right_subgroup/right_csv_file",
                                             "gcs_uri_format": "group/{group_id}/right_subgroup/{right_id}.csv",
                                             "type_ref": "test_schema.json#/definitions/file_path",

@@ -923,9 +923,11 @@ def mif() -> PrismTestData:
         "assays": {
             "mif": [
                 {
+                    "panel": "Panel 1: PD-L1, CD68, PD-1, CD8, CD3, pan-cytokeratin, DAPI",
                     "antibodies": [
                         {
                             "antibody": "CD8",
+                            "export_name": "CD8 (Opal 540)",
                             "clone": "C8/144b",
                             "company": "DAKO",
                             "cat_num": "C8-ABC",
@@ -941,6 +943,7 @@ def mif() -> PrismTestData:
                         },
                         {
                             "antibody": "PD-L1",
+                            "export_name": "PD-L1 (Opal 620)",
                             "clone": "9A11",
                             "company": "CST",
                             "cat_num": "9A-ABC",

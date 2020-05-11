@@ -24,6 +24,16 @@
     "imaging_date": {"$ref": "assays/components/imaging_data.json#properties/imaging_date"},
     "imaging_status": {"$ref": "assays/components/imaging_data.json#properties/imaging_status"},
 
+    "panel": {
+      "type": "string",
+      "enum": [
+        "Panel 1: PD-L1, CD68, PD-1, CD8, CD3, pan-cytokeratin, DAPI",
+        "Panel 2: FOXP3, Granzyme B, CD45RO, CD8, CD3, pan-cytokeratin, DAPI",
+        "Panel 3: pan-cytokeratin, CD8, PD-1, PD-L1, DAPI",
+        "Panel 4: SOX10, CD8, PD-1, PD-L1, DAPI"
+      ]
+    },
+
     "records": {
       "type": "array",
       "description": "A single data record from mIF assay.",
@@ -46,6 +56,6 @@
       }
     }
   },
-  "required": ["records"],
+  "required": ["records", "panel"],
   "mergeStrategy": "objectMerge"
 }

@@ -349,6 +349,7 @@ def test_mif():
                     "cell_seg_data_summary": text,
                     "phenotype_map": image,
                     "score_data": [text],
+                    "score_data": [text],
                     "composite_image": image,
                     "im3": image,
                     "component_data": image,
@@ -359,6 +360,7 @@ def test_mif():
 
     # add a demo record.
     obj["records"] = [record]
+    obj["panel"] = "Panel 1: PD-L1, CD68, PD-1, CD8, CD3, pan-cytokeratin, DAPI"
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("mif")

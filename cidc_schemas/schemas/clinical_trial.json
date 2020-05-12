@@ -31,7 +31,7 @@
       "type": "string"
     },
     "grant_of_affiliated_network": {
-      "description": "[TODO]",
+      "description": "The primary organization providing grant funding and supporting the trial.",
       "type": "string"
     },
     "trial_status": {
@@ -40,33 +40,34 @@
       "enum": ["Open", "Closed"]
     },
     "biobank": {
-      "description": "[TODO]",
+      "description": "The primary organization responsible for storing biospecimens from this study.",
       "type": "string"
     },
-    "lead_cimac_pi": {
-      "description": "[TODO]",
-      "type": "string"
+    "lead_cimac_pis": {
+      "description": "The PI(s) from the CIMAC-CIDC network responsible for this study.",
+      "type": "array",
+      "items": { "type": "string" }
     },
     "lead_cimac_contacts": {
-      "description": "A list of email contacts for this trial.",
+      "description": "A list of contacts for this trial.",
       "type": "array",
       "items": { "type": "string" }
     },
     "lead_trial_staff": {
-      "description": "[TODO]",
+      "description": "The names of lead trial staff members other than the PIs.",
       "type": "string"
     },
     "justification": {
-      "description": "[TODO]",
+      "description": "A description of the reasons why this study could provide insight into molecular biomarkers of immunotherapy.",
       "type": "string"
     },
     "schema": { "$ref": "artifacts/artifact_image.json" },
     "biomarker_plan": {
-      "description": "[TODO]",
+      "description": "A description of the objectives and hypotheses for the proposed biomarkers.",
       "type": "string"
     },
     "data_sharing_plan": {
-      "description": "[TODO]",
+      "description": "A description of the rules governing data sharing and publications.",
       "type": "string"
     },
     "specimen_collection_event_matrix": {

@@ -35,9 +35,9 @@
       "type": "string"
     },
     "trial_status": {
-      "description": "Whether this trial is open to accrual or not.",
+      "description": "What stage the clinical trial is at in its process.",
       "type": "string",
-      "enum": ["Open", "Closed"]
+      "enum": ["New", "Ongoing", "Completed"]
     },
     "biobank": {
       "description": "The primary organization responsible for storing biospecimens from this study.",

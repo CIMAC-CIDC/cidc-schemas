@@ -50,6 +50,10 @@
           "imaging status": {
             "merge_pointer": "0/imaging_status",
             "type_ref": "assays/components/imaging_data.json#properties/imaging_status"
+          },
+          "panel": {
+            "merge_pointer": "0/panel",
+            "type_ref": "assays/mif_assay.json#properties/panel"
           }
         },
         "prism_data_object_pointer": "/records/0/files/regions_of_interest/-",
@@ -135,6 +139,10 @@
             "Antibody": {
               "merge_pointer": "0/antibody",
               "type_ref": "assays/components/antibody.json#properties/antibody"
+            },
+            "Export name": {
+              "merge_pointer": "0/export_name",
+              "type_ref": "assays/components/mif_antibody.json#properties/export_name"
             },
             "Clone": {
               "merge_pointer": "0/clone",

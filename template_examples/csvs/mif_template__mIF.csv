@@ -10,6 +10,7 @@
 "#p","Staining date","2001-01-01 00:00:00"
 "#p","Imaging date","2001-01-01 00:00:00"
 "#p","Imaging status","Yes"
+"#p","Panel","Panel 1: PD-L1, CD68, PD-1, CD8, CD3, pan-cytokeratin, DAPI"
 
 "","ROIs"
 "#h","Cimac id","Roi id","Score data files","Inform export prefix","Im3 file"

@@ -70,18 +70,19 @@
       "description": "A description of the rules governing data sharing and publications.",
       "type": "string"
     },
-    "specimen_collection_event_matrix": {
+    "collection_event_matrix": {
       "description": "A list associating collection events with allowed sample types.",
       "type": "array",
       "items": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "collection_event": {
             "type": "string"
           },
           "sample_types": {
             "type": "array",
-            "item": { "type": "string" }
+            "items": { "type": "string" }
           }
         }
       }

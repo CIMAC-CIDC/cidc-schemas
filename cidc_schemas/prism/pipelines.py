@@ -133,6 +133,7 @@ def _csv2string(data):
 
 RNA_METASHEET_KEYS = [
     "cimac_id",
+    "cimac_participant_id",
     "collection_event_name",
     "type_of_sample",
     "processed_sample_derivative",
@@ -159,7 +160,7 @@ def _extract_sample_metadata(participants, records):
         for sample in all_participants[pid]:
             cid = sample["cimac_id"]
             if cid in cimac_ids_list:
-                sample_metadata[cid] = dict(sample)
+                sample_metadata[cid] = dict(sample, cimac_participant_id=pid)
 
     return sample_metadata
 

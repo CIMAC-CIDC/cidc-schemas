@@ -29,7 +29,7 @@
         "Arm_A",
         "Arm_B",
         "Arm_C",
-        "Arm_D", 
+        "Arm_D",
         "Arm_E",
         "Arm_F",
         "Arm_G",
@@ -62,7 +62,7 @@
         "Arm_A": "E4412 or 10026",
         "Arm_B": "E4412 or 10026",
         "Arm_C": "E4412",
-        "Arm_D": "E4412", 
+        "Arm_D": "E4412",
         "Arm_E": "E4412",
         "Arm_F": "E4412",
         "Arm_G": "E4412",
@@ -90,8 +90,8 @@
       }
     },
     "essential_patient_entry_number": {
-        "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
-        "type": "integer"
+      "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
+      "type": "integer"
     },
     "gender": {
       "type": "string",
@@ -134,9 +134,5 @@
       }
     }
   },
-  "required": [
-    "cimac_participant_id",
-    "participant_id",
-    "cohort_name",
-    "samples"]
+  "required": ["cimac_participant_id", "participant_id", "samples"]
 }

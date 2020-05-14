@@ -30,7 +30,7 @@
       "description": "Name of the primary organization that oversees the clinical trial. Example: ECOG-ACRIN, SWOG, etc.",
       "type": "string"
     },
-    "grant_of_affiliated_network": {
+    "grant_or_affiliated_network": {
       "description": "The primary organization providing grant funding and supporting the trial.",
       "type": "string"
     },

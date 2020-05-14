@@ -183,9 +183,9 @@ def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, templ
 
             assert (
                 fcontent
-                == "cimac_id,collection_event_name,type_of_sample,processed_sample_derivative"
-                "\r\nCTTTPP122.00,Not_reported,Not Reported,"
-                "\r\nCTTTPP123.00,Not_reported,Not Reported,"
+                == "cimac_id,cimac_participant_id,collection_event_name,type_of_sample,processed_sample_derivative"
+                "\r\nCTTTPP122.00,CTTTPP1,Not_reported,Not Reported,"
+                "\r\nCTTTPP123.00,CTTTPP1,Not_reported,Not Reported,"
             )
 
         else:

@@ -79,9 +79,9 @@
               "type": "string",
               "process_as": [
                   {
-                      "parse_through": "lambda prefix: prefix + 'binary_seg_map.tif'",
-                      "merge_pointer": "0/binary_seg_map",
-                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/binary_seg_map.tif",
+                      "parse_through": "lambda prefix: prefix + 'binary_seg_maps.tif'",
+                      "merge_pointer": "0/binary_seg_maps",
+                      "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/binary_seg_maps.tif",
                       "type_ref": "assays/components/local_file.json#properties/file_path",
                       "is_artifact": 1
                   },

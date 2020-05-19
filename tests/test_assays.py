@@ -344,7 +344,7 @@ def test_mif():
         "files": {
             "regions_of_interest": [
                 {
-                    "binary_seg_map": image,
+                    "binary_seg_maps": image,
                     "cell_seg_data": text,
                     "cell_seg_data_summary": text,
                     "phenotype_map": image,
@@ -397,7 +397,7 @@ def test_micsss():
             "micsss_output_summary": csv,
             "Mapping Artifacts": [
                 {
-                    "binary_seg_map": image,
+                    "binary_seg_maps": image,
                     "cell_seg_data": text,
                     "cell_seg_data_summary": text,
                     "phenotype_map": image,

@@ -965,7 +965,7 @@ def mif() -> PrismTestData:
                                 "regions_of_interest": [
                                     {
                                         "roi_id": "1",
-                                        "binary_seg_map": {
+                                        "binary_seg_maps": {
                                             "upload_placeholder": "1aaaaaaa-047f-4df6-b614-871289a1a2a"
                                         },
                                         "cell_seg_data": {
@@ -1004,7 +1004,7 @@ def mif() -> PrismTestData:
                                 "regions_of_interest": [
                                     {
                                         "roi_id": "1",
-                                        "binary_seg_map": {
+                                        "binary_seg_maps": {
                                             "upload_placeholder": "1bbbbbbb-047f-4df6-b614-871289a1a2a"
                                         },
                                         "cell_seg_data": {
@@ -1033,7 +1033,7 @@ def mif() -> PrismTestData:
                                     },
                                     {
                                         "roi_id": "2",
-                                        "binary_seg_map": {
+                                        "binary_seg_maps": {
                                             "upload_placeholder": "1ccccccc-047f-4df6-b614-871289a1a2a"
                                         },
                                         "cell_seg_data": {
@@ -1080,8 +1080,8 @@ def mif() -> PrismTestData:
     }
     upload_entries = [
         LocalFileUploadEntry(
-            local_path="111/1_binary_seg_map.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/binary_seg_map.tif",
+            local_path="111/1_binary_seg_maps.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/binary_seg_maps.tif",
             upload_placeholder="1aaaaaaa-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
@@ -1134,8 +1134,8 @@ def mif() -> PrismTestData:
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="121/1_binary_seg_map.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/binary_seg_map.tif",
+            local_path="121/1_binary_seg_maps.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/binary_seg_maps.tif",
             upload_placeholder="2bbbbbbb-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),
@@ -1182,8 +1182,8 @@ def mif() -> PrismTestData:
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="121/2_binary_seg_map.tif",
-            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/binary_seg_map.tif",
+            local_path="121/2_binary_seg_maps.tif",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/binary_seg_maps.tif",
             upload_placeholder="2ccccccc-047f-4df6-b614-871289a1a2a",
             metadata_availability=None,
         ),

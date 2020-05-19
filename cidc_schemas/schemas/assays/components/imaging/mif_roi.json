@@ -13,7 +13,7 @@
         "type": "string"
     },
 
-    "binary_seg_map": {"$ref": "assays/components/mapping.json#properties/binary_seg_map" },
+    "binary_seg_maps": {"$ref": "assays/components/mapping.json#properties/binary_seg_maps" },
     "cell_seg_data": {"$ref": "assays/components/mapping.json#properties/cell_seg_data" },
     "cell_seg_data_summary": {"$ref": "assays/components/mapping.json#properties/cell_seg_data_summary" },
     "phenotype_map": {"$ref": "assays/components/mapping.json#properties/phenotype_map" },
@@ -25,7 +25,7 @@
   },
   "mergeStrategy": "objectMerge",
   "required": [
-    "binary_seg_map",
+    "binary_seg_maps",
     "cell_seg_data",
     "cell_seg_data_summary",
     "phenotype_map",

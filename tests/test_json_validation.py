@@ -161,12 +161,15 @@ def test_resolve_refs():
 
     # One level of nesting
     b = do_resolve("b.json")
-    assert b["properties"] == {"b_prop": {"c_prop": {"type": "string"}}}
+    assert b["properties"] == {
+        "b_prop": {"c_prop": {"type": "string"}},
+        "recursive_prop": {"$ref": "#/definitions/nested_arrays"},
+    }
 
     # Two levels of nesting with a local ref that should *not* have been resolved
     a = do_resolve("a.json")
     assert a["properties"] == {
-        "a_prop": b["properties"],
+        "a_prop": b["properties"]["b_prop"],
         "recursive_prop": {"$ref": "#/definitions/nested_arrays"},
     }
 
@@ -176,6 +179,25 @@ def test_resolve_refs():
 
     with pytest.raises(RefResolutionError, match="invalid_ref.json"):
         do_resolve("invalid_ref.json")
+
+
+def test_recursive_validations():
+    """Ensure that recursive ref validations work"""
+
+    a = do_resolve("a.json")
+    v = _Validator(a)
+
+    v.validate({"recursive_prop": [[[]]]})
+
+    with pytest.raises(
+        jsonschema.exceptions.ValidationError, match="is not of type 'array'"
+    ):
+        v.validate({"recursive_prop": [[[{}]]]})
+
+    with pytest.raises(
+        jsonschema.exceptions.ValidationError, match="1 is not of type 'array'"
+    ):
+        v.validate({"recursive_prop": [[[1]]]})
 
 
 def test_get_values_for_path_pattern():

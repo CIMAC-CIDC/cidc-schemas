@@ -159,10 +159,16 @@ def do_resolve(schema_path):
 def test_resolve_refs():
     """Ensure that ref resolution can handle nested refs"""
 
+    c = do_resolve("c.json")
+
     # One level of nesting
     b = do_resolve("b.json")
     assert b["properties"] == {
-        "b_prop": {"c_prop": {"type": "string"}},
+        "b_prop": {
+            "properties": {"c_prop": {"type": "string"}},
+            "type": "object",
+            "additionalProperties": False,
+        },
         "recursive_prop": {"$ref": "#/definitions/nested_arrays"},
     }
 
@@ -181,8 +187,9 @@ def test_resolve_refs():
 def test_recursive_validations():
     """Ensure that recursive ref validations work"""
 
-    a = do_resolve("a.json")
-    v = _Validator(a)
+    v = load_and_validate_schema(
+        "a.json", schema_root=TEST_SCHEMA_DIR, return_validator=True
+    )
 
     v.validate({"recursive_prop": [[[]]]})
 

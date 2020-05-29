@@ -24,10 +24,11 @@ def _fetch_validator(name):
 
     schema_root = SCHEMA_DIR
     schema_path = os.path.join(SCHEMA_DIR, "%s.json" % name)
-    schema = load_and_validate_schema(schema_path, schema_root)
+    validator = load_and_validate_schema(
+        schema_path, schema_root, return_validator=True
+    )
 
-    # create validator assert schemas are valid.
-    return jsonschema.Draft7Validator(schema)
+    return validator
 
 
 def _sim_olink():

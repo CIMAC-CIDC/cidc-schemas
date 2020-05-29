@@ -151,11 +151,9 @@ def test_trial_core():
 
 
 def do_resolve(schema_path):
-    base_uri = f"file://{TEST_SCHEMA_DIR}/"
-
     with open(os.path.join(TEST_SCHEMA_DIR, schema_path)) as f:
         spec = json.load(f)
-        return _resolve_refs(base_uri, spec, schema_path)
+        return _resolve_refs(TEST_SCHEMA_DIR, spec, schema_path)
 
 
 def test_resolve_refs():

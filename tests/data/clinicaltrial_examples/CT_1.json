@@ -1,413 +1,536 @@
 {
-    "protocol_identifier": "10021",
-    "allowed_collection_event_names": [
-        "Baseline"
-    ],
-    "allowed_cohort_names": [
-        "Arm_Z"
-    ],
-    "participants": [
+  "protocol_identifier": "10021",
+  "allowed_collection_event_names": ["Baseline"],
+  "allowed_cohort_names": ["Arm_Z"],
+  "collection_event_list": [
+    {
+      "event_name": "Baseline",
+      "specimen_types": [
         {
-            "cimac_participant_id": "CTTTPP1",
-            "participant_id": "trial.PA.1",
-            "cohort_name": "Arm_Z",
-            "samples": [
-                {
-                    "cimac_id": "CTTTPP1S1.00",
-                    "parent_sample_id": "SA.1.1",
-                    "collection_event_name": "Baseline",
-                    "sample_location": "---",
-                    "type_of_sample": "Other",
-                    "type_of_primary_container": "Other",
-                    "sample_volume_units": "Other",
-                    "material_used": 1,
-                    "material_remaining": 0,
-                    "quality_of_sample": "Other",
-                    "aliquots": [
-                        {
-                            "slide_number": "1",
-                            "aliquot_replacement": "N/A",
-                            "aliquot_status": "Other"
-                        }
-                    ] 
-                }, 
-                {
-                    "cimac_id": "CTTTPP1S2.00",
-                    "parent_sample_id": "SA.1.2",
-                    "collection_event_name": "Baseline",
-                    "sample_location": "---",
-                    "type_of_sample": "Other",
-                    "type_of_primary_container": "Other",
-                    "sample_volume_units": "Other",
-                    "material_used": 1,
-                    "material_remaining": 0,
-                    "quality_of_sample": "Other",
-                    "aliquots": [
-                        {
-                            "slide_number": "1",
-                            "aliquot_replacement": "N/A",
-                            "aliquot_status": "Other"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "cimac_participant_id": "CTTTPP2",
-            "participant_id": "trial.PA.2",
-            "cohort_name": "Arm_Z",
-            "samples": [
-                {
-                    "cimac_id": "CTTTPP2S1.00",
-                    "parent_sample_id": "SA.2.1",
-                    "collection_event_name": "Baseline",
-                    "sample_location": "---",
-                    "type_of_sample": "Other",
-                    "type_of_primary_container": "Other",
-                    "sample_volume_units": "Other",
-                    "material_used": 1,
-                    "material_remaining": 0,
-                    "quality_of_sample": "Other",
-                    "aliquots": [
-                        {
-                            "slide_number": "1",
-                            "aliquot_replacement": "N/A",
-                            "aliquot_status": "Other"
-                        }
-                    ]
-                },
-                {
-                    "cimac_id": "CTTTPP2S2.00",
-                    "parent_sample_id": "SA.2.2",
-                    "collection_event_name": "Baseline",
-                    "sample_location": "---",
-                    "type_of_sample": "Other",
-                    "type_of_primary_container": "Other",
-                    "sample_volume_units": "Other",
-                    "material_used": 1,
-                    "material_remaining": 0,
-                    "quality_of_sample": "Other",
-                    "aliquots": [
-                        {
-                            "slide_number": "1",
-                            "aliquot_replacement": "N/A",
-                            "aliquot_status": "Other"
-                        }
-                    ]
-                }
-            ]
+          "specimen_type": "Whole Blood",
+          "derivatives": [
+            { "specimen_type": "Plasma", "intended_assays": ["CyTOF"] },
+            { "specimen_type": "PBMC", "intended_assays": ["Olink"] }
+          ]
         }
-    ],
-    "assays": {
-        "olink": {
-            "assay_creator": "Mount Sinai",
-            "panel": "ol_panel_1",
-            "study": {
-                "npx_manager_version": "ol_npx_v1",
-                "study_npx": {
-                    "file_name" :           "...",
-                    "object_url" :          "...",
-                    "uploaded_timestamp" :  "...",
-                    "file_size_bytes" :     0,
-                    "md5_hash" :            "...",
-                    "artifact_category" :   "Assay Artifact from CIMAC",
-                    "data_format" :           "NPX",
-                    "number_of_samples":   6,
-                    "samples": ["CTTTPP2S2.01", "CTTTPP1S1.01", "CTTTPP2S1.01", "CTTTPP2S2.00", "CTTTPP1S1.00", "CTTTPP2S1.00"]
-                }
-            },
-            "records": [
+      ]
+    },
+    {
+      "event_name": "Week7",
+      "specimen_types": [
+        {
+          "specimen_type": "Whole Blood",
+          "derivatives": [
+            {
+              "specimen_type": "Plasma",
+              "intended_assays": ["CyTOF"],
+              "derivatives": [
                 {
-                    "number_of_samples": 88,
-                    "npx_manager_version": "ol_npx_v1",
-                    "files": {
-                        "assay_npx": {
-                            "file_name" :           "...",
-                            "object_url" :          "...",
-                            "uploaded_timestamp" :  "...",
-                            "file_size_bytes" :     0,
-                            "md5_hash" :            "...",
-                            "artifact_category" :   "Assay Artifact from CIMAC",
-                            "data_format" :           "NPX",
-                            "number_of_samples":   3,
-                            "samples": ["CTTTPP2S2.01", "CTTTPP1S1.01", "CTTTPP2S1.01"]
-                        },
-                        "assay_raw_ct": {
-                            "file_name" :           "...",
-                            "object_url" :          "...",
-                            "uploaded_timestamp" :  "...",
-                            "file_size_bytes" :     0,
-                            "md5_hash" :            "...",
-                            "artifact_category" :   "Assay Artifact from CIMAC",
-                            "data_format" :         "CSV"
-                        }
-                    }
-                }, 
-                {
-                    "number_of_samples": 45,
-                    "npx_manager_version": "ol_npx_v1",
-                    "files": {
-                        "assay_npx": {
-                            "file_name" :           "...",
-                            "object_url" :          "...",
-                            "uploaded_timestamp" :  "...",
-                            "file_size_bytes" :     0,
-                            "md5_hash" :            "...",
-                            "artifact_category" :   "Assay Artifact from CIMAC",
-                            "data_format" :           "NPX",
-                            "number_of_samples":   3,
-                            "samples": ["CTTTPP2S2.00", "CTTTPP1S1.00", "CTTTPP2S1.00"]
-                        },
-                        "assay_raw_ct": {
-                            "file_name" :           "...",
-                            "object_url" :          "...",
-                            "uploaded_timestamp" :  "...",
-                            "file_size_bytes" :     0,
-                            "md5_hash" :            "...",
-                            "artifact_category" :   "Assay Artifact from CIMAC",
-                            "data_format" :         "CSV"
-                        }
-                    }
+                  "specimen_type": "DNA",
+                  "intended_assays": ["WES"]
                 }
-            ]
-        },
-        "wes": [
-            {
-                "assay_creator": "Mount Sinai",
-                "paired_end_reads": "Paired",
-                "read_length": 100,
-                "sequencer_platform": "Illumina - HiSeq 3000",
-                "library_kit": "Hyper Prep ICE Exome Express: 1.0",
-                "sequencing_protocol": "Express Somatic Human WES (Deep Coverage) v1.1",
-                "bait_set": "whole_exome_illumina_coding_v1",
-                "records": [
-                    {
-                        "cimac_id":          "CTTTPP1S1.00",
-                        "sequencing_date": "...",
-                        "quality_flag": 1,
-                        "files": {
-                            "r1": [{
-                                    "file_name" :           "...",
-                                    "object_url" :          "...",
-                                    "uploaded_timestamp" :  "...",
-                                    "file_size_bytes" :     0,
-                                    "md5_hash" :            "...",
-                                    "artifact_category" :   "Assay Artifact from CIMAC",
-                                    "data_format":          "FASTQ.GZ"
-                            }],
-                            "r2": [{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format":          "FASTQ.GZ"
-                            }]
-                        }
-                    },
-                    {
-                        "cimac_id":          "CTTTPP1S2.00",
-                        "sequencing_date": "...",
-                        "quality_flag": 1,
-                        "files": {
-                            "bam": [{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "BAM"
-                            }]
-                        }
-                    }
-                ]
+              ]
             },
-            {
-                "assay_creator": "Mount Sinai",
-                "paired_end_reads": "Paired",
-                "read_length": 100,
-                "sequencer_platform": "Illumina - HiSeq 3000",
-                "library_kit": "Hyper Prep ICE Exome Express: 1.0",
-                "sequencing_protocol": "Express Somatic Human WES (Deep Coverage) v1.1",
-                "bait_set": "whole_exome_illumina_coding_v1",
-                "records": [
-                    {
-                        "cimac_id":          "CTTTPP2S1.00",
-                        "sequencing_date": "...",
-                        "quality_flag": 1,
-                        "files": {
-                            "r1": [{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ.GZ"
-                            }],
-                            "r2": [{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ.GZ"
-                            }]
-                        }
-                    },
-                    {
-                        "cimac_id":          "CTTTPP2S2.00",
-                        "sequencing_date": "...",
-                        "quality_flag": 1,
-                        "files": {
-                            "r1": [{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ.GZ"
-                            }],
-                            "r2": [{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ.GZ"
-                            }]
-                        }
-                    }
-                ]
-            }
-        ],
-        "rna": [
-            {
-                "assay_creator": "Mount Sinai",
-                "paired_end_reads": "Paired",
-                "enrichment_method": "Ribo minus",
-                "enrichment_vendor_kit": "Agilent",
-                "sequencer_platform": "Illumina - HiSeq 3000",
-                "records": [
-                    {
-                        "cimac_id":          "CTTTPP1S1.00",
-                        "library_yield_ng": 666,
-                        "dv200": 0.7,
-                        "rqs": 8,
-                        "rin": 8,
-                        "quality_flag": 1,
-                        "files": {
-                            "r1": [{
-                                    "file_name" :           "...",
-                                    "object_url" :          "...",
-                                    "uploaded_timestamp" :  "...",
-                                    "file_size_bytes" :     0,
-                                    "md5_hash" :            "...",
-                                    "artifact_category" :   "Assay Artifact from CIMAC",
-                                    "data_format":          "FASTQ.GZ"
-                            }],
-                            "r2": [{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format":          "FASTQ.GZ"
-                            }]
-                        }
-                    },
-                    {
-                        "cimac_id":          "CTTTPP1S2.00",
-                        "library_yield_ng": 666,
-                        "dv200": 0.7,
-                        "rqs": 8,
-                        "rin": 8,
-                        "quality_flag": 1,
-                        "files": {
-                            "bam": [{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "BAM"
-                            }]
-                        }
-                    }
-                ]
-            },
-            {
-                "assay_creator": "Mount Sinai",
-                "paired_end_reads": "Paired",
-                "enrichment_method": "Ribo minus",
-                "enrichment_vendor_kit": "Agilent",
-                "sequencer_platform": "Illumina - HiSeq 3000",
-                "records": [
-                    {
-                        "cimac_id":          "CTTTPP2S1.00",
-                        "library_yield_ng": 666,
-                        "dv200": 0.7,
-                        "rqs": 8,
-                        "rin": 8,
-                        "quality_flag": 1,
-                        "files": {
-                            "r1": [{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ.GZ"
-                            }],
-                            "r2": [{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ.GZ"
-                            }]
-                        }
-                    },
-                    {
-                        "cimac_id":          "CTTTPP2S2.00",
-                        "quality_flag": 1,
-                        "library_yield_ng": 666,
-                        "dv200": 0.7,
-                        "rqs": 8,
-                        "rin": 8,
-                        "files": {
-                            "r1": [{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ.GZ"
-                            }],
-                            "r2": [{
-                                "file_name" :           "...",
-                                "object_url" :          "...",
-                                "uploaded_timestamp" :  "...",
-                                "file_size_bytes" :     0,
-                                "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC",
-                                "data_format" :           "FASTQ.GZ"
-                            }]
-                        }
-                    }
-                ]
-            }
-        ]
+            { "specimen_type": "PBMC", "intended_assays": ["Olink"] }
+          ]
+        }
+      ]
     }
+  ],
+  "participants": [
+    {
+      "cimac_participant_id": "CTTTPP1",
+      "participant_id": "trial.PA.1",
+      "cohort_name": "Arm_Z",
+      "samples": [
+        {
+          "cimac_id": "CTTTPP1S1.00",
+          "parent_sample_id": "SA.1.1",
+          "collection_event_name": "Baseline",
+          "sample_location": "---",
+          "type_of_sample": "Other",
+          "type_of_primary_container": "Other",
+          "sample_volume_units": "Other",
+          "material_used": 1,
+          "material_remaining": 0,
+          "quality_of_sample": "Other",
+          "aliquots": [
+            {
+              "slide_number": "1",
+              "aliquot_replacement": "N/A",
+              "aliquot_status": "Other"
+            }
+          ]
+        },
+        {
+          "cimac_id": "CTTTPP1S1.01",
+          "parent_sample_id": "SA.1.1",
+          "collection_event_name": "Baseline",
+          "sample_location": "---",
+          "type_of_sample": "Other",
+          "type_of_primary_container": "Other",
+          "sample_volume_units": "Other",
+          "material_used": 1,
+          "material_remaining": 0,
+          "quality_of_sample": "Other",
+          "aliquots": [
+            {
+              "slide_number": "1",
+              "aliquot_replacement": "N/A",
+              "aliquot_status": "Other"
+            }
+          ]
+        },
+        {
+          "cimac_id": "CTTTPP1S2.00",
+          "parent_sample_id": "SA.1.2",
+          "collection_event_name": "Baseline",
+          "sample_location": "---",
+          "type_of_sample": "Other",
+          "type_of_primary_container": "Other",
+          "sample_volume_units": "Other",
+          "material_used": 1,
+          "material_remaining": 0,
+          "quality_of_sample": "Other",
+          "aliquots": [
+            {
+              "slide_number": "1",
+              "aliquot_replacement": "N/A",
+              "aliquot_status": "Other"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cimac_participant_id": "CTTTPP2",
+      "participant_id": "trial.PA.2",
+      "cohort_name": "Arm_Z",
+      "samples": [
+        {
+          "cimac_id": "CTTTPP2S1.00",
+          "parent_sample_id": "SA.2.1",
+          "collection_event_name": "Baseline",
+          "sample_location": "---",
+          "type_of_sample": "Other",
+          "type_of_primary_container": "Other",
+          "sample_volume_units": "Other",
+          "material_used": 1,
+          "material_remaining": 0,
+          "quality_of_sample": "Other",
+          "aliquots": [
+            {
+              "slide_number": "1",
+              "aliquot_replacement": "N/A",
+              "aliquot_status": "Other"
+            }
+          ]
+        },
+        {
+          "cimac_id": "CTTTPP2S1.01",
+          "parent_sample_id": "SA.2.1",
+          "collection_event_name": "Baseline",
+          "sample_location": "---",
+          "type_of_sample": "Other",
+          "type_of_primary_container": "Other",
+          "sample_volume_units": "Other",
+          "material_used": 1,
+          "material_remaining": 0,
+          "quality_of_sample": "Other",
+          "aliquots": [
+            {
+              "slide_number": "1",
+              "aliquot_replacement": "N/A",
+              "aliquot_status": "Other"
+            }
+          ]
+        },
+        {
+          "cimac_id": "CTTTPP2S2.00",
+          "parent_sample_id": "SA.2.2",
+          "collection_event_name": "Baseline",
+          "sample_location": "---",
+          "type_of_sample": "Other",
+          "type_of_primary_container": "Other",
+          "sample_volume_units": "Other",
+          "material_used": 1,
+          "material_remaining": 0,
+          "quality_of_sample": "Other",
+          "aliquots": [
+            {
+              "slide_number": "1",
+              "aliquot_replacement": "N/A",
+              "aliquot_status": "Other"
+            }
+          ]
+        },
+        {
+          "cimac_id": "CTTTPP2S2.01",
+          "parent_sample_id": "SA.2.2",
+          "collection_event_name": "Baseline",
+          "sample_location": "---",
+          "type_of_sample": "Other",
+          "type_of_primary_container": "Other",
+          "sample_volume_units": "Other",
+          "material_used": 1,
+          "material_remaining": 0,
+          "quality_of_sample": "Other",
+          "aliquots": [
+            {
+              "slide_number": "1",
+              "aliquot_replacement": "N/A",
+              "aliquot_status": "Other"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "assays": {
+    "olink": {
+      "assay_creator": "Mount Sinai",
+      "panel": "ol_panel_1",
+      "study": {
+        "npx_manager_version": "ol_npx_v1",
+        "study_npx": {
+          "file_name": "...",
+          "object_url": "...",
+          "uploaded_timestamp": "...",
+          "file_size_bytes": 0,
+          "md5_hash": "...",
+          "artifact_category": "Assay Artifact from CIMAC",
+          "data_format": "NPX",
+          "number_of_samples": 6,
+          "samples": [
+            "CTTTPP2S2.01",
+            "CTTTPP1S1.01",
+            "CTTTPP2S1.01",
+            "CTTTPP2S2.00",
+            "CTTTPP1S1.00",
+            "CTTTPP2S1.00"
+          ]
+        }
+      },
+      "records": [
+        {
+          "number_of_samples": 88,
+          "npx_manager_version": "ol_npx_v1",
+          "files": {
+            "assay_npx": {
+              "file_name": "...",
+              "object_url": "...",
+              "uploaded_timestamp": "...",
+              "file_size_bytes": 0,
+              "md5_hash": "...",
+              "artifact_category": "Assay Artifact from CIMAC",
+              "data_format": "NPX",
+              "number_of_samples": 3,
+              "samples": ["CTTTPP2S2.01", "CTTTPP1S1.01", "CTTTPP2S1.01"]
+            },
+            "assay_raw_ct": {
+              "file_name": "...",
+              "object_url": "...",
+              "uploaded_timestamp": "...",
+              "file_size_bytes": 0,
+              "md5_hash": "...",
+              "artifact_category": "Assay Artifact from CIMAC",
+              "data_format": "CSV"
+            }
+          }
+        },
+        {
+          "number_of_samples": 45,
+          "npx_manager_version": "ol_npx_v1",
+          "files": {
+            "assay_npx": {
+              "file_name": "...",
+              "object_url": "...",
+              "uploaded_timestamp": "...",
+              "file_size_bytes": 0,
+              "md5_hash": "...",
+              "artifact_category": "Assay Artifact from CIMAC",
+              "data_format": "NPX",
+              "number_of_samples": 3,
+              "samples": ["CTTTPP2S2.00", "CTTTPP1S1.00", "CTTTPP2S1.00"]
+            },
+            "assay_raw_ct": {
+              "file_name": "...",
+              "object_url": "...",
+              "uploaded_timestamp": "...",
+              "file_size_bytes": 0,
+              "md5_hash": "...",
+              "artifact_category": "Assay Artifact from CIMAC",
+              "data_format": "CSV"
+            }
+          }
+        }
+      ]
+    },
+    "wes": [
+      {
+        "assay_creator": "Mount Sinai",
+        "paired_end_reads": "Paired",
+        "read_length": 100,
+        "sequencer_platform": "Illumina - HiSeq 3000",
+        "library_kit": "Hyper Prep ICE Exome Express: 1.0",
+        "sequencing_protocol": "Express Somatic Human WES (Deep Coverage) v1.1",
+        "bait_set": "whole_exome_illumina_coding_v1",
+        "records": [
+          {
+            "cimac_id": "CTTTPP1S1.00",
+            "sequencing_date": "...",
+            "quality_flag": 1,
+            "files": {
+              "r1": [
+                {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "...",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "FASTQ.GZ"
+                }
+              ],
+              "r2": [
+                {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "...",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "FASTQ.GZ"
+                }
+              ]
+            }
+          },
+          {
+            "cimac_id": "CTTTPP1S2.00",
+            "sequencing_date": "...",
+            "quality_flag": 1,
+            "files": {
+              "bam": [
+                {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "...",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "BAM"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "assay_creator": "Mount Sinai",
+        "paired_end_reads": "Paired",
+        "read_length": 100,
+        "sequencer_platform": "Illumina - HiSeq 3000",
+        "library_kit": "Hyper Prep ICE Exome Express: 1.0",
+        "sequencing_protocol": "Express Somatic Human WES (Deep Coverage) v1.1",
+        "bait_set": "whole_exome_illumina_coding_v1",
+        "records": [
+          {
+            "cimac_id": "CTTTPP2S1.00",
+            "sequencing_date": "...",
+            "quality_flag": 1,
+            "files": {
+              "r1": [
+                {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "...",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "FASTQ.GZ"
+                }
+              ],
+              "r2": [
+                {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "...",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "FASTQ.GZ"
+                }
+              ]
+            }
+          },
+          {
+            "cimac_id": "CTTTPP2S2.00",
+            "sequencing_date": "...",
+            "quality_flag": 1,
+            "files": {
+              "r1": [
+                {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "...",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "FASTQ.GZ"
+                }
+              ],
+              "r2": [
+                {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "...",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "FASTQ.GZ"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "rna": [
+      {
+        "assay_creator": "Mount Sinai",
+        "paired_end_reads": "Paired",
+        "enrichment_method": "Ribo minus",
+        "enrichment_vendor_kit": "Agilent",
+        "sequencer_platform": "Illumina - HiSeq 3000",
+        "records": [
+          {
+            "cimac_id": "CTTTPP1S1.00",
+            "library_yield_ng": 666,
+            "dv200": 0.7,
+            "rqs": 8,
+            "rin": 8,
+            "quality_flag": 1,
+            "files": {
+              "r1": [
+                {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "...",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "FASTQ.GZ"
+                }
+              ],
+              "r2": [
+                {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "...",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "FASTQ.GZ"
+                }
+              ]
+            }
+          },
+          {
+            "cimac_id": "CTTTPP1S2.00",
+            "library_yield_ng": 666,
+            "dv200": 0.7,
+            "rqs": 8,
+            "rin": 8,
+            "quality_flag": 1,
+            "files": {
+              "bam": [
+                {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "...",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "BAM"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "assay_creator": "Mount Sinai",
+        "paired_end_reads": "Paired",
+        "enrichment_method": "Ribo minus",
+        "enrichment_vendor_kit": "Agilent",
+        "sequencer_platform": "Illumina - HiSeq 3000",
+        "records": [
+          {
+            "cimac_id": "CTTTPP2S1.00",
+            "library_yield_ng": 666,
+            "dv200": 0.7,
+            "rqs": 8,
+            "rin": 8,
+            "quality_flag": 1,
+            "files": {
+              "r1": [
+                {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "...",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "FASTQ.GZ"
+                }
+              ],
+              "r2": [
+                {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "...",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "FASTQ.GZ"
+                }
+              ]
+            }
+          },
+          {
+            "cimac_id": "CTTTPP2S2.00",
+            "quality_flag": 1,
+            "library_yield_ng": 666,
+            "dv200": 0.7,
+            "rqs": 8,
+            "rin": 8,
+            "files": {
+              "r1": [
+                {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "...",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "FASTQ.GZ"
+                }
+              ],
+              "r2": [
+                {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "...",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "FASTQ.GZ"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
 }

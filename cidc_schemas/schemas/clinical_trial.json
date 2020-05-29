@@ -70,22 +70,10 @@
       "description": "A description of the rules governing data sharing and publications.",
       "type": "string"
     },
-    "collection_event_matrix": {
+    "collection_event_list": {
       "description": "A list associating collection events with allowed sample types.",
       "type": "array",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "collection_event": {
-            "type": "string"
-          },
-          "sample_types": {
-            "type": "array",
-            "items": { "type": "string" }
-          }
-        }
-      }
+      "items": { "$ref": "collection_event.json" }
     },
     "allowed_collection_event_names": {
       "description": "Allowed values for sample.json#properties/collection_event_name for this trial.",

@@ -168,13 +168,14 @@ def test_resolve_refs():
             "properties": {"c_prop": {"type": "string"}},
             "type": "object",
             "additionalProperties": False,
+            "$schema": "http://json-schema.org/draft-07/schema#",
         },
         "recursive_prop": {"$ref": "#/definitions/nested_arrays"},
     }
 
     # Two levels of nesting with a local ref that should *not* have been resolved
     a = do_resolve("a.json")
-    assert a["properties"] == b["properties"]
+    assert a["properties"]["a_prop"] == b
 
     # Two levels of nesting across different directories
     one = do_resolve("1.json")
@@ -191,17 +192,17 @@ def test_recursive_validations():
         "a.json", schema_root=TEST_SCHEMA_DIR, return_validator=True
     )
 
-    v.validate({"recursive_prop": [[[]]]})
+    v.validate({"a_prop": {"recursive_prop": [[[]]]}})
 
     with pytest.raises(
         jsonschema.exceptions.ValidationError, match="is not of type 'array'"
     ):
-        v.validate({"recursive_prop": [[[{}]]]})
+        v.validate({"a_prop": {"recursive_prop": [[[{}]]]}})
 
     with pytest.raises(
         jsonschema.exceptions.ValidationError, match="1 is not of type 'array'"
     ):
-        v.validate({"recursive_prop": [[[1]]]})
+        v.validate({"a_prop": {"recursive_prop": [[[1]]]}})
 
 
 def test_get_values_for_path_pattern():

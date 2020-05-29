@@ -9,9 +9,7 @@
   },
   "properties": {
     "b_prop": {
-      "additionalProperties": false,
-      "type": "object",
-      "properties": {"$ref": "c.json#properties"}
+       "$ref": "c.json"
     },
     "recursive_prop": {
       "$ref": "#/definitions/nested_arrays"

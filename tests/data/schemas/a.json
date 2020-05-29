@@ -1,17 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": {
-    "nested_arrays": {
-      "type": "array",
-      "items": { "$ref": "#/definitions/nested_arrays" }
-    }
-  },
+  "$id": "a.json",
+  "additionalProperties": false,
+  "type": "object",
   "properties": {
     "a_prop": {
-      "$ref": "b.json#properties"
-    },
-    "recursive_prop": {
-      "$ref": "#/definitions/nested_arrays"
+      "$ref": "b.json"
     }
   }
 }

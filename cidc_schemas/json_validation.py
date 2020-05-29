@@ -259,22 +259,33 @@ def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
     return node
 
 
-def _resolve_refs(base_uri: str, json_spec: dict, context: str) -> dict:
+def _build_ref_resolver(
+    schema_root: str, schema_instance: dict
+) -> jsonschema.RefResolver:
+    base_uri = f"file://{schema_root}/"
+    return jsonschema.RefResolver(base_uri, schema_instance)
+
+
+def _resolve_refs(schema_root: str, json_spec: dict, context: str) -> dict:
     """
     Resolve JSON Schema references in `json_spec` relative to `base_uri`,
     return `json_spec` with all references inlined. `context` is used to
     format error to provide (wait for it) context.
     """
-    resolver = jsonschema.RefResolver(base_uri, json_spec)
+    resolver = _build_ref_resolver(schema_root, json_spec)
 
     def _resolve_ref(ref: str) -> dict:
+        # Don't resolve local refs, since this would make loading recursive schemas impossible.
+        if ref.startswith("#"):
+            return {"$ref": ref}
+
         with resolver.resolving(ref) as resolved_spec:
             # resolved_spec might have unresolved refs in it, so we pass
             # it back to _resolve_refs to resolve them. This way,
             # we can fully resolve schemas with nested refs.
 
             try:
-                res = _resolve_refs(base_uri, resolved_spec, ref)
+                res = _resolve_refs(schema_root, resolved_spec, ref)
             except RefResolutionError as e:
                 raise RefResolutionError(f"Error resolving '$ref':{ref!r}: {e}") from e
 
@@ -308,7 +319,6 @@ def _load_dont_validate_schema(
     # Load schema with resolved $refs
     schema_path = os.path.join(schema_root, schema_path)
     with open(schema_path) as schema_file:
-        base_uri = f"file://{schema_root}/"
         try:
             json_spec = json.load(schema_file)
         except Exception as e:
@@ -316,7 +326,7 @@ def _load_dont_validate_schema(
         if on_refs:
             schema = _map_refs(json_spec, on_refs)
         else:
-            schema = _resolve_refs(base_uri, json_spec, schema_path)
+            schema = _resolve_refs(schema_root, json_spec, schema_path)
 
     return schema
 
@@ -331,7 +341,6 @@ def load_and_validate_schema(
     return_validator: bool = False,
     on_refs: Optional[Callable[[dict], dict]] = None,
 ) -> Union[dict, jsonschema.Draft7Validator]:
-
     schema = _load_dont_validate_schema(schema_path, schema_root, on_refs)
 
     # Ensure schema is valid
@@ -341,7 +350,9 @@ def load_and_validate_schema(
     if not return_validator:
         return schema
     else:
-        return _Validator(schema)
+        validator = _Validator(schema)
+        validator.resolver = _build_ref_resolver(schema_root, schema)
+        return validator
 
 
 # Warm up the cache with a full clinical trial validator

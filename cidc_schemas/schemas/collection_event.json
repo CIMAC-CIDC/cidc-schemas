@@ -1,0 +1,42 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "collection_event.json",
+  "description": "Defines a collection event and its biospecimen type hierarchy.",
+  "additionalProperties": false,
+  "type": "object",
+  "definitions": {
+    "specimen_type": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "specimen_type": {
+          "$comment": "The name of this specimen type",
+          "type": "string"
+        },
+        "derivatives": {
+          "$comment": "The derivate specimen types for this specimen type (e.g., plasma is derived from whole blood).",
+          "type": "array",
+          "items": { "$ref": "#/definitions/specimen_type" }
+        },
+        "intended_assays": {
+          "$comment": "The assay(s) with which this biospecimen will be analyzed.",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "comments": { "type": "string" }
+      },
+      "required": ["specimen_type"]
+    }
+  },
+  "properties": {
+    "event_name": {
+      "$comment": "The name of this collection event",
+      "type": "string"
+    },
+    "specimen_types": {
+      "$comment": "The array of root specimen types associated with this collection event",
+      "type": "array",
+      "items": { "$ref": "#/definitions/specimen_type" }
+    }
+  }
+}

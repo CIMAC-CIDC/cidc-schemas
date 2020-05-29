@@ -168,10 +168,7 @@ def test_resolve_refs():
 
     # Two levels of nesting with a local ref that should *not* have been resolved
     a = do_resolve("a.json")
-    assert a["properties"] == {
-        "a_prop": b["properties"]["b_prop"],
-        "recursive_prop": {"$ref": "#/definitions/nested_arrays"},
-    }
+    assert a["properties"] == b["properties"]
 
     # Two levels of nesting across different directories
     one = do_resolve("1.json")

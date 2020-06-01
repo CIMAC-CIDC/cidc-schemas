@@ -17,6 +17,7 @@
     "cidc_participant_id": {
       "type": "string",
       "in_doc_ref_pattern": "/participants/*/cidc_participant_id",
+      "pattern": "^CIDC-\\w+-\\w+$",
       "example": "CIDC-Trial101-e1b2c3",
       "description": "The generated, CIDC-internal identifier for this participant."
     },

@@ -13,6 +13,13 @@
             "example": "CTTTP01A1.00",
             "type": "string"
         },
+        "cidc_id": {
+            "type": "string",
+            "in_doc_ref_pattern": "/participants/*/samples/*/cidc_id",
+            "pattern": "^CIDC-\\w+-\\w+-\\w+$",
+            "example": "CIDC-Trial101-e1b2c3-a7b",
+            "description": "The generated, CIDC-internal identifier for this sample."
+        },
         "shipping_entry_number": {
             "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
             "type": "integer"

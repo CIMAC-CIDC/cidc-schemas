@@ -14,6 +14,12 @@
       "example": "CTTTP01",
       "description": "Participant identifier assigned by the CIMAC-CIDC Network. Formated as: C??????."
     },
+    "cidc_participant_id": {
+      "type": "string",
+      "in_doc_ref_pattern": "/participants/*/cidc_participant_id",
+      "example": "CIDC-Trial101-e1b2c3",
+      "description": "The generated, CIDC-internal identifier for this participant."
+    },
     "participant_id": {
       "type": "string",
       "description": "Trial Participant Identifier.",

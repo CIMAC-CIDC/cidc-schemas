@@ -113,8 +113,8 @@ def _wes_pipeline_config(
                 res[run.run_id + ".yaml"] = templ.render(
                     **{
                         "run_id": run.run_id,
-                        "tumor_sample": all_wes_records[run.normal_cimac_id],
-                        "normal_sample": all_wes_records[run.tumor_cimac_id],
+                        "tumor_sample": all_wes_records[run.tumor_cimac_id],
+                        "normal_sample": all_wes_records[run.normal_cimac_id],
                         "BIOFX_BUCKET_NAME": bucket,
                     }
                 )

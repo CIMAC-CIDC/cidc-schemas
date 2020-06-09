@@ -46,7 +46,7 @@ metasheet:
     normal: {{normal_sample.cimac_id}}
 
 # unique instance name
-instance_name: "{{run_id}}"
+instance_name: "{{run_id|lower|replace(".", "-")}}"
 # NOTE: "wes-auto" will automatically be prepended to this string
 
 # Number of cores for the wes instance

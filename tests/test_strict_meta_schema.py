@@ -27,13 +27,7 @@ def test_valid_simple_schema():
 
 
 def test_valid_custom_prism_keywords_schema():
-    check_valid(
-        {
-            "type": "string",
-            "in_doc_ref_pattern": "whatever",
-            "enum_comments": {"something": "else"},
-        }
-    )
+    check_valid({"type": "string", "in_doc_ref_pattern": "whatever"})
 
 
 def test_valid_base_schema():

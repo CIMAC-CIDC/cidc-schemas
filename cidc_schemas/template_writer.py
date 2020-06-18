@@ -219,15 +219,6 @@ class XlTemplateWriter:
         if not len(enum):
             raise Exception(f"Enum {name} with no options detected:\n{prop_schema}")
 
-        comments = prop_schema.get("enum_comments", {})
-
-        for i, enum_value in enumerate(enum):
-            ws.write(1 + i, col_n, enum_value)
-            if comments and enum_value in comments and comments[enum_value]:
-                ws.write_comment(
-                    1 + i, col_n, comments[enum_value], XlThemes.COMMENT_THEME
-                )
-
         return len(enum)
 
     def _write_legend(self, schemas):

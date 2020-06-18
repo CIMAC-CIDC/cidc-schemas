@@ -428,10 +428,6 @@
                 "Not Reported",
                 "Other"
             ]
-        },
-        "intended_assay": {
-            "type": "string",
-            "description": "The assay that this sample is expected to be used as input for."
         }
     },
 

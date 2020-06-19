@@ -122,7 +122,9 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
         conf = yaml.load(conf)
 
         assert len(conf["metasheet"]) == 1  # one run
-
+        assert (
+            conf["instance_name"] == "ctttpp111-00"
+        )  # run ID but lowercase & hyphenated
         assert len(conf["samples"]) == 2  # tumor and normal
         for sample in conf["samples"].values():
             assert len(sample) > 0  # at lease one data file per sample

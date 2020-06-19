@@ -69,75 +69,7 @@
             "description": "Categorical description of timepoint at which the sample was taken.",
             "type": "string",
             "in_doc_ref_pattern": "/allowed_collection_event_names/*",
-            "$comment": "This enum lists a union of all possible values from all supported trials at the moment. Options are further limited by `in_doc_ref_pattern`.",
-            "enum": [
-                "Baseline",
-                
-                "Pre_Day_1_Cycle_2",
-                "Restaging",
-                "Off_study",
-                
-                "Cycle_2_Week_3",
-                "Cycle_4_Week_7",
-                "Cycle_5_Week_9",
-
-                "Cycle_3",
-                "End_of_treatment",
-
-                "Pre_PD1_therapy",
-                "On_Treatment",
-                "Week_5",
-                "Week_7",
-
-                "Response",
-                "Relapse",
-                "Day_8",
-                "Cycle_2_Day_1",
-
-                "T0",
-                "T1",
-                "T2",
-                "T3",
-                "T4",
-                "T5",
-                "T6",
-                "End_of_Treatment",
-                "Progression",
-                
-                "Other",
-                "Not_reported"
-            ],
-            "enum_comments": {
-                "Pre_Day_1_Cycle_2": "E4412",
-                "Restaging": "E4412",
-                "Off_study": "E4412",
-                
-                "Cycle_2_Week_3": "S1400I",
-                "Cycle_4_Week_7": "S1400I",
-                "Cycle_5_Week_9": "S1400I",
-                "Progression": "S1400I, 10021",
-
-                "Cycle_3": "EAY131-Z1D",
-                "End_of_treatment": "EAY131-Z1D, 10026",
-
-                "Response": "9204",
-                "Relapse": "9204",
-                "Day_8": "9204",
-                "Cycle_2_Day_1": "9204",
-
-                "T0": "10026",
-                "T1": "10026",
-                "T2": "10026",
-                "T3": "10026",
-                "T4": "10026",
-                "T5": "10026",
-                "T6": "10026",
-
-                "Pre_PD1_therapy" : "10021",
-                "On_Treatment" : "10021",
-                "Week_5": "10021",
-                "Week_7": "10021"
-            }
+            "$comment": "Values in this field are validated dynamically by `in_doc_ref_pattern`."
         },
         "sample_location": {
             "description": "Sample location within the shipping container. Example: A1.",

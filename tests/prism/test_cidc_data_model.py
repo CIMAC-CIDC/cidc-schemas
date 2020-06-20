@@ -26,7 +26,7 @@ def ct_validator():
 def assert_metadata_matches(received: dict, expected: dict, upload_entries: list):
     """Check that the `received` metadata dict matches the `expected` metadata dict."""
     # Take the difference of the received patch and the expected patch.
-    # We expect these patchs to differ by upload placeholder UUID only,
+    # We expect these patches to differ by upload placeholder UUID only,
     # so the number of differences should equal the number of expected
     # upload entries.
     diff = DeepDiff(expected, received)

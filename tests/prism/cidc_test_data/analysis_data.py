@@ -522,7 +522,7 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/metrics/CTTTPP111.00/CTTTPP111.00_target_metrics.txt.sample_summary.txt",
+            local_path="analysis/metrics/CTTTPP111.00/CTTTPP111.00_target_metrics.sample_summary.txt",
             gs_key="test_prism_trial_id/wes/run_1/analysis/tumor/CTTTPP111.00/target_metrics_summary.txt",
             upload_placeholder="0c0f2c9d-8f75-4b04-8a21-c97b4110de79",
             metadata_availability=None,
@@ -600,7 +600,7 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/metrics/CTTTPP111.00/CTTTPP111.00_target_metrics.txt.sample_summary.txt",
+            local_path="analysis/metrics/CTTTPP111.00/CTTTPP111.00_target_metrics.sample_summary.txt",
             gs_key="test_prism_trial_id/wes/run_1/analysis/normal/CTTTPP111.00/target_metrics_summary.txt",
             upload_placeholder="d99b7fed-0501-4177-85e5-a0a57b051eff",
             metadata_availability=None,
@@ -786,7 +786,7 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/metrics/CTTTPP121.00/CTTTPP121.00_target_metrics.txt.sample_summary.txt",
+            local_path="analysis/metrics/CTTTPP121.00/CTTTPP121.00_target_metrics.sample_summary.txt",
             gs_key="test_prism_trial_id/wes/run_2/analysis/tumor/CTTTPP121.00/target_metrics_summary.txt",
             upload_placeholder="3dd1b2c5-d5bd-44cc-b994-32cba3cab5d4",
             metadata_availability=None,
@@ -864,7 +864,7 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/metrics/CTTTPP121.00/CTTTPP121.00_target_metrics.txt.sample_summary.txt",
+            local_path="analysis/metrics/CTTTPP121.00/CTTTPP121.00_target_metrics.sample_summary.txt",
             gs_key="test_prism_trial_id/wes/run_2/analysis/normal/CTTTPP121.00/target_metrics_summary.txt",
             upload_placeholder="cd4af4a4-da0d-4af9-b443-b5c15f85189b",
             metadata_availability=None,

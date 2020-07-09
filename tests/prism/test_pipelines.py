@@ -142,10 +142,10 @@ def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, templ
     full_ct = get_test_trial(
         [
             "CTTTPP111.00",
-            "CTTTPP121.00",
             "CTTTPP122.00",
-            "CTTTPP121.00",
             "CTTTPP123.00",
+            "CTTTPP221.00",
+            "CTTTPP222.00",
         ],
         assays={"rna": []},
     )

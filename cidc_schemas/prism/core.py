@@ -341,12 +341,11 @@ def _process_field_value(
                     )(raw_val)
 
                 # catching everything, because of eval
-                except BaseException as e:
+                except:
                     extra_field_key = extra_fdef["merge_pointer"].rsplit("/", 1)[-1]
-                    raise Exception(
-                        # raise ParsingException(
+                    raise ParsingException(
                         f"Cannot extract {extra_field_key} from {key} value: {raw_val!r}"
-                    ) from e
+                    )
 
             # recursive call
             extra_changes, extra_files = _process_field_value(

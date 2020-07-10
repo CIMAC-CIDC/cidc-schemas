@@ -2,6 +2,7 @@
 
 import json
 import logging
+from hashlib import sha224
 from typing import Any, List, NamedTuple, Tuple, Union, Optional
 
 from cidc_schemas.json_validation import load_and_validate_schema
@@ -280,6 +281,10 @@ class _AtomicChange(NamedTuple):
     value: Any
 
 
+def _encrypt(obj):
+    return sha224(str(obj).encode()).hexdigest()
+
+
 def _process_field_value(
     key: str, raw_val, field_def: dict, format_context: dict
 ) -> Tuple[List[_AtomicChange], List[LocalFileUploadEntry]]:
@@ -331,14 +336,17 @@ def _process_field_value(
             # `eval` should be fine, as we're controlling the code argument in templates
             if "parse_through" in extra_fdef:
                 try:
-                    extra_fdef_raw_val = eval(extra_fdef["parse_through"])(raw_val)
+                    extra_fdef_raw_val = eval(
+                        extra_fdef["parse_through"], {"encrypt": _encrypt}
+                    )(raw_val)
 
                 # catching everything, because of eval
-                except:
+                except BaseException as e:
                     extra_field_key = extra_fdef["merge_pointer"].rsplit("/", 1)[-1]
-                    raise ParsingException(
+                    raise Exception(
+                        # raise ParsingException(
                         f"Cannot extract {extra_field_key} from {key} value: {raw_val!r}"
-                    )
+                    ) from e
 
             # recursive call
             extra_changes, extra_files = _process_field_value(

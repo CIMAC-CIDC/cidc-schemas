@@ -41,7 +41,11 @@ def assert_metadata_matches(received: dict, expected: dict, upload_entries: list
         assert diff == {}
 
 
-def test_prismify(prism_test: PrismTestData):
+def test_prismify(prism_test: PrismTestData, monkeypatch):
+    monkeypatch.setattr(
+        "cidc_schemas.prism.core._encrypt", lambda x: f"encrypt({repr(str(x))})"
+    )
+
     # Run prismify on the given test case
     patch, upload_entries, errs = prismify(*prism_test.prismify_args)
 

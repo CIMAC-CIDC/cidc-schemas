@@ -4,6 +4,8 @@ TODO: some of these tests currently use the CIDC data model, but they
 should probably use an unrelated test data model instead.
 """
 import os
+import base64
+import hmac
 from unittest.mock import MagicMock
 from collections import namedtuple
 
@@ -190,6 +192,75 @@ def test_prismify_preamble_parsing_error(monkeypatch):
 
     _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
     assert isinstance(errs[0], prism.ParsingException)
+
+
+def test_encrypt():
+    with pytest.raises(Exception, match="initialized"):
+        core._encrypt("x")
+
+    assert not core._encrypt_hmac
+
+    core.set_encrypt_key("key")
+
+    with pytest.raises(Exception, match="twice"):
+        core.set_encrypt_key("key")
+
+    assert core._encrypt_hmac
+
+    d = hmac.new(b"key", msg=b"", digestmod="SHA512").digest()
+    assert core._encrypt("") == base64.b64encode(d)[:32].decode()
+    assert core._encrypt("") == "hPpaoCebvEcyZ9BaU+oDMQqYfOzEwVNf"
+
+
+def test_prismify_encrypt(monkeypatch):
+    """Check that prismify catches parsing errors in the pre"""
+    prop = "prop0"
+    mock_XlTemplateReader_from_excel({"ws1": [["#p", prop, "some str"]]}, monkeypatch)
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    template = build_mock_Template(
+        {
+            "title": "parse error",
+            "prism_template_root_object_schema": "test_schema.json",
+            "properties": {
+                "worksheets": {
+                    "ws1": {
+                        "prism_preamble_object_schema": "test_schema.json",
+                        "prism_preamble_object_pointer": "#",
+                        "prism_data_object_pointer": "/files/-",
+                        "preamble_rows": {
+                            prop: {
+                                "do_not_merge": True,
+                                "allow_empty": True,
+                                "type": "string",
+                                "process_as": [
+                                    {
+                                        "merge_pointer": "/file_path",
+                                        "type": "string",
+                                        "parse_through": "encrypt",
+                                    }
+                                ],
+                            }
+                        },
+                    }
+                }
+            },
+        },
+        "test_preamble_parsing_error",
+        monkeypatch,
+    )
+
+    _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
+    assert len(errs) == 1
+    assert str(errs[0]) == f'Cannot extract file_path from {prop} value: {"some str"!r}'
+
+    core.set_encrypt_key("key")
+
+    patch, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
+    assert not errs
+    d = hmac.new(b"key", msg=b"some str", digestmod="SHA512").digest()
+    assert patch == {"file_path": base64.b64encode(d)[:32].decode()}
 
 
 def test_prism_local_files_format_extension(monkeypatch):

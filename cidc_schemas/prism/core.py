@@ -2,7 +2,8 @@
 
 import json
 import logging
-from hashlib import sha224
+import base64
+import hmac
 from typing import Any, List, NamedTuple, Tuple, Union, Optional
 
 from cidc_schemas.json_validation import load_and_validate_schema
@@ -281,8 +282,30 @@ class _AtomicChange(NamedTuple):
     value: Any
 
 
+_encrypt_hmac = None
+
+
+def set_encrypt_key(key):
+    global _encrypt_hmac
+    if _encrypt_hmac != None:
+        raise Exception("attempt to set_encrypt_key twice")
+
+    _encrypt_hmac = hmac.new(str(key).encode(), digestmod="SHA512")
+
+
+def _get_encrypt_hmac():
+    return _encrypt_hmac.copy()
+
+
 def _encrypt(obj):
-    return sha224(str(obj).encode()).hexdigest()
+    if not _encrypt_hmac:
+        raise Exception(
+            "encrypt is not initialized. set_encrypt_key should be called before"
+        )
+
+    h = _get_encrypt_hmac()
+    h.update(str(obj).encode())
+    return (base64.b64encode(h.digest()))[:32].decode()
 
 
 def _process_field_value(
@@ -341,7 +364,7 @@ def _process_field_value(
                     )(raw_val)
 
                 # catching everything, because of eval
-                except:
+                except Exception as e:
                     extra_field_key = extra_fdef["merge_pointer"].rsplit("/", 1)[-1]
                     raise ParsingException(
                         f"Cannot extract {extra_field_key} from {key} value: {raw_val!r}"

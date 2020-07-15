@@ -285,10 +285,10 @@ class _AtomicChange(NamedTuple):
 _encrypt_hmac = None
 
 
-def set_encrypt_key(key):
+def set_prism_encrypt_key(key):
     global _encrypt_hmac
     if _encrypt_hmac != None:
-        raise Exception("attempt to set_encrypt_key twice")
+        raise Exception("attempt to set_prism_encrypt_key twice")
 
     _encrypt_hmac = hmac.new(str(key).encode(), digestmod="SHA512")
 
@@ -300,7 +300,7 @@ def _get_encrypt_hmac():
 def _encrypt(obj):
     if not _encrypt_hmac:
         raise Exception(
-            "encrypt is not initialized. set_encrypt_key should be called before"
+            "encrypt is not initialized. set_prism_encrypt_key should be called before"
         )
 
     h = _get_encrypt_hmac()

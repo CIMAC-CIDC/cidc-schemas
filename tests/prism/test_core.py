@@ -204,10 +204,10 @@ def test_encrypt():
 
     assert not core._encrypt_hmac
 
-    core.set_encrypt_key("key")
+    core.set_prism_encrypt_key("key")
 
     with pytest.raises(Exception, match="twice"):
-        core.set_encrypt_key("key")
+        core.set_prism_encrypt_key("key")
 
     assert core._encrypt_hmac
 
@@ -263,7 +263,7 @@ def test_prismify_encrypt(monkeypatch):
     assert len(errs) == 1
     assert str(errs[0]) == f'Cannot extract file_path from {prop} value: {"some str"!r}'
 
-    core.set_encrypt_key("key")
+    core.set_prism_encrypt_key("key")
 
     patch, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
     assert not errs

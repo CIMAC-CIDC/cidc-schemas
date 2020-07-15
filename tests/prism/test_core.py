@@ -195,6 +195,10 @@ def test_prismify_preamble_parsing_error(monkeypatch):
 
 
 def test_encrypt():
+
+    # setup
+    core._encrypt_hmac = None
+
     with pytest.raises(Exception, match="initialized"):
         core._encrypt("x")
 
@@ -213,7 +217,11 @@ def test_encrypt():
 
 
 def test_prismify_encrypt(monkeypatch):
-    """Check that prismify catches parsing errors in the pre"""
+    """Check that prismify can encrypt private values"""
+
+    # setup
+    core._encrypt_hmac = None
+
     prop = "prop0"
     mock_XlTemplateReader_from_excel({"ws1": [["#p", prop, "some str"]]}, monkeypatch)
     xlsx, errs = XlTemplateReader.from_excel("workbook")

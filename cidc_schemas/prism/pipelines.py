@@ -7,6 +7,7 @@ from datetime import datetime
 from collections import defaultdict
 
 from ..util import load_pipeline_config_template, participant_id_from_cimac
+from .constants import PROTOCOL_ID_FIELD_NAME
 
 
 def _wes_pipeline_config(
@@ -175,6 +176,8 @@ def _rna_level1_pipeline_config(
         Patch is expected to be already merged into full_ct.
     """
 
+    tid = full_ct[PROTOCOL_ID_FIELD_NAME]
+
     templ = load_pipeline_config_template("rna_level1_analysis_config")
 
     # as we know that `patch` is a prism result of a rna_fastq upload
@@ -190,28 +193,21 @@ def _rna_level1_pipeline_config(
     )
 
     res = {
-        f"metasheet_{dt}.csv": _csv2string(
+        f"metasheet_{tid}_{dt}.csv": _csv2string(
             [RNA_METASHEET_KEYS]
             + [[s.get(k) for k in RNA_METASHEET_KEYS] for s in sample_metadata.values()]
         )
     }
 
-    # splitting samples from different participants into different runs
-    per_participant_records = defaultdict(list)
-    for record in assay["records"]:
-        pid = participant_id_from_cimac(record["cimac_id"])
-        per_participant_records[pid].append(record)
-
-    for pid, samples in per_participant_records.items():
-        config_str = templ.render(
-            BIOFX_BUCKET_NAME=bucket,
-            samples=samples,
-            paired_end_reads=assay["paired_end_reads"],
-            dt=dt,
-        )
-        # keying on participant id and date time, so if data for one participant
-        # comes in different uploads, those runs will be distinguishable
-        res[f"rna_pipeline_{pid}_{dt}.yaml"] = config_str
+    config_str = templ.render(
+        BIOFX_BUCKET_NAME=bucket,
+        samples=assay["records"],
+        paired_end_reads=assay["paired_end_reads"],
+        dt=dt,
+    )
+    # keying on participant id and date time, so if data for one participant
+    # comes in different uploads, those runs will be distinguishable
+    res[f"rna_pipeline_{tid}_{dt}.yaml"] = config_str
 
     return res
 

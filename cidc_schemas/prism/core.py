@@ -2,6 +2,8 @@
 
 import json
 import logging
+import base64
+import hmac
 from typing import Any, List, NamedTuple, Tuple, Union, Optional
 
 from cidc_schemas.json_validation import load_and_validate_schema
@@ -280,6 +282,32 @@ class _AtomicChange(NamedTuple):
     value: Any
 
 
+_encrypt_hmac = None
+
+
+def set_prism_encrypt_key(key):
+    global _encrypt_hmac
+    if _encrypt_hmac != None:
+        raise Exception("attempt to set_prism_encrypt_key twice")
+
+    _encrypt_hmac = hmac.new(str(key).encode(), digestmod="SHA512")
+
+
+def _get_encrypt_hmac():
+    return _encrypt_hmac.copy()
+
+
+def _encrypt(obj):
+    if not _encrypt_hmac:
+        raise Exception(
+            "encrypt is not initialized. set_prism_encrypt_key should be called before"
+        )
+
+    h = _get_encrypt_hmac()
+    h.update(str(obj).encode())
+    return (base64.b64encode(h.digest()))[:32].decode()
+
+
 def _process_field_value(
     key: str, raw_val, field_def: dict, format_context: dict
 ) -> Tuple[List[_AtomicChange], List[LocalFileUploadEntry]]:
@@ -331,10 +359,12 @@ def _process_field_value(
             # `eval` should be fine, as we're controlling the code argument in templates
             if "parse_through" in extra_fdef:
                 try:
-                    extra_fdef_raw_val = eval(extra_fdef["parse_through"])(raw_val)
+                    extra_fdef_raw_val = eval(
+                        extra_fdef["parse_through"], {"encrypt": _encrypt}
+                    )(raw_val)
 
                 # catching everything, because of eval
-                except:
+                except Exception as e:
                     extra_field_key = extra_fdef["merge_pointer"].rsplit("/", 1)[-1]
                     raise ParsingException(
                         f"Cannot extract {extra_field_key} from {key} value: {raw_val!r}"

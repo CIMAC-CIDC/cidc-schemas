@@ -1,4 +1,9 @@
-from .core import prismify, ParsingException, LocalFileUploadEntry
+from .core import (
+    prismify,
+    ParsingException,
+    LocalFileUploadEntry,
+    set_prism_encrypt_key,
+)
 from .merger import (
     merge_artifact,
     merge_artifact_extra_metadata,

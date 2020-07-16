@@ -94,6 +94,8 @@
             
         
             
+        
+            
                 <tr>
     <td>
         
@@ -128,91 +130,6 @@
 </tr>
             
         
-            
-                <tr>
-    <td>
-        
-            <span id="cohort_name">
-                cohort_name
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Categorical description of cohorts, arms, and treatment groups.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-                    <li>"Arm_A"</li>
-                
-                    <li>"Arm_B"</li>
-                
-                    <li>"Arm_C"</li>
-                
-                    <li>"Arm_D"</li>
-                
-                    <li>"Arm_E"</li>
-                
-                    <li>"Arm_F"</li>
-                
-                    <li>"Arm_G"</li>
-                
-                    <li>"Arm_H"</li>
-                
-                    <li>"Arm_I"</li>
-                
-                    <li>"Arm_X"</li>
-                
-                    <li>"Arm_Y"</li>
-                
-                    <li>"Arm_Z"</li>
-                
-                    <li>"Arm_1"</li>
-                
-                    <li>"Arm_2"</li>
-                
-                    <li>"EAY131-Z1D"</li>
-                
-                    <li>"NSCLC_A"</li>
-                
-                    <li>"NSCLC_B"</li>
-                
-                    <li>"NSCLC_C"</li>
-                
-                    <li>"CRC_A"</li>
-                
-                    <li>"CRC_B"</li>
-                
-                    <li>"Dose_A"</li>
-                
-                    <li>"Dose_B"</li>
-                
-                    <li>"Dose_C"</li>
-                
-                    <li>"Dose_D"</li>
-                
-                    <li>"Other"</li>
-                
-                    <li>"Not_reported"</li>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
             
         
             
@@ -266,7 +183,71 @@
             
         
             
+                <tr>
+    <td>
         
+            <span id="cidc_participant_id">
+                cidc_participant_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The generated, CIDC-internal identifier for this participant.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+     : <code>^CIDC-\w+-\w+$</code> 
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cohort_name">
+                cohort_name
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Categorical description of cohorts, arms, and treatment groups.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
             
         
             
@@ -452,6 +433,13 @@
     "additionalProperties": false,
     "description": "The collection of all data related to a specific participant in the context of a specific clinical trial.\n",
     "properties": {
+        "cidc_participant_id": {
+            "description": "The generated, CIDC-internal identifier for this participant.",
+            "example": "CIDC-Trial101-e1b2c3",
+            "in_doc_ref_pattern": "/participants/*/cidc_participant_id",
+            "pattern": "^CIDC-\\w+-\\w+$",
+            "type": "string"
+        },
         "cimac_participant_id": {
             "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_participant_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_participant_id $ref.",
             "description": "Participant identifier assigned by the CIMAC-CIDC Network. Formated as: C??????.",
@@ -461,62 +449,8 @@
             "type": "string"
         },
         "cohort_name": {
-            "$comment": "This enum lists a union of all possible values from all supported trials at the moment. Options are further limited by `in_doc_ref_pattern`.",
+            "$comment": "Values in this field are validated dynamically by `in_doc_ref_pattern`.",
             "description": "Categorical description of cohorts, arms, and treatment groups.",
-            "enum": [
-                "Arm_A",
-                "Arm_B",
-                "Arm_C",
-                "Arm_D",
-                "Arm_E",
-                "Arm_F",
-                "Arm_G",
-                "Arm_H",
-                "Arm_I",
-                "Arm_X",
-                "Arm_Y",
-                "Arm_Z",
-                "Arm_1",
-                "Arm_2",
-                "EAY131-Z1D",
-                "NSCLC_A",
-                "NSCLC_B",
-                "NSCLC_C",
-                "CRC_A",
-                "CRC_B",
-                "Dose_A",
-                "Dose_B",
-                "Dose_C",
-                "Dose_D",
-                "Other",
-                "Not_reported"
-            ],
-            "enum_comments": {
-                "Arm_1": "S1400I",
-                "Arm_2": "S1400I",
-                "Arm_A": "E4412 or 10026",
-                "Arm_B": "E4412 or 10026",
-                "Arm_C": "E4412",
-                "Arm_D": "E4412",
-                "Arm_E": "E4412",
-                "Arm_F": "E4412",
-                "Arm_G": "E4412",
-                "Arm_H": "E4412",
-                "Arm_I": "E4412",
-                "Arm_X": "E4412",
-                "Arm_Y": "E4412",
-                "Arm_Z": "E4412",
-                "CRC_A": "10021",
-                "CRC_B": "10021",
-                "Dose_A": "9204",
-                "Dose_B": "9204",
-                "Dose_C": "9204",
-                "Dose_D": "9204",
-                "NSCLC_A": "10021",
-                "NSCLC_B": "10021",
-                "NSCLC_C": "10021",
-                "Not reported": "Can be used for blinded values"
-            },
             "example": "Arm_Z",
             "in_doc_ref_pattern": "/allowed_cohort_names/*",
             "type": "string"
@@ -668,6 +602,13 @@
                         "description": "Identifier if sample shipment container includes multiple boxes for each assay.",
                         "type": "string"
                     },
+                    "cidc_id": {
+                        "description": "The generated, CIDC-internal identifier for this sample.",
+                        "example": "CIDC-Trial101-e1b2c3-a7b",
+                        "in_doc_ref_pattern": "/participants/*/samples/*/cidc_id",
+                        "pattern": "^CIDC-\\w+-\\w+-\\w+$",
+                        "type": "string"
+                    },
                     "cimac_id": {
                         "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.",
                         "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??",
@@ -681,64 +622,8 @@
                         "type": "string"
                     },
                     "collection_event_name": {
-                        "$comment": "This enum lists a union of all possible values from all supported trials at the moment. Options are further limited by `in_doc_ref_pattern`.",
+                        "$comment": "Values in this field are validated dynamically by `in_doc_ref_pattern`.",
                         "description": "Categorical description of timepoint at which the sample was taken.",
-                        "enum": [
-                            "Baseline",
-                            "Pre_Day_1_Cycle_2",
-                            "Restaging",
-                            "Off_study",
-                            "Cycle_2_Week_3",
-                            "Cycle_4_Week_7",
-                            "Cycle_5_Week_9",
-                            "Cycle_3",
-                            "End_of_treatment",
-                            "Pre_PD1_therapy",
-                            "On_Treatment",
-                            "Week_5",
-                            "Week_7",
-                            "Response",
-                            "Relapse",
-                            "Day_8",
-                            "Cycle_2_Day_1",
-                            "T0",
-                            "T1",
-                            "T2",
-                            "T3",
-                            "T4",
-                            "T5",
-                            "T6",
-                            "End_of_Treatment",
-                            "Progression",
-                            "Other",
-                            "Not_reported"
-                        ],
-                        "enum_comments": {
-                            "Cycle_2_Day_1": "9204",
-                            "Cycle_2_Week_3": "S1400I",
-                            "Cycle_3": "EAY131-Z1D",
-                            "Cycle_4_Week_7": "S1400I",
-                            "Cycle_5_Week_9": "S1400I",
-                            "Day_8": "9204",
-                            "End_of_treatment": "EAY131-Z1D, 10026",
-                            "Off_study": "E4412",
-                            "On_Treatment": "10021",
-                            "Pre_Day_1_Cycle_2": "E4412",
-                            "Pre_PD1_therapy": "10021",
-                            "Progression": "S1400I, 10021",
-                            "Relapse": "9204",
-                            "Response": "9204",
-                            "Restaging": "E4412",
-                            "T0": "10026",
-                            "T1": "10026",
-                            "T2": "10026",
-                            "T3": "10026",
-                            "T4": "10026",
-                            "T5": "10026",
-                            "T6": "10026",
-                            "Week_5": "10021",
-                            "Week_7": "10021"
-                        },
                         "in_doc_ref_pattern": "/allowed_collection_event_names/*",
                         "title": "Collection Event Name",
                         "type": "string"
@@ -793,6 +678,10 @@
                     },
                     "histology_behavior_description": {
                         "description": "ICD-0-3 histology and behavior code description. e.g. Hodgkin lymphoma, nod. scler., grade 1",
+                        "type": "string"
+                    },
+                    "intended_assay": {
+                        "description": "The assay that this sample is expected to be used as input for.",
                         "type": "string"
                     },
                     "material_remaining": {
@@ -1144,7 +1033,6 @@
     "required": [
         "cimac_participant_id",
         "participant_id",
-        "cohort_name",
         "samples"
     ],
     "title": "Participant",

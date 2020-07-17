@@ -101,6 +101,8 @@
             
         
             
+        
+            
                 <tr>
     <td>
         
@@ -173,62 +175,6 @@
     
             &gt;
             <ul>
-                
-                    <li>"Baseline"</li>
-                
-                    <li>"Pre_Day_1_Cycle_2"</li>
-                
-                    <li>"Restaging"</li>
-                
-                    <li>"Off_study"</li>
-                
-                    <li>"Cycle_2_Week_3"</li>
-                
-                    <li>"Cycle_4_Week_7"</li>
-                
-                    <li>"Cycle_5_Week_9"</li>
-                
-                    <li>"Cycle_3"</li>
-                
-                    <li>"End_of_treatment"</li>
-                
-                    <li>"Pre_PD1_therapy"</li>
-                
-                    <li>"On_Treatment"</li>
-                
-                    <li>"Week_5"</li>
-                
-                    <li>"Week_7"</li>
-                
-                    <li>"Response"</li>
-                
-                    <li>"Relapse"</li>
-                
-                    <li>"Day_8"</li>
-                
-                    <li>"Cycle_2_Day_1"</li>
-                
-                    <li>"T0"</li>
-                
-                    <li>"T1"</li>
-                
-                    <li>"T2"</li>
-                
-                    <li>"T3"</li>
-                
-                    <li>"T4"</li>
-                
-                    <li>"T5"</li>
-                
-                    <li>"T6"</li>
-                
-                    <li>"End_of_Treatment"</li>
-                
-                    <li>"Progression"</li>
-                
-                    <li>"Other"</li>
-                
-                    <li>"Not_reported"</li>
                 
             </ul>
             
@@ -408,7 +354,42 @@
         
             
         
+            
         
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cidc_id">
+                cidc_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The generated, CIDC-internal identifier for this sample.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+     : <code>^CIDC-\w+-\w+-\w+$</code> 
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
             
         
             
@@ -2317,6 +2298,39 @@
 </tr>
             
         
+            
+                <tr>
+    <td>
+        
+            <span id="intended_assay">
+                intended_assay
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The assay that this sample is expected to be used as input for.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
     </table>
 
     
@@ -2426,6 +2440,13 @@
             "description": "Identifier if sample shipment container includes multiple boxes for each assay.",
             "type": "string"
         },
+        "cidc_id": {
+            "description": "The generated, CIDC-internal identifier for this sample.",
+            "example": "CIDC-Trial101-e1b2c3-a7b",
+            "in_doc_ref_pattern": "/participants/*/samples/*/cidc_id",
+            "pattern": "^CIDC-\\w+-\\w+-\\w+$",
+            "type": "string"
+        },
         "cimac_id": {
             "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.",
             "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??",
@@ -2439,64 +2460,8 @@
             "type": "string"
         },
         "collection_event_name": {
-            "$comment": "This enum lists a union of all possible values from all supported trials at the moment. Options are further limited by `in_doc_ref_pattern`.",
+            "$comment": "Values in this field are validated dynamically by `in_doc_ref_pattern`.",
             "description": "Categorical description of timepoint at which the sample was taken.",
-            "enum": [
-                "Baseline",
-                "Pre_Day_1_Cycle_2",
-                "Restaging",
-                "Off_study",
-                "Cycle_2_Week_3",
-                "Cycle_4_Week_7",
-                "Cycle_5_Week_9",
-                "Cycle_3",
-                "End_of_treatment",
-                "Pre_PD1_therapy",
-                "On_Treatment",
-                "Week_5",
-                "Week_7",
-                "Response",
-                "Relapse",
-                "Day_8",
-                "Cycle_2_Day_1",
-                "T0",
-                "T1",
-                "T2",
-                "T3",
-                "T4",
-                "T5",
-                "T6",
-                "End_of_Treatment",
-                "Progression",
-                "Other",
-                "Not_reported"
-            ],
-            "enum_comments": {
-                "Cycle_2_Day_1": "9204",
-                "Cycle_2_Week_3": "S1400I",
-                "Cycle_3": "EAY131-Z1D",
-                "Cycle_4_Week_7": "S1400I",
-                "Cycle_5_Week_9": "S1400I",
-                "Day_8": "9204",
-                "End_of_treatment": "EAY131-Z1D, 10026",
-                "Off_study": "E4412",
-                "On_Treatment": "10021",
-                "Pre_Day_1_Cycle_2": "E4412",
-                "Pre_PD1_therapy": "10021",
-                "Progression": "S1400I, 10021",
-                "Relapse": "9204",
-                "Response": "9204",
-                "Restaging": "E4412",
-                "T0": "10026",
-                "T1": "10026",
-                "T2": "10026",
-                "T3": "10026",
-                "T4": "10026",
-                "T5": "10026",
-                "T6": "10026",
-                "Week_5": "10021",
-                "Week_7": "10021"
-            },
             "in_doc_ref_pattern": "/allowed_collection_event_names/*",
             "title": "Collection Event Name",
             "type": "string"
@@ -2551,6 +2516,10 @@
         },
         "histology_behavior_description": {
             "description": "ICD-0-3 histology and behavior code description. e.g. Hodgkin lymphoma, nod. scler., grade 1",
+            "type": "string"
+        },
+        "intended_assay": {
+            "description": "The assay that this sample is expected to be used as input for.",
             "type": "string"
         },
         "material_remaining": {

@@ -42,7 +42,7 @@
             },
             "BAM file": {
               "merge_pointer": "0/files/bam",
-              "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/reads_{num}.bam",
+              "gcs_uri_format": "{protocol identifier}/rna/source/{cimac id}/reads_{num}.bam",
               "is_artifact": "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
             },

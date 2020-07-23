@@ -570,25 +570,25 @@ def rna_bam() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="gs://local/path/to/fwd.1.1.1.bam",
-            gs_key="test_prism_trial_id/rna/CTTTPP122.00/reads_0.bam",
+            gs_key="test_prism_trial_id/rna/source/CTTTPP122.00/reads_0.bam",
             upload_placeholder="8c85011c-ccee-49b4-a940-be6ece437953",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="gs://local/path/to/fwd.1.1.1_2.bam",
-            gs_key="test_prism_trial_id/rna/CTTTPP122.00/reads_1.bam",
+            gs_key="test_prism_trial_id/rna/source/CTTTPP122.00/reads_1.bam",
             upload_placeholder="5cebf955-8f5b-4523-807b-3bd3cf5811f6",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="gs://local/path/to/fwd.1.2.1.bam",
-            gs_key="test_prism_trial_id/rna/CTTTPP123.00/reads_0.bam",
+            gs_key="test_prism_trial_id/rna/source/CTTTPP123.00/reads_0.bam",
             upload_placeholder="10859cc5-8258-4d00-9118-9939b354a519",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="gs://local/path/to/fwd.1.2.1_2.bam",
-            gs_key="test_prism_trial_id/rna/CTTTPP123.00/reads_1.bam",
+            gs_key="test_prism_trial_id/rna/source/CTTTPP123.00/reads_1.bam",
             upload_placeholder="c7cf5b84-b924-48dd-9f7b-a32efd6a7b0d",
             metadata_availability=None,
         ),
@@ -681,37 +681,37 @@ def rna_fastq() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="/local/path/to/fwd.1.1.1.fastq.gz",
-            gs_key="test_prism_trial_id/rna/CTTTPP122.00/r1_0.fastq.gz",
+            gs_key="test_prism_trial_id/rna/source/CTTTPP122.00/r1_0.fastq.gz",
             upload_placeholder="2635df00-082b-4e2d-92a8-7a5e629483db",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/fwd.1.1.1_2.fastq.gz",
-            gs_key="test_prism_trial_id/rna/CTTTPP122.00/r1_1.fastq.gz",
+            gs_key="test_prism_trial_id/rna/source/CTTTPP122.00/r1_1.fastq.gz",
             upload_placeholder="b0723fe8-5533-40e0-86cb-16162d8683e4",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/rev.1.1.1.fastq.gz",
-            gs_key="test_prism_trial_id/rna/CTTTPP122.00/r2_0.fastq.gz",
+            gs_key="test_prism_trial_id/rna/source/CTTTPP122.00/r2_0.fastq.gz",
             upload_placeholder="1cd2bb4f-3f84-4f78-b387-4edb6dcc5d1b",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/fwd.1.2.1.fastq.gz",
-            gs_key="test_prism_trial_id/rna/CTTTPP123.00/r1_0.fastq.gz",
+            gs_key="test_prism_trial_id/rna/source/CTTTPP123.00/r1_0.fastq.gz",
             upload_placeholder="d49521dc-d531-4555-a874-80aa0ce31dc1",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/fwd.1.2.1_2.fastq.gz",
-            gs_key="test_prism_trial_id/rna/CTTTPP123.00/r1_1.fastq.gz",
+            gs_key="test_prism_trial_id/rna/source/CTTTPP123.00/r1_1.fastq.gz",
             upload_placeholder="5ebfef93-5c4c-496d-b8ae-13c1978322d2",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/rev.1.2.1.fastq.gz",
-            gs_key="test_prism_trial_id/rna/CTTTPP123.00/r2_0.fastq.gz",
+            gs_key="test_prism_trial_id/rna/source/CTTTPP123.00/r2_0.fastq.gz",
             upload_placeholder="ae150200-c6b2-459c-a264-b56bc2aca263",
             metadata_availability=None,
         ),

@@ -1117,31 +1117,31 @@ def rna_level1_analysis() -> PrismTestData:
             [
                 LocalFileUploadEntry(
                     local_path=f"analysis/star/{cimac_id}/{cimac_id}.sorted.bam",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/star/sorted.bam",
+                    gs_key=f"test_prism_trial_id/rna/alignment/{cimac_id}/star/sorted.bam",
                     upload_placeholder=f"03030303-0303-0303-0303-{cimac_id}",
                     metadata_availability=None,
                 ),
                 LocalFileUploadEntry(
                     local_path=f"analysis/star/{cimac_id}/{cimac_id}.sorted.bam.bai",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/star/sorted.bam.bai",
+                    gs_key=f"test_prism_trial_id/rna/alignment/{cimac_id}/star/sorted.bam.bai",
                     upload_placeholder=f"04040404-0404-0404-0404-{cimac_id}",
                     metadata_availability=None,
                 ),
                 LocalFileUploadEntry(
                     local_path=f"analysis/star/{cimac_id}/{cimac_id}.sorted.bam.stat.txt",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/star/sorted.bam.stat.txt",
+                    gs_key=f"test_prism_trial_id/rna/alignment/{cimac_id}/star/sorted.bam.stat.txt",
                     upload_placeholder=f"05050505-0505-0505-0505-{cimac_id}",
                     metadata_availability=None,
                 ),
                 LocalFileUploadEntry(
                     local_path=f"analysis/star/{cimac_id}/{cimac_id}_downsampling.bam",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/star/downsampling.bam",
+                    gs_key=f"test_prism_trial_id/rna/alignment/{cimac_id}/star/downsampling.bam",
                     upload_placeholder=f"16161616-1616-1616-1616-{cimac_id}",
                     metadata_availability=None,
                 ),
                 LocalFileUploadEntry(
                     local_path=f"analysis/star/{cimac_id}/{cimac_id}_downsampling.bam.bai",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/star/downsampling.bam.bai",
+                    gs_key=f"test_prism_trial_id/rna/alignment/{cimac_id}/star/downsampling.bam.bai",
                     upload_placeholder=f"17171717-1717-1717-1717-{cimac_id}",
                     metadata_availability=None,
                 ),

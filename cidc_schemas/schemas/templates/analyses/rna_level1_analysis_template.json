@@ -61,35 +61,35 @@
                                 {
                                     "parse_through": "lambda id: f'analysis/rseqc/{id}/{id}_downsampling_housekeeping.bam'",
                                     "merge_pointer": "0/rseqc/downsampling_housekeeping_bam",
-                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/rseqc/downsampling_housekeeping.bam",
+                                    "gcs_uri_format": "{protocol identifier}/rna/quality/{cimac id}/rseqc/downsampling_housekeeping.bam",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1                                    
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/rseqc/{id}/{id}_downsampling_housekeeping.bam.bai'",
                                     "merge_pointer": "0/rseqc/downsampling_housekeeping_bam_index",
-                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/rseqc/downsampling_housekeeping.bam.bai",
+                                    "gcs_uri_format": "{protocol identifier}/rna/quality/{cimac id}/rseqc/downsampling_housekeeping.bam.bai",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1                                    
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/rseqc/read_distrib/{id}/{id}.txt'",
                                     "merge_pointer": "0/rseqc/read_distrib",
-                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/rseqc/read_distrib.txt",
+                                    "gcs_uri_format": "{protocol identifier}/rna/quality/{cimac id}/rseqc/read_distrib.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1                                    
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/rseqc/tin_score/{id}/{id}.summary.txt'",
                                     "merge_pointer": "0/rseqc/tin_score_summary",
-                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/rseqc/tin_score.summary.txt",
+                                    "gcs_uri_format": "{protocol identifier}/rna/quality/{cimac id}/rseqc/tin_score.summary.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1                                    
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/rseqc/tin_score/{id}/{id}.tin_score.txt'",
                                     "merge_pointer": "0/rseqc/tin_score",
-                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/rseqc/tin_score.txt",
+                                    "gcs_uri_format": "{protocol identifier}/rna/quality/{cimac id}/rseqc/tin_score.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },

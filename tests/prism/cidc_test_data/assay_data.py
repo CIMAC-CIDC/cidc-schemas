@@ -349,25 +349,25 @@ def wes_bam() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="gs://local/path/to/fwd.1.1.1.bam",
-            gs_key="test_prism_trial_id/wes/CTTTPP111.00/reads_0.bam",
+            gs_key="test_prism_trial_id/wes/source/CTTTPP111.00/reads_0.bam",
             upload_placeholder="d75a0a45-50dd-4aa5-bd46-2793bd5c84e5",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="gs://local/path/to/fwd.1.1.1_2.bam",
-            gs_key="test_prism_trial_id/wes/CTTTPP111.00/reads_1.bam",
+            gs_key="test_prism_trial_id/wes/source/CTTTPP111.00/reads_1.bam",
             upload_placeholder="3385fc87-9630-440b-9924-448168050170",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="gs://local/path/to/fwd.1.2.1.bam",
-            gs_key="test_prism_trial_id/wes/CTTTPP121.00/reads_0.bam",
+            gs_key="test_prism_trial_id/wes/source/CTTTPP121.00/reads_0.bam",
             upload_placeholder="c2ffea21-0771-45ca-bd08-f384b012afb9",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="gs://local/path/to/fwd.1.2.1_2.bam",
-            gs_key="test_prism_trial_id/wes/CTTTPP121.00/reads_1.bam",
+            gs_key="test_prism_trial_id/wes/source/CTTTPP121.00/reads_1.bam",
             upload_placeholder="b5952706-527d-4a6c-b085-97cb02059da6",
             metadata_availability=None,
         ),

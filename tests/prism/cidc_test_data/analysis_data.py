@@ -403,13 +403,13 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/copynumber/run_1/run_1_cnvcalls.txt",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/copynumber_cnvcalls.txt",
+            gs_key="test_prism_trial_id/wes/copy-number/run_1/copynumber_cnvcalls.txt",
             upload_placeholder="85989077-49e4-44c6-8788-3b19357d3122",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="analysis/copynumber/run_1/run_1_cnvcalls.txt.tn.tsv",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/copynumber_cnvcalls.txt.tn.tsv",
+            gs_key="test_prism_trial_id/wes/copy-number/run_1/copynumber_cnvcalls.txt.tn.tsv",
             upload_placeholder="eb1a8d7a-fd96-4e75-b265-1590c703a301",
             metadata_availability=None,
         ),
@@ -679,13 +679,13 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/copynumber/run_2/run_2_cnvcalls.txt",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/copynumber_cnvcalls.txt",
+            gs_key="test_prism_trial_id/wes/copy-number/run_2/copynumber_cnvcalls.txt",
             upload_placeholder="c187bcfe-b454-46a5-bf85-e2a2d5f7a9a5",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="analysis/copynumber/run_2/run_2_cnvcalls.txt.tn.tsv",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/copynumber_cnvcalls.txt.tn.tsv",
+            gs_key="test_prism_trial_id/wes/copy-number/run_2/copynumber_cnvcalls.txt.tn.tsv",
             upload_placeholder="ba2984c0-f7e6-470c-95ef-e4b33cbdea48",
             metadata_availability=None,
         ),

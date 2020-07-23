@@ -44,14 +44,14 @@
                                 {
                                     "parse_through": "lambda run: f'analysis/copynumber/{run}/{run}_cnvcalls.txt'",
                                     "merge_pointer": "/copynumber/copynumber_cnv_calls",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/copynumber_cnvcalls.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/copy-number/{run id}/copynumber_cnvcalls.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda run: f'analysis/copynumber/{run}/{run}_cnvcalls.txt.tn.tsv'",
                                     "merge_pointer": "/copynumber/copynumber_cnv_calls_tsv",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/copynumber_cnvcalls.txt.tn.tsv",
+                                    "gcs_uri_format": "{protocol identifier}/wes/copy-number/{run id}/copynumber_cnvcalls.txt.tn.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },

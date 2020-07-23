@@ -397,7 +397,7 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/clonality/run_1/run_1_pyclone.tsv",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/clonality_pyclone.tsv",
+            gs_key="test_prism_trial_id/wes/clonality/run_1/clonality_pyclone.tsv",
             upload_placeholder="cdef9e1e-8e04-46ed-a9e6-bb618188a6d6",
             metadata_availability=None,
         ),
@@ -499,7 +499,7 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/report/wes_version.txt",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/wes_version.txt",
+            gs_key="test_prism_trial_id/wes/report/run_1/wes_version.txt",
             upload_placeholder="b47271fb-d2c7-4436-bafe-4cf84bc72bf4",
             metadata_availability=None,
         ),
@@ -673,7 +673,7 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/clonality/run_2/run_2_pyclone.tsv",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/clonality_pyclone.tsv",
+            gs_key="test_prism_trial_id/wes/clonality/run_2/clonality_pyclone.tsv",
             upload_placeholder="a4cba177-0be5-4d7d-b635-4a60adaa9575",
             metadata_availability=None,
         ),
@@ -775,7 +775,7 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/report/wes_version.txt",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/wes_version.txt",
+            gs_key="test_prism_trial_id/wes/report/run_2/wes_version.txt",
             upload_placeholder="46824763-fb9f-48b4-b7c4-7175759933f4",
             metadata_availability=None,
         ),

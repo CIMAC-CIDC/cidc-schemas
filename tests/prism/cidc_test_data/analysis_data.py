@@ -391,7 +391,7 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/purity/run_1/run_1.optimalpurityvalue.txt",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/optimalpurityvalue.txt",
+            gs_key="test_prism_trial_id/wes/purity/run_1/optimalpurityvalue.txt",
             upload_placeholder="f0b85ef8-47cb-45b9-bb94-c961150786b9",
             metadata_availability=None,
         ),
@@ -667,7 +667,7 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/purity/run_2/run_2.optimalpurityvalue.txt",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/optimalpurityvalue.txt",
+            gs_key="test_prism_trial_id/wes/purity/run_2/optimalpurityvalue.txt",
             upload_placeholder="98621828-ee22-40d1-840a-0dae97e8bf09",
             metadata_availability=None,
         ),

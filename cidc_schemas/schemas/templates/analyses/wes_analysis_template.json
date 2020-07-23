@@ -30,7 +30,7 @@
                                 {
                                     "parse_through": "lambda run: f'analysis/purity/{run}/{run}.optimalpurityvalue.txt'",
                                     "merge_pointer": "/purity/optimal_purity_value",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/optimalpurityvalue.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/purity/{run id}/optimalpurityvalue.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },

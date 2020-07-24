@@ -1333,7 +1333,7 @@ def cytof_analysis() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="CTTTPP111.00/fcs.fcs",
-            gs_key="test_prism_trial_id/cytof/analysis-source/test_prism_trial_id_run_1/XYZ1/CTTTPP111.00/source.fcs",
+            gs_key="test_prism_trial_id/cytof/labeled-source/test_prism_trial_id_run_1/XYZ1/CTTTPP111.00/source.fcs",
             upload_placeholder="a5515c79-e5ff-41a8-bd98-c7e746a84d8c",
             metadata_availability=None,
         ),
@@ -1375,7 +1375,7 @@ def cytof_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="CTTTPP121.00/fcs.fcs",
-            gs_key="test_prism_trial_id/cytof/analysis-source/test_prism_trial_id_run_1/XYZ1/CTTTPP121.00/source.fcs",
+            gs_key="test_prism_trial_id/cytof/labeled-source/test_prism_trial_id_run_1/XYZ1/CTTTPP121.00/source.fcs",
             upload_placeholder="26fb0ada-8860-4a3d-a278-6b04a36291b9",
             metadata_availability=None,
         ),

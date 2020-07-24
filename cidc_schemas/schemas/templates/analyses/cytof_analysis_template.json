@@ -43,7 +43,7 @@
                         "fcs file": {
                             "merge_pointer": "0/output_files/fcs_file",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof/analysis-source/{assay run id}/{batch id}/{cimac id}/source.fcs",
+                            "gcs_uri_format": "{protocol identifier}/cytof/labeled-source/{assay run id}/{batch id}/{cimac id}/source.fcs",
                             "is_artifact": 1
                         },
                         "assignment": {

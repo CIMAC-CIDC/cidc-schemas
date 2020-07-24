@@ -197,49 +197,49 @@
                                 {
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_coverage_metrics.txt'",
                                     "merge_pointer": "/tumor/metrics/coverage_metrics",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/coverage_metrics.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/metrics/{run id}/tumor/{tumor cimac id}/coverage_metrics.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_target_metrics.txt'",
                                     "merge_pointer": "/tumor/metrics/target_metrics",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/target_metrics.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/metrics/{run id}/tumor/{tumor cimac id}/target_metrics.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_coverage_metrics.sample_summary.txt'",
                                     "merge_pointer": "/tumor/metrics/coverage_metrics_summary",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/coverage_metrics_summary.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/metrics/{run id}/tumor/{tumor cimac id}/coverage_metrics_summary.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_target_metrics.sample_summary.txt'",
                                     "merge_pointer": "/tumor/metrics/target_metrics_summary",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/target_metrics_summary.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/metrics/{run id}/tumor/{tumor cimac id}/target_metrics_summary.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}.broad.mosdepth.region.dist.txt'",
                                     "merge_pointer": "/tumor/metrics/mosdepth_region_dist_broad",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/mosdepth_region_dist_broad.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/metrics/{run id}/tumor/{tumor cimac id}/mosdepth_region_dist_broad.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}.mda.mosdepth.region.dist.txt'",
                                     "merge_pointer": "/tumor/metrics/mosdepth_region_dist_mda",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/mosdepth_region_dist_mda.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/metrics/{run id}/tumor/{tumor cimac id}/mosdepth_region_dist_mda.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}.mocha.mosdepth.region.dist.txt'",
                                     "merge_pointer": "/tumor/metrics/mosdepth_region_dist_mocha",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/mosdepth_region_dist_mocha.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/metrics/{run id}/tumor/{tumor cimac id}/mosdepth_region_dist_mocha.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
@@ -294,49 +294,49 @@
                                 {
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_coverage_metrics.txt'",
                                     "merge_pointer": "/normal/metrics/coverage_metrics",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/coverage_metrics.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/metrics/{run id}/normal/{normal cimac id}/coverage_metrics.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_target_metrics.txt'",
                                     "merge_pointer": "/normal/metrics/target_metrics",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/target_metrics.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/metrics/{run id}/normal/{normal cimac id}/target_metrics.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_coverage_metrics.sample_summary.txt'",
                                     "merge_pointer": "/normal/metrics/coverage_metrics_summary",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/coverage_metrics_summary.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/metrics/{run id}/normal/{normal cimac id}/coverage_metrics_summary.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_target_metrics.sample_summary.txt'",
                                     "merge_pointer": "/normal/metrics/target_metrics_summary",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/target_metrics_summary.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/metrics/{run id}/normal/{normal cimac id}/target_metrics_summary.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}.broad.mosdepth.region.dist.txt'",
                                     "merge_pointer": "/normal/metrics/mosdepth_region_dist_broad",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/mosdepth_region_dist_broad.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/metrics/{run id}/normal/{normal cimac id}/mosdepth_region_dist_broad.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}.mda.mosdepth.region.dist.txt'",
                                     "merge_pointer": "/normal/metrics/mosdepth_region_dist_mda",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/mosdepth_region_dist_mda.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/metrics/{run id}/normal/{normal cimac id}/mosdepth_region_dist_mda.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}.mocha.mosdepth.region.dist.txt'",
                                     "merge_pointer": "/normal/metrics/mosdepth_region_dist_mocha",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/mosdepth_region_dist_mocha.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/metrics/{run id}/normal/{normal cimac id}/mosdepth_region_dist_mocha.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },

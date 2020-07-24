@@ -5,11 +5,13 @@
 
 import os
 import pytest
+import openpyxl
 
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template, _TEMPLATE_PATH_MAP
 from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader, ValidationError
+from cidc_schemas.template_writer import XlTemplateWriter
 
 from .constants import ROOT_DIR, TEMPLATE_EXAMPLES_DIR
 
@@ -74,6 +76,17 @@ def test_template(template, template_example, template_example_xlsx_path, tmpdir
         other_template = Template.from_type(other_template_type)
         with pytest.raises(ValidationError):
             other_template.validate_excel(template_example_xlsx_path)
+
+    # Ensure that the data dictionary tab in this template doesn't have empty columns
+    generated_xlsx = openpyxl.load_workbook(p)
+    data_dict_ws = generated_xlsx[XlTemplateWriter._data_dict_sheet_name]
+    for col in data_dict_ws.iter_cols(
+        min_col=2, max_col=50, max_row=10, values_only=True
+    ):
+        [header, *values] = col
+        if header is None:
+            break
+        assert any(val is not None for val in values)
 
 
 def compare_templates(

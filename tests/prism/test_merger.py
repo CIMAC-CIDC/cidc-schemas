@@ -37,13 +37,14 @@ def test_throw_on_collision():
     merger = Merger(schema, strategies=prism_merger.PRISM_MERGE_STRATEGIES)
 
     # Identical values, no collision - no error
-    base = {"l": [{"cimac_id": "c1", "a": 1}]}
+    base = {"l": [{"cimac_id": "c1", "a": 1}, {"cimac_id": "c2", "a": 2}]}
     assert merger.merge(base, base)
 
     # Different values, collision - error
-    head = {"l": [{"cimac_id": "c1", "a": 2}]}
+    head = {"l": [{"cimac_id": "c2", "a": 333}, {"cimac_id": "c3", "a": 3}]}
     with pytest.raises(
-        prism_merger.MergeCollisionException, match=r"1 \(current\) != 2 \(incoming\)"
+        prism_merger.MergeCollisionException,
+        match="mismatch of incoming value a=2 with already saved a=333 l/\d+ cimac_id=c2",
     ):
         merger.merge(base, head)
 
@@ -71,10 +72,11 @@ def test_overwrite_any():
     head = {"a": {"foo": "buzz"}, "b": 1}
     assert merger.merge(base, head) == head
 
-    # Updates to "b" should not be allowed
+    # Updates to "b" still should not be allowed
     head["b"] = 2
     with pytest.raises(
-        prism_merger.MergeCollisionException, match=r"1 \(current\) != 2 \(incoming\)"
+        prism_merger.MergeCollisionException,
+        match="mismatch of incoming value b=1 with already saved b=2",
     ):
         merger.merge(base, head)
 

@@ -192,10 +192,9 @@ class ThrowOnOverwrite(strategies.Strategy):
         if base.is_undef():
             return head
         if base.val != head.val:
-            obj_pointer, _, prop_name = base.ref.rpartition("/")
+            _, prop_name = base.ref.rsplit("/", 1)
             raise MergeCollisionException(
-                f"Found mismatch of incoming {prop_name}={base.val!r} with already saved {prop_name}={head.val!r} "
-                f"{obj_pointer.lstrip('#/')}",
+                f"Found mismatch of incoming {prop_name}={head.val!r} with already saved {prop_name}={base.val!r}",
                 base,
                 head,
             )
@@ -212,8 +211,9 @@ class ArrayMergeByIdWithContextForMergeCollisionException(strategies.ArrayMergeB
         except MergeCollisionException as merge_e:
             try:
                 key = self.get_key(walk, merge_e.head, idRef)
+                _, prop_name = base.ref.rsplit("/", 1)
                 raise MergeCollisionException(
-                    f"{merge_e} {idRef.lstrip('/')}={key}", base, head
+                    f"{merge_e} in {prop_name}/{idRef.lstrip('/')}={key}", base, head
                 ) from merge_e
             except jsonschema.exceptions.RefResolutionError as ref_e:
                 raise merge_e

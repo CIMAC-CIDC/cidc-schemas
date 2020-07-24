@@ -25,9 +25,12 @@ def test_throw_on_collision():
     schema = {
         "type": "object",
         "properties": {
-            "l": {
+            "participants": {
                 "type": "array",
-                "items": {"cimac_id": {"type": "string"}, "a": {"type": "integer"}},
+                "items": {
+                    "cimac_id": {"type": "string"},
+                    "weight": {"type": "integer"},
+                },
                 "mergeStrategy": "arrayMergeById",
                 "mergeOptions": {"idRef": "/cimac_id"},
             }
@@ -37,22 +40,34 @@ def test_throw_on_collision():
     merger = Merger(schema, strategies=prism_merger.PRISM_MERGE_STRATEGIES)
 
     # Identical values, no collision - no error
-    base = {"l": [{"cimac_id": "c1", "a": 1}, {"cimac_id": "c2", "a": 2}]}
+    base = {
+        "participants": [
+            {"cimac_id": "c1", "weight": 1},
+            {"cimac_id": "c2", "weight": 2},
+        ]
+    }
     assert merger.merge(base, base)
 
     # Different values, collision - error
-    head = {"l": [{"cimac_id": "c2", "a": 333}, {"cimac_id": "c3", "a": 3}]}
+    head = {
+        "participants": [
+            {"cimac_id": "c2", "weight": 333},
+            {"cimac_id": "c3", "weight": 3},
+        ]
+    }
     with pytest.raises(
         prism_merger.MergeCollisionException,
-        match="mismatch of incoming value a=2 with already saved a=333 l/\d+ cimac_id=c2",
+        match="mismatch of incoming weight=2 with already saved weight=333 participants/\d+ cimac_id=c2",
     ):
         merger.merge(base, head)
 
     # Some identical and some different values - no error, proper merge
-    base["l"].append({"cimac_id": "c2", "a": 2})
-    head = {"l": [base["l"][0], {"cimac_id": "c3", "a": 3}]}
+    base["participants"].append({"cimac_id": "c2", "weight": 2})
+    head = {"participants": [base["participants"][0], {"cimac_id": "c3", "weight": 3}]}
 
-    assert merger.merge(base, head) == {"l": [*base["l"], head["l"][-1]]}
+    assert merger.merge(base, head) == {
+        "participants": [*base["participants"], head["participants"][-1]]
+    }
 
 
 def test_overwrite_any():
@@ -76,7 +91,7 @@ def test_overwrite_any():
     head["b"] = 2
     with pytest.raises(
         prism_merger.MergeCollisionException,
-        match="mismatch of incoming value b=1 with already saved b=2",
+        match="mismatch of incoming b=1 with already saved b=2",
     ):
         merger.merge(base, head)
 

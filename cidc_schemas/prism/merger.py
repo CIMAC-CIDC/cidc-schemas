@@ -194,7 +194,7 @@ class ThrowOnOverwrite(strategies.Strategy):
         if base.val != head.val:
             obj_pointer, _, prop_name = base.ref.rpartition("/")
             raise MergeCollisionException(
-                f"Found mismatch of incoming value {prop_name}={base.val!r} with already saved {prop_name}={head.val!r} "
+                f"Found mismatch of incoming {prop_name}={base.val!r} with already saved {prop_name}={head.val!r} "
                 f"{obj_pointer.lstrip('#/')}",
                 base,
                 head,

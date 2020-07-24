@@ -49,19 +49,19 @@
                         "assignment": {
                             "merge_pointer": "0/output_files/assignment",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof/cell-label-keys/{assay run id}/{batch id}/{cimac id}/assignment.csv",
+                            "gcs_uri_format": "{protocol identifier}/cytof/key/{assay run id}/{batch id}/{cimac id}/assignment.csv",
                             "is_artifact": 1
                         },
                         "compartment": {
                             "merge_pointer": "0/output_files/compartment",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof/cell-label-keys/{assay run id}/{batch id}/{cimac id}/compartment.csv",
+                            "gcs_uri_format": "{protocol identifier}/cytof/key/{assay run id}/{batch id}/{cimac id}/compartment.csv",
                             "is_artifact": 1
                         },
                         "profiling": {
                             "merge_pointer": "0/output_files/profiling",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof/cell-label-keys/{assay run id}/{batch id}/{cimac id}/profiling.csv",
+                            "gcs_uri_format": "{protocol identifier}/cytof/key/{assay run id}/{batch id}/{cimac id}/profiling.csv",
                             "is_artifact": 1
                         },
                         "cell counts assignment": {

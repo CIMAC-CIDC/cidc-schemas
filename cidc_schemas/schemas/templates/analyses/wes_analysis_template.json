@@ -23,7 +23,7 @@
                                 {
                                     "parse_through": "lambda run: f'analysis/germline/{run}/{run}_vcfcompare.txt'",
                                     "merge_pointer": "/germline/vcf_compare",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcfcompare.txt",
+                                    "gcs_uri_format": "{protocol identifier}/wes/germline/{run id}/vcfcompare.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },

@@ -385,7 +385,7 @@ def wes_analysis() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="analysis/germline/run_1/run_1_vcfcompare.txt",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/vcfcompare.txt",
+            gs_key="test_prism_trial_id/wes/germline/run_1/vcfcompare.txt",
             upload_placeholder="9986de8e-84eb-49ba-9270-ca9d6aa0edf0",
             metadata_availability=None,
         ),
@@ -661,7 +661,7 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/germline/run_2/run_2_vcfcompare.txt",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/vcfcompare.txt",
+            gs_key="test_prism_trial_id/wes/germline/run_2/vcfcompare.txt",
             upload_placeholder="45f1f7d1-4a48-48d5-9ee3-e7ccc4474d25",
             metadata_availability=None,
         ),

@@ -571,7 +571,7 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/optitype/CTTTPP111.00/CTTTPP111.00_result.tsv",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/tumor/CTTTPP111.00/optitype_result.tsv",
+            gs_key="test_prism_trial_id/wes/hla-type/run_1/tumor/CTTTPP111.00/optitype_result.tsv",
             upload_placeholder="a5899d73-7373-4041-85f9-6cc4324be817",
             metadata_availability=None,
         ),
@@ -649,7 +649,7 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/optitype/CTTTPP111.00/CTTTPP111.00_result.tsv",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/normal/CTTTPP111.00/optitype_result.tsv",
+            gs_key="test_prism_trial_id/wes/hla-type/run_1/normal/CTTTPP111.00/optitype_result.tsv",
             upload_placeholder="6b36da9d-c015-42be-80df-d22c17a29124",
             metadata_availability=None,
         ),
@@ -847,7 +847,7 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/optitype/CTTTPP121.00/CTTTPP121.00_result.tsv",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/tumor/CTTTPP121.00/optitype_result.tsv",
+            gs_key="test_prism_trial_id/wes/hla-type/run_2/tumor/CTTTPP121.00/optitype_result.tsv",
             upload_placeholder="671d710e-f245-4d2b-8732-2774e26aec10",
             metadata_availability=None,
         ),
@@ -925,7 +925,7 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/optitype/CTTTPP121.00/CTTTPP121.00_result.tsv",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/normal/CTTTPP121.00/optitype_result.tsv",
+            gs_key="test_prism_trial_id/wes/hla-type/run_2/normal/CTTTPP121.00/optitype_result.tsv",
             upload_placeholder="9371d710-e3d0-4d1b-b87f-23bbadc4ae7e",
             metadata_availability=None,
         ),

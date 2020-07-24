@@ -481,13 +481,13 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/corealignments/run_1/run_1_tn_corealigned.bam",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/tn_corealigned.bam",
+            gs_key="test_prism_trial_id/wes/alignment/run_1/tn_corealigned.bam",
             upload_placeholder="106abc8b-c2c5-4d2a-8663-5e4b9e1188c4",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="analysis/corealignments/run_1/run_1_tn_corealigned.bam.bai",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/tn_corealigned.bam.bai",
+            gs_key="test_prism_trial_id/wes/alignment/run_1/tn_corealigned.bam.bai",
             upload_placeholder="a929e845-4ef6-4c06-bfce-8139780469ed",
             metadata_availability=None,
         ),
@@ -757,13 +757,13 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/corealignments/run_2/run_2_tn_corealigned.bam",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/tn_corealigned.bam",
+            gs_key="test_prism_trial_id/wes/alignment/run_2/tn_corealigned.bam",
             upload_placeholder="9bad3bcb-1b37-4564-bd05-1a919b320f1b",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="analysis/corealignments/run_2/run_2_tn_corealigned.bam.bai",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/tn_corealigned.bam.bai",
+            gs_key="test_prism_trial_id/wes/alignment/run_2/tn_corealigned.bam.bai",
             upload_placeholder="4667eb84-13dd-4143-81f5-2e7272441daf",
             metadata_availability=None,
         ),

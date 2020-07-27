@@ -11,6 +11,7 @@ from cidc_schemas.template import Template
 from cidc_schemas.template_reader import XlTemplateReader
 from cidc_schemas.template_writer import RowType
 from cidc_schemas.constants import SCHEMA_DIR
+from .merger import PRISM_MERGE_STRATEGIES, MergeCollisionException
 from jsonmerge import Merger, strategies, exceptions as jsonmerge_exceptions
 from jsonpointer import EndOfList, JsonPointer, JsonPointerException, resolve_pointer
 
@@ -500,7 +501,7 @@ class ParsingException(ValueError):
     pass
 
 
-PRISM_PRISMIFY_STRATEGIES = {"overwriteAny": strategies.Overwrite()}
+PRISM_PRISMIFY_STRATEGIES = PRISM_MERGE_STRATEGIES
 
 
 def prismify(
@@ -730,8 +731,17 @@ def prismify(
                 logger.debug("  merging preambles")
                 logger.debug(f"   {preamble_obj}")
                 logger.debug(f"   {copy_of_preamble}")
-                preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
-                logger.debug(f"    merged - {preamble_obj}")
+                try:
+                    preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
+                    logger.debug(f"    merged - {preamble_obj}")
+                except MergeCollisionException as e:
+                    e = MergeCollisionException(
+                        f"{e} on row {row.row_num} in worksheet {ws_name!r}",
+                        e.base,
+                        e.head,
+                    )
+                    errors_so_far.append(e)
+                    logger.info(f"    didn't merge - MergeCollisionException: {e}")
 
         # Now processing preamble rows
         logger.debug(f"  preamble for {ws_name!r}")

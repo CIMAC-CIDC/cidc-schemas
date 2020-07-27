@@ -538,6 +538,61 @@ def test_prism_process_as_error(monkeypatch):
     assert "Cannot extract author_id from book id value: None" == str(errs[0])
 
 
+def test_confilicting_values_in_one_template(monkeypatch):
+    """ Tests that prismify doesn't allow two different values for some property """
+    mock_XlTemplateReader_from_excel(
+        {
+            "authors": [
+                ["#h", "author id", "author name"],
+                ["#d", "auth 1", "my name is"],
+                ["#d", "auth 1", "slim shady"],
+            ]
+        },
+        monkeypatch,
+    )
+
+    template = build_mock_Template(
+        {
+            "$id": "test_value_conflict_override",
+            "title": "authors",
+            "prism_template_root_object_schema": "test_schema.json",
+            "properties": {
+                "worksheets": {
+                    "authors": {
+                        "prism_preamble_object_pointer": "#",
+                        "prism_data_object_pointer": "/authors/0",
+                        "preamble_rows": {},
+                        "data_columns": {
+                            "Authors": {
+                                "author id": {
+                                    "merge_pointer": "/author_id",
+                                    "type": "string",
+                                },
+                                "author name": {
+                                    "merge_pointer": "/author_name",
+                                    "type": "string",
+                                },
+                            }
+                        },
+                    }
+                }
+            },
+        },
+        "test_prism_process_as",
+        monkeypatch,
+    )
+
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
+    assert len(errs) == 1
+    err_msg = str(errs[0])
+    assert "slim shady" in err_msg
+    assert "my name is" in err_msg
+    assert "author_id='auth 1'" in err_msg
+
+
 def test_prism_do_not_merge(monkeypatch):
     """ Tests whether prism can parse multi_artifact from process_as record"""
 

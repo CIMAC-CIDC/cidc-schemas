@@ -27,12 +27,9 @@ def test_throw_on_mismatch():
         "properties": {
             "participants": {
                 "type": "array",
-                "items": {
-                    "cimac_id": {"type": "string"},
-                    "weight": {"type": "integer"},
-                },
+                "items": {"p_id": {"type": "string"}, "weight": {"type": "integer"}},
                 "mergeStrategy": "arrayMergeById",
-                "mergeOptions": {"idRef": "/cimac_id"},
+                "mergeOptions": {"idRef": "/p_id"},
             }
         },
     }
@@ -40,30 +37,22 @@ def test_throw_on_mismatch():
     merger = Merger(schema, strategies=prism_merger.PRISM_MERGE_STRATEGIES)
 
     # Identical values, no mismatch - no error
-    base = {
-        "participants": [
-            {"cimac_id": "c1", "weight": 1},
-            {"cimac_id": "c2", "weight": 2},
-        ]
-    }
+    base = {"participants": [{"p_id": "c1", "weight": 1}, {"p_id": "c2", "weight": 2}]}
     assert merger.merge(base, base)
 
     # Different values, mismatch - error
     head = {
-        "participants": [
-            {"cimac_id": "c2", "weight": 333},
-            {"cimac_id": "c3", "weight": 3},
-        ]
+        "participants": [{"p_id": "c2", "weight": 333}, {"p_id": "c3", "weight": 3}]
     }
     with pytest.raises(
         prism_merger.MergeCollisionException,
-        match="mismatch of incoming weight=333 with already saved weight=2 in participants/cimac_id=c2",
+        match="mismatch of incoming weight=333 with already saved weight=2 in participants/p_id=c2",
     ):
         merger.merge(base, head)
 
     # Some identical and some different values - no error, proper merge
-    base["participants"].append({"cimac_id": "c2", "weight": 2})
-    head = {"participants": [base["participants"][0], {"cimac_id": "c3", "weight": 3}]}
+    base["participants"].append({"p_id": "c2", "weight": 2})
+    head = {"participants": [base["participants"][0], {"p_id": "c3", "weight": 3}]}
 
     assert merger.merge(base, head) == {
         "participants": [*base["participants"], head["participants"][-1]]
@@ -86,12 +75,12 @@ def test_throw_on_mismatch_context():
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "cimac_id": {"type": "string"},
+                                    "sample_id": {"type": "string"},
                                     "weight": {"type": "integer"},
                                 },
                             },
                             "mergeStrategy": "arrayMergeById",
-                            "mergeOptions": {"idRef": "/cimac_id"},
+                            "mergeOptions": {"idRef": "/sample_id"},
                         },
                     },
                 },
@@ -106,7 +95,7 @@ def test_throw_on_mismatch_context():
     # Identical values, no collision - no error
     base = {
         "participants": [
-            {"participant_id": "p1", "samples": [{"cimac_id": "c1", "weight": 2}]}
+            {"participant_id": "p1", "samples": [{"sample_id": "c1", "weight": 2}]}
         ]
     }
     assert merger.merge(base, base)
@@ -114,13 +103,13 @@ def test_throw_on_mismatch_context():
     # Different values, collision - error
     head = {
         "participants": [
-            {"participant_id": "p1", "samples": [{"cimac_id": "c1", "weight": 333}]}
+            {"participant_id": "p1", "samples": [{"sample_id": "c1", "weight": 333}]}
         ]
     }
     with pytest.raises(
         prism_merger.MergeCollisionException,
         match="mismatch of incoming weight=333 with already saved weight=2"
-        " in samples/cimac_id=c1 in participants/participant_id=p1",
+        " in samples/sample_id=c1 in participants/participant_id=p1",
     ):
         merger.merge(base, head)
 

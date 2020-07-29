@@ -71,18 +71,20 @@
                             "merge_pointer": "0/files/ihc_image",
                             "is_artifact": 1,
                             "gcs_uri_format": {
-                                "format": "lambda val, ctx: ctx['protocol identifier'] + '/ihc/' + ctx['cimac id'] + '/ihc_image.' + val.rsplit('.')[-1]",
-                                "check_errors": "lambda val: f'Bad file type {val!r}. It should be in one of .tiff .tif .qptiff .svs formats' if val.rsplit('.', 1)[-1] not in ['svs', 'tiff', 'tif', 'qptiff'] else None",
+                                "format": "lambda val, ctx: str(ctx['protocol identifier']) + '/ihc/' + str(ctx['cimac id']) + '/ihc_image.' + str(val).rsplit('.')[-1]",
+                                "check_errors": "lambda val: f'Bad file type {val!r}. It should be in one of .tiff .tif .qptiff .svs formats' if str(val).rsplit('.', 1)[-1] not in ['svs', 'tiff', 'tif', 'qptiff'] else None",
                                 "template_comment": "In one of .tiff .tif .qptiff .svs formats."
                             },
                             "type_ref": "assays/components/local_file.json#properties/file_path"
                         }
                     },
-                    "Chromogenic IHC (please specify one score/metric)": {
+                    "Marker call": {
                         "marker positive": {
                             "merge_pointer": "0/marker_positive",
                             "type_ref": "assays/components/imaging/ihc_entry.json#properties/marker_positive"
-                        },
+                        }
+                    },
+                    "Chromogenic IHC (please specify one score/metric)": {
                         "tumor proportion score": {
                             "merge_pointer": "0/tumor_proportion_score",
                             "type_ref": "assays/components/imaging/ihc_entry.json#properties/tumor_proportion_score",

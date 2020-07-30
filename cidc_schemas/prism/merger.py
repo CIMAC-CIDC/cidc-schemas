@@ -175,10 +175,16 @@ def _update_artifact(
 
 
 class MergeCollisionException(ValueError):
-    def __init__(self, msg, base, head):
+    def __init__(self, msg, base, head, context=None):
         super().__init__(msg)
         self.base = base
         self.head = head
+        self.context = context
+
+    def __str__(self):
+        _, prop_name = self.base.ref.rsplit("/", 1)
+        str_ctx = " ".join(f"{k}={v!r}" for k, v in (self.context or {}).items())
+        return f"Found mismatch of {prop_name}={self.head.val!r} and {prop_name}={self.base.val!r} in {str_ctx}"
 
 
 class ThrowOnOverwrite(strategies.Strategy):
@@ -208,15 +214,20 @@ class ArrayMergeByIdWithContextForMergeCollisionException(strategies.ArrayMergeB
     def merge(self, walk, base, head, schema, meta, idRef="id", **kwargs):
         try:
             return super().merge(walk, base, head, schema, meta, idRef=idRef, **kwargs)
-        except MergeCollisionException as merge_e:
+        except MergeCollisionException as e:
             try:
-                key = self.get_key(walk, merge_e.head, idRef)
+                ctx_key = idRef.lstrip("/")
+                ctx_val = self.get_key(walk, e.head, idRef)
                 _, prop_name = base.ref.rsplit("/", 1)
                 raise MergeCollisionException(
-                    f"{merge_e} in {prop_name}/{idRef.lstrip('/')}={key}", base, head
-                ) from merge_e
-            except jsonschema.exceptions.RefResolutionError as ref_e:
-                raise merge_e
+                    f"{e} in {prop_name}/{ctx_key}={ctx_val!r}",
+                    base,
+                    head,
+                    {ctx_key: ctx_val},
+                ) from e
+            except jsonschema.exceptions.RefResolutionError:
+                # self.get_key failed, so we re-raise as is
+                raise e
 
 
 class ObjectMergeWithContextForMergeCollisionException(strategies.ObjectMerge):
@@ -224,7 +235,7 @@ class ObjectMergeWithContextForMergeCollisionException(strategies.ObjectMerge):
         try:
             return super().merge(walk, base, head, schema, meta, **kwargs)
         except MergeCollisionException as e:
-            raise MergeCollisionException(e, base, head) from e
+            raise MergeCollisionException(str(e), base, head) from e
 
 
 PRISM_MERGE_STRATEGIES = {

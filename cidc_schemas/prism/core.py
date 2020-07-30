@@ -504,6 +504,25 @@ class ParsingException(ValueError):
 PRISM_PRISMIFY_STRATEGIES = PRISM_MERGE_STRATEGIES
 
 
+def _wrap_merge_collision_with_row_context(
+    e: MergeCollisionException, row_num: int, ws_name: str
+):
+    _, prop_name = e.base.ref.rsplit("/", 1)
+
+    str_ctx = " ".join(f"{k}={v!r}" for k, v in e.context.items())
+
+    wrapped = MergeCollisionException(
+        f"Found mismatch of {prop_name}={e.head.val!r} in {str_ctx} "
+        # adding manifest context to the message
+        f"from row {row_num} in worksheet {ws_name!r} "
+        f"with already processed {prop_name}={e.base.val!r} in {str_ctx} from other row",
+        e.base,
+        e.head,
+        dict(e.context, row=row_num, worksheet=ws_name),
+    )
+    return wrapped
+
+
 def prismify(
     xlsx: XlTemplateReader,
     template: Template,
@@ -735,13 +754,15 @@ def prismify(
                     preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
                     logger.debug(f"    merged - {preamble_obj}")
                 except MergeCollisionException as e:
-                    e = MergeCollisionException(
-                        f"{e} on row {row.row_num} in worksheet {ws_name!r}",
-                        e.base,
-                        e.head,
+                    # Reformatting exception, because this mismatch happened within one template
+                    # and not with some saved stuff.
+                    wrapped = _wrap_merge_collision_with_row_context(
+                        e, row.row_num, ws_name
                     )
-                    errors_so_far.append(e)
-                    logger.info(f"    didn't merge - MergeCollisionException: {e}")
+                    errors_so_far.append(wrapped)
+                    logger.info(
+                        f"    didn't merge - MergeCollisionException: {wrapped}"
+                    )
 
         # Now processing preamble rows
         logger.debug(f"  preamble for {ws_name!r}")

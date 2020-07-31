@@ -71,8 +71,8 @@
                             "merge_pointer": "0/files/ihc_image",
                             "is_artifact": 1,
                             "gcs_uri_format": {
-                                "format": "lambda val, ctx: str(ctx['protocol identifier']) + '/ihc/' + str(ctx['cimac id']) + '/ihc_image.' + str(val).rsplit('.')[-1]",
-                                "check_errors": "lambda val: f'Bad file type {val!r}. It should be in one of .tiff .tif .qptiff .svs formats' if str(val).rsplit('.', 1)[-1] not in ['svs', 'tiff', 'tif', 'qptiff'] else None",
+                                "format": "lambda val, ctx: str(ctx['protocol identifier']) + '/ihc/' + str(ctx['cimac id']) + '/ihc_image.' + (str(val).rsplit('.')[-1]).lower()",
+                                "check_errors": "lambda val: f'Bad file type {val!r}. It should be in one of .tiff .tif .qptiff .svs formats' if (str(val).rsplit('.', 1)[-1]).lower() not in ['svs', 'tiff', 'tif', 'qptiff'] else None",
                                 "template_comment": "In one of .tiff .tif .qptiff .svs formats."
                             },
                             "type_ref": "assays/components/local_file.json#properties/file_path"

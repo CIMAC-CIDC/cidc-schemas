@@ -70,6 +70,20 @@
                                     "is_artifact": 1
                                 },
                                 {
+                                    "parse_through": "lambda run: f'analysis/neoantigen/{run}/MHC_Class_II/{run}.all_epitopes.tsv'",
+                                    "merge_pointer": "/neoantigen/mhc_class_II_epitopes",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/MHC_Class_II_all_epitopes.tsv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'analysis/neoantigen/{run}/MHC_Class_II/{run}.filtered.condensed.ranked.tsv'",
+                                    "merge_pointer": "/neoantigen/mhc_class_II_filtered_condensed_ranked",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/MHC_Class_II_filtered_condensed_ranked.tsv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
                                     "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.output.vcf'",
                                     "merge_pointer": "/somatic/vcf_tnscope_output",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_tnscope_output.vcf",
@@ -235,6 +249,13 @@
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/optitype_result.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/xhla/{id}/{id}_report-{id}-hla.json'",
+                                    "merge_pointer": "/tumor/optitype/xhla_report_hla",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/xhla_report_hla.json",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
                                 }
                             ]
                         },
@@ -323,6 +344,13 @@
                                     "parse_through": "lambda id: f'analysis/optitype/{id}/{id}_result.tsv'",
                                     "merge_pointer": "/normal/optitype/optitype_result",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/optitype_result.tsv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/xhla/{id}/{id}_report-{id}-hla.json'",
+                                    "merge_pointer": "/normal/optitype/xhla_report_hla",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/xhla_report_hla.json",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 }

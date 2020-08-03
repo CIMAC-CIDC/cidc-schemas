@@ -175,10 +175,13 @@ def _update_artifact(
 
 
 class MergeCollisionException(ValueError):
-    pass
+    def __init__(self, msg, base, head):
+        super().__init__(msg)
+        self.base = base
+        self.head = head
 
 
-class ThrowOnCollision(strategies.Strategy):
+class ThrowOnOverwrite(strategies.Strategy):
     """
     Similar to the jsonmerge's built in 'discard' strategy,
     but throws an error if the value already exists. This is
@@ -189,10 +192,11 @@ class ThrowOnCollision(strategies.Strategy):
         if base.is_undef():
             return head
         if base.val != head.val:
-            prop = base.ref.rsplit("/", 1)[-1]
+            _, prop_name = base.ref.rsplit("/", 1)
             raise MergeCollisionException(
-                f"Found conflicting values for {prop}: {base.val} (current) != {head.val} (incoming). "
-                "Updates are not currently supported."
+                f"Found mismatch of incoming {prop_name}={head.val!r} with already saved {prop_name}={base.val!r}",
+                base,
+                head,
             )
         return base
 
@@ -200,9 +204,35 @@ class ThrowOnCollision(strategies.Strategy):
         return schema
 
 
+class ArrayMergeByIdWithContextForMergeCollisionException(strategies.ArrayMergeById):
+    def merge(self, walk, base, head, schema, meta, idRef="id", **kwargs):
+        try:
+            return super().merge(walk, base, head, schema, meta, idRef=idRef, **kwargs)
+        except MergeCollisionException as merge_e:
+            try:
+                key = self.get_key(walk, merge_e.head, idRef)
+                _, prop_name = base.ref.rsplit("/", 1)
+                raise MergeCollisionException(
+                    f"{merge_e} in {prop_name}/{idRef.lstrip('/')}={key}", base, head
+                ) from merge_e
+            except jsonschema.exceptions.RefResolutionError as ref_e:
+                raise merge_e
+
+
+class ObjectMergeWithContextForMergeCollisionException(strategies.ObjectMerge):
+    def merge(self, walk, base, head, schema, meta, **kwargs):
+        try:
+            return super().merge(walk, base, head, schema, meta, **kwargs)
+        except MergeCollisionException as e:
+            raise MergeCollisionException(e, base, head) from e
+
+
 PRISM_MERGE_STRATEGIES = {
     # This overwrites the default jsonmerge merge strategy for literal values.
-    "overwrite": ThrowOnCollision(),
+    "overwrite": ThrowOnOverwrite(),
+    # This adds context to MergeCollisionExceptions
+    "arrayMergeById": ArrayMergeByIdWithContextForMergeCollisionException(),
+    "objectMerge": ObjectMergeWithContextForMergeCollisionException(),
     # Alias the builtin jsonmerge overwrite strategy
     "overwriteAny": strategies.Overwrite(),
 }

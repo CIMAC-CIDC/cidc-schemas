@@ -111,8 +111,8 @@
                 <tr>
     <td>
         
-            <span id="binary_seg_map">
-                binary_seg_map
+            <span id="binary_seg_maps">
+                binary_seg_maps
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -126,7 +126,7 @@
     </td>
     <td>
         
-            <a href="assays.components.mapping.html#binary_seg_map">assays.components.mapping#binary_seg_map</a>
+            <a href="assays.components.mapping.html#binary_seg_maps">assays.components.mapping#binary_seg_maps</a>
         
     </td>
 </tr>
@@ -379,7 +379,7 @@
             "description": "Regions of interest obtained from image mapping.",
             "inheritableBase": true,
             "properties": {
-                "binary_seg_map": {
+                "binary_seg_maps": {
                     "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.",
                     "$id": "image_artifact",
                     "$schema": "metaschema/strict_meta_schema.json#",
@@ -2198,7 +2198,7 @@
     "description": "A region of interest (ROI) is a portion of an image which has been analyzed using image processing software.",
     "mergeStrategy": "objectMerge",
     "properties": {
-        "binary_seg_map": {
+        "binary_seg_maps": {
             "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.",
             "$id": "image_artifact",
             "$schema": "metaschema/strict_meta_schema.json#",
@@ -3998,7 +3998,7 @@
         }
     },
     "required": [
-        "binary_seg_map",
+        "binary_seg_maps",
         "cell_seg_data",
         "cell_seg_data_summary",
         "phenotype_map",

@@ -22,6 +22,12 @@ from .cidc_test_data import get_test_trial
 
 @pytest.fixture(scope="session")
 def prismify_result(template, template_example):
+
+    # tear down
+    core._encrypt_hmac = None
+    # and set up
+    core.set_prism_encrypt_key("test")
+
     prism_patch, file_maps, errs = core.prismify(template_example, template)
     assert not errs
     return prism_patch, file_maps, errs

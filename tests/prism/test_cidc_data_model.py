@@ -1,6 +1,7 @@
 import pytest
 from copy import deepcopy
 from deepdiff import DeepDiff, grep
+from unittest.mock import MagicMock
 
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.prism import (
@@ -41,7 +42,11 @@ def assert_metadata_matches(received: dict, expected: dict, upload_entries: list
         assert diff == {}
 
 
-def test_prismify(prism_test: PrismTestData):
+def test_prismify(prism_test: PrismTestData, monkeypatch):
+    monkeypatch.setattr(
+        "cidc_schemas.prism.core._encrypt", lambda x: f"encrypt({str(x)!r})"
+    )
+
     # Run prismify on the given test case
     patch, upload_entries, errs = prismify(*prism_test.prismify_args)
 

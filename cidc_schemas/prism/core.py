@@ -507,20 +507,15 @@ PRISM_PRISMIFY_STRATEGIES = PRISM_MERGE_STRATEGIES
 def _wrap_merge_collision_with_row_context(
     e: MergeCollisionException, row_num: int, ws_name: str
 ):
-    _, prop_name = e.base.ref.rsplit("/", 1)
-
-    str_ctx = " ".join(f"{k}={v!r}" for k, v in e.context.items())
-
-    wrapped = MergeCollisionException(
-        f"Found mismatch of {prop_name}={e.head.val!r} in {str_ctx} "
-        # adding manifest context to the message
-        f"from row {row_num} in worksheet {ws_name!r} "
-        f"with already processed {prop_name}={e.base.val!r} in {str_ctx} from other row",
+    return MergeCollisionException(
+        e,
+        e.prop_name,
+        e.base_val,
+        e.head_val,
         e.base,
         e.head,
         dict(e.context, row=row_num, worksheet=ws_name),
     )
-    return wrapped
 
 
 def prismify(

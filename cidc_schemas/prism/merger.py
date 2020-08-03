@@ -175,16 +175,19 @@ def _update_artifact(
 
 
 class MergeCollisionException(ValueError):
-    def __init__(self, msg, base, head, context=None):
+    def __init__(self, msg, prop_name, base_val, head_val, base, head, context=None):
         super().__init__(msg)
+        self.prop_name = prop_name
+        self.base_val = base_val
+        self.head_val = head_val
         self.base = base
         self.head = head
-        self.context = context
+        self.context = context or dict()
 
     def __str__(self):
-        _, prop_name = self.base.ref.rsplit("/", 1)
         str_ctx = " ".join(f"{k}={v!r}" for k, v in (self.context or {}).items())
-        return f"Found mismatch of {prop_name}={self.head.val!r} and {prop_name}={self.base.val!r} in {str_ctx}"
+        str_ctx = " in " + str_ctx if str_ctx else ""
+        return f"Detected mismatch of {self.prop_name}={self.head_val!r} and {self.prop_name}={self.base_val!r}{str_ctx}"
 
 
 class ThrowOnOverwrite(strategies.Strategy):
@@ -200,7 +203,10 @@ class ThrowOnOverwrite(strategies.Strategy):
         if base.val != head.val:
             _, prop_name = base.ref.rsplit("/", 1)
             raise MergeCollisionException(
-                f"Found mismatch of incoming {prop_name}={head.val!r} with already saved {prop_name}={base.val!r}",
+                f"Found mismatch of {prop_name}={head.val!r} with {prop_name}={base.val!r}",
+                prop_name,
+                base.val,
+                head.val,
                 base,
                 head,
             )
@@ -208,6 +214,16 @@ class ThrowOnOverwrite(strategies.Strategy):
 
     def get_schema(self, walk, schema, **kwargs):
         return schema
+
+
+class ObjectMergeWithContextForMergeCollisionException(strategies.ObjectMerge):
+    def merge(self, walk, base, head, schema, meta, **kwargs):
+        try:
+            return super().merge(walk, base, head, schema, meta, **kwargs)
+        except MergeCollisionException as e:
+            raise MergeCollisionException(
+                e.args[0], e.prop_name, e.base_val, e.head_val, base, head, e.context
+            ) from e
 
 
 class ArrayMergeByIdWithContextForMergeCollisionException(strategies.ArrayMergeById):
@@ -218,24 +234,18 @@ class ArrayMergeByIdWithContextForMergeCollisionException(strategies.ArrayMergeB
             try:
                 ctx_key = idRef.lstrip("/")
                 ctx_val = self.get_key(walk, e.head, idRef)
-                _, prop_name = base.ref.rsplit("/", 1)
                 raise MergeCollisionException(
-                    f"{e} in {prop_name}/{ctx_key}={ctx_val!r}",
+                    f"{e} in {ctx_key}={ctx_val!r}",
+                    e.prop_name,
+                    e.base_val,
+                    e.head_val,
                     base,
                     head,
-                    {ctx_key: ctx_val},
+                    dict(e.context, **{ctx_key: ctx_val}),
                 ) from e
             except jsonschema.exceptions.RefResolutionError:
                 # self.get_key failed, so we re-raise as is
                 raise e
-
-
-class ObjectMergeWithContextForMergeCollisionException(strategies.ObjectMerge):
-    def merge(self, walk, base, head, schema, meta, **kwargs):
-        try:
-            return super().merge(walk, base, head, schema, meta, **kwargs)
-        except MergeCollisionException as e:
-            raise MergeCollisionException(str(e), base, head) from e
 
 
 PRISM_MERGE_STRATEGIES = {

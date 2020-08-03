@@ -591,6 +591,7 @@ def test_confilicting_values_in_one_template(monkeypatch):
     assert "slim shady" in err_msg
     assert "my name is" in err_msg
     assert "author_id='auth 1'" in err_msg
+    assert "row=3 worksheet='authors'" in err_msg
 
 
 def test_prism_do_not_merge(monkeypatch):

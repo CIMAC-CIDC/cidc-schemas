@@ -189,6 +189,17 @@ class MergeCollisionException(ValueError):
         str_ctx = " in " + str_ctx if str_ctx else ""
         return f"Detected mismatch of {self.prop_name}={self.head_val!r} and {self.prop_name}={self.base_val!r}{str_ctx}"
 
+    def wrap_with_context(self, **add_context):
+        return MergeCollisionException(
+            self.args[0],
+            self.prop_name,
+            self.base_val,
+            self.head_val,
+            self.base,
+            self.head,
+            dict(self.context, **add_context),
+        )
+
 
 class ThrowOnOverwrite(strategies.Strategy):
     """

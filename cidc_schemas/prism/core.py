@@ -504,20 +504,6 @@ class ParsingException(ValueError):
 PRISM_PRISMIFY_STRATEGIES = PRISM_MERGE_STRATEGIES
 
 
-def _wrap_merge_collision_with_row_context(
-    e: MergeCollisionException, row_num: int, ws_name: str
-):
-    return MergeCollisionException(
-        e,
-        e.prop_name,
-        e.base_val,
-        e.head_val,
-        e.base,
-        e.head,
-        dict(e.context, row=row_num, worksheet=ws_name),
-    )
-
-
 def prismify(
     xlsx: XlTemplateReader,
     template: Template,
@@ -751,9 +737,7 @@ def prismify(
                 except MergeCollisionException as e:
                     # Reformatting exception, because this mismatch happened within one template
                     # and not with some saved stuff.
-                    wrapped = _wrap_merge_collision_with_row_context(
-                        e, row.row_num, ws_name
-                    )
+                    wrapped = e.wrap_with_context(row=row.row_num, worksheet=ws_name)
                     errors_so_far.append(wrapped)
                     logger.info(
                         f"    didn't merge - MergeCollisionException: {wrapped}"

@@ -767,15 +767,20 @@ def prismify(
                 errors_so_far.append(e)
 
         # Now pushing it up / merging with the whole thing
-        copy_of_template_root = {}
-        _set_val(preamble_object_pointer, preamble_obj, copy_of_template_root)
+        copy_of_templ_root = {}
+        _set_val(preamble_object_pointer, preamble_obj, copy_of_templ_root)
         logger.debug("merging root objs")
         logger.debug(f" {template_root_obj}")
-        logger.debug(f" {copy_of_template_root}")
-        template_root_obj = root_ct_merger.merge(
-            template_root_obj, copy_of_template_root
-        )
-        logger.debug(f"  merged - {template_root_obj}")
+        logger.debug(f" {copy_of_templ_root}")
+        try:
+            template_root_obj = root_ct_merger.merge(
+                template_root_obj, copy_of_templ_root
+            )
+            logger.debug(f"  merged - {template_root_obj}")
+        except MergeCollisionException as e:
+            wrapped = e.wrap_with_context(worksheet=ws_name)
+            errors_so_far.append(wrapped)
+            logger.info(f"    didn't merge - MergeCollisionException: {wrapped}")
 
     if template_root_obj_pointer != "":
         _set_val(template_root_obj_pointer, template_root_obj, root_ct_obj)

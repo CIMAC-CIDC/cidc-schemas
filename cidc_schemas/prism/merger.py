@@ -175,8 +175,7 @@ def _update_artifact(
 
 
 class MergeCollisionException(ValueError):
-    def __init__(self, msg, prop_name, base_val, head_val, base, head, context=None):
-        super().__init__(msg)
+    def __init__(self, prop_name, base_val, head_val, base, head, context=None):
         self.prop_name = prop_name
         self.base_val = base_val
         self.head_val = head_val
@@ -191,7 +190,6 @@ class MergeCollisionException(ValueError):
 
     def wrap_with_context(self, **add_context):
         return MergeCollisionException(
-            self.args[0],
             self.prop_name,
             self.base_val,
             self.head_val,
@@ -213,14 +211,7 @@ class ThrowOnOverwrite(strategies.Strategy):
             return head
         if base.val != head.val:
             _, prop_name = base.ref.rsplit("/", 1)
-            raise MergeCollisionException(
-                f"Found mismatch of {prop_name}={head.val!r} with {prop_name}={base.val!r}",
-                prop_name,
-                base.val,
-                head.val,
-                base,
-                head,
-            )
+            raise MergeCollisionException(prop_name, base.val, head.val, base, head)
         return base
 
     def get_schema(self, walk, schema, **kwargs):
@@ -232,8 +223,11 @@ class ObjectMergeWithContextForMergeCollisionException(strategies.ObjectMerge):
         try:
             return super().merge(walk, base, head, schema, meta, **kwargs)
         except MergeCollisionException as e:
+            # Swaping base and head in exception for current objects'
+            # so in the parent container/array we will have context of current object
+            # and not context of only one property of this object
             raise MergeCollisionException(
-                e.args[0], e.prop_name, e.base_val, e.head_val, base, head, e.context
+                e.prop_name, e.base_val, e.head_val, base, head, e.context
             ) from e
 
 
@@ -246,7 +240,6 @@ class ArrayMergeByIdWithContextForMergeCollisionException(strategies.ArrayMergeB
                 ctx_key = idRef.lstrip("/")
                 ctx_val = self.get_key(walk, e.head, idRef)
                 raise MergeCollisionException(
-                    f"{e} in {ctx_key}={ctx_val!r}",
                     e.prop_name,
                     e.base_val,
                     e.head_val,

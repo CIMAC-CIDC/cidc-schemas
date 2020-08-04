@@ -237,16 +237,10 @@ class ArrayMergeByIdWithContextForMergeCollisionException(strategies.ArrayMergeB
             return super().merge(walk, base, head, schema, meta, idRef=idRef, **kwargs)
         except MergeCollisionException as e:
             try:
-                ctx_key = idRef.lstrip("/")
+                # Adding context from MergeById
                 ctx_val = self.get_key(walk, e.head, idRef)
-                raise MergeCollisionException(
-                    e.prop_name,
-                    e.base_val,
-                    e.head_val,
-                    base,
-                    head,
-                    dict(e.context, **{ctx_key: ctx_val}),
-                ) from e
+                ctx_key = idRef.split("/")[-1]
+                raise e.wrap_with_context(**{ctx_key: ctx_val})
             except jsonschema.exceptions.RefResolutionError:
                 # self.get_key failed, so we re-raise as is
                 raise e

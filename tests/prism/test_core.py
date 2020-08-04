@@ -320,7 +320,8 @@ def test_prism_local_files_format_extension(monkeypatch):
 
     _, file_maps, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
 
-    [error] = errs
+    assert len(errs) == 1
+    error = errs[0]
     assert isinstance(error, prism.ParsingException)
     assert (
         str(error) == "Expected .csv for 'local_file_col_name' but got '.xlsx' instead."
@@ -393,7 +394,8 @@ def test_prism_local_files_format_multiple_extensions(monkeypatch):
 
     _, file_maps, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
 
-    [error] = errs
+    assert len(errs) == 1
+    error = errs[0]
     assert isinstance(error, prism.ParsingException)
     assert str(error) == error_str.format(val="somewhere/on/my/computer.NONtiff")
 
@@ -595,7 +597,7 @@ def test_confilicting_values_in_one_template(monkeypatch):
 
 
 def test_prism_do_not_merge(monkeypatch):
-    """ Tests whether prism can parse multi_artifact from process_as record"""
+    """ Tests whether prism acknowledges do_not_merge """
 
     mock_XlTemplateReader_from_excel(
         {"analysis": [["#h", "id", "comment"], ["#d", "111", "whatever"]]}, monkeypatch
@@ -653,7 +655,7 @@ def test_prism_do_not_merge(monkeypatch):
 
 
 def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
-    """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
+    """ Tests whether prism can extract many file_map entries from process_as on one record """
 
     mock_XlTemplateReader_from_excel(
         {

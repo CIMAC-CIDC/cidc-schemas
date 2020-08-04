@@ -553,7 +553,6 @@ def rna_bam() -> PrismTestData:
                                     },
                                 ]
                             },
-                            "library_yield_ng": 650.0,
                             "dv200": 0.8,
                             "rqs": 9.0,
                             "rin": 9.0,
@@ -562,7 +561,6 @@ def rna_bam() -> PrismTestData:
                     ],
                     "assay_creator": "DFCI",
                     "enrichment_method": "Transcriptome capture",
-                    "enrichment_vendor_kit": "Illumina - TruSeq Stranded PolyA mRNA",
                     "sequencer_platform": "Illumina - HiSeq 3000",
                     "paired_end_reads": "Paired",
                 }

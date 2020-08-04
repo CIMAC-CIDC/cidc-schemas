@@ -23,7 +23,8 @@
           },
           "enrichment kit": {
             "merge_pointer": "0/enrichment_vendor_kit",
-            "type_ref": "assays/rna_assay.json#properties/enrichment_vendor_kit"
+            "type_ref": "assays/rna_assay.json#properties/enrichment_vendor_kit",
+            "allow_empty": true
           },
           "sequencer platform": {
             "merge_pointer": "0/sequencer_platform",
@@ -48,7 +49,8 @@
             },
             "library yield ng": {
               "merge_pointer": "0/library_yield_ng",
-              "type_ref": "assays/components/ngs/rna/rna_entry.json#properties/library_yield_ng"
+              "type_ref": "assays/components/ngs/rna/rna_entry.json#properties/library_yield_ng",
+              "allow_empty": true
             },
             "dv200": {
               "merge_pointer": "0/dv200",

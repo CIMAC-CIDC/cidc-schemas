@@ -1801,4 +1801,4 @@ def tumor_normal_pairing():
 missing = set(SUPPORTED_MANIFESTS).difference(
     [f.__name__ for f in manifest_data_generators]
 )
-# assert not missing, f"Missing manifest test data generators for {missing}"
+assert not missing, f"Missing manifest test data generators for {missing}"

@@ -214,7 +214,12 @@ class XlTemplateWriter:
         if not enum:
             return 0
 
+        # Write the data dict column header
         ws.write(0, col_n, name.capitalize(), theme)
+
+        # Write the data dict column values
+        for i, enum_value in enumerate(enum):
+            ws.write(1 + i, col_n, enum_value)
 
         if not len(enum):
             raise Exception(f"Enum {name} with no options detected:\n{prop_schema}")

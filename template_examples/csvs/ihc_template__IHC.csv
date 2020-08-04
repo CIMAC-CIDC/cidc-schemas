@@ -1,5 +1,5 @@
 "#t","Metadata file for ihc"
-"#p","Protocol identifier","test_prism_trial_id"
+"#p","Protocol identifier","123"
 "#p","Assay creator","DFCI"
 "#p","Slide scanner model","Vectra 2.0"
 "#p","Staining platform","auto"
@@ -13,7 +13,7 @@
 "#p","Incubation time","06:45:00"
 "#p","Incubation temperature","54c"
 
-"","Sample","","Chromogenic IHC (please specify one score/metric)"
+"","Sample","","Marker call","Chromogenic IHC (please specify one score/metric)"
 "#h","Cimac id","Ihc image","Marker positive","Tumor proportion score","Combined positive score","Inflammatory cells","Positive inflammatory cell area","Intensity","% expression","H score","Comment"
 "#d","CTTTPP111.00","path/to/image1.tif","positive","0.67"
 "#d","CTTTPP121.00","path/to/image2.tiff","no_call","0.1","","","","1","10","120"

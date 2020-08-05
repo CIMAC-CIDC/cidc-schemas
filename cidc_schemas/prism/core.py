@@ -501,9 +501,6 @@ class ParsingException(ValueError):
     pass
 
 
-PRISM_PRISMIFY_STRATEGIES = PRISM_MERGE_STRATEGIES
-
-
 def prismify(
     xlsx: XlTemplateReader,
     template: Template,
@@ -640,7 +637,7 @@ def prismify(
         template_root_obj = root_ct_obj
 
     # and merger for it
-    root_ct_merger = Merger(root_ct_schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    root_ct_merger = Merger(root_ct_schema, strategies=PRISM_MERGE_STRATEGIES)
     # and where to collect all local file refs
     collected_files = []
 
@@ -670,7 +667,7 @@ def prismify(
             schema_root,
         )
         preamble_merger = Merger(
-            preamble_object_schema, strategies=PRISM_PRISMIFY_STRATEGIES
+            preamble_object_schema, strategies=PRISM_MERGE_STRATEGIES
         )
         preamble_object_pointer = templ_ws.get("prism_preamble_object_pointer", "")
         data_object_pointer = templ_ws["prism_data_object_pointer"]
@@ -737,7 +734,7 @@ def prismify(
                 except MergeCollisionException as e:
                     # Reformatting exception, because this mismatch happened within one template
                     # and not with some saved stuff.
-                    wrapped = e.wrap_with_context(row=row.row_num, worksheet=ws_name)
+                    wrapped = e.with_context(row=row.row_num, worksheet=ws_name)
                     errors_so_far.append(wrapped)
                     logger.info(
                         f"    didn't merge - MergeCollisionException: {wrapped}"
@@ -778,7 +775,7 @@ def prismify(
             )
             logger.debug(f"  merged - {template_root_obj}")
         except MergeCollisionException as e:
-            wrapped = e.wrap_with_context(worksheet=ws_name)
+            wrapped = e.with_context(worksheet=ws_name)
             errors_so_far.append(wrapped)
             logger.info(f"    didn't merge - MergeCollisionException: {wrapped}")
 

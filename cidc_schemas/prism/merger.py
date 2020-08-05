@@ -187,9 +187,6 @@ class MergeCollisionException(ValueError):
             res += " in " + " ".join(f"{k}={v!r}" for k, v in self.context.items())
         return res
 
-    def __repr__(self):
-        return f"MergeCollisionException({self})"
-
     def with_context(self, **add_context):
         return MergeCollisionException(
             self.prop_name,

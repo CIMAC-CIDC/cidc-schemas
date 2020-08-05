@@ -46,7 +46,7 @@ def test_throw_on_mismatch():
     }
     with pytest.raises(
         prism_merger.MergeCollisionException,
-        match="mismatch of weight=333 and weight=2 in p_id='c2'",
+        match="mismatch of weight=2 and weight=333 in p_id='c2'",
     ):
         merger.merge(base, head)
 
@@ -108,7 +108,7 @@ def test_throw_on_mismatch_context():
     }
     with pytest.raises(
         prism_merger.MergeCollisionException,
-        match="mismatch of weight=333 and weight=2"
+        match="mismatch of weight=2 and weight=333"
         " in sample_id='c1' participant_id='p1'",
     ):
         merger.merge(base, head)
@@ -134,7 +134,7 @@ def test_overwrite_any():
     # Updates to "b" still should not be allowed
     head["b"] = 2
     with pytest.raises(
-        prism_merger.MergeCollisionException, match="mismatch of b=2 and b=1"
+        prism_merger.MergeCollisionException, match="mismatch of b=1.*and b=2"
     ):
         merger.merge(base, head)
 

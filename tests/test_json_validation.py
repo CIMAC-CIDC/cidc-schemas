@@ -379,6 +379,7 @@ def test_format_validation_error():
                     "properties": {
                         "foo": {"type": "array", "items": {"type": "string"}}
                     },
+                    "required": ["foo"],
                 },
             },
             "required": ["a", "b", "c"],
@@ -408,12 +409,17 @@ def test_format_validation_error():
     err = format_error(inst)
     assert err == "error on foo[0]=1: 1 is not of type 'string'"
 
+    # Nest property missing
+    inst = {**valid_instance, "c": {}}
+    err = format_error(inst)
+    assert err == "error on c={}: missing required property 'foo'"
+
     # Root-level property missing
     valid_instance.pop("a")
     err = format_error(valid_instance)
     assert (
         err
-        == "error on [root]={'b': [1, 2, 3], 'c': {'foo': ['a']}}: 'a' is a required property"
+        == "error on [root]={'b': [1, 2, 3], 'c': {'foo': ['a']}}: missing required property 'a'"
     )
 
 

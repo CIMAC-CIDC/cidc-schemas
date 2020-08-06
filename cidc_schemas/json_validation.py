@@ -469,11 +469,22 @@ def convert(fmt: str, value: str) -> str:
         raise jsonschema.ValidationError(e)
 
 
+REQUIRED_PROPERTY_MSG = " is a required property"
+
+
 def format_validation_error(e: ValidationError) -> str:
     """Produce a short(er), human-friendly(er) jsonschema.ValidationError message."""
-    build_message = lambda field: f"error on {field}={e.instance}: {e.message}"
+
+    def build_message(field: str):
+        message = e.message
+        if REQUIRED_PROPERTY_MSG in e.message:
+            prop_name = e.message.split(REQUIRED_PROPERTY_MSG)[0]
+            message = f"missing required property {prop_name}"
+
+        return f"error on {field}={e.instance}: {message}"
 
     depth = len(e.absolute_path)
+
     if depth == 0:
         return build_message("[root]")
     if depth == 1:

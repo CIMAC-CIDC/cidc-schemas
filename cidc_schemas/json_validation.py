@@ -470,6 +470,7 @@ def convert(fmt: str, value: str) -> str:
 
 
 def format_validation_error(e: ValidationError) -> str:
+    """Produce a short(er), human-friendly(er) jsonschema.ValidationError message."""
     depth = len(e.absolute_path)
     if depth == 0:
         field = "[root]"

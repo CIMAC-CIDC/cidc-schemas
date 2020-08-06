@@ -471,20 +471,22 @@ def convert(fmt: str, value: str) -> str:
 
 def format_validation_error(e: ValidationError) -> str:
     """Produce a short(er), human-friendly(er) jsonschema.ValidationError message."""
+    build_message = lambda field: f"error on {field}={e.instance}: {e.message}"
+
     depth = len(e.absolute_path)
     if depth == 0:
-        field = "[root]"
-    elif depth == 1:
-        field = e.absolute_path[0]
-    else:
-        field = ""
-        # Handle potentially nested array fields, going up in depth until
-        # a named property is found
-        for path_part in list(e.absolute_path)[::-1]:
-            if isinstance(path_part, int):
-                field = f"[{path_part}]{field}"
-            else:
-                field = f"{path_part}{field}"
-                break
+        return build_message("[root]")
+    if depth == 1:
+        return build_message(e.absolute_path[0])
 
-    return f"error on {field}={e.instance}: {e.message}"
+    # Handle potentially nested array fields, going up in depth until
+    # a named property is found
+    field = ""
+    for path_part in list(e.absolute_path)[::-1]:
+        if isinstance(path_part, int):
+            field = f"[{path_part}]{field}"
+        else:
+            field = f"{path_part}{field}"
+            break
+
+    return build_message(field)

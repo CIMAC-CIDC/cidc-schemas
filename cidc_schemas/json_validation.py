@@ -127,6 +127,14 @@ class _Validator(jsonschema.Draft7Validator):
                 # and produce errors only when check wont pass
                 yield in_doc_ref_not_found
 
+    def iter_error_messages(self, instance: JSON, _schema: Optional[dict] = None):
+        """
+        A wrapper for `_Validator.iter_errors` that generates friendlier, shorter error
+        messages representing `ValidationError`s.
+        """
+        for error in self.iter_errors(instance, _schema):
+            yield format_validation_error(error)
+
     def _get_values_for_path_pattern(self, path: str, doc: dict) -> set:
         """
         Search `doc` for every value matching `path`, and return those values as a set. 
@@ -459,3 +467,23 @@ def convert(fmt: str, value: str) -> str:
         return reformatter(value)
     except Exception as e:
         raise jsonschema.ValidationError(e)
+
+
+def format_validation_error(e: ValidationError) -> str:
+    depth = len(e.absolute_path)
+    if depth == 0:
+        field = "[root]"
+    elif depth == 1:
+        field = e.absolute_path[0]
+    else:
+        field = ""
+        # Handle potentially nested array fields, going up in depth until
+        # a named property is found
+        for path_part in list(e.absolute_path)[::-1]:
+            if isinstance(path_part, int):
+                field = f"[{path_part}]{field}"
+            else:
+                field = f"{path_part}{field}"
+                break
+
+    return f"error on {field}={e.instance}: {e.message}"

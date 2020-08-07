@@ -80,42 +80,42 @@
               "type": "string",
               "process_as": [
                   {
-                      "parse_through": "lambda prefix: prefix + 'binary_seg_maps.tif'",
+                      "parse_through": "lambda prefix: str(prefix) + 'binary_seg_maps.tif'",
                       "merge_pointer": "0/binary_seg_maps",
                       "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/binary_seg_maps.tif",
                       "type_ref": "assays/components/local_file.json#properties/file_path",
                       "is_artifact": 1
                   },
                   {
-                      "parse_through": "lambda prefix: prefix + 'cell_seg_data.txt'",
+                      "parse_through": "lambda prefix: str(prefix) + 'cell_seg_data.txt'",
                       "merge_pointer": "0/cell_seg_data",
                       "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/cell_seg_data.txt",
                       "type_ref": "assays/components/local_file.json#properties/file_path",
                       "is_artifact": 1
                   },
                   {
-                      "parse_through": "lambda prefix: prefix + 'cell_seg_data_summary.txt'",
+                      "parse_through": "lambda prefix: str(prefix) + 'cell_seg_data_summary.txt'",
                       "merge_pointer": "0/cell_seg_data_summary",
                       "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/cell_seg_data_summary.txt",
                       "type_ref": "assays/components/local_file.json#properties/file_path",
                       "is_artifact": 1
                   },
                   {
-                      "parse_through": "lambda prefix: prefix + 'phenotype_map.tif'",
+                      "parse_through": "lambda prefix: str(prefix) + 'phenotype_map.tif'",
                       "merge_pointer": "0/phenotype_map",
                       "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/phenotype_map.tif",
                       "type_ref": "assays/components/local_file.json#properties/file_path",
                       "is_artifact": 1
                   },
                   {
-                      "parse_through": "lambda prefix: prefix + 'composite_image.tif'",
+                      "parse_through": "lambda prefix: str(prefix) + 'composite_image.tif'",
                       "merge_pointer": "0/composite_image",
                       "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/composite_image.tif",
                       "type_ref": "assays/components/local_file.json#properties/file_path",
                       "is_artifact": 1
                   },
                   {
-                      "parse_through": "lambda prefix: prefix + 'component_data.tif'",
+                      "parse_through": "lambda prefix: str(prefix) + 'component_data.tif'",
                       "merge_pointer": "0/component_data",
                       "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/component_data.tif",
                       "type_ref": "assays/components/local_file.json#properties/file_path",

@@ -1,4 +1,5 @@
 {
+  "$id": "test_root_obj",
   "additionalProperties": false,
   "properties": {
     "authors": {
@@ -34,6 +35,19 @@
               "right_csv_file": { "$ref": "#/definitions/artifact" }
             }
           }
+        }
+      }
+    },
+    "files": {
+      "type": "array",
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": { "idRef": "/id" },
+      "items": { 
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "number"},
+          "artifact": { "$ref": "#/definitions/artifact" }
         }
       }
     }

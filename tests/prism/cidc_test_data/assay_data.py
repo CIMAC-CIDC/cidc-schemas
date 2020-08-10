@@ -1,4 +1,4 @@
-from cidc_schemas.prism import SUPPORTED_ASSAYS
+from cidc_schemas.prism import SUPPORTED_ASSAYS, PROTOCOL_ID_FIELD_NAME
 
 from .utils import (
     copy_dict_with_branch,
@@ -172,7 +172,7 @@ def ihc() -> PrismTestData:
     upload_type = "ihc"
     prismify_args = get_prismify_args(upload_type)
     prismify_patch = {
-        "protocol_identifier": "test_prism_trial_id",
+        "protocol_identifier": "123",  # testing integer protocol id
         "assays": {
             "ihc": [
                 {
@@ -251,25 +251,25 @@ def ihc() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="path/to/image1.tif",
-            gs_key="test_prism_trial_id/ihc/CTTTPP111.00/ihc_image.tif",
+            gs_key="123/ihc/CTTTPP111.00/ihc_image.tif",
             upload_placeholder="e4294fb9-047f-4df6-b614-871289a1a2a8",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="path/to/image2.tiff",
-            gs_key="test_prism_trial_id/ihc/CTTTPP121.00/ihc_image.tiff",
+            gs_key="123/ihc/CTTTPP121.00/ihc_image.tiff",
             upload_placeholder="fba3f94b-669c-48c7-aee0-f0d5e5e8a341",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="path/to/image3.svs",
-            gs_key="test_prism_trial_id/ihc/CTTTPP122.00/ihc_image.svs",
+            gs_key="123/ihc/CTTTPP122.00/ihc_image.svs",
             upload_placeholder="ecd3f6ea-8315-4fa9-bb37-501b4e821aed",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="path/to/image4.qptiff",
-            gs_key="test_prism_trial_id/ihc/CTTTPP123.00/ihc_image.qptiff",
+            gs_key="123/ihc/CTTTPP123.00/ihc_image.qptiff",
             upload_placeholder="af19deb2-a66e-4c2c-960c-308781245c69",
             metadata_availability=None,
         ),
@@ -281,6 +281,8 @@ def ihc() -> PrismTestData:
         for record in batch["records"]
     ]
     base_trial = get_test_trial(cimac_ids)
+
+    base_trial[PROTOCOL_ID_FIELD_NAME] = "123"
 
     target_trial = copy_dict_with_branch(base_trial, prismify_patch, "assays")
 
@@ -551,7 +553,6 @@ def rna_bam() -> PrismTestData:
                                     },
                                 ]
                             },
-                            "library_yield_ng": 650.0,
                             "dv200": 0.8,
                             "rqs": 9.0,
                             "rin": 9.0,
@@ -560,7 +561,6 @@ def rna_bam() -> PrismTestData:
                     ],
                     "assay_creator": "DFCI",
                     "enrichment_method": "Transcriptome capture",
-                    "enrichment_vendor_kit": "Illumina - TruSeq Stranded PolyA mRNA",
                     "sequencer_platform": "Illumina - HiSeq 3000",
                     "paired_end_reads": "Paired",
                 }

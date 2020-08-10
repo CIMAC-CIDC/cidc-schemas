@@ -8,7 +8,7 @@ import openpyxl
 import jsonschema
 from jsonmerge import Merger, strategies
 
-from ..json_validation import load_and_validate_schema
+from ..json_validation import load_and_validate_schema, _Validator
 from ..util import get_path, get_source
 from .extra_metadata import EXTRA_METADATA_PARSERS
 from .constants import PROTOCOL_ID_FIELD_NAME
@@ -285,7 +285,9 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
         arg2: list of validation errors
     """
 
-    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+    validator: _Validator = load_and_validate_schema(
+        "clinical_trial.json", return_validator=True
+    )
 
     # first we assert original object is valid
     try:
@@ -307,4 +309,4 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
     merger = Merger(validator.schema, strategies=PRISM_MERGE_STRATEGIES)
     merged = merger.merge(target, patch)
 
-    return merged, list(validator.iter_errors(merged))
+    return merged, list(validator.iter_error_messages(merged))

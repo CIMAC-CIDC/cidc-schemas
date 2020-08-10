@@ -386,7 +386,7 @@ def _process_field_value(
 
 
 def _get_file_ext(fname):
-    return fname.rsplit(".")[-1]
+    return (fname.rsplit(".")[-1]).lower()
 
 
 def _format_single_artifact(

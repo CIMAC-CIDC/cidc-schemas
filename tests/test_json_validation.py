@@ -17,6 +17,7 @@ from cidc_schemas.json_validation import (
     _Validator,
     InDocRefNotFoundError,
     RefResolutionError,
+    format_validation_error,
 )
 from cidc_schemas.prism import PROTOCOL_ID_FIELD_NAME
 from .constants import SCHEMA_DIR, ROOT_DIR, TEST_SCHEMA_DIR
@@ -363,3 +364,69 @@ def test_special_keywords():
 
     assert "is_multi_artifact" not in tmp2
     assert "is_artifact" in tmp2
+
+
+def test_format_validation_error():
+    """Check that format_validation_error works as expected on different error scenarios."""
+    validator = jsonschema.Draft7Validator(
+        {
+            "type": "object",
+            "properties": {
+                "a": {"type": "string"},
+                "b": {"type": "array", "items": {"type": "number"}},
+                "c": {
+                    "type": "object",
+                    "properties": {
+                        "foo": {"type": "array", "items": {"type": "string"}}
+                    },
+                    "required": ["foo"],
+                },
+            },
+            "required": ["a", "b", "c"],
+        }
+    )
+
+    def format_error(instance: dict):
+        try:
+            validator.validate(instance)
+        except jsonschema.ValidationError as e:
+            return format_validation_error(e)
+
+    valid_instance = {"a": "ok", "b": [1, 2, 3], "c": {"foo": ["a"]}}
+
+    # Root-level property type error
+    inst = {**valid_instance, "a": 1}
+    err = format_error(inst)
+    assert err == "error on a=1: 1 is not of type 'string'"
+
+    # Array value type error
+    inst = {**valid_instance, "b": [1, "oops", 2]}
+    err = format_error(inst)
+    assert err == "error on b[1]=oops: 'oops' is not of type 'number'"
+
+    # Array inside nested object
+    inst = {**valid_instance, "c": {"foo": [1]}}
+    err = format_error(inst)
+    assert err == "error on foo[0]=1: 1 is not of type 'string'"
+
+    # Nest property missing
+    inst = {**valid_instance, "c": {}}
+    err = format_error(inst)
+    assert err == "error on c={}: missing required property 'foo'"
+
+    # Root-level property missing
+    valid_instance.pop("a")
+    err = format_error(valid_instance)
+    assert (
+        err
+        == "error on [root]={'b': [1, 2, 3], 'c': {'foo': ['a']}}: missing required property 'a'"
+    )
+
+
+def test_iter_error_messages():
+    """Smoke check that _Validator.iter_error_messages returns strings, not ValidationErrors."""
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
+
+    errs = list(validator.iter_error_messages({"protocol_identifier": "foo123"}))
+    for err in errs:
+        assert isinstance(err, str)

@@ -7,10 +7,14 @@
   "properties": {
     "wes_version": {
       "$ref": "artifacts/artifact_text.json"
+    },
+    "wes_run_version": {
+      "$ref": "artifacts/artifact_tsv.json"
     }
   },
   "required": [
-  "wes_version"
+    "wes_version",
+    "wes_run_version"
   ],
   "additionalProperties": false
 }

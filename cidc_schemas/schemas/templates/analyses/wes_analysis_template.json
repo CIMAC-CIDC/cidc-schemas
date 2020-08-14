@@ -173,6 +173,13 @@
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/wes_run_version.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/report/metasheet.csv'",
+                                    "merge_pointer": "/report/metasheet",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/metasheet.csv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
                                 }
                             ]
                         },

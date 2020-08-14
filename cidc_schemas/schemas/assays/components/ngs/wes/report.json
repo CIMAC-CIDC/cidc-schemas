@@ -13,12 +13,16 @@
     },
     "wes_run_version": {
       "$ref": "artifacts/artifact_tsv.json"
+    },
+    "metasheet": {
+      "$ref": "artifacts/artifact_csv.json"
     }
   },
   "required": [
     "wes_version",
     "config",
-    "wes_run_version"
+    "wes_run_version",
+    "metasheet"
   ],
   "additionalProperties": false
 }

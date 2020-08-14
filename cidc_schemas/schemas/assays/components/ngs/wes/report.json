@@ -9,7 +9,7 @@
       "$ref": "artifacts/artifact_text.json"
     },
     "config": {
-      "$ref": "artifacts/artifact_text.json"
+      "$ref": "artifacts/artifact_yaml.json"
     },
     "wes_run_version": {
       "$ref": "artifacts/artifact_tsv.json"

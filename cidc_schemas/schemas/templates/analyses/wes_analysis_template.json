@@ -161,6 +161,13 @@
                                     "is_artifact": 1
                                 },
                                 {
+                                    "parse_through": "lambda id: f'analysis/report/config.yaml'",
+                                    "merge_pointer": "/report/config",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/config.yaml",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
                                     "parse_through": "lambda id: f'analysis/report/wes_meta/02_wes_run_version.tsv'",
                                     "merge_pointer": "/report/wes_run_version",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/wes_run_version.tsv",

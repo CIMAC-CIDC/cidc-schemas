@@ -8,12 +8,16 @@
     "wes_version": {
       "$ref": "artifacts/artifact_text.json"
     },
+    "config": {
+      "$ref": "artifacts/artifact_text.json"
+    },
     "wes_run_version": {
       "$ref": "artifacts/artifact_tsv.json"
     }
   },
   "required": [
     "wes_version",
+    "config",
     "wes_run_version"
   ],
   "additionalProperties": false

@@ -11,6 +11,7 @@ from cidc_schemas.template import Template
 from cidc_schemas.template_reader import XlTemplateReader
 from cidc_schemas.template_writer import RowType
 from cidc_schemas.constants import SCHEMA_DIR
+from .merger import PRISM_MERGE_STRATEGIES, MergeCollisionException
 from jsonmerge import Merger, strategies, exceptions as jsonmerge_exceptions
 from jsonpointer import EndOfList, JsonPointer, JsonPointerException, resolve_pointer
 
@@ -500,9 +501,6 @@ class ParsingException(ValueError):
     pass
 
 
-PRISM_PRISMIFY_STRATEGIES = {"overwriteAny": strategies.Overwrite()}
-
-
 def prismify(
     xlsx: XlTemplateReader,
     template: Template,
@@ -639,7 +637,7 @@ def prismify(
         template_root_obj = root_ct_obj
 
     # and merger for it
-    root_ct_merger = Merger(root_ct_schema, strategies=PRISM_PRISMIFY_STRATEGIES)
+    root_ct_merger = Merger(root_ct_schema, strategies=PRISM_MERGE_STRATEGIES)
     # and where to collect all local file refs
     collected_files = []
 
@@ -669,7 +667,7 @@ def prismify(
             schema_root,
         )
         preamble_merger = Merger(
-            preamble_object_schema, strategies=PRISM_PRISMIFY_STRATEGIES
+            preamble_object_schema, strategies=PRISM_MERGE_STRATEGIES
         )
         preamble_object_pointer = templ_ws.get("prism_preamble_object_pointer", "")
         data_object_pointer = templ_ws["prism_data_object_pointer"]
@@ -730,8 +728,17 @@ def prismify(
                 logger.debug("  merging preambles")
                 logger.debug(f"   {preamble_obj}")
                 logger.debug(f"   {copy_of_preamble}")
-                preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
-                logger.debug(f"    merged - {preamble_obj}")
+                try:
+                    preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
+                    logger.debug(f"    merged - {preamble_obj}")
+                except MergeCollisionException as e:
+                    # Reformatting exception, because this mismatch happened within one template
+                    # and not with some saved stuff.
+                    wrapped = e.with_context(row=row.row_num, worksheet=ws_name)
+                    errors_so_far.append(wrapped)
+                    logger.info(
+                        f"    didn't merge - MergeCollisionException: {wrapped}"
+                    )
 
         # Now processing preamble rows
         logger.debug(f"  preamble for {ws_name!r}")
@@ -757,14 +764,12 @@ def prismify(
                 errors_so_far.append(e)
 
         # Now pushing it up / merging with the whole thing
-        copy_of_template_root = {}
-        _set_val(preamble_object_pointer, preamble_obj, copy_of_template_root)
+        copy_of_templ_root = {}
+        _set_val(preamble_object_pointer, preamble_obj, copy_of_templ_root)
         logger.debug("merging root objs")
         logger.debug(f" {template_root_obj}")
-        logger.debug(f" {copy_of_template_root}")
-        template_root_obj = root_ct_merger.merge(
-            template_root_obj, copy_of_template_root
-        )
+        logger.debug(f" {copy_of_templ_root}")
+        template_root_obj = root_ct_merger.merge(template_root_obj, copy_of_templ_root)
         logger.debug(f"  merged - {template_root_obj}")
 
     if template_root_obj_pointer != "":

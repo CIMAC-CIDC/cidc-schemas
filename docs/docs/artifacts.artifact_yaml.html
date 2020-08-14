@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>VCF Artifact</h1>
+        <h1>YAML Artifact</h1>
         <p>
-            <b>Description:</b>  Information about a VCF file.
+            <b>Description:</b>  Information about a YAML file.
         </p>
         
     </div>
@@ -128,7 +128,7 @@
     </td>
     <td>
         
-            &lt; const: <strong>VCF</strong> &gt;            
+            &lt; const: <strong>YAML</strong> &gt;            
         
     </td>
 </tr>
@@ -416,9 +416,9 @@
   </div>
 
   <div class="container">
-    <h3>artifact_vcf.full.json</h3>
+    <h3>artifact_yaml.full.json</h3>
   	<pre><code>{
-    "$id": "vcf_artifact",
+    "$id": "yaml_artifact",
     "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
     "allOf": [
@@ -551,7 +551,7 @@
             "type": "object"
         }
     ],
-    "description": "Information about a VCF file.",
+    "description": "Information about a YAML file.",
     "mergeStrategy": "objectMerge",
     "properties": {
         "artifact_category": {
@@ -578,7 +578,7 @@
             "type": "string"
         },
         "data_format": {
-            "const": "VCF",
+            "const": "YAML",
             "description": "Data format."
         },
         "file_name": {
@@ -621,7 +621,7 @@
             "type": "boolean"
         }
     },
-    "title": "VCF Artifact",
+    "title": "YAML Artifact",
     "type": "object"
 }</code></pre>
   </container>

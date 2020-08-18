@@ -1,5 +1,5 @@
 """Build metadata dictionaries from Excel files."""
-
+import re
 import json
 import logging
 import base64
@@ -334,8 +334,6 @@ def _process_field_value(
     else:
         # or set/update value in-place in data_obj dictionary
         pointer = field_def["merge_pointer"]
-        if field_def.get("is_artifact") == 1:
-            pointer += "/upload_placeholder"
 
         try:
             val, files = _calc_val_and_files(raw_val, field_def, format_context)
@@ -346,7 +344,24 @@ def _process_field_value(
                 f"Can't parse {key!r} value {str(raw_val)!r}: {e}"
             ) from e
 
-        changes = [_AtomicChange(pointer, val)]
+        if field_def.get("is_artifact"):
+            placeholder_pointer = pointer + "/upload_placeholder"
+            facet_group_pointer = pointer + "/facet_group"
+            changes = []
+            if isinstance(val, list):
+                for v in val:
+                    artifact_changes = [
+                        _AtomicChange(placeholder_pointer, v["upload_placeholder"]),
+                        _AtomicChange(facet_group_pointer, v["facet_group"]),
+                    ]
+                    changes.extend(artifact_changes)
+            else:
+                changes = [
+                    _AtomicChange(placeholder_pointer, val["upload_placeholder"]),
+                    _AtomicChange(facet_group_pointer, val["facet_group"]),
+                ]
+        else:
+            changes = [_AtomicChange(pointer, val)]
 
     # "process_as" allows to define additional places/ways to put that match
     # somewhere in the resulting doc, with additional processing.
@@ -391,7 +406,8 @@ def _get_file_ext(fname):
 
 def _format_single_artifact(
     local_path: str, uuid: str, field_def: dict, format_context: dict
-):
+) -> Tuple[LocalFileUploadEntry, str]:
+    """Return a LocalFileUploadEntry for this artifact, along with the artifact's facet group."""
     try:
         gcs_uri_format = field_def["gcs_uri_format"]
     except KeyError as e:
@@ -410,6 +426,7 @@ def _format_single_artifact(
 
         try:
             gs_key = eval(gcs_uri_format["format"])(local_path, format_context)
+            facet_group = _get_facet_group(gcs_uri_format["format"])
         except Exception as e:
             raise ValueError(
                 f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format['format']}: {e!r}"
@@ -418,6 +435,7 @@ def _format_single_artifact(
     elif isinstance(gcs_uri_format, str):
         try:
             gs_key = gcs_uri_format.format_map(format_context)
+            facet_group = _get_facet_group(gcs_uri_format)
         except KeyError as e:
             raise KeyError(
                 f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format}: {e!r}"
@@ -430,12 +448,24 @@ def _format_single_artifact(
                 f"Expected {'.' + expected_extension} for {field_def['key_name']!r} but got {'.' + provided_extension!r} instead."
             )
 
-    return LocalFileUploadEntry(
-        local_path=local_path,
-        gs_key=gs_key,
-        upload_placeholder=uuid,
-        metadata_availability=field_def.get("extra_metadata"),
+    return (
+        LocalFileUploadEntry(
+            local_path=local_path,
+            gs_key=gs_key,
+            upload_placeholder=uuid,
+            metadata_availability=field_def.get("extra_metadata"),
+        ),
+        facet_group,
     )
+
+
+def _get_facet_group(gcs_uri_format: str) -> str:
+    """"
+    Extract a file's facet group from its GCS URI format string by removing
+    the "format" parts.
+    """
+    format_part_regex = r"\{[^\/]*\}\/?"
+    return re.sub(format_part_regex, "", gcs_uri_format)
 
 
 def _calc_val_and_files(raw_val, field_def: dict, format_context: dict):
@@ -468,31 +498,33 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict):
             # Ignoring errors here as we're sure `coerce` will just return a uuid
             file_uuid = coerce(local_path)
 
-            val.append({"upload_placeholder": file_uuid})
-
-            files.append(
-                _format_single_artifact(
-                    local_path=local_path,
-                    uuid=file_uuid,
-                    field_def=field_def,
-                    format_context=dict(
-                        format_context,
-                        num=num  # add num to be able to generate
-                        # different gcs keys for each multi-artifact file.
-                    ),
-                )
+            artifact, facet_group = _format_single_artifact(
+                local_path=local_path,
+                uuid=file_uuid,
+                field_def=field_def,
+                format_context=dict(
+                    format_context,
+                    num=num  # add num to be able to generate
+                    # different gcs keys for each multi-artifact file.
+                ),
             )
+
+            val.append({"upload_placeholder": file_uuid, "facet_group": facet_group})
+
+            files.append(artifact)
 
     else:
         logger.debug(f"      collecting local_file_path {field_def}")
-        files.append(
-            _format_single_artifact(
-                local_path=raw_val,
-                uuid=val,
-                field_def=field_def,
-                format_context=format_context,
-            )
+        artifact, facet_group = _format_single_artifact(
+            local_path=raw_val,
+            uuid=val,
+            field_def=field_def,
+            format_context=format_context,
         )
+
+        val = {"upload_placeholder": val, "facet_group": facet_group}
+
+        files.append(artifact)
 
     return val, files
 

@@ -41,7 +41,10 @@
   "properties": {
     "additionalProperties": {
       "$comment": "overrides draft-07 definition",
-      "const": false
+      "enum": [
+        false,
+        true
+      ]
     },
     "inheritableBase": {
       "$comment": "Shows that a schema is an extensible 'abstract base' to inherit from and doesn't have `additionalProperties` set to false. No end user objects should be of that schema, only of something 'descendant' from it.",

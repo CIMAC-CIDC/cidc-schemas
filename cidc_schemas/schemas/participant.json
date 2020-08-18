@@ -67,6 +67,11 @@
         "Other"
       ]
     },
+    "trial_specific_not_harmonized_annotations" : {
+      "type": "object",
+      "additionalProperties": true,
+      "$comment": "Allowing arbitrary annotations"
+    },
     "samples": {
       "type": "array",
       "items": {

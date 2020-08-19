@@ -4,7 +4,8 @@ import json
 import logging
 import base64
 import hmac
-from typing import Any, List, NamedTuple, Tuple, Union, Optional
+from collections import defaultdict
+from typing import Any, List, NamedTuple, Tuple, Union, Optional, Dict
 
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template
@@ -344,22 +345,13 @@ def _process_field_value(
                 f"Can't parse {key!r} value {str(raw_val)!r}: {e}"
             ) from e
 
-        if field_def.get("is_artifact"):
+        if field_def.get("is_artifact") == 1:
             placeholder_pointer = pointer + "/upload_placeholder"
             facet_group_pointer = pointer + "/facet_group"
-            changes = []
-            if isinstance(val, list):
-                for v in val:
-                    artifact_changes = [
-                        _AtomicChange(placeholder_pointer, v["upload_placeholder"]),
-                        _AtomicChange(facet_group_pointer, v["facet_group"]),
-                    ]
-                    changes.extend(artifact_changes)
-            else:
-                changes = [
-                    _AtomicChange(placeholder_pointer, val["upload_placeholder"]),
-                    _AtomicChange(facet_group_pointer, val["facet_group"]),
-                ]
+            changes = [
+                _AtomicChange(placeholder_pointer, val["upload_placeholder"]),
+                _AtomicChange(facet_group_pointer, val["facet_group"]),
+            ]
         else:
             changes = [_AtomicChange(pointer, val)]
 
@@ -426,7 +418,7 @@ def _format_single_artifact(
 
         try:
             gs_key = eval(gcs_uri_format["format"])(local_path, format_context)
-            facet_group = _get_facet_group(gcs_uri_format["format"])
+            facet_group = _get_facet_group(gcs_uri_format["format"], is_lambda=True)
         except Exception as e:
             raise ValueError(
                 f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format['format']}: {e!r}"
@@ -459,13 +451,24 @@ def _format_single_artifact(
     )
 
 
-def _get_facet_group(gcs_uri_format: str) -> str:
+_empty_defaultdict: Dict[str, str] = defaultdict(str)
+
+
+def _get_facet_group(gcs_uri_format: str, is_lambda: bool = False) -> str:
     """"
     Extract a file's facet group from its GCS URI format string by removing
     the "format" parts.
     """
-    format_part_regex = r"\{[^\/]*\}\/?"
-    return re.sub(format_part_regex, "", gcs_uri_format)
+    # Provide empty strings for a;; GCS URI formatter variables
+    if is_lambda:
+        fmted_string = eval(gcs_uri_format)("", _empty_defaultdict)
+    else:
+        fmted_string = gcs_uri_format.format_map(_empty_defaultdict)
+
+    # Clear any double slashes
+    facet_group = re.sub(r"\/\/*", "/", fmted_string)
+
+    return facet_group
 
 
 def _calc_val_and_files(raw_val, field_def: dict, format_context: dict):
@@ -483,6 +486,7 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict):
 
     # deal with multi-artifact
     if field_def["is_artifact"] == "multi":
+        print("multi")
         logger.debug(f"      collecting multi local_file_path {field_def}")
 
         # In case of is_aritfact=multi we expect the value to be a comma-separated
@@ -514,6 +518,7 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict):
             files.append(artifact)
 
     else:
+        print("non-multi")
         logger.debug(f"      collecting local_file_path {field_def}")
         artifact, facet_group = _format_single_artifact(
             local_path=raw_val,
@@ -525,6 +530,8 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict):
         val = {"upload_placeholder": val, "facet_group": facet_group}
 
         files.append(artifact)
+
+    print(val)
 
     return val, files
 

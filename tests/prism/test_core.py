@@ -650,7 +650,15 @@ def test_prism_do_not_merge(monkeypatch):
     patch["authors"][0]["artifact"]["upload_placeholder"] = "123"
 
     assert patch == {
-        "authors": [{"author_id": "111", "artifact": {"upload_placeholder": "123"}}]
+        "authors": [
+            {
+                "author_id": "111",
+                "artifact": {
+                    "upload_placeholder": "123",
+                    "facet_group": "/artifact.txt",
+                },
+            }
+        ]
     }
 
 

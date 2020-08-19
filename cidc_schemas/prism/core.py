@@ -418,7 +418,7 @@ def _format_single_artifact(
 
         try:
             gs_key = eval(gcs_uri_format["format"])(local_path, format_context)
-            facet_group = _get_facet_group(gcs_uri_format["format"], is_lambda=True)
+            facet_group = _get_facet_group(gcs_uri_format["format"])
         except Exception as e:
             raise ValueError(
                 f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format['format']}: {e!r}"
@@ -454,15 +454,17 @@ def _format_single_artifact(
 _empty_defaultdict: Dict[str, str] = defaultdict(str)
 
 
-def _get_facet_group(gcs_uri_format: str, is_lambda: bool = False) -> str:
+def _get_facet_group(gcs_uri_format: str) -> str:
     """"
     Extract a file's facet group from its GCS URI format string by removing
     the "format" parts.
     """
-    # Provide empty strings for a;; GCS URI formatter variables
-    if is_lambda:
+    # Provide empty strings for a GCS URI formatter variables
+    try:
+        # First, attempt to call the format string as a lambda
         fmted_string = eval(gcs_uri_format)("", _empty_defaultdict)
-    else:
+    except:
+        # Fall back to string interpolation via format_map
         fmted_string = gcs_uri_format.format_map(_empty_defaultdict)
 
     # Clear any double slashes

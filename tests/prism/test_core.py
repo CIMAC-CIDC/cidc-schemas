@@ -96,6 +96,15 @@ def test_process_property():
         core._process_property(prop, "123", {prop: prop_def}, {}, {})
 
 
+def test_get_facet_group():
+    """Check that the _get_facet_group helper function produces facet groups as expected"""
+    test_lambda = "lambda val, ctx: '/some/' + str(ctx['foo']) + '/' + val + '_bar.csv'"
+    assert core._get_facet_group(test_lambda) == "/some/_bar.csv"
+
+    test_fmt_string = "/some/{a_b}/{c-d}/foo/{buzz123}/{OK}_bar.csv"
+    assert core._get_facet_group(test_fmt_string) == "/some/foo/_bar.csv"
+
+
 #### END HELPER FUNCTION TESTS ####
 
 

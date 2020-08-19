@@ -259,7 +259,7 @@ def _process_property(
     # coerce value
     try:
         field_def = key_lu[key.lower()]
-    except Exception:
+    except KeyError:
         raise ParsingException(f"Unexpected property {key!r}.")
 
     logger.debug(f"      found def {field_def}")

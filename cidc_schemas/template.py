@@ -9,7 +9,7 @@ import uuid
 import json
 import jsonschema
 from typing import List, Optional, Dict, BinaryIO, Union
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 
 from .constants import SCHEMA_DIR, TEMPLATE_DIR
 from .json_validation import _load_dont_validate_schema
@@ -192,6 +192,35 @@ class Template:
         else:
             raise NotImplementedError(f"no coercion available for type:{t}")
 
+    def _add_coerce(self, field_def: dict) -> dict:
+        """ Checks if we have a cast func for that 'type_ref' """
+        if "type_ref" in field_def or "$ref" in field_def:
+            coerce = self._get_ref_coerce(
+                field_def.get("type_ref") or field_def["$ref"]
+            )
+        elif "type" in field_def:
+            if "$id" in field_def:
+                coerce = self._get_coerce(field_def["type"], field_def["$id"])
+            else:
+                coerce = self._get_coerce(field_def["type"])
+        else:
+            raise Exception(
+                f'Either "type" or "type_ref" or "$ref should be present '
+                f"in each template schema field def, but not found in {field_def!r}"
+            )
+
+        if "process_as" in field_def:
+
+            # recursively _add_coerce to each sub 'process_as' item
+            for extra_fdef in field_def["process_as"]:
+                extra_fdef.update(
+                    # adding "key_name" from parent field_def
+                    # so we later know what template column this came from
+                    dict(self._add_coerce(extra_fdef), key_name=field_def["key_name"])
+                )
+
+        return dict(coerce=coerce, **field_def)
+
     def _load_keylookup(self) -> dict:
         """
         The excel spreadsheet uses human friendly (no _) names
@@ -207,36 +236,10 @@ class Template:
         """
 
         # create a key lookup dictionary
-        key_lu = {}
-
-        def _add_coerce(field_def: dict) -> dict:
-            """ Checks if we have a cast func for that 'type_ref' """
-            if "type_ref" in field_def or "$ref" in field_def:
-                coerce = self._get_ref_coerce(
-                    field_def.get("type_ref") or field_def["$ref"]
-                )
-            elif "type" in field_def:
-                if "$id" in field_def:
-                    coerce = self._get_coerce(field_def["type"], field_def["$id"])
-                else:
-                    coerce = self._get_coerce(field_def["type"])
-            else:
-                raise Exception(
-                    f'Either "type" or "type_ref" or "$ref should be present '
-                    f"in each template schema field def, but not found in {field_def!r}"
-                )
-
-            if "process_as" in field_def:
-
-                # recursively _add_coerce to each sub 'process_as' item
-                for extra_fdef in field_def["process_as"]:
-                    extra_fdef.update(
-                        # adding "key_name" from parent field_def
-                        # so we later know what template column this came from
-                        dict(_add_coerce(extra_fdef), key_name=field_def["key_name"])
-                    )
-
-            return dict(coerce=coerce, **field_def)
+        if self.schema.get("allow_arbitrary_data_columns"):
+            key_lu = defaultdict(lambda: dict(coerce=lambda x: x))
+        else:
+            key_lu = {}
 
         # loop over each worksheet
         for ws_name, ws_schema in self.worksheets.items():
@@ -248,7 +251,7 @@ class Template:
 
                 # populate lookup
                 # TODO .lower() ?
-                key_lu[preamble_key] = _add_coerce(
+                key_lu[preamble_key] = self._add_coerce(
                     dict(preamble_def, key_name=preamble_key)
                 )
                 # we expect preamble_def from `_template.json` have 2 fields
@@ -260,7 +263,7 @@ class Template:
 
                     # populate lookup
                     # TODO .lower() ?
-                    key_lu[column_key] = _add_coerce(
+                    key_lu[column_key] = self._add_coerce(
                         dict(column_def, key_name=column_key)
                     )
                     # we expect column_def from `_template.json` have 2 fields

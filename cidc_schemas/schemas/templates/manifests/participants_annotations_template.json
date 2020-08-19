@@ -1,6 +1,7 @@
 {
     "title": "Metadata manifest for trail specific participant annotations.",
     "description": "Metadata manifest for trail specific participant annotations.",
+    "allow_arbitrary_data_columns": true,
     "properties": {
         "worksheets": {
 
@@ -22,6 +23,7 @@
                         }
                     }
                 }
+
             }
         }
     }

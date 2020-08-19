@@ -488,7 +488,6 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict):
 
     # deal with multi-artifact
     if field_def["is_artifact"] == "multi":
-        print("multi")
         logger.debug(f"      collecting multi local_file_path {field_def}")
 
         # In case of is_aritfact=multi we expect the value to be a comma-separated
@@ -520,7 +519,6 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict):
             files.append(artifact)
 
     else:
-        print("non-multi")
         logger.debug(f"      collecting local_file_path {field_def}")
         artifact, facet_group = _format_single_artifact(
             local_path=raw_val,
@@ -532,8 +530,6 @@ def _calc_val_and_files(raw_val, field_def: dict, format_context: dict):
         val = {"upload_placeholder": val, "facet_group": facet_group}
 
         files.append(artifact)
-
-    print(val)
 
     return val, files
 

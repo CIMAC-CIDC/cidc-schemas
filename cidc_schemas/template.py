@@ -8,7 +8,17 @@ import logging
 import uuid
 import json
 import jsonschema
-from typing import List, Optional, Dict, BinaryIO, Union
+from typing import (
+    List,
+    Optional,
+    Dict,
+    BinaryIO,
+    Union,
+    NamedTuple,
+    Any,
+    Tuple,
+    Callable,
+)
 from collections import OrderedDict, defaultdict
 
 from .constants import SCHEMA_DIR, TEMPLATE_DIR
@@ -63,6 +73,166 @@ def generate_all_templates(target_dir: str):
                     template_xlsx_file = template_schema_file.replace(".json", ".xlsx")
                     target_path = os.path.join(target_subdir, template_xlsx_file)
                     generate_empty_template(schema_path, target_path)
+
+
+class AtomicChange(NamedTuple):
+    """
+    Represents exactly one "value set" operation on some data object
+    `Pointer` being a json-pointer string showing where to set `value` to.
+    """
+
+    pointer: str
+    value: Any
+
+
+class LocalFileUploadEntry(NamedTuple):
+    local_path: str
+    gs_key: str
+    upload_placeholder: str
+    metadata_availability: Optional[bool]
+
+
+class _FieldDef(NamedTuple):
+    """
+    Represents all the specs on processing a specific value 
+    """
+
+    key_name: str
+    # TODO unwrap local_file
+    gcs_uri_format: Union[str, dict]
+    extra_metadata: bool
+    coerce: Callable
+    description: str
+    type: str
+    # # TODO join type and type_ref by resolving ref
+    # type_ref: str
+    merge_pointer: str
+    enum: Any
+    format: Any
+    example: Any
+    # TODO remove?
+    in_doc_ref_pattern: str
+    parse_through: str
+    do_not_merge: bool
+    allow_empty: bool
+
+
+class ParsingException(ValueError):
+    pass
+
+
+def _format_single_artifact(
+    local_path: str, uuid: str, field_def: _FieldDef, format_context: dict
+) -> Tuple[LocalFileUploadEntry, str]:
+    """Return a LocalFileUploadEntry for this artifact, along with the artifact's facet group."""
+
+    # TODO move these check (for `is_artifact`s to template reading)
+    if not field_def.gcs_uri_format:
+        raise Exception(f"Empty gcs_uri_format for {field_def.key_name!r}") from e
+    if not isinstance(gcs_uri_format, (dict, str)):
+        raise Exception(f"Unsupported gcs_uri_format for {field_def.key_name!r}")
+
+    if isinstance(gcs_uri_format, dict):
+        if "check_errors" in gcs_uri_format:
+            # `eval` should be fine, as we're controlling the code argument in templates
+            err = eval(gcs_uri_format["check_errors"])(local_path)
+            if err:
+                raise ParsingException(err)
+
+        try:
+            gs_key = eval(gcs_uri_format["format"])(local_path, format_context)
+            facet_group = _get_facet_group(gcs_uri_format["format"])
+        except Exception as e:
+            raise ParsingException(
+                f"Can't format gcs uri for {field_def.key_name!r}: {gcs_uri_format['format']}: {e!r}"
+            )
+
+    elif isinstance(gcs_uri_format, str):
+        try:
+            gs_key = gcs_uri_format.format_map(format_context)
+            facet_group = _get_facet_group(gcs_uri_format)
+        except KeyError as e:
+            raise ParsingException(
+                f"Can't format gcs uri for {field_def.key_name!r}: {gcs_uri_format}: {e!r}"
+            )
+
+        expected_extension = _get_file_ext(gs_key)
+        provided_extension = _get_file_ext(local_path)
+        if provided_extension != expected_extension:
+            raise ParsingException(
+                f"Expected {'.' + expected_extension} for {field_def.key_name!r} but got {'.' + provided_extension!r} instead."
+            )
+
+    return (
+        LocalFileUploadEntry(
+            local_path=local_path,
+            gs_key=gs_key,
+            upload_placeholder=uuid,
+            metadata_availability=field_def.extra_metadata,
+        ),
+        facet_group,
+    )
+
+
+def _calc_val_and_files(raw_val, field_def: _FieldDef, format_context: dict):
+    """
+    Processes one field value based on field_def taken from a ..._template.json schema.
+    Calculates a value and (if there's 'is_artifact') a file upload entry.
+    """
+
+    coerce = field_def.coerce
+    val = coerce(raw_val)
+    files = []
+
+    if not field_def.get("is_artifact"):
+        return val, files  # no files if it's not an artifact
+
+    # deal with multi-artifact
+    if field_def["is_artifact"] == "multi":
+        logger.debug(f"      collecting multi local_file_path {field_def}")
+
+        # In case of is_aritfact=multi we expect the value to be a comma-separated
+        # list of local_file paths (that we will convert to uuids)
+        # and also for the corresponding DM schema to be an array of artifacts
+        # that we will fill with upload_placeholder uuids
+
+        # So our value is a list of artifact placeholders
+        val = []
+
+        # and we iterate through local file paths:
+        for num, local_path in enumerate(raw_val.split(",")):
+            # Ignoring errors here as we're sure `coerce` will just return a uuid
+            file_uuid = coerce(local_path)
+
+            artifact, facet_group = _format_single_artifact(
+                local_path=local_path,
+                uuid=file_uuid,
+                field_def=field_def,
+                format_context=dict(
+                    format_context,
+                    num=num  # add num to be able to generate
+                    # different gcs keys for each multi-artifact file.
+                ),
+            )
+
+            val.append({"upload_placeholder": file_uuid, "facet_group": facet_group})
+
+            files.append(artifact)
+
+    else:
+        logger.debug(f"Collecting local_file_path {field_def}")
+        artifact, facet_group = _format_single_artifact(
+            local_path=raw_val,
+            uuid=val,
+            field_def=field_def,
+            format_context=format_context,
+        )
+
+        val = {"upload_placeholder": val, "facet_group": facet_group}
+
+        files.append(artifact)
+
+    return val, files
 
 
 class Template:
@@ -194,32 +364,69 @@ class Template:
 
     def _add_coerce(self, field_def: dict) -> dict:
         """ Checks if we have a cast func for that 'type_ref' """
-        if "type_ref" in field_def or "$ref" in field_def:
-            coerce = self._get_ref_coerce(
-                field_def.get("type_ref") or field_def["$ref"]
-            )
+
+        orig_fdef = dict(field_def)
+
+        if "type_ref" in field_def:
+            coerce = self._get_ref_coerce(field_def.pop("type_ref"))
+        elif "ref" in field_def:
+            coerce = self._get_ref_coerce(field_def.pop("ref"))
         elif "type" in field_def:
-            if "$id" in field_def:
-                coerce = self._get_coerce(field_def["type"], field_def["$id"])
-            else:
-                coerce = self._get_coerce(field_def["type"])
+            coerce = self._get_coerce(field_def.pop("type"), field_def.pop("$id", None))
+        elif field_def.get("do_not_merge"):
+
+            def c(v):
+                raise Exception("Should not have been merged as for `do_not_merge`")
+
+            coerce = c
+
         else:
             raise Exception(
                 f'Either "type" or "type_ref" or "$ref should be present '
-                f"in each template schema field def, but not found in {field_def!r}"
+                f"in each template schema field def, but not found in {orig_fdef!r}"
             )
 
-        if "process_as" in field_def:
-
-            # recursively _add_coerce to each sub 'process_as' item
-            for extra_fdef in field_def["process_as"]:
-                extra_fdef.update(
-                    # adding "key_name" from parent field_def
-                    # so we later know what template column this came from
-                    dict(self._add_coerce(extra_fdef), key_name=field_def["key_name"])
-                )
-
         return dict(coerce=coerce, **field_def)
+
+    def _load_f_defs(self, key_name, def_dict):
+        # TODO check types, add defaults ?
+
+        def_dict = dict(def_dict)  # so we don't mutate original
+        def_dict.pop("$comment", None)
+        def_dict.pop("pattern", None)
+        def_dict.pop("title", None)
+        process_as = def_dict.pop("process_as", None)
+
+        try:
+            with_coerce = self._add_coerce(def_dict)
+        except Exception as e:
+            raise Exception(f"{key_name!r} " + str(e))
+
+        res = [
+            _FieldDef(
+                key_name=key_name,
+                gcs_uri_format=with_coerce.pop("gcs_uri_format", None),
+                extra_metadata=with_coerce.pop("extra_metadata", None),
+                enum=with_coerce.pop("enum", None),
+                format=with_coerce.pop("format", None),
+                description=with_coerce.pop("description", None),
+                type=with_coerce.pop("type", None),
+                example=with_coerce.pop("example", None),
+                in_doc_ref_pattern=with_coerce.pop("in_doc_ref_pattern", None),
+                parse_through=with_coerce.pop("parse_through", None),
+                do_not_merge=with_coerce.pop("do_not_merge", None),
+                allow_empty=with_coerce.pop("allow_empty", None),
+                merge_pointer=with_coerce.pop("merge_pointer", None),
+                **with_coerce,
+            )
+        ]
+
+        if process_as:
+            # recursively _add_coerce to each sub 'process_as' item
+            for extra_fdef in process_as:
+                res.extend(self._load_f_defs(key_name, extra_fdef))
+
+        return res
 
     def _load_keylookup(self) -> dict:
         """
@@ -249,27 +456,106 @@ class Template:
                 "preamble_rows", {}
             ).items():
 
-                # populate lookup
                 # TODO .lower() ?
-                key_lu[preamble_key] = self._add_coerce(
-                    dict(preamble_def, key_name=preamble_key)
-                )
-                # we expect preamble_def from `_template.json` have 2 fields
-                # (as for template.schema) - "merge_pointer" and "type_ref"
+                key_lu[preamble_key] = self._load_f_defs(preamble_key, preamble_def)
 
             # load the data columns
             for section_key, section_def in ws_schema.get("data_columns", {}).items():
                 for column_key, column_def in section_def.items():
 
-                    # populate lookup
                     # TODO .lower() ?
-                    key_lu[column_key] = self._add_coerce(
-                        dict(column_def, key_name=column_key)
-                    )
-                    # we expect column_def from `_template.json` have 2 fields
-                    # (as for template.schema) - "merge_pointer" and "type_ref"
+                    key_lu[column_key] = self._load_f_defs(column_key, column_def)
 
         return key_lu
+
+    def process_field_value(
+        self, key: str, raw_val, format_context: dict
+    ) -> Tuple[List[AtomicChange], List[LocalFileUploadEntry]]:
+        """
+        Processes one field value based on field_def taken from a template schema.
+        Calculates a list of `AtomicChange`s within a context object
+        and a list of file upload entries.
+        A list of values and not just one value might arise from a `process_as` section
+        in template schema, that allows for multi-processing of a single cell value.
+        """
+
+        logger.debug(f"Processing property {key!r} - {raw_val!r}")
+        try:
+            field_defs = self.key_lu[key.lower()]
+        except KeyError:
+            raise ParsingException(f"Unexpected property {key!r}.")
+
+        logger.debug(f"Found def {field_def}")
+
+        changes, files = [], []
+
+        # skip nullable
+        if field_def.get("allow_empty"):
+            if raw_val is None:
+                return changes, files
+
+        if field_def.get("do_not_merge") == True:
+            logger.debug(
+                f"Ignoring {field_def.key_name!r} due to 'do_not_merge' == True"
+            )
+        else:
+            # or set/update value in-place in data_obj dictionary
+            pointer = field_def["merge_pointer"]
+
+            try:
+                val, files = _calc_val_and_files(raw_val, field_def, format_context)
+            except ParsingException:
+                raise
+            except Exception as e:
+                raise ParsingException(
+                    f"Can't parse {key!r} value {str(raw_val)!r}: {e}"
+                ) from e
+
+            if field_def.get("is_artifact") == 1:
+                placeholder_pointer = pointer + "/upload_placeholder"
+                facet_group_pointer = pointer + "/facet_group"
+                changes = [
+                    AtomicChange(placeholder_pointer, val["upload_placeholder"]),
+                    AtomicChange(facet_group_pointer, val["facet_group"]),
+                ]
+            else:
+                changes = [AtomicChange(pointer, val)]
+
+        # "process_as" allows to define additional places/ways to put that match
+        # somewhere in the resulting doc, with additional processing.
+        # E.g. we need to strip cimac_id='CM-TEST-0001-01' to 'CM-TEST-0001'
+        # and put it in this sample parent's cimac_participant_id
+        if "process_as" in field_def:
+            for extra_fdef in field_def["process_as"]:
+                # Calculating new "raw" val.
+                extra_fdef_raw_val = raw_val
+
+                # `eval` should be fine, as we're controlling the code argument in templates
+                if "parse_through" in extra_fdef:
+                    try:
+                        extra_fdef_raw_val = eval(
+                            extra_fdef["parse_through"], {"encrypt": _encrypt}
+                        )(raw_val)
+
+                    # catching everything, because of eval
+                    except Exception as e:
+                        extra_field_key = extra_fdef["merge_pointer"].rsplit("/", 1)[-1]
+                        raise ParsingException(
+                            f"Cannot extract {extra_field_key} from {key} value: {raw_val!r}"
+                        )
+
+                # recursive call
+                extra_changes, extra_files = _process_field_value(
+                    key=key,
+                    raw_val=extra_fdef_raw_val,  # new "raw" val
+                    field_def=extra_fdef,  # merged field_def
+                    format_context=format_context,
+                )
+
+                files.extend(extra_files)
+                changes.extend(extra_changes)
+
+        return changes, files
 
     # XlTemplateReader only knows how to format these types of sections
     VALID_WS_SECTIONS = set(

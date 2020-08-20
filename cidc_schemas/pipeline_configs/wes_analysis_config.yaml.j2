@@ -57,7 +57,7 @@ cores: 32
 disk_size: 750
 # the name of the persistent disk will be: "wes_auto_{instance_name}_disk"
 
-# CIMAC center sample source
+# CIMAC center the samples associate with
 # Options- broad, mda
 cimac_center:
   # bam
@@ -68,14 +68,19 @@ cimac_center:
   - mda
 {% endif %}
 
-
-# Somatic caller preference
+# Somatic variant caller preference
 # Options- tnscope (default), tnsnv, tnhaplotyper2
 somatic_caller: tnscope
 
 # IGNORED Path to the google bucket path for the run
 # google_bucket_path: gs://...
 
-# Specific wes commit string to use
+# Specific wes commit string to use (filled by pipeline team)
 # wes_commit: 44b17ff
 wes_commit: develop
+
+# Specific wes google image to use (filled by pipeline team)
+# image:
+
+# Specific wes reference snapshot to use (filled by pipeline team)
+# wes_ref_snapshot:

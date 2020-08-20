@@ -180,15 +180,15 @@ def _calc_val_and_files(raw_val, field_def: _FieldDef, format_context: dict):
     Calculates a value and (if there's 'is_artifact') a file upload entry.
     """
 
-    coerce = field_def.coerce
-    val = coerce(raw_val)
+    val = field_def.coerce(raw_val)
+
+    if not field_def.is_artifact:
+        return val, []  # no files if it's not an artifact
+
     files = []
 
-    if not field_def.get("is_artifact"):
-        return val, files  # no files if it's not an artifact
-
     # deal with multi-artifact
-    if field_def["is_artifact"] == "multi":
+    if field_def.is_artifact == "multi":
         logger.debug(f"      collecting multi local_file_path {field_def}")
 
         # In case of is_aritfact=multi we expect the value to be a comma-separated
@@ -373,7 +373,7 @@ class Template:
             coerce = self._get_ref_coerce(field_def.pop("ref"))
         elif "type" in field_def:
             coerce = self._get_coerce(field_def.pop("type"), field_def.pop("$id", None))
-        elif field_def.get("do_not_merge"):
+        elif field_def.do_not_merge:
 
             def c(v):
                 raise Exception("Should not have been merged as for `do_not_merge`")
@@ -485,77 +485,93 @@ class Template:
         except KeyError:
             raise ParsingException(f"Unexpected property {key!r}.")
 
-        logger.debug(f"Found def {field_def}")
+        logger.debug(f"Found field {len(field_defs)} defs")
 
         changes, files = [], []
+        for f_def in field_defs:
+            chs, fs = self._process_one_field_def(key, raw_val, f_def, format_context)
+
+            changes.extend(chs)
+            fs.extend(fs)
+
+        return changes, files
+
+    def _process_one_field_def(
+        self, key: str, raw_val, field_def: _FieldDef, format_context: dict
+    ) -> Tuple[List[AtomicChange], List[LocalFileUploadEntry]]:
+
+        logger.debug(f"Processing field spec: {field_def}")
 
         # skip nullable
-        if field_def.get("allow_empty"):
+        if field_def.allow_empty:
             if raw_val is None:
-                return changes, files
+                return [], []
 
-        if field_def.get("do_not_merge") == True:
+        if field_def.do_not_merge:
             logger.debug(
                 f"Ignoring {field_def.key_name!r} due to 'do_not_merge' == True"
             )
-        else:
-            # or set/update value in-place in data_obj dictionary
-            pointer = field_def["merge_pointer"]
+            return [], []
 
-            try:
-                val, files = _calc_val_and_files(raw_val, field_def, format_context)
-            except ParsingException:
-                raise
-            except Exception as e:
-                raise ParsingException(
-                    f"Can't parse {key!r} value {str(raw_val)!r}: {e}"
-                ) from e
+        # or set/update value in-place in data_obj dictionary
 
-            if field_def.get("is_artifact") == 1:
-                placeholder_pointer = pointer + "/upload_placeholder"
-                facet_group_pointer = pointer + "/facet_group"
-                changes = [
+        try:
+            val, files = _calc_val_and_files(raw_val, field_def, format_context)
+        except ParsingException:
+            raise
+        except Exception as e:
+            raise ParsingException(
+                f"Can't parse {key!r} value {str(raw_val)!r}: {e}"
+            ) from e
+
+        if field_def.is_artifact:
+            placeholder_pointer = field_def.merge_pointer + "/upload_placeholder"
+            facet_group_pointer = field_def.merge_pointer + "/facet_group"
+            return (
+                [
                     AtomicChange(placeholder_pointer, val["upload_placeholder"]),
                     AtomicChange(facet_group_pointer, val["facet_group"]),
-                ]
-            else:
-                changes = [AtomicChange(pointer, val)]
+                ],
+                files,
+            )
+        else:
+            return [AtomicChange(field_def.merge_pointer, val)], files
 
-        # "process_as" allows to define additional places/ways to put that match
-        # somewhere in the resulting doc, with additional processing.
-        # E.g. we need to strip cimac_id='CM-TEST-0001-01' to 'CM-TEST-0001'
-        # and put it in this sample parent's cimac_participant_id
-        if "process_as" in field_def:
-            for extra_fdef in field_def["process_as"]:
-                # Calculating new "raw" val.
-                extra_fdef_raw_val = raw_val
+        # # "process_as" allows to define additional places/ways to put that match
+        # # somewhere in the resulting doc, with additional processing.
+        # # E.g. we need to strip cimac_id='CM-TEST-0001-01' to 'CM-TEST-0001'
+        # # and put it in this sample parent's cimac_participant_id
+        # if "process_as" in field_def:
+        #     for extra_fdef in field_def["process_as"]:
+        #         # Calculating new "raw" val.
+        #         extra_fdef_raw_val = raw_val
 
-                # `eval` should be fine, as we're controlling the code argument in templates
-                if "parse_through" in extra_fdef:
-                    try:
-                        extra_fdef_raw_val = eval(
-                            extra_fdef["parse_through"], {"encrypt": _encrypt}
-                        )(raw_val)
+        #         # `eval` should be fine, as we're controlling the code argument in templates
+        #         if "parse_through" in extra_fdef:
+        #             try:
+        #                 extra_fdef_raw_val = eval(
+        #                     extra_fdef["parse_through"], {"encrypt": _encrypt}
+        #                 )(raw_val)
 
-                    # catching everything, because of eval
-                    except Exception as e:
-                        extra_field_key = extra_fdef["merge_pointer"].rsplit("/", 1)[-1]
-                        raise ParsingException(
-                            f"Cannot extract {extra_field_key} from {key} value: {raw_val!r}"
-                        )
+        #             # catching everything, because of eval
+        #             except Exception as e:
+        #                 extra_field_key = extra_fdef["merge_pointer"].rsplit("/", 1)[-1]
+        #                 raise ParsingException(
+        #                     f"Cannot extract {extra_field_key} from {key} value: {raw_val!r}"
+        #                 )
 
-                # recursive call
-                extra_changes, extra_files = _process_field_value(
-                    key=key,
-                    raw_val=extra_fdef_raw_val,  # new "raw" val
-                    field_def=extra_fdef,  # merged field_def
-                    format_context=format_context,
-                )
+        #         # recursive call
+        #         extra_changes, extra_files = _process_field_value(
+        #             key=key,
+        #             raw_val=extra_fdef_raw_val,  # new "raw" val
+        #             field_def=extra_fdef,  # merged field_def
+        #             format_context=format_context,
+        #         )
 
-                files.extend(extra_files)
-                changes.extend(extra_changes)
+        #         files.extend(extra_files)
+        #         changes.extend(extra_changes)
 
-        return changes, files
+        # return changes, files
 
     # XlTemplateReader only knows how to format these types of sections
     VALID_WS_SECTIONS = set(

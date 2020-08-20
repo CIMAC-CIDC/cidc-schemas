@@ -499,9 +499,9 @@ def prismify(
                     combined_context = dict(local_context, **preamble_context)
                     try:
                         changes, new_files = template.process_field_value(
-                            key, raw_val, combined_context
+                            key, val, combined_context
                         )
-                    except TemplatingException as e:
+                    except ParsingException as e:
                         errors_so_far.append(e)
                     else:
                         _apply_changes(
@@ -526,7 +526,7 @@ def prismify(
                 changes, new_files = template.process_field_value(
                     k, v, preamble_context
                 )
-            except TemplatingException as e:
+            except ParsingException as e:
                 errors_so_far.append(e)
             else:
                 # TODO we might want to use copy+preamble_merger here too,

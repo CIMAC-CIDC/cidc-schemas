@@ -32,10 +32,13 @@ def assert_metadata_matches(received: dict, expected: dict, upload_entries: list
     # upload entries.
     diff = DeepDiff(expected, received)
     if upload_entries and diff:
-        assert len(diff) == 1  # only "values_changed"
+        assert len(diff) == 2  # only "values_changed" and "dictionary_item_added"
+        assert len(diff["dictionary_item_added"]) == len(upload_entries)
         assert len(diff["values_changed"]) == len(upload_entries)
-        for key in diff["values_changed"].keys():
-            assert key.endswith("['upload_placeholder']")
+        for changed_key in diff["values_changed"].keys():
+            assert changed_key.endswith("['upload_placeholder']")
+        for new_key in diff["dictionary_item_added"]:
+            assert new_key.endswith("['facet_group']")
     else:
         # For manifest uploads, we expect no artifacts, so there should
         # be no difference between expected and received trial objects.

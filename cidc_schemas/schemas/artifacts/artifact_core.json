@@ -86,8 +86,13 @@
         "FCS",
         "GZ",
         "JSON",
+        "YAML",
         "[NOT SET]"
       ]
+    },
+    "facet_group": {
+      "description": "The internal data category for this artifact",
+      "type": "string"
     }
   },
   "anyOf": [

@@ -7,10 +7,22 @@
   "properties": {
     "wes_version": {
       "$ref": "artifacts/artifact_text.json"
+    },
+    "config": {
+      "$ref": "artifacts/artifact_yaml.json"
+    },
+    "wes_run_version": {
+      "$ref": "artifacts/artifact_tsv.json"
+    },
+    "metasheet": {
+      "$ref": "artifacts/artifact_csv.json"
     }
   },
   "required": [
-  "wes_version"
+    "wes_version",
+    "config",
+    "wes_run_version",
+    "metasheet"
   ],
   "additionalProperties": false
 }

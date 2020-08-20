@@ -1,14 +1,14 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
-  "$id": "json_artifact",
-  "title": "JSON Artifact",
+  "$id": "yaml_artifact",
+  "title": "YAML Artifact",
   "type": "object",
-  "description": "Information about a JSON file.",
+  "description": "Information about a YAML file.",
   "additionalProperties": false,
   "properties": {
     "data_format": {
       "description": "Data format.",
-      "const": "JSON"
+      "const": "YAML"
     },
     "upload_placeholder": {
       "$ref": "artifacts/artifact_core.json#properties/upload_placeholder"

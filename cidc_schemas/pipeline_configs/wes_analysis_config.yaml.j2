@@ -60,11 +60,11 @@ disk_size: 750
 # CIMAC center the samples associate with
 # Options- broad, mda
 cimac_center:
-  # bam
 {% if normal_sample.files.bam or tumor_sample.files.bam %}
+  # bam
   - broad
-  # fastq or fastq.gz
 {% else %}
+  # fastq or fastq.gz
   - mda
 {% endif %}
 
@@ -76,8 +76,7 @@ somatic_caller: tnscope
 # google_bucket_path: gs://...
 
 # Specific wes commit string to use (filled by pipeline team)
-# wes_commit: 44b17ff
-wes_commit: develop
+# wes_commit:
 
 # Specific wes google image to use (filled by pipeline team)
 # image:

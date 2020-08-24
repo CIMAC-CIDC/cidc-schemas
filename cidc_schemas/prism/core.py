@@ -499,7 +499,7 @@ def prismify(
                     combined_context = dict(local_context, **preamble_context)
                     try:
                         changes, new_files = template.process_field_value(
-                            key, val, combined_context
+                            key, val, combined_context, {"encrypt": _encrypt}
                         )
                     except ParsingException as e:
                         errors_so_far.append(e)
@@ -524,7 +524,7 @@ def prismify(
             k, v, *_ = row.values
             try:
                 changes, new_files = template.process_field_value(
-                    k, v, preamble_context
+                    k, v, preamble_context, {"encrypt": _encrypt}
                 )
             except ParsingException as e:
                 errors_so_far.append(e)
@@ -532,7 +532,10 @@ def prismify(
                 # TODO we might want to use copy+preamble_merger here too,
                 # to for complex properties that require mergeStrategy
                 _apply_changes(
-                    changes, preamble_obj, root_ct_obj, template_root_obj_pointer
+                    changes,
+                    preamble_obj,
+                    root_ct_obj,
+                    template_root_obj_pointer + preamble_object_pointer,
                 )
                 collected_files.extend(new_files)
 

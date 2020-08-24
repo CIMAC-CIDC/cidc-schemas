@@ -14,7 +14,7 @@ from cidc_schemas.prism import (
 from .cidc_test_data import list_test_data, PrismTestData
 
 
-@pytest.fixture(params=list_test_data())
+@pytest.fixture(params=list_test_data(), ids=lambda ptd: ptd.upload_type)
 def prism_test(request):
     return request.param
 

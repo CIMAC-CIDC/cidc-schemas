@@ -12,5 +12,3 @@ def list_test_data():
     ]
     for generator in generators:
         yield generator()
-
-        return

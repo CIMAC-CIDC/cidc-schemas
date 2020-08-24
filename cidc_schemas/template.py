@@ -116,6 +116,8 @@ class _FieldDef(NamedTuple):
     do_not_merge: bool
     allow_empty: bool
     is_artifact: bool
+    minimum: Any
+    maximum: Any
 
 
 class ParsingException(ValueError):
@@ -396,6 +398,8 @@ class Template:
         def_dict.pop("$comment", None)
         def_dict.pop("pattern", None)
         def_dict.pop("title", None)
+        def_dict.pop("$id", None)
+        def_dict.pop("exclusiveMinimum", None)
         process_as = def_dict.pop("process_as", None)
 
         try:
@@ -418,6 +422,8 @@ class Template:
                 do_not_merge=with_coerce.pop("do_not_merge", None),
                 allow_empty=with_coerce.pop("allow_empty", None),
                 is_artifact=with_coerce.pop("is_artifact", None),
+                minimum=with_coerce.pop("minimum", None),
+                maximum=with_coerce.pop("maximum", None),
                 merge_pointer=with_coerce.pop("merge_pointer", None),
                 **with_coerce,
             )

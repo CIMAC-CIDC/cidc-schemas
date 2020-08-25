@@ -1,5 +1,4 @@
 """Build metadata dictionaries from Excel files."""
-import re
 import json
 import logging
 import base64
@@ -262,32 +261,6 @@ def _encrypt(obj):
     h = _get_encrypt_hmac()
     h.update(str(obj).encode())
     return (base64.b64encode(h.digest()))[:32].decode()
-
-
-def _get_file_ext(fname):
-    return (fname.rsplit(".")[-1]).lower()
-
-
-_empty_defaultdict: Dict[str, str] = defaultdict(str)
-
-
-def _get_facet_group(gcs_uri_format: str) -> str:
-    """"
-    Extract a file's facet group from its GCS URI format string by removing
-    the "format" parts.
-    """
-    # Provide empty strings for a GCS URI formatter variables
-    try:
-        # First, attempt to call the format string as a lambda
-        fmted_string = eval(gcs_uri_format)("", _empty_defaultdict)
-    except:
-        # Fall back to string interpolation via format_map
-        fmted_string = gcs_uri_format.format_map(_empty_defaultdict)
-
-    # Clear any double slashes
-    facet_group = re.sub(r"\/\/*", "/", fmted_string)
-
-    return facet_group
 
 
 def prismify(

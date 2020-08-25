@@ -8,6 +8,7 @@ import logging
 import uuid
 import json
 import jsonschema
+import re
 from typing import (
     List,
     Optional,
@@ -98,30 +99,55 @@ class _FieldDef(NamedTuple):
     """
 
     key_name: str
-    # TODO unwrap local_file
-    gcs_uri_format: Union[str, dict]
-    extra_metadata: bool
     coerce: Callable
-    description: str
-    type: str
-    # # TODO join type and type_ref by resolving ref
-    # type_ref: str
     merge_pointer: str
-    enum: Any
-    format: Any
-    example: Any
-    # TODO remove?
-    in_doc_ref_pattern: str
-    parse_through: str
-    do_not_merge: bool
-    allow_empty: bool
-    is_artifact: bool
-    minimum: Any
-    maximum: Any
+    # # TODO join type and type_ref by resolving ref
+    type: Union[str, None] = None
+    type_ref: str = None
+    # TODO unwrap local_file
+    gcs_uri_format: Union[str, dict, None] = None
+    extra_metadata: bool = False
+    parse_through: Union[str, None] = None
+    do_not_merge: bool = False
+    allow_empty: bool = False
+    is_artifact: Union[str, bool] = False
+
+    # @classmethod
+    # def from_whatever_dict(cls, **kv):
+    #     inst = cls(*[None]*len(cls._fields))
+    #     for k, v in kv.items():
+    #         setattr(inst, k, v)
+    #     return inst
 
 
 class ParsingException(ValueError):
     pass
+
+
+def _get_file_ext(fname):
+    return (fname.rsplit(".")[-1]).lower()
+
+
+_empty_defaultdict: Dict[str, str] = defaultdict(str)
+
+
+def _get_facet_group(gcs_uri_format: str) -> str:
+    """"
+    Extract a file's facet group from its GCS URI format string by removing
+    the "format" parts.
+    """
+    # Provide empty strings for a GCS URI formatter variables
+    try:
+        # First, attempt to call the format string as a lambda
+        fmted_string = eval(gcs_uri_format)("", _empty_defaultdict)
+    except:
+        # Fall back to string interpolation via format_map
+        fmted_string = gcs_uri_format.format_map(_empty_defaultdict)
+
+    # Clear any double slashes
+    facet_group = re.sub(r"\/\/*", "/", fmted_string)
+
+    return facet_group
 
 
 def _format_single_artifact(
@@ -132,31 +158,33 @@ def _format_single_artifact(
     # TODO move these check (for `is_artifact`s to template reading)
     if not field_def.gcs_uri_format:
         raise Exception(f"Empty gcs_uri_format for {field_def.key_name!r}") from e
-    if not isinstance(gcs_uri_format, (dict, str)):
+    if not isinstance(field_def.gcs_uri_format, (dict, str)):
         raise Exception(f"Unsupported gcs_uri_format for {field_def.key_name!r}")
 
-    if isinstance(gcs_uri_format, dict):
-        if "check_errors" in gcs_uri_format:
+    if isinstance(field_def.gcs_uri_format, dict):
+        if "check_errors" in field_def.gcs_uri_format:
             # `eval` should be fine, as we're controlling the code argument in templates
-            err = eval(gcs_uri_format["check_errors"])(local_path)
+            err = eval(field_def.gcs_uri_format["check_errors"])(local_path)
             if err:
                 raise ParsingException(err)
 
         try:
-            gs_key = eval(gcs_uri_format["format"])(local_path, format_context)
-            facet_group = _get_facet_group(gcs_uri_format["format"])
+            gs_key = eval(field_def.gcs_uri_format["format"])(
+                local_path, format_context
+            )
+            facet_group = _get_facet_group(field_def.gcs_uri_format["format"])
         except Exception as e:
             raise ParsingException(
-                f"Can't format gcs uri for {field_def.key_name!r}: {gcs_uri_format['format']}: {e!r}"
+                f"Can't format gcs uri for {field_def.key_name!r}: {field_def.gcs_uri_format['format']}: {e!r}"
             )
 
-    elif isinstance(gcs_uri_format, str):
+    elif isinstance(field_def.gcs_uri_format, str):
         try:
-            gs_key = gcs_uri_format.format_map(format_context)
-            facet_group = _get_facet_group(gcs_uri_format)
+            gs_key = field_def.gcs_uri_format.format_map(format_context)
+            facet_group = _get_facet_group(field_def.gcs_uri_format)
         except KeyError as e:
             raise ParsingException(
-                f"Can't format gcs uri for {field_def.key_name!r}: {gcs_uri_format}: {e!r}"
+                f"Can't format gcs uri for {field_def.key_name!r}: {field_def.gcs_uri_format}: {e!r}"
             )
 
         expected_extension = _get_file_ext(gs_key)
@@ -205,7 +233,7 @@ def _calc_val_and_files(raw_val, field_def: _FieldDef, format_context: dict):
         # and we iterate through local file paths:
         for num, local_path in enumerate(raw_val.split(",")):
             # Ignoring errors here as we're sure `coerce` will just return a uuid
-            file_uuid = coerce(local_path)
+            file_uuid = field_def.coerce(local_path)
 
             artifact, facet_group = _format_single_artifact(
                 local_path=local_path,
@@ -376,12 +404,9 @@ class Template:
             coerce = self._get_ref_coerce(field_def.pop("ref"))
         elif "type" in field_def:
             coerce = self._get_coerce(field_def.pop("type"), field_def.pop("$id", None))
-        elif field_def.do_not_merge:
+        elif field_def.get("do_not_merge", False):
 
-            def c(v):
-                raise Exception("Should not have been merged as for `do_not_merge`")
-
-            coerce = c
+            raise Exception("Should not have been merged as for `do_not_merge`")
 
         else:
             raise Exception(
@@ -394,40 +419,31 @@ class Template:
     def _load_f_defs(self, key_name, def_dict):
         # TODO check types, add defaults ?
 
-        def_dict = dict(def_dict)  # so we don't mutate original
-        def_dict.pop("$comment", None)
-        def_dict.pop("pattern", None)
-        def_dict.pop("title", None)
-        def_dict.pop("$id", None)
-        def_dict.pop("exclusiveMinimum", None)
-        process_as = def_dict.pop("process_as", None)
+        def_d = dict(def_dict)  # so we don't mutate original
+        process_as = def_d.pop("process_as", None)
+        res = []
 
-        try:
-            with_coerce = self._add_coerce(def_dict)
-        except Exception as e:
-            raise Exception(f"{key_name!r} " + str(e))
+        if not def_dict.get("do_not_merge"):
+            for f in def_dict:
+                if f in _FieldDef._fields:
+                    continue
+                def_d.pop(f, None)
 
-        res = [
-            _FieldDef(
-                key_name=key_name,
-                gcs_uri_format=with_coerce.pop("gcs_uri_format", None),
-                extra_metadata=with_coerce.pop("extra_metadata", None),
-                enum=with_coerce.pop("enum", None),
-                format=with_coerce.pop("format", None),
-                description=with_coerce.pop("description", None),
-                type=with_coerce.pop("type", None),
-                example=with_coerce.pop("example", None),
-                in_doc_ref_pattern=with_coerce.pop("in_doc_ref_pattern", None),
-                parse_through=with_coerce.pop("parse_through", None),
-                do_not_merge=with_coerce.pop("do_not_merge", None),
-                allow_empty=with_coerce.pop("allow_empty", None),
-                is_artifact=with_coerce.pop("is_artifact", None),
-                minimum=with_coerce.pop("minimum", None),
-                maximum=with_coerce.pop("maximum", None),
-                merge_pointer=with_coerce.pop("merge_pointer", None),
-                **with_coerce,
+            try:
+                with_coerce = self._add_coerce(def_d)
+            except Exception as e:
+                raise Exception(f"Couldn't load mapping for {key_name!r}: " + str(e))
+
+            res.append(
+                _FieldDef(
+                    key_name=key_name,
+                    # TODO review
+                    # type=with_coerce.pop("type", None),
+                    # parse_through=with_coerce.pop("parse_through", None),
+                    # merge_pointer=with_coerce.pop("merge_pointer", None),
+                    **with_coerce,
+                )
             )
-        ]
 
         # "process_as" allows to define additional places/ways to put a match
         # somewhere in the resulting doc, with additional processing.
@@ -457,7 +473,13 @@ class Template:
 
         # create a key lookup dictionary
         if self.schema.get("allow_arbitrary_data_columns"):
-            key_lu = defaultdict(lambda: dict(coerce=lambda x: x))
+            # TODO FIXME key_name for default?
+            # TODO FIXME merge_pointer should normalize actual field name somehow
+            # TODO FIXME type?
+            default_fdef = _FieldDef(
+                key_name="*", coerce=lambda x: x, merge_pointer="*"
+            )
+            key_lu = defaultdict(lambda: [default_fdef])
         else:
             key_lu = {}
 
@@ -494,17 +516,23 @@ class Template:
 
         logger.debug(f"Processing property {key!r} - {raw_val!r}")
         try:
+            # TODO replace lookup with smart matching - the whole purpose of refactoring
             field_defs = self.key_lu[key.lower()]
         except KeyError:
             raise ParsingException(f"Unexpected property {key!r}.")
+        except Exception as e:
+            raise Exception(e)
 
         logger.debug(f"Found field {len(field_defs)} defs")
 
         changes, files = [], []
         for f_def in field_defs:
-            chs, fs = self._process_one_field_def(
-                key, raw_val, f_def, format_context, eval_context
-            )
+            try:
+                chs, fs = self._process_one_field_def(
+                    key, raw_val, f_def, format_context, eval_context
+                )
+            except Exception as e:
+                raise Exception(e)
 
             changes.extend(chs)
             fs.extend(fs)
@@ -555,7 +583,7 @@ class Template:
         #         f"Can't parse {key!r} value {str(raw_val)!r}: {e}"
         #     ) from e
 
-        if field_def.is_artifact:
+        if field_def.is_artifact == True:  # multi goes into other one
             placeholder_pointer = field_def.merge_pointer + "/upload_placeholder"
             facet_group_pointer = field_def.merge_pointer + "/facet_group"
             return (

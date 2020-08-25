@@ -21,13 +21,6 @@
                             "type_ref": "assays/components/ngs/wes/wes_pair_analysis.json#properties/run_id",
                             "process_as": [
                                 {
-                                    "parse_through": "lambda run: f'analysis/purity/{run}/{run}.optimalpurityvalue.txt'",
-                                    "merge_pointer": "/purity/optimal_purity_value",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/optimalpurityvalue.txt",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
                                     "parse_through": "lambda run: f'analysis/clonality/{run}/{run}_pyclone.tsv'",
                                     "merge_pointer": "/clonality/clonality_pyclone",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/clonality_pyclone.tsv",

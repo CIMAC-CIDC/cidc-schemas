@@ -29,11 +29,6 @@ def wes_analysis() -> PrismTestData:
                 "pair_runs": [
                     {
                         "run_id": "run_1",
-                        "purity": {
-                            "optimal_purity_value": {
-                                "upload_placeholder": "f0b85ef8-47cb-45b9-bb94-c961150786b9"
-                            }
-                        },
                         "clonality": {
                             "clonality_pyclone": {
                                 "upload_placeholder": "cdef9e1e-8e04-46ed-a9e6-bb618188a6d6"
@@ -208,11 +203,6 @@ def wes_analysis() -> PrismTestData:
                     },
                     {
                         "run_id": "run_2",
-                        "purity": {
-                            "optimal_purity_value": {
-                                "upload_placeholder": "98621828-ee22-40d1-840a-0dae97e8bf09"
-                            }
-                        },
                         "clonality": {
                             "clonality_pyclone": {
                                 "upload_placeholder": "a4cba177-0be5-4d7d-b635-4a60adaa9575"
@@ -391,12 +381,6 @@ def wes_analysis() -> PrismTestData:
         "protocol_identifier": "test_prism_trial_id",
     }
     upload_entries = [
-        LocalFileUploadEntry(
-            local_path="analysis/purity/run_1/run_1.optimalpurityvalue.txt",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/optimalpurityvalue.txt",
-            upload_placeholder="f0b85ef8-47cb-45b9-bb94-c961150786b9",
-            metadata_availability=None,
-        ),
         LocalFileUploadEntry(
             local_path="analysis/clonality/run_1/run_1_pyclone.tsv",
             gs_key="test_prism_trial_id/wes/run_1/analysis/clonality_pyclone.tsv",
@@ -677,12 +661,6 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/xhla/CTTTPP111.00/CTTTPP111.00_report-CTTTPP111.00-hla.json",
             gs_key="test_prism_trial_id/wes/run_1/analysis/normal/CTTTPP111.00/xhla_report_hla.json",
             upload_placeholder="f6a76030-cf27-41e6-8836-17c99479001e",
-            metadata_availability=None,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/purity/run_2/run_2.optimalpurityvalue.txt",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/optimalpurityvalue.txt",
-            upload_placeholder="98621828-ee22-40d1-840a-0dae97e8bf09",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(

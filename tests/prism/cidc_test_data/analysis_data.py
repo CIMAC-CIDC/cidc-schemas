@@ -29,11 +29,6 @@ def wes_analysis() -> PrismTestData:
                 "pair_runs": [
                     {
                         "run_id": "run_1",
-                        "germline": {
-                            "vcf_compare": {
-                                "upload_placeholder": "9986de8e-84eb-49ba-9270-ca9d6aa0edf0"
-                            }
-                        },
                         "purity": {
                             "optimal_purity_value": {
                                 "upload_placeholder": "f0b85ef8-47cb-45b9-bb94-c961150786b9"
@@ -213,11 +208,6 @@ def wes_analysis() -> PrismTestData:
                     },
                     {
                         "run_id": "run_2",
-                        "germline": {
-                            "vcf_compare": {
-                                "upload_placeholder": "45f1f7d1-4a48-48d5-9ee3-e7ccc4474d25"
-                            }
-                        },
                         "purity": {
                             "optimal_purity_value": {
                                 "upload_placeholder": "98621828-ee22-40d1-840a-0dae97e8bf09"
@@ -401,12 +391,6 @@ def wes_analysis() -> PrismTestData:
         "protocol_identifier": "test_prism_trial_id",
     }
     upload_entries = [
-        LocalFileUploadEntry(
-            local_path="analysis/germline/run_1/run_1_vcfcompare.txt",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/vcfcompare.txt",
-            upload_placeholder="9986de8e-84eb-49ba-9270-ca9d6aa0edf0",
-            metadata_availability=None,
-        ),
         LocalFileUploadEntry(
             local_path="analysis/purity/run_1/run_1.optimalpurityvalue.txt",
             gs_key="test_prism_trial_id/wes/run_1/analysis/optimalpurityvalue.txt",
@@ -693,12 +677,6 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/xhla/CTTTPP111.00/CTTTPP111.00_report-CTTTPP111.00-hla.json",
             gs_key="test_prism_trial_id/wes/run_1/analysis/normal/CTTTPP111.00/xhla_report_hla.json",
             upload_placeholder="f6a76030-cf27-41e6-8836-17c99479001e",
-            metadata_availability=None,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/germline/run_2/run_2_vcfcompare.txt",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/vcfcompare.txt",
-            upload_placeholder="45f1f7d1-4a48-48d5-9ee3-e7ccc4474d25",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(

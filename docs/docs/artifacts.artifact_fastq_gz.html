@@ -108,6 +108,8 @@
         
             
         
+            
+        
         
             
         
@@ -410,6 +412,29 @@
 </tr>
             
         
+            
+                <tr>
+    <td>
+        
+            <span id="facet_group">
+                facet_group
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The internal data category for this artifact
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_core.html#facet_group">artifacts.artifact_core#facet_group</a>
+        
+    </td>
+</tr>
+            
+        
     </table>
 
     
@@ -507,6 +532,10 @@
                     ],
                     "type": "string"
                 },
+                "facet_group": {
+                    "description": "The internal data category for this artifact",
+                    "type": "string"
+                },
                 "file_name": {
                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
                     "description": "The name of the file with extension.",
@@ -580,6 +609,10 @@
         "data_format": {
             "const": "FASTQ.GZ",
             "description": "Data format."
+        },
+        "facet_group": {
+            "description": "The internal data category for this artifact",
+            "type": "string"
         },
         "file_name": {
             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",

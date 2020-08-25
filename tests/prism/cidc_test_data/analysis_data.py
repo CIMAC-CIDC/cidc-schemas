@@ -29,11 +29,6 @@ def wes_analysis() -> PrismTestData:
                 "pair_runs": [
                     {
                         "run_id": "run_1",
-                        "clonality": {
-                            "clonality_pyclone": {
-                                "upload_placeholder": "cdef9e1e-8e04-46ed-a9e6-bb618188a6d6"
-                            }
-                        },
                         "copynumber": {
                             "copynumber_cnv_calls": {
                                 "upload_placeholder": "85989077-49e4-44c6-8788-3b19357d3122"
@@ -203,11 +198,6 @@ def wes_analysis() -> PrismTestData:
                     },
                     {
                         "run_id": "run_2",
-                        "clonality": {
-                            "clonality_pyclone": {
-                                "upload_placeholder": "a4cba177-0be5-4d7d-b635-4a60adaa9575"
-                            }
-                        },
                         "copynumber": {
                             "copynumber_cnv_calls": {
                                 "upload_placeholder": "c187bcfe-b454-46a5-bf85-e2a2d5f7a9a5"
@@ -381,12 +371,6 @@ def wes_analysis() -> PrismTestData:
         "protocol_identifier": "test_prism_trial_id",
     }
     upload_entries = [
-        LocalFileUploadEntry(
-            local_path="analysis/clonality/run_1/run_1_pyclone.tsv",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/clonality_pyclone.tsv",
-            upload_placeholder="cdef9e1e-8e04-46ed-a9e6-bb618188a6d6",
-            metadata_availability=None,
-        ),
         LocalFileUploadEntry(
             local_path="analysis/copynumber/run_1/run_1_cnvcalls.txt",
             gs_key="test_prism_trial_id/wes/run_1/analysis/copynumber_cnvcalls.txt",
@@ -661,12 +645,6 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/xhla/CTTTPP111.00/CTTTPP111.00_report-CTTTPP111.00-hla.json",
             gs_key="test_prism_trial_id/wes/run_1/analysis/normal/CTTTPP111.00/xhla_report_hla.json",
             upload_placeholder="f6a76030-cf27-41e6-8836-17c99479001e",
-            metadata_availability=None,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/clonality/run_2/run_2_pyclone.tsv",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/clonality_pyclone.tsv",
-            upload_placeholder="a4cba177-0be5-4d7d-b635-4a60adaa9575",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(

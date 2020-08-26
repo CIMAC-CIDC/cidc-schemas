@@ -112,12 +112,61 @@ class _FieldDef(NamedTuple):
     allow_empty: bool = False
     is_artifact: Union[str, bool] = False
 
-    # @classmethod
-    # def from_whatever_dict(cls, **kv):
-    #     inst = cls(*[None]*len(cls._fields))
-    #     for k, v in kv.items():
-    #         setattr(inst, k, v)
-    #     return inst
+    def process_value(
+        self, raw_val, format_context: dict, eval_context: dict
+    ) -> Tuple[List[AtomicChange], List[LocalFileUploadEntry]]:
+
+        logger.debug(f"Processing field spec: {self}")
+
+        # skip nullable
+        if self.allow_empty:
+            if raw_val is None:
+                return [], []
+
+        if self.do_not_merge:
+            logger.debug(f"Ignoring {self.key_name!r} due to 'do_not_merge' == True")
+            return [], []
+
+        if self.parse_through:
+            try:
+                raw_val = eval(self.parse_through, eval_context)(raw_val)
+
+            # catching everything, because of eval
+            except Exception as e:
+                _field_name = self.merge_pointer.rsplit("/", 1)[-1]
+                raise ParsingException(
+                    f"Cannot extract {_field_name} from {self.key_name} value: {raw_val!r} ({e})"
+                ) from e
+
+        # or set/update value in-place in data_obj dictionary
+
+        try:
+            val, files = _calc_val_and_files(raw_val, self, format_context)
+        except ParsingException as pe:
+            raise pe
+            # raise ParsingException(
+            #     f"Can't parse {self.key_name!r} value {str(raw_val)!r}"
+            # ) from pe
+        except Exception as e:
+            # this shouldn't wrap all exceptions into a parsing one,
+            # but we need to split calc_val_and_files to handle them separately here
+            # because we still want to catch all from `.coerce`
+            raise ParsingException(
+                f"Can't parse {self.key_name!r} value {str(raw_val)!r}: {e}"
+            ) from e
+
+        if self.is_artifact == True:  # multi goes into other one
+            placeholder_pointer = self.merge_pointer + "/upload_placeholder"
+            facet_group_pointer = self.merge_pointer + "/facet_group"
+            return (
+                [
+                    AtomicChange(placeholder_pointer, val["upload_placeholder"]),
+                    AtomicChange(facet_group_pointer, val["facet_group"]),
+                ],
+                files,
+            )
+        else:
+            return [AtomicChange(self.merge_pointer, val)], files
 
 
 class ParsingException(ValueError):
@@ -155,11 +204,17 @@ def _format_single_artifact(
 ) -> Tuple[LocalFileUploadEntry, str]:
     """Return a LocalFileUploadEntry for this artifact, along with the artifact's facet group."""
 
-    # TODO move these check (for `is_artifact`s to template reading)
-    if not field_def.gcs_uri_format:
-        raise Exception(f"Empty gcs_uri_format for {field_def.key_name!r}") from e
-    if not isinstance(field_def.gcs_uri_format, (dict, str)):
-        raise Exception(f"Unsupported gcs_uri_format for {field_def.key_name!r}")
+    # # TODO move these checks to template instantiating - so it fails on build/startup
+    # if not field_def.gcs_uri_format:
+    #     raise Exception(f"Empty gcs_uri_format for {field_def.key_name!r}")
+    # if not isinstance(field_def.gcs_uri_format, (dict, str)):
+    #     raise Exception(f"Unsupported gcs_uri_format for {field_def.key_name!r}")
+    # if isinstance(field_def.gcs_uri_format, dict):
+    #     assert "format" in field_def.gcs_uri_format
+
+    # By default we think gcs_uri_format is a format-string
+    format = field_def.gcs_uri_format
+    try_formatting = lambda: format.format_map(format_context)
 
     if isinstance(field_def.gcs_uri_format, dict):
         if "check_errors" in field_def.gcs_uri_format:
@@ -168,31 +223,24 @@ def _format_single_artifact(
             if err:
                 raise ParsingException(err)
 
-        try:
-            gs_key = eval(field_def.gcs_uri_format["format"])(
-                local_path, format_context
-            )
-            facet_group = _get_facet_group(field_def.gcs_uri_format["format"])
-        except Exception as e:
-            raise ParsingException(
-                f"Can't format gcs uri for {field_def.key_name!r}: {field_def.gcs_uri_format['format']}: {e!r}"
-            )
+        format = field_def.gcs_uri_format["format"]
+        try_formatting = lambda: eval(format)(local_path, format_context)
 
-    elif isinstance(field_def.gcs_uri_format, str):
-        try:
-            gs_key = field_def.gcs_uri_format.format_map(format_context)
-            facet_group = _get_facet_group(field_def.gcs_uri_format)
-        except KeyError as e:
-            raise ParsingException(
-                f"Can't format gcs uri for {field_def.key_name!r}: {field_def.gcs_uri_format}: {e!r}"
-            )
+    try:
+        gs_key = try_formatting()
+    except Exception as e:
+        raise ParsingException(
+            f"Can't format destination gcs uri for {field_def.key_name!r}: {format}"
+        )
 
-        expected_extension = _get_file_ext(gs_key)
-        provided_extension = _get_file_ext(local_path)
-        if provided_extension != expected_extension:
-            raise ParsingException(
-                f"Expected {'.' + expected_extension} for {field_def.key_name!r} but got {'.' + provided_extension!r} instead."
-            )
+    expected_extension = _get_file_ext(gs_key)
+    provided_extension = _get_file_ext(local_path)
+    if provided_extension != expected_extension:
+        raise ParsingException(
+            f"Expected {'.' + expected_extension} for {field_def.key_name!r} but got {'.' + provided_extension!r} instead."
+        )
+
+    facet_group = _get_facet_group(format)
 
     return (
         LocalFileUploadEntry(
@@ -205,10 +253,12 @@ def _format_single_artifact(
     )
 
 
+## TODO split val / files
+## TODO files (artifact and multi) should be just coerce?
 def _calc_val_and_files(raw_val, field_def: _FieldDef, format_context: dict):
     """
     Processes one field value based on field_def taken from a ..._template.json schema.
-    Calculates a value and (if there's 'is_artifact') a file upload entry.
+    Calculates a file upload entry if is_artifact.
     """
 
     val = field_def.coerce(raw_val)
@@ -528,8 +578,8 @@ class Template:
         changes, files = [], []
         for f_def in field_defs:
             try:
-                chs, fs = self._process_one_field_def(
-                    key, raw_val, f_def, format_context, eval_context
+                chs, fs = f_def.process_value(
+                    key, raw_val, format_context, eval_context
                 )
             except Exception as e:
                 raise Exception(e)
@@ -538,63 +588,6 @@ class Template:
             files.extend(fs)
 
         return changes, files
-
-    def _process_one_field_def(
-        self,
-        key: str,
-        raw_val,
-        field_def: _FieldDef,
-        format_context: dict,
-        eval_context: dict,
-    ) -> Tuple[List[AtomicChange], List[LocalFileUploadEntry]]:
-
-        logger.debug(f"Processing field spec: {field_def}")
-
-        # skip nullable
-        if field_def.allow_empty:
-            if raw_val is None:
-                return [], []
-
-        if field_def.do_not_merge:
-            logger.debug(
-                f"Ignoring {field_def.key_name!r} due to 'do_not_merge' == True"
-            )
-            return [], []
-
-        if field_def.parse_through:
-            try:
-                raw_val = eval(field_def.parse_through, eval_context)(raw_val)
-
-            # catching everything, because of eval
-            except Exception as e:
-                _field_name = field_def.merge_pointer.rsplit("/", 1)[-1]
-                raise ParsingException(
-                    f"Cannot extract {_field_name} from {key} value: {raw_val!r} ({e})"
-                ) from e
-
-        # or set/update value in-place in data_obj dictionary
-
-        try:
-            val, files = _calc_val_and_files(raw_val, field_def, format_context)
-        except ParsingException:
-            raise
-        # except Exception as e: # this shouldn't wrap all exceptions into a parsing one.
-        #     raise ParsingException(
-        #         f"Can't parse {key!r} value {str(raw_val)!r}: {e}"
-        #     ) from e
-
-        if field_def.is_artifact == True:  # multi goes into other one
-            placeholder_pointer = field_def.merge_pointer + "/upload_placeholder"
-            facet_group_pointer = field_def.merge_pointer + "/facet_group"
-            return (
-                [
-                    AtomicChange(placeholder_pointer, val["upload_placeholder"]),
-                    AtomicChange(facet_group_pointer, val["facet_group"]),
-                ],
-                files,
-            )
-        else:
-            return [AtomicChange(field_def.merge_pointer, val)], files
 
     # XlTemplateReader only knows how to format these types of sections
     VALID_WS_SECTIONS = set(

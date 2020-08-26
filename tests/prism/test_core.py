@@ -57,45 +57,6 @@ def test_set_val():
         core._set_val(one_jumpup_pointer, {}, {}, {}, invalid_context_pointer)
 
 
-def test_process_property():
-    prop = "prop0"
-
-    # _process_property throws a ParsingException on properties missing from the key lookup dict
-    with pytest.raises(prism.ParsingException, match="Unexpected property"):
-        core._process_property(prop, "123", {}, {}, {})
-
-    prop_def = {"merge_pointer": "/hello", "coerce": int, "key_name": "hello"}
-
-    # _process_property behaves as expected on a simple example
-    root = {}
-    files = core._process_property(prop, "123", {prop: prop_def}, root, {})
-    assert root == {"hello": 123}
-    assert files == []
-
-    # _process_property catches unparseable raw values
-    with pytest.raises(prism.ParsingException, match=f"Can't parse {prop!r}"):
-        core._process_property(prop, "123abcd", {prop: prop_def}, {}, {})
-
-    # _process_property catches a missing gcs_uri_format on an artifact
-    prop_def = {
-        "merge_pointer": "/hello",
-        "coerce": str,
-        "is_artifact": 1,
-        "key_name": "hello",
-    }
-    with pytest.raises(prism.ParsingException, match="Empty gcs_uri_format"):
-        core._process_property(prop, "123", {prop: prop_def}, {}, {})
-
-    # _process property catches gcs_uri_format strings that can't be processed
-    prop_def["gcs_uri_format"] = "{foo}/{bar}"
-    with pytest.raises(prism.ParsingException, match="Can't format gcs uri"):
-        core._process_property(prop, "123", {prop: prop_def}, {}, {})
-
-    prop_def["gcs_uri_format"] = {"format": prop_def["gcs_uri_format"]}
-    with pytest.raises(prism.ParsingException, match="Can't format gcs uri"):
-        core._process_property(prop, "123", {prop: prop_def}, {}, {})
-
-
 def test_get_facet_group():
     """Check that the _get_facet_group helper function produces facet groups as expected"""
     test_lambda = "lambda val, ctx: '/some/' + str(ctx['foo']) + '/' + val + '_bar.csv'"

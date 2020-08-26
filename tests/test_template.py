@@ -10,6 +10,9 @@ from cidc_schemas.template import (
     Template,
     generate_empty_template,
     generate_all_templates,
+    ParsingException,
+    AtomicChange,
+    _FieldDef,
 )
 
 # NOTE: see conftest.py for pbmc_template and tiny_template fixture definitions
@@ -25,6 +28,48 @@ def test_pbmc_loaded(pbmc_template):
 def test_tiny_loaded(tiny_template):
     """Smoke test to ensure worksheets loaded from tiny template"""
     assert "TEST_SHEET" in tiny_template.worksheets
+
+
+def test_process_value():
+    prop = "prop0"
+
+    # # TODO move that to a separate test on template
+    # # process_field_value throws a ParsingException on properties missing from the key lookup dict
+    # with pytest.raises(ParsingException, match="Unexpected property"):
+    #     Template.process_field_value(prop, "123", {}, {}, {})
+    # # TODO add test for not throwing that for with `"allow_arbitrary_data_columns": true`
+
+    prop_def = {"merge_pointer": "/hello", "coerce": int, "key_name": prop}
+
+    # _process_property behaves as expected on a simple example
+    changes, files = _FieldDef(**prop_def).process_value("123", {}, {})
+    assert changes == [AtomicChange("/hello", 123)]
+    assert files == []
+
+    # _process_property catches unparseable raw values
+    with pytest.raises(ParsingException, match=f"Can't parse {prop!r}"):
+        _FieldDef(**prop_def).process_value("123abcd", {}, {})
+
+    # _process_property catches a missing gcs_uri_format on an artifact
+    prop_def = {
+        "merge_pointer": "/hello",
+        "coerce": str,
+        "is_artifact": 1,
+        "key_name": "hello",
+    }
+
+    # # TODO move that to a separate test on template instantiation
+    # with pytest.raises(ParsingException, match="Empty gcs_uri_format"):
+    #     _FieldDef(**prop_def).process_value("123", {}, {})
+
+    # _process property catches gcs_uri_format strings that can't be processed
+    prop_def["gcs_uri_format"] = "{foo}/{bar}"
+    with pytest.raises(ParsingException, match="Can't format destination gcs uri"):
+        _FieldDef(**prop_def).process_value("123", {}, {})
+
+    prop_def["gcs_uri_format"] = {"format": prop_def["gcs_uri_format"]}
+    with pytest.raises(ParsingException, match="Can't format destination gcs uri"):
+        _FieldDef(**prop_def).process_value("123", {}, {})
 
 
 def test_from_type():

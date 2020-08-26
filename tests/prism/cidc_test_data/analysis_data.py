@@ -38,9 +38,6 @@ def wes_analysis() -> PrismTestData:
                             },
                         },
                         "neoantigen": {
-                            "mhc_class_I_filtered_condensed_ranked": {
-                                "upload_placeholder": "f62b3afe-7380-4bc6-87a1-5a3181497f42"
-                            },
                             "mhc_class_II_epitopes": {
                                 "upload_placeholder": "b02ea27f-66a5-4381-bd8d-3f3e19f7ac11"
                             },
@@ -184,9 +181,6 @@ def wes_analysis() -> PrismTestData:
                             },
                         },
                         "neoantigen": {
-                            "mhc_class_I_filtered_condensed_ranked": {
-                                "upload_placeholder": "032d8195-cde7-484f-aa56-25f950eeb1ad"
-                            },
                             "mhc_class_II_epitopes": {
                                 "upload_placeholder": "b02ea27f-66a5-4381-bd8c-3f3e19f7ac11"
                             },
@@ -335,12 +329,6 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/copynumber/run_1/run_1_cnvcalls.txt.tn.tsv",
             gs_key="test_prism_trial_id/wes/run_1/analysis/copynumber_cnvcalls.txt.tn.tsv",
             upload_placeholder="eb1a8d7a-fd96-4e75-b265-1590c703a301",
-            metadata_availability=None,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/neoantigen/run_1/MHC_Class_I/run_1.filtered.condensed.ranked.tsv",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/MHC_Class_I_filtered_condensed_ranked.tsv",
-            upload_placeholder="f62b3afe-7380-4bc6-87a1-5a3181497f42",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
@@ -569,12 +557,6 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/copynumber/run_2/run_2_cnvcalls.txt.tn.tsv",
             gs_key="test_prism_trial_id/wes/run_2/analysis/copynumber_cnvcalls.txt.tn.tsv",
             upload_placeholder="ba2984c0-f7e6-470c-95ef-e4b33cbdea48",
-            metadata_availability=None,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/neoantigen/run_2/MHC_Class_I/run_2.filtered.condensed.ranked.tsv",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/MHC_Class_I_filtered_condensed_ranked.tsv",
-            upload_placeholder="032d8195-cde7-484f-aa56-25f950eeb1ad",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(

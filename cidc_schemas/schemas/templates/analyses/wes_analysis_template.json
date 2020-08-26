@@ -35,13 +35,6 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda run: f'analysis/neoantigen/{run}/MHC_Class_I/{run}.filtered.condensed.ranked.tsv'",
-                                    "merge_pointer": "/neoantigen/mhc_class_I_filtered_condensed_ranked",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/MHC_Class_I_filtered_condensed_ranked.tsv",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
                                     "parse_through": "lambda run: f'analysis/neoantigen/{run}/MHC_Class_II/{run}.all_epitopes.tsv'",
                                     "merge_pointer": "/neoantigen/mhc_class_II_epitopes",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/MHC_Class_II_all_epitopes.tsv",

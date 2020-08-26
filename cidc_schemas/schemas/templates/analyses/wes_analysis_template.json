@@ -112,20 +112,6 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda run: f'analysis/corealignments/{run}/{run}_tn_corealigned.bam'",
-                                    "merge_pointer": "/corealignments/tn_corealigned",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tn_corealigned.bam",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'analysis/corealignments/{run}/{run}_tn_corealigned.bam.bai'",
-                                    "merge_pointer": "/corealignments/tn_corealigned_index",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tn_corealigned.bam.bai",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
                                     "parse_through": "lambda id: f'analysis/metrics/all_sample_summaries.txt'",
                                     "merge_pointer": "/tumor/metrics/all_summaries",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/all_summaries.txt",

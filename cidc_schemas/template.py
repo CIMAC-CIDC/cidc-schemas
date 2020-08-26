@@ -535,7 +535,7 @@ class Template:
                 raise Exception(e)
 
             changes.extend(chs)
-            fs.extend(fs)
+            files.extend(fs)
 
         return changes, files
 

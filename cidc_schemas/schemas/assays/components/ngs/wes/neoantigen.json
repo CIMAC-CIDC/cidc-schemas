@@ -19,7 +19,6 @@
     }
   },
   "required": [
-    "mhc_class_II_filtered_condensed_ranked"
   ],
   "additionalProperties": false
 }

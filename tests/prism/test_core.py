@@ -14,6 +14,7 @@ import pytest
 from cidc_schemas.template import Template
 from cidc_schemas.template_reader import XlTemplateReader
 from cidc_schemas import prism
+from cidc_schemas import util
 from cidc_schemas.prism import core
 
 #### HELPER FUNCTION TESTS ####
@@ -55,15 +56,6 @@ def test_set_val():
     invalid_context_pointer = "/foo/bar"
     with pytest.raises(Exception, match="member 'foo' not found"):
         core._set_val(one_jumpup_pointer, {}, {}, {}, invalid_context_pointer)
-
-
-def test_get_facet_group():
-    """Check that the _get_facet_group helper function produces facet groups as expected"""
-    test_lambda = "lambda val, ctx: '/some/' + str(ctx['foo']) + '/' + val + '_bar.csv'"
-    assert core._get_facet_group(test_lambda) == "/some/_bar.csv"
-
-    test_fmt_string = "/some/{a_b}/{c-d}/foo/{buzz123}/{OK}_bar.csv"
-    assert core._get_facet_group(test_fmt_string) == "/some/foo/_bar.csv"
 
 
 #### END HELPER FUNCTION TESTS ####
@@ -231,14 +223,18 @@ def test_prismify_encrypt(monkeypatch):
 
     _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
     assert len(errs) == 1
-    assert str(errs[0]) == f'Cannot extract file_path from {prop} value: {"some str"!r}'
+    assert str(errs[0]).startswith(
+        f'Cannot extract file_path from {prop} value: {"some str"!r}'
+    )
 
     core.set_prism_encrypt_key("key")
 
     patch, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
     assert not errs
+
     d = hmac.new(b"key", msg=b"some str", digestmod="SHA512").digest()
-    assert patch == {"file_path": base64.b64encode(d)[:32].decode()}
+    encrypted = base64.b64encode(d)[:32].decode()
+    assert patch == {"file_path": encrypted}
 
 
 def test_prism_local_files_format_extension(monkeypatch):
@@ -372,8 +368,8 @@ def test_prism_local_files_format_multiple_extensions(monkeypatch):
     assert len(file_maps) == 4
     expected_extensions = ["tif", "tiff", "svs", "qptiff"]
     # check that we have only "proper" (checked by `check_errors`) extensions
-    local_extensions = [core._get_file_ext(fm.local_path) for fm in file_maps]
-    gcs_extensions = [core._get_file_ext(fm.gs_key) for fm in file_maps]
+    local_extensions = [util.get_file_ext(fm.local_path) for fm in file_maps]
+    gcs_extensions = [util.get_file_ext(fm.gs_key) for fm in file_maps]
     assert expected_extensions == gcs_extensions == local_extensions
 
 
@@ -507,7 +503,7 @@ def test_prism_process_as_error(monkeypatch):
     assert not errs
 
     _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
-    assert "Cannot extract author_id from book id value: None" == str(errs[0])
+    assert str(errs[0]).startswith("Cannot extract author_id from book id value: None")
 
 
 def test_confilicting_values_in_one_template(monkeypatch):

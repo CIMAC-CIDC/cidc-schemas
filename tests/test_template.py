@@ -13,6 +13,7 @@ from cidc_schemas.template import (
     ParsingException,
     AtomicChange,
     _FieldDef,
+    _get_facet_group,
 )
 
 # NOTE: see conftest.py for pbmc_template and tiny_template fixture definitions
@@ -70,6 +71,15 @@ def test_process_value():
     prop_def["gcs_uri_format"] = {"format": prop_def["gcs_uri_format"]}
     with pytest.raises(ParsingException, match="Can't format destination gcs uri"):
         _FieldDef(**prop_def).process_value("123", {}, {})
+
+
+def test_get_facet_group():
+    """Check that the _get_facet_group helper function produces facet groups as expected"""
+    test_lambda = "lambda val, ctx: '/some/' + str(ctx['foo']) + '/' + val + '_bar.csv'"
+    assert _get_facet_group(test_lambda) == "/some/_bar.csv"
+
+    test_fmt_string = "/some/{a_b}/{c-d}/foo/{buzz123}/{OK}_bar.csv"
+    assert _get_facet_group(test_fmt_string) == "/some/foo/_bar.csv"
 
 
 def test_from_type():

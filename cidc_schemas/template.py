@@ -24,6 +24,7 @@ from collections import OrderedDict, defaultdict
 
 from .constants import SCHEMA_DIR, TEMPLATE_DIR
 from .json_validation import _load_dont_validate_schema
+from .util import get_file_ext
 
 logger = logging.getLogger("cidc_schemas.template")
 
@@ -173,10 +174,6 @@ class ParsingException(ValueError):
     pass
 
 
-def _get_file_ext(fname):
-    return (fname.rsplit(".")[-1]).lower()
-
-
 _empty_defaultdict: Dict[str, str] = defaultdict(str)
 
 
@@ -233,8 +230,8 @@ def _format_single_artifact(
             f"Can't format destination gcs uri for {field_def.key_name!r}: {format}"
         )
 
-    expected_extension = _get_file_ext(gs_key)
-    provided_extension = _get_file_ext(local_path)
+    expected_extension = get_file_ext(gs_key)
+    provided_extension = get_file_ext(local_path)
     if provided_extension != expected_extension:
         raise ParsingException(
             f"Expected {'.' + expected_extension} for {field_def.key_name!r} but got {'.' + provided_extension!r} instead."
@@ -578,11 +575,9 @@ class Template:
         changes, files = [], []
         for f_def in field_defs:
             try:
-                chs, fs = f_def.process_value(
-                    key, raw_val, format_context, eval_context
-                )
+                chs, fs = f_def.process_value(raw_val, format_context, eval_context)
             except Exception as e:
-                raise Exception(e)
+                raise ParsingException(e)
 
             changes.extend(chs)
             files.extend(fs)

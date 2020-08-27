@@ -185,6 +185,40 @@ def test_rna_bam():
     validator.validate(obj)
 
 
+def test_tcr_fastq():
+
+    # create the ngs object
+    ngs_obj = {
+        "sequencer_platform": "Illumina - NovaSeq 6000",
+        "paired_end_reads": "Paired",
+    }
+    obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
+
+    # add custom entry
+    obj["enrichment_method"] = "Ribo minus"
+    obj["enrichment_vendor_kit"] = "Agilent"
+
+    # create the tcr_seq object
+    r1 = ARTIFACT_OBJ.copy()
+    r1["data_format"] = "FASTQ.GZ"
+    record = {
+        "library_yield_ng": 666,
+        "dv200": 0.7,
+        "rqs": 8,
+        "rin": 8,
+        "quality_flag": 1,
+        "cimac_id": "CTTTPPPSA.00",
+        "files": {"r1": [r1], "r2": [r1]},
+    }
+
+    # add a demo record.
+    obj["records"] = [record]
+
+    # create validator assert schemas are valid.
+    validator = _fetch_validator("tcr")
+    validator.validate(obj)
+
+
 def test_cytof():
 
     # test artifact sub schema

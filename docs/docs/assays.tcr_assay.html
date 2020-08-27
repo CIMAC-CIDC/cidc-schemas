@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>RNA Gene Expression Assay</h1>
+        <h1>TCR Gene Expression Assay</h1>
         <p>
-            <b>Description:</b>  Additional properties to describe a RNA assay for expression analysis.
+            <b>Description:</b>  Additional properties to describe a TCR assay for expression analysis.
         </p>
         
     </div>
@@ -170,7 +170,7 @@
     </td>
     <td width=55%>
         
-            A single data record from RNAseq assay.
+            A single data record from TCRseq assay.
         
     </td>
     <td>
@@ -186,7 +186,7 @@
             </ul>
              
                 
-                    <a href="assays.components.ngs.rna.rna_entry.html">assays.components.ngs.rna.rna_entry</a>
+                    <a href="assays.components.ngs.tcr.tcr_entry.html">assays.components.ngs.tcr.tcr_entry</a>
                 
             
             
@@ -345,9 +345,9 @@
   </div>
 
   <div class="container">
-    <h3>rna_assay.full.json</h3>
+    <h3>tcr_assay.full.json</h3>
   	<pre><code>{
-    "$id": "rna_assay",
+    "$id": "tcr_assay",
     "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
     "allOf": [
@@ -416,7 +416,7 @@
             "type": "object"
         }
     ],
-    "description": "Additional properties to describe a RNA assay for expression analysis.",
+    "description": "Additional properties to describe a TCR assay for expression analysis.",
     "mergeStrategy": "objectMerge",
     "properties": {
         "assay_creator": {
@@ -466,9 +466,9 @@
             "type": "string"
         },
         "records": {
-            "description": "A single data record from RNAseq assay.",
+            "description": "A single data record from TCRseq assay.",
             "items": {
-                "$id": "rna_entry",
+                "$id": "tcr_entry",
                 "$schema": "metaschema/strict_meta_schema.json#",
                 "additionalProperties": false,
                 "allOf": [
@@ -1180,7 +1180,7 @@
                         "type": "object"
                     }
                 ],
-                "description": "A single data record from RNAseq assay.",
+                "description": "A single data record from TCRseq assay.",
                 "mergeStrategy": "objectMerge",
                 "properties": {
                     "cimac_id": {
@@ -1903,7 +1903,7 @@
                         "type": "number"
                     }
                 },
-                "title": "RNAseq assay record",
+                "title": "TCRseq assay record",
                 "type": "object"
             },
             "mergeOptions": {
@@ -1928,7 +1928,7 @@
         "enrichment_method",
         "records"
     ],
-    "title": "RNA Gene Expression Assay",
+    "title": "TCR Gene Expression Assay",
     "type": "object"
 }</code></pre>
   </container>

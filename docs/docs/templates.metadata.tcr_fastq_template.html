@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CIDC Schemas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main role="main">
+      
+
+  
+    <div class="container">
+        <p>
+            <a href="index.html">CIDC Data Model</a>
+        </p>
+        <h1>Metadata file for TCR seq  [FASTQ].</h1>
+        <p>
+            <b>Description:</b>  Metadata information for rna expression data submission via FASTQ files.
+        </p>
+        
+    </div>
+
+  <div class="container">
+    
+      <h3>Worksheet - TCR</h3>
+  
+    <h4>Preamble Rows</h4>
+    
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="protocol identifier">
+                protocol identifier
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            <a href="clinical_trial.html#protocol_identifier">clinical_trial#protocol_identifier</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="assay creator">
+                assay creator
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates what site is filling out the assay.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.assay_core.html#assay_creator">assays.components.assay_core#assay_creator</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="enrichment method">
+                enrichment method
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Method used for enriching for mRNA.
+        
+    </td>
+    <td>
+        
+            <a href="assays.tcr_assay.html#enrichment_method">assays.tcr_assay#enrichment_method</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="enrichment kit">
+                enrichment kit
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT.
+        
+    </td>
+    <td>
+        
+            <a href="assays.tcr_assay.html#enrichment_vendor_kit">assays.tcr_assay#enrichment_vendor_kit</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="sequencer platform">
+                sequencer platform
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.ngs_assay_core.html#sequencer_platform">assays.components.ngs_assay_core#sequencer_platform</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="paired end reads">
+                paired end reads
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates if the sequencing was performed paired or single ended.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.ngs_assay_core.html#paired_end_reads">assays.components.ngs_assay_core#paired_end_reads</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+  
+  
+    <h4>Data Columns</h4>
+    
+      <h5 class="text-muted">Samples</h4>
+      
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cimac id">
+                cimac id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#cimac_id">sample#cimac_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="forward fastq">
+                forward fastq
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A comma-separated list of paths to files on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.multiple_local_files.html#file_path_list">assays.components.multiple_local_files#file_path_list</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="reverse fastq">
+                reverse fastq
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A comma-separated list of paths to files on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.multiple_local_files.html#file_path_list">assays.components.multiple_local_files#file_path_list</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="library yield ng">
+                library yield ng
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Resulting yield (in ng) from library construction.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.ngs.tcr.tcr_entry.html#library_yield_ng">assays.components.ngs.tcr.tcr_entry#library_yield_ng</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="dv200">
+                dv200
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The percentage of fragments > 200 nucleotides.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.ngs.tcr.tcr_entry.html#dv200">assays.components.ngs.tcr.tcr_entry#dv200</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="rqs">
+                rqs
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            RNA quality score. (0-10)
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.ngs.tcr.tcr_entry.html#rqs">assays.components.ngs.tcr.tcr_entry#rqs</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="rin">
+                rin
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            RNA integrity number. (0-10)
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.ngs.tcr.tcr_entry.html#rin">assays.components.ngs.tcr.tcr_entry#rin</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="quality flag">
+                quality flag
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Flag used for quality.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+    </table>
+    
+  
+    
+    
+    
+  </div>
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+    

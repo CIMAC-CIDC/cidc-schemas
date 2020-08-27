@@ -519,16 +519,7 @@ class Template:
         """
 
         # create a key lookup dictionary
-        if self.schema.get("allow_arbitrary_data_columns"):
-            # TODO FIXME key_name for default?
-            # TODO FIXME merge_pointer should normalize actual field name somehow
-            # TODO FIXME type?
-            default_fdef = _FieldDef(
-                key_name="*", coerce=lambda x: x, merge_pointer="*"
-            )
-            key_lu = defaultdict(lambda: [default_fdef])
-        else:
-            key_lu = {}
+        key_lu = {}
 
         # loop over each worksheet
         for ws_name, ws_schema in self.worksheets.items():

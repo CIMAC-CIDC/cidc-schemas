@@ -1,6 +1,0 @@
-"#t","PARTICIPANTS annotations"
-"#p","Protocol identifier","test_prism_trial_id"
-
-
-"#h","cimac participant id","race","SiteNumber","gender","ethnicity","cohort","arm","ECOG_PS","age","Prior surgery","prior RT","number prior treatments","reason off treatment","BEST_RESPponse","Response","Clinical benefit","prog1=Y)ression (","days to progression","died (1=Y)","overall survival","number days to response"
-"#d","CTTTP00","White","WI020","Male","Not Hispanic or Latino","Lung","ARM C","1","52","Y","Y","4","Disease progression on study","PD","Non-resp","No C-B","1","58","1","102"

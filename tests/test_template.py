@@ -38,7 +38,6 @@ def test_process_value():
     # # process_field_value throws a ParsingException on properties missing from the key lookup dict
     # with pytest.raises(ParsingException, match="Unexpected property"):
     #     Template.process_field_value(prop, "123", {}, {}, {})
-    # # TODO add test for not throwing that for with `"allow_arbitrary_data_columns": true`
 
     prop_def = {"merge_pointer": "/hello", "coerce": int, "key_name": prop}
 

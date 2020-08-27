@@ -1,0 +1,46 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "tcr_assay",
+  "title": "TCR Gene Expression Assay",
+  "type": "object",
+  "description": "Additional properties to describe a TCR assay for expression analysis.",
+  "additionalProperties": false,
+  "allOf": [
+    { "$ref": "assays/components/assay_core.json" },
+    { "$ref": "assays/components/ngs_assay_core.json" }
+  ],
+  "properties": {
+    "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
+
+    "sequencer_platform": {"$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"},
+    "library_kit": {"$ref": "assays/components/ngs_assay_core.json#properties/library_kit"},
+    "paired_end_reads": {"$ref": "assays/components/ngs_assay_core.json#properties/paired_end_reads"},
+
+    "enrichment_method": {
+      "description": "Method used for enriching for mRNA.",
+      "type": "string",
+      "enum": ["PolyA capture", "Transcriptome capture", "Ribo minus"]
+    },
+    "enrichment_vendor_kit": {
+      "description": "Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT.",
+      "type": "string",
+      "enum": ["Agilent", "Twist", "IDT", "NEB", "Illumina - TruSeq Stranded PolyA mRNA"]
+    },
+    "records": {
+      "type": "array",
+      "description": "A single data record from TCRseq assay.",
+      "items": {
+        "$ref": "assays/components/ngs/tcr/tcr_entry.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "cimac_id"
+      }
+    }
+  },
+  "required": [
+    "enrichment_method",
+    "records"
+  ],
+  "mergeStrategy": "objectMerge"
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "tcr_entry",
+  "title": "TCRseq assay record",
+  "type": "object",
+  "description": "A single data record from TCRseq assay.",
+  "additionalProperties": false,
+  "allOf": [
+    { "$ref": "assays/components/ngs/ngs_assay_record.json" }
+  ],
+  "properties": {
+    "library_yield_ng": {
+      "description": "Resulting yield (in ng) from library construction.",
+      "type": "number"
+    },
+    "dv200": {
+      "description": "The percentage of fragments > 200 nucleotides.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "rqs": {
+      "description": "RNA quality score. (0-10)",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "rin": {
+      "description": "RNA integrity number. (0-10)",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "quality_flag": {
+      "description": "Flag used for quality.",
+      "type": "number"
+    },
+    "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
+    "files": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/files"}
+  },
+  "mergeStrategy": "objectMerge"
+}

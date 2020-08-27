@@ -1,0 +1,10 @@
+"#t","Metadata file for tcr seq  [fastq]."
+"#p","Protocol identifier"
+"#p","Assay creator"
+"#p","Enrichment method"
+"#p","Enrichment kit"
+"#p","Sequencer platform"
+"#p","Paired end reads"
+
+"","Samples"
+"#h","Cimac id","Forward fastq","Reverse fastq","Library yield ng","Dv200","Rqs","Rin","Quality flag"

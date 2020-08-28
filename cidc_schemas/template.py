@@ -120,9 +120,8 @@ class _FieldDef(NamedTuple):
         logger.debug(f"Processing field spec: {self}")
 
         # skip nullable
-        if self.allow_empty:
-            if raw_val is None:
-                return [], []
+        if self.allow_empty and raw_val is None:
+            return [], []
 
         if self.do_not_merge:
             logger.debug(f"Ignoring {self.key_name!r} due to 'do_not_merge' == True")

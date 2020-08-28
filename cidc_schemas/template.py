@@ -102,7 +102,7 @@ class _FieldDef(NamedTuple):
     key_name: str
     coerce: Callable
     merge_pointer: str
-    # # TODO join type and type_ref by resolving ref
+    # MAYBE TODO unify type and type_ref
     type: Union[str, None] = None
     type_ref: str = None
     # TODO unwrap local_file
@@ -141,12 +141,9 @@ class _FieldDef(NamedTuple):
         # or set/update value in-place in data_obj dictionary
 
         try:
-            val, files = _calc_val_and_files(raw_val, self, format_context)
-        except ParsingException as pe:
-            raise pe
-            # raise ParsingException(
-            #     f"Can't parse {self.key_name!r} value {str(raw_val)!r}"
-            # ) from pe
+            val, files = self._calc_val_and_files(raw_val, format_context)
+        except ParsingException:
+            raise
         except Exception as e:
             # this shouldn't wrap all exceptions into a parsing one,
             # but we need to split calc_val_and_files to handle them separately here
@@ -167,6 +164,119 @@ class _FieldDef(NamedTuple):
             )
         else:
             return [AtomicChange(self.merge_pointer, val)], files
+
+    ## TODO easy - split val coerce / files calc to handle exceptions separately
+    ## TODO hard - files (artifact and multi) should be just coerce?
+    def _calc_val_and_files(self, raw_val, format_context: dict):
+        """
+        Processes one field value based on `_FieldDef` taken from a ..._template.json schema.
+        Calculates a file upload entry if is_artifact.
+        """
+
+        val = self.coerce(raw_val)
+
+        if not self.is_artifact:
+            return val, []  # no files if it's not an artifact
+
+        files = []
+
+        # deal with multi-artifact
+        if self.is_artifact == "multi":
+            logger.debug(f"      collecting multi local_file_path {self}")
+
+            # In case of is_aritfact=multi we expect the value to be a comma-separated
+            # list of local_file paths (that we will convert to uuids)
+            # and also for the corresponding DM schema to be an array of artifacts
+            # that we will fill with upload_placeholder uuids
+
+            # So our value is a list of artifact placeholders
+            val = []
+
+            # and we iterate through local file paths:
+            for num, local_path in enumerate(raw_val.split(",")):
+                # Ignoring errors here as we're sure `coerce` will just return a uuid
+                file_uuid = self.coerce(local_path)
+
+                artifact, facet_group = self._format_single_artifact(
+                    local_path=local_path,
+                    uuid=file_uuid,
+                    format_context=dict(
+                        format_context,
+                        num=num  # add num to be able to generate
+                        # different gcs keys for each multi-artifact file.
+                    ),
+                )
+
+                val.append(
+                    {"upload_placeholder": file_uuid, "facet_group": facet_group}
+                )
+
+                files.append(artifact)
+
+        else:
+            logger.debug(f"Collecting local_file_path {self}")
+            artifact, facet_group = self._format_single_artifact(
+                local_path=raw_val, uuid=val, format_context=format_context
+            )
+
+            val = {"upload_placeholder": val, "facet_group": facet_group}
+
+            files.append(artifact)
+
+        return val, files
+
+    def _format_single_artifact(
+        self, local_path: str, uuid: str, format_context: dict
+    ) -> Tuple[LocalFileUploadEntry, str]:
+        """Return a LocalFileUploadEntry for this artifact, along with the artifact's facet group."""
+
+        # # TODO move these checks to template instantiating - so it fails on build/startup
+        # if not self.gcs_uri_format:
+        #     raise Exception(f"Empty gcs_uri_format for {self.key_name!r}")
+        # if not isinstance(self.gcs_uri_format, (dict, str)):
+        #     raise Exception(f"Unsupported gcs_uri_format for {self.key_name!r}")
+        # if isinstance(self.gcs_uri_format, dict):
+        #     assert "format" in self.gcs_uri_format
+
+        # By default we think gcs_uri_format is a format-string
+        format = self.gcs_uri_format
+        try_formatting = lambda: format.format_map(format_context)
+
+        if isinstance(self.gcs_uri_format, dict):
+            if "check_errors" in self.gcs_uri_format:
+                # `eval` should be fine, as we're controlling the code argument in templates
+                err = eval(self.gcs_uri_format["check_errors"])(local_path)
+                if err:
+                    raise ParsingException(err)
+
+            format = self.gcs_uri_format["format"]
+            try_formatting = lambda: eval(format)(local_path, format_context)
+
+        try:
+            gs_key = try_formatting()
+        except Exception as e:
+            raise ParsingException(
+                f"Can't format destination gcs uri for {self.key_name!r}: {format}"
+            )
+
+        expected_extension = get_file_ext(gs_key)
+        provided_extension = get_file_ext(local_path)
+        if provided_extension != expected_extension:
+            raise ParsingException(
+                f"Expected {'.' + expected_extension} for {self.key_name!r} but got {'.' + provided_extension!r} instead."
+            )
+
+        facet_group = _get_facet_group(format)
+
+        return (
+            LocalFileUploadEntry(
+                local_path=local_path,
+                gs_key=gs_key,
+                upload_placeholder=uuid,
+                metadata_availability=self.extra_metadata,
+            ),
+            facet_group,
+        )
 
 
 class ParsingException(ValueError):
@@ -193,123 +303,6 @@ def _get_facet_group(gcs_uri_format: str) -> str:
     facet_group = re.sub(r"\/\/*", "/", fmted_string)
 
     return facet_group
-
-
-def _format_single_artifact(
-    local_path: str, uuid: str, field_def: _FieldDef, format_context: dict
-) -> Tuple[LocalFileUploadEntry, str]:
-    """Return a LocalFileUploadEntry for this artifact, along with the artifact's facet group."""
-
-    # # TODO move these checks to template instantiating - so it fails on build/startup
-    # if not field_def.gcs_uri_format:
-    #     raise Exception(f"Empty gcs_uri_format for {field_def.key_name!r}")
-    # if not isinstance(field_def.gcs_uri_format, (dict, str)):
-    #     raise Exception(f"Unsupported gcs_uri_format for {field_def.key_name!r}")
-    # if isinstance(field_def.gcs_uri_format, dict):
-    #     assert "format" in field_def.gcs_uri_format
-
-    # By default we think gcs_uri_format is a format-string
-    format = field_def.gcs_uri_format
-    try_formatting = lambda: format.format_map(format_context)
-
-    if isinstance(field_def.gcs_uri_format, dict):
-        if "check_errors" in field_def.gcs_uri_format:
-            # `eval` should be fine, as we're controlling the code argument in templates
-            err = eval(field_def.gcs_uri_format["check_errors"])(local_path)
-            if err:
-                raise ParsingException(err)
-
-        format = field_def.gcs_uri_format["format"]
-        try_formatting = lambda: eval(format)(local_path, format_context)
-
-    try:
-        gs_key = try_formatting()
-    except Exception as e:
-        raise ParsingException(
-            f"Can't format destination gcs uri for {field_def.key_name!r}: {format}"
-        )
-
-    expected_extension = get_file_ext(gs_key)
-    provided_extension = get_file_ext(local_path)
-    if provided_extension != expected_extension:
-        raise ParsingException(
-            f"Expected {'.' + expected_extension} for {field_def.key_name!r} but got {'.' + provided_extension!r} instead."
-        )
-
-    facet_group = _get_facet_group(format)
-
-    return (
-        LocalFileUploadEntry(
-            local_path=local_path,
-            gs_key=gs_key,
-            upload_placeholder=uuid,
-            metadata_availability=field_def.extra_metadata,
-        ),
-        facet_group,
-    )
-
-
-## TODO split val / files
-## TODO files (artifact and multi) should be just coerce?
-def _calc_val_and_files(raw_val, field_def: _FieldDef, format_context: dict):
-    """
-    Processes one field value based on field_def taken from a ..._template.json schema.
-    Calculates a file upload entry if is_artifact.
-    """
-
-    val = field_def.coerce(raw_val)
-
-    if not field_def.is_artifact:
-        return val, []  # no files if it's not an artifact
-
-    files = []
-
-    # deal with multi-artifact
-    if field_def.is_artifact == "multi":
-        logger.debug(f"      collecting multi local_file_path {field_def}")
-
-        # In case of is_aritfact=multi we expect the value to be a comma-separated
-        # list of local_file paths (that we will convert to uuids)
-        # and also for the corresponding DM schema to be an array of artifacts
-        # that we will fill with upload_placeholder uuids
-
-        # So our value is a list of artifact placeholders
-        val = []
-
-        # and we iterate through local file paths:
-        for num, local_path in enumerate(raw_val.split(",")):
-            # Ignoring errors here as we're sure `coerce` will just return a uuid
-            file_uuid = field_def.coerce(local_path)
-
-            artifact, facet_group = _format_single_artifact(
-                local_path=local_path,
-                uuid=file_uuid,
-                field_def=field_def,
-                format_context=dict(
-                    format_context,
-                    num=num  # add num to be able to generate
-                    # different gcs keys for each multi-artifact file.
-                ),
-            )
-
-            val.append({"upload_placeholder": file_uuid, "facet_group": facet_group})
-
-            files.append(artifact)
-
-    else:
-        logger.debug(f"Collecting local_file_path {field_def}")
-        artifact, facet_group = _format_single_artifact(
-            local_path=raw_val,
-            uuid=val,
-            field_def=field_def,
-            format_context=format_context,
-        )
-
-        val = {"upload_placeholder": val, "facet_group": facet_group}
-
-        files.append(artifact)
-
-    return val, files
 
 
 class Template:
@@ -411,14 +404,14 @@ class Template:
         # add our own type conversion
         t = entry["type"]
 
-        return Template._get_coerce(t, entry.get("$id"))
+        return self._get_simple_type_coerce(t, entry.get("$id"))
 
     @staticmethod
     def _gen_upload_placeholder_uuid(_):
         return str(uuid.uuid4())
 
     @staticmethod
-    def _get_coerce(t: str, object_id=None):
+    def _get_simple_type_coerce(t: str, object_id=None):
         """
         This function takes a json-schema style type
         and determines the best python
@@ -439,17 +432,19 @@ class Template:
         else:
             raise NotImplementedError(f"no coercion available for type:{t}")
 
-    def _add_coerce(self, field_def: dict) -> dict:
-        """ Checks if we have a cast func for that 'type_ref' """
+    def _get_coerce(self, field_def: dict) -> Callable:
+        """ Checks if we have a cast func for that 'type_ref' and returns it."""
 
         orig_fdef = dict(field_def)
 
-        if "type_ref" in field_def:
-            coerce = self._get_ref_coerce(field_def.pop("type_ref"))
-        elif "ref" in field_def:
-            coerce = self._get_ref_coerce(field_def.pop("ref"))
+        if "type_ref" in field_def or "ref" in field_def:
+            coerce = self._get_ref_coerce(
+                field_def.pop("ref", field_def.pop("type_ref"))
+            )
         elif "type" in field_def:
-            coerce = self._get_coerce(field_def.pop("type"), field_def.pop("$id", None))
+            coerce = self._get_simple_type_coerce(
+                field_def.pop("type"), field_def.pop("$id", None)
+            )
         elif field_def.get("do_not_merge", False):
 
             raise Exception("Should not have been merged as for `do_not_merge`")
@@ -460,46 +455,39 @@ class Template:
                 f"in each template schema field def, but not found in {orig_fdef!r}"
             )
 
-        return dict(coerce=coerce, **field_def)
+        return coerce
 
-    def _load_f_defs(self, key_name, def_dict):
-        # TODO check types, add defaults ?
+    def _load_field_defs(self, key_name, def_dict) -> List[_FieldDef]:
+        """
+        Converts a template schema "field definition" to a list of typed `_FieldDef`s,
+        which ensures we get only supported matching logic.
+        """
 
         def_d = dict(def_dict)  # so we don't mutate original
-        process_as = def_d.pop("process_as", None)
+        process_as = def_d.pop("process_as", [])
         res = []
 
         if not def_dict.get("do_not_merge"):
+
+            # remove all unsupported _FieldDef keys
             for f in def_dict:
                 if f in _FieldDef._fields:
                     continue
                 def_d.pop(f, None)
 
             try:
-                with_coerce = self._add_coerce(def_d)
+                coerce = self._get_coerce(def_d)
+                res.append(_FieldDef(key_name=key_name, coerce=coerce, **def_d))
             except Exception as e:
                 raise Exception(f"Couldn't load mapping for {key_name!r}: " + str(e))
-
-            res.append(
-                _FieldDef(
-                    key_name=key_name,
-                    # TODO review
-                    # type=with_coerce.pop("type", None),
-                    # parse_through=with_coerce.pop("parse_through", None),
-                    # merge_pointer=with_coerce.pop("merge_pointer", None),
-                    **with_coerce,
-                )
-            )
 
         # "process_as" allows to define additional places/ways to put a match
         # somewhere in the resulting doc, with additional processing.
         # E.g. we need to strip cimac_id='CM-TEST-0001-01' to 'CM-TEST-0001'
         # and put it in this sample parent's cimac_participant_id
-
-        if process_as:
-            # recursively _add_coerce to each sub 'process_as' item
-            for extra_fdef in process_as:
-                res.extend(self._load_f_defs(key_name, extra_fdef))
+        for extra_fdef in process_as:
+            # recursively adds coerce to each sub 'process_as' item
+            res.extend(self._load_field_defs(key_name, extra_fdef))
 
         return res
 
@@ -528,15 +516,13 @@ class Template:
                 "preamble_rows", {}
             ).items():
 
-                # TODO .lower() ?
-                key_lu[preamble_key] = self._load_f_defs(preamble_key, preamble_def)
+                key_lu[preamble_key] = self._load_field_defs(preamble_key, preamble_def)
 
             # load the data columns
             for section_key, section_def in ws_schema.get("data_columns", {}).items():
                 for column_key, column_def in section_def.items():
 
-                    # TODO .lower() ?
-                    key_lu[column_key] = self._load_f_defs(column_key, column_def)
+                    key_lu[column_key] = self._load_field_defs(column_key, column_def)
 
         return key_lu
 
@@ -553,7 +539,8 @@ class Template:
 
         logger.debug(f"Processing property {key!r} - {raw_val!r}")
         try:
-            # TODO replace lookup with smart matching - the whole purpose of refactoring
+            # TODO replace lookup with smart matching - the whole purpose of
+            # refactoring to allow for arbitrary annotations
             field_defs = self.key_lu[key.lower()]
         except KeyError:
             raise ParsingException(f"Unexpected property {key!r}.")

@@ -82,8 +82,10 @@ def test_get_facet_group():
 
 
 def test_from_type():
-    assert "Shipment" in Template.from_type("pbmc").worksheets
-    assert "Samples" in Template.from_type("pbmc").worksheets
+    pbmc = Template.from_type("pbmc")
+
+    assert "Shipment" in pbmc.worksheets
+    assert "Samples" in pbmc.worksheets
     assert "WES" in Template.from_type("wes_fastq").worksheets
 
     with pytest.raises(Exception, match="unknown template type"):

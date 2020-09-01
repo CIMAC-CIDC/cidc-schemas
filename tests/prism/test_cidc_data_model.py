@@ -94,7 +94,7 @@ def test_merge_patch_into_trial(prism_test: PrismTestData, ct_validator):
 
     # Ensure no errors resulted from the merge
     if errs:
-        raise errs[0]
+        raise errs[0] if isinstance(errs[0], BaseException) else Exception(errs[0])
     assert len(errs) == 0
 
     # Ensure that the merge result passes validation

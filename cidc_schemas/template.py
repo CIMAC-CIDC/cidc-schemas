@@ -105,7 +105,6 @@ class _FieldDef(NamedTuple):
     # MAYBE TODO unify type and type_ref
     type: Union[str, None] = None
     type_ref: str = None
-    # TODO unwrap local_file
     gcs_uri_format: Union[str, dict, None] = None
     extra_metadata: bool = False
     parse_through: Union[str, None] = None
@@ -230,18 +229,11 @@ class _FieldDef(NamedTuple):
     ) -> Tuple[LocalFileUploadEntry, str]:
         """Return a LocalFileUploadEntry for this artifact, along with the artifact's facet group."""
 
-        # # TODO move these checks to template instantiating - so it fails on build/startup
-        # if not self.gcs_uri_format:
-        #     raise Exception(f"Empty gcs_uri_format for {self.key_name!r}")
-        # if not isinstance(self.gcs_uri_format, (dict, str)):
-        #     raise Exception(f"Unsupported gcs_uri_format for {self.key_name!r}")
-        # if isinstance(self.gcs_uri_format, dict):
-        #     assert "format" in self.gcs_uri_format
-
         # By default we think gcs_uri_format is a format-string
         format = self.gcs_uri_format
         try_formatting = lambda: format.format_map(format_context)
 
+        # or it could be a dict
         if isinstance(self.gcs_uri_format, dict):
             if "check_errors" in self.gcs_uri_format:
                 # `eval` should be fine, as we're controlling the code argument in templates
@@ -250,6 +242,7 @@ class _FieldDef(NamedTuple):
                     raise ParsingException(err)
 
             format = self.gcs_uri_format["format"]
+            # `eval` should be fine, as we're controlling the code argument in templates
             try_formatting = lambda: eval(format)(local_path, format_context)
 
         try:
@@ -477,9 +470,28 @@ class Template:
 
             try:
                 coerce = self._get_coerce(def_d)
-                res.append(_FieldDef(key_name=key_name, coerce=coerce, **def_d))
+                fd = _FieldDef(key_name=key_name, coerce=coerce, **def_d)
             except Exception as e:
                 raise Exception(f"Couldn't load mapping for {key_name!r}: " + str(e))
+
+            # TODO maybe move these checks to _FieldDef constructor?
+            # Though it will require changing _FieldDef implementation
+            # from NamedTuple to something more extensible like attrs or dataclasses
+            if fd.is_artifact and not fd.gcs_uri_format:
+                raise Exception(f"Empty gcs_uri_format for {fd.key_name!r}")
+
+            if not isinstance(fd.gcs_uri_format, (dict, str)):
+                raise Exception(f"Unsupported gcs_uri_format for {fd.key_name!r}")
+
+            if (
+                isinstance(fd.gcs_uri_format, dict)
+                and "format" not in fd.gcs_uri_format
+            ):
+                raise Exception(
+                    f"{fd.key_name!r} gcs_uri_format should have `format` def"
+                )
+
+            res.append(fd)
 
         # "process_as" allows to define additional places/ways to put a match
         # somewhere in the resulting doc, with additional processing.

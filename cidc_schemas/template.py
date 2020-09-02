@@ -480,15 +480,23 @@ class Template:
             if fd.is_artifact and not fd.gcs_uri_format:
                 raise Exception(f"Empty gcs_uri_format for {fd.key_name!r}")
 
-            if not isinstance(fd.gcs_uri_format, (dict, str)):
-                raise Exception(f"Unsupported gcs_uri_format for {fd.key_name!r}")
+            if fd.gcs_uri_format and not fd.is_artifact:
+                raise Exception(
+                    f"gcs_uri_format defined {fd.key_name!r} with `is_artifact=False`"
+                )
+
+            if fd.gcs_uri_format and not isinstance(fd.gcs_uri_format, (dict, str)):
+                raise Exception(
+                    f"Bad gcs_uri_format for {fd.key_name!r}:"
+                    f"{type(fd.gcs_uri_format)} - should be dict or str."
+                )
 
             if (
                 isinstance(fd.gcs_uri_format, dict)
                 and "format" not in fd.gcs_uri_format
             ):
                 raise Exception(
-                    f"{fd.key_name!r} gcs_uri_format should have `format` def"
+                    f"gcs_uri_format for {fd.key_name!r} should have `format` def"
                 )
 
             res.append(fd)
@@ -523,18 +531,29 @@ class Template:
         # loop over each worksheet
         for ws_name, ws_schema in self.worksheets.items():
 
-            # loop over each row in pre-amble
-            for preamble_key, preamble_def in ws_schema.get(
-                "preamble_rows", {}
-            ).items():
+            try:
+                # loop over each row in pre-amble
+                for preamble_key, preamble_def in ws_schema.get(
+                    "preamble_rows", {}
+                ).items():
 
-                key_lu[preamble_key] = self._load_field_defs(preamble_key, preamble_def)
+                    key_lu[preamble_key] = self._load_field_defs(
+                        preamble_key, preamble_def
+                    )
 
-            # load the data columns
-            for section_key, section_def in ws_schema.get("data_columns", {}).items():
-                for column_key, column_def in section_def.items():
+                # load the data columns
+                for section_key, section_def in ws_schema.get(
+                    "data_columns", {}
+                ).items():
+                    for column_key, column_def in section_def.items():
 
-                    key_lu[column_key] = self._load_field_defs(column_key, column_def)
+                        key_lu[column_key] = self._load_field_defs(
+                            column_key, column_def
+                        )
+            except Exception as e:
+                raise Exception(
+                    f"Error in template {self.type!r}/{ws_name!r}: {e}"
+                ) from e
 
         return key_lu
 

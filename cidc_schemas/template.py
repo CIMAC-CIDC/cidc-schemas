@@ -120,7 +120,7 @@ class _FieldDef(NamedTuple):
             raise Exception(f"Empty gcs_uri_format")
 
         if self.gcs_uri_format and not self.is_artifact:
-            raise Exception(f"gcs_uri_format defined for `is_artifact=False`")
+            raise Exception(f"gcs_uri_format defined for not is_artifact")
 
         if self.gcs_uri_format and not isinstance(self.gcs_uri_format, (dict, str)):
             raise Exception(
@@ -131,7 +131,7 @@ class _FieldDef(NamedTuple):
             isinstance(self.gcs_uri_format, dict)
             and "format" not in self.gcs_uri_format
         ):
-            raise Exception(f"dict type gcs_uri_format should have `format` def")
+            raise Exception(f"dict type gcs_uri_format should have 'format' def")
 
     def process_value(
         self, raw_val, format_context: dict, eval_context: dict
@@ -461,11 +461,11 @@ class Template:
             )
         elif field_def.get("do_not_merge", False):
 
-            raise Exception("Should not have been merged as for `do_not_merge`")
+            raise Exception("Should not have been processed as for `do_not_merge`")
 
         else:
             raise Exception(
-                f'Either "type" or "type_ref" or "$ref should be present '
+                f'Either "type" or "type_ref" or "$ref" should be present '
                 f"in each template schema field def, but not found in {orig_fdef!r}"
             )
 
@@ -494,7 +494,7 @@ class Template:
                 fd = _FieldDef(key_name=key_name, coerce=coerce, **def_d)
                 fd.artifact_checks()
             except Exception as e:
-                raise Exception(f"Couldn't load mapping for {key_name!r}: " + str(e))
+                raise Exception(f"Couldn't load mapping for {key_name!r}: {e}") from e
 
             res.append(fd)
 
@@ -572,8 +572,6 @@ class Template:
             field_defs = self.key_lu[key.lower()]
         except KeyError:
             raise ParsingException(f"Unexpected property {key!r}.")
-        except Exception as e:
-            raise Exception(e)
 
         logger.debug(f"Found field {len(field_defs)} defs")
 

@@ -31,13 +31,117 @@ def test_tiny_loaded(tiny_template):
     assert "TEST_SHEET" in tiny_template.worksheets
 
 
-def test_process_value():
+def test_process_field_value():
     prop = "prop0"
 
-    # # TODO move that to a separate test on template
-    # # process_field_value throws a ParsingException on properties missing from the key lookup dict
-    # with pytest.raises(ParsingException, match="Unexpected property"):
-    #     Template.process_field_value(prop, "123", {}, {}, {})
+    schema = {
+        "properties": {
+            "worksheets": {
+                "worksheet_1": {
+                    "prism_preamble_object_pointer": "/prism_preamble_object_pointer/0",
+                    "preamble_rows": {
+                        "preamble_field_1": {
+                            "merge_pointer": "/preamble_field",
+                            "type": "string",
+                        }
+                    },
+                    "prism_data_object_pointer": "/prism_data_object_pointer/-",
+                    "data_columns": {
+                        "section_1": {
+                            "data_field_1": {
+                                "merge_pointer": "/data_field",
+                                "type": "number",
+                            }
+                        }
+                    },
+                }
+            }
+        }
+    }
+
+    template = Template(schema, type="adhoc_test_template")
+
+    # process_field_value throws a ParsingException on properties missing from the key lookup dict
+    with pytest.raises(ParsingException, match="Unexpected property"):
+        template.process_field_value(prop, "123", {}, {})
+
+
+def test_template_schema_checks():
+    schema = {
+        "properties": {
+            "worksheets": {
+                "worksheet_1": {
+                    "prism_preamble_object_pointer": "/prism_preamble_object_pointer/0",
+                    "preamble_rows": {
+                        "preamble_field_1": {"gcs_uri_format": "should not be here"}
+                    },
+                    "prism_data_object_pointer": "/prism_data_object_pointer/-",
+                    "data_columns": {
+                        "section_1": {
+                            "data_field_1": {
+                                "merge_pointer": "/data_field",
+                                "type": "number",
+                                "is_artifact": True,
+                            }
+                        }
+                    },
+                }
+            }
+        }
+    }
+
+    with pytest.raises(
+        Exception,
+        match="Error in template 'adhoc_test_template'/'worksheet_1': Couldn't load mapping for 'preamble_field_1': Either \"type\".*should be present",
+    ):
+        template = Template(schema, type="adhoc_test_template")
+
+    schema["properties"]["worksheets"]["worksheet_1"]["preamble_rows"][
+        "preamble_field_1"
+    ]["type"] = "string"
+
+    with pytest.raises(Exception, match=r"missing.*required.*argument.*merge_pointer"):
+        template = Template(schema, type="adhoc_test_template")
+
+    schema["properties"]["worksheets"]["worksheet_1"]["preamble_rows"][
+        "preamble_field_1"
+    ]["merge_pointer"] = "preamble_field"
+
+    with pytest.raises(Exception, match="gcs_uri_format defined for not is_artifact"):
+        template = Template(schema, type="adhoc_test_template")
+
+    del schema["properties"]["worksheets"]["worksheet_1"]["preamble_rows"][
+        "preamble_field_1"
+    ]["gcs_uri_format"]
+
+    with pytest.raises(Exception, match="Empty gcs_uri_format"):
+        template = Template(schema, type="adhoc_test_template")
+
+    schema["properties"]["worksheets"]["worksheet_1"]["data_columns"]["section_1"][
+        "data_field_1"
+    ]["gcs_uri_format"] = 123
+
+    with pytest.raises(Exception, match=r"Bad gcs_uri_format.*should be dict or str"):
+        template = Template(schema, type="adhoc_test_template")
+
+    schema["properties"]["worksheets"]["worksheet_1"]["data_columns"]["section_1"][
+        "data_field_1"
+    ]["gcs_uri_format"] = {"check_errors": "something"}
+
+    with pytest.raises(
+        Exception, match="dict type gcs_uri_format should have 'format'"
+    ):
+        template = Template(schema, type="adhoc_test_template")
+
+    schema["properties"]["worksheets"]["worksheet_1"]["data_columns"]["section_1"][
+        "data_field_1"
+    ]["gcs_uri_format"] = {"check_errors": "something", "format": "/some/{thing}"}
+
+    template = Template(schema, type="adhoc_test_template")
+
+
+def test_process_value():
+    prop = "prop0"
 
     prop_def = {"merge_pointer": "/hello", "coerce": int, "key_name": prop}
 
@@ -57,10 +161,6 @@ def test_process_value():
         "is_artifact": 1,
         "key_name": "hello",
     }
-
-    # # TODO move that to a separate test on template instantiation
-    # with pytest.raises(ParsingException, match="Empty gcs_uri_format"):
-    #     _FieldDef(**prop_def).process_value("123", {}, {})
 
     # _process property catches gcs_uri_format strings that can't be processed
     prop_def["gcs_uri_format"] = "{foo}/{bar}"

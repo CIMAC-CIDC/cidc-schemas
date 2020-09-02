@@ -112,6 +112,27 @@ class _FieldDef(NamedTuple):
     allow_empty: bool = False
     is_artifact: Union[str, bool] = False
 
+    def artifact_checks(self):
+        # TODO maybe move these checks to constructor?
+        # Though it will require changing implementation
+        # from NamedTuple to something more extensible like attrs or dataclasses
+        if self.is_artifact and not self.gcs_uri_format:
+            raise Exception(f"Empty gcs_uri_format")
+
+        if self.gcs_uri_format and not self.is_artifact:
+            raise Exception(f"gcs_uri_format defined for `is_artifact=False`")
+
+        if self.gcs_uri_format and not isinstance(self.gcs_uri_format, (dict, str)):
+            raise Exception(
+                f"Bad gcs_uri_format: {type(self.gcs_uri_format)} - should be dict or str."
+            )
+
+        if (
+            isinstance(self.gcs_uri_format, dict)
+            and "format" not in self.gcs_uri_format
+        ):
+            raise Exception(f"dict type gcs_uri_format should have `format` def")
+
     def process_value(
         self, raw_val, format_context: dict, eval_context: dict
     ) -> Tuple[List[AtomicChange], List[LocalFileUploadEntry]]:
@@ -471,33 +492,9 @@ class Template:
             try:
                 coerce = self._get_coerce(def_d)
                 fd = _FieldDef(key_name=key_name, coerce=coerce, **def_d)
+                fd.artifact_checks()
             except Exception as e:
                 raise Exception(f"Couldn't load mapping for {key_name!r}: " + str(e))
-
-            # TODO maybe move these checks to _FieldDef constructor?
-            # Though it will require changing _FieldDef implementation
-            # from NamedTuple to something more extensible like attrs or dataclasses
-            if fd.is_artifact and not fd.gcs_uri_format:
-                raise Exception(f"Empty gcs_uri_format for {fd.key_name!r}")
-
-            if fd.gcs_uri_format and not fd.is_artifact:
-                raise Exception(
-                    f"gcs_uri_format defined {fd.key_name!r} with `is_artifact=False`"
-                )
-
-            if fd.gcs_uri_format and not isinstance(fd.gcs_uri_format, (dict, str)):
-                raise Exception(
-                    f"Bad gcs_uri_format for {fd.key_name!r}:"
-                    f"{type(fd.gcs_uri_format)} - should be dict or str."
-                )
-
-            if (
-                isinstance(fd.gcs_uri_format, dict)
-                and "format" not in fd.gcs_uri_format
-            ):
-                raise Exception(
-                    f"gcs_uri_format for {fd.key_name!r} should have `format` def"
-                )
 
             res.append(fd)
 

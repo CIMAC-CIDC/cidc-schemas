@@ -597,6 +597,8 @@ class Template:
             "prism_preamble_object_pointer",
             "prism_data_object_pointer",
             "prism_preamble_object_schema",
+            "prism_arbitrary_data_section",
+            "prism_arbitrary_data_merge_pointer",
         ]
     )
 

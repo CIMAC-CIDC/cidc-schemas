@@ -65,6 +65,48 @@ def test_process_field_value():
     with pytest.raises(ParsingException, match="Unexpected property"):
         template.process_field_value(prop, "123", {}, {})
 
+    # not throwing on expected
+    template.process_field_value("data_field_1", "123", {}, {})
+
+
+def test_template_arbitrary_data_section():
+    schema = {
+        "properties": {
+            "worksheets": {
+                "worksheet_1": {
+                    "prism_data_object_pointer": "/prism_data_object_pointer/-",
+                    "prism_arbitrary_data_section": "extra_annotations",
+                    "prism_arbitrary_data_merge_pointer": "/extra_annotations_sub_object",
+                    "data_columns": {
+                        "section_1": {
+                            "data_field_1": {
+                                "merge_pointer": "/data_field",
+                                "type": "number",
+                            }
+                        }
+                    },
+                }
+            }
+        }
+    }
+
+    template = Template(schema, type="adhoc_arbitrary_data_test_template")
+
+    # not throwing on expected
+    changes, _ = template.process_field_value("data_field_1", "123", {}, {})
+
+    assert len(changes) == 1
+    assert changes[0].pointer == "/data_field"
+    assert changes[0].value == 123.0
+
+    # process_field_value DOESN'T throw a ParsingException
+    # on arbitrary, not predefined fields
+    changes, _ = template.process_field_value("unexpected_property", "123", {}, {})
+
+    assert len(changes) == 1
+    assert changes[0].pointer == "/extra_annotations_sub_object/unexpected_property"
+    assert changes[0].value == 123.0
+
 
 def test_template_schema_checks():
     schema = {
@@ -140,21 +182,21 @@ def test_template_schema_checks():
     template = Template(schema, type="adhoc_test_template")
 
 
-def test_process_value():
+def test_field_def_process_value():
     prop = "prop0"
 
     prop_def = {"merge_pointer": "/hello", "coerce": int, "key_name": prop}
 
-    # _process_property behaves as expected on a simple example
+    # process_value behaves as expected on a simple example
     changes, files = _FieldDef(**prop_def).process_value("123", {}, {})
     assert changes == [AtomicChange("/hello", 123)]
     assert files == []
 
-    # _process_property catches unparseable raw values
+    # process_value catches unparseable raw values
     with pytest.raises(ParsingException, match=f"Can't parse {prop!r}"):
         _FieldDef(**prop_def).process_value("123abcd", {}, {})
 
-    # _process_property catches a missing gcs_uri_format on an artifact
+    # process_value catches a missing gcs_uri_format on an artifact
     prop_def = {
         "merge_pointer": "/hello",
         "coerce": str,
@@ -162,7 +204,7 @@ def test_process_value():
         "key_name": "hello",
     }
 
-    # _process property catches gcs_uri_format strings that can't be processed
+    # process_value catches gcs_uri_format strings that can't be processed
     prop_def["gcs_uri_format"] = "{foo}/{bar}"
     with pytest.raises(ParsingException, match="Can't format destination gcs uri"):
         _FieldDef(**prop_def).process_value("123", {}, {})

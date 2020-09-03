@@ -52,6 +52,9 @@ def wes_analysis() -> PrismTestData:
                             "vcf_tnscope_filter": {
                                 "upload_placeholder": "a86ab142-a925-433c-bb13-030c0684365d"
                             },
+                            "vcf_gz_tnscope_filter": {
+                                "upload_placeholder": "b86ab142-a925-433c-bb13-030c0684365e"
+                            },
                             "maf_tnscope_filter": {
                                 "upload_placeholder": "53991cf3-b1b9-4b4a-830d-4eade9ef1321"
                             },
@@ -191,6 +194,9 @@ def wes_analysis() -> PrismTestData:
                             },
                             "vcf_tnscope_filter": {
                                 "upload_placeholder": "54466c04-86f8-44af-953d-0cfb10d11b33"
+                            },
+                            "vcf_gz_tnscope_filter": {
+                                "upload_placeholder": "64466c04-86f8-44af-953d-0cfb10d11b34"
                             },
                             "maf_tnscope_filter": {
                                 "upload_placeholder": "1d589bba-708c-449f-879f-44cba199c635"
@@ -347,6 +353,12 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/somatic/run_1/run_1_tnscope.filter.vcf",
             gs_key="test_prism_trial_id/wes/run_1/analysis/vcf_tnscope_filter.vcf",
             upload_placeholder="a86ab142-a925-433c-bb13-030c0684365d",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="analysis/somatic/run_1/run_1_tnscope.filter.vcf.gz",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/vcf_gz_tnscope_filter.vcf.gz",
+            upload_placeholder="b86ab142-a925-433c-bb13-030c0684365e",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
@@ -569,6 +581,12 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/somatic/run_2/run_2_tnscope.filter.vcf",
             gs_key="test_prism_trial_id/wes/run_2/analysis/vcf_tnscope_filter.vcf",
             upload_placeholder="54466c04-86f8-44af-953d-0cfb10d11b33",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="analysis/somatic/run_2/run_2_tnscope.filter.vcf.gz",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/vcf_gz_tnscope_filter.vcf.gz",
+            upload_placeholder="64466c04-86f8-44af-953d-0cfb10d11b34",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(

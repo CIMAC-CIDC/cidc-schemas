@@ -461,7 +461,9 @@ class Template:
             )
         elif field_def.get("do_not_merge", False):
 
-            raise Exception("Template fields flagged with `do_not_merge` do not have a typecast function")
+            raise Exception(
+                "Template fields flagged with `do_not_merge` do not have a typecast function"
+            )
 
         else:
             raise Exception(

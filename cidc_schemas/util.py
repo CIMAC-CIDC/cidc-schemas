@@ -63,6 +63,10 @@ def get_path(ct: dict, key: str) -> str:
     return all_paths.pop()
 
 
+def get_file_ext(fname):
+    return (fname.rsplit(".")[-1]).lower()
+
+
 def split_python_style_path(path: str) -> list:
     """
     Will parse `get_path` output (`root['some']['access']['path']`)

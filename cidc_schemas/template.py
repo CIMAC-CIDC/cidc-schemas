@@ -8,11 +8,23 @@ import logging
 import uuid
 import json
 import jsonschema
-from typing import List, Optional, Dict, BinaryIO, Union
-from collections import OrderedDict
+import re
+from typing import (
+    List,
+    Optional,
+    Dict,
+    BinaryIO,
+    Union,
+    NamedTuple,
+    Any,
+    Tuple,
+    Callable,
+)
+from collections import OrderedDict, defaultdict
 
 from .constants import SCHEMA_DIR, TEMPLATE_DIR
 from .json_validation import _load_dont_validate_schema
+from .util import get_file_ext
 
 logger = logging.getLogger("cidc_schemas.template")
 
@@ -63,6 +75,248 @@ def generate_all_templates(target_dir: str):
                     template_xlsx_file = template_schema_file.replace(".json", ".xlsx")
                     target_path = os.path.join(target_subdir, template_xlsx_file)
                     generate_empty_template(schema_path, target_path)
+
+
+class AtomicChange(NamedTuple):
+    """
+    Represents exactly one "value set" operation on some data object
+    `Pointer` being a json-pointer string showing where to set `value` to.
+    """
+
+    pointer: str
+    value: Any
+
+
+class LocalFileUploadEntry(NamedTuple):
+    local_path: str
+    gs_key: str
+    upload_placeholder: str
+    metadata_availability: Optional[bool]
+
+
+class _FieldDef(NamedTuple):
+    """
+    Represents all the specs on processing a specific value 
+    """
+
+    key_name: str
+    coerce: Callable
+    merge_pointer: str
+    # MAYBE TODO unify type and type_ref
+    type: Union[str, None] = None
+    type_ref: str = None
+    gcs_uri_format: Union[str, dict, None] = None
+    extra_metadata: bool = False
+    parse_through: Union[str, None] = None
+    do_not_merge: bool = False
+    allow_empty: bool = False
+    is_artifact: Union[str, bool] = False
+
+    def artifact_checks(self):
+        # TODO maybe move these checks to constructor?
+        # Though it will require changing implementation
+        # from NamedTuple to something more extensible like attrs or dataclasses
+        if self.is_artifact and not self.gcs_uri_format:
+            raise Exception(f"Empty gcs_uri_format")
+
+        if self.gcs_uri_format and not self.is_artifact:
+            raise Exception(f"gcs_uri_format defined for not is_artifact")
+
+        if self.gcs_uri_format and not isinstance(self.gcs_uri_format, (dict, str)):
+            raise Exception(
+                f"Bad gcs_uri_format: {type(self.gcs_uri_format)} - should be dict or str."
+            )
+
+        if (
+            isinstance(self.gcs_uri_format, dict)
+            and "format" not in self.gcs_uri_format
+        ):
+            raise Exception(f"dict type gcs_uri_format should have 'format' def")
+
+    def process_value(
+        self, raw_val, format_context: dict, eval_context: dict
+    ) -> Tuple[List[AtomicChange], List[LocalFileUploadEntry]]:
+
+        logger.debug(f"Processing field spec: {self}")
+
+        # skip nullable
+        if self.allow_empty and raw_val is None:
+            return [], []
+
+        if self.do_not_merge:
+            logger.debug(f"Ignoring {self.key_name!r} due to 'do_not_merge' == True")
+            return [], []
+
+        if self.parse_through:
+            try:
+                raw_val = eval(self.parse_through, eval_context)(raw_val)
+
+            # catching everything, because of eval
+            except Exception as e:
+                _field_name = self.merge_pointer.rsplit("/", 1)[-1]
+                raise ParsingException(
+                    f"Cannot extract {_field_name} from {self.key_name} value: {raw_val!r} ({e})"
+                ) from e
+
+        # or set/update value in-place in data_obj dictionary
+
+        try:
+            val, files = self._calc_val_and_files(raw_val, format_context)
+        except ParsingException:
+            raise
+        except Exception as e:
+            # this shouldn't wrap all exceptions into a parsing one,
+            # but we need to split calc_val_and_files to handle them separately here
+            # because we still want to catch all from `.coerce`
+            raise ParsingException(
+                f"Can't parse {self.key_name!r} value {str(raw_val)!r}: {e}"
+            ) from e
+
+        if self.is_artifact == True:  # multi goes into other one
+            placeholder_pointer = self.merge_pointer + "/upload_placeholder"
+            facet_group_pointer = self.merge_pointer + "/facet_group"
+            return (
+                [
+                    AtomicChange(placeholder_pointer, val["upload_placeholder"]),
+                    AtomicChange(facet_group_pointer, val["facet_group"]),
+                ],
+                files,
+            )
+        else:
+            return [AtomicChange(self.merge_pointer, val)], files
+
+    ## TODO easy - split val coerce / files calc to handle exceptions separately
+    ## TODO hard - files (artifact and multi) should be just coerce?
+    def _calc_val_and_files(self, raw_val, format_context: dict):
+        """
+        Processes one field value based on `_FieldDef` taken from a ..._template.json schema.
+        Calculates a file upload entry if is_artifact.
+        """
+
+        val = self.coerce(raw_val)
+
+        if not self.is_artifact:
+            return val, []  # no files if it's not an artifact
+
+        files = []
+
+        # deal with multi-artifact
+        if self.is_artifact == "multi":
+            logger.debug(f"      collecting multi local_file_path {self}")
+
+            # In case of is_aritfact=multi we expect the value to be a comma-separated
+            # list of local_file paths (that we will convert to uuids)
+            # and also for the corresponding DM schema to be an array of artifacts
+            # that we will fill with upload_placeholder uuids
+
+            # So our value is a list of artifact placeholders
+            val = []
+
+            # and we iterate through local file paths:
+            for num, local_path in enumerate(raw_val.split(",")):
+                # Ignoring errors here as we're sure `coerce` will just return a uuid
+                file_uuid = self.coerce(local_path)
+
+                artifact, facet_group = self._format_single_artifact(
+                    local_path=local_path,
+                    uuid=file_uuid,
+                    format_context=dict(
+                        format_context,
+                        num=num  # add num to be able to generate
+                        # different gcs keys for each multi-artifact file.
+                    ),
+                )
+
+                val.append(
+                    {"upload_placeholder": file_uuid, "facet_group": facet_group}
+                )
+
+                files.append(artifact)
+
+        else:
+            logger.debug(f"Collecting local_file_path {self}")
+            artifact, facet_group = self._format_single_artifact(
+                local_path=raw_val, uuid=val, format_context=format_context
+            )
+
+            val = {"upload_placeholder": val, "facet_group": facet_group}
+
+            files.append(artifact)
+
+        return val, files
+
+    def _format_single_artifact(
+        self, local_path: str, uuid: str, format_context: dict
+    ) -> Tuple[LocalFileUploadEntry, str]:
+        """Return a LocalFileUploadEntry for this artifact, along with the artifact's facet group."""
+
+        # By default we think gcs_uri_format is a format-string
+        format = self.gcs_uri_format
+        try_formatting = lambda: format.format_map(format_context)
+
+        # or it could be a dict
+        if isinstance(self.gcs_uri_format, dict):
+            if "check_errors" in self.gcs_uri_format:
+                # `eval` should be fine, as we're controlling the code argument in templates
+                err = eval(self.gcs_uri_format["check_errors"])(local_path)
+                if err:
+                    raise ParsingException(err)
+
+            format = self.gcs_uri_format["format"]
+            # `eval` should be fine, as we're controlling the code argument in templates
+            try_formatting = lambda: eval(format)(local_path, format_context)
+
+        try:
+            gs_key = try_formatting()
+        except Exception as e:
+            raise ParsingException(
+                f"Can't format destination gcs uri for {self.key_name!r}: {format}"
+            )
+
+        expected_extension = get_file_ext(gs_key)
+        provided_extension = get_file_ext(local_path)
+        if provided_extension != expected_extension:
+            raise ParsingException(
+                f"Expected {'.' + expected_extension} for {self.key_name!r} but got {'.' + provided_extension!r} instead."
+            )
+
+        facet_group = _get_facet_group(format)
+
+        return (
+            LocalFileUploadEntry(
+                local_path=local_path,
+                gs_key=gs_key,
+                upload_placeholder=uuid,
+                metadata_availability=self.extra_metadata,
+            ),
+            facet_group,
+        )
+
+
+class ParsingException(ValueError):
+    pass
+
+
+_empty_defaultdict: Dict[str, str] = defaultdict(str)
+
+
+def _get_facet_group(gcs_uri_format: str) -> str:
+    """"
+    Extract a file's facet group from its GCS URI format string by removing
+    the "format" parts.
+    """
+    # Provide empty strings for a GCS URI formatter variables
+    try:
+        # First, attempt to call the format string as a lambda
+        fmted_string = eval(gcs_uri_format)("", _empty_defaultdict)
+    except:
+        # Fall back to string interpolation via format_map
+        fmted_string = gcs_uri_format.format_map(_empty_defaultdict)
+
+    # Clear any double slashes
+    facet_group = re.sub(r"\/\/*", "/", fmted_string)
+
+    return facet_group
 
 
 class Template:
@@ -164,14 +418,14 @@ class Template:
         # add our own type conversion
         t = entry["type"]
 
-        return Template._get_coerce(t, entry.get("$id"))
+        return self._get_simple_type_coerce(t, entry.get("$id"))
 
     @staticmethod
     def _gen_upload_placeholder_uuid(_):
         return str(uuid.uuid4())
 
     @staticmethod
-    def _get_coerce(t: str, object_id=None):
+    def _get_simple_type_coerce(t: str, object_id=None):
         """
         This function takes a json-schema style type
         and determines the best python
@@ -192,6 +446,70 @@ class Template:
         else:
             raise NotImplementedError(f"no coercion available for type:{t}")
 
+    def _get_coerce(self, field_def: dict) -> Callable:
+        """ Checks if we have a cast func for that 'type_ref' and returns it."""
+
+        orig_fdef = dict(field_def)
+
+        if "type_ref" in field_def or "ref" in field_def:
+            coerce = self._get_ref_coerce(
+                field_def.pop("ref", field_def.pop("type_ref"))
+            )
+        elif "type" in field_def:
+            coerce = self._get_simple_type_coerce(
+                field_def.pop("type"), field_def.pop("$id", None)
+            )
+        elif field_def.get("do_not_merge", False):
+
+            raise Exception(
+                "Template fields flagged with `do_not_merge` do not have a typecast function"
+            )
+
+        else:
+            raise Exception(
+                f'Either "type" or "type_ref" or "$ref" should be present '
+                f"in each template schema field def, but not found in {orig_fdef!r}"
+            )
+
+        return coerce
+
+    def _load_field_defs(self, key_name, def_dict) -> List[_FieldDef]:
+        """
+        Converts a template schema "field definition" to a list of typed `_FieldDef`s,
+        which ensures we get only supported matching logic.
+        """
+
+        def_d = dict(def_dict)  # so we don't mutate original
+        process_as = def_d.pop("process_as", [])
+        res = []
+
+        if not def_dict.get("do_not_merge"):
+
+            # remove all unsupported _FieldDef keys
+            for f in def_dict:
+                if f in _FieldDef._fields:
+                    continue
+                def_d.pop(f, None)
+
+            try:
+                coerce = self._get_coerce(def_d)
+                fd = _FieldDef(key_name=key_name, coerce=coerce, **def_d)
+                fd.artifact_checks()
+            except Exception as e:
+                raise Exception(f"Couldn't load mapping for {key_name!r}: {e}") from e
+
+            res.append(fd)
+
+        # "process_as" allows to define additional places/ways to put a match
+        # somewhere in the resulting doc, with additional processing.
+        # E.g. we need to strip cimac_id='CM-TEST-0001-01' to 'CM-TEST-0001'
+        # and put it in this sample parent's cimac_participant_id
+        for extra_fdef in process_as:
+            # recursively adds coerce to each sub 'process_as' item
+            res.extend(self._load_field_defs(key_name, extra_fdef))
+
+        return res
+
     def _load_keylookup(self) -> dict:
         """
         The excel spreadsheet uses human friendly (no _) names
@@ -209,64 +527,67 @@ class Template:
         # create a key lookup dictionary
         key_lu = {}
 
-        def _add_coerce(field_def: dict) -> dict:
-            """ Checks if we have a cast func for that 'type_ref' """
-            if "type_ref" in field_def or "$ref" in field_def:
-                coerce = self._get_ref_coerce(
-                    field_def.get("type_ref") or field_def["$ref"]
-                )
-            elif "type" in field_def:
-                if "$id" in field_def:
-                    coerce = self._get_coerce(field_def["type"], field_def["$id"])
-                else:
-                    coerce = self._get_coerce(field_def["type"])
-            else:
-                raise Exception(
-                    f'Either "type" or "type_ref" or "$ref should be present '
-                    f"in each template schema field def, but not found in {field_def!r}"
-                )
-
-            if "process_as" in field_def:
-
-                # recursively _add_coerce to each sub 'process_as' item
-                for extra_fdef in field_def["process_as"]:
-                    extra_fdef.update(
-                        # adding "key_name" from parent field_def
-                        # so we later know what template column this came from
-                        dict(_add_coerce(extra_fdef), key_name=field_def["key_name"])
-                    )
-
-            return dict(coerce=coerce, **field_def)
-
         # loop over each worksheet
         for ws_name, ws_schema in self.worksheets.items():
 
-            # loop over each row in pre-amble
-            for preamble_key, preamble_def in ws_schema.get(
-                "preamble_rows", {}
-            ).items():
+            try:
+                # loop over each row in pre-amble
+                for preamble_key, preamble_def in ws_schema.get(
+                    "preamble_rows", {}
+                ).items():
 
-                # populate lookup
-                # TODO .lower() ?
-                key_lu[preamble_key] = _add_coerce(
-                    dict(preamble_def, key_name=preamble_key)
-                )
-                # we expect preamble_def from `_template.json` have 2 fields
-                # (as for template.schema) - "merge_pointer" and "type_ref"
-
-            # load the data columns
-            for section_key, section_def in ws_schema.get("data_columns", {}).items():
-                for column_key, column_def in section_def.items():
-
-                    # populate lookup
-                    # TODO .lower() ?
-                    key_lu[column_key] = _add_coerce(
-                        dict(column_def, key_name=column_key)
+                    key_lu[preamble_key] = self._load_field_defs(
+                        preamble_key, preamble_def
                     )
-                    # we expect column_def from `_template.json` have 2 fields
-                    # (as for template.schema) - "merge_pointer" and "type_ref"
+
+                # load the data columns
+                for section_key, section_def in ws_schema.get(
+                    "data_columns", {}
+                ).items():
+                    for column_key, column_def in section_def.items():
+
+                        key_lu[column_key] = self._load_field_defs(
+                            column_key, column_def
+                        )
+            except Exception as e:
+                raise Exception(
+                    f"Error in template {self.type!r}/{ws_name!r}: {e}"
+                ) from e
 
         return key_lu
+
+    def process_field_value(
+        self, key: str, raw_val, format_context: dict, eval_context: dict
+    ) -> Tuple[List[AtomicChange], List[LocalFileUploadEntry]]:
+        """
+        Processes one field value based on field_def taken from a template schema.
+        Calculates a list of `AtomicChange`s within a context object
+        and a list of file upload entries.
+        A list of values and not just one value might arise from a `process_as` section
+        in template schema, that allows for multi-processing of a single cell value.
+        """
+
+        logger.debug(f"Processing property {key!r} - {raw_val!r}")
+        try:
+            # TODO replace lookup with smart matching - the whole purpose of
+            # refactoring to allow for arbitrary annotations
+            field_defs = self.key_lu[key.lower()]
+        except KeyError:
+            raise ParsingException(f"Unexpected property {key!r}.")
+
+        logger.debug(f"Found field {len(field_defs)} defs")
+
+        changes, files = [], []
+        for f_def in field_defs:
+            try:
+                chs, fs = f_def.process_value(raw_val, format_context, eval_context)
+            except Exception as e:
+                raise ParsingException(e)
+
+            changes.extend(chs)
+            files.extend(fs)
+
+        return changes, files
 
     # XlTemplateReader only knows how to format these types of sections
     VALID_WS_SECTIONS = set(

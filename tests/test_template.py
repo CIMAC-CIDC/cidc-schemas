@@ -10,6 +10,10 @@ from cidc_schemas.template import (
     Template,
     generate_empty_template,
     generate_all_templates,
+    ParsingException,
+    AtomicChange,
+    _FieldDef,
+    _get_facet_group,
 )
 
 # NOTE: see conftest.py for pbmc_template and tiny_template fixture definitions
@@ -27,9 +31,161 @@ def test_tiny_loaded(tiny_template):
     assert "TEST_SHEET" in tiny_template.worksheets
 
 
+def test_process_field_value():
+    prop = "prop0"
+
+    schema = {
+        "properties": {
+            "worksheets": {
+                "worksheet_1": {
+                    "prism_preamble_object_pointer": "/prism_preamble_object_pointer/0",
+                    "preamble_rows": {
+                        "preamble_field_1": {
+                            "merge_pointer": "/preamble_field",
+                            "type": "string",
+                        }
+                    },
+                    "prism_data_object_pointer": "/prism_data_object_pointer/-",
+                    "data_columns": {
+                        "section_1": {
+                            "data_field_1": {
+                                "merge_pointer": "/data_field",
+                                "type": "number",
+                            }
+                        }
+                    },
+                }
+            }
+        }
+    }
+
+    template = Template(schema, type="adhoc_test_template")
+
+    # process_field_value throws a ParsingException on properties missing from the key lookup dict
+    with pytest.raises(ParsingException, match="Unexpected property"):
+        template.process_field_value(prop, "123", {}, {})
+
+
+def test_template_schema_checks():
+    schema = {
+        "properties": {
+            "worksheets": {
+                "worksheet_1": {
+                    "prism_preamble_object_pointer": "/prism_preamble_object_pointer/0",
+                    "preamble_rows": {
+                        "preamble_field_1": {"gcs_uri_format": "should not be here"}
+                    },
+                    "prism_data_object_pointer": "/prism_data_object_pointer/-",
+                    "data_columns": {
+                        "section_1": {
+                            "data_field_1": {
+                                "merge_pointer": "/data_field",
+                                "type": "number",
+                                "is_artifact": True,
+                            }
+                        }
+                    },
+                }
+            }
+        }
+    }
+
+    with pytest.raises(
+        Exception,
+        match="Error in template 'adhoc_test_template'/'worksheet_1': Couldn't load mapping for 'preamble_field_1': Either \"type\".*should be present",
+    ):
+        template = Template(schema, type="adhoc_test_template")
+
+    schema["properties"]["worksheets"]["worksheet_1"]["preamble_rows"][
+        "preamble_field_1"
+    ]["type"] = "string"
+
+    with pytest.raises(Exception, match=r"missing.*required.*argument.*merge_pointer"):
+        template = Template(schema, type="adhoc_test_template")
+
+    schema["properties"]["worksheets"]["worksheet_1"]["preamble_rows"][
+        "preamble_field_1"
+    ]["merge_pointer"] = "preamble_field"
+
+    with pytest.raises(Exception, match="gcs_uri_format defined for not is_artifact"):
+        template = Template(schema, type="adhoc_test_template")
+
+    del schema["properties"]["worksheets"]["worksheet_1"]["preamble_rows"][
+        "preamble_field_1"
+    ]["gcs_uri_format"]
+
+    with pytest.raises(Exception, match="Empty gcs_uri_format"):
+        template = Template(schema, type="adhoc_test_template")
+
+    schema["properties"]["worksheets"]["worksheet_1"]["data_columns"]["section_1"][
+        "data_field_1"
+    ]["gcs_uri_format"] = 123
+
+    with pytest.raises(Exception, match=r"Bad gcs_uri_format.*should be dict or str"):
+        template = Template(schema, type="adhoc_test_template")
+
+    schema["properties"]["worksheets"]["worksheet_1"]["data_columns"]["section_1"][
+        "data_field_1"
+    ]["gcs_uri_format"] = {"check_errors": "something"}
+
+    with pytest.raises(
+        Exception, match="dict type gcs_uri_format should have 'format'"
+    ):
+        template = Template(schema, type="adhoc_test_template")
+
+    schema["properties"]["worksheets"]["worksheet_1"]["data_columns"]["section_1"][
+        "data_field_1"
+    ]["gcs_uri_format"] = {"check_errors": "something", "format": "/some/{thing}"}
+
+    template = Template(schema, type="adhoc_test_template")
+
+
+def test_process_value():
+    prop = "prop0"
+
+    prop_def = {"merge_pointer": "/hello", "coerce": int, "key_name": prop}
+
+    # _process_property behaves as expected on a simple example
+    changes, files = _FieldDef(**prop_def).process_value("123", {}, {})
+    assert changes == [AtomicChange("/hello", 123)]
+    assert files == []
+
+    # _process_property catches unparseable raw values
+    with pytest.raises(ParsingException, match=f"Can't parse {prop!r}"):
+        _FieldDef(**prop_def).process_value("123abcd", {}, {})
+
+    # _process_property catches a missing gcs_uri_format on an artifact
+    prop_def = {
+        "merge_pointer": "/hello",
+        "coerce": str,
+        "is_artifact": 1,
+        "key_name": "hello",
+    }
+
+    # _process property catches gcs_uri_format strings that can't be processed
+    prop_def["gcs_uri_format"] = "{foo}/{bar}"
+    with pytest.raises(ParsingException, match="Can't format destination gcs uri"):
+        _FieldDef(**prop_def).process_value("123", {}, {})
+
+    prop_def["gcs_uri_format"] = {"format": prop_def["gcs_uri_format"]}
+    with pytest.raises(ParsingException, match="Can't format destination gcs uri"):
+        _FieldDef(**prop_def).process_value("123", {}, {})
+
+
+def test_get_facet_group():
+    """Check that the _get_facet_group helper function produces facet groups as expected"""
+    test_lambda = "lambda val, ctx: '/some/' + str(ctx['foo']) + '/' + val + '_bar.csv'"
+    assert _get_facet_group(test_lambda) == "/some/_bar.csv"
+
+    test_fmt_string = "/some/{a_b}/{c-d}/foo/{buzz123}/{OK}_bar.csv"
+    assert _get_facet_group(test_fmt_string) == "/some/foo/_bar.csv"
+
+
 def test_from_type():
-    assert "Shipment" in Template.from_type("pbmc").worksheets
-    assert "Samples" in Template.from_type("pbmc").worksheets
+    pbmc = Template.from_type("pbmc")
+
+    assert "Shipment" in pbmc.worksheets
+    assert "Samples" in pbmc.worksheets
     assert "WES" in Template.from_type("wes_fastq").worksheets
 
     with pytest.raises(Exception, match="unknown template type"):

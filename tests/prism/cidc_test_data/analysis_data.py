@@ -126,6 +126,9 @@ def wes_analysis() -> PrismTestData:
                             "wes_run_version": {
                                 "upload_placeholder": "c47271fb-e2c7-5436-cafe-5cf84bc72bf4"
                             },
+                            "tumor_mutational_burden": {
+                                "upload_placeholder": "d47271fb-e2c7-5436-cafe-5cf84bc72bf5"
+                            },
                             "metasheet": {
                                 "upload_placeholder": "xyz271fb-e2c7-5436-cafe-5cf84bc72bf4"
                             },
@@ -271,6 +274,9 @@ def wes_analysis() -> PrismTestData:
                             },
                             "wes_run_version": {
                                 "upload_placeholder": "56824763-fb9f-58b4-c7c4-8175759933f4"
+                            },
+                            "tumor_mutational_burden": {
+                                "upload_placeholder": "66824763-fb9f-58b4-c7c4-8175759933f5"
                             },
                             "metasheet": {
                                 "upload_placeholder": "xyz24763-fb9f-58b4-c7c4-8175759933f4"
@@ -425,6 +431,12 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/report/wes_meta/02_wes_run_version.tsv",
             gs_key="test_prism_trial_id/wes/run_1/analysis/wes_run_version.tsv",
             upload_placeholder="c47271fb-e2c7-5436-cafe-5cf84bc72bf4",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="analysis/report/somatic_variants/tumor_mutational_burden.tsv",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/tumor_mutational_burden.tsv",
+            upload_placeholder="d47271fb-e2c7-5436-cafe-5cf84bc72bf5",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
@@ -659,6 +671,12 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/report/wes_meta/02_wes_run_version.tsv",
             gs_key="test_prism_trial_id/wes/run_2/analysis/wes_run_version.tsv",
             upload_placeholder="56824763-fb9f-58b4-c7c4-8175759933f4",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="analysis/report/somatic_variants/tumor_mutational_burden.tsv",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/tumor_mutational_burden.tsv",
+            upload_placeholder="66824763-fb9f-58b4-c7c4-8175759933f5",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(

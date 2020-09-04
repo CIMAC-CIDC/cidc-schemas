@@ -32,7 +32,6 @@ def test_tiny_loaded(tiny_template):
 
 
 def test_process_field_value():
-    prop = "prop0"
 
     schema = {
         "properties": {
@@ -63,10 +62,13 @@ def test_process_field_value():
 
     # process_field_value throws a ParsingException on properties missing from the key lookup dict
     with pytest.raises(ParsingException, match="Unexpected property"):
-        template.process_field_value(prop, "123", {}, {})
+        template.process_field_value("worksheet_1", "unexpected_prop", "123", {}, {})
+
+    with pytest.raises(ParsingException, match="Unexpected worksheet"):
+        template.process_field_value("unexpected_worksheet", "whatever", "123", {}, {})
 
     # not throwing on expected
-    template.process_field_value("data_field_1", "123", {}, {})
+    template.process_field_value("worksheet_1", "data_field_1", "123", {}, {})
 
 
 def test_template_arbitrary_data_section():
@@ -93,7 +95,9 @@ def test_template_arbitrary_data_section():
     template = Template(schema, type="adhoc_arbitrary_data_test_template")
 
     # not throwing on expected
-    changes, _ = template.process_field_value("data_field_1", "123", {}, {})
+    changes, _ = template.process_field_value(
+        "worksheet_1", "data_field_1", "123", {}, {}
+    )
 
     assert len(changes) == 1
     assert changes[0].pointer == "/data_field"
@@ -101,11 +105,13 @@ def test_template_arbitrary_data_section():
 
     # process_field_value DOESN'T throw a ParsingException
     # on arbitrary, not predefined fields
-    changes, _ = template.process_field_value("unexpected_property", "123", {}, {})
+    changes, _ = template.process_field_value(
+        "worksheet_1", "unexpected_property", "321", {}, {}
+    )
 
     assert len(changes) == 1
     assert changes[0].pointer == "/extra_annotations_sub_object/unexpected_property"
-    assert changes[0].value == 123.0
+    assert changes[0].value == 321
 
 
 def test_template_schema_checks():

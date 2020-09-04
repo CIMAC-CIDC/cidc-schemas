@@ -434,7 +434,7 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/report/somatic_variants/tumor_mutational_burden.tsv",
+            local_path="analysis/report2/somatic_variants/tumor_mutational_burden.tsv",
             gs_key="test_prism_trial_id/wes/run_1/analysis/tumor_mutational_burden.tsv",
             upload_placeholder="d47271fb-e2c7-5436-cafe-5cf84bc72bf5",
             metadata_availability=None,
@@ -674,7 +674,7 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/report/somatic_variants/tumor_mutational_burden.tsv",
+            local_path="analysis/report2/somatic_variants/tumor_mutational_burden.tsv",
             gs_key="test_prism_trial_id/wes/run_2/analysis/tumor_mutational_burden.tsv",
             upload_placeholder="66824763-fb9f-58b4-c7c4-8175759933f5",
             metadata_availability=None,

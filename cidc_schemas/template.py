@@ -389,6 +389,10 @@ class Template:
                 for table_name, table_schema in section_schema.items():
                     data_schemas[table_name] = process_fields(table_schema)
                 processed_worksheet[section_name] = data_schemas
+            elif section_name == "prism_arbitrary_data_merge_pointer":
+                processed_worksheet[
+                    "prism_arbitrary_data_merge_pointer"
+                ] = section_schema
 
         return processed_worksheet
 
@@ -560,6 +564,32 @@ class Template:
         # to be able to catch unexpected worksheet error
         return dict(key_lu)
 
+    @staticmethod
+    def _sanitize_arbitrary_key(key):
+        # TODO
+        return key
+
+    def _process_arbitrary_val(
+        self, key, raw_val, arbitrary_data_merge_pointer
+    ) -> Tuple[List[AtomicChange], List[LocalFileUploadEntry]]:
+        """
+        Processes one field value based on 'prism_arbitrary_data' directive in template schema.
+        Calculates a list of `AtomicChange`s within a context object
+        and an empty list of file upload entries.
+        """
+
+        return (
+            [
+                AtomicChange(
+                    arbitrary_data_merge_pointer
+                    + "/"
+                    + self._sanitize_arbitrary_key(key),
+                    raw_val,
+                )
+            ],
+            [],
+        )
+
     def process_field_value(
         self,
         worksheet: str,
@@ -578,7 +608,8 @@ class Template:
 
         logger.debug(f"Processing property {worksheet!r}:{key!r} - {raw_val!r}")
         try:
-            ws_field_defs = self.key_lu[worksheet.lower()]
+            ws_field_defs = self.key_lu[worksheet]
+            ws = self.worksheets[worksheet]
         except KeyError:
             raise ParsingException(f"Unexpected worksheet {worksheet!r}.")
 
@@ -587,7 +618,12 @@ class Template:
             # refactoring to allow for arbitrary annotations
             field_defs = ws_field_defs[key.lower()]
         except KeyError:
-            raise ParsingException(f"Unexpected property {worksheet!r}:{key!r}.")
+            if ws["prism_arbitrary_data_merge_pointer"]:
+                return self._process_arbitrary_val(
+                    key, raw_val, ws["prism_arbitrary_data_merge_pointer"]
+                )
+            else:
+                raise ParsingException(f"Unexpected property {worksheet!r}:{key!r}")
 
         logger.debug(f"Found field {len(field_defs)} defs")
 

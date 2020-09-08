@@ -106,12 +106,20 @@ def test_template_arbitrary_data_section():
     # process_field_value DOESN'T throw a ParsingException
     # on arbitrary, not predefined fields
     changes, _ = template.process_field_value(
-        "worksheet_1", "unexpected_property", "321", {}, {}
+        "worksheet_1", "unexpected_property", 321, {}, {}
     )
 
     assert len(changes) == 1
     assert changes[0].pointer == "/extra_annotations_sub_object/unexpected_property"
     assert changes[0].value == 321
+
+    # Checking different keys sanitization
+    # TODO - figure out and add more
+    changes, _ = template.process_field_value(
+        "worksheet_1", "unexpected '\"property", 321, {}, {}
+    )
+
+    assert changes[0].pointer == "/extra_annotations_sub_object/unexpected '\"property"
 
 
 def test_template_schema_checks():

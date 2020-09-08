@@ -42,6 +42,11 @@ def wes_analysis() -> PrismTestData:
                                 "upload_placeholder": "eb1a8d7a-fd96-4e75-b265-1590c703a301"
                             },
                         },
+                        "neoantigen": {
+                            "HLA_results": {
+                                "upload_placeholder": "e47271fb-e2c7-5436-cafe-5cf84bc72bf6"
+                            }
+                        },
                         "somatic": {
                             "vcf_tnscope_output": {
                                 "upload_placeholder": "1a5993b7-3d93-43cf-ba64-0d260dad3cdd"
@@ -190,6 +195,11 @@ def wes_analysis() -> PrismTestData:
                             "copynumber_cnv_calls_tsv": {
                                 "upload_placeholder": "ba2984c0-f7e6-470c-95ef-e4b33cbdea48"
                             },
+                        },
+                        "neoantigen": {
+                            "HLA_results": {
+                                "upload_placeholder": "76824763-fb9f-58b4-c7c4-8175759933f6"
+                            }
                         },
                         "somatic": {
                             "vcf_tnscope_output": {
@@ -440,6 +450,12 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
+            local_path="analysis/report2/neoantigen/HLA_results.tsv",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/HLA_results.tsv",
+            upload_placeholder="e47271fb-e2c7-5436-cafe-5cf84bc72bf6",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
             local_path="analysis/align/CTTTPP111.00/CTTTPP111.00.sorted.dedup.bam",
             gs_key="test_prism_trial_id/wes/run_1/analysis/tumor/CTTTPP111.00/sorted.dedup.bam",
             upload_placeholder="2068ae50-3ce7-4b0c-ba56-f678233dd098",
@@ -677,6 +693,12 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/report2/somatic_variants/tumor_mutational_burden.tsv",
             gs_key="test_prism_trial_id/wes/run_2/analysis/tumor_mutational_burden.tsv",
             upload_placeholder="66824763-fb9f-58b4-c7c4-8175759933f5",
+            metadata_availability=None,
+        ),
+        LocalFileUploadEntry(
+            local_path="analysis/report2/neoantigen/HLA_results.tsv",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/HLA_results.tsv",
+            upload_placeholder="76824763-fb9f-58b4-c7c4-8175759933f6",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(

@@ -29,11 +29,19 @@ def pbmc_template(pbmc_schema_path):
 def tiny_template():
     """A small, valid """
 
-    test_property = {"$id": "test_property", "type": "string"}
-    test_date = {"type": "string", "format": "date"}
-    test_time = {"type": "string", "format": "time"}
-    test_enum = {"type": "string", "enum": ["enum_val_1", "enum_val_2"]}
-    test_number = {"type": "number"}
+    test_property = {
+        "$id": "test_property",
+        "type": "string",
+        "merge_pointer": "test_property",
+    }
+    test_date = {"type": "string", "format": "date", "merge_pointer": "test_date"}
+    test_time = {"type": "string", "format": "time", "merge_pointer": "test_time"}
+    test_enum = {
+        "type": "string",
+        "enum": ["enum_val_1", "enum_val_2"],
+        "merge_pointer": "test_enum",
+    }
+    test_number = {"type": "number", "merge_pointer": "test_number"}
     test_fields = {
         "test_property": test_property,
         "test_date": test_date,

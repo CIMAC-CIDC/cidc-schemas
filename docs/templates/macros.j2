@@ -108,10 +108,12 @@
                 {% if "propertyNames" in prop_schema and "$id" in prop_schema["propertyNames"] %}
                     {{prop_schema["propertyNames"]["$id"]}} -&gt;
                 {% endif %}
-                {% if "url" in prop_schema["additionalProperties"] %}
-                    <a href="{{ prop_schema['additionalProperties']['url'] }}">{{ prop_schema['additionalProperties']['url'].replace('.html', '') }}</a>
-                {% else %}
-                    {{ prop_type_format(prop_schema["additionalProperties"]) }}
+                {% if prop_schema["additionalProperties"].keys %}
+                    {% if "url" in prop_schema["additionalProperties"] %}
+                        <a href="{{ prop_schema['additionalProperties']['url'] }}">{{ prop_schema['additionalProperties']['url'].replace('.html', '') }}</a>
+                    {% else %}
+                        {{ prop_type_format(prop_schema["additionalProperties"]) }}
+                    {% endif %}
                 {% endif %}
             {% endif %}
         {% elif "const" in prop_schema %}

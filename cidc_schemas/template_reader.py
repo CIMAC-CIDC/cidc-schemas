@@ -76,6 +76,9 @@ class XlTemplateReader:
         template = {}
         errors = []
         for worksheet_name in workbook.sheetnames:
+            if worksheet_name in Template.ignored_worksheets:
+                continue
+
             worksheet = workbook[worksheet_name]
             rows = []
             header_width = 0

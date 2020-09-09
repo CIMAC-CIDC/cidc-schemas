@@ -618,7 +618,7 @@ class Template:
             # refactoring to allow for arbitrary annotations
             field_defs = ws_field_defs[key.lower()]
         except KeyError:
-            if ws["prism_arbitrary_data_merge_pointer"]:
+            if ws.get("prism_arbitrary_data_merge_pointer"):
                 return self._process_arbitrary_val(
                     key, raw_val, ws["prism_arbitrary_data_merge_pointer"]
                 )

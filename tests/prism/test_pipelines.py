@@ -29,7 +29,7 @@ def prismify_result(template, template_example):
     core.set_prism_encrypt_key("test")
 
     prism_patch, file_maps, errs = core.prismify(template_example, template)
-    assert not errs
+    assert not errs, str(errs[0])
     return prism_patch, file_maps, errs
 
 

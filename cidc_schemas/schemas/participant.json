@@ -12,7 +12,7 @@
       "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_participant_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_participant_id $ref.",
       "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}$",
       "example": "CTTTP01",
-      "description": "Participant identifier assigned by the CIMAC-CIDC Network. Formated as: C??????."
+      "description": "Participant identifier assigned by the CIMAC-CIDC Network. Formated as: C?????? (first 7 characters of CIMAC ID)"
     },
     "cidc_participant_id": {
       "type": "string",
@@ -34,7 +34,8 @@
       "$comment": "Values in this field are validated dynamically by `in_doc_ref_pattern`."
     },
     "essential_patient_entry_number": {
-      "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
+      "description": "Deprecated",
+      "$comment": "Used to provide id for patient entry in a shipment manifest, left here for back-compat.",
       "type": "integer"
     },
     "gender": {
@@ -66,6 +67,11 @@
         "Unknown",
         "Other"
       ]
+    },
+    "arbitrary_trial_specific_clinical_annotations":{
+      "type": "object",
+      "$comment": "holds whatever non-harmonized annotations trial team provides",
+      "additionalProperties": true
     },
     "samples": {
       "type": "array",

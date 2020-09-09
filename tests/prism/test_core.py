@@ -436,12 +436,12 @@ def test_prism_joining_tabs(monkeypatch):
 
     mock_XlTemplateReader_from_excel(
         {
-            "books": [
+            "authors": [
                 ["#h", "author id", "author name"],
                 ["#d", "CPP0", "Alice"],
                 ["#d", "CPP1", "Bob"],
             ],
-            "authors": [
+            "books": [
                 ["#h", "book id", "book name"],
                 ["#d", "CPP1S0.00", "Foo"],
                 ["#d", "CPP1S1.00", "Bar"],

@@ -19,6 +19,9 @@
     },
     "tumor_mutational_burden": {
       "$ref": "artifacts/artifact_tsv.json"
+    },
+    "report": {
+      "$ref": "artifacts/artifact_zip.json"
     }
   },
   "required": [

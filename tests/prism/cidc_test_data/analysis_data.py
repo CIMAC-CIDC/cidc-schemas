@@ -140,6 +140,9 @@ def wes_analysis() -> PrismTestData:
                             "metasheet": {
                                 "upload_placeholder": "xyz271fb-e2c7-5436-cafe-5cf84bc72bf4"
                             },
+                            "report": {
+                                "upload_placeholder": "yyz271fb-e2c7-5436-cafe-5cf84bc72bf5"
+                            },
                         },
                         "normal": {
                             "cimac_id": "CTTTPP111.00",
@@ -297,6 +300,9 @@ def wes_analysis() -> PrismTestData:
                             "metasheet": {
                                 "upload_placeholder": "xyz24763-fb9f-58b4-c7c4-8175759933f4"
                             },
+                            "report": {
+                                "upload_placeholder": "yyz24763-fb9f-58b4-c7c4-8175759933f5"
+                            },
                         },
                         "normal": {
                             "cimac_id": "CTTTPP121.00",
@@ -441,6 +447,12 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/report/metasheet.csv",
             gs_key="test_prism_trial_id/wes/run_1/analysis/metasheet.csv",
             upload_placeholder="xyz24763-fb9f-58b4-c7c4-8175759933f4",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="analysis/report/report.zip",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/report.zip",
+            upload_placeholder="yyz24763-fb9f-58b4-c7c4-8175759933f5",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
@@ -693,6 +705,12 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/report/metasheet.csv",
             gs_key="test_prism_trial_id/wes/run_2/analysis/metasheet.csv",
             upload_placeholder="xyz271fb-e2c7-5436-cafe-5cf84bc72bf4",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="analysis/report/report.zip",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/report.zip",
+            upload_placeholder="yyz271fb-e2c7-5436-cafe-5cf84bc72bf5",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(

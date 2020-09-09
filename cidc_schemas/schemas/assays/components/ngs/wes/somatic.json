@@ -35,10 +35,7 @@
   },
   "required": [
     "vcf_gz_tnscope_output",
-    "vcf_gz_tnscope_filter",
-    "tnscope_exons_broad",
-    "tnscope_exons_mda",
-    "tnscope_exons_mocha"
+    "vcf_gz_tnscope_filter"
   ],
   "additionalProperties": false
 }

@@ -75,8 +75,9 @@
                 "data_columns": {
                     "Path Concordance Verification": {
                         "entry (#)": {
-                            "merge_pointer": "2/essential_patient_entry_number",
-                            "type_ref": "participant.json#properties/essential_patient_entry_number"
+                            "do_not_merge": true,
+                            "allow_empty": true,
+                            "type": "string"
                         },
                         "participant ID": {
                             "merge_pointer": "2/participant_id",

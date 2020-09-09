@@ -33,10 +33,6 @@
       "in_doc_ref_pattern": "/allowed_cohort_names/*",
       "$comment": "Values in this field are validated dynamically by `in_doc_ref_pattern`."
     },
-    "essential_patient_entry_number": {
-      "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
-      "type": "integer"
-    },
     "gender": {
       "type": "string",
       "description": "Identifies the gender of the participant.",

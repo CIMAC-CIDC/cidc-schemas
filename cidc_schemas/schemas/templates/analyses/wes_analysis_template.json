@@ -152,6 +152,13 @@
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/HLA_results.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/neoantigen/combined_filtered.tsv'",
+                                    "merge_pointer": "/neoantigen/combined_filtered",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/combined_filtered.tsv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
                                 }
                             ]
                         },

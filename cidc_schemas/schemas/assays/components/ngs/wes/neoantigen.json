@@ -8,6 +8,9 @@
     "HLA_results": {
       "$ref": "artifacts/artifact_tsv.json"
     },
+    "combined_filtered": {
+      "$ref": "artifacts/artifact_tsv.json"
+    },
     "mhc_class_I_epitopes": {
       "$ref": "artifacts/artifact_tsv.json"
     },
@@ -22,7 +25,8 @@
     }
   },
   "required": [
-    "HLA_results"
+    "HLA_results",
+    "combined_filtered"
   ],
   "additionalProperties": false
 }

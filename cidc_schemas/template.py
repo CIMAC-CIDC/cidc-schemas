@@ -608,7 +608,7 @@ class Template:
 
         logger.debug(f"Processing property {worksheet!r}:{key!r} - {raw_val!r}")
         try:
-            ws_field_defs = self.key_lu[worksheet]
+            ws_field_defs = self.key_lu[self._process_fieldname(worksheet)]
             ws = self.worksheets[worksheet]
         except KeyError:
             raise ParsingException(f"Unexpected worksheet {worksheet!r}.")

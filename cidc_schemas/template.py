@@ -571,23 +571,16 @@ class Template:
 
     def _process_arbitrary_val(
         self, key, raw_val, arbitrary_data_merge_pointer
-    ) -> Tuple[List[AtomicChange], List[LocalFileUploadEntry]]:
+    ) -> AtomicChange:
         """
         Processes one field value based on 'prism_arbitrary_data' directive in template schema.
         Calculates a list of `AtomicChange`s within a context object
         and an empty list of file upload entries.
         """
 
-        return (
-            [
-                AtomicChange(
-                    arbitrary_data_merge_pointer
-                    + "/"
-                    + self._sanitize_arbitrary_key(key),
-                    raw_val,
-                )
-            ],
-            [],
+        return AtomicChange(
+            arbitrary_data_merge_pointer + "/" + self._sanitize_arbitrary_key(key),
+            raw_val,
         )
 
     def process_field_value(
@@ -617,8 +610,13 @@ class Template:
             field_defs = ws_field_defs[self._process_fieldname(key)]
         except KeyError:
             if ws.get("prism_arbitrary_data_merge_pointer"):
-                return self._process_arbitrary_val(
-                    key, raw_val, ws["prism_arbitrary_data_merge_pointer"]
+                return (
+                    [
+                        self._process_arbitrary_val(
+                            key, raw_val, ws["prism_arbitrary_data_merge_pointer"]
+                        )
+                    ],
+                    [],
                 )
             else:
                 raise ParsingException(f"Unexpected property {worksheet!r}:{key!r}")

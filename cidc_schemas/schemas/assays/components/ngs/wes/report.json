@@ -29,7 +29,8 @@
     "config",
     "wes_run_version",
     "metasheet",
-    "tumor_mutational_burden"
+    "tumor_mutational_burden",
+    "report"
   ],
   "additionalProperties": false
 }

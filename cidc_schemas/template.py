@@ -534,7 +534,7 @@ class Template:
         # loop over each worksheet
         for ws_name, ws_schema in self.worksheets.items():
 
-            ws_name = ws_name.lower()
+            ws_name = self._process_fieldname(ws_name)
 
             try:
                 # loop over each row in pre-amble
@@ -566,7 +566,7 @@ class Template:
 
     @staticmethod
     def _sanitize_arbitrary_key(key):
-        # TODO
+        # TODO figure out sanitization - non-ascii or non-unicode or something
         return key
 
     def _process_arbitrary_val(
@@ -614,9 +614,7 @@ class Template:
             raise ParsingException(f"Unexpected worksheet {worksheet!r}.")
 
         try:
-            # TODO replace lookup with smart matching - the whole purpose of
-            # refactoring to allow for arbitrary annotations
-            field_defs = ws_field_defs[key.lower()]
+            field_defs = ws_field_defs[self._process_fieldname(key)]
         except KeyError:
             if ws.get("prism_arbitrary_data_merge_pointer"):
                 return self._process_arbitrary_val(

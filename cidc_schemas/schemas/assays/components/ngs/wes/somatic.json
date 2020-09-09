@@ -34,7 +34,6 @@
     }
   },
   "required": [
-    "vcf_tnscope_output",
     "vcf_gz_tnscope_output",
     "vcf_tnscope_filter",
     "vcf_gz_tnscope_filter",

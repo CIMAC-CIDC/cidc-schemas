@@ -51,9 +51,6 @@ def wes_analysis() -> PrismTestData:
                             },
                         },
                         "somatic": {
-                            "vcf_tnscope_output": {
-                                "upload_placeholder": "1a5993b7-3d93-43cf-ba64-0d260dad3cdd"
-                            },
                             "maf_tnscope_output": {
                                 "upload_placeholder": "a0a4a694-c0bc-4661-b9be-0b6dff20a240"
                             },
@@ -211,9 +208,6 @@ def wes_analysis() -> PrismTestData:
                             },
                         },
                         "somatic": {
-                            "vcf_tnscope_output": {
-                                "upload_placeholder": "478bb88c-ab41-4423-87d9-6e49ada70b96"
-                            },
                             "maf_tnscope_output": {
                                 "upload_placeholder": "e73b8502-d7cc-4002-a96d-57e635f4f2b0"
                             },
@@ -369,12 +363,6 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/copynumber/run_1/run_1_cnvcalls.txt.tn.tsv",
             gs_key="test_prism_trial_id/wes/run_1/analysis/copynumber_cnvcalls.txt.tn.tsv",
             upload_placeholder="eb1a8d7a-fd96-4e75-b265-1590c703a301",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/somatic/run_1/run_1_tnscope.output.vcf",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/vcf_tnscope_output.vcf",
-            upload_placeholder="1a5993b7-3d93-43cf-ba64-0d260dad3cdd",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
@@ -627,12 +615,6 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/copynumber/run_2/run_2_cnvcalls.txt.tn.tsv",
             gs_key="test_prism_trial_id/wes/run_2/analysis/copynumber_cnvcalls.txt.tn.tsv",
             upload_placeholder="ba2984c0-f7e6-470c-95ef-e4b33cbdea48",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/somatic/run_2/run_2_tnscope.output.vcf",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/vcf_tnscope_output.vcf",
-            upload_placeholder="478bb88c-ab41-4423-87d9-6e49ada70b96",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(

@@ -1798,6 +1798,58 @@ def tumor_normal_pairing():
     )
 
 
+@manifest_data_generator
+def participants_annotations():
+    upload_type = "participants_annotations"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "test_prism_trial_id",
+        "participants": [
+            {
+                "cimac_participant_id": "CTTTP00",
+                "arbitrary_trial_specific_clinical_annotations": {
+                    "race": "White",
+                    "SiteNumber": "WI020",
+                    "gender": "Male",
+                    "ethnicity": "Not Hispanic or Latino",
+                    "cohort": "Lung",
+                    "arm": "ARM C",
+                    "ECOG_PS": "1",
+                    "age": "52",
+                    "Prior surgery": "Y",
+                    "prior RT": "Y",
+                    "number prior treatments": "4",
+                    "reason off treatment": "Disease progression on study",
+                    "BEST_RESPponse": "PD",
+                    "Response": "Non-resp",
+                    "Clinical benefit": "No C-B",
+                    "prog1=Y)ression (": "1",
+                    "days to progression": "58",
+                    "died (1=Y)": "1",
+                    "overall survival": "102",
+                },
+            }
+        ],
+    }
+    upload_entries = []
+
+    cimac_ids = [
+        p["cimac_participant_id"] + "00.01" for p in prismify_patch["participants"]
+    ]
+    base_trial = get_test_trial(cimac_ids)
+
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "participants")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
 missing = set(SUPPORTED_MANIFESTS).difference(
     [f.__name__ for f in manifest_data_generators]
 )

@@ -25,7 +25,7 @@ SUPPORTED_SHIPPING_MANIFESTS = [
     "h_and_e",
 ]
 # weird non shipping manifest
-SUPPORTED_WEIRD_MANIFESTS = ["tumor_normal_pairing"]
+SUPPORTED_WEIRD_MANIFESTS = ["tumor_normal_pairing", "participants_annotations"]
 SUPPORTED_MANIFESTS = SUPPORTED_SHIPPING_MANIFESTS + SUPPORTED_WEIRD_MANIFESTS
 
 SUPPORTED_ANALYSES = ["cytof_analysis", "wes_analysis", "rna_level1_analysis"]

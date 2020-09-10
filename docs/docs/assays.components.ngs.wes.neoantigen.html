@@ -58,14 +58,21 @@
         </thead>
         
             
+        
+            
+        
+            
+        
+            
+        
+        
+            
                 <tr>
     <td>
         
             <span id="mhc_class_I_epitopes">
                 mhc_class_I_epitopes
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -90,8 +97,6 @@
                 mhc_class_II_epitopes
             </span>
             
-                <br><sup><mark>required</mark></sup>
-            
         
     </td>
     <td width=55%>
@@ -114,8 +119,6 @@
             <span id="mhc_class_I_filtered_condensed_ranked">
                 mhc_class_I_filtered_condensed_ranked
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -140,8 +143,6 @@
                 mhc_class_II_filtered_condensed_ranked
             </span>
             
-                <br><sup><mark>required</mark></sup>
-            
         
     </td>
     <td width=55%>
@@ -155,15 +156,6 @@
         
     </td>
 </tr>
-            
-        
-        
-            
-        
-            
-        
-            
-        
             
         
     </table>
@@ -269,6 +261,10 @@
                             ],
                             "type": "string"
                         },
+                        "facet_group": {
+                            "description": "The internal data category for this artifact",
+                            "type": "string"
+                        },
                         "file_name": {
                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
                             "description": "The name of the file with extension.",
@@ -342,6 +338,10 @@
                 "data_format": {
                     "const": "TSV",
                     "description": "Data format."
+                },
+                "facet_group": {
+                    "description": "The internal data category for this artifact",
+                    "type": "string"
                 },
                 "file_name": {
                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
@@ -476,6 +476,10 @@
                             ],
                             "type": "string"
                         },
+                        "facet_group": {
+                            "description": "The internal data category for this artifact",
+                            "type": "string"
+                        },
                         "file_name": {
                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
                             "description": "The name of the file with extension.",
@@ -549,6 +553,10 @@
                 "data_format": {
                     "const": "TSV",
                     "description": "Data format."
+                },
+                "facet_group": {
+                    "description": "The internal data category for this artifact",
+                    "type": "string"
                 },
                 "file_name": {
                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
@@ -683,6 +691,10 @@
                             ],
                             "type": "string"
                         },
+                        "facet_group": {
+                            "description": "The internal data category for this artifact",
+                            "type": "string"
+                        },
                         "file_name": {
                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
                             "description": "The name of the file with extension.",
@@ -756,6 +768,10 @@
                 "data_format": {
                     "const": "TSV",
                     "description": "Data format."
+                },
+                "facet_group": {
+                    "description": "The internal data category for this artifact",
+                    "type": "string"
                 },
                 "file_name": {
                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
@@ -890,6 +906,10 @@
                             ],
                             "type": "string"
                         },
+                        "facet_group": {
+                            "description": "The internal data category for this artifact",
+                            "type": "string"
+                        },
                         "file_name": {
                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
                             "description": "The name of the file with extension.",
@@ -964,6 +984,10 @@
                     "const": "TSV",
                     "description": "Data format."
                 },
+                "facet_group": {
+                    "description": "The internal data category for this artifact",
+                    "type": "string"
+                },
                 "file_name": {
                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
                     "description": "The name of the file with extension.",
@@ -1008,12 +1032,7 @@
             "type": "object"
         }
     },
-    "required": [
-        "mhc_class_I_epitopes",
-        "mhc_class_I_filtered_condensed_ranked",
-        "mhc_class_II_epitopes",
-        "mhc_class_II_filtered_condensed_ranked"
-    ],
+    "required": [],
     "title": "WES Neoantigen Output Files",
     "type": "object"
 }</code></pre>

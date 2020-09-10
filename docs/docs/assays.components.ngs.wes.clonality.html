@@ -58,14 +58,15 @@
         </thead>
         
             
+        
+        
+            
                 <tr>
     <td>
         
             <span id="clonality_pyclone">
                 clonality_pyclone
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -80,9 +81,6 @@
         
     </td>
 </tr>
-            
-        
-        
             
         
     </table>
@@ -188,6 +186,10 @@
                             ],
                             "type": "string"
                         },
+                        "facet_group": {
+                            "description": "The internal data category for this artifact",
+                            "type": "string"
+                        },
                         "file_name": {
                             "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
                             "description": "The name of the file with extension.",
@@ -262,6 +264,10 @@
                     "const": "TSV",
                     "description": "Data format."
                 },
+                "facet_group": {
+                    "description": "The internal data category for this artifact",
+                    "type": "string"
+                },
                 "file_name": {
                     "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
                     "description": "The name of the file with extension.",
@@ -306,9 +312,7 @@
             "type": "object"
         }
     },
-    "required": [
-        "clonality_pyclone"
-    ],
+    "required": [],
     "title": "Clonality output files",
     "type": "object"
 }</code></pre>

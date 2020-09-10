@@ -13,7 +13,6 @@
     }
   },
     "required": [
-      "tn_corealigned"
     ],
     "additionalProperties": false
 }

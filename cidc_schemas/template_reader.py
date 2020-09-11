@@ -146,13 +146,14 @@ class XlTemplateReader:
         """Try to find a schemas for the given template key"""
         entity_name = Template._process_fieldname(key)
         if entity_name not in schema:
+            # raise Exception()
             return None, f"Found unexpected column {entity_name!r}"
         # Add a note saying this field was accessed
         self.visited_fields.add(entity_name)
         return schema[entity_name], None
 
     def _get_data_schemas(
-        self, row_groups, data_schemas: Dict[str, dict]
+        self, row_groups, data_schemas: Dict[str, dict], ignore_unexpected: bool
     ) -> (List[dict], List[str]):
         """Transform data table into a list of entity name + schema pairs"""
         header_row = row_groups[RowType.HEADER][0]
@@ -173,7 +174,7 @@ class XlTemplateReader:
         for header in header_row.values:
             if header:
                 sch, err = self._get_schema(header, data_schemas)
-                if err:
+                if err and not ignore_unexpected:
                     errors.append(err)
                 schemas.append(sch)
 
@@ -273,7 +274,12 @@ class XlTemplateReader:
                 )
                 return
 
-            data_schemas, errors = self._get_data_schemas(row_groups, flat_data_schemas)
+            ignore_unexpected = bool(
+                ws_schema.get("prism_arbitrary_data_merge_pointer")
+            )
+            data_schemas, errors = self._get_data_schemas(
+                row_groups, flat_data_schemas, ignore_unexpected
+            )
             for e in errors:
                 yield (f"Worksheet {worksheet_name!r}: {e}")
 

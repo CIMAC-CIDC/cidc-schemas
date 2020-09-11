@@ -10,7 +10,7 @@
     }
   },
   "required": [
-  "clonality_pyclone"
+    "clonality_pyclone"
   ],
   "additionalProperties": false
 }

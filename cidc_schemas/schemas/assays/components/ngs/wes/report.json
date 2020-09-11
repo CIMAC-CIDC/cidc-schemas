@@ -16,13 +16,21 @@
     },
     "metasheet": {
       "$ref": "artifacts/artifact_csv.json"
+    },
+    "tumor_mutational_burden": {
+      "$ref": "artifacts/artifact_tsv.json"
+    },
+    "report": {
+      "$ref": "artifacts/artifact_zip.json"
     }
   },
   "required": [
     "wes_version",
     "config",
     "wes_run_version",
-    "metasheet"
+    "metasheet",
+    "tumor_mutational_burden",
+    "report"
   ],
   "additionalProperties": false
 }

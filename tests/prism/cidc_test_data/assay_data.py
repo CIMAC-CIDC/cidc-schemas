@@ -736,17 +736,18 @@ def rna_fastq() -> PrismTestData:
     )
 
 
+@assay_data_generator
 def tcr_fastq() -> PrismTestData:
     upload_type = "tcr_fastq"
     prismify_args = get_prismify_args(upload_type)
     prismify_patch = {
         "protocol_identifier": "test_prism_trial_id",
         "assays": {
-            "rna": [
+            "tcr": [
                 {
                     "records": [
                         {
-                            "cimac_id": "CTTTPP700.00",
+                            "cimac_id": "CTTTPP111.00",
                             "files": {
                                 "r1": [
                                     {
@@ -768,7 +769,7 @@ def tcr_fastq() -> PrismTestData:
                             "quality_flag": 1.0,
                         },
                         {
-                            "cimac_id": "CTTTPP701.00",
+                            "cimac_id": "CTTTPP121.00",
                             "files": {
                                 "r1": [
                                     {
@@ -803,37 +804,37 @@ def tcr_fastq() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="/local/path/to/fwd.1.1.1.fastq.gz",
-            gs_key="test_prism_trial_id/rna/CTTTPP700.00/r1_0.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/CTTTPP111.00/r1_0.fastq.gz",
             upload_placeholder="3635df00-082b-4e2d-92a8-7a5e629483dc",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/fwd.1.1.1_2.fastq.gz",
-            gs_key="test_prism_trial_id/rna/CTTTPP700.00/r1_1.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/CTTTPP111.00/r1_1.fastq.gz",
             upload_placeholder="c0723fe8-5533-40e0-86cb-16162d8683e5",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/rev.1.1.1.fastq.gz",
-            gs_key="test_prism_trial_id/rna/CTTTPP700.00/r2_0.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/CTTTPP111.00/r2_0.fastq.gz",
             upload_placeholder="2cd2bb4f-3f84-4f78-b387-4edb6dcc5d1c",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/fwd.1.2.1.fastq.gz",
-            gs_key="test_prism_trial_id/rna/CTTTPP701.00/r1_0.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/CTTTPP121.00/r1_0.fastq.gz",
             upload_placeholder="e49521dc-d531-4555-a874-80aa0ce31dc2",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/fwd.1.2.1_2.fastq.gz",
-            gs_key="test_prism_trial_id/rna/CTTTPP701.00/r1_1.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/CTTTPP121.00/r1_1.fastq.gz",
             upload_placeholder="6ebfef93-5c4c-496d-b8ae-13c1978322d3",
             metadata_availability=None,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/rev.1.2.1.fastq.gz",
-            gs_key="test_prism_trial_id/rna/CTTTPP701.00/r2_0.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/CTTTPP121.00/r2_0.fastq.gz",
             upload_placeholder="be150200-c6b2-459c-a264-b56bc2aca264",
             metadata_availability=None,
         ),

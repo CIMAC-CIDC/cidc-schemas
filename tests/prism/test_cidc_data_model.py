@@ -9,12 +9,13 @@ from cidc_schemas.prism import (
     merge_clinical_trial_metadata,
     merge_artifact,
     merge_artifact_extra_metadata,
+    PROTOCOL_ID_FIELD_NAME,
 )
 
 from .cidc_test_data import list_test_data, PrismTestData
 
 
-@pytest.fixture(params=list_test_data())
+@pytest.fixture(params=list_test_data(), ids=lambda ptd: ptd.upload_type)
 def prism_test(request):
     return request.param
 
@@ -43,6 +44,13 @@ def assert_metadata_matches(received: dict, expected: dict, upload_entries: list
         # For manifest uploads, we expect no artifacts, so there should
         # be no difference between expected and received trial objects.
         assert diff == {}
+
+
+def test_gcs_uri_format(prism_test: PrismTestData):
+    for ue in prism_test.upload_entries:
+        prot_id = prism_test.base_trial[PROTOCOL_ID_FIELD_NAME]
+        assay = prism_test.upload_type.split("_", 1)[0]
+        assert ue.gs_key.startswith(f"{prot_id}/{assay}")
 
 
 def test_prismify(prism_test: PrismTestData, monkeypatch):
@@ -86,7 +94,7 @@ def test_merge_patch_into_trial(prism_test: PrismTestData, ct_validator):
 
     # Ensure no errors resulted from the merge
     if errs:
-        raise errs[0]
+        raise errs[0] if isinstance(errs[0], BaseException) else Exception(errs[0])
     assert len(errs) == 0
 
     # Ensure that the merge result passes validation

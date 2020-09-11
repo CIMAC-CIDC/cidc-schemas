@@ -1,5 +1,4 @@
 """Build metadata dictionaries from Excel files."""
-import re
 import json
 import logging
 import base64
@@ -8,7 +7,12 @@ from collections import defaultdict
 from typing import Any, List, NamedTuple, Tuple, Union, Optional, Dict
 
 from cidc_schemas.json_validation import load_and_validate_schema
-from cidc_schemas.template import Template
+from cidc_schemas.template import (
+    Template,
+    AtomicChange,
+    LocalFileUploadEntry,
+    ParsingException,
+)
 from cidc_schemas.template_reader import XlTemplateReader
 from cidc_schemas.template_writer import RowType
 from cidc_schemas.constants import SCHEMA_DIR
@@ -214,74 +218,23 @@ def __jpointer_insert_next_thing(doc, jpoint, part, next_thing):
             doc.append(next_thing)
 
 
-class LocalFileUploadEntry(NamedTuple):
-    local_path: str
-    gs_key: str
-    upload_placeholder: str
-    metadata_availability: Optional[bool]
-
-
-def _process_property(
-    key: str,
-    raw_val,
-    key_lu: dict,
+def _apply_changes(
+    changes: List[AtomicChange],
     data_obj: dict,
-    format_context: dict,
     root_obj: Union[None, dict] = None,
     data_obj_pointer: Union[None, str] = None,
-) -> List[LocalFileUploadEntry]:
+):
     """
-    Takes a single property (key, val) from spreadsheet, determines
-    where it needs to go in the final object, then inserts it.
-    Args:
-        key: property name,
-        raw_val: value of a property being processed,
-        key_lu: dictionary to translate from template naming to json-schema
-                property names
-        data_obj: dictionary we are building to represent data
-        format_context: dictionary of everything needed for 'gcs_uri_format'
-                        in case this property has that
+    Takes a list of AtomicChanges and applies it to the `data_obj` within 
         root_obj: root dictionary we are building to represent data,
                   that holds 'data_obj' within 'data_obj_pointer'
         data_obj_pointer: pointer of 'data_obj' within 'root_obj'.
                           this will allow to process relative json-pointer properties
                           to jump out of data_object
-    Returns:
-        [ LocalFileUploadEntry(
-            local_path = "/local/file/from/excel/file/cell",
-            gs_key = "constructed/GCS/path/where/this/artifact/should/endup",
-            upload_placeholder = 'uuiduuiduuid-uuid-uuid-uuiduuid' # unique artifact/upload_placeholder,
-            metadata_availability = boolean to indicate whether LocalFileUploadEntry should be extracted for metadata files
-        ) ]
     """
-
-    logger.debug(f"    processing property {key!r} - {raw_val!r}")
-    # coerce value
-    try:
-        field_def = key_lu[key.lower()]
-    except Exception:
-        raise ParsingException(f"Unexpected property {key!r}.")
-
-    logger.debug(f"      found def {field_def}")
-
-    changes, files = _process_field_value(
-        key=key, raw_val=raw_val, field_def=field_def, format_context=format_context
-    )
 
     for ch in changes:
         _set_val(ch.pointer, ch.value, data_obj, root_obj, data_obj_pointer)
-
-    return files
-
-
-class _AtomicChange(NamedTuple):
-    """
-    Represents exactly one "value set" operation on some data object
-    `Pointer` being a json-pointer string showing where to set `value` to.
-    """
-
-    pointer: str
-    value: Any
 
 
 _encrypt_hmac = None
@@ -310,234 +263,6 @@ def _encrypt(obj):
     return (base64.b64encode(h.digest()))[:32].decode()
 
 
-def _process_field_value(
-    key: str, raw_val, field_def: dict, format_context: dict
-) -> Tuple[List[_AtomicChange], List[LocalFileUploadEntry]]:
-    """
-    Processes one field value based on field_def taken from a ..._template.json schema.
-    Calculates a list of `_AtomicChange`s within a context object
-    and a list of file upload entries.
-    A list of values and not just one value might arise from a `process_as` section
-    in template schema, that allows for multi-processing of a single cell value.
-    """
-
-    changes, files = [], []
-
-    # skip nullable
-    if field_def.get("allow_empty"):
-        if raw_val is None:
-            return changes, files
-
-    if field_def.get("do_not_merge") == True:
-        logger.debug(
-            f"Ignoring {field_def['key_name']!r} due to 'do_not_merge' == True"
-        )
-    else:
-        # or set/update value in-place in data_obj dictionary
-        pointer = field_def["merge_pointer"]
-
-        try:
-            val, files = _calc_val_and_files(raw_val, field_def, format_context)
-        except ParsingException:
-            raise
-        except Exception as e:
-            raise ParsingException(
-                f"Can't parse {key!r} value {str(raw_val)!r}: {e}"
-            ) from e
-
-        if field_def.get("is_artifact") == 1:
-            placeholder_pointer = pointer + "/upload_placeholder"
-            facet_group_pointer = pointer + "/facet_group"
-            changes = [
-                _AtomicChange(placeholder_pointer, val["upload_placeholder"]),
-                _AtomicChange(facet_group_pointer, val["facet_group"]),
-            ]
-        else:
-            changes = [_AtomicChange(pointer, val)]
-
-    # "process_as" allows to define additional places/ways to put that match
-    # somewhere in the resulting doc, with additional processing.
-    # E.g. we need to strip cimac_id='CM-TEST-0001-01' to 'CM-TEST-0001'
-    # and put it in this sample parent's cimac_participant_id
-    if "process_as" in field_def:
-        for extra_fdef in field_def["process_as"]:
-            # Calculating new "raw" val.
-            extra_fdef_raw_val = raw_val
-
-            # `eval` should be fine, as we're controlling the code argument in templates
-            if "parse_through" in extra_fdef:
-                try:
-                    extra_fdef_raw_val = eval(
-                        extra_fdef["parse_through"], {"encrypt": _encrypt}
-                    )(raw_val)
-
-                # catching everything, because of eval
-                except Exception as e:
-                    extra_field_key = extra_fdef["merge_pointer"].rsplit("/", 1)[-1]
-                    raise ParsingException(
-                        f"Cannot extract {extra_field_key} from {key} value: {raw_val!r}"
-                    )
-
-            # recursive call
-            extra_changes, extra_files = _process_field_value(
-                key=key,
-                raw_val=extra_fdef_raw_val,  # new "raw" val
-                field_def=extra_fdef,  # merged field_def
-                format_context=format_context,
-            )
-
-            files.extend(extra_files)
-            changes.extend(extra_changes)
-
-    return changes, files
-
-
-def _get_file_ext(fname):
-    return (fname.rsplit(".")[-1]).lower()
-
-
-def _format_single_artifact(
-    local_path: str, uuid: str, field_def: dict, format_context: dict
-) -> Tuple[LocalFileUploadEntry, str]:
-    """Return a LocalFileUploadEntry for this artifact, along with the artifact's facet group."""
-    try:
-        gcs_uri_format = field_def["gcs_uri_format"]
-    except KeyError as e:
-        raise KeyError(f"Empty gcs_uri_format for {field_def['key_name']!r}") from e
-
-    assert isinstance(
-        gcs_uri_format, (dict, str)
-    ), f"Unsupported gcs_uri_format for {field_def['key_name']!r}"
-
-    if isinstance(gcs_uri_format, dict):
-        if "check_errors" in gcs_uri_format:
-            # `eval` should be fine, as we're controlling the code argument in templates
-            err = eval(gcs_uri_format["check_errors"])(local_path)
-            if err:
-                raise ParsingException(err)
-
-        try:
-            gs_key = eval(gcs_uri_format["format"])(local_path, format_context)
-            facet_group = _get_facet_group(gcs_uri_format["format"])
-        except Exception as e:
-            raise ValueError(
-                f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format['format']}: {e!r}"
-            )
-
-    elif isinstance(gcs_uri_format, str):
-        try:
-            gs_key = gcs_uri_format.format_map(format_context)
-            facet_group = _get_facet_group(gcs_uri_format)
-        except KeyError as e:
-            raise KeyError(
-                f"Can't format gcs uri for {field_def['key_name']!r}: {gcs_uri_format}: {e!r}"
-            )
-
-        expected_extension = _get_file_ext(gs_key)
-        provided_extension = _get_file_ext(local_path)
-        if provided_extension != expected_extension:
-            raise ParsingException(
-                f"Expected {'.' + expected_extension} for {field_def['key_name']!r} but got {'.' + provided_extension!r} instead."
-            )
-
-    return (
-        LocalFileUploadEntry(
-            local_path=local_path,
-            gs_key=gs_key,
-            upload_placeholder=uuid,
-            metadata_availability=field_def.get("extra_metadata"),
-        ),
-        facet_group,
-    )
-
-
-_empty_defaultdict: Dict[str, str] = defaultdict(str)
-
-
-def _get_facet_group(gcs_uri_format: str) -> str:
-    """"
-    Extract a file's facet group from its GCS URI format string by removing
-    the "format" parts.
-    """
-    # Provide empty strings for a GCS URI formatter variables
-    try:
-        # First, attempt to call the format string as a lambda
-        fmted_string = eval(gcs_uri_format)("", _empty_defaultdict)
-    except:
-        # Fall back to string interpolation via format_map
-        fmted_string = gcs_uri_format.format_map(_empty_defaultdict)
-
-    # Clear any double slashes
-    facet_group = re.sub(r"\/\/*", "/", fmted_string)
-
-    return facet_group
-
-
-def _calc_val_and_files(raw_val, field_def: dict, format_context: dict):
-    """
-    Processes one field value based on field_def taken from a ..._template.json schema.
-    Calculates a value and (if there's 'is_artifact') a file upload entry.
-    """
-
-    coerce = field_def["coerce"]
-    val = coerce(raw_val)
-    files = []
-
-    if not field_def.get("is_artifact"):
-        return val, files  # no files if it's not an artifact
-
-    # deal with multi-artifact
-    if field_def["is_artifact"] == "multi":
-        logger.debug(f"      collecting multi local_file_path {field_def}")
-
-        # In case of is_aritfact=multi we expect the value to be a comma-separated
-        # list of local_file paths (that we will convert to uuids)
-        # and also for the corresponding DM schema to be an array of artifacts
-        # that we will fill with upload_placeholder uuids
-
-        # So our value is a list of artifact placeholders
-        val = []
-
-        # and we iterate through local file paths:
-        for num, local_path in enumerate(raw_val.split(",")):
-            # Ignoring errors here as we're sure `coerce` will just return a uuid
-            file_uuid = coerce(local_path)
-
-            artifact, facet_group = _format_single_artifact(
-                local_path=local_path,
-                uuid=file_uuid,
-                field_def=field_def,
-                format_context=dict(
-                    format_context,
-                    num=num  # add num to be able to generate
-                    # different gcs keys for each multi-artifact file.
-                ),
-            )
-
-            val.append({"upload_placeholder": file_uuid, "facet_group": facet_group})
-
-            files.append(artifact)
-
-    else:
-        logger.debug(f"      collecting local_file_path {field_def}")
-        artifact, facet_group = _format_single_artifact(
-            local_path=raw_val,
-            uuid=val,
-            field_def=field_def,
-            format_context=format_context,
-        )
-
-        val = {"upload_placeholder": val, "facet_group": facet_group}
-
-        files.append(artifact)
-
-    return val, files
-
-
-class ParsingException(ValueError):
-    pass
-
-
 def prismify(
     xlsx: XlTemplateReader,
     template: Template,
@@ -562,7 +287,7 @@ def prismify(
     Returns:
         (tuple):
             arg1: clinical trial object with data parsed from spreadsheet
-            arg2: list of LocalFileUploadEntries that describe each file identified:
+            arg2: list of `LocalFileUploadEntry`s that describe each file identified:
                 LocalFileUploadEntry(
                     local_path = "/local/path/to/a/data/file/parsed/from/template",
                     gs_key = "constructed/relative/to/clinical/trial/GCS/path",
@@ -744,61 +469,48 @@ def prismify(
                 # create dictionary per row
                 for key, val in zip(headers.values, row.values):
 
+                    combined_context = dict(local_context, **preamble_context)
                     try:
-                        # get corr xsls schema type
-                        new_files = _process_property(
-                            key,
-                            val,
-                            key_lu=template.key_lu,
-                            data_obj=data_obj,
-                            format_context=dict(
-                                local_context, **preamble_context
-                            ),  # combine contexts
-                            root_obj=copy_of_preamble,
-                            data_obj_pointer=data_object_pointer,
+                        changes, new_files = template.process_field_value(
+                            ws_name, key, val, combined_context, {"encrypt": _encrypt}
                         )
-                        if new_files:
-                            collected_files.extend(new_files)
                     except ParsingException as e:
                         errors_so_far.append(e)
+                    else:
+                        _apply_changes(
+                            changes, data_obj, copy_of_preamble, data_object_pointer
+                        )
+                        collected_files.extend(new_files)
 
-                logger.debug("  merging preambles")
-                logger.debug(f"   {preamble_obj}")
-                logger.debug(f"   {copy_of_preamble}")
                 try:
                     preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
-                    logger.debug(f"    merged - {preamble_obj}")
                 except MergeCollisionException as e:
                     # Reformatting exception, because this mismatch happened within one template
                     # and not with some saved stuff.
                     wrapped = e.with_context(row=row.row_num, worksheet=ws_name)
                     errors_so_far.append(wrapped)
-                    logger.info(
-                        f"    didn't merge - MergeCollisionException: {wrapped}"
-                    )
+                    logger.info(f"MergeCollisionException: {wrapped}")
 
         # Now processing preamble rows
         logger.debug(f"  preamble for {ws_name!r}")
         for row in ws[RowType.PREAMBLE]:
+            k, v, *_ = row.values
             try:
-                # process this property
-                new_files = _process_property(
-                    row.values[0],
-                    row.values[1],
-                    key_lu=template.key_lu,
-                    data_obj=preamble_obj,
-                    format_context=preamble_context,
-                    root_obj=root_ct_obj,
-                    data_obj_pointer=template_root_obj_pointer
-                    + preamble_object_pointer,
+                changes, new_files = template.process_field_value(
+                    ws_name, k, v, preamble_context, {"encrypt": _encrypt}
                 )
-                # TODO we might want to use copy+preamble_merger here too,
-                # to for complex properties that require mergeStrategy
-
-                if new_files:
-                    collected_files.extend(new_files)
             except ParsingException as e:
                 errors_so_far.append(e)
+            else:
+                # TODO we might want to use copy+preamble_merger here too,
+                # to for complex properties that require mergeStrategy
+                _apply_changes(
+                    changes,
+                    preamble_obj,
+                    root_ct_obj,
+                    template_root_obj_pointer + preamble_object_pointer,
+                )
+                collected_files.extend(new_files)
 
         # Now pushing it up / merging with the whole thing
         copy_of_templ_root = {}

@@ -100,7 +100,8 @@ def test_merge_patch_into_trial(prism_test: PrismTestData, ct_validator):
     # Ensure that the merge result passes validation
     ct_validator.validate(result)
 
-    assert_metadata_matches(result, prism_test.target_trial, prism_test.upload_entries)
+    target = prism_test.target_trial
+    assert_metadata_matches(result, target, prism_test.upload_entries)
 
 
 def test_merge_artifacts(prism_test: PrismTestData, ct_validator):

@@ -56,6 +56,13 @@
                                     "is_artifact": 1
                                 },
                                 {
+                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}tnscope.output.maf'",
+                                    "merge_pointer": "/somatic/maf_tnscope_output",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/maf_tnscope_output.maf",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
                                     "parse_through": "lambda id: f'analysis/metrics/all_sample_summaries.txt'",
                                     "merge_pointer": "/tumor/metrics/all_summaries",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/all_summaries.txt",

@@ -35,7 +35,8 @@
   },
   "required": [
     "vcf_gz_tnscope_output",
-    "vcf_gz_tnscope_filter"
+    "vcf_gz_tnscope_filter",
+    "maf_tnscope_output"
   ],
   "additionalProperties": false
 }

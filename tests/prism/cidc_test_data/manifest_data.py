@@ -1837,8 +1837,14 @@ def participants_annotations():
         p["cimac_participant_id"] + "00.01" for p in prismify_patch["participants"]
     ]
     base_trial = get_test_trial(cimac_ids)
+    base_trial["participants"][0]["samples"] = []
 
-    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "participants")
+    target_trial = copy_dict_with_branch(
+        base_trial, dict(prismify_patch), "participants"
+    )
+    target_trial["participants"][0]["samples"] = []
+    target_trial["participants"][0]["participant_id"] = ""
+    target_trial["participants"][0]["cohort_name"] = "Not_reported"
 
     return PrismTestData(
         upload_type,

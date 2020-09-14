@@ -84,6 +84,6 @@ def copy_dict_with_branch(base: dict, patch: dict, branch: Union[str, List[str]]
 
     for key in branch:
         assert key in patch, f"`patch` must have key {key}"
-        target[key] = patch[key]
+        target[key] = deepcopy(patch[key])
 
     return target

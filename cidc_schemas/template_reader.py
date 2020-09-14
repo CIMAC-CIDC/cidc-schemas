@@ -146,7 +146,6 @@ class XlTemplateReader:
         """Try to find a schemas for the given template key"""
         entity_name = Template._process_fieldname(key)
         if entity_name not in schema:
-            # raise Exception()
             return None, f"Found unexpected column {entity_name!r}"
         # Add a note saying this field was accessed
         self.visited_fields.add(entity_name)

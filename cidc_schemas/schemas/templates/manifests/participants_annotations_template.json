@@ -1,0 +1,30 @@
+{
+    "title": "Metadata manifest for trial-specific non-harmonized participant annotations.",
+    "description": "Metadata manifest for trial-specific non-harmonized participant annotations.",
+    "properties": {
+        "worksheets": {
+
+            "metadata": {
+                "prism_preamble_object_schema": "clinical_trial.json",
+                "prism_preamble_object_pointer": "#",
+                "preamble_rows": {
+                    "protocol identifier": {
+                        "merge_pointer": "/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    }
+                },
+                "prism_data_object_pointer": "/participants/-",
+                "prism_arbitrary_data_section": "Paste columns with DEIDENTIFIED (No PHI) participants clinical annotations",
+                "prism_arbitrary_data_merge_pointer": "/arbitrary_trial_specific_clinical_annotations",
+                "data_columns": {
+                    "ID": {
+                        "CIMAC participant ID": {
+                            "merge_pointer": "/cimac_participant_id",
+                            "type_ref": "participant.json#properties/cimac_participant_id"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

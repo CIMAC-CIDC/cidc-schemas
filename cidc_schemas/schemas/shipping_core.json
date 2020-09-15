@@ -45,7 +45,8 @@
         "H&E",
         "ELISA",
         "mIF",
-        "mIHC"
+        "mIHC",
+        "TCRseq"
       ]
     },
     "courier": {

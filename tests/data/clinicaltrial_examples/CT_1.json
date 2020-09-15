@@ -550,7 +550,7 @@
         "sequencer_platform": "Illumina - HiSeq 3000",
         "records": [
           {
-            "cimac_id": "CTTTPP111.00",
+            "cimac_id": "CTTTPP1S1.00",
             "library_yield_ng": 666,
             "dv200": 0.7,
             "rqs": 8,
@@ -582,7 +582,7 @@
             }
           },
           {
-            "cimac_id": "CTTTPP121.00",
+            "cimac_id": "CTTTPP1S2.00",
             "library_yield_ng": 666,
             "dv200": 0.7,
             "rqs": 8,
@@ -612,7 +612,7 @@
         "sequencer_platform": "Illumina - HiSeq 3000",
         "records": [
           {
-            "cimac_id": "CTTTPP122.00",
+            "cimac_id": "CTTTPP2S1.00",
             "library_yield_ng": 666,
             "dv200": 0.7,
             "rqs": 8,
@@ -644,7 +644,7 @@
             }
           },
           {
-            "cimac_id": "CTTTPP123.00",
+            "cimac_id": "CTTTPP2S1.00",
             "quality_flag": 1,
             "library_yield_ng": 666,
             "dv200": 0.7,

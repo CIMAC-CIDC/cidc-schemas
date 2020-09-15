@@ -765,7 +765,6 @@ def tcr_fastq() -> PrismTestData:
                             },
                             "library_yield_ng": 600.0,
                             "dv200": 0.7,
-                            "rqs": 8.0,
                             "quality_flag": 1.0,
                         },
                         {
@@ -787,8 +786,6 @@ def tcr_fastq() -> PrismTestData:
                             },
                             "library_yield_ng": 650.0,
                             "dv200": 0.8,
-                            "rqs": 9.0,
-                            "rin": 9.0,
                             "quality_flag": 1.0,
                         },
                     ],

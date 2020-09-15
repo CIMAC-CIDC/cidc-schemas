@@ -60,15 +60,6 @@
               "merge_pointer": "0/dv200",
               "type_ref": "assays/components/ngs/tcr/tcr_entry.json#properties/dv200"
             },
-            "rqs": {
-              "merge_pointer": "0/rqs",
-              "type_ref": "assays/components/ngs/tcr/tcr_entry.json#properties/rqs"
-            },
-            "rin": {
-              "merge_pointer": "0/rin",
-              "type_ref": "assays/components/ngs/tcr/tcr_entry.json#properties/rin",
-              "allow_empty": true
-            },
             "quality flag": {
               "merge_pointer": "0/quality_flag",
               "type_ref": "assays/components/ngs/tcr/tcr_entry.json#properties/quality_flag",

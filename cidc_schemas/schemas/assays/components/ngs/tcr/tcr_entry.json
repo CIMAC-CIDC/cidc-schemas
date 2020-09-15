@@ -19,18 +19,6 @@
       "minimum": 0,
       "maximum": 1
     },
-    "rqs": {
-      "description": "RNA quality score. (0-10)",
-      "type": "number",
-      "minimum": 0,
-      "maximum": 10
-    },
-    "rin": {
-      "description": "RNA integrity number. (0-10)",
-      "type": "number",
-      "minimum": 0,
-      "maximum": 10
-    },
     "quality_flag": {
       "description": "Flag used for quality.",
       "type": "number"

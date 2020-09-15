@@ -204,8 +204,6 @@ def test_tcr_fastq():
     record = {
         "library_yield_ng": 666,
         "dv200": 0.7,
-        "rqs": 8,
-        "rin": 8,
         "quality_flag": 1,
         "cimac_id": "CTTTPPPSA.00",
         "files": {"r1": [r1], "r2": [r1]},

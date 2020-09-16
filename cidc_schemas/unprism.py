@@ -50,7 +50,7 @@ def _register_derivation(upload_type: str):
 
 def derive_files(context: DeriveFilesContext) -> DeriveFilesResult:
     """Derive files from a trial_metadata blob given an `upload_type`"""
-    if context.upload_type in prism.MANIFESTS_REQUIRING_PARTICIPANT_AND_SAMPLES_DERIVE:
+    if context.upload_type in prism.MANIFESTS_REQUIRING_PARTICIPANT_DERIVE:
         return _shipping_manifest_derivation(context)
 
     if context.upload_type in _upload_type_derivations:

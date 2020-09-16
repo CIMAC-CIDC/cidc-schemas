@@ -26,9 +26,9 @@ SUPPORTED_SHIPPING_MANIFESTS = [
 ]
 # weird non shipping manifest
 SUPPORTED_WEIRD_MANIFESTS = ["tumor_normal_pairing", "participants_annotations"]
-MANIFESTS_REQUIRING_PARTICIPANT_AND_SAMPLES_DERIVE = (
-    SUPPORTED_SHIPPING_MANIFESTS + "participants_annotations"
-)
+MANIFESTS_REQUIRING_PARTICIPANT_DERIVE = SUPPORTED_SHIPPING_MANIFESTS + [
+    "participants_annotations"
+]
 SUPPORTED_MANIFESTS = SUPPORTED_SHIPPING_MANIFESTS + SUPPORTED_WEIRD_MANIFESTS
 
 SUPPORTED_ANALYSES = ["cytof_analysis", "wes_analysis", "rna_level1_analysis"]

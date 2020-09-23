@@ -764,8 +764,6 @@ def tcr_fastq() -> PrismTestData:
                                 ],
                             },
                             "library_yield_ng": 600.0,
-                            "dv200": 0.7,
-                            "quality_flag": 1.0,
                         },
                         {
                             "cimac_id": "CTTTPP121.00",
@@ -785,8 +783,6 @@ def tcr_fastq() -> PrismTestData:
                                 ],
                             },
                             "library_yield_ng": 650.0,
-                            "dv200": 0.8,
-                            "quality_flag": 1.0,
                         },
                     ],
                     "assay_creator": "Mount Sinai",

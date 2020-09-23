@@ -203,8 +203,6 @@ def test_tcr_fastq():
     r1["data_format"] = "FASTQ.GZ"
     record = {
         "library_yield_ng": 666,
-        "dv200": 0.7,
-        "quality_flag": 1,
         "cimac_id": "CTTTPPPSA.00",
         "files": {"r1": [r1], "r2": [r1]},
     }

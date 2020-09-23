@@ -13,16 +13,6 @@
       "description": "Resulting yield (in ng) from library construction.",
       "type": "number"
     },
-    "dv200": {
-      "description": "The percentage of fragments > 200 nucleotides.",
-      "type": "number",
-      "minimum": 0,
-      "maximum": 1
-    },
-    "quality_flag": {
-      "description": "Flag used for quality.",
-      "type": "number"
-    },
     "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
     "files": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/files"}
   },

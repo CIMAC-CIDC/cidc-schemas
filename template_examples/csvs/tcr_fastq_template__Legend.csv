@@ -11,5 +11,3 @@
 "","Forward fastq","String","A comma-separated list of paths to files on a user's computer."
 "","Reverse fastq","String","A comma-separated list of paths to files on a user's computer."
 "","Library yield ng","Number","Resulting yield (in ng) from library construction."
-"","Dv200","Number","The percentage of fragments > 200 nucleotides."
-"","Quality flag","Number","Flag used for quality."

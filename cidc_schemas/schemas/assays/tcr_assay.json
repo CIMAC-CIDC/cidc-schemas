@@ -13,19 +13,6 @@
     "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
 
     "sequencer_platform": {"$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"},
-    "library_kit": {"$ref": "assays/components/ngs_assay_core.json#properties/library_kit"},
-    "paired_end_reads": {"$ref": "assays/components/ngs_assay_core.json#properties/paired_end_reads"},
-
-    "enrichment_method": {
-      "description": "Method used for enriching for mRNA.",
-      "type": "string",
-      "enum": ["PolyA capture", "Transcriptome capture", "Ribo minus"]
-    },
-    "enrichment_vendor_kit": {
-      "description": "Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT.",
-      "type": "string",
-      "enum": ["Agilent", "Twist", "IDT", "NEB", "Illumina - TruSeq Stranded PolyA mRNA"]
-    },
     "records": {
       "type": "array",
       "description": "A single data record from TCRseq assay.",
@@ -39,7 +26,6 @@
     }
   },
   "required": [
-    "enrichment_method",
     "records"
   ],
   "mergeStrategy": "objectMerge"

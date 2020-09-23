@@ -188,15 +188,8 @@ def test_rna_bam():
 def test_tcr_fastq():
 
     # create the ngs object
-    ngs_obj = {
-        "sequencer_platform": "Illumina - NovaSeq 6000",
-        "paired_end_reads": "Paired",
-    }
+    ngs_obj = {"sequencer_platform": "Illumina - NovaSeq 6000"}
     obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
-
-    # add custom entry
-    obj["enrichment_method"] = "Ribo minus"
-    obj["enrichment_vendor_kit"] = "Agilent"
 
     # create the tcr_seq object
     r1 = ARTIFACT_OBJ.copy()

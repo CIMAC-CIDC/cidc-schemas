@@ -17,21 +17,9 @@
             "merge_pointer": "0/assay_creator",
             "type_ref": "assays/components/assay_core.json#properties/assay_creator"
           },
-          "enrichment method": {
-            "merge_pointer": "0/enrichment_method",
-            "type_ref": "assays/tcr_assay.json#properties/enrichment_method"
-          },
-          "enrichment kit": {
-            "merge_pointer": "0/enrichment_vendor_kit",
-            "type_ref": "assays/tcr_assay.json#properties/enrichment_vendor_kit"
-          },
           "sequencer platform": {
             "merge_pointer": "0/sequencer_platform",
             "type_ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"
-          },
-          "paired end reads": {
-            "merge_pointer": "0/paired_end_reads",
-            "type_ref": "assays/components/ngs_assay_core.json#properties/paired_end_reads"
           }
         },
         "data_columns": {

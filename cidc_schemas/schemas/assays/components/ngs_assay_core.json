@@ -30,7 +30,6 @@
     }
   },
   "required": [
-    "sequencer_platform",
-    "paired_end_reads"
+    "sequencer_platform"
   ]
 }

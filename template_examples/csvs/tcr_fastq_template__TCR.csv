@@ -1,10 +1,7 @@
 "#t","Metadata file for tcr seq  [fastq]."
 "#p","Protocol identifier","test_prism_trial_id"
 "#p","Assay creator","Mount Sinai"
-"#p","Enrichment method","Ribo minus"
-"#p","Enrichment kit","Agilent"
 "#p","Sequencer platform","Illumina - HiSeq 3000"
-"#p","Paired end reads","Paired"
 
 "","Samples"
 "#h","Cimac id","Forward fastq","Reverse fastq","Library yield ng"

@@ -786,10 +786,7 @@ def tcr_fastq() -> PrismTestData:
                         },
                     ],
                     "assay_creator": "Mount Sinai",
-                    "enrichment_method": "Ribo minus",
-                    "enrichment_vendor_kit": "Agilent",
                     "sequencer_platform": "Illumina - HiSeq 3000",
-                    "paired_end_reads": "Paired",
                 }
             ]
         },

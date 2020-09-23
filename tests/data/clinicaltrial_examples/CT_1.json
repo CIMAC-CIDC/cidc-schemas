@@ -544,9 +544,6 @@
     "tcr": [
       {
         "assay_creator": "Mount Sinai",
-        "paired_end_reads": "Paired",
-        "enrichment_method": "Ribo minus",
-        "enrichment_vendor_kit": "Agilent",
         "sequencer_platform": "Illumina - HiSeq 3000",
         "records": [
           {
@@ -598,9 +595,6 @@
       },
       {
         "assay_creator": "Mount Sinai",
-        "paired_end_reads": "Paired",
-        "enrichment_method": "Ribo minus",
-        "enrichment_vendor_kit": "Agilent",
         "sequencer_platform": "Illumina - HiSeq 3000",
         "records": [
           {

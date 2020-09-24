@@ -188,12 +188,15 @@ def test_rna_bam():
 def test_tcr_fastq():
 
     # create the ngs object
-    ngs_obj = {"sequencer_platform": "Illumina - NovaSeq 6000"}
+    ngs_obj = {"sequencer_platform": "Illumina - NovaSeq 6000", "batch_id": "XYZ"}
+
     obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
 
     # create the tcr_seq object
     r1 = ARTIFACT_OBJ.copy()
     r1["data_format"] = "FASTQ.GZ"
+    sample_sheet = ARTIFACT_OBJ.copy()
+    sample_sheet["data_format"] = "CSV"
     record = {
         "library_yield_ng": 666,
         "cimac_id": "CTTTPPPSA.00",

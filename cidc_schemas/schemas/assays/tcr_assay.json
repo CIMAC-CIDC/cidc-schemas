@@ -11,8 +11,14 @@
   ],
   "properties": {
     "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
-
     "sequencer_platform": {"$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"},
+    "batch_id": {
+        "description": "TCRseq batch identification number.",
+        "type": "string"
+    },
+    "sample_sheet": {
+        "$ref": "artifacts/artifact_csv.json"
+    },
     "records": {
       "type": "array",
       "description": "A single data record from TCRseq assay.",
@@ -26,7 +32,8 @@
     }
   },
   "required": [
-    "records"
+    "records",
+    "batch_id"
   ],
   "mergeStrategy": "objectMerge"
 }

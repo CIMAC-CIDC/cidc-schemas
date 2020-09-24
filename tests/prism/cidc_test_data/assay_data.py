@@ -787,6 +787,10 @@ def tcr_fastq() -> PrismTestData:
                     ],
                     "assay_creator": "Mount Sinai",
                     "sequencer_platform": "Illumina - HiSeq 3000",
+                    "batch_id": "XYZ",
+                    "sample_sheet": {
+                        "upload_placeholder": "be150200-c6b2-459c-a264-b56bc2aca264"
+                    },
                 }
             ]
         },
@@ -794,37 +798,43 @@ def tcr_fastq() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="/local/path/to/fwd.1.1.1.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/CTTTPP111.00/r1_0.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/r1_0.fastq.gz",
             upload_placeholder="3635df00-082b-4e2d-92a8-7a5e629483dc",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/fwd.1.1.1_2.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/CTTTPP111.00/r1_1.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/r1_1.fastq.gz",
             upload_placeholder="c0723fe8-5533-40e0-86cb-16162d8683e5",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/rev.1.1.1.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/CTTTPP111.00/r2_0.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/r2_0.fastq.gz",
             upload_placeholder="2cd2bb4f-3f84-4f78-b387-4edb6dcc5d1c",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/fwd.1.2.1.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/CTTTPP121.00/r1_0.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/r1_0.fastq.gz",
             upload_placeholder="e49521dc-d531-4555-a874-80aa0ce31dc2",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/fwd.1.2.1_2.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/CTTTPP121.00/r1_1.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/r1_1.fastq.gz",
             upload_placeholder="6ebfef93-5c4c-496d-b8ae-13c1978322d3",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/rev.1.2.1.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/CTTTPP121.00/r2_0.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/r2_0.fastq.gz",
+            upload_placeholder="be150200-c6b2-459c-a264-b56bc2aca264",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="sample_sheet.csv",
+            gs_key="test_prism_trial_id/tcr/XYZ/sample_sheet.csv",
             upload_placeholder="be150200-c6b2-459c-a264-b56bc2aca264",
             metadata_availability=False,
         ),

@@ -1,13 +1,13 @@
 {
   "title": "Metadata file for TCR seq  [FASTQ].",
   "description": "Metadata information for rna expression data submission via FASTQ files.",
+  "prism_preamble_object_schema" : "assays/tcr_assay.json",
+  "prism_preamble_object_pointer" : "/assays/tcr/-",
+  "prism_data_object_pointer" : "/records/-",
   "properties": {
     "worksheets": {
-      "TCR": {
-        "prism_preamble_object_schema" : "assays/tcr_assay.json",
-        "prism_preamble_object_pointer" : "/assays/tcr/-",
-        "prism_data_object_pointer" : "/records/-",
 
+      "TCR": {
         "preamble_rows": {
           "protocol identifier": {
             "merge_pointer": "3/protocol_identifier",
@@ -20,8 +20,19 @@
           "sequencer platform": {
             "merge_pointer": "0/sequencer_platform",
             "type_ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"
+          },
+          "batch id": {
+            "merge_pointer": "0/batch_id",
+            "type_ref": "assays/tcr_assay.json#properties/batch_id"
+          },
+          "sample sheet": {
+            "merge_pointer": "0/batch/sample_sheet",
+            "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/sample_sheet.csv",
+            "is_artifact": 1,
+            "type_ref": "assays/components/local_file.json#properties/file_path"
           }
         },
+
         "data_columns": {
           "Samples": {
             "cimac id": {
@@ -30,13 +41,13 @@
             },
             "forward fastq": {
               "merge_pointer": "0/files/r1",
-              "gcs_uri_format": "{protocol identifier}/tcr/{cimac id}/r1_{num}.fastq.gz",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/r1_{num}.fastq.gz",
               "is_artifact": "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
             },
             "reverse fastq": {
               "merge_pointer": "0/files/r2",
-              "gcs_uri_format": "{protocol identifier}/tcr/{cimac id}/r2_{num}.fastq.gz",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/r2_{num}.fastq.gz",
               "is_artifact" : "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
             },

@@ -51,9 +51,9 @@
               "is_artifact" : "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
             },
-            "library yield ng": {
-              "merge_pointer": "0/library_yield_ng",
-              "type_ref": "assays/components/ngs/tcr/tcr_entry.json#properties/library_yield_ng"
+            "rna quantity": {
+              "merge_pointer": "0/rna_quantity_ng",
+              "type_ref": "assays/components/ngs/tcr/tcr_entry.json#properties/rna_quantity_ng"
             }
           }
         }

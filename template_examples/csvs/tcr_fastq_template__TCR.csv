@@ -6,6 +6,6 @@
 "#p","Sample sheet","sample_sheet.csv"
 
 "","Samples"
-"#h","Cimac id","Forward fastq","Reverse fastq","Library yield ng"
+"#h","Cimac id","Forward fastq","Reverse fastq","Rna quantity"
 "#d","CTTTPP111.00","/local/path/to/fwd.1.1.1.fastq.gz,/local/path/to/fwd.1.1.1_2.fastq.gz","/local/path/to/rev.1.1.1.fastq.gz","600"
 "#d","CTTTPP121.00","/local/path/to/fwd.1.2.1.fastq.gz,/local/path/to/fwd.1.2.1_2.fastq.gz","/local/path/to/rev.1.2.1.fastq.gz","650"

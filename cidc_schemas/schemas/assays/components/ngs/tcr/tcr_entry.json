@@ -9,8 +9,8 @@
     { "$ref": "assays/components/ngs/ngs_assay_record.json" }
   ],
   "properties": {
-    "library_yield_ng": {
-      "description": "Resulting yield (in ng) from library construction.",
+    "rna_quantity_ng": {
+      "description": "RNA quantity (in ng).",
       "type": "number"
     },
     "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},

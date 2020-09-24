@@ -763,7 +763,7 @@ def tcr_fastq() -> PrismTestData:
                                     }
                                 ],
                             },
-                            "library_yield_ng": 600.0,
+                            "rna_quantity_ng": 600.0,
                         },
                         {
                             "cimac_id": "CTTTPP121.00",
@@ -782,7 +782,7 @@ def tcr_fastq() -> PrismTestData:
                                     }
                                 ],
                             },
-                            "library_yield_ng": 650.0,
+                            "rna_quantity_ng": 650.0,
                         },
                     ],
                     "assay_creator": "Mount Sinai",

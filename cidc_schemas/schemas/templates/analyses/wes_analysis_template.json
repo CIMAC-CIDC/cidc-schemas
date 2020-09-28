@@ -140,7 +140,7 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/report2/neoantigen/HLA_results.tsv'",
+                                    "parse_through": "lambda id: f'analysis/report/neoantigen/01_HLA_results.tsv'",
                                     "merge_pointer": "/neoantigen/HLA_results",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/HLA_results.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",

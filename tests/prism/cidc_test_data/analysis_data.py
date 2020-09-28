@@ -444,7 +444,7 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/report2/neoantigen/HLA_results.tsv",
+            local_path="analysis/report/neoantigen/01_HLA_results.tsv",
             gs_key="test_prism_trial_id/wes/run_1/analysis/HLA_results.tsv",
             upload_placeholder="e47271fb-e2c7-5436-cafe-5cf84bc72bf6",
             metadata_availability=False,
@@ -690,7 +690,7 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/report2/neoantigen/HLA_results.tsv",
+            local_path="analysis/report/neoantigen/01_HLA_results.tsv",
             gs_key="test_prism_trial_id/wes/run_2/analysis/HLA_results.tsv",
             upload_placeholder="76824763-fb9f-58b4-c7c4-8175759933f6",
             metadata_availability=False,

@@ -10,13 +10,13 @@
         "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
         "$ref": "sample.json#properties/cimac_id"
     },
-    "files": {
+    "read_files": {
       "$comment": "Fastq files or a bam file produced by the assay.",
       "$ref": "assays/components/fastq_pair_or_bam.json"
     }
   },
   "required": [
     "cimac_id",
-    "files"
+    "read_files"
   ]
 }

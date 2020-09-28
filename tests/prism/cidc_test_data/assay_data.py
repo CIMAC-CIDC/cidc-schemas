@@ -308,7 +308,7 @@ def wes_bam() -> PrismTestData:
                     "records": [
                         {
                             "cimac_id": "CTTTPP111.00",
-                            "files": {
+                            "read_files": {
                                 "bam": [
                                     {
                                         "upload_placeholder": "d75a0a45-50dd-4aa5-bd46-2793bd5c84e5"
@@ -323,7 +323,7 @@ def wes_bam() -> PrismTestData:
                         },
                         {
                             "cimac_id": "CTTTPP121.00",
-                            "files": {
+                            "read_files": {
                                 "bam": [
                                     {
                                         "upload_placeholder": "c2ffea21-0771-45ca-bd08-f384b012afb9"
@@ -406,7 +406,7 @@ def wes_fastq() -> PrismTestData:
                     "records": [
                         {
                             "cimac_id": "CTTTPP111.00",
-                            "files": {
+                            "read_files": {
                                 "r1": [
                                     {
                                         "upload_placeholder": "3c8b4fe4-780a-4431-908f-aa879c01c009"
@@ -426,7 +426,7 @@ def wes_fastq() -> PrismTestData:
                         },
                         {
                             "cimac_id": "CTTTPP121.00",
-                            "files": {
+                            "read_files": {
                                 "r1": [
                                     {
                                         "upload_placeholder": "4d57fa58-5dd4-4379-878d-935d79d2507f"
@@ -526,7 +526,7 @@ def rna_bam() -> PrismTestData:
                     "records": [
                         {
                             "cimac_id": "CTTTPP122.00",
-                            "files": {
+                            "read_files": {
                                 "bam": [
                                     {
                                         "upload_placeholder": "8c85011c-ccee-49b4-a940-be6ece437953"
@@ -543,7 +543,7 @@ def rna_bam() -> PrismTestData:
                         },
                         {
                             "cimac_id": "CTTTPP123.00",
-                            "files": {
+                            "read_files": {
                                 "bam": [
                                     {
                                         "upload_placeholder": "10859cc5-8258-4d00-9118-9939b354a519"
@@ -625,7 +625,7 @@ def rna_fastq() -> PrismTestData:
                     "records": [
                         {
                             "cimac_id": "CTTTPP122.00",
-                            "files": {
+                            "read_files": {
                                 "r1": [
                                     {
                                         "upload_placeholder": "2635df00-082b-4e2d-92a8-7a5e629483db"
@@ -647,7 +647,7 @@ def rna_fastq() -> PrismTestData:
                         },
                         {
                             "cimac_id": "CTTTPP123.00",
-                            "files": {
+                            "read_files": {
                                 "r1": [
                                     {
                                         "upload_placeholder": "d49521dc-d531-4555-a874-80aa0ce31dc1"
@@ -748,7 +748,7 @@ def tcr_fastq() -> PrismTestData:
                     "records": [
                         {
                             "cimac_id": "CTTTPP111.00",
-                            "files": {
+                            "read_files": {
                                 "r1": [
                                     {
                                         "upload_placeholder": "3635df00-082b-4e2d-92a8-7a5e629483dc"
@@ -764,7 +764,7 @@ def tcr_fastq() -> PrismTestData:
                         },
                         {
                             "cimac_id": "CTTTPP121.00",
-                            "files": {
+                            "read_files": {
                                 "r1": [
                                     {
                                         "upload_placeholder": "e49521dc-d531-4555-a874-80aa0ce31dc2"

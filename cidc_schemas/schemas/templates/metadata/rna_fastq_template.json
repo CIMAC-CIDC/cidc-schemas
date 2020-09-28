@@ -41,13 +41,13 @@
               "type_ref": "sample.json#properties/cimac_id"
             },
             "forward fastq": {
-              "merge_pointer": "0/files/r1",
+              "merge_pointer": "0/read_files/r1",
               "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/r1_{num}.fastq.gz",
               "is_artifact": "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
             },
             "reverse fastq": {
-              "merge_pointer": "0/files/r2",
+              "merge_pointer": "0/read_files/r2",
               "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/r2_{num}.fastq.gz",
               "is_artifact" : "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"

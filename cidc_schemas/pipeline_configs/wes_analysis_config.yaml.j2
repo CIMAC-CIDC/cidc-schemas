@@ -4,35 +4,35 @@
 samples:
   # normal
   {{normal_sample.cimac_id}}:
-{% if normal_sample.files.r1 %}
+{% if normal_sample.read_files.r1 %}
     # r1  
-  {% for fastq_gz_artifact in normal_sample.files.r1 %}
+  {% for fastq_gz_artifact in normal_sample.read_files.r1 %}
     - gs://{{BIOFX_BUCKET_NAME}}/{{fastq_gz_artifact.object_url}}
   {% endfor %}
     # r2
-  {% for fastq_gz_artifact in normal_sample.files.r2 %}
+  {% for fastq_gz_artifact in normal_sample.read_files.r2 %}
     - gs://{{BIOFX_BUCKET_NAME}}/{{fastq_gz_artifact.object_url}}
   {% endfor %}
 {% else %}
     # bam
-  {% for bam_artifact in normal_sample.files.bam %}
+  {% for bam_artifact in normal_sample.read_files.bam %}
     - gs://{{BIOFX_BUCKET_NAME}}/{{bam_artifact.object_url}}
   {% endfor %}
 {% endif %}
   # tumor
   {{tumor_sample.cimac_id}}:
-{% if tumor_sample.files.r1 %}
+{% if tumor_sample.read_files.r1 %}
     # r1 
-  {% for fastq_gz_artifact in tumor_sample.files.r1 %}
+  {% for fastq_gz_artifact in tumor_sample.read_files.r1 %}
     - gs://{{BIOFX_BUCKET_NAME}}/{{fastq_gz_artifact.object_url}}
   {% endfor %}
     # r2
-  {% for fastq_gz_artifact in tumor_sample.files.r2 %}
+  {% for fastq_gz_artifact in tumor_sample.read_files.r2 %}
     - gs://{{BIOFX_BUCKET_NAME}}/{{fastq_gz_artifact.object_url}}
   {% endfor %}
 {% else %}
     # bam
-  {% for bam_artifact in tumor_sample.files.bam %}
+  {% for bam_artifact in tumor_sample.read_files.bam %}
     - gs://{{BIOFX_BUCKET_NAME}}/{{bam_artifact.object_url}}
   {% endfor %}
 {% endif %}
@@ -60,7 +60,7 @@ disk_size: 750
 # CIMAC center the samples associate with
 # Options- broad, mda
 cimac_center:
-{% if normal_sample.files.bam or tumor_sample.files.bam %}
+{% if normal_sample.read_files.bam or tumor_sample.read_files.bam %}
   # bam
   - broad
 {% else %}

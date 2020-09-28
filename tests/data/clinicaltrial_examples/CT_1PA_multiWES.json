@@ -87,7 +87,7 @@
                         "cimac_id":          "CTTTP21S1.00",
                         "sequencing_date": "...",
                         "quality_flag": 1,
-                        "files": {
+                        "read_files": {
                             "r1": [{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
@@ -112,7 +112,7 @@
                         "cimac_id":          "CTTTP21S2.00",
                         "sequencing_date": "...",
                         "quality_flag": 1,
-                        "files": {
+                        "read_files": {
                             "r1": [{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
@@ -148,7 +148,7 @@
                         "cimac_id":          "CTTTP21S1.00",
                         "sequencing_date": "...",
                         "quality_flag": 1,
-                        "files": {
+                        "read_files": {
                             "r1": [{
                                 "file_name" :           "...",
                                 "object_url" :          "...",
@@ -173,7 +173,7 @@
                         "cimac_id":          "CTTTP21S3.00",
                         "sequencing_date": "...",
                         "quality_flag": 1,
-                        "files": {
+                        "read_files": {
                             "r1": [{
                                 "file_name" :           "...",
                                 "object_url" :          "...",

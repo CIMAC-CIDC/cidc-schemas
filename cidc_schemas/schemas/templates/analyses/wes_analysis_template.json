@@ -133,7 +133,7 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/report2/somatic_variants/tumor_mutational_burden.tsv'",
+                                    "parse_through": "lambda id: f'analysis/report/somatic_variants/07_tumor_mutational_burden.tsv'",
                                     "merge_pointer": "/report/tumor_mutational_burden",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor_mutational_burden.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",

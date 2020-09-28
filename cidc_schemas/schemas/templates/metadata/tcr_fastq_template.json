@@ -1,13 +1,13 @@
 {
   "title": "Metadata file for TCR seq  [FASTQ].",
   "description": "Metadata information for rna expression data submission via FASTQ files.",
-  "prism_preamble_object_schema" : "assays/tcr_assay.json",
-  "prism_preamble_object_pointer" : "/assays/tcr/-",
-  "prism_data_object_pointer" : "/records/-",
   "properties": {
     "worksheets": {
 
       "TCR": {
+        "prism_preamble_object_schema" : "assays/tcr_assay.json",
+        "prism_preamble_object_pointer" : "/assays/tcr/0",
+        "prism_data_object_pointer" : "/records/-",
         "preamble_rows": {
           "protocol identifier": {
             "merge_pointer": "3/protocol_identifier",
@@ -26,8 +26,8 @@
             "type_ref": "assays/tcr_assay.json#properties/batch_id"
           },
           "sample sheet": {
-            "merge_pointer": "0/batch/sample_sheet",
-            "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/sample_sheet.csv",
+            "merge_pointer": "0/sample_sheet",
+            "gcs_uri_format": "{protocol identifier}/tcr/sample_sheet.csv",
             "is_artifact": 1,
             "type_ref": "assays/components/local_file.json#properties/file_path"
           }

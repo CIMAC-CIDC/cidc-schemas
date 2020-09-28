@@ -783,7 +783,7 @@ def tcr_fastq() -> PrismTestData:
                     "sequencer_platform": "Illumina - HiSeq 3000",
                     "batch_id": "XYZ",
                     "sample_sheet": {
-                        "upload_placeholder": "be150200-c6b2-459c-a264-b56bc2aca264"
+                        "upload_placeholder": "rb150200-c6b2-459c-a264-b56bc2aca26a"
                     },
                 }
             ]
@@ -817,7 +817,7 @@ def tcr_fastq() -> PrismTestData:
         LocalFileUploadEntry(
             local_path="sample_sheet.csv",
             gs_key="test_prism_trial_id/tcr/sample_sheet.csv",
-            upload_placeholder="be150200-c6b2-459c-a264-b56bc2aca264",
+            upload_placeholder="rb150200-c6b2-459c-a264-b56bc2aca26a",
             metadata_availability=False,
         ),
     ]

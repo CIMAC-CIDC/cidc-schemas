@@ -63,6 +63,10 @@
               "is_artifact" : "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
             },
+            "sequencing run date": {
+              "merge_pointer": "0/sequencing_run_date",
+              "type_ref": "assays/components/ngs/tcr/tcr_entry.json#properties/sequencing_run_date"
+            },
             "rna quantity": {
               "merge_pointer": "0/rna_quantity_ng",
               "type_ref": "assays/components/ngs/tcr/tcr_entry.json#properties/rna_quantity_ng"

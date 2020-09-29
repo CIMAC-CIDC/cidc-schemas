@@ -772,6 +772,7 @@ def tcr_fastq() -> PrismTestData:
                                     }
                                 ],
                             },
+                            "sequencing_run_date": "2019-12-12 00:00:00",
                             "rna_quantity_ng": 600.0,
                         },
                         {
@@ -800,6 +801,7 @@ def tcr_fastq() -> PrismTestData:
                                     }
                                 ],
                             },
+                            "sequencing_run_date": "2019-12-12 00:00:00",
                             "rna_quantity_ng": 650.0,
                         },
                     ],

@@ -13,6 +13,11 @@
       "description": "RNA quantity (in ng).",
       "type": "number"
     },
+    "sequencing_run_date": {
+      "description": "Date when the TCR sequencing was run.",
+      "type": "string",
+      "format": "date"
+    },
     "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
     "read_files": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/read_files"},
     "index_files": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/read_files"}

@@ -41,13 +41,25 @@
             },
             "read 1 replicate x": {
               "merge_pointer": "0/read_files/r1",
-              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/r1_{num}.fastq.gz",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/r1_x.fastq.gz",
               "is_artifact": "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
             },
             "read 2 replicate x": {
               "merge_pointer": "0/read_files/r2",
-              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/r2_{num}.fastq.gz",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/r2_x.fastq.gz",
+              "is_artifact" : "multi",
+              "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
+            },
+            "index 1 replicate x": {
+              "merge_pointer": "0/index_files/r1",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/r1_x.fastq.gz",
+              "is_artifact": "multi",
+              "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
+            },
+            "index 2 replicate x": {
+              "merge_pointer": "0/index_files/r2",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/r2_x.fastq.gz",
               "is_artifact" : "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
             },

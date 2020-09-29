@@ -67,8 +67,6 @@
         
             
         
-            
-        
         
             
                 <tr>
@@ -120,52 +118,6 @@
                 <tr>
     <td>
         
-            <span id="enrichment method">
-                enrichment method
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Method used for enriching for mRNA.
-        
-    </td>
-    <td>
-        
-            <a href="assays.tcr_assay.html#enrichment_method">assays.tcr_assay#enrichment_method</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="enrichment kit">
-                enrichment kit
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT.
-        
-    </td>
-    <td>
-        
-            <a href="assays.tcr_assay.html#enrichment_vendor_kit">assays.tcr_assay#enrichment_vendor_kit</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
             <span id="sequencer platform">
                 sequencer platform
             </span>
@@ -189,20 +141,43 @@
                 <tr>
     <td>
         
-            <span id="paired end reads">
-                paired end reads
+            <span id="batch id">
+                batch id
             </span>
             
         
     </td>
     <td width=55%>
         
-            Indicates if the sequencing was performed paired or single ended.
+            TCRseq batch identification number.
         
     </td>
     <td>
         
-            <a href="assays.components.ngs_assay_core.html#paired_end_reads">assays.components.ngs_assay_core#paired_end_reads</a>
+            <a href="assays.tcr_assay.html#batch_id">assays.tcr_assay#batch_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="sample sheet">
+                sample sheet
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
         
     </td>
 </tr>
@@ -227,6 +202,8 @@
             <th>Data Type</th>
         </tr>
         </thead>
+        
+            
         
             
         
@@ -268,8 +245,8 @@
                 <tr>
     <td>
         
-            <span id="forward fastq">
-                forward fastq
+            <span id="read 1 replicate x">
+                read 1 replicate x
             </span>
             
         
@@ -291,8 +268,8 @@
                 <tr>
     <td>
         
-            <span id="reverse fastq">
-                reverse fastq
+            <span id="read 2 replicate x">
+                read 2 replicate x
             </span>
             
         
@@ -314,20 +291,20 @@
                 <tr>
     <td>
         
-            <span id="library yield ng">
-                library yield ng
+            <span id="index 1 replicate x">
+                index 1 replicate x
             </span>
             
         
     </td>
     <td width=55%>
         
-            Resulting yield (in ng) from library construction.
+            A comma-separated list of paths to files on a user's computer.
         
     </td>
     <td>
         
-            <a href="assays.components.ngs.tcr.tcr_entry.html#library_yield_ng">assays.components.ngs.tcr.tcr_entry#library_yield_ng</a>
+            <a href="assays.components.multiple_local_files.html#file_path_list">assays.components.multiple_local_files#file_path_list</a>
         
     </td>
 </tr>
@@ -337,20 +314,20 @@
                 <tr>
     <td>
         
-            <span id="dv200">
-                dv200
+            <span id="index 2 replicate x">
+                index 2 replicate x
             </span>
             
         
     </td>
     <td width=55%>
         
-            The percentage of fragments > 200 nucleotides.
+            A comma-separated list of paths to files on a user's computer.
         
     </td>
     <td>
         
-            <a href="assays.components.ngs.tcr.tcr_entry.html#dv200">assays.components.ngs.tcr.tcr_entry#dv200</a>
+            <a href="assays.components.multiple_local_files.html#file_path_list">assays.components.multiple_local_files#file_path_list</a>
         
     </td>
 </tr>
@@ -360,30 +337,43 @@
                 <tr>
     <td>
         
-            <span id="quality flag">
-                quality flag
+            <span id="sequencing run date">
+                sequencing run date
             </span>
             
         
     </td>
     <td width=55%>
         
-            Flag used for quality.
+            Date when the TCR sequencing was run.
         
     </td>
     <td>
         
-            &lt; 
-                number 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
+            <a href="assays.components.ngs.tcr.tcr_entry.html#sequencing_run_date">assays.components.ngs.tcr.tcr_entry#sequencing_run_date</a>
+        
+    </td>
+</tr>
             
+        
             
+                <tr>
+    <td>
+        
+            <span id="rna quantity">
+                rna quantity
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            RNA quantity (in ng).
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.ngs.tcr.tcr_entry.html#rna_quantity_ng">assays.components.ngs.tcr.tcr_entry#rna_quantity_ng</a>
         
     </td>
 </tr>

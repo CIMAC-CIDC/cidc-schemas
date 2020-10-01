@@ -772,7 +772,6 @@ def tcr_fastq() -> PrismTestData:
                                     }
                                 ],
                             },
-                            "sequencing_run_date": "2019-12-12 00:00:00",
                             "rna_quantity_ng": 600.0,
                         },
                         {
@@ -801,13 +800,13 @@ def tcr_fastq() -> PrismTestData:
                                     }
                                 ],
                             },
-                            "sequencing_run_date": "2019-12-12 00:00:00",
                             "rna_quantity_ng": 650.0,
                         },
                     ],
                     "assay_creator": "Mount Sinai",
                     "sequencer_platform": "Illumina - HiSeq 3000",
                     "batch_id": "XYZ",
+                    "sequencing_run_date": "2019-12-12 00:00:00",
                     "sample_sheet": {
                         "upload_placeholder": "rb150200-c6b2-459c-a264-b56bc2aca26a"
                     },

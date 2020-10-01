@@ -16,6 +16,11 @@
         "description": "TCRseq batch identification number.",
         "type": "string"
     },
+    "sequencing_run_date": {
+        "description": "Date when the TCR sequencing was run.",
+        "type": "string",
+        "format": "date"
+    },
     "sample_sheet": {
         "$ref": "artifacts/artifact_csv.json"
     },

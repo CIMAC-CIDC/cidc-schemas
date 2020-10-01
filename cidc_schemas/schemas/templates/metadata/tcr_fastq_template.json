@@ -25,6 +25,10 @@
             "merge_pointer": "0/batch_id",
             "type_ref": "assays/tcr_assay.json#properties/batch_id"
           },
+          "sequencing run date": {
+            "merge_pointer": "0/sequencing_run_date",
+            "type_ref": "assays/tcr_assay.json#properties/sequencing_run_date"
+          },
           "sample sheet": {
             "merge_pointer": "0/sample_sheet",
             "gcs_uri_format": "{protocol identifier}/tcr/sample_sheet.csv",
@@ -62,10 +66,6 @@
               "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/r2_x.fastq.gz",
               "is_artifact" : "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
-            },
-            "sequencing run date": {
-              "merge_pointer": "0/sequencing_run_date",
-              "type_ref": "assays/components/ngs/tcr/tcr_entry.json#properties/sequencing_run_date"
             },
             "rna quantity": {
               "merge_pointer": "0/rna_quantity_ng",

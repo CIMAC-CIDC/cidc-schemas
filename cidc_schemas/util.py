@@ -135,9 +135,9 @@ def get_source(ct: dict, key: str, skip_last=None) -> (JSON, JSON):
     namespace = ""
     for token in tokens:
         namespace = _update_extra_metadata(token, cur_obj, namespace)
-        if token in cur_obj:
+        try:
             cur_obj = cur_obj[token]
-        else:
+        except Exception:
             raise ValueError(f"{token} not found in {namespace}")
 
     # Extract extra_metadata from the last level if it was skipped

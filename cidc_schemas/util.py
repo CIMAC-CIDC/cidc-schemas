@@ -100,6 +100,8 @@ def get_source(ct: dict, key: str, skip_last=None) -> (JSON, JSON):
     Returns:
         arg1: the value present in `ct` at the `key` path
         arg2: extra metadata collected while descending down `key` path
+    Raises:
+        ValueError if `key` doesn't exist in `ct`
     """
 
     tokens = list(split_python_style_path(key))
@@ -133,7 +135,10 @@ def get_source(ct: dict, key: str, skip_last=None) -> (JSON, JSON):
     namespace = ""
     for token in tokens:
         namespace = _update_extra_metadata(token, cur_obj, namespace)
-        cur_obj = cur_obj[token]
+        if token in cur_obj:
+            cur_obj = cur_obj[token]
+        else:
+            raise ValueError(f"{token} not found in {namespace}")
 
     # Extract extra_metadata from the last level if it was skipped
     if skip_last:

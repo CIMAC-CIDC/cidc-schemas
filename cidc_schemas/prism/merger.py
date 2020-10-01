@@ -137,7 +137,9 @@ def merge_artifact_extra_metadata(
         artifact: updated artifact
         additional_artifact_metadata: relevant metadata collected while updating artifact
     Raises:
-        ValueError if doesn't support metadata parsing or file cannot be parsed
+        ValueError
+            if doesn't support metadata parsing or file cannot be parsed
+            from _update_artifact
     """
 
     if assay_hint not in EXTRA_METADATA_PARSERS:

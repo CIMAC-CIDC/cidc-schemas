@@ -147,7 +147,9 @@ def merge_artifact_extra_metadata(
     try:
         artifact_extra_md_patch = extract_metadata(extra_metadata_file)
     except ValueError as e:
-        raise ValueError(f"Assay {artifact_uuid} cannot be parsed for {assay_hint} metadata") from e
+        raise ValueError(
+            f"Assay {artifact_uuid} cannot be parsed for {assay_hint} metadata"
+        ) from e
     else:
         return _update_artifact(ct, artifact_extra_md_patch, artifact_uuid)
 

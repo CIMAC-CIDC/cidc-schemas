@@ -94,14 +94,13 @@ def parse_npx(xlsx: BinaryIO) -> dict:
 
             if not seen_onlinkid:
                 # check that this is actually an NPX file
-                if i == 1 and first_cell != 'NPX data':
-                    raise ValueError('parse_npx got a file that is not in NPX format')
+                if i == 1 and first_cell != "NPX data":
+                    raise ValueError("parse_npx got a file that is not in NPX format")
 
                 # check if we are starting ids
                 elif first_cell == "OlinkID":
                     seen_onlinkid = True
                     continue
-
 
             else:
                 # check if we are done.

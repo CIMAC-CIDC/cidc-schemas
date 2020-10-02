@@ -223,12 +223,14 @@ def test_merge_artifact_extra_metadata_exc(monkeypatch):
             "cidc_schemas.prism.extra_metadata.EXTRA_METADATA_PARSERS", fake_parsers
         )
 
-    with pytest.raises(
-        ValueError, match=f"Assay{artifact_uuid}cannot be parsed for olink metadata"
-    ):
-        prism_merger.merge_artifact_extra_metadata({}, artifact_uuid, "olink", None)
-    with pytest.raises(TypeError, match=r"this goes through"):
-        prism_merger.merge_artifact_extra_metadata({}, artifact_uuid, "testing", None)
+        with pytest.raises(
+            ValueError, match=f"Assay{artifact_uuid}cannot be parsed for olink metadata"
+        ):
+            prism_merger.merge_artifact_extra_metadata({}, artifact_uuid, "olink", None)
+        with pytest.raises(TypeError, match=r"this goes through"):
+            prism_merger.merge_artifact_extra_metadata(
+                {}, artifact_uuid, "testing", None
+            )
 
 
 # upload placeholder shorthand

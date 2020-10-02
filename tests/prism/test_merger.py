@@ -219,13 +219,16 @@ def test_merge_artifact_extra_metadata_exc(monkeypatch):
     fake_parsers["olink"].side_effect = ValueError("disappears")
     fake_parsers["testing"].side_effect = TypeError("this goes through")
     with monkeypatch.context():
-        monkeypatch.setattr("cidc_schemas.prism.extra_metadata.EXTRA_METADATA_PARSERS", fake_parsers)
+        monkeypatch.setattr(
+            "cidc_schemas.prism.extra_metadata.EXTRA_METADATA_PARSERS", fake_parsers
+        )
 
-    with pytest.raises(ValueError, match=f"Assay{artifact_uuid}cannot be parsed for olink metadata"):
+    with pytest.raises(
+        ValueError, match=f"Assay{artifact_uuid}cannot be parsed for olink metadata"
+    ):
         prism_merger.merge_artifact_extra_metadata({}, artifact_uuid, "olink", None)
     with pytest.raises(TypeError, match=r"this goes through"):
         prism_merger.merge_artifact_extra_metadata({}, artifact_uuid, "testing", None)
-    
 
 
 # upload placeholder shorthand

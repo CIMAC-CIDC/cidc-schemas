@@ -35,7 +35,9 @@ combined_npx_metadata = {
     ],
 }
 
-invalid_npx_file_path = os.path.join(TEST_DATA_DIR, "olink", "invalid_olink_assay_1_NPX.xlsx")
+invalid_npx_file_path = os.path.join(
+    TEST_DATA_DIR, "olink", "invalid_olink_assay_1_NPX.xlsx"
+)
 
 # ELISA file and metadata
 elisa_file_path = os.path.join(TEST_DATA_DIR, "elisa_test_file.xlsx")

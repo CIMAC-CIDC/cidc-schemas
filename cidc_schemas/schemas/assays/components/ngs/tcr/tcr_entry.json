@@ -14,8 +14,8 @@
       "type": "number"
     },
     "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
-    "read_files": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/read_files"},
-    "index_files": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/read_files"}
+    "files": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/files"},
+    "index_files": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/index_files"}
   },
   "mergeStrategy": "objectMerge"
 }

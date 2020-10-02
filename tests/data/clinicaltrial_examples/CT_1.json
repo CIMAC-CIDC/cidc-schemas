@@ -289,7 +289,7 @@
             "cimac_id": "CTTTPP1S1.00",
             "sequencing_date": "...",
             "quality_flag": 1,
-            "read_files": {
+            "files": {
               "r1": [
                 {
                   "file_name": "...",
@@ -318,7 +318,7 @@
             "cimac_id": "CTTTPP1S2.00",
             "sequencing_date": "...",
             "quality_flag": 1,
-            "read_files": {
+            "files": {
               "bam": [
                 {
                   "file_name": "...",
@@ -347,7 +347,7 @@
             "cimac_id": "CTTTPP2S1.00",
             "sequencing_date": "...",
             "quality_flag": 1,
-            "read_files": {
+            "files": {
               "r1": [
                 {
                   "file_name": "...",
@@ -376,7 +376,7 @@
             "cimac_id": "CTTTPP2S2.00",
             "sequencing_date": "...",
             "quality_flag": 1,
-            "read_files": {
+            "files": {
               "r1": [
                 {
                   "file_name": "...",
@@ -419,7 +419,7 @@
             "rqs": 8,
             "rin": 8,
             "quality_flag": 1,
-            "read_files": {
+            "files": {
               "r1": [
                 {
                   "file_name": "...",
@@ -451,7 +451,7 @@
             "rqs": 8,
             "rin": 8,
             "quality_flag": 1,
-            "read_files": {
+            "files": {
               "bam": [
                 {
                   "file_name": "...",
@@ -481,7 +481,7 @@
             "rqs": 8,
             "rin": 8,
             "quality_flag": 1,
-            "read_files": {
+            "files": {
               "r1": [
                 {
                   "file_name": "...",
@@ -513,7 +513,7 @@
             "dv200": 0.7,
             "rqs": 8,
             "rin": 8,
-            "read_files": {
+            "files": {
               "r1": [
                 {
                   "file_name": "...",
@@ -550,7 +550,7 @@
           {
             "cimac_id": "CTTTPP1S1.00",
             "rna_quantity_ng": 666,
-            "read_files": {
+            "files": {
               "r1": [
                 {
                   "file_name": "...",
@@ -578,7 +578,7 @@
           {
             "cimac_id": "CTTTPP1S2.00",
             "rna_quantity_ng": 666,
-            "read_files": {
+            "files": {
               "bam": [
                 {
                   "file_name": "...",
@@ -602,7 +602,7 @@
           {
             "cimac_id": "CTTTPP2S1.00",
             "rna_quantity_ng": 666,
-            "read_files": {
+            "files": {
               "r1": [
                 {
                   "file_name": "...",
@@ -630,7 +630,7 @@
           {
             "cimac_id": "CTTTPP2S1.00",
             "rna_quantity_ng": 666,
-            "read_files": {
+            "files": {
               "r1": [
                 {
                   "file_name": "...",

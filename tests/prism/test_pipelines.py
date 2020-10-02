@@ -159,7 +159,7 @@ def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, templ
         assert 0 == len(errs)
 
     full_ct, errs = merger.merge_clinical_trial_metadata(patch_with_artifacts, full_ct)
-    print(errs)
+
     assert 0 == len(errs)
 
     res = pipelines.generate_analysis_configs_from_upload_patch(

@@ -73,7 +73,7 @@ def test_wes_fastq():
     r2["data_format"] = "FASTQ.GZ"
     record = {
         "cimac_id": "CTTTPPPSA.00",
-        "read_files": {"r1": [r1], "r2": [r2]},
+        "files": {"r1": [r1], "r2": [r2]},
         "sequencing_date": "...",
         "quality_flag": 1,
     }
@@ -104,7 +104,7 @@ def test_wes_bam():
     bam["data_format"] = "BAM"
     record = {
         "cimac_id": "CTTTPPPSA.00",
-        "read_files": {"bam": [bam]},
+        "files": {"bam": [bam]},
         "sequencing_date": "...",
         "quality_flag": 1,
     }
@@ -140,7 +140,7 @@ def test_rna_fastq():
         "rin": 8,
         "quality_flag": 1,
         "cimac_id": "CTTTPPPSA.00",
-        "read_files": {"r1": [r1], "r2": [r1]},
+        "files": {"r1": [r1], "r2": [r1]},
     }
 
     # add a demo record.
@@ -174,7 +174,7 @@ def test_rna_bam():
         "rqs": 8,
         "rin": 8,
         "quality_flag": 1,
-        "read_files": {"bam": [bam]},
+        "files": {"bam": [bam]},
     }
 
     # add a demo record.
@@ -200,7 +200,7 @@ def test_tcr_fastq():
     record = {
         "rna_quantity_ng": 666,
         "cimac_id": "CTTTPPPSA.00",
-        "read_files": {"r1": [r1], "r2": [r1]},
+        "files": {"r1": [r1], "r2": [r1]},
     }
 
     # add a demo record.

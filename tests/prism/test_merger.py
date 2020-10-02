@@ -215,7 +215,7 @@ def test_merge_artifact_extra_metadata_exc(monkeypatch):
         prism_merger.merge_artifact_extra_metadata({}, "", assay_hint, None)
 
     artifact_uuid = "uuid-1"
-    fake_parsers = {"olink": Mock(), "testing": Mock()}
+    fake_parsers = {"olink": MagicMock(), "testing": MagicMock()}
     fake_parsers["olink"].side_effect = ValueError("disappears")
     fake_parsers["testing"].side_effect = TypeError("this goes through")
     with monkeypatch.context():

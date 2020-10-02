@@ -78,9 +78,9 @@ def test_parser_smoketest(parser, file_path, target):
 
 
 def test_parse_npx_exc():
-    with pytest.assertRaises(TypeError, match=r"not file paths"):
+    with pytest.raises(TypeError, match=r"not file paths"):
         parse_npx("str should fail")
 
-    with pytest.assertRaises(ValueError, match=r"not in NPX"):
+    with pytest.raises(ValueError, match=r"not in NPX"):
         with open(invalid_npx_file_path, "rb") as f:
             parse_npx(f)

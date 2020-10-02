@@ -205,13 +205,27 @@ def test_merge_clinical_trial_metadata_invalid_target():
 #### EXTRA METADATA TESTS ####
 
 
-def test_merge_artfiact_extra_metadata_unsupported_assay():
-    """Ensure merge_artifact_extra_metadata fails gracefully for unsupported assays"""
+def test_merge_artifact_extra_metadata_exc(monkeypatch):
+    """Ensure merge_artifact_extra_metadata fails gracefully for unsupported assays
+    Also fails if parser returns ValueError, but not TypeError"""
     assay_hint = "foo"
     with pytest.raises(
-        Exception, match=f"Assay {assay_hint} does not support extra metadata"
+        ValueError, match=f"Assay {assay_hint} does not support extra metadata"
     ):
         prism_merger.merge_artifact_extra_metadata({}, "", assay_hint, None)
+
+    artifact_uuid = "uuid-1"
+    fake_parsers = {"olink": Mock(), "testing"}
+    fake_parsers["olink"].side_effect = ValueError("disappears")
+    fake_parsers["testing"].side_effect = TypeError("this goes through")
+    with monkeypatch.context():
+        monkeypatch.setattr("cidc_schemas.prism.extra_metadata.EXTRA_METADATA_PARSERS", fake_parsers)
+
+    with pytest.raises(ValueError, match=f"Assay{artifact_uuid}cannot be parsed for olink metadata"):
+        prism_merger.merge_artifact_extra_metadata({}, artifact_uuid, "olink", None)
+    with pytest.raises(TypeError, match=r"this goes through"):
+        prism_merger.merge_artifact_extra_metadata({}, artifact_uuid, "testing", None)
+    
 
 
 # upload placeholder shorthand

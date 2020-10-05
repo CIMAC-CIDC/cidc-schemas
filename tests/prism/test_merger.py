@@ -223,7 +223,7 @@ def test_merge_artifact_extra_metadata_exc(monkeypatch):
     # test wrapping ValueError
     with monkeypatch.context():
         monkeypatch.setattr(
-            "cidc_schemas.prism.extra_metadata.EXTRA_METADATA_PARSERS", fake_parsers
+            "cidc_schemas.prism.merger.EXTRA_METADATA_PARSERS", fake_parsers
         )
 
         with pytest.raises(

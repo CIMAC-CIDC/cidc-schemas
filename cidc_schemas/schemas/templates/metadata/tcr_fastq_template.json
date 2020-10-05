@@ -56,14 +56,14 @@
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
             },
             "index 1 replicate x": {
-              "merge_pointer": "0/index_files/r1",
-              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/r1_x.fastq.gz",
+              "merge_pointer": "0/files/i1",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/i1_x.fastq.gz",
               "is_artifact": "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
             },
             "index 2 replicate x": {
-              "merge_pointer": "0/index_files/r2",
-              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/r2_x.fastq.gz",
+              "merge_pointer": "0/files/i2",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/i2_x.fastq.gz",
               "is_artifact" : "multi",
               "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
             },

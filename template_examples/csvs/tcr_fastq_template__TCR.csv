@@ -8,5 +8,5 @@
 
 "","Samples"
 "#h","Cimac id","Read 1 replicate x","Read 2 replicate x","Index 1 replicate x","Index 2 replicate x","Rna quantity"
-"#d","CTTTPP111.00","/local/path/to/read1_rx_1.fastq.gz","/local/path/to/read2_rx_1.fastq.gz","/local/path/to/index1_rx_1.fastq.gz","/local/path/to/index2_rx_1.fastq.gz","600"
-"#d","CTTTPP121.00","/local/path/to/read1_rx_2.fastq.gz","/local/path/to/read2_rx_2.fastq.gz","/local/path/to/index1_rx_2.fastq.gz","/local/path/to/index2_rx_2.fastq.gz","650"
+"#d","CTTTPP111.00","/local/path/to/read1_rx_1.fastq.gz","/local/path/to/read2_rx_1.fastq.gz","/local/path/to/index1_ix_1.fastq.gz","/local/path/to/index2_ix_1.fastq.gz","600"
+"#d","CTTTPP121.00","/local/path/to/read1_rx_2.fastq.gz","/local/path/to/read2_rx_2.fastq.gz","/local/path/to/index1_ix_2.fastq.gz","/local/path/to/index2_ix_2.fastq.gz","650"

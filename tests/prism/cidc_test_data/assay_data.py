@@ -759,14 +759,12 @@ def tcr_fastq() -> PrismTestData:
                                         "upload_placeholder": "2cd2bb4f-3f84-4f78-b387-4edb6dcc5d1c"
                                     }
                                 ],
-                            },
-                            "index_files": {
-                                "r1": [
+                                "i1": [
                                     {
                                         "upload_placeholder": "aa35df00-082b-4e2d-92a8-7a5e629483dc"
                                     }
                                 ],
-                                "r2": [
+                                "i2": [
                                     {
                                         "upload_placeholder": "bbd2bb4f-3f84-4f78-b387-4edb6dcc5d1c"
                                     }
@@ -787,14 +785,12 @@ def tcr_fastq() -> PrismTestData:
                                         "upload_placeholder": "be150200-c6b2-459c-a264-b56bc2aca264"
                                     }
                                 ],
-                            },
-                            "index_files": {
-                                "r1": [
+                                "i1": [
                                     {
                                         "upload_placeholder": "cc9521dc-d531-4555-a874-80aa0ce31dc2"
                                     }
                                 ],
-                                "r2": [
+                                "i2": [
                                     {
                                         "upload_placeholder": "dd150200-c6b2-459c-a264-b56bc2aca264"
                                     }
@@ -828,6 +824,18 @@ def tcr_fastq() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
+            local_path="/local/path/to/index1_ix_1.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/i1_x.fastq.gz",
+            upload_placeholder="aa35df00-082b-4e2d-92a8-7a5e629483dc",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/index2_ix_1.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/i2_x.fastq.gz",
+            upload_placeholder="bbd2bb4f-3f84-4f78-b387-4edb6dcc5d1c",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
             local_path="/local/path/to/read1_rx_2.fastq.gz",
             gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/r1_x.fastq.gz",
             upload_placeholder="e49521dc-d531-4555-a874-80aa0ce31dc2",
@@ -840,26 +848,14 @@ def tcr_fastq() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="/local/path/to/index1_rx_1.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/r1_x.fastq.gz",
-            upload_placeholder="aa35df00-082b-4e2d-92a8-7a5e629483dc",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="/local/path/to/index2_rx_1.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/r2_x.fastq.gz",
-            upload_placeholder="bbd2bb4f-3f84-4f78-b387-4edb6dcc5d1c",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="/local/path/to/index1_rx_2.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/r1_x.fastq.gz",
+            local_path="/local/path/to/index1_ix_2.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/i1_x.fastq.gz",
             upload_placeholder="cc9521dc-d531-4555-a874-80aa0ce31dc2",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="/local/path/to/index2_rx_2.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/r2_x.fastq.gz",
+            local_path="/local/path/to/index2_ix_2.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/i2_x.fastq.gz",
             upload_placeholder="dd150200-c6b2-459c-a264-b56bc2aca264",
             metadata_availability=False,
         ),

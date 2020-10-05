@@ -21,22 +21,6 @@
       },
       "minItems": 1
     },
-    "i1": {
-      "type": "array",
-      "items": {
-        "$comment": "Fastq file for the first index file.",
-        "$ref": "artifacts/artifact_fastq_gz.json"
-      },
-      "minItems": 1
-    },
-    "i2": {
-      "type": "array",
-      "items": {
-        "$comment": "Fastq file for the second index file.",
-        "$ref": "artifacts/artifact_fastq_gz.json"
-      },
-      "minItems": 1
-    },
     "bam": {
       "type": "array",
       "items": {
@@ -55,5 +39,5 @@
       "required": ["bam"]
     }
   ],
-  "additionalProperties": false
+  "additionalProperties": true
 }

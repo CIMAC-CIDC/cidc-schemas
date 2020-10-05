@@ -1,0 +1,30 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "reads_with_index",
+  "title": "Reads with index",
+  "type": "object",
+  "description": "Index files associated with read files, in fastq.gz format",
+  "allOf": [
+    { "$ref": "assays/components/reads_core.json" }
+  ],
+  "properties": {
+    "i1": {
+      "type": "array",
+      "items": {
+        "$comment": "Fastq file for the first index file.",
+        "$ref": "artifacts/artifact_fastq_gz.json"
+      },
+      "minItems": 1
+    },
+    "i2": {
+      "type": "array",
+      "items": {
+        "$comment": "Fastq file for the second index file.",
+        "$ref": "artifacts/artifact_fastq_gz.json"
+      },
+      "minItems": 1
+    }
+  },
+  "mergeStrategy": "objectMerge",
+  "additionalProperties": false
+}

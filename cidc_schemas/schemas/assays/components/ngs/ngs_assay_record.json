@@ -12,11 +12,7 @@
     },
     "files": {
       "$comment": "Fastq files or a bam file produced by the assay.",
-      "$ref": "assays/components/fastq_pair_or_bam.json"
-    },
-    "index_files": {
-      "$comment": "Fastq files or a bam file produced by the assay.",
-      "$ref": "assays/components/fastq_pair_or_bam.json"
+      "$ref": "assays/components/reads_core.json"
     }
   },
   "required": [

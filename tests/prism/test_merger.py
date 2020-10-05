@@ -227,7 +227,8 @@ def test_merge_artifact_extra_metadata_exc(monkeypatch):
         )
 
         with pytest.raises(
-            ValueError, match=f"Assay{artifact_uuid}cannot be parsed for olink metadata"
+            ValueError,
+            match=f"Assay {artifact_uuid} cannot be parsed for olink metadata",
         ):
             with open(invalid_npx_file_path, "rb") as f:
                 prism_merger.merge_artifact_extra_metadata(

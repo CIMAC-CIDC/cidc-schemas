@@ -230,7 +230,9 @@ def test_merge_artifact_extra_metadata_exc(monkeypatch):
             ValueError, match=f"Assay{artifact_uuid}cannot be parsed for olink metadata"
         ):
             with open(invalid_npx_file_path, "rb") as f:
-                prism_merger.merge_artifact_extra_metadata({}, artifact_uuid, "olink", f)
+                prism_merger.merge_artifact_extra_metadata(
+                    {}, artifact_uuid, "olink", f
+                )
 
     # doesn't wrap TypeErrors; None is not a BinaryIO
     with monkeypatch.context():

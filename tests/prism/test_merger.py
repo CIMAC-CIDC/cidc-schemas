@@ -13,6 +13,7 @@ from cidc_schemas.prism.constants import PROTOCOL_ID_FIELD_NAME
 from .test_extra_metadata import (
     npx_file_path,
     npx_combined_file_path,
+    invalid_npx_file_path,
     elisa_file_path,
     single_npx_metadata,
     combined_npx_metadata,
@@ -207,7 +208,7 @@ def test_merge_clinical_trial_metadata_invalid_target():
 
 def test_merge_artifact_extra_metadata_exc(monkeypatch):
     """Ensure merge_artifact_extra_metadata fails gracefully for unsupported assays
-    Also fails if parser returns ValueError, but not TypeError"""
+    Also raises clearer error if parser raises ValueError, but not TypeError"""
     assay_hint = "foo"
     with pytest.raises(
         ValueError, match=f"Assay {assay_hint} does not support extra metadata"
@@ -218,6 +219,8 @@ def test_merge_artifact_extra_metadata_exc(monkeypatch):
     fake_parsers = {"olink": MagicMock(), "testing": MagicMock()}
     fake_parsers["olink"].side_effect = ValueError("disappears")
     fake_parsers["testing"].side_effect = TypeError("this goes through")
+
+    # test wrapping ValueError
     with monkeypatch.context():
         monkeypatch.setattr(
             "cidc_schemas.prism.extra_metadata.EXTRA_METADATA_PARSERS", fake_parsers
@@ -226,8 +229,10 @@ def test_merge_artifact_extra_metadata_exc(monkeypatch):
         with pytest.raises(
             ValueError, match=f"Assay{artifact_uuid}cannot be parsed for olink metadata"
         ):
-            prism_merger.merge_artifact_extra_metadata({}, artifact_uuid, "olink", None)
+            with open(invalid_npx_file_path, "rb") as f:
+                prism_merger.merge_artifact_extra_metadata({}, artifact_uuid, "olink", f)
 
+    # doesn't wrap TypeErrors; None is not a BinaryIO
     with monkeypatch.context():
         monkeypatch.setattr(
             "cidc_schemas.prism.extra_metadata.EXTRA_METADATA_PARSERS", fake_parsers

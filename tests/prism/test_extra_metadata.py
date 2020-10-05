@@ -35,6 +35,10 @@ combined_npx_metadata = {
     ],
 }
 
+invalid_npx_file_path = os.path.join(
+    TEST_DATA_DIR, "olink", "invalid_olink_assay_1_NPX.xlsx"
+)
+
 # ELISA file and metadata
 elisa_file_path = os.path.join(TEST_DATA_DIR, "elisa_test_file.xlsx")
 elisa_metadata = {
@@ -71,3 +75,12 @@ def test_parser_smoketest(parser, file_path, target):
     """Check that the parser produces the expected output on a friendly input"""
     with open(file_path, "rb") as f:
         assert parser(f) == target
+
+
+def test_parse_npx_exc():
+    with pytest.raises(TypeError, match=r"not file paths"):
+        parse_npx("str should fail")
+
+    with pytest.raises(ValueError, match=r"not in NPX"):
+        with open(invalid_npx_file_path, "rb") as f:
+            parse_npx(f)

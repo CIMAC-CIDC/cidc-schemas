@@ -63,6 +63,9 @@ def parse_npx(xlsx: BinaryIO) -> dict:
         xlsx: an opened NPX file
     Returns:
         arg1: a dict of containing list of sample IDs and number of samples
+    Raises:
+        TypeError if xlsx is not a BinaryIO
+        ValueError if the second row doesn't start with "NPX data"
     """
 
     # load the file
@@ -89,17 +92,22 @@ def parse_npx(xlsx: BinaryIO) -> dict:
             if len(vals) == 0 or first_cell is None:
                 continue
 
-            # check if we are starting ids
-            if first_cell == "OlinkID":
-                seen_onlinkid = True
-                continue
+            if not seen_onlinkid:
+                # check that this is actually an NPX file
+                if i == 1 and first_cell != "NPX data":
+                    raise ValueError("parse_npx got a file that is not in NPX format")
 
-            # check if we are done.
-            if first_cell == "LOD":
-                break
+                # check if we are starting ids
+                elif first_cell == "OlinkID":
+                    seen_onlinkid = True
+                    continue
 
-            # get the identifier
-            if seen_onlinkid:
+            else:
+                # check if we are done.
+                if first_cell == "LOD":
+                    break
+
+                # get the identifier
                 # check that it is a CIMAC ID
                 if cimac_id_regex.match(first_cell):
                     ids.append(first_cell)

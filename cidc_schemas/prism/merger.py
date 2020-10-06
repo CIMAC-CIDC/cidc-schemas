@@ -136,14 +136,24 @@ def merge_artifact_extra_metadata(
         ct: updated clinical trial object
         artifact: updated artifact
         additional_artifact_metadata: relevant metadata collected while updating artifact
+    Raises:
+        ValueError
+            if doesn't support metadata parsing or file cannot be parsed
+            from _update_artifact
     """
 
     if assay_hint not in EXTRA_METADATA_PARSERS:
-        raise Exception(f"Assay {assay_hint} does not support extra metadata parsing")
+        raise ValueError(f"Assay {assay_hint} does not support extra metadata parsing")
     extract_metadata = EXTRA_METADATA_PARSERS[assay_hint]
 
-    artifact_extra_md_patch = extract_metadata(extra_metadata_file)
-    return _update_artifact(ct, artifact_extra_md_patch, artifact_uuid)
+    try:
+        artifact_extra_md_patch = extract_metadata(extra_metadata_file)
+    except ValueError as e:
+        raise ValueError(
+            f"Assay {artifact_uuid} cannot be parsed for {assay_hint} metadata"
+        ) from e
+    else:
+        return _update_artifact(ct, artifact_extra_md_patch, artifact_uuid)
 
 
 def _update_artifact(

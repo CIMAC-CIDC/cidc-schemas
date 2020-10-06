@@ -9,12 +9,8 @@
     { "$ref": "assays/components/ngs/ngs_assay_record.json" }
   ],
   "properties": {
-    "rna_quantity_ng": {
-      "description": "RNA quantity (in ng).",
-      "type": "number"
-    },
     "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
-    "files": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/files"}
+    "files": {"$ref": "assays/components/ngs/tcr/tcr_input.json"}
   },
-  "mergeStrategy": "objectMerge"
+  "required": ["cimac_id", "files"]
 }

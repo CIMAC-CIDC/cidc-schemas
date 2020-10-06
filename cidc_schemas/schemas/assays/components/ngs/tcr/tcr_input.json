@@ -1,0 +1,29 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "tcr_input",
+  "title": "TCRseq assay Input Files",
+  "type": "object",
+  "description": "TCRseq assay input files.",
+  "additionalProperties": false,
+  "properties": {
+    "sample_sheet": {
+      "$comment": "Summary of the results of the experiment.",
+      "$ref": "artifacts/artifact_csv.json"
+    },
+    "rna_quantity_ng": {
+      "description": "RNA quantity (in ng).",
+      "type": "number"
+    },
+    "replicates": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/components/ngs/tcr/tcr_replicates.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "/replicate_no"
+      }
+    }
+  },
+  "required": ["replicates"]
+}

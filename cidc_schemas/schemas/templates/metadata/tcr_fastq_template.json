@@ -3,7 +3,6 @@
   "description": "Metadata information for rna expression data submission via FASTQ files.",
   "properties": {
     "worksheets": {
-
       "TCR": {
         "prism_preamble_object_schema" : "assays/tcr_assay.json",
         "prism_preamble_object_pointer" : "/assays/tcr/0",
@@ -31,45 +30,49 @@
           },
           "sample sheet": {
             "merge_pointer": "0/sample_sheet",
-            "gcs_uri_format": "{protocol identifier}/tcr/sample_sheet.csv",
+            "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/sample_sheet.csv",
             "is_artifact": 1,
             "type_ref": "assays/components/local_file.json#properties/file_path"
           }
         },
-
+        "prism_data_object_pointer": "/records/0/files/replicates/-",
         "data_columns": {
-          "Samples": {
+          "Replicates": {
             "cimac id": {
-              "merge_pointer": "0/cimac_id",
+              "merge_pointer": "3/cimac_id",
               "type_ref": "sample.json#properties/cimac_id"
             },
-            "read 1 replicate x": {
-              "merge_pointer": "0/files/r1",
-              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/r1_x.fastq.gz",
-              "is_artifact": "multi",
-              "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
+            "replicate no": {
+              "merge_pointer": "/replicate_no",
+              "type_ref": "assays/components/ngs/tcr/tcr_replicates.json#properties/replicate_no"
             },
-            "read 2 replicate x": {
-              "merge_pointer": "0/files/r2",
-              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/r2_x.fastq.gz",
-              "is_artifact" : "multi",
-              "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
+            "read 1": {
+              "merge_pointer": "0/r1",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/replicate_{replicate no}/r1.fastq.gz",
+              "is_artifact": "1",
+              "type_ref": "assays/components/local_file.json#properties/file_path"
             },
-            "index 1 replicate x": {
-              "merge_pointer": "0/files/i1",
-              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/i1_x.fastq.gz",
-              "is_artifact": "multi",
-              "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
+            "read 2": {
+              "merge_pointer": "0/r2",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/replicate_{replicate no}/r2.fastq.gz",
+              "is_artifact" : "1",
+              "type_ref": "assays/components/local_file.json#properties/file_path"
             },
-            "index 2 replicate x": {
-              "merge_pointer": "0/files/i2",
-              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/i2_x.fastq.gz",
-              "is_artifact" : "multi",
-              "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
+            "index 1": {
+              "merge_pointer": "0/i1",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/replicate_{replicate no}/i1.fastq.gz",
+              "is_artifact": "1",
+              "type_ref": "assays/components/local_file.json#properties/file_path"
+            },
+            "index 2": {
+              "merge_pointer": "0/i2",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/replicate_{replicate no}/i2.fastq.gz",
+              "is_artifact" : "1",
+              "type_ref": "assays/components/local_file.json#properties/file_path"
             },
             "rna quantity": {
               "merge_pointer": "0/rna_quantity_ng",
-              "type_ref": "assays/components/ngs/tcr/tcr_entry.json#properties/rna_quantity_ng"
+              "type_ref": "assays/components/ngs/tcr/tcr_replicates.json#properties/rna_quantity_ng"
             }
           }
         }

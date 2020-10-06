@@ -21,9 +21,6 @@
         "type": "string",
         "format": "date"
     },
-    "sample_sheet": {
-        "$ref": "artifacts/artifact_csv.json"
-    },
     "records": {
       "type": "array",
       "description": "A single data record from TCRseq assay.",

@@ -198,9 +198,18 @@ def test_tcr_fastq():
     sample_sheet = ARTIFACT_OBJ.copy()
     sample_sheet["data_format"] = "CSV"
     record = {
-        "rna_quantity_ng": 666,
         "cimac_id": "CTTTPPPSA.00",
-        "files": {"r1": [r1], "r2": [r1]},
+        "files": {
+            "replicates": [
+                {
+                    "r1": [r1],
+                    "r2": [r1],
+                    "i1": [r1],
+                    "i2": [r1],
+                    "sample_sheet": sample_sheet,
+                }
+            ]
+        },
     }
 
     # add a demo record.

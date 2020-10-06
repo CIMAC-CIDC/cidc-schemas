@@ -55,7 +55,8 @@
     },
     "lead_trial_staff": {
       "description": "The names of lead trial staff members other than the PIs.",
-      "type": "string"
+      "type": "array",
+      "items": { "type": "string" }
     },
     "justification": {
       "description": "A description of the reasons why this study could provide insight into molecular biomarkers of immunotherapy.",

@@ -15,12 +15,20 @@
       "$ref": "assays/components/reads_core.json#properties/r2"
     },
     "i1": {
+      "type": "array",
+      "items": {
         "$comment": "Fastq file for the first index.",
         "$ref": "artifacts/artifact_fastq_gz.json"
+      },
+      "minItems": 1
     },
     "i2": {
+      "type": "array",
+      "items": {
         "$comment": "Fastq file for the second index.",
         "$ref": "artifacts/artifact_fastq_gz.json"
+      },
+      "minItems": 1
     }
   },
   "mergeStrategy": "objectMerge",

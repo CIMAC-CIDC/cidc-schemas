@@ -199,7 +199,16 @@ def test_tcr_fastq():
     sample_sheet["data_format"] = "CSV"
     record = {
         "cimac_id": "CTTTPPPSA.00",
-        "files": {"replicates": [{"r1": [r1], "r2": [r1], "i1": [r1], "i2": [r1]}]},
+        "files": {
+            "replicates": {
+                "replicate_no": 1,
+                "r1": [r1],
+                "r2": [r1],
+                "i1": [r1],
+                "i2": [r1],
+                "rna_quantity_ng": 600,
+            }
+        },
     }
 
     # add a demo record.

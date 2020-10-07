@@ -29,7 +29,10 @@
       "items": {
         "$ref": "assays/tcr_assay.json"
       },
-      "mergeStrategy": "append"
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "batch_id"
+      }
     },
     "cytof": {
       "type": "array",

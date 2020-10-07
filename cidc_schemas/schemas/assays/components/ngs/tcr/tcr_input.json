@@ -6,14 +6,6 @@
   "description": "TCRseq assay input files.",
   "additionalProperties": false,
   "properties": {
-    "sample_sheet": {
-      "$comment": "Summary of the results of the experiment.",
-      "$ref": "artifacts/artifact_csv.json"
-    },
-    "rna_quantity_ng": {
-      "description": "RNA quantity (in ng).",
-      "type": "number"
-    },
     "replicates": {
       "type": "array",
       "items": {

@@ -6,7 +6,6 @@
       "TCR": {
         "prism_preamble_object_schema" : "assays/tcr_assay.json",
         "prism_preamble_object_pointer" : "/assays/tcr/0",
-        "prism_data_object_pointer" : "/records/-",
         "preamble_rows": {
           "protocol identifier": {
             "merge_pointer": "3/protocol_identifier",

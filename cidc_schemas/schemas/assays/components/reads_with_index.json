@@ -8,21 +8,19 @@
     { "$ref": "assays/components/reads_core.json" }
   ],
   "properties": {
+    "r1": {
+      "$ref": "assays/components/reads_core.json#properties/r1"
+    },
+    "r2": {
+      "$ref": "assays/components/reads_core.json#properties/r2"
+    },
     "i1": {
-      "type": "array",
-      "items": {
-        "$comment": "Fastq file for the first index file.",
+        "$comment": "Fastq file for the first index.",
         "$ref": "artifacts/artifact_fastq_gz.json"
-      },
-      "minItems": 1
     },
     "i2": {
-      "type": "array",
-      "items": {
-        "$comment": "Fastq file for the second index file.",
+        "$comment": "Fastq file for the second index.",
         "$ref": "artifacts/artifact_fastq_gz.json"
-      },
-      "minItems": 1
     }
   },
   "mergeStrategy": "objectMerge",

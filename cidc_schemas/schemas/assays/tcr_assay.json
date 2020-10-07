@@ -1,7 +1,7 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "tcr_assay",
-  "title": "TCR Gene Expression Assay",
+  "title": "TCR Assay",
   "type": "object",
   "description": "Additional properties to describe a TCR assay for expression analysis.",
   "additionalProperties": false,
@@ -15,6 +15,9 @@
     "batch_id": {
         "description": "TCRseq batch identification number.",
         "type": "string"
+    },
+    "sample_sheet": {
+        "$ref": "artifacts/artifact_csv.json"
     },
     "sequencing_run_date": {
         "description": "Date when the TCR sequencing was run.",
@@ -35,7 +38,9 @@
   },
   "required": [
     "records",
-    "batch_id"
+    "batch_id",
+    "sequencing_run_date",
+    "sample_sheet"
   ],
   "mergeStrategy": "objectMerge"
 }

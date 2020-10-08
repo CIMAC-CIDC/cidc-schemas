@@ -751,7 +751,7 @@ def tcr_fastq() -> PrismTestData:
                             "files": {
                                 "replicates": [
                                     {
-                                        "replicate_no": 1.0,
+                                        "replicate_id": "1A",
                                         "r1": [
                                             {
                                                 "upload_placeholder": "3635df00-082b-4e2d-92a8-7a5e629483dc"
@@ -782,7 +782,7 @@ def tcr_fastq() -> PrismTestData:
                             "files": {
                                 "replicates": [
                                     {
-                                        "replicate_no": 1.0,
+                                        "replicate_id": "1A",
                                         "r1": [
                                             {
                                                 "upload_placeholder": "e49521dc-d531-4555-a874-80aa0ce31dc2"
@@ -823,49 +823,49 @@ def tcr_fastq() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="/local/path/to/read1_1.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/replicate_1/r1.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/replicate_1A/r1.fastq.gz",
             upload_placeholder="3635df00-082b-4e2d-92a8-7a5e629483dc",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/read2_1.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/replicate_1/r2.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/replicate_1A/r2.fastq.gz",
             upload_placeholder="2cd2bb4f-3f84-4f78-b387-4edb6dcc5d1c",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/index1_1.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/replicate_1/i1.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/replicate_1A/i1.fastq.gz",
             upload_placeholder="aa35df00-082b-4e2d-92a8-7a5e629483dc",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/index2_1.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/replicate_1/i2.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/replicate_1A/i2.fastq.gz",
             upload_placeholder="bbd2bb4f-3f84-4f78-b387-4edb6dcc5d1c",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/read1_2.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/replicate_1/r1.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/replicate_1A/r1.fastq.gz",
             upload_placeholder="e49521dc-d531-4555-a874-80aa0ce31dc2",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/read2_2.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/replicate_1/r2.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/replicate_1A/r2.fastq.gz",
             upload_placeholder="be150200-c6b2-459c-a264-b56bc2aca264",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/index1_2.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/replicate_1/i1.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/replicate_1A/i1.fastq.gz",
             upload_placeholder="cc9521dc-d531-4555-a874-80aa0ce31dc2",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/index2_2.fastq.gz",
-            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/replicate_1/i2.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/replicate_1A/i2.fastq.gz",
             upload_placeholder="dd150200-c6b2-459c-a264-b56bc2aca264",
             metadata_availability=False,
         ),

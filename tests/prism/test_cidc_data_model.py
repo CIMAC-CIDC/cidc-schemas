@@ -152,7 +152,6 @@ def test_merge_artifacts(prism_test: PrismTestData, ct_validator):
 
     # Merge the patch-with-artifacts into the base trial
     result, errs = merge_clinical_trial_metadata(patch, prism_test.base_trial)
-    print(errs)
     assert len(errs) == 0
 
     # Make sure the modified patch is still valid

@@ -13,9 +13,8 @@
       },
       "mergeStrategy": "arrayMergeById",
       "mergeOptions": {
-        "idRef": "/replicate_no"
+        "idRef": "/replicate_id"
       }
     }
-  },
-  "required": ["replicates"]
+  }
 }

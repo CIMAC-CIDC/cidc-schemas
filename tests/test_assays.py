@@ -187,11 +187,6 @@ def test_rna_bam():
 
 def test_tcr_fastq():
 
-    # create the ngs object
-    ngs_obj = {"sequencer_platform": "Illumina - NovaSeq 6000", "batch_id": "XYZ"}
-
-    obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
-
     # create the tcr_seq object
     r1 = ARTIFACT_OBJ.copy()
     r1["data_format"] = "FASTQ.GZ"
@@ -212,6 +207,16 @@ def test_tcr_fastq():
             ]
         },
     }
+
+    # create the ngs object
+    ngs_obj = {
+        "sequencer_platform": "Illumina - NovaSeq 6000",
+        "batch_id": "XYZ",
+        "sequencing_run_date": "12/12/20",
+        "sample_sheet": sample_sheet,
+    }
+
+    obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
 
     # add a demo record.
     obj["records"] = [record]

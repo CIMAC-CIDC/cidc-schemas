@@ -202,7 +202,7 @@ def test_tcr_fastq():
         "files": {
             "replicates": [
                 {
-                    "replicate_no": 1,
+                    "replicate_id": 1,
                     "r1": [r1],
                     "r2": [r1],
                     "i1": [r1],

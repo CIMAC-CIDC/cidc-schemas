@@ -772,7 +772,6 @@ def tcr_fastq() -> PrismTestData:
                                                 "upload_placeholder": "bbd2bb4f-3f84-4f78-b387-4edb6dcc5d1c"
                                             }
                                         ],
-                                        "rna_quantity_ng": 600.0,
                                     }
                                 ]
                             },
@@ -803,7 +802,6 @@ def tcr_fastq() -> PrismTestData:
                                                 "upload_placeholder": "dd150200-c6b2-459c-a264-b56bc2aca264"
                                             }
                                         ],
-                                        "rna_quantity_ng": 650.0,
                                     }
                                 ]
                             },

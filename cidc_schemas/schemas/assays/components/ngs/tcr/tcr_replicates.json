@@ -21,8 +21,7 @@
     "i2": {"$ref": "assays/components/reads_with_index.json#properties/i2"}
   },
   "required": [
-    "replicate_id",
-    "rna_quantity_ng"
+    "replicate_id"
   ],
   "mergeStrategy": "objectMerge"
 }

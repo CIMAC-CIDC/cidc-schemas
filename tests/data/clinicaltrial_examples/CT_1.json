@@ -552,6 +552,7 @@
             "files": {
               "replicates": {
                 "replicate_id": "1A",
+                "rna_quantity_ng": 600,
                 "r1": [
                   {
                     "file_name": "...",
@@ -604,6 +605,7 @@
             "files": {
               "replicates": {
                 "replicate_id": "1B",
+                "rna_quantity_ng": 650,
                 "r1": [
                   {
                     "file_name": "...",
@@ -656,6 +658,7 @@
             "files": {
               "replicates": {
                 "replicate_id": "2A",
+                "rna_quantity_ng": 700,
                 "r1": [
                   {
                     "file_name": "...",

@@ -200,14 +200,16 @@ def test_tcr_fastq():
     record = {
         "cimac_id": "CTTTPPPSA.00",
         "files": {
-            "replicates": {
-                "replicate_no": 1,
-                "r1": [r1],
-                "r2": [r1],
-                "i1": [r1],
-                "i2": [r1],
-                "rna_quantity_ng": 600,
-            }
+            "replicates": [
+                {
+                    "replicate_no": 1,
+                    "r1": [r1],
+                    "r2": [r1],
+                    "i1": [r1],
+                    "i2": [r1],
+                    "rna_quantity_ng": 600,
+                }
+            ]
         },
     }
 

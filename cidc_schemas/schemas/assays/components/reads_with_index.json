@@ -32,5 +32,9 @@
     }
   },
   "mergeStrategy": "objectMerge",
-  "additionalProperties": false
+  "additionalProperties": false,
+  "required": [
+    "i1",
+    "i2"
+  ]
 }

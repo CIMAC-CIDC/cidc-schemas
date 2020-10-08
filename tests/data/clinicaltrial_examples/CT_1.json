@@ -550,171 +550,160 @@
           {
             "cimac_id": "CTTTPP1S1.00",
             "files": {
-              "r1": [
-                {
-                  "file_name": "...",
-                  "object_url": "...",
-                  "uploaded_timestamp": "...",
-                  "file_size_bytes": 0,
-                  "md5_hash": "...",
-                  "artifact_category": "Assay Artifact from CIMAC",
-                  "data_format": "FASTQ.GZ"
-                }
-              ],
-              "r2": [
-                {
-                  "file_name": "...",
-                  "object_url": "...",
-                  "uploaded_timestamp": "...",
-                  "file_size_bytes": 0,
-                  "md5_hash": "...",
-                  "artifact_category": "Assay Artifact from CIMAC",
-                  "data_format": "FASTQ.GZ"
-                }
-              ],
-              "i1": [
-                {
-                  "file_name": "...",
-                  "object_url": "...",
-                  "uploaded_timestamp": "...",
-                  "file_size_bytes": 0,
-                  "md5_hash": "...",
-                  "artifact_category": "Assay Artifact from CIMAC",
-                  "data_format": "FASTQ.GZ"
-                }
-              ],
-              "i2": [
-                {
-                  "file_name": "...",
-                  "object_url": "...",
-                  "uploaded_timestamp": "...",
-                  "file_size_bytes": 0,
-                  "md5_hash": "...",
-                  "artifact_category": "Assay Artifact from CIMAC",
-                  "data_format": "FASTQ.GZ"
-                }
-              ]
-            }
-          },
-          {
-            "cimac_id": "CTTTPP1S2.00",
-            "files": {
-              "bam": [
-                {
-                  "file_name": "...",
-                  "object_url": "...",
-                  "uploaded_timestamp": "...",
-                  "file_size_bytes": 0,
-                  "md5_hash": "...",
-                  "artifact_category": "Assay Artifact from CIMAC",
-                  "data_format": "BAM"
-                }
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "assay_creator": "Mount Sinai",
-        "sequencer_platform": "Illumina - HiSeq 3000",
-        "batch_id": "XYZ",
-        "records": [
-          {
-            "cimac_id": "CTTTPP2S1.00",
-            "files": {
-              "r1": [
-                {
-                  "file_name": "...",
-                  "object_url": "...",
-                  "uploaded_timestamp": "...",
-                  "file_size_bytes": 0,
-                  "md5_hash": "...",
-                  "artifact_category": "Assay Artifact from CIMAC",
-                  "data_format": "FASTQ.GZ"
-                }
-              ],
-              "r2": [
-                {
-                  "file_name": "...",
-                  "object_url": "...",
-                  "uploaded_timestamp": "...",
-                  "file_size_bytes": 0,
-                  "md5_hash": "...",
-                  "artifact_category": "Assay Artifact from CIMAC",
-                  "data_format": "FASTQ.GZ"
-                }
-              ],
-              "i1": [
-                {
-                  "file_name": "...",
-                  "object_url": "...",
-                  "uploaded_timestamp": "...",
-                  "file_size_bytes": 0,
-                  "md5_hash": "...",
-                  "artifact_category": "Assay Artifact from CIMAC",
-                  "data_format": "FASTQ.GZ"
-                }
-              ],
-              "i2": [
-                {
-                  "file_name": "...",
-                  "object_url": "...",
-                  "uploaded_timestamp": "...",
-                  "file_size_bytes": 0,
-                  "md5_hash": "...",
-                  "artifact_category": "Assay Artifact from CIMAC",
-                  "data_format": "FASTQ.GZ"
-                }
-              ]
+              "replicates": {
+                "replicate_no": 1,
+                "rna_quantity_ng": 600,
+                "r1": [
+                  {
+                    "file_name": "...",
+                    "object_url": "...",
+                    "uploaded_timestamp": "...",
+                    "file_size_bytes": 0,
+                    "md5_hash": "...",
+                    "artifact_category": "Assay Artifact from CIMAC",
+                    "data_format": "FASTQ.GZ"
+                  }
+                ],
+                "r2": [
+                  {
+                    "file_name": "...",
+                    "object_url": "...",
+                    "uploaded_timestamp": "...",
+                    "file_size_bytes": 0,
+                    "md5_hash": "...",
+                    "artifact_category": "Assay Artifact from CIMAC",
+                    "data_format": "FASTQ.GZ"
+                  }
+                ],
+                "i1": [
+                  {
+                    "file_name": "...",
+                    "object_url": "...",
+                    "uploaded_timestamp": "...",
+                    "file_size_bytes": 0,
+                    "md5_hash": "...",
+                    "artifact_category": "Assay Artifact from CIMAC",
+                    "data_format": "FASTQ.GZ"
+                  }
+                ],
+                "i2": [
+                  {
+                    "file_name": "...",
+                    "object_url": "...",
+                    "uploaded_timestamp": "...",
+                    "file_size_bytes": 0,
+                    "md5_hash": "...",
+                    "artifact_category": "Assay Artifact from CIMAC",
+                    "data_format": "FASTQ.GZ"
+                  }
+                ]
+              }
             }
           },
           {
             "cimac_id": "CTTTPP2S1.00",
             "files": {
-              "r1": [
-                {
-                  "file_name": "...",
-                  "object_url": "...",
-                  "uploaded_timestamp": "...",
-                  "file_size_bytes": 0,
-                  "md5_hash": "...",
-                  "artifact_category": "Assay Artifact from CIMAC",
-                  "data_format": "FASTQ.GZ"
-                }
-              ],
-              "r2": [
-                {
-                  "file_name": "...",
-                  "object_url": "...",
-                  "uploaded_timestamp": "...",
-                  "file_size_bytes": 0,
-                  "md5_hash": "...",
-                  "artifact_category": "Assay Artifact from CIMAC",
-                  "data_format": "FASTQ.GZ"
-                }
-              ],
-              "i1": [
-                {
-                  "file_name": "...",
-                  "object_url": "...",
-                  "uploaded_timestamp": "...",
-                  "file_size_bytes": 0,
-                  "md5_hash": "...",
-                  "artifact_category": "Assay Artifact from CIMAC",
-                  "data_format": "FASTQ.GZ"
-                }
-              ],
-              "i2": [
-                {
-                  "file_name": "...",
-                  "object_url": "...",
-                  "uploaded_timestamp": "...",
-                  "file_size_bytes": 0,
-                  "md5_hash": "...",
-                  "artifact_category": "Assay Artifact from CIMAC",
-                  "data_format": "FASTQ.GZ"
-                }
-              ]
+              "replicates": {
+                "replicate_no": 1,
+                "rna_quantity_ng": 650,
+                "r1": [
+                  {
+                    "file_name": "...",
+                    "object_url": "...",
+                    "uploaded_timestamp": "...",
+                    "file_size_bytes": 0,
+                    "md5_hash": "...",
+                    "artifact_category": "Assay Artifact from CIMAC",
+                    "data_format": "FASTQ.GZ"
+                  }
+                ],
+                "r2": [
+                  {
+                    "file_name": "...",
+                    "object_url": "...",
+                    "uploaded_timestamp": "...",
+                    "file_size_bytes": 0,
+                    "md5_hash": "...",
+                    "artifact_category": "Assay Artifact from CIMAC",
+                    "data_format": "FASTQ.GZ"
+                  }
+                ],
+                "i1": [
+                  {
+                    "file_name": "...",
+                    "object_url": "...",
+                    "uploaded_timestamp": "...",
+                    "file_size_bytes": 0,
+                    "md5_hash": "...",
+                    "artifact_category": "Assay Artifact from CIMAC",
+                    "data_format": "FASTQ.GZ"
+                  }
+                ],
+                "i2": [
+                  {
+                    "file_name": "...",
+                    "object_url": "...",
+                    "uploaded_timestamp": "...",
+                    "file_size_bytes": 0,
+                    "md5_hash": "...",
+                    "artifact_category": "Assay Artifact from CIMAC",
+                    "data_format": "FASTQ.GZ"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "cimac_id": "CTTTPP2S1.00",
+            "files": {
+              "replicates": {
+                "replicate_no": 2,
+                "rna_quantity_ng": 700,
+                "r1": [
+                  {
+                    "file_name": "...",
+                    "object_url": "...",
+                    "uploaded_timestamp": "...",
+                    "file_size_bytes": 0,
+                    "md5_hash": "...",
+                    "artifact_category": "Assay Artifact from CIMAC",
+                    "data_format": "FASTQ.GZ"
+                  }
+                ],
+                "r2": [
+                  {
+                    "file_name": "...",
+                    "object_url": "...",
+                    "uploaded_timestamp": "...",
+                    "file_size_bytes": 0,
+                    "md5_hash": "...",
+                    "artifact_category": "Assay Artifact from CIMAC",
+                    "data_format": "FASTQ.GZ"
+                  }
+                ],
+                "i1": [
+                  {
+                    "file_name": "...",
+                    "object_url": "...",
+                    "uploaded_timestamp": "...",
+                    "file_size_bytes": 0,
+                    "md5_hash": "...",
+                    "artifact_category": "Assay Artifact from CIMAC",
+                    "data_format": "FASTQ.GZ"
+                  }
+                ],
+                "i2": [
+                  {
+                    "file_name": "...",
+                    "object_url": "...",
+                    "uploaded_timestamp": "...",
+                    "file_size_bytes": 0,
+                    "md5_hash": "...",
+                    "artifact_category": "Assay Artifact from CIMAC",
+                    "data_format": "FASTQ.GZ"
+                  }
+                ]
+              }
             }
           }
         ]

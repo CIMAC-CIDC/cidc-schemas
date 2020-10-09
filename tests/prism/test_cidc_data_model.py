@@ -139,6 +139,7 @@ def test_merge_artifacts(prism_test: PrismTestData, ct_validator):
         # Get the path in the *original* patch to the placeholder uuid.
         paths = (prism_test.prismify_patch | grep(uuid))["matched_values"]
 
+        print(paths)
         assert len(paths) == 1, "UUID should only occur once in a metadata patch"
         path = paths.pop()
         assert path.endswith(

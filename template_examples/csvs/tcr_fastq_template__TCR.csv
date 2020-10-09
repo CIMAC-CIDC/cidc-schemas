@@ -10,3 +10,4 @@
 "#h","Cimac id","Replicate id","Read 1","Read 2","Index 1","Index 2","Rna quantity"
 "#d","CTTTPP111.00","1A","/local/path/to/read1_1.fastq.gz","/local/path/to/read2_1.fastq.gz","/local/path/to/index1_1.fastq.gz","/local/path/to/index2_1.fastq.gz","600"
 "#d","CTTTPP121.00","1A","/local/path/to/read1_2.fastq.gz","/local/path/to/read2_2.fastq.gz","/local/path/to/index1_2.fastq.gz","/local/path/to/index2_2.fastq.gz","650"
+"#d","CTTTPP121.00","2A","/local/path/to/read1_3.fastq.gz","/local/path/to/read2_3.fastq.gz","/local/path/to/index1_3.fastq.gz","/local/path/to/index2_3.fastq.gz","10"

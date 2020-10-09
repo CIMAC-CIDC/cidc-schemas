@@ -871,7 +871,7 @@ def tcr_fastq() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/sample_sheet.csv",
-            gs_key="test_prism_trial_id/tcr/XYZ/sample_sheet.csv",
+            gs_key="test_prism_trial_id/tcr/XYZ/SampleSheet.csv",
             upload_placeholder="rb150200-c6b2-459c-a264-b56bc2aca26a",
             metadata_availability=False,
         ),

@@ -29,7 +29,7 @@
           },
           "sample sheet": {
             "merge_pointer": "0/sample_sheet",
-            "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/sample_sheet.csv",
+            "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/SampleSheet.csv",
             "is_artifact": 1,
             "type_ref": "assays/components/local_file.json#properties/file_path"
           }

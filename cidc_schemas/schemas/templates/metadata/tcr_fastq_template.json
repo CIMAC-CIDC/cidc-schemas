@@ -34,7 +34,7 @@
             "type_ref": "assays/components/local_file.json#properties/file_path"
           }
         },
-        "prism_data_object_pointer": "/records/0/files/replicates/-",
+        "prism_data_object_pointer": "/records/0/files/replicates/0/",
         "data_columns": {
           "Replicates": {
             "cimac id": {

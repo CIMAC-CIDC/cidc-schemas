@@ -1,0 +1,46 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "tcr_assay",
+  "title": "TCR Assay",
+  "type": "object",
+  "description": "Additional properties to describe a TCR assay for expression analysis.",
+  "additionalProperties": false,
+  "allOf": [
+    { "$ref": "assays/components/assay_core.json" },
+    { "$ref": "assays/components/ngs_assay_core.json" }
+  ],
+  "properties": {
+    "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
+    "sequencer_platform": {"$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"},
+    "batch_id": {
+        "description": "TCRseq batch identification number.",
+        "type": "string"
+    },
+    "sample_sheet": {
+        "$ref": "artifacts/artifact_csv.json"
+    },
+    "sequencing_run_date": {
+        "description": "Date when the TCR sequencing was run.",
+        "type": "string",
+        "format": "date"
+    },
+    "records": {
+      "type": "array",
+      "description": "A single data record from TCRseq assay.",
+      "items": {
+        "$ref": "assays/components/ngs/tcr/tcr_entry.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "cimac_id"
+      }
+    }
+  },
+  "required": [
+    "records",
+    "batch_id",
+    "sequencing_run_date",
+    "sample_sheet"
+  ],
+  "mergeStrategy": "objectMerge"
+}

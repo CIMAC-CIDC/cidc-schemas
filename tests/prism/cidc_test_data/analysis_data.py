@@ -3,6 +3,7 @@ from copy import deepcopy
 from cidc_schemas.prism import SUPPORTED_ANALYSES
 
 from .assay_data import cytof
+
 from .utils import (
     copy_dict_with_branch,
     get_prismify_args,
@@ -1262,6 +1263,117 @@ def cytof_analysis() -> PrismTestData:
 
     target_trial = copy_dict_with_branch(
         base_trial, {"assays": {"cytof": combined_batches}}, "assays"
+    )
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
+@analysis_data_generator
+def tcr_analysis() -> PrismTestData:
+    upload_type = "tcr_analysis"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "assays": {
+            "tcr": [
+                {
+                    "records": [
+                        {
+                            "cimac_id": "CTTTPP111.00",
+                            "output_files": {
+                                "tra_clone": {
+                                    "upload_placeholder": "tcrf6d8a-811d-4213-8de3-b1fb92432c37"
+                                },
+                                "trb_clone": {
+                                    "upload_placeholder": "tcrc9744-6065-4c0d-a595-a3db4f3605ec"
+                                },
+                            },
+                        },
+                        {
+                            "cimac_id": "CTTTPP121.00",
+                            "output_files": {
+                                "tra_clone": {
+                                    "upload_placeholder": "tcrc578a-77f3-4898-84ab-e124f1cf000f"
+                                },
+                                "trb_clone": {
+                                    "upload_placeholder": "tcr88f77-07ec-46b9-9e9f-53532ae96efc"
+                                },
+                            },
+                        },
+                    ],
+                    "batch_id": "XYZ",
+                    "summary_info": {
+                        "upload_placeholder": "tcr9c736-0c99-4908-b288-41ebcc0a07d9"
+                    },
+                }
+            ]
+        },
+        "protocol_identifier": "test_prism_trial_id",
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="tra_clones_count_1.csv",
+            gs_key="test_prism_trial_id/tcr_analysis/XYZ/CTTTPP111.00/tra_clone.csv",
+            upload_placeholder="tcrf6d8a-811d-4213-8de3-b1fb92432c37",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="trb_clones_count_1.csv",
+            gs_key="test_prism_trial_id/tcr_analysis/XYZ/CTTTPP111.00/trb_clone.csv",
+            upload_placeholder="tcrc9744-6065-4c0d-a595-a3db4f3605ec",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="tra_clones_count_2.csv",
+            gs_key="test_prism_trial_id/tcr_analysis/XYZ/CTTTPP121.00/tra_clone.csv",
+            upload_placeholder="tcrc578a-77f3-4898-84ab-e124f1cf000f",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="trb_clones_count_2.csv",
+            gs_key="test_prism_trial_id/tcr_analysis/XYZ/CTTTPP121.00/trb_clone.csv",
+            upload_placeholder="tcr88f77-07ec-46b9-9e9f-53532ae96efc",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="summary_info.csv",
+            gs_key="test_prism_trial_id/tcr_analysis/XYZ/summary_info.csv",
+            upload_placeholder="tcr9c736-0c99-4908-b288-41ebcc0a07d9",
+            metadata_availability=False,
+        ),
+    ]
+
+    cimac_ids = [
+        record["cimac_id"]
+        for batch in prismify_patch["assays"]["tcr"]
+        for record in batch["records"]
+    ]
+    assays = tcr().prismify_patch["assays"]
+    base_trial = get_test_trial(cimac_ids, assays)
+
+    # Set up the TCR target trial to include both assay and analysis metadata
+    target_trial = deepcopy(base_trial)
+    assay_batches = assays["tcr"]
+    analysis_batches = prismify_patch["assays"]["tcr"]
+    combined_batches = []
+    for assay_batch, analysis_batch in zip(assay_batches, analysis_batches):
+        assay_records = assay_batch["records"]
+        analysis_records = analysis_batch["records"]
+        combined_records = [
+            copy_dict_with_branch(assay_record, analysis_record, "output_files")
+            for assay_record, analysis_record in zip(assay_records, analysis_records)
+        ]
+        combined_batch = {**assay_batch, **analysis_batch, "records": combined_records}
+        combined_batches.append(combined_batch)
+
+    target_trial = copy_dict_with_branch(
+        base_trial, {"assays": {"tcr": combined_batches}}, "assays"
     )
 
     return PrismTestData(

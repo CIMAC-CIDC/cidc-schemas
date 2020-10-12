@@ -4,6 +4,6 @@
 "#p","Summary info","summary_info.csv"
 
 "","TCRseq Runs"
-"#h","Cimac id","Tra clones","Trb clones"
+"#h","Cimac id","Tra clone","Trb clone"
 "#d","CTTTPP111.00","tra_clones_count_1.csv","trb_clones_count_1.csv"
 "#d","CTTTPP121.00","tra_clones_count_2.csv","trb_clones_count_2.csv"

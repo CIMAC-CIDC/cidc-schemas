@@ -737,6 +737,214 @@ def rna_fastq() -> PrismTestData:
 
 
 @assay_data_generator
+def tcr_fastq() -> PrismTestData:
+    upload_type = "tcr_fastq"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "test_prism_trial_id",
+        "assays": {
+            "tcr": [
+                {
+                    "records": [
+                        {
+                            "cimac_id": "CTTTPP111.00",
+                            "files": {
+                                "replicates": [
+                                    {
+                                        "replicate_id": "1A",
+                                        "r1": [
+                                            {
+                                                "upload_placeholder": "3635df00-082b-4e2d-92a8-7a5e629483dc"
+                                            }
+                                        ],
+                                        "r2": [
+                                            {
+                                                "upload_placeholder": "2cd2bb4f-3f84-4f78-b387-4edb6dcc5d1c"
+                                            }
+                                        ],
+                                        "i1": [
+                                            {
+                                                "upload_placeholder": "aa35df00-082b-4e2d-92a8-7a5e629483dc"
+                                            }
+                                        ],
+                                        "i2": [
+                                            {
+                                                "upload_placeholder": "bbd2bb4f-3f84-4f78-b387-4edb6dcc5d1c"
+                                            }
+                                        ],
+                                        "rna_quantity_ng": 600.0,
+                                    }
+                                ]
+                            },
+                        },
+                        {
+                            "cimac_id": "CTTTPP121.00",
+                            "files": {
+                                "replicates": [
+                                    {
+                                        "replicate_id": "1A",
+                                        "r1": [
+                                            {
+                                                "upload_placeholder": "e49521dc-d531-4555-a874-80aa0ce31dc2"
+                                            }
+                                        ],
+                                        "r2": [
+                                            {
+                                                "upload_placeholder": "be150200-c6b2-459c-a264-b56bc2aca264"
+                                            }
+                                        ],
+                                        "i1": [
+                                            {
+                                                "upload_placeholder": "cc9521dc-d531-4555-a874-80aa0ce31dc2"
+                                            }
+                                        ],
+                                        "i2": [
+                                            {
+                                                "upload_placeholder": "dd150200-c6b2-459c-a264-b56bc2aca264"
+                                            }
+                                        ],
+                                        "rna_quantity_ng": 650.0,
+                                    },
+                                    {
+                                        "replicate_id": "2A",
+                                        "r1": [
+                                            {
+                                                "upload_placeholder": "r29521dc-d531-4555-a874-80aa0ce31dc2"
+                                            }
+                                        ],
+                                        "r2": [
+                                            {
+                                                "upload_placeholder": "r2150200-c6b2-459c-a264-b56bc2aca264"
+                                            }
+                                        ],
+                                        "i1": [
+                                            {
+                                                "upload_placeholder": "r29521dc-d531-4555-a874-80aa0ce31dc3"
+                                            }
+                                        ],
+                                        "i2": [
+                                            {
+                                                "upload_placeholder": "r2150200-c6b2-459c-a264-b56bc2aca265"
+                                            }
+                                        ],
+                                        "rna_quantity_ng": 10.0,
+                                    },
+                                ]
+                            },
+                        },
+                    ],
+                    "assay_creator": "Mount Sinai",
+                    "sequencer_platform": "Illumina - HiSeq 3000",
+                    "batch_id": "XYZ",
+                    "sequencing_run_date": "2019-12-12 00:00:00",
+                    "sample_sheet": {
+                        "upload_placeholder": "rb150200-c6b2-459c-a264-b56bc2aca26a"
+                    },
+                }
+            ]
+        },
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="/local/path/to/read1_1.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/replicate_1A/r1.fastq.gz",
+            upload_placeholder="3635df00-082b-4e2d-92a8-7a5e629483dc",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/read2_1.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/replicate_1A/r2.fastq.gz",
+            upload_placeholder="2cd2bb4f-3f84-4f78-b387-4edb6dcc5d1c",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/index1_1.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/replicate_1A/i1.fastq.gz",
+            upload_placeholder="aa35df00-082b-4e2d-92a8-7a5e629483dc",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/index2_1.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/replicate_1A/i2.fastq.gz",
+            upload_placeholder="bbd2bb4f-3f84-4f78-b387-4edb6dcc5d1c",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/read1_2.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/replicate_1A/r1.fastq.gz",
+            upload_placeholder="e49521dc-d531-4555-a874-80aa0ce31dc2",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/read2_2.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/replicate_1A/r2.fastq.gz",
+            upload_placeholder="be150200-c6b2-459c-a264-b56bc2aca264",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/index1_2.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/replicate_1A/i1.fastq.gz",
+            upload_placeholder="cc9521dc-d531-4555-a874-80aa0ce31dc2",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/index2_2.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/replicate_1A/i2.fastq.gz",
+            upload_placeholder="dd150200-c6b2-459c-a264-b56bc2aca264",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/read1_3.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/replicate_2A/r1.fastq.gz",
+            upload_placeholder="r29521dc-d531-4555-a874-80aa0ce31dc2",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/read2_3.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/replicate_2A/r2.fastq.gz",
+            upload_placeholder="r2150200-c6b2-459c-a264-b56bc2aca264",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/index1_3.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/replicate_2A/i1.fastq.gz",
+            upload_placeholder="r29521dc-d531-4555-a874-80aa0ce31dc3",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/index2_3.fastq.gz",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/replicate_2A/i2.fastq.gz",
+            upload_placeholder="r2150200-c6b2-459c-a264-b56bc2aca265",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/sample_sheet.csv",
+            gs_key="test_prism_trial_id/tcr/XYZ/SampleSheet.csv",
+            upload_placeholder="rb150200-c6b2-459c-a264-b56bc2aca26a",
+            metadata_availability=False,
+        ),
+    ]
+
+    cimac_ids = [
+        record["cimac_id"]
+        for batch in prismify_patch["assays"]["tcr"]
+        for record in batch["records"]
+    ]
+    base_trial = get_test_trial(cimac_ids)
+
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "assays")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
+@assay_data_generator
 def olink() -> PrismTestData:
     upload_type = "olink"
     prismify_args = get_prismify_args(upload_type)

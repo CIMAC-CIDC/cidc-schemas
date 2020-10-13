@@ -1,0 +1,14 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "tcr_entry",
+  "title": "TCRseq assay record",
+  "type": "object",
+  "description": "A single data record from TCRseq assay.",
+  "additionalProperties": false,
+  "properties": {
+    "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
+    "files": {"$ref": "assays/components/ngs/tcr/tcr_input.json"}
+  },
+  "mergeStrategy": "objectMerge",
+  "required": ["cimac_id", "files"]
+}

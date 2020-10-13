@@ -39,5 +39,5 @@
       "required": ["bam"]
     }
   ],
-  "additionalProperties": false
+  "additionalProperties": true
 }

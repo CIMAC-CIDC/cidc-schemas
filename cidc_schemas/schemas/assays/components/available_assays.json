@@ -23,6 +23,17 @@
       },
       "mergeStrategy": "append"
     },
+    "tcr": {
+      "type": "array",
+      "description": "TCR sequencing assay.",
+      "items": {
+        "$ref": "assays/tcr_assay.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "batch_id"
+      }
+    },
     "cytof": {
       "type": "array",
       "description": "Base information about the acquisition and analysis of CyTOF data.",

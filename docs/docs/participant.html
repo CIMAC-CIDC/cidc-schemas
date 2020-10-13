@@ -72,7 +72,7 @@
     </td>
     <td width=55%>
         
-            Participant identifier assigned by the CIMAC-CIDC Network. Formated as: C??????.
+            Participant identifier assigned by the CIMAC-CIDC Network. Formated as: C?????? (first 7 characters of CIMAC ID)
         
     </td>
     <td>
@@ -128,6 +128,8 @@
         
     </td>
 </tr>
+            
+        
             
         
             
@@ -262,7 +264,7 @@
     </td>
     <td width=55%>
         
-            Provides a numbered identifier for patient (sample) entry in a shipment manifest.
+            Deprecated
         
     </td>
     <td>
@@ -419,6 +421,42 @@
             
         
             
+                <tr>
+    <td>
+        
+            <span id="arbitrary_trial_specific_clinical_annotations">
+                arbitrary_trial_specific_clinical_annotations
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+        
+    </td>
+    <td>
+        
+            &lt; 
+                object 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+                
+                
+            
+        
+    </td>
+</tr>
+            
+        
+            
         
     </table>
 
@@ -433,6 +471,11 @@
     "additionalProperties": false,
     "description": "The collection of all data related to a specific participant in the context of a specific clinical trial.\n",
     "properties": {
+        "arbitrary_trial_specific_clinical_annotations": {
+            "$comment": "holds whatever non-harmonized annotations trial team provides",
+            "additionalProperties": true,
+            "type": "object"
+        },
         "cidc_participant_id": {
             "description": "The generated, CIDC-internal identifier for this participant.",
             "example": "CIDC-Trial101-e1b2c3",
@@ -442,7 +485,7 @@
         },
         "cimac_participant_id": {
             "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_participant_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_participant_id $ref.",
-            "description": "Participant identifier assigned by the CIMAC-CIDC Network. Formated as: C??????.",
+            "description": "Participant identifier assigned by the CIMAC-CIDC Network. Formated as: C?????? (first 7 characters of CIMAC ID)",
             "example": "CTTTP01",
             "in_doc_ref_pattern": "/participants/*/cimac_participant_id",
             "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}$",
@@ -456,7 +499,8 @@
             "type": "string"
         },
         "essential_patient_entry_number": {
-            "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
+            "$comment": "Used to provide id for patient entry in a shipment manifest, left here for back-compat.",
+            "description": "Deprecated",
             "type": "integer"
         },
         "ethnicity": {

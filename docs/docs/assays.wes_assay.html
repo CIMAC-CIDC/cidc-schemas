@@ -436,8 +436,7 @@
                 }
             },
             "required": [
-                "sequencer_platform",
-                "paired_end_reads"
+                "sequencer_platform"
             ],
             "title": "NGS Assay Core",
             "type": "object"
@@ -510,7 +509,7 @@
                                 "$comment": "Fastq files or a bam file produced by the assay.",
                                 "$id": "fastq_pair_or_bam",
                                 "$schema": "metaschema/strict_meta_schema.json#",
-                                "additionalProperties": false,
+                                "additionalProperties": true,
                                 "anyOf": [
                                     {
                                         "required": [
@@ -1215,7 +1214,7 @@
                         "$comment": "Fastq files or a bam file produced by the assay.",
                         "$id": "fastq_pair_or_bam",
                         "$schema": "metaschema/strict_meta_schema.json#",
-                        "additionalProperties": false,
+                        "additionalProperties": true,
                         "anyOf": [
                             {
                                 "required": [

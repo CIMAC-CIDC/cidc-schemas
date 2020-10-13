@@ -40,7 +40,7 @@ OLINK_RECORD = {
     "files": {"assay_npx": "", "assay_raw_ct": ""},
 }
 
-ASSAY_CORE = {"assay_creator": "DFCI", "assay_creator": "Mount Sinai"}
+ASSAY_CORE = {"assay_creator": "Mount Sinai"}
 
 
 def _fetch_validator(name):
@@ -182,6 +182,47 @@ def test_rna_bam():
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("rna")
+    validator.validate(obj)
+
+
+def test_tcr_fastq():
+
+    # create the tcr_seq object
+    r1 = ARTIFACT_OBJ.copy()
+    r1["data_format"] = "FASTQ.GZ"
+    sample_sheet = ARTIFACT_OBJ.copy()
+    sample_sheet["data_format"] = "CSV"
+    record = {
+        "cimac_id": "CTTTPPPSA.00",
+        "files": {
+            "replicates": [
+                {
+                    "replicate_id": "1A",
+                    "r1": [r1],
+                    "r2": [r1],
+                    "i1": [r1],
+                    "i2": [r1],
+                    "rna_quantity_ng": 600,
+                }
+            ]
+        },
+    }
+
+    # create the ngs object
+    ngs_obj = {
+        "sequencer_platform": "Illumina - NovaSeq 6000",
+        "batch_id": "XYZ",
+        "sequencing_run_date": "12/12/20",
+        "sample_sheet": sample_sheet,
+    }
+
+    obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
+
+    # add a demo record.
+    obj["records"] = [record]
+
+    # create validator assert schemas are valid.
+    validator = _fetch_validator("tcr")
     validator.validate(obj)
 
 

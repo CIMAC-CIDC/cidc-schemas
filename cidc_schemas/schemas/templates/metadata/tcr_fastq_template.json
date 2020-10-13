@@ -34,7 +34,7 @@
             "type_ref": "assays/components/local_file.json#properties/file_path"
           }
         },
-        "prism_data_object_pointer": "/records/0/files/replicates/0/",
+        "prism_data_object_pointer": "/records/0/files/replicates/-",
         "data_columns": {
           "Replicates": {
             "cimac id": {
@@ -46,25 +46,25 @@
               "type_ref": "assays/components/ngs/tcr/tcr_replicates.json#properties/replicate_id"
             },
             "read 1": {
-              "merge_pointer": "0/r1",
+              "merge_pointer": "0/r1/-",
               "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/replicate_{replicate id}/r1.fastq.gz",
               "is_artifact": "1",
               "type_ref": "assays/components/local_file.json#properties/file_path"
             },
             "read 2": {
-              "merge_pointer": "0/r2",
+              "merge_pointer": "0/r2/-",
               "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/replicate_{replicate id}/r2.fastq.gz",
               "is_artifact" : "1",
               "type_ref": "assays/components/local_file.json#properties/file_path"
             },
             "index 1": {
-              "merge_pointer": "0/i1",
+              "merge_pointer": "0/i1/-",
               "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/replicate_{replicate id}/i1.fastq.gz",
               "is_artifact": "1",
               "type_ref": "assays/components/local_file.json#properties/file_path"
             },
             "index 2": {
-              "merge_pointer": "0/i2",
+              "merge_pointer": "0/i2/-",
               "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/replicate_{replicate id}/i2.fastq.gz",
               "is_artifact" : "1",
               "type_ref": "assays/components/local_file.json#properties/file_path"

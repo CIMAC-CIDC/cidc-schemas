@@ -1,0 +1,81 @@
+{
+  "title": "Metadata file for TCR seq  [FASTQ].",
+  "description": "Metadata information for rna expression data submission via FASTQ files.",
+  "properties": {
+    "worksheets": {
+      "TCR": {
+        "prism_preamble_object_schema" : "assays/tcr_assay.json",
+        "prism_preamble_object_pointer" : "/assays/tcr/0",
+        "preamble_rows": {
+          "protocol identifier": {
+            "merge_pointer": "3/protocol_identifier",
+            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+          },
+          "assay creator": {
+            "merge_pointer": "0/assay_creator",
+            "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+          },
+          "sequencer platform": {
+            "merge_pointer": "0/sequencer_platform",
+            "type_ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"
+          },
+          "batch id": {
+            "merge_pointer": "0/batch_id",
+            "type_ref": "assays/tcr_assay.json#properties/batch_id"
+          },
+          "sequencing run date": {
+            "merge_pointer": "0/sequencing_run_date",
+            "type_ref": "assays/tcr_assay.json#properties/sequencing_run_date"
+          },
+          "sample sheet": {
+            "merge_pointer": "0/sample_sheet",
+            "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/SampleSheet.csv",
+            "is_artifact": 1,
+            "type_ref": "assays/components/local_file.json#properties/file_path"
+          }
+        },
+        "prism_data_object_pointer": "/records/0/files/replicates/-",
+        "data_columns": {
+          "Replicates": {
+            "cimac id": {
+              "merge_pointer": "3/cimac_id",
+              "type_ref": "sample.json#properties/cimac_id"
+            },
+            "replicate id": {
+              "merge_pointer": "/replicate_id",
+              "type_ref": "assays/components/ngs/tcr/tcr_replicates.json#properties/replicate_id"
+            },
+            "read 1": {
+              "merge_pointer": "0/r1/-",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/replicate_{replicate id}/r1.fastq.gz",
+              "is_artifact": "1",
+              "type_ref": "assays/components/local_file.json#properties/file_path"
+            },
+            "read 2": {
+              "merge_pointer": "0/r2/-",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/replicate_{replicate id}/r2.fastq.gz",
+              "is_artifact" : "1",
+              "type_ref": "assays/components/local_file.json#properties/file_path"
+            },
+            "index 1": {
+              "merge_pointer": "0/i1/-",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/replicate_{replicate id}/i1.fastq.gz",
+              "is_artifact": "1",
+              "type_ref": "assays/components/local_file.json#properties/file_path"
+            },
+            "index 2": {
+              "merge_pointer": "0/i2/-",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/replicate_{replicate id}/i2.fastq.gz",
+              "is_artifact" : "1",
+              "type_ref": "assays/components/local_file.json#properties/file_path"
+            },
+            "rna quantity": {
+              "merge_pointer": "0/rna_quantity_ng",
+              "type_ref": "assays/components/ngs/tcr/tcr_replicates.json#properties/rna_quantity_ng"
+            }
+          }
+        }
+      }
+    }
+  }
+}

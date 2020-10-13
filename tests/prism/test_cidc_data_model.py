@@ -32,6 +32,7 @@ def assert_metadata_matches(received: dict, expected: dict, upload_entries: list
     # so the number of differences should equal the number of expected
     # upload entries.
     diff = DeepDiff(expected, received)
+
     if upload_entries and diff:
         assert len(diff) == 2  # only "values_changed" and "dictionary_item_added"
         assert len(diff["dictionary_item_added"]) == len(upload_entries)
@@ -137,6 +138,8 @@ def test_merge_artifacts(prism_test: PrismTestData, ct_validator):
     for uuid, artifact, entry in uuids_and_artifacts:
         # Get the path in the *original* patch to the placeholder uuid.
         paths = (prism_test.prismify_patch | grep(uuid))["matched_values"]
+
+        print(paths)
         assert len(paths) == 1, "UUID should only occur once in a metadata patch"
         path = paths.pop()
         assert path.endswith(

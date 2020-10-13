@@ -6,23 +6,31 @@
   "description": "Additional properties to describe a TCR assay for expression analysis.",
   "additionalProperties": false,
   "allOf": [
-    { "$ref": "assays/components/assay_core.json" },
-    { "$ref": "assays/components/ngs_assay_core.json" }
+    {
+      "$ref": "assays/components/assay_core.json"
+    },
+    {
+      "$ref": "assays/components/ngs_assay_core.json"
+    }
   ],
   "properties": {
-    "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
-    "sequencer_platform": {"$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"},
+    "assay_creator": {
+      "$ref": "assays/components/assay_core.json#properties/assay_creator"
+    },
+    "sequencer_platform": {
+      "$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"
+    },
     "batch_id": {
-        "description": "TCRseq batch identification number.",
-        "type": "string"
+      "description": "TCRseq batch identification number.",
+      "type": "string"
     },
     "sample_sheet": {
-        "$ref": "artifacts/artifact_csv.json"
+      "$ref": "artifacts/artifact_csv.json"
     },
     "sequencing_run_date": {
-        "description": "Date when the TCR sequencing was run.",
-        "type": "string",
-        "format": "date"
+      "description": "Date when the TCR sequencing was run.",
+      "type": "string",
+      "format": "date"
     },
     "records": {
       "type": "array",

@@ -506,6 +506,90 @@ def test_prism_process_as_error(monkeypatch):
     assert str(errs[0]).startswith("Cannot extract author_id from book id value: None")
 
 
+def test_parse_through_basic(monkeypatch):
+    """Checks prismify directive "parse_through" """
+
+    mock_XlTemplateReader_from_excel(
+        {"ws1": [["#p", "propname", "propval"]]}, monkeypatch
+    )
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    template = build_mock_Template(
+        {
+            "title": "parse_through",
+            "prism_template_root_object_schema": "test_schema.json",
+            "properties": {
+                "worksheets": {
+                    "ws1": {
+                        "prism_preamble_object_schema": "test_schema.json",
+                        "prism_preamble_object_pointer": "#",
+                        "prism_data_object_pointer": "/whatever",
+                        "preamble_rows": {
+                            "propname": {
+                                "type": "string",
+                                "parse_through": "lambda x: f'pre_{x}_post'",
+                                "merge_pointer": "/propname",
+                            }
+                        },
+                    }
+                }
+            },
+        },
+        "test_preamble_parsing_error",
+        monkeypatch,
+    )
+
+    _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
+
+    patch, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
+    assert not errs
+
+    assert patch == {"propname": "pre_propval_post"}
+
+
+def test_parse_through_None(monkeypatch):
+    """Checks how "parse_through" works with null values"""
+
+    mock_XlTemplateReader_from_excel({"ws1": [["#p", "propname", None]]}, monkeypatch)
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    template = build_mock_Template(
+        {
+            "title": "parse_through",
+            "prism_template_root_object_schema": "test_schema.json",
+            "properties": {
+                "worksheets": {
+                    "ws1": {
+                        "prism_preamble_object_schema": "test_schema.json",
+                        "prism_preamble_object_pointer": "#",
+                        "prism_data_object_pointer": "/whatever",
+                        "preamble_rows": {
+                            "propname": {
+                                "type": "string",
+                                # "parse_through": "lambda x: f'pre_{x}_post' if x is not None else x",
+                                "merge_pointer": "/propname",
+                                # TODO rename to "skip_empty"
+                                "allow_empty": True,
+                            }
+                        },
+                    }
+                }
+            },
+        },
+        "test_preamble_parsing_error",
+        monkeypatch,
+    )
+
+    _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
+
+    patch, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
+    assert not errs
+
+    assert patch == {"propname": "pre_propval_post_"}
+
+
 def test_confilicting_values_in_one_template(monkeypatch):
     """ Tests that prismify doesn't allow two different values for some property """
     mock_XlTemplateReader_from_excel(

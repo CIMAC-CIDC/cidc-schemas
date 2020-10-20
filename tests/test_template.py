@@ -3,6 +3,7 @@
 """Tests for `cidc_schemas.template` module."""
 
 from deepdiff import DeepDiff
+import json
 import os
 import pytest
 
@@ -17,7 +18,10 @@ from cidc_schemas.template import (
     _get_facet_group,
     _convert_api_to_template,
     _first_in_context,
+    convert_all_apis
 )
+
+from .constants import TEST_SCHEMA_DIR
 
 # NOTE: see conftest.py for pbmc_template and tiny_template fixture definitions
 
@@ -375,7 +379,7 @@ def test_first_in_context():
     assert _first_in_context(["Key1"], context)[0] == "key1"
 
 
-def test_convert_api():
+def test_convert_api_to_template():
     wes_api = {
         "run id": [
             {
@@ -501,3 +505,13 @@ def test_convert_api():
 
     assert DeepDiff(wes_json, wes_output) == {}
     assert DeepDiff(rna_json, rna_output) == {}
+
+def test_convert_all_apis():
+    templates = convert_all_apis(True)
+
+    test_dir = os.path.join(TEST_SCHEMA_DIR, "target-templates")
+    rna = json.load(open(os.path.join(test_dir, "rna_template.json")))
+    wes = json.load(open(os.path.join(test_dir, "wes_template.json")))
+
+    assert DeepDiff(rna, templates['rna']) == {}
+    assert DeepDiff(wes, templates['wes']) == {}

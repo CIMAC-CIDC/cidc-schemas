@@ -1,0 +1,370 @@
+{
+    "title": "WES analysis template",
+    "description": "Metadata information for WES Analysis output.",
+    "prism_template_root_object_schema": "assays/components/ngs/wes/wes_analysis.json",
+    "prism_template_root_object_pointer": "/analysis/wes_analysis",
+    "properties":
+    {
+        "worksheets":
+        {
+            "WES Analysis":
+            {
+                "preamble_rows":
+                {
+                    "protocol identifier":
+                    {
+                        "merge_pointer": "2/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    }
+                },
+                "prism_data_object_pointer": "/pair_runs/-",
+                "data_columns":
+                {
+                    "WES Runs":
+                    {
+                        "run id":
+                        {
+                            "merge_pointer": "/run_id",
+                            "type_ref": "assays/components/ngs/wes/wes_pair_analysis.json#properties/run_id",
+                            "process_as": [
+                            {
+                                "parse_through": "lambda run: f'analysis/germline/{run}/{run}_vcfcompare.txt'",
+                                "merge_pointer": "/germline/vcf_compare",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_compare.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/purity/{run}/{run}.optimalpurityvalue.txt'",
+                                "merge_pointer": "/purity/optimal_purity_value",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/optimal_purity_value.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/clonality/{run}/{run}_pyclone.tsv'",
+                                "merge_pointer": "/clonality/clonality_pyclone",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/clonality_pyclone.tsv",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/copynumber/{run}/{run}_cnvcalls.txt'",
+                                "merge_pointer": "/copynumber/copynumber_cnv_calls",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/copynumber_cnvcalls.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/copynumber/{run}/{run}_cnvcalls.txt.tn.tsv'",
+                                "merge_pointer": "/copynumber/copynumber_cnv_calls_tsv",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/copynumber_cnvcalls.txt.tn.tsv",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/neoantigen/{run}/MHC_Class_I/{run}.all_epitopes.tsv'",
+                                "merge_pointer": "/neoantigen/mhc_class_i_epitopes",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/mhc_class_i_epitopes.tsv",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/neoantigen/{run}/MHC_Class_I/{run}.filtered.condensed.ranked.tsv'",
+                                "merge_pointer": "/neoantigen/mhc_class_i_filtered_condensed_ranked",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/mhc_class_i_filtered_condensed_ranked.tsv",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/neoantigen/{run}/MHC_Class_II/{run}.all_epitopes.tsv'",
+                                "merge_pointer": "/neoantigen/mhc_class_ii_epitopes",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/mhc_class_ii_epitopes.tsv",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/neoantigen/{run}/MHC_Class_II/{run}.filtered.condensed.ranked.tsv'",
+                                "merge_pointer": "/neoantigen/mhc_class_ii_filtered_condensed_ranked",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/mhc_class_ii_filtered_condensed_ranked.tsv",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.output.vcf'",
+                                "merge_pointer": "/somatic/vcf_tnscope_output",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_tnscope_output.vcf",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.output.maf'",
+                                "merge_pointer": "/somatic/maf_tnscope_output",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/maf_tnscope_output.",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.vcf'",
+                                "merge_pointer": "/somatic/vcf_tnscope_filter",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_tnscope_filter.vcf",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.maf'",
+                                "merge_pointer": "/somatic/maf_tnscope_filter",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/maf_tnscope_filter.",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.exons.broad.vcf.gz'",
+                                "merge_pointer": "/somatic/vcf_gz_tnscope_filter",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_gz_tnscope_filter.vcf.gz",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.exons.mda.vcf.gz'",
+                                "merge_pointer": "/somatic/vcf_gz_tnscope_filter",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_gz_tnscope_filter.vcf.gz",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.exons.mocha.vcf.gz'",
+                                "merge_pointer": "/somatic/vcf_gz_tnscope_filter",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_gz_tnscope_filter.vcf.gz",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/corealignments/{run}/{run}_tn_corealigned.bam'",
+                                "merge_pointer": "/corealignments/tn_corealigned",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tn_corealigned.bam",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/corealignments/{run}/{run}_tn_corealigned.bam.bai'",
+                                "merge_pointer": "/corealignments/tn_corealigned_index",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tn_corealigned.bam.bai",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/metrics/all_sample_summaries.txt'",
+                                "merge_pointer": "/tumor/metrics/all_summaries",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/all_summaries.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda run: f'analysis/report/wes_version.txt'",
+                                "merge_pointer": "/report/wes_version",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/wes_version.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            }]
+                        },
+                        "tumor cimac id":
+                        {
+                            "merge_pointer": "/tumor/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id",
+                            "process_as": [
+                            {
+                                "parse_through": "lambda id: f'analysis/align/{id}/{id}_recalibrated.bam'",
+                                "merge_pointer": "/tumor/alignment/align_recalibrated",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/recalibrated.bam",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/align/{id}/{id}_recalibrated.bam.bai'",
+                                "merge_pointer": "/tumor/alignment/align_recalibrated_index",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/recalibrated.bam.bai",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/align/{id}/{id}.sorted.dedup.bam'",
+                                "merge_pointer": "/tumor/alignment/align_sorted_dedup",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/sorted.dedup.bam",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/align/{id}/{id}.sorted.dedup.bam.bai'",
+                                "merge_pointer": "/tumor/alignment/align_sorted_dedup_index",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/sorted.dedup.bam.bai",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_coverage_metrics.txt'",
+                                "merge_pointer": "/tumor/metrics/coverage_metrics",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/coverage_metrics.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_target_metrics.txt'",
+                                "merge_pointer": "/tumor/metrics/target_metrics",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/target_metrics.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_coverage_metrics.sample_summary.txt'",
+                                "merge_pointer": "/tumor/metrics/coverage_metrics_summary",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/coverage_metrics_summary.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_target_metrics.sample_summary.txt'",
+                                "merge_pointer": "/tumor/metrics/target_metrics_summary",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/target_metrics_summary.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/metrics/{id}/{id}.broad.mosdepth.region.dist.txt'",
+                                "merge_pointer": "/tumor/metrics/mosdepth_region_dist_broad",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/mosdepth_region_dist_broad.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/metrics/{id}/{id}.mda.mosdepth.region.dist.txt'",
+                                "merge_pointer": "/tumor/metrics/mosdepth_region_dist_mda",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/mosdepth_region_dist_mda.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/metrics/{id}/{id}.mocha.mosdepth.region.dist.txt'",
+                                "merge_pointer": "/tumor/metrics/mosdepth_region_dist_mocha",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/mosdepth_region_dist_mocha.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/optitype/{id}/{id}_result.tsv'",
+                                "merge_pointer": "/tumor/optitype/optitype_result",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/optitype_result.tsv",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/xhla/{id}/{id}_report-{id}-hla.json'",
+                                "merge_pointer": "/tumor/optitype/xhla_report_hla",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/xhla_report_hla.json",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            }]
+                        },
+                        "normal cimac id":
+                        {
+                            "merge_pointer": "/normal/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id",
+                            "process_as": [
+                            {
+                                "parse_through": "lambda id: f'analysis/align/{id}/{id}_recalibrated.bam'",
+                                "merge_pointer": "/normal/alignment/align_recalibrated",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/recalibrated.bam",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/align/{id}/{id}_recalibrated.bam.bai'",
+                                "merge_pointer": "/normal/alignment/align_recalibrated_index",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/recalibrated.bam.bai",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/align/{id}/{id}.sorted.dedup.bam'",
+                                "merge_pointer": "/normal/alignment/align_sorted_dedup",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/sorted.dedup.bam",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/align/{id}/{id}.sorted.dedup.bam.bai'",
+                                "merge_pointer": "/normal/alignment/align_sorted_dedup_index",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/sorted.dedup.bam.bai",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_coverage_metrics.txt'",
+                                "merge_pointer": "/normal/metrics/coverage_metrics",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/coverage_metrics.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_target_metrics.txt'",
+                                "merge_pointer": "/normal/metrics/target_metrics",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/target_metrics.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_coverage_metrics.sample_summary.txt'",
+                                "merge_pointer": "/normal/metrics/coverage_metrics_summary",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/coverage_metrics_summary.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/metrics/{id}/{id}_target_metrics.sample_summary.txt'",
+                                "merge_pointer": "/normal/metrics/target_metrics_summary",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/target_metrics_summary.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/metrics/{id}/{id}.broad.mosdepth.region.dist.txt'",
+                                "merge_pointer": "/normal/metrics/mosdepth_region_dist_broad",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/mosdepth_region_dist_broad.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/metrics/{id}/{id}.mda.mosdepth.region.dist.txt'",
+                                "merge_pointer": "/normal/metrics/mosdepth_region_dist_mda",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/mosdepth_region_dist_mda.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/metrics/{id}/{id}.mocha.mosdepth.region.dist.txt'",
+                                "merge_pointer": "/normal/metrics/mosdepth_region_dist_mocha",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/mosdepth_region_dist_mocha.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/optitype/{id}/{id}_result.tsv'",
+                                "merge_pointer": "/normal/optitype/optitype_result",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/optitype_result.tsv",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            },
+                            {
+                                "parse_through": "lambda id: f'analysis/xhla/{id}/{id}_report-{id}-hla.json'",
+                                "merge_pointer": "/normal/optitype/xhla_report_hla",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/xhla_report_hla.json",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1
+                            }]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -325,18 +325,18 @@ def test_generate_all_templates(tmpdir):
 def test_first_in_context():
     context = {
         "key1": {"properties": {}},
-        "key1_key2": {"properties":{}}, # more specific
-        "key2_key3": {"properties":{}}, # two with underscore
-        "key4key5": {"properties":{}}, # two without underscore
-        "key6_index": {"properties":{}}, # index
-        "key7_summary": {"properties":{}}, # summary
+        "key1_key2": {"properties": {}},  # more specific
+        "key2_key3": {"properties": {}},  # two with underscore
+        "key4key5": {"properties": {}},  # two without underscore
+        "key6_index": {"properties": {}},  # index
+        "key7_summary": {"properties": {}},  # summary
     }
 
     # Identical
     assert _first_in_context(["key1"], context)[0] == "key1"
 
     # More specific
-    assert _first_in_context(["key1","key2"], context)[0] == "key1_key2"
+    assert _first_in_context(["key1", "key2"], context)[0] == "key1_key2"
 
     # Key has dot, context has underscore
     assert _first_in_context(["key2.key3"], context)[0] == "key2_key3"
@@ -345,13 +345,16 @@ def test_first_in_context():
     assert _first_in_context(["Key1.key3"], context)[0] == "key1"
 
     # Pull summary from end
-    assert _first_in_context(["key7","this_is_missed", ".summary.txt"], context)[0] == "key7_summary"
+    assert (
+        _first_in_context(["key7", "this_is_missed", ".summary.txt"], context)[0]
+        == "key7_summary"
+    )
 
     # Two joined with underscore
-    assert _first_in_context(["key2","key3"], context)[0] == "key2_key3"
+    assert _first_in_context(["key2", "key3"], context)[0] == "key2_key3"
 
     # Skipping logs
-    assert _first_in_context(["logs","Key1"], context)[0] == "key1"
+    assert _first_in_context(["logs", "Key1"], context)[0] == "key1"
 
     # Key missing underscore
     assert _first_in_context(["key2key3"], context)[0] == "key2_key3"
@@ -380,7 +383,7 @@ def test_convert_api():
                 "file_path_template": "analysis/clonality/{run id}/{run id}_pyclone.tsv",
                 "short_description": "clonality_pyclone file",
                 "long_description": "clonality_pyclone file clonality_pyclone file",
-                "file_purpose": "Miscellaneous"
+                "file_purpose": "Miscellaneous",
             },
         ],
         "tumor cimac id": [
@@ -389,19 +392,19 @@ def test_convert_api():
                 "file_path_template": "analysis/align/{tumor cimac id}/{tumor cimac id}.sorted.dedup.bam",
                 "short_description": "align_sorted_dedup file",
                 "long_description": "align_sorted_dedup file align_sorted_dedup file",
-                "file_purpose": "Miscellaneous"
+                "file_purpose": "Miscellaneous",
             },
         ],
     }
 
     rna_api = {
-        "id": [ # converted to cimac id
-            { # use first entry as example
+        "id": [  # converted to cimac id
+            {  # use first entry as example
                 "filter_group": "alignment",
                 "file_path_template": "analysis/star/{id}/{id}.sorted.bam",
                 "short_description": "star alignment output",
                 "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
-                "file_purpose": "Analysis view"
+                "file_purpose": "Analysis view",
             },
         ],
     }
@@ -411,56 +414,49 @@ def test_convert_api():
         "description": "Metadata information for WES Analysis output.",
         "prism_template_root_object_schema": "assays/components/ngs/wes/wes_analysis.json",
         "prism_template_root_object_pointer": "/analysis/wes_analysis",
-        "properties":
-        {
-            "worksheets":
-            {
-                "WES Analysis":
-                {
-                    "preamble_rows":
-                    {
-                        "protocol identifier":
-                        {
+        "properties": {
+            "worksheets": {
+                "WES Analysis": {
+                    "preamble_rows": {
+                        "protocol identifier": {
                             "merge_pointer": "2/protocol_identifier",
-                            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                            "type_ref": "clinical_trial.json#properties/protocol_identifier",
                         }
                     },
                     "prism_data_object_pointer": "/pair_runs/-",
-                    "data_columns":
-                    {
-                        "WES Runs":
-                        {
-                            "run id":
-                            {
+                    "data_columns": {
+                        "WES Runs": {
+                            "run id": {
                                 "merge_pointer": "/run_id",
                                 "type_ref": "assays/components/ngs/wes/wes_pair_analysis.json#properties/run_id",
                                 "process_as": [
-                                {
-                                    "parse_through": "lambda run: f'analysis/clonality/{run}/{run}_pyclone.tsv'",
-                                    "merge_pointer": "/clonality/clonality_pyclone",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/clonality_pyclone.tsv",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                }]
+                                    {
+                                        "parse_through": "lambda run: f'analysis/clonality/{run}/{run}_pyclone.tsv'",
+                                        "merge_pointer": "/clonality/clonality_pyclone",
+                                        "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/clonality_pyclone.tsv",
+                                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                                        "is_artifact": 1,
+                                    }
+                                ],
                             },
-                            "tumor cimac id":
-                            {
+                            "tumor cimac id": {
                                 "merge_pointer": "/tumor/cimac_id",
                                 "type_ref": "sample.json#properties/cimac_id",
                                 "process_as": [
-                                {
-                                    "parse_through": "lambda id: f'analysis/align/{id}/{id}.sorted.dedup.bam'",
-                                    "merge_pointer": "/tumor/alignment/align_sorted_dedup",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/sorted.dedup.bam",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                }]
-                            }
+                                    {
+                                        "parse_through": "lambda id: f'analysis/align/{id}/{id}.sorted.dedup.bam'",
+                                        "merge_pointer": "/tumor/alignment/align_sorted_dedup",
+                                        "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/sorted.dedup.bam",
+                                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                                        "is_artifact": 1,
+                                    }
+                                ],
+                            },
                         }
-                    }
+                    },
                 }
             }
-        }
+        },
     }
 
     rna_json = {
@@ -468,27 +464,19 @@ def test_convert_api():
         "description": "Metadata information for RNAseq level 1 Analysis output.",
         "prism_template_root_object_schema": "assays/components/ngs/rna/rnaseq_analysis.json",
         "prism_template_root_object_pointer": "/analysis/rnaseq_analysis",
-        "properties":
-        {
-            "worksheets":
-            {
-                "RNAseq Analysis":
-                {
-                    "preamble_rows":
-                    {
-                        "protocol identifier":
-                        {
+        "properties": {
+            "worksheets": {
+                "RNAseq Analysis": {
+                    "preamble_rows": {
+                        "protocol identifier": {
                             "merge_pointer": "2/protocol_identifier",
-                            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                            "type_ref": "clinical_trial.json#properties/protocol_identifier",
                         }
                     },
                     "prism_data_object_pointer": "/level_1/-",
-                    "data_columns":
-                    {
-                        "RNAseq Runs":
-                        {
-                            "cimac id":
-                            {
+                    "data_columns": {
+                        "RNAseq Runs": {
+                            "cimac id": {
                                 "merge_pointer": "/cimac_id",
                                 "type_ref": "assays/components/ngs/rna/rnaseq_level1_analysis.json#properties/cimac_id",
                                 "process_as": [
@@ -497,15 +485,15 @@ def test_convert_api():
                                         "merge_pointer": "0/star/sorted_bam",
                                         "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/star/sorted.bam",
                                         "type_ref": "assays/components/local_file.json#properties/file_path",
-                                        "is_artifact": 1
+                                        "is_artifact": 1,
                                     }
-                                ]
+                                ],
                             }
                         }
-                    }
+                    },
                 }
             }
-        }
+        },
     }
 
     wes_output = _convert_api_to_template("wes", wes_api)

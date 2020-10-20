@@ -193,6 +193,10 @@
         }
       ]
     },
+    "encrypt": {
+      "type": "boolean",
+      "default": false
+    },
     "format": { "type": "string" },
     "contentMediaType": { "type": "string" },
     "contentEncoding": { "type": "string" },

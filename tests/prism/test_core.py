@@ -515,43 +515,64 @@ def test_parse_through_basic(monkeypatch):
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
 
-    template = build_mock_Template(
-        {
-            "title": "parse_through",
-            "prism_template_root_object_schema": "test_schema.json",
-            "properties": {
-                "worksheets": {
-                    "ws1": {
-                        "prism_preamble_object_schema": "test_schema.json",
-                        "prism_preamble_object_pointer": "#",
-                        "prism_data_object_pointer": "/whatever",
-                        "preamble_rows": {
-                            "propname": {
-                                "type": "string",
-                                "parse_through": "lambda x: f'pre_{x}_post'",
-                                "merge_pointer": "/propname",
-                            }
-                        },
-                    }
+    template_schema = {
+        "title": "parse_through",
+        "prism_template_root_object_schema": "test_schema.json",
+        "properties": {
+            "worksheets": {
+                "ws1": {
+                    "prism_preamble_object_schema": "test_schema.json",
+                    "prism_preamble_object_pointer": "#",
+                    "prism_data_object_pointer": "/whatever",
+                    "preamble_rows": {
+                        "propname": {
+                            "type": "string",
+                            "parse_through": "lambda x: f'encrypted({x})'",
+                            "merge_pointer": "/propname",
+                        }
+                    },
                 }
-            },
+            }
         },
-        "test_preamble_parsing_error",
-        monkeypatch,
-    )
+    }
+    template = build_mock_Template(template_schema, "test_template_name", monkeypatch)
 
     _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
 
     patch, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
     assert not errs
 
-    assert patch == {"propname": "pre_propval_post"}
+    assert patch == {"propname": "encrypted(propval)"}
 
-
-def test_parse_through_None(monkeypatch):
-    """Checks how "parse_through" works with null values"""
+    # Check working with null/None values"""
 
     mock_XlTemplateReader_from_excel({"ws1": [["#p", "propname", None]]}, monkeypatch)
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    template_schema["properties"]["worksheets"]["ws1"]["preamble_rows"]["propname"][
+        "allow_empty"
+    ] = True
+    template = build_mock_Template(template_schema, "test_template_name", monkeypatch)
+
+    _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
+
+    patch, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
+    assert not errs
+
+    # empty val (None) was not parsed through
+    assert patch != {"propname": "encrypted(None)"}
+    # but was skipped all together
+    assert patch == {}
+
+
+# TODO rename to "allow_None"
+def test_allow_empty(monkeypatch):
+    """Check "allow_empty" skips None values"""
+
+    mock_XlTemplateReader_from_excel(
+        {"ws1": [["#p", "id", "id"], ["#p", "prop", None]]}, monkeypatch
+    )
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
 
@@ -566,13 +587,12 @@ def test_parse_through_None(monkeypatch):
                         "prism_preamble_object_pointer": "#",
                         "prism_data_object_pointer": "/whatever",
                         "preamble_rows": {
-                            "propname": {
+                            "id": {"type": "string", "merge_pointer": "/id"},
+                            "prop": {
                                 "type": "string",
-                                # "parse_through": "lambda x: f'pre_{x}_post' if x is not None else x",
-                                "merge_pointer": "/propname",
-                                # TODO rename to "skip_empty"
+                                "merge_pointer": "/prop",
                                 "allow_empty": True,
-                            }
+                            },
                         },
                     }
                 }
@@ -587,7 +607,7 @@ def test_parse_through_None(monkeypatch):
     patch, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
     assert not errs
 
-    assert patch == {"propname": "pre_propval_post_"}
+    assert patch == {"id": "id"}
 
 
 def test_confilicting_values_in_one_template(monkeypatch):

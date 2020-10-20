@@ -419,17 +419,15 @@ class Template:
             _, referer = resolver.resolve(referer["$ref"])
 
         entry = referer
-        # add our own type conversion
-        t = entry["type"]
 
-        return self._get_simple_type_coerce(t, entry.get("$id"))
+        return self._get_typed_entry_coerce(entry)
 
     @staticmethod
     def _gen_upload_placeholder_uuid(_):
         return str(uuid.uuid4())
 
     @staticmethod
-    def _get_simple_type_coerce(t: str, object_id=None):
+    def _get_typed_entry_coerce(entry: dict):
         """
         This function takes a json-schema style type
         and determines the best python
@@ -437,8 +435,17 @@ class Template:
         """
         # if it's an artifact that will be loaded through local file
         # we just return uuid as value
-        if object_id in ["local_file_path", "local_file_path_list"]:
+        if entry.get("$id") in ["local_file_path", "local_file_path_list"]:
             return Template._gen_upload_placeholder_uuid
+
+        if entry.get("encypted"):
+            # TODO use somehow injected `encrypt` here?
+            return lambda x: "TODO implement encrypt here"
+
+        return Template._get_simple_type_coerce(entry["type"])
+
+    @staticmethod
+    def _get_simple_type_coerce(t: str):
         if t == "string":
             return str
         elif t == "integer":
@@ -460,9 +467,8 @@ class Template:
                 field_def.pop("ref", field_def.pop("type_ref"))
             )
         elif "type" in field_def:
-            coerce = self._get_simple_type_coerce(
-                field_def.pop("type"), field_def.pop("$id", None)
-            )
+            coerce = self._get_typed_entry_coerce(field_def)
+
         elif field_def.get("do_not_merge", False):
 
             raise Exception(

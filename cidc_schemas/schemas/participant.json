@@ -24,7 +24,7 @@
     "participant_id": {
       "type": "string",
       "description": "Trial Participant Identifier.",
-      "example": "PT123"
+      "encrypt": true
     },
     "cohort_name": {
       "type": "string",

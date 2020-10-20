@@ -173,29 +173,16 @@
                             "type_ref": "participant.json#properties/participant_id"
                         },
                         "parent sample ID": {
-                            "do_not_merge": true,
+                            "$comment": "one of the sample ids should not be allow_empty",
                             "allow_empty": true,
-                            "type": "string",
-                            "process_as": [
-                                {
-                                    "merge_pointer": "/parent_sample_id",
-                                    "type_ref": "sample.json#properties/parent_sample_id",
-                                    "parse_through": "encrypt"
-                                }
-                            ]
+                            "merge_pointer": "/parent_sample_id",
+                            "type_ref": "sample.json#properties/parent_sample_id"
                         },
                         "processed sample ID": {
-                            "do_not_merge": true,
+                            "$comment": "one of the sample ids should not be allow_empty",
                             "allow_empty": true,
-                            "type": "string",
-                            "process_as": [
-                                {
-                                    "merge_pointer": "/processed_sample_id",
-                                    "type_ref": "sample.json#properties/processed_sample_id",
-                                    "parse_through": "encrypt"
-                                }
-                            ]
-                           
+                            "merge_pointer": "/processed_sample_id",
+                            "type_ref": "sample.json#properties/processed_sample_id"
                         },
                         "CIMAC ID": {
                             "merge_pointer": "/cimac_id",

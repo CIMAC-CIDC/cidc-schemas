@@ -51,7 +51,7 @@ def convert_all_apis(test : bool = False):
             ret[analysis] = template
         # otherwise write it to disk
         else:
-            with open(os.path.join(TEMPLATE_DIR, "analyses", f"{analysis}_analysis_template.json")) as f:
+            with open(os.path.join(TEMPLATE_DIR, "analyses", f"{analysis}_analysis_template.json"), "w") as f:
                 json.dump(template, f)
 
     # make the return
@@ -59,7 +59,24 @@ def convert_all_apis(test : bool = False):
         return ret
 
 def _first_in_context(path : list, context : dict):
-    """For matching a file path to its nearest equivalent key in context"""
+    """
+    For matching a file path to its nearest equivalent key in a schema context
+
+    Params
+    ------
+    path : list
+        a list of path elements to locate in @context
+    context : dict
+        a schema that has an element similar to @path
+
+    Returns
+    -------
+    tuple
+        (equivalent key in context, rest of path elements, context[key]['properties'])
+        ("", [], context) if path doesn't lead to anything in the given context
+    """
+    if not isinstance(path, list): path =  list(path)
+
     # if we can step down
     if path[0] in context:
         # if this is the end, we're done
@@ -93,13 +110,9 @@ def _first_in_context(path : list, context : dict):
         if len(path) > 1: trial.extend(path[1:])
         ret = _first_in_context(trial, context)
         if ret[0]: return ret
-        elif len(path) > 1:
-            trial =  [path[0] + "_" + path[-1]]
-            if len(path) > 2: trial.extend(path[2:])
-            ret = _first_in_context(trial, context)
-            if ret[0]: return ret
 
     # sometimes two are actually stuck together
+    # sometime `logs` is skipped 
     if len(path) > 1:
         trial = ["_".join(path[:2])]
         if len(path) > 2: trial.extend(path[2:])
@@ -195,6 +208,9 @@ def _convert_api_to_template(name : str, schema : dict):
                 "process_as" : []
         }
 
+        if key in ["normal", "tumor"]:
+            subtemplate[k]["merge_pointer"] = subtemplate[k]["merge_pointer"].replace("_cimac","/cimac")
+
         # keep track of where we are in the analysis schema
         context = assay_schema["properties"][data_pointer[name]]["items"]["properties"]
         if key not in context:
@@ -256,8 +272,58 @@ def _convert_api_to_template(name : str, schema : dict):
             if curr_step:
                 merge_pointer += "/" + curr_step
 
-            # WES doesn't get starting 0 for some reason
-            if name == "wes": merge_pointer = merge_pointer[1:]
+            # GCS URI start is static
+            gcs_uri = f"{{protocol identifier}}/{name}/"
+            if name == "wes": # wes has its own scheme
+                gcs_uri += "{run id}/analysis/"
+                if k != "run id":
+                    gcs_uri += f"{key}/{{{k}}}/"
+            else:
+                gcs_uri += f"{{{k}}}/analysis/"
+
+            # generate GCS URI ending from merge pointer
+            path, file = merge_pointer[2:].rsplit('/',1)
+            if name != "wes": # WES doesn't get this for some reason
+                gcs_uri += path + "/"
+
+            # special handling for .bam.bai
+            file = file.replace("_bam_index", "_bam_bai").replace("_index", "_bam_bai")
+
+            # guess at file extension from merge_pointer
+            file = file.split("_")
+            possible_exts = ['tsv', 'log', 'summary', 'txt', 'gz', 'bam', 'bai', 'tn', 'vcf', 'yaml', 'csv', 'zip', 'json',
+                             'dedup', 'stat', 'sf']
+            
+            # look for last entry that isn't a file extension
+            n = 1
+            while n <= len(file):
+                if file[-n] not in possible_exts: # go from the right
+                    n -= 1 # we went too far, so decrement
+                    break
+                else:
+                    n += 1 # now look at previous
+
+            # cut file name before file extension
+            if n < 1:
+                file = "_".join(file)
+            else:
+                file = "_".join(file[:-n])
+
+            # special handling, then add
+            file = file.replace("align_","").replace("cnv_calls","cnvcalls")
+            gcs_uri += file
+
+            # now get actual file extension from file_path_template
+            ext = d['file_path_template'].split('/')[-1].replace("sample_summary",".summary").split('.')
+            ext = [i for i in ext if i in possible_exts] # only keep valid parts, in order they appear
+            ext = ".".join(ext)
+            gcs_uri += "." + ext
+
+            if name == "wes":
+                gcs_uri = gcs_uri.replace(".summary", "_summary") # doesn't change in WES for some reason
+                merge_pointer = merge_pointer[1:] # WES doesn't get starting 0 for some reason
+                if key in ["normal", "tumor"]:
+                    merge_pointer = f"/{key}{merge_pointer}"
 
             # fill in `process_as` entry
             subsubtemplate = {
@@ -265,7 +331,7 @@ def _convert_api_to_template(name : str, schema : dict):
                 "merge_pointer": merge_pointer,
 
                 # TODO generate GCS URIs
-                "gcs_uri_format": "",
+                "gcs_uri_format": gcs_uri,
 
                 "type_ref": "assays/components/local_file.json#properties/file_path",
                 "is_artifact": 1

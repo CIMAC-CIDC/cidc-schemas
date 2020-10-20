@@ -18,7 +18,7 @@ from cidc_schemas.template import (
     _get_facet_group,
     _convert_api_to_template,
     _first_in_context,
-    convert_all_apis
+    convert_all_apis,
 )
 
 from .constants import TEST_SCHEMA_DIR
@@ -506,6 +506,7 @@ def test_convert_api_to_template():
     assert DeepDiff(wes_json, wes_output) == {}
     assert DeepDiff(rna_json, rna_output) == {}
 
+
 def test_convert_all_apis():
     templates = convert_all_apis(True)
 
@@ -513,5 +514,5 @@ def test_convert_all_apis():
     rna = json.load(open(os.path.join(test_dir, "rna_template.json")))
     wes = json.load(open(os.path.join(test_dir, "wes_template.json")))
 
-    assert DeepDiff(rna, templates['rna']) == {}
-    assert DeepDiff(wes, templates['wes']) == {}
+    assert DeepDiff(rna, templates["rna"]) == {}
+    assert DeepDiff(wes, templates["wes"]) == {}

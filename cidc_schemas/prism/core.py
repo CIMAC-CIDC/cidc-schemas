@@ -472,7 +472,7 @@ def prismify(
                     combined_context = dict(local_context, **preamble_context)
                     try:
                         changes, new_files = template.process_field_value(
-                            ws_name, key, val, combined_context, {"encrypt": _encrypt}
+                            ws_name, key, val, combined_context, _encrypt
                         )
                     except ParsingException as e:
                         errors_so_far.append(e)
@@ -497,7 +497,7 @@ def prismify(
             k, v, *_ = row.values
             try:
                 changes, new_files = template.process_field_value(
-                    ws_name, k, v, preamble_context, {"encrypt": _encrypt}
+                    ws_name, k, v, preamble_context, _encrypt
                 )
             except ParsingException as e:
                 errors_so_far.append(e)

@@ -3,6 +3,7 @@ from copy import deepcopy
 from cidc_schemas.prism import SUPPORTED_ANALYSES
 
 from .assay_data import cytof
+from .assay_data import tcr_fastq
 
 from .utils import (
     copy_dict_with_branch,
@@ -1354,7 +1355,7 @@ def tcr_analysis() -> PrismTestData:
         for batch in prismify_patch["assays"]["tcr"]
         for record in batch["records"]
     ]
-    assays = tcr().prismify_patch["assays"]
+    assays = tcr_fastq().prismify_patch["assays"]
     base_trial = get_test_trial(cimac_ids, assays)
 
     # Set up the TCR target trial to include both assay and analysis metadata

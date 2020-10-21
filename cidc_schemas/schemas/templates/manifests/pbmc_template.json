@@ -173,13 +173,10 @@
                             "type_ref": "participant.json#properties/participant_id"
                         },
                         "parent sample ID": {
-                            "$comment": "one of the sample ids should not be allow_empty",
-                            "allow_empty": true,
                             "merge_pointer": "/parent_sample_id",
                             "type_ref": "sample.json#properties/parent_sample_id"
                         },
                         "processed sample ID": {
-                            "$comment": "one of the sample ids should not be allow_empty",
                             "allow_empty": true,
                             "merge_pointer": "/processed_sample_id",
                             "type_ref": "sample.json#properties/processed_sample_id"

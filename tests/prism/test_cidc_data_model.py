@@ -56,7 +56,7 @@ def test_gcs_uri_format(prism_test: PrismTestData):
 
 def test_prismify(prism_test: PrismTestData, monkeypatch):
     monkeypatch.setattr(
-        "cidc_schemas.prism.core._encrypt", lambda x: f"encrypt({str(x)!r})"
+        "cidc_schemas.prism.core._encrypt", lambda x: f"test_encrypted({str(x)!r})"
     )
 
     # Run prismify on the given test case

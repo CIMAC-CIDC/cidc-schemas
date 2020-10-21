@@ -26,19 +26,21 @@ from .constants import SCHEMA_DIR, TEMPLATE_DIR
 from .json_validation import _load_dont_validate_schema
 from .util import get_file_ext
 
+from cidc_ngs_pipeline_api import OUTPUT_APIS
+
 logger = logging.getLogger("cidc_schemas.template")
 
 
-def convert_all_apis(test: bool = False):
+def generate_analysis_template_schemas(test: bool = False):
     """Uses output_API.json's from cidc-ngs-pipeline-api along with existing assays/components/ngs analysis templates to generate templates/analyses schemas"""
-    from cidc_ngs_pipeline_api import SCHEMAS as to_convert
 
+    # TODO get rid of this, move all testing functionality to tests
     # if only testing, just return it
     if test:
         ret = {}
 
     # for each output_API.json
-    for analysis, schema in to_convert.items():
+    for analysis, schema in OUTPUT_APIS.items():
         # try to convert it, but skip if it's not implemented'
         try:
             template = _convert_api_to_template(analysis, schema)
@@ -82,6 +84,10 @@ def _first_in_context(path: list, context: dict):
         (equivalent key in context, rest of path elements, context[key]['properties'])
         ("", [], context) if path doesn't lead to anything in the given context
     """
+    def extend(piece: str, whole: list, offset: int = 1):
+        if len(whole) > offset:
+            return [piece].extend(whole[offset:])
+
     ret = None
     if not isinstance(path, list):
         path = list(path)
@@ -95,20 +101,12 @@ def _first_in_context(path: list, context: dict):
                 path[1:] if len(path) > 1 else [],
                 context[path[0]]["properties"],
             )
-
-        # otherwise, see if there's something more specific first
-        trial = [path[0] + "_" + path[1]]
-        if len(path) > 2:
-            trial.extend(path[2:])
-        ret = _first_in_context(trial, context)
-
-        # if there isn't, we're still done
-        if not ret[0]:
-            ret = (
-                path[0],
-                path[1:] if len(path) > 1 else [],
-                context[path[0]]["properties"],
-            )
+        else:
+            # otherwise, see if there's something more specific first
+            trial = [path[0] + "_" + path[1]]
+            if len(path) > 2:
+                trial.extend(path[2:])
+            ret = _first_in_context(trial, context)
 
     # sometimes `.` are replaced by `_`
     if not ret[0] and "." in path[0]:
@@ -129,17 +127,19 @@ def _first_in_context(path: list, context: dict):
             trial.extend(path[1:])
         ret = _first_in_context(trial, context)
 
+
     # sometimes two are actually stuck together
-    # sometime `logs` is skipped
     if not ret[0] and len(path) > 1:
         trial = ["_".join(path[:2])]
         if len(path) > 2:
             trial.extend(path[2:])
         ret = _first_in_context(trial, context)
-        if not ret[0] and path[0] == "logs":
-            trial = path[1:]
-            ret = _first_in_context(trial, context)
         
+    # sometime `logs` is skipped
+    if not ret[0] and path[0] == "logs" and len(path) > 1:
+        trial = path[1:]
+        ret = _first_in_context(trial, context)
+
     # sometimes the key has added `_`
     if not ret[0] and path[0] in [k.replace("_", "") for k in context.keys()]:
         path[0] = [k for k in context.keys() if k.replace("_", "") == path[0]][0]
@@ -163,6 +163,14 @@ def _first_in_context(path: list, context: dict):
         path = [p.lower() for p in path]
         context = {k.lower(): v for k, v in context.items()}
         ret = _first_in_context(path, context)
+
+    # if there isn't, we're still done
+    if not ret[0]:
+        ret = (
+            path[0],
+            path[1:] if len(path) > 1 else [],
+            context[path[0]]["properties"],
+        )
 
     return ret if ret[0] else ("", path, context)
 

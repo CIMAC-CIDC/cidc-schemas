@@ -60,9 +60,6 @@ def wes_analysis() -> PrismTestData:
                         },
                         "tumor": {
                             "metrics": {
-                                "all_summaries": {
-                                    "upload_placeholder": "81613653-16a7-4f6c-b8ff-e916013b61a2"
-                                },
                                 "coverage_metrics": {
                                     "upload_placeholder": "1ac21de4-6b15-48c0-9a0a-d66b9d99cd49"
                                 },
@@ -165,6 +162,11 @@ def wes_analysis() -> PrismTestData:
                                 },
                             },
                         },
+                        "metrics" : {
+                            "all_summaries": {
+                                "upload_placeholder": "81613653-16a7-4f6c-b8ff-e916013b61a2"
+                            },
+                        }
                     },
                     {
                         "run_id": "run_2",
@@ -199,9 +201,6 @@ def wes_analysis() -> PrismTestData:
                         },
                         "tumor": {
                             "metrics": {
-                                "all_summaries": {
-                                    "upload_placeholder": "5dfc766a-d447-4279-abc4-3b93890b1e41"
-                                },
                                 "coverage_metrics": {
                                     "upload_placeholder": "bc055607-9085-4f47-91e5-8f412c4dfafd"
                                 },
@@ -304,6 +303,11 @@ def wes_analysis() -> PrismTestData:
                                 },
                             },
                         },
+                        "metrics" : {
+                            "all_summaries": {
+                                "upload_placeholder": "5dfc766a-d447-4279-abc4-3b93890b1e41"
+                            },
+                        }
                     },
                 ]
             }
@@ -770,7 +774,7 @@ def rna_level1_analysis() -> PrismTestData:
     prismify_args = get_prismify_args(upload_type)
     prismify_patch = {
         "analysis": {
-            "rnaseq_analysis": {
+            "rna_analysis": {
                 "level_1": [
                     {
                         "cimac_id": "CTTTPP111.00",
@@ -917,7 +921,7 @@ def rna_level1_analysis() -> PrismTestData:
     }
 
     cimac_ids = [
-        r["cimac_id"] for r in prismify_patch["analysis"]["rnaseq_analysis"]["level_1"]
+        r["cimac_id"] for r in prismify_patch["analysis"]["rna_analysis"]["level_1"]
     ]
 
     upload_entries = sum(

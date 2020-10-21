@@ -1,9 +1,9 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
-  "$id": "all_summaries",
-  "title": "WES Pair All Summaries Files",
+  "$id": "pair_metrics",
+  "title": "WES Pair Metrics Files",
   "type": "object",
-  "description": "Pair-level summaries for WES.",
+  "description": "Pair-level metrics for WES.",
   "additionalProperties": false,
   "properties": {
         "all_summaries": {

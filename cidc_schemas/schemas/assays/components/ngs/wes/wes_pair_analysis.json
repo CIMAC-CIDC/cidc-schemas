@@ -39,6 +39,9 @@
     },
     "report": {
       "$ref": "assays/components/ngs/wes/report.json"
+    },
+    "metrics": {
+      "$ref": "assays/components/ngs/wes/pair_metrics.json"
     }
   },
   "required": [

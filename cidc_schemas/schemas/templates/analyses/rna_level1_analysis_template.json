@@ -1,8 +1,8 @@
 {
     "title": "RNAseq level 1 analysis template",
     "description": "Metadata information for RNAseq level 1 Analysis output.",
-    "prism_template_root_object_schema": "assays/components/ngs/rna/rnaseq_analysis.json",
-    "prism_template_root_object_pointer": "/analysis/rnaseq_analysis",
+    "prism_template_root_object_schema": "assays/components/ngs/rna/rna_analysis.json",
+    "prism_template_root_object_pointer": "/analysis/rna_analysis",
     "properties": {
         "worksheets": {
             "RNAseq Analysis": {
@@ -17,7 +17,7 @@
                     "RNAseq Runs": {
                         "cimac id": {
                             "merge_pointer": "/cimac_id",
-                            "type_ref": "assays/components/ngs/rna/rnaseq_level1_analysis.json#properties/cimac_id",
+                            "type_ref": "assays/components/ngs/rna/rna_level1_analysis.json#properties/cimac_id",
                             "process_as": [
                                 {
                                     "parse_through": "lambda id: f'analysis/star/{id}/{id}.sorted.bam'",

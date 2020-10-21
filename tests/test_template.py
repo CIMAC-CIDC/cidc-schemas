@@ -47,7 +47,7 @@ def test_process_field_value():
                     "prism_preamble_object_pointer": "/prism_preamble_object_pointer/0",
                     "preamble_rows": {
                         "preamble_field_1": {
-                            "merge_pointer": "/preamble_field",
+                            "merge_pointer": "0/preamble_field",
                             "type": "string",
                         }
                     },
@@ -55,7 +55,7 @@ def test_process_field_value():
                     "data_columns": {
                         "section_1": {
                             "data_field_1": {
-                                "merge_pointer": "/data_field",
+                                "merge_pointer": "0/data_field",
                                 "type": "number",
                             }
                         }
@@ -142,7 +142,7 @@ def test_template_schema_checks():
                     "data_columns": {
                         "section_1": {
                             "data_field_1": {
-                                "merge_pointer": "/data_field",
+                                "merge_pointer": "0/data_field",
                                 "type": "number",
                                 "is_artifact": True,
                             }
@@ -402,10 +402,10 @@ def test_convert_api_to_template():
     }
 
     rna_api = {
-        "id": [  # converted to cimac id
+        "cimac id": [  # converted to cimac id
             {  # use first entry as example
                 "filter_group": "alignment",
-                "file_path_template": "analysis/star/{id}/{id}.sorted.bam",
+                "file_path_template": "analysis/star/{cimac id}/{cimac id}.sorted.bam",
                 "short_description": "star alignment output",
                 "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
                 "file_purpose": "Analysis view",
@@ -435,7 +435,7 @@ def test_convert_api_to_template():
                                 "type_ref": "assays/components/ngs/wes/wes_pair_analysis.json#properties/run_id",
                                 "process_as": [
                                     {
-                                        "parse_through": "lambda run: f'analysis/clonality/{run}/{run}_pyclone.tsv'",
+                                        "parse_through": "lambda run_id: f'analysis/clonality/{run_id}/{run_id}_pyclone.tsv'",
                                         "merge_pointer": "/clonality/clonality_pyclone",
                                         "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/clonality_pyclone.tsv",
                                         "type_ref": "assays/components/local_file.json#properties/file_path",
@@ -448,7 +448,7 @@ def test_convert_api_to_template():
                                 "type_ref": "sample.json#properties/cimac_id",
                                 "process_as": [
                                     {
-                                        "parse_through": "lambda id: f'analysis/align/{id}/{id}.sorted.dedup.bam'",
+                                        "parse_through": "lambda tumor_cimac_id: f'analysis/align/{tumor_cimac_id}/{tumor_cimac_id}.sorted.dedup.bam'",
                                         "merge_pointer": "/tumor/alignment/align_sorted_dedup",
                                         "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/sorted.dedup.bam",
                                         "type_ref": "assays/components/local_file.json#properties/file_path",
@@ -464,10 +464,10 @@ def test_convert_api_to_template():
     }
 
     rna_json = {
-        "title": "RNAseq level 1 analysis template",
-        "description": "Metadata information for RNAseq level 1 Analysis output.",
-        "prism_template_root_object_schema": "assays/components/ngs/rna/rnaseq_analysis.json",
-        "prism_template_root_object_pointer": "/analysis/rnaseq_analysis",
+        "title": "RNAseq analysis template",
+        "description": "Metadata information for RNAseq Analysis output.",
+        "prism_template_root_object_schema": "assays/components/ngs/rna/rna_analysis.json",
+        "prism_template_root_object_pointer": "/analysis/rna_analysis",
         "properties": {
             "worksheets": {
                 "RNAseq Analysis": {
@@ -482,10 +482,10 @@ def test_convert_api_to_template():
                         "RNAseq Runs": {
                             "cimac id": {
                                 "merge_pointer": "/cimac_id",
-                                "type_ref": "assays/components/ngs/rna/rnaseq_level1_analysis.json#properties/cimac_id",
+                                "type_ref": "assays/components/ngs/rna/rna_level1_analysis.json#properties/cimac_id",
                                 "process_as": [
                                     {
-                                        "parse_through": "lambda id: f'analysis/star/{id}/{id}.sorted.bam'",
+                                        "parse_through": "lambda cimac_id: f'analysis/star/{cimac_id}/{cimac_id}.sorted.bam'",
                                         "merge_pointer": "0/star/sorted_bam",
                                         "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/star/sorted.bam",
                                         "type_ref": "assays/components/local_file.json#properties/file_path",

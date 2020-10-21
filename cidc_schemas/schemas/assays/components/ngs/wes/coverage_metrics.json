@@ -5,9 +5,6 @@
   "type": "object",
   "description": "Coverage metrics output files.",
   "properties": {
-    "all_summaries": {
-      "$ref": "artifacts/artifact_text.json"
-    },
     "mosdepth_region_dist_broad": {
       "$ref": "artifacts/artifact_text.json"
     },

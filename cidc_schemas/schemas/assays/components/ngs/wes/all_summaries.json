@@ -1,0 +1,14 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "all_summaries",
+  "title": "WES Pair All Summaries Files",
+  "type": "object",
+  "description": "Pair-level summaries for WES.",
+  "additionalProperties": false,
+  "properties": {
+        "all_summaries": {
+          "$ref": "artifacts/artifact_text.json"
+        }
+  },
+  "required": ["all_summaries"]
+}

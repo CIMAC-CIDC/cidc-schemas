@@ -39,6 +39,80 @@ class migration:
     def downgrade(metadata: dict, *args, **kwargs) -> MigrationResult:
         raise NotImplementedError
 
+class v0_21_2_to_v0_21_3_wes(migration):
+    """
+    v0.21.2: had `all_summaries` in `wes_pair_analysis/tumor/metrics`
+                as optional entry for assays/components/ngs/coverage_metrics.json
+                only assigned on `wes_pair_analysis/tumor` and not `wes_pair_analysis/normal`
+                pair-level summary, not tumor/normal individually
+
+    v0.21.3: `all_summaries` in new `wes_pair_analysis/metrics`
+    """
+
+    @classmethod
+    def upgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+        analyses = metadata.get("analysis", {}) # /analysis : object
+        if analyses:
+            wes = analyses.get("wes_analysis", {}) # /analysis/wes_analysis : object
+            if wes:
+                runs = wes.pop("pair_runs", [])  # /analysis/wes_analysis/pair_runs : array
+                if runs: # pair_runs/0/tumor required
+                    for n in range(len(runs)):
+                        metrics = runs[n]["tumor"].get("metrics", {}) # /analysis/wes_analysis/pair_runs/0/tumor/metrics : object
+                        if metrics:
+                            summ = metrics.pop("all_summaries", {}) # tumor/metrics/all_summaries : object
+                            if summ:
+                                runs[n]["metrics"] = {"all_summaries": summ}
+
+                    metadata["analysis"]["wes_analysis"]["pair_runs"] = runs
+
+        return MigrationResult(metadata, {})
+
+    @classmethod
+    def downgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+        analyses = metadata.get("analysis", {}) # /analysis : object
+        if analyses:
+            wes = analyses.get("wes_analysis", {}) # /analysis/wes_analysis : object
+            if wes:
+                runs = wes.pop("pair_runs", [])  # /analysis/wes_analysis/pair_runs : array
+                if runs:
+                    for n in range(len(runs)):
+                        metrics = runs[n].pop("metrics", {}) # /analysis/wes_analysis/pair_runs/0 : object
+                        if metrics: # metrics/all_summaries is required
+                            if "metrics" in runs[n]["tumor"]: # /analysis/wes_analysis/pair_runs/0/tumor/metrics : Optional[object]
+                                runs[n]["tumor"]["metrics"]["all_summaries"] = metrics["all_summaries"]
+
+                    metadata["analysis"]["wes_analysis"]["pair_runs"] = runs
+
+        return MigrationResult(metadata, {})
+
+
+class v0_21_2_to_v0_21_3_rna(migration):
+    """
+    v0.21.2: had `rnaseq` in several places
+    v0.21.3: replaced with `rna` in all places
+    """
+
+    @classmethod
+    def upgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+        analyses = metadata.get("analysis", {}) # /analysis : object
+        if analyses:
+            rna = analyses.pop("rnaseq_analysis", {}) # /analysis/rnaseq_analysis : object
+            if rna:
+                analyses["rna_analysis"] = rna
+
+        return MigrationResult(metadata, {})
+
+    @classmethod
+    def downgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+        analyses = metadata.get("analysis", {})
+        if analyses:
+            rna = analyses.pop("rna_analysis", None)
+            if rna:
+                analyses["rnaseq_analysis"] = rna
+
+        return MigrationResult(metadata, {})
+
 
 class v0_15_2_to_v0_15_3(migration):
     """

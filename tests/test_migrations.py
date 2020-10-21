@@ -6,6 +6,8 @@ from cidc_schemas.migrations import (
     MigrationError,
     v0_10_2_to_v0_11_0,
     v0_15_2_to_v0_15_3,
+    v0_21_2_to_v0_21_3_rna,
+    v0_21_2_to_v0_21_3_wes,
 )
 
 
@@ -21,6 +23,61 @@ def test_follow_path():
     assert _follow_path(d, "a", "b") is None
     d = {"a": [val]}
     assert _follow_path(d, 1) is None
+
+
+def test_v0_21_2_to_v0_21_3_rna():
+    assert v0_21_2_to_v0_21_3_rna.downgrade(
+        v0_21_2_to_v0_21_3_rna.upgrade({"foo":"bar"}).result
+        ).result == {"foo":"bar"}
+
+    ct = {
+        "analysis": {
+            "rnaseq_analysis": {
+                "level_1" : [
+                    {"foo":"bar"}
+                    ]
+                }
+            }
+        }
+
+    upgraded_ct = v0_21_2_to_v0_21_3_rna.upgrade(ct).result
+    assert "rnaseq_analysis" not in upgraded_ct["analysis"]
+    assert "rna_analysis" in upgraded_ct["analysis"]
+
+    assert upgraded_ct["analysis"]["rna_analysis"]["level_1"][0] == {"foo":"bar"}
+
+    assert ct == v0_21_2_to_v0_21_3_rna.downgrade(upgraded_ct).result
+
+
+def test_v0_21_2_to_v0_21_3_wes():
+    assert v0_21_2_to_v0_21_3_wes.downgrade(
+        v0_21_2_to_v0_21_3_wes.upgrade({"foo":"bar"}).result
+        ).result == {"foo":"bar"}
+
+    ct = {
+        "analysis": {
+            "wes_analysis": {
+                "pair_runs" : [
+                    {
+                        "tumor": {
+                            "metrics": {
+                                "all_summaries": {"foo":"bar"}
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+
+    upgraded_ct = v0_21_2_to_v0_21_3_wes.upgrade(ct).result
+    print(upgraded_ct)
+    assert "metrics" in upgraded_ct["analysis"]["wes_analysis"]["pair_runs"][0]
+    assert "all_summaries" in upgraded_ct["analysis"]["wes_analysis"]["pair_runs"][0]["metrics"]
+    assert upgraded_ct["analysis"]["wes_analysis"]["pair_runs"][0]["metrics"]["all_summaries"] == {"foo":"bar"}
+    assert "all_summaries" not in upgraded_ct["analysis"]["wes_analysis"]["pair_runs"][0]["tumor"]["metrics"]
+
+    assert ct == v0_21_2_to_v0_21_3_wes.downgrade(upgraded_ct).result
 
 
 def test_v0_15_2_to_v0_15_3():

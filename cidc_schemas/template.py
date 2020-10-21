@@ -82,6 +82,7 @@ def _first_in_context(path: list, context: dict):
         (equivalent key in context, rest of path elements, context[key]['properties'])
         ("", [], context) if path doesn't lead to anything in the given context
     """
+    ret = None
     if not isinstance(path, list):
         path = list(path)
 
@@ -89,7 +90,7 @@ def _first_in_context(path: list, context: dict):
     if path[0] in context:
         # if this is the end, we're done
         if len(path) == 1:
-            return (
+            ret = (
                 path[0],
                 path[1:] if len(path) > 1 else [],
                 context[path[0]]["properties"],
@@ -100,90 +101,70 @@ def _first_in_context(path: list, context: dict):
         if len(path) > 2:
             trial.extend(path[2:])
         ret = _first_in_context(trial, context)
-        if ret[0]:
-            return ret
 
         # if there isn't, we're still done
-        else:
-            return (
+        if not ret[0]:
+            ret = (
                 path[0],
                 path[1:] if len(path) > 1 else [],
                 context[path[0]]["properties"],
             )
 
     # sometimes `.` are replaced by `_`
-    if "." in path[0]:
+    if not ret[0] and "." in path[0]:
         trial = [path[0].replace(".", "_")]
         if len(path) > 1:
             trial.extend(path[1:])
         ret = _first_in_context(trial, context)
-        if ret[0]:
-            return ret
-        else:
+        if not ret[0]
             trial = path[0].split(".")
             if len(path) > 1:
                 trial.extend(path[2:])
             ret = _first_in_context(trial, context)
-            if ret[0]:
-                return ret
 
     # sometimes `summary` is pulled up from the end
-    if "summary" in path[-1] and "summary" not in path[0]:
+    if not ret[0] and "summary" in path[-1] and "summary" not in path[0]:
         trial = [path[0] + "_summary"]
         if len(path) > 1:
             trial.extend(path[1:])
         ret = _first_in_context(trial, context)
-        if ret[0]:
-            return ret
 
     # sometimes two are actually stuck together
     # sometime `logs` is skipped
-    if len(path) > 1:
+    if not ret[0] and len(path) > 1:
         trial = ["_".join(path[:2])]
         if len(path) > 2:
             trial.extend(path[2:])
         ret = _first_in_context(trial, context)
-        if ret[0]:
-            return ret
-        elif path[0] == "logs":
+        if not ret[0] and path[0] == "logs":
             trial = path[1:]
             ret = _first_in_context(trial, context)
-            if ret[0]:
-                return ret
-
+        
     # sometimes the key has added `_`
-    if path[0] in [k.replace("_", "") for k in context.keys()]:
+    if not ret[0] and path[0] in [k.replace("_", "") for k in context.keys()]:
         path[0] = [k for k in context.keys() if k.replace("_", "") == path[0]][0]
-        return _first_in_context(path, context)
+        ret = _first_in_context(path, context)
 
     # sometimes the key is missing `_`
-    if "_" in path[0]:
+    if not ret[0] and "_" in path[0]:
         trial = [path[0].replace("_", "")]
         if len(path) > 1:
             trial.extend(path[1:])
         ret = _first_in_context(trial, context)
-        if ret[0]:
-            return ret
 
     # sometimes bam isn't included in `bam.bai` -> `index`
-    if "bam_index" in path[-1]:
+    if not ret[0] and "bam_index" in path[-1]:
         trial = path[:-1]
         trial.append(path[-1].replace("bam_index", "index"))
         ret = _first_in_context(trial, context)
-        if ret[0]:
-            return ret
 
     # sometimes capitalisation changes
-    if path[0].lower() != path[0]:
+    if not ret[0] and path[0].lower() != path[0]:
         path = [p.lower() for p in path]
         context = {k.lower(): v for k, v in context.items()}
         ret = _first_in_context(path, context)
-        if ret[0]:
-            return ret
 
-    # if nothing else, just give up
-    # this also happens if trailing entries are not part of the key
-    return "", path, context
+    return ret if ret[0] else ("", path, context)
 
 
 def _initialize_template_schema(name: str, title: str, pointer: str):

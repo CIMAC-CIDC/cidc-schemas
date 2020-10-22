@@ -223,9 +223,8 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
         file_path = file_path[1:]
 
     # look into first step
-    merge_pointer = "0"
     curr_step, file_path, curr_context = _first_in_context(file_path, context)
-    merge_pointer += "/" + curr_step
+    merge_pointer = "0/" + curr_step
     # then off to the races
     while len(curr_step):
         curr_step, file_path, curr_context = _first_in_context(file_path, curr_context)

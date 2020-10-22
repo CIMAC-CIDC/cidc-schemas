@@ -507,7 +507,7 @@ def test_convert_api_to_template():
     assert DeepDiff(rna_json, rna_output) == {}
 
 
-def test_generate_analysis_template_schemas(monkeypatch, tmpdir):
+def test_generate_analysis_template_schemas(tmpdir):
     generate_analysis_template_schemas(
         tmpdir.strpath, lambda file: f"{file}_template.json"
     )

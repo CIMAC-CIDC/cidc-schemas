@@ -27,6 +27,9 @@
     "sample_sheet": {
       "$ref": "artifacts/artifact_csv.json"
     },
+    "summary_info": {
+      "$ref": "artifacts/artifact_csv.json"
+    },
     "sequencing_run_date": {
       "description": "Date when the TCR sequencing was run.",
       "type": "string",
@@ -47,8 +50,7 @@
   "required": [
     "records",
     "batch_id",
-    "sequencing_run_date",
-    "sample_sheet"
+    "sequencing_run_date"
   ],
   "mergeStrategy": "objectMerge"
 }

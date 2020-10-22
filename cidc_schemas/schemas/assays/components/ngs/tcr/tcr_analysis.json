@@ -4,7 +4,7 @@
     "title": "TCR Output Files",
     "description": "Output files generated from the TCRseq assay: TRA and TRB clones",
     "type": "object",
-    "additionalProperties": false,
+    "additionalProperties": true,
     "properties": {
         "tca_clone": {
             "$ref": "artifacts/artifact_csv.json"

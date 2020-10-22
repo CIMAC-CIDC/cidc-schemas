@@ -1319,25 +1319,25 @@ def tcr_analysis() -> PrismTestData:
     }
     upload_entries = [
         LocalFileUploadEntry(
-            local_path="tra_clones_count_1.csv",
+            local_path="1A_10_0_TRA_clones_umi_count.csv",
             gs_key="test_prism_trial_id/tcr_analysis/XYZ/CTTTPP111.00/tra_clone.csv",
             upload_placeholder="tcrf6d8a-811d-4213-8de3-b1fb92432c37",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="trb_clones_count_1.csv",
+            local_path="1A_10_0_TRB_clones_umi_count.csv",
             gs_key="test_prism_trial_id/tcr_analysis/XYZ/CTTTPP111.00/trb_clone.csv",
             upload_placeholder="tcrc9744-6065-4c0d-a595-a3db4f3605ec",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="tra_clones_count_2.csv",
+            local_path="2A_10_0_TRA_clones_umi_count.csv",
             gs_key="test_prism_trial_id/tcr_analysis/XYZ/CTTTPP121.00/tra_clone.csv",
             upload_placeholder="tcrc578a-77f3-4898-84ab-e124f1cf000f",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="trb_clones_count_2.csv",
+            local_path="2A_10_0_TRB_clones_umi_count.csv",
             gs_key="test_prism_trial_id/tcr_analysis/XYZ/CTTTPP121.00/trb_clone.csv",
             upload_placeholder="tcr88f77-07ec-46b9-9e9f-53532ae96efc",
             metadata_availability=False,

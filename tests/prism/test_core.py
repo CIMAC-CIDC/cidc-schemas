@@ -201,16 +201,9 @@ def test_prismify_encrypt(monkeypatch):
                         "prism_data_object_pointer": "/files/-",
                         "preamble_rows": {
                             prop: {
-                                "do_not_merge": True,
-                                "allow_empty": True,
+                                "merge_pointer": "/file_path",
                                 "type": "string",
-                                "process_as": [
-                                    {
-                                        "merge_pointer": "/file_path",
-                                        "type": "string",
-                                        "parse_through": "encrypt",
-                                    }
-                                ],
+                                "encrypt": True,
                             }
                         },
                     }
@@ -221,11 +214,9 @@ def test_prismify_encrypt(monkeypatch):
         monkeypatch,
     )
 
-    _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
-    assert len(errs) == 1
-    assert str(errs[0]).startswith(
-        f'Cannot extract file_path from {prop} value: {"some str"!r}'
-    )
+    # pretend to forgot 'set_prism_encrypt_key' so we get server error
+    with pytest.raises(Exception, match="Encrypt is not initialized"):
+        core.prismify(xlsx, template, TEST_SCHEMA_DIR)
 
     core.set_prism_encrypt_key("key")
 

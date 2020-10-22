@@ -252,11 +252,13 @@ def _get_encrypt_hmac():
     return _encrypt_hmac.copy()
 
 
-def _encrypt(obj):
+def _check_encrypt_init():
     if not _encrypt_hmac:
-        raise Exception(
-            "encrypt is not initialized. set_prism_encrypt_key should be called before"
-        )
+        raise Exception("Encrypt is not initialized")
+
+
+def _encrypt(obj):
+    _check_encrypt_init()
 
     h = _get_encrypt_hmac()
     h.update(str(obj).encode())
@@ -373,6 +375,8 @@ def prismify(
     Prism now uses `prism_preamble_object_schema` to merge all that together
     with respect to `mergeStrategy`es defined in that schema.
     """
+
+    _check_encrypt_init()
 
     if template.type not in SUPPORTED_TEMPLATES:
         raise NotImplementedError(

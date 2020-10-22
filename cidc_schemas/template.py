@@ -31,39 +31,23 @@ from cidc_ngs_pipeline_api import OUTPUT_APIS
 logger = logging.getLogger("cidc_schemas.template")
 
 
-def generate_analysis_template_schemas(test: bool = False):
+def generate_analysis_template_schemas(
+    target_dir: str = os.path.join(TEMPLATE_DIR, "analyses"),
+    fname_format: Callable[[str], str] = lambda file: f"{file}_analysis_template.json",
+):
     """Uses output_API.json's from cidc-ngs-pipeline-api along with existing assays/components/ngs analysis templates to generate templates/analyses schemas"""
-
-    # TODO get rid of this, move all testing functionality to tests
-    # if only testing, just return it
-    if test:
-        ret = {}
-
     # for each output_API.json
     for analysis, schema in OUTPUT_APIS.items():
         # try to convert it, but skip if it's not implemented'
         try:
             template = _convert_api_to_template(analysis, schema)
         except NotImplementedError as e:
-            print(e)
-            continue
-
-        # store for return
-        if test:
-            ret[analysis] = template
-        # otherwise write it to disk
+            print(
+                f"skipping {analysis} as it doesn't have a corresponding `assays/components/ngs/{analysis}/{'rnaseq' if analysis == 'rna' else analysis}_analysis.json`"
+            )
         else:
-            with open(
-                os.path.join(
-                    TEMPLATE_DIR, "analyses", f"{analysis}_analysis_template.json"
-                ),
-                "w",
-            ) as f:
+            with open(os.path.join(target_dir, fname_format(analysis)), "w") as f:
                 json.dump(template, f)
-
-    # make the return
-    if test:
-        return ret
 
 
 def _first_in_context(path: list, context: dict):
@@ -84,57 +68,42 @@ def _first_in_context(path: list, context: dict):
         (equivalent key in context, rest of path elements, context[key]['properties'])
         ("", [], context) if path doesn't lead to anything in the given context
     """
-    def extend(piece: str, whole: list, offset: int = 1):
-        if len(whole) > offset:
-            return [piece].extend(whole[offset:])
-
-    ret = None
+    ret = ("", [], {})  # index-safe equivalent of None
     if not isinstance(path, list):
         path = list(path)
+    if not path:
+        return ret
 
     # if we can step down
     if path[0] in context:
         # if this is the end, we're done
         if len(path) == 1:
-            ret = (
-                path[0],
-                path[1:] if len(path) > 1 else [],
-                context[path[0]]["properties"],
-            )
+            ret = (path[0], [], context[path[0]]["properties"])  # path[1:] == []
         else:
             # otherwise, see if there's something more specific first
-            trial = [path[0] + "_" + path[1]]
-            if len(path) > 2:
-                trial.extend(path[2:])
+            trial = [path[0] + "_" + path[1]] + path[2:]
             ret = _first_in_context(trial, context)
+            if not ret[0]:
+                ret = (path[0], path[1:], context[path[0]]["properties"])
 
     # sometimes `.` are replaced by `_`
     if not ret[0] and "." in path[0]:
-        trial = [path[0].replace(".", "_")]
-        if len(path) > 1:
-            trial.extend(path[1:])
+        trial = [path[0].replace(".", "_")] + path[1:]
         ret = _first_in_context(trial, context)
-        if not ret[0]
-            trial = path[0].split(".")
-            if len(path) > 1:
-                trial.extend(path[2:])
+        if not ret[0]:
+            trial = path[0].split(".") + path[2:]
             ret = _first_in_context(trial, context)
 
     # sometimes `summary` is pulled up from the end
     if not ret[0] and "summary" in path[-1] and "summary" not in path[0]:
-        trial = [path[0] + "_summary"]
-        if len(path) > 1:
-            trial.extend(path[1:])
+        trial = [path[0] + "_summary"] + path[1:]
         ret = _first_in_context(trial, context)
-
 
     # sometimes two are actually stuck together
     if not ret[0] and len(path) > 1:
-        trial = ["_".join(path[:2])]
-        if len(path) > 2:
-            trial.extend(path[2:])
+        trial = ["_".join(path[:2])] + path[2:]
         ret = _first_in_context(trial, context)
-        
+
     # sometime `logs` is skipped
     if not ret[0] and path[0] == "logs" and len(path) > 1:
         trial = path[1:]
@@ -147,40 +116,33 @@ def _first_in_context(path: list, context: dict):
 
     # sometimes the key is missing `_`
     if not ret[0] and "_" in path[0]:
-        trial = [path[0].replace("_", "")]
-        if len(path) > 1:
-            trial.extend(path[1:])
+        trial = [path[0].replace("_", "")] + path[1:]
         ret = _first_in_context(trial, context)
 
     # sometimes bam isn't included in `bam.bai` -> `index`
     if not ret[0] and "bam_index" in path[-1]:
-        trial = path[:-1]
-        trial.append(path[-1].replace("bam_index", "index"))
+        trial = path[:-1] + [path[-1].replace("bam_index", "index")]
         ret = _first_in_context(trial, context)
 
     # sometimes capitalisation changes
     if not ret[0] and path[0].lower() != path[0]:
-        path = [p.lower() for p in path]
+        trial = [p.lower() for p in path]
         context = {k.lower(): v for k, v in context.items()}
-        ret = _first_in_context(path, context)
+        ret = _first_in_context(trial, context)
 
     # if there isn't, we're still done
     if not ret[0]:
-        ret = (
-            path[0],
-            path[1:] if len(path) > 1 else [],
-            context[path[0]]["properties"],
-        )
+        ret = ("", path, context)  # [] if len(path) == 1
 
     return ret if ret[0] else ("", path, context)
 
 
 def _initialize_template_schema(name: str, title: str, pointer: str):
-    title = "RNAseq level 1" if name == "RNAseq" else name
+    long_title = "RNAseq level 1" if title == "RNAseq" else title
     # static
     template = {
-        "title": f"{title} analysis template",
-        "description": f"Metadata information for {title} Analysis output.",
+        "title": f"{long_title} analysis template",
+        "description": f"Metadata information for {long_title} Analysis output.",
         "prism_template_root_object_schema": f"assays/components/ngs/{name}/{'rnaseq' if name == 'rna' else name}_analysis.json",
         "prism_template_root_object_pointer": f"/analysis/{'rnaseq' if name == 'rna' else name}_analysis",
         "properties": {
@@ -223,7 +185,7 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
     file_path = file_path.replace("//", "/").replace("--", "_")
 
     # specialty conversions for existing non-standard usage
-    fixes = { # old : new
+    fixes = {  # old : new
         ".bam.bai": ".bam.index",
         "pyclone.tsv": "clonality_pyclone",
         "copynumber/": "copynumber/copynumber_",
@@ -233,10 +195,10 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
         "/align": "/alignment/align",
         "sample_summar": "summar",
         "all_epitopes": "epitopes",
-        ".txt.tn.tsv": ".tsv"
+        ".txt.tn.tsv": ".tsv",
     }
     for old, new in fixes.items():
-        path = path.replace(old, new)
+        file_path = file_path.replace(old, new)
 
     # special handling for `all_summaries`
     if key not in ["tumor cimac id", "normal cimac id"]:
@@ -263,12 +225,10 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
     # look into first step
     merge_pointer = "0"
     curr_step, file_path, curr_context = _first_in_context(file_path, context)
-        merge_pointer += "/" + curr_step
+    merge_pointer += "/" + curr_step
     # then off to the races
     while len(curr_step):
-        curr_step, file_path, curr_context = _first_in_context(
-            file_path, curr_context
-        )
+        curr_step, file_path, curr_context = _first_in_context(file_path, curr_context)
         if curr_step:
             merge_pointer += "/" + curr_step
 
@@ -281,7 +241,7 @@ def _calc_gcs_uri_path(name: str, merge_pointer: str):
     if name == "wes":  # WES doesn't get the beginning path for some reason
         file = merge_pointer[2:].rsplit("/", 1)[1]
     else:
-        file = merge_pointer[2:].copy()
+        file = merge_pointer[2:]
     # special handling for .bam.bai
     file = file.replace("_bam_index", "_bam_bai").replace("_index", "_bam_bai")
 
@@ -337,10 +297,11 @@ def _convert_api_to_template(name: str, schema: dict):
             f"{name} doesn't have a corresponding `assays/components/ngs/{name}/{'rnaseq' if name == 'rna' else name}_analysis.json`"
         ) from e
 
-
     # so many different ways of writing it
     title = "RNAseq" if name == "rna" else name.upper()
-    pointer = [k for k in assay_schema["properties"].keys() if not k.startswith("merge")][0]
+    pointer = [
+        k for k in assay_schema["properties"].keys() if not k.startswith("merge")
+    ][0]
 
     template = _initialize_template_schema(name, title, pointer)
 
@@ -350,7 +311,9 @@ def _convert_api_to_template(name: str, schema: dict):
         # so many ways to write this too
         if long_key == "id":
             long_key = "cimac id"  # assume CIMAC if just 'id'
-        pysafe_key = "id" if "cimac id" in long_key else "run" if long_key == "run id" else k
+        pysafe_key = (
+            "id" if "cimac id" in long_key else "run" if long_key == "run id" else k
+        )
         short_key = (
             "normal"
             if long_key == "normal cimac id"
@@ -360,8 +323,8 @@ def _convert_api_to_template(name: str, schema: dict):
         )
 
         # static
-        subtemplate[k] = {
-            "merge_pointer": f"/{k.replace(' ','_')}",
+        subtemplate[long_key] = {
+            "merge_pointer": f"/{long_key.replace(' ','_')}",
             # complicated because of non-systematic naming
             "type_ref": f"assays/components/ngs/{name}/{'rnaseq_level1' if name == 'rna' else 'wes_pair' if name == 'wes' and long_key == 'run id' else name}_analysis.json#properties/{long_key.replace(' ','_')}"
             if "cimac id" not in long_key or name != "wes"
@@ -370,9 +333,9 @@ def _convert_api_to_template(name: str, schema: dict):
         }
 
         if short_key in ["normal", "tumor"]:
-            subtemplate[long_key]["merge_pointer"] = subtemplate[k]["merge_pointer"].replace(
-                "_cimac", "/cimac"
-            )
+            subtemplate[long_key]["merge_pointer"] = subtemplate[long_key][
+                "merge_pointer"
+            ].replace("_cimac", "/cimac")
 
         # keep track of where we are in the analysis schema
         context = assay_schema["properties"][pointer]["items"]["properties"]
@@ -387,14 +350,11 @@ def _convert_api_to_template(name: str, schema: dict):
         for entry in entries:  # entries = list[dict]
             # get the local file path
             file_path = entry["file_path_template"]
-            # these just don't get caught
-            if "filter.exons" in file_path:
-                continue
 
             # calculate merge_pointer
-            merge_pointer = _calc_merge_pointer(file_path, context, k)
+            merge_pointer = _calc_merge_pointer(file_path, context, long_key)
             # store if non-trivial merge_pointer
-            if merge_pointer in ["", "0"]: # "" for WES, "0" otherwise
+            if merge_pointer in ["", "0"]:  # "" for WES, "0" otherwise
                 print("skipping", entry["file_path_template"])
                 continue
 
@@ -410,6 +370,24 @@ def _convert_api_to_template(name: str, schema: dict):
             gcs_uri += _calc_gcs_uri_path(name, merge_pointer)
 
             # now get actual file extension from file_path_template
+            possible_exts = [
+                "tsv",
+                "log",
+                "summary",
+                "txt",
+                "gz",
+                "bam",
+                "bai",
+                "tn",
+                "vcf",
+                "yaml",
+                "csv",
+                "zip",
+                "json",
+                "dedup",
+                "stat",
+                "sf",
+            ]
             ext = (
                 entry["file_path_template"]
                 .split("/")[-1]
@@ -442,7 +420,7 @@ def _convert_api_to_template(name: str, schema: dict):
                 "is_artifact": 1,
             }
 
-            subtemplate[k]["process_as"].append(subsubtemplate)
+            subtemplate[long_key]["process_as"].append(subsubtemplate)
 
         # store it all on the static part
         template["properties"]["worksheets"][f"{title} Analysis"]["data_columns"][

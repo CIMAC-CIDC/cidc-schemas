@@ -18,7 +18,7 @@ from cidc_schemas.template import (
     _get_facet_group,
     _convert_api_to_template,
     _first_in_context,
-    convert_all_apis,
+    generate_analysis_template_schemas,
 )
 
 from .constants import TEST_SCHEMA_DIR
@@ -388,7 +388,7 @@ def test_convert_api_to_template():
                 "short_description": "clonality_pyclone file",
                 "long_description": "clonality_pyclone file clonality_pyclone file",
                 "file_purpose": "Miscellaneous",
-            },
+            }
         ],
         "tumor cimac id": [
             {
@@ -397,7 +397,7 @@ def test_convert_api_to_template():
                 "short_description": "align_sorted_dedup file",
                 "long_description": "align_sorted_dedup file align_sorted_dedup file",
                 "file_purpose": "Miscellaneous",
-            },
+            }
         ],
     }
 
@@ -409,8 +409,8 @@ def test_convert_api_to_template():
                 "short_description": "star alignment output",
                 "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
                 "file_purpose": "Analysis view",
-            },
-        ],
+            }
+        ]
     }
 
     wes_json = {
@@ -507,12 +507,20 @@ def test_convert_api_to_template():
     assert DeepDiff(rna_json, rna_output) == {}
 
 
-def test_convert_all_apis():
-    templates = convert_all_apis(True)
+def test_generate_analysis_template_schemas(monkeypatch, tmpdir):
+    generate_analysis_template_schemas(
+        tmpdir.strpath, lambda file: f"{file}_template.json"
+    )
 
     test_dir = os.path.join(TEST_SCHEMA_DIR, "target-templates")
-    rna = json.load(open(os.path.join(test_dir, "rna_template.json")))
-    wes = json.load(open(os.path.join(test_dir, "wes_template.json")))
+    good_rna = json.load(open(os.path.join(test_dir, "rna_template.json")))
+    good_wes = json.load(open(os.path.join(test_dir, "wes_template.json")))
 
-    assert DeepDiff(rna, templates["rna"]) == {}
-    assert DeepDiff(wes, templates["wes"]) == {}
+    new_rna = json.load(open(tmpdir.join("rna_template.json")))
+    new_wes = json.load(open(tmpdir.join("wes_template.json")))
+
+    print(good_wes)
+    print(new_wes)
+
+    assert DeepDiff(good_rna, new_rna) == {}
+    assert DeepDiff(good_wes, new_wes) == {}

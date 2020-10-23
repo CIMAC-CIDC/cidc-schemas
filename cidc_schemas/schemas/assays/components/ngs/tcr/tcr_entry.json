@@ -13,5 +13,8 @@
         }
   },
   "mergeStrategy": "objectMerge",
-  "required": ["cimac_id", "files"]
+  "required": [
+    "cimac_id",
+    "files"
+  ]
 }

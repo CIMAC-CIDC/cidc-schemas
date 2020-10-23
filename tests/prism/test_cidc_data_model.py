@@ -63,6 +63,7 @@ def test_prismify(prism_test: PrismTestData, monkeypatch):
     patch, upload_entries, errs = prismify(*prism_test.prismify_args)
 
     # Ensure no errors resulted from the prismify run
+    print(errs)
     assert len(errs) == 0
 
     # Compare the received upload entries with the expected upload entries.

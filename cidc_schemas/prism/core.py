@@ -257,12 +257,15 @@ def _check_encrypt_init():
         raise Exception("Encrypt is not initialized")
 
 
+_ENCRYPTED_FIELD_LEN = 32
+
+
 def _encrypt(obj):
     _check_encrypt_init()
 
     h = _get_encrypt_hmac()
     h.update(str(obj).encode())
-    return (base64.b64encode(h.digest()))[:32].decode()
+    return (base64.b64encode(h.digest()))[:_ENCRYPTED_FIELD_LEN].decode()
 
 
 def prismify(

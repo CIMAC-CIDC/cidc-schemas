@@ -1,6 +1,8 @@
 from copy import deepcopy
 from typing import NamedTuple, Dict
 
+from .prism.core import _ENCRYPTED_FIELD_LEN, _encrypt
+
 
 def _follow_path(d: dict, *keys):
     for key in keys:
@@ -38,6 +40,46 @@ class migration:
     @staticmethod
     def downgrade(metadata: dict, *args, **kwargs) -> MigrationResult:
         raise NotImplementedError
+
+
+class v0_21_1_to_v0_22_0(migration):
+    """
+    Hashing participant/participant_id and sample/parent_sample_id,processed_sample_id
+    """
+
+    @classmethod
+    def upgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+
+        not_reported = _encrypt("Not reported")
+
+        for p in metadata.get("participants", []):
+
+            if len(p["participant_id"]) != _ENCRYPTED_FIELD_LEN:
+                p["participant_id"] = _encrypt(p["participant_id"])
+
+            for s in p["samples"]:
+
+                if s["parent_sample_id"] == "X":
+                    s["parent_sample_id"] = s["processed_sample_id"]
+
+                if s["processed_sample_id"] == not_reported:
+                    s["processed_sample_id"] = s["parent_sample_id"]
+
+                if (
+                    len(s["parent_sample_id"]) == _ENCRYPTED_FIELD_LEN
+                    and len(s.get("processed_sample_id", "")) == _ENCRYPTED_FIELD_LEN
+                ):
+                    # both are hashed so skip
+                    continue
+
+                s["processed_sample_id"] = _encrypt(s["processed_sample_id"])
+                s["parent_sample_id"] = _encrypt(s["parent_sample_id"])
+
+        return MigrationResult(metadata, {})
+
+    @classmethod
+    def downgrade(cls, metadata: dict, *args, **kwargs):
+        MigrationResult(metadata, {})
 
 
 class v0_15_2_to_v0_15_3(migration):

@@ -22,7 +22,7 @@
                         "is_artifact": 1
                     }
                 },
-                "prism_data_object_pointer": "/records/-",
+                "prism_data_object_pointer": "/pair_runs/-",
                 "data_columns": {
                     "TCRseq Runs": {
                         "cimac id": {

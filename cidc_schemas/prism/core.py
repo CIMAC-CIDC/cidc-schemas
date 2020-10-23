@@ -526,5 +526,4 @@ def prismify(
     else:
         root_ct_obj = template_root_obj
 
-    print("blah\n", collected_files, "\n")
     return root_ct_obj, collected_files, errors_so_far

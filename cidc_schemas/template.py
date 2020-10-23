@@ -31,6 +31,26 @@ from cidc_ngs_pipeline_api import OUTPUT_APIS
 logger = logging.getLogger("cidc_schemas.template")
 
 
+POSSIBLE_FILE_EXTS = [
+        "tsv",
+        "log",
+        "summary",
+        "txt",
+        "gz",
+        "bam",
+        "bai",
+        "tn",
+        "vcf",
+        "yaml",
+        "csv",
+        "zip",
+        "json",
+        "dedup",
+        "stat",
+        "sf",
+    ]
+
+
 def generate_analysis_template_schemas(
     target_dir: str = os.path.join(TEMPLATE_DIR, "analyses"),
     fname_format: Callable[[str], str] = lambda file: f"{file}_analysis_template.json",
@@ -235,7 +255,6 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
 
 
 def _calc_gcs_uri_path(name: str, merge_pointer: str):
-    ret = ""
     # generate GCS URI ending from merge pointer
     if name == "wes":  # WES doesn't get the beginning path for some reason
         file = merge_pointer[2:].rsplit("/", 1)[1]
@@ -246,40 +265,12 @@ def _calc_gcs_uri_path(name: str, merge_pointer: str):
 
     # guess at file extension from merge_pointer
     file = file.split("_")
-    possible_exts = [
-        "tsv",
-        "log",
-        "summary",
-        "txt",
-        "gz",
-        "bam",
-        "bai",
-        "tn",
-        "vcf",
-        "yaml",
-        "csv",
-        "zip",
-        "json",
-        "dedup",
-        "stat",
-        "sf",
-    ]
 
-    # look for last entry that isn't a file extension
-    n = 1
-    while n <= len(file):
-        if file[-n] not in possible_exts:  # go from the right
-            n -= 1  # we went too far, so decrement
-            break
-        else:
-            n += 1  # now look at previous
-
-    # cut file name before file extension
-    if n < 1:
-        file = "_".join(file)
-    else:
-        file = "_".join(file[:-n])
-
+    # trim off file extension from path
+    while file[-n] in POSSIBLE_FILE_EXTS: # go from the right
+        file.pop()
+    file = "_".join(file)
+    
     # special handling, then return
     file = file.replace("align_", "").replace("cnv_calls", "cnvcalls")
     return file
@@ -369,7 +360,7 @@ def _convert_api_to_template(name: str, schema: dict):
             gcs_uri += _calc_gcs_uri_path(name, merge_pointer)
 
             # now get actual file extension from file_path_template
-            possible_exts = [
+            POSSIBLE_FILE_EXTS = [
                 "tsv",
                 "log",
                 "summary",
@@ -394,7 +385,7 @@ def _convert_api_to_template(name: str, schema: dict):
                 .split(".")
             )
             ext = [
-                i for i in ext if i in possible_exts
+                i for i in ext if i in POSSIBLE_FILE_EXTS
             ]  # only keep valid parts, in order they appear
             ext = ".".join(ext)
             gcs_uri += "." + ext

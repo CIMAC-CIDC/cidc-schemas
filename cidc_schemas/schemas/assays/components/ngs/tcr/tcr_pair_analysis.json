@@ -6,6 +6,10 @@
     "type": "object",
     "additionalProperties": true,
     "properties": {
+        "cimac_id": {
+            "$comment": "Id of a sample within this clinical trial, that this record is based upon.",
+            "$ref": "sample.json#properties/cimac_id"
+        },
         "tca_clone": {
             "$ref": "artifacts/artifact_csv.json"
         },

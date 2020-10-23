@@ -1,0 +1,16 @@
+{
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "$id": "tcr_pair_analysis",
+    "title": "TCRseq analysis TRA/TRB clone output files",
+    "description": "Output files generated from the TCRseq assay: TRA and TRB clones",
+    "type": "object",
+    "additionalProperties": true,
+    "properties": {
+        "tca_clone": {
+            "$ref": "artifacts/artifact_csv.json"
+        },
+        "trb_clone": {
+            "$ref": "artifacts/artifact_csv.json"
+        }
+    }
+}

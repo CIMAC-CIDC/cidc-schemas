@@ -25,6 +25,7 @@ from collections import OrderedDict, defaultdict
 from .constants import SCHEMA_DIR, TEMPLATE_DIR
 from .json_validation import _load_dont_validate_schema
 from .util import get_file_ext
+from .prism import InvalidMergeTargetException
 
 from cidc_ngs_pipeline_api import OUTPUT_APIS
 
@@ -62,6 +63,7 @@ def generate_analysis_template_schemas(
         try:
             template = _convert_api_to_template(analysis, schema)
         except NotImplementedError as e:
+            # I think this should skip not print because we don't really care if they upload new output_API's if there's no model to match it to
             print(
                 f"skipping {analysis} as it doesn't have a corresponding `assays/components/ngs/{analysis}/{'rnaseq' if analysis == 'rna' else analysis}_analysis.json`"
             )
@@ -284,7 +286,7 @@ def _convert_api_to_template(name: str, schema: dict):
         )
     except Exception as e:
         raise NotImplementedError(
-            f"{name} doesn't have a corresponding `assays/components/ngs/{name}/{'rnaseq' if name == 'rna' else name}_analysis.json`"
+            f"Cannot load corresponding `assays/components/ngs/{name}/{'rnaseq' if name == 'rna' else name}_analysis.json`"
         ) from e
 
     # so many different ways of writing it
@@ -297,6 +299,7 @@ def _convert_api_to_template(name: str, schema: dict):
 
     # for each entry
     subtemplate = {}
+    used_merge_pointers, used_gcs_uris = [], []
     for long_key, entries in schema.items():
         # so many ways to write this too
         if long_key == "id":
@@ -343,10 +346,17 @@ def _convert_api_to_template(name: str, schema: dict):
 
             # calculate merge_pointer
             merge_pointer = _calc_merge_pointer(file_path, context, long_key)
+            # let's check its target
+            merge_target = context.copy()
+            for ptr in merge_pointer.lstrip("0/"):
+                merge_target = merge_target["properties"][ptr]
             # store if non-trivial merge_pointer
-            if merge_pointer in ["", "0"]:  # "" for WES, "0" otherwise
-                print("skipping", entry["file_path_template"])
-                continue
+            if merge_pointer == "0/":  # default value
+                raise InvalidMergeTargetException(f"{file_path} cannot be mapped to a location of the data object")
+            elif merge_pointer in used_merge_pointers:
+                raise InvalidMergeTargetException(f"{file_path} causes a collision for inferred merge target {merge_pointer}")
+            elif "data_format" not in merge_pointer["properties"]:
+                raise InvalidMergeTargetException(f"from {file_path}, inferred merge target {merge_pointer} which is not a valid file")
 
             # GCS URI start is static
             gcs_uri = f"{{protocol identifier}}/{name}/"
@@ -360,24 +370,6 @@ def _convert_api_to_template(name: str, schema: dict):
             gcs_uri += _calc_gcs_uri_path(name, merge_pointer)
 
             # now get actual file extension from file_path_template
-            POSSIBLE_FILE_EXTS = [
-                "tsv",
-                "log",
-                "summary",
-                "txt",
-                "gz",
-                "bam",
-                "bai",
-                "tn",
-                "vcf",
-                "yaml",
-                "csv",
-                "zip",
-                "json",
-                "dedup",
-                "stat",
-                "sf",
-            ]
             ext = (
                 entry["file_path_template"]
                 .split("/")[-1]
@@ -400,17 +392,26 @@ def _convert_api_to_template(name: str, schema: dict):
                 if short_key in ["normal", "tumor"]:
                     merge_pointer = f"/{short_key}{merge_pointer}"
 
+            # I'm not sure if this could actually happen without causing a merge collision above
+            # therefore also don't know how to test
+            if gcs_uri in used_gcs_uris:
+                raise InvalidMergeTargetException(f"{file_path} caused a collision for inferred destination URI {gcs_uri}")
+            
+            if ext.upper() in merge_target["properties"]["data_format"]["CONST"]:
+                raise InvalidMergeTargetException(f"{file_path} is not the correct format for inferred merge target {merge_pointer}")
+
             # fill in `process_as` entry
             subsubtemplate = {
                 "parse_through": f"lambda {pysafe_key}: f'{entry['file_path_template'].replace(long_key, pysafe_key)}'",
                 "merge_pointer": merge_pointer,
-                # TODO generate GCS URIs
                 "gcs_uri_format": gcs_uri,
                 "type_ref": "assays/components/local_file.json#properties/file_path",
                 "is_artifact": 1,
             }
 
             subtemplate[long_key]["process_as"].append(subsubtemplate)
+            used_merge_pointers.append(merge_pointer)
+            used_gcs_uris.append(gcs_uri)
 
         # store it all on the static part
         template["properties"]["worksheets"][f"{title} Analysis"]["data_columns"][

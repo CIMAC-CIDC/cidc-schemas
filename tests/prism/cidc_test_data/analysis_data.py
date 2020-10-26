@@ -1281,8 +1281,8 @@ def tcr_analysis() -> PrismTestData:
     upload_type = "tcr_analysis"
     prismify_args = get_prismify_args(upload_type)
     prismify_patch = {
-        "assays": {
-            "tcr": [
+        "analysis": {
+            "tcr_analysis": [
                 {
                     "records": [
                         {
@@ -1352,7 +1352,7 @@ def tcr_analysis() -> PrismTestData:
 
     cimac_ids = [
         record["cimac_id"]
-        for batch in prismify_patch["assays"]["tcr"]
+        for batch in prismify_patch["analysis"]["tcr_analysis"]
         for record in batch["records"]
     ]
     assays = tcr_fastq().prismify_patch["assays"]
@@ -1361,7 +1361,7 @@ def tcr_analysis() -> PrismTestData:
     # Set up the TCR target trial to include both assay and analysis metadata
     target_trial = deepcopy(base_trial)
     assay_batches = assays["tcr"]
-    analysis_batches = prismify_patch["assays"]["tcr"]
+    analysis_batches = prismify_patch["analysis"]["tcr_analysis"]
     combined_batches = []
     for assay_batch, analysis_batch in zip(assay_batches, analysis_batches):
         assay_records = assay_batch["records"]

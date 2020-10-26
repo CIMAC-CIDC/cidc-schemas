@@ -11,7 +11,7 @@ script:
   - pytest --cov=cidc_schemas -v
   - black --check cidc_schemas tests docs --target-version=py36
 after_script:
-  - coverage xml
+  - coverage xml --omit=cidc_schemas/migrations.py
   - ./cc-test-reporter after-build -t coverage.py --exit-code $TRAVIS_TEST_RESULT 
 deploy:
   provider: pypi

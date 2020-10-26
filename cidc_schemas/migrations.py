@@ -62,7 +62,10 @@ class v0_21_1_to_v0_22_0(migration):
                 if s["parent_sample_id"] == "X":
                     s["parent_sample_id"] = s["processed_sample_id"]
 
-                if s["processed_sample_id"] == not_reported:
+                if (
+                    "processed_sample_id" not in s
+                    or s["processed_sample_id"] == not_reported
+                ):
                     s["processed_sample_id"] = s["parent_sample_id"]
 
                 if (

@@ -528,8 +528,6 @@ def test_parse_through_basic(monkeypatch):
     }
     template = build_mock_Template(template_schema, "test_template_name", monkeypatch)
 
-    _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
-
     patch, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
     assert not errs
 
@@ -545,8 +543,6 @@ def test_parse_through_basic(monkeypatch):
         "allow_empty"
     ] = True
     template = build_mock_Template(template_schema, "test_template_name", monkeypatch)
-
-    _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
 
     patch, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
     assert not errs

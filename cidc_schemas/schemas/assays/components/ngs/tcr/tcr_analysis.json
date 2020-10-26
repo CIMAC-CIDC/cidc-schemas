@@ -6,7 +6,7 @@
     "type": "object",
     "additionalProperties": true,
     "properties": {
-        "tca_clone": {
+        "tra_clone": {
             "$ref": "artifacts/artifact_csv.json"
         },
         "trb_clone": {

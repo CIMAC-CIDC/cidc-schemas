@@ -22,21 +22,21 @@
                         "is_artifact": 1
                     }
                 },
-                "prism_data_object_pointer": "/records/-",
+                "prism_data_object_pointer": "/records/output_files/-",
                 "data_columns": {
                     "TCRseq Runs": {
                         "cimac id": {
-                            "merge_pointer": "0/cimac_id",
+                            "merge_pointer": "2/cimac_id",
                             "type_ref": "sample.json#properties/cimac_id"
                         },
                         "TRA Clones UMI Counts": {
-                            "merge_pointer": "0/output_files/tra_clone",
+                            "merge_pointer": "/tra_clone",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
                             "gcs_uri_format": "{protocol identifier}/tcr_analysis/{batch id}/{cimac id}/tra_clone.csv",
                             "is_artifact": 1
                         },
                         "TRB Clones UMI Counts": {
-                            "merge_pointer": "0/output_files/trb_clone",
+                            "merge_pointer": "/trb_clone",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
                             "gcs_uri_format": "{protocol identifier}/tcr_analysis/{batch id}/{cimac id}/trb_clone.csv",
                             "is_artifact": 1

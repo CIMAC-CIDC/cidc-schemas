@@ -14,7 +14,8 @@
         "Illumina - HiSeq 3000",
         "Illumina - NextSeq 550",
         "Illumina - HiSeq 4000",
-        "Illumina - NovaSeq 6000"
+        "Illumina - NovaSeq 6000",
+        "MiSeq"
       ]
     },
     "library_kit": {
@@ -30,7 +31,6 @@
     }
   },
   "required": [
-    "sequencer_platform",
-    "paired_end_reads"
+    "sequencer_platform"
   ]
 }

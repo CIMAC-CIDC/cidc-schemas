@@ -63,6 +63,11 @@ def test_get_source():
     assert obj == util.get_source(hier, "root['p'][0]")[0]
     assert extra_md == {"p.id": "3"}
 
+    with pytest.raises(ValueError, match=r"not found in"):
+        util.get_source(hier, "root['q']")  # entry not in dict
+    with pytest.raises(ValueError, match=r"not found in"):
+        util.get_source(hier, "root['p'][2]")  # index error
+
 
 def test_get_source_with_strings_with_quotes():
     hier = {"p": [{"a": [{"i want ' ": "this"}], 'and " ': "that"}]}

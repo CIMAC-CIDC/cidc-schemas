@@ -32,6 +32,7 @@ def assert_metadata_matches(received: dict, expected: dict, upload_entries: list
     # so the number of differences should equal the number of expected
     # upload entries.
     diff = DeepDiff(expected, received)
+
     if upload_entries and diff:
         assert len(diff) == 2  # only "values_changed" and "dictionary_item_added"
         assert len(diff["dictionary_item_added"]) == len(upload_entries)
@@ -55,8 +56,10 @@ def test_gcs_uri_format(prism_test: PrismTestData):
 
 def test_prismify(prism_test: PrismTestData, monkeypatch):
     monkeypatch.setattr(
-        "cidc_schemas.prism.core._encrypt", lambda x: f"encrypt({str(x)!r})"
+        "cidc_schemas.prism.core._encrypt", lambda x: f"test_encrypted({str(x)!r})"
     )
+
+    monkeypatch.setattr("cidc_schemas.prism.core._check_encrypt_init", lambda: None)
 
     # Run prismify on the given test case
     patch, upload_entries, errs = prismify(*prism_test.prismify_args)
@@ -137,6 +140,8 @@ def test_merge_artifacts(prism_test: PrismTestData, ct_validator):
     for uuid, artifact, entry in uuids_and_artifacts:
         # Get the path in the *original* patch to the placeholder uuid.
         paths = (prism_test.prismify_patch | grep(uuid))["matched_values"]
+
+        print(paths)
         assert len(paths) == 1, "UUID should only occur once in a metadata patch"
         path = paths.pop()
         assert path.endswith(

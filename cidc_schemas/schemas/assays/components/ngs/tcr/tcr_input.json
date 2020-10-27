@@ -1,0 +1,20 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "tcr_input",
+  "title": "TCRseq assay Input Files",
+  "type": "object",
+  "description": "TCRseq assay input files.",
+  "additionalProperties": false,
+  "properties": {
+    "replicates": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/components/ngs/tcr/tcr_replicates.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "/replicate_id"
+      }
+    }
+  }
+}

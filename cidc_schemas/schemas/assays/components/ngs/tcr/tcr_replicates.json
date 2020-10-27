@@ -1,0 +1,27 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "tcr_input",
+  "description": "TCRseq replicate of interest.",
+  "additionalProperties": false,
+  "allOf": [
+    { "$ref": "assays/components/reads_with_index.json"}
+  ],
+  "properties": {
+    "replicate_id": {
+      "description": "Replicate identifier.",
+      "type": "string"
+    },
+    "rna_quantity_ng": {
+      "description": "RNA quantity (in ng).",
+      "type": "number"
+    },
+    "r1": {"$ref": "assays/components/reads_with_index.json#properties/r1"},
+    "r2": {"$ref": "assays/components/reads_with_index.json#properties/r2"},
+    "i1": {"$ref": "assays/components/reads_with_index.json#properties/i1"},
+    "i2": {"$ref": "assays/components/reads_with_index.json#properties/i2"}
+  },
+  "required": [
+    "replicate_id"
+  ],
+  "mergeStrategy": "objectMerge"
+}

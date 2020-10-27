@@ -13,6 +13,7 @@ from cidc_schemas.prism.constants import PROTOCOL_ID_FIELD_NAME
 from .test_extra_metadata import (
     npx_file_path,
     npx_combined_file_path,
+    invalid_npx_file_path,
     elisa_file_path,
     single_npx_metadata,
     combined_npx_metadata,
@@ -205,13 +206,45 @@ def test_merge_clinical_trial_metadata_invalid_target():
 #### EXTRA METADATA TESTS ####
 
 
-def test_merge_artfiact_extra_metadata_unsupported_assay():
-    """Ensure merge_artifact_extra_metadata fails gracefully for unsupported assays"""
+def test_merge_artifact_extra_metadata_exc(monkeypatch):
+    """Ensure merge_artifact_extra_metadata fails gracefully for unsupported assays
+    Also raises clearer error if parser raises ValueError, but not TypeError"""
     assay_hint = "foo"
     with pytest.raises(
-        Exception, match=f"Assay {assay_hint} does not support extra metadata"
+        ValueError, match=f"Assay {assay_hint} does not support extra metadata"
     ):
         prism_merger.merge_artifact_extra_metadata({}, "", assay_hint, None)
+
+    artifact_uuid = "uuid-1"
+    fake_parsers = {"olink": MagicMock(), "testing": MagicMock()}
+    fake_parsers["olink"].side_effect = ValueError("disappears")
+    fake_parsers["testing"].side_effect = TypeError("this goes through")
+
+    # test wrapping ValueError
+    with monkeypatch.context():
+        monkeypatch.setattr(
+            "cidc_schemas.prism.merger.EXTRA_METADATA_PARSERS", fake_parsers
+        )
+
+        with pytest.raises(
+            ValueError,
+            match=f"Assay {artifact_uuid} cannot be parsed for olink metadata",
+        ):
+            with open(invalid_npx_file_path, "rb") as f:
+                prism_merger.merge_artifact_extra_metadata(
+                    {}, artifact_uuid, "olink", f
+                )
+
+    # doesn't wrap TypeErrors; None is not a BinaryIO
+    with monkeypatch.context():
+        monkeypatch.setattr(
+            "cidc_schemas.prism.merger.EXTRA_METADATA_PARSERS", fake_parsers
+        )
+
+        with pytest.raises(TypeError, match=r"this goes through"):
+            prism_merger.merge_artifact_extra_metadata(
+                {}, artifact_uuid, "testing", None
+            )
 
 
 # upload placeholder shorthand

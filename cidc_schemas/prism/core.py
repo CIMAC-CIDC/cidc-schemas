@@ -252,15 +252,20 @@ def _get_encrypt_hmac():
     return _encrypt_hmac.copy()
 
 
-def _encrypt(obj):
+def _check_encrypt_init():
     if not _encrypt_hmac:
-        raise Exception(
-            "encrypt is not initialized. set_prism_encrypt_key should be called before"
-        )
+        raise Exception("Encrypt is not initialized")
+
+
+_ENCRYPTED_FIELD_LEN = 32
+
+
+def _encrypt(obj):
+    _check_encrypt_init()
 
     h = _get_encrypt_hmac()
     h.update(str(obj).encode())
-    return (base64.b64encode(h.digest()))[:32].decode()
+    return (base64.b64encode(h.digest()))[:_ENCRYPTED_FIELD_LEN].decode()
 
 
 def prismify(
@@ -374,6 +379,8 @@ def prismify(
     with respect to `mergeStrategy`es defined in that schema.
     """
 
+    _check_encrypt_init()
+
     if template.type not in SUPPORTED_TEMPLATES:
         raise NotImplementedError(
             f"{template.type!r} is not supported, only {SUPPORTED_TEMPLATES} are."
@@ -472,7 +479,7 @@ def prismify(
                     combined_context = dict(local_context, **preamble_context)
                     try:
                         changes, new_files = template.process_field_value(
-                            ws_name, key, val, combined_context, {"encrypt": _encrypt}
+                            ws_name, key, val, combined_context, _encrypt
                         )
                     except ParsingException as e:
                         errors_so_far.append(e)
@@ -497,7 +504,7 @@ def prismify(
             k, v, *_ = row.values
             try:
                 changes, new_files = template.process_field_value(
-                    ws_name, k, v, preamble_context, {"encrypt": _encrypt}
+                    ws_name, k, v, preamble_context, _encrypt
                 )
             except ParsingException as e:
                 errors_so_far.append(e)

@@ -54,12 +54,15 @@ class v0_21_1_to_v0_22_0(migration):
 
         for p in metadata.get("participants", []):
 
-            if len(p["participant_id"]) != _ENCRYPTED_FIELD_LEN:
+            if (
+                "participant_id" in p
+                and len(p["participant_id"]) != _ENCRYPTED_FIELD_LEN
+            ):
                 p["participant_id"] = _encrypt(p["participant_id"])
 
-            for s in p["samples"]:
+            for s in p.get("samples", []):
 
-                if s["parent_sample_id"] == "X":
+                if s.get("parent_sample_id") == "X":
                     s["parent_sample_id"] = s["processed_sample_id"]
 
                 if (
@@ -69,14 +72,16 @@ class v0_21_1_to_v0_22_0(migration):
                     s["processed_sample_id"] = s["parent_sample_id"]
 
                 if (
-                    len(s["parent_sample_id"]) == _ENCRYPTED_FIELD_LEN
+                    len(s.get("parent_sample_id", "")) == _ENCRYPTED_FIELD_LEN
                     and len(s.get("processed_sample_id", "")) == _ENCRYPTED_FIELD_LEN
                 ):
                     # both are hashed so skip
                     continue
 
-                s["processed_sample_id"] = _encrypt(s["processed_sample_id"])
-                s["parent_sample_id"] = _encrypt(s["parent_sample_id"])
+                if "processed_sample_id" in s:
+                    s["processed_sample_id"] = _encrypt(s["processed_sample_id"])
+                if "parent_sample_id" in s:
+                    s["parent_sample_id"] = _encrypt(s["parent_sample_id"])
 
         return MigrationResult(metadata, {})
 

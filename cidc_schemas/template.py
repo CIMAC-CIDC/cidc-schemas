@@ -25,7 +25,6 @@ from collections import OrderedDict, defaultdict
 from .constants import SCHEMA_DIR, TEMPLATE_DIR
 from .json_validation import _load_dont_validate_schema
 from .util import get_file_ext
-from .prism import InvalidMergeTargetException
 
 from cidc_ngs_pipeline_api import OUTPUT_APIS
 
@@ -33,23 +32,23 @@ logger = logging.getLogger("cidc_schemas.template")
 
 
 POSSIBLE_FILE_EXTS = [
-        "tsv",
-        "log",
-        "summary",
-        "txt",
-        "gz",
-        "bam",
-        "bai",
-        "tn",
-        "vcf",
-        "yaml",
-        "csv",
-        "zip",
-        "json",
-        "dedup",
-        "stat",
-        "sf",
-    ]
+    "tsv",
+    "log",
+    "summary",
+    "txt",
+    "gz",
+    "bam",
+    "bai",
+    "tn",
+    "vcf",
+    "yaml",
+    "csv",
+    "zip",
+    "json",
+    "dedup",
+    "stat",
+    "sf",
+]
 
 
 def generate_analysis_template_schemas(
@@ -100,13 +99,40 @@ def _first_in_context(path: list, context: dict):
     if path[0] in context:
         # if this is the end, we're done
         if len(path) == 1:
-            ret = (path[0], [], context[path[0]]["properties"])  # path[1:] == []
+            context = context[path[0]]
+            if "items" in context:
+                # to handle arrays
+                context = context["items"]
+            if "properties" in context:
+                context = context["properties"]
+
+            ret = (path[0], [], context)  # path[1:] == []
         else:
             # otherwise, see if there's something more specific first
             trial = [path[0] + "_" + path[1]] + path[2:]
             ret = _first_in_context(trial, context)
             if not ret[0]:
-                ret = (path[0], path[1:], context[path[0]]["properties"])
+                context = context[path[0]]
+                if "items" in context:
+                    # to handle arrays
+                    context = context["items"]
+                if "properties" in context:
+                    context = context["properties"]
+                ret = (path[0], path[1:], context)
+
+    # sometimes capitalisation changes
+    if not ret[0] and path[0].lower() != path[0]:
+        if sum([path[0].lower() == k.lower() for k in context.keys()]) == 1:
+            # guaranteed to work and be the only item
+            key = [k for k in context.keys() if k.lower() == path[0].lower()][0]
+
+            context = context[key]
+            if "items" in context:
+                # to handle arrays
+                context = context["items"]
+            if "properties" in context:
+                context = context["properties"]
+            ret = [key, path[1:], context]
 
     # sometimes `.` are replaced by `_`
     if not ret[0] and "." in path[0]:
@@ -144,12 +170,6 @@ def _first_in_context(path: list, context: dict):
     # sometimes bam isn't included in `bam.bai` -> `index`
     if not ret[0] and "bam_index" in path[-1]:
         trial = path[:-1] + [path[-1].replace("bam_index", "index")]
-        ret = _first_in_context(trial, context)
-
-    # sometimes capitalisation changes
-    if not ret[0] and path[0].lower() != path[0]:
-        trial = [p.lower() for p in path]
-        context = {k.lower(): v for k, v in context.items()}
         ret = _first_in_context(trial, context)
 
     # if there isn't, we're still done
@@ -192,7 +212,7 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
     ------
     file_path : str
         the local file path for the file
-    contexxt : dict
+    context : dict
         the assay schema for the analysis onto which to map the file path
     key : str
         the key from output_API.json undre which the file path is listed
@@ -231,11 +251,14 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
 
     # specialty conversions for file names / extensions only
     if "tnscope" in file_path[-1]:
-        temp = file_path[-1].split(".")
-        if temp[-1] != "gz":
-            file_path[-1] = ".".join(temp[-1:] + temp[:-1])
+        if "filter.exons" in file_path[-1]:
+            file_path[-1] = file_path[-1].replace("filter.exons", "exons")
         else:
-            file_path[-1] = ".".join(temp[-2:] + temp[:-2])
+            temp = file_path[-1].split(".")
+            if temp[-1] != "gz":
+                file_path[-1] = ".".join(temp[-1:] + temp[:-1])
+            else:
+                file_path[-1] = ".".join(temp[-2:] + temp[:-2])
     if "mosdepth" in file_path[-1]:
         temp = file_path[-1].split(".")
         file_path[-1] = ".".join(temp[1:4]) + "_" + temp[0]
@@ -269,16 +292,19 @@ def _calc_gcs_uri_path(name: str, merge_pointer: str):
     file = file.split("_")
 
     # trim off file extension from path
-    while file[-n] in POSSIBLE_FILE_EXTS: # go from the right
+    while file[-1] in POSSIBLE_FILE_EXTS:  # go from the right
         file.pop()
     file = "_".join(file)
-    
+
     # special handling, then return
     file = file.replace("align_", "").replace("cnv_calls", "cnvcalls")
     return file
 
 
 def _convert_api_to_template(name: str, schema: dict):
+    # import here to avoid circular dependence where prism imports Template
+    from .prism.merger import InvalidMergeTargetException
+
     # need an existing assay/components/ngs analysis schema to find merge pointers
     try:
         assay_schema = _load_dont_validate_schema(
@@ -305,7 +331,11 @@ def _convert_api_to_template(name: str, schema: dict):
         if long_key == "id":
             long_key = "cimac id"  # assume CIMAC if just 'id'
         pysafe_key = (
-            "id" if "cimac id" in long_key else "run" if long_key == "run id" else k
+            "id"
+            if "cimac id" in long_key
+            else "run"
+            if long_key == "run id"
+            else long_key.replace(" ", "_")
         )
         short_key = (
             "normal"
@@ -333,7 +363,7 @@ def _convert_api_to_template(name: str, schema: dict):
         # keep track of where we are in the analysis schema
         context = assay_schema["properties"][pointer]["items"]["properties"]
         if short_key not in context:
-            raise NotImplementedError(
+            raise InvalidMergeTargetException(
                 f"{long_key} in {name} does not have a corresponding entry in `assays/components/ngs/{name}/{'rnaseq' if name == 'rna' else name}_analysis.json`"
             )
         elif "properties" in context[short_key]:
@@ -346,17 +376,43 @@ def _convert_api_to_template(name: str, schema: dict):
 
             # calculate merge_pointer
             merge_pointer = _calc_merge_pointer(file_path, context, long_key)
-            # let's check its target
-            merge_target = context.copy()
-            for ptr in merge_pointer.lstrip("0/"):
-                merge_target = merge_target["properties"][ptr]
-            # store if non-trivial merge_pointer
-            if merge_pointer == "0/":  # default value
-                raise InvalidMergeTargetException(f"{file_path} cannot be mapped to a location of the data object")
+            if name == "wes":
+                # WES doesn't get starting 0 for some reason
+                merge_pointer = merge_pointer[1:]
+                # also gets normal / tumor prepended
+                if short_key in ["normal", "tumor"]:
+                    merge_pointer = f"/{short_key}{merge_pointer}"
+
+            if merge_pointer in ["0/", "/"]:  # default value, possibly modified
+                raise InvalidMergeTargetException(
+                    f"{file_path} cannot be mapped to a location of the data object"
+                )
             elif merge_pointer in used_merge_pointers:
-                raise InvalidMergeTargetException(f"{file_path} causes a collision for inferred merge target {merge_pointer}")
-            elif "data_format" not in merge_pointer["properties"]:
-                raise InvalidMergeTargetException(f"from {file_path}, inferred merge target {merge_pointer} which is not a valid file")
+                print(used_merge_pointers[:-1], merge_pointer)
+                print(used_gcs_uris, gcs_uri)
+                raise InvalidMergeTargetException(
+                    f"{file_path} causes a collision for inferred merge target {merge_pointer}"
+                )
+
+            # let's check its target too
+            merge_target = context.copy()
+            for ptr in merge_pointer.lstrip("0/").split("/"):
+                if "properties" in merge_target and ptr not in merge_target:
+                    merge_target = merge_target["properties"]
+
+                if ptr in merge_target:
+                    merge_target = merge_target[ptr]
+                elif ptr in ["normal", "tumor"]:
+                    # already handled, special add ins
+                    # only sometimes needs to be stripped though
+                    # if incorrect, will still error in next step
+                    continue
+                else:
+                    raise ValueError("Generated pointer to non-existant merge_target")
+            if "data_format" not in merge_target["properties"]:
+                raise InvalidMergeTargetException(
+                    f"from {file_path}, inferred merge target {merge_pointer} which is not a valid file"
+                )
 
             # GCS URI start is static
             gcs_uri = f"{{protocol identifier}}/{name}/"
@@ -386,19 +442,13 @@ def _convert_api_to_template(name: str, schema: dict):
                 gcs_uri = gcs_uri.replace(
                     ".summary", "_summary"
                 )  # doesn't change in WES for some reason
-                merge_pointer = merge_pointer[
-                    1:
-                ]  # WES doesn't get starting 0 for some reason
-                if short_key in ["normal", "tumor"]:
-                    merge_pointer = f"/{short_key}{merge_pointer}"
 
             # I'm not sure if this could actually happen without causing a merge collision above
             # therefore also don't know how to test
             if gcs_uri in used_gcs_uris:
-                raise InvalidMergeTargetException(f"{file_path} caused a collision for inferred destination URI {gcs_uri}")
-            
-            if ext.upper() in merge_target["properties"]["data_format"]["CONST"]:
-                raise InvalidMergeTargetException(f"{file_path} is not the correct format for inferred merge target {merge_pointer}")
+                raise InvalidMergeTargetException(
+                    f"{file_path} caused a collision for inferred destination URI {gcs_uri}"
+                )
 
             # fill in `process_as` entry
             subsubtemplate = {

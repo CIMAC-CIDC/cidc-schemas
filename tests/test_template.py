@@ -507,12 +507,10 @@ def test_convert_api_to_template():
     assert DeepDiff(wes_json, wes_output) == {}
     assert DeepDiff(rna_json, rna_output) == {}
 
-
-
     with pytest.raises(NotImplementedError, match="Cannot load"):
         _convert_api_to_template("foo", wes_api)
 
-    rna_api_bad_key = {"foo": [{}] }
+    rna_api_bad_key = {"foo": [{}]}
     with pytest.raises(InvalidMergeTargetException, match="corresponding entry"):
         _convert_api_to_template("rna", rna_api_bad_key)
 
@@ -520,7 +518,7 @@ def test_convert_api_to_template():
         "cimac id": [
             {
                 "filter_group": "alignment",
-                "file_path_template": "foo", # used to generate merge_pointer
+                "file_path_template": "foo",  # used to generate merge_pointer
                 "short_description": "star alignment output",
                 "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
                 "file_purpose": "Analysis view",
@@ -545,24 +543,19 @@ def test_convert_api_to_template():
                 "short_description": "star alignment output",
                 "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
                 "file_purpose": "Analysis view",
-            }
+            },
         ]
     }
-    with pytest.raises(InvalidMergeTargetException, match="collision for inferred merge target"):
+    with pytest.raises(
+        InvalidMergeTargetException, match="collision for inferred merge target"
+    ):
         _convert_api_to_template("rna", rna_api_merge_collision)
 
     rna_api_underspecified = {
         "cimac id": [
             {
                 "filter_group": "alignment",
-                "file_path_template": "analysis/star/{id}/{id}.sorted.bam",
-                "short_description": "star alignment output",
-                "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
-                "file_purpose": "Analysis view",
-            },
-            {  # direct repeat will collide
-                "filter_group": "alignment",
-                "file_path_template": "analysis/star/{id}/{id}.sorted.bam",
+                "file_path_template": "analysis/star/{id}/{id}.sorted",
                 "short_description": "star alignment output",
                 "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
                 "file_purpose": "Analysis view",
@@ -571,22 +564,6 @@ def test_convert_api_to_template():
     }
     with pytest.raises(InvalidMergeTargetException, match="not a valid file"):
         _convert_api_to_template("rna", rna_api_underspecified)
-    
-
-    rna_api_wrong_ext = {
-        "cimac id": [
-            {
-                "filter_group": "alignment",
-                # extra '.foo' ignored for merge_pointer, but not valid ext for target
-                "file_path_template": "analysis/star/{id}/{id}.sorted.bam.foo",
-                "short_description": "star alignment output",
-                "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
-                "file_purpose": "Analysis view",
-            }
-        ]
-    }
-    with pytest.raises(InvalidMergeTargetException, match="not the correct format"):
-        _convert_api_to_template("rna", rna_api_wrong_ext)
 
 
 def test_generate_analysis_template_schemas(tmpdir):

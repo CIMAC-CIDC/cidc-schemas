@@ -64,29 +64,29 @@
                             },
                             {
                                 "parse_through": "lambda run: f'analysis/neoantigen/{run}/MHC_Class_I/{run}.all_epitopes.tsv'",
-                                "merge_pointer": "/neoantigen/mhc_class_i_epitopes",
-                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/mhc_class_i_epitopes.tsv",
+                                "merge_pointer": "/neoantigen/mhc_class_I_epitopes",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/mhc_class_I_epitopes.tsv",
                                 "type_ref": "assays/components/local_file.json#properties/file_path",
                                 "is_artifact": 1
                             },
                             {
                                 "parse_through": "lambda run: f'analysis/neoantigen/{run}/MHC_Class_I/{run}.filtered.condensed.ranked.tsv'",
-                                "merge_pointer": "/neoantigen/mhc_class_i_filtered_condensed_ranked",
-                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/mhc_class_i_filtered_condensed_ranked.tsv",
+                                "merge_pointer": "/neoantigen/mhc_class_I_filtered_condensed_ranked",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/mhc_class_I_filtered_condensed_ranked.tsv",
                                 "type_ref": "assays/components/local_file.json#properties/file_path",
                                 "is_artifact": 1
                             },
                             {
                                 "parse_through": "lambda run: f'analysis/neoantigen/{run}/MHC_Class_II/{run}.all_epitopes.tsv'",
-                                "merge_pointer": "/neoantigen/mhc_class_ii_epitopes",
-                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/mhc_class_ii_epitopes.tsv",
+                                "merge_pointer": "/neoantigen/mhc_class_II_epitopes",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/mhc_class_II_epitopes.tsv",
                                 "type_ref": "assays/components/local_file.json#properties/file_path",
                                 "is_artifact": 1
                             },
                             {
                                 "parse_through": "lambda run: f'analysis/neoantigen/{run}/MHC_Class_II/{run}.filtered.condensed.ranked.tsv'",
-                                "merge_pointer": "/neoantigen/mhc_class_ii_filtered_condensed_ranked",
-                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/mhc_class_ii_filtered_condensed_ranked.tsv",
+                                "merge_pointer": "/neoantigen/mhc_class_II_filtered_condensed_ranked",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/mhc_class_II_filtered_condensed_ranked.tsv",
                                 "type_ref": "assays/components/local_file.json#properties/file_path",
                                 "is_artifact": 1
                             },
@@ -120,22 +120,22 @@
                             },
                             {
                                 "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.exons.broad.vcf.gz'",
-                                "merge_pointer": "/somatic/vcf_gz_tnscope_filter",
-                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_gz_tnscope_filter.vcf.gz",
+                                "merge_pointer": "/somatic/tnscope_exons_broad",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tnscope_exons_broad.vcf.gz",
                                 "type_ref": "assays/components/local_file.json#properties/file_path",
                                 "is_artifact": 1
                             },
                             {
                                 "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.exons.mda.vcf.gz'",
-                                "merge_pointer": "/somatic/vcf_gz_tnscope_filter",
-                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_gz_tnscope_filter.vcf.gz",
+                                "merge_pointer": "/somatic/tnscope_exons_mda",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tnscope_exons_mda.vcf.gz",
                                 "type_ref": "assays/components/local_file.json#properties/file_path",
                                 "is_artifact": 1
                             },
                             {
                                 "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.exons.mocha.vcf.gz'",
-                                "merge_pointer": "/somatic/vcf_gz_tnscope_filter",
-                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_gz_tnscope_filter.vcf.gz",
+                                "merge_pointer": "/somatic/tnscope_exons_mocha",
+                                "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tnscope_exons_mocha.vcf.gz",
                                 "type_ref": "assays/components/local_file.json#properties/file_path",
                                 "is_artifact": 1
                             },

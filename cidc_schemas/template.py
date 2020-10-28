@@ -552,6 +552,7 @@ class _FieldDef(NamedTuple):
     parse_through: Union[str, None] = None
     do_not_merge: bool = False
     allow_empty: bool = False
+    encrypt: bool = False
     is_artifact: Union[str, bool] = False
 
     def artifact_checks(self):
@@ -576,7 +577,7 @@ class _FieldDef(NamedTuple):
             raise Exception(f"dict type gcs_uri_format should have 'format' def")
 
     def process_value(
-        self, raw_val, format_context: dict, eval_context: dict
+        self, raw_val, format_context: dict, encrypt_fn: Callable
     ) -> Tuple[List[AtomicChange], List[LocalFileUploadEntry]]:
 
         logger.debug(f"Processing field spec: {self}")
@@ -591,19 +592,19 @@ class _FieldDef(NamedTuple):
 
         if self.parse_through:
             try:
-                raw_val = eval(self.parse_through, eval_context)(raw_val)
+                raw_val = eval(self.parse_through, {}, {})(raw_val)
 
             # catching everything, because of eval
             except Exception as e:
                 _field_name = self.merge_pointer.rsplit("/", 1)[-1]
                 raise ParsingException(
-                    f"Cannot extract {_field_name} from {self.key_name} value: {raw_val!r} ({e})"
+                    f"Cannot extract {_field_name} from {self.key_name} value: {raw_val!r}"
                 ) from e
 
         # or set/update value in-place in data_obj dictionary
 
         try:
-            val, files = self._calc_val_and_files(raw_val, format_context)
+            val, files = self._calc_val_and_files(raw_val, format_context, encrypt_fn)
         except ParsingException:
             raise
         except Exception as e:
@@ -629,13 +630,16 @@ class _FieldDef(NamedTuple):
 
     ## TODO easy - split val coerce / files calc to handle exceptions separately
     ## TODO hard - files (artifact and multi) should be just coerce?
-    def _calc_val_and_files(self, raw_val, format_context: dict):
+    def _calc_val_and_files(self, raw_val, format_context: dict, encrypt_fn: Callable):
         """
         Processes one field value based on `_FieldDef` taken from a ..._template.json schema.
         Calculates a file upload entry if is_artifact.
         """
 
         val = self.coerce(raw_val)
+
+        if self.encrypt:
+            val = encrypt_fn(val)
 
         if not self.is_artifact:
             return val, []  # no files if it's not an artifact
@@ -861,17 +865,15 @@ class Template:
             _, referer = resolver.resolve(referer["$ref"])
 
         entry = referer
-        # add our own type conversion
-        t = entry["type"]
 
-        return self._get_simple_type_coerce(t, entry.get("$id"))
+        return self._get_typed_entry_coerce(entry)
 
     @staticmethod
     def _gen_upload_placeholder_uuid(_):
         return str(uuid.uuid4())
 
     @staticmethod
-    def _get_simple_type_coerce(t: str, object_id=None):
+    def _get_typed_entry_coerce(entry: dict):
         """
         This function takes a json-schema style type
         and determines the best python
@@ -879,8 +881,13 @@ class Template:
         """
         # if it's an artifact that will be loaded through local file
         # we just return uuid as value
-        if object_id in ["local_file_path", "local_file_path_list"]:
+        if entry.get("$id") in ["local_file_path", "local_file_path_list"]:
             return Template._gen_upload_placeholder_uuid
+
+        return Template._get_simple_type_coerce(entry["type"])
+
+    @staticmethod
+    def _get_simple_type_coerce(t: str):
         if t == "string":
             return str
         elif t == "integer":
@@ -902,9 +909,8 @@ class Template:
                 field_def.pop("ref", field_def.pop("type_ref"))
             )
         elif "type" in field_def:
-            coerce = self._get_simple_type_coerce(
-                field_def.pop("type"), field_def.pop("$id", None)
-            )
+            coerce = self._get_typed_entry_coerce(field_def)
+
         elif field_def.get("do_not_merge", False):
 
             raise Exception(
@@ -925,21 +931,21 @@ class Template:
         which ensures we get only supported matching logic.
         """
 
-        def_d = dict(def_dict)  # so we don't mutate original
-        process_as = def_d.pop("process_as", [])
+        def_dict = dict(def_dict)  # so we don't mutate original
+        process_as = def_dict.pop("process_as", [])
         res = []
 
         if not def_dict.get("do_not_merge"):
 
             # remove all unsupported _FieldDef keys
-            for f in def_dict:
+            for f in list(def_dict):
                 if f in _FieldDef._fields:
                     continue
-                def_d.pop(f, None)
+                def_dict.pop(f, None)
 
             try:
-                coerce = self._get_coerce(def_d)
-                fd = _FieldDef(key_name=key_name, coerce=coerce, **def_d)
+                coerce = self._get_coerce(def_dict)
+                fd = _FieldDef(key_name=key_name, coerce=coerce, **def_dict)
                 fd.artifact_checks()
             except Exception as e:
                 raise Exception(f"Couldn't load mapping for {key_name!r}: {e}") from e
@@ -1031,7 +1037,7 @@ class Template:
         key: str,
         raw_val,
         format_context: dict,
-        eval_context: dict,
+        encrypt_fn: Callable,
     ) -> Tuple[List[AtomicChange], List[LocalFileUploadEntry]]:
         """
         Processes one field value based on field_def taken from a template schema.
@@ -1068,7 +1074,7 @@ class Template:
         changes, files = [], []
         for f_def in field_defs:
             try:
-                chs, fs = f_def.process_value(raw_val, format_context, eval_context)
+                chs, fs = f_def.process_value(raw_val, format_context, encrypt_fn)
             except Exception as e:
                 raise ParsingException(e)
 

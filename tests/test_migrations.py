@@ -6,6 +6,8 @@ from cidc_schemas.migrations import (
     MigrationError,
     v0_10_2_to_v0_11_0,
     v0_15_2_to_v0_15_3,
+    v0_21_1_to_v0_22_0,
+    _ENCRYPTED_FIELD_LEN,
 )
 
 
@@ -62,6 +64,74 @@ def test_v0_10_2_to_v0_11_0():
     upgraded = v0_10_2_to_v0_11_0.upgrade(ct_2).result
     assert sorted(upgraded["allowed_collection_event_names"]) == ["event_1", "event_2"]
     assert sorted(upgraded["allowed_cohort_names"]) == ["cohort_1", "cohort_2"]
+
+
+def test_v0_21_1_to_v0_22_0(monkeypatch):
+    monkeypatch.setattr(
+        "cidc_schemas.migrations._encrypt", lambda x: f"test_encrypted({str(x)!r})"
+    )
+    monkeypatch.setattr("cidc_schemas.prism.core._check_encrypt_init", lambda: None)
+
+    empty_ct = {}
+
+    assert v0_21_1_to_v0_22_0.upgrade(empty_ct).result == {}
+
+    ct_2 = {
+        "participants": [
+            {"participant_id": "pid1", "samples": []},
+            {
+                "participant_id": "pid2",
+                "samples": [
+                    {
+                        "parent_sample_id": "PARENT_sid_1",
+                        "processed_sample_id": "PROCESSED_sid_1",
+                    },
+                    {"parent_sample_id": "X", "processed_sample_id": "PROCESSED_sid_2"},
+                    {
+                        "parent_sample_id": "PARENT_sid_3",
+                        "processed_sample_id": "test_encrypted('Not reported')",
+                    },
+                    {
+                        "parent_sample_id": "4" * _ENCRYPTED_FIELD_LEN,
+                        "processed_sample_id": "4" * _ENCRYPTED_FIELD_LEN,
+                    },
+                    {"parent_sample_id": "PARENT_sid_5"},
+                ],
+            },
+        ]
+    }
+
+    upgraded = v0_21_1_to_v0_22_0.upgrade(ct_2).result
+    assert upgraded == {
+        "participants": [
+            {"participant_id": "test_encrypted('pid1')", "samples": []},
+            {
+                "participant_id": "test_encrypted('pid2')",
+                "samples": [
+                    {
+                        "parent_sample_id": "test_encrypted('PARENT_sid_1')",
+                        "processed_sample_id": "test_encrypted('PROCESSED_sid_1')",
+                    },
+                    {
+                        "parent_sample_id": "test_encrypted('PROCESSED_sid_2')",
+                        "processed_sample_id": "test_encrypted('PROCESSED_sid_2')",
+                    },
+                    {
+                        "parent_sample_id": "test_encrypted('PARENT_sid_3')",
+                        "processed_sample_id": "test_encrypted('PARENT_sid_3')",
+                    },
+                    {
+                        "parent_sample_id": "4" * _ENCRYPTED_FIELD_LEN,
+                        "processed_sample_id": "4" * _ENCRYPTED_FIELD_LEN,
+                    },
+                    {
+                        "parent_sample_id": "test_encrypted('PARENT_sid_5')",
+                        "processed_sample_id": "test_encrypted('PARENT_sid_5')",
+                    },
+                ],
+            },
+        ]
+    }
 
 
 def test_v0_10_0_to_v0_10_2():

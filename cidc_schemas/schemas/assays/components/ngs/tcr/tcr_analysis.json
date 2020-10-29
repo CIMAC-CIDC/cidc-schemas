@@ -6,11 +6,21 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
-        "tra_clone": {
+        "batch_id": {
+            "$ref": "assays/tcr_assay.json#properties/batch_id"
+        },
+        "summary_info": {
             "$ref": "artifacts/artifact_csv.json"
         },
-        "trb_clone": {
-            "$ref": "artifacts/artifact_csv.json"
+        "records": {
+            "type": "array",
+            "items": {
+                "$ref": "assays/components/ngs/tcr/tcr_pair_analysis.json"
+            },
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": {
+                "idRef": "/cimac_id"
+            }
         }
     }
 }

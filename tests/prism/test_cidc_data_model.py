@@ -94,9 +94,7 @@ def test_merge_patch_into_trial(prism_test: PrismTestData, ct_validator):
     )
 
     # Ensure no errors resulted from the merge
-    if errs:
-        raise errs[0] if isinstance(errs[0], BaseException) else Exception(errs[0])
-    assert len(errs) == 0
+    assert len(errs) == 0, "\n".join([str(e) for e in errs])
 
     # Ensure that the merge result passes validation
     ct_validator.validate(result)
@@ -153,7 +151,7 @@ def test_merge_artifacts(prism_test: PrismTestData, ct_validator):
 
     # Merge the patch-with-artifacts into the base trial
     result, errs = merge_clinical_trial_metadata(patch, prism_test.base_trial)
-    assert len(errs) == 0
+    assert len(errs) == 0, "\n".join([str(e) for e in errs])
 
     # Make sure the modified patch is still valid
     ct_validator.validate(result)

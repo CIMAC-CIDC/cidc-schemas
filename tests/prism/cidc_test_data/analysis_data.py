@@ -1282,38 +1282,32 @@ def tcr_analysis() -> PrismTestData:
     prismify_args = get_prismify_args(upload_type)
     prismify_patch = {
         "analysis": {
-            "tcr_analysis": [
-                {
-                    "records": [
-                        {
-                            "cimac_id": "CTTTPP111.00",
-                            "output_files": {
-                                "tra_clone": {
-                                    "upload_placeholder": "0b9a11cb-dcf9-45c3-b276-a4f05c687a80"
-                                },
-                                "trb_clone": {
-                                    "upload_placeholder": "5ddbbe19-e695-4ab4-b02c-9ff98509e202"
-                                },
-                            },
+            "tcr_analysis": {
+                "pair_runs": [
+                    {
+                        "cimac_id": "CTTTPP111.00",
+                        "tra_clone": {
+                            "upload_placeholder": "0b9a11cb-dcf9-45c3-b276-a4f05c687a80"
                         },
-                        {
-                            "cimac_id": "CTTTPP121.00",
-                            "output_files": {
-                                "tra_clone": {
-                                    "upload_placeholder": "3f79f985-eca2-46c4-9148-820144a9d31a"
-                                },
-                                "trb_clone": {
-                                    "upload_placeholder": "92b14796-d52c-4c77-92c5-cf3c0a59ce29"
-                                },
-                            },
+                        "trb_clone": {
+                            "upload_placeholder": "5ddbbe19-e695-4ab4-b02c-9ff98509e202"
                         },
-                    ],
-                    "batch_id": "XYZ",
-                    "summary_info": {
-                        "upload_placeholder": "872f4bae-bca8-42f6-a3b7-cb4db27b2e24"
                     },
-                }
-            ]
+                    {
+                        "cimac_id": "CTTTPP121.00",
+                        "tra_clone": {
+                            "upload_placeholder": "3f79f985-eca2-46c4-9148-820144a9d31a"
+                        },
+                        "trb_clone": {
+                            "upload_placeholder": "92b14796-d52c-4c77-92c5-cf3c0a59ce29"
+                        },
+                    },
+                ],
+                "batch_id": "XYZ",
+                "summary_info": {
+                    "upload_placeholder": "872f4bae-bca8-42f6-a3b7-cb4db27b2e24"
+                },
+            }
         },
         "protocol_identifier": "test_prism_trial_id",
     }
@@ -1351,30 +1345,17 @@ def tcr_analysis() -> PrismTestData:
     ]
 
     cimac_ids = [
-        record["cimac_id"]
-        for batch in prismify_patch["analysis"]["tcr_analysis"]
-        for record in batch["records"]
+        run["cimac_id"]
+        for run in prismify_patch["analysis"]["tcr_analysis"]["pair_runs"]
     ]
     assays = tcr_fastq().prismify_patch["assays"]
     base_trial = get_test_trial(cimac_ids, assays)
 
     # Set up the TCR target trial to include both assay and analysis metadata
-    target_trial = deepcopy(base_trial)
-    assay_batches = assays["tcr"]
-    analysis_batches = prismify_patch["analysis"]["tcr_analysis"]
-    combined_batches = []
-    for assay_batch, analysis_batch in zip(assay_batches, analysis_batches):
-        assay_records = assay_batch["records"]
-        analysis_records = analysis_batch["records"]
-        combined_records = [
-            copy_dict_with_branch(assay_record, analysis_record, "output_files")
-            for assay_record, analysis_record in zip(assay_records, analysis_records)
-        ]
-        combined_batch = {**assay_batch, **analysis_batch, "records": combined_records}
-        combined_batches.append(combined_batch)
-
     target_trial = copy_dict_with_branch(
-        base_trial, {"assays": {"tcr": combined_batches}}, "assays"
+        base_trial,
+        {"assays": assays, "analysis": prismify_patch["analysis"]},
+        ["assays", "analysis"],
     )
 
     return PrismTestData(

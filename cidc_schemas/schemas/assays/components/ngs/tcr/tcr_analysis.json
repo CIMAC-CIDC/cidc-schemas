@@ -6,6 +6,12 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+        "batch_id": {
+            "$ref": "assays/tcr_assay.json#properties/batch_id"
+        },
+        "summary_info": {
+            "$ref": "artifacts/artifact_csv.json"
+        },
         "pair_runs": {
             "type": "array",
             "items": {

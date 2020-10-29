@@ -7,10 +7,7 @@
   "additionalProperties": false,
   "properties": {
     "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
-    "files": {"$ref": "assays/components/ngs/tcr/tcr_input.json"},
-    "output_files": {
-            "$ref": "assays/components/ngs/tcr/tcr_analysis.json"
-        }
+    "files": {"$ref": "assays/components/ngs/tcr/tcr_input.json"}
   },
   "mergeStrategy": "objectMerge",
   "required": [

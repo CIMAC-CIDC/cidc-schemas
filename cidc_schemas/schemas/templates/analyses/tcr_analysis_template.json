@@ -2,13 +2,13 @@
     "title": "TCR analysis template",
     "description": "Metadata information for TCRseq Analysis output.",
     "prism_template_root_object_schema": "assays/components/ngs/tcr/tcr_analysis.json",
-    "prism_template_root_object_pointer": "/analysis/tcr_analysis/0",
+    "prism_template_root_object_pointer": "/analysis/tcr_analysis",
     "properties": {
         "worksheets": {
             "TCRseq Analysis": {
                 "preamble_rows": {
                     "protocol identifier": {
-                        "merge_pointer": "3/protocol_identifier",
+                        "merge_pointer": "2/protocol_identifier",
                         "type_ref": "clinical_trial.json#properties/protocol_identifier"
                     },
                     "batch id": {
@@ -30,13 +30,13 @@
                             "type_ref": "sample.json#properties/cimac_id"
                         },
                         "TRA Clones UMI Counts": {
-                            "merge_pointer": "0/output_files/tra_clone",
+                            "merge_pointer": "0/tra_clone",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
                             "gcs_uri_format": "{protocol identifier}/tcr_analysis/{batch id}/{cimac id}/tra_clone.csv",
                             "is_artifact": 1
                         },
                         "TRB Clones UMI Counts": {
-                            "merge_pointer": "0/output_files/trb_clone",
+                            "merge_pointer": "0/trb_clone",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
                             "gcs_uri_format": "{protocol identifier}/tcr_analysis/{batch id}/{cimac id}/trb_clone.csv",
                             "is_artifact": 1

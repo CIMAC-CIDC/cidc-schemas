@@ -22,11 +22,11 @@
                         "is_artifact": 1
                     }
                 },
-                "prism_data_object_pointer": "/pair_runs/-",
+                "prism_data_object_pointer": "/records/-",
                 "data_columns": {
                     "TCRseq Runs": {
                         "cimac id": {
-                            "merge_pointer": "2/cimac_id",
+                            "merge_pointer": "0/cimac_id",
                             "type_ref": "sample.json#properties/cimac_id"
                         },
                         "TRA Clones UMI Counts": {

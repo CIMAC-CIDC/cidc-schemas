@@ -12,7 +12,7 @@
         "summary_info": {
             "$ref": "artifacts/artifact_csv.json"
         },
-        "pair_runs": {
+        "records": {
             "type": "array",
             "items": {
                 "$ref": "assays/components/ngs/tcr/tcr_pair_analysis.json"

@@ -1283,7 +1283,7 @@ def tcr_analysis() -> PrismTestData:
     prismify_patch = {
         "analysis": {
             "tcr_analysis": {
-                "pair_runs": [
+                "records": [
                     {
                         "cimac_id": "CTTTPP111.00",
                         "tra_clone": {
@@ -1345,8 +1345,7 @@ def tcr_analysis() -> PrismTestData:
     ]
 
     cimac_ids = [
-        run["cimac_id"]
-        for run in prismify_patch["analysis"]["tcr_analysis"]["pair_runs"]
+        run["cimac_id"] for run in prismify_patch["analysis"]["tcr_analysis"]["records"]
     ]
     assays = tcr_fastq().prismify_patch["assays"]
     base_trial = get_test_trial(cimac_ids, assays)

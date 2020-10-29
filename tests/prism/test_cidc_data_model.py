@@ -33,7 +33,6 @@ def assert_metadata_matches(received: dict, expected: dict, upload_entries: list
     # upload entries.
     diff = DeepDiff(expected, received)
 
-    print(diff)
     if upload_entries and diff:
         assert len(diff) == 2  # only "values_changed" and "dictionary_item_added"
         assert len(diff["dictionary_item_added"]) == len(upload_entries)

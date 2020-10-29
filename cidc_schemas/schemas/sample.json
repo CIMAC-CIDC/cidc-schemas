@@ -30,19 +30,23 @@
         },
         "surgical_pathology_report_id": {
             "description": "A unique identifier so someone can find the surgical pathology report.",
+            "encrypt": true,
             "type": "string"
         },
         "clinical_report_id": {
             "description": "A unique identifier so someone can find the clinical report.",
+            "encrypt": true,
             "type": "string"
         },
         "parent_sample_id": {
-            "description": "Sample identifier assigned by the biorepository site. Example: EA123-45.",
-            "type": "string"
+            "description": "Sample identifier assigned by the biorepository site. Crypto-hashed after upload.",
+            "type": "string",
+            "encrypt": true
         },
         "processed_sample_id": {
-            "description": "Aliquot identifier assigned by the biorepository site: EA123-45-1",
-            "type": "string"
+            "description": "Aliquot identifier assigned by the biorepository site. Crypto-hashed after upload.",
+            "type": "string",
+            "encrypt": true
         },
         "site_description": {
             "description": "Descritpion of the topography category. e.g LUNG AND BRONCHUS",

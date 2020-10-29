@@ -23,8 +23,8 @@
     },
     "participant_id": {
       "type": "string",
-      "description": "Trial Participant Identifier.",
-      "example": "PT123"
+      "description": "Trial Participant Identifier. Crypto-hashed after upload.",
+      "encrypt": true
     },
     "cohort_name": {
       "type": "string",

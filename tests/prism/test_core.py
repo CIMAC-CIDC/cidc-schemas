@@ -201,16 +201,9 @@ def test_prismify_encrypt(monkeypatch):
                         "prism_data_object_pointer": "/files/-",
                         "preamble_rows": {
                             prop: {
-                                "do_not_merge": True,
-                                "allow_empty": True,
+                                "merge_pointer": "/file_path",
                                 "type": "string",
-                                "process_as": [
-                                    {
-                                        "merge_pointer": "/file_path",
-                                        "type": "string",
-                                        "parse_through": "encrypt",
-                                    }
-                                ],
+                                "encrypt": True,
                             }
                         },
                     }
@@ -221,11 +214,9 @@ def test_prismify_encrypt(monkeypatch):
         monkeypatch,
     )
 
-    _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
-    assert len(errs) == 1
-    assert str(errs[0]).startswith(
-        f'Cannot extract file_path from {prop} value: {"some str"!r}'
-    )
+    # pretend to forgot 'set_prism_encrypt_key' so we get server error
+    with pytest.raises(Exception, match="Encrypt is not initialized"):
+        core.prismify(xlsx, template, TEST_SCHEMA_DIR)
 
     core.set_prism_encrypt_key("key")
 
@@ -504,6 +495,106 @@ def test_prism_process_as_error(monkeypatch):
 
     _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
     assert str(errs[0]).startswith("Cannot extract author_id from book id value: None")
+
+
+def test_parse_through_basic(monkeypatch):
+    """Checks prismify directive "parse_through" """
+
+    mock_XlTemplateReader_from_excel(
+        {"ws1": [["#p", "propname", "propval"]]}, monkeypatch
+    )
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    template_schema = {
+        "title": "parse_through",
+        "prism_template_root_object_schema": "test_schema.json",
+        "properties": {
+            "worksheets": {
+                "ws1": {
+                    "prism_preamble_object_schema": "test_schema.json",
+                    "prism_preamble_object_pointer": "#",
+                    "prism_data_object_pointer": "/whatever",
+                    "preamble_rows": {
+                        "propname": {
+                            "type": "string",
+                            "parse_through": "lambda x: f'encrypted({x})'",
+                            "merge_pointer": "/propname",
+                        }
+                    },
+                }
+            }
+        },
+    }
+    template = build_mock_Template(template_schema, "test_template_name", monkeypatch)
+
+    patch, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
+    assert not errs
+
+    assert patch == {"propname": "encrypted(propval)"}
+
+    # Check working with null/None values"""
+
+    mock_XlTemplateReader_from_excel({"ws1": [["#p", "propname", None]]}, monkeypatch)
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    template_schema["properties"]["worksheets"]["ws1"]["preamble_rows"]["propname"][
+        "allow_empty"
+    ] = True
+    template = build_mock_Template(template_schema, "test_template_name", monkeypatch)
+
+    patch, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
+    assert not errs
+
+    # empty val (None) was not parsed through
+    assert patch != {"propname": "encrypted(None)"}
+    # but was skipped all together
+    assert patch == {}
+
+
+# TODO rename to "allow_None"
+def test_allow_empty(monkeypatch):
+    """Check "allow_empty" skips None values"""
+
+    mock_XlTemplateReader_from_excel(
+        {"ws1": [["#p", "id", "id"], ["#p", "prop", None]]}, monkeypatch
+    )
+    xlsx, errs = XlTemplateReader.from_excel("workbook")
+    assert not errs
+
+    template = build_mock_Template(
+        {
+            "title": "parse_through",
+            "prism_template_root_object_schema": "test_schema.json",
+            "properties": {
+                "worksheets": {
+                    "ws1": {
+                        "prism_preamble_object_schema": "test_schema.json",
+                        "prism_preamble_object_pointer": "#",
+                        "prism_data_object_pointer": "/whatever",
+                        "preamble_rows": {
+                            "id": {"type": "string", "merge_pointer": "/id"},
+                            "prop": {
+                                "type": "string",
+                                "merge_pointer": "/prop",
+                                "allow_empty": True,
+                            },
+                        },
+                    }
+                }
+            },
+        },
+        "test_preamble_parsing_error",
+        monkeypatch,
+    )
+
+    _, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
+
+    patch, _, errs = core.prismify(xlsx, template, TEST_SCHEMA_DIR)
+    assert not errs
+
+    assert patch == {"id": "id"}
 
 
 def test_confilicting_values_in_one_template(monkeypatch):

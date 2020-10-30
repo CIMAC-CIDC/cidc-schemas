@@ -351,7 +351,7 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
                 type_ref += "wes_pair"
             else:
                 type_ref += name
-            
+
             if short_key in ["normal", "tumor"]:
                 type_ref += f"_analysis.json#properties/{short_key}/cimac_id"
             else:
@@ -363,7 +363,6 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
             "type_ref": type_ref,
             "process_as": [],
         }
-
 
         # keep track of where we are in the analysis schema
         context = assay_schema["properties"][pointer]["items"]["properties"]

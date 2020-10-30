@@ -466,7 +466,9 @@ def test_convert_api_to_template_wes():
         },
     }
 
-    assay_schema = _load_dont_validate_schema("assays/components/ngs/wes/wes_analysis.json")
+    assay_schema = _load_dont_validate_schema(
+        "assays/components/ngs/wes/wes_analysis.json"
+    )
 
     wes_output = _convert_api_to_template("wes", wes_api, assay_schema)
     assert DeepDiff(wes_json, wes_output) == {}
@@ -522,7 +524,9 @@ def test_convert_api_to_template_rna():
         },
     }
 
-    assay_schema = _load_dont_validate_schema("assays/components/ngs/rna/rnaseq_analysis.json")
+    assay_schema = _load_dont_validate_schema(
+        "assays/components/ngs/rna/rnaseq_analysis.json"
+    )
     rna_output = _convert_api_to_template("rna", rna_api, assay_schema)
     assert DeepDiff(rna_json, rna_output) == {}
 

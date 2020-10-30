@@ -1,18 +1,18 @@
 {
     "title": "TCR analysis template",
     "description": "Metadata information for TCRseq Analysis output.",
-    "prism_template_root_object_schema": "assays/components/ngs/tcr/tcr_analysis.json",
-    "prism_template_root_object_pointer": "/analysis/tcr_analysis",
+    "prism_template_root_object_schema": "assays/components/ngs/tcr/tcr_batch.json",
+    "prism_template_root_object_pointer": "/analysis/tcr_analysis/batches/0",
     "properties": {
         "worksheets": {
             "TCRseq Analysis": {
                 "preamble_rows": {
                     "protocol identifier": {
-                        "merge_pointer": "2/protocol_identifier",
+                        "merge_pointer": "4/protocol_identifier",
                         "type_ref": "clinical_trial.json#properties/protocol_identifier"
                     },
                     "batch id": {
-                        "merge_pointer": "0/batch_id",
+                        "merge_pointer": "0/batch id",
                         "type_ref": "assays/tcr_assay.json#properties/batch_id"
                     },
                     "summary info": {
@@ -22,7 +22,7 @@
                         "is_artifact": 1
                     }
                 },
-                "prism_data_object_pointer": "/records/-",
+                "prism_data_object_pointer": "0/records/-",
                 "data_columns": {
                     "TCRseq Runs": {
                         "cimac id": {

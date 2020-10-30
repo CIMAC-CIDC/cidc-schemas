@@ -4,7 +4,7 @@
     "title": "TCRseq analysis TRA/TRB clone output files",
     "description": "Output files generated from the TCRseq assay: TRA and TRB clones",
     "type": "object",
-    "additionalProperties": true,
+    "additionalProperties": false,
     "properties": {
         "cimac_id": {
             "$comment": "Id of a sample within this clinical trial, that this record is based upon.",

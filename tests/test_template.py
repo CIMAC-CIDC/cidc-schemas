@@ -526,9 +526,6 @@ def test_convert_api_to_template_rna():
     rna_output = _convert_api_to_template("rna", rna_api, assay_schema)
     assert DeepDiff(rna_json, rna_output) == {}
 
-    with pytest.raises(NotImplementedError, match="Cannot load"):
-        _convert_api_to_template("foo", rna_api, assay_schema)
-
     rna_api_bad_key = {"foo": [{}]}
     with pytest.raises(InvalidMergeTargetException, match="corresponding entry"):
         _convert_api_to_template("rna", rna_api_bad_key, assay_schema)

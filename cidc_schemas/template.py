@@ -62,7 +62,7 @@ def generate_analysis_template_schemas(
         # need an existing assay/components/ngs analysis schema to find merge pointers
         try:
             assay_schema = _load_dont_validate_schema(
-                f"assays/components/ngs/{name}/{'rnaseq' if name == 'rna' else name}_analysis.json"
+                f"assays/components/ngs/{analysis}/{'rnaseq' if analysis == 'rna' else analysis}_analysis.json"
             )
         except Exception as e:
             print(
@@ -339,18 +339,24 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
             short_key = long_key.replace(" ", "_")
 
         # static header
-        merge_pointer = f"/{long_key.replace(' ','_')}"
-        if name == "rna":
-            merge_pointer += "rnaseq_level1"
-        elif name == "wes" and long_key == "run id":
-            merge_pointer += "wes_pair"
-        else:
-            merge_pointer += name
-
         if "cimac id" in long_key and name == "wes":
             type_ref = "sample.json#properties/cimac_id"
+            merge_pointer = f"/{short_key}/cimac_id"
         else:
             type_ref = f"assays/components/ngs/{name}/"
+
+            if name == "rna":
+                type_ref += "rnaseq_level1"
+            elif name == "wes" and long_key == "run id":
+                type_ref += "wes_pair"
+            else:
+                type_ref += name
+            
+            if short_key in ["normal", "tumor"]:
+                type_ref += f"_analysis.json#properties/{short_key}/cimac_id"
+            else:
+                type_ref += f"_analysis.json#properties/{long_key.replace(' ','_')}"
+            merge_pointer = f"/{long_key.replace(' ','_')}"
 
         subtemplate[long_key] = {
             "merge_pointer": merge_pointer,
@@ -358,14 +364,6 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
             "process_as": [],
         }
 
-        if short_key in ["normal", "tumor"]:
-            subtemplate[long_key][
-                "merge_pointer"
-            ] += f"_analysis.json#properties/{short_key}/cimac_id"
-        else:
-            subtemplate[long_key][
-                "merge_pointer"
-            ] += f"_analysis.json#properties/{long_key.replace(' ','_')}"
 
         # keep track of where we are in the analysis schema
         context = assay_schema["properties"][pointer]["items"]["properties"]

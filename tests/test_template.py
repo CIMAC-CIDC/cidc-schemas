@@ -7,8 +7,10 @@ import json
 import os
 import pytest
 
-from cidc_schemas.constants import TEMPLATE_DIR
+from cidc_schemas.constants import SCHEMA_DIR, TEMPLATE_DIR
 from cidc_schemas.prism import InvalidMergeTargetException
+from cidc_schemas.json_validation import _load_dont_validate_schema
+
 from cidc_schemas.template import (
     Template,
     generate_empty_template,
@@ -379,8 +381,20 @@ def test_first_in_context():
     # Capitals
     assert _first_in_context(["Key1"], context)[0] == "key1"
 
+    # items with one-element path
+    assert _first_in_context(["foo"], {"foo": {"items": {"properties": "bar"}}}) == (
+        "foo",
+        [],
+        "bar",
+    )
 
-def test_convert_api_to_template():
+    # items with two-element path
+    assert _first_in_context(
+        ["foo", "bar"], {"foo": {"items": {"properties": "bar"}}}
+    ) == ("foo", ["bar"], "bar")
+
+
+def test_convert_api_to_template_wes():
     wes_api = {
         "run id": [
             {
@@ -400,18 +414,6 @@ def test_convert_api_to_template():
                 "file_purpose": "Miscellaneous",
             }
         ],
-    }
-
-    rna_api = {
-        "cimac id": [
-            {  # use first entry as example
-                "filter_group": "alignment",
-                "file_path_template": "analysis/star/{id}/{id}.sorted.bam",
-                "short_description": "star alignment output",
-                "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
-                "file_purpose": "Analysis view",
-            }
-        ]
     }
 
     wes_json = {
@@ -464,6 +466,25 @@ def test_convert_api_to_template():
         },
     }
 
+    assay_schema = _load_dont_validate_schema("assays/components/ngs/wes/wes_analysis.json")
+
+    wes_output = _convert_api_to_template("wes", wes_api, assay_schema)
+    assert DeepDiff(wes_json, wes_output) == {}
+
+
+def test_convert_api_to_template_rna():
+    rna_api = {
+        "cimac id": [
+            {  # use first entry as example
+                "filter_group": "alignment",
+                "file_path_template": "analysis/star/{id}/{id}.sorted.bam",
+                "short_description": "star alignment output",
+                "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
+                "file_purpose": "Analysis view",
+            }
+        ]
+    }
+
     rna_json = {
         "title": "RNAseq level 1 analysis template",
         "description": "Metadata information for RNAseq level 1 Analysis output.",
@@ -501,18 +522,16 @@ def test_convert_api_to_template():
         },
     }
 
-    wes_output = _convert_api_to_template("wes", wes_api)
-    rna_output = _convert_api_to_template("rna", rna_api)
-
-    assert DeepDiff(wes_json, wes_output) == {}
+    assay_schema = _load_dont_validate_schema("assays/components/ngs/rna/rnaseq_analysis.json")
+    rna_output = _convert_api_to_template("rna", rna_api, assay_schema)
     assert DeepDiff(rna_json, rna_output) == {}
 
     with pytest.raises(NotImplementedError, match="Cannot load"):
-        _convert_api_to_template("foo", wes_api)
+        _convert_api_to_template("foo", rna_api, assay_schema)
 
     rna_api_bad_key = {"foo": [{}]}
     with pytest.raises(InvalidMergeTargetException, match="corresponding entry"):
-        _convert_api_to_template("rna", rna_api_bad_key)
+        _convert_api_to_template("rna", rna_api_bad_key, assay_schema)
 
     rna_api_no_target = {
         "cimac id": [
@@ -526,7 +545,7 @@ def test_convert_api_to_template():
         ]
     }
     with pytest.raises(InvalidMergeTargetException, match="cannot be mapped"):
-        _convert_api_to_template("rna", rna_api_no_target)
+        _convert_api_to_template("rna", rna_api_no_target, assay_schema)
 
     rna_api_merge_collision = {
         "cimac id": [
@@ -549,7 +568,7 @@ def test_convert_api_to_template():
     with pytest.raises(
         InvalidMergeTargetException, match="collision for inferred merge target"
     ):
-        _convert_api_to_template("rna", rna_api_merge_collision)
+        _convert_api_to_template("rna", rna_api_merge_collision, assay_schema)
 
     rna_api_underspecified = {
         "cimac id": [
@@ -563,23 +582,26 @@ def test_convert_api_to_template():
         ]
     }
     with pytest.raises(InvalidMergeTargetException, match="not a valid file"):
-        _convert_api_to_template("rna", rna_api_underspecified)
+        _convert_api_to_template("rna", rna_api_underspecified, assay_schema)
 
 
-def test_generate_analysis_template_schemas(tmpdir):
+def test_generate_analysis_template_schemas_rna(tmpdir):
     generate_analysis_template_schemas(
         tmpdir.strpath, lambda file: f"{file}_template.json"
     )
 
     test_dir = os.path.join(TEST_SCHEMA_DIR, "target-templates")
     good_rna = json.load(open(os.path.join(test_dir, "rna_template.json")))
-    good_wes = json.load(open(os.path.join(test_dir, "wes_template.json")))
 
     new_rna = json.load(open(tmpdir.join("rna_template.json")))
-    new_wes = json.load(open(tmpdir.join("wes_template.json")))
-
-    print(good_wes)
-    print(new_wes)
-
     assert DeepDiff(good_rna, new_rna) == {}
+
+
+def test_generate_analysis_template_schemas_wes(tmpdir):
+    generate_analysis_template_schemas(
+        tmpdir.strpath, lambda file: f"{file}_template.json"
+    )
+    test_dir = os.path.join(TEST_SCHEMA_DIR, "target-templates")
+    good_wes = json.load(open(os.path.join(test_dir, "wes_template.json")))
+    new_wes = json.load(open(tmpdir.join("wes_template.json")))
     assert DeepDiff(good_wes, new_wes) == {}

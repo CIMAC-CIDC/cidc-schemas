@@ -57,16 +57,19 @@ def generate_analysis_template_schemas(
 ):
     """Uses output_API.json's from cidc-ngs-pipeline-api along with existing assays/components/ngs analysis templates to generate templates/analyses schemas"""
     # for each output_API.json
-    for analysis, schema in OUTPUT_APIS.items():
+    for analysis, output_schema in OUTPUT_APIS.items():
         # try to convert it, but skip if it's not implemented'
+        # need an existing assay/components/ngs analysis schema to find merge pointers
         try:
-            template = _convert_api_to_template(analysis, schema)
-        except NotImplementedError as e:
-            # I think this should skip not print because we don't really care if they upload new output_API's if there's no model to match it to
+            assay_schema = _load_dont_validate_schema(
+                f"assays/components/ngs/{name}/{'rnaseq' if name == 'rna' else name}_analysis.json"
+            )
+        except Exception as e:
             print(
-                f"skipping {analysis} as it doesn't have a corresponding `assays/components/ngs/{analysis}/{'rnaseq' if analysis == 'rna' else analysis}_analysis.json`"
+                f"skipping {analysis}: failed to load corresponding `assays/components/ngs/{analysis}/{'rnaseq' if analysis == 'rna' else analysis}_analysis.json`"
             )
         else:
+            template = _convert_api_to_template(analysis, output_schema, assay_schema)
             with open(os.path.join(target_dir, fname_format(analysis)), "w") as f:
                 json.dump(template, f)
 
@@ -301,19 +304,9 @@ def _calc_gcs_uri_path(name: str, merge_pointer: str):
     return file
 
 
-def _convert_api_to_template(name: str, schema: dict):
+def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
     # import here to avoid circular dependence where prism imports Template
     from .prism.merger import InvalidMergeTargetException
-
-    # need an existing assay/components/ngs analysis schema to find merge pointers
-    try:
-        assay_schema = _load_dont_validate_schema(
-            f"assays/components/ngs/{name}/{'rnaseq' if name == 'rna' else name}_analysis.json"
-        )
-    except Exception as e:
-        raise NotImplementedError(
-            f"Cannot load corresponding `assays/components/ngs/{name}/{'rnaseq' if name == 'rna' else name}_analysis.json`"
-        ) from e
 
     # so many different ways of writing it
     title = "RNAseq" if name == "rna" else name.upper()
@@ -330,35 +323,49 @@ def _convert_api_to_template(name: str, schema: dict):
         # so many ways to write this too
         if long_key == "id":
             long_key = "cimac id"  # assume CIMAC if just 'id'
-        pysafe_key = (
-            "id"
-            if "cimac id" in long_key
-            else "run"
-            if long_key == "run id"
-            else long_key.replace(" ", "_")
-        )
-        short_key = (
-            "normal"
-            if long_key == "normal cimac id"
-            else "tumor"
-            if long_key == "tumor cimac id"
-            else long_key.replace(" ", "_")
-        )
 
-        # static
+        if "cimac id" in long_key:
+            pysafe_key = "id"
+        elif long_key == "run id":
+            pysafe_key = "run"
+        else:
+            pysafe_key = long_key.replace(" ", "_")
+
+        if long_key == "normal cimac id":
+            short_key = "normal"
+        elif long_key == "tumor cimac id":
+            short_key = "tumor"
+        else:
+            short_key = long_key.replace(" ", "_")
+
+        # static header
+        merge_pointer = f"/{long_key.replace(' ','_')}"
+        if name == "rna":
+            merge_pointer += "rnaseq_level1"
+        elif name == "wes" and long_key == "run id":
+            merge_pointer += "wes_pair"
+        else:
+            merge_pointer += name
+
+        if "cimac id" in long_key and name == "wes":
+            type_ref = "sample.json#properties/cimac_id"
+        else:
+            type_ref = f"assays/components/ngs/{name}/"
+
         subtemplate[long_key] = {
-            "merge_pointer": f"/{long_key.replace(' ','_')}",
-            # complicated because of non-systematic naming
-            "type_ref": f"assays/components/ngs/{name}/{'rnaseq_level1' if name == 'rna' else 'wes_pair' if name == 'wes' and long_key == 'run id' else name}_analysis.json#properties/{long_key.replace(' ','_')}"
-            if "cimac id" not in long_key or name != "wes"
-            else "sample.json#properties/cimac_id",
+            "merge_pointer": merge_pointer,
+            "type_ref": type_ref,
             "process_as": [],
         }
 
         if short_key in ["normal", "tumor"]:
-            subtemplate[long_key]["merge_pointer"] = subtemplate[long_key][
+            subtemplate[long_key][
                 "merge_pointer"
-            ].replace("_cimac", "/cimac")
+            ] += f"_analysis.json#properties/{short_key}/cimac_id"
+        else:
+            subtemplate[long_key][
+                "merge_pointer"
+            ] += f"_analysis.json#properties/{long_key.replace(' ','_')}"
 
         # keep track of where we are in the analysis schema
         context = assay_schema["properties"][pointer]["items"]["properties"]
@@ -432,9 +439,8 @@ def _convert_api_to_template(name: str, schema: dict):
                 .replace("sample_summary", ".summary")
                 .split(".")
             )
-            ext = [
-                i for i in ext if i in POSSIBLE_FILE_EXTS
-            ]  # only keep valid parts, in order they appear
+            # only keep valid parts, in order they appear
+            ext = [i for i in ext if i in POSSIBLE_FILE_EXTS]
             ext = ".".join(ext)
             gcs_uri += "." + ext
 

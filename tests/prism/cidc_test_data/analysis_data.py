@@ -1298,7 +1298,7 @@ def tcr_analysis() -> PrismTestData:
                                 },
                                 "trb_clone": {
                                     "upload_placeholder": "5ddbbe19-e695-4ab4-b02c-9ff98509e202"
-                                }
+                                },
                             },
                             {
                                 "cimac_id": "CTTTPP121.00",
@@ -1307,13 +1307,13 @@ def tcr_analysis() -> PrismTestData:
                                 },
                                 "trb_clone": {
                                     "upload_placeholder": "92b14796-d52c-4c77-92c5-cf3c0a59ce29"
-                                }
-                            }
-                        ]
+                                },
+                            },
+                        ],
                     }
                 ]
             }
-        }
+        },
     }
     upload_entries = [
         LocalFileUploadEntry(
@@ -1349,7 +1349,8 @@ def tcr_analysis() -> PrismTestData:
     ]
 
     cimac_ids = [
-        record["cimac_id"] for batch in prismify_patch["analysis"]["tcr_analysis"]["batches"]
+        record["cimac_id"]
+        for batch in prismify_patch["analysis"]["tcr_analysis"]["batches"]
         for record in batch["records"]
     ]
     assays = tcr_fastq().prismify_patch["assays"]

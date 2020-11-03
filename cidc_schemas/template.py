@@ -71,7 +71,7 @@ def generate_analysis_template_schemas(
         else:
             template = _convert_api_to_template(analysis, output_schema, assay_schema)
             with open(os.path.join(target_dir, fname_format(analysis)), "w") as f:
-                json.dump(template, f)
+                json.dump(template, f, indent=4)
 
 
 def _first_in_context(path: list, context: dict):

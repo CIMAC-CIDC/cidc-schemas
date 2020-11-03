@@ -6,7 +6,7 @@ import os
 import sys
 import subprocess
 
-from cidc_schemas.constatns import TEMPLATE_DIR
+from cidc_schemas.constants import TEMPLATE_DIR
 from cidc_schemas.template import generate_analysis_template_schemas
 
 
@@ -89,15 +89,15 @@ def main():
             if err:
                 os.exit(err)
 
-
     generate_analysis_template_schemas()
     folder = os.path.join(TEMPLATE_DIR, "analyses")
     for fname in os.listdir(folder):
         if fname.endswith("_analysis_template.json"):
-            output, err = system("git", "add", fname)
+            output, err = system("git", "add", os.path.join(folder, fname))
             if output:
                 print(output)
             if err:
                 os.exit(err)
+
 
 main()

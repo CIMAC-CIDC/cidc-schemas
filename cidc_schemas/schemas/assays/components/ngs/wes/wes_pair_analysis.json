@@ -39,6 +39,9 @@
     },
     "report": {
       "$ref": "assays/components/ngs/wes/report.json"
+    },
+    "msisensor": {
+      "$ref": "assays/components/ngs/wes/msisensor.json"
     }
   },
   "required": [

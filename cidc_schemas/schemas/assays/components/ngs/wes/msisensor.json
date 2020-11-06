@@ -1,0 +1,16 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "msisensor",
+  "title": "WES MSISensor2 Output Files",
+  "type": "object",
+  "description": "MSISensor2 output files.",
+  "properties": {
+    "msisensor": {
+      "$ref": "artifacts/artifact_text.json"
+    }
+  },
+  "required": [
+    "msisensor"
+  ],
+  "additionalProperties": false
+}

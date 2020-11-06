@@ -34,6 +34,11 @@ def wes_analysis() -> PrismTestData:
                                 "upload_placeholder": "cdef9e1e-8e04-46ed-a9e6-bb618188a6d6"
                             }
                         },
+                        "msisensor": {
+                            "msisensor": {
+                                "upload_placeholder": "msi18d7a-fd96-4e75-b265-1590c703a301"
+                            }
+                        },
                         "copynumber": {
                             "copynumber_cnv_calls": {
                                 "upload_placeholder": "85989077-49e4-44c6-8788-3b19357d3122"
@@ -186,6 +191,11 @@ def wes_analysis() -> PrismTestData:
                         "clonality": {
                             "clonality_pyclone": {
                                 "upload_placeholder": "a4cba177-0be5-4d7d-b635-4a60adaa9575"
+                            }
+                        },
+                        "msisensor": {
+                            "msisensor": {
+                                "upload_placeholder": "msi28d7a-fd96-4e75-b265-1590c703a301"
                             }
                         },
                         "copynumber": {
@@ -357,6 +367,12 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/copynumber/run_1/run_1_cnvcalls.txt.tn.tsv",
             gs_key="test_prism_trial_id/wes/run_1/analysis/copynumber_cnvcalls.txt.tn.tsv",
             upload_placeholder="eb1a8d7a-fd96-4e75-b265-1590c703a301",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="analysis/msisensor2/run_1/run_1_msisensor.txt",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/msisensor.txt",
+            upload_placeholder="msi18d7a-fd96-4e75-b265-1590c703a301",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
@@ -603,6 +619,12 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/copynumber/run_2/run_2_cnvcalls.txt.tn.tsv",
             gs_key="test_prism_trial_id/wes/run_2/analysis/copynumber_cnvcalls.txt.tn.tsv",
             upload_placeholder="ba2984c0-f7e6-470c-95ef-e4b33cbdea48",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="analysis/msisensor2/run_2/run_2_msisensor.txt",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/msisensor.txt",
+            upload_placeholder="msi28d7a-fd96-4e75-b265-1590c703a301",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(

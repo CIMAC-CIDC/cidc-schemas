@@ -230,6 +230,13 @@
                                     "is_artifact": 1
                                 },
                                 {
+                                    "parse_through": "lambda id: f'analysis/germline/{id}/{id}_haplotyper.targets.vcf.gz'",
+                                    "merge_pointer": "/tumor/germline/haplotyper_targets",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/haplotyper_targets.vcf.gz",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
                                     "parse_through": "lambda id: f'analysis/optitype/{id}/{id}_result.tsv'",
                                     "merge_pointer": "/tumor/optitype/optitype_result",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/optitype_result.tsv",

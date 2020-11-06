@@ -1,0 +1,26 @@
+{
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "$id": "tcr_single_analysis",
+    "title": "TCR Output Files",
+    "description": "Output files generated from the TCRseq assay: TRA and TRB clones",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "batch id": {
+            "$ref": "assays/tcr_assay.json#properties/batch_id"
+        },
+        "summary_info": {
+            "$ref": "artifacts/artifact_csv.json"
+        },
+        "records": {
+            "type": "array",
+            "items": {
+                "$ref": "assays/components/ngs/tcr/tcr_pair_analysis.json"
+            },
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": {
+                "idRef": "/cimac_id"
+            }
+        }
+    }
+}

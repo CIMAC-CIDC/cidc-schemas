@@ -10,5 +10,8 @@
     "files": {"$ref": "assays/components/ngs/tcr/tcr_input.json"}
   },
   "mergeStrategy": "objectMerge",
-  "required": ["cimac_id", "files"]
+  "required": [
+    "cimac_id",
+    "files"
+  ]
 }

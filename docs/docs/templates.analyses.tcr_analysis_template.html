@@ -31,16 +31,16 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>RNAseq level 1 analysis template</h1>
+        <h1>TCR analysis template</h1>
         <p>
-            <b>Description:</b>  Metadata information for RNAseq level 1 Analysis output.
+            <b>Description:</b>  Metadata information for TCRseq Analysis output.
         </p>
         
     </div>
 
   <div class="container">
     
-      <h3>Worksheet - RNAseq Analysis</h3>
+      <h3>Worksheet - TCRseq Analysis</h3>
   
     <h4>Preamble Rows</h4>
     
@@ -56,6 +56,10 @@
             <th>Data Type</th>
         </tr>
         </thead>
+        
+            
+        
+            
         
             
         
@@ -83,12 +87,58 @@
 </tr>
             
         
+            
+                <tr>
+    <td>
+        
+            <span id="batch id">
+                batch id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            TCRseq batch identification number.
+        
+    </td>
+    <td>
+        
+            <a href="assays.tcr_assay.html#batch_id">assays.tcr_assay#batch_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="summary info">
+                summary info
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
     </table>
   
   
     <h4>Data Columns</h4>
     
-      <h5 class="text-muted">RNAseq Runs</h4>
+      <h5 class="text-muted">TCRseq Runs</h4>
       
     
         
@@ -105,6 +155,10 @@
         
             
         
+            
+        
+            
+        
         
             
                 <tr>
@@ -118,12 +172,58 @@
     </td>
     <td width=55%>
         
-            
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??
         
     </td>
     <td>
         
-            <a href="assays.components.ngs.rna.rnaseq_level1_analysis.html#cimac_id">assays.components.ngs.rna.rnaseq_level1_analysis#cimac_id</a>
+            <a href="sample.html#cimac_id">sample#cimac_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="TRA Clones UMI Counts">
+                TRA Clones UMI Counts
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="TRB Clones UMI Counts">
+                TRB Clones UMI Counts
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
         
     </td>
 </tr>

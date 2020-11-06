@@ -12,7 +12,9 @@
     },
     "rnaseq_analysis": {
       "$ref": "assays/components/ngs/rna/rnaseq_analysis.json"
+    },
+    "tcr_analysis": {
+      "$ref": "assays/components/ngs/tcr/tcr_analysis.json"
     }
-
   }
 }

@@ -102,15 +102,6 @@ def wes_analysis() -> PrismTestData:
                                 "coverage_metrics_summary": {
                                     "upload_placeholder": "653bd098-3997-494b-8db9-03d114b3fbb3"
                                 },
-                                "mosdepth_region_dist_broad": {
-                                    "upload_placeholder": "82dc827e-e35a-4a72-b6f9-8d870c87a453"
-                                },
-                                "mosdepth_region_dist_mda": {
-                                    "upload_placeholder": "28bbbff2-c67e-4ac1-b536-624f4e74dde8"
-                                },
-                                "mosdepth_region_dist_mocha": {
-                                    "upload_placeholder": "edaa1d9a-320b-4a66-99a8-84ed62f374be"
-                                },
                             },
                             "cimac_id": "CTTTPP111.00",
                             "alignment": {
@@ -174,15 +165,6 @@ def wes_analysis() -> PrismTestData:
                                 },
                                 "coverage_metrics_summary": {
                                     "upload_placeholder": "3b5fded9-7274-45a4-a71e-48cf590814a9"
-                                },
-                                "mosdepth_region_dist_broad": {
-                                    "upload_placeholder": "f63b5f01-a2fa-403d-a7c0-4561dadfbedd"
-                                },
-                                "mosdepth_region_dist_mda": {
-                                    "upload_placeholder": "041dc89f-e374-4808-82a6-9a63caa98f65"
-                                },
-                                "mosdepth_region_dist_mocha": {
-                                    "upload_placeholder": "55776c65-0e65-4063-97f5-500ceb65d0f2"
                                 },
                             },
                             "optitype": {
@@ -273,15 +255,6 @@ def wes_analysis() -> PrismTestData:
                                 "coverage_metrics_summary": {
                                     "upload_placeholder": "3db263fd-2b23-4905-8389-dc8c49c01c2f"
                                 },
-                                "mosdepth_region_dist_broad": {
-                                    "upload_placeholder": "3c5664be-f99a-406d-8849-8064d41a92fe"
-                                },
-                                "mosdepth_region_dist_mda": {
-                                    "upload_placeholder": "a19d90c6-4794-4628-b1c8-dd603b7f6ff1"
-                                },
-                                "mosdepth_region_dist_mocha": {
-                                    "upload_placeholder": "2b3fbb1a-8182-4409-a90e-c69ee75cb194"
-                                },
                             },
                             "cimac_id": "CTTTPP121.00",
                             "alignment": {
@@ -345,15 +318,6 @@ def wes_analysis() -> PrismTestData:
                                 },
                                 "coverage_metrics_summary": {
                                     "upload_placeholder": "de83d3c9-6b0d-4317-b01e-dd28183744f7"
-                                },
-                                "mosdepth_region_dist_broad": {
-                                    "upload_placeholder": "1ffc81e4-0b97-437d-85a8-9389b59727b5"
-                                },
-                                "mosdepth_region_dist_mda": {
-                                    "upload_placeholder": "15933a57-70bf-4db0-b227-ab9ff5ce6258"
-                                },
-                                "mosdepth_region_dist_mocha": {
-                                    "upload_placeholder": "c92dde2b-bf94-4b85-8185-2cf19fd5b7ee"
                                 },
                             },
                             "optitype": {
@@ -540,24 +504,6 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/metrics/CTTTPP111.00/CTTTPP111.00.broad.mosdepth.region.dist.txt",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/tumor/CTTTPP111.00/mosdepth_region_dist_broad.txt",
-            upload_placeholder="82dc827e-e35a-4a72-b6f9-8d870c87a453",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/metrics/CTTTPP111.00/CTTTPP111.00.mda.mosdepth.region.dist.txt",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/tumor/CTTTPP111.00/mosdepth_region_dist_mda.txt",
-            upload_placeholder="28bbbff2-c67e-4ac1-b536-624f4e74dde8",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/metrics/CTTTPP111.00/CTTTPP111.00.mocha.mosdepth.region.dist.txt",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/tumor/CTTTPP111.00/mosdepth_region_dist_mocha.txt",
-            upload_placeholder="edaa1d9a-320b-4a66-99a8-84ed62f374be",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
             local_path="analysis/germline/CTTTPP111.00/CTTTPP111.00_haplotyper.targets.vcf.gz",
             gs_key="test_prism_trial_id/wes/run_1/analysis/tumor/CTTTPP111.00/haplotyper_targets.vcf.gz",
             upload_placeholder="ht899d73-7373-4041-85f9-6cc4324be811",
@@ -609,24 +555,6 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/metrics/CTTTPP111.00/CTTTPP111.00_coverage_metrics.sample_summary.txt",
             gs_key="test_prism_trial_id/wes/run_1/analysis/normal/CTTTPP111.00/coverage_metrics_summary.txt",
             upload_placeholder="3b5fded9-7274-45a4-a71e-48cf590814a9",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/metrics/CTTTPP111.00/CTTTPP111.00.broad.mosdepth.region.dist.txt",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/normal/CTTTPP111.00/mosdepth_region_dist_broad.txt",
-            upload_placeholder="f63b5f01-a2fa-403d-a7c0-4561dadfbedd",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/metrics/CTTTPP111.00/CTTTPP111.00.mda.mosdepth.region.dist.txt",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/normal/CTTTPP111.00/mosdepth_region_dist_mda.txt",
-            upload_placeholder="041dc89f-e374-4808-82a6-9a63caa98f65",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/metrics/CTTTPP111.00/CTTTPP111.00.mocha.mosdepth.region.dist.txt",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/normal/CTTTPP111.00/mosdepth_region_dist_mocha.txt",
-            upload_placeholder="55776c65-0e65-4063-97f5-500ceb65d0f2",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
@@ -804,24 +732,6 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/metrics/CTTTPP121.00/CTTTPP121.00.broad.mosdepth.region.dist.txt",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/tumor/CTTTPP121.00/mosdepth_region_dist_broad.txt",
-            upload_placeholder="3c5664be-f99a-406d-8849-8064d41a92fe",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/metrics/CTTTPP121.00/CTTTPP121.00.mda.mosdepth.region.dist.txt",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/tumor/CTTTPP121.00/mosdepth_region_dist_mda.txt",
-            upload_placeholder="a19d90c6-4794-4628-b1c8-dd603b7f6ff1",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/metrics/CTTTPP121.00/CTTTPP121.00.mocha.mosdepth.region.dist.txt",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/tumor/CTTTPP121.00/mosdepth_region_dist_mocha.txt",
-            upload_placeholder="2b3fbb1a-8182-4409-a90e-c69ee75cb194",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
             local_path="analysis/germline/CTTTPP121.00/CTTTPP121.00_haplotyper.targets.vcf.gz",
             gs_key="test_prism_trial_id/wes/run_2/analysis/tumor/CTTTPP121.00/haplotyper_targets.vcf.gz",
             upload_placeholder="ht899d73-7373-4041-85f9-6cc4324be813",
@@ -867,24 +777,6 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/metrics/CTTTPP121.00/CTTTPP121.00_coverage_metrics.sample_summary.txt",
             gs_key="test_prism_trial_id/wes/run_2/analysis/normal/CTTTPP121.00/coverage_metrics_summary.txt",
             upload_placeholder="de83d3c9-6b0d-4317-b01e-dd28183744f7",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/metrics/CTTTPP121.00/CTTTPP121.00.broad.mosdepth.region.dist.txt",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/normal/CTTTPP121.00/mosdepth_region_dist_broad.txt",
-            upload_placeholder="1ffc81e4-0b97-437d-85a8-9389b59727b5",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/metrics/CTTTPP121.00/CTTTPP121.00.mda.mosdepth.region.dist.txt",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/normal/CTTTPP121.00/mosdepth_region_dist_mda.txt",
-            upload_placeholder="15933a57-70bf-4db0-b227-ab9ff5ce6258",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/metrics/CTTTPP121.00/CTTTPP121.00.mocha.mosdepth.region.dist.txt",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/normal/CTTTPP121.00/mosdepth_region_dist_mocha.txt",
-            upload_placeholder="c92dde2b-bf94-4b85-8185-2cf19fd5b7ee",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(

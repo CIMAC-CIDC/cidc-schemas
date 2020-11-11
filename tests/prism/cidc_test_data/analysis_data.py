@@ -79,6 +79,9 @@ def wes_analysis() -> PrismTestData:
                             "tnscope_exons_mocha": {
                                 "upload_placeholder": "218be905-220d-417f-8395-0de84fcd8f1d"
                             },
+                            "vcf_compare": {
+                                "upload_placeholder": "218be905-220d-417f-8395-0de84fcd81sg"
+                            },
                         },
                         "tumor": {
                             "metrics": {
@@ -247,6 +250,9 @@ def wes_analysis() -> PrismTestData:
                             },
                             "tnscope_exons_mocha": {
                                 "upload_placeholder": "84f6bd4c-00db-4ce3-a6b6-a8482a333b25"
+                            },
+                            "vcf_compare": {
+                                "upload_placeholder": "84f6bd4c-00db-4ce3-a6b6-a8482a3332sg"
                             },
                         },
                         "tumor": {
@@ -437,6 +443,12 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/somatic/run_1/run_1_tnscope.filter.exons.mocha.vcf.gz",
             gs_key="test_prism_trial_id/wes/run_1/analysis/tnscope_exons_mocha.gz",
             upload_placeholder="218be905-220d-417f-8395-0de84fcd8f1d",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="analysis/somatic/run_1/run_1_vcfcompare.txt",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/vcfcompare.txt",
+            upload_placeholder="218be905-220d-417f-8395-0de84fcd81sg",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
@@ -701,6 +713,12 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/somatic/run_2/run_2_tnscope.filter.exons.mocha.vcf.gz",
             gs_key="test_prism_trial_id/wes/run_2/analysis/tnscope_exons_mocha.gz",
             upload_placeholder="84f6bd4c-00db-4ce3-a6b6-a8482a333b25",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="analysis/somatic/run_2/run_2_vcfcompare.txt",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/vcfcompare.txt",
+            upload_placeholder="84f6bd4c-00db-4ce3-a6b6-a8482a3332sg",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(

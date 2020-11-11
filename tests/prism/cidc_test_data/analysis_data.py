@@ -410,7 +410,7 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/somatic/run_1/run_1tnscope.output.maf",
+            local_path="analysis/somatic/run_1/run_1_tnscope.output.maf",
             gs_key="test_prism_trial_id/wes/run_1/analysis/maf_tnscope_output.maf",
             upload_placeholder="a0a4a694-c0bc-4661-b9be-0b6dff20a240",
             metadata_availability=False,
@@ -674,7 +674,7 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/somatic/run_2/run_2tnscope.output.maf",
+            local_path="analysis/somatic/run_2/run_2_tnscope.output.maf",
             gs_key="test_prism_trial_id/wes/run_2/analysis/maf_tnscope_output.maf",
             upload_placeholder="e73b8502-d7cc-4002-a96d-57e635f4f2b0",
             metadata_availability=False,

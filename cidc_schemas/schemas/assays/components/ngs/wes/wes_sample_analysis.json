@@ -8,12 +8,12 @@
     "properties": {
         "cimac_id": {
             "$comment": "Id of a sample within this clinical trial, that this record is based upon.",
-            "$ref": "sample.json#properties/cimac_id",
+            "$ref": "sample.json#properties/cimac_id"
         },
         "alignment": {"$ref": "assays/components/ngs/wes/alignment.json"},
         "germline": {"$ref": "assays/components/ngs/wes/germline.json"},
         "optitype": {"$ref": "assays/components/ngs/wes/optitype.json"},
-        "metrics": {"$ref": "assays/components/ngs/wes/coverage_metrics.json"},
+        "metrics": {"$ref": "assays/components/ngs/wes/coverage_metrics.json"}
     },
-    "required": ["cimac_id"],
+    "required": ["cimac_id"]
 }

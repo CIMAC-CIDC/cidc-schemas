@@ -112,28 +112,28 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/report/config.yaml'",
+                                    "parse_through": "lambda run: f'analysis/report/config.yaml'",
                                     "merge_pointer": "/report/config",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/config.yaml",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/report/wes_meta/02_wes_run_version.tsv'",
+                                    "parse_through": "lambda run: f'analysis/report/wes_meta/02_wes_run_version.tsv'",
                                     "merge_pointer": "/report/wes_run_version",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/wes_run_version.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/report/metasheet.csv'",
+                                    "parse_through": "lambda run: f'analysis/report/metasheet.csv'",
                                     "merge_pointer": "/report/metasheet",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/metasheet.csv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/report/report.tar.gz'",
+                                    "parse_through": "lambda run: f'analysis/report/report.tar.gz'",
                                     "merge_pointer": "/report/report",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/report.tar.gz",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
@@ -147,14 +147,14 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/report/somatic_variants/07_tumor_mutational_burden.tsv'",
+                                    "parse_through": "lambda run: f'analysis/report/somatic_variants/07_tumor_mutational_burden.tsv'",
                                     "merge_pointer": "/report/tumor_mutational_burden",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor_mutational_burden.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/report/neoantigens/01_HLA_results.tsv'",
+                                    "parse_through": "lambda run: f'analysis/report/neoantigens/01_HLA_results.tsv'",
                                     "merge_pointer": "/neoantigen/HLA_results",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/HLA_results.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",

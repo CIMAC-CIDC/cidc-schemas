@@ -28,6 +28,7 @@ def prismify_result(template, template_example):
     # and set up
     core.set_prism_encrypt_key("test")
 
+    print(template_example)
     prism_patch, file_maps, errs = core.prismify(template_example, template)
     assert not errs, "\n".join([str(e) for e in errs])
     return prism_patch, file_maps, errs

@@ -490,8 +490,8 @@ def test_convert_api_to_template_rna():
     rna_json = {
         "title": "RNAseq level 1 analysis template",
         "description": "Metadata information for RNAseq level 1 Analysis output.",
-        "prism_template_root_object_schema": "assays/components/ngs/rna/rnaseq_analysis.json",
-        "prism_template_root_object_pointer": "/analysis/rnaseq_analysis",
+        "prism_template_root_object_schema": "assays/components/ngs/rna/rna_analysis.json",
+        "prism_template_root_object_pointer": "/analysis/rna_analysis",
         "properties": {
             "worksheets": {
                 "RNAseq Analysis": {
@@ -506,7 +506,7 @@ def test_convert_api_to_template_rna():
                         "RNAseq Runs": {
                             "cimac id": {
                                 "merge_pointer": "/cimac_id",
-                                "type_ref": "assays/components/ngs/rna/rnaseq_level1_analysis.json#properties/cimac_id",
+                                "type_ref": "assays/components/ngs/rna/rna_level1_analysis.json#properties/cimac_id",
                                 "process_as": [
                                     {
                                         "parse_through": "lambda id: f'analysis/star/{id}/{id}.sorted.bam'",
@@ -525,7 +525,7 @@ def test_convert_api_to_template_rna():
     }
 
     assay_schema = _load_dont_validate_schema(
-        "assays/components/ngs/rna/rnaseq_analysis.json"
+        "assays/components/ngs/rna/rna_analysis.json"
     )
     rna_output = _convert_api_to_template("rna", rna_api, assay_schema)
     assert DeepDiff(rna_json, rna_output) == {}

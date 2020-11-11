@@ -48,12 +48,14 @@ POSSIBLE_FILE_EXTS = [
     "dedup",
     "stat",
     "sf",
+    "maf",
+    "tar"
 ]
 
 
 def generate_analysis_template_schemas(
     target_dir: str = os.path.join(TEMPLATE_DIR, "analyses"),
-    fname_format: Callable[[str], str] = lambda file: f"{file}_analysis_template.json",
+    fname_format: Callable[[str], str] = lambda file: f"{file + ('_level1' if file=='rna' else '')}_analysis_template.json",
 ):
     """Uses output_API.json's from cidc-ngs-pipeline-api along with existing assays/components/ngs analysis templates to generate templates/analyses schemas"""
     # for each output_API.json
@@ -62,11 +64,11 @@ def generate_analysis_template_schemas(
         # need an existing assay/components/ngs analysis schema to find merge pointers
         try:
             assay_schema = _load_dont_validate_schema(
-                f"assays/components/ngs/{analysis}/{'rnaseq' if analysis == 'rna' else analysis}_analysis.json"
+                f"assays/components/ngs/{analysis}/{analysis}_analysis.json"
             )
         except Exception as e:
             print(
-                f"skipping {analysis}: failed to load corresponding `assays/components/ngs/{analysis}/{'rnaseq' if analysis == 'rna' else analysis}_analysis.json`"
+                f"skipping {analysis}: failed to load corresponding `assays/components/ngs/{analysis}/{'rna_level1' if analysis == 'rna' else analysis}_analysis.json`"
             )
         else:
             template = _convert_api_to_template(analysis, output_schema, assay_schema)
@@ -188,8 +190,8 @@ def _initialize_template_schema(name: str, title: str, pointer: str):
     template = {
         "title": f"{long_title} analysis template",
         "description": f"Metadata information for {long_title} Analysis output.",
-        "prism_template_root_object_schema": f"assays/components/ngs/{name}/{'rnaseq' if name == 'rna' else name}_analysis.json",
-        "prism_template_root_object_pointer": f"/analysis/{'rnaseq' if name == 'rna' else name}_analysis",
+        "prism_template_root_object_schema": f"assays/components/ngs/{name}/{name}_analysis.json",
+        "prism_template_root_object_pointer": f"/analysis/{name}_analysis",
         "properties": {
             "worksheets": {
                 f"{title} Analysis": {
@@ -232,22 +234,30 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
     # specialty conversions for existing non-standard usage
     fixes = {  # old : new
         ".bam.bai": ".bam.index",
-        "pyclone.tsv": "clonality_pyclone",
+        "clonality/": "clonality/clonality/",
         "copynumber/": "copynumber/copynumber_",
         "tn_corealigned.bam": "tn_corealigned",
         "optitype/result": "optitype/optitype_result",
         "xhla": "optitype/xhla",
+        "all_samples_summaries": "all_summaries",
         "/align": "/alignment/align",
         "sample_summar": "summar",
         "all_epitopes": "epitopes",
         ".txt.tn.tsv": ".tsv",
+        "report/somatic_variants/07_": "report/",
+        "report/neoantigens/01_": "neoantigen/",
+        "msisensor2": "msisensor",
+        "/report.": "/report/report.",
+        "wes_meta/02_": "",
+        "json/wes.json": "wes_sample.json",
+        "vcfcompare": "vcf_compare",
     }
     for old, new in fixes.items():
         file_path = file_path.replace(old, new)
 
-    # special handling for `all_summaries`
-    if key not in ["tumor cimac id", "normal cimac id"]:
-        file_path = file_path.replace("analysis/metrics", "tumor/metrics")
+    # special handling for vcfcompare
+    if "vcf_compare" in file_path:
+        file_path = file_path.replace("germline", "somatic")
 
     # split path into pieces
     file_path = file_path.split("/")
@@ -285,7 +295,7 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
 def _calc_gcs_uri_path(name: str, merge_pointer: str):
     # generate GCS URI ending from merge pointer
     if name == "wes":  # WES doesn't get the beginning path for some reason
-        file = merge_pointer[2:].rsplit("/", 1)[1]
+        file = merge_pointer[1:].rsplit("/", 1)[1]
     else:
         file = merge_pointer[2:]
     # special handling for .bam.bai
@@ -301,6 +311,7 @@ def _calc_gcs_uri_path(name: str, merge_pointer: str):
 
     # special handling, then return
     file = file.replace("align_", "").replace("cnv_calls", "cnvcalls")
+    if "vcf_compare" in file: print(merge_pointer, file)
     return file
 
 
@@ -346,7 +357,7 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
             type_ref = f"assays/components/ngs/{name}/"
 
             if name == "rna":
-                type_ref += "rnaseq_level1"
+                type_ref += "rna_level1"
             elif name == "wes" and long_key == "run id":
                 type_ref += "wes_pair"
             else:
@@ -368,7 +379,7 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
         context = assay_schema["properties"][pointer]["items"]["properties"]
         if short_key not in context:
             raise InvalidMergeTargetException(
-                f"{long_key} in {name} does not have a corresponding entry in `assays/components/ngs/{name}/{'rnaseq' if name == 'rna' else name}_analysis.json`"
+                f"{long_key} in {name} does not have a corresponding entry in `assays/components/ngs/{name}/{name}_analysis.json`"
             )
         elif "properties" in context[short_key]:
             context = context[short_key]["properties"]
@@ -392,8 +403,6 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
                     f"{file_path} cannot be mapped to a location of the data object"
                 )
             elif merge_pointer in used_merge_pointers:
-                print(used_merge_pointers[:-1], merge_pointer)
-                print(used_gcs_uris, gcs_uri)
                 raise InvalidMergeTargetException(
                     f"{file_path} causes a collision for inferred merge target {merge_pointer}"
                 )
@@ -452,6 +461,10 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
                 raise InvalidMergeTargetException(
                     f"{file_path} caused a collision for inferred destination URI {gcs_uri}"
                 )
+
+            # append empty file extension if entry['file_path_template'] doesn't have one so that prism doesn't break
+            if entry['file_path_template'].split('/')[-1].count(".") == 0:
+                entry['file_path_template'] += "."
 
             # fill in `process_as` entry
             subsubtemplate = {

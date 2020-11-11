@@ -1,6 +1,6 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
-  "$id": "rnaseq_analysis",
+  "$id": "rna_analysis",
   "title": "RNAseq analysis combined files",
   "type": "object",
   "description": "Combined analysis files for the whole RNAseq assay.",
@@ -9,7 +9,7 @@
     "level_1": {
       "type": "array",
       "items": {
-        "$ref": "assays/components/ngs/rna/rnaseq_level1_analysis.json"
+        "$ref": "assays/components/ngs/rna/rna_level1_analysis.json"
       },
       "mergeStrategy": "arrayMergeById",
       "mergeOptions": {

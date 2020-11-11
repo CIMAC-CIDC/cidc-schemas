@@ -158,8 +158,6 @@
         
             
         
-            
-        
         
             
         
@@ -185,29 +183,6 @@
     <td>
         
             <a href="assays.components.ngs.wes.somatic.html">assays.components.ngs.wes.somatic</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="germline">
-                germline
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Germline variant output sample files.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.ngs.wes.germline.html">assays.components.ngs.wes.germline</a>
         
     </td>
 </tr>
@@ -607,10 +582,226 @@
                     },
                     "title": "TSV Artifact",
                     "type": "object"
+                },
+                "clonality_table": {
+                    "$id": "tsv_artifact",
+                    "$schema": "metaschema/strict_meta_schema.json#",
+                    "additionalProperties": false,
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "metaschema/strict_meta_schema.json#",
+                            "anyOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "artifact_category",
+                                        "data_format",
+                                        "md5_hash"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "artifact_category",
+                                        "data_format",
+                                        "crc32c_hash"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artifact.",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "crc32c_hash": {
+                                    "description": "CRC32c Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "description": "Data Format.",
+                                    "enum": [
+                                        "FASTA",
+                                        "FASTQ.GZ",
+                                        "VCF.GZ",
+                                        "IMAGE",
+                                        "VCF",
+                                        "CSV",
+                                        "TSV",
+                                        "XLSX",
+                                        "NPX",
+                                        "ELISA",
+                                        "BAM",
+                                        "BAM.BAI",
+                                        "MAF",
+                                        "BINARY",
+                                        "TEXT",
+                                        "ZIP",
+                                        "FCS",
+                                        "GZ",
+                                        "JSON",
+                                        "YAML",
+                                        "[NOT SET]"
+                                    ],
+                                    "type": "string"
+                                },
+                                "facet_group": {
+                                    "description": "The internal data category for this artifact",
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                    "description": "The name of the file with extension.",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        }
+                    ],
+                    "description": "Information about a tab Separated file.",
+                    "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "description": "Artifact category.",
+                            "enum": [
+                                "Assay Artifact from CIMAC",
+                                "Pipeline Artifact",
+                                "Manifest File"
+                            ],
+                            "type": "string"
+                        },
+                        "artifact_creator": {
+                            "description": "The name of the center that created this artifact.",
+                            "enum": [
+                                "DFCI",
+                                "Mount Sinai",
+                                "Stanford",
+                                "MD Anderson"
+                            ],
+                            "type": "string"
+                        },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
+                        "data_format": {
+                            "const": "TSV",
+                            "description": "Data format."
+                        },
+                        "facet_group": {
+                            "description": "The internal data category for this artifact",
+                            "type": "string"
+                        },
+                        "file_name": {
+                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                            "description": "The name of the file with extension.",
+                            "type": "string"
+                        },
+                        "file_size_bytes": {
+                            "description": "File size in bytes.",
+                            "type": "integer"
+                        },
+                        "md5_hash": {
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                            "type": "string"
+                        },
+                        "object_url": {
+                            "description": "URL to artifact within Google Bucket.",
+                            "type": "string"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "description": "A placeholder for when artifact file is being uploaded.",
+                            "type": "string"
+                        },
+                        "uploaded_timestamp": {
+                            "description": "Timestamp of when artifact was loaded into the system.",
+                            "format": "date-time",
+                            "type": "string"
+                        },
+                        "uploader": {
+                            "description": "The name of the person uploading the artifact.",
+                            "type": "string"
+                        },
+                        "uuid": {
+                            "description": "UUID of artifact.",
+                            "type": "string"
+                        },
+                        "visible": {
+                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                            "type": "boolean"
+                        }
+                    },
+                    "title": "TSV Artifact",
+                    "type": "object"
                 }
             },
             "required": [
-                "clonality_pyclone"
+                "clonality_pyclone",
+                "clonality_table"
             ],
             "title": "Clonality output files",
             "type": "object"
@@ -1498,232 +1689,6 @@
             },
             "required": [],
             "title": "WES Corealignment Output Files",
-            "type": "object"
-        },
-        "germline": {
-            "$id": "germline",
-            "$schema": "metaschema/strict_meta_schema.json#",
-            "additionalProperties": false,
-            "description": "Germline variant output sample files.",
-            "properties": {
-                "vcf_compare": {
-                    "$id": "text_artifact",
-                    "$schema": "metaschema/strict_meta_schema.json#",
-                    "additionalProperties": false,
-                    "allOf": [
-                        {
-                            "$id": "artifact_core",
-                            "$schema": "metaschema/strict_meta_schema.json#",
-                            "anyOf": [
-                                {
-                                    "required": [
-                                        "file_name",
-                                        "object_url",
-                                        "uploaded_timestamp",
-                                        "file_size_bytes",
-                                        "artifact_category",
-                                        "data_format",
-                                        "md5_hash"
-                                    ]
-                                },
-                                {
-                                    "required": [
-                                        "file_name",
-                                        "object_url",
-                                        "uploaded_timestamp",
-                                        "file_size_bytes",
-                                        "artifact_category",
-                                        "data_format",
-                                        "crc32c_hash"
-                                    ]
-                                },
-                                {
-                                    "required": [
-                                        "upload_placeholder"
-                                    ]
-                                }
-                            ],
-                            "description": "Any file artifact associated with a clinical trial.",
-                            "inheritableBase": true,
-                            "properties": {
-                                "artifact_category": {
-                                    "description": "Artifact category.",
-                                    "enum": [
-                                        "Assay Artifact from CIMAC",
-                                        "Pipeline Artifact",
-                                        "Manifest File"
-                                    ],
-                                    "type": "string"
-                                },
-                                "artifact_creator": {
-                                    "description": "The name of the center that created this artifact.",
-                                    "enum": [
-                                        "DFCI",
-                                        "Mount Sinai",
-                                        "Stanford",
-                                        "MD Anderson"
-                                    ],
-                                    "type": "string"
-                                },
-                                "crc32c_hash": {
-                                    "description": "CRC32c Hash of artifact.",
-                                    "type": "string"
-                                },
-                                "data_format": {
-                                    "description": "Data Format.",
-                                    "enum": [
-                                        "FASTA",
-                                        "FASTQ.GZ",
-                                        "VCF.GZ",
-                                        "IMAGE",
-                                        "VCF",
-                                        "CSV",
-                                        "TSV",
-                                        "XLSX",
-                                        "NPX",
-                                        "ELISA",
-                                        "BAM",
-                                        "BAM.BAI",
-                                        "MAF",
-                                        "BINARY",
-                                        "TEXT",
-                                        "ZIP",
-                                        "FCS",
-                                        "GZ",
-                                        "JSON",
-                                        "YAML",
-                                        "[NOT SET]"
-                                    ],
-                                    "type": "string"
-                                },
-                                "facet_group": {
-                                    "description": "The internal data category for this artifact",
-                                    "type": "string"
-                                },
-                                "file_name": {
-                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                                    "description": "The name of the file with extension.",
-                                    "type": "string"
-                                },
-                                "file_size_bytes": {
-                                    "description": "File size in bytes.",
-                                    "type": "integer"
-                                },
-                                "md5_hash": {
-                                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
-                                    "type": "string"
-                                },
-                                "object_url": {
-                                    "description": "URL to artifact within Google Bucket.",
-                                    "type": "string"
-                                },
-                                "upload_placeholder": {
-                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
-                                    "description": "A placeholder for when artifact file is being uploaded.",
-                                    "type": "string"
-                                },
-                                "uploaded_timestamp": {
-                                    "description": "Timestamp of when artifact was loaded into the system.",
-                                    "format": "date-time",
-                                    "type": "string"
-                                },
-                                "uploader": {
-                                    "description": "The name of the person uploading the artifact.",
-                                    "type": "string"
-                                },
-                                "uuid": {
-                                    "description": "UUID of artifact.",
-                                    "type": "string"
-                                },
-                                "visible": {
-                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
-                                    "type": "boolean"
-                                }
-                            },
-                            "title": "Artifact Core",
-                            "type": "object"
-                        }
-                    ],
-                    "description": "Information about a text file.",
-                    "mergeStrategy": "objectMerge",
-                    "properties": {
-                        "artifact_category": {
-                            "description": "Artifact category.",
-                            "enum": [
-                                "Assay Artifact from CIMAC",
-                                "Pipeline Artifact",
-                                "Manifest File"
-                            ],
-                            "type": "string"
-                        },
-                        "artifact_creator": {
-                            "description": "The name of the center that created this artifact.",
-                            "enum": [
-                                "DFCI",
-                                "Mount Sinai",
-                                "Stanford",
-                                "MD Anderson"
-                            ],
-                            "type": "string"
-                        },
-                        "crc32c_hash": {
-                            "description": "CRC32c Hash of artifact.",
-                            "type": "string"
-                        },
-                        "data_format": {
-                            "const": "TEXT",
-                            "description": "Data format."
-                        },
-                        "facet_group": {
-                            "description": "The internal data category for this artifact",
-                            "type": "string"
-                        },
-                        "file_name": {
-                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
-                            "description": "The name of the file with extension.",
-                            "type": "string"
-                        },
-                        "file_size_bytes": {
-                            "description": "File size in bytes.",
-                            "type": "integer"
-                        },
-                        "md5_hash": {
-                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
-                            "type": "string"
-                        },
-                        "object_url": {
-                            "description": "URL to artifact within Google Bucket.",
-                            "type": "string"
-                        },
-                        "upload_placeholder": {
-                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
-                            "description": "A placeholder for when artifact file is being uploaded.",
-                            "type": "string"
-                        },
-                        "uploaded_timestamp": {
-                            "description": "Timestamp of when artifact was loaded into the system.",
-                            "format": "date-time",
-                            "type": "string"
-                        },
-                        "uploader": {
-                            "description": "The name of the person uploading the artifact.",
-                            "type": "string"
-                        },
-                        "uuid": {
-                            "description": "UUID of artifact.",
-                            "type": "string"
-                        },
-                        "visible": {
-                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
-                            "type": "boolean"
-                        }
-                    },
-                    "title": "Text Artifact",
-                    "type": "object"
-                }
-            },
-            "required": [],
-            "title": "WES Germline Output Files",
             "type": "object"
         },
         "msisensor": {
@@ -4146,6 +4111,234 @@
                     "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
                     "type": "string"
                 },
+                "germline": {
+                    "$id": "germline",
+                    "$schema": "metaschema/strict_meta_schema.json#",
+                    "additionalProperties": false,
+                    "description": "Germline variant output sample files.",
+                    "properties": {
+                        "haplotyper_targets": {
+                            "$id": "vcf_gz_artifact",
+                            "$schema": "metaschema/strict_meta_schema.json#",
+                            "additionalProperties": false,
+                            "allOf": [
+                                {
+                                    "$id": "artifact_core",
+                                    "$schema": "metaschema/strict_meta_schema.json#",
+                                    "anyOf": [
+                                        {
+                                            "required": [
+                                                "file_name",
+                                                "object_url",
+                                                "uploaded_timestamp",
+                                                "file_size_bytes",
+                                                "artifact_category",
+                                                "data_format",
+                                                "md5_hash"
+                                            ]
+                                        },
+                                        {
+                                            "required": [
+                                                "file_name",
+                                                "object_url",
+                                                "uploaded_timestamp",
+                                                "file_size_bytes",
+                                                "artifact_category",
+                                                "data_format",
+                                                "crc32c_hash"
+                                            ]
+                                        },
+                                        {
+                                            "required": [
+                                                "upload_placeholder"
+                                            ]
+                                        }
+                                    ],
+                                    "description": "Any file artifact associated with a clinical trial.",
+                                    "inheritableBase": true,
+                                    "properties": {
+                                        "artifact_category": {
+                                            "description": "Artifact category.",
+                                            "enum": [
+                                                "Assay Artifact from CIMAC",
+                                                "Pipeline Artifact",
+                                                "Manifest File"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "artifact_creator": {
+                                            "description": "The name of the center that created this artifact.",
+                                            "enum": [
+                                                "DFCI",
+                                                "Mount Sinai",
+                                                "Stanford",
+                                                "MD Anderson"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "crc32c_hash": {
+                                            "description": "CRC32c Hash of artifact.",
+                                            "type": "string"
+                                        },
+                                        "data_format": {
+                                            "description": "Data Format.",
+                                            "enum": [
+                                                "FASTA",
+                                                "FASTQ.GZ",
+                                                "VCF.GZ",
+                                                "IMAGE",
+                                                "VCF",
+                                                "CSV",
+                                                "TSV",
+                                                "XLSX",
+                                                "NPX",
+                                                "ELISA",
+                                                "BAM",
+                                                "BAM.BAI",
+                                                "MAF",
+                                                "BINARY",
+                                                "TEXT",
+                                                "ZIP",
+                                                "FCS",
+                                                "GZ",
+                                                "JSON",
+                                                "YAML",
+                                                "[NOT SET]"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "facet_group": {
+                                            "description": "The internal data category for this artifact",
+                                            "type": "string"
+                                        },
+                                        "file_name": {
+                                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                            "description": "The name of the file with extension.",
+                                            "type": "string"
+                                        },
+                                        "file_size_bytes": {
+                                            "description": "File size in bytes.",
+                                            "type": "integer"
+                                        },
+                                        "md5_hash": {
+                                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                            "type": "string"
+                                        },
+                                        "object_url": {
+                                            "description": "URL to artifact within Google Bucket.",
+                                            "type": "string"
+                                        },
+                                        "upload_placeholder": {
+                                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                            "description": "A placeholder for when artifact file is being uploaded.",
+                                            "type": "string"
+                                        },
+                                        "uploaded_timestamp": {
+                                            "description": "Timestamp of when artifact was loaded into the system.",
+                                            "format": "date-time",
+                                            "type": "string"
+                                        },
+                                        "uploader": {
+                                            "description": "The name of the person uploading the artifact.",
+                                            "type": "string"
+                                        },
+                                        "uuid": {
+                                            "description": "UUID of artifact.",
+                                            "type": "string"
+                                        },
+                                        "visible": {
+                                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "title": "Artifact Core",
+                                    "type": "object"
+                                }
+                            ],
+                            "description": "Information about a Gzipped VCF file.",
+                            "mergeStrategy": "objectMerge",
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artifact.",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "crc32c_hash": {
+                                    "description": "CRC32c Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "const": "VCF.GZ",
+                                    "description": "Data format."
+                                },
+                                "facet_group": {
+                                    "description": "The internal data category for this artifact",
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                    "description": "The name of the file with extension.",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Gzipped VCF Artifact",
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "haplotyper_targets"
+                    ],
+                    "title": "WES Germline Output Files",
+                    "type": "object"
+                },
                 "metrics": {
                     "$id": "coverage_metrics",
                     "$schema": "metaschema/strict_meta_schema.json#",
@@ -5874,12 +6067,8 @@
                         }
                     },
                     "required": [
-                        "mosdepth_region_dist_broad",
-                        "mosdepth_region_dist_mda",
-                        "mosdepth_region_dist_mocha",
                         "coverage_metrics",
-                        "target_metrics",
-                        "target_metrics_summary"
+                        "target_metrics"
                     ],
                     "title": "WES Metric Output Files",
                     "type": "object"
@@ -6556,7 +6745,9 @@
                     "type": "object"
                 }
             },
-            "required": [],
+            "required": [
+                "optimal_purity_value"
+            ],
             "title": "WES Purity Output Files",
             "type": "object"
         },
@@ -7641,6 +7832,221 @@
                     "title": "TSV Artifact",
                     "type": "object"
                 },
+                "wes_sample_json": {
+                    "$id": "json_artifact",
+                    "$schema": "metaschema/strict_meta_schema.json#",
+                    "additionalProperties": false,
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "metaschema/strict_meta_schema.json#",
+                            "anyOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "artifact_category",
+                                        "data_format",
+                                        "md5_hash"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "artifact_category",
+                                        "data_format",
+                                        "crc32c_hash"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artifact.",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "crc32c_hash": {
+                                    "description": "CRC32c Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "description": "Data Format.",
+                                    "enum": [
+                                        "FASTA",
+                                        "FASTQ.GZ",
+                                        "VCF.GZ",
+                                        "IMAGE",
+                                        "VCF",
+                                        "CSV",
+                                        "TSV",
+                                        "XLSX",
+                                        "NPX",
+                                        "ELISA",
+                                        "BAM",
+                                        "BAM.BAI",
+                                        "MAF",
+                                        "BINARY",
+                                        "TEXT",
+                                        "ZIP",
+                                        "FCS",
+                                        "GZ",
+                                        "JSON",
+                                        "YAML",
+                                        "[NOT SET]"
+                                    ],
+                                    "type": "string"
+                                },
+                                "facet_group": {
+                                    "description": "The internal data category for this artifact",
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                    "description": "The name of the file with extension.",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        }
+                    ],
+                    "description": "Information about a JSON file.",
+                    "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "description": "Artifact category.",
+                            "enum": [
+                                "Assay Artifact from CIMAC",
+                                "Pipeline Artifact",
+                                "Manifest File"
+                            ],
+                            "type": "string"
+                        },
+                        "artifact_creator": {
+                            "description": "The name of the center that created this artifact.",
+                            "enum": [
+                                "DFCI",
+                                "Mount Sinai",
+                                "Stanford",
+                                "MD Anderson"
+                            ],
+                            "type": "string"
+                        },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
+                        "data_format": {
+                            "const": "JSON",
+                            "description": "Data format."
+                        },
+                        "facet_group": {
+                            "description": "The internal data category for this artifact",
+                            "type": "string"
+                        },
+                        "file_name": {
+                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                            "description": "The name of the file with extension.",
+                            "type": "string"
+                        },
+                        "file_size_bytes": {
+                            "description": "File size in bytes.",
+                            "type": "integer"
+                        },
+                        "md5_hash": {
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                            "type": "string"
+                        },
+                        "object_url": {
+                            "description": "URL to artifact within Google Bucket.",
+                            "type": "string"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "description": "A placeholder for when artifact file is being uploaded.",
+                            "type": "string"
+                        },
+                        "uploaded_timestamp": {
+                            "description": "Timestamp of when artifact was loaded into the system.",
+                            "format": "date-time",
+                            "type": "string"
+                        },
+                        "uploader": {
+                            "description": "The name of the person uploading the artifact.",
+                            "type": "string"
+                        },
+                        "uuid": {
+                            "description": "UUID of artifact.",
+                            "type": "string"
+                        },
+                        "visible": {
+                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                            "type": "boolean"
+                        }
+                    },
+                    "title": "JSON Artifact",
+                    "type": "object"
+                },
                 "wes_version": {
                     "$id": "text_artifact",
                     "$schema": "metaschema/strict_meta_schema.json#",
@@ -7858,12 +8264,12 @@
                 }
             },
             "required": [
-                "wes_version",
                 "config",
                 "wes_run_version",
                 "metasheet",
                 "tumor_mutational_burden",
-                "report"
+                "report",
+                "wes_sample_json"
             ],
             "title": "WES Pipeline Version",
             "type": "object"
@@ -8953,6 +9359,221 @@
                     "title": "Gzipped VCF Artifact",
                     "type": "object"
                 },
+                "vcf_compare": {
+                    "$id": "text_artifact",
+                    "$schema": "metaschema/strict_meta_schema.json#",
+                    "additionalProperties": false,
+                    "allOf": [
+                        {
+                            "$id": "artifact_core",
+                            "$schema": "metaschema/strict_meta_schema.json#",
+                            "anyOf": [
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "artifact_category",
+                                        "data_format",
+                                        "md5_hash"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "file_name",
+                                        "object_url",
+                                        "uploaded_timestamp",
+                                        "file_size_bytes",
+                                        "artifact_category",
+                                        "data_format",
+                                        "crc32c_hash"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "upload_placeholder"
+                                    ]
+                                }
+                            ],
+                            "description": "Any file artifact associated with a clinical trial.",
+                            "inheritableBase": true,
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artifact.",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "crc32c_hash": {
+                                    "description": "CRC32c Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "description": "Data Format.",
+                                    "enum": [
+                                        "FASTA",
+                                        "FASTQ.GZ",
+                                        "VCF.GZ",
+                                        "IMAGE",
+                                        "VCF",
+                                        "CSV",
+                                        "TSV",
+                                        "XLSX",
+                                        "NPX",
+                                        "ELISA",
+                                        "BAM",
+                                        "BAM.BAI",
+                                        "MAF",
+                                        "BINARY",
+                                        "TEXT",
+                                        "ZIP",
+                                        "FCS",
+                                        "GZ",
+                                        "JSON",
+                                        "YAML",
+                                        "[NOT SET]"
+                                    ],
+                                    "type": "string"
+                                },
+                                "facet_group": {
+                                    "description": "The internal data category for this artifact",
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                    "description": "The name of the file with extension.",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Artifact Core",
+                            "type": "object"
+                        }
+                    ],
+                    "description": "Information about a text file.",
+                    "mergeStrategy": "objectMerge",
+                    "properties": {
+                        "artifact_category": {
+                            "description": "Artifact category.",
+                            "enum": [
+                                "Assay Artifact from CIMAC",
+                                "Pipeline Artifact",
+                                "Manifest File"
+                            ],
+                            "type": "string"
+                        },
+                        "artifact_creator": {
+                            "description": "The name of the center that created this artifact.",
+                            "enum": [
+                                "DFCI",
+                                "Mount Sinai",
+                                "Stanford",
+                                "MD Anderson"
+                            ],
+                            "type": "string"
+                        },
+                        "crc32c_hash": {
+                            "description": "CRC32c Hash of artifact.",
+                            "type": "string"
+                        },
+                        "data_format": {
+                            "const": "TEXT",
+                            "description": "Data format."
+                        },
+                        "facet_group": {
+                            "description": "The internal data category for this artifact",
+                            "type": "string"
+                        },
+                        "file_name": {
+                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                            "description": "The name of the file with extension.",
+                            "type": "string"
+                        },
+                        "file_size_bytes": {
+                            "description": "File size in bytes.",
+                            "type": "integer"
+                        },
+                        "md5_hash": {
+                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                            "type": "string"
+                        },
+                        "object_url": {
+                            "description": "URL to artifact within Google Bucket.",
+                            "type": "string"
+                        },
+                        "upload_placeholder": {
+                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                            "description": "A placeholder for when artifact file is being uploaded.",
+                            "type": "string"
+                        },
+                        "uploaded_timestamp": {
+                            "description": "Timestamp of when artifact was loaded into the system.",
+                            "format": "date-time",
+                            "type": "string"
+                        },
+                        "uploader": {
+                            "description": "The name of the person uploading the artifact.",
+                            "type": "string"
+                        },
+                        "uuid": {
+                            "description": "UUID of artifact.",
+                            "type": "string"
+                        },
+                        "visible": {
+                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                            "type": "boolean"
+                        }
+                    },
+                    "title": "Text Artifact",
+                    "type": "object"
+                },
                 "vcf_gz_tnscope_filter": {
                     "$id": "vcf_gz_artifact",
                     "$schema": "metaschema/strict_meta_schema.json#",
@@ -9821,7 +10442,8 @@
                 "maf_tnscope_filter",
                 "tnscope_exons_broad",
                 "tnscope_exons_mda",
-                "tnscope_exons_mocha"
+                "tnscope_exons_mocha",
+                "vcf_compare"
             ],
             "title": "WES Somatic Output Files",
             "type": "object"
@@ -10713,6 +11335,234 @@
                     "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
                     "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
                     "type": "string"
+                },
+                "germline": {
+                    "$id": "germline",
+                    "$schema": "metaschema/strict_meta_schema.json#",
+                    "additionalProperties": false,
+                    "description": "Germline variant output sample files.",
+                    "properties": {
+                        "haplotyper_targets": {
+                            "$id": "vcf_gz_artifact",
+                            "$schema": "metaschema/strict_meta_schema.json#",
+                            "additionalProperties": false,
+                            "allOf": [
+                                {
+                                    "$id": "artifact_core",
+                                    "$schema": "metaschema/strict_meta_schema.json#",
+                                    "anyOf": [
+                                        {
+                                            "required": [
+                                                "file_name",
+                                                "object_url",
+                                                "uploaded_timestamp",
+                                                "file_size_bytes",
+                                                "artifact_category",
+                                                "data_format",
+                                                "md5_hash"
+                                            ]
+                                        },
+                                        {
+                                            "required": [
+                                                "file_name",
+                                                "object_url",
+                                                "uploaded_timestamp",
+                                                "file_size_bytes",
+                                                "artifact_category",
+                                                "data_format",
+                                                "crc32c_hash"
+                                            ]
+                                        },
+                                        {
+                                            "required": [
+                                                "upload_placeholder"
+                                            ]
+                                        }
+                                    ],
+                                    "description": "Any file artifact associated with a clinical trial.",
+                                    "inheritableBase": true,
+                                    "properties": {
+                                        "artifact_category": {
+                                            "description": "Artifact category.",
+                                            "enum": [
+                                                "Assay Artifact from CIMAC",
+                                                "Pipeline Artifact",
+                                                "Manifest File"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "artifact_creator": {
+                                            "description": "The name of the center that created this artifact.",
+                                            "enum": [
+                                                "DFCI",
+                                                "Mount Sinai",
+                                                "Stanford",
+                                                "MD Anderson"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "crc32c_hash": {
+                                            "description": "CRC32c Hash of artifact.",
+                                            "type": "string"
+                                        },
+                                        "data_format": {
+                                            "description": "Data Format.",
+                                            "enum": [
+                                                "FASTA",
+                                                "FASTQ.GZ",
+                                                "VCF.GZ",
+                                                "IMAGE",
+                                                "VCF",
+                                                "CSV",
+                                                "TSV",
+                                                "XLSX",
+                                                "NPX",
+                                                "ELISA",
+                                                "BAM",
+                                                "BAM.BAI",
+                                                "MAF",
+                                                "BINARY",
+                                                "TEXT",
+                                                "ZIP",
+                                                "FCS",
+                                                "GZ",
+                                                "JSON",
+                                                "YAML",
+                                                "[NOT SET]"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "facet_group": {
+                                            "description": "The internal data category for this artifact",
+                                            "type": "string"
+                                        },
+                                        "file_name": {
+                                            "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                            "description": "The name of the file with extension.",
+                                            "type": "string"
+                                        },
+                                        "file_size_bytes": {
+                                            "description": "File size in bytes.",
+                                            "type": "integer"
+                                        },
+                                        "md5_hash": {
+                                            "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                            "type": "string"
+                                        },
+                                        "object_url": {
+                                            "description": "URL to artifact within Google Bucket.",
+                                            "type": "string"
+                                        },
+                                        "upload_placeholder": {
+                                            "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                            "description": "A placeholder for when artifact file is being uploaded.",
+                                            "type": "string"
+                                        },
+                                        "uploaded_timestamp": {
+                                            "description": "Timestamp of when artifact was loaded into the system.",
+                                            "format": "date-time",
+                                            "type": "string"
+                                        },
+                                        "uploader": {
+                                            "description": "The name of the person uploading the artifact.",
+                                            "type": "string"
+                                        },
+                                        "uuid": {
+                                            "description": "UUID of artifact.",
+                                            "type": "string"
+                                        },
+                                        "visible": {
+                                            "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "title": "Artifact Core",
+                                    "type": "object"
+                                }
+                            ],
+                            "description": "Information about a Gzipped VCF file.",
+                            "mergeStrategy": "objectMerge",
+                            "properties": {
+                                "artifact_category": {
+                                    "description": "Artifact category.",
+                                    "enum": [
+                                        "Assay Artifact from CIMAC",
+                                        "Pipeline Artifact",
+                                        "Manifest File"
+                                    ],
+                                    "type": "string"
+                                },
+                                "artifact_creator": {
+                                    "description": "The name of the center that created this artifact.",
+                                    "enum": [
+                                        "DFCI",
+                                        "Mount Sinai",
+                                        "Stanford",
+                                        "MD Anderson"
+                                    ],
+                                    "type": "string"
+                                },
+                                "crc32c_hash": {
+                                    "description": "CRC32c Hash of artifact.",
+                                    "type": "string"
+                                },
+                                "data_format": {
+                                    "const": "VCF.GZ",
+                                    "description": "Data format."
+                                },
+                                "facet_group": {
+                                    "description": "The internal data category for this artifact",
+                                    "type": "string"
+                                },
+                                "file_name": {
+                                    "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+                                    "description": "The name of the file with extension.",
+                                    "type": "string"
+                                },
+                                "file_size_bytes": {
+                                    "description": "File size in bytes.",
+                                    "type": "integer"
+                                },
+                                "md5_hash": {
+                                    "description": "MD5 Hash of artifact. Not available for composite GCS objects.",
+                                    "type": "string"
+                                },
+                                "object_url": {
+                                    "description": "URL to artifact within Google Bucket.",
+                                    "type": "string"
+                                },
+                                "upload_placeholder": {
+                                    "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",
+                                    "description": "A placeholder for when artifact file is being uploaded.",
+                                    "type": "string"
+                                },
+                                "uploaded_timestamp": {
+                                    "description": "Timestamp of when artifact was loaded into the system.",
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                "uploader": {
+                                    "description": "The name of the person uploading the artifact.",
+                                    "type": "string"
+                                },
+                                "uuid": {
+                                    "description": "UUID of artifact.",
+                                    "type": "string"
+                                },
+                                "visible": {
+                                    "description": "Indicates if the artifact is visible.  If set to false, the artifact is effectively deleted.",
+                                    "type": "boolean"
+                                }
+                            },
+                            "title": "Gzipped VCF Artifact",
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "haplotyper_targets"
+                    ],
+                    "title": "WES Germline Output Files",
+                    "type": "object"
                 },
                 "metrics": {
                     "$id": "coverage_metrics",
@@ -12442,12 +13292,8 @@
                         }
                     },
                     "required": [
-                        "mosdepth_region_dist_broad",
-                        "mosdepth_region_dist_mda",
-                        "mosdepth_region_dist_mocha",
                         "coverage_metrics",
-                        "target_metrics",
-                        "target_metrics_summary"
+                        "target_metrics"
                     ],
                     "title": "WES Metric Output Files",
                     "type": "object"

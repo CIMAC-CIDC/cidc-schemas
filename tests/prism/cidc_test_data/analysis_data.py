@@ -93,9 +93,6 @@ def wes_analysis() -> PrismTestData:
                         },
                         "tumor": {
                             "metrics": {
-                                "all_summaries": {
-                                    "upload_placeholder": "81613653-16a7-4f6c-b8ff-e916013b61a2"
-                                },
                                 "coverage_metrics": {
                                     "upload_placeholder": "1ac21de4-6b15-48c0-9a0a-d66b9d99cd49"
                                 },
@@ -276,9 +273,6 @@ def wes_analysis() -> PrismTestData:
                         },
                         "tumor": {
                             "metrics": {
-                                "all_summaries": {
-                                    "upload_placeholder": "5dfc766a-d447-4279-abc4-3b93890b1e41"
-                                },
                                 "coverage_metrics": {
                                     "upload_placeholder": "bc055607-9085-4f47-91e5-8f412c4dfafd"
                                 },
@@ -483,12 +477,6 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/purity/run_1/run_1.optimalpurityvalue.txt",
             gs_key="test_prism_trial_id/wes/run_1/analysis/optimalpurityvalue.txt",
             upload_placeholder="f0b85ef8-47cb-45b9-bb94-c961150786b9",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/metrics/all_sample_summaries.txt",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/all_summaries.txt",
-            upload_placeholder="81613653-16a7-4f6c-b8ff-e916013b61a2",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
@@ -771,12 +759,6 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/somatic/run_2/run_2_vcfcompare.txt",
             gs_key="test_prism_trial_id/wes/run_2/analysis/vcfcompare.txt",
             upload_placeholder="84f6bd4c-00db-4ce3-a6b6-a8482a3332sg",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/metrics/all_sample_summaries.txt",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/all_summaries.txt",
-            upload_placeholder="5dfc766a-d447-4279-abc4-3b93890b1e41",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(

@@ -19,9 +19,6 @@
     "somatic": {
       "$ref": "assays/components/ngs/wes/somatic.json"
     },
-    "germline": {
-      "$ref": "assays/components/ngs/wes/germline.json"
-    },
     "neoantigen": {
       "$ref": "assays/components/ngs/wes/neoantigen.json"
     },

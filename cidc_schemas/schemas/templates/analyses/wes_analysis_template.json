@@ -154,7 +154,7 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/msisensor2/{run}/{run}_msisensor.txt'",
+                                    "parse_through": "lambda run: f'analysis/msisensor2/{run}/{run}_msisensor.txt'",
                                     "merge_pointer": "/msisensor/msisensor",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/msisensor.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
@@ -316,6 +316,13 @@
                                     "parse_through": "lambda id: f'analysis/metrics/{id}/{id}.mocha.mosdepth.region.dist.txt'",
                                     "merge_pointer": "/normal/metrics/mosdepth_region_dist_mocha",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/mosdepth_region_dist_mocha.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/germline/{id}/{id}_haplotyper.targets.vcf.gz'",
+                                    "merge_pointer": "/normal/germline/haplotyper_targets",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/haplotyper_targets.vcf.gz",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },

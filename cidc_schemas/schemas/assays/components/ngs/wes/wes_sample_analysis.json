@@ -13,6 +13,9 @@
     "alignment": {
       "$ref": "assays/components/ngs/wes/alignment.json"
     },
+    "germline": {
+      "$ref": "assays/components/ngs/wes/germline.json"
+    },
     "optitype": {
       "$ref": "assays/components/ngs/wes/optitype.json"
     },

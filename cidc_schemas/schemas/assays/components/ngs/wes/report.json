@@ -28,7 +28,6 @@
     }
   },
   "required": [
-    "wes_version",
     "config",
     "wes_run_version",
     "metasheet",

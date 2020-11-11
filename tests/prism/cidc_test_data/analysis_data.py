@@ -34,6 +34,9 @@ def wes_analysis() -> PrismTestData:
                         "clonality": {
                             "clonality_pyclone": {
                                 "upload_placeholder": "cdef9e1e-8e04-46ed-a9e6-bb618188a6d6"
+                            },
+                            "clonality_table": {
+                                "upload_placeholder": "ctef9e1e-8e04-46ed-a9e6-bb618188a6d6"
                             }
                         },
                         "msisensor": {
@@ -211,6 +214,9 @@ def wes_analysis() -> PrismTestData:
                         "clonality": {
                             "clonality_pyclone": {
                                 "upload_placeholder": "a4cba177-0be5-4d7d-b635-4a60adaa9575"
+                            },
+                            "clonality_table": {
+                                "upload_placeholder": "aucba177-0be5-4d7d-b635-4a60adaa9575"
                             }
                         },
                         "msisensor": {
@@ -393,6 +399,12 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/clonality/run_1/run_1_pyclone.tsv",
             gs_key="test_prism_trial_id/wes/run_1/analysis/clonality_pyclone.tsv",
             upload_placeholder="cdef9e1e-8e04-46ed-a9e6-bb618188a6d6",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="analysis/clonality/run_1/run_1_table.tsv",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/clonality_table.tsv",
+            upload_placeholder="ctef9e1e-8e04-46ed-a9e6-bb618188a6d6",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
@@ -675,6 +687,12 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/clonality/run_2/run_2_pyclone.tsv",
             gs_key="test_prism_trial_id/wes/run_2/analysis/clonality_pyclone.tsv",
             upload_placeholder="a4cba177-0be5-4d7d-b635-4a60adaa9575",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="analysis/clonality/run_2/run_2_table.tsv",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/clonality_table.tsv",
+            upload_placeholder="aucba177-0be5-4d7d-b635-4a60adaa9575",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(

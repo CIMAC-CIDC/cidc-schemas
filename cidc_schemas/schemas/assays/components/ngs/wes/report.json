@@ -21,16 +21,19 @@
       "$ref": "artifacts/artifact_tsv.json"
     },
     "report": {
-      "$ref": "artifacts/artifact_zip.json"
+      "$ref": "artifacts/artifact_gz.json"
+    },
+    "wes_sample_json": {
+      "$ref": "artifacts/artifact_json.json"
     }
   },
   "required": [
-    "wes_version",
     "config",
     "wes_run_version",
     "metasheet",
     "tumor_mutational_burden",
-    "report"
+    "report",
+    "wes_sample_json"
   ],
   "additionalProperties": false
 }

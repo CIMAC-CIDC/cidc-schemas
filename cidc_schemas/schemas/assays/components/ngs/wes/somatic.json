@@ -31,11 +31,20 @@
     },
     "tnscope_exons_mocha": {
       "$ref": "artifacts/artifact_vcf_gz.json"
+    },
+    "vcf_compare": {
+      "$ref": "artifacts/artifact_text.json"
     }
   },
   "required": [
     "vcf_gz_tnscope_output",
-    "vcf_gz_tnscope_filter"
+    "vcf_gz_tnscope_filter",
+    "maf_tnscope_output",
+    "maf_tnscope_filter",
+    "tnscope_exons_broad",
+    "tnscope_exons_mda",
+    "tnscope_exons_mocha",
+    "vcf_compare"
   ],
   "additionalProperties": false
 }

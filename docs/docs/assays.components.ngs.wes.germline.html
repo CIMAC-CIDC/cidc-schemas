@@ -58,29 +58,31 @@
         </thead>
         
             
-        
-        
-            
                 <tr>
     <td>
         
-            <span id="vcf_compare">
-                vcf_compare
+            <span id="haplotyper_targets">
+                haplotyper_targets
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
     <td width=55%>
         
-            Information about a text file.
+            Information about a Gzipped VCF file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
+            <a href="artifacts.artifact_vcf_gz.html">artifacts.artifact_vcf_gz</a>
         
     </td>
 </tr>
+            
+        
+        
             
         
     </table>
@@ -96,8 +98,8 @@
     "additionalProperties": false,
     "description": "Germline variant output sample files.",
     "properties": {
-        "vcf_compare": {
-            "$id": "text_artifact",
+        "haplotyper_targets": {
+            "$id": "vcf_gz_artifact",
             "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
@@ -234,7 +236,7 @@
                     "type": "object"
                 }
             ],
-            "description": "Information about a text file.",
+            "description": "Information about a Gzipped VCF file.",
             "mergeStrategy": "objectMerge",
             "properties": {
                 "artifact_category": {
@@ -261,7 +263,7 @@
                     "type": "string"
                 },
                 "data_format": {
-                    "const": "TEXT",
+                    "const": "VCF.GZ",
                     "description": "Data format."
                 },
                 "facet_group": {
@@ -308,11 +310,13 @@
                     "type": "boolean"
                 }
             },
-            "title": "Text Artifact",
+            "title": "Gzipped VCF Artifact",
             "type": "object"
         }
     },
-    "required": [],
+    "required": [
+        "haplotyper_targets"
+    ],
     "title": "WES Germline Output Files",
     "type": "object"
 }</code></pre>

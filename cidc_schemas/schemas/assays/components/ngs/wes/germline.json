@@ -5,11 +5,12 @@
   "type": "object",
   "description": "Germline variant output sample files.",
   "properties": {
-    "vcf_compare": {
-      "$ref": "artifacts/artifact_text.json"
+    "haplotyper_targets": {
+      "$ref": "artifacts/artifact_vcf_gz.json"
     }
   },
   "required": [
+    "haplotyper_targets"
   ],
   "additionalProperties": false
 }

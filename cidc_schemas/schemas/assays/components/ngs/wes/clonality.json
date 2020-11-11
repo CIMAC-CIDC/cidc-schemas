@@ -7,10 +7,14 @@
   "properties": {
     "clonality_pyclone": {
       "$ref": "artifacts/artifact_tsv.json"
+    },
+    "clonality_table": {
+      "$ref": "artifacts/artifact_tsv.json"
     }
   },
   "required": [
-    "clonality_pyclone"
+    "clonality_pyclone",
+    "clonality_table"
   ],
   "additionalProperties": false
 }

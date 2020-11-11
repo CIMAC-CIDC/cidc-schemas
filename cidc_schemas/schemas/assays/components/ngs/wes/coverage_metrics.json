@@ -31,12 +31,8 @@
     }
   },
   "required": [
-    "mosdepth_region_dist_broad",
-    "mosdepth_region_dist_mda",
-    "mosdepth_region_dist_mocha",
     "coverage_metrics",
-    "target_metrics",
-    "target_metrics_summary"
+    "target_metrics"
   ],
   "additionalProperties": false
 }

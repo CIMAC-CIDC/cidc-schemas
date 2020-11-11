@@ -1,0 +1,20 @@
+{
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "$id": "tcr_pair_analysis",
+    "title": "TCRseq analysis TRA/TRB clone output files",
+    "description": "Output files generated from the TCRseq assay: TRA and TRB clones",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "cimac_id": {
+            "$comment": "Id of a sample within this clinical trial, that this record is based upon.",
+            "$ref": "sample.json#properties/cimac_id"
+        },
+        "tra_clone": {
+            "$ref": "artifacts/artifact_csv.json"
+        },
+        "trb_clone": {
+            "$ref": "artifacts/artifact_csv.json"
+        }
+    }
+}

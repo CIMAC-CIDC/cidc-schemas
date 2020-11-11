@@ -19,9 +19,6 @@
     "somatic": {
       "$ref": "assays/components/ngs/wes/somatic.json"
     },
-    "germline": {
-      "$ref": "assays/components/ngs/wes/germline.json"
-    },
     "neoantigen": {
       "$ref": "assays/components/ngs/wes/neoantigen.json"
     },
@@ -39,6 +36,9 @@
     },
     "report": {
       "$ref": "assays/components/ngs/wes/report.json"
+    },
+    "msisensor": {
+      "$ref": "assays/components/ngs/wes/msisensor.json"
     }
   },
   "required": [

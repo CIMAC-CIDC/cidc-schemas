@@ -109,7 +109,7 @@
     </td>
     <td width=55%>
         
-            Trial Participant Identifier.
+            Trial Participant Identifier. Crypto-hashed after upload.
         
     </td>
     <td>
@@ -525,8 +525,8 @@
             "type": "string"
         },
         "participant_id": {
-            "description": "Trial Participant Identifier.",
-            "example": "PT123",
+            "description": "Trial Participant Identifier. Crypto-hashed after upload.",
+            "encrypt": true,
             "type": "string"
         },
         "race": {
@@ -663,6 +663,7 @@
                     },
                     "clinical_report_id": {
                         "description": "A unique identifier so someone can find the clinical report.",
+                        "encrypt": true,
                         "type": "string"
                     },
                     "collection_event_name": {
@@ -786,7 +787,8 @@
                         "type": "number"
                     },
                     "parent_sample_id": {
-                        "description": "Sample identifier assigned by the biorepository site. Example: EA123-45.",
+                        "description": "Sample identifier assigned by the biorepository site. Crypto-hashed after upload.",
+                        "encrypt": true,
                         "type": "string"
                     },
                     "pbmc_recovery": {
@@ -836,7 +838,8 @@
                         "type": "string"
                     },
                     "processed_sample_id": {
-                        "description": "Aliquot identifier assigned by the biorepository site: EA123-45-1",
+                        "description": "Aliquot identifier assigned by the biorepository site. Crypto-hashed after upload.",
+                        "encrypt": true,
                         "type": "string"
                     },
                     "processed_sample_quantity": {
@@ -984,6 +987,7 @@
                     },
                     "surgical_pathology_report_id": {
                         "description": "A unique identifier so someone can find the surgical pathology report.",
+                        "encrypt": true,
                         "type": "string"
                     },
                     "topography_code": {

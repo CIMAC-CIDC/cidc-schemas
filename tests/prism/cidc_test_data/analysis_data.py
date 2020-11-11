@@ -37,7 +37,7 @@ def wes_analysis() -> PrismTestData:
                             },
                             "clonality_table": {
                                 "upload_placeholder": "ctef9e1e-8e04-46ed-a9e6-bb618188a6d6"
-                            }
+                            },
                         },
                         "msisensor": {
                             "msisensor": {
@@ -144,7 +144,7 @@ def wes_analysis() -> PrismTestData:
                             },
                             "wes_sample_json": {
                                 "upload_placeholder": "yyz24763-fb9f-58b4-c7c4-8175759933s1"
-                            }
+                            },
                         },
                         "normal": {
                             "cimac_id": "CTTTPP111.00",
@@ -190,7 +190,7 @@ def wes_analysis() -> PrismTestData:
                             },
                             "clonality_table": {
                                 "upload_placeholder": "aucba177-0be5-4d7d-b635-4a60adaa9575"
-                            }
+                            },
                         },
                         "msisensor": {
                             "msisensor": {
@@ -297,7 +297,7 @@ def wes_analysis() -> PrismTestData:
                             },
                             "wes_sample_json": {
                                 "upload_placeholder": "yyz271fb-e2c7-5436-cafe-5cf84bc72bs2"
-                            }
+                            },
                         },
                         "normal": {
                             "cimac_id": "CTTTPP121.00",

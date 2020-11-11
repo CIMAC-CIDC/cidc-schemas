@@ -160,6 +160,9 @@ def wes_analysis() -> PrismTestData:
                             "report": {
                                 "upload_placeholder": "yyz271fb-e2c7-5436-cafe-5cf84bc72bf5"
                             },
+                            "wes_sample_json": {
+                                "upload_placeholder": "yyz24763-fb9f-58b4-c7c4-8175759933s1"
+                            }
                         },
                         "normal": {
                             "cimac_id": "CTTTPP111.00",
@@ -340,6 +343,9 @@ def wes_analysis() -> PrismTestData:
                             "report": {
                                 "upload_placeholder": "yyz24763-fb9f-58b4-c7c4-8175759933f5"
                             },
+                            "wes_sample_json": {
+                                "upload_placeholder": "yyz271fb-e2c7-5436-cafe-5cf84bc72bs2"
+                            }
                         },
                         "normal": {
                             "cimac_id": "CTTTPP121.00",
@@ -507,6 +513,12 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/report/report.tar.gz",
             gs_key="test_prism_trial_id/wes/run_1/analysis/report.tar.gz",
             upload_placeholder="yyz24763-fb9f-58b4-c7c4-8175759933f5",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="analysis/report/json/run_1.wes.json",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/wes_sample_json.json",
+            upload_placeholder="yyz24763-fb9f-58b4-c7c4-8175759933s1",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
@@ -789,6 +801,12 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/report/report.tar.gz",
             gs_key="test_prism_trial_id/wes/run_2/analysis/report.tar.gz",
             upload_placeholder="yyz271fb-e2c7-5436-cafe-5cf84bc72bf5",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="analysis/report/json/run_2.wes.json",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/wes_sample_json.json",
+            upload_placeholder="yyz271fb-e2c7-5436-cafe-5cf84bc72bs2",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(

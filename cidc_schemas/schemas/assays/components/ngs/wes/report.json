@@ -22,6 +22,9 @@
     },
     "report": {
       "$ref": "artifacts/artifact_zip.json"
+    },
+    "wes_sample_json": {
+      "$ref": "artifacts/artifact_json.json"
     }
   },
   "required": [
@@ -30,7 +33,8 @@
     "wes_run_version",
     "metasheet",
     "tumor_mutational_burden",
-    "report"
+    "report",
+    "wes_sample_json"
   ],
   "additionalProperties": false
 }

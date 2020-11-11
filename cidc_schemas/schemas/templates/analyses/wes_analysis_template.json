@@ -63,7 +63,7 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}tnscope.filter.maf'",
+                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.maf'",
                                     "merge_pointer": "/somatic/maf_tnscope_filter",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/maf_tnscope_filter.maf",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",

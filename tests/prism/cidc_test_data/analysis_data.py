@@ -83,6 +83,11 @@ def wes_analysis() -> PrismTestData:
                                 "upload_placeholder": "218be905-220d-417f-8395-0de84fcd81sg"
                             },
                         },
+                        "purity": {
+                            "optimal_purity_value": {
+                                "upload_placeholder": "f0b85ef8-47cb-45b9-bb94-c961150786b9"
+                            }
+                        },
                         "tumor": {
                             "metrics": {
                                 "all_summaries": {
@@ -254,6 +259,11 @@ def wes_analysis() -> PrismTestData:
                             "vcf_compare": {
                                 "upload_placeholder": "84f6bd4c-00db-4ce3-a6b6-a8482a3332sg"
                             },
+                        },
+                        "purity": {
+                            "optimal_purity_value": {
+                                "upload_placeholder": "98621828-ee22-40d1-840a-0dae97e8bf09"
+                            }
                         },
                         "tumor": {
                             "metrics": {
@@ -452,6 +462,12 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
+            local_path="analysis/purity/run_1/run_1.optimalpurityvalue.txt",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/optimalpurityvalue.txt",
+            upload_placeholder="f0b85ef8-47cb-45b9-bb94-c961150786b9",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
             local_path="analysis/metrics/all_sample_summaries.txt",
             gs_key="test_prism_trial_id/wes/run_1/analysis/all_summaries.txt",
             upload_placeholder="81613653-16a7-4f6c-b8ff-e916013b61a2",
@@ -587,6 +603,12 @@ def wes_analysis() -> PrismTestData:
             local_path="analysis/align/CTTTPP111.00/CTTTPP111.00.sorted.dedup.bam.bai",
             gs_key="test_prism_trial_id/wes/run_1/analysis/normal/CTTTPP111.00/sorted.dedup.bam.bai",
             upload_placeholder="be406c27-2ef4-477c-93e5-684fbe4f9307",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="analysis/purity/run_2/run_2.optimalpurityvalue.txt",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/optimalpurityvalue.txt",
+            upload_placeholder="98621828-ee22-40d1-840a-0dae97e8bf09",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(

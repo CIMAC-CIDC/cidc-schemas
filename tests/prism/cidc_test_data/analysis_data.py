@@ -504,8 +504,8 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/report/report.zip",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/report.zip",
+            local_path="analysis/report/report.tar.gz",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/report.tar.gz",
             upload_placeholder="yyz24763-fb9f-58b4-c7c4-8175759933f5",
             metadata_availability=False,
         ),
@@ -786,8 +786,8 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/report/report.zip",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/report.zip",
+            local_path="analysis/report/report.tar.gz",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/report.tar.gz",
             upload_placeholder="yyz271fb-e2c7-5436-cafe-5cf84bc72bf5",
             metadata_availability=False,
         ),

@@ -147,9 +147,9 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/report/report.zip'",
+                                    "parse_through": "lambda id: f'analysis/report/report.tar.gz'",
                                     "merge_pointer": "/report/report",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/report.zip",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/report.tar.gz",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },

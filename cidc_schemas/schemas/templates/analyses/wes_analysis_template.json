@@ -272,7 +272,7 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/xhla/{id}/{id}_report-{id}-hla.json'",
+                                    "parse_through": "lambda id: f'analysis/xhla/{id}/report-{id}-hla.json'",
                                     "merge_pointer": "/tumor/optitype/xhla_report_hla",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/xhla_report_hla.json",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
@@ -362,7 +362,7 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/xhla/{id}/{id}_report-{id}-hla.json'",
+                                    "parse_through": "lambda id: f'analysis/xhla/{id}/report-{id}-hla.json'",
                                     "merge_pointer": "/normal/optitype/xhla_report_hla",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/xhla_report_hla.json",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",

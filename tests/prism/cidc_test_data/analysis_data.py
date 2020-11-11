@@ -612,7 +612,7 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/xhla/CTTTPP111.00/CTTTPP111.00_report-CTTTPP111.00-hla.json",
+            local_path="analysis/xhla/CTTTPP111.00/report-CTTTPP111.00-hla.json",
             gs_key="test_prism_trial_id/wes/run_1/analysis/tumor/CTTTPP111.00/xhla_report_hla.json",
             upload_placeholder="2f3307bd-960e-4735-b831-f93d20fe8d37",
             metadata_availability=False,
@@ -690,7 +690,7 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/xhla/CTTTPP111.00/CTTTPP111.00_report-CTTTPP111.00-hla.json",
+            local_path="analysis/xhla/CTTTPP111.00/report-CTTTPP111.00-hla.json",
             gs_key="test_prism_trial_id/wes/run_1/analysis/normal/CTTTPP111.00/xhla_report_hla.json",
             upload_placeholder="f6a76030-cf27-41e6-8836-17c99479001e",
             metadata_availability=False,
@@ -900,7 +900,7 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/xhla/CTTTPP121.00/CTTTPP121.00_report-CTTTPP121.00-hla.json",
+            local_path="analysis/xhla/CTTTPP121.00/report-CTTTPP121.00-hla.json",
             gs_key="test_prism_trial_id/wes/run_2/analysis/tumor/CTTTPP121.00/xhla_report_hla.json",
             upload_placeholder="4807aaa5-bafa-4fe5-89e9-73f9d734b971",
             metadata_availability=False,
@@ -972,7 +972,7 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/xhla/CTTTPP121.00/CTTTPP121.00_report-CTTTPP121.00-hla.json",
+            local_path="analysis/xhla/CTTTPP121.00/report-CTTTPP121.00-hla.json",
             gs_key="test_prism_trial_id/wes/run_2/analysis/normal/CTTTPP121.00/xhla_report_hla.json",
             upload_placeholder="1d0c1f42-6a58-4e4b-b127-208c33f2aeb6",
             metadata_availability=False,

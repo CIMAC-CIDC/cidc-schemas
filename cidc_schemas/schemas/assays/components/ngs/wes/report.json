@@ -21,7 +21,7 @@
       "$ref": "artifacts/artifact_tsv.json"
     },
     "report": {
-      "$ref": "artifacts/artifact_zip.json"
+      "$ref": "artifacts/artifact_gz.json"
     },
     "wes_sample_json": {
       "$ref": "artifacts/artifact_json.json"

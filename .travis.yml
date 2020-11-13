@@ -4,6 +4,7 @@ python:
 install:
   - pip install -r requirements.dev.txt
   - pip install pytest-cov
+  - pip install importlib-metadata>=1
   
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter

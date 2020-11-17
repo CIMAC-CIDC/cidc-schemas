@@ -49,13 +49,15 @@ POSSIBLE_FILE_EXTS = [
     "stat",
     "sf",
     "maf",
-    "tar"
+    "tar",
 ]
 
 
 def generate_analysis_template_schemas(
     target_dir: str = os.path.join(TEMPLATE_DIR, "analyses"),
-    fname_format: Callable[[str], str] = lambda file: f"{file + ('_level1' if file=='rna' else '')}_analysis_template.json",
+    fname_format: Callable[
+        [str], str
+    ] = lambda file: f"{file + ('_level1' if file=='rna' else '')}_analysis_template.json",
 ):
     """Uses output_API.json's from cidc-ngs-pipeline-api along with existing assays/components/ngs analysis templates to generate templates/analyses schemas"""
     # for each output_API.json
@@ -311,7 +313,8 @@ def _calc_gcs_uri_path(name: str, merge_pointer: str):
 
     # special handling, then return
     file = file.replace("align_", "").replace("cnv_calls", "cnvcalls")
-    if "vcf_compare" in file: print(merge_pointer, file)
+    if "vcf_compare" in file:
+        print(merge_pointer, file)
     return file
 
 
@@ -463,8 +466,8 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
                 )
 
             # append empty file extension if entry['file_path_template'] doesn't have one so that prism doesn't break
-            if entry['file_path_template'].split('/')[-1].count(".") == 0:
-                entry['file_path_template'] += "."
+            if entry["file_path_template"].split("/")[-1].count(".") == 0:
+                entry["file_path_template"] += "."
 
             # fill in `process_as` entry
             subsubtemplate = {

@@ -22,7 +22,7 @@ def check_raises(schema: dict, match: str = ""):
         _validator_instance.check_schema(schema)
 
 
-def test_valid_simple_schema():
+def test_valid_simplest_schema():
     check_valid({"type": "string"})
 
 

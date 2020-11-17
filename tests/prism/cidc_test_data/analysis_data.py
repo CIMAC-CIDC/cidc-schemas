@@ -397,31 +397,31 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/somatic/run_1/run_1_tnscope.filter.exons.broad.vcf.gz",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/tnscope_exons_broad.gz",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/tnscope_exons_broad.vcf.gz",
             upload_placeholder="09bb7dd5-083e-468e-b5c7-3c8eb3e77a94",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="analysis/somatic/run_1/run_1_tnscope.filter.exons.mda.vcf.gz",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/tnscope_exons_mda.gz",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/tnscope_exons_mda.vcf.gz",
             upload_placeholder="e31166e8-9ee3-46b6-abf8-bf2b5d933b68",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="analysis/somatic/run_1/run_1_tnscope.filter.exons.mocha.vcf.gz",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/tnscope_exons_mocha.gz",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/tnscope_exons_mocha.vcf.gz",
             upload_placeholder="218be905-220d-417f-8395-0de84fcd8f1d",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/somatic/run_1/run_1_vcfcompare.txt",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/vcfcompare.txt",
+            local_path="analysis/germline/run_1/run_1_vcfcompare.txt",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/vcf_compare.txt",
             upload_placeholder="218be905-220d-417f-8395-0de84fcd81sg",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="analysis/purity/run_1/run_1.optimalpurityvalue.txt",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/optimalpurityvalue.txt",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/optimal_purity_value.txt",
             upload_placeholder="f0b85ef8-47cb-45b9-bb94-c961150786b9",
             metadata_availability=False,
         ),
@@ -438,14 +438,14 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/report/report.tar.gz",
+            local_path="analysis/report.tar.gz",
             gs_key="test_prism_trial_id/wes/run_1/analysis/report.tar.gz",
             upload_placeholder="yyz24763-fb9f-58b4-c7c4-8175759933f5",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="analysis/report/json/run_1.wes.json",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/wes_sample_json.json",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/wes_sample.json",
             upload_placeholder="yyz24763-fb9f-58b4-c7c4-8175759933s1",
             metadata_availability=False,
         ),
@@ -535,7 +535,7 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/purity/run_2/run_2.optimalpurityvalue.txt",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/optimalpurityvalue.txt",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/optimal_purity_value.txt",
             upload_placeholder="98621828-ee22-40d1-840a-0dae97e8bf09",
             metadata_availability=False,
         ),
@@ -631,25 +631,25 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="analysis/somatic/run_2/run_2_tnscope.filter.exons.broad.vcf.gz",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/tnscope_exons_broad.gz",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/tnscope_exons_broad.vcf.gz",
             upload_placeholder="ba9d4b22-5610-4cde-b7e1-31ebf856a4ab",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="analysis/somatic/run_2/run_2_tnscope.filter.exons.mda.vcf.gz",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/tnscope_exons_mda.gz",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/tnscope_exons_mda.vcf.gz",
             upload_placeholder="267e4b9f-e4b6-464a-bafb-44c0e405e44e",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="analysis/somatic/run_2/run_2_tnscope.filter.exons.mocha.vcf.gz",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/tnscope_exons_mocha.gz",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/tnscope_exons_mocha.vcf.gz",
             upload_placeholder="84f6bd4c-00db-4ce3-a6b6-a8482a333b25",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/somatic/run_2/run_2_vcfcompare.txt",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/vcfcompare.txt",
+            local_path="analysis/germline/run_2/run_2_vcfcompare.txt",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/vcf_compare.txt",
             upload_placeholder="84f6bd4c-00db-4ce3-a6b6-a8482a3332sg",
             metadata_availability=False,
         ),
@@ -666,14 +666,14 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/report/report.tar.gz",
+            local_path="analysis/report.tar.gz",
             gs_key="test_prism_trial_id/wes/run_2/analysis/report.tar.gz",
             upload_placeholder="yyz271fb-e2c7-5436-cafe-5cf84bc72bf5",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="analysis/report/json/run_2.wes.json",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/wes_sample_json.json",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/wes_sample.json",
             upload_placeholder="yyz271fb-e2c7-5436-cafe-5cf84bc72bs2",
             metadata_availability=False,
         ),
@@ -824,7 +824,7 @@ def rna_level1_analysis() -> PrismTestData:
     prismify_args = get_prismify_args(upload_type)
     prismify_patch = {
         "analysis": {
-            "rnaseq_analysis": {
+            "rna_analysis": {
                 "level_1": [
                     {
                         "cimac_id": "CTTTPP111.00",
@@ -971,7 +971,7 @@ def rna_level1_analysis() -> PrismTestData:
     }
 
     cimac_ids = [
-        r["cimac_id"] for r in prismify_patch["analysis"]["rnaseq_analysis"]["level_1"]
+        r["cimac_id"] for r in prismify_patch["analysis"]["rna_analysis"]["level_1"]
     ]
 
     upload_entries = sum(

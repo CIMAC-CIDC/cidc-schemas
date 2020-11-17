@@ -26,7 +26,468 @@ from .constants import SCHEMA_DIR, TEMPLATE_DIR
 from .json_validation import _load_dont_validate_schema
 from .util import get_file_ext
 
+from cidc_ngs_pipeline_api import OUTPUT_APIS
+
 logger = logging.getLogger("cidc_schemas.template")
+
+
+POSSIBLE_FILE_EXTS = [
+    "tsv",
+    "log",
+    "summary",
+    "txt",
+    "gz",
+    "bam",
+    "bai",
+    "tn",
+    "vcf",
+    "yaml",
+    "csv",
+    "zip",
+    "json",
+    "dedup",
+    "stat",
+    "sf",
+    "maf",
+    "tar",
+]
+
+
+def generate_analysis_template_schemas(
+    target_dir: str = os.path.join(TEMPLATE_DIR, "analyses"),
+    fname_format: Callable[
+        [str], str
+    ] = lambda file: f"{file + ('_level1' if file=='rna' else '')}_analysis_template.json",
+):
+    """Uses output_API.json's from cidc-ngs-pipeline-api along with existing assays/components/ngs analysis templates to generate templates/analyses schemas"""
+    # for each output_API.json
+    for analysis, output_schema in OUTPUT_APIS.items():
+        # try to convert it, but skip if it's not implemented'
+        # need an existing assay/components/ngs analysis schema to find merge pointers
+        try:
+            assay_schema = _load_dont_validate_schema(
+                f"assays/components/ngs/{analysis}/{analysis}_analysis.json"
+            )
+        except Exception as e:
+            print(
+                f"skipping {analysis}: failed to load corresponding `assays/components/ngs/{analysis}/{'rna_level1' if analysis == 'rna' else analysis}_analysis.json`"
+            )
+        else:
+            template = _convert_api_to_template(analysis, output_schema, assay_schema)
+            with open(os.path.join(target_dir, fname_format(analysis)), "w") as f:
+                json.dump(template, f, indent=4)
+
+
+def _first_in_context(path: list, context: dict):
+    """
+    For matching a file path to its nearest equivalent key in a schema context
+    Recursive to try for more specific, more complex entries
+
+    Params
+    ------
+    path : list
+        a list of path elements to locate in @context
+    context : dict
+        a schema that has an element similar to @path
+
+    Returns
+    -------
+    tuple
+        (equivalent key in context, rest of path elements, context[key]['properties'])
+        ("", [], context) if path doesn't lead to anything in the given context
+    """
+    ret = ("", [], {})  # index-safe equivalent of None
+    if not isinstance(path, list):
+        path = list(path)
+    if not path:
+        return ret
+
+    # if we can step down
+    if path[0] in context:
+        # if this is the end, we're done
+        if len(path) == 1:
+            context = context[path[0]]
+            if "items" in context:
+                # to handle arrays
+                context = context["items"]
+            if "properties" in context:
+                context = context["properties"]
+
+            ret = (path[0], [], context)  # path[1:] == []
+        else:
+            # otherwise, see if there's something more specific first
+            trial = [path[0] + "_" + path[1]] + path[2:]
+            ret = _first_in_context(trial, context)
+            if not ret[0]:
+                context = context[path[0]]
+                if "items" in context:
+                    # to handle arrays
+                    context = context["items"]
+                if "properties" in context:
+                    context = context["properties"]
+                ret = (path[0], path[1:], context)
+
+    # sometimes capitalisation changes
+    if not ret[0] and path[0].lower() != path[0]:
+        if sum([path[0].lower() == k.lower() for k in context.keys()]) == 1:
+            # guaranteed to work and be the only item
+            key = [k for k in context.keys() if k.lower() == path[0].lower()][0]
+
+            context = context[key]
+            if "items" in context:
+                # to handle arrays
+                context = context["items"]
+            if "properties" in context:
+                context = context["properties"]
+            ret = [key, path[1:], context]
+
+    # sometimes `.` are replaced by `_`
+    if not ret[0] and "." in path[0]:
+        trial = [path[0].replace(".", "_")] + path[1:]
+        ret = _first_in_context(trial, context)
+        if not ret[0]:
+            trial = path[0].split(".") + path[2:]
+            ret = _first_in_context(trial, context)
+
+    # sometimes `summary` is pulled up from the end
+    if not ret[0] and "summary" in path[-1] and "summary" not in path[0]:
+        trial = [path[0] + "_summary"] + path[1:]
+        ret = _first_in_context(trial, context)
+
+    # sometimes two are actually stuck together
+    if not ret[0] and len(path) > 1:
+        trial = ["_".join(path[:2])] + path[2:]
+        ret = _first_in_context(trial, context)
+
+    # sometime `logs` is skipped
+    if not ret[0] and path[0] == "logs" and len(path) > 1:
+        trial = path[1:]
+        ret = _first_in_context(trial, context)
+
+    # sometimes the key has added `_`
+    if not ret[0] and path[0] in [k.replace("_", "") for k in context.keys()]:
+        path[0] = [k for k in context.keys() if k.replace("_", "") == path[0]][0]
+        ret = _first_in_context(path, context)
+
+    # sometimes the key is missing `_`
+    if not ret[0] and "_" in path[0]:
+        trial = [path[0].replace("_", "")] + path[1:]
+        ret = _first_in_context(trial, context)
+
+    # sometimes bam isn't included in `bam.bai` -> `index`
+    if not ret[0] and "bam_index" in path[-1]:
+        trial = path[:-1] + [path[-1].replace("bam_index", "index")]
+        ret = _first_in_context(trial, context)
+
+    # if there isn't, we're still done
+    if not ret[0]:
+        ret = ("", path, context)  # [] if len(path) == 1
+
+    return ret if ret[0] else ("", path, context)
+
+
+def _initialize_template_schema(name: str, title: str, pointer: str):
+    long_title = "RNAseq level 1" if title == "RNAseq" else title
+    # static
+    template = {
+        "title": f"{long_title} analysis template",
+        "description": f"Metadata information for {long_title} Analysis output.",
+        "prism_template_root_object_schema": f"assays/components/ngs/{name}/{name}_analysis.json",
+        "prism_template_root_object_pointer": f"/analysis/{name}_analysis",
+        "properties": {
+            "worksheets": {
+                f"{title} Analysis": {
+                    "preamble_rows": {
+                        "protocol identifier": {
+                            "merge_pointer": "2/protocol_identifier",
+                            "type_ref": "clinical_trial.json#properties/protocol_identifier",
+                        }
+                    },
+                    "prism_data_object_pointer": f"/{pointer}/-",
+                    "data_columns": {f"{title} Runs": {}},
+                }
+            }
+        },
+    }
+    return template
+
+
+def _calc_merge_pointer(file_path: str, context: dict, key: str):
+    """Return the merge_pointer in context that the file_path directs to
+
+    Params
+    ------
+    file_path : str
+        the local file path for the file
+    context : dict
+        the assay schema for the analysis onto which to map the file path
+    key : str
+        the key from output_API.json undre which the file path is listed
+        used for WES handling of `all_summaries`
+        e.g. 'tumor cimac id', 'normal cimac id' 
+    """
+    # remove any fill-in-the-blanks
+    while "{" in file_path:
+        temp = file_path.split("{", 1)
+        file_path = temp[0] + temp[1].split("}", 1)[1].strip("._")
+    # this can generate `/{id}/` -> `//` and `-{id}-` -> `--`, so fix those
+    file_path = file_path.replace("//", "/").replace("--", "_")
+
+    # specialty conversions for existing non-standard usage
+    fixes = {  # old : new
+        ".bam.bai": ".bam.index",
+        "clonality/": "clonality/clonality/",
+        "copynumber/": "copynumber/copynumber_",
+        "tn_corealigned.bam": "tn_corealigned",
+        "optitype/result": "optitype/optitype_result",
+        "xhla": "optitype/xhla",
+        "all_samples_summaries": "all_summaries",
+        "/align": "/alignment/align",
+        "sample_summar": "summar",
+        "all_epitopes": "epitopes",
+        ".txt.tn.tsv": ".tsv",
+        "report/somatic_variants/07_": "report/",
+        "report/neoantigens/01_": "neoantigen/",
+        "msisensor2": "msisensor",
+        "/report.": "/report/report.",
+        "wes_meta/02_": "",
+        "json/wes.json": "wes_sample.json",
+        "vcfcompare": "vcf_compare",
+    }
+    for old, new in fixes.items():
+        file_path = file_path.replace(old, new)
+
+    # special handling for vcfcompare
+    if "vcf_compare" in file_path:
+        file_path = file_path.replace("germline", "somatic")
+
+    # split path into pieces
+    file_path = file_path.split("/")
+
+    # specialty conversions for file names / extensions only
+    if "tnscope" in file_path[-1]:
+        if "filter.exons" in file_path[-1]:
+            file_path[-1] = file_path[-1].replace("filter.exons", "exons")
+        else:
+            temp = file_path[-1].split(".")
+            if temp[-1] != "gz":
+                file_path[-1] = ".".join(temp[-1:] + temp[:-1])
+            else:
+                file_path[-1] = ".".join(temp[-2:] + temp[:-2])
+    if "mosdepth" in file_path[-1]:
+        temp = file_path[-1].split(".")
+        file_path[-1] = ".".join(temp[1:4]) + "_" + temp[0]
+
+    # remove any extra `analysis` at the front
+    if file_path[0] == "analysis":
+        file_path = file_path[1:]
+
+    # look into first step
+    curr_step, file_path, curr_context = _first_in_context(file_path, context)
+    merge_pointer = "0/" + curr_step
+    # then off to the races
+    while len(curr_step):
+        curr_step, file_path, curr_context = _first_in_context(file_path, curr_context)
+        if curr_step:
+            merge_pointer += "/" + curr_step
+
+    return merge_pointer
+
+
+def _calc_gcs_uri_path(name: str, merge_pointer: str):
+    # generate GCS URI ending from merge pointer
+    if name == "wes":  # WES doesn't get the beginning path for some reason
+        file = merge_pointer[1:].rsplit("/", 1)[1]
+    else:
+        file = merge_pointer[2:]
+    # special handling for .bam.bai
+    file = file.replace("_bam_index", "_bam_bai").replace("_index", "_bam_bai")
+
+    # guess at file extension from merge_pointer
+    file = file.split("_")
+
+    # trim off file extension from path
+    while file[-1] in POSSIBLE_FILE_EXTS:  # go from the right
+        file.pop()
+    file = "_".join(file)
+
+    # special handling, then return
+    file = file.replace("align_", "").replace("cnv_calls", "cnvcalls")
+    if "vcf_compare" in file:
+        print(merge_pointer, file)
+    return file
+
+
+def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
+    # import here to avoid circular dependence where prism imports Template
+    from .prism.merger import InvalidMergeTargetException
+
+    # so many different ways of writing it
+    title = "RNAseq" if name == "rna" else name.upper()
+    pointer = [
+        k for k in assay_schema["properties"].keys() if not k.startswith("merge")
+    ][0]
+
+    template = _initialize_template_schema(name, title, pointer)
+
+    # for each entry
+    subtemplate = {}
+    used_merge_pointers, used_gcs_uris = [], []
+    for long_key, entries in schema.items():
+        # so many ways to write this too
+        if long_key == "id":
+            long_key = "cimac id"  # assume CIMAC if just 'id'
+
+        if "cimac id" in long_key:
+            pysafe_key = "id"
+        elif long_key == "run id":
+            pysafe_key = "run"
+        else:
+            pysafe_key = long_key.replace(" ", "_")
+
+        if long_key == "normal cimac id":
+            short_key = "normal"
+        elif long_key == "tumor cimac id":
+            short_key = "tumor"
+        else:
+            short_key = long_key.replace(" ", "_")
+
+        # static header
+        if "cimac id" in long_key and name == "wes":
+            type_ref = "sample.json#properties/cimac_id"
+            merge_pointer = f"/{short_key}/cimac_id"
+        else:
+            type_ref = f"assays/components/ngs/{name}/"
+
+            if name == "rna":
+                type_ref += "rna_level1"
+            elif name == "wes" and long_key == "run id":
+                type_ref += "wes_pair"
+            else:
+                type_ref += name
+
+            if short_key in ["normal", "tumor"]:
+                type_ref += f"_analysis.json#properties/{short_key}/cimac_id"
+            else:
+                type_ref += f"_analysis.json#properties/{long_key.replace(' ','_')}"
+            merge_pointer = f"/{long_key.replace(' ','_')}"
+
+        subtemplate[long_key] = {
+            "merge_pointer": merge_pointer,
+            "type_ref": type_ref,
+            "process_as": [],
+        }
+
+        # keep track of where we are in the analysis schema
+        context = assay_schema["properties"][pointer]["items"]["properties"]
+        if short_key not in context:
+            raise InvalidMergeTargetException(
+                f"{long_key} in {name} does not have a corresponding entry in `assays/components/ngs/{name}/{name}_analysis.json`"
+            )
+        elif "properties" in context[short_key]:
+            context = context[short_key]["properties"]
+
+        # for each entry in the output_API.json
+        for entry in entries:  # entries = list[dict]
+            # get the local file path
+            file_path = entry["file_path_template"]
+
+            # calculate merge_pointer
+            merge_pointer = _calc_merge_pointer(file_path, context, long_key)
+            if name == "wes":
+                # WES doesn't get starting 0 for some reason
+                merge_pointer = merge_pointer[1:]
+                # also gets normal / tumor prepended
+                if short_key in ["normal", "tumor"]:
+                    merge_pointer = f"/{short_key}{merge_pointer}"
+
+            if merge_pointer in ["0/", "/"]:  # default value, possibly modified
+                raise InvalidMergeTargetException(
+                    f"{file_path} cannot be mapped to a location of the data object"
+                )
+            elif merge_pointer in used_merge_pointers:
+                raise InvalidMergeTargetException(
+                    f"{file_path} causes a collision for inferred merge target {merge_pointer}"
+                )
+
+            # let's check its target too
+            merge_target = context.copy()
+            for ptr in merge_pointer.lstrip("0/").split("/"):
+                if "properties" in merge_target and ptr not in merge_target:
+                    merge_target = merge_target["properties"]
+
+                if ptr in merge_target:
+                    merge_target = merge_target[ptr]
+                elif ptr in ["normal", "tumor"]:
+                    # already handled, special add ins
+                    # only sometimes needs to be stripped though
+                    # if incorrect, will still error in next step
+                    continue
+                else:
+                    raise ValueError("Generated pointer to non-existant merge_target")
+            if "data_format" not in merge_target["properties"]:
+                raise InvalidMergeTargetException(
+                    f"from {file_path}, inferred merge target {merge_pointer} which is not a valid file"
+                )
+
+            # GCS URI start is static
+            gcs_uri = f"{{protocol identifier}}/{name}/"
+            if name == "wes":  # wes has its own scheme
+                gcs_uri += "{run id}/analysis/"
+                if long_key != "run id":
+                    gcs_uri += f"{short_key}/{{{long_key}}}/"
+            else:
+                gcs_uri += f"{{{long_key}}}/analysis/"
+
+            gcs_uri += _calc_gcs_uri_path(name, merge_pointer)
+
+            # now get actual file extension from file_path_template
+            ext = (
+                entry["file_path_template"]
+                .split("/")[-1]
+                .replace("sample_summary", ".summary")
+                .split(".")
+            )
+            # only keep valid parts, in order they appear
+            ext = [i for i in ext if i in POSSIBLE_FILE_EXTS]
+            ext = ".".join(ext)
+            gcs_uri += "." + ext
+
+            if name == "wes":
+                gcs_uri = gcs_uri.replace(
+                    ".summary", "_summary"
+                )  # doesn't change in WES for some reason
+
+            # I'm not sure if this could actually happen without causing a merge collision above
+            # therefore also don't know how to test
+            if gcs_uri in used_gcs_uris:
+                raise InvalidMergeTargetException(
+                    f"{file_path} caused a collision for inferred destination URI {gcs_uri}"
+                )
+
+            # append empty file extension if entry['file_path_template'] doesn't have one so that prism doesn't break
+            if entry["file_path_template"].split("/")[-1].count(".") == 0:
+                entry["file_path_template"] += "."
+
+            # fill in `process_as` entry
+            subsubtemplate = {
+                "parse_through": f"lambda {pysafe_key}: f'{entry['file_path_template'].replace(long_key, pysafe_key)}'",
+                "merge_pointer": merge_pointer,
+                "gcs_uri_format": gcs_uri,
+                "type_ref": "assays/components/local_file.json#properties/file_path",
+                "is_artifact": 1,
+            }
+
+            subtemplate[long_key]["process_as"].append(subsubtemplate)
+            used_merge_pointers.append(merge_pointer)
+            used_gcs_uris.append(gcs_uri)
+
+        # store it all on the static part
+        template["properties"]["worksheets"][f"{title} Analysis"]["data_columns"][
+            f"{title} Runs"
+        ] = subtemplate
+
+    return template
 
 
 def _get_template_path_map() -> dict:

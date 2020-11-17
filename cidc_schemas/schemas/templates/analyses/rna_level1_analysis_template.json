@@ -1,8 +1,8 @@
 {
     "title": "RNAseq level 1 analysis template",
     "description": "Metadata information for RNAseq level 1 Analysis output.",
-    "prism_template_root_object_schema": "assays/components/ngs/rna/rnaseq_analysis.json",
-    "prism_template_root_object_pointer": "/analysis/rnaseq_analysis",
+    "prism_template_root_object_schema": "assays/components/ngs/rna/rna_analysis.json",
+    "prism_template_root_object_pointer": "/analysis/rna_analysis",
     "properties": {
         "worksheets": {
             "RNAseq Analysis": {
@@ -17,7 +17,7 @@
                     "RNAseq Runs": {
                         "cimac id": {
                             "merge_pointer": "/cimac_id",
-                            "type_ref": "assays/components/ngs/rna/rnaseq_level1_analysis.json#properties/cimac_id",
+                            "type_ref": "assays/components/ngs/rna/rna_level1_analysis.json#properties/cimac_id",
                             "process_as": [
                                 {
                                     "parse_through": "lambda id: f'analysis/star/{id}/{id}.sorted.bam'",
@@ -54,37 +54,33 @@
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
-
-
-
-
                                 {
                                     "parse_through": "lambda id: f'analysis/rseqc/{id}/{id}_downsampling_housekeeping.bam'",
                                     "merge_pointer": "0/rseqc/downsampling_housekeeping_bam",
                                     "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/rseqc/downsampling_housekeeping.bam",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1                                    
+                                    "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/rseqc/{id}/{id}_downsampling_housekeeping.bam.bai'",
                                     "merge_pointer": "0/rseqc/downsampling_housekeeping_bam_index",
                                     "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/rseqc/downsampling_housekeeping.bam.bai",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1                                    
+                                    "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/rseqc/read_distrib/{id}/{id}.txt'",
                                     "merge_pointer": "0/rseqc/read_distrib",
                                     "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/rseqc/read_distrib.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1                                    
+                                    "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/rseqc/tin_score/{id}/{id}.summary.txt'",
                                     "merge_pointer": "0/rseqc/tin_score_summary",
                                     "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/rseqc/tin_score.summary.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1                                    
+                                    "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/rseqc/tin_score/{id}/{id}.tin_score.txt'",
@@ -93,9 +89,6 @@
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
-
-
-
                                 {
                                     "parse_through": "lambda id: f'analysis/salmon/{id}/{id}.quant.sf'",
                                     "merge_pointer": "0/salmon/quant_sf",

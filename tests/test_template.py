@@ -2,10 +2,15 @@
 
 """Tests for `cidc_schemas.template` module."""
 
+from deepdiff import DeepDiff
+import json
 import os
 import pytest
 
-from cidc_schemas.constants import TEMPLATE_DIR
+from cidc_schemas.constants import SCHEMA_DIR, TEMPLATE_DIR
+from cidc_schemas.prism import InvalidMergeTargetException
+from cidc_schemas.json_validation import _load_dont_validate_schema
+
 from cidc_schemas.template import (
     Template,
     generate_empty_template,
@@ -14,7 +19,12 @@ from cidc_schemas.template import (
     AtomicChange,
     _FieldDef,
     _get_facet_group,
+    _convert_api_to_template,
+    _first_in_context,
+    generate_analysis_template_schemas,
 )
+
+from .constants import TEST_SCHEMA_DIR
 
 # NOTE: see conftest.py for pbmc_template and tiny_template fixture definitions
 
@@ -317,3 +327,282 @@ def test_generate_all_templates(tmpdir):
     generated_filenames = set(f.rstrip(".xlsx") for f in generated_files)
     schema_filenames = set(f.rstrip(".json") for f in schema_files)
     assert generated_filenames == schema_filenames
+
+
+def test_first_in_context():
+    context = {
+        "key1": {"properties": {}},
+        "key1_key2": {"properties": {}},  # more specific
+        "key2_key3": {"properties": {}},  # two with underscore
+        "key4key5": {"properties": {}},  # two without underscore
+        "key6_index": {"properties": {}},  # index
+        "key7_summary": {"properties": {}},  # summary
+    }
+
+    # Identical
+    assert _first_in_context(["key1"], context)[0] == "key1"
+
+    # More specific
+    assert _first_in_context(["key1", "key2"], context)[0] == "key1_key2"
+
+    # Key has dot, context has underscore
+    assert _first_in_context(["key2.key3"], context)[0] == "key2_key3"
+
+    # Key has dot, context only has first half
+    assert _first_in_context(["Key1.key3"], context)[0] == "key1"
+
+    # Pull summary from end
+    assert (
+        _first_in_context(["key7", "this_is_missed", ".summary.txt"], context)[0]
+        == "key7_summary"
+    )
+
+    # Two joined with underscore
+    assert _first_in_context(["key2", "key3"], context)[0] == "key2_key3"
+
+    # Skipping logs
+    assert _first_in_context(["logs", "Key1"], context)[0] == "key1"
+
+    # Key missing underscore
+    assert _first_in_context(["key2key3"], context)[0] == "key2_key3"
+
+    # Key has extra underscore
+    assert _first_in_context(["key4_key5"], context)[0] == "key4key5"
+
+    # Two joined, but then has extra underscore
+    assert _first_in_context(["key4", "key5"], context)[0] == "key4key5"
+
+    # Dot -> underscore, but then has extra underscore
+    assert _first_in_context(["key4.key5"], context)[0] == "key4key5"
+
+    # Drop bam from bam_index
+    assert _first_in_context(["key6_bam_index"], context)[0] == "key6_index"
+
+    # Capitals
+    assert _first_in_context(["Key1"], context)[0] == "key1"
+
+    # items with one-element path
+    assert _first_in_context(["foo"], {"foo": {"items": {"properties": "bar"}}}) == (
+        "foo",
+        [],
+        "bar",
+    )
+
+    # items with two-element path
+    assert _first_in_context(
+        ["foo", "bar"], {"foo": {"items": {"properties": "bar"}}}
+    ) == ("foo", ["bar"], "bar")
+
+
+def test_convert_api_to_template_wes():
+    wes_api = {
+        "run id": [
+            {
+                "filter_group": "clonality/clonality_pyclone",
+                "file_path_template": "analysis/clonality/{run id}/{run id}_pyclone.tsv",
+                "short_description": "clonality_pyclone file",
+                "long_description": "clonality_pyclone file clonality_pyclone file",
+                "file_purpose": "Miscellaneous",
+            }
+        ],
+        "tumor cimac id": [
+            {
+                "filter_group": "alignment/align_sorted_dedup",
+                "file_path_template": "analysis/align/{tumor cimac id}/{tumor cimac id}.sorted.dedup.bam",
+                "short_description": "align_sorted_dedup file",
+                "long_description": "align_sorted_dedup file align_sorted_dedup file",
+                "file_purpose": "Miscellaneous",
+            }
+        ],
+    }
+
+    wes_json = {
+        "title": "WES analysis template",
+        "description": "Metadata information for WES Analysis output.",
+        "prism_template_root_object_schema": "assays/components/ngs/wes/wes_analysis.json",
+        "prism_template_root_object_pointer": "/analysis/wes_analysis",
+        "properties": {
+            "worksheets": {
+                "WES Analysis": {
+                    "preamble_rows": {
+                        "protocol identifier": {
+                            "merge_pointer": "2/protocol_identifier",
+                            "type_ref": "clinical_trial.json#properties/protocol_identifier",
+                        }
+                    },
+                    "prism_data_object_pointer": "/pair_runs/-",
+                    "data_columns": {
+                        "WES Runs": {
+                            "run id": {
+                                "merge_pointer": "/run_id",
+                                "type_ref": "assays/components/ngs/wes/wes_pair_analysis.json#properties/run_id",
+                                "process_as": [
+                                    {
+                                        "parse_through": "lambda run: f'analysis/clonality/{run}/{run}_pyclone.tsv'",
+                                        "merge_pointer": "/clonality/clonality_pyclone",
+                                        "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/clonality_pyclone.tsv",
+                                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                                        "is_artifact": 1,
+                                    }
+                                ],
+                            },
+                            "tumor cimac id": {
+                                "merge_pointer": "/tumor/cimac_id",
+                                "type_ref": "sample.json#properties/cimac_id",
+                                "process_as": [
+                                    {
+                                        "parse_through": "lambda id: f'analysis/align/{id}/{id}.sorted.dedup.bam'",
+                                        "merge_pointer": "/tumor/alignment/align_sorted_dedup",
+                                        "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/sorted.dedup.bam",
+                                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                                        "is_artifact": 1,
+                                    }
+                                ],
+                            },
+                        }
+                    },
+                }
+            }
+        },
+    }
+
+    assay_schema = _load_dont_validate_schema(
+        "assays/components/ngs/wes/wes_analysis.json"
+    )
+
+    wes_output = _convert_api_to_template("wes", wes_api, assay_schema)
+    assert DeepDiff(wes_json, wes_output) == {}
+
+
+def test_convert_api_to_template_rna():
+    rna_api = {
+        "cimac id": [
+            {  # use first entry as example
+                "filter_group": "alignment",
+                "file_path_template": "analysis/star/{id}/{id}.sorted.bam",
+                "short_description": "star alignment output",
+                "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
+                "file_purpose": "Analysis view",
+            }
+        ]
+    }
+
+    rna_json = {
+        "title": "RNAseq level 1 analysis template",
+        "description": "Metadata information for RNAseq level 1 Analysis output.",
+        "prism_template_root_object_schema": "assays/components/ngs/rna/rna_analysis.json",
+        "prism_template_root_object_pointer": "/analysis/rna_analysis",
+        "properties": {
+            "worksheets": {
+                "RNAseq Analysis": {
+                    "preamble_rows": {
+                        "protocol identifier": {
+                            "merge_pointer": "2/protocol_identifier",
+                            "type_ref": "clinical_trial.json#properties/protocol_identifier",
+                        }
+                    },
+                    "prism_data_object_pointer": "/level_1/-",
+                    "data_columns": {
+                        "RNAseq Runs": {
+                            "cimac id": {
+                                "merge_pointer": "/cimac_id",
+                                "type_ref": "assays/components/ngs/rna/rna_level1_analysis.json#properties/cimac_id",
+                                "process_as": [
+                                    {
+                                        "parse_through": "lambda id: f'analysis/star/{id}/{id}.sorted.bam'",
+                                        "merge_pointer": "0/star/sorted_bam",
+                                        "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/star/sorted.bam",
+                                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                                        "is_artifact": 1,
+                                    }
+                                ],
+                            }
+                        }
+                    },
+                }
+            }
+        },
+    }
+
+    assay_schema = _load_dont_validate_schema(
+        "assays/components/ngs/rna/rna_analysis.json"
+    )
+    rna_output = _convert_api_to_template("rna", rna_api, assay_schema)
+    assert DeepDiff(rna_json, rna_output) == {}
+
+    rna_api_bad_key = {"foo": [{}]}
+    with pytest.raises(InvalidMergeTargetException, match="corresponding entry"):
+        _convert_api_to_template("rna", rna_api_bad_key, assay_schema)
+
+    rna_api_no_target = {
+        "cimac id": [
+            {
+                "filter_group": "alignment",
+                "file_path_template": "foo",  # used to generate merge_pointer
+                "short_description": "star alignment output",
+                "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
+                "file_purpose": "Analysis view",
+            }
+        ]
+    }
+    with pytest.raises(InvalidMergeTargetException, match="cannot be mapped"):
+        _convert_api_to_template("rna", rna_api_no_target, assay_schema)
+
+    rna_api_merge_collision = {
+        "cimac id": [
+            {
+                "filter_group": "alignment",
+                "file_path_template": "analysis/star/{id}/{id}.sorted.bam",
+                "short_description": "star alignment output",
+                "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
+                "file_purpose": "Analysis view",
+            },
+            {  # direct repeat will collide
+                "filter_group": "alignment",
+                "file_path_template": "analysis/star/{id}/{id}.sorted.bam",
+                "short_description": "star alignment output",
+                "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
+                "file_purpose": "Analysis view",
+            },
+        ]
+    }
+    with pytest.raises(
+        InvalidMergeTargetException, match="collision for inferred merge target"
+    ):
+        _convert_api_to_template("rna", rna_api_merge_collision, assay_schema)
+
+    rna_api_underspecified = {
+        "cimac id": [
+            {
+                "filter_group": "alignment",
+                "file_path_template": "analysis/star/{id}/{id}.sorted",
+                "short_description": "star alignment output",
+                "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
+                "file_purpose": "Analysis view",
+            }
+        ]
+    }
+    with pytest.raises(InvalidMergeTargetException, match="not a valid file"):
+        _convert_api_to_template("rna", rna_api_underspecified, assay_schema)
+
+
+def test_generate_analysis_template_schemas_rna(tmpdir):
+    generate_analysis_template_schemas(
+        tmpdir.strpath, lambda file: f"{file}_template.json"
+    )
+
+    test_dir = os.path.join(TEST_SCHEMA_DIR, "target-templates")
+    good_rna = json.load(open(os.path.join(test_dir, "rna_template.json")))
+
+    new_rna = json.load(open(tmpdir.join("rna_template.json")))
+    assert DeepDiff(good_rna, new_rna) == {}
+
+
+def test_generate_analysis_template_schemas_wes(tmpdir):
+    generate_analysis_template_schemas(
+        tmpdir.strpath, lambda file: f"{file}_template.json"
+    )
+    test_dir = os.path.join(TEST_SCHEMA_DIR, "target-templates")
+    good_wes = json.load(open(os.path.join(test_dir, "wes_template.json")))
+    new_wes = json.load(open(tmpdir.join("wes_template.json")))
+    assert DeepDiff(good_wes, new_wes) == {}

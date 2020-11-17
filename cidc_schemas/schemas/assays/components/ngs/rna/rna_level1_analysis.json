@@ -1,6 +1,6 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
-  "$id": "rnaseq_level1_analysis",
+  "$id": "rna_level1_analysis",
   "title": "RNAseq Level 1 Sample Analysis Output Files",
   "type": "object",
   "description": "RNAseq assay output files for a sample level 1 analysis.",

@@ -9,4 +9,4 @@ deepdiff==4.0.6
 jsonpointer==2.0
 pandas>=0.25.1
 jinja2==2.10.3
-cidc-ngs-pipeline-api==0.1.5
+cidc-ngs-pipeline-api==0.1.6

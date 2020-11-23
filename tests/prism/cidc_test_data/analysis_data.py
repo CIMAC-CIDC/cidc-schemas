@@ -73,14 +73,8 @@ def wes_analysis() -> PrismTestData:
                             "maf_tnscope_filter": {
                                 "upload_placeholder": "53991cf3-b1b9-4b4a-830d-4eade9ef1321"
                             },
-                            "tnscope_exons_broad": {
+                            "tnscope_exons": {
                                 "upload_placeholder": "09bb7dd5-083e-468e-b5c7-3c8eb3e77a94"
-                            },
-                            "tnscope_exons_mda": {
-                                "upload_placeholder": "e31166e8-9ee3-46b6-abf8-bf2b5d933b68"
-                            },
-                            "tnscope_exons_mocha": {
-                                "upload_placeholder": "218be905-220d-417f-8395-0de84fcd8f1d"
                             },
                             "vcf_compare": {
                                 "upload_placeholder": "218be905-220d-417f-8395-0de84fcd81sg"
@@ -226,14 +220,8 @@ def wes_analysis() -> PrismTestData:
                             "maf_tnscope_filter": {
                                 "upload_placeholder": "1d589bba-708c-449f-879f-44cba199c635"
                             },
-                            "tnscope_exons_broad": {
+                            "tnscope_exons": {
                                 "upload_placeholder": "ba9d4b22-5610-4cde-b7e1-31ebf856a4ab"
-                            },
-                            "tnscope_exons_mda": {
-                                "upload_placeholder": "267e4b9f-e4b6-464a-bafb-44c0e405e44e"
-                            },
-                            "tnscope_exons_mocha": {
-                                "upload_placeholder": "84f6bd4c-00db-4ce3-a6b6-a8482a333b25"
                             },
                             "vcf_compare": {
                                 "upload_placeholder": "84f6bd4c-00db-4ce3-a6b6-a8482a3332sg"
@@ -396,21 +384,9 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/somatic/run_1/run_1_tnscope.filter.exons.broad.vcf.gz",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/tnscope_exons_broad.vcf.gz",
+            local_path="analysis/somatic/run_1/run_1_tnscope.filter.exons.vcf.gz",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/tnscope_exons.vcf.gz",
             upload_placeholder="09bb7dd5-083e-468e-b5c7-3c8eb3e77a94",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/somatic/run_1/run_1_tnscope.filter.exons.mda.vcf.gz",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/tnscope_exons_mda.vcf.gz",
-            upload_placeholder="e31166e8-9ee3-46b6-abf8-bf2b5d933b68",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/somatic/run_1/run_1_tnscope.filter.exons.mocha.vcf.gz",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/tnscope_exons_mocha.vcf.gz",
-            upload_placeholder="218be905-220d-417f-8395-0de84fcd8f1d",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
@@ -630,21 +606,9 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/somatic/run_2/run_2_tnscope.filter.exons.broad.vcf.gz",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/tnscope_exons_broad.vcf.gz",
+            local_path="analysis/somatic/run_2/run_2_tnscope.filter.exons.vcf.gz",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/tnscope_exons.vcf.gz",
             upload_placeholder="ba9d4b22-5610-4cde-b7e1-31ebf856a4ab",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/somatic/run_2/run_2_tnscope.filter.exons.mda.vcf.gz",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/tnscope_exons_mda.vcf.gz",
-            upload_placeholder="267e4b9f-e4b6-464a-bafb-44c0e405e44e",
-            metadata_availability=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="analysis/somatic/run_2/run_2_tnscope.filter.exons.mocha.vcf.gz",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/tnscope_exons_mocha.vcf.gz",
-            upload_placeholder="84f6bd4c-00db-4ce3-a6b6-a8482a333b25",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(

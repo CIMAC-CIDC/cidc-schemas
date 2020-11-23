@@ -153,23 +153,9 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.exons.broad.vcf.gz'",
-                                    "merge_pointer": "/somatic/tnscope_exons_broad",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tnscope_exons_broad.vcf.gz",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.exons.mda.vcf.gz'",
-                                    "merge_pointer": "/somatic/tnscope_exons_mda",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tnscope_exons_mda.vcf.gz",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.exons.mocha.vcf.gz'",
-                                    "merge_pointer": "/somatic/tnscope_exons_mocha",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tnscope_exons_mocha.vcf.gz",
+                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.exons.vcf.gz'",
+                                    "merge_pointer": "/somatic/tnscope_exons",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tnscope_exons.vcf.gz",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 }

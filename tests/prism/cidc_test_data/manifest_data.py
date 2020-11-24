@@ -1807,7 +1807,7 @@ def participants_annotations():
         "participants": [
             {
                 "cimac_participant_id": "CTTTP00",
-                "arbitrary_trial_specific_clinical_annotations": {
+                "trial_specific": {
                     "race": "White",
                     "SiteNumber": "WI020",
                     "gender": "Male",

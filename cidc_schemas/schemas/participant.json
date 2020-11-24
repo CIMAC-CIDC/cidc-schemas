@@ -68,7 +68,7 @@
         "Other"
       ]
     },
-    "arbitrary_trial_specific_clinical_annotations":{
+    "trial_specific":{
       "type": "object",
       "$comment": "holds whatever non-harmonized annotations trial team provides",
       "additionalProperties": true

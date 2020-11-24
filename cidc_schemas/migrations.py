@@ -42,6 +42,32 @@ class migration:
         raise NotImplementedError
 
 
+class v0_23_0_to_v0_23_1(migration):
+    """
+    renaming 'arbitrary_trial_specific_clinical_annotations' to 'trial_specific'
+    """
+
+    @classmethod
+    def upgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+        for p in metadata.get("participants", []):
+            if "arbitrary_trial_specific_clinical_annotations" in p:
+                p["trial_specific"] = p.pop(
+                    "arbitrary_trial_specific_clinical_annotations"
+                )
+
+        return MigrationResult(metadata, {})
+
+    @classmethod
+    def downgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+        for p in metadata.get("participants", []):
+            if "trial_specific" in p:
+                p["arbitrary_trial_specific_clinical_annotations"] = p.pop(
+                    "trial_specific"
+                )
+
+        return MigrationResult(metadata, {})
+
+
 class v0_21_1_to_v0_22_0(migration):
     """
     Hashing participant/participant_id and sample/parent_sample_id,processed_sample_id

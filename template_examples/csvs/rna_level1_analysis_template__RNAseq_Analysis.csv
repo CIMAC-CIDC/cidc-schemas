@@ -1,7 +1,7 @@
-"#t","Rnaseq level 1 analysis template"
-"#p","Protocol identifier","test_prism_trial_id"
+"#title","Rnaseq level 1 analysis template"
+"#preamble","Protocol identifier","test_prism_trial_id"
 
-"","RNAseq Runs"
-"#h","Cimac id"
-"#d","CTTTPP111.00"
-"#d","CTTTPP121.00"
+"#skip","RNAseq Runs"
+"#header","Cimac id"
+"#data","CTTTPP111.00"
+"#data","CTTTPP121.00"

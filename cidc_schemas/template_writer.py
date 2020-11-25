@@ -19,10 +19,11 @@ logger = logging.getLogger("cidc_schemas.template_writer")
 class RowType(Enum):
     """Annotations denoting what type of data a template row contains."""
 
-    TITLE = "#t"
-    HEADER = "#h"
-    PREAMBLE = "#p"
-    DATA = "#d"
+    TITLE = "#title"
+    SKIP = "#skip"
+    HEADER = "#header"
+    PREAMBLE = "#preamble"
+    DATA = "#data"
 
 
 def row_type_from_string(maybe_type: str) -> Optional[RowType]:
@@ -105,7 +106,7 @@ class XlThemes:
 class XlTemplateWriter:
     """A wrapper around xlsxwriter that can create Excel templates from template schemas"""
 
-    _DATA_ROWS = 200
+    _DATA_ROWS = 2000  # very unlikely that we'll encounter an upload with more data rows than this
     _MIN_NUM_COLS = 2
     _COLUMN_WIDTH_PX = 30
 
@@ -310,7 +311,7 @@ class XlTemplateWriter:
         assert self.template, "_write_worksheet called without an initialized template"
 
         self.worksheet = workbook
-        self.worksheet.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
+        self.worksheet.set_column(0, 100, width=self.COLUMN_WIDTH_PX)
 
         self.row = 0
         self.col = 1
@@ -345,8 +346,6 @@ class XlTemplateWriter:
                     self._write_data_column(name, schema)
                     self.col += 1
 
-        self._hide_type_annotations()
-
     # We can think of the below _write_* functions as "template components".
     # Template components write to the spreadsheet at the current row/column
     # location, but *should not* update that location -- only the write orchestration function (above)
@@ -376,6 +375,9 @@ class XlTemplateWriter:
         self._write_validation(value_cell, entity_name, entity_schema)
 
     def _write_data_multiheaders(self, data_columns: Dict[str, dict]):
+        # Write row type
+        self._write_type_annotation(RowType.SKIP)
+
         start_col = 1
         for section_header, section_values in data_columns.items():
             section_width = len(section_values)
@@ -443,9 +445,6 @@ class XlTemplateWriter:
         )
         if validation:
             self.worksheet.data_validation(cell, validation)
-
-    def _hide_type_annotations(self):
-        self.worksheet.set_column(0, 0, None, None, {"hidden": True})
 
     @staticmethod
     def _get_validation(

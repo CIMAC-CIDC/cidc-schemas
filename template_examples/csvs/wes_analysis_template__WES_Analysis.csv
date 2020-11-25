@@ -1,7 +1,7 @@
-"#t","Wes analysis template"
-"#p","Protocol identifier","test_prism_trial_id"
+"#title","Wes analysis template"
+"#preamble","Protocol identifier","test_prism_trial_id"
 
-"","WES Runs"
-"#h","Run id","Normal cimac id","Tumor cimac id"
-"#d","run_1","CTTTPP111.00","CTTTPP111.00"
-"#d","run_2","CTTTPP121.00","CTTTPP121.00"
+"#skip","WES Runs"
+"#header","Run id","Normal cimac id","Tumor cimac id"
+"#data","run_1","CTTTPP111.00","CTTTPP111.00"
+"#data","run_2","CTTTPP121.00","CTTTPP121.00"

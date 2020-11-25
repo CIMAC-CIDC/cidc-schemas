@@ -106,6 +106,12 @@ def _shipping_manifest_derivation(context: DeriveFilesContext) -> DeriveFilesRes
     participants_csv = participants.to_csv(index=False)
     samples_csv = samples.to_csv(index=False)
 
+    # strip this prefix, even if that leads to repeated column names
+    participants_csv = participants_csv.replace(
+        "arbitrary_trial_specific_annotations.", ""
+    )
+    samples_csv = samples_csv.replace("arbitrary_trial_specific_annotations.", "")
+
     return DeriveFilesResult(
         [
             _build_artifact(

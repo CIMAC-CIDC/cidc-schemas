@@ -7,7 +7,7 @@ import os
 import pytest
 import jsonschema
 from typing import List
-from openpyxl import load_workbook
+from openpyxl import Workbook
 
 from cidc_schemas.template_reader import XlTemplateReader, ValidationError, TemplateRow
 from cidc_schemas.template_writer import RowType
@@ -174,6 +174,19 @@ def test_invalid(tiny_template):
     }
 
     search_error_message(tiny_invalid, tiny_template, ValidationError, "")
+
+
+def test_missing_row_type(tmp_path):
+    """Test that we get an error on a spreadsheet row that has data but lacks a row type annotation"""
+    path = f"{tmp_path}/test.xlsx"
+    wb = Workbook()
+    wb["Sheet"]["B1"] = "some data"
+    wb.save(path)
+
+    with pytest.raises(
+        ValidationError, match="No recognized row type found in row Sheet/1"
+    ):
+        XlTemplateReader.from_excel(path)
 
 
 def test_pbmc_validation(pbmc_template):

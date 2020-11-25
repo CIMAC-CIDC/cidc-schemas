@@ -1,4 +1,4 @@
-"","antibodies"
-"#h","Antibody","Export name","Clone","Antibody company","Cat#","Lot#","Staining order","Fluor wavelength","Primary ab dilution","Dilutent","Fluor dilution","Antigen retrieval time","Primary incubation time","Amplification time"
-"#d","CD8","CD8 (Opal 540)","C8/144b","DAKO","C8-ABC","3983272","2","520","1:5,000","DV","1:100","00:01:00","00:01:00","00:01:00"
-"#d","PD-L1","PD-L1 (Opal 620)","9A11","CST","9A-ABC","29387234","3","540","1:500","VENTANA","1:200","00:01:00","00:01:00","00:01:00"
+"#skip","antibodies"
+"#header","Antibody","Export name","Clone","Antibody company","Cat#","Lot#","Staining order","Fluor wavelength","Primary ab dilution","Dilutent","Fluor dilution","Antigen retrieval time","Primary incubation time","Amplification time"
+"#data","CD8","CD8 (Opal 540)","C8/144b","DAKO","C8-ABC","3983272","2","520","1:5,000","DV","1:100","00:01:00","00:01:00","00:01:00"
+"#data","PD-L1","PD-L1 (Opal 620)","9A11","CST","9A-ABC","29387234","3","540","1:500","VENTANA","1:200","00:01:00","00:01:00","00:01:00"

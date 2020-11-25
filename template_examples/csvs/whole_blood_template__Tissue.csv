@@ -18,7 +18,7 @@
 "#p","SHIP FROM","Stanford"
 "#p","SHIP TO","DFCI"
 
-"","Filled by Biorepository","","","","","","","","","","","","","","","Filled by CIMAC Lab"
+"#mh","Filled by Biorepository","","","","","","","","","","","","","","","Filled by CIMAC Lab"
 "#h","LEAD ORGANIZATION STUDY ID","TRIAL PARTICIPANT ID","CIMAC PARTICIPANT ID","COHORT ID","ARM ID","SITE SAMPLE ID","CIMAC SAMPLE ID","TIME POINT","SAMPLE LOCATION","SPECIMEN TYPE","SPECIMEN FORMAT","MATERIAL EXTRACTED","EXTRACTED CONCENTRATION","EXTRACTED UNITS","ALIQUOT AMOUNT","CIMAC ALIQUOT ID","MATERIAL USED","MATERIAL REMAINING","ALIQUOT QUALITY STATUS","ALIQUOT REPLACEMENT","ALIQUOT STATUS"
 "#d","12345","54321","P1","54321","12345","54321","S1","Baseline ","A1","Whole Blood","EDTA Tube","DNA","100","ng/µL","500 ng","A1","500","0","Usable for Assay","N/A","Aliquot Exhausted"
 "#d","12345","54321","P888","54321","12345","54321","S1","Baseline ","A2","Whole Blood","EDTA Tube","DNA","125","ng/µL","500 ng","A2","500","0","Usable for Assay","N/A","Aliquot Exhausted"

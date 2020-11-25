@@ -13,7 +13,7 @@
 "#p","Incubation time","06:45:00"
 "#p","Incubation temperature","54c"
 
-"","Sample","","Marker call","Chromogenic IHC (please specify one score/metric)"
+"#mh","Sample","","Marker call","Chromogenic IHC (please specify one score/metric)"
 "#h","Cimac id","Ihc image","Marker positive","Tumor proportion score","Combined positive score","Inflammatory cells","Positive inflammatory cell area","Intensity","% expression","H score","Comment"
 "#d","CTTTPP111.00","path/to/image1.tif","positive","0.67"
 "#d","CTTTPP121.00","path/to/image2.tiff","no_call","0.1","","","","1","10","120"

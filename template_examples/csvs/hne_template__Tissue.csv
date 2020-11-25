@@ -18,7 +18,7 @@
 "#p","SHIP FROM","Stanford"
 "#p","SHIP TO","DFCI"
 
-"","Filled by Biorepository","","","","","","","","","","","","","","","Filled by CIMAC Lab"
+"#mh","Filled by Biorepository","","","","","","","","","","","","","","","Filled by CIMAC Lab"
 "#h","LEAD ORGANIZATION STUDY ID","TRIAL PARTICIPANT ID","CIMAC PARTICIPANT ID","COHORT ID","ARM ID","SITE SAMPLE ID","CIMAC SAMPLE ID","TIME POINT","SAMPLE LOCATION","TISSUE TYPE SUBMITTED","SPECIMEN TYPE","SPECIMEN FORMAT","SPECIMEN ANALYTE","QUANTITY","UNITS","CIMAC ALIQUOT ID","LYMPHOCYTE INFLUX","VIABLE STROMA PERCENT AREA","VIABLE TUMOR PERCENT AREA","NECROSIS PERCENT AREA","FIBROSIS PERCENT AREA","SAMPLE QUALITY STATUS","SAMPLE REPLACEMENT"
 "#d","12345","54321","12345","54321","12345","54321","12345","Baseline ","A1","Primary Tumor","Core Needle Biopsy","FFPE Block","H&E slide","1","Slides","12345","1+","30","60","5","5","Usable for Assay","N/A"
 "#d","12345","54321","12345","54321","12345","54321","12345","Baseline ","A2","Primary Tumor","Core Needle Biopsy","FFPE Block","H&E slide","1","Slides","12345","1+","40","50","5","5","Usable for Assay","N/A"

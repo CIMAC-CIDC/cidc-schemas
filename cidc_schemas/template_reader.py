@@ -91,12 +91,11 @@ class XlTemplateReader:
                 if not any(values):
                     continue
 
-                # If no recognized row type found, don't parse this row
+                # If no recognized row type is found but the row has data, throw an error
                 if not row_type:
-                    logger.info(
-                        f"No recognized row type found in row {worksheet_name}/{row_num} - skipping."
+                    raise ValidationError(
+                        f"No recognized row type found in row {worksheet_name}/{row_num}"
                     )
-                    continue
 
                 # Filter empty cells from the end of the row
 

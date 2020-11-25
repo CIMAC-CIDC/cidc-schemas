@@ -8,7 +8,7 @@
 "#p","Read length","100"
 "#p","Bait set","whole_exome_illumina_coding_v1"
 
-"","Samples"
+"#mh","Samples"
 "#h","Cimac id","Forward fastq","Reverse fastq","Sequencing date","Quality flag"
 "#d","CTTTPP111.00","/local/path/to/fwd.1.1.1.fastq.gz,/local/path/to/fwd.1.1.1_2.fastq.gz","/local/path/to/rev.1.1.1.fastq.gz","2010-01-01 00:00:00","1"
 "#d","CTTTPP121.00","/local/path/to/fwd.1.2.1.fastq.gz,/local/path/to/fwd.1.2.1_2.fastq.gz","/local/path/to/rev.1.2.1.fastq.gz","2010-01-01 00:00:00","1"

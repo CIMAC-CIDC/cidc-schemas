@@ -8,7 +8,7 @@
 "#p","Read length","100"
 "#p","Bait set","whole_exome_illumina_coding_v1"
 
-"","Samples"
+"#mh","Samples"
 "#h","Cimac id","Bam file","Sequencing date","Quality flag"
 "#d","CTTTPP111.00","gs://local/path/to/fwd.1.1.1.bam,gs://local/path/to/fwd.1.1.1_2.bam","2010-01-01 00:00:00","1"
 "#d","CTTTPP121.00","gs://local/path/to/fwd.1.2.1.bam,gs://local/path/to/fwd.1.2.1_2.bam","2010-01-01 00:00:00","1"

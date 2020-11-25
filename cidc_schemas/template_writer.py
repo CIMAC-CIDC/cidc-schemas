@@ -20,6 +20,7 @@ class RowType(Enum):
     """Annotations denoting what type of data a template row contains."""
 
     TITLE = "#t"
+    MULTIHEADER = "#mh"
     HEADER = "#h"
     PREAMBLE = "#p"
     DATA = "#d"
@@ -105,7 +106,9 @@ class XlThemes:
 class XlTemplateWriter:
     """A wrapper around xlsxwriter that can create Excel templates from template schemas"""
 
-    _DATA_ROWS = 200
+    _DATA_ROWS = (
+        2000
+    )  # very unlikely that we'll encounter an upload with more data rows than this
     _MIN_NUM_COLS = 2
     _COLUMN_WIDTH_PX = 30
 
@@ -376,6 +379,9 @@ class XlTemplateWriter:
         self._write_validation(value_cell, entity_name, entity_schema)
 
     def _write_data_multiheaders(self, data_columns: Dict[str, dict]):
+        # Write row type
+        self._write_type_annotation(RowType.MULTIHEADER)
+
         start_col = 1
         for section_header, section_values in data_columns.items():
             section_width = len(section_values)

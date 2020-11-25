@@ -311,7 +311,7 @@ class XlTemplateWriter:
         assert self.template, "_write_worksheet called without an initialized template"
 
         self.worksheet = workbook
-        self.worksheet.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
+        self.worksheet.set_column(0, 100, width=self.COLUMN_WIDTH_PX)
 
         self.row = 0
         self.col = 1

@@ -44,8 +44,8 @@ def test_format_validation_range():
 def test_row_type_from_string():
     """Test RowType extraction from parsed strings"""
 
-    assert row_type_from_string("#t") == RowType.TITLE
-    assert row_type_from_string("t") == None
+    assert row_type_from_string("#title") == RowType.TITLE
+    assert row_type_from_string("ttitle") == None
     assert row_type_from_string("") == None
 
 

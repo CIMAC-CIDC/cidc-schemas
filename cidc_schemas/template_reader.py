@@ -94,7 +94,12 @@ class XlTemplateReader:
                 # If no recognized row type is found but the row has data, throw an error
                 if not row_type:
                     raise ValidationError(
-                        f"No recognized row type found in row {worksheet_name}/{row_num}"
+                        f"No recognized row type found in row {worksheet_name}/{row_num}.\n"
+                        f"Add #skip to column A to skip this row.\n"
+                        f"Add #title to column A if this is a preamble row.\n"
+                        f"Add #preamble to column A if this is a preamble row.\n"
+                        f"Add #header to column A if this is a data header row.\n"
+                        f"Add #data to column A if this is a data row."
                     )
 
                 # Filter empty cells from the end of the row

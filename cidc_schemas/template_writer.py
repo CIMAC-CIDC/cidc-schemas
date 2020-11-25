@@ -19,11 +19,11 @@ logger = logging.getLogger("cidc_schemas.template_writer")
 class RowType(Enum):
     """Annotations denoting what type of data a template row contains."""
 
-    TITLE = "#t"
-    MULTIHEADER = "#mh"
-    HEADER = "#h"
-    PREAMBLE = "#p"
-    DATA = "#d"
+    TITLE = "#title"
+    SKIP = "#skip"
+    HEADER = "#header"
+    PREAMBLE = "#preamble"
+    DATA = "#data"
 
 
 def row_type_from_string(maybe_type: str) -> Optional[RowType]:
@@ -346,8 +346,6 @@ class XlTemplateWriter:
                     self._write_data_column(name, schema)
                     self.col += 1
 
-        self._hide_type_annotations()
-
     # We can think of the below _write_* functions as "template components".
     # Template components write to the spreadsheet at the current row/column
     # location, but *should not* update that location -- only the write orchestration function (above)
@@ -378,7 +376,7 @@ class XlTemplateWriter:
 
     def _write_data_multiheaders(self, data_columns: Dict[str, dict]):
         # Write row type
-        self._write_type_annotation(RowType.MULTIHEADER)
+        self._write_type_annotation(RowType.SKIP)
 
         start_col = 1
         for section_header, section_values in data_columns.items():
@@ -447,9 +445,6 @@ class XlTemplateWriter:
         )
         if validation:
             self.worksheet.data_validation(cell, validation)
-
-    def _hide_type_annotations(self):
-        self.worksheet.set_column(0, 0, None, None, {"hidden": True})
 
     @staticmethod
     def _get_validation(

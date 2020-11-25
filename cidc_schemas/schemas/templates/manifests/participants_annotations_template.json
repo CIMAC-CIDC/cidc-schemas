@@ -15,7 +15,7 @@
                 },
                 "prism_data_object_pointer": "/participants/-",
                 "prism_arbitrary_data_section": "Paste columns with DEIDENTIFIED (No PHI) participants clinical annotations",
-                "prism_arbitrary_data_merge_pointer": "/trial_specific",
+                "prism_arbitrary_data_merge_pointer": "/clinical",
                 "data_columns": {
                     "ID": {
                         "CIMAC participant ID": {

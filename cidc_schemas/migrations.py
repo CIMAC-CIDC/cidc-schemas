@@ -44,14 +44,14 @@ class migration:
 
 class v0_23_0_to_v0_23_1(migration):
     """
-    renaming 'arbitrary_trial_specific_clinical_annotations' to 'trial_specific'
+    renaming 'arbitrary_trial_specific_clinical_annotations' to 'clinical'
     """
 
     @classmethod
     def upgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
         for p in metadata.get("participants", []):
             if "arbitrary_trial_specific_clinical_annotations" in p:
-                p["trial_specific"] = p.pop(
+                p["clinical"] = p.pop(
                     "arbitrary_trial_specific_clinical_annotations"
                 )
 
@@ -60,9 +60,9 @@ class v0_23_0_to_v0_23_1(migration):
     @classmethod
     def downgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
         for p in metadata.get("participants", []):
-            if "trial_specific" in p:
+            if "clinical" in p:
                 p["arbitrary_trial_specific_clinical_annotations"] = p.pop(
-                    "trial_specific"
+                    "clinical"
                 )
 
         return MigrationResult(metadata, {})

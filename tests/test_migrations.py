@@ -208,22 +208,22 @@ def test_v0_23_0_to_v0_23_1():
 
     upgraded_ct = v0_23_0_to_v0_23_1.upgrade(ct).result
     assert (
-        "trial_specific" in upgraded_ct["participants"][0]
+        "clinical" in upgraded_ct["participants"][0]
         and "arbitrary_trial_specific_clinical_annotations"
         not in upgraded_ct["participants"][0]
     )
     assert (
-        "trial_specific" in upgraded_ct["participants"][1]
+        "clinical" in upgraded_ct["participants"][1]
         and "arbitrary_trial_specific_clinical_annotations"
         not in upgraded_ct["participants"][1]
     )
     assert (
-        "foo" in upgraded_ct["participants"][0]["trial_specific"]
-        and upgraded_ct["participants"][0]["trial_specific"]["foo"] == "bar"
+        "foo" in upgraded_ct["participants"][0]["clinical"]
+        and upgraded_ct["participants"][0]["clinical"]["foo"] == "bar"
     )
     assert (
-        "foo" in upgraded_ct["participants"][1]["trial_specific"]
-        and upgraded_ct["participants"][1]["trial_specific"]["foo"] == "baz"
+        "foo" in upgraded_ct["participants"][1]["clinical"]
+        and upgraded_ct["participants"][1]["clinical"]["foo"] == "baz"
     )
 
     assert ct == v0_23_0_to_v0_23_1.downgrade(upgraded_ct).result

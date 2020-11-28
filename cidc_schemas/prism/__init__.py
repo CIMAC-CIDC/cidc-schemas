@@ -6,10 +6,12 @@ from .core import (
 )
 from .merger import (
     merge_artifact,
+    merge_artifacts,
     merge_artifact_extra_metadata,
     merge_clinical_trial_metadata,
     InvalidMergeTargetException,
     MergeCollisionException,
+    ArtifactInfo,
 )
 from .extra_metadata import (
     parse_elisa,

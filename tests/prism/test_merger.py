@@ -1,5 +1,6 @@
 """Tests for generic merging functionality."""
-import os
+from copy import deepcopy
+from uuid import uuid4
 from unittest.mock import MagicMock
 
 import pytest
@@ -199,6 +200,83 @@ def test_merge_clinical_trial_metadata_invalid_target():
         prism_merger.InvalidMergeTargetException, match="merge trials with different"
     ):
         prism_merger.merge_clinical_trial_metadata(valid_patch, wrong_trial_id_target)
+
+
+@pytest.fixture
+def ct_and_artifacts():
+    num_artifacts = 500
+
+    def make_artifacts():
+        return [
+            prism_merger.ArtifactInfo(
+                artifact_uuid=str(uuid4()),
+                object_url="a/b",
+                upload_type="",
+                file_size_bytes=0,
+                uploaded_timestamp="",
+                crc32c_hash="foo",
+            )
+            for _ in range(num_artifacts)
+        ]
+
+    artifacts = make_artifacts()
+    ct = {
+        "a": {
+            "b": [
+                {"upload_placeholder": a.artifact_uuid}
+                for a in artifacts[: num_artifacts // 4]
+            ],
+            "c": [
+                {
+                    "d": [
+                        {"upload_placeholder": a.artifact_uuid}
+                        for a in artifacts[num_artifacts // 4 : num_artifacts // 2]
+                    ]
+                },
+                {
+                    "d": [
+                        {"upload_placeholder": a.artifact_uuid}
+                        for a in artifacts[num_artifacts // 2 : num_artifacts * 3 // 4]
+                    ],
+                    "e": {
+                        "f": [
+                            {"upload_placeholder": a.artifact_uuid}
+                            for a in artifacts[num_artifacts * 3 // 4 :]
+                        ]
+                    },
+                },
+            ],
+        },
+    }
+
+    return ct, artifacts
+
+
+def test_merge_artifacts_speed(benchmark, ct_and_artifacts):
+    benchmark(prism_merger.merge_artifacts, *ct_and_artifacts)
+
+
+def merge_one_by_one(ct, artifacts):
+    updated_artifacts = []
+    for artifact in artifacts:
+        ct, *updated_artifact = prism_merger.merge_artifact(ct, *artifact)
+        updated_artifacts.append(tuple(updated_artifact))
+    return ct, updated_artifacts
+
+
+def test_merge_artifact_speed(benchmark, ct_and_artifacts):
+    benchmark(merge_one_by_one, *ct_and_artifacts)
+
+
+def test_merge_artifacts_smoketest(ct_and_artifacts):
+    """
+    Ensure merge_artifacts produces the same result as repeated calls to merge_artifact
+    """
+    ct, artifacts = ct_and_artifacts
+    ct_batch, artifacts_batch = prism_merger.merge_artifacts(deepcopy(ct), artifacts)
+    ct_1by1, artifacts_1by1 = merge_one_by_one(deepcopy(ct), artifacts)
+    assert ct_batch == ct_1by1
+    assert artifacts_batch == artifacts_1by1
 
 
 #### END MERGER TESTS ####

@@ -1,12 +1,11 @@
 """Merge CIDC schemas metadata dictionaries."""
 
-import re
 import logging
-from typing import BinaryIO, List, NamedTuple, Optional, Callable
+from typing import BinaryIO, List, NamedTuple, Optional, Tuple
 
-import openpyxl
 import jsonschema
 from jsonmerge import Merger, strategies
+from deepdiff import DeepSearch
 
 from ..json_validation import load_and_validate_schema, _Validator
 from ..util import get_path, get_source
@@ -53,19 +52,6 @@ def _set_data_format(ct: dict, artifact: dict):
     # data format was not set!
 
 
-def _get_uuid_info(ct: dict, artifact_uuid: str) -> (dict, dict):
-    """
-        Using uuid to find path in CT where corresponding artifact is located.
-    """
-    uuid_field_path = get_path(ct, artifact_uuid)
-
-    # As "uuid_field_path" contains path to a field with uuid,
-    # we're looking for an artifact that contains it, not the "string" field itself
-    # That's why we need skip_last=1, to get 1 "level" higher
-    # from 'uuid_field_path' field to it's parent - existing_artifact obj
-    return get_source(ct, uuid_field_path, skip_last=1)
-
-
 def merge_artifact(
     ct: dict,
     artifact_uuid: str,
@@ -75,7 +61,8 @@ def merge_artifact(
     uploaded_timestamp: str,
     crc32c_hash: Optional[str] = None,
     md5_hash: Optional[str] = None,
-) -> (dict, dict, dict):
+    uuid_path: Optional[str] = None,
+) -> Tuple[dict, dict, dict]:
     """
     create and merge an artifact into the metadata blob
     for a clinical trial. The merging process is automatically
@@ -88,9 +75,10 @@ def merge_artifact(
         uploaded_timestamp: time stamp associated with this object
         md5_hash: md5 hash of the uploaded object, provided by GCS for non-composite objects
         crc32c_hash: crc32c hash of the uploaded object, provided by GCS for all objects
+        uuid_path: optional `deepdiff`-style path to the artifact in the `ct` dictionary
     Returns:
         ct: updated clinical trial object
-        artifact: updated artifactf
+        artifact: updated artifact
         additional_artifact_metadata: relevant metadata collected while updating artifact
     """
     assert (
@@ -114,7 +102,68 @@ def merge_artifact(
     if md5_hash:
         artifact_patch["md5_hash"] = md5_hash
 
-    return _update_artifact(ct, artifact_patch, artifact_uuid)
+    return _update_artifact(ct, artifact_patch, artifact_uuid, uuid_path=uuid_path)
+
+
+class ArtifactInfo(NamedTuple):
+    artifact_uuid: str
+    object_url: str
+    upload_type: str
+    file_size_bytes: int
+    uploaded_timestamp: str
+    crc32c_hash: Optional[str] = None
+    md5_hash: Optional[str] = None
+
+
+def merge_artifacts(
+    ct, artifacts: List[ArtifactInfo]
+) -> Tuple[dict, List[Tuple[dict, dict]]]:
+    """
+    Insert metadata for a batch of `artifacts` into `ct`, returning the modified `ct` dictionary
+    and array of 
+    """
+    # Make no modifications to `ct` if no artifacts are passed
+    if len(artifacts) == 0:
+        return ct, []
+
+    # Pre-compute the mapping from artifact UUIDs to metadata paths.
+    uuid_path_map = _get_uuid_path_map(ct)
+    merged_artifacts = []
+    for artifact in artifacts:
+        uuid_path = uuid_path_map[artifact.artifact_uuid]
+        ct, *merged_artifact = merge_artifact(ct, *artifact, uuid_path=uuid_path)
+        merged_artifacts.append(tuple(merged_artifact))
+    return ct, merged_artifacts
+
+
+def _get_uuid_path_map(ct: dict) -> dict:
+    """
+    Build a dictionary mapping upload placeholder UUIDs to a `deepdiff`-style
+    path to that artifact in the `ct` clinical trial metadata dictionary. This
+    will look something like:
+    ```python
+    {
+        "uuuu-uuuu-iiii-dddd": "root['path']['to']['upload_placeholder']",
+        ...
+    }
+    ```
+    """
+
+    def get_uuid_for_path(path: str):
+        # Spooky stuff: `exec` executes the string provided as its first argument as
+        # python code in a context populated with the global variables defined by
+        # the dictionary passed as its second argument. Since `path` looks like
+        # "root['path']['to']['upload_placeholder']", the following code looks up
+        # the UUID associated with `path` in the `ct` dict, whose value is assigned
+        # to "root" in the scope provided to `exec`, and stores that UUID in `scope['uuid']`.
+        scope = {"root": ct}
+        exec(f"uuid = {path}", scope)
+        return scope["uuid"]
+
+    return {
+        get_uuid_for_path(path): path
+        for path in DeepSearch(ct, "upload_placeholder")["matched_paths"]
+    }
 
 
 class InvalidMergeTargetException(ValueError):
@@ -157,8 +206,8 @@ def merge_artifact_extra_metadata(
 
 
 def _update_artifact(
-    ct: dict, artifact_patch: dict, artifact_uuid: str
-) -> (dict, dict, dict):
+    ct: dict, artifact_patch: dict, artifact_uuid: str, uuid_path: Optional[str] = None,
+) -> Tuple[dict, dict, dict]:
     """ Updates the artifact with uuid `artifact_uuid` in `ct`,
     and return the updated clinical trial and artifact objects
     Args:
@@ -170,8 +219,18 @@ def _update_artifact(
         artifact: updated artifact
         additional_artifact_metadata: relevant metadata collected while updating artifact
     """
+    # `uuid_path` won't be defined if the user of this module called
+    # `merge_artifact` directly instead of using `merge_artifacts`,
+    # so we need this fallback.
+    uuid_field_path = uuid_path or get_path(ct, artifact_uuid)
 
-    artifact, additional_artifact_metadata = _get_uuid_info(ct, artifact_uuid)
+    # As "uuid_field_path" contains path to a field with uuid,
+    # we're looking for an artifact that contains it, not the "string" field itself
+    # That's why we need skip_last=1, to get 1 "level" higher
+    # from 'uuid_field_path' field to it's parent - existing_artifact obj
+    artifact, additional_artifact_metadata = get_source(
+        ct, uuid_field_path, skip_last=1
+    )
 
     # TODO this might be better with merger:
     # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")

@@ -1,4 +1,5 @@
 """Tests for pipeline config generation."""
+from cidc_schemas.prism.merger import ArtifactInfo
 import os
 import copy
 import yaml
@@ -39,17 +40,20 @@ def prism_patch_stage_artifacts(prismify_result, template_type):
     prism_patch, prism_fmap, _ = prismify_result
     patch_copy_4_artifacts = copy.deepcopy(prism_patch)
 
-    for i, fmap_entry in enumerate(prism_fmap):
-        # attempt to merge
-        patch_copy_4_artifacts, artifact, patch_metadata = merger.merge_artifact(
-            patch_copy_4_artifacts,
-            artifact_uuid=fmap_entry.upload_placeholder,
-            object_url=fmap_entry.gs_key,
-            assay_type=template_type,
-            file_size_bytes=i,
-            uploaded_timestamp="01/01/2001",
-            md5_hash=f"hash_{i}",
-        )
+    patch_copy_4_artifacts = merger.merge_artifacts(
+        patch_copy_4_artifacts,
+        [
+            merger.ArtifactInfo(
+                artifact_uuid=fmap_entry.upload_placeholder,
+                object_url=fmap_entry.gs_key,
+                upload_type=template_type,
+                file_size_bytes=i,
+                uploaded_timestamp="01/01/2001",
+                md5_hash=f"hash_{i}",
+            )
+            for i, fmap_entry in enumerate(prism_fmap)
+        ],
+    )[0]
 
     return patch_copy_4_artifacts
 

@@ -8,8 +8,10 @@ from cidc_schemas.prism import (
     prismify,
     merge_clinical_trial_metadata,
     merge_artifact,
+    merge_artifacts,
     merge_artifact_extra_metadata,
     PROTOCOL_ID_FIELD_NAME,
+    ArtifactInfo,
 )
 
 from .cidc_test_data import list_test_data, PrismTestData
@@ -113,18 +115,24 @@ def test_merge_artifacts(prism_test: PrismTestData, ct_validator):
     # Merge the upload entries into the prismify patch
     uuids_and_artifacts = []
     patch = deepcopy(prism_test.prismify_patch)
-    for entry in prism_test.upload_entries:
-        patch, artifact, additional_metadata = merge_artifact(
-            patch,
-            artifact_uuid=entry.upload_placeholder,
-            object_url=entry.gs_key,
-            assay_type=prism_test.upload_type,
-            file_size_bytes=0,
-            uploaded_timestamp="",
-            md5_hash="foo",
-            crc32c_hash="bar",
-        )
-
+    patch, artifact_results = merge_artifacts(
+        patch,
+        [
+            ArtifactInfo(
+                artifact_uuid=entry.upload_placeholder,
+                object_url=entry.gs_key,
+                upload_type=prism_test.upload_type,
+                file_size_bytes=0,
+                uploaded_timestamp="",
+                md5_hash="foo",
+                crc32c_hash="bar",
+            )
+            for entry in prism_test.upload_entries
+        ],
+    )
+    for entry, (artifact, additional_metadata) in zip(
+        prism_test.upload_entries, artifact_results
+    ):
         # Check that artifact has expected fields for the given entry
         assert artifact["object_url"] == entry.gs_key
         assert artifact["upload_placeholder"] == entry.upload_placeholder

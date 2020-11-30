@@ -123,6 +123,10 @@ def merge_artifacts(
     Insert metadata for a batch of `artifacts` into `ct`, returning the modified `ct` dictionary
     and array of 
     """
+    # Make no modifications to `ct` if no artifacts are passed
+    if len(artifacts) == 0:
+        return ct, []
+
     # Pre-compute the mapping from artifact UUIDs to metadata paths.
     uuid_path_map = _get_uuid_path_map(ct)
     merged_artifacts = [

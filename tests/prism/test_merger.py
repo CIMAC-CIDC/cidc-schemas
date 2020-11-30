@@ -1,4 +1,5 @@
 """Tests for generic merging functionality."""
+from copy import deepcopy
 from uuid import uuid4
 from unittest.mock import MagicMock
 
@@ -252,22 +253,30 @@ def ct_and_artifacts():
 
 
 def test_merge_artifacts_speed(benchmark, ct_and_artifacts):
-    ct, artifacts = ct_and_artifacts
+    benchmark(prism_merger.merge_artifacts, *ct_and_artifacts)
 
-    def merge_batch():
-        prism_merger.merge_artifacts(ct, artifacts)
 
-    benchmark(merge_batch)
+def merge_one_by_one(ct, artifacts):
+    updated_artifacts = []
+    for artifact in artifacts:
+        ct, *updated_artifact = prism_merger.merge_artifact(ct, *artifact)
+        updated_artifacts.append(tuple(updated_artifact))
+    return ct, updated_artifacts
 
 
 def test_merge_artifact_speed(benchmark, ct_and_artifacts):
+    benchmark(merge_one_by_one, *ct_and_artifacts)
+
+
+def test_merge_artifacts_smoketest(ct_and_artifacts):
+    """
+    Ensure merge_artifacts produces the same result as repeated calls to merge_artifact
+    """
     ct, artifacts = ct_and_artifacts
-
-    def merge_one_by_one():
-        for artifact in artifacts:
-            prism_merger.merge_artifact(ct, *artifact)
-
-    benchmark(merge_one_by_one)
+    ct_batch, artifacts_batch = prism_merger.merge_artifacts(deepcopy(ct), artifacts)
+    ct_1by1, artifacts_1by1 = merge_one_by_one(deepcopy(ct), artifacts)
+    assert ct_batch == ct_1by1
+    assert artifacts_batch == artifacts_1by1
 
 
 #### END MERGER TESTS ####

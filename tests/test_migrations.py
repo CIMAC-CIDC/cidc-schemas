@@ -8,6 +8,7 @@ from cidc_schemas.migrations import (
     v0_15_2_to_v0_15_3,
     v0_21_1_to_v0_22_0,
     _ENCRYPTED_FIELD_LEN,
+    v0_23_0_to_v0_23_1,
 )
 
 
@@ -191,3 +192,38 @@ def test_v0_10_0_to_v0_10_2():
 
     # Check upgrade/downgrade inverse
     assert v0_10_0_to_v0_10_2.downgrade(res.result).result == old_ct
+
+
+def test_v0_23_0_to_v0_23_1():
+    assert v0_23_0_to_v0_23_1.downgrade(
+        v0_23_0_to_v0_23_1.upgrade({"foo": "bar"}).result
+    ).result == {"foo": "bar"}
+
+    ct = {
+        "participants": [
+            {"arbitrary_trial_specific_clinical_annotations": {"foo": "bar"}},
+            {"arbitrary_trial_specific_clinical_annotations": {"foo": "baz"}},
+        ]
+    }
+
+    upgraded_ct = v0_23_0_to_v0_23_1.upgrade(ct).result
+    assert (
+        "clinical" in upgraded_ct["participants"][0]
+        and "arbitrary_trial_specific_clinical_annotations"
+        not in upgraded_ct["participants"][0]
+    )
+    assert (
+        "clinical" in upgraded_ct["participants"][1]
+        and "arbitrary_trial_specific_clinical_annotations"
+        not in upgraded_ct["participants"][1]
+    )
+    assert (
+        "foo" in upgraded_ct["participants"][0]["clinical"]
+        and upgraded_ct["participants"][0]["clinical"]["foo"] == "bar"
+    )
+    assert (
+        "foo" in upgraded_ct["participants"][1]["clinical"]
+        and upgraded_ct["participants"][1]["clinical"]["foo"] == "baz"
+    )
+
+    assert ct == v0_23_0_to_v0_23_1.downgrade(upgraded_ct).result

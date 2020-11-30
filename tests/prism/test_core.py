@@ -126,7 +126,7 @@ def test_prismify_preamble_parsing_error(monkeypatch):
     """Check that prismify catches parsing errors in the pre"""
     prop = "prop0"
     mock_XlTemplateReader_from_excel(
-        {"ws1": [["#p", prop, "some string"]]}, monkeypatch
+        {"ws1": [["#preamble", prop, "some string"]]}, monkeypatch
     )
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
@@ -185,7 +185,9 @@ def test_prismify_encrypt(monkeypatch):
     core._encrypt_hmac = None
 
     prop = "prop0"
-    mock_XlTemplateReader_from_excel({"ws1": [["#p", prop, "some str"]]}, monkeypatch)
+    mock_XlTemplateReader_from_excel(
+        {"ws1": [["#preamble", prop, "some str"]]}, monkeypatch
+    )
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
 
@@ -234,9 +236,9 @@ def test_prism_local_files_format_extension(monkeypatch):
     mock_XlTemplateReader_from_excel(
         {
             "files": [
-                ["#h", "record", "local_file_col_name"],
-                ["#d", "1", "somewhere/on/my/computer.csv"],
-                ["#d", "2", "somewhere/on/my/computer.xlsx"],
+                ["#header", "record", "local_file_col_name"],
+                ["#data", "1", "somewhere/on/my/computer.csv"],
+                ["#data", "2", "somewhere/on/my/computer.xlsx"],
             ]
         },
         monkeypatch,
@@ -294,12 +296,12 @@ def test_prism_local_files_format_multiple_extensions(monkeypatch):
     mock_XlTemplateReader_from_excel(
         {
             "files": [
-                ["#h", "record", "local_file_col_name"],
-                ["#d", "1", "somewhere/on/my/computer.tif"],
-                ["#d", "2", "somewhere/on/my/computer.tiff"],
-                ["#d", "3", "somewhere/on/my/computer.NONtiff"],
-                ["#d", "4", "somewhere/on/my/computer.svs"],
-                ["#d", "5", "somewhere/on/my/computer.qptiff"],
+                ["#header", "record", "local_file_col_name"],
+                ["#data", "1", "somewhere/on/my/computer.tif"],
+                ["#data", "2", "somewhere/on/my/computer.tiff"],
+                ["#data", "3", "somewhere/on/my/computer.NONtiff"],
+                ["#data", "4", "somewhere/on/my/computer.svs"],
+                ["#data", "5", "somewhere/on/my/computer.qptiff"],
             ]
         },
         monkeypatch,
@@ -428,16 +430,16 @@ def test_prism_joining_tabs(monkeypatch):
     mock_XlTemplateReader_from_excel(
         {
             "authors": [
-                ["#h", "author id", "author name"],
-                ["#d", "CPP0", "Alice"],
-                ["#d", "CPP1", "Bob"],
+                ["#header", "author id", "author name"],
+                ["#data", "CPP0", "Alice"],
+                ["#data", "CPP1", "Bob"],
             ],
             "books": [
-                ["#h", "book id", "book name"],
-                ["#d", "CPP1S0.00", "Foo"],
-                ["#d", "CPP1S1.00", "Bar"],
-                ["#d", "CPP0S0.00", "Baz"],
-                ["#d", "CPP0S1.00", "Buz"],
+                ["#header", "book id", "book name"],
+                ["#data", "CPP1S0.00", "Foo"],
+                ["#data", "CPP1S1.00", "Bar"],
+                ["#data", "CPP0S0.00", "Baz"],
+                ["#data", "CPP0S1.00", "Buz"],
             ],
         },
         monkeypatch,
@@ -480,8 +482,8 @@ def test_prism_process_as_error(monkeypatch):
     """Tests that prismify doesn't crash when a `parse_through` function errors"""
     mock_XlTemplateReader_from_excel(
         {
-            "authors": [["#h", "author id"], ["#d", "CPP0"]],
-            "books": [["#h", "book id", "book name"], ["#d", None, 100]],
+            "authors": [["#header", "author id"], ["#data", "CPP0"]],
+            "books": [["#header", "book id", "book name"], ["#data", None, 100]],
         },
         monkeypatch,
     )
@@ -501,7 +503,7 @@ def test_parse_through_basic(monkeypatch):
     """Checks prismify directive "parse_through" """
 
     mock_XlTemplateReader_from_excel(
-        {"ws1": [["#p", "propname", "propval"]]}, monkeypatch
+        {"ws1": [["#preamble", "propname", "propval"]]}, monkeypatch
     )
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
@@ -535,7 +537,9 @@ def test_parse_through_basic(monkeypatch):
 
     # Check working with null/None values"""
 
-    mock_XlTemplateReader_from_excel({"ws1": [["#p", "propname", None]]}, monkeypatch)
+    mock_XlTemplateReader_from_excel(
+        {"ws1": [["#preamble", "propname", None]]}, monkeypatch
+    )
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
 
@@ -558,7 +562,7 @@ def test_allow_empty(monkeypatch):
     """Check "allow_empty" skips None values"""
 
     mock_XlTemplateReader_from_excel(
-        {"ws1": [["#p", "id", "id"], ["#p", "prop", None]]}, monkeypatch
+        {"ws1": [["#preamble", "id", "id"], ["#preamble", "prop", None]]}, monkeypatch
     )
     xlsx, errs = XlTemplateReader.from_excel("workbook")
     assert not errs
@@ -602,9 +606,9 @@ def test_confilicting_values_in_one_template(monkeypatch):
     mock_XlTemplateReader_from_excel(
         {
             "authors": [
-                ["#h", "author id", "author name"],
-                ["#d", "auth 1", "my name is"],
-                ["#d", "auth 1", "slim shady"],
+                ["#header", "author id", "author name"],
+                ["#data", "auth 1", "my name is"],
+                ["#data", "auth 1", "slim shady"],
             ]
         },
         monkeypatch,
@@ -657,7 +661,8 @@ def test_prism_do_not_merge(monkeypatch):
     """ Tests whether prism acknowledges do_not_merge """
 
     mock_XlTemplateReader_from_excel(
-        {"analysis": [["#h", "id", "comment"], ["#d", "111", "whatever"]]}, monkeypatch
+        {"analysis": [["#header", "id", "comment"], ["#data", "111", "whatever"]]},
+        monkeypatch,
     )
 
     template = Template(
@@ -725,9 +730,9 @@ def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
     mock_XlTemplateReader_from_excel(
         {
             "groups": [
-                ["#h", "group_id", "left_id", "right_id"],
-                ["#d", "000", "sid1_0", "sid2_0"],
-                ["#d", "111", "sid1_1", "sid2_1"],
+                ["#header", "group_id", "left_id", "right_id"],
+                ["#data", "000", "sid1_0", "sid2_0"],
+                ["#data", "111", "sid1_1", "sid2_1"],
             ]
         },
         monkeypatch,

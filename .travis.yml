@@ -5,17 +5,17 @@ install:
   - pip install -r requirements.dev.txt
   - pip install pytest-cov
   - pip install 'importlib-metadata>=1'
-  
+
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script:
-  - pytest --cov=cidc_schemas -v
+  - pytest --cov=cidc_schemas -v --benchmark-group-by=func
   - black --check cidc_schemas tests docs --target-version=py36
 after_script:
   - coverage xml
-  - ./cc-test-reporter after-build -t coverage.py --exit-code $TRAVIS_TEST_RESULT 
+  - ./cc-test-reporter after-build -t coverage.py --exit-code $TRAVIS_TEST_RESULT
 deploy:
   provider: pypi
   # TODO: should this be on a shared CIDC account?

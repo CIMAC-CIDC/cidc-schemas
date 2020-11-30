@@ -61,7 +61,7 @@ def merge_artifact(
     uploaded_timestamp: str,
     crc32c_hash: Optional[str] = None,
     md5_hash: Optional[str] = None,
-    uuid_path_map: Optional[dict] = None,
+    uuid_path: Optional[str] = None,
 ) -> Tuple[dict, dict, dict]:
     """
     create and merge an artifact into the metadata blob
@@ -75,6 +75,7 @@ def merge_artifact(
         uploaded_timestamp: time stamp associated with this object
         md5_hash: md5 hash of the uploaded object, provided by GCS for non-composite objects
         crc32c_hash: crc32c hash of the uploaded object, provided by GCS for all objects
+        uuid_path: optional `deepdiff`-style path to the artifact in the `ct` dictionary
     Returns:
         ct: updated clinical trial object
         artifact: updated artifact
@@ -101,9 +102,7 @@ def merge_artifact(
     if md5_hash:
         artifact_patch["md5_hash"] = md5_hash
 
-    return _update_artifact(
-        ct, artifact_patch, artifact_uuid, uuid_path_map=uuid_path_map
-    )
+    return _update_artifact(ct, artifact_patch, artifact_uuid, uuid_path=uuid_path)
 
 
 class ArtifactInfo(NamedTuple):
@@ -129,9 +128,11 @@ def merge_artifacts(
 
     # Pre-compute the mapping from artifact UUIDs to metadata paths.
     uuid_path_map = _get_uuid_path_map(ct)
-    merged_artifacts = [
-        merge_artifact(ct, *a, uuid_path_map=uuid_path_map)[1:] for a in artifacts
-    ]
+    merged_artifacts = []
+    for artifact in artifacts:
+        uuid_path = uuid_path_map[artifact.artifact_uuid]
+        ct, *merged_artifact = merge_artifact(ct, *artifact, uuid_path=uuid_path)
+        merged_artifacts.append(tuple(merged_artifact))
     return ct, merged_artifacts
 
 
@@ -205,10 +206,7 @@ def merge_artifact_extra_metadata(
 
 
 def _update_artifact(
-    ct: dict,
-    artifact_patch: dict,
-    artifact_uuid: str,
-    uuid_path_map: Optional[dict] = None,
+    ct: dict, artifact_patch: dict, artifact_uuid: str, uuid_path: Optional[str] = None,
 ) -> Tuple[dict, dict, dict]:
     """ Updates the artifact with uuid `artifact_uuid` in `ct`,
     and return the updated clinical trial and artifact objects
@@ -221,11 +219,10 @@ def _update_artifact(
         artifact: updated artifact
         additional_artifact_metadata: relevant metadata collected while updating artifact
     """
-    uuid_field_path = (
-        uuid_path_map[artifact_uuid]
-        if uuid_path_map is not None
-        else get_path(ct, artifact_uuid)
-    )
+    # `uuid_path` won't be defined if the user of this module called
+    # `merge_artifact` directly instead of using `merge_artifacts`,
+    # so we need this fallback.
+    uuid_field_path = uuid_path or get_path(ct, artifact_uuid)
 
     # As "uuid_field_path" contains path to a field with uuid,
     # we're looking for an artifact that contains it, not the "string" field itself

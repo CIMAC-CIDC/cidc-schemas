@@ -313,8 +313,6 @@ def _calc_gcs_uri_path(name: str, merge_pointer: str):
 
     # special handling, then return
     file = file.replace("align_", "").replace("cnv_calls", "cnvcalls")
-    if "vcf_compare" in file:
-        print(merge_pointer, file)
     return file
 
 

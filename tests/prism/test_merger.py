@@ -246,7 +246,7 @@ def ct_and_artifacts():
                     },
                 },
             ],
-        },
+        }
     }
 
     return ct, artifacts

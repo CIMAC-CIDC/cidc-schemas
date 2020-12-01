@@ -106,9 +106,7 @@ class XlThemes:
 class XlTemplateWriter:
     """A wrapper around xlsxwriter that can create Excel templates from template schemas"""
 
-    _DATA_ROWS = (
-        2000
-    )  # very unlikely that we'll encounter an upload with more data rows than this
+    _DATA_ROWS = 2000  # very unlikely that we'll encounter an upload with more data rows than this
     _MIN_NUM_COLS = 2
     _COLUMN_WIDTH_PX = 30
 

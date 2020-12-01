@@ -33,6 +33,8 @@ jobs:
         run: |
           pytest --cov=cidc_schemas -v --benchmark-group-by=func
       - name: Report test coverage
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         run: |
           coverage xml
           ./cc-test-reporter after-build -t coverage.py --exit-code 0

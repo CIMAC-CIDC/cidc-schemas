@@ -384,7 +384,7 @@ def wes_analysis() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
-            local_path="analysis/somatic/run_1/run_1_tnscope.filter.exons.vcf.gz",
+            local_path="analysis/somatic/run_1/run_1_tnscope.filter.exons.center_targets.vcf.gz",
             gs_key="test_prism_trial_id/wes/run_1/analysis/tnscope_exons.vcf.gz",
             upload_placeholder="09bb7dd5-083e-468e-b5c7-3c8eb3e77a94",
             metadata_availability=False,

@@ -153,7 +153,7 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.exons.vcf.gz'",
+                                    "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.filter.exons.center_targets.vcf.gz'",
                                     "merge_pointer": "/somatic/tnscope_exons",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tnscope_exons.vcf.gz",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",

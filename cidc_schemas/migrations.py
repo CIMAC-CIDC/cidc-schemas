@@ -50,14 +50,18 @@ class v0_23_4_to_v0_23_5(migration):
     @classmethod
     def upgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
         if "rnaseq_analysis" in metadata.get("analysis", {}):
-            metadata["analysis"]["rna_analysis"] = metadata["analysis"].pop("rnaseq_analysis")
+            metadata["analysis"]["rna_analysis"] = metadata["analysis"].pop(
+                "rnaseq_analysis"
+            )
 
         return MigrationResult(metadata, {})
 
     @classmethod
     def downgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
         if "rna_analysis" in metadata.get("analysis", {}):
-            metadata["analysis"]["rnaseq_analysis"] = metadata["analysis"].pop("rna_analysis")
+            metadata["analysis"]["rnaseq_analysis"] = metadata["analysis"].pop(
+                "rna_analysis"
+            )
 
         return MigrationResult(metadata, {})
 

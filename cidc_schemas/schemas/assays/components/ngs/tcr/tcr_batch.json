@@ -9,7 +9,10 @@
         "batch id": {
             "$ref": "assays/tcr_assay.json#properties/batch_id"
         },
-        "summary_info": {
+        "report trial": {
+            "$ref": "artifacts/artifact_gz.json"
+        },
+        "summary info": {
             "$ref": "artifacts/artifact_csv.json"
         },
         "records": {

@@ -1306,6 +1306,9 @@ def tcr_analysis() -> PrismTestData:
                         "summary_info": {
                             "upload_placeholder": "872f4bae-bca8-42f6-a3b7-cb4db27b2e24"
                         },
+                        "report_trial": {
+                            "upload_placeholder": "912f4bae-bca8-42f6-a3b7-cb4db27b2e24"
+                        },
                         "records": [
                             {
                                 "cimac_id": "CTTTPP111.00",
@@ -1360,6 +1363,12 @@ def tcr_analysis() -> PrismTestData:
             local_path="summary_info.csv",
             gs_key="test_prism_trial_id/tcr_analysis/XYZ/summary_info.csv",
             upload_placeholder="872f4bae-bca8-42f6-a3b7-cb4db27b2e24",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="9204_trial.tar.gz",
+            gs_key="test_prism_trial_id/tcr_analysis/XYZ/summary_info.csv",
+            upload_placeholder="912f4bae-bca8-42f6-a3b7-cb4db27b2e24",
             metadata_availability=False,
         ),
     ]

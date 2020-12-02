@@ -1182,6 +1182,12 @@ def mif() -> PrismTestData:
                                         "cell_seg_data_summary": {
                                             "upload_placeholder": "3aaaaaaa-047f-4df6-b614-871289a1a2a"
                                         },
+                                        "tissue_seg_data": {
+                                            "upload_placeholder": "2zaaaaaa-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "tissue_seg_data_summary": {
+                                            "upload_placeholder": "3zaaaaaa-047f-4df6-b614-871289a1a2a"
+                                        },
                                         "phenotype_map": {
                                             "upload_placeholder": "4aaaaaaa-047f-4df6-b614-871289a1a2a"
                                         },
@@ -1221,6 +1227,12 @@ def mif() -> PrismTestData:
                                         "cell_seg_data_summary": {
                                             "upload_placeholder": "3bbbbbbb-047f-4df6-b614-871289a1a2a"
                                         },
+                                        "tissue_seg_data": {
+                                            "upload_placeholder": "2abbbbbb-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "tissue_seg_data_summary": {
+                                            "upload_placeholder": "3abbbbbb-047f-4df6-b614-871289a1a2a"
+                                        },
                                         "phenotype_map": {
                                             "upload_placeholder": "4bbbbbbb-047f-4df6-b614-871289a1a2a"
                                         },
@@ -1249,6 +1261,12 @@ def mif() -> PrismTestData:
                                         },
                                         "cell_seg_data_summary": {
                                             "upload_placeholder": "3ccccccc-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "tissue_seg_data": {
+                                            "upload_placeholder": "2acccccc-047f-4df6-b614-871289a1a2a"
+                                        },
+                                        "tissue_seg_data_summary": {
+                                            "upload_placeholder": "3acccccc-047f-4df6-b614-871289a1a2a"
                                         },
                                         "phenotype_map": {
                                             "upload_placeholder": "4ccccccc-047f-4df6-b614-871289a1a2a"
@@ -1306,6 +1324,18 @@ def mif() -> PrismTestData:
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
+            local_path="111/1_tissue_seg_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/tissue_seg_data.txt",
+            upload_placeholder="2zaaaaaa-047f-4df6-b614-871289a1a2a",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="111/1_tissue_seg_data_summary.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/tissue_seg_data_summary.txt",
+            upload_placeholder="3zaaaaaa-047f-4df6-b614-871289a1a2a",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
             local_path="111/1_phenotype_map.tif",
             gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/phenotype_map.tif",
             upload_placeholder="4aaaaaaa-047f-4df6-b614-871289a1a2a",
@@ -1344,19 +1374,31 @@ def mif() -> PrismTestData:
         LocalFileUploadEntry(
             local_path="121/1_binary_seg_maps.tif",
             gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/binary_seg_maps.tif",
-            upload_placeholder="2bbbbbbb-047f-4df6-b614-871289a1a2a",
+            upload_placeholder="1bbbbbbb-047f-4df6-b614-871289a1a2a",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="121/1_cell_seg_data.txt",
             gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/cell_seg_data.txt",
-            upload_placeholder="1bbbbbbb-047f-4df6-b614-871289a1a2a",
+            upload_placeholder="2bbbbbbb-047f-4df6-b614-871289a1a2a",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="121/1_cell_seg_data_summary.txt",
             gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/cell_seg_data_summary.txt",
             upload_placeholder="3bbbbbbb-047f-4df6-b614-871289a1a2a",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/1_tissue_seg_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/tissue_seg_data.txt",
+            upload_placeholder="2abbbbbb-047f-4df6-b614-871289a1a2a",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/1_tissue_seg_data_summary.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_1/tissue_seg_data_summary.txt",
+            upload_placeholder="3abbbbbb-047f-4df6-b614-871289a1a2a",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
@@ -1392,19 +1434,31 @@ def mif() -> PrismTestData:
         LocalFileUploadEntry(
             local_path="121/2_binary_seg_maps.tif",
             gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/binary_seg_maps.tif",
-            upload_placeholder="2ccccccc-047f-4df6-b614-871289a1a2a",
+            upload_placeholder="1ccccccc-047f-4df6-b614-871289a1a2a",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="121/2_cell_seg_data.txt",
             gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/cell_seg_data.txt",
-            upload_placeholder="1ccccccc-047f-4df6-b614-871289a1a2a",
+            upload_placeholder="2ccccccc-047f-4df6-b614-871289a1a2a",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(
             local_path="121/2_cell_seg_data_summary.txt",
             gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/cell_seg_data_summary.txt",
             upload_placeholder="3ccccccc-047f-4df6-b614-871289a1a2a",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/2_tissue_seg_data.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/tissue_seg_data.txt",
+            upload_placeholder="2acccccc-047f-4df6-b614-871289a1a2a",
+            metadata_availability=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="121/2_tissue_seg_data_summary.txt",
+            gs_key="test_prism_trial_id/mif/CTTTPP121.00/roi_2/tissue_seg_data_summary.txt",
+            upload_placeholder="3acccccc-047f-4df6-b614-871289a1a2a",
             metadata_availability=False,
         ),
         LocalFileUploadEntry(

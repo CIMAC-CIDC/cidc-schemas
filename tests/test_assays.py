@@ -385,6 +385,7 @@ def test_mif():
         "files": {
             "regions_of_interest": [
                 {
+                    "roi_id": "foo",
                     "binary_seg_maps": image,
                     "cell_seg_data": text,
                     "cell_seg_data_summary": text,

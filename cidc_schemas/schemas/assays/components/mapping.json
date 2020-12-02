@@ -6,6 +6,12 @@
   "description": "Regions of interest obtained from image mapping.",
   "inheritableBase": true,
   "properties": {
+
+    "phenotype_map": {
+      "$comment": "Image produced from the combination of multiple imaging experiment data images.",
+      "$ref": "artifacts/artifact_image.json"
+    },
+    
     "binary_seg_maps": {
       "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.",
       "$ref": "artifacts/artifact_image.json"
@@ -18,10 +24,15 @@
       "$comment": "Summary of the results of a cell segmentation data experiment.",
       "$ref": "artifacts/artifact_text.json"
     },
-    "phenotype_map": {
-      "$comment": "Image produced from the combination of multiple imaging experiment data images.",
-      "$ref": "artifacts/artifact_image.json"
+    "tissue_seg_data": {
+      "$comment": "Data produced from the analysis of tissue image.",
+      "$ref": "artifacts/artifact_text.json"
     },
+    "tissue_seg_data_summary": {
+      "$comment": "Summary of the results of a tissue segmentation data experiment.",
+      "$ref": "artifacts/artifact_text.json"
+    },
+    
     "score_data": {
       "type": "array",
       "items": {

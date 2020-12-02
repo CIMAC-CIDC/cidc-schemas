@@ -38,7 +38,6 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    needs: test
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.7
@@ -51,6 +50,23 @@ jobs:
       - name: Build a binary wheel and a source tarball
         run: |
           python -m build --sdist --wheel --outdir dist/ .
+      - name: Archive the build artifacts
+        uses: actions/upload-artifact@v2
+        if: ${{ github.ref == 'refs/heads/master' }}
+        with:
+          name: build-artifacts
+          path: dist
+
+  pypi-publish:
+    needs: [test, build]
+    if: ${{ github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: build-artifacts
+          path: dist
       - name: Publish package to PyPI
         uses: pypa/gh-action-pypi-publish@master
         if: ${{ github.ref == 'refs/heads/master' }}

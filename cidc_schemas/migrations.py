@@ -49,6 +49,10 @@ class v0_23_0_to_v0_23_1(migration):
 
     @classmethod
     def upgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+        if "rnaseq_analysis" in metadata.get("analysis", {}):
+            metadata["analysis"]["rna_analysis"] = metadata["analysis"].pop(
+                "rnaseq_analysis"
+            )
         for p in metadata.get("participants", []):
             if "arbitrary_trial_specific_clinical_annotations" in p:
                 p["clinical"] = p.pop("arbitrary_trial_specific_clinical_annotations")
@@ -57,6 +61,11 @@ class v0_23_0_to_v0_23_1(migration):
 
     @classmethod
     def downgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+        if "rna_analysis" in metadata.get("analysis", {}):
+            metadata["analysis"]["rnaseq_analysis"] = metadata["analysis"].pop(
+                "rna_analysis"
+            )
+
         for p in metadata.get("participants", []):
             if "clinical" in p:
                 p["arbitrary_trial_specific_clinical_annotations"] = p.pop("clinical")

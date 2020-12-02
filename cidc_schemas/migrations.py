@@ -42,7 +42,7 @@ class migration:
         raise NotImplementedError
 
 
-class v0_23_4_to_v0_23_5(migration):
+class v0_23_0_to_v0_23_1(migration):
     """
     renaming 'arbitrary_trial_specific_clinical_annotations' to 'clinical'
     """
@@ -53,6 +53,9 @@ class v0_23_4_to_v0_23_5(migration):
             metadata["analysis"]["rna_analysis"] = metadata["analysis"].pop(
                 "rnaseq_analysis"
             )
+        for p in metadata.get("participants", []):
+            if "arbitrary_trial_specific_clinical_annotations" in p:
+                p["clinical"] = p.pop("arbitrary_trial_specific_clinical_annotations")
 
         return MigrationResult(metadata, {})
 
@@ -63,24 +66,6 @@ class v0_23_4_to_v0_23_5(migration):
                 "rna_analysis"
             )
 
-        return MigrationResult(metadata, {})
-
-
-class v0_23_0_to_v0_23_1(migration):
-    """
-    renaming 'arbitrary_trial_specific_clinical_annotations' to 'clinical'
-    """
-
-    @classmethod
-    def upgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
-        for p in metadata.get("participants", []):
-            if "arbitrary_trial_specific_clinical_annotations" in p:
-                p["clinical"] = p.pop("arbitrary_trial_specific_clinical_annotations")
-
-        return MigrationResult(metadata, {})
-
-    @classmethod
-    def downgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
         for p in metadata.get("participants", []):
             if "clinical" in p:
                 p["arbitrary_trial_specific_clinical_annotations"] = p.pop("clinical")

@@ -1367,7 +1367,7 @@ def tcr_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="9204_trial.tar.gz",
-            gs_key="test_prism_trial_id/tcr_analysis/XYZ/summary_info.csv",
+            gs_key="test_prism_trial_id/tcr_analysis/XYZ/report_trial.tar.gz",
             upload_placeholder="912f4bae-bca8-42f6-a3b7-cb4db27b2e24",
             metadata_availability=False,
         ),

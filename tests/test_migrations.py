@@ -203,7 +203,8 @@ def test_v0_23_0_to_v0_23_1():
         "participants": [
             {"arbitrary_trial_specific_clinical_annotations": {"foo": "bar"}},
             {"arbitrary_trial_specific_clinical_annotations": {"foo": "baz"}},
-        ]
+        ],
+        "analysis": {"rnaseq_analysis": "qux"},
     }
 
     upgraded_ct = v0_23_0_to_v0_23_1.upgrade(ct).result
@@ -224,6 +225,11 @@ def test_v0_23_0_to_v0_23_1():
     assert (
         "foo" in upgraded_ct["participants"][1]["clinical"]
         and upgraded_ct["participants"][1]["clinical"]["foo"] == "baz"
+    )
+    assert "rnaseq_analysis" not in upgraded_ct["analysis"]
+    assert (
+        "rna_analysis" in upgraded_ct["analysis"]
+        and upgraded_ct["analysis"]["rna_analysis"] == "qux"
     )
 
     assert ct == v0_23_0_to_v0_23_1.downgrade(upgraded_ct).result

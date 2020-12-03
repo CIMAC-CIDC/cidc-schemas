@@ -1,7 +1,8 @@
 # cidc-schemas
-| Branch                                               | Status                                                                                                                            | Maintainability                                                                                                                                                          | Test Coverage | Code Style                                                                                                                                                      |
-| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---|
-| [master](https://cimac-cidc.github.io/cidc-schemas/) | [![Build Status](https://travis-ci.com/CIMAC-CIDC/cidc-schemas.svg?branch=master)](https://travis-ci.com/CIMAC-CIDC/cidc-schemas) | [![Maintainability](https://api.codeclimate.com/v1/badges/3f989b974663df81ef45/maintainability)](https://codeclimate.com/github/CIMAC-CIDC/cidc-schemas/maintainability) | [![Test Coverage](https://api.codeclimate.com/v1/badges/3f989b974663df81ef45/test_coverage)](https://codeclimate.com/github/CIMAC-CIDC/cidc-schemas/test_coverage) | <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a> |
+
+| Branch                                               | Status                                                                                                                           | Maintainability                                                                                                                                                          | Test Coverage                                                                                                                                                      | Code Style                                                                                                                                |
+| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| [master](https://cimac-cidc.github.io/cidc-schemas/) | ![Continuous Integration](https://github.com/CIMAC-CIDC/cidc-schemas/workflows/Continuous%20Integration/badge.svg?branch=master) | [![Maintainability](https://api.codeclimate.com/v1/badges/3f989b974663df81ef45/maintainability)](https://codeclimate.com/github/CIMAC-CIDC/cidc-schemas/maintainability) | [![Test Coverage](https://api.codeclimate.com/v1/badges/3f989b974663df81ef45/test_coverage)](https://codeclimate.com/github/CIMAC-CIDC/cidc-schemas/test_coverage) | <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a> |
 
 This repository contains formal definitions of the CIDC metadata model using [json-schema](https://json-schema.org/) syntax and vocabulary.
 
@@ -10,6 +11,7 @@ This repository contains formal definitions of the CIDC metadata model using [js
 ## Installation
 
 To install the latest released version, run:
+
 ```bash
 pip install cidc-schemas
 ```
@@ -31,11 +33,13 @@ pip install cidc-schemas
 ### Developer Setup
 
 Install necessary dependencies.
+
 ```bash
 pip install -r requirements.dev.txt
 ```
 
 Install and configure pre-commit hooks.
+
 ```bash
 pre-commit install
 ```

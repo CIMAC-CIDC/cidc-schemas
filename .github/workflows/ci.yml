@@ -1,3 +1,5 @@
+name: Continuous Integration
+
 on:
   push:
     branches: [master]
@@ -69,7 +71,6 @@ jobs:
           path: dist
       - name: Publish package to PyPI
         uses: pypa/gh-action-pypi-publish@master
-        if: ${{ github.ref == 'refs/heads/master' }}
         with:
           skip_existing: true
           user: jlurye-ksg

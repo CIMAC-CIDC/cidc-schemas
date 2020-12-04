@@ -20,6 +20,12 @@
                         "type_ref": "assays/components/local_file.json#properties/file_path",
                         "gcs_uri_format": "{protocol identifier}/tcr_analysis/{batch id}/summary_info.csv",
                         "is_artifact": 1
+                    },
+                    "report trial": {
+                        "merge_pointer": "0/report_trial",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "gcs_uri_format": "{protocol identifier}/tcr_analysis/{batch id}/report_trial.tar.gz",
+                        "is_artifact": 1
                     }
                 },
                 "prism_data_object_pointer": "0/records/-",

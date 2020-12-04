@@ -173,12 +173,12 @@
     </td>
     <td width=55%>
         
-            Information about a ZIP file.
+            Information about a GZ file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_zip.html">artifacts.artifact_zip</a>
+            <a href="artifacts.artifact_gz.html">artifacts.artifact_gz</a>
         
     </td>
 </tr>
@@ -689,7 +689,7 @@
             "type": "object"
         },
         "report": {
-            "$id": "zip_artifact",
+            "$id": "gz_artifact",
             "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
@@ -826,7 +826,7 @@
                     "type": "object"
                 }
             ],
-            "description": "Information about a ZIP file.",
+            "description": "Information about a GZ file.",
             "mergeStrategy": "objectMerge",
             "properties": {
                 "artifact_category": {
@@ -853,7 +853,7 @@
                     "type": "string"
                 },
                 "data_format": {
-                    "const": "ZIP",
+                    "const": "GZ",
                     "description": "Data format."
                 },
                 "facet_group": {
@@ -900,7 +900,7 @@
                     "type": "boolean"
                 }
             },
-            "title": "ZIP Artifact",
+            "title": "GZ Artifact",
             "type": "object"
         },
         "tumor_mutational_burden": {

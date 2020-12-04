@@ -471,11 +471,6 @@
     "additionalProperties": false,
     "description": "The collection of all data related to a specific participant in the context of a specific clinical trial.\n",
     "properties": {
-        "clinical": {
-            "$comment": "holds whatever non-harmonized annotations trial team provides",
-            "additionalProperties": true,
-            "type": "object"
-        },
         "cidc_participant_id": {
             "description": "The generated, CIDC-internal identifier for this participant.",
             "example": "CIDC-Trial101-e1b2c3",
@@ -490,6 +485,11 @@
             "in_doc_ref_pattern": "/participants/*/cimac_participant_id",
             "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}$",
             "type": "string"
+        },
+        "clinical": {
+            "$comment": "holds whatever non-harmonized annotations trial team provides",
+            "additionalProperties": true,
+            "type": "object"
         },
         "cohort_name": {
             "$comment": "Values in this field are validated dynamically by `in_doc_ref_pattern`.",

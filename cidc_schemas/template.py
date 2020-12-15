@@ -736,6 +736,9 @@ class _FieldDef(NamedTuple):
                 f"Can't format destination gcs uri for {self.key_name!r}: {format}"
             )
 
+        # gsutils treats brackets as a character set
+        gs_key = gs_key.replace("[", "").replace("]", "")
+
         expected_extension = get_file_ext(gs_key)
         provided_extension = get_file_ext(local_path)
         if provided_extension != expected_extension:

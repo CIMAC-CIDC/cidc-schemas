@@ -736,7 +736,8 @@ class _FieldDef(NamedTuple):
                 f"Can't format destination gcs uri for {self.key_name!r}: {format}"
             )
 
-        # gsutils treats brackets as a character set
+        # remove [ or ] in GCS URI because gsutils treats brackets as a character set
+        # and matches multiple file paths, which is not allowed for a target
         gs_key = gs_key.replace("[", "").replace("]", "")
 
         expected_extension = get_file_ext(gs_key)

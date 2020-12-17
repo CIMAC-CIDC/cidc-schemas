@@ -241,8 +241,7 @@ def test_field_def_process_value():
 
     # process_value does remove brackets from gcs uri
     prop_def["gcs_uri_format"] = "[foo].bar"
-    prop_def["parse_through"] = 'lambda _: "baz.bar"'
-    changes, files = _FieldDef(**prop_def).process_value("baz", {}, {})
+    changes, files = _FieldDef(**prop_def).process_value("baz.bar", {}, {})
     assert files[0].gs_key == "foo.bar"
 
 

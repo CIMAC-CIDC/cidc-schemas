@@ -227,6 +227,8 @@ def test_field_def_process_value():
         "is_artifact": 1,
         "key_name": "hello",
     }
+    with pytest.raises(ParsingException, match="Can't format destination gcs uri"):
+        _FieldDef(**prop_def).process_value("123", {}, {})
 
     # process_value catches gcs_uri_format strings that can't be processed
     prop_def["gcs_uri_format"] = "{foo}/{bar}"
@@ -236,6 +238,12 @@ def test_field_def_process_value():
     prop_def["gcs_uri_format"] = {"format": prop_def["gcs_uri_format"]}
     with pytest.raises(ParsingException, match="Can't format destination gcs uri"):
         _FieldDef(**prop_def).process_value("123", {}, {})
+
+    # process_value does remove brackets from gcs uri
+    prop_def["gcs_uri_format"] = "[foo].bar"
+    prop_def["parse_through"] = 'lambda _: "baz.bar"'
+    changes, files = _FieldDef(**prop_def).process_value("baz", {}, {})
+    assert files[0].gs_key == "foo.bar"
 
 
 def test_get_facet_group():

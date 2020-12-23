@@ -48,7 +48,7 @@
           "properties": {
             "5/protocol_identifier": {
               "$comment": "relative JSON pointer!",
-              "const": "10021"
+              "enum": ["10021", "10021_crc_mif"]
             }
           }
         }

@@ -34,11 +34,9 @@
   "mergeStrategy": "objectMerge",
   "required": [
     "roi_id",
-    "phenotype_map",
     "cell_seg_data",
     "cell_seg_data_summary",
-    "composite_image",
-    "component_data"
+    "composite_image"
   ],
 
   "allOf": [
@@ -46,16 +44,18 @@
       "$comment": "for multiple conditionals, use object to connect `if` and `then`",
       "if": {
         "$comment": "if `if` validates, then `then` needs to as well",
-        "properties": {
-          "5/protocol_identifier": {
-            "$comment": "relative JSON pointer!",
-            "const": "test_prism_trial_id"
+        "not": {
+          "properties": {
+            "5/protocol_identifier": {
+              "$comment": "relative JSON pointer!",
+              "const": "10021"
+            }
           }
         }
       },
       "then": {
         "$comment" : "for test data, since `if` validates, this must also",
-        "required": ["im3"]
+        "required": ["component_data", "phenotype_map"]
       }
     }
   ]

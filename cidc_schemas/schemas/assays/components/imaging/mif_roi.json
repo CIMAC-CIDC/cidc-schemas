@@ -21,19 +21,42 @@
     "tissue_seg_data_summary": {"$ref": "assays/components/mapping.json#properties/tissue_seg_data_summary" },
     "score_data": {"$ref": "assays/components/mapping.json#properties/score_data" },
 
+    "image_with_all_seg": {"$ref": "assays/components/mapping.json#properties/seg_maps" },
+    "image_with_cell_seg_map": {"$ref": "assays/components/mapping.json#properties/seg_maps" },
+    "image_with_phenotype_map": {"$ref": "assays/components/mapping.json#properties/phenotype_map" },
+    "image_with_tissue_seg": {"$ref": "assays/components/mapping.json#properties/seg_maps" },
+
     "im3": {"$ref": "assays/components/composite_image.json#properties/im3"},
     "composite_image": {"$ref": "assays/components/composite_image.json#properties/composite_image"},
     "component_data": {"$ref": "assays/components/composite_image.json#properties/component_data"}
+
   },
   "mergeStrategy": "objectMerge",
   "required": [
     "roi_id",
-    "binary_seg_maps",
+    "phenotype_map",
     "cell_seg_data",
     "cell_seg_data_summary",
-    "phenotype_map",
-    "im3",
     "composite_image",
     "component_data"
+  ],
+
+  "allOf": [
+    {
+      "$comment": "for multiple conditionals, use object to connect `if` and `then`",
+      "if": {
+        "$comment": "if `if` validates, then `then` needs to as well",
+        "properties": {
+          "5/protocol_identifier": {
+            "$comment": "relative JSON pointer!",
+            "const": "test_prism_trial_id"
+          }
+        }
+      },
+      "then": {
+        "$comment" : "for test data, since `if` validates, this must also",
+        "required": ["im3"]
+      }
+    }
   ]
 }

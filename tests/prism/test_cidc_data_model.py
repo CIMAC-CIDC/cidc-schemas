@@ -36,7 +36,9 @@ def assert_metadata_matches(received: dict, expected: dict, upload_entries: list
     diff = DeepDiff(expected, received)
 
     if upload_entries and diff:
-        assert len(diff) == 2  # only "values_changed" and "dictionary_item_added"
+        assert len(diff) == 2, str(
+            diff
+        )  # only "values_changed" and "dictionary_item_added"
         assert len(diff["dictionary_item_added"]) == len(upload_entries)
         assert len(diff["values_changed"]) == len(upload_entries)
         for changed_key in diff["values_changed"].keys():
@@ -64,6 +66,7 @@ def test_prismify(prism_test: PrismTestData, monkeypatch):
     monkeypatch.setattr("cidc_schemas.prism.core._check_encrypt_init", lambda: None)
 
     # Run prismify on the given test case
+    print(*prism_test.prismify_args)
     patch, upload_entries, errs = prismify(*prism_test.prismify_args)
 
     # Ensure no errors resulted from the prismify run

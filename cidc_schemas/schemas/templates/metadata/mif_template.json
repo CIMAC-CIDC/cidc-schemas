@@ -137,6 +137,38 @@
                     "type_ref": "assays/components/local_file.json#properties/file_path",
                     "is_artifact": 1,
                     "allow_empty": true
+                  },
+                  {
+                    "parse_through": "lambda prefix: str(prefix) + 'image_with_all_seg.tif'",
+                    "merge_pointer": "0/image_with_all_seg",
+                    "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/image_with_all_seg.tif",
+                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                    "is_artifact": 1,
+                    "allow_empty": true
+                  },
+                  {
+                    "parse_through": "lambda prefix: str(prefix) + 'image_with_cell_seg_map.tif'",
+                    "merge_pointer": "0/image_with_cell_seg_map",
+                    "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/image_with_cell_seg_map.tif",
+                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                    "is_artifact": 1,
+                    "allow_empty": true
+                  },
+                  {
+                    "parse_through": "lambda prefix: str(prefix) + 'image_with_phenotype_map.tif'",
+                    "merge_pointer": "0/image_with_phenotype_map",
+                    "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/image_with_phenotype_map.tif",
+                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                    "is_artifact": 1,
+                    "allow_empty": true
+                  },
+                  {
+                    "parse_through": "lambda prefix: str(prefix) + 'image_with_tissue_seg.tif'",
+                    "merge_pointer": "0/image_with_tissue_seg",
+                    "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/image_with_tissue_seg.tif",
+                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                    "is_artifact": 1,
+                    "allow_empty": true
                   }
 
               ]

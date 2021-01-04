@@ -231,7 +231,7 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
         temp = file_path.split("{", 1)
         file_path = temp[0] + temp[1].split("}", 1)[1].strip("._")
     # this can generate `/{id}/` -> `//` and `-{id}-` -> `--`, so fix those
-    file_path = file_path.replace("//", "/").replace("--", "_")
+    file_path = file_path.replace("//", "/").replace("--", "_").lower()
 
     # specialty conversions for existing non-standard usage
     fixes = {  # old : new

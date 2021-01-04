@@ -246,7 +246,7 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
         "sample_summar": "summar",
         "all_epitopes": "epitopes",
         ".txt.tn.tsv": ".tsv",
-        "report/somatic_variants/07_": "report/",
+        "report/somatic_variants/06_": "report/",
         "report/neoantigens/01_": "neoantigen/",
         "msisensor2": "msisensor",
         "/report.": "/report/report.",

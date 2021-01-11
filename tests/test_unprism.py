@@ -139,18 +139,12 @@ def test_derive_files_MIF():
                     "records": [
                         {
                             "files": {
-                                "regions_of_interest" : [
+                                "regions_of_interest": [
                                     {
                                         "cell_seg_data": [
-                                            {
-                                                "object_url": "a"
-                                            },
-                                            {
-                                                "object_url": "b"
-                                            },
-                                            {
-                                                "object_url": "c"
-                                            }
+                                            {"object_url": "a"},
+                                            {"object_url": "b"},
+                                            {"object_url": "c"},
                                         ]
                                     }
                                 ]
@@ -170,7 +164,7 @@ def test_derive_files_MIF():
     cell_seg3 = "a\tOthers\tc\n" "d\tj+\te\n" "f\tj+\tg\n"
 
     def fetch_artifact(url: str, as_string: bool) -> StringIO:
-        print("fa",url)
+        print("fa", url)
         assert url in (url1, url2, url3)
         if url == url1:
             return StringIO(headers + cell_seg1)
@@ -192,6 +186,7 @@ def test_derive_files_MIF():
 
     import pandas as pd
     import io
+
     assert combined_seg.data == headers + "a\tb+\tc\n" "d\th+ j+\te\n" "f\tj+\tg\n"
 
 

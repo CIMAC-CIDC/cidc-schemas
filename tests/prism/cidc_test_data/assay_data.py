@@ -1264,8 +1264,8 @@ def mif() -> PrismTestData:
                                                         "upload_placeholder": "5aaaaaa2-047f-4df6-b614-871289a1a2b"
                                                     },
                                                 ],
-                                            }
-                                        ]
+                                            },
+                                        ],
                                     }
                                 ]
                             },
@@ -1324,7 +1324,7 @@ def mif() -> PrismTestData:
                                                     }
                                                 ],
                                             }
-                                        ]
+                                        ],
                                     },
                                     {
                                         "roi_id": "2",
@@ -1376,7 +1376,7 @@ def mif() -> PrismTestData:
                                                     }
                                                 ],
                                             }
-                                        ]
+                                        ],
                                     },
                                 ]
                             },

@@ -399,11 +399,10 @@ def test_mif():
                             "score_data": [text],
                             "score_data": [text],
                         }
-                    ]
+                    ],
                 }
             ]
         },
-
     }
 
     ab = {
@@ -414,7 +413,7 @@ def test_mif():
         "fluor_dilution": "1",
         "antigen_retrieval_time": "00:00:00",
         "primary_incubation_time": "00:00:00",
-        "amplification_time": "00:00:00"
+        "amplification_time": "00:00:00",
     }
 
     # add a demo record.
@@ -427,7 +426,9 @@ def test_mif():
     validator.validate(obj)
 
     # assert negative behaviors
-    del obj["records"][0]["files"]["regions_of_interest"][0]["exports"][0]["cell_seg_data"]
+    del obj["records"][0]["files"]["regions_of_interest"][0]["exports"][0][
+        "cell_seg_data"
+    ]
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)
 

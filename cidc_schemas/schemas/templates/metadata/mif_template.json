@@ -56,7 +56,7 @@
             "type_ref": "assays/mif_assay.json#properties/panel"
           }
         },
-        "prism_data_object_pointer": "/records/0/files/regions_of_interest/0/exports/-",
+        "prism_data_object_pointer": "/records/-/files/regions_of_interest/0/exports/-",
         "data_columns": {
           "ROIs": {
             "CIMAC ID": {

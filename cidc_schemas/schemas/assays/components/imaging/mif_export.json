@@ -1,0 +1,35 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "mif_export",
+  "description": "An analysis export from inForm of a region of interest (ROI).",
+  "allOf": [
+    { "$ref": "assays/components/mapping.json" }
+  ],
+  "mergeStrategy": "objectMerge",
+  "mergeOptions": {"idRef": "/export_id"},
+  "additionalProperties": false,
+  "properties": {
+      "export_id": {
+        "description": "Name used for an inForm export of a region of interest within one mIF slide, e.g. CD8, CD45RO",
+        "type": "string"
+      },
+
+      "cell_seg_data": {"$ref": "assays/components/mapping.json#properties/cell_seg_data" },
+      "cell_seg_data_summary": {"$ref": "assays/components/mapping.json#properties/cell_seg_data_summary" },
+      "phenotype_map": {"$ref": "assays/components/mapping.json#properties/phenotype_map" },
+      "score_data": {"$ref": "assays/components/mapping.json#properties/score_data" },
+      "tissue_seg_data": {"$ref": "assays/components/mapping.json#properties/tissue_seg_data" },
+      "tissue_seg_data_summary": {"$ref": "assays/components/mapping.json#properties/tissue_seg_data_summary" },
+      "binary_seg_maps": {"$ref": "assays/components/mapping.json#properties/binary_seg_maps" },
+
+      "image_with_all_seg": {"$ref": "assays/components/mapping.json#properties/seg_maps" },
+      "image_with_cell_seg_map": {"$ref": "assays/components/mapping.json#properties/seg_maps" },
+      "image_with_phenotype_map": {"$ref": "assays/components/mapping.json#properties/phenotype_map" },
+      "image_with_tissue_seg": {"$ref": "assays/components/mapping.json#properties/seg_maps" }
+  },
+  "required": [
+      "export_id",
+      "cell_seg_data",
+      "cell_seg_data_summary"
+  ]
+}

@@ -125,6 +125,76 @@ def test_derive_files_IHC():
     assert recs == true_recs
 
 
+def test_derive_files_MIF():
+    """Check that MIF combined cell segmentation data CSV is derived as expected."""
+    url1 = "a"
+    url2 = "b"
+    url3 = "c"
+    trial_id = "test-trial"
+    partial_ct = {
+        PROTOCOL_ID_FIELD_NAME: trial_id,
+        "assays": {
+            "mif": [
+                {
+                    "records": [
+                        {
+                            "files": {
+                                "regions_of_interest" : [
+                                    {
+                                        "cell_seg_data": [
+                                            {
+                                                "object_url": "a"
+                                            },
+                                            {
+                                                "object_url": "b"
+                                            },
+                                            {
+                                                "object_url": "c"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+    }
+
+    # Has req'd `Cell Id` and `Phenotype` columns
+    # Others is mode within and across
+    headers = "Cell ID\tPhenotype\tcol3\n"
+    cell_seg1 = "a\tb+\tc\n" "d\tOthers\te\n" "f\tOthers\tg\n"
+    cell_seg2 = "a\tOthers\tc\n" "d\th+\te\n" "f\tOthers\tg\n"
+    cell_seg3 = "a\tOthers\tc\n" "d\tj+\te\n" "f\tj+\tg\n"
+
+    def fetch_artifact(url: str, as_string: bool) -> StringIO:
+        print("fa",url)
+        assert url in (url1, url2, url3)
+        if url == url1:
+            return StringIO(headers + cell_seg1)
+        elif url == url2:
+            return StringIO(headers + cell_seg2)
+        else:
+            return StringIO(headers + cell_seg3)
+
+    context = DeriveFilesContext(partial_ct, "mif", fetch_artifact)
+    result = derive_files(context)
+
+    assert result.trial_metadata == partial_ct
+    assert len(result.artifacts) == 1
+
+    combined_seg = result.artifacts[0]
+
+    assert combined_seg.data_format == "csv"
+    assert combined_seg.file_type == "combined cell segmentation data"
+
+    import pandas as pd
+    import io
+    assert combined_seg.data == headers + "a\tb+\tc\n" "d\th+ j+\te\n" "f\tj+\tg\n"
+
+
 def test_derive_files_wes_analysis():
     """Check that combined MAF is derived as expected"""
     url1 = "a"

@@ -3,7 +3,6 @@
   "$id": "mif_roi",
   "description": "A region of interest (ROI) is a portion of an image which has been analyzed using image processing software.",
   "allOf": [
-    { "$ref": "assays/components/mapping.json" },
     { "$ref": "assays/components/composite_image.json" }
   ],
   "additionalProperties": false,
@@ -12,51 +11,25 @@
         "description": "Identifier of a region of interest within one mIF slide, e.g. 1, 2, 3 or [123 x 321]",
         "type": "string"
     },
-
-    "phenotype_map": {"$ref": "assays/components/mapping.json#properties/phenotype_map" },
-    "binary_seg_maps": {"$ref": "assays/components/mapping.json#properties/binary_seg_maps" },
-    "cell_seg_data": {"$ref": "assays/components/mapping.json#properties/cell_seg_data" },
-    "cell_seg_data_summary": {"$ref": "assays/components/mapping.json#properties/cell_seg_data_summary" },
-    "tissue_seg_data": {"$ref": "assays/components/mapping.json#properties/tissue_seg_data" },
-    "tissue_seg_data_summary": {"$ref": "assays/components/mapping.json#properties/tissue_seg_data_summary" },
-    "score_data": {"$ref": "assays/components/mapping.json#properties/score_data" },
-
-    "image_with_all_seg": {"$ref": "assays/components/mapping.json#properties/seg_maps" },
-    "image_with_cell_seg_map": {"$ref": "assays/components/mapping.json#properties/seg_maps" },
-    "image_with_phenotype_map": {"$ref": "assays/components/mapping.json#properties/phenotype_map" },
-    "image_with_tissue_seg": {"$ref": "assays/components/mapping.json#properties/seg_maps" },
-
     "im3": {"$ref": "assays/components/composite_image.json#properties/im3"},
+    "component_data": {"$ref": "assays/components/composite_image.json#properties/component_data"},
     "composite_image": {"$ref": "assays/components/composite_image.json#properties/composite_image"},
-    "component_data": {"$ref": "assays/components/composite_image.json#properties/component_data"}
 
+    "exports": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/components/imaging/mif_export.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "/export_id"
+      }
+    }
   },
   "mergeStrategy": "objectMerge",
   "required": [
     "roi_id",
-    "cell_seg_data",
-    "cell_seg_data_summary",
-    "composite_image"
-  ],
-
-  "allOf": [
-    {
-      "$comment": "for multiple conditionals, use object to connect `if` and `then`",
-      "if": {
-        "$comment": "if `if` validates, then `then` needs to as well",
-        "not": {
-          "properties": {
-            "5/protocol_identifier": {
-              "$comment": "relative JSON pointer!",
-              "enum": ["10021", "10021_crc_mif"]
-            }
-          }
-        }
-      },
-      "then": {
-        "$comment" : "for test data, since `if` validates, this must also",
-        "required": ["component_data", "phenotype_map"]
-      }
-    }
+    "im3",
+    "exports"
   ]
 }

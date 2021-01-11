@@ -492,6 +492,7 @@ def prismify(
                 try:
                     preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
                 except MergeCollisionException as e:
+                    print(494, preamble_obj, copy_of_preamble)
                     # Reformatting exception, because this mismatch happened within one template
                     # and not with some saved stuff.
                     wrapped = e.with_context(row=row.row_num, worksheet=ws_name)

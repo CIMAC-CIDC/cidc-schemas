@@ -66,11 +66,10 @@ def test_prismify(prism_test: PrismTestData, monkeypatch):
     monkeypatch.setattr("cidc_schemas.prism.core._check_encrypt_init", lambda: None)
 
     # Run prismify on the given test case
-    print(*prism_test.prismify_args)
     patch, upload_entries, errs = prismify(*prism_test.prismify_args)
 
     # Ensure no errors resulted from the prismify run
-    assert len(errs) == 0
+    assert len(errs) == 0, "\n".join([str(e) for e in errs])
 
     # Compare the received upload entries with the expected upload entries.
     # These should differ by upload placeholder UUID only.
@@ -150,7 +149,6 @@ def test_merge_artifacts(prism_test: PrismTestData, ct_validator):
         # Get the path in the *original* patch to the placeholder uuid.
         paths = (prism_test.prismify_patch | grep(uuid))["matched_values"]
 
-        print(paths)
         assert len(paths) == 1, "UUID should only occur once in a metadata patch"
         path = paths.pop()
         assert path.endswith(

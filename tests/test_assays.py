@@ -386,30 +386,48 @@ def test_mif():
             "regions_of_interest": [
                 {
                     "roi_id": "foo",
-                    "binary_seg_maps": image,
-                    "cell_seg_data": text,
-                    "cell_seg_data_summary": text,
-                    "phenotype_map": image,
-                    "score_data": [text],
-                    "score_data": [text],
-                    "composite_image": image,
                     "im3": image,
                     "component_data": image,
+                    "composite_image": image,
+                    "exports": [
+                        {
+                            "export_id": "bar",
+                            "binary_seg_maps": image,
+                            "cell_seg_data": text,
+                            "cell_seg_data_summary": text,
+                            "phenotype_map": image,
+                            "score_data": [text],
+                            "score_data": [text],
+                        }
+                    ]
                 }
             ]
         },
+
+    }
+
+    ab = {
+        "antibody": "foobar-999",
+        "fluor_wavelength": 999,
+        "primary_ab_dilution": "1",
+        "dilutent": "water",
+        "fluor_dilution": "1",
+        "antigen_retrieval_time": "00:00:00",
+        "primary_incubation_time": "00:00:00",
+        "amplification_time": "00:00:00"
     }
 
     # add a demo record.
     obj["records"] = [record]
     obj["panel"] = "Panel 1: PD-L1, CD68, PD-1, CD8, CD3, pan-cytokeratin, DAPI"
+    obj["antibodies"] = [ab]
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("mif")
     validator.validate(obj)
 
     # assert negative behaviors
-    del obj["records"][0]["files"]["regions_of_interest"][0]["cell_seg_data_summary"]
+    del obj["records"][0]["files"]["regions_of_interest"][0]["exports"][0]["cell_seg_data"]
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)
 

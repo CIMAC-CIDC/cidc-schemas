@@ -56,6 +56,6 @@
       }
     }
   },
-  "required": ["records", "panel"],
+  "required": ["records", "panel", "antibodies"],
   "mergeStrategy": "objectMerge"
 }

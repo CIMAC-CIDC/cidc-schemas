@@ -164,7 +164,6 @@ def test_derive_files_MIF():
     cell_seg3 = "a\tOthers\tc\n" "d\tj+\te\n" "f\tj+\tg\n"
 
     def fetch_artifact(url: str, as_string: bool) -> StringIO:
-        print("fa", url)
         assert url in (url1, url2, url3)
         if url == url1:
             return StringIO(headers + cell_seg1)

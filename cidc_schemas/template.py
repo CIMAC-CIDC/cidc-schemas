@@ -231,7 +231,7 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
         temp = file_path.split("{", 1)
         file_path = temp[0] + temp[1].split("}", 1)[1].strip("._")
     # this can generate `/{id}/` -> `//` and `-{id}-` -> `--`, so fix those
-    file_path = file_path.replace("//", "/").replace("--", "_")
+    file_path = file_path.replace("//", "/").replace("--", "_").lower()
 
     # specialty conversions for existing non-standard usage
     fixes = {  # old : new
@@ -246,8 +246,8 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
         "sample_summar": "summar",
         "all_epitopes": "epitopes",
         ".txt.tn.tsv": ".tsv",
-        "report/somatic_variants/07_": "report/",
-        "report/neoantigens/01_": "neoantigen/",
+        "report/somatic_variants/06_": "report/",
+        "report/neoantigens/01_hla_r": "neoantigen/HLA_r",
         "msisensor2": "msisensor",
         "/report.": "/report/report.",
         "wes_meta/02_": "",

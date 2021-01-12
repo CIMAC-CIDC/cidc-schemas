@@ -34,6 +34,7 @@ def assert_metadata_matches(received: dict, expected: dict, upload_entries: list
     # so the number of differences should equal the number of expected
     # upload entries.
     diff = DeepDiff(expected, received)
+    print(diff)
 
     if upload_entries and diff:
         assert len(diff) == 2, str(
@@ -81,6 +82,8 @@ def test_prismify(prism_test: PrismTestData, monkeypatch):
         for e in prism_test.upload_entries
     ]
 
+    print(prism_test.prismify_patch)
+    print(patch)
     assert sorted(expected) == sorted(received)
     for received, expected in zip(
         sorted(upload_entries), sorted(prism_test.upload_entries)
@@ -132,9 +135,11 @@ def test_merge_artifacts(prism_test: PrismTestData, ct_validator):
             for entry in prism_test.upload_entries
         ],
     )
+
     for entry, (artifact, additional_metadata) in zip(
         prism_test.upload_entries, artifact_results
     ):
+        print(entry.gs_key, artifact["object_url"])
         # Check that artifact has expected fields for the given entry
         assert artifact["object_url"] == entry.gs_key
         assert artifact["upload_placeholder"] == entry.upload_placeholder

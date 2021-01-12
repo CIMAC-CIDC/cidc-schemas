@@ -1,22 +1,22 @@
-#title,Metadata file for mif,,,,,,,
-#preamble,Protocol identifier,test_prism_trial_id,,,,,,
-#preamble,Assay creator,DFCI,,,,,,
-#preamble,Slide scanner model,Hamamatsu,,,,,,
-#preamble,Image analysis software,InForm,,,,,,
-#preamble,Image analysis software version,2.4.2,,,,,,
-#preamble,Cell segmentation model,proprietary,,,,,,
-#preamble,Positive cell detection model,proprietary,,,,,,
-#preamble,Staining,Bond RX,,,,,,
-#preamble,Staining date,1/1/2001 0:00,,,,,,
-#preamble,Imaging date,1/1/2001 0:00,,,,,,
-#preamble,Imaging status,Yes,,,,,,
-#preamble,Panel,"Panel 1: PD-L1, CD68, PD-1, CD8, CD3, pan-cytokeratin, DAPI",,,,,,
-,,,,,,,,
-#skip,ROIs,,,,,,,
-#header,Cimac id,Roi id,Export id,Score data files,Im3 file,Composite image,Component data,Inform export prefix
-#data,CTTTPP111.00,1,CD4,"111/1_score_data.txt,111_extra/1_score_data.txt",111/1.im3,111/1.tif,111/1.tif,111/1/CD4/
-#data,CTTTPP111.00,1,CD8,"111/1_score_data.txt,111_extra/1_score_data.txt",111/1.im3,111/1.tif,111/1.tif,111/1/CD8/
-#data,CTTTPP121.00,1,CD4,121/1_score_data.txt,121/1.im3,121/1.tif,121/1.tif,121/1/CD4/
-#data,CTTTPP121.00,1,CD8,121/1_score_data.txt,121/1.im3,121/1.tif,121/1.tif,121/1/CD8/
-#data,CTTTPP121.00,2,CD4,121/2_score_data.txt,121/2.im3,121/2.tif,121/2.tif,121/2/CD4/
-#data,CTTTPP121.00,2,CD8,121/2_score_data.txt,121/2.im3,121/2.tif,121/2.tif,121/2/CD8/
+"#title","Metadata file for mif"
+"#preamble","Protocol identifier","test_prism_trial_id"
+"#preamble","Assay creator","DFCI"
+"#preamble","Slide scanner model","Hamamatsu"
+"#preamble","Image analysis software","InForm"
+"#preamble","Image analysis software version","2.4.2"
+"#preamble","Cell segmentation model","proprietary"
+"#preamble","Positive cell detection model","proprietary"
+"#preamble","Staining","Bond RX"
+"#preamble","Staining date","2001-01-01 00:00:00"
+"#preamble","Imaging date","2001-01-01 00:00:00"
+"#preamble","Imaging status","Yes"
+"#preamble","Panel","Panel 1: PD-L1, CD68, PD-1, CD8, CD3, pan-cytokeratin, DAPI"
+
+"#skip","ROIs"
+"#header","Cimac id","Roi id","Export id","Score data files","Im3 file","Composite image","Component data","Inform export prefix"
+"#data","CTTTPP111.00","1","CD4","111/1_score_data.txt,111_extra/1_score_data.txt","111/1.im3","111/1.tif","111/1.tif","111/1/CD4/"
+"#data","CTTTPP111.00","1","CD8","111/1_score_data.txt,111_extra/1_score_data.txt","111/1.im3","111/1.tif","111/1.tif","111/1/CD8/"
+"#data","CTTTPP121.00","1","CD4","121/1_score_data.txt","121/1.im3","121/1.tif","121/1.tif","121/1/CD4/"
+"#data","CTTTPP121.00","1","CD8","121/1_score_data.txt","121/1.im3","121/1.tif","121/1.tif","121/1/CD8/"
+"#data","CTTTPP121.00","2","CD4","121/2_score_data.txt","121/2.im3","121/2.tif","121/2.tif","121/2/CD4/"
+"#data","CTTTPP121.00","2","CD8","121/2_score_data.txt","121/2.im3","121/2.tif","121/2.tif","121/2/CD8/"

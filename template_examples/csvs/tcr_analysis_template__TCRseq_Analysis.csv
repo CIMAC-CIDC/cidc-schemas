@@ -2,6 +2,7 @@
 "#preamble","Protocol identifier","test_prism_trial_id"
 "#preamble","Batch id","XYZ"
 "#preamble","Summary info","summary_info.csv"
+"#preamble","Report trial","9204_report.tar.gz"
 
 "#skip","TCRseq Runs"
 "#header","Cimac id","Tra clones umi counts","Trb clones umi counts"

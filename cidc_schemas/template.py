@@ -551,6 +551,7 @@ class LocalFileUploadEntry(NamedTuple):
     gs_key: str
     upload_placeholder: str
     metadata_availability: Optional[bool]
+    allow_empty: Optional[bool]
 
 
 class _FieldDef(NamedTuple):
@@ -755,6 +756,7 @@ class _FieldDef(NamedTuple):
                 gs_key=gs_key,
                 upload_placeholder=uuid,
                 metadata_availability=self.extra_metadata,
+                allow_empty=self.allow_empty,
             ),
             facet_group,
         )

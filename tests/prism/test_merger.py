@@ -352,12 +352,14 @@ def olink_file_infos():
             gs_key="",
             upload_placeholder="npx_1",
             metadata_availability=True,
+            allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path=npx_combined_file_path,
             gs_key="",
             upload_placeholder="study_npx",
             metadata_availability=True,
+            allow_empty=False,
         ),
     ]
 
@@ -399,6 +401,7 @@ def elisa_file_infos():
             gs_key="",
             upload_placeholder="elisa_file",
             metadata_availability=True,
+            allow_empty=False,
         )
     ]
 

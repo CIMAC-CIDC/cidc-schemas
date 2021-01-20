@@ -13,7 +13,7 @@
 "#preamble","Panel","Panel 1: PD-L1, CD68, PD-1, CD8, CD3, pan-cytokeratin, DAPI"
 
 "#skip","ROIs"
-"#header","Cimac id","Roi id","Score data files","Inform export prefix","Im3 file"
-"#data","CTTTPP111.00","1","111/1_score_data.txt,111_extra/1_score_data.txt","111/1_","111/1.im3"
-"#data","CTTTPP121.00","1","121/1_score_data.txt","121/1_","121/1.im3"
-"#data","CTTTPP121.00","2","121/2_score_data.txt","121/2_","121/2.im3"
+"#header","Cimac id","Roi id","Im3 file","Composite image","Component data"
+"#data","CTTTPP111.00","1","111/1.im3","111/1_composite_image.tif","111/1_component_data.tif"
+"#data","CTTTPP121.00","1","121/1.im3","121/1_composite_image.tif","121/1_component_data.tif"
+"#data","CTTTPP121.00","2","121/2.im3","121/2_composite_image.tif","121/2_component_data.tif"

@@ -161,69 +161,6 @@ def _ihc_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
     )
 
 
-@_register_derivation("mif")
-def _mif_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
-    """Generate combined cell seg data"""
-    new_mif = context.trial_metadata["assays"]["mif"][-1]
-    entry_list = new_mif["records"]
-    new_files = []
-    updated_mif = new_mif.copy()
-
-    def fetch_phenotype_df(url: str) -> Optional[pd.DataFrame]:
-        stream = context.fetch_artifact(url, True)
-        if stream:
-            return pd.read_csv(
-                stream, sep="\t", index_col="Cell ID", usecols=["Phenotype", "Cell ID"]
-            )
-        return None
-
-    for n_entry, entry in enumerate(entry_list):
-        roi_list = entry["files"]["regions_of_interest"]
-        for n_roi, roi in enumerate(roi_list):
-            phenotypes = pd.concat(
-                [
-                    fetch_phenotype_df(cell_seg["object_url"])
-                    for cell_seg in roi["cell_seg_data"]
-                ],
-                axis=1,
-            )
-
-            # phenotype entries can be blank, "XXX+", or something like "Other"
-            # since "Other" is likely the most common, turn all of those to blank for aggregation
-
-            other = (
-                phenotypes.mode(axis=0).iloc[0].mode().iloc[0]
-            )  # mode returns same type, so grab first value row/value
-            phenotypes[phenotypes == other] = pd.np.nan  # replace all Other with NaN
-            short_pheno = phenotypes.apply(
-                lambda s: " ".join(s[~s.isna()]).strip(), axis=1
-            )
-
-            stream = context.fetch_artifact(
-                roi["cell_seg_data"][0]["object_url"], True
-            )  # get full cell_seg_data
-            data_df = pd.read_csv(stream, sep="\t", index_col="Cell ID")
-            data_df = data_df[data_df.columns[data_df.columns != "Confidence"]]
-            data_df["Phenotype"] = short_pheno
-
-            file = _build_artifact(
-                context,
-                file_name="combined_cell_seg_data.csv",
-                data=data_df.to_csv(sep="\t"),
-                file_type="combined cell segmentation data",
-                data_format="csv",
-                include_upload_type=True,
-            )
-            new_files.append(file)
-            updated_mif["records"][n_entry]["files"]["regions_of_interest"][n_roi][
-                "combined_cell_seg_data"
-            ] = file.object_url
-
-    md = context.trial_metadata.copy()
-    md["assays"]["mif"][-1] = updated_mif
-    return DeriveFilesResult(new_files, md)
-
-
 @_register_derivation("wes_analysis")
 def _wes_analysis_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
     """Generate a combined MAF file for an entire trial"""

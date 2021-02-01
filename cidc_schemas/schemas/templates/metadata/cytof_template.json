@@ -72,14 +72,6 @@
                         "acquisition_buffer": {
                             "merge_pointer": "0/acquisition_buffer",
                             "type_ref": "assays/components/cytof/cytof_entry.json#properties/acquisition_buffer"
-                        },
-                        "average_event_per_second": {
-                            "merge_pointer": "0/average_event_per_second",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/average_event_per_second"
-                        },
-                        "run_time": {
-                            "merge_pointer": "0/run_time",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/run_time"
                         }
                     },
                     "Preprocessing": {

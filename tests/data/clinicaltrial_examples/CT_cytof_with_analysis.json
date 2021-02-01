@@ -6,7 +6,6 @@
           {
             "cimac_id": "CTSTP01S1.01",
             "injector": "HAT123",
-            "run_time": "23",
             "input_files": {},
             "output_files": {
               "fcs_file": {
@@ -80,13 +79,11 @@
             "preprocessing_notes": "a note like any other note",
             "debarcoding_protocol": "FLUIDIGM XYZ",
             "concatenation_version": "GHIL",
-            "normalization_version": "ABC",
-            "average_event_per_second": 123
+            "normalization_version": "ABC"
           },
           {
             "cimac_id": "CTSTP01S2.01",
             "injector": "HAT123",
-            "run_time": "23",
             "input_files": {},
             "output_files": {
               "fcs_file": {
@@ -160,8 +157,7 @@
             "preprocessing_notes": "a note like any other note",
             "debarcoding_protocol": "FLUIDIGM XYZ",
             "concatenation_version": "GHIL",
-            "normalization_version": "ABC",
-            "average_event_per_second": 123
+            "normalization_version": "ABC"
           }
         ],
         "instrument": "PresNixon123",

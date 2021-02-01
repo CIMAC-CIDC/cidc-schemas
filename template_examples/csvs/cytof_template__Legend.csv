@@ -16,8 +16,6 @@ This .fcs file has been normalized, concatenated, and debarcoded, but has the ve
 "","Date of acquisition","String","Date of CyTOF batch acquisition."
 "","Injector","String","Name of Injector component used as part of the CyTOF software"
 "","Acquisition_buffer","String","Cell staining buffer used for antibody and cell dilution."
-"","Average_event_per_second","Number","Analysis rate of CyTOF expressions per second."
-"","Run_time","String","Length of run time for CyTOF experiment."
 "","Section 'Preprocessing' of tab 'Acquisition and Preprocessing'"
 "","Processed fcs filename","String","Path to a file on a user's computer."
 "","Concatenation version","String","Concatenation of FCS files into a single FCS version number."

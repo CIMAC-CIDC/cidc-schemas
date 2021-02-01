@@ -22,14 +22,6 @@
             "description": "Cell staining buffer used for antibody and cell dilution.",
             "type": "string"
         },
-        "average_event_per_second": {
-            "description": "Analysis rate of CyTOF expressions per second.",
-            "type": "number"
-        },
-        "run_time": {
-            "description": "Length of run time for CyTOF experiment.",
-            "type": "string"
-        },
         "notes": {
             "description": "Any notes pertaining to CyTOF acquisition.",
             "type": "string"

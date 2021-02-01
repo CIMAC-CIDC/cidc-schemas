@@ -54,12 +54,12 @@
                             "merge_pointer": "0/cimac_id",
                             "type_ref": "sample.json#properties/cimac_id"
                         },
-                        "normalized & debarcoded fcs filename": {
-                            "merge_pointer": "0/input_files/normalized_and_debarcoded_fcs",
+                        "intermediate fcs filename": {
+                            "merge_pointer": "0/input_files/intermediate_fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof/{cimac id}/normalized_and_debarcoded.fcs",
+                            "gcs_uri_format": "{protocol identifier}/cytof/{cimac id}/intermediate.fcs",
                             "is_artifact": 1,
-                            "description": "Path to a file on a User's computer. \nThis .fcs file has been normalized, concatenated, and debarcoded, but has the veri-cells and has not been cleaned up."
+                            "description": "Path to a file on a User's computer. \nThis .fcs file is an intermediate file that has been normalized, concatenated, and debarcoded, but has the veri-cells and has not been cleaned up."
                         },
                         "date of acquisition": {
                             "merge_pointer": "0/date_of_acquisition",

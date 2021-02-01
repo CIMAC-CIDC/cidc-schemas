@@ -9,6 +9,6 @@
 "#preamble","Batch id","XYZ1"
 
 "#skip","Run info","","","","","Preprocessing"
-"#header","Cimac id","Normalized & debarcoded fcs filename","Date of acquisition","Injector","Acquisition_buffer","Processed fcs filename","Concatenation version","Normalization version","Beads removed","Debarcoding protocol","Debarcoding key","Preprocessing_notes"
+"#header","Cimac id","Intermediate fcs filename","Date of acquisition","Injector","Acquisition_buffer","Processed fcs filename","Concatenation version","Normalization version","Beads removed","Debarcoding protocol","Debarcoding key","Preprocessing_notes"
 "#data","CTTTPP111.00","sample1_n.fcs","43355","HAT123","ABC","sample1.fcs","GHIL","ABC","Y","FLUIDIGM XYZ","FLUIDIGM 1234","a note like any other note"
 "#data","CTTTPP121.00","sample2_n.fcs","43385","HAT123","ABCD","sample2.fcs","GHIL","ABC","N","FLUIDIGM XYZ","FLUIDIGM 1234","a different note"

@@ -9,7 +9,7 @@
         "processed_fcs": {
             "$ref": "artifacts/artifact_fcs.json"
         },
-        "normalized_and_debarcoded_fcs": {
+        "intermediate_fcs": {
             "$ref": "artifacts/artifact_fcs.json"
         }
     }

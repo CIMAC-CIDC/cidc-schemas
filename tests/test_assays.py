@@ -242,7 +242,7 @@ def test_cytof():
     fcs_3["data_format"] = "FCS"
     fcs_4 = ARTIFACT_OBJ.copy()
     fcs_4["data_format"] = "FCS"
-    record = {"processed_fcs": fcs_1, "normalized_and_debarcoded_fcs": fcs_4}
+    record = {"processed_fcs": fcs_1, "intermediate_fcs": fcs_4}
     validator.validate(record)
 
     # create the cytof object

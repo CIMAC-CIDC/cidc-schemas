@@ -46,7 +46,7 @@ ASSAY_CORE = {"assay_creator": "Mount Sinai"}
 def _fetch_validator(name):
 
     schema_root = SCHEMA_DIR
-    schema_path = os.path.join(SCHEMA_DIR, "assays/%s_assay.json" % name)
+    schema_path = os.path.join(SCHEMA_DIR, "assays/%s.json" % name)
     schema = load_and_validate_schema(schema_path, schema_root)
 
     # create validator assert schemas are valid.
@@ -82,7 +82,7 @@ def test_wes_fastq():
     obj["records"] = [record]
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("wes")
+    validator = _fetch_validator("wes_assay")
     validator.validate(obj)
 
 
@@ -113,7 +113,7 @@ def test_wes_bam():
     obj["records"] = [record]
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("wes")
+    validator = _fetch_validator("wes_assay")
     validator.validate(obj)
 
 
@@ -147,7 +147,7 @@ def test_rna_fastq():
     obj["records"] = [record]
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("rna")
+    validator = _fetch_validator("rna_assay")
     validator.validate(obj)
 
 
@@ -181,7 +181,7 @@ def test_rna_bam():
     obj["records"] = [record]
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("rna")
+    validator = _fetch_validator("rna_assay")
     validator.validate(obj)
 
 
@@ -222,7 +222,7 @@ def test_tcr_fastq():
     obj["records"] = [record]
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("tcr")
+    validator = _fetch_validator("tcr_assay")
     validator.validate(obj)
 
 
@@ -315,7 +315,7 @@ def test_cytof():
     obj["records"] = [record]
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("cytof")
+    validator = _fetch_validator("cytof_assay")
     validator.validate(obj)
 
 
@@ -361,7 +361,7 @@ def test_ihc():
     obj["records"] = [record]
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("ihc")
+    validator = _fetch_validator("ihc_assay")
     validator.validate(obj)
 
 
@@ -422,7 +422,7 @@ def test_mif():
     obj["antibodies"] = [ab]
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("mif")
+    validator = _fetch_validator("mif_assay")
     validator.validate(obj)
 
     # assert negative behaviors
@@ -477,7 +477,7 @@ def test_micsss():
     obj["records"] = [record]
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("micsss")
+    validator = _fetch_validator("micsss_assay")
     validator.validate(obj)
 
     # assert negative behaviors
@@ -508,7 +508,7 @@ def test_olink():
     obj["study"] = {"npx_manager_version": "whatever", "study_npx": npx}
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("olink")
+    validator = _fetch_validator("olink_assay")
     validator.validate(obj)
 
     # assert negative behaviors

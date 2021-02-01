@@ -449,13 +449,12 @@
     ],
 
     "if": {
-        "properties": { 
+        "properties": {
             "type_of_sample": {
-                "enum": [
-                    "Blood"
-                ]
+                "const": "Blood"
             }
-        }
+        },
+        "additionalProperties": false
     },
     "then": {
         "required": ["type_of_primary_container"]

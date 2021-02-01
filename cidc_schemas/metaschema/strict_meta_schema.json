@@ -201,19 +201,19 @@
     "contentMediaType": { "type": "string" },
     "contentEncoding": { "type": "string" },
 
-    "if": { "$ref": "http://json-schema.org/draft-07/schema#" },
-    "then": { "$ref": "http://json-schema.org/draft-07/schema#" },
-    "else": { "$ref": "http://json-schema.org/draft-07/schema#" },
+    "if": { "$ref": "#" },
+    "then": { "$ref": "#" },
+    "else": { "$ref": "#" },
     "allOf": {
-      "$ref": "http://json-schema.org/draft-07/schema#/definitions/schemaArray"
+      "$ref": "#/definitions/schemaArray"
     },
     "anyOf": {
-      "$ref": "http://json-schema.org/draft-07/schema#/definitions/schemaArray"
+      "$ref": "#/definitions/schemaArray"
     },
     "oneOf": {
-      "$ref": "http://json-schema.org/draft-07/schema#/definitions/schemaArray"
+      "$ref": "#/definitions/schemaArray"
     },
-    "not": { "$ref": "http://json-schema.org/draft-07/schema#" }
+    "not": { "$ref": "#" }
   },
   "definitions": {
     "schemaArray": {

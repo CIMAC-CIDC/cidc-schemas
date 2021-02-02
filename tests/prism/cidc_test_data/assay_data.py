@@ -37,7 +37,6 @@ def cytof() -> PrismTestData:
                                 },
                             },
                             "date_of_acquisition": "43355",
-                            "injector": "HAT123",
                             "acquisition_buffer": "ABC",
                             "concatenation_version": "GHIL",
                             "normalization_version": "ABC",
@@ -57,7 +56,6 @@ def cytof() -> PrismTestData:
                                 },
                             },
                             "date_of_acquisition": "43385",
-                            "injector": "HAT123",
                             "acquisition_buffer": "ABCD",
                             "concatenation_version": "GHIL",
                             "normalization_version": "ABC",
@@ -75,6 +73,7 @@ def cytof() -> PrismTestData:
                         {"upload_placeholder": "0bbd7520-18b9-4ec3-8344-49f02dcadb08"},
                     ],
                     "batch_id": "XYZ1",
+                    "injector": "HAT123",
                     "cytof_antibodies": [
                         {
                             "antibody": "CD8",

@@ -22,6 +22,10 @@
             },
             "mergeStrategy": "append"
         },
+        "injector": {
+            "description": "Name of Injector component used as part of the CyTOF software",
+            "type": "string"
+        },
         "instrument": {
             "description": "Name of CyTOF instrument on which experiment was conducted.",
             "type": "string"

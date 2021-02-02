@@ -42,6 +42,10 @@
                     "batch id": {
                             "merge_pointer": "0/batch_id",
                             "type_ref": "assays/cytof_assay.json#properties/batch_id"
+                    },
+                    "injector": {
+                        "merge_pointer": "0/injector",
+                        "type_ref": "assays/cytof_assay.json#properties/injector"
                     }
                 },
                 "data_columns": {
@@ -60,10 +64,6 @@
                         "date of acquisition": {
                             "merge_pointer": "0/date_of_acquisition",
                             "type_ref": "assays/components/cytof/cytof_entry.json#properties/date_of_acquisition"
-                        },
-                        "injector": {
-                            "merge_pointer": "0/injector",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/injector"
                         },
                         "acquisition_buffer": {
                             "merge_pointer": "0/acquisition_buffer",

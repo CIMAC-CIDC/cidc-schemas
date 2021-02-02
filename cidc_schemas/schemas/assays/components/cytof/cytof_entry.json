@@ -14,10 +14,6 @@
             "description": "Date of CyTOF batch acquisition.",
             "type": "string"
         },
-        "injector": {
-            "description": "Name of Injector component used as part of the CyTOF software",
-            "type": "string"
-        },
         "acquisition_buffer": {
             "description": "Cell staining buffer used for antibody and cell dilution.",
             "type": "string"

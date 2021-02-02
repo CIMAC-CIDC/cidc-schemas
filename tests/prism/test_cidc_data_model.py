@@ -35,6 +35,8 @@ def assert_metadata_matches(received: dict, expected: dict, upload_entries: list
     # upload entries.
     diff = DeepDiff(expected, received)
 
+    print(diff)
+
     if upload_entries and diff:
         assert len(diff) == 2, str(
             diff

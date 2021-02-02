@@ -10,10 +10,6 @@
             "$comment": "Id of a sample within this clinical trial, that this assay record is based upon.",
             "$ref": "sample.json#properties/cimac_id"
         },
-        "date_of_acquisition": {
-            "description": "Date of CyTOF batch acquisition.",
-            "type": "string"
-        },
         "acquisition_buffer": {
             "description": "Cell staining buffer used for antibody and cell dilution.",
             "type": "string"

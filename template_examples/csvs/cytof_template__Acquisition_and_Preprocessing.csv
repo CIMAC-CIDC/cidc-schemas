@@ -7,8 +7,9 @@
 "#preamble","Raw fcs filename(s)","batch1f1.fcs,batch1f2.fcs"
 "#preamble","Batch id","XYZ1"
 "#preamble","Injector","HAT123"
+"#preamble","Date of acquisition","43355"
 
-"#skip","Run info","","","","Preprocessing"
-"#header","Cimac id","Intermediate fcs filename","Date of acquisition","Acquisition_buffer","Processed fcs filename","Concatenation version","Normalization version","Beads removed","Debarcoding protocol","Debarcoding key","Preprocessing_notes"
-"#data","CTTTPP111.00","sample1_n.fcs","43355","ABC","sample1.fcs","GHIL","ABC","Y","FLUIDIGM XYZ","FLUIDIGM 1234","a note like any other note"
-"#data","CTTTPP121.00","sample2_n.fcs","43385","ABCD","sample2.fcs","GHIL","ABC","N","FLUIDIGM XYZ","FLUIDIGM 1234","a different note"
+"#skip","Run info","","","Preprocessing"
+"#header","Cimac id","Intermediate fcs filename","Acquisition_buffer","Processed fcs filename","Concatenation version","Normalization version","Beads removed","Debarcoding protocol","Debarcoding key","Preprocessing_notes"
+"#data","CTTTPP111.00","sample1_n.fcs","ABC","sample1.fcs","GHIL","ABC","Y","FLUIDIGM XYZ","FLUIDIGM 1234","a note like any other note"
+"#data","CTTTPP121.00","sample2_n.fcs","ABCD","sample2.fcs","GHIL","ABC","N","FLUIDIGM XYZ","FLUIDIGM 1234","a different note"

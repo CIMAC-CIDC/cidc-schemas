@@ -3,7 +3,6 @@
 "","Assay run id","String","User defined unique identifier for this assay run."
 "","Protocol identifier","String","Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412."
 "","Assay creator","Enum","Indicates what site is filling out the assay.","E.g. 'DFCI'"
-"","Panel name","String","Standardized CyTOF panel name used for antibody sample development."
 "","Instrument","String","Name of CyTOF instrument on which experiment was conducted."
 "","Spike in fcs filename","String","Path to a file on a User's computer. 
 This file contains the normalized & debarcoded spike-in for a batch."

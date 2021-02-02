@@ -2,7 +2,6 @@
 "#preamble","Assay run id","test_prism_trial_id_run_1"
 "#preamble","Protocol identifier","test_prism_trial_id"
 "#preamble","Assay creator","DFCI"
-"#preamble","Panel name","IMMUNE4"
 "#preamble","Instrument","PresNixon123"
 "#preamble","Spike in fcs filename"
 "#preamble","Raw fcs filename(s)","batch1f1.fcs,batch1f2.fcs"

@@ -161,7 +161,6 @@
           }
         ],
         "instrument": "PresNixon123",
-        "panel_name": "IMMUNE4",
         "assay_run_id": "staging_test_cytof_run_1",
         "assay_creator": "DFCI",
         "cytof_antibodies": [

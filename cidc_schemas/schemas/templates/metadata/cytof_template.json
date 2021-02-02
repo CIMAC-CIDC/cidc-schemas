@@ -21,10 +21,6 @@
                         "merge_pointer": "0/assay_creator",
                         "type_ref": "assays/components/assay_core.json#properties/assay_creator"
                     },
-                    "panel name": {
-                        "merge_pointer": "0/panel_name",
-                        "type_ref": "assays/cytof_assay.json#properties/panel_name"
-                    },
                     "instrument": {
                         "merge_pointer": "0/instrument",
                         "type_ref": "assays/cytof_assay.json#properties/instrument"

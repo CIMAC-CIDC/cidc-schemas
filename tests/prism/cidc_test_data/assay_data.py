@@ -69,7 +69,6 @@ def cytof() -> PrismTestData:
                     ],
                     "assay_run_id": "test_prism_trial_id_run_1",
                     "assay_creator": "DFCI",
-                    "panel_name": "IMMUNE4",
                     "instrument": "PresNixon123",
                     "source_fcs": [
                         {"upload_placeholder": "4918a014-0e63-4a36-a45a-c62d593e225e"},

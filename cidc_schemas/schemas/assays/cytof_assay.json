@@ -26,10 +26,6 @@
             "description": "Name of CyTOF instrument on which experiment was conducted.",
             "type": "string"
         },
-        "panel_name": {
-            "description": "Standardized CyTOF panel name used for antibody sample development.",
-            "type": "string"
-        },
         "spike_in_fcs": {
             "$ref": "artifacts/artifact_fcs.json"
         },

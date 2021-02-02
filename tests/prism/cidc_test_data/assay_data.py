@@ -36,7 +36,6 @@ def cytof() -> PrismTestData:
                                     "upload_placeholder": "97c3b6a6-b03d-4ca1-92f8-b8651e51d0c6"
                                 },
                             },
-                            "acquisition_buffer": "ABC",
                             "concatenation_version": "GHIL",
                             "normalization_version": "ABC",
                             "beads_removed": "Y",
@@ -54,7 +53,6 @@ def cytof() -> PrismTestData:
                                     "upload_placeholder": "7e992a16-9c6a-4ef1-90b8-ef1a599b88bc"
                                 },
                             },
-                            "acquisition_buffer": "ABCD",
                             "concatenation_version": "GHIL",
                             "normalization_version": "ABC",
                             "beads_removed": "N",
@@ -73,6 +71,7 @@ def cytof() -> PrismTestData:
                     "batch_id": "XYZ1",
                     "injector": "HAT123",
                     "date_of_acquisition": "43355",
+                    "acquisition_buffer": "ABC",
                     "cytof_antibodies": [
                         {
                             "antibody": "CD8",

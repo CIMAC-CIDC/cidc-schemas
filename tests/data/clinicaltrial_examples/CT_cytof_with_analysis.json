@@ -73,7 +73,6 @@
             },
             "beads_removed": "Y",
             "debarcoding_key": "FLUIDIGM 1234",
-            "acquisition_buffer": "ABC",
             "preprocessing_notes": "a note like any other note",
             "debarcoding_protocol": "FLUIDIGM XYZ",
             "concatenation_version": "GHIL",
@@ -149,7 +148,6 @@
             },
             "beads_removed": "Y",
             "debarcoding_key": "FLUIDIGM 1234",
-            "acquisition_buffer": "ABC",
             "preprocessing_notes": "a note like any other note",
             "debarcoding_protocol": "FLUIDIGM XYZ",
             "concatenation_version": "GHIL",
@@ -161,6 +159,7 @@
         "assay_creator": "DFCI",
         "injector": "HAT123",
         "date_of_acquisition": "43355",
+        "acquisition_buffer": "ABC",
         "cytof_antibodies": [
           {
             "clone": "C8/144b",

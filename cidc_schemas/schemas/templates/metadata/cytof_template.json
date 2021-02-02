@@ -46,6 +46,14 @@
                     "injector": {
                         "merge_pointer": "0/injector",
                         "type_ref": "assays/cytof_assay.json#properties/injector"
+                    },
+                    "date of acquisition": {
+                        "merge_pointer": "0/date_of_acquisition",
+                        "type_ref": "assays/cytof_assay.json#properties/date_of_acquisition"
+                    },
+                    "acquisition_buffer": {
+                        "merge_pointer": "0/acquisition_buffer",
+                        "type_ref": "assays/cytof_assay.json#properties/acquisition_buffer"
                     }
                 },
                 "data_columns": {
@@ -60,14 +68,6 @@
                             "gcs_uri_format": "{protocol identifier}/cytof/{cimac id}/intermediate.fcs",
                             "is_artifact": 1,
                             "description": "Path to a file on a User's computer. \nThis .fcs file is an intermediate file that has been normalized, concatenated, and debarcoded, but has the veri-cells and has not been cleaned up."
-                        },
-                        "date of acquisition": {
-                            "merge_pointer": "0/date_of_acquisition",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/date_of_acquisition"
-                        },
-                        "acquisition_buffer": {
-                            "merge_pointer": "0/acquisition_buffer",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/acquisition_buffer"
                         }
                     },
                     "Preprocessing": {

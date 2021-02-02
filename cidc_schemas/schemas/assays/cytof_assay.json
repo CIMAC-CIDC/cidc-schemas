@@ -30,6 +30,10 @@
             "description": "Date of CyTOF batch acquisition.",
             "type": "string"
         },
+        "acquisition_buffer": {
+            "description": "Cell staining buffer used for antibody and cell dilution.",
+            "type": "string"
+        },
         "instrument": {
             "description": "Name of CyTOF instrument on which experiment was conducted.",
             "type": "string"

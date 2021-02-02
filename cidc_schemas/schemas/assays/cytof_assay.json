@@ -30,6 +30,10 @@
             "description": "Date of CyTOF batch acquisition.",
             "type": "string"
         },
+        "bead_removal": {
+            "description": "Boolean to indicate whether beads have been removed",
+            "type": "boolean"
+        },
         "acquisition_buffer": {
             "description": "Cell staining buffer used for antibody and cell dilution.",
             "type": "string"

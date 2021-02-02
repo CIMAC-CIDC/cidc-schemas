@@ -160,6 +160,7 @@
         "injector": "HAT123",
         "date_of_acquisition": "43355",
         "acquisition_buffer": "ABC",
+        "bead_removal": true,
         "cytof_antibodies": [
           {
             "clone": "C8/144b",

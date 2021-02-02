@@ -54,6 +54,10 @@
                     "acquisition_buffer": {
                         "merge_pointer": "0/acquisition_buffer",
                         "type_ref": "assays/cytof_assay.json#properties/acquisition_buffer"
+                    },
+                    "bead_removal": {
+                        "merge_pointer": "0/bead_removal",
+                        "type_ref": "assays/cytof_assay.json#properties/bead_removal"
                     }
                 },
                 "data_columns": {

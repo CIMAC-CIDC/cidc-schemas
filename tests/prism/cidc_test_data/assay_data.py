@@ -72,6 +72,7 @@ def cytof() -> PrismTestData:
                     "injector": "HAT123",
                     "date_of_acquisition": "43355",
                     "acquisition_buffer": "ABC",
+                    "bead_removal": True,
                     "cytof_antibodies": [
                         {
                             "antibody": "CD8",

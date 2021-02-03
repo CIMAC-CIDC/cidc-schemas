@@ -46,14 +46,18 @@
             "$ref": "artifacts/artifact_fcs.json"
         },
         "normalization_method":{
-            "description": "Process used for normalization prior to analysis.",
+            "description": "Process used for normalization prior to analysis, if any.",
             "type": "string",
             "enum": ["Fluidigm", "Other"] 
         },
         "debarcoding_method": {
-            "description": "Process used for debarcoding.",
+            "description": "Process used for debarcoding, if any.",
             "type": "string",
             "enum": ["Fluidigm", "Other"] 
+        },
+        "harware_version": {
+            "description": "Version no. of instrument hardware used.",
+            "type": "string"
         },
         "source_fcs": {
             "type": "array",

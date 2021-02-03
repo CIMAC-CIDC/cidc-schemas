@@ -68,6 +68,10 @@
                         "merge_pointer": "0/debarcoding_method",
                         "type_ref": "assays/cytof_assay.json#properties/debarcoding_method",
                         "allow_empty": true
+                    },
+                    "harware version": {
+                        "merge_pointer": "0/harware_version",
+                        "type_ref": "assays/cytof_assay.json#properties/harware_version"
                     }
                 },
                 "data_columns": {

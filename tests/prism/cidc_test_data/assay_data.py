@@ -73,6 +73,7 @@ def cytof() -> PrismTestData:
                     "date_of_acquisition": "43355",
                     "acquisition_buffer": "ABC",
                     "bead_removal": True,
+                    "normalization_method": "Fluidigm",
                     "cytof_antibodies": [
                         {
                             "antibody": "CD8",

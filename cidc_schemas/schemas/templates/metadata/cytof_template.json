@@ -51,13 +51,18 @@
                         "merge_pointer": "0/date_of_acquisition",
                         "type_ref": "assays/cytof_assay.json#properties/date_of_acquisition"
                     },
-                    "acquisition_buffer": {
+                    "acquisition buffer": {
                         "merge_pointer": "0/acquisition_buffer",
                         "type_ref": "assays/cytof_assay.json#properties/acquisition_buffer"
                     },
-                    "bead_removal": {
+                    "bead removal": {
                         "merge_pointer": "0/bead_removal",
                         "type_ref": "assays/cytof_assay.json#properties/bead_removal"
+                    },
+                    "normalization method": {
+                        "merge_pointer": "0/normalization_method",
+                        "type_ref": "assays/cytof_assay.json#properties/normalization_method",
+                        "allow_empty": true
                     }
                 },
                 "data_columns": {

@@ -8,8 +8,9 @@
 "#preamble","Batch id","XYZ1"
 "#preamble","Injector","HAT123"
 "#preamble","Date of acquisition","43355"
-"#preamble","Acquisition_buffer","ABC"
-"#preamble","Bead_removal","True"
+"#preamble","Acquisition buffer","ABC"
+"#preamble","Bead removal","True"
+"#preamble","Normalization method","Fluidigm"
 
 "#skip","Run info","","Preprocessing"
 "#header","Cimac id","Intermediate fcs filename","Processed fcs filename","Concatenation version","Normalization version","Beads removed","Debarcoding protocol","Debarcoding key","Preprocessing_notes"

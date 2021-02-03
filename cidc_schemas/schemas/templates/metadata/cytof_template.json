@@ -63,6 +63,11 @@
                         "merge_pointer": "0/normalization_method",
                         "type_ref": "assays/cytof_assay.json#properties/normalization_method",
                         "allow_empty": true
+                    },
+                    "debarcoding method": {
+                        "merge_pointer": "0/debarcoding_method",
+                        "type_ref": "assays/cytof_assay.json#properties/debarcoding_method",
+                        "allow_empty": true
                     }
                 },
                 "data_columns": {

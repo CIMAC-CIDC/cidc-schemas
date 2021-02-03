@@ -12,7 +12,7 @@
 "#preamble","Bead removal","True"
 "#preamble","Normalization method","Fluidigm"
 "#preamble","Debarcoding method","Fluidigm"
-"#preamble","Harware version","3.0.2"
+"#preamble","Harware version","Fluidigm 3.0.2"
 
 "#skip","Run info","","Preprocessing"
 "#header","Cimac id","Intermediate fcs filename","Processed fcs filename","Concatenation version","Normalization version","Beads removed","Debarcoding protocol","Debarcoding key","Preprocessing_notes"

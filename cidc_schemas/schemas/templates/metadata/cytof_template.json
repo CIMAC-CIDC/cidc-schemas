@@ -13,6 +13,10 @@
                         "merge_pointer": "/assay_run_id",
                         "type_ref": "assays/cytof_assay.json#properties/assay_run_id"
                     },
+                    "batch id": {
+                        "merge_pointer": "0/batch_id",
+                        "type_ref": "assays/cytof_assay.json#properties/batch_id"
+                    },
                     "protocol identifier": {
                         "merge_pointer": "3/protocol_identifier",
                         "type_ref": "clinical_trial.json#properties/protocol_identifier"
@@ -38,10 +42,6 @@
                         "type_ref": "assays/components/local_file.json#properties/file_path",
                         "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/source_{num}.fcs",
                         "is_artifact": "multi"
-                    },
-                    "batch id": {
-                            "merge_pointer": "0/batch_id",
-                            "type_ref": "assays/cytof_assay.json#properties/batch_id"
                     },
                     "injector": {
                         "merge_pointer": "0/injector",

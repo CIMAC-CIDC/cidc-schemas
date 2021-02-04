@@ -8,6 +8,7 @@
 "","Spike in fcs filename","String","Path to a file on a User's computer. 
 This file contains the normalized & debarcoded spike-in for a batch."
 "","Raw fcs filename(s)","String","Path to a file on a user's computer."
+"","Controls fcs filename(s)","String","Path to a file on a user's computer."
 "","Injector","String","Name of Injector component used as part of the CyTOF software"
 "","Date of acquisition","String","Date of CyTOF batch acquisition."
 "","Acquisition buffer","String","Cell staining buffer used for antibody and cell dilution."

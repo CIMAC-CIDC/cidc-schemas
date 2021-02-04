@@ -6,6 +6,7 @@
 "#preamble","Instrument","PresNixon123"
 "#preamble","Spike in fcs filename"
 "#preamble","Raw fcs filename(s)","batch1f1.fcs,batch1f2.fcs"
+"#preamble","Controls fcs filename(s)"
 "#preamble","Injector","HAT123"
 "#preamble","Date of acquisition","43355"
 "#preamble","Acquisition buffer","ABC"

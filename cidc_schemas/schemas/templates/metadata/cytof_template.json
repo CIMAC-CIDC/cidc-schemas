@@ -43,6 +43,13 @@
                         "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/source_{num}.fcs",
                         "is_artifact": "multi"
                     },
+                    "controls fcs filename(s)": {
+                        "merge_pointer": "0/controls_fcs",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/control_{num}.fcs",
+                        "is_artifact": "multi",
+                        "allow_empty": true
+                    },
                     "injector": {
                         "merge_pointer": "0/injector",
                         "type_ref": "assays/cytof_assay.json#properties/injector"

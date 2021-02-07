@@ -71,9 +71,9 @@
                         "type_ref": "assays/cytof_assay.json#properties/normalization_method",
                         "allow_empty": true
                     },
-                    "debarcoding method": {
-                        "merge_pointer": "0/debarcoding_method",
-                        "type_ref": "assays/cytof_assay.json#properties/debarcoding_method",
+                    "debarcoding protocol": {
+                        "merge_pointer": "0/debarcoding_protocol",
+                        "type_ref": "assays/cytof_assay.json#properties/debarcoding_protocol",
                         "allow_empty": true
                     },
                     "harware version": {
@@ -113,10 +113,6 @@
                         "beads removed": {
                             "merge_pointer": "0/beads_removed",
                             "type_ref": "assays/components/cytof/cytof_entry.json#properties/beads_removed"
-                        },
-                        "debarcoding protocol": {
-                            "merge_pointer": "0/debarcoding_protocol",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/debarcoding_protocol"
                         },
                         "debarcoding key": {
                             "merge_pointer": "0/debarcoding_key",

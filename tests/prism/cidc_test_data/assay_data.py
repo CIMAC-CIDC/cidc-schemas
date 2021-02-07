@@ -39,7 +39,6 @@ def cytof() -> PrismTestData:
                             "concatenation_version": "GHIL",
                             "normalization_version": "ABC",
                             "beads_removed": "Y",
-                            "debarcoding_protocol": "FLUIDIGM XYZ",
                             "debarcoding_key": "FLUIDIGM 1234",
                             "preprocessing_notes": "a note like any other note",
                         },
@@ -56,7 +55,6 @@ def cytof() -> PrismTestData:
                             "concatenation_version": "GHIL",
                             "normalization_version": "ABC",
                             "beads_removed": "N",
-                            "debarcoding_protocol": "FLUIDIGM XYZ",
                             "debarcoding_key": "FLUIDIGM 1234",
                             "preprocessing_notes": "a different note",
                         },
@@ -74,7 +72,7 @@ def cytof() -> PrismTestData:
                     "acquisition_buffer": "ABC",
                     "bead_removal": True,
                     "normalization_method": "Fluidigm",
-                    "debarcoding_method": "Fluidigm",
+                    "debarcoding_protocol": "Fluidigm",
                     "harware_version": "Fluidigm 3.0.2",
                     "cytof_antibodies": [
                         {

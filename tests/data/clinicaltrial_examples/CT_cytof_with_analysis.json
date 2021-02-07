@@ -74,7 +74,6 @@
             "beads_removed": "Y",
             "debarcoding_key": "FLUIDIGM 1234",
             "preprocessing_notes": "a note like any other note",
-            "debarcoding_protocol": "FLUIDIGM XYZ",
             "concatenation_version": "GHIL",
             "normalization_version": "ABC"
           },
@@ -149,7 +148,6 @@
             "beads_removed": "Y",
             "debarcoding_key": "FLUIDIGM 1234",
             "preprocessing_notes": "a note like any other note",
-            "debarcoding_protocol": "FLUIDIGM XYZ",
             "concatenation_version": "GHIL",
             "normalization_version": "ABC"
           }

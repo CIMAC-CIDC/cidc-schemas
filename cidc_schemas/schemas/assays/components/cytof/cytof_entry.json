@@ -35,10 +35,6 @@
             "type": "string",
             "format": "date"
         },
-        "debarcoding_protocol": {
-            "description": "The strategy/kit used to barcode CyTOF samples.",
-            "type": "string"
-        },
         "debarcoding_key": {
             "description": "An ID that maps to the specific isotope labeling scheme in the debarcoding protocol.",
             "type": "string"

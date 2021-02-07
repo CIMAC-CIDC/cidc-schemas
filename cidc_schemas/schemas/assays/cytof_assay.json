@@ -50,10 +50,9 @@
             "type": "string",
             "enum": ["Fluidigm", "Other"] 
         },
-        "debarcoding_method": {
-            "description": "Process used for debarcoding, if any.",
-            "type": "string",
-            "enum": ["Fluidigm", "Other"] 
+        "debarcoding_protocol": {
+            "description": "The strategy/kit used to barcode CyTOF samples, if any",
+            "type": "string"
         },
         "harware_version": {
             "description": "Version no. of instrument hardware used.",

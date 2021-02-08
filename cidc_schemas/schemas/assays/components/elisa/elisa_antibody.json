@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft-07/schema#",
   "$id": "elisa_antibody",
   "title": "ELISA Antibody",
   "description": "Data specific to antibody preparation on the ELISA assay.",

@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "https://json-schema.org/draft-07/schema#",
     "$id": "tcr_pair_analysis",
     "title": "TCRseq analysis TRA/TRB clone output files",
     "description": "Output files generated from the TCRseq assay: TRA and TRB clones",

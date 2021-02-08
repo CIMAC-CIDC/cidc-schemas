@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft-07/schema#",
   "$id": "mif_roi",
   "description": "A region of interest (ROI) is a portion of an image which has been analyzed using image processing software.",
   "allOf": [

@@ -1,10 +1,10 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft-07/schema#",
   "$id": "ngs_assay_core",
   "title": "NGS Assay Core",
   "type": "object",
   "description": "Common properties for NGS Assays.",
-  "additionalProperties": true,
+  "inheritableBase": true,
   "properties": {
     "sequencer_platform": {
       "description": "Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.",

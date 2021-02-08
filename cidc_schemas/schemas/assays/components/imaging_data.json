@@ -1,10 +1,10 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft-07/schema#",
   "$id": "imaging_data",
   "title": "Imaging Data",
   "description": "Shared schema for experiments involving the use of imaging data.",
   "type": "object",
-  "additionalProperties": true,
+  "inheritableBase": true,
   "properties": {
     "staining": {
       "description": "'manual' or Model version of the autostainer instrument used for tissue sample labeling.",

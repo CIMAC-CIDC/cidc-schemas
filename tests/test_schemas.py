@@ -33,3 +33,21 @@ def schema_paths():
 def test_schema(schema_path):
     """Ensure the schema file conforms to JSON schema draft 7"""
     assert load_and_validate_schema(schema_path)
+
+
+def recursive_additionalProperties(schema: dict, name: str):
+    if not isinstance(schema, dict):
+        return
+
+    if schema.get("type") == "object":
+        assert "additionalProperties" in schema or schema.get("inheritableBase"), name
+
+    for k, v in schema.items():
+        recursive_additionalProperties(v, name + "/" + k)
+
+
+def test_additionalProperties():
+    ct_schema = load_and_validate_schema(
+        os.path.join(SCHEMA_DIR, "clinical_trial.json")
+    )
+    recursive_additionalProperties(ct_schema, "")

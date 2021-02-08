@@ -1,5 +1,5 @@
 {
-  "$schema": "metaschema/strict_meta_schema.json#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "collection_event.json",
   "description": "Defines a collection event and its biospecimen type hierarchy.",
   "additionalProperties": false,

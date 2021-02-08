@@ -513,7 +513,7 @@ def test_convert_api_to_template_rna():
                         "RNAseq Runs": {
                             "cimac id": {
                                 "merge_pointer": "/cimac_id",
-                                "type_ref": "assays/components/ngs/rna/rna_level1_analysis.json#properties/cimac_id",
+                                "type_ref": "sample.json#properties/cimac_id",
                                 "process_as": [
                                     {
                                         "parse_through": "lambda id: f'analysis/star/{id}/{id}.sorted.bam'",
@@ -531,9 +531,7 @@ def test_convert_api_to_template_rna():
         },
     }
 
-    assay_schema = _load_dont_validate_schema(
-        "assays/components/ngs/rna/rna_analysis.json"
-    )
+    assay_schema = _load_dont_validate_schema("assays/components/ngs/rna/rna_analysis.json")
     rna_output = _convert_api_to_template("rna", rna_api, assay_schema)
     assert DeepDiff(rna_json, rna_output) == {}
 

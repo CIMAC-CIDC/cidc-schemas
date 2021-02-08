@@ -57,7 +57,7 @@ def generate_analysis_template_schemas(
     target_dir: str = os.path.join(TEMPLATE_DIR, "analyses"),
     fname_format: Callable[
         [str], str
-    ] = lambda file: f"{file + ('_level1' if file=='rna' else '')}_analysis_template.json",
+    ] = lambda file: f"{file}_analysis_template.json",
 ):
     """Uses output_API.json's from cidc-ngs-pipeline-api along with existing assays/components/ngs analysis templates to generate templates/analyses schemas"""
     # for each output_API.json
@@ -351,9 +351,12 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
             short_key = long_key.replace(" ", "_")
 
         # static header
-        if "cimac id" in long_key and name == "wes":
+        if "cimac id" in long_key:
             type_ref = "sample.json#properties/cimac_id"
-            merge_pointer = f"/{short_key}/cimac_id"
+            if name == "wes":
+                merge_pointer = f"/{short_key}/cimac_id"
+            else:
+                merge_pointer = f"/{long_key.replace(' ','_')}"
         else:
             type_ref = f"assays/components/ngs/{name}/"
 

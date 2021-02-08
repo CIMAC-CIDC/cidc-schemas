@@ -75,6 +75,10 @@ def generate_docs(out_directory: str = HTML_DIR):
     templateLoader = jinja2.FileSystemLoader(TEMPLATES_DIR)
     templateEnv = jinja2.Environment(loader=templateLoader)
 
+    # Use this in docs templates to print out variable values, e.g.
+    # {{ some_variable | print }}
+    templateEnv.filters["print"] = lambda arg: print(arg)
+
     # Generate index template
     schemas = load_schemas()
     index_template = templateEnv.get_template("index.j2")

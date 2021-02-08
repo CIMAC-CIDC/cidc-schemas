@@ -1,5 +1,5 @@
 {
-  "$schema": "metaschema/strict_meta_schema.json#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "somatic",
   "title": "WES Somatic Output Files",
   "type": "object",

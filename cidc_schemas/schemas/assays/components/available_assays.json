@@ -1,5 +1,5 @@
 {
-  "$schema": "metaschema/strict_meta_schema.json#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "available_assays",
   "title": "Assays which are available in the network",
   "description": "Reference for every available assay in network.",

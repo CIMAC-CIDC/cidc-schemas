@@ -1,5 +1,5 @@
 {
-    "$schema": "metaschema/strict_meta_schema.json#",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "tcr_single_analysis",
     "title": "TCR Output Files",
     "description": "Output files generated from the TCRseq assay: TRA and TRB clones",

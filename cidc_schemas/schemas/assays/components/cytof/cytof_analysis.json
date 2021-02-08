@@ -1,5 +1,5 @@
 {
-    "$schema": "metaschema/strict_meta_schema.json#",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "cytof_analysis",
     "title": "CyTOF Output Files",
     "description": "Output files generated from the CyTOF assay: FCS file with enumerations for compartment, assignment and profiling cell labels; 3 CSV keys for mapping from respective enumeration indices to the cell labels; 3 CSV files providing cell count information for each of the cell labels",

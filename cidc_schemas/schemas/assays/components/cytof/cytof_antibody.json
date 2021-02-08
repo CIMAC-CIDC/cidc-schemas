@@ -1,5 +1,5 @@
 {
-  "$schema": "metaschema/strict_meta_schema.json#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "cytof_antibody",
   "title": "CyTOF Conjugated Antibody",
   "description": "Data specific to antibody preparation on the CyTOF assay.",

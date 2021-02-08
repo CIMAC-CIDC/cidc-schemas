@@ -74,9 +74,6 @@ class _Validator(jsonschema.Draft7Validator):
     
     """
 
-    with open(METASCHEMA_PATH) as metaschema_file:
-        META_SCHEMA = json.load(metaschema_file)
-
     def __init__(self, *args, **kwargs):
 
         super().__init__(*args, **kwargs)

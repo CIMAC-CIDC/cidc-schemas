@@ -1,10 +1,10 @@
 {
-  "$schema": "metaschema/strict_meta_schema.json#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "artifact_core",
   "title": "Artifact Core",
   "type": "object",
   "description": "Any file artifact associated with a clinical trial.",
-  "inheritableBase": true,
+  "additionalProperties": true,
   "properties": {
     "upload_placeholder": {
       "$comment": "It might be something like random uuid or `upload_job_id` to help trace everything back.",

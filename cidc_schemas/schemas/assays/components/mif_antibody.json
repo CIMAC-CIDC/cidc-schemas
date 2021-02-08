@@ -1,5 +1,5 @@
 {
-  "$schema": "metaschema/strict_meta_schema.json#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "mif_antibody",
   "title": "mIF antibody",
   "description": "Data specific to antibody preparation on the multiplex immunofluorescence platform.",

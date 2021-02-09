@@ -125,18 +125,18 @@
     <h3>clonality.full.json</h3>
   	<pre><code>{
     "$id": "WES Clonality Output Files",
-    "$schema": "metaschema/strict_meta_schema.json#",
+    "$schema": "https://json-schema.org/draft-07/schema#",
     "additionalProperties": false,
     "description": "Clonality output files.",
     "properties": {
         "clonality_pyclone": {
             "$id": "tsv_artifact",
-            "$schema": "metaschema/strict_meta_schema.json#",
+            "$schema": "https://json-schema.org/draft-07/schema#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "metaschema/strict_meta_schema.json#",
+                    "$schema": "https://json-schema.org/draft-07/schema#",
                     "anyOf": [
                         {
                             "required": [
@@ -346,12 +346,12 @@
         },
         "clonality_table": {
             "$id": "tsv_artifact",
-            "$schema": "metaschema/strict_meta_schema.json#",
+            "$schema": "https://json-schema.org/draft-07/schema#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "metaschema/strict_meta_schema.json#",
+                    "$schema": "https://json-schema.org/draft-07/schema#",
                     "anyOf": [
                         {
                             "required": [

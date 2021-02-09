@@ -150,19 +150,19 @@
     <h3>composite_image.full.json</h3>
   	<pre><code>{
     "$id": "composite_image",
-    "$schema": "metaschema/strict_meta_schema.json#",
+    "$schema": "https://json-schema.org/draft-07/schema#",
     "description": "Regions of interest obtained from composite images.",
     "inheritableBase": true,
     "properties": {
         "component_data": {
             "$comment": "Imaging data resulting from the individual components of the imaging experiment.",
             "$id": "image_artifact",
-            "$schema": "metaschema/strict_meta_schema.json#",
+            "$schema": "https://json-schema.org/draft-07/schema#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "metaschema/strict_meta_schema.json#",
+                    "$schema": "https://json-schema.org/draft-07/schema#",
                     "anyOf": [
                         {
                             "required": [
@@ -400,12 +400,12 @@
         "composite_image": {
             "$comment": "Image produced from the combination of multiple imaging experiment data images.",
             "$id": "image_artifact",
-            "$schema": "metaschema/strict_meta_schema.json#",
+            "$schema": "https://json-schema.org/draft-07/schema#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "metaschema/strict_meta_schema.json#",
+                    "$schema": "https://json-schema.org/draft-07/schema#",
                     "anyOf": [
                         {
                             "required": [
@@ -643,12 +643,12 @@
         "im3": {
             "$comment": "PerkinElmer Multispectral Images.",
             "$id": "image_artifact",
-            "$schema": "metaschema/strict_meta_schema.json#",
+            "$schema": "https://json-schema.org/draft-07/schema#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "metaschema/strict_meta_schema.json#",
+                    "$schema": "https://json-schema.org/draft-07/schema#",
                     "anyOf": [
                         {
                             "required": [

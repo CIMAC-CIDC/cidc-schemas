@@ -471,14 +471,14 @@
     <h3>participant.full.json</h3>
   	<pre><code>{
     "$id": "participant",
-    "$schema": "metaschema/strict_meta_schema.json#",
+    "$schema": "https://json-schema.org/draft-07/schema#",
     "additionalProperties": false,
     "description": "The collection of all data related to a specific participant in the context of a specific clinical trial.\n",
     "properties": {
         "cidc_participant_id": {
+            "$comment": "in_doc_ref_pattern: /participants/*/cidc_participant_id",
             "description": "The generated, CIDC-internal identifier for this participant.",
             "example": "CIDC-Trial101-e1b2c3",
-            "in_doc_ref_pattern": "/participants/*/cidc_participant_id",
             "pattern": "^CIDC-\\w+-\\w+$",
             "type": "string"
         },
@@ -486,7 +486,6 @@
             "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_participant_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_participant_id $ref.",
             "description": "Participant identifier assigned by the CIMAC-CIDC Network. Formated as: C?????? (first 7 characters of CIMAC ID)",
             "example": "CTTTP01",
-            "in_doc_ref_pattern": "/participants/*/cimac_participant_id",
             "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}$",
             "type": "string"
         },
@@ -499,7 +498,6 @@
             "$comment": "Values in this field are validated dynamically by `in_doc_ref_pattern`.",
             "description": "Categorical description of cohorts, arms, and treatment groups.",
             "example": "Arm_Z",
-            "in_doc_ref_pattern": "/allowed_cohort_names/*",
             "type": "string"
         },
         "essential_patient_entry_number": {
@@ -550,7 +548,7 @@
         "samples": {
             "items": {
                 "$id": "sample",
-                "$schema": "metaschema/strict_meta_schema.json#",
+                "$schema": "https://json-schema.org/draft-07/schema#",
                 "additionalProperties": false,
                 "description": "Any material sample taken from a biological entity for testing, diagnostic, propagation, treatment or research purposes, including a sample obtained from a living organism or taken from the biological object after halting of all its life functions. Biospecimen can contain one or more components including but not limited to cellular molecules, cells, tissues, organs, body fluids, embryos, and body excretory products.",
                 "if": {
@@ -575,7 +573,7 @@
                         "description": "Pertaining to a portion (volume or weight) of the whole.",
                         "items": {
                             "$id": "aliquot",
-                            "$schema": "metaschema/strict_meta_schema.json#",
+                            "$schema": "https://json-schema.org/draft-07/schema#",
                             "additionalProperties": false,
                             "description": "Pertaining to a portion (volume or weight) of the whole.",
                             "properties": {
@@ -651,9 +649,9 @@
                         "type": "string"
                     },
                     "cidc_id": {
+                        "$comment": "in_doc_ref_pattern: /participants/*/samples/*/cidc_id",
                         "description": "The generated, CIDC-internal identifier for this sample.",
                         "example": "CIDC-Trial101-e1b2c3-a7b",
-                        "in_doc_ref_pattern": "/participants/*/samples/*/cidc_id",
                         "pattern": "^CIDC-\\w+-\\w+-\\w+$",
                         "type": "string"
                     },
@@ -661,7 +659,6 @@
                         "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.",
                         "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??",
                         "example": "CTTTP01A1.00",
-                        "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
                         "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
                         "type": "string"
                     },
@@ -673,7 +670,6 @@
                     "collection_event_name": {
                         "$comment": "Values in this field are validated dynamically by `in_doc_ref_pattern`.",
                         "description": "Categorical description of timepoint at which the sample was taken.",
-                        "in_doc_ref_pattern": "/allowed_collection_event_names/*",
                         "title": "Collection Event Name",
                         "type": "string"
                     },

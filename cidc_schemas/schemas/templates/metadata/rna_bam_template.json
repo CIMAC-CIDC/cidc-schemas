@@ -45,7 +45,14 @@
               "merge_pointer": "0/files/bam",
               "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/reads_{num}.bam",
               "is_artifact": "multi",
-              "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list"
+              "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list",
+              "process_as": [
+                                {
+                                    "parse_through": "lambda run: 'BAM'",
+                                    "merge_pointer": "0/files/bam/data_format",
+                                    "type_ref": ".../data_format"
+                                }
+              ]
             },
             "library yield ng": {
               "merge_pointer": "0/library_yield_ng",

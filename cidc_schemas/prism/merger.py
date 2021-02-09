@@ -32,22 +32,46 @@ def _set_data_format(ct: dict, artifact: dict):
     )
 
     for error in validator.iter_errors(ct):
-        if not isinstance(error, jsonschema.exceptions.ValidationError):
-            continue
+        if isinstance(error, jsonschema.exceptions.ValidationError):
+            if error.validator == "const":
+                if error.path[-1] == "data_format":
+                    if error.instance == artifact["data_format"]:
+                        artifact["data_format"] = error.validator_value
+                        # Since data_format is specified as a constant in the schema,
+                        # the validator_value on this exception will be the desired data format.
+                        return
+            elif error.validator == "anyOf":
+                schema = validator.schema
+                path = list(DeepSearch(ct, artifact)["matched_values"])[
+                    0
+                ]  # {"matched_values": {"root['path'][2]['artifact']"}}
+                path = path[4:].strip("[]").split("][")  # ["'path'", "2", "'artifact'"]
+                path = [eval(p) for p in path]  # ["path", 2, "artifact"]
 
-        if error.validator != "const":
-            continue
+                def fwd(sc: dict) -> dict:
+                    if "properties" in sc:
+                        return fwd(sc["properties"])
+                    elif "items" in sc:
+                        return fwd(sc["items"])
+                    elif "anyOf" in sc or "allOf" in sc:
+                        anyall = sc.get("anyOf", []) + sc.get("all", [])
+                        sc = {}
+                        for a in anyall:
+                            sc.update(a)
+                        return fwd(sc)
+                    else:
+                        return sc
 
-        if error.path[-1] != "data_format":
-            continue
+                schema = fwd(schema)
+                for p in path[:-1]:
+                    if p in schema:
+                        schema = schema[p]
+                    schema = fwd(schema)
 
-        if error.instance != artifact["data_format"]:
-            continue
-
-        # Since data_format is specified as a constant in the schema,
-        # the validator_value on this exception will be the desired data format.
-        artifact["data_format"] = error.validator_value
-        return
+                if isinstance(schema, dict) and "const" in schema.get(
+                    "data_format", {}
+                ):
+                    artifact["data_format"] = schema["data_format"]["const"]
 
     # data format was not set!
 

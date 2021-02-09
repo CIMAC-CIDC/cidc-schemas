@@ -8,7 +8,7 @@
   "properties": {
     "data_format": {
       "description": "Data format.",
-      "enum": ["BAM", "[NOT SET]"]
+      "const": "BAM"
     },
     "upload_placeholder": {
       "$ref": "artifacts/artifact_core.json#properties/upload_placeholder"

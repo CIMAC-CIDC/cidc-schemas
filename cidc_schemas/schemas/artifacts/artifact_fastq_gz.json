@@ -8,7 +8,7 @@
   "properties": {
     "data_format": {
       "description": "Data format.",
-      "const": "FASTQ.GZ"
+      "enum": ["FASTQ.GZ", "[NOT SET]"]
     },
     "upload_placeholder": {
       "$ref": "artifacts/artifact_core.json#properties/upload_placeholder"

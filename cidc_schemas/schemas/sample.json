@@ -7,7 +7,7 @@
     "properties": {
         "cimac_id": {
             "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??",
-            "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
+            "$comment":  "in_doc_ref_pattern: /participants/*/samples/*/cimac_id",
             "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.",
             "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
             "example": "CTTTP01A1.00",
@@ -15,7 +15,7 @@
         },
         "cidc_id": {
             "type": "string",
-            "in_doc_ref_pattern": "/participants/*/samples/*/cidc_id",
+            "$comment": "in_doc_ref_pattern: /participants/*/samples/*/cidc_id",
             "pattern": "^CIDC-\\w+-\\w+-\\w+$",
             "example": "CIDC-Trial101-e1b2c3-a7b",
             "description": "The generated, CIDC-internal identifier for this sample."
@@ -72,7 +72,7 @@
             "title": "Collection Event Name",
             "description": "Categorical description of timepoint at which the sample was taken.",
             "type": "string",
-            "in_doc_ref_pattern": "/allowed_collection_event_names/*",
+            "$comment": "in_doc_ref_pattern: /allowed_collection_event_names/*",
             "$comment": "Values in this field are validated dynamically by `in_doc_ref_pattern`."
         },
         "sample_location": {

@@ -38,7 +38,6 @@ def _fetch_validator():
 @pytest.mark.parametrize("example_path", example_paths(), ids=lambda x: x[1])
 def test_schema(example_path):
     validator = _fetch_validator()
-    print(validator.resolver)
 
     full_path = os.path.join(*example_path)
     root, fname = example_path

@@ -41,7 +41,7 @@ def _set_data_format(ct: dict, artifact: dict):
                         # the validator_value on this exception will be the desired data format.
                         return
             elif error.validator == "anyOf":
-                schema = validator.schema
+                schema = error.schema
                 path = list(DeepSearch(ct, artifact)["matched_values"])[
                     0
                 ]  # {"matched_values": {"root['path'][2]['artifact']"}}

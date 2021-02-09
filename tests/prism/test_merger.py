@@ -204,7 +204,7 @@ def test_merge_clinical_trial_metadata_invalid_target():
 
 @pytest.fixture
 def ct_and_artifacts():
-    num_artifacts = 50
+    num_artifacts = 500
 
     def make_artifacts():
         return [

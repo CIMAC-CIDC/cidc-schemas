@@ -8,8 +8,11 @@ import logging
 
 import pytest
 
+from cidc_schemas.prism import set_prism_encrypt_key
 from cidc_schemas.template import Template
 from cidc_schemas.constants import SCHEMA_DIR, MANIFEST_DIR
+
+set_prism_encrypt_key("")
 
 # Set logger config to hide DEBUG statements for now
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)

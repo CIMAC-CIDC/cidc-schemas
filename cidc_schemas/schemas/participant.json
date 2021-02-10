@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "participant",
   "title": "Participant",
   "description": "The collection of all data related to a specific participant in the context of a specific clinical trial.\n",
@@ -8,7 +8,7 @@
   "properties": {
     "cimac_participant_id": {
       "type": "string",
-      "$comment": "in_doc_ref_pattern: /participants/*/cimac_participant_id",
+      "in_doc_ref_pattern": "/participants/*/cimac_participant_id",
       "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_participant_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_participant_id $ref.",
       "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}$",
       "example": "CTTTP01",
@@ -16,7 +16,7 @@
     },
     "cidc_participant_id": {
       "type": "string",
-      "$comment": "in_doc_ref_pattern: /participants/*/cidc_participant_id",
+      "in_doc_ref_pattern": "/participants/*/cidc_participant_id",
       "pattern": "^CIDC-\\w+-\\w+$",
       "example": "CIDC-Trial101-e1b2c3",
       "description": "The generated, CIDC-internal identifier for this participant."
@@ -30,7 +30,7 @@
       "type": "string",
       "description": "Categorical description of cohorts, arms, and treatment groups.",
       "example": "Arm_Z",
-      "$comment": "in_doc_ref_pattern: /allowed_cohort_names/*",
+      "in_doc_ref_pattern": "/allowed_cohort_names/*",
       "$comment": "Values in this field are validated dynamically by `in_doc_ref_pattern`."
     },
     "essential_patient_entry_number": {

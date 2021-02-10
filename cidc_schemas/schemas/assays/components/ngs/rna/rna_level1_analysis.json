@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "rna_level1_analysis",
   "title": "RNAseq Level 1 Sample Analysis Output Files",
   "type": "object",

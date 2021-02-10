@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "tcr_input",
   "description": "TCRseq replicate of interest.",
   "additionalProperties": false,

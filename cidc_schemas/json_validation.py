@@ -3,14 +3,15 @@
 """Tools for performing validations based on json schemas"""
 
 import os
-import json
 import copy
 import fnmatch
-import collections.abc
 import functools
+import json
+import collections.abc
 from typing import Optional, List, Callable, Union
 
 import dateparser
+from deepdiff import DeepSearch
 import jsonschema
 from jsonschema.exceptions import ValidationError, RefResolutionError
 
@@ -74,6 +75,9 @@ class _Validator(jsonschema.Draft7Validator):
     
     """
 
+    with open(METASCHEMA_PATH) as metaschema_file:
+        META_SCHEMA = json.load(metaschema_file)
+
     def __init__(self, *args, **kwargs):
 
         super().__init__(*args, **kwargs)
@@ -83,28 +87,44 @@ class _Validator(jsonschema.Draft7Validator):
             self.META_SCHEMA, validators={"in_doc_ref_pattern": _in_doc_refs_check}
         )(*args, **kwargs)
 
+    def _build_in_doc_refs_cache(self, instance: JSON):
+        self.in_doc_refs_cache = dict()
+        search = DeepSearch(self.schema, "in_doc_ref_pattern")
+
+        if "matched_paths" not in search:
+            # means there are no `in_doc_ref_pattern`s that we need to validate in this schema
+            return
+
+        for path in search["matched_paths"]:
+            scope = {"root": self.schema}
+            exec(f"ref_path_pattern = {path}", scope)
+            ref_path_pattern = scope["ref_path_pattern"]
+            # If there are no cached values for this ref path pattern, collect them
+            if ref_path_pattern not in self.in_doc_refs_cache:
+                self.in_doc_refs_cache[
+                    ref_path_pattern
+                ] = self._get_values_for_path_pattern(ref_path_pattern, instance)
+
+    def validate(self, instance: JSON, *args, **kwargs):
+        self._build_in_doc_refs_cache(instance)
+
+        super().validate(instance, *args, **kwargs)
+
     def iter_errors(self, instance: JSON, _schema: Optional[dict] = None):
         """ 
         This is the main validation method. `.is_valid`, `.validate` are based on this. 
     
         It will be called recursively, while `.descend`ing instance and schema.
         """
-        in_doc_refs_cache = {}
-
         # First we call usual Draft7Validator validation
         for downstream_error in super().iter_errors(instance, _schema):
             # and if an error is not "ours" - just propagate it up
             if not isinstance(downstream_error, InDocRefNotFoundError):
                 yield downstream_error
             # if it is "ours" - we actually check ref
-            elif not self._ensure_in_doc_ref(
-                # error.instance - is value in doc that should satisfy a constraint
-                ref=downstream_error.instance,
-                # error.validator_value - is value of a constraint from schema,
-                # which should be in a form of path pattern, where ref value needs to be present.
-                ref_path_pattern=downstream_error.validator_value,
-                doc=instance,
-                in_doc_refs_cache=in_doc_refs_cache,
+            elif (
+                repr(downstream_error.instance)
+                not in self.in_doc_refs_cache[downstream_error.validator_value]
             ):
                 # and if the check was not passed - we propagate it
                 yield downstream_error
@@ -115,11 +135,9 @@ class _Validator(jsonschema.Draft7Validator):
             instance, _schema
         ):
             # but then we actually check refs
-            if not self._ensure_in_doc_ref(
-                ref=in_doc_ref_not_found.instance,
-                ref_path_pattern=in_doc_ref_not_found.validator_value,
-                doc=instance,
-                in_doc_refs_cache=in_doc_refs_cache,
+            if (
+                repr(in_doc_ref_not_found.instance)
+                not in self.in_doc_refs_cache[in_doc_ref_not_found.validator_value]
             ):
                 # and produce errors only when check wont pass
                 yield in_doc_ref_not_found
@@ -129,6 +147,7 @@ class _Validator(jsonschema.Draft7Validator):
         A wrapper for `_Validator.iter_errors` that generates friendlier, shorter error
         messages representing `ValidationError`s.
         """
+        self._build_in_doc_refs_cache(instance)
         for error in self.iter_errors(instance, _schema):
             yield format_validation_error(error)
 
@@ -166,51 +185,6 @@ class _Validator(jsonschema.Draft7Validator):
             values = next_values
 
         return set(repr(val) for val in values)
-
-    def _ensure_in_doc_ref(
-        self, ref: str, ref_path_pattern: str, doc: JSON, in_doc_refs_cache: dict
-    ):
-        """
-        This checks that a `ref` (think foreign key) can be found within a `doc` (JSON object),
-        and it's location (json pointer path) should match `ref_path_pattern`. 
-        
-        ref_path_pattern might be in `fnmatch` form
-
-        E.g.
-
-        >>> doc = {"objs": [{"id":"1"}, {"id":"something"}]}
-        >>> _Validator({})._ensure_in_doc_ref("something", "/objs/*/id", doc)
-        True
-
-        >>> _Validator({})._ensure_in_doc_ref("1", "/objs/*/id", doc)
-        True
-        
-        >>> _Validator({})._ensure_in_doc_ref("something_else", "/objs/*/id", doc)
-        False
-
-        
-        >>> _Validator({})._ensure_in_doc_ref("something", "/objs", doc)
-        False
-
-        """
-        if not (self.is_type(doc, "object") or self.is_type(doc, "array")):
-            # if we're in a "simple value" context,
-            # we can't possibly match ref_path_pattern
-            return False
-
-        # If there are no cached values for this ref path pattern, collect them
-        if ref_path_pattern not in in_doc_refs_cache:
-            vals = self._get_values_for_path_pattern(ref_path_pattern, doc)
-            if len(vals) == 0:
-                # There are no values matching this pattern, so there's
-                # no way `ref` can match a value with this pattern.
-                return False
-            else:
-                # Cache the collected values for this path
-                in_doc_refs_cache[ref_path_pattern] = vals
-
-        # Check if `ref` is among valid values for this pattern
-        return repr(ref) in in_doc_refs_cache[ref_path_pattern]
 
 
 def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:

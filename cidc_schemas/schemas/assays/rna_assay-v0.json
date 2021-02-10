@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "rna_assay-v0",
   "title": "RNA Gene Expression Assay version 0",
   "type": "object",
@@ -41,6 +41,7 @@
       "mergeOptions": { "idRef": "cimac_id" },
       
       "items": {
+        "additionalProperties": false,
         "type": "object",
         "mergeStrategy": "objectMerge",
         "allOf": [ { "$ref": "assays/components/ngs_assay_record.json" } ],

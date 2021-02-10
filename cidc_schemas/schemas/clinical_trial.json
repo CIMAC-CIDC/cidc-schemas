@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "clinical_trial",
   "title": "Clinical Trial",
   "description": "Encapsulates information regarding a clinical trial.",

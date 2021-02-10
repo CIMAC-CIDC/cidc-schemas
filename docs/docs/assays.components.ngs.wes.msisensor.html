@@ -98,18 +98,18 @@
     <h3>msisensor.full.json</h3>
   	<pre><code>{
     "$id": "msisensor",
-    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
     "description": "MSISensor2 output files.",
     "properties": {
         "msisensor": {
             "$id": "text_artifact",
-            "$schema": "https://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "https://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "anyOf": [
                         {
                             "required": [

@@ -206,18 +206,18 @@
     <h3>rseqc.full.json</h3>
   	<pre><code>{
     "$id": "star",
-    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
     "description": "Star output sample files.",
     "properties": {
         "downsampling_housekeeping_bam": {
             "$id": "bam_artifact",
-            "$schema": "https://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "https://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "anyOf": [
                         {
                             "required": [
@@ -427,12 +427,12 @@
         },
         "downsampling_housekeeping_bam_index": {
             "$id": "bam_bai_artifact",
-            "$schema": "https://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "https://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "anyOf": [
                         {
                             "required": [
@@ -642,12 +642,12 @@
         },
         "read_distrib": {
             "$id": "binary_artifact",
-            "$schema": "https://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "https://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "anyOf": [
                         {
                             "required": [
@@ -857,12 +857,12 @@
         },
         "tin_score": {
             "$id": "text_artifact",
-            "$schema": "https://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "https://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "anyOf": [
                         {
                             "required": [
@@ -1072,12 +1072,12 @@
         },
         "tin_score_summary": {
             "$id": "text_artifact",
-            "$schema": "https://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "https://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "anyOf": [
                         {
                             "required": [

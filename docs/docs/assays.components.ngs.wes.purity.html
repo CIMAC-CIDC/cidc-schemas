@@ -98,18 +98,18 @@
     <h3>purity.full.json</h3>
   	<pre><code>{
     "$id": "purity",
-    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
     "description": "Purity output files.",
     "properties": {
         "optimal_purity_value": {
             "$id": "text_artifact",
-            "$schema": "https://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "https://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "anyOf": [
                         {
                             "required": [

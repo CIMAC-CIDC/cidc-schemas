@@ -125,18 +125,18 @@
     <h3>copynumber.full.json</h3>
   	<pre><code>{
     "$id": "copynumber",
-    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
     "description": "Copy number output files.",
     "properties": {
         "copynumber_cnv_calls": {
             "$id": "text_artifact",
-            "$schema": "https://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "https://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "anyOf": [
                         {
                             "required": [
@@ -346,12 +346,12 @@
         },
         "copynumber_cnv_calls_tsv": {
             "$id": "tsv_artifact",
-            "$schema": "https://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "artifact_core",
-                    "$schema": "https://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "anyOf": [
                         {
                             "required": [

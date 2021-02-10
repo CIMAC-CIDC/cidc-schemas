@@ -125,7 +125,7 @@
     <h3>tcr_entry.full.json</h3>
   	<pre><code>{
     "$id": "tcr_entry",
-    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
     "description": "A single data record from TCRseq assay.",
     "mergeStrategy": "objectMerge",
@@ -134,28 +134,29 @@
             "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.Id of an sample within this clinical trial, that this assay record is based upon.",
             "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??",
             "example": "CTTTP01A1.00",
+            "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
             "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
             "type": "string"
         },
         "files": {
             "$id": "tcr_input",
-            "$schema": "https://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "description": "TCRseq assay input files.",
             "properties": {
                 "replicates": {
                     "items": {
                         "$id": "tcr_input",
-                        "$schema": "https://json-schema.org/draft-07/schema#",
+                        "$schema": "metaschema/strict_meta_schema.json#",
                         "additionalProperties": false,
                         "allOf": [
                             {
                                 "$id": "reads_with_index",
-                                "$schema": "https://json-schema.org/draft-07/schema#",
+                                "$schema": "metaschema/strict_meta_schema.json#",
                                 "allOf": [
                                     {
                                         "$id": "fastq_pair_or_bam",
-                                        "$schema": "https://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "anyOf": [
                                             {
                                                 "required": [
@@ -177,12 +178,12 @@
                                                 "items": {
                                                     "$comment": "A BAM file, aligned or not, which contains both pairs of sequencing libraries",
                                                     "$id": "bam_artifact",
-                                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                                    "$schema": "metaschema/strict_meta_schema.json#",
                                                     "additionalProperties": false,
                                                     "allOf": [
                                                         {
                                                             "$id": "artifact_core",
-                                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                                            "$schema": "metaschema/strict_meta_schema.json#",
                                                             "anyOf": [
                                                                 {
                                                                     "required": [
@@ -397,12 +398,12 @@
                                                 "items": {
                                                     "$comment": "Fastq file for the first fragment.",
                                                     "$id": "artifact_fastq_gz",
-                                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                                    "$schema": "metaschema/strict_meta_schema.json#",
                                                     "additionalProperties": false,
                                                     "allOf": [
                                                         {
                                                             "$id": "artifact_core",
-                                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                                            "$schema": "metaschema/strict_meta_schema.json#",
                                                             "anyOf": [
                                                                 {
                                                                     "required": [
@@ -617,12 +618,12 @@
                                                 "items": {
                                                     "$comment": "Fastq file for the first fragment.",
                                                     "$id": "artifact_fastq_gz",
-                                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                                    "$schema": "metaschema/strict_meta_schema.json#",
                                                     "additionalProperties": false,
                                                     "allOf": [
                                                         {
                                                             "$id": "artifact_core",
-                                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                                            "$schema": "metaschema/strict_meta_schema.json#",
                                                             "anyOf": [
                                                                 {
                                                                     "required": [
@@ -846,12 +847,12 @@
                                         "items": {
                                             "$comment": "Fastq file for the first index.",
                                             "$id": "artifact_fastq_gz",
-                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                            "$schema": "metaschema/strict_meta_schema.json#",
                                             "additionalProperties": false,
                                             "allOf": [
                                                 {
                                                     "$id": "artifact_core",
-                                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                                    "$schema": "metaschema/strict_meta_schema.json#",
                                                     "anyOf": [
                                                         {
                                                             "required": [
@@ -1066,12 +1067,12 @@
                                         "items": {
                                             "$comment": "Fastq file for the second index.",
                                             "$id": "artifact_fastq_gz",
-                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                            "$schema": "metaschema/strict_meta_schema.json#",
                                             "additionalProperties": false,
                                             "allOf": [
                                                 {
                                                     "$id": "artifact_core",
-                                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                                    "$schema": "metaschema/strict_meta_schema.json#",
                                                     "anyOf": [
                                                         {
                                                             "required": [
@@ -1286,12 +1287,12 @@
                                         "items": {
                                             "$comment": "Fastq file for the first fragment.",
                                             "$id": "artifact_fastq_gz",
-                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                            "$schema": "metaschema/strict_meta_schema.json#",
                                             "additionalProperties": false,
                                             "allOf": [
                                                 {
                                                     "$id": "artifact_core",
-                                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                                    "$schema": "metaschema/strict_meta_schema.json#",
                                                     "anyOf": [
                                                         {
                                                             "required": [
@@ -1506,12 +1507,12 @@
                                         "items": {
                                             "$comment": "Fastq file for the first fragment.",
                                             "$id": "artifact_fastq_gz",
-                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                            "$schema": "metaschema/strict_meta_schema.json#",
                                             "additionalProperties": false,
                                             "allOf": [
                                                 {
                                                     "$id": "artifact_core",
-                                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                                    "$schema": "metaschema/strict_meta_schema.json#",
                                                     "anyOf": [
                                                         {
                                                             "required": [
@@ -1738,12 +1739,12 @@
                                 "items": {
                                     "$comment": "Fastq file for the first index.",
                                     "$id": "artifact_fastq_gz",
-                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                    "$schema": "metaschema/strict_meta_schema.json#",
                                     "additionalProperties": false,
                                     "allOf": [
                                         {
                                             "$id": "artifact_core",
-                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                            "$schema": "metaschema/strict_meta_schema.json#",
                                             "anyOf": [
                                                 {
                                                     "required": [
@@ -1958,12 +1959,12 @@
                                 "items": {
                                     "$comment": "Fastq file for the second index.",
                                     "$id": "artifact_fastq_gz",
-                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                    "$schema": "metaschema/strict_meta_schema.json#",
                                     "additionalProperties": false,
                                     "allOf": [
                                         {
                                             "$id": "artifact_core",
-                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                            "$schema": "metaschema/strict_meta_schema.json#",
                                             "anyOf": [
                                                 {
                                                     "required": [
@@ -2178,12 +2179,12 @@
                                 "items": {
                                     "$comment": "Fastq file for the first fragment.",
                                     "$id": "artifact_fastq_gz",
-                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                    "$schema": "metaschema/strict_meta_schema.json#",
                                     "additionalProperties": false,
                                     "allOf": [
                                         {
                                             "$id": "artifact_core",
-                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                            "$schema": "metaschema/strict_meta_schema.json#",
                                             "anyOf": [
                                                 {
                                                     "required": [
@@ -2398,12 +2399,12 @@
                                 "items": {
                                     "$comment": "Fastq file for the first fragment.",
                                     "$id": "artifact_fastq_gz",
-                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                    "$schema": "metaschema/strict_meta_schema.json#",
                                     "additionalProperties": false,
                                     "allOf": [
                                         {
                                             "$id": "artifact_core",
-                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                            "$schema": "metaschema/strict_meta_schema.json#",
                                             "anyOf": [
                                                 {
                                                     "required": [

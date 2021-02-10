@@ -96,16 +96,16 @@
     <h3>rna_assay.full.json</h3>
   	<pre><code>{
     "$id": "rna_assay",
-    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "anyOf": [
         {
             "$id": "rna_assay-v0",
-            "$schema": "https://json-schema.org/draft-07/schema#",
+            "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
                 {
                     "$id": "assay_core",
-                    "$schema": "https://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "description": "Main properties of the assay experiment template.",
                     "inheritableBase": true,
                     "properties": {
@@ -128,7 +128,7 @@
                 },
                 {
                     "$id": "ngs_assay_core",
-                    "$schema": "https://json-schema.org/draft-07/schema#",
+                    "$schema": "metaschema/strict_meta_schema.json#",
                     "description": "Common properties for NGS Assays.",
                     "inheritableBase": true,
                     "properties": {
@@ -220,10 +220,11 @@
                 "records": {
                     "description": "A single data record from RNAseq assay.",
                     "items": {
+                        "additionalProperties": false,
                         "allOf": [
                             {
                                 "$id": "ngs_assay_record",
-                                "$schema": "https://json-schema.org/draft-07/schema#",
+                                "$schema": "metaschema/strict_meta_schema.json#",
                                 "description": "A single data record from an NGS assay.",
                                 "inheritableBase": true,
                                 "properties": {
@@ -231,13 +232,14 @@
                                         "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.Id of an sample within this clinical trial, that this assay record is based upon.",
                                         "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??",
                                         "example": "CTTTP01A1.00",
+                                        "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
                                         "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
                                         "type": "string"
                                     },
                                     "files": {
                                         "$comment": "Fastq files or a bam file produced by the assay.",
                                         "$id": "fastq_pair_or_bam",
-                                        "$schema": "https://json-schema.org/draft-07/schema#",
+                                        "$schema": "metaschema/strict_meta_schema.json#",
                                         "anyOf": [
                                             {
                                                 "required": [
@@ -259,12 +261,12 @@
                                                 "items": {
                                                     "$comment": "A BAM file, aligned or not, which contains both pairs of sequencing libraries",
                                                     "$id": "bam_artifact",
-                                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                                    "$schema": "metaschema/strict_meta_schema.json#",
                                                     "additionalProperties": false,
                                                     "allOf": [
                                                         {
                                                             "$id": "artifact_core",
-                                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                                            "$schema": "metaschema/strict_meta_schema.json#",
                                                             "anyOf": [
                                                                 {
                                                                     "required": [
@@ -479,12 +481,12 @@
                                                 "items": {
                                                     "$comment": "Fastq file for the first fragment.",
                                                     "$id": "artifact_fastq_gz",
-                                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                                    "$schema": "metaschema/strict_meta_schema.json#",
                                                     "additionalProperties": false,
                                                     "allOf": [
                                                         {
                                                             "$id": "artifact_core",
-                                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                                            "$schema": "metaschema/strict_meta_schema.json#",
                                                             "anyOf": [
                                                                 {
                                                                     "required": [
@@ -699,12 +701,12 @@
                                                 "items": {
                                                     "$comment": "Fastq file for the first fragment.",
                                                     "$id": "artifact_fastq_gz",
-                                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                                    "$schema": "metaschema/strict_meta_schema.json#",
                                                     "additionalProperties": false,
                                                     "allOf": [
                                                         {
                                                             "$id": "artifact_core",
-                                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                                            "$schema": "metaschema/strict_meta_schema.json#",
                                                             "anyOf": [
                                                                 {
                                                                     "required": [
@@ -934,6 +936,7 @@
                                 "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.Id of an sample within this clinical trial, that this assay record is based upon.",
                                 "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??",
                                 "example": "CTTTP01A1.00",
+                                "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
                                 "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
                                 "type": "string"
                             },
@@ -946,7 +949,7 @@
                             "files": {
                                 "$comment": "Fastq files or a bam file produced by the assay.",
                                 "$id": "fastq_pair_or_bam",
-                                "$schema": "https://json-schema.org/draft-07/schema#",
+                                "$schema": "metaschema/strict_meta_schema.json#",
                                 "anyOf": [
                                     {
                                         "required": [
@@ -968,12 +971,12 @@
                                         "items": {
                                             "$comment": "A BAM file, aligned or not, which contains both pairs of sequencing libraries",
                                             "$id": "bam_artifact",
-                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                            "$schema": "metaschema/strict_meta_schema.json#",
                                             "additionalProperties": false,
                                             "allOf": [
                                                 {
                                                     "$id": "artifact_core",
-                                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                                    "$schema": "metaschema/strict_meta_schema.json#",
                                                     "anyOf": [
                                                         {
                                                             "required": [
@@ -1188,12 +1191,12 @@
                                         "items": {
                                             "$comment": "Fastq file for the first fragment.",
                                             "$id": "artifact_fastq_gz",
-                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                            "$schema": "metaschema/strict_meta_schema.json#",
                                             "additionalProperties": false,
                                             "allOf": [
                                                 {
                                                     "$id": "artifact_core",
-                                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                                    "$schema": "metaschema/strict_meta_schema.json#",
                                                     "anyOf": [
                                                         {
                                                             "required": [
@@ -1408,12 +1411,12 @@
                                         "items": {
                                             "$comment": "Fastq file for the first fragment.",
                                             "$id": "artifact_fastq_gz",
-                                            "$schema": "https://json-schema.org/draft-07/schema#",
+                                            "$schema": "metaschema/strict_meta_schema.json#",
                                             "additionalProperties": false,
                                             "allOf": [
                                                 {
                                                     "$id": "artifact_core",
-                                                    "$schema": "https://json-schema.org/draft-07/schema#",
+                                                    "$schema": "metaschema/strict_meta_schema.json#",
                                                     "anyOf": [
                                                         {
                                                             "required": [

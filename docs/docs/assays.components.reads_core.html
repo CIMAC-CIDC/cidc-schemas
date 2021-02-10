@@ -196,7 +196,7 @@
     <h3>reads_core.full.json</h3>
   	<pre><code>{
     "$id": "fastq_pair_or_bam",
-    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$schema": "metaschema/strict_meta_schema.json#",
     "anyOf": [
         {
             "required": [
@@ -218,12 +218,12 @@
             "items": {
                 "$comment": "A BAM file, aligned or not, which contains both pairs of sequencing libraries",
                 "$id": "bam_artifact",
-                "$schema": "https://json-schema.org/draft-07/schema#",
+                "$schema": "metaschema/strict_meta_schema.json#",
                 "additionalProperties": false,
                 "allOf": [
                     {
                         "$id": "artifact_core",
-                        "$schema": "https://json-schema.org/draft-07/schema#",
+                        "$schema": "metaschema/strict_meta_schema.json#",
                         "anyOf": [
                             {
                                 "required": [
@@ -438,12 +438,12 @@
             "items": {
                 "$comment": "Fastq file for the first fragment.",
                 "$id": "artifact_fastq_gz",
-                "$schema": "https://json-schema.org/draft-07/schema#",
+                "$schema": "metaschema/strict_meta_schema.json#",
                 "additionalProperties": false,
                 "allOf": [
                     {
                         "$id": "artifact_core",
-                        "$schema": "https://json-schema.org/draft-07/schema#",
+                        "$schema": "metaschema/strict_meta_schema.json#",
                         "anyOf": [
                             {
                                 "required": [
@@ -658,12 +658,12 @@
             "items": {
                 "$comment": "Fastq file for the first fragment.",
                 "$id": "artifact_fastq_gz",
-                "$schema": "https://json-schema.org/draft-07/schema#",
+                "$schema": "metaschema/strict_meta_schema.json#",
                 "additionalProperties": false,
                 "allOf": [
                     {
                         "$id": "artifact_core",
-                        "$schema": "https://json-schema.org/draft-07/schema#",
+                        "$schema": "metaschema/strict_meta_schema.json#",
                         "anyOf": [
                             {
                                 "required": [

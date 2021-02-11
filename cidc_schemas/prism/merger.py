@@ -31,23 +31,28 @@ def _set_data_format(ct: dict, artifact: dict):
         "clinical_trial.json", return_validator=True
     )
 
+    def get_data_format(error: jsonschema.exceptions.ValidationError):
+        if (
+            error.validator == "const"
+            and error.path[-1] == "data_format"
+            and error.instance == artifact["data_format"]
+        ):
+            return error.validator_value
+
     for error in validator.iter_errors(ct):
-        if not isinstance(error, jsonschema.exceptions.ValidationError):
-            continue
+        if isinstance(error, jsonschema.exceptions.ValidationError):
+            if error.validator == "anyOf":
+                data_format = None
+                for suberror in error.context:
+                    data_format = get_data_format(suberror)
+                    if data_format:
+                        break
+            else:
+                data_format = get_data_format(error)
 
-        if error.validator != "const":
-            continue
-
-        if error.path[-1] != "data_format":
-            continue
-
-        if error.instance != artifact["data_format"]:
-            continue
-
-        # Since data_format is specified as a constant in the schema,
-        # the validator_value on this exception will be the desired data format.
-        artifact["data_format"] = error.validator_value
-        return
+            if data_format:
+                artifact["data_format"] = data_format
+                return
 
     # data format was not set!
 

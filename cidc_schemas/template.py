@@ -55,9 +55,7 @@ POSSIBLE_FILE_EXTS = [
 
 def generate_analysis_template_schemas(
     target_dir: str = os.path.join(TEMPLATE_DIR, "analyses"),
-    fname_format: Callable[
-        [str], str
-    ] = lambda file: f"{file + ('_level1' if file=='rna' else '')}_analysis_template.json",
+    fname_format: Callable[[str], str] = lambda file: f"{file}_analysis_template.json",
 ):
     """Uses output_API.json's from cidc-ngs-pipeline-api along with existing assays/components/ngs analysis templates to generate templates/analyses schemas"""
     # for each output_API.json

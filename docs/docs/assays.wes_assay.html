@@ -42,22 +42,26 @@
     <h3>Properties</h3>
     
     
+    
+
+    
         
             
                 
-                    
-                
-                
             
-                
-                    
-                
-                
             
         
-        
+            
+                
+            
             
         
+    
+
+    
+        
+    
+
     
 
     <table class="table table-striped">
@@ -510,7 +514,6 @@
                                 "$comment": "Fastq files or a bam file produced by the assay.",
                                 "$id": "fastq_pair_or_bam",
                                 "$schema": "metaschema/strict_meta_schema.json#",
-                                "additionalProperties": true,
                                 "anyOf": [
                                     {
                                         "required": [
@@ -525,6 +528,7 @@
                                     }
                                 ],
                                 "description": "Paired end sequencing in a .fastq file pair or in a .bam",
+                                "inheritableBase": true,
                                 "mergeStrategy": "objectMerge",
                                 "properties": {
                                     "bam": {
@@ -1215,7 +1219,6 @@
                         "$comment": "Fastq files or a bam file produced by the assay.",
                         "$id": "fastq_pair_or_bam",
                         "$schema": "metaschema/strict_meta_schema.json#",
-                        "additionalProperties": true,
                         "anyOf": [
                             {
                                 "required": [
@@ -1230,6 +1233,7 @@
                             }
                         ],
                         "description": "Paired end sequencing in a .fastq file pair or in a .bam",
+                        "inheritableBase": true,
                         "mergeStrategy": "objectMerge",
                         "properties": {
                             "bam": {
@@ -5244,7 +5248,7 @@
     "title": "Whole Exome Sequencing Assay",
     "type": "object"
 }</code></pre>
-  </container>
+  </div>
 
 
     </main>

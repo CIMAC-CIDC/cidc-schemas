@@ -152,7 +152,7 @@ def test_set_data_format_edge_cases(monkeypatch):
     # _set_data_format bypasses exceptions that aren't jsonschema.exceptions.ValidationError instances.
     mock_iter_errors([Exception("non-validation error")])
     artifact = {}
-    prism_merger._set_data_format({}, artifact)
+    prism_merger._set_data_format({"artifacts": [artifact]}, artifact)
     assert artifact["data_format"] == "[NOT SET]"
 
     # _set_data_format bypasses validation errors not pertaining to the "data_format" field
@@ -161,7 +161,7 @@ def test_set_data_format_edge_cases(monkeypatch):
     val_error.path = ["some_path"]
     mock_iter_errors([val_error])
     artifact = {}
-    prism_merger._set_data_format({}, artifact)
+    prism_merger._set_data_format({"artifacts": [artifact]}, artifact)
     assert artifact["data_format"] == "[NOT SET]"
 
     # _set_data_format bypasses validation errors on unrelated fields
@@ -171,7 +171,7 @@ def test_set_data_format_edge_cases(monkeypatch):
     val_error.instance = "unrelated instance"
     mock_iter_errors([val_error])
     artifact = {}
-    prism_merger._set_data_format({}, artifact)
+    prism_merger._set_data_format({"artifacts": [artifact]}, artifact)
     assert artifact["data_format"] == "[NOT SET]"
 
 

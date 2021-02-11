@@ -2,25 +2,106 @@
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "olink_assay",
   "title": "OLink Assay",
-  "type": "object",
   "description": "High-throughput multiplexed assays for protein biomarker discovery.",
+  "type": "object",
   "additionalProperties": false,
-  "allOf": [
-    { "$ref": "assays/components/assay_core.json" }
-  ],
   "mergeStrategy": "objectMerge",
+
+  "required": ["panel", "records", "study"],
+  "allOf": [{ "$ref": "assays/components/assay_core.json" }],
   "properties": {
     "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
   
     "records": {
       "type": "array",
       "description": "A single data record from Olink assay.",
-      "items": {
-        "$ref": "assays/components/olink/olink_entry.json"
-      }, 
       "mergeStrategy": "arrayMergeById",
       "mergeOptions": {
         "idRef": "/chip_barcode"
+      },
+
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+
+        "required": [
+          "number_of_samples",
+          "npx_manager_version",
+          "files"
+        ],
+        "properties": {
+          "run_date": {
+            "description": "Date when the Olink assay was run.",
+            "type": "string",
+            "format": "date"
+          },
+          "run_time": {
+            "description": "Time when the Olink assay was run.",
+            "type": "string",
+            "format": "time"
+          },
+          "instrument": {
+            "description": "Instrument used for the Olink assay.",
+            "type": "string"
+          },
+          "fludigm_application_version": {
+            "description": "Version of the Fluidgm application used.",
+            "type": "string"
+          },
+          "fludigm_application_build": {
+            "description": "Build of the Fluidgm application used.",
+            "type": "string"
+          },
+          "chip_barcode": {
+            "description": "Chip barcode number.",
+            "type": "string"
+          },
+          "probe_type": {
+            "description": "Probe Type.",
+            "type": "string"
+          },
+          "passive_reference": {
+            "description": "Passive Reference.",
+            "type": "string"
+          },
+          "quality_threshold": {
+            "description": "Threshold used for quality cutoff.",
+            "type": "number"
+          },
+          "baseline_correction": {
+            "description": "Method used for baseline correction.",
+            "type": "string"
+          },
+          "number_of_samples": {
+            "description": "Number of samples analyzed in the assay.",
+            "type": "number"
+          },
+          "number_of_samples_failed": {
+            "description": "Number of samples failed in the assay.",
+            "type": "number"
+          },
+          "npx_manager_version": {
+            "description": "Version of NPX manager used for the analysis.",
+            "type": "string"
+          },
+          "files": {
+            "description": "Olink assay input files.",
+            "type": "object",
+            "additionalProperties": false,
+
+            "required": ["assay_npx", "assay_raw_ct"],
+            "properties": {
+              "assay_npx": {
+                "$ref": "artifacts/artifact_npx.json",
+                "$comment": "Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale."
+              },
+              "assay_raw_ct": {
+                "$ref": "artifacts/artifact_csv.json",
+                "$comment": "Number of cycles required for the fluorescent signal to cross the threshold."
+              }
+            }
+          }
+        }
       }
     },
     "panel": {
@@ -32,8 +113,22 @@
       "type": "string"
     },
     "study": {
-      "$ref": "assays/components/olink/olink_combined.json"
+      "description": "A single data record from Olink assay.",
+      "type": "object",
+      "additionalProperties": false,
+      "mergeStrategy": "overwriteAny",
+
+      "required": ["npx_manager_version", "study_npx"],
+      "properties": {
+        "npx_manager_version": {
+          "description": "Version of NPX manager used for the analysis.",
+          "type": "string"
+        },
+        "study_npx": {
+          "$comment": "Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale.",
+          "$ref": "artifacts/artifact_npx.json"
+        }
+      }
     }
-  },
-  "required": ["panel", "records", "study"]
+  }
 }

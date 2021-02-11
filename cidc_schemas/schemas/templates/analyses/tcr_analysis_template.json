@@ -1,8 +1,8 @@
 {
     "title": "TCR analysis template",
     "description": "Metadata information for TCRseq Analysis output.",
-    "prism_template_root_object_schema": "assays/components/ngs/tcr/tcr_batch.json",
-    "prism_template_root_object_pointer": "/analysis/tcr_analysis/batches/0",
+    "prism_template_root_object_schema": "analyses/tcr_analysis.json#properties/batches/items",
+    "prism_template_root_object_pointer": "/analysis/tcr_analysis/batches/-",
     "properties": {
         "worksheets": {
             "TCRseq Analysis": {
@@ -12,7 +12,7 @@
                         "type_ref": "clinical_trial.json#properties/protocol_identifier"
                     },
                     "batch id": {
-                        "merge_pointer": "0/batch id",
+                        "merge_pointer": "0/batch_id",
                         "type_ref": "assays/tcr_assay.json#properties/batch_id"
                     },
                     "summary info": {

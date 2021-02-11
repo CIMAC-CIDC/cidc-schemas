@@ -66,11 +66,11 @@ def generate_analysis_template_schemas(
         # need an existing assay/components/ngs analysis schema to find merge pointers
         try:
             assay_schema = _load_dont_validate_schema(
-                f"assays/components/ngs/{analysis}/{analysis}_analysis.json"
+                f"analyses/{analysis}_analysis.json"
             )
         except Exception as e:
             print(
-                f"skipping {analysis}: failed to load corresponding `assays/components/ngs/{analysis}/{'rna_level1' if analysis == 'rna' else analysis}_analysis.json`"
+                f"skipping {analysis}: failed to load corresponding `analyses/{analysis}_analysis.json`"
             )
         else:
             template = _convert_api_to_template(analysis, output_schema, assay_schema)
@@ -192,7 +192,7 @@ def _initialize_template_schema(name: str, title: str, pointer: str):
     template = {
         "title": f"{long_title} analysis template",
         "description": f"Metadata information for {long_title} Analysis output.",
-        "prism_template_root_object_schema": f"assays/components/ngs/{name}/{name}_analysis.json",
+        "prism_template_root_object_schema": f"analyses/{name}_analysis.json",
         "prism_template_root_object_pointer": f"/analysis/{name}_analysis",
         "properties": {
             "worksheets": {
@@ -351,23 +351,26 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
             short_key = long_key.replace(" ", "_")
 
         # static header
-        if "cimac id" in long_key and name == "wes":
+        if "cimac id" in long_key:
             type_ref = "sample.json#properties/cimac_id"
-            merge_pointer = f"/{short_key}/cimac_id"
+            if name == "wes":
+                merge_pointer = f"/{short_key}/cimac_id"
+            else:
+                merge_pointer = "/cimac_id"
         else:
-            type_ref = f"assays/components/ngs/{name}/"
+            type_ref = f"analyses/{name}_analysis.json#properties/"
 
             if name == "rna":
-                type_ref += "rna_level1"
+                type_ref += "level_1/items/properties/"
             elif name == "wes" and long_key == "run id":
-                type_ref += "wes_pair"
+                type_ref += "pair_runs/items/properties/"
             else:
                 type_ref += name
 
             if short_key in ["normal", "tumor"]:
-                type_ref += f"_analysis.json#properties/{short_key}/cimac_id"
+                type_ref += f"{short_key}//cimac_id"
             else:
-                type_ref += f"_analysis.json#properties/{long_key.replace(' ','_')}"
+                type_ref += long_key.replace(" ", "_")
             merge_pointer = f"/{long_key.replace(' ','_')}"
 
         subtemplate[long_key] = {

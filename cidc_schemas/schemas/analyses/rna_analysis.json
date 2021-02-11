@@ -1,0 +1,145 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "rna_analysis",
+  "title": "RNAseq analysis combined files",
+  "type": "object",
+  "description": "Combined analysis files for the whole RNAseq assay.",
+  "additionalProperties": false,
+  "properties": {
+    "level_1": {
+      "type": "array",
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "/cimac_id"
+      },
+      "items": {
+        "type": "object",
+        "description": "RNAseq assay output files for a sample level 1 analysis.",
+        "additionalProperties": false,
+
+        "required": [
+          "cimac_id",
+          "star",
+          "rseqc",
+          "salmon"
+        ],
+        "properties": {
+          "cimac_id": {
+              "$comment": "Id of a sample within this clinical trial, that this record is based upon.",
+              "$ref": "sample.json#properties/cimac_id"
+          },
+          "star": {
+            "description": "Star output sample files.",
+            "type": "object",
+            "additionalProperties": false,
+
+            "required": [
+              "sorted_bam",
+              "sorted_bam_index",
+              "sorted_bam_stat_txt",
+              "downsampling_bam",
+              "downsampling_bam_index"
+            ],
+            "properties": {
+              "sorted_bam": {
+                "$ref": "artifacts/artifact_bam.json"
+              },
+              "sorted_bam_index": {
+                "$ref": "artifacts/artifact_bam_bai.json"
+              },
+              "sorted_bam_stat_txt": {
+                "$ref": "artifacts/artifact_text.json"
+              },
+              "downsampling_bam": {
+                "$ref": "artifacts/artifact_bam.json"
+              },
+              "downsampling_bam_index": {
+                "$ref": "artifacts/artifact_bam_bai.json"
+              }
+            }
+          },
+          "rseqc": {
+            "description": "Star output sample files.",
+            "type": "object",
+            "additionalProperties": false,
+
+            "required": [
+              "downsampling_housekeeping_bam",
+              "downsampling_housekeeping_bam_index",
+              "read_distrib",
+              "tin_score_summary",
+              "tin_score"
+            ],
+            "properties": {
+              "downsampling_housekeeping_bam": {
+                "$ref": "artifacts/artifact_bam.json"
+              },
+              "downsampling_housekeeping_bam_index": {
+                "$ref": "artifacts/artifact_bam_bai.json"
+              },
+              "read_distrib": {
+                "$ref": "artifacts/artifact_binary.json"
+              },
+              "tin_score_summary": {
+                "$ref": "artifacts/artifact_text.json"
+              },
+              "tin_score": {
+                "$ref": "artifacts/artifact_text.json"
+              }
+            }
+          },
+          "salmon": {
+            "description": "Star output sample files.",
+            "type": "object",
+            "additionalProperties": false,
+
+            "required": [
+              "quant_sf",
+              "transcriptome_bam_log",
+              "aux_info_ambig_info_tsv",
+              "aux_info_expected_bias",
+              "aux_info_fld",
+              "aux_info_meta_info",
+              "aux_info_observed_bias",
+              "aux_info_observed_bias_3p",
+              "cmd_info",
+              "salmon_quant_log"
+            ],
+            "properties": {
+                "quant_sf": {
+                    "$ref": "artifacts/artifact_text.json"
+                },
+                "transcriptome_bam_log": {
+                    "$ref": "artifacts/artifact_text.json"
+                },
+                "aux_info_ambig_info_tsv": {
+                    "$ref": "artifacts/artifact_tsv.json"
+                },
+                "aux_info_expected_bias": {
+                    "$ref": "artifacts/artifact_gz.json"
+                },
+                "aux_info_fld": {
+                    "$ref": "artifacts/artifact_gz.json"
+                },
+                "aux_info_meta_info": {
+                    "$ref": "artifacts/artifact_json.json"
+                },
+                "aux_info_observed_bias": {
+                    "$ref": "artifacts/artifact_gz.json"
+                },
+                "aux_info_observed_bias_3p": {
+                    "$ref": "artifacts/artifact_gz.json"
+                },
+                "cmd_info": {
+                    "$ref": "artifacts/artifact_json.json"
+                },
+                "salmon_quant_log": {
+                    "$ref": "artifacts/artifact_text.json"
+                }
+            }
+          }
+        }
+      }
+    }
+  }
+}

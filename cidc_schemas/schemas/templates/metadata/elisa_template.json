@@ -55,19 +55,19 @@
                 },
                 "isotope": {
                     "merge_pointer": "0/isotope",
-                    "type_ref": "assays/components/elisa/elisa_antibody.json#properties/isotope"
+                    "type_ref": "assays/elisa_assay.json#properties/antibodies/items/properties/isotope"
                 },
                 "dilution": {
                     "merge_pointer": "0/dilution",
-                    "type_ref": "assays/components/elisa/elisa_antibody.json#properties/dilution"
+                    "type_ref": "assays/elisa_assay.json#properties/antibodies/items/properties/dilution"
                 },
                 "stain_type": {
                     "merge_pointer": "0/stain_type",
-                    "type_ref": "assays/components/elisa/elisa_antibody.json#properties/stain_type"
+                    "type_ref": "assays/elisa_assay.json#properties/antibodies/items/properties/stain_type"
                 },
                 "usage": {
                     "merge_pointer": "0/usage",
-                    "type_ref": "assays/components/elisa/elisa_antibody.json#properties/usage"
+                    "type_ref": "assays/elisa_assay.json#properties/antibodies/items/properties/usage"
                 }
             }
         }

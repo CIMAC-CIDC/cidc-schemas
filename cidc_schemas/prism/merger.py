@@ -305,8 +305,11 @@ class ObjectContextForMergeCollisionException(MergeCollisionException):
 
 class ObjectMergeWithContextForMergeCollision(strategies.ObjectMerge):
     def merge(self, walk, base, head, schema, meta, **kwargs):
+        print("merge", base, head)
         try:
-            return super().merge(walk, base, head, schema, meta, **kwargs)
+            ret = super().merge(walk, base, head, schema, meta, **kwargs)
+            print(ret)
+            return ret
         except MergeCollisionException as e:
             # Swaping base and head in exception for current objects'
             # so in the parent container/array we will have context of current object
@@ -376,6 +379,22 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
 
     # merge the two documents
     merger = Merger(validator.schema, strategies=PRISM_MERGE_STRATEGIES)
+    schema = validator.schema.copy()
+    for i in [
+        "properties",
+        "analysis",
+        "properties",
+        "tcr_analysis",
+        "properties",
+        "batches",
+    ]:
+        schema = schema.get(i)
+        if not schema:
+            print(f"fail on {i}")
+            break
+    if schema:
+        pass
+    # print(schema.get("$id", schema))
     merged = merger.merge(target, patch)
 
     return merged, list(validator.iter_error_messages(merged))

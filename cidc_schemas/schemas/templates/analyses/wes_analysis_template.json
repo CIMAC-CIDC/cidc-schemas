@@ -1,7 +1,7 @@
 {
     "title": "WES analysis template",
     "description": "Metadata information for WES Analysis output.",
-    "prism_template_root_object_schema": "assays/components/ngs/wes/wes_analysis.json",
+    "prism_template_root_object_schema": "analyses/wes_analysis.json",
     "prism_template_root_object_pointer": "/analysis/wes_analysis",
     "properties": {
         "worksheets": {
@@ -17,7 +17,7 @@
                     "WES Runs": {
                         "run id": {
                             "merge_pointer": "/run_id",
-                            "type_ref": "assays/components/ngs/wes/wes_pair_analysis.json#properties/run_id",
+                            "type_ref": "analyses/wes_analysis.json#properties/pair_runs/items/properties/run_id",
                             "process_as": [
                                 {
                                     "parse_through": "lambda run: f'analysis/somatic/{run}/{run}_tnscope.output.vcf.gz'",

@@ -8,13 +8,13 @@
   "type": "object",
   "properties": {
     "wes_analysis": {
-      "$ref": "assays/components/ngs/wes/wes_analysis.json"
+      "$ref": "analyses/wes_analysis.json"
     },
     "rna_analysis": {
-      "$ref": "assays/components/ngs/rna/rna_analysis.json"
+      "$ref": "analyses/rna_analysis.json"
     },
     "tcr_analysis": {
-      "$ref": "assays/components/ngs/tcr/tcr_analysis.json"
+      "$ref": "analyses/tcr_analysis.json"
     }
   }
 }

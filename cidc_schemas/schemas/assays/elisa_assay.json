@@ -2,8 +2,12 @@
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "elisa_assay",
   "title": "ELISA Assay",
-  "type": "object",
   "description": "High-throughput multiplexed assays for protein biomarker discovery.",
+  "type": "object",
+  "mergeStrategy": "objectMerge",
+  "additionalProperties": false,
+  
+  "required": ["assay_run_id", "assay_xlsx", "antibodies"],
   "allOf": [
       {"$ref": "assays/components/assay_core.json"}
   ],
@@ -17,18 +21,48 @@
       "$ref": "artifacts/artifact_elisa_xlsx.json"
     },
     "antibodies": {
-      "type": "array",
       "description": "Data specific to antibody preparation on the ELISA assay.",
-      "items": {
-          "$ref": "assays/components/elisa/elisa_antibody.json"
-      },
+      "type": "array",
       "mergeStrategy": "arrayMergeById",
       "mergeOptions": {
         "idRef": "antibody"
+      },
+      
+      "items": {
+        "description": "Data specific to antibody preparation on the ELISA assay.",
+        "type": "object",
+        "additionalProperties": false,
+        "mergeStrategy": "objectMerge",
+
+        "required": ["isotope", "dilution", "stain_type", "usage"],
+        "allOf": [{ "$ref": "assays/components/antibody.json" }],
+        "properties": {
+          "antibody": {"$ref": "assays/components/antibody.json#properties/antibody"},
+          "clone": {"$ref": "assays/components/antibody.json#properties/clone"},
+          "company": {"$ref": "assays/components/antibody.json#properties/company"},
+          "cat_num": {"$ref": "assays/components/antibody.json#properties/cat_num"},
+          "lot_num": {"$ref": "assays/components/antibody.json#properties/lot_num"},
+
+          "isotope": {
+            "description": "Antibody isotype used to help differentiate antibody signals.",
+            "type": "string"
+          },
+          "dilution": {
+            "description": "Concentration ratio of dilution buffer for primary antibody.",
+            "type": "string"
+          },
+          "stain_type": {
+            "description": "Type of staining method used for antibody.",
+            "type": "string",
+            "enum": ["Surface Stain", "Intracellular"]
+          },
+          "usage": {
+              "description": "How this antibody should be used in automatic analysis",
+              "type": "string",
+              "enum": ["Ignored", "Used", "Analysis Only"]
+            }
+        }
       }
     }
-  },
-  "mergeStrategy": "objectMerge",
-  "additionalProperties": false,
-  "required": ["assay_run_id", "assay_xlsx", "antibodies"]
+  }
 }

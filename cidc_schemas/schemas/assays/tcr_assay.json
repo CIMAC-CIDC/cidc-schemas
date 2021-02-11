@@ -5,6 +5,14 @@
   "type": "object",
   "description": "Additional properties to describe a TCR assay for expression analysis.",
   "additionalProperties": false,
+  "mergeStrategy": "objectMerge",
+
+  "required": [
+    "records",
+    "batch_id",
+    "sequencing_run_date",
+    "sample_sheet"
+  ],
   "allOf": [
     { "$ref": "assays/components/assay_core.json" },
     { "$ref": "assays/components/ngs_assay_core.json" }
@@ -25,22 +33,64 @@
         "format": "date"
     },
     "records": {
-      "type": "array",
       "description": "A single data record from TCRseq assay.",
-      "items": {
-        "$ref": "assays/components/ngs/tcr/tcr_entry.json"
-      },
+      "type": "array",
       "mergeStrategy": "arrayMergeById",
       "mergeOptions": {
         "idRef": "cimac_id"
+      },
+
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "mergeStrategy": "objectMerge",
+
+        "required": [
+          "cimac_id",
+          "files"
+        ],
+        "properties": {
+          "cimac_id": {"$ref": "sample.json#properties/cimac_id"},
+          "files": {
+            "description": "TCRseq assay input files.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "replicates": {
+                "type": "array",
+                "mergeStrategy": "arrayMergeById",
+                "mergeOptions": {
+                  "idRef": "/replicate_id"
+                },
+
+                "items": {
+                  "description": "TCRseq replicate of interest.",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "mergeStrategy": "objectMerge",
+
+                  "required": [ "replicate_id" ],
+                  "allOf": [{ "$ref": "assays/components/reads_with_index.json"}],
+                  "properties": {
+                    "replicate_id": {
+                      "description": "Replicate identifier.",
+                      "type": "string"
+                    },
+                    "rna_quantity_ng": {
+                      "description": "RNA quantity (in ng).",
+                      "type": "number"
+                    },
+                    "r1": {"$ref": "assays/components/reads_with_index.json#properties/r1"},
+                    "r2": {"$ref": "assays/components/reads_with_index.json#properties/r2"},
+                    "i1": {"$ref": "assays/components/reads_with_index.json#properties/i1"},
+                    "i2": {"$ref": "assays/components/reads_with_index.json#properties/i2"}
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
-  },
-  "required": [
-    "records",
-    "batch_id",
-    "sequencing_run_date",
-    "sample_sheet"
-  ],
-  "mergeStrategy": "objectMerge"
+  }
 }

@@ -1,0 +1,107 @@
+{
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "$id": "wes_sample_analysis",
+    "title": "WES sample analysis files",
+    "type": "object",
+    "description": "Sample wise analysis files for the WES assay.",
+    "additionalProperties": false,
+    
+    "required": ["cimac_id"],
+    "properties": {
+        "cimac_id": {
+            "$comment": "Id of a sample within this clinical trial, that this record is based upon.",
+            "$ref": "sample.json#properties/cimac_id"
+        },
+        "alignment": {
+          "description": "WES output align files.",
+          "type": "object",
+          "additionalProperties": false,
+
+          "properties": {
+            "align_recalibrated": {
+              "$ref": "artifacts/artifact_bam.json"
+            },
+            "align_recalibrated_index": {
+              "$ref": "artifacts/artifact_bam_bai.json"
+            },
+            "align_sorted_dedup": {
+              "$ref": "artifacts/artifact_bam.json"
+            },
+            "align_sorted_dedup_index": {
+              "$ref": "artifacts/artifact_bam_bai.json"
+            }
+          },
+          "required": [
+            "align_sorted_dedup",
+            "align_sorted_dedup_index"
+          ]
+        },
+        "germline": {
+          "description": "Germline variant output sample files.",
+          "type": "object",
+          "additionalProperties": false,
+          
+          "properties": {
+            "haplotyper_targets": {
+              "$ref": "artifacts/artifact_vcf_gz.json"
+            }
+          },
+          "required": [
+            "haplotyper_targets"
+          ]
+        },
+        "optitype": {
+          "description": "HLA output files.",
+          "type": "object",
+          "additionalProperties": false,
+
+          "properties": {
+            "optitype_result": {
+              "$ref": "artifacts/artifact_text.json"
+            },
+            "xhla_report_hla": {
+              "$ref": "artifacts/artifact_json.json"
+            }
+          },
+          "required": [
+            "optitype_result"
+          ]
+        },
+        "metrics": {
+          "description": "Coverage metrics output files.",
+          "type": "object",
+          "additionalProperties": false,
+
+          "properties": {
+            "all_summaries": {
+              "$ref": "artifacts/artifact_text.json"
+            },
+            "mosdepth_region_dist_broad": {
+              "$ref": "artifacts/artifact_text.json"
+            },
+            "mosdepth_region_dist_mda": {
+              "$ref": "artifacts/artifact_text.json"
+            },
+            "mosdepth_region_dist_mocha": {
+              "$ref": "artifacts/artifact_text.json"
+            },
+            "coverage_metrics": {
+              "$ref": "artifacts/artifact_text.json"
+            },
+            "coverage_metrics_summary": {
+              "$ref": "artifacts/artifact_text.json"
+            },
+            "target_metrics": {
+              "$ref": "artifacts/artifact_text.json"
+            },
+            "target_metrics_summary": {
+              "$ref": "artifacts/artifact_text.json"
+            }
+          },
+          "required": [
+            "coverage_metrics",
+            "target_metrics"
+          ]
+        }
+    }
+}

@@ -227,12 +227,12 @@ def test_tcr_fastq():
 
 
 def test_cytof():
-
-    # test artifact sub schema
-    schema_root = SCHEMA_DIR
-    schema_path = os.path.join(SCHEMA_DIR, "assays/components/cytof/cytof_input.json")
-    schema = load_and_validate_schema(schema_path, schema_root)
-    validator = jsonschema.Draft7Validator(schema)
+    # test artifact sub schema only first
+    schema_path = os.path.join(
+        SCHEMA_DIR,
+        "assays/cytof_assay.json#properties/records/items/properties/input_files",
+    )
+    validator = load_and_validate_schema(schema_path, SCHEMA_DIR, return_validator=True)
 
     fcs_1 = ARTIFACT_OBJ.copy()
     fcs_1["data_format"] = "FCS"

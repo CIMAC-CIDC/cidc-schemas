@@ -5,48 +5,69 @@
   "type": "object",
   "description": "Whole exome sequencing.",
   "additionalProperties": false,
-  "allOf": [
-      { "$ref": "assays/components/assay_core.json" },
-      { "$ref": "assays/components/ngs_assay_core.json" }
-  ],
-  "properties": {
-      "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
-      "sequencer_platform": {"$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"},
-      "library_kit": {"$ref": "assays/components/ngs_assay_core.json#properties/library_kit"},
-      "paired_end_reads": {"$ref": "assays/components/ngs_assay_core.json#properties/paired_end_reads"},
-      "sequencing_protocol": {
-          "description": "Protocol and version used for the sequencing.",
-          "type": "string",
-          "enum": ["Express Somatic Human WES (Deep Coverage) v1.1"]
-      },
-      "bait_set": {
-          "description": "Bait set ID.",
-          "type": "string",
-          "enum": ["whole_exome_illumina_coding_v1"]
-      },
-      "read_length": {
-          "description": "Number of cycles for each sequencing read.",
-          "type": "integer",
-          "exclusiveMinimum": 0,
-          "maximum": 1000
-      },
-      "records": {
-          "type": "array",
-          "description": "A single data record from WES assay.",
-          "items": {
-            "$ref": "assays/components/ngs/wes/wes_entry.json"
-          },
-          "mergeStrategy": "arrayMergeById",
-          "mergeOptions": {
-            "idRef": "cimac_id"
-          }
-      }
-  },
+  "mergeStrategy": "objectMerge",
+
   "required": [
     "records",
     "sequencing_protocol",
     "bait_set",
     "read_length"
   ],
-  "mergeStrategy": "objectMerge"
+  "allOf": [
+      { "$ref": "assays/components/assay_core.json" },
+      { "$ref": "assays/components/ngs_assay_core.json" }
+  ],
+  "properties": {
+    "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
+    "sequencer_platform": {"$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"},
+    "library_kit": {"$ref": "assays/components/ngs_assay_core.json#properties/library_kit"},
+    "paired_end_reads": {"$ref": "assays/components/ngs_assay_core.json#properties/paired_end_reads"},
+    "sequencing_protocol": {
+      "description": "Protocol and version used for the sequencing.",
+      "type": "string",
+      "enum": ["Express Somatic Human WES (Deep Coverage) v1.1"]
+    },
+    "bait_set": {
+      "description": "Bait set ID.",
+      "type": "string",
+      "enum": ["whole_exome_illumina_coding_v1"]
+    },
+    "read_length": {
+      "description": "Number of cycles for each sequencing read.",
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 1000
+    },
+    "records": {
+      "description": "A single data record from WES assay.",
+      "type": "array",
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "cimac_id"
+      },
+
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "mergeStrategy": "objectMerge",
+
+        "allOf": [{ "$ref": "assays/components/ngs_assay_record.json" }],
+        "properties": {
+          "cimac_id": {"$ref": "sample.json#properties/cimac_id"},
+          "files": {"$ref": "assays/components/ngs_assay_record.json#properties/files"},
+          "output_files": {"$ref": "assays/components/wes_sample_analysis.json"},
+
+          "sequencing_date": {
+            "description": "Date of sequencing.",
+            "type": "string",
+            "format": "date"
+          },
+          "quality_flag": {
+            "description": "Flag used for quality.",
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
 }

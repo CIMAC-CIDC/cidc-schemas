@@ -1,7 +1,7 @@
 {    "title": "Metadata file for mIF",
     "description": "Metadata information for multiplex immunoflouresence (mIF).",
     "prism_template_root_object_schema": "assays/mif_assay.json",
-    "prism_template_root_object_pointer": "/assays/mif/0",
+    "prism_template_root_object_pointer": "/assays/mif/-",
     "properties":
     {
         "worksheets":
@@ -84,7 +84,7 @@
                         "ROI id":
                         {
                             "merge_pointer": "0/roi_id",
-                            "type_ref": "assays/components/imaging/mif_roi.json#properties/roi_id"
+                            "type_ref": "assays/mif_assay.json#properties/records/items/properties/files/properties/regions_of_interest/items/properties/roi_id"
                         },
                         "IM3 file":
                         {
@@ -134,14 +134,14 @@
                         },
                         "ROI id":
                         {
-                            "type_ref": "assays/components/imaging/mif_roi.json#properties/roi_id",
+                            "type_ref": "assays/mif_assay.json#properties/records/items/properties/files/properties/regions_of_interest/items/properties/roi_id",
                             "merge_pointer": "2/roi_id"
                         },
                         "Export ID":
                         {
                             "description": "The export as given by the folder name. Generally the marker(s) used in each analysis.",
                             "merge_pointer": "0/export_id",
-                            "type_ref": "assays/components/imaging/mif_export.json#properties/export_id"
+                            "type_ref": "assays/mif_assay.json#properties/records/items/properties/files/properties/regions_of_interest/items/properties/exports/items/properties/export_id"
                         },
                         "Score data files":
                         {
@@ -256,7 +256,7 @@
                         "Export name":
                         {
                             "merge_pointer": "0/export_name",
-                            "type_ref": "assays/components/mif_antibody.json#properties/export_name"
+                            "type_ref": "assays/mif_assay.json#properties/antibodies/items/properties/export_name"
                         },
                         "Clone":
                         {
@@ -281,42 +281,42 @@
                         "Staining Order":
                         {
                             "merge_pointer": "0/staining_order",
-                            "type_ref": "assays/components/mif_antibody.json#properties/staining_order"
+                            "type_ref": "assays/mif_assay.json#properties/antibodies/items/properties/staining_order"
                         },
                         "Fluor Wavelength":
                         {
                             "merge_pointer": "0/fluor_wavelength",
-                            "type_ref": "assays/components/mif_antibody.json#properties/fluor_wavelength"
+                            "type_ref": "assays/mif_assay.json#properties/antibodies/items/properties/fluor_wavelength"
                         },
                         "Primary ab Dilution":
                         {
                             "merge_pointer": "0/primary_ab_dilution",
-                            "type_ref": "assays/components/mif_antibody.json#properties/primary_ab_dilution"
+                            "type_ref": "assays/mif_assay.json#properties/antibodies/items/properties/primary_ab_dilution"
                         },
                         "Dilutent":
                         {
                             "merge_pointer": "0/dilutent",
-                            "type_ref": "assays/components/mif_antibody.json#properties/dilutent"
+                            "type_ref": "assays/mif_assay.json#properties/antibodies/items/properties/dilutent"
                         },
                         "Fluor dilution":
                         {
                             "merge_pointer": "0/fluor_dilution",
-                            "type_ref": "assays/components/mif_antibody.json#properties/fluor_dilution"
+                            "type_ref": "assays/mif_assay.json#properties/antibodies/items/properties/fluor_dilution"
                         },
                         "Antigen Retrieval Time":
                         {
                             "merge_pointer": "0/antigen_retrieval_time",
-                            "type_ref": "assays/components/mif_antibody.json#properties/antigen_retrieval_time"
+                            "type_ref": "assays/mif_assay.json#properties/antibodies/items/properties/antigen_retrieval_time"
                         },
                         "Primary Incubation Time":
                         {
                             "merge_pointer": "0/primary_incubation_time",
-                            "type_ref": "assays/components/mif_antibody.json#properties/primary_incubation_time"
+                            "type_ref": "assays/mif_assay.json#properties/antibodies/items/properties/primary_incubation_time"
                         },
                         "Amplification Time":
                         {
                             "merge_pointer": "0/amplification_time",
-                            "type_ref": "assays/components/mif_antibody.json#properties/amplification_time"
+                            "type_ref": "assays/mif_assay.json#properties/antibodies/items/properties/amplification_time"
                         }
                     }
                 }

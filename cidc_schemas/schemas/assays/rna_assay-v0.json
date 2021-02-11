@@ -1,0 +1,83 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "rna_assay-v0",
+  "title": "RNA Gene Expression Assay version 0",
+  "type": "object",
+  "description": "Additional properties to describe a RNA assay for expression analysis.",
+  "additionalProperties": false,
+  "mergeStrategy": "objectMerge",
+  
+  "required": [
+    "enrichment_method",
+    "records"
+  ],
+
+  "allOf": [
+    { "$ref": "assays/components/assay_core.json" },
+    { "$ref": "assays/components/ngs_assay_core.json" }
+  ],
+
+  "properties": {
+    "assay_creator": { "$ref": "assays/components/assay_core.json#properties/assay_creator" },
+    "sequencer_platform": { "$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform" },
+    "library_kit": { "$ref": "assays/components/ngs_assay_core.json#properties/library_kit" },
+    "paired_end_reads": { "$ref": "assays/components/ngs_assay_core.json#properties/paired_end_reads" },
+
+    "enrichment_method": {
+      "description": "Method used for enriching for mRNA.",
+      "type": "string",
+      "enum": ["PolyA capture", "Transcriptome capture", "Ribo minus"]
+    },
+    "enrichment_vendor_kit": {
+      "description": "Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT.",
+      "type": "string",
+      "enum": ["Agilent", "Twist", "IDT", "NEB", "Illumina - TruSeq Stranded PolyA mRNA"]
+    },
+
+    "records": {
+      "type": "array",
+      "description": "A single data record from RNAseq assay.",
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": { "idRef": "cimac_id" },
+      
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "mergeStrategy": "objectMerge",
+        "allOf": [ { "$ref": "assays/components/ngs_assay_record.json" } ],
+        
+        "properties": {
+          "cimac_id": { "$ref": "assays/components/ngs_assay_record.json#properties/cimac_id" },
+          "files": { "$ref": "assays/components/ngs_assay_record.json#properties/files" },
+
+          "library_yield_ng": {
+            "description": "Resulting yield (in ng) from library construction.",
+            "type": "number"
+          },
+          "dv200": {
+            "description": "The percentage of fragments > 200 nucleotides.",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "rqs": {
+            "description": "RNA quality score. (0-10)",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10
+          },
+          "rin": {
+            "description": "RNA integrity number. (0-10)",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10
+          },
+          "quality_flag": {
+            "description": "Flag used for quality.",
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

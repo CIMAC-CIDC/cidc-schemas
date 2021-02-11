@@ -27,21 +27,25 @@
 
 {% macro properties_table(schema, required) -%}
     {% set properties = [] %}
-    {% if 'properties' in schema or 'allOf' in schema %}
-        {% if 'allOf' in schema %}
-            {% for prop in schema['allOf'] %}
-                {% if 'url' in prop %}
-                    {% set _ = properties.append(("$ref", prop)) %}
-                {% endif %}
-                {% if 'properties' in prop %}
-                    {% set _ = properties.extend(prop['properties'].items()) %}
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-        {% if 'properties' in schema %}
-            {% set _ = properties.extend(schema['properties'].items()) %}
-        {% endif %}
-    {% else %}
+    {% set allOfOrAnyOf = schema.get('allOf') or schema.get('anyOf') %}
+    {% set hasProperties = 'properties' in schema %}
+
+    {% if allOfOrAnyOf %}
+        {% for prop in allOfOrAnyOf %}
+            {% if 'url' in prop %}
+                {% set _ = properties.append(("$ref", prop)) %}
+            {% endif %}
+            {% if 'properties' in prop %}
+                {% set _ = properties.extend(prop['properties'].items()) %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% if hasProperties %}
+        {% set _ = properties.extend(schema['properties'].items()) %}
+    {% endif %}
+
+    {% if not hasProperties and not allOfOrAnyOf %}
         {% set properties = schema.items() %}
     {% endif %}
 
@@ -83,6 +87,8 @@
             Inherits all properties from schema:
         {% elif "allOf" in prop_schema %}
             Inherits all properties from schemas:
+        {% elif "anyOf" in prop_schema %}
+            Inherits properties from any of these schemas:
         {% else %}
             {{ prop_schema["description"] }}
         {% endif %}
@@ -152,7 +158,8 @@
 {% macro definitions_table(schema, required) -%}
     {% if 'definitions' in schema %}
         {% for def_name, def_schema in schema['definitions'].items() %}
-            <h5>Definitions - {{ def_name }}</h5>
+            <h3>Definitions</h3>
+            <h4 id=".{{ def_name }}">{{ def_name }}</h4>
             {{ properties_table(def_schema, required) }}
         {% endfor %}
     {% endif %}

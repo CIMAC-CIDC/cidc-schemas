@@ -4,7 +4,7 @@
   "properties": {
     "worksheets": {
       "RNA": {
-        "prism_preamble_object_schema" : "assays/rna_assay.json",
+        "prism_preamble_object_schema" : "assays/rna_assay-v0.json",
         "prism_preamble_object_pointer" : "/assays/rna/-",
         "prism_data_object_pointer" : "/records/-",
 
@@ -19,11 +19,11 @@
           },
           "enrichment method": {
             "merge_pointer": "0/enrichment_method",
-            "type_ref": "assays/rna_assay.json#properties/enrichment_method"
+            "type_ref": "assays/rna_assay-v0.json#properties/enrichment_method"
           },
           "enrichment kit": {
             "merge_pointer": "0/enrichment_vendor_kit",
-            "type_ref": "assays/rna_assay.json#properties/enrichment_vendor_kit"
+            "type_ref": "assays/rna_assay-v0.json#properties/enrichment_vendor_kit"
           },
           "sequencer platform": {
             "merge_pointer": "0/sequencer_platform",
@@ -54,24 +54,24 @@
             },
             "library yield ng": {
               "merge_pointer": "0/library_yield_ng",
-              "type_ref": "assays/components/ngs/rna/rna_entry.json#properties/library_yield_ng"
+              "type_ref": "assays/rna_assay-v0.json#properties/records/items/properties/library_yield_ng"
             },
             "dv200": {
               "merge_pointer": "0/dv200",
-              "type_ref": "assays/components/ngs/rna/rna_entry.json#properties/dv200"
+              "type_ref": "assays/rna_assay-v0.json#properties/records/items/properties/dv200"
             },
             "rqs": {
               "merge_pointer": "0/rqs",
-              "type_ref": "assays/components/ngs/rna/rna_entry.json#properties/rqs"
+              "type_ref": "assays/rna_assay-v0.json#properties/records/items/properties/rqs"
             },
             "rin": {
               "merge_pointer": "0/rin",
-              "type_ref": "assays/components/ngs/rna/rna_entry.json#properties/rin",
+              "type_ref": "assays/rna_assay-v0.json#properties/records/items/properties/rin",
               "allow_empty": true
             },
             "quality flag": {
               "merge_pointer": "0/quality_flag",
-              "type_ref": "assays/components/ngs/rna/rna_entry.json#properties/quality_flag",
+              "type_ref": "assays/rna_assay-v0.json#properties/records/items/properties/quality_flag",
               "type": "number"
             }
           }

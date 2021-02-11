@@ -241,24 +241,6 @@ def test_get_values_for_path_pattern():
 
 
 def test_validate_in_doc_refs():
-    doc = {"objs": [{"id": "1"}, {"id": "something"}]}
-
-    v = empty_schema_validator = _Validator({})
-    in_doc_refs_cache = {}
-    assert True == v._ensure_in_doc_ref(
-        "something", "/objs/*/id", doc, in_doc_refs_cache
-    )
-
-    assert True == v._ensure_in_doc_ref("1", "/objs/*/id", doc, in_doc_refs_cache)
-
-    assert True == v._ensure_in_doc_ref("1", "/*/*/id", doc, in_doc_refs_cache)
-
-    assert False == v._ensure_in_doc_ref(
-        "something_else", "/objs/*/id", doc, in_doc_refs_cache
-    )
-
-    assert False == v._ensure_in_doc_ref("something", "/objs", doc, in_doc_refs_cache)
-
     v = _Validator(
         {
             "properties": {
@@ -275,8 +257,10 @@ def test_validate_in_doc_refs():
     )
 
     v.validate({"objs": [{"id": 1}, {"id": "something"}], "refs": [1, "something"]})
+    assert v.in_doc_refs_cache == {"/objs/*/id": {repr(1), repr("something")}}
 
     v.validate({"objs": [{"id": 1}, {"id": "something"}], "refs": [1]})
+    assert v.in_doc_refs_cache == {"/objs/*/id": {repr(1), repr("something")}}
 
     assert 2 == len(
         [

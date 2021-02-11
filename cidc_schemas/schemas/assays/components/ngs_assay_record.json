@@ -1,0 +1,22 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "ngs_assay_record",
+  "title": "NGS assay record",
+  "type": "object",
+  "description": "A single data record from an NGS assay.",
+  "inheritableBase": true,
+  "properties": {
+    "cimac_id": {
+        "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
+        "$ref": "sample.json#properties/cimac_id"
+    },
+    "files": {
+      "$comment": "Fastq files or a bam file produced by the assay.",
+      "$ref": "assays/components/reads_core.json"
+    }
+  },
+  "required": [
+    "cimac_id",
+    "files"
+  ]
+}

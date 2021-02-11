@@ -42,17 +42,21 @@
     <h3>Properties</h3>
     
     
+    
+
+    
         
             
                 
-                    
-                
-                
+            
             
         
+    
+
+    
         
-            
-        
+    
+
     
 
     <table class="table table-striped">
@@ -227,12 +231,10 @@
   	<pre><code>{
     "$id": "reads_with_index",
     "$schema": "metaschema/strict_meta_schema.json#",
-    "additionalProperties": true,
     "allOf": [
         {
             "$id": "fastq_pair_or_bam",
             "$schema": "metaschema/strict_meta_schema.json#",
-            "additionalProperties": true,
             "anyOf": [
                 {
                     "required": [
@@ -247,6 +249,7 @@
                 }
             ],
             "description": "Paired end sequencing in a .fastq file pair or in a .bam",
+            "inheritableBase": true,
             "mergeStrategy": "objectMerge",
             "properties": {
                 "bam": {
@@ -915,6 +918,7 @@
         }
     ],
     "description": "Index files associated with read files, in fastq.gz format",
+    "inheritableBase": true,
     "mergeStrategy": "objectMerge",
     "properties": {
         "i1": {
@@ -1805,7 +1809,7 @@
     "title": "Reads with index",
     "type": "object"
 }</code></pre>
-  </container>
+  </div>
 
 
     </main>

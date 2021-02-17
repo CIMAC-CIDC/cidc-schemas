@@ -1,4 +1,4 @@
-"#title","Metadata file for wes"
+"#title","Metadata file for wes [fastq]"
 "#preamble","Protocol identifier","test_prism_trial_id"
 "#preamble","Assay creator","Mount Sinai"
 "#preamble","Sequencing protocol","Express Somatic Human WES (Deep Coverage) v1.1"
@@ -6,7 +6,7 @@
 "#preamble","Sequencer platform","Illumina - NextSeq 550"
 "#preamble","Paired end reads","Paired"
 "#preamble","Read length","100"
-"#preamble","Bait set","whole_exome_illumina_coding_v1"
+"#preamble","Bait set","broad_custom_exome_v1"
 
 "#skip","Samples"
 "#header","Cimac id","Forward fastq","Reverse fastq","Sequencing date","Quality flag"

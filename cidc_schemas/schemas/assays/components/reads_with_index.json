@@ -32,7 +32,7 @@
     }
   },
   "mergeStrategy": "objectMerge",
-  "additionalProperties": true,
+  "inheritableBase": true,
   "required": [
     "i1",
     "i2"

@@ -29,7 +29,6 @@
   "mergeStrategy": "objectMerge",
   "required": [
     "roi_id",
-    "im3",
     "exports"
   ]
 }

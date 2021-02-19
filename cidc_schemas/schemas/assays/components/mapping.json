@@ -44,6 +44,5 @@
         "$ref": "artifacts/artifact_text.json"
       }
     }
-  },
-  "required": ["phenotype_map"]
+  }
 }

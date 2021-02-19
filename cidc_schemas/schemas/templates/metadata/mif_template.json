@@ -91,7 +91,8 @@
                             "merge_pointer": "0/im3",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
                             "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/multispectral.im3",
-                            "is_artifact": 1
+                            "is_artifact": 1,
+                            "allow_empty": true
                         },
                         "Composite image":
                         {

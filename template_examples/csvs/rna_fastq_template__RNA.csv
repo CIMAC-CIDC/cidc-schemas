@@ -1,4 +1,4 @@
-"#title","Metadata file for rna expression"
+"#title","Metadata file for rna expression [fastq]."
 "#preamble","Protocol identifier","test_prism_trial_id"
 "#preamble","Assay creator","DFCI"
 "#preamble","Enrichment method","Transcriptome capture"

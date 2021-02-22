@@ -17,7 +17,7 @@
       "sequencing_protocol": {
           "description": "Protocol and version used for the sequencing.",
           "type": "string",
-          "enum": ["Express Somatic Human WES (Deep Coverage) v1.1"]
+          "enum": ["Express Somatic Human WES (Deep Coverage) v1.1", "Somatic Human WES v6"]
       },
       "bait_set": {
           "description": "Bait set ID.",

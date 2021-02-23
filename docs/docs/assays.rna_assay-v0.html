@@ -146,7 +146,7 @@
                 
                     <li>"PolyA capture"</li>
                 
-                    <li>"Transcriptome capture"</li>
+                    <li>"Transcriptome capture v1"</li>
                 
                     <li>"Ribo minus"</li>
                 
@@ -336,6 +336,10 @@
                 
                     <li>"Illumina - TruSeq Stranded PolyA mRNA"</li>
                 
+                    <li>"Illumina - TruSeq Stranded mRNA Sample Prep Kit"</li>
+                
+                    <li>"Illumina- TruSeq RNA Access Library Prep Kit"</li>
+                
             </ul>
             
             
@@ -391,7 +395,9 @@
                     "$comment": "This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.",
                     "description": "The library construction kit.",
                     "enum": [
-                        "Hyper Prep ICE Exome Express: 1.0"
+                        "Hyper Prep ICE Exome Express: 1.0",
+                        "KAPA HyperPrep",
+                        "IDT duplex UMI adapters"
                     ],
                     "type": "string"
                 },
@@ -440,7 +446,7 @@
             "description": "Method used for enriching for mRNA.",
             "enum": [
                 "PolyA capture",
-                "Transcriptome capture",
+                "Transcriptome capture v1",
                 "Ribo minus"
             ],
             "type": "string"
@@ -452,7 +458,9 @@
                 "Twist",
                 "IDT",
                 "NEB",
-                "Illumina - TruSeq Stranded PolyA mRNA"
+                "Illumina - TruSeq Stranded PolyA mRNA",
+                "Illumina - TruSeq Stranded mRNA Sample Prep Kit",
+                "Illumina- TruSeq RNA Access Library Prep Kit"
             ],
             "type": "string"
         },
@@ -460,7 +468,9 @@
             "$comment": "This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.",
             "description": "The library construction kit.",
             "enum": [
-                "Hyper Prep ICE Exome Express: 1.0"
+                "Hyper Prep ICE Exome Express: 1.0",
+                "KAPA HyperPrep",
+                "IDT duplex UMI adapters"
             ],
             "type": "string"
         },

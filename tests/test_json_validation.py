@@ -280,13 +280,13 @@ def test_validate_in_doc_refs():
 
     instance = {"objs": [{"id": 1}, {"id": "something"}], "refs": [1, "something"]}
     v.validate(instance)
-    with v._build_in_doc_refs_cache(instance):
-        assert v.in_doc_refs_cache == {"/objs/*/id": {repr(1), repr("something")}}
+    with v._validation_context(instance, ignore_in_doc_refs=False):
+        assert v._in_doc_refs_cache == {"/objs/*/id": {repr(1), repr("something")}}
 
     instance = {"objs": [{"id": 1}, {"id": "something"}], "refs": [1]}
     v.validate(instance)
-    with v._build_in_doc_refs_cache(instance):
-        assert v.in_doc_refs_cache == {"/objs/*/id": {repr(1), repr("something")}}
+    with v._validation_context(instance, ignore_in_doc_refs=False):
+        assert v._in_doc_refs_cache == {"/objs/*/id": {repr(1), repr("something")}}
 
     assert 2 == len(
         [

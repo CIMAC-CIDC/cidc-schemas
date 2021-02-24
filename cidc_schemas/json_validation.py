@@ -83,7 +83,8 @@ class _Validator(jsonschema.Draft7Validator):
 
         super().__init__(*args, **kwargs)
 
-        self.in_doc_refs_cache = None
+        self._in_doc_refs_cache = None
+        self._ignore_in_doc_refs = False
 
         # TODO consider adding json pointer check to metaschema for in_doc_ref_pattern values
         self.in_doc_ref_validator = jsonschema.validators.create(
@@ -91,33 +92,40 @@ class _Validator(jsonschema.Draft7Validator):
         )(*args, **kwargs)
 
     @contextmanager
-    def _build_in_doc_refs_cache(self, instance: JSON):
+    def _validation_context(self, instance: JSON, ignore_in_doc_refs: bool):
         """
-        A context manager for building up and tearing down an in_doc_refs_cache
-        for the given instance
+        A context manager for building up and tearing down configuration for
+        a running our custom validator on a given instance.
         """
-        self.in_doc_refs_cache = dict()
-        search = DeepSearch(self.schema, "in_doc_ref_pattern")
+        self._ignore_in_doc_refs = ignore_in_doc_refs
+        self._in_doc_refs_cache = dict()
 
-        if "matched_paths" in search:
-            for path in search["matched_paths"]:
-                scope = {"root": self.schema}
-                exec(f"ref_path_pattern = {path}", scope)
-                ref_path_pattern = scope["ref_path_pattern"]
-                # If there are no cached values for this ref path pattern, collect them
-                if ref_path_pattern not in self.in_doc_refs_cache:
-                    self.in_doc_refs_cache[
-                        ref_path_pattern
-                    ] = self._get_values_for_path_pattern(ref_path_pattern, instance)
+        # Build the in_doc_refs_cache if we're not ignoring in_doc_refs
+        if not ignore_in_doc_refs:
+            search = DeepSearch(self.schema, "in_doc_ref_pattern")
+            if "matched_paths" in search:
+                for path in search["matched_paths"]:
+                    scope = {"root": self.schema}
+                    exec(f"ref_path_pattern = {path}", scope)
+                    ref_path_pattern = scope["ref_path_pattern"]
+                    # If there are no cached values for this ref path pattern, collect them
+                    if ref_path_pattern not in self._in_doc_refs_cache:
+                        self._in_doc_refs_cache[
+                            ref_path_pattern
+                        ] = self._get_values_for_path_pattern(
+                            ref_path_pattern, instance
+                        )
 
         # see: https://docs.python.org/3/library/contextlib.html
         try:
             yield
         finally:
-            self.in_doc_refs_cache = None
+            self._in_doc_refs_cache = None
 
-    def validate(self, instance: JSON, *args, **kwargs):
-        with self._build_in_doc_refs_cache(instance):
+    def validate(
+        self, instance: JSON, *args, ignore_in_doc_refs: bool = False, **kwargs
+    ):
+        with self._validation_context(instance, ignore_in_doc_refs):
             super().validate(instance, *args, **kwargs)
 
     def iter_errors(self, instance: JSON, _schema: Optional[dict] = None):
@@ -136,10 +144,14 @@ class _Validator(jsonschema.Draft7Validator):
             # if it is "ours" - we actually check ref
             elif (
                 repr(downstream_error.instance)
-                not in self.in_doc_refs_cache[downstream_error.validator_value]
+                not in self._in_doc_refs_cache[downstream_error.validator_value]
             ):
                 # and if the check was not passed - we propagate it
                 yield downstream_error
+
+        # Don't perform referential integrity checks if _ignore_in_doc_refs = True
+        if self._ignore_in_doc_refs:
+            return
 
         # Here we actually call our custom validator, that will throw errors
         # on every occurrence of `in_doc_ref_pattern` constraint
@@ -150,7 +162,7 @@ class _Validator(jsonschema.Draft7Validator):
             # we know that it wasn't initialized properly - this generally means
             # some client code called `self.iter_errors` directly, which
             # isn't allowed.
-            if self.in_doc_refs_cache is None:
+            if self._in_doc_refs_cache is None:
                 raise AssertionError(
                     "_Validator.iter_errors cannot be called directly. Please call _Validator.safe_iter_errors instead."
                 )
@@ -158,16 +170,23 @@ class _Validator(jsonschema.Draft7Validator):
             # but then we actually check refs
             if (
                 repr(in_doc_ref_not_found.instance)
-                not in self.in_doc_refs_cache[in_doc_ref_not_found.validator_value]
+                not in self._in_doc_refs_cache[in_doc_ref_not_found.validator_value]
             ):
                 # and produce errors only when check wont pass
                 yield in_doc_ref_not_found
 
-    def safe_iter_errors(self, instance: JSON, _schema: Optional[dict] = None):
+    def safe_iter_errors(
+        self,
+        instance: JSON,
+        _schema: Optional[dict] = None,
+        ignore_in_doc_refs: bool = False,
+    ):
         """A generator producing validation errors for the given JSON instance."""
-        with self._build_in_doc_refs_cache(instance):
+        with self._validation_context(instance, ignore_in_doc_refs):
             for error in self.iter_errors(instance, _schema):
                 yield error
+            # restore to default value
+            self._ignore_in_doc_refs = False
 
     def iter_error_messages(self, instance: JSON, _schema: Optional[dict] = None):
         """

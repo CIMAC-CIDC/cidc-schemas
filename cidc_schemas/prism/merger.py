@@ -39,7 +39,7 @@ def _set_data_format(ct: dict, artifact: dict):
         ):
             return error.validator_value
 
-    for error in validator.iter_errors(ct):
+    for error in validator.safe_iter_errors(ct):
         if isinstance(error, jsonschema.exceptions.ValidationError):
             if error.validator == "anyOf":
                 data_format = None

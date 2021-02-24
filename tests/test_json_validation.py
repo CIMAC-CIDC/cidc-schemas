@@ -24,7 +24,7 @@ from .constants import SCHEMA_DIR, ROOT_DIR, TEST_SCHEMA_DIR
 
 
 def test_validator_iter_errors_in_doc_ref():
-    """Smoketest for calls to iter_errors (reproduces a previous bug)."""
+    """Show that calling iter_errors directly leads to an assertion error"""
     validator = _Validator(
         {
             "$schema": "http://json-schema.org/draft-07/schema#",
@@ -33,7 +33,16 @@ def test_validator_iter_errors_in_doc_ref():
             "properties": {"a": {"type": "string", "in_doc_ref_pattern": "/a"}},
         }
     )
-    assert len(list(validator.iter_errors({"a": "foo"}))) == 0
+
+    valid_instance = {"a": "foo"}
+
+    with pytest.raises(
+        AssertionError, match="Please call _Validator.safe_iter_errors instead."
+    ):
+        list(validator.iter_errors(valid_instance))
+
+    errors = list(validator.safe_iter_errors(valid_instance))
+    assert len(errors) == 0
 
 
 def test_map_refs():
@@ -269,16 +278,20 @@ def test_validate_in_doc_refs():
         }
     )
 
-    v.validate({"objs": [{"id": 1}, {"id": "something"}], "refs": [1, "something"]})
-    assert v.in_doc_refs_cache == {"/objs/*/id": {repr(1), repr("something")}}
+    instance = {"objs": [{"id": 1}, {"id": "something"}], "refs": [1, "something"]}
+    v.validate(instance)
+    with v._build_in_doc_refs_cache(instance):
+        assert v.in_doc_refs_cache == {"/objs/*/id": {repr(1), repr("something")}}
 
-    v.validate({"objs": [{"id": 1}, {"id": "something"}], "refs": [1]})
-    assert v.in_doc_refs_cache == {"/objs/*/id": {repr(1), repr("something")}}
+    instance = {"objs": [{"id": 1}, {"id": "something"}], "refs": [1]}
+    v.validate(instance)
+    with v._build_in_doc_refs_cache(instance):
+        assert v.in_doc_refs_cache == {"/objs/*/id": {repr(1), repr("something")}}
 
     assert 2 == len(
         [
             e
-            for e in v.iter_errors(
+            for e in v.safe_iter_errors(
                 {
                     "objs": [{"id": 1}, {"id": "something"}],
                     "refs": [2, "something", "else"],

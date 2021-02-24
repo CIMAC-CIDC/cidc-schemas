@@ -576,7 +576,7 @@ def rna_bam() -> PrismTestData:
                         },
                     ],
                     "assay_creator": "DFCI",
-                    "enrichment_method": "Transcriptome capture",
+                    "enrichment_method": "Transcriptome capture v1",
                     "sequencer_platform": "Illumina - HiSeq 3000",
                     "paired_end_reads": "Paired",
                 }
@@ -690,7 +690,7 @@ def rna_fastq() -> PrismTestData:
                         },
                     ],
                     "assay_creator": "DFCI",
-                    "enrichment_method": "Transcriptome capture",
+                    "enrichment_method": "Transcriptome capture v1",
                     "enrichment_vendor_kit": "Illumina - TruSeq Stranded PolyA mRNA",
                     "sequencer_platform": "Illumina - HiSeq 3000",
                     "paired_end_reads": "Paired",

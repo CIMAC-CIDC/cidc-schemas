@@ -1,7 +1,7 @@
 "#title","Metadata file for rna expression [bam]"
 "#preamble","Protocol identifier","test_prism_trial_id"
 "#preamble","Assay creator","DFCI"
-"#preamble","Enrichment method","Transcriptome capture"
+"#preamble","Enrichment method","Transcriptome capture v1"
 "#preamble","Enrichment kit"
 "#preamble","Sequencer platform","Illumina - HiSeq 3000"
 "#preamble","Paired end reads","Paired"

@@ -92,7 +92,7 @@ class _Validator(jsonschema.Draft7Validator):
         )(*args, **kwargs)
 
     @contextmanager
-    def _validation_context(self, instance: JSON, ignore_in_doc_refs: bool):
+    def _validation_context(self, instance: JSON, ignore_in_doc_refs: bool = False):
         """
         A context manager for building up and tearing down configuration for
         a running our custom validator on a given instance.

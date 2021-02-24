@@ -23,6 +23,19 @@ from cidc_schemas.prism import PROTOCOL_ID_FIELD_NAME
 from .constants import SCHEMA_DIR, ROOT_DIR, TEST_SCHEMA_DIR
 
 
+def test_validator_iter_errors_in_doc_ref():
+    """Smoketest for calls to iter_errors (reproduces a previous bug)."""
+    validator = _Validator(
+        {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": False,
+            "type": "object",
+            "properties": {"a": {"type": "string", "in_doc_ref_pattern": "/a"}},
+        }
+    )
+    assert len(list(validator.iter_errors({"a": "foo"}))) == 0
+
+
 def test_map_refs():
     ref_spec = {"a": {"$ref": "foo"}, "b": [{"$ref": "foo"}]}
     mapped_refs = _map_refs(ref_spec.copy(), lambda ref: ref.upper())

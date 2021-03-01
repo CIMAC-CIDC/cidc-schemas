@@ -465,6 +465,7 @@ def prismify(
                     template_root_obj,
                     preamble_object_pointer,
                 )
+                print(template_root_obj, data_object_pointer)
 
                 # We create this "data record dict" (all key-value pairs) prior to processing
                 # properties from data_columns wrt template schema definitions, because

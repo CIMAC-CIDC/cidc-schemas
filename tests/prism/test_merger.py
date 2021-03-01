@@ -335,10 +335,19 @@ def olink_ct_metadata():
         "protocol_identifier": "test_prism_trial_id",
         "assays": {
             "olink": {
-                "records": [
-                    {"files": {"assay_npx": up("npx_1"), "assay_raw_ct": up("ct_1")}}
+                "batches": [
+                    {
+                        "records": [
+                            {
+                                "files": {
+                                    "assay_npx": up("npx_1"),
+                                    "assay_raw_ct": up("ct_1"),
+                                }
+                            }
+                        ]
+                    }
                 ],
-                "study": {"study_npx": up("study_npx")},
+                "study": {"npx_file": up("study_npx")},
             }
         },
     }
@@ -375,8 +384,10 @@ def _do_extra_metadata_merge(ct, file_infos, upload_type):
 def test_merge_extra_metadata_olink(olink_ct_metadata, olink_file_infos):
     _do_extra_metadata_merge(olink_ct_metadata, olink_file_infos, "olink")
 
-    study_npx = olink_ct_metadata["assays"]["olink"]["study"]["study_npx"]
-    assay_npx = olink_ct_metadata["assays"]["olink"]["records"][0]["files"]["assay_npx"]
+    study_npx = olink_ct_metadata["assays"]["olink"]["study"]["npx_file"]
+    assay_npx = olink_ct_metadata["assays"]["olink"]["batches"][0]["records"][0][
+        "files"
+    ]["assay_npx"]
 
     assert assay_npx["data_format"] == "NPX"
     assert study_npx["data_format"] == "NPX"

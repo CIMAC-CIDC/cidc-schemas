@@ -404,6 +404,7 @@ def prismify(
         _set_val(template_root_obj_pointer, template_root_obj, root_ct_obj)
     else:
         template_root_obj = root_ct_obj
+    print("root_ct_obj", root_ct_obj)
 
     # and merger for it
     root_ct_merger = Merger(root_ct_schema, strategies=PRISM_MERGE_STRATEGIES)
@@ -490,7 +491,11 @@ def prismify(
                         collected_files.extend(new_files)
 
                 try:
+                    print(
+                        "???? attempting to two objects", preamble_obj, copy_of_preamble
+                    )
                     preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
+                    print("!!!! success preamble_obj", preamble_obj)
                 except MergeCollisionException as e:
                     # Reformatting exception, because this mismatch happened within one template
                     # and not with some saved stuff.
@@ -534,3 +539,63 @@ def prismify(
         root_ct_obj = template_root_obj
 
     return root_ct_obj, collected_files, errors_so_far
+
+
+{
+    "records": [
+        {
+            "chip_barcode": "1111",
+            "files": {
+                "assay_npx": {
+                    "upload_placeholder": "5d3e1d35-95d9-4b9e-8b0d-4a889fd8de3e",
+                    "facet_group": "/olink/batch_/chip_/assay_npx.xlsx",
+                },
+                "assay_raw_ct": {
+                    "upload_placeholder": "be736650-0920-4e11-a885-6e259e3beebf",
+                    "facet_group": "/olink/batch_/chip_/assay_raw_ct.csv",
+                },
+            },
+            "run_date": "2019-12-12 00:00:00",
+            "run_time": "10:11:00",
+            "instrument": "MIOMARKHD411",
+            "fludigm_application_version": "4.1.3",
+            "fludigm_application_build": "20140305.43",
+            "probe_type": "FAM-MGB",
+            "passive_reference": "ROX",
+            "quality_threshold": 0.5,
+            "baseline_correction": "Linear",
+            "number_of_samples": 90.0,
+            "number_of_samples_failed": 5.0,
+            "npx_manager_version": "Olink NPX Manager 0.0.82.0",
+        }
+    ]
+}
+{
+    "records": [
+        {
+            "chip_barcode": "1112",
+            "files": {
+                "assay_npx": {
+                    "upload_placeholder": "f9416138-98a1-4a7f-bf75-62e2298433c8",
+                    "facet_group": "/olink/batch_/chip_/assay_npx.xlsx",
+                },
+                "assay_raw_ct": {
+                    "upload_placeholder": "f9a8040e-f46e-49ce-9447-bee155a39e25",
+                    "facet_group": "/olink/batch_/chip_/assay_raw_ct.csv",
+                },
+            },
+            "run_date": "2019-12-12 00:00:00",
+            "run_time": "10:11:00",
+            "instrument": "MIOMARKHD411",
+            "fludigm_application_version": "4.1.3",
+            "fludigm_application_build": "20140305.43",
+            "probe_type": "FAM-MGB",
+            "passive_reference": "ROX",
+            "quality_threshold": 0.5,
+            "baseline_correction": "Linear",
+            "number_of_samples": 80.0,
+            "number_of_samples_failed": 10.0,
+            "npx_manager_version": "Olink NPX Manager 0.0.82.0",
+        }
+    ]
+}

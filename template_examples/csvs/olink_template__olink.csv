@@ -1,7 +1,7 @@
 "#title","Metadata file for olink"
 "#preamble","Protocol identifier","test_prism_trial_id"
 "#preamble","Assay creator","DFCI"
-"#preamble","Batch identifier","batch 1"
+"#preamble","Batch identifier","batch1"
 "#preamble","Panel","Olink INFLAMMATION(v.3004)"
 "#preamble","Assay panel lot","1"
 "#preamble","Study-level combined file","olink_assay_combined.xlsx"

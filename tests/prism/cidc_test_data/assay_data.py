@@ -997,7 +997,7 @@ def olink() -> PrismTestData:
             "olink": {
                 "batches": [
                     {
-                        "batch_id": "batch 1",
+                        "batch_id": "batch1",
                         "records": [
                             {
                                 "chip_barcode": "1111",
@@ -1063,28 +1063,28 @@ def olink() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="olink_assay_1_NPX.xlsx",
-            gs_key="test_prism_trial_id/olink/chip_1111/assay_npx.xlsx",
+            gs_key="test_prism_trial_id/olink/batch_batch1/chip_1111/assay_npx.xlsx",
             upload_placeholder="d658b480-ed78-4717-b622-3e84bde632b6",
             metadata_availability=True,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="olink_assay_1_CT.csv",
-            gs_key="test_prism_trial_id/olink/chip_1111/assay_raw_ct.csv",
+            gs_key="test_prism_trial_id/olink/batch_batch1/chip_1111/assay_raw_ct.csv",
             upload_placeholder="4e9d0a47-90dc-4134-9ad6-3e3dd83619d6",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="olink_assay_2_NPX.xlsx",
-            gs_key="test_prism_trial_id/olink/chip_1112/assay_npx.xlsx",
+            gs_key="test_prism_trial_id/olink/batch_batch1/chip_1112/assay_npx.xlsx",
             upload_placeholder="9855c579-82e0-42ee-8225-7c1c736bb69f",
             metadata_availability=True,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="olink_assay_2_CT.csv",
-            gs_key="test_prism_trial_id/olink/chip_1112/assay_raw_ct.csv",
+            gs_key="test_prism_trial_id/olink/batch_batch1/chip_1112/assay_raw_ct.csv",
             upload_placeholder="b387e41a-1c6a-42b5-aa16-dccf6249e404",
             metadata_availability=False,
             allow_empty=False,

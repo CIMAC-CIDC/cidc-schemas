@@ -58,14 +58,11 @@ disk_size: 750
 # the name of the persistent disk will be: "wes_auto_{instance_name}_disk"
 
 # CIMAC center the samples associate with
-# Options- broad, mda
-cimac_center:
+# Options- broad (.bam), mda (.fastq or fastq.gz)
 {% if normal_sample.files.bam or tumor_sample.files.bam %}
-  # bam
-  - broad
+  cimac_center: broad
 {% else %}
-  # fastq or fastq.gz
-  - mda
+  cimac_center: mda
 {% endif %}
 
 # Somatic variant caller preference

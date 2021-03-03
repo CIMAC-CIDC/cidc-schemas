@@ -23,7 +23,7 @@ from jsonpointer import EndOfList, JsonPointer, JsonPointerException, resolve_po
 from .constants import SUPPORTED_TEMPLATES
 
 logger = logging.getLogger(__file__)
-logger.setLevel(logging.DEBUG)
+# logger.setLevel(logging.DEBUG)
 
 
 def _set_val(
@@ -100,6 +100,13 @@ def _set_val(
         root = context
     if context_pointer is None:
         context_pointer = "/"
+
+    logger.debug("*" * 100)
+    logger.debug(f"pointer {pointer}")
+    logger.debug(f"val {val}")
+    logger.debug(f"context {context}")
+    logger.debug(f"root {root}")
+    logger.debug(f"context_pointer {context_pointer}")
 
     # first we need to convert pointer to an absolute one
     # if it was a relative one (https://tools.ietf.org/id/draft-handrews-relative-json-pointer-00.html)
@@ -491,9 +498,7 @@ def prismify(
                         collected_files.extend(new_files)
 
                 try:
-                    logger.debug("before %s" % preamble_obj)
                     preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
-                    logger.debug("after %s" % preamble_obj)
                 except MergeCollisionException as e:
                     # Reformatting exception, because this mismatch happened within one template
                     # and not with some saved stuff.

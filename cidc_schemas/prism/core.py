@@ -23,7 +23,7 @@ from jsonpointer import EndOfList, JsonPointer, JsonPointerException, resolve_po
 from .constants import SUPPORTED_TEMPLATES
 
 logger = logging.getLogger(__file__)
-# logger.level = logging.DEBUG
+logger.setLevel(logging.DEBUG)
 
 
 def _set_val(
@@ -491,7 +491,9 @@ def prismify(
                         collected_files.extend(new_files)
 
                 try:
+                    logger.debug("before %s" % preamble_obj)
                     preamble_obj = preamble_merger.merge(preamble_obj, copy_of_preamble)
+                    logger.debug("after %s" % preamble_obj)
                 except MergeCollisionException as e:
                     # Reformatting exception, because this mismatch happened within one template
                     # and not with some saved stuff.

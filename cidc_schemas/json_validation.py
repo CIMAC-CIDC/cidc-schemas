@@ -341,10 +341,16 @@ def _load_dont_validate_schema(
     assert os.path.isabs(schema_root), "schema_root must be an absolute path"
 
     # Load schema with resolved $refs
+    subschema = None
+    if "#" in schema_path:
+        schema_path, subschema = schema_path.split("#", 1)
     schema_path = os.path.join(schema_root, schema_path)
     with open(schema_path) as schema_file:
         try:
             json_spec = json.load(schema_file)
+            if subschema:
+                for prop in subschema.split("/"):
+                    json_spec = json_spec[prop]
         except Exception as e:
             raise Exception(f"Failed loading json {schema_file}") from e
         if on_refs:

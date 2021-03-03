@@ -130,12 +130,12 @@
         "records": {
           "type": "array",
           "description": "A single data record from Olink assay.",
-          "items": {
-            "$ref": "assays/olink_assay.json#definitions/record"
-          },
           "mergeStrategy": "arrayMergeById",
           "mergeOptions": {
             "idRef": "/chip_barcode"
+          },
+          "items": {
+            "$ref": "assays/olink_assay.json#definitions/record"
           }
         },
         "combined": {

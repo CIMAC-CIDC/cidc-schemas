@@ -1,11 +1,11 @@
 {
   "title": "Metadata file for olink",
   "description": "Metadata information for olink analysis.\n",
+  "prism_template_root_object_pointer": "/assays/olink/batches/-",
   "properties": {
     "worksheets": {
       "olink": {
-        "prism_preamble_object_pointer": "/assays/olink/batches/-",
-        "prism_data_object_pointer": "/records/-",
+        "prism_data_object_pointer": "assays/olink/batches/0/records/-",
         "preamble_rows": {
           "protocol identifier": {
             "merge_pointer": "3/protocol_identifier",

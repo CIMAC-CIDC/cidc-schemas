@@ -9,7 +9,7 @@
         "prism_data_object_pointer": "/records/-",
         "preamble_rows": {
           "protocol identifier": {
-            "merge_pointer": "3/protocol_identifier",
+            "merge_pointer": "4/protocol_identifier",
             "type_ref": "clinical_trial.json#properties/protocol_identifier"
           },
           "assay creator": {

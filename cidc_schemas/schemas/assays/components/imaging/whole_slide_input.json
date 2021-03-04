@@ -1,0 +1,15 @@
+{
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "$id": "whole_slide_input",
+    "title": "Whole Slide Analysis Input Files",
+    "type": "object",
+    "description": "Whole Slide assay input/output files.",
+    "additionalProperties": false,
+    "properties": {
+      "whole_slide_image": {
+        "$comment": "Path to the Whole Slide image in SVS format.",
+        "$ref": "artifacts/artifact_image.json"
+      }
+    },
+    "required": ["whole_slide_image"]
+  }

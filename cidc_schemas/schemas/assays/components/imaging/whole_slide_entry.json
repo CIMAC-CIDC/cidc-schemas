@@ -1,0 +1,26 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "whole_slide_assay_record",
+  "title": "Whole Slide assay record",
+  "type": "object",
+  "description": "A single data record from whole slide imaging assay.",
+  "additionalProperties": false,
+  "properties": {
+    "cimac_id": {
+        "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
+        "$ref": "sample.json#properties/cimac_id"
+    },
+    "comment": {
+        "description": "A text comment regarding this slide.",
+        "type": "string"
+      },
+    "files": {
+      "$ref": "assays/components/imaging/whole_slide_input.json"
+    }
+  },
+  "mergeStrategy": "objectMerge",
+  "required": [
+    "cimac_id",
+    "files"
+  ]
+}

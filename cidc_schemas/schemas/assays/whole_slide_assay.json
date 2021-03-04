@@ -1,0 +1,29 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "whole_slide_assay",
+  "title": "Whole Slide Imaging Assay",
+  "type": "object",
+  "description": "Whole slide imaging.",
+  "additionalProperties": false,
+  "allOf": [
+      { "$ref": "assays/components/assay_core.json" }
+  ],
+  "properties": {
+      "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
+      "records": {
+            "type": "array",
+            "description": "A single data record from Whole Slide assay.",
+            "items": {
+                "$ref": "assays/components/imaging/whole_slide_entry.json"
+            },
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": {
+                "idRef": "cimac_id"
+            }
+        }
+  },
+  "required": [
+    "records"
+  ],
+  "mergeStrategy": "objectMerge"
+}

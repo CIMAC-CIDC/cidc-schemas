@@ -101,13 +101,6 @@ def _set_val(
     if context_pointer is None:
         context_pointer = "/"
 
-    logger.debug("*" * 100)
-    logger.debug(f"pointer {pointer}")
-    logger.debug(f"val {val}")
-    logger.debug(f"context {context}")
-    logger.debug(f"root {root}")
-    logger.debug(f"context_pointer {context_pointer}")
-
     # first we need to convert pointer to an absolute one
     # if it was a relative one (https://tools.ietf.org/id/draft-handrews-relative-json-pointer-00.html)
     if pointer.startswith("/"):

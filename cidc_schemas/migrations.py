@@ -42,6 +42,50 @@ class migration:
         raise NotImplementedError
 
 
+class v0_23_18_to_v0_24_0(migration):
+    """
+    Restructure the Olink data model, introducing the concept of batches representing
+    each new upload. Trials can now have both an optional study-level combined file
+    *and* batch-level combined files.
+    """
+
+    @classmethod
+    def upgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+        if "assays" not in metadata or "olink" not in metadata["assays"]:
+            return MigrationResult(metadata, {})
+
+        file_updates = {}
+        batch_id = "1"
+        olink = metadata["assays"]["olink"]
+
+        # Add a batch_id to the record file URLs
+        for record in olink["records"]:
+            files = record["files"]
+            for f in [files["assay_npx"], files["assay_raw_ct"]]:
+                object_url = f["object_url"]
+                f["object_url"] = object_url.replace("chip_", f"batch_{batch_id}/chip_")
+                file_updates[object_url] = f
+
+        olink["batch_id"] = batch_id
+        new_olink = {"batches": [olink]}
+        if "study" in olink:
+            new_olink["study"] = olink.pop("study")
+            new_olink["study"]["npx_file"] = new_olink["study"].pop("study_npx")
+
+        metadata["assays"]["olink"] = new_olink
+
+        return MigrationResult(metadata, file_updates)
+
+    @classmethod
+    def downgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+        """
+        NOTE: downgrades are not possible on this breaking change. Downgrading 
+        would require making arbitrary decisions about which data to delete and 
+        which to keep.
+        """
+        return MigrationResult(metadata, {})
+
+
 class v0_23_0_to_v0_23_1(migration):
     """
     renaming 'arbitrary_trial_specific_clinical_annotations' to 'clinical'

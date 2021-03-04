@@ -110,7 +110,7 @@
     "batch": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["batch_id", "panel", "records"],
+      "required": ["batch_id", "panel", "records", "assay_creator"],
       "properties": {
         "batch_id": {
           "type": "string",

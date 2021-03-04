@@ -454,4 +454,3 @@ def test_load_subschema():
 
     with pytest.raises(jsonpointer.JsonPointerException):
         load_and_validate_schema("clinical_trial.json#foo")
-

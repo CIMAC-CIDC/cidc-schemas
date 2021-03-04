@@ -4,13 +4,11 @@
 """Tests for data model schemas."""
 
 import os
-import unittest
 import pytest
 import json
 import jsonschema
 
 from cidc_schemas.json_validation import load_and_validate_schema
-from .constants import ROOT_DIR, SCHEMA_DIR
 
 
 def example_paths():
@@ -25,22 +23,12 @@ def example_paths():
             yield root, path
 
 
-def _fetch_validator():
-    schema_root = SCHEMA_DIR
-    schema_path = os.path.join(SCHEMA_DIR, "clinical_trial.json")
-    validator = load_and_validate_schema(
-        schema_path, schema_root, return_validator=True
-    )
-
-    return validator
-
-
 @pytest.mark.parametrize("example_path", example_paths(), ids=lambda x: x[1])
 def test_schema(example_path):
-    validator = _fetch_validator()
+    validator = load_and_validate_schema("clinical_trial.json", return_validator=True)
 
     full_path = os.path.join(*example_path)
-    root, fname = example_path
+    _, fname = example_path
 
     with open(full_path) as file:
         try:

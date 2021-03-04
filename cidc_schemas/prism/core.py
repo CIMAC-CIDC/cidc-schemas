@@ -23,6 +23,7 @@ from jsonpointer import EndOfList, JsonPointer, JsonPointerException, resolve_po
 from .constants import SUPPORTED_TEMPLATES
 
 logger = logging.getLogger(__file__)
+# logger.setLevel(logging.DEBUG)
 
 
 def _set_val(
@@ -117,7 +118,7 @@ def _set_val(
         # check that we don't have to jump up more than we dived in already
         assert jumpups <= context_pointer.rstrip("/").count(
             "/"
-        ), f"Can't set value for pointer {pointer} too many jumps up from current context."
+        ), f"Can't set value for pointer {pointer} too many jumps up from current context: {context_pointer}"
 
         # and we'll go down remaining part of `pointer` from there
         jpoint = JsonPointer(slash + rem_pointer)

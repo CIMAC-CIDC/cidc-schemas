@@ -8,6 +8,7 @@ import json
 
 import pytest
 import jsonschema
+import jsonpointer
 
 from cidc_schemas.json_validation import (
     _map_refs,
@@ -440,3 +441,16 @@ def test_iter_error_messages():
     errs = list(validator.iter_error_messages({"protocol_identifier": "foo123"}))
     for err in errs:
         assert isinstance(err, str)
+
+
+def test_load_subschema():
+    """Test that the subschema loading option works as expected."""
+    schema = load_and_validate_schema("clinical_trial.json")
+    subschema = schema["properties"]["participants"]
+    path = "properties/participants"
+
+    assert subschema == load_and_validate_schema(f"clinical_trial.json#{path}")
+    assert subschema == load_and_validate_schema(f"clinical_trial.json#/{path}")
+
+    with pytest.raises(jsonpointer.JsonPointerException):
+        load_and_validate_schema("clinical_trial.json#foo")

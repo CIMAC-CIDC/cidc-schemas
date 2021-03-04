@@ -15,6 +15,7 @@ import dateparser
 from deepdiff import DeepSearch
 import jsonschema
 from jsonschema.exceptions import ValidationError, RefResolutionError
+from jsonpointer import resolve_pointer
 
 from .constants import SCHEMA_DIR, METASCHEMA_PATH
 from .util import get_all_paths, split_python_style_path, JSON
@@ -329,8 +330,12 @@ def _load_dont_validate_schema(
     on_refs: Optional[Callable[[dict], dict]] = None,
 ) -> Union[dict, jsonschema.Draft7Validator]:
     """
-    Try to load a valid schema at `schema_path`. If an `on_refs` function
-    is supplied, call that on all refs in the schema, rather than
+    Try to load a valid schema at `schema_path`. The provided `schema_path` can include a
+    subschema pointer to load only the subschema at the provided path. For example,
+    `my/schema/path.json#properties/subschema` would load only the schema tree below the
+    `subschema` property.
+    
+    If an `on_refs` function is supplied, call that on all refs in the schema, rather than
     resolving the refs. Note: it is shallow, i.e., if calling `on_refs` on a node produces 
     a new node that contains refs, those refs will not be resolved.
 
@@ -340,19 +345,28 @@ def _load_dont_validate_schema(
 
     assert os.path.isabs(schema_root), "schema_root must be an absolute path"
 
-    # Load schema with resolved $refs
-    subschema = None
+    # Check if the schema path includes a subschema pointer, e.g.
+    #   "my/schema.json#properties/my_property"
+    # where "my/schema.json" is the path and "properties/my_property"
+    # is the subschema pointer.
+    subschema_pointer = None
     if "#" in schema_path:
-        schema_path, subschema = schema_path.split("#", 1)
+        schema_path, subschema_pointer = schema_path.split("#", 1)
+        if not subschema_pointer.startswith("/"):
+            subschema_pointer = f"/{subschema_pointer}"
+
+    # Load schema with resolved $refs
     schema_path = os.path.join(schema_root, schema_path)
     with open(schema_path) as schema_file:
         try:
             json_spec = json.load(schema_file)
-            if subschema:
-                for prop in subschema.split("/"):
-                    json_spec = json_spec[prop]
         except Exception as e:
             raise Exception(f"Failed loading json {schema_file}") from e
+
+        # If there's a subschema pointer, resolve it and only
+        # load the subpart of the JSON schema
+        if subschema_pointer:
+            json_spec = resolve_pointer(json_spec, subschema_pointer)
         if on_refs:
             schema = _map_refs(json_spec, on_refs)
         else:

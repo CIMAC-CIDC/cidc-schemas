@@ -62,9 +62,12 @@ class v0_23_18_to_v0_24_0(migration):
         for record in olink["records"]:
             files = record["files"]
             for f in [files["assay_npx"], files["assay_raw_ct"]]:
-                object_url = f["object_url"]
-                f["object_url"] = object_url.replace("chip_", f"batch_{batch_id}/chip_")
-                file_updates[object_url] = f
+                if "object_url" in f:
+                    object_url = f["object_url"]
+                    f["object_url"] = object_url.replace(
+                        "chip_", f"batch_{batch_id}/chip_"
+                    )
+                    file_updates[object_url] = f
 
         olink["batch_id"] = batch_id
         new_olink = {"batches": [olink]}

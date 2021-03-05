@@ -146,6 +146,8 @@
                 
                     <li>"Express Somatic Human WES (Deep Coverage) v1.1"</li>
                 
+                    <li>"Somatic Human WES v6"</li>
+                
             </ul>
             
             
@@ -182,6 +184,8 @@
             <ul>
                 
                     <li>"whole_exome_illumina_coding_v1"</li>
+                
+                    <li>"broad_custom_exome_v1"</li>
                 
             </ul>
             
@@ -415,7 +419,9 @@
                     "$comment": "This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.",
                     "description": "The library construction kit.",
                     "enum": [
-                        "Hyper Prep ICE Exome Express: 1.0"
+                        "Hyper Prep ICE Exome Express: 1.0",
+                        "KAPA HyperPrep",
+                        "IDT duplex UMI adapters"
                     ],
                     "type": "string"
                 },
@@ -463,7 +469,8 @@
         "bait_set": {
             "description": "Bait set ID.",
             "enum": [
-                "whole_exome_illumina_coding_v1"
+                "whole_exome_illumina_coding_v1",
+                "broad_custom_exome_v1"
             ],
             "type": "string"
         },
@@ -471,7 +478,9 @@
             "$comment": "This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.",
             "description": "The library construction kit.",
             "enum": [
-                "Hyper Prep ICE Exome Express: 1.0"
+                "Hyper Prep ICE Exome Express: 1.0",
+                "KAPA HyperPrep",
+                "IDT duplex UMI adapters"
             ],
             "type": "string"
         },
@@ -5234,7 +5243,8 @@
         "sequencing_protocol": {
             "description": "Protocol and version used for the sequencing.",
             "enum": [
-                "Express Somatic Human WES (Deep Coverage) v1.1"
+                "Express Somatic Human WES (Deep Coverage) v1.1",
+                "Somatic Human WES v6"
             ],
             "type": "string"
         }

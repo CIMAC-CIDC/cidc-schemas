@@ -1,134 +1,162 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "olink_assay",
-  "title": "OLink Assay",
-  "description": "High-throughput multiplexed assays for protein biomarker discovery.",
+  "title": "Olink Assay",
   "type": "object",
+  "description": "High-throughput multiplexed assays for protein biomarker discovery.",
   "additionalProperties": false,
   "mergeStrategy": "objectMerge",
-
-  "required": ["panel", "records", "study"],
-  "allOf": [{ "$ref": "assays/components/assay_core.json" }],
-  "properties": {
-    "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
-  
-    "records": {
-      "type": "array",
-      "description": "A single data record from Olink assay.",
-      "mergeStrategy": "arrayMergeById",
-      "mergeOptions": {
-        "idRef": "/chip_barcode"
-      },
-
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-
-        "required": [
-          "number_of_samples",
-          "npx_manager_version",
-          "files"
-        ],
-        "properties": {
-          "run_date": {
-            "description": "Date when the Olink assay was run.",
-            "type": "string",
-            "format": "date"
-          },
-          "run_time": {
-            "description": "Time when the Olink assay was run.",
-            "type": "string",
-            "format": "time"
-          },
-          "instrument": {
-            "description": "Instrument used for the Olink assay.",
-            "type": "string"
-          },
-          "fludigm_application_version": {
-            "description": "Version of the Fluidgm application used.",
-            "type": "string"
-          },
-          "fludigm_application_build": {
-            "description": "Build of the Fluidgm application used.",
-            "type": "string"
-          },
-          "chip_barcode": {
-            "description": "Chip barcode number.",
-            "type": "string"
-          },
-          "probe_type": {
-            "description": "Probe Type.",
-            "type": "string"
-          },
-          "passive_reference": {
-            "description": "Passive Reference.",
-            "type": "string"
-          },
-          "quality_threshold": {
-            "description": "Threshold used for quality cutoff.",
-            "type": "number"
-          },
-          "baseline_correction": {
-            "description": "Method used for baseline correction.",
-            "type": "string"
-          },
-          "number_of_samples": {
-            "description": "Number of samples analyzed in the assay.",
-            "type": "number"
-          },
-          "number_of_samples_failed": {
-            "description": "Number of samples failed in the assay.",
-            "type": "number"
-          },
-          "npx_manager_version": {
-            "description": "Version of NPX manager used for the analysis.",
-            "type": "string"
-          },
-          "files": {
-            "description": "Olink assay input files.",
-            "type": "object",
-            "additionalProperties": false,
-
-            "required": ["assay_npx", "assay_raw_ct"],
-            "properties": {
-              "assay_npx": {
-                "$ref": "artifacts/artifact_npx.json",
-                "$comment": "Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale."
-              },
-              "assay_raw_ct": {
-                "$ref": "artifacts/artifact_csv.json",
-                "$comment": "Number of cycles required for the fluorescent signal to cross the threshold."
-              }
-            }
-          }
-        }
-      }
-    },
-    "panel": {
-      "description": "Panel used for the assay.",
-      "type": "string"
-    },
-    "assay_panel_lot": {
-      "description": "Lot number of the assay panel.",
-      "type": "string"
-    },
-    "study": {
-      "description": "A single data record from Olink assay.",
+  "definitions": {
+    "combined_npx": {
       "type": "object",
       "additionalProperties": false,
-      "mergeStrategy": "overwriteAny",
-
-      "required": ["npx_manager_version", "study_npx"],
+      "mergeStrategy": "objectMerge",
+      "required": ["npx_manager_version", "npx_file"],
       "properties": {
         "npx_manager_version": {
           "description": "Version of NPX manager used for the analysis.",
           "type": "string"
         },
-        "study_npx": {
+        "npx_file": {
           "$comment": "Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale.",
           "$ref": "artifacts/artifact_npx.json"
         }
       }
+    },
+
+    "input": {
+      "type": "object",
+      "description": "Olink assay input files.",
+      "additionalProperties": false,
+      "required": ["assay_npx", "assay_raw_ct"],
+      "properties": {
+        "assay_npx": {
+          "$ref": "artifacts/artifact_npx.json",
+          "$comment": "Normalized Protein eXpression is Olink’s arbitrary unit which is in Log2 scale."
+        },
+        "assay_raw_ct": {
+          "$ref": "artifacts/artifact_csv.json",
+          "$comment": "Number of cycles required for the fluorescent signal to cross the threshold."
+        }
+      }
+    },
+
+    "record": {
+      "type": "object",
+      "description": "A single data record from Olink assay.",
+      "additionalProperties": false,
+      "required": ["number_of_samples", "npx_manager_version", "files"],
+      "properties": {
+        "run_date": {
+          "description": "Date when the Olink assay was run.",
+          "type": "string",
+          "format": "date"
+        },
+        "run_time": {
+          "description": "Time when the Olink assay was run.",
+          "type": "string",
+          "format": "time"
+        },
+        "instrument": {
+          "description": "Instrument used for the Olink assay.",
+          "type": "string"
+        },
+        "fludigm_application_version": {
+          "description": "Version of the Fluidgm application used.",
+          "type": "string"
+        },
+        "fludigm_application_build": {
+          "description": "Build of the Fluidgm application used.",
+          "type": "string"
+        },
+        "chip_barcode": {
+          "description": "Chip barcode number.",
+          "type": "string"
+        },
+        "probe_type": {
+          "description": "Probe Type.",
+          "type": "string"
+        },
+        "passive_reference": {
+          "description": "Passive Reference.",
+          "type": "string"
+        },
+        "quality_threshold": {
+          "description": "Threshold used for quality cutoff.",
+          "type": "number"
+        },
+        "baseline_correction": {
+          "description": "Method used for baseline correction.",
+          "type": "string"
+        },
+        "number_of_samples": {
+          "description": "Number of samples analyzed in the assay.",
+          "type": "number"
+        },
+        "number_of_samples_failed": {
+          "description": "Number of samples failed in the assay.",
+          "type": "number"
+        },
+        "npx_manager_version": {
+          "description": "Version of NPX manager used for the analysis.",
+          "type": "string"
+        },
+        "files": {
+          "$ref": "assays/olink_assay.json#definitions/input"
+        }
+      }
+    },
+
+    "batch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["batch_id", "panel", "records", "assay_creator"],
+      "properties": {
+        "batch_id": {
+          "type": "string",
+          "description": "A unique identifier for this Olink upload"
+        },
+        "assay_creator": {
+          "$ref": "assays/components/assay_core.json#properties/assay_creator"
+        },
+        "panel": {
+          "description": "Panel used for the assay.",
+          "type": "string"
+        },
+        "assay_panel_lot": {
+          "description": "Lot number of the assay panel.",
+          "type": "string"
+        },
+        "records": {
+          "type": "array",
+          "description": "A single data record from Olink assay.",
+          "mergeStrategy": "arrayMergeById",
+          "mergeOptions": {
+            "idRef": "/chip_barcode"
+          },
+          "items": {
+            "$ref": "assays/olink_assay.json#definitions/record"
+          }
+        },
+        "combined": {
+          "$ref": "assays/olink_assay.json#definitions/combined_npx"
+        }
+      }
     }
-  }
+  },
+
+  "properties": {
+    "study": {
+      "$ref": "assays/olink_assay.json#definitions/combined_npx"
+    },
+    "batches": {
+      "type": "array",
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "/batch_id"
+      },
+      "items": { "$ref": "assays/olink_assay.json#definitions/batch" }
+    }
+  },
+  "required": ["batches"]
 }

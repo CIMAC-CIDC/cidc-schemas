@@ -8,12 +8,14 @@ import fnmatch
 import functools
 import json
 import collections.abc
+from contextlib import contextmanager
 from typing import Optional, List, Callable, Union
 
 import dateparser
 from deepdiff import DeepSearch
 import jsonschema
 from jsonschema.exceptions import ValidationError, RefResolutionError
+from jsonpointer import resolve_pointer
 
 from .constants import SCHEMA_DIR, METASCHEMA_PATH
 from .util import get_all_paths, split_python_style_path, JSON
@@ -82,36 +84,55 @@ class _Validator(jsonschema.Draft7Validator):
 
         super().__init__(*args, **kwargs)
 
+        self._in_doc_refs_cache = None
+        self._ignore_in_doc_refs = False
+
         # TODO consider adding json pointer check to metaschema for in_doc_ref_pattern values
         self.in_doc_ref_validator = jsonschema.validators.create(
             self.META_SCHEMA, validators={"in_doc_ref_pattern": _in_doc_refs_check}
         )(*args, **kwargs)
 
-    def _build_in_doc_refs_cache(self, instance: JSON):
-        self.in_doc_refs_cache = dict()
-        search = DeepSearch(self.schema, "in_doc_ref_pattern")
+    @contextmanager
+    def _validation_context(self, instance: JSON, ignore_in_doc_refs: bool = False):
+        """
+        A context manager for building up and tearing down configuration for
+        a running our custom validator on a given instance.
+        """
+        self._ignore_in_doc_refs = ignore_in_doc_refs
+        self._in_doc_refs_cache = dict()
 
-        if "matched_paths" not in search:
-            # means there are no `in_doc_ref_pattern`s that we need to validate in this schema
-            return
+        # Build the in_doc_refs_cache if we're not ignoring in_doc_refs
+        if not ignore_in_doc_refs:
+            search = DeepSearch(self.schema, "in_doc_ref_pattern")
+            if "matched_paths" in search:
+                for path in search["matched_paths"]:
+                    scope = {"root": self.schema}
+                    exec(f"ref_path_pattern = {path}", scope)
+                    ref_path_pattern = scope["ref_path_pattern"]
+                    # If there are no cached values for this ref path pattern, collect them
+                    if ref_path_pattern not in self._in_doc_refs_cache:
+                        self._in_doc_refs_cache[
+                            ref_path_pattern
+                        ] = self._get_values_for_path_pattern(
+                            ref_path_pattern, instance
+                        )
 
-        for path in search["matched_paths"]:
-            scope = {"root": self.schema}
-            exec(f"ref_path_pattern = {path}", scope)
-            ref_path_pattern = scope["ref_path_pattern"]
-            # If there are no cached values for this ref path pattern, collect them
-            if ref_path_pattern not in self.in_doc_refs_cache:
-                self.in_doc_refs_cache[
-                    ref_path_pattern
-                ] = self._get_values_for_path_pattern(ref_path_pattern, instance)
+        # see: https://docs.python.org/3/library/contextlib.html
+        try:
+            yield
+        finally:
+            self._in_doc_refs_cache = None
 
-    def validate(self, instance: JSON, *args, **kwargs):
-        self._build_in_doc_refs_cache(instance)
-
-        super().validate(instance, *args, **kwargs)
+    def validate(
+        self, instance: JSON, *args, ignore_in_doc_refs: bool = False, **kwargs
+    ):
+        with self._validation_context(instance, ignore_in_doc_refs):
+            super().validate(instance, *args, **kwargs)
 
     def iter_errors(self, instance: JSON, _schema: Optional[dict] = None):
         """ 
+        NOTE: do not call this directly! Doing so will break the in_doc_refs validation!
+
         This is the main validation method. `.is_valid`, `.validate` are based on this. 
     
         It will be called recursively, while `.descend`ing instance and schema.
@@ -124,31 +145,56 @@ class _Validator(jsonschema.Draft7Validator):
             # if it is "ours" - we actually check ref
             elif (
                 repr(downstream_error.instance)
-                not in self.in_doc_refs_cache[downstream_error.validator_value]
+                not in self._in_doc_refs_cache[downstream_error.validator_value]
             ):
                 # and if the check was not passed - we propagate it
                 yield downstream_error
 
-        # Here we actually call our custom validator, that will through errors
+        # Don't perform referential integrity checks if _ignore_in_doc_refs = True
+        if self._ignore_in_doc_refs:
+            return
+
+        # Here we actually call our custom validator, that will throw errors
         # on every occurrence of `in_doc_ref_pattern` constraint
         for in_doc_ref_not_found in self.in_doc_ref_validator.iter_errors(
             instance, _schema
         ):
+            # If the in_doc_refs cache is None at this point in the code,
+            # we know that it wasn't initialized properly - this generally means
+            # some client code called `self.iter_errors` directly, which
+            # isn't allowed.
+            if self._in_doc_refs_cache is None:
+                raise AssertionError(
+                    "_Validator.iter_errors cannot be called directly. Please call _Validator.safe_iter_errors instead."
+                )
+
             # but then we actually check refs
             if (
                 repr(in_doc_ref_not_found.instance)
-                not in self.in_doc_refs_cache[in_doc_ref_not_found.validator_value]
+                not in self._in_doc_refs_cache[in_doc_ref_not_found.validator_value]
             ):
                 # and produce errors only when check wont pass
                 yield in_doc_ref_not_found
+
+    def safe_iter_errors(
+        self,
+        instance: JSON,
+        _schema: Optional[dict] = None,
+        ignore_in_doc_refs: bool = False,
+    ):
+        """A generator producing validation errors for the given JSON instance."""
+        with self._validation_context(instance, ignore_in_doc_refs):
+            for error in self.iter_errors(instance, _schema):
+                yield error
+            # restore to default value
+            self._ignore_in_doc_refs = False
 
     def iter_error_messages(self, instance: JSON, _schema: Optional[dict] = None):
         """
         A wrapper for `_Validator.iter_errors` that generates friendlier, shorter error
         messages representing `ValidationError`s.
         """
-        self._build_in_doc_refs_cache(instance)
-        for error in self.iter_errors(instance, _schema):
+        for error in self.safe_iter_errors(instance, _schema):
             yield format_validation_error(error)
 
     def _get_values_for_path_pattern(self, path: str, doc: dict) -> set:
@@ -284,8 +330,12 @@ def _load_dont_validate_schema(
     on_refs: Optional[Callable[[dict], dict]] = None,
 ) -> Union[dict, jsonschema.Draft7Validator]:
     """
-    Try to load a valid schema at `schema_path`. If an `on_refs` function
-    is supplied, call that on all refs in the schema, rather than
+    Try to load a valid schema at `schema_path`. The provided `schema_path` can include a
+    subschema pointer to load only the subschema at the provided path. For example,
+    `my/schema/path.json#properties/subschema` would load only the schema tree below the
+    `subschema` property.
+    
+    If an `on_refs` function is supplied, call that on all refs in the schema, rather than
     resolving the refs. Note: it is shallow, i.e., if calling `on_refs` on a node produces 
     a new node that contains refs, those refs will not be resolved.
 
@@ -294,11 +344,15 @@ def _load_dont_validate_schema(
     """
     assert os.path.isabs(schema_root), "schema_root must be an absolute path"
 
+    # Check if the schema path includes a subschema pointer, e.g.
+    #   "my/schema.json#properties/my_property"
+    # where "my/schema.json" is the path and "properties/my_property"
+    # is the subschema pointer.
+    subschema_pointer = None
     if "#" in schema_path:
-        assert schema_path.count("#") == 1, "invalid subschema path"
-        schema_path, subschema_path = schema_path.split("#")
-    else:
-        subschema_path = None
+        schema_path, subschema_pointer = schema_path.split("#", 1)
+        if not subschema_pointer.startswith("/"):
+            subschema_pointer = f"/{subschema_pointer}"
 
     # Load schema with resolved $refs
     schema_path = os.path.join(schema_root, schema_path)
@@ -308,6 +362,11 @@ def _load_dont_validate_schema(
             json_spec = json.load(schema_file)
         except Exception as e:
             raise Exception(f"Failed loading json {schema_file}") from e
+
+        # If there's a subschema pointer, resolve it and only
+        # load the subpart of the JSON schema
+        if subschema_pointer:
+            json_spec = resolve_pointer(json_spec, subschema_pointer)
         if on_refs:
             schema = _map_refs(json_spec, on_refs)
         else:

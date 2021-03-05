@@ -12,7 +12,7 @@
       "description": "Whole exome sequencing.",
       "items": {
         "$ref": "assays/wes_assay.json"
-      }, 
+      },
       "mergeStrategy": "append"
     },
     "rna": {

@@ -1,9 +1,9 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
-  "$id": "whole_slide_assay",
-  "title": "Whole Slide Imaging Assay",
+  "$id": "hande_assay",
+  "title": "H&E Assay",
   "type": "object",
-  "description": "Whole slide imaging.",
+  "description": "H & E assay",
   "additionalProperties": false,
   "allOf": [
       { "$ref": "assays/components/assay_core.json" }
@@ -12,9 +12,9 @@
       "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
       "records": {
             "type": "array",
-            "description": "A single data record from Whole Slide assay.",
+            "description": "A single data record from H & E assay.",
             "items": {
-                "$ref": "assays/components/imaging/whole_slide_entry.json"
+                "$ref": "assays/components/imaging/hande_entry.json"
             },
             "mergeStrategy": "arrayMergeById",
             "mergeOptions": {

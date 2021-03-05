@@ -1,9 +1,9 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
-  "$id": "whole_slide_assay_record",
-  "title": "Whole Slide assay record",
+  "$id": "hande_assay_record",
+  "title": "H & E Slide assay record",
   "type": "object",
-  "description": "A single data record from whole slide imaging assay.",
+  "description": "A single data record from H & E assay.",
   "additionalProperties": false,
   "properties": {
     "cimac_id": {
@@ -15,7 +15,7 @@
         "type": "string"
       },
     "files": {
-      "$ref": "assays/components/imaging/whole_slide_input.json"
+      "$ref": "assays/components/imaging/hande_input.json"
     }
   },
   "mergeStrategy": "objectMerge",

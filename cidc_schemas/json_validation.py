@@ -342,6 +342,7 @@ def _load_dont_validate_schema(
     If return validator is true it will return
     the validator and the schema used in the validator.
     """
+
     assert os.path.isabs(schema_root), "schema_root must be an absolute path"
 
     # Check if the schema path includes a subschema pointer, e.g.
@@ -356,7 +357,6 @@ def _load_dont_validate_schema(
 
     # Load schema with resolved $refs
     schema_path = os.path.join(schema_root, schema_path)
-
     with open(schema_path) as schema_file:
         try:
             json_spec = json.load(schema_file)
@@ -371,14 +371,6 @@ def _load_dont_validate_schema(
             schema = _map_refs(json_spec, on_refs)
         else:
             schema = _resolve_refs(schema_root, json_spec, schema_path)
-
-    if subschema_path:
-        for level in subschema_path.strip("/").split("/"):
-            schema = schema.get(level)
-            if not schema:
-                raise Exception(
-                    f"Failed loading subschema {subschema_path} from {schema_path}"
-                )
 
     return schema
 

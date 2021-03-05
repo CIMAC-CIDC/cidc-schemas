@@ -366,7 +366,7 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
                 type_ref += name
 
             if short_key in ["normal", "tumor"]:
-                type_ref += f"{short_key}//cimac_id"
+                type_ref += f"{short_key}/cimac_id"
             else:
                 type_ref += long_key.replace(" ", "_")
             merge_pointer = f"/{long_key.replace(' ','_')}"

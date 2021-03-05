@@ -1049,6 +1049,12 @@ def olink() -> PrismTestData:
                         "assay_creator": "DFCI",
                         "panel": "Olink INFLAMMATION(v.3004)",
                         "assay_panel_lot": "1",
+                        "combined": {
+                            "npx_file": {
+                                "upload_placeholder": "1b0b3b8f-6417-4a37-85dc-e8aa75594678"
+                            },
+                            "npx_manager_version": "Olink NPX Manager 0.0.82.0",
+                        },
                     }
                 ],
                 "study": {
@@ -1093,6 +1099,13 @@ def olink() -> PrismTestData:
             local_path="olink_assay_combined.xlsx",
             gs_key="test_prism_trial_id/olink/study_npx.xlsx",
             upload_placeholder="19b31c40-a3dd-4be1-b9bd-022b9ff08dfd",
+            metadata_availability=True,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="olink_assay_batch_combined.xlsx",
+            gs_key="test_prism_trial_id/olink/batch_batch1/combined_npx.xlsx",
+            upload_placeholder="1b0b3b8f-6417-4a37-85dc-e8aa75594678",
             metadata_availability=True,
             allow_empty=False,
         ),

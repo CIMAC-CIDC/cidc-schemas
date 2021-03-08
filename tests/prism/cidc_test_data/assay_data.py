@@ -307,6 +307,76 @@ def ihc() -> PrismTestData:
 
 
 @assay_data_generator
+def hande() -> PrismTestData:
+    upload_type = "hande"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "123",
+        "assays": {
+            "hande": [
+                {
+                    "records": [
+                        {
+                            "cimac_id": "CTTTPP111.00",
+                            "files": {
+                                "ihc_image": {
+                                    "upload_placeholder": "eeeeeeee-047f-4df6-b614-871289a1a2a8"
+                                }
+                            },
+                        },
+                        {
+                            "cimac_id": "CTTTPP121.00",
+                            "files": {
+                                "ihc_image": {
+                                    "upload_placeholder": "eeeeeeee-669c-48c7-aee0-f0d5e5e8a341"
+                                }
+                            },
+                        },
+                    ],
+                    "assay_creator": "DFCI",
+                }
+            ]
+        },
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="path/to/image1.tif",
+            gs_key="123/hande/CTTTPP111.00/image_file.svs",
+            upload_placeholder="eeeeeeee-047f-4df6-b614-871289a1a2a8",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="path/to/image2.tiff",
+            gs_key="123/hande/CTTTPP121.00/image_file.svs",
+            upload_placeholder="eeeeeeee-669c-48c7-aee0-f0d5e5e8a341",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+    ]
+
+    cimac_ids = [
+        record["cimac_id"]
+        for batch in prismify_patch["assays"]["hande"]
+        for record in batch["records"]
+    ]
+    base_trial = get_test_trial(cimac_ids)
+
+    base_trial[PROTOCOL_ID_FIELD_NAME] = "123"
+
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "assays")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
+@assay_data_generator
 def wes_bam() -> PrismTestData:
     upload_type = "wes_bam"
     prismify_args = get_prismify_args(upload_type)

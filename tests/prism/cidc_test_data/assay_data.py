@@ -991,59 +991,70 @@ def olink() -> PrismTestData:
         "protocol_identifier": "test_prism_trial_id",
         "assays": {
             "olink": {
-                "records": [
+                "batches": [
                     {
-                        "chip_barcode": "1111",
-                        "files": {
-                            "assay_npx": {
-                                "upload_placeholder": "d658b480-ed78-4717-b622-3e84bde632b6"
+                        "batch_id": "batch1",
+                        "records": [
+                            {
+                                "chip_barcode": "1111",
+                                "files": {
+                                    "assay_npx": {
+                                        "upload_placeholder": "d658b480-ed78-4717-b622-3e84bde632b6"
+                                    },
+                                    "assay_raw_ct": {
+                                        "upload_placeholder": "4e9d0a47-90dc-4134-9ad6-3e3dd83619d6"
+                                    },
+                                },
+                                "run_date": "2019-12-12 00:00:00",
+                                "run_time": "10:11:00",
+                                "instrument": "MIOMARKHD411",
+                                "fludigm_application_version": "4.1.3",
+                                "fludigm_application_build": "20140305.43",
+                                "probe_type": "FAM-MGB",
+                                "passive_reference": "ROX",
+                                "quality_threshold": 0.5,
+                                "baseline_correction": "Linear",
+                                "number_of_samples": 90.0,
+                                "number_of_samples_failed": 5.0,
+                                "npx_manager_version": "Olink NPX Manager 0.0.82.0",
                             },
-                            "assay_raw_ct": {
-                                "upload_placeholder": "4e9d0a47-90dc-4134-9ad6-3e3dd83619d6"
+                            {
+                                "chip_barcode": "1112",
+                                "files": {
+                                    "assay_npx": {
+                                        "upload_placeholder": "9855c579-82e0-42ee-8225-7c1c736bb69f"
+                                    },
+                                    "assay_raw_ct": {
+                                        "upload_placeholder": "b387e41a-1c6a-42b5-aa16-dccf6249e404"
+                                    },
+                                },
+                                "run_date": "2019-12-12 00:00:00",
+                                "run_time": "10:11:00",
+                                "instrument": "MIOMARKHD411",
+                                "fludigm_application_version": "4.1.3",
+                                "fludigm_application_build": "20140305.43",
+                                "probe_type": "FAM-MGB",
+                                "passive_reference": "ROX",
+                                "quality_threshold": 0.5,
+                                "baseline_correction": "Linear",
+                                "number_of_samples": 80.0,
+                                "number_of_samples_failed": 10.0,
+                                "npx_manager_version": "Olink NPX Manager 0.0.82.0",
                             },
+                        ],
+                        "assay_creator": "DFCI",
+                        "panel": "Olink INFLAMMATION(v.3004)",
+                        "assay_panel_lot": "1",
+                        "combined": {
+                            "npx_file": {
+                                "upload_placeholder": "1b0b3b8f-6417-4a37-85dc-e8aa75594678"
+                            },
+                            "npx_manager_version": "Olink NPX Manager 0.0.82.0",
                         },
-                        "run_date": "2019-12-12 00:00:00",
-                        "run_time": "10:11:00",
-                        "instrument": "MIOMARKHD411",
-                        "fludigm_application_version": "4.1.3",
-                        "fludigm_application_build": "20140305.43",
-                        "probe_type": "FAM-MGB",
-                        "passive_reference": "ROX",
-                        "quality_threshold": 0.5,
-                        "baseline_correction": "Linear",
-                        "number_of_samples": 90.0,
-                        "number_of_samples_failed": 5.0,
-                        "npx_manager_version": "Olink NPX Manager 0.0.82.0",
-                    },
-                    {
-                        "chip_barcode": "1112",
-                        "files": {
-                            "assay_npx": {
-                                "upload_placeholder": "9855c579-82e0-42ee-8225-7c1c736bb69f"
-                            },
-                            "assay_raw_ct": {
-                                "upload_placeholder": "b387e41a-1c6a-42b5-aa16-dccf6249e404"
-                            },
-                        },
-                        "run_date": "2019-12-12 00:00:00",
-                        "run_time": "10:11:00",
-                        "instrument": "MIOMARKHD411",
-                        "fludigm_application_version": "4.1.3",
-                        "fludigm_application_build": "20140305.43",
-                        "probe_type": "FAM-MGB",
-                        "passive_reference": "ROX",
-                        "quality_threshold": 0.5,
-                        "baseline_correction": "Linear",
-                        "number_of_samples": 80.0,
-                        "number_of_samples_failed": 10.0,
-                        "npx_manager_version": "Olink NPX Manager 0.0.82.0",
-                    },
+                    }
                 ],
-                "assay_creator": "DFCI",
-                "panel": "Olink INFLAMMATION(v.3004)",
-                "assay_panel_lot": "1",
                 "study": {
-                    "study_npx": {
+                    "npx_file": {
                         "upload_placeholder": "19b31c40-a3dd-4be1-b9bd-022b9ff08dfd"
                     },
                     "npx_manager_version": "Olink NPX Manager 0.0.82.0",
@@ -1054,28 +1065,28 @@ def olink() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="olink_assay_1_NPX.xlsx",
-            gs_key="test_prism_trial_id/olink/chip_1111/assay_npx.xlsx",
+            gs_key="test_prism_trial_id/olink/batch_batch1/chip_1111/assay_npx.xlsx",
             upload_placeholder="d658b480-ed78-4717-b622-3e84bde632b6",
             metadata_availability=True,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="olink_assay_1_CT.csv",
-            gs_key="test_prism_trial_id/olink/chip_1111/assay_raw_ct.csv",
+            gs_key="test_prism_trial_id/olink/batch_batch1/chip_1111/assay_raw_ct.csv",
             upload_placeholder="4e9d0a47-90dc-4134-9ad6-3e3dd83619d6",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="olink_assay_2_NPX.xlsx",
-            gs_key="test_prism_trial_id/olink/chip_1112/assay_npx.xlsx",
+            gs_key="test_prism_trial_id/olink/batch_batch1/chip_1112/assay_npx.xlsx",
             upload_placeholder="9855c579-82e0-42ee-8225-7c1c736bb69f",
             metadata_availability=True,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="olink_assay_2_CT.csv",
-            gs_key="test_prism_trial_id/olink/chip_1112/assay_raw_ct.csv",
+            gs_key="test_prism_trial_id/olink/batch_batch1/chip_1112/assay_raw_ct.csv",
             upload_placeholder="b387e41a-1c6a-42b5-aa16-dccf6249e404",
             metadata_availability=False,
             allow_empty=False,
@@ -1084,6 +1095,13 @@ def olink() -> PrismTestData:
             local_path="olink_assay_combined.xlsx",
             gs_key="test_prism_trial_id/olink/study_npx.xlsx",
             upload_placeholder="19b31c40-a3dd-4be1-b9bd-022b9ff08dfd",
+            metadata_availability=True,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="olink_assay_batch_combined.xlsx",
+            gs_key="test_prism_trial_id/olink/batch_batch1/combined_npx.xlsx",
+            upload_placeholder="1b0b3b8f-6417-4a37-85dc-e8aa75594678",
             metadata_availability=True,
             allow_empty=False,
         ),

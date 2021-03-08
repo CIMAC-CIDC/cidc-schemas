@@ -18,6 +18,5 @@
       "$comment": "Imaging data resulting from the individual components of the imaging experiment.",
       "$ref": "artifacts/artifact_image.json"
     }
-  },
-  "required": ["composite_image", "component_data"]
+  }
 }

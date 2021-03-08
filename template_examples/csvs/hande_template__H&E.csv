@@ -1,6 +1,8 @@
 "#title","Metadata file for h & e"
-"#preamble","Protocol identifier"
-"#preamble","Assay creator"
+"#preamble","Protocol identifier","123"
+"#preamble","Assay creator","DFCI"
 
 "#skip","Samples"
 "#header","Cimac id","Image file","Comment"
+"#data","CTTTPP111.00","path/to/image1.svs","a comment"
+"#data","CTTTPP121.00","path/to/image2.svs","another comment"

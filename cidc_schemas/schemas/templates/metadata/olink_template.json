@@ -52,7 +52,7 @@
             "allow_empty": true
           },
           "batch-level combined npx manager version": {
-            "merge_pointer": "0/npx_manager_version",
+            "merge_pointer": "0/combined/npx_manager_version",
             "type_ref": "assays/olink_assay.json#definitions/combined_npx/properties/npx_manager_version",
             "allow_empty": true
           }

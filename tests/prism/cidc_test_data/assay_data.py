@@ -319,18 +319,20 @@ def hande() -> PrismTestData:
                         {
                             "cimac_id": "CTTTPP111.00",
                             "files": {
-                                "ihc_image": {
+                                "image_file": {
                                     "upload_placeholder": "eeeeeeee-047f-4df6-b614-871289a1a2a8"
                                 }
                             },
+                            "comment": "a comment",
                         },
                         {
                             "cimac_id": "CTTTPP121.00",
                             "files": {
-                                "ihc_image": {
+                                "image_file": {
                                     "upload_placeholder": "eeeeeeee-669c-48c7-aee0-f0d5e5e8a341"
                                 }
                             },
+                            "comment": "another comment",
                         },
                     ],
                     "assay_creator": "DFCI",
@@ -340,14 +342,14 @@ def hande() -> PrismTestData:
     }
     upload_entries = [
         LocalFileUploadEntry(
-            local_path="path/to/image1.tif",
+            local_path="path/to/image1.svs",
             gs_key="123/hande/CTTTPP111.00/image_file.svs",
             upload_placeholder="eeeeeeee-047f-4df6-b614-871289a1a2a8",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
-            local_path="path/to/image2.tiff",
+            local_path="path/to/image2.svs",
             gs_key="123/hande/CTTTPP121.00/image_file.svs",
             upload_placeholder="eeeeeeee-669c-48c7-aee0-f0d5e5e8a341",
             metadata_availability=False,

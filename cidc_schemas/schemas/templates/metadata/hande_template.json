@@ -31,7 +31,7 @@
                       },
                       "comment": {
                             "merge_pointer": "0/comment",
-                            "type_ref": "assays/components/imaging/hande_entry.json#properties/comment",
+                            "type_ref": "assays/hande_assay.json#definitions/record/properties/comment",
                             "allow_empty": true
                         }
                   }

@@ -14,6 +14,7 @@ SUPPORTED_ASSAYS = [
     "mif",
     "tcr_fastq",
     "hande",
+    "nanostring",
 ]
 
 SUPPORTED_SHIPPING_MANIFESTS = [

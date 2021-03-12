@@ -1942,5 +1942,136 @@ def mif() -> PrismTestData:
     )
 
 
+@assay_data_generator
+def nanostring() -> PrismTestData:
+    upload_type = "nanostring"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "test_prism_trial_id",
+        "assays": {
+            "nanostring": [
+                {
+                    "assay_creator": "DFCI",
+                    "batch_id": "test_batch",
+                    "data": {
+                        "raw": {
+                            "upload_placeholder": "d658b480-ed78-4717-b622-3e84bde632b6"
+                        },
+                        "normalized": {
+                            "upload_placeholder": "4e9d0a47-90dc-4134-9ad6-3e3dd83619d6"
+                        },
+                    },
+                    "runs": [
+                        {
+                            "run_id": "RUN01",
+                            "control_raw_rcc": {
+                                "upload_placeholder": "1b0b3b8f-6417-4a37-85dc-e8aa75594678"
+                            },
+                            "samples": [
+                                {
+                                    "cimac_id": "CTTTPP111.00",
+                                    "raw_rcc": {
+                                        "upload_placeholder": "9855c579-82e0-42ee-8225-7c1c736bb69f"
+                                    },
+                                },
+                                {
+                                    "cimac_id": "CTTTPP112.00",
+                                    "raw_rcc": {
+                                        "upload_placeholder": "9855c579-82e0-42ee-8225-7c1c736bb69g"
+                                    },
+                                },
+                            ],
+                        },
+                        {
+                            "run_id": "RUN02",
+                            "control_raw_rcc": {
+                                "upload_placeholder": "1b0b3b8f-6417-4a37-85dc-e8aa75594679"
+                            },
+                            "samples": [
+                                {
+                                    "cimac_id": "CTTTPP111.00",
+                                    "raw_rcc": {
+                                        "upload_placeholder": "9855c579-82e0-42ee-8225-7c1c736bb69h"
+                                    },
+                                }
+                            ],
+                        },
+                    ],
+                }
+            ]
+        },
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="raw_data.csv",
+            upload_placeholder="d658b480-ed78-4717-b622-3e84bde632b6",
+            gs_key="test_prism_trial_id/nanostring/test_batch/raw_data.csv",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="normalized.csv",
+            upload_placeholder="4e9d0a47-90dc-4134-9ad6-3e3dd83619d6",
+            gs_key="test_prism_trial_id/nanostring/test_batch/normalized_data.csv",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="RUN01_reference.rcc",
+            upload_placeholder="1b0b3b8f-6417-4a37-85dc-e8aa75594678",
+            gs_key="test_prism_trial_id/nanostring/test_batch/RUN01/control.rcc",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="RUN01_111.rcc",
+            upload_placeholder="9855c579-82e0-42ee-8225-7c1c736bb69f",
+            gs_key="test_prism_trial_id/nanostring/test_batch/RUN01/CTTTPP111.00.rcc",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="RUN01_112.rcc",
+            upload_placeholder="9855c579-82e0-42ee-8225-7c1c736bb69g",
+            gs_key="test_prism_trial_id/nanostring/test_batch/RUN01/CTTTPP112.00.rcc",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="RUN02_reference.rcc",
+            upload_placeholder="1b0b3b8f-6417-4a37-85dc-e8aa75594679",
+            gs_key="test_prism_trial_id/nanostring/test_batch/RUN02/control.rcc",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="RUN02_111.rcc",
+            upload_placeholder="9855c579-82e0-42ee-8225-7c1c736bb69h",
+            gs_key="test_prism_trial_id/nanostring/test_batch/RUN02/CTTTPP111.00.rcc",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+    ]
+
+    cimac_ids = [
+        sample["cimac_id"]
+        for batch in prismify_patch["assays"]["nanostring"]
+        for runs in batch["runs"]
+        for sample in runs["samples"]
+    ]
+    base_trial = get_test_trial(cimac_ids)
+
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "assays")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
 missing = set(SUPPORTED_ASSAYS).difference([f.__name__ for f in assay_data_generators])
 assert not missing, f"Missing assay test data generators for {missing}"

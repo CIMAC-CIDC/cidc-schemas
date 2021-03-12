@@ -155,19 +155,23 @@
                     "Filled by CIMAC Lab": {
                         "viable tumor (% area)": {
                             "merge_pointer": "/viable_tumor_area_percentage",
-                            "type_ref": "sample.json#properties/viable_tumor_area_percentage"
+                            "type_ref": "sample.json#properties/viable_tumor_area_percentage",
+                            "allow_empty": true
                         },
                         "viable stroma (% area)": {
                             "merge_pointer": "/viable_stroma_area_percentage",
-                            "type_ref": "sample.json#properties/viable_stroma_area_percentage"
+                            "type_ref": "sample.json#properties/viable_stroma_area_percentage",
+                            "allow_empty": true
                         },
                         "necrosis (% area)": {
                             "merge_pointer": "/necrosis_area_percentage",
-                            "type_ref": "sample.json#properties/necrosis_area_percentage"
+                            "type_ref": "sample.json#properties/necrosis_area_percentage",
+                            "allow_empty": true
                         },
                         "fibrosis (% area)": {
                             "merge_pointer": "/fibrosis_area_percentage",
-                            "type_ref": "sample.json#properties/fibrosis_area_percentage"
+                            "type_ref": "sample.json#properties/fibrosis_area_percentage",
+                            "allow_empty": true
                         },
                         "material used": {
                             "merge_pointer": "/material_used",

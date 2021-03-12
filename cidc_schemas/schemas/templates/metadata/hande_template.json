@@ -1,0 +1,42 @@
+{
+  "title": "Metadata file for H & E",
+  "description": "Metadata information for H & E analysis.",
+  "properties": {
+      "worksheets": {
+          "H&E": {
+              "prism_preamble_object_schema": "assays/hande_assay.json",
+              "prism_preamble_object_pointer": "/assays/hande/0",
+              "prism_data_object_pointer": "/records/-",
+              "preamble_rows": {
+                "protocol identifier": {
+                      "merge_pointer": "3/protocol_identifier",
+                      "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                  },
+                  "assay creator": {
+                      "merge_pointer": "0/assay_creator",
+                      "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+                  }
+              },
+              "data_columns": {
+                  "Samples": {
+                      "cimac id": {
+                          "merge_pointer": "0/cimac_id",
+                          "type_ref": "sample.json#properties/cimac_id"
+                      },
+                      "image file": {
+                          "merge_pointer": "0/files/image_file",
+                          "is_artifact": 1,
+                          "gcs_uri_format": "{protocol identifier}/hande/{cimac id}/image_file.svs",
+                          "type_ref": "assays/components/local_file.json#properties/file_path"
+                      },
+                      "comment": {
+                            "merge_pointer": "0/comment",
+                            "type_ref": "assays/hande_assay.json#definitions/record/properties/comment",
+                            "allow_empty": true
+                        }
+                  }
+              }
+          }
+      }
+  }
+}

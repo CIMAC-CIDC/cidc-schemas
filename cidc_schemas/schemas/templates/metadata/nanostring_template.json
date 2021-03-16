@@ -1,0 +1,87 @@
+{
+  "title": "Metadata file for Nanostring",
+  "description": "Metadata information for Nanostring analysis.\n",
+  "prism_template_root_object_schema": "assays/nanostring_assay.json",
+  "prism_template_root_object_pointer": "/assays/nanostring/0",
+  "properties": {
+    "worksheets": {
+      "nanostring": {
+        "preamble_rows": {
+          "protocol identifier": {
+            "merge_pointer": "3/protocol_identifier",
+            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+          },
+          "assay creator": {
+            "merge_pointer": "0/assay_creator",
+            "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+          },
+          "batch id": {
+            "merge_pointer": "0/batch_id",
+            "type_ref": "assays/nanostring_assay.json#properties/batch_id"
+          },
+          "raw data csv": {
+            "merge_pointer": "0/data/raw",
+            "is_artifact": 1,
+            "gcs_uri_format": "{protocol identifier}/nanostring/{batch id}/raw_data.csv",
+            "type_ref": "assays/components/local_file.json#properties/file_path"
+          },
+          "normalized data csv": {
+            "merge_pointer": "0/data/normalized",
+            "is_artifact": 1,
+            "gcs_uri_format": "{protocol identifier}/nanostring/{batch id}/normalized_data.csv",
+            "type_ref": "assays/components/local_file.json#properties/file_path"
+          }
+        },
+
+        "prism_data_object_pointer" : "/runs/-",
+        "data_columns": {
+          "Runs": {
+            "run id": {
+              "merge_pointer": "0/run_id",
+              "type_ref": "assays/nanostring_assay.json#definitions/run/properties/run_id"
+            },
+            "reference data rcc": {
+              "merge_pointer": "0/control_raw_rcc",
+              "is_artifact": 1,
+              "gcs_uri_format": "{protocol identifier}/nanostring/{batch id}/{run id}/control.rcc",
+              "type_ref": "assays/components/local_file.json#properties/file_path"
+            }
+          }
+        }
+      },
+
+      "raw data": {
+        "preamble_rows": {
+          "protocol identifier": {
+            "merge_pointer": "3/protocol_identifier",
+            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+          },
+          "batch id": {
+            "merge_pointer": "0/batch_id",
+            "type_ref": "assays/nanostring_assay.json#properties/batch_id"
+          }
+        },
+
+        "prism_data_object_pointer" : "/runs/0/samples/-",
+        "data_columns": {
+          "raw data": {
+            "run id": {
+              "merge_pointer": "2/run_id",
+              "type_ref": "assays/nanostring_assay.json#definitions/run/properties/run_id"
+            },
+            "cimac id": {
+                "type_ref": "sample.json#properties/cimac_id",
+                "merge_pointer": "0/cimac_id"
+            },
+            "data rcc": {
+              "merge_pointer": "0/raw_rcc",
+              "is_artifact": 1,
+              "gcs_uri_format": "{protocol identifier}/nanostring/{batch id}/{run id}/{cimac id}.rcc",
+              "type_ref": "assays/components/local_file.json#properties/file_path"
+            }
+          }
+        }
+      }
+    }
+  }
+}

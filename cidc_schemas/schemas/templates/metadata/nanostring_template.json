@@ -5,7 +5,7 @@
   "prism_template_root_object_pointer": "/assays/nanostring/0",
   "properties": {
     "worksheets": {
-      "olink": {
+      "nanostring": {
         "preamble_rows": {
           "protocol identifier": {
             "merge_pointer": "3/protocol_identifier",

@@ -3,7 +3,7 @@
   "$id": "nanostring_assay",
   "title": "Nanostring Assay",
   "type": "object",
-  "description": "",
+  "description": "A microarray assay for expression levels, suitable for smaller samples than RNA-seq",
   "additionalProperties": false,
   "mergeStrategy": "objectMerge",
   "definitions": {
@@ -11,6 +11,7 @@
       "type": "object",
       "description": "A single Nanostring run.",
       "additionalProperties": false,
+      "required": ["run_id", "samples"],
       "properties": {
         "run_id": {
           "type": "string",

@@ -3,7 +3,7 @@
   "$id": "rcc_artifact",
   "title": "RCC Artifact",
   "type": "object",
-  "description": "Information about a comma separated file.",
+  "description": "Information about a Nanostring output file. XML-formatted comma-separated tables",
   "additionalProperties": false,
   "properties": {
     "data_format": {

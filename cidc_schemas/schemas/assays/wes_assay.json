@@ -30,7 +30,7 @@
       "bait_set": {
           "description": "Bait set ID.",
           "type": "string",
-          "enum": ["whole_exome_illumina_coding_v1","broad_custom_exome_v1"]
+          "enum": ["whole_exome_illumina_coding_v1","broad_custom_exome_v1","TWIST Dana Farber Custom Panel"]
       },
 
       "items": {

@@ -83,6 +83,22 @@
         "$ref": "assays/ihc_assay.json"
       },
       "mergeStrategy": "append"
+    },
+    "hande": {
+      "type": "array",
+      "description": "H & E.",
+      "items": {
+        "$ref": "assays/hande_assay.json"
+      },
+      "mergeStrategy": "append"
+    },
+    "nanostring": {
+      "type": "array",
+      "description": "Nanostring",
+      "items": {
+        "$ref": "assays/nanostring_assay.json"
+      },
+      "mergeStrategy": "append"
     }
   }
 }

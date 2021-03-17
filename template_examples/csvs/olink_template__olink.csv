@@ -6,8 +6,8 @@
 "#preamble","Assay panel lot","1"
 "#preamble","Study-level combined file","olink_assay_combined.xlsx"
 "#preamble","Study-level combined npx manager version","Olink NPX Manager 0.0.82.0"
-"#preamble","Batch-level combined file"
-"#preamble","Batch-level combined npx manager version"
+"#preamble","Batch-level combined file","olink_assay_batch_combined.xlsx"
+"#preamble","Batch-level combined npx manager version","Olink NPX Manager 0.0.82.0"
 
 "#skip","Olink details"
 "#header","Chip barcode","Npx file","Raw ct file","Run date","Run time","Instrument","Fludigm application version","Fludigm application build","Probe type","Passive reference","Quality threshold","Baseline correction","Number of samples","Number of samples failed","Npx manager version"

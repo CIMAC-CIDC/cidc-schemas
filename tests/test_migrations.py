@@ -264,6 +264,12 @@ def test_v0_23_18_to_v0_24_0():
                             },
                         },
                     },
+                    {
+                        "files": {
+                            "assay_npx": {"upload_placeholder": "asdf"},
+                            "assay_raw_ct": {"upload_placeholder": "asdf"},
+                        }
+                    },
                 ],
             }
         },
@@ -293,6 +299,12 @@ def test_v0_23_18_to_v0_24_0():
                                         "foo": "bar",
                                     },
                                 },
+                            },
+                            {
+                                "files": {
+                                    "assay_npx": {"upload_placeholder": "asdf"},
+                                    "assay_raw_ct": {"upload_placeholder": "asdf"},
+                                }
                             },
                         ],
                     }

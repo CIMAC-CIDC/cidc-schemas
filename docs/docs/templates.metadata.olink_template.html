@@ -77,6 +77,12 @@
         
             
         
+            
+        
+            
+        
+            
+        
         
             
                 <tr>
@@ -128,6 +134,29 @@
                 <tr>
     <td>
         
+            <span id="batch identifier">
+                batch identifier
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A unique identifier for this Olink upload
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#batch.batch_id">assays.olink_assay#batch.batch_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
             <span id="panel">
                 panel
             </span>
@@ -141,7 +170,7 @@
     </td>
     <td>
         
-            <a href="assays.olink_assay.html#panel">assays.olink_assay#panel</a>
+            <a href="assays.olink_assay.html#batch.panel">assays.olink_assay#batch.panel</a>
         
     </td>
 </tr>
@@ -164,7 +193,7 @@
     </td>
     <td>
         
-            <a href="assays.olink_assay.html#assay_panel_lot">assays.olink_assay#assay_panel_lot</a>
+            <a href="assays.olink_assay.html#batch.assay_panel_lot">assays.olink_assay#batch.assay_panel_lot</a>
         
     </td>
 </tr>
@@ -174,15 +203,15 @@
                 <tr>
     <td>
         
-            <span id="combined file">
-                combined file
+            <span id="study-level combined file">
+                study-level combined file
             </span>
             
         
     </td>
     <td width=55%>
         
-            Combined file name on a user's computer.
+            Relative path to a combined NPX file containing all samples for this trial.
         
     </td>
     <td>
@@ -197,8 +226,8 @@
                 <tr>
     <td>
         
-            <span id="combined file npx manager version">
-                combined file npx manager version
+            <span id="study-level combined npx manager version">
+                study-level combined npx manager version
             </span>
             
         
@@ -210,7 +239,53 @@
     </td>
     <td>
         
-            <a href="assays.components.olink.olink_combined.html#npx_manager_version">assays.components.olink.olink_combined#npx_manager_version</a>
+            <a href="assays.olink_assay.html#combined_npx.npx_manager_version">assays.olink_assay#combined_npx.npx_manager_version</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="batch-level combined file">
+                batch-level combined file
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Relative path to a combined NPX file containing all samples for this upload only.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="batch-level combined npx manager version">
+                batch-level combined npx manager version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Version of NPX manager used for the analysis.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#combined_npx.npx_manager_version">assays.olink_assay#combined_npx.npx_manager_version</a>
         
     </td>
 </tr>
@@ -221,7 +296,7 @@
   
     <h4>Data Columns</h4>
     
-      <h5 class="text-muted">Olink Assay details</h4>
+      <h5 class="text-muted">Olink details</h4>
       
     
     
@@ -291,7 +366,7 @@
     </td>
     <td>
         
-            <a href="assays.components.olink.olink_entry.html#chip_barcode">assays.components.olink.olink_entry#chip_barcode</a>
+            <a href="assays.olink_assay.html#record.chip_barcode">assays.olink_assay#record.chip_barcode</a>
         
     </td>
 </tr>
@@ -360,7 +435,7 @@
     </td>
     <td>
         
-            <a href="assays.components.olink.olink_entry.html#run_date">assays.components.olink.olink_entry#run_date</a>
+            <a href="assays.olink_assay.html#record.run_date">assays.olink_assay#record.run_date</a>
         
     </td>
 </tr>
@@ -383,7 +458,7 @@
     </td>
     <td>
         
-            <a href="assays.components.olink.olink_entry.html#run_time">assays.components.olink.olink_entry#run_time</a>
+            <a href="assays.olink_assay.html#record.run_time">assays.olink_assay#record.run_time</a>
         
     </td>
 </tr>
@@ -406,7 +481,7 @@
     </td>
     <td>
         
-            <a href="assays.components.olink.olink_entry.html#instrument">assays.components.olink.olink_entry#instrument</a>
+            <a href="assays.olink_assay.html#record.instrument">assays.olink_assay#record.instrument</a>
         
     </td>
 </tr>
@@ -429,7 +504,7 @@
     </td>
     <td>
         
-            <a href="assays.components.olink.olink_entry.html#fludigm_application_version">assays.components.olink.olink_entry#fludigm_application_version</a>
+            <a href="assays.olink_assay.html#record.fludigm_application_version">assays.olink_assay#record.fludigm_application_version</a>
         
     </td>
 </tr>
@@ -452,7 +527,7 @@
     </td>
     <td>
         
-            <a href="assays.components.olink.olink_entry.html#fludigm_application_build">assays.components.olink.olink_entry#fludigm_application_build</a>
+            <a href="assays.olink_assay.html#record.fludigm_application_build">assays.olink_assay#record.fludigm_application_build</a>
         
     </td>
 </tr>
@@ -475,7 +550,7 @@
     </td>
     <td>
         
-            <a href="assays.components.olink.olink_entry.html#probe_type">assays.components.olink.olink_entry#probe_type</a>
+            <a href="assays.olink_assay.html#record.probe_type">assays.olink_assay#record.probe_type</a>
         
     </td>
 </tr>
@@ -498,7 +573,7 @@
     </td>
     <td>
         
-            <a href="assays.components.olink.olink_entry.html#passive_reference">assays.components.olink.olink_entry#passive_reference</a>
+            <a href="assays.olink_assay.html#record.passive_reference">assays.olink_assay#record.passive_reference</a>
         
     </td>
 </tr>
@@ -521,7 +596,7 @@
     </td>
     <td>
         
-            <a href="assays.components.olink.olink_entry.html#quality_threshold">assays.components.olink.olink_entry#quality_threshold</a>
+            <a href="assays.olink_assay.html#record.quality_threshold">assays.olink_assay#record.quality_threshold</a>
         
     </td>
 </tr>
@@ -544,7 +619,7 @@
     </td>
     <td>
         
-            <a href="assays.components.olink.olink_entry.html#baseline_correction">assays.components.olink.olink_entry#baseline_correction</a>
+            <a href="assays.olink_assay.html#record.baseline_correction">assays.olink_assay#record.baseline_correction</a>
         
     </td>
 </tr>
@@ -567,7 +642,7 @@
     </td>
     <td>
         
-            <a href="assays.components.olink.olink_entry.html#number_of_samples">assays.components.olink.olink_entry#number_of_samples</a>
+            <a href="assays.olink_assay.html#record.number_of_samples">assays.olink_assay#record.number_of_samples</a>
         
     </td>
 </tr>
@@ -590,7 +665,7 @@
     </td>
     <td>
         
-            <a href="assays.components.olink.olink_entry.html#number_of_samples_failed">assays.components.olink.olink_entry#number_of_samples_failed</a>
+            <a href="assays.olink_assay.html#record.number_of_samples_failed">assays.olink_assay#record.number_of_samples_failed</a>
         
     </td>
 </tr>
@@ -613,7 +688,7 @@
     </td>
     <td>
         
-            <a href="assays.components.olink.olink_entry.html#npx_manager_version">assays.components.olink.olink_entry#npx_manager_version</a>
+            <a href="assays.olink_assay.html#record.npx_manager_version">assays.olink_assay#record.npx_manager_version</a>
         
     </td>
 </tr>

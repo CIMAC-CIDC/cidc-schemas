@@ -1,0 +1,62 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "hande_assay",
+  "title": "H&E Assay",
+  "type": "object",
+  "description": "H & E assay",
+  "additionalProperties": false,
+  "mergeStrategy": "objectMerge",
+
+  "definitions": {
+    "input": {
+      "type": "object",
+      "description": "H & E assay input files.",
+      "additionalProperties": false,
+      "properties": {
+        "image_file": {
+          "$comment": "Path to the H & E image in SVS format.",
+          "$ref": "artifacts/artifact_image.json"
+        }
+      },
+      "required": ["image_file"]
+    },
+    "record": {
+      "type": "object",
+      "description": "A single data record from H & E assay.",
+      "additionalProperties": false,
+      "properties": {
+        "cimac_id": {
+            "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
+            "$ref": "sample.json#properties/cimac_id"
+        },
+        "comment": {
+            "description": "A text comment regarding this slide.",
+            "type": "string"
+          },
+        "files": {
+          "$ref": "assays/hande_assay.json#definitions/input"
+        }
+      },
+      "required": ["cimac_id", "files"]
+    }
+  },
+  
+  "properties": {
+      "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
+      "records": {
+            "type": "array",
+            "description": "A single data record from H & E assay.",
+            "items": {
+                "$ref": "assays/hande_assay.json#definitions/record"
+            },
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": {
+                "idRef": "cimac_id"
+            }
+        }
+  },
+  "required": [
+    "records",
+    "assay_creator"
+  ]
+}

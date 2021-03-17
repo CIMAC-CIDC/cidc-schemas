@@ -31,16 +31,16 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>RNAseq level 1 analysis template</h1>
+        <h1>Metadata file for H & E</h1>
         <p>
-            <b>Description:</b>  Metadata information for RNAseq level 1 Analysis output.
+            <b>Description:</b>  Metadata information for H & E analysis.
         </p>
         
     </div>
 
   <div class="container">
     
-      <h3>Worksheet - RNAseq Analysis</h3>
+      <h3>Worksheet - H&E</h3>
   
     <h4>Preamble Rows</h4>
     
@@ -63,6 +63,8 @@
             <th>Data Type</th>
         </tr>
         </thead>
+        
+            
         
             
         
@@ -90,12 +92,35 @@
 </tr>
             
         
+            
+                <tr>
+    <td>
+        
+            <span id="assay creator">
+                assay creator
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates what site is filling out the assay.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.assay_core.html#assay_creator">assays.components.assay_core#assay_creator</a>
+        
+    </td>
+</tr>
+            
+        
     </table>
   
   
     <h4>Data Columns</h4>
     
-      <h5 class="text-muted">RNAseq Runs</h4>
+      <h5 class="text-muted">Samples</h4>
       
     
     
@@ -119,6 +144,10 @@
         
             
         
+            
+        
+            
+        
         
             
                 <tr>
@@ -138,6 +167,52 @@
     <td>
         
             <a href="sample.html#cimac_id">sample#cimac_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="image file">
+                image file
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="comment">
+                comment
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A text comment regarding this slide.
+        
+    </td>
+    <td>
+        
+            <a href="assays.hande_assay.html#record.comment">assays.hande_assay#record.comment</a>
         
     </td>
 </tr>

@@ -13,6 +13,8 @@ SUPPORTED_ASSAYS = [
     "rna_bam",
     "mif",
     "tcr_fastq",
+    "hande",
+    "nanostring",
 ]
 
 SUPPORTED_SHIPPING_MANIFESTS = [

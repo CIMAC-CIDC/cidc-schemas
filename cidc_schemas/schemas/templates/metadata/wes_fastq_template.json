@@ -18,7 +18,8 @@
           },
           "sequencing protocol": {
             "merge_pointer": "0/sequencing_protocol",
-            "type_ref": "assays/wes_assay.json#properties/sequencing_protocol"
+            "type_ref": "assays/wes_assay.json#properties/sequencing_protocol",
+            "allow_empty": true
           },
           "library kit": {
             "merge_pointer": "0/library_kit",

@@ -487,11 +487,7 @@ def test_micsss():
 
 def test_olink():
 
-    # create the olink object
-    obj = {**ASSAY_CORE}
-    obj["panel"] = "panel v1"
-
-    # create the artifact object
+    # build up the batch object with one record
     npx = ARTIFACT_OBJ.copy()
     npx["data_format"] = "NPX"
     npx["samples"] = ["CTTTPPPS1.00", "CTTTPPPS2.00", "CTTTPPPS3.00"]
@@ -501,16 +497,24 @@ def test_olink():
     record = OLINK_RECORD.copy()
     record["files"]["assay_npx"] = npx
     record["files"]["assay_raw_ct"] = csv
+    batch = {
+        **ASSAY_CORE,
+        "batch_id": "batch1",
+        "panel": "panel v1",
+        "records": [record],
+    }
 
-    # add a demo record.
-    obj["records"] = [record]
-    obj["study"] = {"npx_manager_version": "whatever", "study_npx": npx}
+    # create the olink object
+    obj = {
+        "batches": [batch],
+        "study": {"npx_manager_version": "whatever", "npx_file": npx},
+    }
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("olink")
     validator.validate(obj)
 
     # assert negative behaviors
-    del obj["records"][0]["number_of_samples"]
+    del obj["batches"][0]["records"][0]["number_of_samples"]
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)

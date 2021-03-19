@@ -9,6 +9,7 @@ from cidc_schemas.migrations import (
     v0_21_1_to_v0_22_0,
     _ENCRYPTED_FIELD_LEN,
     v0_23_0_to_v0_23_1,
+    v0_23_18_to_v0_24_0,
 )
 
 
@@ -233,3 +234,97 @@ def test_v0_23_0_to_v0_23_1():
     )
 
     assert ct == v0_23_0_to_v0_23_1.downgrade(upgraded_ct).result
+
+
+def test_v0_23_18_to_v0_24_0():
+    # Unrelated data is unchanged
+    assert v0_23_18_to_v0_24_0.downgrade(
+        v0_23_18_to_v0_24_0.upgrade({"foo": "bar"}).result
+    ).result == {"foo": "bar"}
+
+    ct = {
+        "assays": {
+            "olink": {
+                "study": {
+                    "npx_manager_version": "ol_npx_v1",
+                    "study_npx": {"foo": "bar"},
+                },
+                "assay_creator": "Mount Sinai",
+                "panel": "ol_panel_1",
+                "records": [
+                    {
+                        "files": {
+                            "assay_npx": {
+                                "object_url": "test-trial/chip_1234/assay_npx.xlsx",
+                                "foo": "bar",
+                            },
+                            "assay_raw_ct": {
+                                "object_url": "test-trial/chip_1234/assay_raw_ct.xlsx",
+                                "foo": "bar",
+                            },
+                        },
+                    },
+                    {
+                        "files": {
+                            "assay_npx": {"upload_placeholder": "asdf"},
+                            "assay_raw_ct": {"upload_placeholder": "asdf"},
+                        }
+                    },
+                ],
+            }
+        },
+    }
+
+    target_ct = {
+        "assays": {
+            "olink": {
+                "study": {
+                    "npx_manager_version": "ol_npx_v1",
+                    "npx_file": {"foo": "bar"},
+                },
+                "batches": [
+                    {
+                        "batch_id": "1",
+                        "assay_creator": "Mount Sinai",
+                        "panel": "ol_panel_1",
+                        "records": [
+                            {
+                                "files": {
+                                    "assay_npx": {
+                                        "object_url": "test-trial/batch_1/chip_1234/assay_npx.xlsx",
+                                        "foo": "bar",
+                                    },
+                                    "assay_raw_ct": {
+                                        "object_url": "test-trial/batch_1/chip_1234/assay_raw_ct.xlsx",
+                                        "foo": "bar",
+                                    },
+                                },
+                            },
+                            {
+                                "files": {
+                                    "assay_npx": {"upload_placeholder": "asdf"},
+                                    "assay_raw_ct": {"upload_placeholder": "asdf"},
+                                }
+                            },
+                        ],
+                    }
+                ],
+            }
+        },
+    }
+
+    result = v0_23_18_to_v0_24_0.upgrade(ct)
+    assert result.result == target_ct
+    assert result.file_updates == {
+        "test-trial/chip_1234/assay_npx.xlsx": {
+            "object_url": "test-trial/batch_1/chip_1234/assay_npx.xlsx",
+            "foo": "bar",
+        },
+        "test-trial/chip_1234/assay_raw_ct.xlsx": {
+            "object_url": "test-trial/batch_1/chip_1234/assay_raw_ct.xlsx",
+            "foo": "bar",
+        },
+    }
+
+    # downgrade is a noop for this migration
+    assert v0_23_18_to_v0_24_0.downgrade(target_ct).result == target_ct

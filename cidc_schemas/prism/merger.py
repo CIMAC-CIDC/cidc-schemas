@@ -39,7 +39,9 @@ def _set_data_format(ct: dict, artifact: dict):
         ):
             return error.validator_value
 
-    for error in validator.iter_errors(ct):
+    # We don't need any referential integrity checks to extract data formats, so ensure
+    # the validator skips those by passing _ignore_in_doc_refs = True
+    for error in validator.safe_iter_errors(ct, ignore_in_doc_refs=True):
         if isinstance(error, jsonschema.exceptions.ValidationError):
             if error.validator == "anyOf":
                 data_format = None

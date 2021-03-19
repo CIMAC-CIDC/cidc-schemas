@@ -301,6 +301,78 @@ def ihc() -> PrismTestData:
 
 
 @assay_data_generator
+def hande() -> PrismTestData:
+    upload_type = "hande"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "123",
+        "assays": {
+            "hande": [
+                {
+                    "records": [
+                        {
+                            "cimac_id": "CTTTPP111.00",
+                            "files": {
+                                "image_file": {
+                                    "upload_placeholder": "eeeeeeee-047f-4df6-b614-871289a1a2a8"
+                                }
+                            },
+                            "comment": "a comment",
+                        },
+                        {
+                            "cimac_id": "CTTTPP121.00",
+                            "files": {
+                                "image_file": {
+                                    "upload_placeholder": "eeeeeeee-669c-48c7-aee0-f0d5e5e8a341"
+                                }
+                            },
+                            "comment": "another comment",
+                        },
+                    ],
+                    "assay_creator": "DFCI",
+                }
+            ]
+        },
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="path/to/image1.svs",
+            gs_key="123/hande/CTTTPP111.00/image_file.svs",
+            upload_placeholder="eeeeeeee-047f-4df6-b614-871289a1a2a8",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="path/to/image2.svs",
+            gs_key="123/hande/CTTTPP121.00/image_file.svs",
+            upload_placeholder="eeeeeeee-669c-48c7-aee0-f0d5e5e8a341",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+    ]
+
+    cimac_ids = [
+        record["cimac_id"]
+        for batch in prismify_patch["assays"]["hande"]
+        for record in batch["records"]
+    ]
+    base_trial = get_test_trial(cimac_ids)
+
+    base_trial[PROTOCOL_ID_FIELD_NAME] = "123"
+
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "assays")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
+@assay_data_generator
 def wes_bam() -> PrismTestData:
     upload_type = "wes_bam"
     prismify_args = get_prismify_args(upload_type)
@@ -574,7 +646,7 @@ def rna_bam() -> PrismTestData:
                         },
                     ],
                     "assay_creator": "DFCI",
-                    "enrichment_method": "Transcriptome capture",
+                    "enrichment_method": "Transcriptome capture v1",
                     "sequencer_platform": "Illumina - HiSeq 3000",
                     "paired_end_reads": "Paired",
                 }
@@ -688,7 +760,7 @@ def rna_fastq() -> PrismTestData:
                         },
                     ],
                     "assay_creator": "DFCI",
-                    "enrichment_method": "Transcriptome capture",
+                    "enrichment_method": "Transcriptome capture v1",
                     "enrichment_vendor_kit": "Illumina - TruSeq Stranded PolyA mRNA",
                     "sequencer_platform": "Illumina - HiSeq 3000",
                     "paired_end_reads": "Paired",
@@ -989,59 +1061,70 @@ def olink() -> PrismTestData:
         "protocol_identifier": "test_prism_trial_id",
         "assays": {
             "olink": {
-                "records": [
+                "batches": [
                     {
-                        "chip_barcode": "1111",
-                        "files": {
-                            "assay_npx": {
-                                "upload_placeholder": "d658b480-ed78-4717-b622-3e84bde632b6"
+                        "batch_id": "batch1",
+                        "records": [
+                            {
+                                "chip_barcode": "1111",
+                                "files": {
+                                    "assay_npx": {
+                                        "upload_placeholder": "d658b480-ed78-4717-b622-3e84bde632b6"
+                                    },
+                                    "assay_raw_ct": {
+                                        "upload_placeholder": "4e9d0a47-90dc-4134-9ad6-3e3dd83619d6"
+                                    },
+                                },
+                                "run_date": "2019-12-12 00:00:00",
+                                "run_time": "10:11:00",
+                                "instrument": "MIOMARKHD411",
+                                "fludigm_application_version": "4.1.3",
+                                "fludigm_application_build": "20140305.43",
+                                "probe_type": "FAM-MGB",
+                                "passive_reference": "ROX",
+                                "quality_threshold": 0.5,
+                                "baseline_correction": "Linear",
+                                "number_of_samples": 90.0,
+                                "number_of_samples_failed": 5.0,
+                                "npx_manager_version": "Olink NPX Manager 0.0.82.0",
                             },
-                            "assay_raw_ct": {
-                                "upload_placeholder": "4e9d0a47-90dc-4134-9ad6-3e3dd83619d6"
+                            {
+                                "chip_barcode": "1112",
+                                "files": {
+                                    "assay_npx": {
+                                        "upload_placeholder": "9855c579-82e0-42ee-8225-7c1c736bb69f"
+                                    },
+                                    "assay_raw_ct": {
+                                        "upload_placeholder": "b387e41a-1c6a-42b5-aa16-dccf6249e404"
+                                    },
+                                },
+                                "run_date": "2019-12-12 00:00:00",
+                                "run_time": "10:11:00",
+                                "instrument": "MIOMARKHD411",
+                                "fludigm_application_version": "4.1.3",
+                                "fludigm_application_build": "20140305.43",
+                                "probe_type": "FAM-MGB",
+                                "passive_reference": "ROX",
+                                "quality_threshold": 0.5,
+                                "baseline_correction": "Linear",
+                                "number_of_samples": 80.0,
+                                "number_of_samples_failed": 10.0,
+                                "npx_manager_version": "Olink NPX Manager 0.0.82.0",
                             },
+                        ],
+                        "assay_creator": "DFCI",
+                        "panel": "Olink INFLAMMATION(v.3004)",
+                        "assay_panel_lot": "1",
+                        "combined": {
+                            "npx_file": {
+                                "upload_placeholder": "1b0b3b8f-6417-4a37-85dc-e8aa75594678"
+                            },
+                            "npx_manager_version": "Olink NPX Manager 0.0.82.0",
                         },
-                        "run_date": "2019-12-12 00:00:00",
-                        "run_time": "10:11:00",
-                        "instrument": "MIOMARKHD411",
-                        "fludigm_application_version": "4.1.3",
-                        "fludigm_application_build": "20140305.43",
-                        "probe_type": "FAM-MGB",
-                        "passive_reference": "ROX",
-                        "quality_threshold": 0.5,
-                        "baseline_correction": "Linear",
-                        "number_of_samples": 90.0,
-                        "number_of_samples_failed": 5.0,
-                        "npx_manager_version": "Olink NPX Manager 0.0.82.0",
-                    },
-                    {
-                        "chip_barcode": "1112",
-                        "files": {
-                            "assay_npx": {
-                                "upload_placeholder": "9855c579-82e0-42ee-8225-7c1c736bb69f"
-                            },
-                            "assay_raw_ct": {
-                                "upload_placeholder": "b387e41a-1c6a-42b5-aa16-dccf6249e404"
-                            },
-                        },
-                        "run_date": "2019-12-12 00:00:00",
-                        "run_time": "10:11:00",
-                        "instrument": "MIOMARKHD411",
-                        "fludigm_application_version": "4.1.3",
-                        "fludigm_application_build": "20140305.43",
-                        "probe_type": "FAM-MGB",
-                        "passive_reference": "ROX",
-                        "quality_threshold": 0.5,
-                        "baseline_correction": "Linear",
-                        "number_of_samples": 80.0,
-                        "number_of_samples_failed": 10.0,
-                        "npx_manager_version": "Olink NPX Manager 0.0.82.0",
-                    },
+                    }
                 ],
-                "assay_creator": "DFCI",
-                "panel": "Olink INFLAMMATION(v.3004)",
-                "assay_panel_lot": "1",
                 "study": {
-                    "study_npx": {
+                    "npx_file": {
                         "upload_placeholder": "19b31c40-a3dd-4be1-b9bd-022b9ff08dfd"
                     },
                     "npx_manager_version": "Olink NPX Manager 0.0.82.0",
@@ -1052,28 +1135,28 @@ def olink() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="olink_assay_1_NPX.xlsx",
-            gs_key="test_prism_trial_id/olink/chip_1111/assay_npx.xlsx",
+            gs_key="test_prism_trial_id/olink/batch_batch1/chip_1111/assay_npx.xlsx",
             upload_placeholder="d658b480-ed78-4717-b622-3e84bde632b6",
             metadata_availability=True,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="olink_assay_1_CT.csv",
-            gs_key="test_prism_trial_id/olink/chip_1111/assay_raw_ct.csv",
+            gs_key="test_prism_trial_id/olink/batch_batch1/chip_1111/assay_raw_ct.csv",
             upload_placeholder="4e9d0a47-90dc-4134-9ad6-3e3dd83619d6",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="olink_assay_2_NPX.xlsx",
-            gs_key="test_prism_trial_id/olink/chip_1112/assay_npx.xlsx",
+            gs_key="test_prism_trial_id/olink/batch_batch1/chip_1112/assay_npx.xlsx",
             upload_placeholder="9855c579-82e0-42ee-8225-7c1c736bb69f",
             metadata_availability=True,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="olink_assay_2_CT.csv",
-            gs_key="test_prism_trial_id/olink/chip_1112/assay_raw_ct.csv",
+            gs_key="test_prism_trial_id/olink/batch_batch1/chip_1112/assay_raw_ct.csv",
             upload_placeholder="b387e41a-1c6a-42b5-aa16-dccf6249e404",
             metadata_availability=False,
             allow_empty=False,
@@ -1082,6 +1165,13 @@ def olink() -> PrismTestData:
             local_path="olink_assay_combined.xlsx",
             gs_key="test_prism_trial_id/olink/study_npx.xlsx",
             upload_placeholder="19b31c40-a3dd-4be1-b9bd-022b9ff08dfd",
+            metadata_availability=True,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="olink_assay_batch_combined.xlsx",
+            gs_key="test_prism_trial_id/olink/batch_batch1/combined_npx.xlsx",
+            upload_placeholder="1b0b3b8f-6417-4a37-85dc-e8aa75594678",
             metadata_availability=True,
             allow_empty=False,
         ),
@@ -1831,6 +1921,137 @@ def mif() -> PrismTestData:
         record["cimac_id"]
         for batch in prismify_patch["assays"]["mif"]
         for record in batch["records"]
+    ]
+    base_trial = get_test_trial(cimac_ids)
+
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "assays")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
+@assay_data_generator
+def nanostring() -> PrismTestData:
+    upload_type = "nanostring"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "test_prism_trial_id",
+        "assays": {
+            "nanostring": [
+                {
+                    "assay_creator": "DFCI",
+                    "batch_id": "test_batch",
+                    "data": {
+                        "raw": {
+                            "upload_placeholder": "d658b480-ed78-4717-b622-3e84bde632b6"
+                        },
+                        "normalized": {
+                            "upload_placeholder": "4e9d0a47-90dc-4134-9ad6-3e3dd83619d6"
+                        },
+                    },
+                    "runs": [
+                        {
+                            "run_id": "RUN01",
+                            "control_raw_rcc": {
+                                "upload_placeholder": "1b0b3b8f-6417-4a37-85dc-e8aa75594678"
+                            },
+                            "samples": [
+                                {
+                                    "cimac_id": "CTTTPP111.00",
+                                    "raw_rcc": {
+                                        "upload_placeholder": "9855c579-82e0-42ee-8225-7c1c736bb69f"
+                                    },
+                                },
+                                {
+                                    "cimac_id": "CTTTPP112.00",
+                                    "raw_rcc": {
+                                        "upload_placeholder": "9855c579-82e0-42ee-8225-7c1c736bb69g"
+                                    },
+                                },
+                            ],
+                        },
+                        {
+                            "run_id": "RUN02",
+                            "control_raw_rcc": {
+                                "upload_placeholder": "1b0b3b8f-6417-4a37-85dc-e8aa75594679"
+                            },
+                            "samples": [
+                                {
+                                    "cimac_id": "CTTTPP111.00",
+                                    "raw_rcc": {
+                                        "upload_placeholder": "9855c579-82e0-42ee-8225-7c1c736bb69h"
+                                    },
+                                }
+                            ],
+                        },
+                    ],
+                }
+            ]
+        },
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="raw_data.csv",
+            upload_placeholder="d658b480-ed78-4717-b622-3e84bde632b6",
+            gs_key="test_prism_trial_id/nanostring/test_batch/raw_data.csv",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="normalized.csv",
+            upload_placeholder="4e9d0a47-90dc-4134-9ad6-3e3dd83619d6",
+            gs_key="test_prism_trial_id/nanostring/test_batch/normalized_data.csv",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="RUN01_reference.rcc",
+            upload_placeholder="1b0b3b8f-6417-4a37-85dc-e8aa75594678",
+            gs_key="test_prism_trial_id/nanostring/test_batch/RUN01/control.rcc",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="RUN01_111.rcc",
+            upload_placeholder="9855c579-82e0-42ee-8225-7c1c736bb69f",
+            gs_key="test_prism_trial_id/nanostring/test_batch/RUN01/CTTTPP111.00.rcc",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="RUN01_112.rcc",
+            upload_placeholder="9855c579-82e0-42ee-8225-7c1c736bb69g",
+            gs_key="test_prism_trial_id/nanostring/test_batch/RUN01/CTTTPP112.00.rcc",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="RUN02_reference.rcc",
+            upload_placeholder="1b0b3b8f-6417-4a37-85dc-e8aa75594679",
+            gs_key="test_prism_trial_id/nanostring/test_batch/RUN02/control.rcc",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="RUN02_111.rcc",
+            upload_placeholder="9855c579-82e0-42ee-8225-7c1c736bb69h",
+            gs_key="test_prism_trial_id/nanostring/test_batch/RUN02/CTTTPP111.00.rcc",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+    ]
+
+    cimac_ids = [
+        sample["cimac_id"]
+        for batch in prismify_patch["assays"]["nanostring"]
+        for runs in batch["runs"]
+        for sample in runs["samples"]
     ]
     base_trial = get_test_trial(cimac_ids)
 

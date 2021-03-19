@@ -8,6 +8,7 @@ import json
 
 import pytest
 import jsonschema
+import jsonpointer
 
 from cidc_schemas.json_validation import (
     _map_refs,
@@ -21,6 +22,28 @@ from cidc_schemas.json_validation import (
 )
 from cidc_schemas.prism import PROTOCOL_ID_FIELD_NAME
 from .constants import SCHEMA_DIR, ROOT_DIR, TEST_SCHEMA_DIR
+
+
+def test_validator_iter_errors_in_doc_ref():
+    """Show that calling iter_errors directly leads to an assertion error"""
+    validator = _Validator(
+        {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": False,
+            "type": "object",
+            "properties": {"a": {"type": "string", "in_doc_ref_pattern": "/a"}},
+        }
+    )
+
+    valid_instance = {"a": "foo"}
+
+    with pytest.raises(
+        AssertionError, match="Please call _Validator.safe_iter_errors instead."
+    ):
+        list(validator.iter_errors(valid_instance))
+
+    errors = list(validator.safe_iter_errors(valid_instance))
+    assert len(errors) == 0
 
 
 def test_map_refs():
@@ -256,16 +279,20 @@ def test_validate_in_doc_refs():
         }
     )
 
-    v.validate({"objs": [{"id": 1}, {"id": "something"}], "refs": [1, "something"]})
-    assert v.in_doc_refs_cache == {"/objs/*/id": {repr(1), repr("something")}}
+    instance = {"objs": [{"id": 1}, {"id": "something"}], "refs": [1, "something"]}
+    v.validate(instance)
+    with v._validation_context(instance):
+        assert v._in_doc_refs_cache == {"/objs/*/id": {repr(1), repr("something")}}
 
-    v.validate({"objs": [{"id": 1}, {"id": "something"}], "refs": [1]})
-    assert v.in_doc_refs_cache == {"/objs/*/id": {repr(1), repr("something")}}
+    instance = {"objs": [{"id": 1}, {"id": "something"}], "refs": [1]}
+    v.validate(instance)
+    with v._validation_context(instance):
+        assert v._in_doc_refs_cache == {"/objs/*/id": {repr(1), repr("something")}}
 
     assert 2 == len(
         [
             e
-            for e in v.iter_errors(
+            for e in v.safe_iter_errors(
                 {
                     "objs": [{"id": 1}, {"id": "something"}],
                     "refs": [2, "something", "else"],
@@ -414,3 +441,16 @@ def test_iter_error_messages():
     errs = list(validator.iter_error_messages({"protocol_identifier": "foo123"}))
     for err in errs:
         assert isinstance(err, str)
+
+
+def test_load_subschema():
+    """Test that the subschema loading option works as expected."""
+    schema = load_and_validate_schema("clinical_trial.json")
+    subschema = schema["properties"]["participants"]
+    path = "properties/participants"
+
+    assert subschema == load_and_validate_schema(f"clinical_trial.json#{path}")
+    assert subschema == load_and_validate_schema(f"clinical_trial.json#/{path}")
+
+    with pytest.raises(jsonpointer.JsonPointerException):
+        load_and_validate_schema("clinical_trial.json#foo")

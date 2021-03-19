@@ -197,11 +197,9 @@
   ],
   "assays": {
     "olink": {
-      "assay_creator": "Mount Sinai",
-      "panel": "ol_panel_1",
       "study": {
         "npx_manager_version": "ol_npx_v1",
-        "study_npx": {
+        "npx_file": {
           "file_name": "...",
           "object_url": "...",
           "uploaded_timestamp": "2018-11-13T20:20:39+00:00",
@@ -220,58 +218,65 @@
           ]
         }
       },
-      "records": [
+      "batches": [
         {
-          "number_of_samples": 88,
-          "npx_manager_version": "ol_npx_v1",
-          "files": {
-            "assay_npx": {
-              "file_name": "...",
-              "object_url": "...",
-              "uploaded_timestamp": "2018-11-13T20:20:39+00:00",
-              "file_size_bytes": 0,
-              "md5_hash": "...",
-              "artifact_category": "Assay Artifact from CIMAC",
-              "data_format": "NPX",
-              "number_of_samples": 3,
-              "samples": ["CTTTPP2S2.01", "CTTTPP1S1.01", "CTTTPP2S1.01"]
+          "batch_id": "batch1",
+          "assay_creator": "Mount Sinai",
+          "panel": "ol_panel_1",
+          "records": [
+            {
+              "number_of_samples": 88,
+              "npx_manager_version": "ol_npx_v1",
+              "files": {
+                "assay_npx": {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "2018-11-13T20:20:39+00:00",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "NPX",
+                  "number_of_samples": 3,
+                  "samples": ["CTTTPP2S2.01", "CTTTPP1S1.01", "CTTTPP2S1.01"]
+                },
+                "assay_raw_ct": {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "2018-11-13T20:20:39+00:00",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "CSV"
+                }
+              }
             },
-            "assay_raw_ct": {
-              "file_name": "...",
-              "object_url": "...",
-              "uploaded_timestamp": "2018-11-13T20:20:39+00:00",
-              "file_size_bytes": 0,
-              "md5_hash": "...",
-              "artifact_category": "Assay Artifact from CIMAC",
-              "data_format": "CSV"
+            {
+              "number_of_samples": 45,
+              "npx_manager_version": "ol_npx_v1",
+              "files": {
+                "assay_npx": {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "2018-11-13T20:20:39+00:00",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "NPX",
+                  "number_of_samples": 3,
+                  "samples": ["CTTTPP2S2.00", "CTTTPP1S1.00", "CTTTPP2S1.00"]
+                },
+                "assay_raw_ct": {
+                  "file_name": "...",
+                  "object_url": "...",
+                  "uploaded_timestamp": "2018-11-13T20:20:39+00:00",
+                  "file_size_bytes": 0,
+                  "md5_hash": "...",
+                  "artifact_category": "Assay Artifact from CIMAC",
+                  "data_format": "CSV"
+                }
+              }
             }
-          }
-        },
-        {
-          "number_of_samples": 45,
-          "npx_manager_version": "ol_npx_v1",
-          "files": {
-            "assay_npx": {
-              "file_name": "...",
-              "object_url": "...",
-              "uploaded_timestamp": "2018-11-13T20:20:39+00:00",
-              "file_size_bytes": 0,
-              "md5_hash": "...",
-              "artifact_category": "Assay Artifact from CIMAC",
-              "data_format": "NPX",
-              "number_of_samples": 3,
-              "samples": ["CTTTPP2S2.00", "CTTTPP1S1.00", "CTTTPP2S1.00"]
-            },
-            "assay_raw_ct": {
-              "file_name": "...",
-              "object_url": "...",
-              "uploaded_timestamp": "2018-11-13T20:20:39+00:00",
-              "file_size_bytes": 0,
-              "md5_hash": "...",
-              "artifact_category": "Assay Artifact from CIMAC",
-              "data_format": "CSV"
-            }
-          }
+          ]
         }
       ]
     },
@@ -547,16 +552,15 @@
         "sequencer_platform": "Illumina - HiSeq 3000",
         "batch_id": "XYZ",
         "sequencing_run_date": "12/12/20",
-        "sample_sheet":
-          {
-            "file_name": "...",
-            "object_url": "...",
-            "uploaded_timestamp": "2018-11-13T20:20:39+00:00",
-            "file_size_bytes": 0,
-            "md5_hash": "...",
-            "artifact_category": "Assay Artifact from CIMAC",
-            "data_format": "CSV"
-          },
+        "sample_sheet": {
+          "file_name": "...",
+          "object_url": "...",
+          "uploaded_timestamp": "2018-11-13T20:20:39+00:00",
+          "file_size_bytes": 0,
+          "md5_hash": "...",
+          "artifact_category": "Assay Artifact from CIMAC",
+          "data_format": "CSV"
+        },
         "records": [
           {
             "cimac_id": "CTTTPP1S1.00",
@@ -617,7 +621,7 @@
             "cimac_id": "CTTTPP2S1.00",
             "files": {
               "replicates": [
-                  {
+                {
                   "replicate_id": "1B",
                   "rna_quantity_ng": 650,
                   "r1": [

@@ -31,7 +31,7 @@
             "type": "string"
         },
         "bead_removal": {
-            "description": "Boolean to indicate whether beads have been removed",
+            "description": "Boolean to indicate whether beads have been removed after normalization process",
             "type": "boolean"
         },
         "acquisition_buffer": {

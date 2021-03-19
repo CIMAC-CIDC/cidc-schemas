@@ -110,10 +110,6 @@
                             "merge_pointer": "0/normalization_version",
                             "type_ref": "assays/components/cytof/cytof_entry.json#properties/normalization_version"
                         },
-                        "beads removed": {
-                            "merge_pointer": "0/beads_removed",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/beads_removed"
-                        },
                         "debarcoding key": {
                             "merge_pointer": "0/debarcoding_key",
                             "type_ref": "assays/components/cytof/cytof_entry.json#properties/debarcoding_key"

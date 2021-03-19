@@ -71,7 +71,6 @@
                 "uploaded_timestamp": "2019-11-19T20:48:40.524000+00:00"
               }
             },
-            "beads_removed": "Y",
             "debarcoding_key": "FLUIDIGM 1234",
             "preprocessing_notes": "a note like any other note",
             "concatenation_version": "GHIL",
@@ -145,7 +144,6 @@
                 "uploaded_timestamp": "2019-11-19T20:48:40.524000+00:00"
               }
             },
-            "beads_removed": "Y",
             "debarcoding_key": "FLUIDIGM 1234",
             "preprocessing_notes": "a note like any other note",
             "concatenation_version": "GHIL",

@@ -22,14 +22,6 @@
             "description": "Version of normalization for CyTOF assay batch.",
             "type": "string"
         },
-        "beads_removed": {
-            "description": "Confirmation of beads being removed after normalization process.",
-            "type": "string",
-            "enum": [
-                "Y",
-                "N"
-            ]
-        },
         "staining_date": {
             "description": "Date of staining for CyTOF assay slides.",
             "type": "string",

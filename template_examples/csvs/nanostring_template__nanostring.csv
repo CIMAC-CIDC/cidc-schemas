@@ -1,0 +1,11 @@
+"#title","Metadata file for nanostring"
+"#preamble","Protocol identifier","test_prism_trial_id"
+"#preamble","Assay creator","DFCI"
+"#preamble","Batch id","test_batch"
+"#preamble","Raw data csv","raw_data.csv"
+"#preamble","Normalized data csv","normalized.csv"
+
+"#skip","Runs"
+"#header","Run id","Reference data rcc"
+"#data","RUN01","RUN01_reference.rcc"
+"#data","RUN02","RUN02_reference.rcc"

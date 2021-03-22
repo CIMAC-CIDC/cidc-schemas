@@ -1,7 +1,7 @@
 {
     "title": "Metadata file for CYTOF",
     "description": "Metadata information for mass-cytometry (CYTOF).",
-    "prism_template_root_object_schema": "assays/cytof_assay.json",
+    "prism_template_root_object_schema": "assays/cytof_10021_assay.json",
     "prism_template_root_object_pointer": "/assays/cytof/0",
     "properties": {
         "worksheets": {
@@ -11,11 +11,11 @@
                 "preamble_rows": {
                     "assay run id": {
                         "merge_pointer": "/assay_run_id",
-                        "type_ref": "assays/cytof_assay.json#properties/assay_run_id"
+                        "type_ref": "assays/cytof_assay_core.json#properties/assay_run_id"
                     },
                     "batch id": {
                         "merge_pointer": "0/batch_id",
-                        "type_ref": "assays/cytof_assay.json#properties/batch_id"
+                        "type_ref": "assays/cytof_assay_core.json#properties/batch_id"
                     },
                     "protocol identifier": {
                         "merge_pointer": "3/protocol_identifier",
@@ -27,7 +27,7 @@
                     },
                     "instrument": {
                         "merge_pointer": "0/instrument",
-                        "type_ref": "assays/cytof_assay.json#properties/instrument"
+                        "type_ref": "assays/cytof_assay_core.json#properties/instrument"
                     },
                     "spike in fcs filename": {
                         "merge_pointer": "0/spike_in_fcs",
@@ -52,33 +52,33 @@
                     },
                     "injector": {
                         "merge_pointer": "0/injector",
-                        "type_ref": "assays/cytof_assay.json#properties/injector"
+                        "type_ref": "assays/cytof_10021_assay.json#properties/injector"
                     },
                     "date of acquisition": {
                         "merge_pointer": "0/date_of_acquisition",
-                        "type_ref": "assays/cytof_assay.json#properties/date_of_acquisition"
+                        "type_ref": "assays/cytof_10021_assay.json#properties/date_of_acquisition"
                     },
                     "acquisition buffer": {
                         "merge_pointer": "0/acquisition_buffer",
-                        "type_ref": "assays/cytof_assay.json#properties/acquisition_buffer"
+                        "type_ref": "assays/cytof_10021_assay.json#properties/acquisition_buffer"
                     },
                     "bead removal": {
                         "merge_pointer": "0/bead_removal",
-                        "type_ref": "assays/cytof_assay.json#properties/bead_removal"
+                        "type_ref": "assays/cytof_10021_assay.json#properties/bead_removal"
                     },
                     "normalization method": {
                         "merge_pointer": "0/normalization_method",
-                        "type_ref": "assays/cytof_assay.json#properties/normalization_method",
+                        "type_ref": "assays/cytof_10021_assay.json#properties/normalization_method",
                         "allow_empty": true
                     },
                     "debarcoding protocol": {
                         "merge_pointer": "0/debarcoding_protocol",
-                        "type_ref": "assays/cytof_assay.json#properties/debarcoding_protocol",
+                        "type_ref": "assays/cytof_10021_assay.json#properties/debarcoding_protocol",
                         "allow_empty": true
                     },
                     "harware version": {
                         "merge_pointer": "0/harware_version",
-                        "type_ref": "assays/cytof_assay.json#properties/harware_version"
+                        "type_ref": "assays/cytof_10021_assay.json#properties/harware_version"
                     }
                 },
                 "data_columns": {

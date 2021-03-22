@@ -1179,7 +1179,7 @@ def cytof_analysis() -> PrismTestData:
     prismify_args = get_prismify_args(upload_type)
     prismify_patch = {
         "assays": {
-            "cytof": [
+            "cytof_10021": [
                 {
                     "records": [
                         {

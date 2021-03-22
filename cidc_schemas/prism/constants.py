@@ -6,7 +6,7 @@ SUPPORTED_ASSAYS = [
     "wes_fastq",
     "wes_bam",
     "olink",
-    "cytof",
+    "cytof_10021",
     "ihc",
     "elisa",
     "rna_fastq",

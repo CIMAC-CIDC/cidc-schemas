@@ -18,12 +18,12 @@ def assay_data_generator(f):
 
 
 @assay_data_generator
-def cytof() -> PrismTestData:
-    upload_type = "cytof"
+def cytof_10021() -> PrismTestData:
+    upload_type = "cytof_10021"
     prismify_args = get_prismify_args(upload_type)
     prismify_patch = {
         "assays": {
-            "cytof": [
+            "cytof_10021": [
                 {
                     "records": [
                         {
@@ -148,7 +148,7 @@ def cytof() -> PrismTestData:
 
     cimac_ids = [
         record["cimac_id"]
-        for batch in prismify_patch["assays"]["cytof"]
+        for batch in prismify_patch["assays"]["cytof_10021"]
         for record in batch["records"]
     ]
     base_trial = get_test_trial(cimac_ids)

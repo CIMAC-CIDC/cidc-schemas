@@ -1,0 +1,37 @@
+{
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "$id": "cytof",
+    "title": "CYTOF Run",
+    "type": "object",
+    "description": "Base information about the acquisition and analysis CyTOF data.",
+    "additionalProperties": false,
+    "allOf": [
+        {"$ref": "assays/components/assay_core.json"}
+    ],
+    "properties": {
+        "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
+        "assay_run_id": {
+            "type": "string",
+            "description": "User defined unique identifier for this assay run."
+        },
+        "cytof_antibodies": {
+            "type": "array",
+            "description": "Data specific to antibody preparation on the CyTOF assay.",
+            "items": {
+                "$ref": "assays/components/cytof/cytof_antibody.json"
+            },
+            "mergeStrategy": "append"
+        },
+        "batch_id": {
+            "description": "CyTOF batch identification number.",
+            "type": "string"
+        }
+    },
+    "required": [
+        "cytof_antibodies",
+        "records",
+        "assay_run_id",
+        "batch_id"
+    ],
+    "mergeStrategy": "objectMerge"
+}

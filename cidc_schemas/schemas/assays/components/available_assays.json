@@ -34,11 +34,11 @@
         "idRef": "batch_id"
       }
     },
-    "cytof": {
+    "cytof_10021": {
       "type": "array",
       "description": "Base information about the acquisition and analysis of CyTOF data.",
       "items": {
-        "$ref": "assays/cytof_assay.json"
+        "$ref": "assays/cytof_10021_assay.json"
       },
       "mergeStrategy": "arrayMergeById",
       "mergeOptions": {

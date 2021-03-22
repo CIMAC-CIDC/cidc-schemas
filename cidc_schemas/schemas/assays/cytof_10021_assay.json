@@ -1,27 +1,11 @@
 {
     "$schema": "metaschema/strict_meta_schema.json#",
-    "$id": "cytof",
+    "$id": "cytof_10021",
     "title": "CYTOF Run",
     "type": "object",
     "description": "Base information about the acquisition and analysis CyTOF data.",
     "additionalProperties": false,
-    "allOf": [
-        {"$ref": "assays/components/assay_core.json"}
-    ],
     "properties": {
-        "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
-        "assay_run_id": {
-            "type": "string",
-            "description": "User defined unique identifier for this assay run."
-        },
-        "cytof_antibodies": {
-            "type": "array",
-            "description": "Data specific to antibody preparation on the CyTOF assay.",
-            "items": {
-                "$ref": "assays/components/cytof/cytof_antibody.json"
-            },
-            "mergeStrategy": "append"
-        },
         "injector": {
             "description": "Name of Injector component used as part of the CyTOF software",
             "type": "string"
@@ -70,10 +54,6 @@
                 "$ref": "artifacts/artifact_fcs.json"
             }
         },
-        "batch_id": {
-            "description": "CyTOF batch identification number.",
-            "type": "string"
-        },
         "astrolabe_reports": {
             "$ref": "artifacts/artifact_zip.json"
         },
@@ -92,11 +72,6 @@
             }
         }
     },
-    "required": [
-        "cytof_antibodies",
-        "records",
-        "assay_run_id"
-    ],
     "mergeStrategy": "objectMerge"
 }
 

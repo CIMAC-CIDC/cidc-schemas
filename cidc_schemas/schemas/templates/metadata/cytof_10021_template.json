@@ -52,7 +52,8 @@
                     },
                     "injector": {
                         "merge_pointer": "0/injector",
-                        "type_ref": "assays/cytof_10021_assay.json#properties/injector"
+                        "type_ref": "assays/cytof_10021_assay.json#properties/injector",
+                        "allow_empty": true
                     },
                     "date of acquisition": {
                         "merge_pointer": "0/date_of_acquisition",
@@ -78,7 +79,8 @@
                     },
                     "harware version": {
                         "merge_pointer": "0/harware_version",
-                        "type_ref": "assays/cytof_10021_assay.json#properties/harware_version"
+                        "type_ref": "assays/cytof_10021_assay.json#properties/harware_version",
+                        "allow_empty": true
                     }
                 },
                 "data_columns": {
@@ -104,19 +106,23 @@
                         },
                         "concatenation version": {
                             "merge_pointer": "0/concatenation_version",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/concatenation_version"
+                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/concatenation_version",
+                            "allow_empty": true
                         },
                         "normalization version": {
                             "merge_pointer": "0/normalization_version",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/normalization_version"
+                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/normalization_version",
+                            "allow_empty": true
                         },
                         "debarcoding key": {
                             "merge_pointer": "0/debarcoding_key",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/debarcoding_key"
+                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/debarcoding_key",
+                            "allow_empty": true
                         },
                         "preprocessing_notes": {
                             "merge_pointer": "0/preprocessing_notes",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/preprocessing_notes"
+                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/preprocessing_notes",
+                            "allow_empty": true
                         }
                     }
                 }

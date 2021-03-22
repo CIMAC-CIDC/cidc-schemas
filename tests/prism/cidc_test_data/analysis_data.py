@@ -2,7 +2,7 @@ from copy import deepcopy
 
 from cidc_schemas.prism import SUPPORTED_ANALYSES
 
-from .assay_data import cytof
+from .assay_data import cytof_10021
 from .assay_data import tcr_fastq
 
 from .utils import (
@@ -1365,16 +1365,16 @@ def cytof_analysis() -> PrismTestData:
 
     cimac_ids = [
         record["cimac_id"]
-        for batch in prismify_patch["assays"]["cytof"]
+        for batch in prismify_patch["assays"]["cytof_10021"]
         for record in batch["records"]
     ]
-    assays = cytof().prismify_patch["assays"]
+    assays = cytof_10021().prismify_patch["assays"]
     base_trial = get_test_trial(cimac_ids, assays)
 
     # Set up the CyTOF target trial to include both assay and analysis metadata
     target_trial = deepcopy(base_trial)
-    assay_batches = assays["cytof"]
-    analysis_batches = prismify_patch["assays"]["cytof"]
+    assay_batches = assays["cytof_10021"]
+    analysis_batches = prismify_patch["assays"]["cytof_10021"]
     combined_batches = []
     for assay_batch, analysis_batch in zip(assay_batches, analysis_batches):
         assay_records = assay_batch["records"]
@@ -1387,7 +1387,7 @@ def cytof_analysis() -> PrismTestData:
         combined_batches.append(combined_batch)
 
     target_trial = copy_dict_with_branch(
-        base_trial, {"assays": {"cytof": combined_batches}}, "assays"
+        base_trial, {"assays": {"cytof_10021": combined_batches}}, "assays"
     )
 
     return PrismTestData(

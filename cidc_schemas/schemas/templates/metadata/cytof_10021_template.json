@@ -27,7 +27,7 @@
                     },
                     "instrument": {
                         "merge_pointer": "0/instrument",
-                        "type_ref": "assays/cytof_assay_core.json#properties/instrument"
+                        "type_ref": "assays/cytof_10021_assay.json#properties/instrument"
                     },
                     "spike in fcs filename": {
                         "merge_pointer": "0/spike_in_fcs",

@@ -1,6 +1,6 @@
 {
     "$schema": "metaschema/strict_meta_schema.json#",
-    "$id": "cytof",
+    "$id": "cytof_core",
     "title": "CYTOF Run",
     "type": "object",
     "description": "Base information about the acquisition and analysis CyTOF data.",

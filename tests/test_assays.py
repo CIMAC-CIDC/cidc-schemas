@@ -267,6 +267,7 @@ def test_cytof():
     ]
     cytof_panel = {
         "assay_run_id": "run_1",
+        "batch_id": "XYZ",
         "cytof_antibodies": antibodies,
         "source_fcs": [fcs_2, fcs_3],
     }
@@ -314,7 +315,7 @@ def test_cytof():
     obj["records"] = [record]
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("cytof")
+    validator = _fetch_validator("cytof_10021")
     validator.validate(obj)
 
 

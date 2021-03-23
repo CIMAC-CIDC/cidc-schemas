@@ -152,6 +152,7 @@
         ],
         "instrument": "PresNixon123",
         "assay_run_id": "staging_test_cytof_run_1",
+        "batch_id": "XYZ",
         "assay_creator": "DFCI",
         "injector": "HAT123",
         "date_of_acquisition": "43355",

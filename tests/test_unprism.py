@@ -1,7 +1,8 @@
 import os
 import json
-from io import StringIO
+from io import BytesIO, StringIO
 import csv
+import pandas as pd
 
 import pytest
 
@@ -123,6 +124,72 @@ def test_derive_files_IHC():
         recs[cimac_id] = rec
 
     assert recs == true_recs
+
+
+def test_derive_files_olink():
+    partial_ct = {
+        PROTOCOL_ID_FIELD_NAME: "test-trial",
+        "assays": {
+            "olink": {
+                "study": {"npx_file": {"object_url": "foo"}},
+                "batches": [
+                    {
+                        "combined": {"npx_file": {"object_url": "bar"}},
+                        "records": [{"files": {"assay_npx": {"object_url": "baz"}}}],
+                    }
+                ],
+            }
+        },
+    }
+
+    header = "CIMAC_10021_IO,Olink NPX Manager 2.0.1.175,\nNPX data,,\nPanel,Olink IMMUNO-ONCOLOGY(v.3111),Olink IMMUNO-ONCOLOGY(v.3111)\n"
+    columns = "Assay,IL8,Inc Ctrl 1\nUniprot ID,P10145,-\nOlinkID,OID00752,\n\n"
+    columns_after = "Assay,IL8\nUniprot ID,P10145\nOlinkID,OID00752\n"
+    non_cimac = "NC1,-0.64245,-0.06713\n"
+    cimac1 = "CNTZJXGSE.01,8.14109,0\n"
+    cimac1_after = "CNTZJXGSE.01,8.14109\n"
+    cimac2 = "CNTZ24O6Z.01,6.63796,0\n"
+    cimac2_after = "CNTZ24O6Z.01,6.63796\n"
+    footer = "\nLOD,1.15432,0.47603\nMissing Data freq.,0.05,0.07\n"
+
+    def fetch_artifact(url: str, as_string: bool) -> StringIO:
+        assert url in ("foo", "bar", "baz")
+        if url == "foo":
+            df = pd.read_csv(
+                BytesIO(bytes(header + columns + cimac1 + cimac2 + footer, "utf8"))
+            )
+            print(df)
+        elif url == "bar":
+            df = pd.read_csv(
+                BytesIO(bytes(header + columns + non_cimac + cimac1 + footer, "utf8"))
+            )
+        else:
+            df = pd.read_csv(
+                BytesIO(
+                    bytes(
+                        header + columns + non_cimac + cimac1 + cimac2 + footer, "utf8"
+                    )
+                )
+            )
+
+        buff = BytesIO()
+        with pd.ExcelWriter(buff) as writer:
+            df.to_excel(writer, sheet_name="NPX Data")
+        return buff
+
+    result = derive_files(DeriveFilesContext(partial_ct, "olink", fetch_artifact))
+    assert len(result.artifacts) == 1
+    assert result.artifacts[0].data == (columns_after + cimac1_after + cimac2_after)
+
+    del partial_ct["assays"]["olink"]["study"]
+    result = derive_files(DeriveFilesContext(partial_ct, "olink", fetch_artifact))
+    assert len(result.artifacts) == 1
+    assert result.artifacts[0].data == (columns_after + cimac1_after)
+
+    del partial_ct["assays"]["olink"]["batches"][0]["combined"]
+    result = derive_files(DeriveFilesContext(partial_ct, "olink", fetch_artifact))
+    assert len(result.artifacts) == 1
+    assert result.artifacts[0].data == (columns_after + cimac1_after + cimac2_after)
 
 
 def test_derive_files_wes_analysis():

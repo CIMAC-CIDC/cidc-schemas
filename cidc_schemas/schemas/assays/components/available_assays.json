@@ -42,7 +42,7 @@
       },
       "mergeStrategy": "arrayMergeById",
       "mergeOptions": {
-        "idRef": "assay_run_id"
+        "idRef": "batch_id"
       }
     },
     "elisa": {

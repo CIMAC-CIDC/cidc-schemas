@@ -183,7 +183,7 @@ def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
             df = df[
                 [c for c in df.columns if c[2] != 2 and isinstance(c[2], str)]
             ]  # non-analytes don't have OlinkID : str
-            del df.index.name
+            df.index.name = None
             return df.filter(
                 regex=r"^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$", axis=0
             )  # match against CIMAC regex
@@ -213,8 +213,8 @@ def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
                 context,
                 file_name="analysis_ready_npx.csv",
                 data=study_df.to_csv(),
-                file_type="combined npx",
-                data_format="npx",
+                file_type="csv",
+                data_format="npx|analysis_ready",
                 include_upload_type=True,
             )
         ],

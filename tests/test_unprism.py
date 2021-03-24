@@ -158,7 +158,6 @@ def test_derive_files_olink():
             df = pd.read_csv(
                 BytesIO(bytes(header + columns + cimac1 + cimac2 + footer, "utf8"))
             )
-            print(df)
         elif url == "bar":
             df = pd.read_csv(
                 BytesIO(bytes(header + columns + non_cimac + cimac1 + footer, "utf8"))

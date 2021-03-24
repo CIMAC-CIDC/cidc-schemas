@@ -184,7 +184,6 @@ def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
                 [c for c in df.columns if c[2] != 2 and isinstance(c[2], str)]
             ]  # non-analytes don't have OlinkID : str
             del df.index.name
-            print(df)
             return df.filter(
                 regex=r"^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$", axis=0
             )  # match against CIMAC regex

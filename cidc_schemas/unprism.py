@@ -161,6 +161,71 @@ def _ihc_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
     )
 
 
+@_register_derivation("olink")
+def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
+    """Generate a single analysis-ready NPX file across the entire trial for only samples/analytes"""
+    olink = context.trial_metadata.get("assays", {}).get("olink", {})
+
+    def download_and_parse_npx(npx_url: str) -> Optional[pd.DataFrame]:
+        npx_stream = context.fetch_artifact(npx_url, False)
+        if npx_stream:
+            # first 3 rows aren't needed, and there's a 2 row footer
+            df = pd.read_excel(
+                npx_stream, header=3, index_col=1, skipfooter=2, engine="openpyxl"
+            )  # npx are .xlsx
+            df.columns = pd.MultiIndex.from_tuples(
+                [
+                    (c, df.loc["Uniprot ID", c], df.loc["OlinkID", c])
+                    for c in df.columns
+                ],
+                names=["Assay", "Uniprot ID", "OlinkID"],
+            )
+            df = df[
+                [
+                    c
+                    for c in df.columns
+                    if isinstance(c[2], str) and c[2].startswith("OID")
+                ]
+            ]  # non-analytes don't have OlinkID : OIDnnnnn
+            df.index.name = None
+            return df.filter(
+                regex=r"^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$", axis=0
+            )  # match against CIMAC regex
+
+        return None
+
+    if "study" in olink:
+        study_npx = olink["study"]["npx_file"]
+        study_df = download_and_parse_npx(study_npx["object_url"])
+    else:
+        batch_dfs = []
+        for batch in olink.get("batches", []):
+            if "combined" in batch:
+                batch_npx = batch["combined"]["npx_file"]
+                batch_dfs.append(download_and_parse_npx(batch_npx["object_url"]))
+            else:
+                chip_dfs = []
+                for chip in batch.get("records", []):
+                    chip_npx = chip["files"]["assay_npx"]
+                    batch_dfs.append(download_and_parse_npx(chip_npx["object_url"]))
+
+        study_df = pd.concat(batch_dfs)
+
+    return DeriveFilesResult(
+        [
+            _build_artifact(
+                context,
+                file_name="all_samples_npx.csv",
+                data=study_df.to_csv(),
+                file_type="csv",
+                data_format="npx|analysis_ready",
+                include_upload_type=True,
+            )
+        ],
+        context.trial_metadata,  # return metadata without updates
+    )
+
+
 @_register_derivation("wes_analysis")
 def _wes_analysis_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
     """Generate a combined MAF file for an entire trial"""

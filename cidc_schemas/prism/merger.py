@@ -179,7 +179,7 @@ class InvalidMergeTargetException(ValueError):
 
 def merge_artifact_extra_metadata(
     ct: dict, artifact_uuid: str, assay_hint: str, extra_metadata_file: BinaryIO
-) -> (dict, dict, dict):
+) -> Tuple[dict, dict, dict]:
     """
     Merges parsed extra metadata returned by extra_metadata_parsing to
     corresponding artifact objects within the patch.

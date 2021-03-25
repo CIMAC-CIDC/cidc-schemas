@@ -226,7 +226,7 @@ def test_tcr_fastq():
     validator.validate(obj)
 
 
-def test_cytof():
+def test_cytof_10021():
 
     # test artifact sub schema
     schema_root = SCHEMA_DIR

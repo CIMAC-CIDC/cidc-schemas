@@ -2,7 +2,7 @@
     "title": "Metadata file for CYTOF",
     "description": "Metadata information for mass-cytometry (CYTOF).",
     "prism_template_root_object_schema": "assays/cytof_10021_assay.json",
-    "prism_template_root_object_pointer": "/assays/cytof/0",
+    "prism_template_root_object_pointer": "/assays/cytof_10021/0",
     "properties": {
         "worksheets": {
 
@@ -32,7 +32,7 @@
                     "spike in fcs filename": {
                         "merge_pointer": "0/spike_in_fcs",
                         "is_artifact" : 1,
-                        "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/spike_in.fcs",
+                        "gcs_uri_format": "{protocol identifier}/cytof_10021/{batch id}/spike_in.fcs",
                         "type_ref": "assays/components/local_file.json#properties/file_path",
                         "description": "Path to a file on a User's computer. \nThis file contains the normalized & debarcoded spike-in for a batch.",
                         "allow_empty": true
@@ -40,13 +40,13 @@
                     "raw fcs filename(s)": {
                         "merge_pointer": "0/source_fcs",
                         "type_ref": "assays/components/local_file.json#properties/file_path",
-                        "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/source_{num}.fcs",
+                        "gcs_uri_format": "{protocol identifier}/cytof_10021/{batch id}/source_{num}.fcs",
                         "is_artifact": "multi"
                     },
                     "controls fcs filename(s)": {
                         "merge_pointer": "0/controls_fcs",
                         "type_ref": "assays/components/local_file.json#properties/file_path",
-                        "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/control_{num}.fcs",
+                        "gcs_uri_format": "{protocol identifier}/cytof_10021/{batch id}/control_{num}.fcs",
                         "is_artifact": "multi",
                         "allow_empty": true
                     },
@@ -92,7 +92,7 @@
                         "intermediate fcs filename": {
                             "merge_pointer": "0/input_files/intermediate_fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof/{cimac id}/intermediate.fcs",
+                            "gcs_uri_format": "{protocol identifier}/cytof_10021/{cimac id}/intermediate.fcs",
                             "is_artifact": 1,
                             "description": "Path to a file on a User's computer. \nThis .fcs file is an intermediate file that has been normalized, concatenated, and debarcoded, but has the veri-cells and has not been cleaned up."
                         }
@@ -101,7 +101,7 @@
                         "processed fcs filename": {
                             "merge_pointer": "0/input_files/processed_fcs",
                             "is_artifact": 1,
-                            "gcs_uri_format": "{protocol identifier}/cytof/{cimac id}/processed.fcs",
+                            "gcs_uri_format": "{protocol identifier}/cytof_10021/{cimac id}/processed.fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path"
                         },
                         "concatenation version": {

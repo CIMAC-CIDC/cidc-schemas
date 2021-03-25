@@ -63,7 +63,7 @@ def stage_assay_for_analysis(template_type):
     """
 
     staging_map = {
-        "cytof_analysis": "cytof",
+        "cytof_analysis": "cytof_10021",
         "wes_fastq": "tumor_normal_pairing",
         "wes_bam": "tumor_normal_pairing",
         "tumor_normal_pairing": "wes_fastq",

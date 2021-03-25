@@ -2,7 +2,7 @@
     "title": "CyTOF analysis template",
     "description": "Metadata information for CyTOF Analysis output.",
     "prism_template_root_object_schema": "assays/cytof_assay_core.json",
-    "prism_template_root_object_pointer": "/assays/cytof/0",
+    "prism_template_root_object_pointer": "/assays/cytof_10021/0",
     "properties": {
         "worksheets": {
 

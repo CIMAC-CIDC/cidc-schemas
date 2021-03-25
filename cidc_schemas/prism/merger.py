@@ -365,13 +365,13 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> Tuple[dict, List
         "clinical_trial.json", return_validator=True
     )
 
-    # first we assert original object is valid
-    try:
-        validator.validate(target)
-    except jsonschema.ValidationError as e:
-        raise InvalidMergeTargetException(
-            f"Merge target is invalid: {target}\n{e}"
-        ) from e
+    # uncomment to assert original object is valid
+    # try:
+    #     validator.validate(target)
+    # except jsonschema.ValidationError as e:
+    #     raise InvalidMergeTargetException(
+    #         f"Merge target is invalid: {target}\n{e}"
+    #     ) from e
 
     # assert the un-mutable fields are equal
     # these fields are required in the schema

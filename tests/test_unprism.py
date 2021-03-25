@@ -155,18 +155,12 @@ def test_derive_files_olink():
     def fetch_artifact(url: str, as_string: bool) -> StringIO:
         assert url in ("foo", "bar", "baz")
         if url == "foo":
-            df = pd.read_csv(
-                StringIO(header + columns + cimac1 + cimac2 + footer)
-            )
+            df = pd.read_csv(StringIO(header + columns + cimac1 + cimac2 + footer))
         elif url == "bar":
-            df = pd.read_csv(
-                StringIO(header + columns + non_cimac + cimac1 + footer)
-            )
+            df = pd.read_csv(StringIO(header + columns + non_cimac + cimac1 + footer))
         else:
             df = pd.read_csv(
-                StringIO(
-                    header + columns + non_cimac + cimac1 + cimac2 + footer
-                )
+                StringIO(header + columns + non_cimac + cimac1 + cimac2 + footer)
             )
 
         buff = BytesIO()

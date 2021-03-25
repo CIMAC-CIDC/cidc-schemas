@@ -143,8 +143,8 @@ def test_derive_files_olink():
     }
 
     header = "CIMAC_10021_IO,Olink NPX Manager 2.0.1.175,\nNPX data,,\nPanel,Olink IMMUNO-ONCOLOGY(v.3111),Olink IMMUNO-ONCOLOGY(v.3111)\n"
-    columns = "Assay,IL8,Inc Ctrl 1\nUniprot ID,P10145,-\nOlinkID,OID00752,\n\n"
-    columns_after = "Assay,IL8\nUniprot ID,P10145\nOlinkID,OID00752\n"
+    columns = "Assay,IL8,Inc Ctrl 1\nUniprot ID,P10145,-\nOlink ID,OID00752,\n\n"
+    columns_after = "Assay,IL8\nUniprot ID,P10145\nOlink ID,OID00752\n"
     non_cimac = "NC1,-0.64245,-0.06713\n"
     cimac1 = "CNNNNNNNN.01,8.14109,0\n"
     cimac1_after = "CNNNNNNNN.01,8.14109\n"
@@ -155,25 +155,17 @@ def test_derive_files_olink():
     def fetch_artifact(url: str, as_string: bool) -> StringIO:
         assert url in ("foo", "bar", "baz")
         if url == "foo":
-            df = pd.read_csv(
-                BytesIO(bytes(header + columns + cimac1 + cimac2 + footer, "utf8"))
-            )
+            df = pd.read_csv(StringIO(header + columns + cimac1 + cimac2 + footer))
         elif url == "bar":
-            df = pd.read_csv(
-                BytesIO(bytes(header + columns + non_cimac + cimac1 + footer, "utf8"))
-            )
+            df = pd.read_csv(StringIO(header + columns + non_cimac + cimac1 + footer))
         else:
             df = pd.read_csv(
-                BytesIO(
-                    bytes(
-                        header + columns + non_cimac + cimac1 + cimac2 + footer, "utf8"
-                    )
-                )
+                StringIO(header + columns + non_cimac + cimac1 + cimac2 + footer)
             )
 
         buff = BytesIO()
         with pd.ExcelWriter(buff) as writer:
-            df.to_excel(writer, sheet_name="NPX Data")
+            df.to_excel(writer, sheet_name="NPX Data", index=False)
         return buff
 
     result = derive_files(DeriveFilesContext(partial_ct, "olink", fetch_artifact))

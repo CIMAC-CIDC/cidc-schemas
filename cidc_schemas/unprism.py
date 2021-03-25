@@ -174,15 +174,15 @@ def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
             df = pd.read_excel(
                 npx_stream,
                 # first 3 rows aren't needed for a single panel
-                header=3, # this is the `Assay` row
-                index_col=0, # these are the sample ids 
-                skipfooter=2, # last 2 rows are unneeded footer
-                engine="openpyxl" # default engine doesn't handle xlsx
+                header=3,  # this is the `Assay` row
+                index_col=0,  # these are the sample ids
+                skipfooter=2,  # last 2 rows are unneeded footer
+                engine="openpyxl",  # default engine doesn't handle xlsx
             )
             df.columns = pd.MultiIndex.from_tuples(
                 [
                     (
-                        c, # this is `Assay` due to header=3 above
+                        c,  # this is `Assay` due to header=3 above
                         df.loc["Uniprot ID", c],
                         df.loc["Olink ID", c],
                     )
@@ -201,7 +201,8 @@ def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
             df.index.name = None
             return df.filter(
                 # match against CIMAC regex
-                regex=r"^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$", axis=0
+                regex=r"^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
+                axis=0,
             )
 
         return None

@@ -146,10 +146,10 @@ def test_derive_files_olink():
     columns = "Assay,IL8,Inc Ctrl 1\nUniprot ID,P10145,-\nOlinkID,OID00752,\n\n"
     columns_after = "Assay,IL8\nUniprot ID,P10145\nOlinkID,OID00752\n"
     non_cimac = "NC1,-0.64245,-0.06713\n"
-    cimac1 = "CNTZJXGSE.01,8.14109,0\n"
-    cimac1_after = "CNTZJXGSE.01,8.14109\n"
-    cimac2 = "CNTZ24O6Z.01,6.63796,0\n"
-    cimac2_after = "CNTZ24O6Z.01,6.63796\n"
+    cimac1 = "CNNNNNNNN.01,8.14109,0\n"
+    cimac1_after = "CNNNNNNNN.01,8.14109\n"
+    cimac2 = "CMMMMMMMM.01,6.63796,0\n"
+    cimac2_after = "CMMMMMMMM.01,6.63796\n"
     footer = "\nLOD,1.15432,0.47603\nMissing Data freq.,0.05,0.07\n"
 
     def fetch_artifact(url: str, as_string: bool) -> StringIO:

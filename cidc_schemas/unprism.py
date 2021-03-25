@@ -175,7 +175,8 @@ def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
             )  # npx are .xlsx
             df.columns = pd.MultiIndex.from_tuples(
                 [
-                    (c, df.loc["Uniprot ID", c], df.loc["OlinkID", c])
+                    # asserting that rows 3,4,5 (zero-indexed) are the header
+                    (c, df.iloc[0][c], df.iloc[1][c],)
                     for c in df.columns
                 ],
                 names=["Assay", "Uniprot ID", "OlinkID"],

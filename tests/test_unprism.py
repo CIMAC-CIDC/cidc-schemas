@@ -152,22 +152,20 @@ def test_derive_files_olink():
     cimac2_after = "CMMMMMMMM.01,6.63796\n"
     footer = "\nLOD,1.15432,0.47603\nMissing Data freq.,0.05,0.07\n"
 
-    def fetch_artifact(url: str, as_string: bool) -> BytesIO:
+    def fetch_artifact(url: str, as_string: bool) -> StringIO:
         assert url in ("foo", "bar", "baz")
         if url == "foo":
             df = pd.read_csv(
-                BytesIO(bytes(header + columns + cimac1 + cimac2 + footer, "utf8"))
+                StringIO(header + columns + cimac1 + cimac2 + footer)
             )
         elif url == "bar":
             df = pd.read_csv(
-                BytesIO(bytes(header + columns + non_cimac + cimac1 + footer, "utf8"))
+                StringIO(header + columns + non_cimac + cimac1 + footer)
             )
         else:
             df = pd.read_csv(
-                BytesIO(
-                    bytes(
-                        header + columns + non_cimac + cimac1 + cimac2 + footer, "utf8"
-                    )
+                StringIO(
+                    header + columns + non_cimac + cimac1 + cimac2 + footer
                 )
             )
 

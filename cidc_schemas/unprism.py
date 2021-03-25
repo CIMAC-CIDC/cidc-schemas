@@ -181,8 +181,12 @@ def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
                 names=["Assay", "Uniprot ID", "OlinkID"],
             )
             df = df[
-                [c for c in df.columns if c[2] != 2 and isinstance(c[2], str)]
-            ]  # non-analytes don't have OlinkID : str
+                [
+                    c
+                    for c in df.columns
+                    if isinstance(c[2], str) and c[2].startswith("OID")
+                ]
+            ]  # non-analytes don't have OlinkID : OIDnnnnn
             df.index.name = None
             return df.filter(
                 regex=r"^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$", axis=0
@@ -211,7 +215,7 @@ def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
         [
             _build_artifact(
                 context,
-                file_name="analysis_ready_npx.csv",
+                file_name="all_samples_npx.csv",
                 data=study_df.to_csv(),
                 file_type="csv",
                 data_format="npx|analysis_ready",

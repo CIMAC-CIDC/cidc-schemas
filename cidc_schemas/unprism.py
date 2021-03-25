@@ -169,29 +169,40 @@ def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
     def download_and_parse_npx(npx_url: str) -> Optional[pd.DataFrame]:
         npx_stream = context.fetch_artifact(npx_url, False)
         if npx_stream:
-            # first 3 rows aren't needed, and there's a 2 row footer
+            # NPX (xlsx) format is shown on page 12 of
+            # olink.com/content/uploads/2017/11/1078-v1.0-Olink-NPX-Manager-User-Guide_final.pdf
             df = pd.read_excel(
-                npx_stream, header=3, index_col=1, skipfooter=2, engine="openpyxl"
-            )  # npx are .xlsx
+                npx_stream,
+                # first 3 rows aren't needed for a single panel
+                header=3, # this is the `Assay` row
+                index_col=0, # these are the sample ids 
+                skipfooter=2, # last 2 rows are unneeded footer
+                engine="openpyxl" # default engine doesn't handle xlsx
+            )
             df.columns = pd.MultiIndex.from_tuples(
                 [
-                    # asserting that rows 3,4,5 (zero-indexed) are the header
-                    (c, df.iloc[0][c], df.iloc[1][c],)
+                    (
+                        c, # this is `Assay` due to header=3 above
+                        df.loc["Uniprot ID", c],
+                        df.loc["Olink ID", c],
+                    )
                     for c in df.columns
                 ],
-                names=["Assay", "Uniprot ID", "OlinkID"],
+                names=["Assay", "Uniprot ID", "Olink ID"],
             )
             df = df[
                 [
                     c
                     for c in df.columns
+                    # assert that only want columns that have OlinkID : OIDnnnnn
                     if isinstance(c[2], str) and c[2].startswith("OID")
                 ]
-            ]  # non-analytes don't have OlinkID : OIDnnnnn
+            ]
             df.index.name = None
             return df.filter(
+                # match against CIMAC regex
                 regex=r"^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$", axis=0
-            )  # match against CIMAC regex
+            )
 
         return None
 

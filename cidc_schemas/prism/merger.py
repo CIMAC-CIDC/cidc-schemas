@@ -127,7 +127,7 @@ def merge_artifacts(
 ) -> Tuple[dict, List[Tuple[dict, dict]]]:
     """
     Insert metadata for a batch of `artifacts` into `ct`, returning the modified `ct` dictionary
-    and array of 
+    and array of merged artifacts.
     """
     # Make no modifications to `ct` if no artifacts are passed
     if len(artifacts) == 0:
@@ -350,7 +350,7 @@ PRISM_MERGE_STRATEGIES = {
 }
 
 
-def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]):
+def merge_clinical_trial_metadata(patch: dict, target: dict) -> Tuple[dict, List[str]]:
     """
     Merges two clinical trial metadata objects together
     Args:

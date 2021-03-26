@@ -184,11 +184,11 @@ def test_merge_clinical_trial_metadata_invalid_target():
     """Ensure `merge_clinical_trial_metadata` catches expected corner cases."""
     valid_patch = {PROTOCOL_ID_FIELD_NAME: "test_prism_trial_id"}
 
-    invalid_target = {"foo": "bar"}
-    with pytest.raises(
-        prism_merger.InvalidMergeTargetException, match="target is invalid"
-    ):
-        prism_merger.merge_clinical_trial_metadata(valid_patch, invalid_target)
+    # invalid_target = {"foo": "bar"}
+    # with pytest.raises(
+    #     prism_merger.InvalidMergeTargetException, match="target is invalid"
+    # ):
+    #     prism_merger.merge_clinical_trial_metadata(valid_patch, invalid_target)
 
     wrong_trial_id_target = {
         PROTOCOL_ID_FIELD_NAME: "foobar",

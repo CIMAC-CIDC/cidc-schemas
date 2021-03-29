@@ -5,6 +5,7 @@
     "description": "CyTOF Assay Input Files",
     "type": "object",
     "additionalProperties": false,
+    "required": ["processed_fcs"],
     "properties": {
         "processed_fcs": {
             "$ref": "artifacts/artifact_fcs.json"

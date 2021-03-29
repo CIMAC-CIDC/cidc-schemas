@@ -36,9 +36,20 @@
     },
     "cytof_10021": {
       "type": "array",
-      "description": "Base information about the acquisition and analysis of CyTOF data.",
+      "description": "Information about the acquisition and analysis CyTOF data for 10021 and similarly formatted trials.",
       "items": {
         "$ref": "assays/cytof_10021_assay.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "batch_id"
+      }
+    },
+    "cytof_e4412": {
+      "type": "array",
+      "description": "Information about the acquisition and analysis CyTOF data for E4412 and similarly formatted trials.",
+      "items": {
+        "$ref": "assays/cytof_e4412_assay.json"
       },
       "mergeStrategy": "arrayMergeById",
       "mergeOptions": {

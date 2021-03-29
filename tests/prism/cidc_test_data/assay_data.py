@@ -177,6 +177,7 @@ def cytof_e4412() -> PrismTestData:
                         {
                             "cimac_participant_id": "CTTTPP1",
                             "debarcoding_key": "FOOBAR",
+                            "preprocessing_notes": "testing a participant note",
                             "control": {
                                 "input_files": {
                                     "processed_fcs": {
@@ -186,7 +187,7 @@ def cytof_e4412() -> PrismTestData:
                                 "concatenation_version": "GHIL",
                                 "normalization_version": "ABC",
                                 "debarcoding_key": "FLUIDIGM 1234",
-                                "preprocessing_notes": "a different note",
+                                "preprocessing_notes": "a note like any other note",
                             },
                             "samples": [
                                 {
@@ -285,7 +286,7 @@ def cytof_e4412() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="control1.fcs",
-            gs_key="test_prism_trial_id/cytof_e4412/CTTTPP1_source/processed.fcs",
+            gs_key="test_prism_trial_id/cytof_e4412/CTTTPP1_control/processed.fcs",
             upload_placeholder="28ec20a1-d2dc-46aa-91be-819b684da268",
             metadata_availability=False,
             allow_empty=False,
@@ -313,14 +314,14 @@ def cytof_e4412() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="sample3.fcs",
-            gs_key="test_prism_trial_id/cytof_e4412/XYZ1/processed.fcs",
+            gs_key="test_prism_trial_id/cytof_e4412/CTTTPP211.00/processed.fcs",
             upload_placeholder="0bbd7520-18b9-4ec3-8344-49f02dcadb08",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="batch1f1.fcs",
-            gs_key="test_prism_trial_id/cytof_e4412/CTTTPP211.00/source_0.fcs",
+            gs_key="test_prism_trial_id/cytof_e4412/XYZ1/source_0.fcs",
             upload_placeholder="4918a014-0e63-4a36-a45a-c62d593e225e",
             metadata_availability=False,
             allow_empty=False,

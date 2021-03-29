@@ -127,7 +127,7 @@ def merge_artifacts(
 ) -> Tuple[dict, List[Tuple[dict, dict]]]:
     """
     Insert metadata for a batch of `artifacts` into `ct`, returning the modified `ct` dictionary
-    and array of 
+    and array of merged artifacts.
     """
     # Make no modifications to `ct` if no artifacts are passed
     if len(artifacts) == 0:
@@ -179,7 +179,7 @@ class InvalidMergeTargetException(ValueError):
 
 def merge_artifact_extra_metadata(
     ct: dict, artifact_uuid: str, assay_hint: str, extra_metadata_file: BinaryIO
-) -> (dict, dict, dict):
+) -> Tuple[dict, dict, dict]:
     """
     Merges parsed extra metadata returned by extra_metadata_parsing to
     corresponding artifact objects within the patch.
@@ -350,7 +350,7 @@ PRISM_MERGE_STRATEGIES = {
 }
 
 
-def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]):
+def merge_clinical_trial_metadata(patch: dict, target: dict) -> Tuple[dict, List[str]]:
     """
     Merges two clinical trial metadata objects together
     Args:
@@ -365,13 +365,13 @@ def merge_clinical_trial_metadata(patch: dict, target: dict) -> (dict, List[str]
         "clinical_trial.json", return_validator=True
     )
 
-    # first we assert original object is valid
-    try:
-        validator.validate(target)
-    except jsonschema.ValidationError as e:
-        raise InvalidMergeTargetException(
-            f"Merge target is invalid: {target}\n{e}"
-        ) from e
+    # uncomment to assert original object is valid
+    # try:
+    #     validator.validate(target)
+    # except jsonschema.ValidationError as e:
+    #     raise InvalidMergeTargetException(
+    #         f"Merge target is invalid: {target}\n{e}"
+    #     ) from e
 
     # assert the un-mutable fields are equal
     # these fields are required in the schema

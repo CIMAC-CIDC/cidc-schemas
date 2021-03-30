@@ -106,22 +106,22 @@
                         },
                         "concatenation version": {
                             "merge_pointer": "0/concatenation_version",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/concatenation_version",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/concatenation_version",
                             "allow_empty": true
                         },
                         "normalization version": {
                             "merge_pointer": "0/normalization_version",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/normalization_version",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/normalization_version",
                             "allow_empty": true
                         },
                         "debarcoding key": {
                             "merge_pointer": "0/debarcoding_key",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/debarcoding_key",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/debarcoding_key",
                             "allow_empty": true
                         },
                         "preprocessing_notes": {
                             "merge_pointer": "0/preprocessing_notes",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/preprocessing_notes",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/preprocessing_notes",
                             "allow_empty": true
                         }
                     }
@@ -153,19 +153,19 @@
                         },
                         "isotope": {
                             "merge_pointer": "0/isotope",
-                            "type_ref": "assays/components/cytof/cytof_antibody.json#properties/isotope"
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/isotope"
                         },
                         "dilution": {
                             "merge_pointer": "0/dilution",
-                            "type_ref": "assays/components/cytof/cytof_antibody.json#properties/dilution"
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/dilution"
                         },
                         "stain_type": {
                             "merge_pointer": "0/stain_type",
-                            "type_ref": "assays/components/cytof/cytof_antibody.json#properties/stain_type"
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/stain_type"
                         },
                         "usage": {
                             "merge_pointer": "0/usage",
-                            "type_ref": "assays/components/cytof/cytof_antibody.json#properties/usage"
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/usage"
                         }
                     }
                 }

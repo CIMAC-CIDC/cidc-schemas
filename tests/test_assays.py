@@ -230,7 +230,9 @@ def test_cytof_10021():
 
     # test artifact sub schema
     schema_root = SCHEMA_DIR
-    schema_path = os.path.join(SCHEMA_DIR, "assays/components/cytof/cytof_input.json")
+    schema_path = os.path.join(
+        SCHEMA_DIR, "assays/cytof_assay_core.json#definitions/input_files"
+    )
     schema = load_and_validate_schema(schema_path, schema_root)
     validator = jsonschema.Draft7Validator(schema)
 

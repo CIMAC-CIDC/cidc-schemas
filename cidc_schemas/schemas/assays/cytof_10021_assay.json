@@ -67,7 +67,7 @@
             "type": "array",
             "description": "A single data record from CyTOF assay batch.",
             "items": {
-                "$ref": "assays/components/cytof/cytof_entry.json"
+                "$ref": "assays/cytof_assay_core.json#definitions/entry"
             },
             "mergeStrategy": "arrayMergeById",
             "mergeOptions": {

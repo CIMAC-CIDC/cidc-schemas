@@ -1205,28 +1205,18 @@ def elisa() -> PrismTestData:
         "assays": {
             "elisa": [
                 {
-                    "antibodies": [
+                    "antigens": [
                         {
-                            "antibody": "CD8",
-                            "clone": "C8/144b",
-                            "company": "DAKO",
-                            "cat_num": "C8-ABC",
-                            "lot_num": "3983272",
-                            "isotope": "146Nd",
-                            "dilution": "100X",
-                            "stain_type": "Surface Stain",
-                            "usage": "Used",
+                            "antigen": "GST",
+                            "antigen_type": "protein",
+                            "final_concentration": 1.0,
+                            "final_concentration_units": "Nanogram per Microliter",
                         },
                         {
-                            "antibody": "PD-L1",
-                            "clone": "C2/11p",
-                            "company": "DAKO",
-                            "cat_num": "C8-AB123",
-                            "lot_num": "1231272",
-                            "isotope": "146Nb",
-                            "dilution": "100X",
-                            "stain_type": "Surface Stain",
-                            "usage": "Analysis Only",
+                            "antigen": "p53 16-32",
+                            "antigen_type": "peptide",
+                            "final_concentration": 1.0,
+                            "final_concentration_units": "Micromolar",
                         },
                     ],
                     "assay_creator": "DFCI",

@@ -43,11 +43,13 @@
             },
             "final concentration": {
               "merge_pointer": "0/final_concentration",
-              "type_ref": "assays/elisa_assay.json#definitions/antigen/properties/final_concentration"
+              "type_ref": "assays/elisa_assay.json#definitions/antigen/properties/final_concentration",
+              "allow_empty": true
             },
             "final concentration units": {
               "merge_pointer": "0/final_concentration_units",
-              "type_ref": "assays/elisa_assay.json#definitions/antigen/properties/final_concentration_units"
+              "type_ref": "assays/elisa_assay.json#definitions/antigen/properties/final_concentration_units",
+              "allow_empty": true
            }
           }
         }

@@ -40,8 +40,13 @@ invalid_npx_file_path = os.path.join(
 )
 
 # ELISA file and metadata
-elisa_file_path = os.path.join(TEST_DATA_DIR, "elisa_test_file.xlsx")
-elisa_metadata = {
+elisa_file_path_1 = os.path.join(TEST_DATA_DIR, "elisa_test_file.1.xlsx")
+elisa_file_path_2 = os.path.join(TEST_DATA_DIR, "elisa_test_file.2.xlsx")
+elisa_metadata_1 = {
+    "number_of_samples": 3,
+    "samples": ["CTTTP01A1.00", "CTTTP01A2.00", "CTTTP01A3.00",],
+}
+elisa_metadata_2 = {
     "number_of_samples": 7,
     "samples": [
         "CTTTP01A1.00",
@@ -68,7 +73,10 @@ def test_parse_binaryio_only(parser):
     [
         (parse_npx, npx_file_path, single_npx_metadata),
         (parse_npx, npx_combined_file_path, combined_npx_metadata),
-        (parse_elisa, elisa_file_path, elisa_metadata),
+        # differ in column order and capitalization/spacing of cimac_id column
+        # testing both to prevent unnecessary assumptions in formatting as this is hand generated
+        (parse_elisa, elisa_file_path_1, elisa_metadata_1),
+        (parse_elisa, elisa_file_path_2, elisa_metadata_2),
     ],
 )
 def test_parser_smoketest(parser, file_path, target):

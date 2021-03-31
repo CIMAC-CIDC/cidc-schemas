@@ -34,13 +34,20 @@ def parse_elisa(xlsx: BinaryIO) -> dict:
     ids = []
     worksheet = workbook[workbook.sheetnames[0]]
 
+    idx = 0
     for i, row in enumerate(worksheet.iter_rows()):
-
         if i == 0:
-            assert "CIMAC ID" == row[0].value
+            # find the one that looks like CIMAC ID
+            # ignore case, switch underscores to spaces
+            values = [
+                str(i.value).upper().strip().replace("_", " ") if str(i.value) else ""
+                for i in row
+            ]
+            assert any(["CIMAC ID" == i for i in values])
+            idx = values.index("CIMAC ID")
             continue
 
-        val = row[0].value
+        val = row[idx].value
 
         if val:
             if cimac_id_regex.match(val):

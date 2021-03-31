@@ -15,10 +15,10 @@ from .test_extra_metadata import (
     npx_file_path,
     npx_combined_file_path,
     invalid_npx_file_path,
-    elisa_file_path,
+    elisa_file_path_1,
     single_npx_metadata,
     combined_npx_metadata,
-    elisa_metadata,
+    elisa_metadata_1,
 )
 
 #### MERGE STRATEGY TESTS ####
@@ -408,7 +408,7 @@ def elisa_ct_metadata():
 def elisa_file_infos():
     return [
         LocalFileUploadEntry(
-            local_path=elisa_file_path,
+            local_path=elisa_file_path_1,
             gs_key="",
             upload_placeholder="elisa_file",
             metadata_availability=True,
@@ -425,7 +425,7 @@ def test_merge_extra_metadata_elisa(elisa_ct_metadata, elisa_file_infos):
     # TODO antibodies
     assert artifact["data_format"] == "ELISA"
     for key in ["samples", "number_of_samples"]:
-        assert artifact[key] == elisa_metadata[key]
+        assert artifact[key] == elisa_metadata_1[key]
 
 
 #### END EXTRA METADATA TESTS ####

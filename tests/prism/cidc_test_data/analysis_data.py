@@ -1614,51 +1614,42 @@ def cytof_e4412_analysis() -> PrismTestData:
 
     # Set up the CyTOF target trial to include both assay and analysis metadata
     target_trial = deepcopy(base_trial)
-    assay_batches = assays["cytof_e4412"]
-    analysis_batches = prismify_patch["assays"]["cytof_e4412"]
-    combined_batches = []
-    for assay_batch, analysis_batch in zip(assay_batches, analysis_batches):
-        assay_participants = sorted(
-            assay_batch["participants"], key=lambda x: x["cimac_participant_id"]
-        )
-        analysis_participants = sorted(
-            analysis_batch["participants"], key=lambda x: x["cimac_participant_id"]
-        )
+    for k, v in prismify_patch["assays"]["cytof_e4412"][0].items():
+        if k not in target_trial["assays"]["cytof_e4412"][0]:
+            target_trial["assays"]["cytof_e4412"][0][k] = deepcopy(v)
+        elif k == "participants":
+            for participant in v:
+                participant_idx = None
+                for n, p in enumerate(
+                    target_trial["assays"]["cytof_e4412"][0]["participants"]
+                ):
+                    if p["cimac_participant_id"] == participant["cimac_participant_id"]:
+                        participant_idx = n
+                        break
 
-        combined_participants = []
-        for assay_participant, analysis_participant in zip(
-            assay_participants, analysis_participants
-        ):
-            assay_records = sorted(
-                assay_participant["samples"], key=lambda x: x["cimac_id"]
-            )
-            analysis_records = sorted(
-                analysis_participant["samples"], key=lambda x: x["cimac_id"]
-            )
+                if participant_idx is None:
+                    target_trial["assays"]["cytof_e4412"][0][k].append(participant)
+                    continue
 
-            combined_records = [
-                copy_dict_with_branch(assay_record, analysis_record, "output_files")
-                for assay_record, analysis_record in zip(
-                    assay_records, analysis_records
-                )
-            ]
-            combined_participant = {
-                **assay_participant,
-                **analysis_participant,
-                "samples": combined_records,
-            }
-            combined_participants.append(combined_participant)
+                for sample in participant["samples"]:
+                    sample_idx = None
+                    for n, s in enumerate(
+                        target_trial["assays"]["cytof_e4412"][0][k][participant_idx][
+                            "samples"
+                        ]
+                    ):
+                        if s["cimac_id"] == sample["cimac_id"]:
+                            sample_idx = n
+                            break
 
-        combined_batch = {
-            **assay_batch,
-            **analysis_batch,
-            "participants": combined_participants,
-        }
-        combined_batches.append(combined_batch)
-
-    target_trial = copy_dict_with_branch(
-        base_trial, {"assays": {"cytof_e4412": combined_batches}}, "assays"
-    )
+                    if sample_idx is None:
+                        target_trial["assays"]["cytof_e4412"][0][k][participant_idx][
+                            "samples"
+                        ].append(sample)
+                    else:
+                        target_trial["assays"]["cytof_e4412"][0][k][participant_idx][
+                            "samples"
+                        ][sample_idx]["output_files"] = sample["output_files"]
 
     return PrismTestData(
         upload_type,

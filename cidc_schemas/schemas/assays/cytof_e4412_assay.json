@@ -27,7 +27,7 @@
                     "$comment": "Id of a participant within this clinical trial, that this assay record is based upon.",
                     "$ref": "participant.json#properties/cimac_participant_id"
                 },
-                "debarcoding_key": {
+                "participant_debarcoding_key": {
                     "description": "An ID that maps to the specific isotope labeling scheme in the debarcoding protocol.",
                     "type": "string"
                 },

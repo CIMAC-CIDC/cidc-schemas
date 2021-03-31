@@ -176,7 +176,7 @@ def cytof_e4412() -> PrismTestData:
                     "participants": [
                         {
                             "cimac_participant_id": "CTTTPP1",
-                            "debarcoding_key": "FOOBAR",
+                            "participant_debarcoding_key": "FOOBAR",
                             "preprocessing_notes": "testing a participant note",
                             "control": {
                                 "input_files": {
@@ -218,7 +218,7 @@ def cytof_e4412() -> PrismTestData:
                         },
                         {
                             "cimac_participant_id": "CTTTPP2",
-                            "debarcoding_key": "BIZBUZ",
+                            "participant_debarcoding_key": "BIZBUZ",
                             "control": {
                                 "input_files": {
                                     "processed_fcs": {

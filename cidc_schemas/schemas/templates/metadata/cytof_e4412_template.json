@@ -51,10 +51,10 @@
                             "type_ref": "participant.json#properties/cimac_participant_id",
                             "merge_pointer": "0/cimac_participant_id"
                         },
-                        "debarcoding key": {
+                        "participant debarcoding key": {
                             "description": "An ID that maps to the specific isotope labeling scheme in the debarcoding protocol.",
-                            "type_ref": "assays/cytof_e4412_assay.json#definitions/participant/properties/debarcoding_key",
-                            "merge_pointer": "0/debarcoding_key",
+                            "type_ref": "assays/cytof_e4412_assay.json#definitions/participant/properties/participant_debarcoding_key",
+                            "merge_pointer": "0/participant_debarcoding_key",
                             "allow_empty": true
                         },
                         "preprocessing notes": {

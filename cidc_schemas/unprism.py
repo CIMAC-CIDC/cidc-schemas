@@ -176,7 +176,6 @@ def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
                 # first 3 rows aren't needed for a single panel
                 header=3,  # this is the `Assay` row
                 index_col=0,  # these are the sample ids
-                skipfooter=2,  # last 2 rows are unneeded footer
                 engine="openpyxl",  # default engine doesn't handle xlsx
             )
             df.columns = pd.MultiIndex.from_tuples(
@@ -185,10 +184,11 @@ def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
                         c,  # this is `Assay` due to header=3 above
                         df.loc["Uniprot ID", c],
                         df.loc["Olink ID", c],
+                        df.loc["LOD", c],
                     )
                     for c in df.columns
                 ],
-                names=["Assay", "Uniprot ID", "Olink ID"],
+                names=["Assay", "Uniprot ID", "Olink ID", "LOD"],
             )
             df = df[
                 [

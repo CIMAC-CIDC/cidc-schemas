@@ -49,9 +49,9 @@
                                 "is_artifact": 1
                             },
                             {
-                                "parse_through": "lambda id: f'analysis/star/{id}/{id}_downsampling.bam'",
-                                "merge_pointer": "0/star/downsampling_bam",
-                                "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/star/downsampling.bam",
+                                "parse_through": "lambda id: f'analysis/star/{id}/{id}.transcriptome.bam'",
+                                "merge_pointer": "0/star/transcriptome_bam",
+                                "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/star/transcriptome.bam",
                                 "type_ref": "assays/components/local_file.json#properties/file_path",
                                 "is_artifact": 1
                             },

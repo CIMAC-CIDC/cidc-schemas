@@ -1,8 +1,8 @@
 {
     "title": "Metadata file for CYTOF",
     "description": "Metadata information for mass-cytometry (CYTOF).",
-    "prism_template_root_object_schema": "assays/cytof_assay.json",
-    "prism_template_root_object_pointer": "/assays/cytof/0",
+    "prism_template_root_object_schema": "assays/cytof_10021_assay.json",
+    "prism_template_root_object_pointer": "/assays/cytof_10021/0",
     "properties": {
         "worksheets": {
 
@@ -11,7 +11,11 @@
                 "preamble_rows": {
                     "assay run id": {
                         "merge_pointer": "/assay_run_id",
-                        "type_ref": "assays/cytof_assay.json#properties/assay_run_id"
+                        "type_ref": "assays/cytof_assay_core.json#properties/assay_run_id"
+                    },
+                    "batch id": {
+                        "merge_pointer": "0/batch_id",
+                        "type_ref": "assays/cytof_assay_core.json#properties/batch_id"
                     },
                     "protocol identifier": {
                         "merge_pointer": "3/protocol_identifier",
@@ -21,18 +25,14 @@
                         "merge_pointer": "0/assay_creator",
                         "type_ref": "assays/components/assay_core.json#properties/assay_creator"
                     },
-                    "panel name": {
-                        "merge_pointer": "0/panel_name",
-                        "type_ref": "assays/cytof_assay.json#properties/panel_name"
-                    },
                     "instrument": {
                         "merge_pointer": "0/instrument",
-                        "type_ref": "assays/cytof_assay.json#properties/instrument"
+                        "type_ref": "assays/cytof_10021_assay.json#properties/instrument"
                     },
                     "spike in fcs filename": {
                         "merge_pointer": "0/spike_in_fcs",
                         "is_artifact" : 1,
-                        "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/spike_in.fcs",
+                        "gcs_uri_format": "{protocol identifier}/cytof_10021/{batch id}/spike_in.fcs",
                         "type_ref": "assays/components/local_file.json#properties/file_path",
                         "description": "Path to a file on a User's computer. \nThis file contains the normalized & debarcoded spike-in for a batch.",
                         "allow_empty": true
@@ -40,12 +40,47 @@
                     "raw fcs filename(s)": {
                         "merge_pointer": "0/source_fcs",
                         "type_ref": "assays/components/local_file.json#properties/file_path",
-                        "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/source_{num}.fcs",
+                        "gcs_uri_format": "{protocol identifier}/cytof_10021/{batch id}/source_{num}.fcs",
                         "is_artifact": "multi"
                     },
-                    "batch id": {
-                            "merge_pointer": "0/batch_id",
-                            "type_ref": "assays/cytof_assay.json#properties/batch_id"
+                    "controls fcs filename(s)": {
+                        "merge_pointer": "0/controls_fcs",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "gcs_uri_format": "{protocol identifier}/cytof_10021/{batch id}/control_{num}.fcs",
+                        "is_artifact": "multi",
+                        "allow_empty": true
+                    },
+                    "injector": {
+                        "merge_pointer": "0/injector",
+                        "type_ref": "assays/cytof_10021_assay.json#properties/injector",
+                        "allow_empty": true
+                    },
+                    "date of acquisition": {
+                        "merge_pointer": "0/date_of_acquisition",
+                        "type_ref": "assays/cytof_10021_assay.json#properties/date_of_acquisition"
+                    },
+                    "acquisition buffer": {
+                        "merge_pointer": "0/acquisition_buffer",
+                        "type_ref": "assays/cytof_10021_assay.json#properties/acquisition_buffer"
+                    },
+                    "bead removal": {
+                        "merge_pointer": "0/bead_removal",
+                        "type_ref": "assays/cytof_10021_assay.json#properties/bead_removal"
+                    },
+                    "normalization method": {
+                        "merge_pointer": "0/normalization_method",
+                        "type_ref": "assays/cytof_10021_assay.json#properties/normalization_method",
+                        "allow_empty": true
+                    },
+                    "debarcoding protocol": {
+                        "merge_pointer": "0/debarcoding_protocol",
+                        "type_ref": "assays/cytof_10021_assay.json#properties/debarcoding_protocol",
+                        "allow_empty": true
+                    },
+                    "harware version": {
+                        "merge_pointer": "0/harware_version",
+                        "type_ref": "assays/cytof_10021_assay.json#properties/harware_version",
+                        "allow_empty": true
                     }
                 },
                 "data_columns": {
@@ -54,64 +89,40 @@
                             "merge_pointer": "0/cimac_id",
                             "type_ref": "sample.json#properties/cimac_id"
                         },
-                        "normalized & debarcoded fcs filename": {
-                            "merge_pointer": "0/input_files/normalized_and_debarcoded_fcs",
+                        "intermediate fcs filename": {
+                            "merge_pointer": "0/input_files/intermediate_fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof/{cimac id}/normalized_and_debarcoded.fcs",
+                            "gcs_uri_format": "{protocol identifier}/cytof_10021/{cimac id}/intermediate.fcs",
                             "is_artifact": 1,
-                            "description": "Path to a file on a User's computer. \nThis .fcs file has been normalized, concatenated, and debarcoded, but has the veri-cells and has not been cleaned up."
-                        },
-                        "date of acquisition": {
-                            "merge_pointer": "0/date_of_acquisition",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/date_of_acquisition"
-                        },
-                        "injector": {
-                            "merge_pointer": "0/injector",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/injector"
-                        },
-                        "acquisition_buffer": {
-                            "merge_pointer": "0/acquisition_buffer",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/acquisition_buffer"
-                        },
-                        "average_event_per_second": {
-                            "merge_pointer": "0/average_event_per_second",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/average_event_per_second"
-                        },
-                        "run_time": {
-                            "merge_pointer": "0/run_time",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/run_time"
+                            "description": "Path to a file on a User's computer. \nThis .fcs file is an intermediate file that has been normalized, concatenated, and debarcoded, but has the veri-cells and has not been cleaned up."
                         }
                     },
                     "Preprocessing": {
                         "processed fcs filename": {
                             "merge_pointer": "0/input_files/processed_fcs",
                             "is_artifact": 1,
-                            "gcs_uri_format": "{protocol identifier}/cytof/{cimac id}/processed.fcs",
+                            "gcs_uri_format": "{protocol identifier}/cytof_10021/{cimac id}/processed.fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path"
                         },
                         "concatenation version": {
                             "merge_pointer": "0/concatenation_version",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/concatenation_version"
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/concatenation_version",
+                            "allow_empty": true
                         },
                         "normalization version": {
                             "merge_pointer": "0/normalization_version",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/normalization_version"
-                        },
-                        "beads removed": {
-                            "merge_pointer": "0/beads_removed",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/beads_removed"
-                        },
-                        "debarcoding protocol": {
-                            "merge_pointer": "0/debarcoding_protocol",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/debarcoding_protocol"
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/normalization_version",
+                            "allow_empty": true
                         },
                         "debarcoding key": {
                             "merge_pointer": "0/debarcoding_key",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/debarcoding_key"
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/debarcoding_key",
+                            "allow_empty": true
                         },
                         "preprocessing_notes": {
                             "merge_pointer": "0/preprocessing_notes",
-                            "type_ref": "assays/components/cytof/cytof_entry.json#properties/preprocessing_notes"
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/preprocessing_notes",
+                            "allow_empty": true
                         }
                     }
                 }
@@ -142,19 +153,19 @@
                         },
                         "isotope": {
                             "merge_pointer": "0/isotope",
-                            "type_ref": "assays/components/cytof/cytof_antibody.json#properties/isotope"
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/isotope"
                         },
                         "dilution": {
                             "merge_pointer": "0/dilution",
-                            "type_ref": "assays/components/cytof/cytof_antibody.json#properties/dilution"
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/dilution"
                         },
                         "stain_type": {
                             "merge_pointer": "0/stain_type",
-                            "type_ref": "assays/components/cytof/cytof_antibody.json#properties/stain_type"
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/stain_type"
                         },
                         "usage": {
                             "merge_pointer": "0/usage",
-                            "type_ref": "assays/components/cytof/cytof_antibody.json#properties/usage"
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/usage"
                         }
                     }
                 }

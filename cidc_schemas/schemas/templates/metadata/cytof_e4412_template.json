@@ -1,0 +1,217 @@
+{
+    "title": "Metadata file for CYTOF",
+    "description": "Metadata information for mass-cytometry (CYTOF).",
+    "prism_template_root_object_schema": "assays/cytof_e4412_assay.json",
+    "prism_template_root_object_pointer": "/assays/cytof_e4412/0",
+    "properties": {
+        "worksheets": {
+            "Participant Information": {
+                "prism_data_object_pointer": "/participants/-",
+                "preamble_rows": {
+                    "protocol identifier": {
+                        "merge_pointer": "3/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    },
+                    "assay run id": {
+                        "merge_pointer": "/assay_run_id",
+                        "type_ref": "assays/cytof_assay_core.json#properties/assay_run_id",
+                        "allow_empty": true
+                    },
+                    "batch id": {
+                        "merge_pointer": "0/batch_id",
+                        "type_ref": "assays/cytof_assay_core.json#properties/batch_id"
+                    },
+                    "assay creator": {
+                        "merge_pointer": "0/assay_creator",
+                        "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+                    },
+                    "raw fcs filename(s)": {
+                        "merge_pointer": "0/source_fcs",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "gcs_uri_format": "{protocol identifier}/cytof_e4412/{batch id}/source_{num}.fcs",
+                        "is_artifact": "multi",
+                        "allow_empty": true
+                    },
+                    "acquisition buffer": {
+                        "merge_pointer": "0/acquisition_buffer",
+                        "type_ref": "assays/cytof_e4412_assay.json#properties/acquisition_buffer",
+                        "allow_empty": true
+                    },
+                    "debarcoding protocol": {
+                        "merge_pointer": "0/debarcoding_protocol",
+                        "type_ref": "assays/cytof_e4412_assay.json#properties/debarcoding_protocol",
+                        "allow_empty": true
+                    }
+                },
+
+                "data_columns": {
+                    "Participant info": {
+                        "cimac participant id": {
+                            "description": "Id of a participant within this clinical trial, that this assay record is based upon.",
+                            "type_ref": "participant.json#properties/cimac_participant_id",
+                            "merge_pointer": "0/cimac_participant_id"
+                        },
+                        "participant debarcoding key": {
+                            "description": "An ID that maps to the specific isotope labeling scheme in the debarcoding protocol.",
+                            "type_ref": "assays/cytof_e4412_assay.json#definitions/participant/properties/participant_debarcoding_key",
+                            "merge_pointer": "0/participant_debarcoding_key",
+                            "allow_empty": true
+                        },
+                        "preprocessing notes": {
+                            "description": "Any notes pertaining to preprocessing of CyTOF data.",
+                            "type_ref": "assays/cytof_e4412_assay.json#definitions/participant/properties/preprocessing_notes",
+                            "merge_pointer": "0/preprocessing_notes",
+                            "allow_empty": true
+                        }
+                    },
+                    "Control info": {
+                        "intermediate fcs filename": {
+                            "merge_pointer": "0/control/input_files/intermediate_fcs",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/cytof_e4412/{cimac participant id}_control/intermediate.fcs",
+                            "description": "Path to a file on a User's computer. \nThis .fcs file is an intermediate file that has been normalized, concatenated, and debarcoded, but has the veri-cells and has not been cleaned up.",
+                            "is_artifact": 1,
+                            "allow_empty": true
+                        },
+                        "processed fcs filename": {
+                            "merge_pointer": "0/control/input_files/processed_fcs",
+                            "is_artifact": 1,
+                            "gcs_uri_format": "{protocol identifier}/cytof_e4412/{cimac participant id}_control/processed.fcs",
+                            "type_ref": "assays/components/local_file.json#properties/file_path"
+                        },
+                        "concatenation version": {
+                            "merge_pointer": "0/control/concatenation_version",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/concatenation_version",
+                            "allow_empty": true
+                        },
+                        "normalization version": {
+                            "merge_pointer": "0/control/normalization_version",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/normalization_version",
+                            "allow_empty": true
+                        },
+                        "debarcoding key": {
+                            "merge_pointer": "0/control/debarcoding_key",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/debarcoding_key",
+                            "allow_empty": true
+                        },
+                        "preprocessing_notes": {
+                            "merge_pointer": "0/control/preprocessing_notes",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/preprocessing_notes",
+                            "allow_empty": true
+                        }
+                    }
+                }
+            },
+
+            "Sample Information": {
+                "prism_data_object_pointer": "/participants/0/samples/-",
+                "preamble_rows": {
+                    "protocol identifier": {
+                        "merge_pointer": "3/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    }
+                },
+                
+                "data_columns": {
+                    "Run info": {
+                        "cimac id": {
+                            "do_not_merge": true,
+                            "type": "string",
+                            "process_as": [
+                                {
+                                    "parse_through": "lambda x: x",
+                                    "merge_pointer": "0/cimac_id",
+                                    "type_ref": "sample.json#properties/cimac_id"
+                                },
+                                {
+                                    "parse_through": "lambda cimac_id: cimac_id[:7]",
+                                    "merge_pointer": "2/cimac_participant_id",
+                                    "type_ref": "participant.json#properties/cimac_participant_id"
+                                }
+                            ]
+                        },
+                        "intermediate fcs filename": {
+                            "merge_pointer": "0/input_files/intermediate_fcs",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/cytof_e4412/{cimac id}/intermediate.fcs",
+                            "description": "Path to a file on a User's computer. \nThis .fcs file is an intermediate file that has been normalized, concatenated, and debarcoded, but has the veri-cells and has not been cleaned up.",
+                            "is_artifact": 1,
+                            "allow_empty": true
+                        }
+                    },
+                    "Preprocessing": {
+                        "processed fcs filename": {
+                            "merge_pointer": "0/input_files/processed_fcs",
+                            "is_artifact": 1,
+                            "gcs_uri_format": "{protocol identifier}/cytof_e4412/{cimac id}/processed.fcs",
+                            "type_ref": "assays/components/local_file.json#properties/file_path"
+                        },
+                        "concatenation version": {
+                            "merge_pointer": "0/concatenation_version",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/concatenation_version",
+                            "allow_empty": true
+                        },
+                        "normalization version": {
+                            "merge_pointer": "0/normalization_version",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/normalization_version",
+                            "allow_empty": true
+                        },
+                        "debarcoding key": {
+                            "merge_pointer": "0/debarcoding_key",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/debarcoding_key",
+                            "allow_empty": true
+                        },
+                        "preprocessing_notes": {
+                            "merge_pointer": "0/preprocessing_notes",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/preprocessing_notes",
+                            "allow_empty": true
+                        }
+                    }
+                }
+            },
+            "Antibody Information": {
+                "prism_data_object_pointer": "/cytof_antibodies/-",
+                "data_columns": {
+                    "Samples": {
+                        "target": {
+                            "merge_pointer": "0/antibody",
+                            "type_ref": "assays/components/antibody.json#properties/antibody"
+                        },
+                        "clone": {
+                            "merge_pointer": "0/clone",
+                            "type_ref": "assays/components/antibody.json#properties/clone"
+                        },
+                        "antibody company": {
+                            "merge_pointer": "0/company",
+                            "type_ref": "assays/components/antibody.json#properties/company"
+                        },
+                        "catalog number": {
+                            "merge_pointer": "0/cat_num",
+                            "type_ref": "assays/components/antibody.json#properties/cat_num"
+                        },
+                        "lot number": {
+                            "merge_pointer": "0/lot_num",
+                            "type_ref": "assays/components/antibody.json#properties/lot_num"
+                        },
+                        "isotope": {
+                            "merge_pointer": "0/isotope",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/isotope"
+                        },
+                        "dilution": {
+                            "merge_pointer": "0/dilution",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/dilution"
+                        },
+                        "stain_type": {
+                            "merge_pointer": "0/stain_type",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/stain_type"
+                        },
+                        "usage": {
+                            "merge_pointer": "0/usage",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/usage"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

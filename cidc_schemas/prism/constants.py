@@ -6,7 +6,8 @@ SUPPORTED_ASSAYS = [
     "wes_fastq",
     "wes_bam",
     "olink",
-    "cytof",
+    "cytof_10021",
+    "cytof_e4412",
     "ihc",
     "elisa",
     "rna_fastq",
@@ -35,7 +36,8 @@ MANIFESTS_WITH_PARTICIPANT_INFO = SUPPORTED_SHIPPING_MANIFESTS + [
 SUPPORTED_MANIFESTS = SUPPORTED_SHIPPING_MANIFESTS + SUPPORTED_WEIRD_MANIFESTS
 
 SUPPORTED_ANALYSES = [
-    "cytof_analysis",
+    "cytof_10021_analysis",
+    "cytof_e4412_analysis",
     "wes_analysis",
     "rna_level1_analysis",
     "tcr_analysis",

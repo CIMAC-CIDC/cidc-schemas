@@ -1,0 +1,79 @@
+{
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "$id": "cytof_10021",
+    "title": "CYTOF Run",
+    "type": "object",
+    "description": "Information about the acquisition and analysis CyTOF data for 10021 and similarly formatted trials.",
+    "additionalProperties": false,
+    "mergeStrategy": "objectMerge",
+    "allOf": [
+        { "$ref": "assays/cytof_assay_core.json"}
+    ],
+    "required": ["assay_creator", "batch_id", "records"],
+    "properties": {
+        "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
+        "assay_run_id": {"$ref": "assays/cytof_assay_core.json#properties/assay_run_id"},
+        "cytof_antibodies": {"$ref": "assays/cytof_assay_core.json#properties/cytof_antibodies"},
+        "batch_id": {"$ref": "assays/cytof_assay_core.json#properties/batch_id"},
+        "injector": {
+            "description": "Name of Injector component used as part of the CyTOF software",
+            "type": "string"
+        },
+        "date_of_acquisition": {
+            "description": "Date of CyTOF batch acquisition.",
+            "type": "string"
+        },
+        "bead_removal": {
+            "description": "Boolean to indicate whether beads have been removed after normalization process",
+            "type": "boolean"
+        },
+        "acquisition_buffer": {
+            "description": "Cell staining buffer used for antibody and cell dilution.",
+            "type": "string"
+        },
+        "instrument": {
+            "description": "Name of CyTOF instrument on which experiment was conducted.",
+            "type": "string"
+        },
+        "spike_in_fcs": {
+            "$ref": "artifacts/artifact_fcs.json"
+        },
+        "normalization_method":{
+            "description": "Process used for normalization prior to analysis, if any.",
+            "type": "string",
+            "enum": ["Fluidigm", "Other"] 
+        },
+        "debarcoding_protocol": {
+            "description": "The strategy/kit used to barcode CyTOF samples, if any",
+            "type": "string"
+        },
+        "harware_version": {
+            "description": "Version no. of instrument hardware used.",
+            "type": "string"
+        },
+        "source_fcs": {
+            "type": "array",
+            "items": {
+                "$ref": "artifacts/artifact_fcs.json"
+            }
+        },
+        "astrolabe_reports": {
+            "$ref": "artifacts/artifact_zip.json"
+        },
+        "astrolabe_analysis": {
+            "$ref": "artifacts/artifact_zip.json"
+        },
+        "records": {
+            "type": "array",
+            "description": "A single data record from CyTOF assay batch.",
+            "items": {
+                "$ref": "assays/cytof_assay_core.json#definitions/entry"
+            },
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": {
+              "idRef": "cimac_id"
+            }
+        }
+    }
+}
+

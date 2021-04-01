@@ -1,0 +1,139 @@
+{
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "$id": "cytof_core",
+    "title": "CYTOF Run",
+    "type": "object",
+    "description": "Base information about the acquisition and analysis CyTOF data.",
+    "inheritableBase": true,
+    "mergeStrategy": "objectMerge",
+    "allOf": [
+        {"$ref": "assays/components/assay_core.json"}
+    ],
+
+    "required": [
+        "cytof_antibodies",
+        "assay_run_id",
+        "batch_id"
+    ],
+    "properties": {
+        "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
+        "assay_run_id": {
+            "type": "string",
+            "description": "User defined unique identifier for this assay run. Not necessarily unique across batches."
+        },
+        "cytof_antibodies": {
+            "type": "array",
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": {"idRef": "antibody"},
+            "items": {"$ref": "assays/cytof_assay_core.json#definitions/antibody"}
+        },
+        "batch_id": {
+            "description": "CyTOF batch identification number. Unique to every batch.",
+            "type": "string"
+        }
+    },
+
+    "definitions": {
+        "input_files": {
+            "description": "CyTOF Assay Input Files",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["processed_fcs"],
+            "properties": {
+                "processed_fcs": {"$ref": "artifacts/artifact_fcs.json"},
+                "intermediate_fcs": {"$ref": "artifacts/artifact_fcs.json"}
+            }
+        },
+
+        "output_files": {
+            "description": "Output files generated from the CyTOF assay: FCS file with enumerations for compartment, assignment and profiling cell labels; 3 CSV keys for mapping from respective enumeration indices to the cell labels; 3 CSV files providing cell count information for each of the cell labels",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "fcs_file": {"$ref": "artifacts/artifact_fcs.json"},
+                "assignment": {"$ref": "artifacts/artifact_csv.json"},
+                "compartment": {"$ref": "artifacts/artifact_csv.json"},
+                "profiling": {"$ref": "artifacts/artifact_csv.json"},
+                "cell_counts_assignment": {"$ref": "artifacts/artifact_csv.json"},
+                "cell_counts_compartment": {"$ref": "artifacts/artifact_csv.json"},
+                "cell_counts_profiling": {"$ref": "artifacts/artifact_csv.json"}
+            }
+        },
+
+        "entry": {
+            "description": "A single data record from CyTOF assay batch.",
+            "type": "object",
+            "mergeStrategy": "objectMerge",
+            "additionalProperties": false,
+
+            "required": ["cimac_id", "input_files"],
+            "properties": {
+                "cimac_id": {
+                    "$comment": "Id of a sample within this clinical trial, that this assay record is based upon.",
+                    "$ref": "sample.json#properties/cimac_id"
+                },
+                "notes": {
+                    "description": "Any notes pertaining to CyTOF acquisition.",
+                    "type": "string"
+                },
+                "concatenation_version": {
+                    "description": "Concatenation of FCS files into a single FCS version number.",
+                    "type": "string"
+                },
+                "normalization_version": {
+                    "description": "Version of normalization for CyTOF assay batch.",
+                    "type": "string"
+                },
+                "staining_date": {
+                    "description": "Date of staining for CyTOF assay slides.",
+                    "type": "string",
+                    "format": "date"
+                },
+                "debarcoding_key": {
+                    "description": "An ID that maps to the specific isotope labeling scheme in the debarcoding protocol.",
+                    "type": "string"
+                },
+                "preprocessing_notes": {
+                    "description": "Any notes pertaining to preprocessing of CyTOF data.",
+                    "type": "string"
+                },
+                "input_files": {"$ref": "assays/cytof_assay_core.json#definitions/input_files"},
+                "output_files": {"$ref": "assays/cytof_assay_core.json#definitions/output_files"}
+            }
+        },
+
+        "antibody": {
+            "description": "Data specific to antibody preparation on the CyTOF assay.",
+            "type": "object",
+            "additionalProperties": false,
+              
+            "required": ["isotope", "dilution", "stain_type", "usage"],
+            "properties": {
+                "antibody": {"$ref": "assays/components/antibody.json#properties/antibody"},
+                "clone": {"$ref": "assays/components/antibody.json#properties/clone"},
+                "company": {"$ref": "assays/components/antibody.json#properties/company"},
+                "cat_num": {"$ref": "assays/components/antibody.json#properties/cat_num"},
+                "lot_num": {"$ref": "assays/components/antibody.json#properties/lot_num"},
+
+                "isotope": {
+                    "description": "Antibody isotype used to help differentiate antibody signals.",
+                    "type": "string"
+                },
+                "dilution": {
+                    "description": "Concentration ratio of dilution buffer for primary antibody.",
+                    "type": "string"
+                },
+                "stain_type": {
+                    "description": "Type of staining method used for antibody.",
+                    "type": "string",
+                   "enum": ["Surface Stain", "Intracellular"]
+                },
+                "usage": {
+                    "description": "How this antibody should be used in automatic analysis",
+                    "type": "string",
+                    "enum": ["Ignored", "Used", "Analysis Only"]
+                }
+            }
+        }
+    }
+}

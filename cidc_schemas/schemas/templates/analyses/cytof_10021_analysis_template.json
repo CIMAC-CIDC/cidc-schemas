@@ -1,0 +1,89 @@
+{
+    "title": "CyTOF analysis template",
+    "description": "Metadata information for CyTOF Analysis output.",
+    "prism_template_root_object_schema": "assays/cytof_10021_assay.json",
+    "prism_template_root_object_pointer": "/assays/cytof_10021/0",
+    "properties": {
+        "worksheets": {
+            "CyTOF Analysis": {
+                "preamble_rows": {
+                    "assay run id": {
+                        "merge_pointer": "/assay_run_id",
+                        "type_ref": "assays/cytof_assay_core.json#properties/assay_run_id"
+                    },
+                    "protocol identifier": {
+                        "merge_pointer": "3/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    },
+                    "batch id": {
+                        "merge_pointer": "0/batch_id",
+                        "type_ref": "assays/cytof_assay_core.json#properties/batch_id"
+                    },
+                    "astrolabe reports": {
+                        "merge_pointer": "0/astrolabe_reports",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{batch id}/reports.zip",
+                        "is_artifact": 1
+                    },
+                    "astrolabe analysis": {
+                        "merge_pointer": "0/astrolabe_analysis",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{batch id}/analysis.zip",
+                        "is_artifact": 1
+                    }
+                },
+                "prism_data_object_pointer": "/records/-",
+                "data_columns": {
+                    "Astrolabe Runs": {
+                        "cimac id": {
+                            "merge_pointer": "0/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id"
+                        },
+                        "fcs file": {
+                            "merge_pointer": "0/output_files/fcs_file",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{batch id}/{cimac id}/source.fcs",
+                            "is_artifact": 1
+                        },
+                        "assignment": {
+                            "merge_pointer": "0/output_files/assignment",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{batch id}/{cimac id}/assignment.csv",
+                            "is_artifact": 1
+                        },
+                        "compartment": {
+                            "merge_pointer": "0/output_files/compartment",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{batch id}/{cimac id}/compartment.csv",
+                            "is_artifact": 1
+                        },
+                        "profiling": {
+                            "merge_pointer": "0/output_files/profiling",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{batch id}/{cimac id}/profiling.csv",
+                            "is_artifact": 1
+                        },
+                        "cell counts assignment": {
+                            "merge_pointer": "0/output_files/cell_counts_assignment",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{batch id}/{cimac id}/cell_counts_assignment.csv",
+                            "is_artifact": 1
+                        },
+                        "cell counts compartment": {
+                            "merge_pointer": "0/output_files/cell_counts_compartment",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{batch id}/{cimac id}/cell_counts_compartment.csv",
+                            "is_artifact": 1
+                        },
+                        "cell counts profiling": {
+                            "merge_pointer": "0/output_files/cell_counts_profiling",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{batch id}/{cimac id}/cell_counts_profiling.csv",
+                            "is_artifact": 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

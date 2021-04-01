@@ -1,13 +1,21 @@
 {
   "assays": {
-    "cytof": [
+    "cytof_10021": [
       {
         "records": [
           {
             "cimac_id": "CTSTP01S1.01",
-            "injector": "HAT123",
-            "run_time": "23",
-            "input_files": {},
+            "input_files": {
+              "processed_fcs": {
+                "file_name": "cytof_input",
+                "object_url": "staging_0/cytof_10021/CTSTP01S1.01/processed.fcs",
+                "data_format": "FCS",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:41.310000+00:00"
+              }
+            },
             "output_files": {
               "fcs_file": {
                 "file_name": "cytof_analysis",
@@ -73,21 +81,24 @@
                 "uploaded_timestamp": "2019-11-19T20:48:40.524000+00:00"
               }
             },
-            "beads_removed": "Y",
             "debarcoding_key": "FLUIDIGM 1234",
-            "acquisition_buffer": "ABC",
-            "date_of_acquisition": "43355",
             "preprocessing_notes": "a note like any other note",
-            "debarcoding_protocol": "FLUIDIGM XYZ",
             "concatenation_version": "GHIL",
-            "normalization_version": "ABC",
-            "average_event_per_second": 123
+            "normalization_version": "ABC"
           },
           {
             "cimac_id": "CTSTP01S2.01",
-            "injector": "HAT123",
-            "run_time": "23",
-            "input_files": {},
+            "input_files": {
+              "processed_fcs": {
+                "file_name": "cytof_input",
+                "object_url": "staging_0/cytof_10021/CTSTP01S2.01/processed.fcs",
+                "data_format": "FCS",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:41.310000+00:00"
+              }
+            },
             "output_files": {
               "fcs_file": {
                 "file_name": "cytof_analysis",
@@ -153,21 +164,20 @@
                 "uploaded_timestamp": "2019-11-19T20:48:40.524000+00:00"
               }
             },
-            "beads_removed": "Y",
             "debarcoding_key": "FLUIDIGM 1234",
-            "acquisition_buffer": "ABC",
-            "date_of_acquisition": "43355",
             "preprocessing_notes": "a note like any other note",
-            "debarcoding_protocol": "FLUIDIGM XYZ",
             "concatenation_version": "GHIL",
-            "normalization_version": "ABC",
-            "average_event_per_second": 123
+            "normalization_version": "ABC"
           }
         ],
         "instrument": "PresNixon123",
-        "panel_name": "IMMUNE4",
         "assay_run_id": "staging_test_cytof_run_1",
+        "batch_id": "XYZ",
         "assay_creator": "DFCI",
+        "injector": "HAT123",
+        "date_of_acquisition": "43355",
+        "acquisition_buffer": "ABC",
+        "bead_removal": true,
         "cytof_antibodies": [
           {
             "clone": "C8/144b",

@@ -18,68 +18,60 @@ def assay_data_generator(f):
 
 
 @assay_data_generator
-def cytof() -> PrismTestData:
-    upload_type = "cytof"
+def cytof_10021() -> PrismTestData:
+    upload_type = "cytof_10021"
     prismify_args = get_prismify_args(upload_type)
     prismify_patch = {
         "assays": {
-            "cytof": [
+            "cytof_10021": [
                 {
                     "records": [
                         {
                             "cimac_id": "CTTTPP111.00",
                             "input_files": {
-                                "normalized_and_debarcoded_fcs": {
+                                "intermediate_fcs": {
                                     "upload_placeholder": "28ec20a1-d2dc-46aa-91be-819b684da268"
                                 },
                                 "processed_fcs": {
                                     "upload_placeholder": "97c3b6a6-b03d-4ca1-92f8-b8651e51d0c6"
                                 },
                             },
-                            "date_of_acquisition": "43355",
-                            "injector": "HAT123",
-                            "acquisition_buffer": "ABC",
-                            "average_event_per_second": 123.0,
-                            "run_time": "23",
                             "concatenation_version": "GHIL",
                             "normalization_version": "ABC",
-                            "beads_removed": "Y",
-                            "debarcoding_protocol": "FLUIDIGM XYZ",
                             "debarcoding_key": "FLUIDIGM 1234",
                             "preprocessing_notes": "a note like any other note",
                         },
                         {
                             "cimac_id": "CTTTPP121.00",
                             "input_files": {
-                                "normalized_and_debarcoded_fcs": {
+                                "intermediate_fcs": {
                                     "upload_placeholder": "8a674ce1-e224-45b7-8094-77fca9f98ae2"
                                 },
                                 "processed_fcs": {
                                     "upload_placeholder": "7e992a16-9c6a-4ef1-90b8-ef1a599b88bc"
                                 },
                             },
-                            "date_of_acquisition": "43385",
-                            "injector": "HAT123",
-                            "acquisition_buffer": "ABCD",
-                            "average_event_per_second": 123.0,
-                            "run_time": "28",
                             "concatenation_version": "GHIL",
                             "normalization_version": "ABC",
-                            "beads_removed": "N",
-                            "debarcoding_protocol": "FLUIDIGM XYZ",
                             "debarcoding_key": "FLUIDIGM 1234",
                             "preprocessing_notes": "a different note",
                         },
                     ],
                     "assay_run_id": "test_prism_trial_id_run_1",
                     "assay_creator": "DFCI",
-                    "panel_name": "IMMUNE4",
                     "instrument": "PresNixon123",
                     "source_fcs": [
                         {"upload_placeholder": "4918a014-0e63-4a36-a45a-c62d593e225e"},
                         {"upload_placeholder": "0bbd7520-18b9-4ec3-8344-49f02dcadb08"},
                     ],
                     "batch_id": "XYZ1",
+                    "injector": "HAT123",
+                    "date_of_acquisition": "43355",
+                    "acquisition_buffer": "ABC",
+                    "bead_removal": True,
+                    "normalization_method": "Fluidigm",
+                    "debarcoding_protocol": "Fluidigm",
+                    "harware_version": "Fluidigm 3.0.2",
                     "cytof_antibodies": [
                         {
                             "antibody": "CD8",
@@ -112,42 +104,42 @@ def cytof() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="sample1_n.fcs",
-            gs_key="test_prism_trial_id/cytof/CTTTPP111.00/normalized_and_debarcoded.fcs",
+            gs_key="test_prism_trial_id/cytof_10021/CTTTPP111.00/intermediate.fcs",
             upload_placeholder="28ec20a1-d2dc-46aa-91be-819b684da268",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="sample1.fcs",
-            gs_key="test_prism_trial_id/cytof/CTTTPP111.00/processed.fcs",
+            gs_key="test_prism_trial_id/cytof_10021/CTTTPP111.00/processed.fcs",
             upload_placeholder="97c3b6a6-b03d-4ca1-92f8-b8651e51d0c6",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="sample2_n.fcs",
-            gs_key="test_prism_trial_id/cytof/CTTTPP121.00/normalized_and_debarcoded.fcs",
+            gs_key="test_prism_trial_id/cytof_10021/CTTTPP121.00/intermediate.fcs",
             upload_placeholder="8a674ce1-e224-45b7-8094-77fca9f98ae2",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="sample2.fcs",
-            gs_key="test_prism_trial_id/cytof/CTTTPP121.00/processed.fcs",
+            gs_key="test_prism_trial_id/cytof_10021/CTTTPP121.00/processed.fcs",
             upload_placeholder="7e992a16-9c6a-4ef1-90b8-ef1a599b88bc",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="batch1f1.fcs",
-            gs_key="test_prism_trial_id/cytof/XYZ1/source_0.fcs",
+            gs_key="test_prism_trial_id/cytof_10021/XYZ1/source_0.fcs",
             upload_placeholder="4918a014-0e63-4a36-a45a-c62d593e225e",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="batch1f2.fcs",
-            gs_key="test_prism_trial_id/cytof/XYZ1/source_1.fcs",
+            gs_key="test_prism_trial_id/cytof_10021/XYZ1/source_1.fcs",
             upload_placeholder="0bbd7520-18b9-4ec3-8344-49f02dcadb08",
             metadata_availability=False,
             allow_empty=False,
@@ -156,8 +148,191 @@ def cytof() -> PrismTestData:
 
     cimac_ids = [
         record["cimac_id"]
-        for batch in prismify_patch["assays"]["cytof"]
+        for batch in prismify_patch["assays"]["cytof_10021"]
         for record in batch["records"]
+    ]
+    base_trial = get_test_trial(cimac_ids)
+
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "assays")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
+@assay_data_generator
+def cytof_e4412() -> PrismTestData:
+    upload_type = "cytof_e4412"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "assays": {
+            "cytof_e4412": [
+                {
+                    "participants": [
+                        {
+                            "cimac_participant_id": "CTTTPP1",
+                            "participant_debarcoding_key": "FOOBAR",
+                            "preprocessing_notes": "testing a participant note",
+                            "control": {
+                                "input_files": {
+                                    "processed_fcs": {
+                                        "upload_placeholder": "28ec20a1-d2dc-46aa-91be-819b684da268"
+                                    }
+                                },
+                                "concatenation_version": "GHIL",
+                                "normalization_version": "ABC",
+                                "debarcoding_key": "FLUIDIGM 1234",
+                                "preprocessing_notes": "a note like any other note",
+                            },
+                            "samples": [
+                                {
+                                    "cimac_id": "CTTTPP111.00",
+                                    "input_files": {
+                                        "processed_fcs": {
+                                            "upload_placeholder": "97c3b6a6-b03d-4ca1-92f8-b8651e51d0c6"
+                                        },
+                                    },
+                                    "concatenation_version": "GHIL",
+                                    "normalization_version": "ABC",
+                                    "debarcoding_key": "FLUIDIGM 1234",
+                                    "preprocessing_notes": "a note like any other note",
+                                },
+                                {
+                                    "cimac_id": "CTTTPP121.00",
+                                    "input_files": {
+                                        "processed_fcs": {
+                                            "upload_placeholder": "7e992a16-9c6a-4ef1-90b8-ef1a599b88bc"
+                                        }
+                                    },
+                                    "concatenation_version": "GHIL",
+                                    "normalization_version": "ABC",
+                                    "debarcoding_key": "FLUIDIGM 1234",
+                                    "preprocessing_notes": "a different note",
+                                },
+                            ],
+                        },
+                        {
+                            "cimac_participant_id": "CTTTPP2",
+                            "participant_debarcoding_key": "BIZBUZ",
+                            "control": {
+                                "input_files": {
+                                    "processed_fcs": {
+                                        "upload_placeholder": "8a674ce1-e224-45b7-8094-77fca9f98ae2"
+                                    }
+                                },
+                                "concatenation_version": "GHIL",
+                                "normalization_version": "ABC",
+                                "debarcoding_key": "FLUIDIGM 1234",
+                                "preprocessing_notes": "a different note",
+                            },
+                            "samples": [
+                                {
+                                    "cimac_id": "CTTTPP211.00",
+                                    "input_files": {
+                                        "processed_fcs": {
+                                            "upload_placeholder": "0bbd7520-18b9-4ec3-8344-49f02dcadb08"
+                                        },
+                                    },
+                                    "concatenation_version": "GHIL",
+                                    "normalization_version": "ABC",
+                                    "debarcoding_key": "FLUIDIGM 1234",
+                                    "preprocessing_notes": "a note like any other note",
+                                }
+                            ],
+                        },
+                    ],
+                    "assay_run_id": "test_prism_trial_id_run_1",
+                    "assay_creator": "DFCI",
+                    "source_fcs": [
+                        {"upload_placeholder": "4918a014-0e63-4a36-a45a-c62d593e225e"}
+                    ],
+                    "batch_id": "XYZ1",
+                    "acquisition_buffer": "ABC",
+                    "debarcoding_protocol": "Fluidigm",
+                    "cytof_antibodies": [
+                        {
+                            "antibody": "CD8",
+                            "clone": "C8/144b",
+                            "company": "DAKO",
+                            "cat_num": "C8-ABC",
+                            "lot_num": "3983272",
+                            "isotope": "146Nd",
+                            "dilution": "100X",
+                            "stain_type": "Surface Stain",
+                            "usage": "Used",
+                        },
+                        {
+                            "antibody": "PD-L1",
+                            "clone": "C2/11p",
+                            "company": "DAKO",
+                            "cat_num": "C8-AB123",
+                            "lot_num": "1231272",
+                            "isotope": "146Nb",
+                            "dilution": "100X",
+                            "stain_type": "Surface Stain",
+                            "usage": "Analysis Only",
+                        },
+                    ],
+                }
+            ]
+        },
+        "protocol_identifier": "test_prism_trial_id",
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="control1.fcs",
+            gs_key="test_prism_trial_id/cytof_e4412/CTTTPP1_control/processed.fcs",
+            upload_placeholder="28ec20a1-d2dc-46aa-91be-819b684da268",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="sample1.fcs",
+            gs_key="test_prism_trial_id/cytof_e4412/CTTTPP111.00/processed.fcs",
+            upload_placeholder="97c3b6a6-b03d-4ca1-92f8-b8651e51d0c6",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="sample2.fcs",
+            gs_key="test_prism_trial_id/cytof_e4412/CTTTPP121.00/processed.fcs",
+            upload_placeholder="7e992a16-9c6a-4ef1-90b8-ef1a599b88bc",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="control2.fcs",
+            gs_key="test_prism_trial_id/cytof_e4412/CTTTPP2_control/processed.fcs",
+            upload_placeholder="8a674ce1-e224-45b7-8094-77fca9f98ae2",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="sample3.fcs",
+            gs_key="test_prism_trial_id/cytof_e4412/CTTTPP211.00/processed.fcs",
+            upload_placeholder="0bbd7520-18b9-4ec3-8344-49f02dcadb08",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="batch1f1.fcs",
+            gs_key="test_prism_trial_id/cytof_e4412/XYZ1/source_0.fcs",
+            upload_placeholder="4918a014-0e63-4a36-a45a-c62d593e225e",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+    ]
+
+    cimac_ids = [
+        record["cimac_id"]
+        for batch in prismify_patch["assays"]["cytof_e4412"]
+        for participant in batch["participants"]
+        for record in participant["samples"]
     ]
     base_trial = get_test_trial(cimac_ids)
 

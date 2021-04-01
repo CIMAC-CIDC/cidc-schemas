@@ -1,0 +1,96 @@
+{
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "$id": "cytof_e4412",
+    "title": "CYTOF Run",
+    "type": "object",
+    "description": "Information about the acquisition and analysis CyTOF data for E4412 and similarly formatted trials.",
+    "additionalProperties": false,
+    "mergeStrategy": "objectMerge",
+    "allOf": [
+        {"$ref": "assays/cytof_assay_core.json"}
+    ],
+
+    "definitions": {
+        "participant": {
+            "description": "A data record for a single participant from CyTOF assay batch.",
+            "type": "object",
+            "mergeStrategy": "objectMerge",
+            "additionalProperties": false,
+            
+            "required": [
+                "cimac_participant_id",
+                "samples",
+                "control"
+            ],
+            "properties": {
+                "cimac_participant_id": {
+                    "$comment": "Id of a participant within this clinical trial, that this assay record is based upon.",
+                    "$ref": "participant.json#properties/cimac_participant_id"
+                },
+                "participant_debarcoding_key": {
+                    "description": "An ID that maps to the specific isotope labeling scheme in the debarcoding protocol.",
+                    "type": "string"
+                },
+                "preprocessing_notes": {
+                    "description": "Any notes pertaining to preprocessing of CyTOF data.",
+                    "type": "string"
+                },
+
+                "control": {
+                    "type": "object",
+                    "mergeStrategy": "objectMerge",
+                    "description": "A single data record from CyTOF assay batch.",
+                    "additionalProperties": false,
+
+                    "required": ["input_files"],
+                    "properties": {
+                        "concatenation_version": {"$ref":"assays/cytof_assay_core.json#definitions/entry/properties/concatenation_version"},
+                        "normalization_version": {"$ref":"assays/cytof_assay_core.json#definitions/entry/properties/normalization_version"},
+                        "debarcoding_key": {"$ref":"assays/cytof_assay_core.json#definitions/entry/properties/debarcoding_key"},
+                        "preprocessing_notes": {"$ref":"assays/cytof_assay_core.json#definitions/entry/properties/preprocessing_notes"},
+
+                        "input_files": {"$ref": "assays/cytof_assay_core.json#definitions/input_files"},
+                        "output_files": {"$ref": "assays/cytof_assay_core.json#definitions/output_files"}
+                    }
+                },
+
+                "samples": {
+                    "type": "array",
+                    "mergeStrategy": "arrayMergeById",
+                    "mergeOptions": {"idRef": "cimac_id"},
+                    "items": {"$ref": "assays/cytof_assay_core.json#definitions/entry"}
+                }
+            }
+        }
+    },
+
+
+    "required": ["assay_creator", "batch_id", "participants"],
+    "properties": {
+        "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
+        "assay_run_id": {"$ref": "assays/cytof_assay_core.json#properties/assay_run_id"},
+        "cytof_antibodies": {"$ref": "assays/cytof_assay_core.json#properties/cytof_antibodies"},
+        "batch_id": {"$ref": "assays/cytof_assay_core.json#properties/batch_id"},
+        "acquisition_buffer": {
+            "description": "Cell staining buffer used for antibody and cell dilution.",
+            "type": "string"
+        },
+        "debarcoding_protocol": {
+            "description": "The strategy/kit used to barcode CyTOF samples, if any",
+            "type": "string"
+        },
+        "source_fcs": {
+            "type": "array",
+            "items": {"$ref": "artifacts/artifact_fcs.json"}
+        },
+        "astrolabe_reports": {"$ref": "artifacts/artifact_zip.json"},
+        "astrolabe_analysis": {"$ref": "artifacts/artifact_zip.json"},
+        "participants": {
+            "type": "array",
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": {"idRef": "cimac_participant_id"},
+            "items": {"$ref": "assays/cytof_e4412_assay.json#definitions/participant"}
+        }
+    }
+}
+

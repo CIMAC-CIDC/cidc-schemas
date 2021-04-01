@@ -874,7 +874,7 @@ def rna_level1_analysis() -> PrismTestData:
                             "sorted_bam_stat_txt": {
                                 "upload_placeholder": "05050505-0505-0505-0505-CTTTPP111.00"
                             },
-                            "downsampling_bam": {
+                            "transcriptome_bam": {
                                 "upload_placeholder": "16161616-1616-1616-1616-CTTTPP111.00"
                             },
                             "downsampling_bam_index": {
@@ -943,7 +943,7 @@ def rna_level1_analysis() -> PrismTestData:
                             "sorted_bam_stat_txt": {
                                 "upload_placeholder": "05050505-0505-0505-0505-CTTTPP121.00"
                             },
-                            "downsampling_bam": {
+                            "transcriptome_bam": {
                                 "upload_placeholder": "16161616-1616-1616-1616-CTTTPP121.00"
                             },
                             "downsampling_bam_index": {
@@ -1035,8 +1035,8 @@ def rna_level1_analysis() -> PrismTestData:
                     allow_empty=False,
                 ),
                 LocalFileUploadEntry(
-                    local_path=f"analysis/star/{cimac_id}/{cimac_id}_downsampling.bam",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/star/downsampling.bam",
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}.transcriptome.bam",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/star/transcriptome.bam",
                     upload_placeholder=f"16161616-1616-1616-1616-{cimac_id}",
                     metadata_availability=False,
                     allow_empty=False,

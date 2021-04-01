@@ -14,7 +14,7 @@
     "sorted_bam_stat_txt": {
       "$ref": "artifacts/artifact_text.json"
     },
-    "downsampling_bam": {
+    "transcriptome_bam": {
       "$ref": "artifacts/artifact_bam.json"
     },
     "downsampling_bam_index": {
@@ -25,7 +25,7 @@
     "sorted_bam",
     "sorted_bam_index",
     "sorted_bam_stat_txt",
-    "downsampling_bam",
+    "transcriptome_bam",
     "downsampling_bam_index"
   ],
   "additionalProperties": false

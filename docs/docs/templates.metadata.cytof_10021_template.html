@@ -80,6 +80,20 @@
         
             
         
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
         
             
                 <tr>
@@ -93,12 +107,35 @@
     </td>
     <td width=55%>
         
-            User defined unique identifier for this assay run.
+            User defined unique identifier for this assay run. Not necessarily unique across batches.
         
     </td>
     <td>
         
-            <a href="assays.cytof_assay.html#assay_run_id">assays.cytof_assay#assay_run_id</a>
+            <a href="assays.cytof_assay_core.html#assay_run_id">assays.cytof_assay_core#assay_run_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="batch id">
+                batch id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            CyTOF batch identification number. Unique to every batch.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#batch_id">assays.cytof_assay_core#batch_id</a>
         
     </td>
 </tr>
@@ -154,29 +191,6 @@
                 <tr>
     <td>
         
-            <span id="panel name">
-                panel name
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Standardized CyTOF panel name used for antibody sample development.
-        
-    </td>
-    <td>
-        
-            <a href="assays.cytof_assay.html#panel_name">assays.cytof_assay#panel_name</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
             <span id="instrument">
                 instrument
             </span>
@@ -190,7 +204,7 @@
     </td>
     <td>
         
-            <a href="assays.cytof_assay.html#instrument">assays.cytof_assay#instrument</a>
+            <a href="assays.cytof_10021_assay.html#instrument">assays.cytof_10021_assay#instrument</a>
         
     </td>
 </tr>
@@ -247,20 +261,181 @@ This file contains the normalized & debarcoded spike-in for a batch.
                 <tr>
     <td>
         
-            <span id="batch id">
-                batch id
+            <span id="controls fcs filename(s)">
+                controls fcs filename(s)
             </span>
             
         
     </td>
     <td width=55%>
         
-            CyTOF batch identification number.
+            Path to a file on a user's computer.
         
     </td>
     <td>
         
-            <a href="assays.cytof_assay.html#batch_id">assays.cytof_assay#batch_id</a>
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="injector">
+                injector
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Name of Injector component used as part of the CyTOF software
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_10021_assay.html#injector">assays.cytof_10021_assay#injector</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="date of acquisition">
+                date of acquisition
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Date of CyTOF batch acquisition.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_10021_assay.html#date_of_acquisition">assays.cytof_10021_assay#date_of_acquisition</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="acquisition buffer">
+                acquisition buffer
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Cell staining buffer used for antibody and cell dilution.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_10021_assay.html#acquisition_buffer">assays.cytof_10021_assay#acquisition_buffer</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="bead removal">
+                bead removal
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Boolean to indicate whether beads have been removed after normalization process
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_10021_assay.html#bead_removal">assays.cytof_10021_assay#bead_removal</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="normalization method">
+                normalization method
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Process used for normalization prior to analysis, if any.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_10021_assay.html#normalization_method">assays.cytof_10021_assay#normalization_method</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="debarcoding protocol">
+                debarcoding protocol
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The strategy/kit used to barcode CyTOF samples, if any
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_10021_assay.html#debarcoding_protocol">assays.cytof_10021_assay#debarcoding_protocol</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="harware version">
+                harware version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Version no. of instrument hardware used.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_10021_assay.html#harware_version">assays.cytof_10021_assay#harware_version</a>
         
     </td>
 </tr>
@@ -297,12 +472,6 @@ This file contains the normalized & debarcoded spike-in for a batch.
         
             
         
-            
-        
-            
-        
-            
-        
         
             
                 <tr>
@@ -331,8 +500,8 @@ This file contains the normalized & debarcoded spike-in for a batch.
                 <tr>
     <td>
         
-            <span id="normalized & debarcoded fcs filename">
-                normalized & debarcoded fcs filename
+            <span id="intermediate fcs filename">
+                intermediate fcs filename
             </span>
             
         
@@ -340,81 +509,12 @@ This file contains the normalized & debarcoded spike-in for a batch.
     <td width=55%>
         
             Path to a file on a User's computer. 
-This .fcs file has been normalized, concatenated, and debarcoded, but has the veri-cells and has not been cleaned up.
+This .fcs file is an intermediate file that has been normalized, concatenated, and debarcoded, but has the veri-cells and has not been cleaned up.
         
     </td>
     <td>
         
             <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="date of acquisition">
-                date of acquisition
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Date of CyTOF batch acquisition.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.cytof.cytof_entry.html#date_of_acquisition">assays.components.cytof.cytof_entry#date_of_acquisition</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="injector">
-                injector
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Name of Injector component used as part of the CyTOF software
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.cytof.cytof_entry.html#injector">assays.components.cytof.cytof_entry#injector</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="acquisition_buffer">
-                acquisition_buffer
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Cell staining buffer used for antibody and cell dilution.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.cytof.cytof_entry.html#acquisition_buffer">assays.components.cytof.cytof_entry#acquisition_buffer</a>
         
     </td>
 </tr>
@@ -443,10 +543,6 @@ This .fcs file has been normalized, concatenated, and debarcoded, but has the ve
             <th>Data Type</th>
         </tr>
         </thead>
-        
-            
-        
-            
         
             
         
@@ -499,7 +595,7 @@ This .fcs file has been normalized, concatenated, and debarcoded, but has the ve
     </td>
     <td>
         
-            <a href="assays.components.cytof.cytof_entry.html#concatenation_version">assays.components.cytof.cytof_entry#concatenation_version</a>
+            <a href="assays.cytof_assay_core.html#entry.concatenation_version">assays.cytof_assay_core#entry.concatenation_version</a>
         
     </td>
 </tr>
@@ -522,53 +618,7 @@ This .fcs file has been normalized, concatenated, and debarcoded, but has the ve
     </td>
     <td>
         
-            <a href="assays.components.cytof.cytof_entry.html#normalization_version">assays.components.cytof.cytof_entry#normalization_version</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="beads removed">
-                beads removed
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Confirmation of beads being removed after normalization process.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.cytof.cytof_entry.html#beads_removed">assays.components.cytof.cytof_entry#beads_removed</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="debarcoding protocol">
-                debarcoding protocol
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            The strategy/kit used to barcode CyTOF samples.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.cytof.cytof_entry.html#debarcoding_protocol">assays.components.cytof.cytof_entry#debarcoding_protocol</a>
+            <a href="assays.cytof_assay_core.html#entry.normalization_version">assays.cytof_assay_core#entry.normalization_version</a>
         
     </td>
 </tr>
@@ -591,7 +641,7 @@ This .fcs file has been normalized, concatenated, and debarcoded, but has the ve
     </td>
     <td>
         
-            <a href="assays.components.cytof.cytof_entry.html#debarcoding_key">assays.components.cytof.cytof_entry#debarcoding_key</a>
+            <a href="assays.cytof_assay_core.html#entry.debarcoding_key">assays.cytof_assay_core#entry.debarcoding_key</a>
         
     </td>
 </tr>
@@ -614,7 +664,7 @@ This .fcs file has been normalized, concatenated, and debarcoded, but has the ve
     </td>
     <td>
         
-            <a href="assays.components.cytof.cytof_entry.html#preprocessing_notes">assays.components.cytof.cytof_entry#preprocessing_notes</a>
+            <a href="assays.cytof_assay_core.html#entry.preprocessing_notes">assays.cytof_assay_core#entry.preprocessing_notes</a>
         
     </td>
 </tr>
@@ -802,7 +852,7 @@ This .fcs file has been normalized, concatenated, and debarcoded, but has the ve
     </td>
     <td>
         
-            <a href="assays.components.cytof.cytof_antibody.html#isotope">assays.components.cytof.cytof_antibody#isotope</a>
+            <a href="assays.cytof_assay_core.html#antibody.isotope">assays.cytof_assay_core#antibody.isotope</a>
         
     </td>
 </tr>
@@ -825,7 +875,7 @@ This .fcs file has been normalized, concatenated, and debarcoded, but has the ve
     </td>
     <td>
         
-            <a href="assays.components.cytof.cytof_antibody.html#dilution">assays.components.cytof.cytof_antibody#dilution</a>
+            <a href="assays.cytof_assay_core.html#antibody.dilution">assays.cytof_assay_core#antibody.dilution</a>
         
     </td>
 </tr>
@@ -848,7 +898,7 @@ This .fcs file has been normalized, concatenated, and debarcoded, but has the ve
     </td>
     <td>
         
-            <a href="assays.components.cytof.cytof_antibody.html#stain_type">assays.components.cytof.cytof_antibody#stain_type</a>
+            <a href="assays.cytof_assay_core.html#antibody.stain_type">assays.cytof_assay_core#antibody.stain_type</a>
         
     </td>
 </tr>
@@ -871,7 +921,7 @@ This .fcs file has been normalized, concatenated, and debarcoded, but has the ve
     </td>
     <td>
         
-            <a href="assays.components.cytof.cytof_antibody.html#usage">assays.components.cytof.cytof_antibody#usage</a>
+            <a href="assays.cytof_assay_core.html#antibody.usage">assays.cytof_assay_core#antibody.usage</a>
         
     </td>
 </tr>

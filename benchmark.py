@@ -45,23 +45,23 @@ def profiling(run_name: str, outdir: str = "benchmark"):
             raise exception
 
 
-def run(ts_path: str, mif_path: str, he_path: str):
+def run(ts_path: str, mif_path: str, he_path: str, outdir: str):
     """Run and profile a typical metadata validation and merging workload."""
     set_prism_encrypt_key("foobar")
 
-    with profiling("1_prismify_tissue_slide_shipping_manifest"):
+    with profiling("1_prismify_tissue_slide_shipping_manifest", outdir):
         ts_template = Template.from_type("tissue_slide")
         ts_spreadsheet, _ = XlTemplateReader.from_excel(ts_path)
         ts_metadata, _, _ = prismify(ts_spreadsheet, ts_template)
         ts_metadata["allowed_cohort_names"] = ["Not_reported"]
         ts_metadata["allowed_collection_event_names"] = ["Baseline"]
 
-    with profiling("2_prismify_mif_assay_metadata_spreadsheet"):
+    with profiling("2_prismify_mif_assay_metadata_spreadsheet", outdir):
         mif_template = Template.from_type("mif")
         mif_spreadsheet, _ = XlTemplateReader.from_excel(mif_path)
         mif_metadata, files, _ = prismify(mif_spreadsheet, mif_template)
 
-    with profiling("3_merge_mif_assay_artifacts_into_mif_metadata_patch"):
+    with profiling("3_merge_mif_assay_artifacts_into_mif_metadata_patch", outdir):
         # tqdm gives us a stdout progress indicator as prism iterates through the array
         artifact_info = tqdm(
             [
@@ -78,7 +78,7 @@ def run(ts_path: str, mif_path: str, he_path: str):
         )
         mif_metadata, _ = merge_artifacts(mif_metadata, artifact_info)
 
-    with profiling("4_merge_mif_metadata_with_tissue_slide_metadata"):
+    with profiling("4_merge_mif_metadata_with_tissue_slide_metadata", outdir):
         combined_metadata, _ = merge_clinical_trial_metadata(mif_metadata, ts_metadata)
 
     # Don't profile this a second time, since we're only interested
@@ -88,7 +88,7 @@ def run(ts_path: str, mif_path: str, he_path: str):
     he_spreadsheet, _ = XlTemplateReader.from_excel(he_path)
     he_metadata, _, _ = prismify(he_spreadsheet, he_template)
 
-    with profiling("5_merge_h_and_e_metadata_into_trial"):
+    with profiling("5_merge_h_and_e_metadata_into_trial", outdir):
         merge_clinical_trial_metadata(he_metadata, combined_metadata)
 
 
@@ -107,6 +107,12 @@ if __name__ == "__main__":
     parser.add_argument(
         "--he-path", required=True, help="path to an h&e metadata spreadsheet"
     )
+    parser.add_argument(
+        "--out-dir",
+        required=False,
+        help="root directory to write profile info to",
+        default="benchmark",
+    )
     args = parser.parse_args()
 
-    run(args.ts_path, args.mif_path, args.he_path)
+    run(args.ts_path, args.mif_path, args.he_path, args.out_dir)

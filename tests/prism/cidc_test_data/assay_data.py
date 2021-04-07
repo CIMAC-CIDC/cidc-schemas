@@ -18,6 +18,50 @@ def assay_data_generator(f):
 
 
 @assay_data_generator
+def clinical_data() -> PrismTestData:
+    upload_type = "clinical_data"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "clinical_data": {
+            "assay_creator": "DFCI",
+            "records": [
+                {
+                    "files": {
+                        "clinical_file": {
+                            "upload_placeholder": "28ec20a1-d2dc-46aa-91be-819b684da268"
+                        },
+                        "comment": "no comment",
+                    }
+                }
+            ],
+        },
+        "protocol_identifier": "test_prism_trial_id",
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="test_file.xlsx",
+            gs_key="test_prism_trial_id/clinical/response.xlsx",
+            upload_placeholder="28ec20a1-d2dc-46aa-91be-819b684da268",
+            metadata_availability=True,
+            allow_empty=False,
+        )
+    ]
+
+    base_trial = get_test_trial([])
+
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "clinical_data")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
+@assay_data_generator
 def cytof_10021() -> PrismTestData:
     upload_type = "cytof_10021"
     prismify_args = get_prismify_args(upload_type)

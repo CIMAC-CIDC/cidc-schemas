@@ -116,6 +116,9 @@
     },
     "analysis": {
       "$ref": "assays/components/available_ngs_analyses.json"
+    },
+    "clinical_data": {
+      "$ref": "assays/clinical_data_assay.json"
     }
   },
   "required": [

@@ -110,6 +110,13 @@
         "$ref": "assays/nanostring_assay.json"
       },
       "mergeStrategy": "append"
+    },
+    "clinical": {
+      "type": "array",
+      "description": "Clinical data",
+      "items": {
+        "$ref": "assays/clinical_data_assay.json"
+      }
     }
   }
 }

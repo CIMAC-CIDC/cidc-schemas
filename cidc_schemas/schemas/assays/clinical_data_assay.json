@@ -1,0 +1,53 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "clinical_assay",
+  "title": "Clinical Data Assay",
+  "type": "object",
+  "description": "Clinical data recorded for a clinical trial",
+  "additionalProperties": false,
+  "mergeStrategy": "objectMerge",
+
+  "definitions": {
+    "input": {
+      "type": "object",
+      "description": "Clinical data files files.",
+      "additionalProperties": false,
+      "properties": {
+        "clinical_file": {
+          "$comment": "Path to clinical data XLSX file.",
+          "$ref": "artifacts/artifact_clinical_xlsx.json"
+        },
+        "comment": {
+          "description": "A text comment regarding this file.",
+          "type": "string"
+        }
+      },
+      "required": []
+    },
+    "record": {
+      "type": "object",
+      "description": "A single data record from Clinical Data assay.",
+      "additionalProperties": false,
+      "properties": {
+        "files": {
+          "$ref": "assays/clinical_data_assay.json#definitions/input"
+        }
+      },
+      "required": []
+    }
+  },
+  "properties": {
+    "assay_creator": {
+      "$ref": "assays/components/assay_core.json#properties/assay_creator"
+    },
+    "records": {
+      "type": "array",
+      "description": "A single file from clinical data upload.",
+      "items": {
+        "$ref": "assays/clinical_data_assay.json#definitions/record"
+      },
+      "mergeStrategy": "append"
+    }
+  },
+  "required": []
+}

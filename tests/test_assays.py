@@ -618,3 +618,34 @@ def test_olink():
     del obj["batches"][0]["records"][0]["number_of_samples"]
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(obj)
+
+
+def test_clinicaldata():
+
+    # create validator
+    validator = _fetch_validator("clinical_data")
+
+    # create clinical data that is valid
+    tmp = ARTIFACT_OBJ.copy()
+    tmp["file_name"] = "dummy.xlsx"
+    tmp["data_format"] = "XLSX"
+    tmp["participants"] = ["CTTTPPP", "CTTTPPQ", "CTTTPPD"]
+    tmp["number_of_participants"] = 3
+    clin_dat = {"records": [{"files": {"clinical_file": tmp, "comment": "dummyxyz"}}]}
+    obj = {**ASSAY_CORE, **clin_dat}
+    validator.validate(obj)
+
+    # valid without a comment.
+    clin_dat = {"records": [{"files": {"clinical_file": tmp}}]}
+    obj = {**ASSAY_CORE, **clin_dat}
+    validator.validate(obj)
+
+    # try to validate this (expect failure on filetype)
+    tmp = ARTIFACT_OBJ.copy()
+    tmp["file_name"] = "dummy.xlsx"
+    tmp["participants"] = ["CTTTPPP", "CTTTPPQ", "CTTTPPD"]
+    tmp["number_of_participants"] = 3
+    clin_dat = {"records": [{"files": {"clinical_file": tmp, "comment": "dummyxyz"}}]}
+    obj = {**ASSAY_CORE, **clin_dat}
+    with pytest.raises(jsonschema.ValidationError, match="'XLSX' was expected"):
+        validator.validate(clin_dat)

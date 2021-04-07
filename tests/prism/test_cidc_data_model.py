@@ -46,6 +46,14 @@ def assert_metadata_matches(received: dict, expected: dict, upload_entries: list
             diff
         )  # only "values_changed" and "dictionary_item_added"
         assert len(diff["dictionary_item_added"]) == len(upload_entries)
+
+        if len(diff["values_changed"]) != len(upload_entries):
+            print("")
+            print("++")
+            print(diff["values_changed"])
+            print("++++")
+            print(upload_entries)
+
         assert len(diff["values_changed"]) == len(upload_entries)
         for changed_key in diff["values_changed"].keys():
             assert changed_key.endswith("['upload_placeholder']")
@@ -86,7 +94,10 @@ def test_prismify(prism_test: PrismTestData, monkeypatch):
         (e.local_path, e.gs_key, e.metadata_availability)
         for e in prism_test.upload_entries
     ]
-
+    if sorted(expected) != sorted(received):
+        print(expected)
+        print("--")
+        print(received)
     assert sorted(expected) == sorted(received)
     for received, expected in zip(
         sorted(upload_entries), sorted(prism_test.upload_entries)
@@ -96,6 +107,11 @@ def test_prismify(prism_test: PrismTestData, monkeypatch):
         assert received.metadata_availability == expected.metadata_availability
 
     # Compare the received and expected prism metadata patches
+    print(patch)
+    print("--")
+    print(prism_test.prismify_patch)
+    print("----")
+    print(upload_entries)
     assert_metadata_matches(patch, prism_test.prismify_patch, upload_entries)
 
 

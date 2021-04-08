@@ -115,7 +115,7 @@
       "type": "array",
       "description": "Clinical data",
       "items": {
-        "$ref": "assays/clinical_data_assay.json"
+        "$ref": "clinical_data_assay.json"
       }
     }
   }

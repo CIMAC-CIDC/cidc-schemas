@@ -29,11 +29,16 @@
       "description": "A single data record from Clinical Data assay.",
       "additionalProperties": false,
       "properties": {
-        "files": {
-          "$ref": "assays/clinical_data_assay.json#definitions/input"
+        "clinical_file": {
+          "$comment": "Path to clinical data XLSX file.",
+          "$ref": "artifacts/artifact_clinical_xlsx.json"
+        },
+        "comment": {
+          "description": "A text comment regarding this file.",
+          "type": "string"
         }
       },
-      "required": []
+      "required": ["clinical_file"]
     }
   },
   "properties": {
@@ -44,7 +49,7 @@
       "type": "array",
       "description": "A single file from clinical data upload.",
       "items": {
-        "$ref": "assays/clinical_data_assay.json#definitions/record"
+        "$ref": "clinical_data_assay.json#definitions/record"
       },
       "mergeStrategy": "append"
     }

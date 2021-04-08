@@ -26,12 +26,10 @@ def clinical_data() -> PrismTestData:
             "assay_creator": "DFCI",
             "records": [
                 {
-                    "files": {
-                        "clinical_file": {
-                            "upload_placeholder": "28ec20a1-d2dc-46aa-91be-819b684da268"
-                        },
-                        "comment": "no comment",
-                    }
+                    "clinical_file": {
+                        "upload_placeholder": "28ec20a1-d2dc-46aa-91be-819b684da268"
+                    },
+                    "comment": "no comment",
                 }
             ],
         },

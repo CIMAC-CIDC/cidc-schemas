@@ -47,6 +47,8 @@ def _fetch_validator(name):
 
     schema_root = SCHEMA_DIR
     schema_path = os.path.join(SCHEMA_DIR, "assays/%s_assay.json" % name)
+    if name == "clinical_data":
+        schema_path = os.path.join(SCHEMA_DIR, "%s_assay.json" % name)
     schema = load_and_validate_schema(schema_path, schema_root)
 
     # create validator assert schemas are valid.
@@ -631,12 +633,12 @@ def test_clinicaldata():
     tmp["data_format"] = "XLSX"
     tmp["participants"] = ["CTTTPPP", "CTTTPPQ", "CTTTPPD"]
     tmp["number_of_participants"] = 3
-    clin_dat = {"records": [{"files": {"clinical_file": tmp, "comment": "dummyxyz"}}]}
+    clin_dat = {"records": [{"clinical_file": tmp, "comment": "dummyxyz"}]}
     obj = {**ASSAY_CORE, **clin_dat}
     validator.validate(obj)
 
     # valid without a comment.
-    clin_dat = {"records": [{"files": {"clinical_file": tmp}}]}
+    clin_dat = {"records": [{"clinical_file": tmp}]}
     obj = {**ASSAY_CORE, **clin_dat}
     validator.validate(obj)
 
@@ -645,7 +647,7 @@ def test_clinicaldata():
     tmp["file_name"] = "dummy.xlsx"
     tmp["participants"] = ["CTTTPPP", "CTTTPPQ", "CTTTPPD"]
     tmp["number_of_participants"] = 3
-    clin_dat = {"records": [{"files": {"clinical_file": tmp, "comment": "dummyxyz"}}]}
+    clin_dat = {"records": [{"clinical_file": tmp, "comment": "dummyxyz"}]}
     obj = {**ASSAY_CORE, **clin_dat}
     with pytest.raises(jsonschema.ValidationError, match="'XLSX' was expected"):
         validator.validate(clin_dat)

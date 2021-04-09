@@ -177,7 +177,7 @@ def parse_clinical(xlsx: BinaryIO) -> dict:
             # does this file have cimac_part_id?
             if not seen_partid and first_cell == "cimac_part_id":
                 seen_partid = True
-                    continue
+                continue
 
             else:
                 # some participant ID's might be blank for

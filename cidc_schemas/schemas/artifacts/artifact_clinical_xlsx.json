@@ -3,8 +3,7 @@
   "$id": "artifact_clinical_xlsx",
   "title": "Generic clinical data artifact",
   "type": "object",
-  "description": "Information about an clinical file.",
-  "$comment": "No comment.",
+  "description": "A file containing clinical information.",
   "additionalProperties": false,
   "properties": {
     "number_of_participants": {

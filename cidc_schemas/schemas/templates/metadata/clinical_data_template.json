@@ -4,7 +4,7 @@
     "properties": {
         "worksheets": {
             "Clinical data": {
-                "prism_preamble_object_schema": "clinical_data_assay.json",
+                "prism_preamble_object_schema": "clinical_data.json",
                 "prism_preamble_object_pointer": "/clinical_data",
                 "prism_data_object_pointer": "/records/-",
                 "preamble_rows": {
@@ -33,7 +33,7 @@
                         "Comment": {
                             "merge_pointer": "0/comment",
                             "is_artifact": 0,
-                            "type_ref": "clinical_data_assay.json#definitions/input/properties/comment"
+                            "type_ref": "clinical_data.json#definitions/input/properties/comment"
                         }
                     }
                 }

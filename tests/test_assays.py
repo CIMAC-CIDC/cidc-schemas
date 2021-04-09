@@ -48,7 +48,7 @@ def _fetch_validator(name):
     schema_root = SCHEMA_DIR
     schema_path = os.path.join(SCHEMA_DIR, "assays/%s_assay.json" % name)
     if name == "clinical_data":
-        schema_path = os.path.join(SCHEMA_DIR, "%s_assay.json" % name)
+        schema_path = os.path.join(SCHEMA_DIR, "%s.json" % name)
     schema = load_and_validate_schema(schema_path, schema_root)
 
     # create validator assert schemas are valid.

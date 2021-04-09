@@ -175,10 +175,8 @@ def parse_clinical(xlsx: BinaryIO) -> dict:
                 continue
 
             # does this file have cimac_part_id?
-            if not seen_partid:
-                # check that this is actually an NPX file
-                if first_cell == "cimac_part_id":
-                    seen_partid = True
+            if not seen_partid and first_cell == "cimac_part_id":
+                seen_partid = True
                     continue
 
             else:

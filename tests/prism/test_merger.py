@@ -141,6 +141,40 @@ def test_overwrite_any():
         merger.merge(base, head)
 
 
+def test_set_data_format_edge_cases(monkeypatch):
+    def mock_iter_errors(errs):
+        validator = MagicMock()
+        validator.iter_errors.return_value = errs
+        load_and_val = MagicMock()
+        load_and_val.return_value = validator
+        monkeypatch.setattr(prism_merger, "load_and_validate_schema", load_and_val)
+
+    # _set_data_format bypasses exceptions that aren't jsonschema.exceptions.ValidationError instances.
+    mock_iter_errors([Exception("non-validation error")])
+    artifact = {}
+    prism_merger._set_data_format({"artifacts": [artifact]}, artifact)
+    assert artifact["data_format"] == "[NOT SET]"
+
+    # _set_data_format bypasses validation errors not pertaining to the "data_format" field
+    val_error = jsonschema.exceptions.ValidationError("")
+    val_error.validator = "const"
+    val_error.path = ["some_path"]
+    mock_iter_errors([val_error])
+    artifact = {}
+    prism_merger._set_data_format({"artifacts": [artifact]}, artifact)
+    assert artifact["data_format"] == "[NOT SET]"
+
+    # _set_data_format bypasses validation errors on unrelated fields
+    val_error = jsonschema.exceptions.ValidationError("")
+    val_error.validator = "const"
+    val_error.path = ["data_format"]
+    val_error.instance = "unrelated instance"
+    mock_iter_errors([val_error])
+    artifact = {}
+    prism_merger._set_data_format({"artifacts": [artifact]}, artifact)
+    assert artifact["data_format"] == "[NOT SET]"
+
+
 #### END MERGE STRATEGY TESTS ####
 
 #### MERGER TESTS ####
@@ -355,6 +389,8 @@ def test_merge_extra_metadata_olink(olink_ct_metadata, olink_file_infos):
         "files"
     ]["assay_npx"]
 
+    assert assay_npx["data_format"] == "NPX"
+    assert study_npx["data_format"] == "NPX"
     for key in ["samples", "number_of_samples"]:
         assert assay_npx[key] == single_npx_metadata[key]
         assert study_npx[key] == combined_npx_metadata[key]
@@ -387,6 +423,7 @@ def test_merge_extra_metadata_elisa(elisa_ct_metadata, elisa_file_infos):
     artifact = elisa_ct_metadata["assays"]["elisa"][0]["assay_xlsx"]
 
     # TODO antibodies
+    assert artifact["data_format"] == "ELISA"
     for key in ["samples", "number_of_samples"]:
         assert artifact[key] == elisa_metadata_1[key]
 

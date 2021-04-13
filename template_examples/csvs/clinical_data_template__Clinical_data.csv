@@ -1,7 +1,0 @@
-"#title","Metadata file for clincal data"
-"#preamble","Protocol identifier","test_prism_trial_id"
-"#preamble","Assay creator","DFCI"
-
-"#skip","Unharmonized"
-"#header","File name","Clinical data file","Comment"
-"#data","response","test_file.xlsx","no comment"

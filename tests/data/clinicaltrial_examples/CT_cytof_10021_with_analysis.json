@@ -7,7 +7,9 @@
             "cimac_id": "CTSTP01S1.01",
             "input_files": {
               "processed_fcs": {
+                "file_name": "cytof_input",
                 "object_url": "staging_0/cytof_10021/CTSTP01S1.01/processed.fcs",
+                "data_format": "FCS",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
@@ -16,49 +18,63 @@
             },
             "output_files": {
               "fcs_file": {
+                "file_name": "cytof_analysis",
                 "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/source.fcs",
+                "data_format": "FCS",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                 "uploaded_timestamp": "2019-11-19T20:48:41.310000+00:00"
               },
               "profiling": {
+                "file_name": "cytof_analysis",
                 "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/profiling.csv",
+                "data_format": "CSV",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                 "uploaded_timestamp": "2019-11-19T20:48:40.549000+00:00"
               },
               "assignment": {
+                "file_name": "cytof_analysis",
                 "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/assignment.csv",
+                "data_format": "CSV",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                 "uploaded_timestamp": "2019-11-19T20:48:41.229000+00:00"
               },
               "compartment": {
+                "file_name": "cytof_analysis",
                 "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/compartment.csv",
+                "data_format": "CSV",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                 "uploaded_timestamp": "2019-11-19T20:48:40.523000+00:00"
               },
               "cell_counts_profiling": {
+                "file_name": "cytof_analysis",
                 "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/cell_counts_profiling.csv",
+                "data_format": "CSV",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                 "uploaded_timestamp": "2019-11-19T20:48:40.524000+00:00"
               },
               "cell_counts_assignment": {
+                "file_name": "cytof_analysis",
                 "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/cell_counts_assignment.csv",
+                "data_format": "CSV",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                 "uploaded_timestamp": "2019-11-19T20:48:40.527000+00:00"
               },
               "cell_counts_compartment": {
+                "file_name": "cytof_analysis",
                 "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/cell_counts_compartment.csv",
+                "data_format": "CSV",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
@@ -74,7 +90,9 @@
             "cimac_id": "CTSTP01S2.01",
             "input_files": {
               "processed_fcs": {
+                "file_name": "cytof_input",
                 "object_url": "staging_0/cytof_10021/CTSTP01S2.01/processed.fcs",
+                "data_format": "FCS",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
@@ -83,49 +101,63 @@
             },
             "output_files": {
               "fcs_file": {
+                "file_name": "cytof_analysis",
                 "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/source.fcs",
+                "data_format": "FCS",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                 "uploaded_timestamp": "2019-11-19T20:48:41.310000+00:00"
               },
               "profiling": {
+                "file_name": "cytof_analysis",
                 "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/profiling.csv",
+                "data_format": "CSV",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                 "uploaded_timestamp": "2019-11-19T20:48:40.549000+00:00"
               },
               "assignment": {
+                "file_name": "cytof_analysis",
                 "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/assignment.csv",
+                "data_format": "CSV",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                 "uploaded_timestamp": "2019-11-19T20:48:41.229000+00:00"
               },
               "compartment": {
+                "file_name": "cytof_analysis",
                 "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/compartment.csv",
+                "data_format": "CSV",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                 "uploaded_timestamp": "2019-11-19T20:48:40.523000+00:00"
               },
               "cell_counts_profiling": {
+                "file_name": "cytof_analysis",
                 "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/cell_counts_profiling.csv",
+                "data_format": "CSV",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                 "uploaded_timestamp": "2019-11-19T20:48:40.524000+00:00"
               },
               "cell_counts_assignment": {
+                "file_name": "cytof_analysis",
                 "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/cell_counts_assignment.csv",
+                "data_format": "CSV",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                 "uploaded_timestamp": "2019-11-19T20:48:40.527000+00:00"
               },
               "cell_counts_compartment": {
+                "file_name": "cytof_analysis",
                 "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/cell_counts_compartment.csv",
+                "data_format": "CSV",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",

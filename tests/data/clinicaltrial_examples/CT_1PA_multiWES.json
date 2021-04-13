@@ -89,18 +89,22 @@
                         "quality_flag": 1,
                         "files": {
                             "r1": [{
+                                "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC"
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "data_format" :           "FASTQ.GZ"
                             }],
                             "r2": [{
+                                "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC"
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "data_format" :           "FASTQ.GZ"
                             }]
                         }
                     },
@@ -110,18 +114,22 @@
                         "quality_flag": 1,
                         "files": {
                             "r1": [{
+                                "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC"
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "data_format" :           "FASTQ.GZ"
                             }],
                             "r2": [{
+                                "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC"
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "data_format" :           "FASTQ.GZ"
                             }]
                         }
                     }
@@ -142,18 +150,22 @@
                         "quality_flag": 1,
                         "files": {
                             "r1": [{
+                                "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC"
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "data_format" :           "FASTQ.GZ"
                             }],
                             "r2": [{
+                                "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC"
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "data_format" :           "FASTQ.GZ"
                             }]
                         }
                     },
@@ -163,18 +175,22 @@
                         "quality_flag": 1,
                         "files": {
                             "r1": [{
+                                "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC"
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "data_format" :           "FASTQ.GZ"
                             }],
                             "r2": [{
+                                "file_name" :           "...",
                                 "object_url" :          "...",
                                 "uploaded_timestamp" :  "...",
                                 "file_size_bytes" :     0,
                                 "md5_hash" :            "...",
-                                "artifact_category" :   "Assay Artifact from CIMAC"
+                                "artifact_category" :   "Assay Artifact from CIMAC",
+                                "data_format" :           "FASTQ.GZ"
                             }]
                         }
                     }

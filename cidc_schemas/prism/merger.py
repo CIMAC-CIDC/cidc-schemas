@@ -15,6 +15,50 @@ from .constants import PROTOCOL_ID_FIELD_NAME
 logger = logging.getLogger(__file__)
 
 
+def _set_data_format(ct: dict, artifact: dict):
+    """
+    Discover the correct data format for the given artifact.
+    Args:
+        ct: a clinical trial object with artifact inserted
+        artifact: a reference to the artifact object inserted in `ct`.
+        NOTE: in-place updates to artifact must trigger in-place updates to `ct`.
+    """
+    # This is invalid for all artifact types, and will
+    # deliberately trigger a validation error below.
+    artifact["data_format"] = "[NOT SET]"
+
+    validator: jsonschema.Draft7Validator = load_and_validate_schema(
+        "clinical_trial.json", return_validator=True
+    )
+
+    def get_data_format(error: jsonschema.exceptions.ValidationError):
+        if (
+            error.validator == "const"
+            and error.path[-1] == "data_format"
+            and error.instance == artifact["data_format"]
+        ):
+            return error.validator_value
+
+    # We don't need any referential integrity checks to extract data formats, so ensure
+    # the validator skips those by passing _ignore_in_doc_refs = True
+    for error in validator.safe_iter_errors(ct, ignore_in_doc_refs=True):
+        if isinstance(error, jsonschema.exceptions.ValidationError):
+            if error.validator == "anyOf":
+                data_format = None
+                for suberror in error.context:
+                    data_format = get_data_format(suberror)
+                    if data_format:
+                        break
+            else:
+                data_format = get_data_format(error)
+
+            if data_format:
+                artifact["data_format"] = data_format
+                return
+
+    # data format was not set!
+
+
 def merge_artifact(
     ct: dict,
     artifact_uuid: str,
@@ -48,10 +92,14 @@ def merge_artifact(
         crc32c_hash or md5_hash
     ), f"Either crc32c_hash or md5_hash must be provided for artifact: {object_url}"
 
+    # urls are created like this in _process_property:
+    file_name, uuid = object_url.split("/")[-2:]
+
     artifact_patch = {
         # TODO 1. this artifact_category should be filled out during prismify
         "artifact_category": "Assay Artifact from CIMAC",
         "object_url": object_url,
+        "file_name": file_name,
         "file_size_bytes": file_size_bytes,
         "uploaded_timestamp": uploaded_timestamp,
     }
@@ -195,6 +243,8 @@ def _update_artifact(
     # artifact_schema = load_and_validate_schema(f"artifacts/{artifact_type}.json")
     # artifact_parent[file_name] = Merger(artifact_schema).merge(existing_artifact, artifact)
     artifact.update(artifact_patch)
+
+    _set_data_format(ct, artifact)
 
     # return the artifact that was merged and the new object
     return ct, artifact, additional_artifact_metadata

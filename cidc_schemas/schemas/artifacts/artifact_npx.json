@@ -18,7 +18,10 @@
         "$ref": "sample.json#properties/cimac_id"
       }
     },
-
+    "data_format": {
+      "description": "Data format.",
+      "const": "NPX"
+    },
     "upload_placeholder": {
       "$ref": "artifacts/artifact_core.json#properties/upload_placeholder"
     },
@@ -27,6 +30,9 @@
     },
     "uploader": { "$ref": "artifacts/artifact_core.json#properties/uploader" },
     "uuid": { "$ref": "artifacts/artifact_core.json#properties/uuid" },
+    "file_name": {
+      "$ref": "artifacts/artifact_core.json#properties/file_name"
+    },
     "object_url": {
       "$ref": "artifacts/artifact_core.json#properties/object_url"
     },

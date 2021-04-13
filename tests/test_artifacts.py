@@ -16,7 +16,9 @@ BASE_OBJ = {
     "artifact_category": "Manifest File",
     "artifact_creator": "DFCI",
     "object_url": "dummy",
+    "file_name": "dummy.txt",
     "file_size_bytes": 1,
+    "data_format": "FASTA",
     "crc32c_hash": "dummy",
     "uploaded_timestamp": "dummy",
     "uuid": "dummy",
@@ -42,6 +44,7 @@ def test_upload_placeholder_oneOf_required():
         "oneOf": [
           {
             "required": [
+              "file_name",
               "object_url",
               "uploaded_timestamp",
               "file_size_bytes",
@@ -59,10 +62,12 @@ def test_upload_placeholder_oneOf_required():
 
     # create validator assert schemas are valid.
     obj = BASE_OBJ.copy()
+    obj["data_format"] = "CSV"
     at_validator = _fetch_validator("core")
     at_validator.validate(obj)
 
     # assert we can fail it.
+    del obj["file_name"]
     del obj["object_url"]
     del obj["uploaded_timestamp"]
     del obj["file_size_bytes"]
@@ -83,6 +88,7 @@ def test_text():
 
     # create validator assert schemas are valid.
     obj = BASE_OBJ.copy()
+    obj["data_format"] = "TEXT"
     at_validator = _fetch_validator("text")
     at_validator.validate(obj)
 
@@ -99,6 +105,7 @@ def test_image():
 
     # create a dummy info
     obj = BASE_OBJ.copy()
+    obj["data_format"] = "IMAGE"
     obj["height"] = 128
     obj["width"] = 128
     obj["channels"] = 8
@@ -112,6 +119,7 @@ def test_binary():
 
     # create a dummy info
     obj = BASE_OBJ.copy()
+    obj["data_format"] = "BINARY"
     at_validator.validate(obj)
 
 
@@ -122,6 +130,7 @@ def test_csv():
 
     # create a dummy info
     obj = BASE_OBJ.copy()
+    obj["data_format"] = "CSV"
     at_validator.validate(obj)
 
 
@@ -132,6 +141,7 @@ def test_fcs():
 
     # create a dummy info
     obj = BASE_OBJ.copy()
+    obj["data_format"] = "FCS"
     at_validator.validate(obj)
 
 
@@ -142,6 +152,7 @@ def test_zip():
 
     # create a dummy info
     obj = BASE_OBJ.copy()
+    obj["data_format"] = "ZIP"
     at_validator.validate(obj)
 
 
@@ -152,6 +163,7 @@ def test_npx():
 
     # create a dummy info
     obj = BASE_OBJ.copy()
+    obj["data_format"] = "NPX"
 
     # should fail
     with pytest.raises(jsonschema.ValidationError):

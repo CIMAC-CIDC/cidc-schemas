@@ -176,28 +176,23 @@ def parse_clinical(xlsx: BinaryIO) -> dict:
             # simplify
             first_cell = vals[0]
 
-            # skip empty
-            if first_cell is None:
-                continue
-
             # does this file have cimac_part_id?
             if not seen_partid and first_cell == "cimac_part_id":
                 seen_partid = True
                 continue
 
-            else:
-                # some participant ID's might be blank for
-                # participants not in the system already (skip these for now)
-                if first_cell == "" or not first_cell:
-                    continue
+            # some participant ID's might be blank for
+            # participants not in the system already (skip these for now)
+            if first_cell == "" or not first_cell:
+                continue
 
-                # get the identifier
-                # check that it is a CIMAC PART ID
-                try:
-                    if cimac_partid_regex.match(first_cell):
-                        ids.add(first_cell)
-                except TypeError as e:
-                    continue
+            # get the identifier
+            # check that it is a CIMAC PART ID
+            try:
+                if cimac_partid_regex.match(first_cell):
+                    ids.add(first_cell)
+            except TypeError as e:
+                continue
 
     part_count = len(ids)
 

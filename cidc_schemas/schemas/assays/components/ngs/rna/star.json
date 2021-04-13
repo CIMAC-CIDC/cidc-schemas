@@ -16,17 +16,13 @@
     },
     "transcriptome_bam": {
       "$ref": "artifacts/artifact_bam.json"
-    },
-    "downsampling_bam_index": {
-      "$ref": "artifacts/artifact_bam_bai.json"
     }
   },
   "required": [
     "sorted_bam",
     "sorted_bam_index",
     "sorted_bam_stat_txt",
-    "transcriptome_bam",
-    "downsampling_bam_index"
+    "transcriptome_bam"
   ],
   "additionalProperties": false
 }

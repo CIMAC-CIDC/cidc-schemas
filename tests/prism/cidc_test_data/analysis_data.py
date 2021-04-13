@@ -876,10 +876,7 @@ def rna_level1_analysis() -> PrismTestData:
                             },
                             "transcriptome_bam": {
                                 "upload_placeholder": "16161616-1616-1616-1616-CTTTPP111.00"
-                            },
-                            "downsampling_bam_index": {
-                                "upload_placeholder": "17171717-1717-1717-1717-CTTTPP111.00"
-                            },
+                            }
                         },
                         "rseqc": {
                             "downsampling_housekeeping_bam": {
@@ -945,10 +942,7 @@ def rna_level1_analysis() -> PrismTestData:
                             },
                             "transcriptome_bam": {
                                 "upload_placeholder": "16161616-1616-1616-1616-CTTTPP121.00"
-                            },
-                            "downsampling_bam_index": {
-                                "upload_placeholder": "17171717-1717-1717-1717-CTTTPP121.00"
-                            },
+                            }
                         },
                         "rseqc": {
                             "downsampling_housekeeping_bam": {

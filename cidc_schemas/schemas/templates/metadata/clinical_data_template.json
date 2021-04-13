@@ -33,7 +33,7 @@
                         "Comment": {
                             "merge_pointer": "0/comment",
                             "is_artifact": 0,
-                            "type_ref": "clinical_data.json#definitions/input/properties/comment"
+                            "type_ref": "clinical_data.json#definitions/record/properties/comment"
                         }
                     }
                 }

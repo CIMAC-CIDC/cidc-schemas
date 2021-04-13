@@ -168,10 +168,16 @@ def parse_clinical(xlsx: BinaryIO) -> dict:
 
             # extract values from row
             vals = [col.value for col in row]
+
+            # skip empty 1
+            if len(vals) == 0:
+                continue
+
+            # simplify
             first_cell = vals[0]
 
             # skip empty
-            if len(vals) == 0 or first_cell is None:
+            if first_cell is None:
                 continue
 
             # does this file have cimac_part_id?

@@ -1,0 +1,4 @@
+"#skip","Samples"
+"#header","Target","Clone","Antibody company","Catalog number","Lot number","Isotope","Dilution","Stain_type","Usage"
+"#data","CD8","C8/144b","DAKO","C8-ABC","3983272","146Nd","100X","Surface Stain","Used"
+"#data","PD-L1","C2/11p","DAKO","C8-AB123","1231272","146Nb","100X","Surface Stain","Analysis Only"

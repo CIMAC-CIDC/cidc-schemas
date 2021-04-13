@@ -13,9 +13,7 @@ ARTIFACT_OBJ = {
     "artifact_category": "Manifest File",
     "artifact_creator": "DFCI",
     "object_url": "dummy",
-    "file_name": "dummy.txt",
     "file_size_bytes": 1,
-    "data_format": "FASTA",
     "crc32c_hash": "dummy",
     "uploaded_timestamp": "dummy",
     "uploader": "dummy",
@@ -70,9 +68,7 @@ def test_wes_fastq():
 
     # create the wes object
     r1 = ARTIFACT_OBJ.copy()
-    r1["data_format"] = "FASTQ.GZ"
     r2 = ARTIFACT_OBJ.copy()
-    r2["data_format"] = "FASTQ.GZ"
     record = {
         "cimac_id": "CTTTPPPSA.00",
         "files": {"r1": [r1], "r2": [r2]},
@@ -103,7 +99,6 @@ def test_wes_bam():
 
     # create the wes object
     bam = ARTIFACT_OBJ.copy()
-    bam["data_format"] = "BAM"
     record = {
         "cimac_id": "CTTTPPPSA.00",
         "files": {"bam": [bam]},
@@ -134,7 +129,6 @@ def test_rna_fastq():
 
     # create the rna_expression object
     r1 = ARTIFACT_OBJ.copy()
-    r1["data_format"] = "FASTQ.GZ"
     record = {
         "library_yield_ng": 666,
         "dv200": 0.7,
@@ -168,7 +162,6 @@ def test_rna_bam():
 
     # create the rna_expression object
     bam = ARTIFACT_OBJ.copy()
-    bam["data_format"] = "BAM"
     record = {
         "cimac_id": "CTTTPPPSA.00",
         "library_yield_ng": 666,
@@ -191,9 +184,7 @@ def test_tcr_fastq():
 
     # create the tcr_seq object
     r1 = ARTIFACT_OBJ.copy()
-    r1["data_format"] = "FASTQ.GZ"
     sample_sheet = ARTIFACT_OBJ.copy()
-    sample_sheet["data_format"] = "CSV"
     record = {
         "cimac_id": "CTTTPPPSA.00",
         "files": {
@@ -239,13 +230,9 @@ def test_cytof_10021():
     validator = jsonschema.Draft7Validator(schema)
 
     fcs_1 = ARTIFACT_OBJ.copy()
-    fcs_1["data_format"] = "FCS"
     fcs_2 = ARTIFACT_OBJ.copy()
-    fcs_2["data_format"] = "FCS"
     fcs_3 = ARTIFACT_OBJ.copy()
-    fcs_3["data_format"] = "FCS"
     fcs_4 = ARTIFACT_OBJ.copy()
-    fcs_4["data_format"] = "FCS"
     record = {"processed_fcs": fcs_1, "intermediate_fcs": fcs_4}
     validator.validate(record)
 
@@ -280,27 +267,16 @@ def test_cytof_10021():
 
     # create the cytof object
     fcs_1 = ARTIFACT_OBJ.copy()
-    fcs_1["data_format"] = "FCS"
     fcs_2 = ARTIFACT_OBJ.copy()
-    fcs_2["data_format"] = "FCS"
     fcs_3 = ARTIFACT_OBJ.copy()
-    fcs_3["data_format"] = "FCS"
     assignment = ARTIFACT_OBJ.copy()
-    assignment["data_format"] = "CSV"
     compartment = ARTIFACT_OBJ.copy()
-    compartment["data_format"] = "CSV"
     profiling = ARTIFACT_OBJ.copy()
-    profiling["data_format"] = "CSV"
     cell_count_assignment = ARTIFACT_OBJ.copy()
-    cell_count_assignment["data_format"] = "CSV"
     cell_count_compartment = ARTIFACT_OBJ.copy()
-    cell_count_compartment["data_format"] = "CSV"
     cell_count_profiling = ARTIFACT_OBJ.copy()
-    cell_count_profiling["data_format"] = "CSV"
     report = ARTIFACT_OBJ.copy()
-    report["data_format"] = "ZIP"
     analysis = ARTIFACT_OBJ.copy()
-    analysis["data_format"] = "ZIP"
     record = {
         "cimac_id": "CTTTPPPSA.00",
         "input_files": {"processed_fcs": fcs_1},
@@ -333,13 +309,9 @@ def test_cytof_e4412():
     validator = jsonschema.Draft7Validator(schema)
 
     fcs_1 = ARTIFACT_OBJ.copy()
-    fcs_1["data_format"] = "FCS"
     fcs_2 = ARTIFACT_OBJ.copy()
-    fcs_2["data_format"] = "FCS"
     fcs_3 = ARTIFACT_OBJ.copy()
-    fcs_3["data_format"] = "FCS"
     fcs_4 = ARTIFACT_OBJ.copy()
-    fcs_4["data_format"] = "FCS"
     record = {"processed_fcs": fcs_1, "intermediate_fcs": fcs_4}
     validator.validate(record)
 
@@ -371,27 +343,16 @@ def test_cytof_e4412():
 
     # create the cytof object
     fcs_1 = ARTIFACT_OBJ.copy()
-    fcs_1["data_format"] = "FCS"
     fcs_2 = ARTIFACT_OBJ.copy()
-    fcs_2["data_format"] = "FCS"
     fcs_3 = ARTIFACT_OBJ.copy()
-    fcs_3["data_format"] = "FCS"
     assignment = ARTIFACT_OBJ.copy()
-    assignment["data_format"] = "CSV"
     compartment = ARTIFACT_OBJ.copy()
-    compartment["data_format"] = "CSV"
     profiling = ARTIFACT_OBJ.copy()
-    profiling["data_format"] = "CSV"
     cell_count_assignment = ARTIFACT_OBJ.copy()
-    cell_count_assignment["data_format"] = "CSV"
     cell_count_compartment = ARTIFACT_OBJ.copy()
-    cell_count_compartment["data_format"] = "CSV"
     cell_count_profiling = ARTIFACT_OBJ.copy()
-    cell_count_profiling["data_format"] = "CSV"
     report = ARTIFACT_OBJ.copy()
-    report["data_format"] = "ZIP"
     analysis = ARTIFACT_OBJ.copy()
-    analysis["data_format"] = "ZIP"
     participant = {
         "cimac_participant_id": "CTTTPPP",
         "control": {"input_files": {"processed_fcs": fcs_2},},
@@ -446,7 +407,6 @@ def test_ihc():
 
     # create the artifact object
     image_1 = ARTIFACT_OBJ.copy()
-    image_1["data_format"] = "IMAGE"
     image_1["height"] = 300
     image_1["width"] = 250
     image_1["channels"] = 3
@@ -475,12 +435,10 @@ def test_mif():
 
     # create the artifact object
     image = ARTIFACT_OBJ.copy()
-    image["data_format"] = "IMAGE"
     image["height"] = 300
     image["width"] = 250
     image["channels"] = 3
     text = ARTIFACT_OBJ.copy()
-    text["data_format"] = "TEXT"
     record = {
         "cimac_id": "CTTTPPPSA.00",
         "files": {
@@ -544,14 +502,11 @@ def test_micsss():
 
     # create the artifact object
     image = ARTIFACT_OBJ.copy()
-    image["data_format"] = "IMAGE"
     image["height"] = 300
     image["width"] = 250
     image["channels"] = 3
     text = ARTIFACT_OBJ.copy()
-    text["data_format"] = "TEXT"
     csv = ARTIFACT_OBJ.copy()
-    csv["data_format"] = "CSV"
     record = {
         "project_qupath_folder": "dummy",
         "micsss_exported_data_folder": "dummy_value",
@@ -591,11 +546,9 @@ def test_olink():
 
     # build up the batch object with one record
     npx = ARTIFACT_OBJ.copy()
-    npx["data_format"] = "NPX"
     npx["samples"] = ["CTTTPPPS1.00", "CTTTPPPS2.00", "CTTTPPPS3.00"]
     npx["number_of_samples"] = 3
     csv = ARTIFACT_OBJ.copy()
-    csv["data_format"] = "CSV"
     record = OLINK_RECORD.copy()
     record["files"]["assay_npx"] = npx
     record["files"]["assay_raw_ct"] = csv
@@ -629,8 +582,6 @@ def test_clinicaldata():
 
     # create clinical data that is valid
     tmp = ARTIFACT_OBJ.copy()
-    tmp["file_name"] = "dummy.xlsx"
-    tmp["data_format"] = "XLSX"
     tmp["participants"] = ["CTTTPPP", "CTTTPPQ", "CTTTPPD"]
     tmp["number_of_participants"] = 3
     clin_dat = {"records": [{"clinical_file": tmp, "comment": "dummyxyz"}]}
@@ -642,12 +593,9 @@ def test_clinicaldata():
     obj = {**ASSAY_CORE, **clin_dat}
     validator.validate(obj)
 
-    # try to validate this (expect failure on filetype)
-    tmp = ARTIFACT_OBJ.copy()
-    tmp["file_name"] = "dummy.xlsx"
-    tmp["participants"] = ["CTTTPPP", "CTTTPPQ", "CTTTPPD"]
-    tmp["number_of_participants"] = 3
+    # try to validate this (expect failure on missing number_of_participants)
+    del tmp["number_of_participants"]
     clin_dat = {"records": [{"clinical_file": tmp, "comment": "dummyxyz"}]}
     obj = {**ASSAY_CORE, **clin_dat}
-    with pytest.raises(jsonschema.ValidationError, match="'XLSX' was expected"):
+    with pytest.raises(jsonschema.ValidationError):
         validator.validate(clin_dat)

@@ -38,5 +38,5 @@
       "mergeStrategy": "append"
     }
   },
-  "required": []
+  "required": ["assay_creator", "records"]
 }

@@ -65,7 +65,6 @@ def get_test_trial(
         "allowed_collection_event_names": allowed_collection_event_names,
     }
     trial["participants"] = list(participants.values())
-    trial["clinical_data"] = {}  # add this empty property
 
     if assays:
         trial["assays"] = assays

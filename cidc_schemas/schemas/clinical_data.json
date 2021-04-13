@@ -8,22 +8,6 @@
   "mergeStrategy": "objectMerge",
 
   "definitions": {
-    "input": {
-      "type": "object",
-      "description": "Clinical data files files.",
-      "additionalProperties": false,
-      "properties": {
-        "clinical_file": {
-          "$comment": "Path to clinical data XLSX file.",
-          "$ref": "artifacts/artifact_clinical_xlsx.json"
-        },
-        "comment": {
-          "description": "A text comment regarding this file.",
-          "type": "string"
-        }
-      },
-      "required": []
-    },
     "record": {
       "type": "object",
       "description": "A single data record from Clinical Data assay.",

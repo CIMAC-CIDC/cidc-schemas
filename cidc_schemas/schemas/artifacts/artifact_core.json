@@ -24,6 +24,11 @@
       "description": "UUID of artifact.",
       "type": "string"
     },
+    "file_name": {
+      "$comment": "This supposedly get generated from 'gcs_uri_format' field in template schema def.",
+      "description": "The name of the file with extension.",
+      "type": "string"
+    },
     "object_url": {
       "description": "URL to artifact within Google Bucket.",
       "type": "string"
@@ -56,6 +61,34 @@
         "Assay Artifact from CIMAC",
         "Pipeline Artifact",
         "Manifest File"
+      ]
+    },
+    "data_format": {
+      "description": "Data Format.",
+      "type": "string",
+      "enum": [
+        "FASTA",
+        "FASTQ.GZ",
+        "VCF.GZ",
+        "IMAGE",
+        "VCF",
+        "CSV",
+        "TSV",
+        "XLSX",
+        "NPX",
+        "ELISA",
+        "BAM",
+        "BAM.BAI",
+        "MAF",
+        "BINARY",
+        "TEXT",
+        "ZIP",
+        "FCS",
+        "GZ",
+        "RCC",
+        "JSON",
+        "YAML",
+        "[NOT SET]"
       ]
     },
     "facet_group": {

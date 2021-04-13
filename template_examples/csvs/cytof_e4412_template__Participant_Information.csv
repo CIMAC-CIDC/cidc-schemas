@@ -1,0 +1,13 @@
+"#title","Metadata file for cytof"
+"#preamble","Protocol identifier","test_prism_trial_id"
+"#preamble","Assay run id","test_prism_trial_id_run_1"
+"#preamble","Batch id","XYZ1"
+"#preamble","Assay creator","DFCI"
+"#preamble","Raw fcs filename(s)","batch1f1.fcs"
+"#preamble","Acquisition buffer","ABC"
+"#preamble","Debarcoding protocol","Fluidigm"
+
+"#skip","Participant info","","","Control info"
+"#header","Cimac participant id","Participant debarcoding key","Preprocessing notes","Intermediate fcs filename","Processed fcs filename","Concatenation version","Normalization version","Debarcoding key","Preprocessing_notes"
+"#data","CTTTPP1","FOOBAR","testing a participant note","","control1.fcs","GHIL","ABC","FLUIDIGM 1234","a note like any other note"
+"#data","CTTTPP2","BIZBUZ","","","control2.fcs","GHIL","ABC","FLUIDIGM 1234","a different note"

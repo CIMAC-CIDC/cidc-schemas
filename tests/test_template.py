@@ -579,20 +579,6 @@ def test_convert_api_to_template_rna():
     ):
         _convert_api_to_template("rna", rna_api_merge_collision, assay_schema)
 
-    rna_api_underspecified = {
-        "cimac id": [
-            {
-                "filter_group": "alignment",
-                "file_path_template": "analysis/star/{id}/{id}.sorted",
-                "short_description": "star alignment output",
-                "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
-                "file_purpose": "Analysis view",
-            }
-        ]
-    }
-    with pytest.raises(InvalidMergeTargetException, match="not a valid file"):
-        _convert_api_to_template("rna", rna_api_underspecified, assay_schema)
-
 
 def test_generate_analysis_template_schemas_rna(tmpdir):
     generate_analysis_template_schemas(

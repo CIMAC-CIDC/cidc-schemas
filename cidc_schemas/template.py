@@ -424,10 +424,6 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
                     continue
                 else:
                     raise ValueError("Generated pointer to non-existant merge_target")
-            if "data_format" not in merge_target["properties"]:
-                raise InvalidMergeTargetException(
-                    f"from {file_path}, inferred merge target {merge_pointer} which is not a valid file"
-                )
 
             # GCS URI start is static
             gcs_uri = f"{{protocol identifier}}/{name}/"

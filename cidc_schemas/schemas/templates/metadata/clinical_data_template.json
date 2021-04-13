@@ -1,0 +1,43 @@
+{
+    "title": "Metadata file for clincal data",
+    "description": "Metadata regarding clinical data.\n",
+    "properties": {
+        "worksheets": {
+            "Clinical data": {
+                "prism_preamble_object_schema": "clinical_data.json",
+                "prism_preamble_object_pointer": "/clinical_data",
+                "prism_data_object_pointer": "/records/-",
+                "preamble_rows": {
+                    "protocol identifier": {
+                        "merge_pointer": "1/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    },
+                    "assay creator": {
+                        "merge_pointer": "0/assay_creator",
+                        "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+                    }
+                },
+                "data_columns": {
+                    "Unharmonized": {
+                        "File name": {
+                            "do_not_merge": true,
+                            "type": "string"
+                        },
+                        "Clinical data file": {
+                            "merge_pointer": "0/clinical_file",
+                            "is_artifact": 1,
+                            "extra_metadata": true,
+                            "gcs_uri_format": "{protocol identifier}/clinical/{file name}.xlsx",
+                            "type_ref": "assays/components/local_file.json#properties/file_path"
+                        },
+                        "Comment": {
+                            "merge_pointer": "0/comment",
+                            "is_artifact": 0,
+                            "type_ref": "clinical_data.json#definitions/record/properties/comment"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

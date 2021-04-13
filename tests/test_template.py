@@ -300,6 +300,7 @@ def test_worksheet_processing():
     assert Template._process_worksheet(worksheet) == target
 
 
+@pytest.mark.xfail(reason="flaky xlsx binary comparison")
 def test_generate_empty_template(pbmc_schema_path, pbmc_template, tmpdir):
     """Check that generate_empty_template generates the correct template."""
     # Generate the xlsx file with the convenience method

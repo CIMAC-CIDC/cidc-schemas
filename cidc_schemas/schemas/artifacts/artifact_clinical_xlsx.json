@@ -1,0 +1,67 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "artifact_clinical_xlsx",
+  "title": "Generic clinical data artifact",
+  "type": "object",
+  "description": "A file containing clinical information.",
+  "additionalProperties": false,
+  "properties": {
+    "number_of_participants": {
+      "description": "Number of participants within this file.",
+      "type": "integer"
+    },
+    "participants": {
+      "description": "Ids of the participants within this file.",
+      "type": "array",
+      "items": {
+        "$comment": "Ids of the participants within this file.",
+        "$ref": "participant.json#properties/cimac_participant_id"
+      }
+    },
+    "data_format": {
+      "description": "Data format.",
+      "const": "XLSX"
+    },
+    "upload_placeholder": {
+      "$ref": "artifacts/artifact_core.json#properties/upload_placeholder"
+    },
+    "artifact_creator": {
+      "$ref": "artifacts/artifact_core.json#properties/artifact_creator"
+    },
+    "uploader": { "$ref": "artifacts/artifact_core.json#properties/uploader" },
+    "uuid": { "$ref": "artifacts/artifact_core.json#properties/uuid" },
+    "file_name": {
+      "$ref": "artifacts/artifact_core.json#properties/file_name"
+    },
+    "object_url": {
+      "$ref": "artifacts/artifact_core.json#properties/object_url"
+    },
+    "uploaded_timestamp": {
+      "$ref": "artifacts/artifact_core.json#properties/uploaded_timestamp"
+    },
+    "file_size_bytes": {
+      "$ref": "artifacts/artifact_core.json#properties/file_size_bytes"
+    },
+    "md5_hash": { "$ref": "artifacts/artifact_core.json#properties/md5_hash" },
+    "crc32c_hash": {
+      "$ref": "artifacts/artifact_core.json#properties/crc32c_hash"
+    },
+    "visible": { "$ref": "artifacts/artifact_core.json#properties/visible" },
+    "artifact_category": {
+      "$ref": "artifacts/artifact_core.json#properties/artifact_category"
+    },
+    "facet_group": {
+      "$ref": "artifacts/artifact_core.json#properties/facet_group"
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "artifacts/artifact_core.json"
+    }
+  ],
+  "mergeStrategy": "objectMerge",
+  "anyOf": [
+    { "required": ["number_of_participants", "participants"] },
+    { "required": ["upload_placeholder"] }
+  ]
+}

@@ -879,12 +879,6 @@ def rna_level1_analysis() -> PrismTestData:
                             }
                         },
                         "rseqc": {
-                            "downsampling_housekeeping_bam": {
-                                "upload_placeholder": "19191919-1919-1919-1919-CTTTPP111.00"
-                            },
-                            "downsampling_housekeeping_bam_index": {
-                                "upload_placeholder": "20202020-2020-2020-2020-CTTTPP111.00"
-                            },
                             "read_distrib": {
                                 "upload_placeholder": "21212121-2121-2121-2121-CTTTPP111.00"
                             },
@@ -945,12 +939,6 @@ def rna_level1_analysis() -> PrismTestData:
                             }
                         },
                         "rseqc": {
-                            "downsampling_housekeeping_bam": {
-                                "upload_placeholder": "19191919-1919-1919-1919-CTTTPP121.00"
-                            },
-                            "downsampling_housekeeping_bam_index": {
-                                "upload_placeholder": "20202020-2020-2020-2020-CTTTPP121.00"
-                            },
                             "read_distrib": {
                                 "upload_placeholder": "21212121-2121-2121-2121-CTTTPP121.00"
                             },
@@ -1032,27 +1020,6 @@ def rna_level1_analysis() -> PrismTestData:
                     local_path=f"analysis/star/{cimac_id}/{cimac_id}.transcriptome.bam",
                     gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/star/transcriptome.bam",
                     upload_placeholder=f"16161616-1616-1616-1616-{cimac_id}",
-                    metadata_availability=False,
-                    allow_empty=False,
-                ),
-                LocalFileUploadEntry(
-                    local_path=f"analysis/star/{cimac_id}/{cimac_id}_downsampling.bam.bai",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/star/downsampling.bam.bai",
-                    upload_placeholder=f"17171717-1717-1717-1717-{cimac_id}",
-                    metadata_availability=False,
-                    allow_empty=False,
-                ),
-                LocalFileUploadEntry(
-                    local_path=f"analysis/rseqc/{cimac_id}/{cimac_id}_downsampling_housekeeping.bam",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/rseqc/downsampling_housekeeping.bam",
-                    upload_placeholder=f"19191919-1919-1919-1919-{cimac_id}",
-                    metadata_availability=False,
-                    allow_empty=False,
-                ),
-                LocalFileUploadEntry(
-                    local_path=f"analysis/rseqc/{cimac_id}/{cimac_id}_downsampling_housekeeping.bam.bai",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/rseqc/downsampling_housekeeping.bam.bai",
-                    upload_placeholder=f"20202020-2020-2020-2020-{cimac_id}",
                     metadata_availability=False,
                     allow_empty=False,
                 ),

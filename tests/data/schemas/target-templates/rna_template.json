@@ -56,20 +56,6 @@
                                 "is_artifact": 1
                             },
                             {
-                                "parse_through": "lambda id: f'analysis/rseqc/{id}/{id}_downsampling_housekeeping.bam'",
-                                "merge_pointer": "0/rseqc/downsampling_housekeeping_bam",
-                                "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/rseqc/downsampling_housekeeping.bam",
-                                "type_ref": "assays/components/local_file.json#properties/file_path",
-                                "is_artifact": 1
-                            },
-                            {
-                                "parse_through": "lambda id: f'analysis/rseqc/{id}/{id}_downsampling_housekeeping.bam.bai'",
-                                "merge_pointer": "0/rseqc/downsampling_housekeeping_bam_index",
-                                "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/rseqc/downsampling_housekeeping.bam.bai",
-                                "type_ref": "assays/components/local_file.json#properties/file_path",
-                                "is_artifact": 1
-                            },
-                            {
                                 "parse_through": "lambda id: f'analysis/rseqc/read_distrib/{id}/{id}.txt'",
                                 "merge_pointer": "0/rseqc/read_distrib",
                                 "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/rseqc/read_distrib.txt",

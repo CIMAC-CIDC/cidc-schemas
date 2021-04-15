@@ -879,7 +879,7 @@ def rna_level1_analysis() -> PrismTestData:
                             },
                             "chimeric_out_junction": {
                                 "upload_placeholder": "16161616-1616-1616-1717-CTTTPP111.00"
-                            }
+                            },
                         },
                         "rseqc": {
                             "read_distrib": {
@@ -928,7 +928,7 @@ def rna_level1_analysis() -> PrismTestData:
                             "sample_report": {
                                 "upload_placeholder": "03030303-0303-0303-0000-CTTTPP111.00"
                             },
-                        }
+                        },
                     },
                     {
                         "cimac_id": "CTTTPP121.00",
@@ -947,7 +947,7 @@ def rna_level1_analysis() -> PrismTestData:
                             },
                             "chimeric_out_junction": {
                                 "upload_placeholder": "16161616-1616-1616-1717-CTTTPP121.00"
-                            }
+                            },
                         },
                         "rseqc": {
                             "read_distrib": {
@@ -996,7 +996,7 @@ def rna_level1_analysis() -> PrismTestData:
                             "sample_report": {
                                 "upload_placeholder": "03030303-0303-0303-0000-CTTTPP121.00"
                             },
-                        }
+                        },
                     },
                 ]
             }

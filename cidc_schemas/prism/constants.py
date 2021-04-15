@@ -16,6 +16,7 @@ SUPPORTED_ASSAYS = [
     "tcr_fastq",
     "hande",
     "nanostring",
+    "clinical_data",
 ]
 
 SUPPORTED_SHIPPING_MANIFESTS = [

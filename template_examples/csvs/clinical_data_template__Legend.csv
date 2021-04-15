@@ -1,0 +1,8 @@
+"","LEGEND"
+"","Legend for tab 'Clinical data'"
+"","Protocol identifier","String","Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412."
+"","Assay creator","Enum","Indicates what site is filling out the assay.","E.g. 'DFCI'"
+"","Section 'Unharmonized' of tab 'Clinical data'"
+"","File name","String"
+"","Clinical data file","String","Path to a file on a user's computer."
+"","Comment","String","A text comment regarding this file."

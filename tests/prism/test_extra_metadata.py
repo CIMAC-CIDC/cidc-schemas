@@ -5,7 +5,7 @@ from zipfile import BadZipFile
 
 import pytest
 
-from cidc_schemas.prism.extra_metadata import parse_elisa, parse_npx
+from cidc_schemas.prism.extra_metadata import parse_elisa, parse_npx, parse_clinical
 
 from ..constants import TEST_DATA_DIR
 
@@ -59,6 +59,22 @@ elisa_metadata_2 = {
     ],
 }
 
+# CLINCAL file and metadata
+clinical_file_path_1 = os.path.join(TEST_DATA_DIR, "clinical_test_file.1.xlsx")
+clinical_metadata_1 = {
+    "number_of_participants": 3,
+    "participants": ["CNQAABC", "CNQAABQ", "CNQAABD"],
+}
+
+clinical_file_path_2 = os.path.join(TEST_DATA_DIR, "clinical_test_file.2.xlsx")
+clinical_metadata_2 = {"number_of_participants": 0, "participants": []}
+
+clinical_file_path_3 = os.path.join(TEST_DATA_DIR, "clinical_test_file.3.xlsx")
+clinical_metadata_3 = {
+    "number_of_participants": 5,
+    "participants": ["CNQAABC", "CNQAABD", "CNQAABQ", "CNQAABY", "CNQAABP"],
+}
+
 
 @pytest.mark.parametrize("parser", [parse_elisa, parse_npx])
 def test_parse_binaryio_only(parser):
@@ -92,3 +108,28 @@ def test_parse_npx_exc():
     with pytest.raises(ValueError, match=r"not in NPX"):
         with open(invalid_npx_file_path, "rb") as f:
             parse_npx(f)
+
+
+def test_parse_clinical():
+    """test for parsing extra metadata (part_ids) from
+    clinical data files"""
+
+    def _check_clin_eq(a, b):
+        assert a["number_of_participants"] == b["number_of_participants"]
+        assert set(a["participants"]) == set(b["participants"])
+
+    # this tests both multiple tabs and extra info tabs
+    clinical_file_path_1 = os.path.join(TEST_DATA_DIR, "clinical_test_file.1.xlsx")
+    with open(clinical_file_path_1, "rb") as f:
+        data = parse_clinical(f)
+        _check_clin_eq(data, clinical_metadata_1)
+
+    # this tests should be empty
+    with open(clinical_file_path_2, "rb") as f:
+        data = parse_clinical(f)
+        _check_clin_eq(data, clinical_metadata_2)
+
+    # this tests should deal with duplicate participants in tabs
+    with open(clinical_file_path_3, "rb") as f:
+        data = parse_clinical(f)
+        _check_clin_eq(data, clinical_metadata_3)

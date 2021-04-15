@@ -300,6 +300,7 @@ def test_worksheet_processing():
     assert Template._process_worksheet(worksheet) == target
 
 
+@pytest.mark.xfail(reason="flaky xlsx binary comparison")
 def test_generate_empty_template(pbmc_schema_path, pbmc_template, tmpdir):
     """Check that generate_empty_template generates the correct template."""
     # Generate the xlsx file with the convenience method
@@ -577,20 +578,6 @@ def test_convert_api_to_template_rna():
         InvalidMergeTargetException, match="collision for inferred merge target"
     ):
         _convert_api_to_template("rna", rna_api_merge_collision, assay_schema)
-
-    rna_api_underspecified = {
-        "cimac id": [
-            {
-                "filter_group": "alignment",
-                "file_path_template": "analysis/star/{id}/{id}.sorted",
-                "short_description": "star alignment output",
-                "long_description": "file sorted_bam file sorted_bam file sorted_bam file",
-                "file_purpose": "Analysis view",
-            }
-        ]
-    }
-    with pytest.raises(InvalidMergeTargetException, match="not a valid file"):
-        _convert_api_to_template("rna", rna_api_underspecified, assay_schema)
 
 
 def test_generate_analysis_template_schemas_rna(tmpdir):

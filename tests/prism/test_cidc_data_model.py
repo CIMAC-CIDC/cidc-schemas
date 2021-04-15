@@ -86,7 +86,6 @@ def test_prismify(prism_test: PrismTestData, monkeypatch):
         (e.local_path, e.gs_key, e.metadata_availability)
         for e in prism_test.upload_entries
     ]
-
     assert sorted(expected) == sorted(received)
     for received, expected in zip(
         sorted(upload_entries), sorted(prism_test.upload_entries)

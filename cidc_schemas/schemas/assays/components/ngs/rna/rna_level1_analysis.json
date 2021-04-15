@@ -20,7 +20,7 @@
       "$ref": "assays/components/ngs/rna/salmon.json"
     },
     "microbiome": {
-      "$ref": "assays/components/ngs/rna/microbiome"
+      "$ref": "assays/components/ngs/rna/microbiome.json"
     }
   },
   "required": [

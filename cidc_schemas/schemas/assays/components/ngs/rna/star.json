@@ -16,6 +16,9 @@
     },
     "transcriptome_bam": {
       "$ref": "artifacts/artifact_bam.json"
+    },
+    "chimeric_out_junction": {
+      "$ref": "artifacts/artifact_junction.json"
     }
   },
   "required": [

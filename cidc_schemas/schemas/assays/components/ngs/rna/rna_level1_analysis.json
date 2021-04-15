@@ -18,12 +18,16 @@
     },
     "salmon": {
       "$ref": "assays/components/ngs/rna/salmon.json"
+    },
+    "microbiome": {
+      "$ref": "assays/components/ngs/rna/microbiome"
     }
   },
   "required": [
     "cimac_id",
     "star",
     "rseqc",
-    "salmon"
+    "salmon",
+    "microbiome"
   ]
 }

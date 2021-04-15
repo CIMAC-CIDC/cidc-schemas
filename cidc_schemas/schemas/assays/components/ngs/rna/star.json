@@ -25,7 +25,8 @@
     "sorted_bam",
     "sorted_bam_index",
     "sorted_bam_stat_txt",
-    "transcriptome_bam"
+    "transcriptome_bam",
+    "chimeric_out_junction"
   ],
   "additionalProperties": false
 }

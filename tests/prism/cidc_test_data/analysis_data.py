@@ -876,6 +876,9 @@ def rna_level1_analysis() -> PrismTestData:
                             },
                             "transcriptome_bam": {
                                 "upload_placeholder": "16161616-1616-1616-1616-CTTTPP111.00"
+                            },
+                            "chimeric_out_junction": {
+                                "upload_placeholder": "16161616-1616-1616-1717-CTTTPP111.00"
                             }
                         },
                         "rseqc": {
@@ -941,6 +944,9 @@ def rna_level1_analysis() -> PrismTestData:
                             },
                             "transcriptome_bam": {
                                 "upload_placeholder": "16161616-1616-1616-1616-CTTTPP121.00"
+                            },
+                            "chimeric_out_junction": {
+                                "upload_placeholder": "16161616-1616-1616-1717-CTTTPP121.00"
                             }
                         },
                         "rseqc": {
@@ -1030,6 +1036,13 @@ def rna_level1_analysis() -> PrismTestData:
                     local_path=f"analysis/star/{cimac_id}/{cimac_id}.transcriptome.bam",
                     gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/star/transcriptome.bam",
                     upload_placeholder=f"16161616-1616-1616-1616-{cimac_id}",
+                    metadata_availability=False,
+                    allow_empty=False,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}.Chimeric.out.junction",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/star/chimeric_out_junction.junction",
+                    upload_placeholder=f"16161616-1616-1616-1717-{cimac_id}",
                     metadata_availability=False,
                     allow_empty=False,
                 ),

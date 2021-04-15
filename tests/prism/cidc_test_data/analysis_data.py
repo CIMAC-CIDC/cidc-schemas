@@ -921,6 +921,11 @@ def rna_level1_analysis() -> PrismTestData:
                                 "upload_placeholder": "33333333-3333-3333-3333-CTTTPP111.00"
                             },
                         },
+                        "microbiome": {
+                            "sample_report": {
+                                "upload_placeholder": "03030303-0303-0303-0000-CTTTPP111.00"
+                            },
+                        }
                     },
                     {
                         "cimac_id": "CTTTPP121.00",
@@ -981,6 +986,11 @@ def rna_level1_analysis() -> PrismTestData:
                                 "upload_placeholder": "33333333-3333-3333-3333-CTTTPP121.00"
                             },
                         },
+                        "microbiome": {
+                            "sample_report": {
+                                "upload_placeholder": "03030303-0303-0303-0000-CTTTPP121.00"
+                            },
+                        }
                     },
                 ]
             }
@@ -1111,6 +1121,13 @@ def rna_level1_analysis() -> PrismTestData:
                     local_path=f"analysis/salmon/{cimac_id}/logs/salmon_quant.log",
                     gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/salmon/salmon_quant.log",
                     upload_placeholder=f"33333333-3333-3333-3333-{cimac_id}",
+                    metadata_availability=False,
+                    allow_empty=False,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/microbiome/{cimac_id}/{cimac_id}_addSample_report.txt",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/microbiome/{cimac_id}_addSample_report.txt",
+                    upload_placeholder=f"03030303-0303-0303-0000-{cimac_id}",
                     metadata_availability=False,
                     allow_empty=False,
                 ),

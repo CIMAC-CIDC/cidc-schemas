@@ -938,6 +938,11 @@ def rna_level1_analysis() -> PrismTestData:
                             "genotype": {
                                 "upload_placeholder": "55555555-0303-0303-0303-CTTTPP111.00"
                             }
+                        },
+                        "msisensor": {
+                            "msisensor_report": {
+                                "upload_placeholder": "55555555-5555-5555-5555-CTTTPP111.00"
+                            }
                         }
                     },
                     {
@@ -1015,6 +1020,11 @@ def rna_level1_analysis() -> PrismTestData:
                         "neoantigen": {
                             "genotype": {
                                 "upload_placeholder": "55555555-0303-0303-0303-CTTTPP121.00"
+                            }
+                        },
+                        "msisensor": {
+                            "msisensor_report": {
+                                "upload_placeholder": "55555555-5555-5555-5555-CTTTPP111.00"
                             }
                         }
                     },
@@ -1175,6 +1185,13 @@ def rna_level1_analysis() -> PrismTestData:
                     local_path=f"analysis/neoantigen/{cimac_id}/{cimac_id}.genotype.json",
                     gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/neoantigen/{cimac_id}.genotype.json",
                     upload_placeholder=f"55555555-0303-0303-0303-{cimac_id}",
+                    metadata_availability=False,
+                    allow_empty=False,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/msisensor/single/run_{cimac_id}/run_{cimac_id}_msisensor.txt",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/msisensor/run_{cimac_id}_msisensor.txt",
+                    upload_placeholder=f"55555555-5555-5555-5555-{cimac_id}",
                     metadata_availability=False,
                     allow_empty=False,
                 ),

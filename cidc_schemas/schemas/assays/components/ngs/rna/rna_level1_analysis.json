@@ -27,6 +27,9 @@
     },
     "neoantigen": {
       "$ref": "assays/components/ngs/rna/neoantigen.json"
+    },
+    "msisensor": {
+      "$ref": "assays/components/ngs/rna/msisensor.json"
     }
   },
   "required": [
@@ -36,6 +39,7 @@
     "salmon",
     "microbiome",
     "trust4",
-    "neoantigen"
+    "neoantigen",
+    "msisensor"
   ]
 }

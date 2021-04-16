@@ -944,6 +944,11 @@ def rna_level1_analysis() -> PrismTestData:
                                 "upload_placeholder": "55555555-5555-5555-5555-CTTTPP111.00"
                             }
                         },
+                        "fusion": {
+                            "fusion_prediction": {
+                                "upload_placeholder": "55555555-6666-6666-6666-CTTTPP111.00"
+                            }
+                        }
                     },
                     {
                         "cimac_id": "CTTTPP121.00",
@@ -1024,9 +1029,14 @@ def rna_level1_analysis() -> PrismTestData:
                         },
                         "msisensor": {
                             "msisensor_report": {
-                                "upload_placeholder": "55555555-5555-5555-5555-CTTTPP111.00"
+                                "upload_placeholder": "55555555-5555-5555-5555-CTTTPP121.00"
                             }
                         },
+                        "fusion": {
+                            "fusion_prediction": {
+                                "upload_placeholder": "55555555-6666-6666-6666-CTTTPP121.00"
+                            }
+                        }
                     },
                 ]
             }
@@ -1195,6 +1205,13 @@ def rna_level1_analysis() -> PrismTestData:
                     metadata_availability=False,
                     allow_empty=False,
                 ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/fusion/{cimac_id}.fusion_predictions.abridged_addSample.tsv",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/fusion/fusion_prediction.tsv",
+                    upload_placeholder="55555555-6666-6666-6666-{cimac_id}",
+                    metadata_availability=False,
+                    allow_empty=False,
+                )
             ]
             for cimac_id in cimac_ids
         ],

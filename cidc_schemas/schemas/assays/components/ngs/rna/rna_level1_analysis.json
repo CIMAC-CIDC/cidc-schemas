@@ -30,6 +30,9 @@
     },
     "msisensor": {
       "$ref": "assays/components/ngs/rna/msisensor.json"
+    },
+    "fusion":{
+      "$ref": "assays/components/ngs/rna/fusion.json"
     }
   },
   "required": [
@@ -40,6 +43,7 @@
     "microbiome",
     "trust4",
     "neoantigen",
-    "msisensor"
+    "msisensor",
+    "fusion"
   ]
 }

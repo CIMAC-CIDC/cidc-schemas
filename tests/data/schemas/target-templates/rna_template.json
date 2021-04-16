@@ -160,6 +160,13 @@
                                     "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/microbiome/{cimac id}_addSample_report.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'analysis/trust4/{id}/{id}_report.tsv'",
+                                    "merge_pointer": "0/trust4/trust4_report",
+                                    "gcs_uri_format": "protocol identifier/rna/{cimac id}/analysis/trust4/{cimac id}_report.tsv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
                                 }
                             ]
                         }

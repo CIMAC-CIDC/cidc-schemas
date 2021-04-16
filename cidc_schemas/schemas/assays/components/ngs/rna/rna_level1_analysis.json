@@ -21,6 +21,9 @@
     },
     "microbiome": {
       "$ref": "assays/components/ngs/rna/microbiome.json"
+    },
+    "trust4": {
+      "$ref": "assays/components/ngs/rna/trust4.json"
     }
   },
   "required": [
@@ -28,6 +31,7 @@
     "star",
     "rseqc",
     "salmon",
-    "microbiome"
+    "microbiome",
+    "trust4"
   ]
 }

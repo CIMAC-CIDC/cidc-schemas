@@ -943,7 +943,7 @@ def rna_level1_analysis() -> PrismTestData:
                             "msisensor_report": {
                                 "upload_placeholder": "55555555-5555-5555-5555-CTTTPP111.00"
                             }
-                        }
+                        },
                     },
                     {
                         "cimac_id": "CTTTPP121.00",
@@ -1026,7 +1026,7 @@ def rna_level1_analysis() -> PrismTestData:
                             "msisensor_report": {
                                 "upload_placeholder": "55555555-5555-5555-5555-CTTTPP111.00"
                             }
-                        }
+                        },
                     },
                 ]
             }

@@ -3,7 +3,7 @@
     "$id": "msisensor",
     "title": "RNAseq msisensor Output Files",
     "type": "object",
-    "description": "Mesisensor output sample files.",
+    "description": "Msisensor output sample files.",
     "properties": {
       "msisensor_report": {
         "$ref": "artifacts/artifact_text.json"

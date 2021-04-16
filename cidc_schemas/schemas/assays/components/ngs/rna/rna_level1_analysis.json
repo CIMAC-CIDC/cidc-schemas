@@ -24,6 +24,9 @@
     },
     "trust4": {
       "$ref": "assays/components/ngs/rna/trust4.json"
+    },
+    "neoantigen": {
+      "$ref": "assays/components/ngs/rna/neoantigen.json"
     }
   },
   "required": [
@@ -32,6 +35,7 @@
     "rseqc",
     "salmon",
     "microbiome",
-    "trust4"
+    "trust4",
+    "neoantigen"
   ]
 }

@@ -1206,7 +1206,7 @@ def rna_level1_analysis() -> PrismTestData:
                     allow_empty=False,
                 ),
                 LocalFileUploadEntry(
-                    local_path=f"analysis/fusion/{cimac_id}.fusion_predictions.abridged_addSample.tsv",
+                    local_path=f"analysis/fusion/{cimac_id}/{cimac_id}.fusion_predictions.abridged_addSample.tsv",
                     gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/fusion/fusion_prediction.tsv",
                     upload_placeholder="55555555-6666-6666-6666-{cimac_id}",
                     metadata_availability=False,

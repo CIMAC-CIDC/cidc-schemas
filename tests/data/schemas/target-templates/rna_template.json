@@ -183,7 +183,7 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/fusion/{id}.fusion_predictions.abridged_addSample.tsv'",
+                                    "parse_through": "lambda id: f'analysis/fusion/{id}/{id}.fusion_predictions.abridged_addSample.tsv'",
                                     "merge_pointer": "0/fusion/fusion_prediction",
                                     "gcs_uri_format": "protocol identifier/rna/{cimac id}/analysis/fusion/fusion_prediction.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",

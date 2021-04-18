@@ -178,7 +178,7 @@
                                 {
                                     "parse_through": "lambda id: f'analysis/msisensor/single/run_{id}/run_{id}_msisensor.txt'",
                                     "merge_pointer": "0/msisensor/msisensor_report",
-                                    "gcs_uri_format": "protocol identifier/rna/{cimac id}/analysis/msisensor/{run_{cimac id}_msisensor.txt",
+                                    "gcs_uri_format": "protocol identifier/rna/{cimac id}/analysis/msisensor/msisensor.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },

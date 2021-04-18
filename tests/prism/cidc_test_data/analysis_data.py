@@ -1200,7 +1200,7 @@ def rna_level1_analysis() -> PrismTestData:
                 ),
                 LocalFileUploadEntry(
                     local_path=f"analysis/msisensor/single/run_{cimac_id}/run_{cimac_id}_msisensor.txt",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/msisensor/run_{cimac_id}_msisensor.txt",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/msisensor/msisensor.txt",
                     upload_placeholder=f"55555555-5555-5555-5555-{cimac_id}",
                     metadata_availability=False,
                     allow_empty=False,

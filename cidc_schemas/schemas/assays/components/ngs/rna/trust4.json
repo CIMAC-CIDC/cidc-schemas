@@ -6,7 +6,7 @@
     "description": "Trust4 output sample files.",
     "properties": {
       "trust4_report": {
-        "$ref": "artifacts/artifact_text.json"
+        "$ref": "artifacts/artifact_tsv.json"
       }
     },
     "required": [

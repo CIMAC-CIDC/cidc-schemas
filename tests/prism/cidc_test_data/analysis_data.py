@@ -1186,7 +1186,7 @@ def rna_level1_analysis() -> PrismTestData:
                 ),
                 LocalFileUploadEntry(
                     local_path=f"analysis/trust4/{cimac_id}/{cimac_id}_report.tsv",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/trust4/{cimac_id}_report.tsv",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/trust4/trust4_report.tsv",
                     upload_placeholder=f"03030303-0303-0303-9999-{cimac_id}",
                     metadata_availability=False,
                     allow_empty=False,

@@ -1179,7 +1179,7 @@ def rna_level1_analysis() -> PrismTestData:
                 ),
                 LocalFileUploadEntry(
                     local_path=f"analysis/microbiome/{cimac_id}/{cimac_id}_addSample_report.txt",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/microbiome/{cimac_id}_addSample_report.txt",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/microbiome/addSample_report.txt",
                     upload_placeholder=f"03030303-0303-0303-0000-{cimac_id}",
                     metadata_availability=False,
                     allow_empty=False,

@@ -157,7 +157,7 @@
                                 {
                                     "parse_through": "lambda id: f'analysis/microbiome/{id}/{id}_addSample_report.txt'",
                                     "merge_pointer": "0/microbiome/sample_report",
-                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/microbiome/{cimac id}_addSample_report.txt",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/microbiome/addSample_report.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },

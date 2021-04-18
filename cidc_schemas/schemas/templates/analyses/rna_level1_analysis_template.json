@@ -162,7 +162,7 @@
                                 {
                                     "parse_through": "lambda id: f'analysis/neoantigen/{id}/{id}.genotype.json'",
                                     "merge_pointer": "0/neoantigen/genotype",
-                                    "gcs_uri_format": "protocol identifier/rna/{cimac id}/analysis/neoantigen/{cimac id}.genotype.json",
+                                    "gcs_uri_format": "protocol identifier/rna/{cimac id}/analysis/neoantigen/genotype.json",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },

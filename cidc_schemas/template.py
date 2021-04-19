@@ -50,6 +50,7 @@ POSSIBLE_FILE_EXTS = [
     "sf",
     "maf",
     "tar",
+    "junction",
 ]
 
 
@@ -232,6 +233,7 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
     file_path = file_path.replace("//", "/").replace("--", "_").lower()
 
     # specialty conversions for existing non-standard usage
+    # all text should be lowercase
     fixes = {  # old : new
         ".bam.bai": ".bam.index",
         "clonality/": "clonality/clonality/",
@@ -247,10 +249,14 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
         "report/somatic_variants/06_": "report/",
         "report/neoantigens/01_hla_r": "neoantigen/HLA_r",
         "msisensor2": "msisensor",
+        "msisensor/single/run_/run_msisensor.txt": "msisensor/msisensor_report.txt",
         "/report.": "/report/report.",
         "wes_meta/02_": "",
         "json/wes.json": "wes_sample.json",
         "vcfcompare": "vcf_compare",
+        "trust4/": "trust4/trust4_",
+        "addsample_report": "sample_report",
+        "chimeric.out.junction": "chimeric_out_junction.junction",
     }
     for old, new in fixes.items():
         file_path = file_path.replace(old, new)

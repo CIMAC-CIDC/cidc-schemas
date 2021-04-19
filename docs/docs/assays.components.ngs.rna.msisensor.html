@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>RNAseq Microbiome Output Files</h1>
+        <h1>RNAseq msisensor Output Files</h1>
         <p>
-            <b>Description:</b>  Microbiome output sample files.
+            <b>Description:</b>  Msisensor output sample files.
         </p>
         
     </div>
@@ -65,8 +65,8 @@
                 <tr>
     <td>
         
-            <span id="sample_report">
-                sample_report
+            <span id="msisensor_report">
+                msisensor_report
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -95,14 +95,14 @@
   </div>
 
   <div class="container">
-    <h3>microbiome.full.json</h3>
+    <h3>msisensor.full.json</h3>
   	<pre><code>{
-    "$id": "microbiome",
+    "$id": "msisensor",
     "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
-    "description": "Microbiome output sample files.",
+    "description": "Msisensor output sample files.",
     "properties": {
-        "sample_report": {
+        "msisensor_report": {
             "$id": "text_artifact",
             "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
@@ -316,9 +316,9 @@
         }
     },
     "required": [
-        "sample_report"
+        "msisensor_report"
     ],
-    "title": "RNAseq Microbiome Output Files",
+    "title": "RNAseq msisensor Output Files",
     "type": "object"
 }</code></pre>
   </div>

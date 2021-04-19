@@ -14,19 +14,19 @@
     "sorted_bam_stat_txt": {
       "$ref": "artifacts/artifact_text.json"
     },
-    "downsampling_bam": {
+    "transcriptome_bam": {
       "$ref": "artifacts/artifact_bam.json"
     },
-    "downsampling_bam_index": {
-      "$ref": "artifacts/artifact_bam_bai.json"
+    "chimeric_out_junction": {
+      "$ref": "artifacts/artifact_junction.json"
     }
   },
   "required": [
     "sorted_bam",
     "sorted_bam_index",
     "sorted_bam_stat_txt",
-    "downsampling_bam",
-    "downsampling_bam_index"
+    "transcriptome_bam",
+    "chimeric_out_junction"
   ],
   "additionalProperties": false
 }

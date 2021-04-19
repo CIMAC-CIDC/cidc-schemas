@@ -874,20 +874,14 @@ def rna_level1_analysis() -> PrismTestData:
                             "sorted_bam_stat_txt": {
                                 "upload_placeholder": "05050505-0505-0505-0505-CTTTPP111.00"
                             },
-                            "downsampling_bam": {
+                            "transcriptome_bam": {
                                 "upload_placeholder": "16161616-1616-1616-1616-CTTTPP111.00"
                             },
-                            "downsampling_bam_index": {
-                                "upload_placeholder": "17171717-1717-1717-1717-CTTTPP111.00"
+                            "chimeric_out_junction": {
+                                "upload_placeholder": "16161616-1616-1616-1717-CTTTPP111.00"
                             },
                         },
                         "rseqc": {
-                            "downsampling_housekeeping_bam": {
-                                "upload_placeholder": "19191919-1919-1919-1919-CTTTPP111.00"
-                            },
-                            "downsampling_housekeeping_bam_index": {
-                                "upload_placeholder": "20202020-2020-2020-2020-CTTTPP111.00"
-                            },
                             "read_distrib": {
                                 "upload_placeholder": "21212121-2121-2121-2121-CTTTPP111.00"
                             },
@@ -930,6 +924,31 @@ def rna_level1_analysis() -> PrismTestData:
                                 "upload_placeholder": "33333333-3333-3333-3333-CTTTPP111.00"
                             },
                         },
+                        "microbiome": {
+                            "sample_report": {
+                                "upload_placeholder": "03030303-0303-0303-0000-CTTTPP111.00"
+                            }
+                        },
+                        "trust4": {
+                            "trust4_report": {
+                                "upload_placeholder": "03030303-0303-0303-9999-CTTTPP111.00"
+                            }
+                        },
+                        "neoantigen": {
+                            "genotype": {
+                                "upload_placeholder": "55555555-0303-0303-0303-CTTTPP111.00"
+                            }
+                        },
+                        "msisensor": {
+                            "msisensor_report": {
+                                "upload_placeholder": "55555555-5555-5555-5555-CTTTPP111.00"
+                            }
+                        },
+                        "fusion": {
+                            "fusion_predictions": {
+                                "upload_placeholder": "55555555-6666-6666-6667-CTTTPP111.00"
+                            }
+                        },
                     },
                     {
                         "cimac_id": "CTTTPP121.00",
@@ -943,20 +962,14 @@ def rna_level1_analysis() -> PrismTestData:
                             "sorted_bam_stat_txt": {
                                 "upload_placeholder": "05050505-0505-0505-0505-CTTTPP121.00"
                             },
-                            "downsampling_bam": {
+                            "transcriptome_bam": {
                                 "upload_placeholder": "16161616-1616-1616-1616-CTTTPP121.00"
                             },
-                            "downsampling_bam_index": {
-                                "upload_placeholder": "17171717-1717-1717-1717-CTTTPP121.00"
+                            "chimeric_out_junction": {
+                                "upload_placeholder": "16161616-1616-1616-1717-CTTTPP121.00"
                             },
                         },
                         "rseqc": {
-                            "downsampling_housekeeping_bam": {
-                                "upload_placeholder": "19191919-1919-1919-1919-CTTTPP121.00"
-                            },
-                            "downsampling_housekeeping_bam_index": {
-                                "upload_placeholder": "20202020-2020-2020-2020-CTTTPP121.00"
-                            },
                             "read_distrib": {
                                 "upload_placeholder": "21212121-2121-2121-2121-CTTTPP121.00"
                             },
@@ -999,6 +1012,31 @@ def rna_level1_analysis() -> PrismTestData:
                                 "upload_placeholder": "33333333-3333-3333-3333-CTTTPP121.00"
                             },
                         },
+                        "microbiome": {
+                            "sample_report": {
+                                "upload_placeholder": "03030303-0303-0303-0000-CTTTPP121.00"
+                            }
+                        },
+                        "trust4": {
+                            "trust4_report": {
+                                "upload_placeholder": "03030303-0303-0303-9999-CTTTPP121.00"
+                            }
+                        },
+                        "neoantigen": {
+                            "genotype": {
+                                "upload_placeholder": "55555555-0303-0303-0303-CTTTPP121.00"
+                            }
+                        },
+                        "msisensor": {
+                            "msisensor_report": {
+                                "upload_placeholder": "55555555-5555-5555-5555-CTTTPP121.00"
+                            }
+                        },
+                        "fusion": {
+                            "fusion_predictions": {
+                                "upload_placeholder": "55555555-6666-6666-6667-CTTTPP121.00"
+                            }
+                        },
                     },
                 ]
             }
@@ -1035,30 +1073,16 @@ def rna_level1_analysis() -> PrismTestData:
                     allow_empty=False,
                 ),
                 LocalFileUploadEntry(
-                    local_path=f"analysis/star/{cimac_id}/{cimac_id}_downsampling.bam",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/star/downsampling.bam",
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}.transcriptome.bam",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/star/transcriptome.bam",
                     upload_placeholder=f"16161616-1616-1616-1616-{cimac_id}",
                     metadata_availability=False,
                     allow_empty=False,
                 ),
                 LocalFileUploadEntry(
-                    local_path=f"analysis/star/{cimac_id}/{cimac_id}_downsampling.bam.bai",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/star/downsampling.bam.bai",
-                    upload_placeholder=f"17171717-1717-1717-1717-{cimac_id}",
-                    metadata_availability=False,
-                    allow_empty=False,
-                ),
-                LocalFileUploadEntry(
-                    local_path=f"analysis/rseqc/{cimac_id}/{cimac_id}_downsampling_housekeeping.bam",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/rseqc/downsampling_housekeeping.bam",
-                    upload_placeholder=f"19191919-1919-1919-1919-{cimac_id}",
-                    metadata_availability=False,
-                    allow_empty=False,
-                ),
-                LocalFileUploadEntry(
-                    local_path=f"analysis/rseqc/{cimac_id}/{cimac_id}_downsampling_housekeeping.bam.bai",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/rseqc/downsampling_housekeeping.bam.bai",
-                    upload_placeholder=f"20202020-2020-2020-2020-{cimac_id}",
+                    local_path=f"analysis/star/{cimac_id}/{cimac_id}.Chimeric.out.junction",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/star/chimeric_out_junction.junction",
+                    upload_placeholder=f"16161616-1616-1616-1717-{cimac_id}",
                     metadata_availability=False,
                     allow_empty=False,
                 ),
@@ -1150,6 +1174,41 @@ def rna_level1_analysis() -> PrismTestData:
                     local_path=f"analysis/salmon/{cimac_id}/logs/salmon_quant.log",
                     gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/salmon/salmon_quant.log",
                     upload_placeholder=f"33333333-3333-3333-3333-{cimac_id}",
+                    metadata_availability=False,
+                    allow_empty=False,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/microbiome/{cimac_id}/{cimac_id}_addSample_report.txt",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/microbiome/addSample_report.txt",
+                    upload_placeholder=f"03030303-0303-0303-0000-{cimac_id}",
+                    metadata_availability=False,
+                    allow_empty=False,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/trust4/{cimac_id}/{cimac_id}_report.tsv",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/trust4/trust4_report.tsv",
+                    upload_placeholder=f"03030303-0303-0303-9999-{cimac_id}",
+                    metadata_availability=False,
+                    allow_empty=False,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/neoantigen/{cimac_id}/{cimac_id}.genotype.json",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/neoantigen/genotype.json",
+                    upload_placeholder=f"55555555-0303-0303-0303-{cimac_id}",
+                    metadata_availability=False,
+                    allow_empty=False,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/msisensor/single/run_{cimac_id}/run_{cimac_id}_msisensor.txt",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/msisensor/msisensor.txt",
+                    upload_placeholder=f"55555555-5555-5555-5555-{cimac_id}",
+                    metadata_availability=False,
+                    allow_empty=False,
+                ),
+                LocalFileUploadEntry(
+                    local_path=f"analysis/fusion/{cimac_id}/{cimac_id}.fusion_predictions.abridged_addSample.tsv",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/fusion/fusion_predictions.tsv",
+                    upload_placeholder=f"55555555-6666-6666-6667-{cimac_id}",
                     metadata_availability=False,
                     allow_empty=False,
                 ),

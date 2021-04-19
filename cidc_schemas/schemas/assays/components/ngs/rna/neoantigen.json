@@ -1,0 +1,16 @@
+{
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "$id": "neoantigen",
+    "title": "RNAseq Neoantigen Output Files",
+    "type": "object",
+    "description": "Neoantigen output sample files.",
+    "properties": {
+      "genotype": {
+        "$ref": "artifacts/artifact_json.json"
+      }
+    },
+    "required": [
+      "genotype"
+    ],
+    "additionalProperties": false
+  }

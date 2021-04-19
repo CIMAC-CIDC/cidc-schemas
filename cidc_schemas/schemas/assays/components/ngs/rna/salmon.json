@@ -33,7 +33,7 @@
           "$ref": "artifacts/artifact_json.json"
       },
       "salmon_quant_log": {
-          "$ref": "artifacts/artifact_text.json"
+          "$ref": "artifacts/artifact_log.json"
       }
   },
   "required": [

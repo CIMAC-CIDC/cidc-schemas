@@ -1,0 +1,16 @@
+{
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "$id": "msisensor",
+    "title": "RNAseq msisensor Output Files",
+    "type": "object",
+    "description": "Msisensor output sample files.",
+    "properties": {
+      "msisensor_report": {
+        "$ref": "artifacts/artifact_text.json"
+      }
+    },
+    "required": [
+      "msisensor_report"
+    ],
+    "additionalProperties": false
+  }

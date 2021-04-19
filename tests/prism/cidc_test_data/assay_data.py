@@ -237,7 +237,7 @@ def cytof_e4412() -> PrismTestData:
                                     "input_files": {
                                         "processed_fcs": {
                                             "upload_placeholder": "97c3b6a6-b03d-4ca1-92f8-b8651e51d0c6"
-                                        },
+                                        }
                                     },
                                     "concatenation_version": "GHIL",
                                     "normalization_version": "ABC",
@@ -278,7 +278,7 @@ def cytof_e4412() -> PrismTestData:
                                     "input_files": {
                                         "processed_fcs": {
                                             "upload_placeholder": "0bbd7520-18b9-4ec3-8344-49f02dcadb08"
-                                        },
+                                        }
                                     },
                                     "concatenation_version": "GHIL",
                                     "normalization_version": "ABC",

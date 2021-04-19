@@ -1,0 +1,16 @@
+{
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "$id": "trust4",
+    "title": "RNAseq Trust4 Output Files",
+    "type": "object",
+    "description": "Trust4 output sample files.",
+    "properties": {
+      "trust4_report": {
+        "$ref": "artifacts/artifact_tsv.json"
+      }
+    },
+    "required": [
+      "trust4_report"
+    ],
+    "additionalProperties": false
+  }

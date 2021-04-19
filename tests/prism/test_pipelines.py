@@ -164,7 +164,7 @@ def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, templ
 
     full_ct, errs = merger.merge_clinical_trial_metadata(patch_with_artifacts, full_ct)
 
-    assert 0 == len(errs)
+    assert 0 == len(errs), "\n".join(errs)
 
     res = pipelines.generate_analysis_configs_from_upload_patch(
         full_ct, patch_with_artifacts, template.type, "my-biofx-bucket"

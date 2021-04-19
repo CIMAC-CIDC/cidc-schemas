@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>RNAseq Microbiome Output Files</h1>
+        <h1>RNAseq Neoantigen Output Files</h1>
         <p>
-            <b>Description:</b>  Microbiome output sample files.
+            <b>Description:</b>  Neoantigen output sample files.
         </p>
         
     </div>
@@ -65,8 +65,8 @@
                 <tr>
     <td>
         
-            <span id="sample_report">
-                sample_report
+            <span id="genotype">
+                genotype
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -75,12 +75,12 @@
     </td>
     <td width=55%>
         
-            Information about a text file.
+            Information about a JSON file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
+            <a href="artifacts.artifact_json.html">artifacts.artifact_json</a>
         
     </td>
 </tr>
@@ -95,15 +95,15 @@
   </div>
 
   <div class="container">
-    <h3>microbiome.full.json</h3>
+    <h3>neoantigen.full.json</h3>
   	<pre><code>{
-    "$id": "microbiome",
+    "$id": "neoantigen",
     "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
-    "description": "Microbiome output sample files.",
+    "description": "Neoantigen output sample files.",
     "properties": {
-        "sample_report": {
-            "$id": "text_artifact",
+        "genotype": {
+            "$id": "json_artifact",
             "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
@@ -237,7 +237,7 @@
                     "type": "object"
                 }
             ],
-            "description": "Information about a text file.",
+            "description": "Information about a JSON file.",
             "mergeStrategy": "objectMerge",
             "properties": {
                 "artifact_category": {
@@ -264,7 +264,7 @@
                     "type": "string"
                 },
                 "data_format": {
-                    "const": "TEXT",
+                    "const": "JSON",
                     "description": "Data format."
                 },
                 "facet_group": {
@@ -311,14 +311,14 @@
                     "type": "boolean"
                 }
             },
-            "title": "Text Artifact",
+            "title": "JSON Artifact",
             "type": "object"
         }
     },
     "required": [
-        "sample_report"
+        "genotype"
     ],
-    "title": "RNAseq Microbiome Output Files",
+    "title": "RNAseq Neoantigen Output Files",
     "type": "object"
 }</code></pre>
   </div>

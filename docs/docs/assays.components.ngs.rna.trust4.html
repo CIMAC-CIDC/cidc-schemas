@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>RNAseq Microbiome Output Files</h1>
+        <h1>RNAseq Trust4 Output Files</h1>
         <p>
-            <b>Description:</b>  Microbiome output sample files.
+            <b>Description:</b>  Trust4 output sample files.
         </p>
         
     </div>
@@ -65,8 +65,8 @@
                 <tr>
     <td>
         
-            <span id="sample_report">
-                sample_report
+            <span id="trust4_report">
+                trust4_report
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -75,12 +75,12 @@
     </td>
     <td width=55%>
         
-            Information about a text file.
+            Information about a tab Separated file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
+            <a href="artifacts.artifact_tsv.html">artifacts.artifact_tsv</a>
         
     </td>
 </tr>
@@ -95,15 +95,15 @@
   </div>
 
   <div class="container">
-    <h3>microbiome.full.json</h3>
+    <h3>trust4.full.json</h3>
   	<pre><code>{
-    "$id": "microbiome",
+    "$id": "trust4",
     "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
-    "description": "Microbiome output sample files.",
+    "description": "Trust4 output sample files.",
     "properties": {
-        "sample_report": {
-            "$id": "text_artifact",
+        "trust4_report": {
+            "$id": "tsv_artifact",
             "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
@@ -237,7 +237,7 @@
                     "type": "object"
                 }
             ],
-            "description": "Information about a text file.",
+            "description": "Information about a tab Separated file.",
             "mergeStrategy": "objectMerge",
             "properties": {
                 "artifact_category": {
@@ -264,7 +264,7 @@
                     "type": "string"
                 },
                 "data_format": {
-                    "const": "TEXT",
+                    "const": "TSV",
                     "description": "Data format."
                 },
                 "facet_group": {
@@ -311,14 +311,14 @@
                     "type": "boolean"
                 }
             },
-            "title": "Text Artifact",
+            "title": "TSV Artifact",
             "type": "object"
         }
     },
     "required": [
-        "sample_report"
+        "trust4_report"
     ],
-    "title": "RNAseq Microbiome Output Files",
+    "title": "RNAseq Trust4 Output Files",
     "type": "object"
 }</code></pre>
   </div>

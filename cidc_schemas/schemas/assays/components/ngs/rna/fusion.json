@@ -1,0 +1,16 @@
+{
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "$id": "fusion",
+    "title": "RNAseq Fusion Output Files",
+    "type": "object",
+    "description": "Fusion output sample files.",
+    "properties": {
+      "fusion_predictions": {
+        "$ref": "artifacts/artifact_tsv.json"
+      }
+    },
+    "required": [
+      "fusion_predictions"
+    ],
+    "additionalProperties": false
+  }

@@ -18,12 +18,32 @@
     },
     "salmon": {
       "$ref": "assays/components/ngs/rna/salmon.json"
+    },
+    "microbiome": {
+      "$ref": "assays/components/ngs/rna/microbiome.json"
+    },
+    "trust4": {
+      "$ref": "assays/components/ngs/rna/trust4.json"
+    },
+    "neoantigen": {
+      "$ref": "assays/components/ngs/rna/neoantigen.json"
+    },
+    "msisensor": {
+      "$ref": "assays/components/ngs/rna/msisensor.json"
+    },
+    "fusion":{
+      "$ref": "assays/components/ngs/rna/fusion.json"
     }
   },
   "required": [
     "cimac_id",
     "star",
     "rseqc",
-    "salmon"
+    "salmon",
+    "microbiome",
+    "trust4",
+    "neoantigen",
+    "msisensor",
+    "fusion"
   ]
 }

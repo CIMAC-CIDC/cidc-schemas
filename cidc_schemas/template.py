@@ -251,6 +251,7 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
         "wes_meta/02_": "",
         "json/wes.json": "wes_sample.json",
         "vcfcompare": "vcf_compare",
+        "trust4/": "trust4/trust4_"
     }
     for old, new in fixes.items():
         file_path = file_path.replace(old, new)

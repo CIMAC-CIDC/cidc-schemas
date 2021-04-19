@@ -948,7 +948,7 @@ def rna_level1_analysis() -> PrismTestData:
                             "fusion_prediction": {
                                 "upload_placeholder": "55555555-6666-6666-6667-CTTTPP111.00"
                             }
-                        }
+                        },
                     },
                     {
                         "cimac_id": "CTTTPP121.00",
@@ -1036,7 +1036,7 @@ def rna_level1_analysis() -> PrismTestData:
                             "fusion_prediction": {
                                 "upload_placeholder": "55555555-6666-6666-6667-CTTTPP121.00"
                             }
-                        }
+                        },
                     },
                 ]
             }
@@ -1211,7 +1211,7 @@ def rna_level1_analysis() -> PrismTestData:
                     upload_placeholder="55555555-6666-6666-6667-{cimac_id}",
                     metadata_availability=False,
                     allow_empty=True,
-                )
+                ),
             ]
             for cimac_id in cimac_ids
         ],

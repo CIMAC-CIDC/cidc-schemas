@@ -946,7 +946,7 @@ def rna_level1_analysis() -> PrismTestData:
                         },
                         "fusion": {
                             "fusion_prediction": {
-                                "upload_placeholder": "55555555-6666-6666-6666-CTTTPP111.00"
+                                "upload_placeholder": "55555555-6666-6666-6667-CTTTPP111.00"
                             }
                         }
                     },
@@ -1034,7 +1034,7 @@ def rna_level1_analysis() -> PrismTestData:
                         },
                         "fusion": {
                             "fusion_prediction": {
-                                "upload_placeholder": "55555555-6666-6666-6666-CTTTPP121.00"
+                                "upload_placeholder": "55555555-6666-6666-6667-CTTTPP121.00"
                             }
                         }
                     },
@@ -1182,35 +1182,35 @@ def rna_level1_analysis() -> PrismTestData:
                     gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/microbiome/addSample_report.txt",
                     upload_placeholder=f"03030303-0303-0303-0000-{cimac_id}",
                     metadata_availability=False,
-                    allow_empty=False,
+                    allow_empty=True,
                 ),
                 LocalFileUploadEntry(
                     local_path=f"analysis/trust4/{cimac_id}/{cimac_id}_report.tsv",
                     gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/trust4/trust4_report.tsv",
                     upload_placeholder=f"03030303-0303-0303-9999-{cimac_id}",
                     metadata_availability=False,
-                    allow_empty=False,
+                    allow_empty=True,
                 ),
                 LocalFileUploadEntry(
                     local_path=f"analysis/neoantigen/{cimac_id}/{cimac_id}.genotype.json",
                     gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/neoantigen/genotype.json",
                     upload_placeholder=f"55555555-0303-0303-0303-{cimac_id}",
                     metadata_availability=False,
-                    allow_empty=False,
+                    allow_empty=True,
                 ),
                 LocalFileUploadEntry(
                     local_path=f"analysis/msisensor/single/run_{cimac_id}/run_{cimac_id}_msisensor.txt",
                     gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/msisensor/msisensor.txt",
                     upload_placeholder=f"55555555-5555-5555-5555-{cimac_id}",
                     metadata_availability=False,
-                    allow_empty=False,
+                    allow_empty=True,
                 ),
                 LocalFileUploadEntry(
                     local_path=f"analysis/fusion/{cimac_id}/{cimac_id}.fusion_predictions.abridged_addSample.tsv",
                     gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/fusion/fusion_prediction.tsv",
-                    upload_placeholder="55555555-6666-6666-6666-{cimac_id}",
+                    upload_placeholder="55555555-6666-6666-6667-{cimac_id}",
                     metadata_availability=False,
-                    allow_empty=False,
+                    allow_empty=True,
                 )
             ]
             for cimac_id in cimac_ids

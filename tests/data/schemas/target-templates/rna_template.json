@@ -59,7 +59,7 @@
                                 {
                                     "parse_through": "lambda id: f'analysis/star/{id}/{id}.Chimeric.out.junction'",
                                     "merge_pointer": "0/star/chimeric_out_junction",
-                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/star/chimeric_out_junction.junction",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/star/chimeric_out.junction",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
@@ -157,7 +157,7 @@
                                 {
                                     "parse_through": "lambda id: f'analysis/microbiome/{id}/{id}_addSample_report.txt'",
                                     "merge_pointer": "0/microbiome/sample_report",
-                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/microbiome/addSample_report.txt",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/microbiome/sample_report.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
@@ -169,23 +169,23 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/neoantigen/{id}/{id}.genotype.json'",
-                                    "merge_pointer": "0/neoantigen/genotype",
-                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/neoantigen/genotype.json",
+                                    "parse_through": "lambda id: f'analysis/fusion/{id}/{id}.fusion_predictions.abridged_addSample.tsv'",
+                                    "merge_pointer": "0/fusion/fusion_predictions",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/fusion/fusion_predictions.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda id: f'analysis/msisensor/single/run_{id}/run_{id}_msisensor.txt'",
                                     "merge_pointer": "0/msisensor/msisensor_report",
-                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/msisensor/msisensor.txt",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/msisensor/msisensor_report.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda id: f'analysis/fusion/{id}/{id}.fusion_predictions.abridged_addSample.tsv'",
-                                    "merge_pointer": "0/fusion/fusion_prediction",
-                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/fusion/fusion_prediction.tsv",
+                                    "parse_through": "lambda id: f'analysis/neoantigen/{id}/{id}.genotype.json'",
+                                    "merge_pointer": "0/neoantigen/genotype",
+                                    "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/neoantigen/genotype.json",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 }

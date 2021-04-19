@@ -44,7 +44,7 @@ elisa_file_path_1 = os.path.join(TEST_DATA_DIR, "elisa_test_file.1.xlsx")
 elisa_file_path_2 = os.path.join(TEST_DATA_DIR, "elisa_test_file.2.xlsx")
 elisa_metadata_1 = {
     "number_of_samples": 3,
-    "samples": ["CTTTP01A1.00", "CTTTP01A2.00", "CTTTP01A3.00",],
+    "samples": ["CTTTP01A1.00", "CTTTP01A2.00", "CTTTP01A3.00"],
 }
 elisa_metadata_2 = {
     "number_of_samples": 7,

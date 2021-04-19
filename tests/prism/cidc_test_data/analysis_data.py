@@ -927,7 +927,7 @@ def rna_level1_analysis() -> PrismTestData:
                         "microbiome": {
                             "sample_report": {
                                 "upload_placeholder": "03030303-0303-0303-0000-CTTTPP111.00"
-                            },
+                            }
                         },
                         "trust4": {
                             "trust4_report": {
@@ -945,7 +945,7 @@ def rna_level1_analysis() -> PrismTestData:
                             }
                         },
                         "fusion": {
-                            "fusion_prediction": {
+                            "fusion_predictions": {
                                 "upload_placeholder": "55555555-6666-6666-6667-CTTTPP111.00"
                             }
                         },
@@ -1015,7 +1015,7 @@ def rna_level1_analysis() -> PrismTestData:
                         "microbiome": {
                             "sample_report": {
                                 "upload_placeholder": "03030303-0303-0303-0000-CTTTPP121.00"
-                            },
+                            }
                         },
                         "trust4": {
                             "trust4_report": {
@@ -1033,7 +1033,7 @@ def rna_level1_analysis() -> PrismTestData:
                             }
                         },
                         "fusion": {
-                            "fusion_prediction": {
+                            "fusion_predictions": {
                                 "upload_placeholder": "55555555-6666-6666-6667-CTTTPP121.00"
                             }
                         },
@@ -1207,7 +1207,7 @@ def rna_level1_analysis() -> PrismTestData:
                 ),
                 LocalFileUploadEntry(
                     local_path=f"analysis/fusion/{cimac_id}/{cimac_id}.fusion_predictions.abridged_addSample.tsv",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/fusion/fusion_prediction.tsv",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/fusion/fusion_predictions.tsv",
                     upload_placeholder=f"55555555-6666-6666-6667-{cimac_id}",
                     metadata_availability=False,
                     allow_empty=True,

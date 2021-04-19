@@ -262,7 +262,7 @@ def test_v0_23_18_to_v0_24_0():
                                 "object_url": "test-trial/chip_1234/assay_raw_ct.xlsx",
                                 "foo": "bar",
                             },
-                        },
+                        }
                     },
                     {
                         "files": {
@@ -272,7 +272,7 @@ def test_v0_23_18_to_v0_24_0():
                     },
                 ],
             }
-        },
+        }
     }
 
     target_ct = {
@@ -298,7 +298,7 @@ def test_v0_23_18_to_v0_24_0():
                                         "object_url": "test-trial/batch_1/chip_1234/assay_raw_ct.xlsx",
                                         "foo": "bar",
                                     },
-                                },
+                                }
                             },
                             {
                                 "files": {
@@ -310,7 +310,7 @@ def test_v0_23_18_to_v0_24_0():
                     }
                 ],
             }
-        },
+        }
     }
 
     result = v0_23_18_to_v0_24_0.upgrade(ct)

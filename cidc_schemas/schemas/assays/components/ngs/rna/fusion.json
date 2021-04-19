@@ -5,12 +5,12 @@
     "type": "object",
     "description": "Fusion output sample files.",
     "properties": {
-      "fusion_prediction": {
+      "fusion_predictions": {
         "$ref": "artifacts/artifact_tsv.json"
       }
     },
     "required": [
-      "fusion_prediction"
+      "fusion_predictions"
     ],
     "additionalProperties": false
   }

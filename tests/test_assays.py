@@ -394,7 +394,7 @@ def test_cytof_e4412():
     analysis["data_format"] = "ZIP"
     participant = {
         "cimac_participant_id": "CTTTPPP",
-        "control": {"input_files": {"processed_fcs": fcs_2},},
+        "control": {"input_files": {"processed_fcs": fcs_2}},
         "samples": [
             {
                 "cimac_id": "CTTTPPPSA.00",

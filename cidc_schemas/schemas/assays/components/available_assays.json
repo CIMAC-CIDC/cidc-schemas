@@ -56,6 +56,17 @@
         "idRef": "batch_id"
       }
     },
+    "cytof_s1609": {
+      "type": "array",
+      "description": "Information about the acquisition and analysis CyTOF data for S1609 and similarly formatted trials.",
+      "items": {
+        "$ref": "assays/cytof_s1609_assay.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "batch_id"
+      }
+    },
     "elisa": {
       "type": "array",
       "description": "Base information about the acquisition and analysis of ELISA data.",

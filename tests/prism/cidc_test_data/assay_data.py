@@ -721,7 +721,10 @@ def wes_fastq() -> PrismTestData:
                                 "r2": [
                                     {
                                         "upload_placeholder": "82bc1123-55e2-4640-a9c9-a259d5756a86"
-                                    }
+                                    },
+                                    {
+                                        "upload_placeholder": "92bc1123-55e2-4640-a9c9-a259d5756a86"
+                                    },
                                 ],
                             },
                             "sequencing_date": "2010-01-01 00:00:00",
@@ -741,7 +744,10 @@ def wes_fastq() -> PrismTestData:
                                 "r2": [
                                     {
                                         "upload_placeholder": "5eb4b639-c2a4-48f8-85f8-e9a04f5233c6"
-                                    }
+                                    },
+                                    {
+                                        "upload_placeholder": "6eb4b639-c2a4-48f8-85f8-e9a04f5233c6"
+                                    },
                                 ],
                             },
                             "sequencing_date": "2010-01-01 00:00:00",
@@ -762,43 +768,57 @@ def wes_fastq() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="/local/path/to/fwd.1.1.1.fastq.gz",
-            gs_key="test_prism_trial_id/wes/CTTTPP111.00/r1_0.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP111.00/r1_L1.fastq.gz",
             upload_placeholder="3c8b4fe4-780a-4431-908f-aa879c01c009",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/fwd.1.1.1_2.fastq.gz",
-            gs_key="test_prism_trial_id/wes/CTTTPP111.00/r1_1.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP111.00/r1_L2.fastq.gz",
             upload_placeholder="c665c9ca-7065-46b8-b1c8-b871e15db294",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/rev.1.1.1.fastq.gz",
-            gs_key="test_prism_trial_id/wes/CTTTPP111.00/r2_0.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP111.00/r2_L1.fastq.gz",
             upload_placeholder="82bc1123-55e2-4640-a9c9-a259d5756a86",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
+            local_path="/local/path/to/rev.1.1.1_2.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP111.00/r2_L2.fastq.gz",
+            upload_placeholder="92bc1123-55e2-4640-a9c9-a259d5756a86",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
             local_path="/local/path/to/fwd.1.2.1.fastq.gz",
-            gs_key="test_prism_trial_id/wes/CTTTPP121.00/r1_0.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP121.00/r1_L1.fastq.gz",
             upload_placeholder="4d57fa58-5dd4-4379-878d-935d79d2507f",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/fwd.1.2.1_2.fastq.gz",
-            gs_key="test_prism_trial_id/wes/CTTTPP121.00/r1_1.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP121.00/r1_L2.fastq.gz",
             upload_placeholder="c24a1b3d-a19a-414a-9fc4-55bcbb7db9ec",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="/local/path/to/rev.1.2.1.fastq.gz",
-            gs_key="test_prism_trial_id/wes/CTTTPP121.00/r2_0.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP121.00/r2_L1.fastq.gz",
             upload_placeholder="5eb4b639-c2a4-48f8-85f8-e9a04f5233c6",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/rev.1.2.1_2.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP121.00/r2_L2.fastq.gz",
+            upload_placeholder="6eb4b639-c2a4-48f8-85f8-e9a04f5233c6",
             metadata_availability=False,
             allow_empty=False,
         ),

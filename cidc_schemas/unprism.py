@@ -178,12 +178,19 @@ def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
                 index_col=0,  # these are the sample ids
                 engine="openpyxl",  # default engine doesn't handle xlsx
             )
+
+            # use this to capture cases where the column name changes in spacing / capitalization
+            ## needed because some data has 'OlinkID' while the standard seems to call for 'Olink ID'
+            olink_id = df.index[df.index.str.lower().str.replace(" ", "") == "olinkid"][
+                0
+            ]
+
             df.columns = pd.MultiIndex.from_tuples(
                 [
                     (
                         c,  # this is `Assay` due to header=3 above
                         df.loc["Uniprot ID", c],
-                        df.loc["Olink ID", c],
+                        df.loc[olink_id, c],
                         df.loc["LOD", c],
                     )
                     for c in df.columns

@@ -143,7 +143,8 @@ def test_derive_files_olink():
     }
 
     header = "CIMAC_10021_IO,Olink NPX Manager 2.0.1.175,\nNPX data,,\nPanel,Olink IMMUNO-ONCOLOGY(v.3111),Olink IMMUNO-ONCOLOGY(v.3111)\n"
-    columns = "Assay,IL8,Inc Ctrl 1\nUniprot ID,P10145,-\nOlink ID,OID00752,\n\n"
+    columns = "Assay,IL8,Inc Ctrl 1\nUniprot ID,P10145,-\nOlinkID,OID00752,\n\n"  # missing space in 'OlinkID' to mimic received data
+    columns_space = "Assay,IL8,Inc Ctrl 1\nUniprot ID,P10145,-\nOlink ID,OID00752,\n\n"  # with space follows standard
     columns_after = "Assay,IL8\nUniprot ID,P10145\nOlink ID,OID00752\nLOD,1.15432\n"
     non_cimac = "NC1,-0.64245,-0.06713\n"
     cimac1 = "CNNNNNNNN.01,8.14109,0\n"
@@ -157,7 +158,9 @@ def test_derive_files_olink():
         if url == "foo":
             df = pd.read_csv(StringIO(header + columns + cimac1 + cimac2 + footer))
         elif url == "bar":
-            df = pd.read_csv(StringIO(header + columns + non_cimac + cimac1 + footer))
+            df = pd.read_csv(
+                StringIO(header + columns_space + non_cimac + cimac1 + footer)
+            )
         else:
             df = pd.read_csv(
                 StringIO(header + columns + non_cimac + cimac1 + cimac2 + footer)

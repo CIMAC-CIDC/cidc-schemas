@@ -118,43 +118,6 @@
             
         
             
-                <tr>
-    <td>
-        
-            <span id="sequencing_protocol">
-                sequencing_protocol
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Protocol and version used for the sequencing.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-                    <li>"Express Somatic Human WES (Deep Coverage) v1.1"</li>
-                
-                    <li>"Somatic Human WES v6"</li>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
         
             
                 <tr>
@@ -186,6 +149,8 @@
                     <li>"whole_exome_illumina_coding_v1"</li>
                 
                     <li>"broad_custom_exome_v1"</li>
+                
+                    <li>"TWIST Dana Farber Custom Panel"</li>
                 
             </ul>
             
@@ -367,6 +332,41 @@
             
         
             
+                <tr>
+    <td>
+        
+            <span id="sequencing_protocol">
+                sequencing_protocol
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Protocol and version used for the sequencing.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Express Somatic Human WES (Deep Coverage) v1.1"</li>
+                
+                    <li>"Somatic Human WES v6"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
         
             
         
@@ -421,7 +421,8 @@
                     "enum": [
                         "Hyper Prep ICE Exome Express: 1.0",
                         "KAPA HyperPrep",
-                        "IDT duplex UMI adapters"
+                        "IDT duplex UMI adapters",
+                        "TWIST"
                     ],
                     "type": "string"
                 },
@@ -470,7 +471,8 @@
             "description": "Bait set ID.",
             "enum": [
                 "whole_exome_illumina_coding_v1",
-                "broad_custom_exome_v1"
+                "broad_custom_exome_v1",
+                "TWIST Dana Farber Custom Panel"
             ],
             "type": "string"
         },
@@ -480,7 +482,8 @@
             "enum": [
                 "Hyper Prep ICE Exome Express: 1.0",
                 "KAPA HyperPrep",
-                "IDT duplex UMI adapters"
+                "IDT duplex UMI adapters",
+                "TWIST"
             ],
             "type": "string"
         },
@@ -553,23 +556,19 @@
                                                     "anyOf": [
                                                         {
                                                             "required": [
-                                                                "file_name",
                                                                 "object_url",
                                                                 "uploaded_timestamp",
                                                                 "file_size_bytes",
                                                                 "artifact_category",
-                                                                "data_format",
                                                                 "md5_hash"
                                                             ]
                                                         },
                                                         {
                                                             "required": [
-                                                                "file_name",
                                                                 "object_url",
                                                                 "uploaded_timestamp",
                                                                 "file_size_bytes",
                                                                 "artifact_category",
-                                                                "data_format",
                                                                 "crc32c_hash"
                                                             ]
                                                         },
@@ -626,6 +625,7 @@
                                                                 "ZIP",
                                                                 "FCS",
                                                                 "GZ",
+                                                                "RCC",
                                                                 "JSON",
                                                                 "YAML",
                                                                 "[NOT SET]"
@@ -757,6 +757,7 @@
                                             "title": "BAM Artifact",
                                             "type": "object"
                                         },
+                                        "mergeStrategy": "append",
                                         "minItems": 1,
                                         "type": "array"
                                     },
@@ -773,23 +774,19 @@
                                                     "anyOf": [
                                                         {
                                                             "required": [
-                                                                "file_name",
                                                                 "object_url",
                                                                 "uploaded_timestamp",
                                                                 "file_size_bytes",
                                                                 "artifact_category",
-                                                                "data_format",
                                                                 "md5_hash"
                                                             ]
                                                         },
                                                         {
                                                             "required": [
-                                                                "file_name",
                                                                 "object_url",
                                                                 "uploaded_timestamp",
                                                                 "file_size_bytes",
                                                                 "artifact_category",
-                                                                "data_format",
                                                                 "crc32c_hash"
                                                             ]
                                                         },
@@ -846,6 +843,7 @@
                                                                 "ZIP",
                                                                 "FCS",
                                                                 "GZ",
+                                                                "RCC",
                                                                 "JSON",
                                                                 "YAML",
                                                                 "[NOT SET]"
@@ -977,6 +975,7 @@
                                             "title": "Gzipped FastQ Artifact",
                                             "type": "object"
                                         },
+                                        "mergeStrategy": "append",
                                         "minItems": 1,
                                         "type": "array"
                                     },
@@ -993,23 +992,19 @@
                                                     "anyOf": [
                                                         {
                                                             "required": [
-                                                                "file_name",
                                                                 "object_url",
                                                                 "uploaded_timestamp",
                                                                 "file_size_bytes",
                                                                 "artifact_category",
-                                                                "data_format",
                                                                 "md5_hash"
                                                             ]
                                                         },
                                                         {
                                                             "required": [
-                                                                "file_name",
                                                                 "object_url",
                                                                 "uploaded_timestamp",
                                                                 "file_size_bytes",
                                                                 "artifact_category",
-                                                                "data_format",
                                                                 "crc32c_hash"
                                                             ]
                                                         },
@@ -1066,6 +1061,7 @@
                                                                 "ZIP",
                                                                 "FCS",
                                                                 "GZ",
+                                                                "RCC",
                                                                 "JSON",
                                                                 "YAML",
                                                                 "[NOT SET]"
@@ -1197,6 +1193,7 @@
                                             "title": "Gzipped FastQ Artifact",
                                             "type": "object"
                                         },
+                                        "mergeStrategy": "append",
                                         "minItems": 1,
                                         "type": "array"
                                     }
@@ -1258,23 +1255,19 @@
                                             "anyOf": [
                                                 {
                                                     "required": [
-                                                        "file_name",
                                                         "object_url",
                                                         "uploaded_timestamp",
                                                         "file_size_bytes",
                                                         "artifact_category",
-                                                        "data_format",
                                                         "md5_hash"
                                                     ]
                                                 },
                                                 {
                                                     "required": [
-                                                        "file_name",
                                                         "object_url",
                                                         "uploaded_timestamp",
                                                         "file_size_bytes",
                                                         "artifact_category",
-                                                        "data_format",
                                                         "crc32c_hash"
                                                     ]
                                                 },
@@ -1331,6 +1324,7 @@
                                                         "ZIP",
                                                         "FCS",
                                                         "GZ",
+                                                        "RCC",
                                                         "JSON",
                                                         "YAML",
                                                         "[NOT SET]"
@@ -1462,6 +1456,7 @@
                                     "title": "BAM Artifact",
                                     "type": "object"
                                 },
+                                "mergeStrategy": "append",
                                 "minItems": 1,
                                 "type": "array"
                             },
@@ -1478,23 +1473,19 @@
                                             "anyOf": [
                                                 {
                                                     "required": [
-                                                        "file_name",
                                                         "object_url",
                                                         "uploaded_timestamp",
                                                         "file_size_bytes",
                                                         "artifact_category",
-                                                        "data_format",
                                                         "md5_hash"
                                                     ]
                                                 },
                                                 {
                                                     "required": [
-                                                        "file_name",
                                                         "object_url",
                                                         "uploaded_timestamp",
                                                         "file_size_bytes",
                                                         "artifact_category",
-                                                        "data_format",
                                                         "crc32c_hash"
                                                     ]
                                                 },
@@ -1551,6 +1542,7 @@
                                                         "ZIP",
                                                         "FCS",
                                                         "GZ",
+                                                        "RCC",
                                                         "JSON",
                                                         "YAML",
                                                         "[NOT SET]"
@@ -1682,6 +1674,7 @@
                                     "title": "Gzipped FastQ Artifact",
                                     "type": "object"
                                 },
+                                "mergeStrategy": "append",
                                 "minItems": 1,
                                 "type": "array"
                             },
@@ -1698,23 +1691,19 @@
                                             "anyOf": [
                                                 {
                                                     "required": [
-                                                        "file_name",
                                                         "object_url",
                                                         "uploaded_timestamp",
                                                         "file_size_bytes",
                                                         "artifact_category",
-                                                        "data_format",
                                                         "md5_hash"
                                                     ]
                                                 },
                                                 {
                                                     "required": [
-                                                        "file_name",
                                                         "object_url",
                                                         "uploaded_timestamp",
                                                         "file_size_bytes",
                                                         "artifact_category",
-                                                        "data_format",
                                                         "crc32c_hash"
                                                     ]
                                                 },
@@ -1771,6 +1760,7 @@
                                                         "ZIP",
                                                         "FCS",
                                                         "GZ",
+                                                        "RCC",
                                                         "JSON",
                                                         "YAML",
                                                         "[NOT SET]"
@@ -1902,6 +1892,7 @@
                                     "title": "Gzipped FastQ Artifact",
                                     "type": "object"
                                 },
+                                "mergeStrategy": "append",
                                 "minItems": 1,
                                 "type": "array"
                             }
@@ -1932,23 +1923,19 @@
                                                 "anyOf": [
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "md5_hash"
                                                         ]
                                                     },
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "crc32c_hash"
                                                         ]
                                                     },
@@ -2005,6 +1992,7 @@
                                                             "ZIP",
                                                             "FCS",
                                                             "GZ",
+                                                            "RCC",
                                                             "JSON",
                                                             "YAML",
                                                             "[NOT SET]"
@@ -2147,23 +2135,19 @@
                                                 "anyOf": [
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "md5_hash"
                                                         ]
                                                     },
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "crc32c_hash"
                                                         ]
                                                     },
@@ -2220,6 +2204,7 @@
                                                             "ZIP",
                                                             "FCS",
                                                             "GZ",
+                                                            "RCC",
                                                             "JSON",
                                                             "YAML",
                                                             "[NOT SET]"
@@ -2362,23 +2347,19 @@
                                                 "anyOf": [
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "md5_hash"
                                                         ]
                                                     },
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "crc32c_hash"
                                                         ]
                                                     },
@@ -2435,6 +2416,7 @@
                                                             "ZIP",
                                                             "FCS",
                                                             "GZ",
+                                                            "RCC",
                                                             "JSON",
                                                             "YAML",
                                                             "[NOT SET]"
@@ -2577,23 +2559,19 @@
                                                 "anyOf": [
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "md5_hash"
                                                         ]
                                                     },
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "crc32c_hash"
                                                         ]
                                                     },
@@ -2650,6 +2628,7 @@
                                                             "ZIP",
                                                             "FCS",
                                                             "GZ",
+                                                            "RCC",
                                                             "JSON",
                                                             "YAML",
                                                             "[NOT SET]"
@@ -2814,23 +2793,19 @@
                                                 "anyOf": [
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "md5_hash"
                                                         ]
                                                     },
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "crc32c_hash"
                                                         ]
                                                     },
@@ -2887,6 +2862,7 @@
                                                             "ZIP",
                                                             "FCS",
                                                             "GZ",
+                                                            "RCC",
                                                             "JSON",
                                                             "YAML",
                                                             "[NOT SET]"
@@ -3042,23 +3018,19 @@
                                                 "anyOf": [
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "md5_hash"
                                                         ]
                                                     },
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "crc32c_hash"
                                                         ]
                                                     },
@@ -3115,6 +3087,7 @@
                                                             "ZIP",
                                                             "FCS",
                                                             "GZ",
+                                                            "RCC",
                                                             "JSON",
                                                             "YAML",
                                                             "[NOT SET]"
@@ -3257,23 +3230,19 @@
                                                 "anyOf": [
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "md5_hash"
                                                         ]
                                                     },
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "crc32c_hash"
                                                         ]
                                                     },
@@ -3330,6 +3299,7 @@
                                                             "ZIP",
                                                             "FCS",
                                                             "GZ",
+                                                            "RCC",
                                                             "JSON",
                                                             "YAML",
                                                             "[NOT SET]"
@@ -3472,23 +3442,19 @@
                                                 "anyOf": [
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "md5_hash"
                                                         ]
                                                     },
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "crc32c_hash"
                                                         ]
                                                     },
@@ -3545,6 +3511,7 @@
                                                             "ZIP",
                                                             "FCS",
                                                             "GZ",
+                                                            "RCC",
                                                             "JSON",
                                                             "YAML",
                                                             "[NOT SET]"
@@ -3687,23 +3654,19 @@
                                                 "anyOf": [
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "md5_hash"
                                                         ]
                                                     },
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "crc32c_hash"
                                                         ]
                                                     },
@@ -3760,6 +3723,7 @@
                                                             "ZIP",
                                                             "FCS",
                                                             "GZ",
+                                                            "RCC",
                                                             "JSON",
                                                             "YAML",
                                                             "[NOT SET]"
@@ -3902,23 +3866,19 @@
                                                 "anyOf": [
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "md5_hash"
                                                         ]
                                                     },
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "crc32c_hash"
                                                         ]
                                                     },
@@ -3975,6 +3935,7 @@
                                                             "ZIP",
                                                             "FCS",
                                                             "GZ",
+                                                            "RCC",
                                                             "JSON",
                                                             "YAML",
                                                             "[NOT SET]"
@@ -4117,23 +4078,19 @@
                                                 "anyOf": [
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "md5_hash"
                                                         ]
                                                     },
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "crc32c_hash"
                                                         ]
                                                     },
@@ -4190,6 +4147,7 @@
                                                             "ZIP",
                                                             "FCS",
                                                             "GZ",
+                                                            "RCC",
                                                             "JSON",
                                                             "YAML",
                                                             "[NOT SET]"
@@ -4332,23 +4290,19 @@
                                                 "anyOf": [
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "md5_hash"
                                                         ]
                                                     },
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "crc32c_hash"
                                                         ]
                                                     },
@@ -4405,6 +4359,7 @@
                                                             "ZIP",
                                                             "FCS",
                                                             "GZ",
+                                                            "RCC",
                                                             "JSON",
                                                             "YAML",
                                                             "[NOT SET]"
@@ -4547,23 +4502,19 @@
                                                 "anyOf": [
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "md5_hash"
                                                         ]
                                                     },
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "crc32c_hash"
                                                         ]
                                                     },
@@ -4620,6 +4571,7 @@
                                                             "ZIP",
                                                             "FCS",
                                                             "GZ",
+                                                            "RCC",
                                                             "JSON",
                                                             "YAML",
                                                             "[NOT SET]"
@@ -4776,23 +4728,19 @@
                                                 "anyOf": [
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "md5_hash"
                                                         ]
                                                     },
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "crc32c_hash"
                                                         ]
                                                     },
@@ -4849,6 +4797,7 @@
                                                             "ZIP",
                                                             "FCS",
                                                             "GZ",
+                                                            "RCC",
                                                             "JSON",
                                                             "YAML",
                                                             "[NOT SET]"
@@ -4991,23 +4940,19 @@
                                                 "anyOf": [
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "md5_hash"
                                                         ]
                                                     },
                                                     {
                                                         "required": [
-                                                            "file_name",
                                                             "object_url",
                                                             "uploaded_timestamp",
                                                             "file_size_bytes",
                                                             "artifact_category",
-                                                            "data_format",
                                                             "crc32c_hash"
                                                         ]
                                                     },
@@ -5064,6 +5009,7 @@
                                                             "ZIP",
                                                             "FCS",
                                                             "GZ",
+                                                            "RCC",
                                                             "JSON",
                                                             "YAML",
                                                             "[NOT SET]"
@@ -5251,7 +5197,6 @@
     },
     "required": [
         "records",
-        "sequencing_protocol",
         "bait_set",
         "read_length"
     ],

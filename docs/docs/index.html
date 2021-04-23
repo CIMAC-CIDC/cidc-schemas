@@ -55,6 +55,13 @@
                 
                 <tr>
                     
+                        <td width=25%><a href='clinical_data.html'>Clinical Data Assay</a></td>
+                    
+                    <td>Clinical data recorded for a clinical trial</td>
+                </tr>
+                
+                <tr>
+                    
                         <td width=25%><a href='shipping_core.html'>Core Shipping Details</a></td>
                     
                     <td>Core shipping details for a manifest.</td>
@@ -104,6 +111,13 @@
                 
                 <tr>
                     
+                        <td width=25%><a href='artifacts.artifact_clinical_xlsx.html'>Generic clinical data artifact</a></td>
+                    
+                    <td>A file containing clinical information.</td>
+                </tr>
+                
+                <tr>
+                    
                         <td width=25%><a href='artifacts.artifact_vcf_gz.html'>Gzipped VCF Artifact</a></td>
                     
                     <td>Information about a Gzipped VCF file.</td>
@@ -114,6 +128,13 @@
                         <td width=25%><a href='artifacts.artifact_gz.html'>GZ Artifact</a></td>
                     
                     <td>Information about a GZ file.</td>
+                </tr>
+                
+                <tr>
+                    
+                        <td width=25%><a href='artifacts.artifact_junction.html'>JUNCTION Artifact</a></td>
+                    
+                    <td>Information about a JUNCTION file.</td>
                 </tr>
                 
                 <tr>
@@ -188,9 +209,23 @@
                 
                 <tr>
                     
+                        <td width=25%><a href='artifacts.artifact_rcc.html'>RCC Artifact</a></td>
+                    
+                    <td>Information about a Nanostring output file. XML-formatted comma-separated tables</td>
+                </tr>
+                
+                <tr>
+                    
                         <td width=25%><a href='artifacts.artifact_core.html'>Artifact Core</a></td>
                     
                     <td>Any file artifact associated with a clinical trial.</td>
+                </tr>
+                
+                <tr>
+                    
+                        <td width=25%><a href='artifacts.artifact_log.html'>LOG Artifact</a></td>
+                    
+                    <td>Information about a log file.</td>
                 </tr>
                 
                 <tr>
@@ -299,6 +334,27 @@
                 
                 <tr>
                     
+                        <td width=25%><a href='assays.nanostring_assay.html'>Nanostring Assay</a></td>
+                    
+                    <td>A microarray assay for expression levels, suitable for smaller samples than RNA-seq</td>
+                </tr>
+                
+                <tr>
+                    
+                        <td width=25%><a href='assays.cytof_e4412_assay.html'>CYTOF Run</a></td>
+                    
+                    <td>Information about the acquisition and analysis CyTOF data for E4412 and similarly formatted trials.</td>
+                </tr>
+                
+                <tr>
+                    
+                        <td width=25%><a href='assays.cytof_assay_core.html'>CYTOF Run</a></td>
+                    
+                    <td>Base information about the acquisition and analysis CyTOF data.</td>
+                </tr>
+                
+                <tr>
+                    
                         <td width=25%><a href='assays.tcr_assay.html'>TCR Assay</a></td>
                     
                     <td>Additional properties to describe a TCR assay for expression analysis.</td>
@@ -320,9 +376,9 @@
                 
                 <tr>
                     
-                        <td width=25%><a href='assays.cytof_assay.html'>CYTOF Run</a></td>
+                        <td width=25%><a href='assays.cytof_10021_assay.html'>CYTOF Run</a></td>
                     
-                    <td>Base information about the acquisition and analysis CyTOF data.</td>
+                    <td>Information about the acquisition and analysis CyTOF data for 10021 and similarly formatted trials.</td>
                 </tr>
                 
                 <tr>
@@ -462,67 +518,6 @@
                         <td width=25%><a href='assays.components.mif_antibody.html'>mIF antibody</a></td>
                     
                     <td>Data specific to antibody preparation on the multiplex immunofluorescence platform.</td>
-                </tr>
-                
-            </table>
-        
-            <h5>Assays > Components > Elisa</h5>
-            <p>
-
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Entity</th>
-                    <th>Description</th>
-                </tr>
-                </thead>
-                
-                <tr>
-                    
-                        <td width=25%><a href='assays.components.elisa.elisa_antibody.html'>ELISA Antibody</a></td>
-                    
-                    <td>Data specific to antibody preparation on the ELISA assay.</td>
-                </tr>
-                
-            </table>
-        
-            <h5>Assays > Components > Cytof</h5>
-            <p>
-
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Entity</th>
-                    <th>Description</th>
-                </tr>
-                </thead>
-                
-                <tr>
-                    
-                        <td width=25%><a href='assays.components.cytof.cytof_entry.html'>CyTOF assay record</a></td>
-                    
-                    <td>A single data record from CyTOF assay batch.</td>
-                </tr>
-                
-                <tr>
-                    
-                        <td width=25%><a href='assays.components.cytof.cytof_analysis.html'>CyTOF Output Files</a></td>
-                    
-                    <td>Output files generated from the CyTOF assay: FCS file with enumerations for compartment, assignment and profiling cell labels; 3 CSV keys for mapping from respective enumeration indices to the cell labels; 3 CSV files providing cell count information for each of the cell labels</td>
-                </tr>
-                
-                <tr>
-                    
-                        <td width=25%><a href='assays.components.cytof.cytof_input.html'>CyTOF Input Files</a></td>
-                    
-                    <td>CyTOF Assay Input Files</td>
-                </tr>
-                
-                <tr>
-                    
-                        <td width=25%><a href='assays.components.cytof.cytof_antibody.html'>CyTOF Conjugated Antibody</a></td>
-                    
-                    <td>Data specific to antibody preparation on the CyTOF assay.</td>
                 </tr>
                 
             </table>
@@ -816,6 +811,13 @@
                 
                 <tr>
                     
+                        <td width=25%><a href='assays.components.ngs.rna.msisensor.html'>RNAseq msisensor Output Files</a></td>
+                    
+                    <td>Msisensor output sample files.</td>
+                </tr>
+                
+                <tr>
+                    
                         <td width=25%><a href='assays.components.ngs.rna.rna_level1_analysis.html'>RNAseq Level 1 Sample Analysis Output Files</a></td>
                     
                     <td>RNAseq assay output files for a sample level 1 analysis.</td>
@@ -826,6 +828,13 @@
                         <td width=25%><a href='assays.components.ngs.rna.salmon.html'>RNAseq Star Output Files</a></td>
                     
                     <td>Star output sample files.</td>
+                </tr>
+                
+                <tr>
+                    
+                        <td width=25%><a href='assays.components.ngs.rna.fusion.html'>RNAseq Fusion Output Files</a></td>
+                    
+                    <td>Fusion output sample files.</td>
                 </tr>
                 
                 <tr>
@@ -856,6 +865,20 @@
                     <td>Combined analysis files for the whole RNAseq assay.</td>
                 </tr>
                 
+                <tr>
+                    
+                        <td width=25%><a href='assays.components.ngs.rna.trust4.html'>RNAseq Trust4 Output Files</a></td>
+                    
+                    <td>Trust4 output sample files.</td>
+                </tr>
+                
+                <tr>
+                    
+                        <td width=25%><a href='assays.components.ngs.rna.neoantigen.html'>RNAseq Neoantigen Output Files</a></td>
+                    
+                    <td>Neoantigen output sample files.</td>
+                </tr>
+                
             </table>
         
             <h5>Templates</h5>
@@ -884,6 +907,13 @@
                 
                 <tr>
                     
+                        <td width=25%><a href='templates.analyses.cytof_e4412_analysis_template.html'>CyTOF analysis template</a></td>
+                    
+                    <td>Metadata information for CyTOF Analysis output.</td>
+                </tr>
+                
+                <tr>
+                    
                         <td width=25%><a href='templates.analyses.rna_level1_analysis_template.html'>RNAseq level 1 analysis template</a></td>
                     
                     <td>Metadata information for RNAseq level 1 Analysis output.</td>
@@ -891,23 +921,16 @@
                 
                 <tr>
                     
-                        <td width=25%><a href='templates.analyses.rna_analysis_template.html'>RNAseq level 1 analysis template</a></td>
-                    
-                    <td>Metadata information for RNAseq level 1 Analysis output.</td>
-                </tr>
-                
-                <tr>
-                    
-                        <td width=25%><a href='templates.analyses.cytof_analysis_template.html'>CyTOF analysis template</a></td>
-                    
-                    <td>Metadata information for CyTOF Analysis output.</td>
-                </tr>
-                
-                <tr>
-                    
                         <td width=25%><a href='templates.analyses.tcr_analysis_template.html'>TCR analysis template</a></td>
                     
                     <td>Metadata information for TCRseq Analysis output.</td>
+                </tr>
+                
+                <tr>
+                    
+                        <td width=25%><a href='templates.analyses.cytof_10021_analysis_template.html'>CyTOF analysis template</a></td>
+                    
+                    <td>Metadata information for CyTOF Analysis output.</td>
                 </tr>
                 
                 <tr>
@@ -1022,9 +1045,31 @@
                 
                 <tr>
                     
+                        <td width=25%><a href='templates.metadata.cytof_e4412_template.html'>Metadata file for CYTOF</a></td>
+                    
+                    <td>Metadata information for mass-cytometry (CYTOF).</td>
+                </tr>
+                
+                <tr>
+                    
+                        <td width=25%><a href='templates.metadata.cytof_10021_template.html'>Metadata file for CYTOF</a></td>
+                    
+                    <td>Metadata information for mass-cytometry (CYTOF).</td>
+                </tr>
+                
+                <tr>
+                    
                         <td width=25%><a href='templates.metadata.rna_fastq_template.html'>Metadata file for RNA expression [FASTQ].</a></td>
                     
                     <td>Metadata information for rna expression data submission via FASTQ files.</td>
+                </tr>
+                
+                <tr>
+                    
+                        <td width=25%><a href='templates.metadata.nanostring_template.html'>Metadata file for Nanostring</a></td>
+                    
+                    <td>Metadata information for Nanostring analysis.
+</td>
                 </tr>
                 
                 <tr>
@@ -1051,6 +1096,14 @@
                 
                 <tr>
                     
+                        <td width=25%><a href='templates.metadata.clinical_data_template.html'>Metadata file for clincal data</a></td>
+                    
+                    <td>Metadata regarding clinical data.
+</td>
+                </tr>
+                
+                <tr>
+                    
                         <td width=25%><a href='templates.metadata.hande_template.html'>Metadata file for H & E</a></td>
                     
                     <td>Metadata information for H & E analysis.</td>
@@ -1069,13 +1122,6 @@
                         <td width=25%><a href='templates.metadata.wes_fastq_template.html'>Metadata file for WES [FASTQ]</a></td>
                     
                     <td>Metadata information for whole exome sequencing (WES) data submission via FASTQ files.</td>
-                </tr>
-                
-                <tr>
-                    
-                        <td width=25%><a href='templates.metadata.cytof_template.html'>Metadata file for CYTOF</a></td>
-                    
-                    <td>Metadata information for mass-cytometry (CYTOF).</td>
                 </tr>
                 
                 <tr>

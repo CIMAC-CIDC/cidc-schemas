@@ -152,8 +152,8 @@
                 <tr>
     <td>
         
-            <span id="antibodies">
-                antibodies
+            <span id="antigens">
+                antigens
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -162,7 +162,7 @@
     </td>
     <td width=55%>
         
-            Data specific to antibody preparation on the ELISA assay.
+            
         
     </td>
     <td>
@@ -178,7 +178,7 @@
             </ul>
              
                 
-                    <a href="assays.components.elisa.elisa_antibody.html">assays.components.elisa.elisa_antibody</a>
+                    <a href="assays.elisa_assay.html#antigen">assays.elisa_assay#antigen</a>
                 
             
             
@@ -222,6 +222,194 @@
     </table>
 
     
+        
+            <h3>Definitions</h3>
+            <h4 id=".antigen">antigen</h4>
+            
+    
+    
+
+    
+
+    
+        
+    
+
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="antigen">
+                antigen
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Identifying name for the antigen.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="antigen_type">
+                antigen_type
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The type of antigen, either protein or peptide
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"protein"</li>
+                
+                    <li>"peptide"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="final_concentration">
+                final_concentration
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The concentration of the antigen after dilution.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="final_concentration_units">
+                final_concentration_units
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The concentration units for the antigen after dilution.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Nanogram per Microliter"</li>
+                
+                    <li>"Milligram per Milliliter"</li>
+                
+                    <li>"Micrograms per Microliter"</li>
+                
+                    <li>"Nanomolar"</li>
+                
+                    <li>"Micromolar"</li>
+                
+                    <li>"Millimolar"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+    </table>
+        
+    
   </div>
 
   <div class="container">
@@ -255,110 +443,98 @@
             "type": "object"
         }
     ],
+    "definitions": {
+        "antigen": {
+            "additionalProperties": false,
+            "description": "Data specific to antigen preparation on the ELISA assay.",
+            "mergeStrategy": "objectMerge",
+            "properties": {
+                "antigen": {
+                    "description": "Identifying name for the antigen.",
+                    "type": "string"
+                },
+                "antigen_type": {
+                    "description": "The type of antigen, either protein or peptide",
+                    "enum": [
+                        "protein",
+                        "peptide"
+                    ],
+                    "type": "string"
+                },
+                "final_concentration": {
+                    "description": "The concentration of the antigen after dilution.",
+                    "type": "number"
+                },
+                "final_concentration_units": {
+                    "description": "The concentration units for the antigen after dilution.",
+                    "enum": [
+                        "Nanogram per Microliter",
+                        "Milligram per Milliliter",
+                        "Micrograms per Microliter",
+                        "Nanomolar",
+                        "Micromolar",
+                        "Millimolar",
+                        "Not Reported",
+                        "Other"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "antigen",
+                "antigen_type"
+            ],
+            "type": "object"
+        }
+    },
     "description": "High-throughput multiplexed assays for protein biomarker discovery.",
     "mergeStrategy": "objectMerge",
     "properties": {
-        "antibodies": {
-            "description": "Data specific to antibody preparation on the ELISA assay.",
+        "antigens": {
             "items": {
-                "$id": "elisa_antibody",
-                "$schema": "metaschema/strict_meta_schema.json#",
                 "additionalProperties": false,
-                "allOf": [
-                    {
-                        "$id": "antibody",
-                        "$schema": "metaschema/strict_meta_schema.json#",
-                        "description": "Common information about an antibody used in a number of immune-oncology assays.",
-                        "inheritableBase": true,
-                        "properties": {
-                            "antibody": {
-                                "description": "Antibody type collected for this study.",
-                                "type": "string"
-                            },
-                            "cat_num": {
-                                "description": "Antibody registry catalog number assigned to antibody sample.",
-                                "type": "string"
-                            },
-                            "clone": {
-                                "description": "Resulting type of antibody clone from primary antibody sample.",
-                                "type": "string"
-                            },
-                            "company": {
-                                "description": "Company from which antibody sample was derived.",
-                                "type": "string"
-                            },
-                            "lot_num": {
-                                "description": "Identification number assigned to the particular quantity or lot of material from manufacturer.",
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "antibody"
-                        ],
-                        "title": "Antibody",
-                        "type": "object"
-                    }
-                ],
-                "description": "Data specific to antibody preparation on the ELISA assay.",
+                "description": "Data specific to antigen preparation on the ELISA assay.",
                 "mergeStrategy": "objectMerge",
                 "properties": {
-                    "antibody": {
-                        "description": "Antibody type collected for this study.",
+                    "antigen": {
+                        "description": "Identifying name for the antigen.",
                         "type": "string"
                     },
-                    "cat_num": {
-                        "description": "Antibody registry catalog number assigned to antibody sample.",
-                        "type": "string"
-                    },
-                    "clone": {
-                        "description": "Resulting type of antibody clone from primary antibody sample.",
-                        "type": "string"
-                    },
-                    "company": {
-                        "description": "Company from which antibody sample was derived.",
-                        "type": "string"
-                    },
-                    "dilution": {
-                        "description": "Concentration ratio of dilution buffer for primary antibody.",
-                        "type": "string"
-                    },
-                    "isotope": {
-                        "description": "Antibody isotype used to help differentiate antibody signals.",
-                        "type": "string"
-                    },
-                    "lot_num": {
-                        "description": "Identification number assigned to the particular quantity or lot of material from manufacturer.",
-                        "type": "string"
-                    },
-                    "stain_type": {
-                        "description": "Type of staining method used for antibody.",
+                    "antigen_type": {
+                        "description": "The type of antigen, either protein or peptide",
                         "enum": [
-                            "Surface Stain",
-                            "Intracellular"
+                            "protein",
+                            "peptide"
                         ],
                         "type": "string"
                     },
-                    "usage": {
-                        "description": "How this antibody should be used in automatic analysis",
+                    "final_concentration": {
+                        "description": "The concentration of the antigen after dilution.",
+                        "type": "number"
+                    },
+                    "final_concentration_units": {
+                        "description": "The concentration units for the antigen after dilution.",
                         "enum": [
-                            "Ignored",
-                            "Used",
-                            "Analysis Only"
+                            "Nanogram per Microliter",
+                            "Milligram per Milliliter",
+                            "Micrograms per Microliter",
+                            "Nanomolar",
+                            "Micromolar",
+                            "Millimolar",
+                            "Not Reported",
+                            "Other"
                         ],
                         "type": "string"
                     }
                 },
                 "required": [
-                    "isotope",
-                    "dilution",
-                    "stain_type",
-                    "usage"
+                    "antigen",
+                    "antigen_type"
                 ],
-                "title": "ELISA Antibody",
                 "type": "object"
             },
             "mergeOptions": {
-                "idRef": "antibody"
+                "idRef": "antigen"
             },
             "mergeStrategy": "arrayMergeById",
             "type": "array"
@@ -389,23 +565,19 @@
                     "anyOf": [
                         {
                             "required": [
-                                "file_name",
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
                                 "artifact_category",
-                                "data_format",
                                 "md5_hash"
                             ]
                         },
                         {
                             "required": [
-                                "file_name",
                                 "object_url",
                                 "uploaded_timestamp",
                                 "file_size_bytes",
                                 "artifact_category",
-                                "data_format",
                                 "crc32c_hash"
                             ]
                         },
@@ -462,6 +634,7 @@
                                 "ZIP",
                                 "FCS",
                                 "GZ",
+                                "RCC",
                                 "JSON",
                                 "YAML",
                                 "[NOT SET]"
@@ -626,7 +799,7 @@
     "required": [
         "assay_run_id",
         "assay_xlsx",
-        "antibodies"
+        "antigens"
     ],
     "title": "ELISA Assay",
     "type": "object"

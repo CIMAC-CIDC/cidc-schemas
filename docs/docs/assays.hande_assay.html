@@ -62,6 +62,29 @@
         </thead>
         
             
+                <tr>
+    <td>
+        
+            <span id="assay_creator">
+                assay_creator
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates what site is filling out the assay.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.assay_core.html#assay_creator">assays.components.assay_core#assay_creator</a>
+        
+    </td>
+</tr>
+            
         
             
                 <tr>
@@ -103,27 +126,6 @@
             
         
         
-            
-                <tr>
-    <td>
-        
-            <span id="assay_creator">
-                assay_creator
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Indicates what site is filling out the assay.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.assay_core.html#assay_creator">assays.components.assay_core#assay_creator</a>
-        
-    </td>
-</tr>
             
         
             
@@ -320,23 +322,19 @@
                             "anyOf": [
                                 {
                                     "required": [
-                                        "file_name",
                                         "object_url",
                                         "uploaded_timestamp",
                                         "file_size_bytes",
                                         "artifact_category",
-                                        "data_format",
                                         "md5_hash"
                                     ]
                                 },
                                 {
                                     "required": [
-                                        "file_name",
                                         "object_url",
                                         "uploaded_timestamp",
                                         "file_size_bytes",
                                         "artifact_category",
-                                        "data_format",
                                         "crc32c_hash"
                                     ]
                                 },
@@ -393,6 +391,7 @@
                                         "ZIP",
                                         "FCS",
                                         "GZ",
+                                        "RCC",
                                         "JSON",
                                         "YAML",
                                         "[NOT SET]"
@@ -589,23 +588,19 @@
                                     "anyOf": [
                                         {
                                             "required": [
-                                                "file_name",
                                                 "object_url",
                                                 "uploaded_timestamp",
                                                 "file_size_bytes",
                                                 "artifact_category",
-                                                "data_format",
                                                 "md5_hash"
                                             ]
                                         },
                                         {
                                             "required": [
-                                                "file_name",
                                                 "object_url",
                                                 "uploaded_timestamp",
                                                 "file_size_bytes",
                                                 "artifact_category",
-                                                "data_format",
                                                 "crc32c_hash"
                                             ]
                                         },
@@ -662,6 +657,7 @@
                                                 "ZIP",
                                                 "FCS",
                                                 "GZ",
+                                                "RCC",
                                                 "JSON",
                                                 "YAML",
                                                 "[NOT SET]"
@@ -881,23 +877,19 @@
                                         "anyOf": [
                                             {
                                                 "required": [
-                                                    "file_name",
                                                     "object_url",
                                                     "uploaded_timestamp",
                                                     "file_size_bytes",
                                                     "artifact_category",
-                                                    "data_format",
                                                     "md5_hash"
                                                 ]
                                             },
                                             {
                                                 "required": [
-                                                    "file_name",
                                                     "object_url",
                                                     "uploaded_timestamp",
                                                     "file_size_bytes",
                                                     "artifact_category",
-                                                    "data_format",
                                                     "crc32c_hash"
                                                 ]
                                             },
@@ -954,6 +946,7 @@
                                                     "ZIP",
                                                     "FCS",
                                                     "GZ",
+                                                    "RCC",
                                                     "JSON",
                                                     "YAML",
                                                     "[NOT SET]"
@@ -1133,7 +1126,8 @@
         }
     },
     "required": [
-        "records"
+        "records",
+        "assay_creator"
     ],
     "title": "H&E Assay",
     "type": "object"

@@ -9,6 +9,8 @@
 "#preamble","Bait set","whole_exome_illumina_coding_v1"
 
 "#skip","Samples"
-"#header","Cimac id","Forward fastq","Reverse fastq","Sequencing date","Quality flag"
-"#data","CTTTPP111.00","/local/path/to/fwd.1.1.1.fastq.gz,/local/path/to/fwd.1.1.1_2.fastq.gz","/local/path/to/rev.1.1.1.fastq.gz","2010-01-01 00:00:00","1"
-"#data","CTTTPP121.00","/local/path/to/fwd.1.2.1.fastq.gz,/local/path/to/fwd.1.2.1_2.fastq.gz","/local/path/to/rev.1.2.1.fastq.gz","2010-01-01 00:00:00","1"
+"#header","Cimac id","Lane","Forward fastq","Reverse fastq","Sequencing date","Quality flag"
+"#data","CTTTPP111.00","1","/local/path/to/fwd.1.1.1.fastq.gz","/local/path/to/rev.1.1.1.fastq.gz","2010-01-01 00:00:00","1"
+"#data","CTTTPP121.00","1","/local/path/to/fwd.1.2.1.fastq.gz","/local/path/to/rev.1.2.1.fastq.gz","2010-01-01 00:00:00","1"
+"#data","CTTTPP111.00","2","/local/path/to/fwd.1.1.1_2.fastq.gz","/local/path/to/rev.1.1.1_2.fastq.gz","2010-01-01 00:00:00","1"
+"#data","CTTTPP121.00","2","/local/path/to/fwd.1.2.1_2.fastq.gz","/local/path/to/rev.1.2.1_2.fastq.gz","2010-01-01 00:00:00","1"

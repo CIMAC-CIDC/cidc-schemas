@@ -28,7 +28,7 @@ pip install cidc-schemas
 - **`docs/`** - the most recent build of the data model documentation, along with templates and scripts for re-generating the documentation.
 - **`template_examples/`** - example populated Excel files for template specifications in `schemas/templates`, and `.csv`s auto-generated from those `.xlsx`s that allow to transparently keep track of changes in them.
 - **`tests/`** - tests for the `cidc_schemas` module.
-- **`.githooks/`** - git hooks, e.g. for auto-generate `.csv`s in `template_examples/`.
+- **`.githooks/`** - git hooks, e.g. for auto-generating `.csv`s in `template_examples/` and `.html` documentation files.
 
 ### Developer Setup
 
@@ -55,15 +55,14 @@ pytest tests
 
 ### Building documentation
 
-To build the documentation, run the following commands:
+Pre-commit hooks ensure documentation is automatically up-to date. To build the documentation manually, run the following commands:
 
 ```bash
 python setup.py install # install helpers from the cidc_schemas library
 python docs/generate_docs.py
 ```
 
-This will output the generated html documents in `docs/docs`. If the updated docs are pushed up and merged
-into master, they will be viewable at https://cimac-cidc.github.io/cidc-schemas/.
+This will output the generated html documents in `docs/docs`. If the updated docs are pushed up and merged into master, they will be viewable at https://cimac-cidc.github.io/cidc-schemas/.
 
 ## Using the Command-Line Interface
 

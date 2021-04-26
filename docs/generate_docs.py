@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 import jinja2
 import json

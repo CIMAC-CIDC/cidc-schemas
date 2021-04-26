@@ -104,13 +104,12 @@ class XlTemplateReader:
                     )
 
                 # Filter empty cells from the end of the row
-
                 if row_type == RowType.HEADER:
                     values = XlTemplateReader._clean_value_row(values)
                     header_width = len(values)
 
                 # Filter empty cells from the end of a data row
-                if row_type == RowType.DATA:
+                elif row_type == RowType.DATA:
                     if not header_width:
                         errors.append(
                             f"Encountered data row (#{row_num} in worksheet {worksheet_name!r}) before header row"
@@ -121,6 +120,11 @@ class XlTemplateReader:
                         errors.append(
                             f"Encountered data row (#{row_num} in worksheet {worksheet_name!r}) wider than header row"
                         )
+
+                elif row_type == RowType.PREAMBLE:
+                    values = XlTemplateReader._clean_value_row(values)
+                    if len(values) != 2:
+                        values.append(None)
 
                 # Reassemble parsed row and add to rows
                 new_row = TemplateRow(row_num, row_type, values)

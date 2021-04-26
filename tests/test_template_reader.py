@@ -51,6 +51,8 @@ def test_valid_from_excel(tiny_template):
     reader, errs = XlTemplateReader.from_excel(tiny_xlsx)
     assert not errs
     assert reader.validate(tiny_template)
+    assert reader.template["TEST_SHEET"][0].values[1] == "foo"
+    assert reader.template["TEST_SHEET"][-1].values[0] == "foo"
 
 
 def search_error_message(workbook, template, error, msg_fragment):

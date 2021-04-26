@@ -123,8 +123,15 @@ class XlTemplateReader:
 
                 elif row_type == RowType.PREAMBLE:
                     values = XlTemplateReader._clean_value_row(values)
-                    if len(values) != 2:
+
+                    # preamble rows are [key, value], therefore must have exactly two entries
+                    # if the value is optional and missing (ie None), will only get [key] after _clean_value_row, so add back None
+                    if len(values) == 1:
                         values.append(None)
+                    elif len(values) != 2:
+                        errors.append(
+                            f"Encountered preamble row in worksheet with width {len(values)} (expected 2)"
+                        )
 
                 # Reassemble parsed row and add to rows
                 new_row = TemplateRow(row_num, row_type, values)

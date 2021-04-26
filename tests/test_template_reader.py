@@ -46,10 +46,20 @@ def test_valid(tiny_template):
 
 def test_valid_from_excel(tiny_template):
     """Test that the reader can load from a small xlsx file"""
-    tiny_xlsx = os.path.join(TEST_DATA_DIR, "tiny_manifest.xlsx")
+    # also has spaces in both name and value for both #preamble and #data
+    tiny_xlsx = os.path.join(TEST_DATA_DIR, "tiny_valid_manifest.xlsx")
     reader, errs = XlTemplateReader.from_excel(tiny_xlsx)
     assert not errs
     assert reader.validate(tiny_template)
+    assert reader.template["TEST_SHEET"][0].values[1] == "foo"
+    assert reader.template["TEST_SHEET"][-1].values[0] == "foo"
+
+
+def test_invalid_from_excel(tiny_template):
+    tiny_xlsx = os.path.join(TEST_DATA_DIR, "tiny_invalid_manifest.xlsx")
+    reader, errs = XlTemplateReader.from_excel(tiny_xlsx)
+    assert len(errs) == 1
+    assert "expected 2" in errs[0]
 
 
 def search_error_message(workbook, template, error, msg_fragment):

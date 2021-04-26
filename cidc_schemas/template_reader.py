@@ -55,6 +55,7 @@ class XlTemplateReader:
     def _clean_value_row(values):
         rev_values = values[::-1]
         clean = list(dropwhile(lambda v: v is None, rev_values))
+        clean = [v.strip() if isinstance(v, str) else v for v in clean]
         return clean[::-1]
 
     @staticmethod
@@ -114,7 +115,9 @@ class XlTemplateReader:
                         errors.append(
                             f"Encountered data row (#{row_num} in worksheet {worksheet_name!r}) before header row"
                         )
-                    if len(XlTemplateReader._clean_value_row(values)) > header_width:
+
+                    values = XlTemplateReader._clean_value_row(values)
+                    if len(values) > header_width:
                         errors.append(
                             f"Encountered data row (#{row_num} in worksheet {worksheet_name!r}) wider than header row"
                         )
@@ -233,6 +236,11 @@ class XlTemplateReader:
             preamble_schemas = ws_schema["preamble_rows"]
             for row in row_groups[RowType.PREAMBLE]:
                 key, value = row.values[0], row.values[1]
+                if isinstance(key, str):
+                    key = key.strip()
+                if isinstance(value, str):
+                    value = value.strip()
+
                 schema, error = self._get_schema(key, preamble_schemas)
                 if error:
                     yield self._make_validation_error(
@@ -248,7 +256,7 @@ class XlTemplateReader:
 
             # Ensure that all preamble rows are present
             for name in preamble_schemas.keys():
-                if name not in self.visited_fields:
+                if name.strip() not in self.visited_fields:
                     yield (
                         f"Worksheet {worksheet_name!r} is missing expected template row: {name!r}"
                     )
@@ -276,6 +284,7 @@ class XlTemplateReader:
                     f"Worksheet {worksheet_name!r}: Found an empty header cell at index {headers.index(None)}"
                 )
                 return
+            headers = [h.strip() if isinstance(h, str) else h for h in headers]
 
             ignore_unexpected = bool(
                 ws_schema.get("prism_arbitrary_data_merge_pointer")
@@ -301,6 +310,9 @@ class XlTemplateReader:
                         # we don't check unexpected column
                         # and we already have an error reported on that
                         continue
+                    if isinstance(value, str):
+                        value = value.strip()
+
                     invalid_reason = self._validate_instance(value, schema)
 
                     if invalid_reason:

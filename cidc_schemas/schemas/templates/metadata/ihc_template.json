@@ -30,7 +30,7 @@
                     },
                     "antibody name": {
                         "merge_pointer": "0/antibody/antibody",
-                        "type_ref": "assays/components/antibody.json#properties/antibody"
+                        "type_ref": "assays/ihc_assay.json#definitions/ihc_antibody/properties/antibody"
                     },
                     "company": {
                         "merge_pointer": "0/antibody/company",
@@ -50,15 +50,15 @@
                     },
                     "dilution": {
                         "merge_pointer": "0/antibody/dilution",
-                        "type_ref": "assays/components/imaging/ihc_antibody.json#properties/dilution"
+                        "type_ref": "assays/ihc_assay.json#definitions/ihc_antibody/properties/dilution"
                     },
                     "incubation time": {
                         "merge_pointer": "0/antibody/incubation_time",
-                        "type_ref": "assays/components/imaging/ihc_antibody.json#properties/incubation_time"
+                        "type_ref": "assays/ihc_assay.json#definitions/ihc_antibody/properties/incubation_time"
                     },
                     "incubation temperature": {
                         "merge_pointer": "0/antibody/incubation_temp",
-                        "type_ref": "assays/components/imaging/ihc_antibody.json#properties/incubation_temp"
+                        "type_ref": "assays/ihc_assay.json#definitions/ihc_antibody/properties/incubation_temp"
                     }
                 },
                 "data_columns": {
@@ -81,48 +81,48 @@
                     "Marker call": {
                         "marker positive": {
                             "merge_pointer": "0/marker_positive",
-                            "type_ref": "assays/components/imaging/ihc_entry.json#properties/marker_positive"
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/marker_positive"
                         }
                     },
                     "Chromogenic IHC (please specify one score/metric)": {
                         "tumor proportion score": {
                             "merge_pointer": "0/tumor_proportion_score",
-                            "type_ref": "assays/components/imaging/ihc_entry.json#properties/tumor_proportion_score",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/tumor_proportion_score",
                             "allow_empty": true
                         },
                         "combined positive score": {
                             "merge_pointer": "0/combined_positive_score",
-                            "type_ref": "assays/components/imaging/ihc_entry.json#properties/combined_positive_score",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/combined_positive_score",
                             "allow_empty": true
                         },
                         "inflammatory cells": {
                             "merge_pointer": "0/inflammatory_cells",
-                            "type_ref": "assays/components/imaging/ihc_entry.json#properties/inflammatory_cells",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/inflammatory_cells",
                             "allow_empty": true
                         },
                         "positive inflammatory cell area": {
                             "merge_pointer": "0/positive_inflammatory_cell_area",
-                            "type_ref": "assays/components/imaging/ihc_entry.json#properties/positive_inflammatory_cell_area",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/positive_inflammatory_cell_area",
                             "allow_empty": true
                         },
                         "intensity": {
                             "merge_pointer": "0/intensity",
-                            "type_ref": "assays/components/imaging/ihc_entry.json#properties/intensity",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/intensity",
                             "allow_empty": true
                         },
                         "% expression": {
                             "merge_pointer": "0/percentage_expression",
-                            "type_ref": "assays/components/imaging/ihc_entry.json#properties/percentage_expression",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/percentage_expression",
                             "allow_empty": true
                         },
                         "h score": {
                             "merge_pointer": "0/h_score",
-                            "type_ref": "assays/components/imaging/ihc_entry.json#properties/h_score",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/h_score",
                             "allow_empty": true
                         },
                         "comment": {
                             "merge_pointer": "0/comment",
-                            "type_ref": "assays/components/imaging/ihc_entry.json#properties/comment",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/comment",
                             "allow_empty": true
                         }
                     }

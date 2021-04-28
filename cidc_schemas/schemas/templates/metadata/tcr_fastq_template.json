@@ -1,6 +1,6 @@
 {
   "title": "Metadata file for TCR seq  [FASTQ].",
-  "description": "Metadata information for rna expression data submission via FASTQ files.",
+  "description": "Metadata information for TCR data submission via FASTQ files.",
   "properties": {
     "worksheets": {
       "TCR": {

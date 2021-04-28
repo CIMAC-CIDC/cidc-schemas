@@ -613,7 +613,7 @@ class _FieldDef(NamedTuple):
 
         if self.parse_through:
             try:
-                raw_val = eval(self.parse_through, {}, {})(raw_val)
+                raw_val = eval(self.parse_through, format_context, {})(raw_val)
 
             # catching everything, because of eval
             except Exception as e:

@@ -918,36 +918,29 @@ class Template:
 
     @staticmethod
     def _get_list_type_coerce(type_list: List[str]):
+        if "boolean" in type_list and ("integer" in type_list or "number" in type_list):
+            raise ParsingException(
+                f"Multiple conflicting coercions found - cannot have boolean alongside integer/numer: {type_list}"
+            )
+
         coerce_fns = {t: Template._get_simple_type_coerce(t) for t in type_list}
 
         def coerce(val, func_map: Dict[str, Callable]):
-            values, errors = {}, {}
-            for t, f in func_map.items():
+            # Types listed in decreasing order of specificity -
+            # i.e., always cast as an integer before casting as a number,
+            # always cast as a number before casting as a string.
+            prioritized_types = ["boolean", "integer", "number", "string"]
+
+            errors = {}
+            for t in prioritized_types:
                 try:
-                    new_val = f(val)
+                    func_map[t](val)
                 except Exception as e:
                     errors[t] = e
                 else:
-                    values[t] = new_val
+                    return func_map[t]
 
-            if len(values) > 1 and "string" in values:
-                # if there's something else, assert we don't want the string
-                values.pop("string")
-            if "integer" in values and "number" in values and "boolean" not in values:
-                # integer is a subset of number, but will also pass boolean if there
-                return values["integer"]
-
-            if len(values) == 1:
-                # if there's only one possible conversion, that's the one we want
-                return list(values.values())[0]
-            elif len(values):
-                # if there's multiple, we don't which one to pick
-                raise ParsingException(
-                    f"Multiple valid coercions detected, unable to choose between: {values}"
-                )
-            else:
-                # if there are none, error
-                raise ParsingException(f"No valid coercion found: {errors}")
+            raise ParsingException(f"No valid coercion found: {errors}")
 
         return lambda v: coerce(v, coerce_fns)
 

@@ -1,5 +1,3 @@
-from pandas import to_numeric
-
 from cidc_schemas.prism import SUPPORTED_ASSAYS, PROTOCOL_ID_FIELD_NAME
 
 from .utils import (

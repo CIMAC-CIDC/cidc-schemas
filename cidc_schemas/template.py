@@ -934,11 +934,9 @@ class Template:
             errors = {}
             for t in prioritized_types:
                 try:
-                    func_map[t](val)
+                    return func_map[t](val)
                 except Exception as e:
                     errors[t] = e
-                else:
-                    return func_map[t]
 
             raise ParsingException(f"No valid coercion found: {errors}")
 

@@ -7,6 +7,7 @@
   "properties": {
     "r1": {
       "type": "array",
+      "mergeStrategy": "append",
       "items": {
         "$comment": "Fastq file for the first fragment.",
         "$ref": "artifacts/artifact_fastq_gz.json"
@@ -15,6 +16,7 @@
     },
     "r2": {
       "type": "array",
+      "mergeStrategy": "append",
       "items": {
         "$comment": "Fastq file for the first fragment.",
         "$ref": "artifacts/artifact_fastq_gz.json"
@@ -23,6 +25,7 @@
     },
     "bam": {
       "type": "array",
+      "mergeStrategy": "append",
       "items": {
         "$comment": "A BAM file, aligned or not, which contains both pairs of sequencing libraries",
         "$ref": "artifacts/artifact_bam.json" 

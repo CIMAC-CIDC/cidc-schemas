@@ -10,3 +10,9 @@ repos:
         entry: .githooks/pre-commit
         language: system
         always_run: true
+      - id: update-documentation
+        name: update-documentation
+        description: This hook ensures that json-schema documentation is always up to date
+        language: python
+        additional_dependencies: [cidc_schemas,jinja2,jsonschema]
+        entry: python ./docs/generate_docs.py

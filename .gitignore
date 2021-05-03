@@ -4,6 +4,7 @@ out/*.html
 .DS_Store
 out/deploy.sh
 .vscode
+benchmark
 
 ## boilerplate ignore
 # Byte-compiled / optimized / DLL files

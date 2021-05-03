@@ -60,7 +60,7 @@
             },
             "combined_positive_score": {
               "description": "Combined Positive Score (CPS) is the percentage of marker staining cells (tumor cells and cells that are non-tumor) relative to all viable tumor cells. (0-1)",
-              "type": ["number", "stringst"]
+              "type": ["number", "string"]
             },
             "inflammatory_cells": {
               "description": "Percentage of inflammatory cells (non-tumor cells) showing marker staining relative to all inflammatory cells. (0-1)",

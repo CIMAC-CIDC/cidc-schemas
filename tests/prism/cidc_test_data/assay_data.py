@@ -1,3 +1,5 @@
+from pandas import to_numeric
+
 from cidc_schemas.prism import SUPPORTED_ASSAYS, PROTOCOL_ID_FIELD_NAME
 
 from .utils import (
@@ -447,7 +449,7 @@ def ihc() -> PrismTestData:
                                 }
                             },
                             "marker_positive": "positive",
-                            "tumor_proportion_score": 0.2,
+                            "tumor_proportion_score": "NE",
                             "intensity": 3.0,
                             "percentage_expression": 100.0,
                             "h_score": 300,

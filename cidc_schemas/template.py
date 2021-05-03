@@ -21,6 +21,7 @@ from typing import (
     Callable,
 )
 from collections import OrderedDict, defaultdict
+from pandas import to_numeric
 
 from .constants import SCHEMA_DIR, TEMPLATE_DIR
 from .json_validation import _load_dont_validate_schema
@@ -619,7 +620,7 @@ class _FieldDef(NamedTuple):
             except Exception as e:
                 _field_name = self.merge_pointer.rsplit("/", 1)[-1]
                 raise ParsingException(
-                    f"Cannot extract {_field_name} from {self.key_name} value: {raw_val!r}"
+                    f"Cannot extract {_field_name} from {self.key_name} value: {raw_val!r}\n{e}"
                 ) from e
 
         # or set/update value in-place in data_obj dictionary
@@ -910,7 +911,45 @@ class Template:
         if entry.get("$id") in ["local_file_path", "local_file_path_list"]:
             return Template._gen_upload_placeholder_uuid
 
-        return Template._get_simple_type_coerce(entry["type"])
+        if isinstance(entry["type"], list):
+            return Template._get_list_type_coerce(entry["type"])
+        else:
+            return Template._get_simple_type_coerce(entry["type"])
+
+    @staticmethod
+    def _get_list_type_coerce(type_list: List[str]):
+        coerce_fns = {t: Template._get_simple_type_coerce(t) for t in type_list}
+
+        def coerce(val, func_map: Dict[str, Callable]):
+            values, errors = {}, {}
+            for t, f in func_map.items():
+                try:
+                    new_val = f(val)
+                except Exception as e:
+                    errors[t] = e
+                else:
+                    values[t] = new_val
+
+            if len(values) > 1 and "string" in values:
+                # if there's something else, assert we don't want the string
+                values.pop("string")
+            if "integer" in values and "number" in values and "boolean" not in values:
+                # integer is a subset of number, but will also pass boolean if there
+                return values["integer"]
+
+            if len(values) == 1:
+                # if there's only one possible conversion, that's the one we want
+                return list(values.values())[0]
+            elif len(values):
+                # if there's multiple, we don't which one to pick
+                raise ParsingException(
+                    f"Multiple valid coercions detected, unable to choose between: {values}"
+                )
+            else:
+                # if there are none, error
+                raise ParsingException(f"No valid coercion found: {errors}")
+
+        return lambda v: coerce(v, coerce_fns)
 
     @staticmethod
     def _get_simple_type_coerce(t: str):

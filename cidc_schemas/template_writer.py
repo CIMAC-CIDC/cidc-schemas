@@ -291,7 +291,12 @@ class XlTemplateWriter:
             return "Enum"
 
         try:
-            property_type = property_schema["type"].capitalize()
+            if isinstance(property_schema["type"], list):
+                property_type = ", ".join(
+                    [t.capitalize() for t in property_schema["type"]]
+                )
+            else:
+                property_type = property_schema["type"].capitalize()
         except KeyError:
             raise KeyError(
                 f"Property schema is missing type annotation:\n{property_schema}"

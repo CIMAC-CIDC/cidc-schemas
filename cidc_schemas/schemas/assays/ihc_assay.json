@@ -60,39 +60,27 @@
             },
             "combined_positive_score": {
               "description": "Combined Positive Score (CPS) is the percentage of marker staining cells (tumor cells and cells that are non-tumor) relative to all viable tumor cells. (0-1)",
-              "type": "number",
-              "minimum": 0,
-              "maximum": 1
+              "type": ["number", "stringst"]
             },
             "inflammatory_cells": {
               "description": "Percentage of inflammatory cells (non-tumor cells) showing marker staining relative to all inflammatory cells. (0-1)",
-              "type": "number",
-              "minimum": 0,
-              "maximum": 1
+              "type": ["number", "string"]
             },
             "positive_inflammatory_cell_area": {
               "description": "Area of PD-L1+ Inflammatory Cells over the area of TSI + IT as a percentage. (0-1)",
-              "type": "number",
-              "minimum": 0,
-              "maximum": 1
+              "type": ["number", "string"]
             },
             "intensity": {
               "description": "A measure of the intensity or brightness of the protein. (0-3)",
-              "type": "number",
-              "minimum": 0,
-              "maximum": 3
+              "type": ["number", "string"]
             },
             "percentage_expression": {
               "description": "A percentage of the relevant cells considered positive. (0-100)",
-              "type": "number",
-              "minimum": 0,
-              "maximum": 100
+              "type": ["number", "string"]
             },
             "h_score": {
               "description": "A summation of the percentage of area stained at each intensity level multiplied by the weighted intensity. (0-300)",
-              "type": "integer",
-              "minimum": 0,
-              "maximum": 300
+              "type": ["integer", "string"]
             },
             "comment": {
                 "description": "A text comment regarding this slide.",

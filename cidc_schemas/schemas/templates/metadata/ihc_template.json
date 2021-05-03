@@ -87,7 +87,7 @@
                     "Chromogenic IHC (please specify one score/metric)": {
                         "tumor proportion score": {
                             "merge_pointer": "0/tumor_proportion_score",
-                            "type": ["number", "string"],
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/tumor_proportion_score",
                             "allow_empty": true
                         },
                         "combined positive score": {

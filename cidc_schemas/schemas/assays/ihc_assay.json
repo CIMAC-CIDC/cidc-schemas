@@ -38,29 +38,7 @@
 
         "record": {
           "type": "object",
-          "additionalProperties": true,
-
-          "oneOf": [
-            {
-              "properties": {
-                  "tumor_proportion_score": {
-                  "description": "Tumor Proportion Score (TPS) is the percentage of viable tumor cells showing marker staining relative to all viable tumor cells. (0-1)",
-                  "type": "number",
-                  "minimum": 0,
-                  "maximum": 1
-                }
-              }
-            },
-            {
-              "properties": {
-                  "tumor_proportion_score": {
-                  "description": "Tumor Proportion Score (TPS) is the percentage of viable tumor cells showing marker staining relative to all viable tumor cells. (0-1)",
-                  "type": "string"
-                }
-              }
-            }
-          ],
-
+          "additionalProperties": false,
 
           "properties": {
             "cimac_id": {
@@ -75,6 +53,10 @@
                     "negative",
                     "no_call"
                 ]
+            },
+            "tumor_proportion_score": {
+              "description": "Tumor Proportion Score (TPS) is the percentage of viable tumor cells showing marker staining relative to all viable tumor cells. (0-1)",
+              "type": ["number", "string"]
             },
             "combined_positive_score": {
               "description": "Combined Positive Score (CPS) is the percentage of marker staining cells (tumor cells and cells that are non-tumor) relative to all viable tumor cells. (0-1)",

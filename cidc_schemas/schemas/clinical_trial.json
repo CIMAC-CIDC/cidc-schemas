@@ -71,6 +71,11 @@
       "description": "A description of the rules governing data sharing and publications.",
       "type": "string"
     },
+    "expected_assays": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "A list of assays the CIDC expects to receive for this trial."
+    },
     "collection_event_list": {
       "description": "A list associating collection events with allowed sample types.",
       "type": "array",

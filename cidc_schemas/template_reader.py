@@ -7,6 +7,14 @@ import json
 import logging
 from itertools import dropwhile, zip_longest
 from typing import Dict, List, Tuple, Union, BinaryIO, NamedTuple, Optional
+from warnings import filterwarnings
+
+filterwarnings(
+    action="ignore",
+    category=UserWarning,
+    message="Data Validation extension is not supported",
+    module="openpyxl",
+)
 
 import openpyxl
 

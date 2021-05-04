@@ -33,24 +33,18 @@ def assert_metadata_matches(received: dict, expected: dict, upload_entries: list
     # We expect these patches to differ by upload placeholder UUID only,
     # so the number of differences should equal the number of expected
     # upload entries.
-    # if "assays" in expected and "olink" in expected["assays"]:
-    #     print(expected)
-    #     print()
-    #     print(received)
     diff = DeepDiff(expected, received)
-
-    print(diff)
 
     if upload_entries and diff:
         assert len(diff) == 2, str(
             diff
         )  # only "values_changed" and "dictionary_item_added"
-        assert len(diff["dictionary_item_added"]) == len(upload_entries)
-        assert len(diff["values_changed"]) == len(upload_entries)
+        assert len(diff["dictionary_item_added"]) == len(upload_entries), str(diff)
+        assert len(diff["values_changed"]) == len(upload_entries), str(diff)
         for changed_key in diff["values_changed"].keys():
-            assert changed_key.endswith("['upload_placeholder']")
+            assert changed_key.endswith("['upload_placeholder']"), str(diff)
         for new_key in diff["dictionary_item_added"]:
-            assert new_key.endswith("['facet_group']")
+            assert new_key.endswith("['facet_group']"), str(diff)
     else:
         # For manifest uploads, we expect no artifacts, so there should
         # be no difference between expected and received trial objects.

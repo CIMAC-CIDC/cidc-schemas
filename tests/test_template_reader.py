@@ -23,7 +23,7 @@ def test_valid(tiny_template):
         "TEST_SHEET": [
             TemplateRow(1, RowType.PREAMBLE, ("test_property", "foo")),
             TemplateRow(2, RowType.PREAMBLE, ("test_date", "6/11/12")),
-            TemplateRow(3, RowType.PREAMBLE, ("test_time", "10:44:61")),
+            TemplateRow(3, RowType.PREAMBLE, ("test_time", "10:45:01")),
             TemplateRow(3, RowType.PREAMBLE, ("test_number", "432.1")),
             TemplateRow(3, RowType.PREAMBLE, ("test_enum", "enum_val_1")),
             TemplateRow(
@@ -32,10 +32,10 @@ def test_valid(tiny_template):
                 ("test_property", "test_date", "test_time", "test_number", "test_enum"),
             ),
             TemplateRow(
-                5, RowType.DATA, ("foo", "6/11/12", "10:44:61", "4.11", "enum_val_1")
+                5, RowType.DATA, ("foo", "6/11/12", "10:45:01", "4.11", "enum_val_1")
             ),
             TemplateRow(
-                6, RowType.DATA, ("foo", "6/12/12", "10:45:61", "5.11", "enum_val_2")
+                6, RowType.DATA, ("foo", "6/12/12", "10:46:01", "5.11", "enum_val_2")
             ),
         ]
     }

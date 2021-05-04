@@ -129,7 +129,7 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
     assert len(res) == 1
 
     for fname, conf in res.items():
-        conf = yaml.load(conf)
+        conf = yaml.load(conf, Loader=yaml.FullLoader)
 
         assert len(conf["metasheet"]) == 1  # one run
         assert (
@@ -197,7 +197,7 @@ def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, templ
 
         else:
 
-            conf = yaml.load(fcontent)
+            conf = yaml.load(fcontent, Loader=yaml.FullLoader)
 
             assert len(conf["runs"]) == 2  # two runs for two samples in example .xlsx
 

@@ -463,7 +463,7 @@ def ihc() -> PrismTestData:
                         "clone": "XYZ",
                         "cat_num": "ABX.123",
                         "lot_num": "#12345",
-                        "dilution": "1900-01-04 04:05:00",
+                        "dilution": "1:100",
                         "incubation_time": "06:45:00",
                         "incubation_temp": "54c",
                     },

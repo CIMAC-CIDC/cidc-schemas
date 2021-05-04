@@ -3,7 +3,6 @@ from io import StringIO, BytesIO
 from typing import Callable, NamedTuple, Optional, Union, List, Dict
 
 import pandas as pd
-from pandas.io.json import json_normalize
 
 from . import prism
 from .util import participant_id_from_cimac
@@ -89,12 +88,12 @@ def _build_artifact(
 
 def _shipping_manifest_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
     """Generate files derived from a shipping manifest upload."""
-    participants = json_normalize(
+    participants = pd.json_normalize(
         data=context.trial_metadata,
         record_path=["participants"],
         meta=[prism.PROTOCOL_ID_FIELD_NAME],
     )
-    samples = json_normalize(
+    samples = pd.json_normalize(
         data=context.trial_metadata,
         record_path=["participants", "samples"],
         meta=[prism.PROTOCOL_ID_FIELD_NAME, ["participants", "cimac_participant_id"]],
@@ -130,7 +129,7 @@ def _shipping_manifest_derivation(context: DeriveFilesContext) -> DeriveFilesRes
 @_register_derivation("ihc")
 def _ihc_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
     """Generate a combined CSV for IHC data"""
-    combined = json_normalize(
+    combined = pd.json_normalize(
         data=context.trial_metadata,
         record_path=["assays", "ihc", "records"],
         meta=[prism.PROTOCOL_ID_FIELD_NAME],
@@ -250,7 +249,7 @@ def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
 def _wes_analysis_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
     """Generate a combined MAF file for an entire trial"""
     # Extract all run-level MAF URLs for this trial
-    runs = json_normalize(
+    runs = pd.json_normalize(
         data=context.trial_metadata,
         record_path=["analysis", "wes_analysis", "pair_runs"],
     )
@@ -290,7 +289,7 @@ def _wes_analysis_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
 @_register_derivation("cytof_analysis")
 def _cytof_analysis_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
     """Generate a combined CSV for CyTOF analysis data"""
-    cell_counts_analysis_csvs = json_normalize(
+    cell_counts_analysis_csvs = pd.json_normalize(
         data=context.trial_metadata,
         record_path=["assays", "cytof_10021", "records"],
         meta=[prism.PROTOCOL_ID_FIELD_NAME],

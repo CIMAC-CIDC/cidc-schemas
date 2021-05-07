@@ -595,7 +595,7 @@ def ihc() -> PrismTestData:
                                 }
                             },
                             "marker_positive": "positive",
-                            "tumor_proportion_score": 0.2,
+                            "tumor_proportion_score": "NE",
                             "intensity": 3.0,
                             "percentage_expression": 100.0,
                             "h_score": 300,
@@ -611,7 +611,7 @@ def ihc() -> PrismTestData:
                         "clone": "XYZ",
                         "cat_num": "ABX.123",
                         "lot_num": "#12345",
-                        "dilution": "1900-01-04 04:05:00",
+                        "dilution": "1:100",
                         "incubation_time": "06:45:00",
                         "incubation_temp": "54c",
                     },

@@ -21,6 +21,7 @@ from typing import (
     Callable,
 )
 from collections import OrderedDict, defaultdict
+from pandas import to_numeric
 
 from .constants import SCHEMA_DIR, TEMPLATE_DIR
 from .json_validation import _load_dont_validate_schema
@@ -619,7 +620,7 @@ class _FieldDef(NamedTuple):
             except Exception as e:
                 _field_name = self.merge_pointer.rsplit("/", 1)[-1]
                 raise ParsingException(
-                    f"Cannot extract {_field_name} from {self.key_name} value: {raw_val!r}"
+                    f"Cannot extract {_field_name} from {self.key_name} value: {raw_val!r}\n{e}"
                 ) from e
 
         # or set/update value in-place in data_obj dictionary
@@ -910,7 +911,36 @@ class Template:
         if entry.get("$id") in ["local_file_path", "local_file_path_list"]:
             return Template._gen_upload_placeholder_uuid
 
-        return Template._get_simple_type_coerce(entry["type"])
+        if isinstance(entry["type"], list):
+            return Template._get_list_type_coerce(entry["type"])
+        else:
+            return Template._get_simple_type_coerce(entry["type"])
+
+    @staticmethod
+    def _get_list_type_coerce(type_list: List[str]):
+        if "boolean" in type_list and ("integer" in type_list or "number" in type_list):
+            raise ParsingException(
+                f"Multiple conflicting coercions found - cannot have boolean alongside integer/numer: {type_list}"
+            )
+
+        coerce_fns = {t: Template._get_simple_type_coerce(t) for t in type_list}
+
+        def coerce(val, func_map: Dict[str, Callable]):
+            # Types listed in decreasing order of specificity -
+            # i.e., always cast as an integer before casting as a number,
+            # always cast as a number before casting as a string.
+            prioritized_types = ["boolean", "integer", "number", "string"]
+
+            errors = {}
+            for t in prioritized_types:
+                try:
+                    return func_map[t](val)
+                except Exception as e:
+                    errors[t] = e
+
+            raise ParsingException(f"No valid coercion found: {errors}")
+
+        return lambda v: coerce(v, coerce_fns)
 
     @staticmethod
     def _get_simple_type_coerce(t: str):

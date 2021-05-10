@@ -9,7 +9,7 @@
 "#preamble","Clone","XYZ"
 "#preamble","Catalogue number","ABX.123"
 "#preamble","Lot number","#12345"
-"#preamble","Dilution","1900-01-04 04:05:00"
+"#preamble","Dilution","1:100"
 "#preamble","Incubation time","06:45:00"
 "#preamble","Incubation temperature","54c"
 
@@ -18,4 +18,4 @@
 "#data","CTTTPP111.00","path/to/image1.tif","positive","0.67"
 "#data","CTTTPP121.00","path/to/image2.tiff","no_call","0.1","","","","1","10","120"
 "#data","CTTTPP122.00","path/to/image3.svs","negative","0.1","","","","2","40","299"
-"#data","CTTTPP123.00","path/to/image4.qptiff","positive","0.2","","","","3","100","300"
+"#data","CTTTPP123.00","path/to/image4.qptiff","positive","NE","","","","3","100","300"

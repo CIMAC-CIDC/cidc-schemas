@@ -1,5 +1,5 @@
 "#title","Cytof analysis template"
-"#preamble","Protocol identifier","test_prism_trial_id","test_prism_trial_id"
+"#preamble","Protocol identifier","test_prism_trial_id"
 "#preamble","Assay run id","test_prism_trial_id_run_1"
 "#preamble","Batch id","XYZ1"
 "#preamble","Astrolabe reports","batch1/reports.zip"

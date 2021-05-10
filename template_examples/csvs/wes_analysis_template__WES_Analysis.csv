@@ -1,5 +1,6 @@
 "#title","Wes analysis template"
 "#preamble","Protocol identifier","test_prism_trial_id"
+"#preamble","Folder","gs://results/"
 
 "#skip","WES Runs"
 "#header","Run id","Normal cimac id","Tumor cimac id"

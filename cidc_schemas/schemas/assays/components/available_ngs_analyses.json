@@ -8,7 +8,7 @@
   "type": "object",
   "properties": {
     "wes_analysis": {
-      "$ref": "assays/components/ngs/wes/wes_analysis.json"
+      "$ref": "assays/wes_analysis.json"
     },
     "rna_analysis": {
       "$ref": "assays/components/ngs/rna/rna_analysis.json"

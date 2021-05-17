@@ -67,6 +67,8 @@ def generate_analysis_template_schemas(
         try:
             assay_schema = _load_dont_validate_schema(
                 f"assays/components/ngs/{analysis}/{analysis}_analysis.json"
+                if analysis != "wes"
+                else "assays/wes_analysis.json"
             )
         except Exception as e:
             print(
@@ -192,7 +194,9 @@ def _initialize_template_schema(name: str, title: str, pointer: str):
     template = {
         "title": f"{long_title} analysis template",
         "description": f"Metadata information for {long_title} Analysis output.",
-        "prism_template_root_object_schema": f"assays/components/ngs/{name}/{name}_analysis.json",
+        "prism_template_root_object_schema": f"assays/components/ngs/{name}/{name}_analysis.json"
+        if name != "wes"
+        else "assays/wes_analysis.json",
         "prism_template_root_object_pointer": f"/analysis/{name}_analysis",
         "properties": {
             "worksheets": {
@@ -201,7 +205,12 @@ def _initialize_template_schema(name: str, title: str, pointer: str):
                         "protocol identifier": {
                             "merge_pointer": "2/protocol_identifier",
                             "type_ref": "clinical_trial.json#properties/protocol_identifier",
-                        }
+                        },
+                        "folder": {
+                            "do_not_merge": True,
+                            "type": "string",
+                            "allow_empty": True,
+                        },
                     },
                     "prism_data_object_pointer": f"/{pointer}/-",
                     "data_columns": {f"{title} Runs": {}},
@@ -362,20 +371,26 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
                 merge_pointer = f"/{short_key}/cimac_id"
             else:
                 merge_pointer = f"/{long_key.replace(' ','_')}"
+        elif name == "wes":
+            type_ref = "assays/wes_analysis.json#definitions/"
+            if long_key == "run id":
+                type_ref += "pair_analysis/properties/"
+
+            if short_key in ["normal", "tumor"]:
+                type_ref += f"{short_key}/properties/cimac_id"
+            else:
+                type_ref += f"{long_key.replace(' ','_')}"
+            merge_pointer = f"/{long_key.replace(' ','_')}"
+
         else:
             type_ref = f"assays/components/ngs/{name}/"
 
             if name == "rna":
                 type_ref += "rna_level1"
-            elif name == "wes" and long_key == "run id":
-                type_ref += "wes_pair"
             else:
                 type_ref += name
 
-            if short_key in ["normal", "tumor"]:
-                type_ref += f"_analysis.json#properties/{short_key}/cimac_id"
-            else:
-                type_ref += f"_analysis.json#properties/{long_key.replace(' ','_')}"
+            type_ref += f"_analysis.json#properties/{long_key.replace(' ','_')}"
             merge_pointer = f"/{long_key.replace(' ','_')}"
 
         subtemplate[long_key] = {
@@ -473,7 +488,7 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
 
             # fill in `process_as` entry
             subsubtemplate = {
-                "parse_through": f"lambda {pysafe_key}: f'{entry['file_path_template'].replace(long_key, pysafe_key)}'",
+                "parse_through": f"lambda {pysafe_key}: f'{{folder or \"\"}}{entry['file_path_template'].replace(long_key, pysafe_key)}'",
                 "merge_pointer": merge_pointer,
                 "gcs_uri_format": gcs_uri,
                 "type_ref": "assays/components/local_file.json#properties/file_path",

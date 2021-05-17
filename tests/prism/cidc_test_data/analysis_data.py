@@ -1472,25 +1472,25 @@ def cytof_s1609_analysis() -> PrismTestData:
                             "cimac_id": "CTTTPP111.00",
                             "output_files": {
                                 "fcs_file": {
-                                    "upload_placeholder": "a5515c79-e5ff-41a8-bd98-c7e746a84d8c"
+                                    "upload_placeholder": "a5515c79-e5ff-41a8-bd98-c7e746as1609"
                                 },
                                 "assignment": {
-                                    "upload_placeholder": "b54fc467-65d9-4cd3-baa7-9ec508ad56eb"
+                                    "upload_placeholder": "b54fc467-65d9-4cd3-baa7-9ec508as1609"
                                 },
                                 "compartment": {
-                                    "upload_placeholder": "1d2be563-3117-4a6a-9ad3-0351cae2b8c0"
+                                    "upload_placeholder": "1d2be563-3117-4a6a-9ad3-0351caes1609"
                                 },
                                 "profiling": {
-                                    "upload_placeholder": "3c8b9d95-b3c0-459b-84d3-6ee0b5c42b56"
+                                    "upload_placeholder": "3c8b9d95-b3c0-459b-84d3-6ee0b5cs1609"
                                 },
                                 "cell_counts_assignment": {
-                                    "upload_placeholder": "3b7f6d8a-811d-4213-8de3-b1fb92432c37"
+                                    "upload_placeholder": "3b7f6d8a-811d-4213-8de3-b1fb924s1609"
                                 },
                                 "cell_counts_compartment": {
-                                    "upload_placeholder": "0b0c9744-6065-4c0d-a595-a3db4f3605ec"
+                                    "upload_placeholder": "0b0c9744-6065-4c0d-a595-a3db4f3s1609"
                                 },
                                 "cell_counts_profiling": {
-                                    "upload_placeholder": "bd2588f3-b524-45b9-aba4-05d531a12bfe"
+                                    "upload_placeholder": "bd2588f3-b524-45b9-aba4-05d531as1609"
                                 },
                             },
                         },
@@ -1498,25 +1498,25 @@ def cytof_s1609_analysis() -> PrismTestData:
                             "cimac_id": "CTTTPP121.00",
                             "output_files": {
                                 "fcs_file": {
-                                    "upload_placeholder": "26fb0ada-8860-4a3d-a278-6b04a36291b9"
+                                    "upload_placeholder": "26fb0ada-8860-4a3d-a278-6b04a36s1609"
                                 },
                                 "assignment": {
-                                    "upload_placeholder": "662a59f1-361c-4cc1-8502-5155120b1ec2"
+                                    "upload_placeholder": "662a59f1-361c-4cc1-8502-5155120s1609"
                                 },
                                 "compartment": {
-                                    "upload_placeholder": "dbcb4352-001a-45d4-bbaf-46f1832859f3"
+                                    "upload_placeholder": "dbcb4352-001a-45d4-bbaf-46f1832s1609"
                                 },
                                 "profiling": {
-                                    "upload_placeholder": "cb714f63-2849-4916-9fe8-421331c08759"
+                                    "upload_placeholder": "cb714f63-2849-4916-9fe8-421331cs1609"
                                 },
                                 "cell_counts_assignment": {
-                                    "upload_placeholder": "91cc578a-77f3-4898-84ab-e124f1cf000f"
+                                    "upload_placeholder": "91cc578a-77f3-4898-84ab-e124f1cs1609"
                                 },
                                 "cell_counts_compartment": {
-                                    "upload_placeholder": "46f88f77-07ec-46b9-9e9f-53532ae96efc"
+                                    "upload_placeholder": "46f88f77-07ec-46b9-9e9f-53532aes1609"
                                 },
                                 "cell_counts_profiling": {
-                                    "upload_placeholder": "97634d45-5796-4210-80f6-c7f08c8f1e1d"
+                                    "upload_placeholder": "97634d45-5796-4210-80f6-c7f08c8s1609"
                                 },
                             },
                         },
@@ -1524,10 +1524,10 @@ def cytof_s1609_analysis() -> PrismTestData:
                     "assay_run_id": "test_prism_trial_id_run_1",
                     "batch_id": "XYZ1",
                     "astrolabe_reports": {
-                        "upload_placeholder": "5b09c736-0c99-4908-b288-41ebcc0a07d9"
+                        "upload_placeholder": "5b09c736-0c99-4908-b288-41ebcc0s1609"
                     },
                     "astrolabe_analysis": {
-                        "upload_placeholder": "6abb7949-5400-4e5a-a947-5a1403ca75cb"
+                        "upload_placeholder": "6abb7949-5400-4e5a-a947-5a1403cs1609"
                     },
                 }
             ]
@@ -1538,112 +1538,112 @@ def cytof_s1609_analysis() -> PrismTestData:
         LocalFileUploadEntry(
             local_path="CTTTPP111.00/fcs.fcs",
             gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/CTTTPP111.00/source.fcs",
-            upload_placeholder="a5515c79-e5ff-41a8-bd98-c7e746a84d8c",
+            upload_placeholder="a5515c79-e5ff-41a8-bd98-c7e746as1609",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="CTTTPP111.00/assignment.csv",
             gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/CTTTPP111.00/assignment.csv",
-            upload_placeholder="b54fc467-65d9-4cd3-baa7-9ec508ad56eb",
+            upload_placeholder="b54fc467-65d9-4cd3-baa7-9ec508as1609",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="CTTTPP111.00/comp.csv",
             gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/CTTTPP111.00/compartment.csv",
-            upload_placeholder="1d2be563-3117-4a6a-9ad3-0351cae2b8c0",
+            upload_placeholder="1d2be563-3117-4a6a-9ad3-0351caes1609",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="CTTTPP111.00/profiling.csv",
             gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/CTTTPP111.00/profiling.csv",
-            upload_placeholder="3c8b9d95-b3c0-459b-84d3-6ee0b5c42b56",
+            upload_placeholder="3c8b9d95-b3c0-459b-84d3-6ee0b5cs1609",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="CTTTPP111.00/cca.csv",
             gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/CTTTPP111.00/cell_counts_assignment.csv",
-            upload_placeholder="3b7f6d8a-811d-4213-8de3-b1fb92432c37",
+            upload_placeholder="3b7f6d8a-811d-4213-8de3-b1fb924s1609",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="CTTTPP111.00/ccc.csv",
             gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/CTTTPP111.00/cell_counts_compartment.csv",
-            upload_placeholder="0b0c9744-6065-4c0d-a595-a3db4f3605ec",
+            upload_placeholder="0b0c9744-6065-4c0d-a595-a3db4f3s1609",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="CTTTPP111.00/ccp.csv",
             gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/CTTTPP111.00/cell_counts_profiling.csv",
-            upload_placeholder="bd2588f3-b524-45b9-aba4-05d531a12bfe",
+            upload_placeholder="bd2588f3-b524-45b9-aba4-05d531as1609",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="CTTTPP121.00/fcs.fcs",
             gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/CTTTPP121.00/source.fcs",
-            upload_placeholder="26fb0ada-8860-4a3d-a278-6b04a36291b9",
+            upload_placeholder="26fb0ada-8860-4a3d-a278-6b04a36s1609",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="CTTTPP121.00/assignment.csv",
             gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/CTTTPP121.00/assignment.csv",
-            upload_placeholder="662a59f1-361c-4cc1-8502-5155120b1ec2",
+            upload_placeholder="662a59f1-361c-4cc1-8502-5155120s1609",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="CTTTPP121.00/comp.csv",
             gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/CTTTPP121.00/compartment.csv",
-            upload_placeholder="dbcb4352-001a-45d4-bbaf-46f1832859f3",
+            upload_placeholder="dbcb4352-001a-45d4-bbaf-46f1832s1609",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="CTTTPP121.00/profiling.csv",
             gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/CTTTPP121.00/profiling.csv",
-            upload_placeholder="cb714f63-2849-4916-9fe8-421331c08759",
+            upload_placeholder="cb714f63-2849-4916-9fe8-421331cs1609",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="CTTTPP121.00/cca.csv",
             gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/CTTTPP121.00/cell_counts_assignment.csv",
-            upload_placeholder="91cc578a-77f3-4898-84ab-e124f1cf000f",
+            upload_placeholder="91cc578a-77f3-4898-84ab-e124f1cs1609",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="CTTTPP121.00/ccc.csv",
             gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/CTTTPP121.00/cell_counts_compartment.csv",
-            upload_placeholder="46f88f77-07ec-46b9-9e9f-53532ae96efc",
+            upload_placeholder="46f88f77-07ec-46b9-9e9f-53532aes1609",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="CTTTPP121.00/ccp.csv",
             gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/CTTTPP121.00/cell_counts_profiling.csv",
-            upload_placeholder="97634d45-5796-4210-80f6-c7f08c8f1e1d",
+            upload_placeholder="97634d45-5796-4210-80f6-c7f08c8s1609",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="batch1/reports.zip",
             gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/reports.zip",
-            upload_placeholder="5b09c736-0c99-4908-b288-41ebcc0a07d9",
+            upload_placeholder="5b09c736-0c99-4908-b288-41ebcc0s1609",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="batch1/analysis.zip",
             gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/analysis.zip",
-            upload_placeholder="6abb7949-5400-4e5a-a947-5a1403ca75cb",
+            upload_placeholder="6abb7949-5400-4e5a-a947-5a1403cs1609",
             metadata_availability=False,
             allow_empty=False,
         ),

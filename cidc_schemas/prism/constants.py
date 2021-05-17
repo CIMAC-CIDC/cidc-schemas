@@ -40,7 +40,7 @@ SUPPORTED_MANIFESTS = SUPPORTED_SHIPPING_MANIFESTS + SUPPORTED_WEIRD_MANIFESTS
 SUPPORTED_ANALYSES = [
     "cytof_10021_analysis",
     "cytof_e4412_analysis",
-    "cytof_s1609_analysis"
+    "cytof_s1609_analysis",
     "wes_analysis",
     "rna_level1_analysis",
     "tcr_analysis",

@@ -54,6 +54,12 @@
                 "$ref": "artifacts/artifact_fcs.json"
             }
         },
+        "controls_fcs": {
+            "type": "array",
+            "items": {
+                "$ref": "artifacts/artifact_fcs.json"
+            }
+        },
         "astrolabe_reports": {
             "$ref": "artifacts/artifact_zip.json"
         },

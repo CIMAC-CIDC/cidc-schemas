@@ -267,6 +267,7 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
         "trust4/": "trust4/trust4_",
         "addsample_report": "sample_report",
         "chimeric.out.junction": "chimeric_out_junction.junction",
+        "haplotyper.rna.vcf": "haplotyper.vcf",
     }
     for old, new in fixes.items():
         file_path = file_path.replace(old, new)
@@ -456,7 +457,11 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
             else:
                 gcs_uri += f"{{{long_key}}}/analysis/"
 
-            gcs_uri += _calc_gcs_uri_path(name, merge_pointer)
+            try:
+                gcs_uri += _calc_gcs_uri_path(name, merge_pointer)
+            except Exception as e:
+                print(entry)
+                raise e
 
             # now get actual file extension from file_path_template
             ext = (

@@ -111,10 +111,10 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
     prelim_assay = stage_assay_for_analysis(template.type)
     if prelim_assay:
         full_ct, errs = merger.merge_clinical_trial_metadata(prelim_assay, full_ct)
-        assert 0 == len(errs)
+        assert 0 == len(errs), str(errs)
 
     full_ct, errs = merger.merge_clinical_trial_metadata(patch_with_artifacts, full_ct)
-    assert 0 == len(errs)
+    assert 0 == len(errs), str(errs)
 
     res = pipelines.generate_analysis_configs_from_upload_patch(
         full_ct, patch_with_artifacts, template.type, "my-biofx-bucket"

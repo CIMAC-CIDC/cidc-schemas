@@ -39,6 +39,9 @@
         "purity": {
           "$ref": "assays/wes_core.json#definitions/purity"
         },
+        "germline": {
+          "$ref": "assays/wes_core.json#definitions/germline"
+        },
         "clonality": {
           "$ref": "assays/wes_core.json#definitions/clonality"
         },
@@ -50,6 +53,9 @@
         },
         "msisensor": {
           "$ref": "assays/wes_core.json#definitions/msisensor"
+        },
+        "rna": {
+          "$ref": "assays/wes_core.json#definitions/rna"
         }
       }
     }

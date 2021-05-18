@@ -8,6 +8,19 @@
   "properties": {},
 
   "definitions": {
+  	"rna": {
+  		"type": "object",
+  		"additionalProperties": false,
+  		"properties": {
+		    "haplotyper": {
+		      "$ref": "artifacts/artifact_vcf_gz.json"
+		    },
+		    "vcf_tnscope_filter_neoantigen": {
+		    	"$ref": "artifacts/artifact_vcf.json"
+		    }
+		}
+  	},
+
   	"alignment": {
 	  "type": "object",
 	  "description": "WES output align files.",
@@ -124,13 +137,18 @@
 	  "type": "object",
 	  "description": "Germline variant output sample files.",
 	  "properties": {
+	    "vcf_compare": {
+	    	"$ref": "artifacts/artifact_text.json"
+	    },
 	    "haplotyper_targets": {
 	      "$ref": "artifacts/artifact_vcf_gz.json"
-	    }
+	  	}
 	  },
-	  "required": [
-	    "haplotyper_targets"
+	  "oneOf": [
+	  	{ "required": ["vcf_compare"] },
+	  	{ "required": ["haplotyper_targets"] }
 	  ],
+	  
 	  "additionalProperties": false
 	},
 
@@ -249,6 +267,7 @@
 	"somatic": {
 	  "type": "object",
 	  "description": "Somatic variant calling output sample files.",
+	  "additionalProperties": false,
 	  "properties": {
 	    "vcf_tnscope_filter": {
 	      "$ref": "artifacts/artifact_vcf.json"
@@ -270,9 +289,6 @@
 	    },
 	    "tnscope_exons": {
 	      "$ref": "artifacts/artifact_vcf_gz.json"
-	    },
-	    "vcf_compare": {
-	      "$ref": "artifacts/artifact_text.json"
 	    }
 	  },
 	  "required": [
@@ -280,10 +296,8 @@
 	    "vcf_gz_tnscope_filter",
 	    "maf_tnscope_output",
 	    "maf_tnscope_filter",
-	    "tnscope_exons",
-	    "vcf_compare"
-	  ],
-	  "additionalProperties": false
+	    "tnscope_exons"
+	  ]
 	}
   }
 }

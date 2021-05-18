@@ -130,20 +130,6 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/rna/{run}/{run}.haplotyper.rna.vcf.gz'",
-                                    "merge_pointer": "/rna/haplotyper",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/haplotyper.vcf.gz",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/rna/{run}/{run}_tnscope.filter.neoantigen.vep.rna.vcf'",
-                                    "merge_pointer": "/rna/vcf_tnscope_filter_neoantigen",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_tnscope_filter_neoantigen.vcf",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
                                     "parse_through": "lambda run: f'{folder or \"\"}analysis/report.tar.gz'",
                                     "merge_pointer": "/report/report",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/report.tar.gz",

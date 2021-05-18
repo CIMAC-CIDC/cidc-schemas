@@ -225,6 +225,9 @@ def cytof_s1609() -> PrismTestData:
                                 "processed_fcs": {
                                     "upload_placeholder": "97c3b6a6-b03d-4ca1-92f8-b8651e5s1609"
                                 },
+                                "spike_in_fcs": {
+                                    "upload_placeholder": "17c3b6a6-b03d-4ca1-92f8-b8651e5s1609"
+                                },
                             },
                             "concatenation_version": "GHIL",
                             "normalization_version": "ABC",
@@ -239,6 +242,9 @@ def cytof_s1609() -> PrismTestData:
                                 },
                                 "processed_fcs": {
                                     "upload_placeholder": "7e992a16-9c6a-4ef1-90b8-ef1a599s1609"
+                                },
+                                "spike_in_fcs": {
+                                    "upload_placeholder": "6e992a16-9c6a-4ef1-90b8-ef1a599s1609"
                                 },
                             },
                             "concatenation_version": "GHIL",
@@ -311,6 +317,13 @@ def cytof_s1609() -> PrismTestData:
             allow_empty=False,
         ),
         LocalFileUploadEntry(
+            local_path="sample1-vericell.fcs",
+            gs_key="test_prism_trial_id/cytof_s1609/CTTTPP111.00/spike_in.fcs",
+            upload_placeholder="17c3b6a6-b03d-4ca1-92f8-b8651e5s1609",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
             local_path="sample2_n.fcs",
             gs_key="test_prism_trial_id/cytof_s1609/CTTTPP121.00/intermediate.fcs",
             upload_placeholder="8a674ce1-e224-45b7-8094-77fca9fs1609",
@@ -321,6 +334,13 @@ def cytof_s1609() -> PrismTestData:
             local_path="sample2.fcs",
             gs_key="test_prism_trial_id/cytof_s1609/CTTTPP121.00/processed.fcs",
             upload_placeholder="7e992a16-9c6a-4ef1-90b8-ef1a599s1609",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="sample2-vericell.fcs",
+            gs_key="test_prism_trial_id/cytof_s1609/CTTTPP121.00/spike_in.fcs",
+            upload_placeholder="6e992a16-9c6a-4ef1-90b8-ef1a599s1609",
             metadata_availability=False,
             allow_empty=False,
         ),

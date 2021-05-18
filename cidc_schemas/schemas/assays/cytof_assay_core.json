@@ -41,7 +41,8 @@
             "required": ["processed_fcs"],
             "properties": {
                 "processed_fcs": {"$ref": "artifacts/artifact_fcs.json"},
-                "intermediate_fcs": {"$ref": "artifacts/artifact_fcs.json"}
+                "intermediate_fcs": {"$ref": "artifacts/artifact_fcs.json"},
+                "spike_in_fcs": {"$ref": "artifacts/artifact_fcs.json"}
             }
         },
 

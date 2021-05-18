@@ -2,24 +2,6 @@
 # VALID INPUTS: fastq, fastq.gz, bam
 # NOTE: for PAIRED-END fastq/fastq.gz, give both pairs to the sample
 samples:
-  # normal
-  {{normal_sample.cimac_id}}:
-{% if normal_sample.files.r1 %}
-    # r1  
-  {% for fastq_gz_artifact in normal_sample.files.r1 %}
-    - gs://{{BIOFX_BUCKET_NAME}}/{{fastq_gz_artifact.object_url}}
-  {% endfor %}
-    # r2
-  {% for fastq_gz_artifact in normal_sample.files.r2 %}
-    - gs://{{BIOFX_BUCKET_NAME}}/{{fastq_gz_artifact.object_url}}
-  {% endfor %}
-{% else %}
-    # bam
-  {% for bam_artifact in normal_sample.files.bam %}
-    - gs://{{BIOFX_BUCKET_NAME}}/{{bam_artifact.object_url}}
-  {% endfor %}
-{% endif %}
-  # tumor
   {{tumor_sample.cimac_id}}:
 {% if tumor_sample.files.r1 %}
     # r1 
@@ -37,13 +19,13 @@ samples:
   {% endfor %}
 {% endif %}
   
-# metasheet: Group the samples into Tumor/Normal "runs"
-# each run should have a name, e.g. run_1:
+# metasheet: Group the samples into Tumor-only "runs"
+# each run should have a name, e.g. run_1 or tumor CIMAC ID:
 # then under each run, define a tumor and a normal sample
 metasheet:
   {{run_id}}:
     tumor: {{tumor_sample.cimac_id}}
-    normal: {{normal_sample.cimac_id}}
+    normal:
 
 # unique instance name
 instance_name: "{{ run_id | lower | replace('.', '-') }}"
@@ -59,7 +41,7 @@ disk_size: 750
 
 # CIMAC center the samples associate with
 # Options- broad (.bam), mda (.fastq or fastq.gz)
-{% if normal_sample.files.bam or tumor_sample.files.bam %}
+{% if tumor_sample.files.bam %}
 cimac_center: broad
 {% else %}
 cimac_center: mda
@@ -70,11 +52,9 @@ cimac_center: mda
 # Default: trim_soft_clip: False
 trim_soft_clip: False
 
-# tumor_only - IF the normal sample is NOT available, then set this flag to
-# be True by uncommenting the line below.
-# Also make sure that the normal samples in the metasheet are empty.
-# Default: tumor_only: False
-tumor_only: False
+# tumor_only - IF the normal sample is NOT available
+# The normal samples are empty in the metasheet above.
+tumor_only: True
 
 # Somatic variant caller preference
 # Options- tnscope (default), tnsnv, tnhaplotyper2

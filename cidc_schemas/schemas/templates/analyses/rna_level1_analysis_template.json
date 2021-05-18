@@ -189,6 +189,20 @@
                         }
                     }
                 }
+            },
+            "Missing Samples": {
+                "data_columns": {
+                    "Missing Sample Explanations": {
+                        "cimac id": {
+                            "type_ref": "sample.json#properties/cimac_id",
+                            "merge_pointer": "0/missing_samples/-/cimac_id"
+                        },
+                        "reason":{
+                            "type_ref": "assays/components/ngs/missing_samples.json#items/properties/missing_reason",
+                            "merge_pointer": "0/missing_samples/-missing_reason"
+                        }
+                    }
+                }
             }
         }
     }

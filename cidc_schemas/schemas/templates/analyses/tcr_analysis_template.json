@@ -49,6 +49,21 @@
                         }
                     }
                 }
+            },
+            "Missing Samples": {
+                "prism_data_object_pointer": "1/missing_samples/-",
+                "data_columns": {
+                    "Missing Sample Explanations": {
+                        "cimac id": {
+                            "type_ref": "sample.json#properties/cimac_id",
+                            "merge_pointer": "0/cimac_id"
+                        },
+                        "reason":{
+                            "type_ref": "assays/components/ngs/missing_samples.json#items/properties/missing_reason",
+                            "merge_pointer": "0/missing_reason"
+                        }
+                    }
+                }
             }
         }
     }

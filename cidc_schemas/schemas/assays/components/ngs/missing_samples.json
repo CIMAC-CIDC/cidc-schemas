@@ -1,0 +1,21 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "ngs_missing_samples",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["cimac_id", "missing_reason"],
+    "properties": {
+      "cimac_id": {
+        "$ref": "sample.json#properties/cimac_id"
+      },
+      "missing_reason": {
+        "type": "string",
+        "description": "A comment describing why this sample is missing from the pipeline output."
+      }
+    }
+  },
+  "mergeStrategy": "arrayMergeById",
+  "mergeOptions": { "idRef": "/cimac_id" }
+}

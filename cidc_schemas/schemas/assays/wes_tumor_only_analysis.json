@@ -1,0 +1,61 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "wes_tumor_only_analysis",
+  "title": "WES tumor-only analysis combined files",
+  "type": "object",
+  "description": "Combined analysis files for the whole WES assay.",
+
+  "definitions": {
+    "sample_analysis": {
+      "type": "object",
+      "description": "Whole Exome Sequencing assay output files for a tumor normal pair of samples.",
+  
+      "required": [
+        "run_id",
+        "somatic",
+        "germline",
+        "report",
+        "neoantigen",
+        "purity",
+        "clonality",
+        "copynumber",
+        "msisensor",
+        "tumor"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "run_id": {
+            "type": "string",
+            "description": "An id used for a paired analysis run."
+        },
+        "somatic": {"$ref": "assays/wes_core.json#definitions/somatic"},
+        "germline": {"$ref": "assays/wes_core.json#definitions/germline"},
+        "report": {"$ref": "assays/wes_core.json#definitions/report"},
+        "neoantigen": {"$ref": "assays/wes_core.json#definitions/neoantigen"},
+        "purity": {"$ref": "assays/wes_core.json#definitions/purity"},
+        "clonality": {"$ref": "assays/wes_core.json#definitions/clonality"},
+        "copynumber": {"$ref": "assays/wes_core.json#definitions/copynumber"},
+        "msisensor": {"$ref": "assays/wes_core.json#definitions/msisensor"},
+        "rna": {"$ref": "assays/wes_core.json#definitions/rna"},
+
+        "tumor": {"$ref": "assays/wes_assay.json#definitions/sample_analysis"}
+      }
+    }
+  },
+
+  "required": [],
+  "additionalProperties": false,
+  "properties": {
+    "runs": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/wes_tumor_only_analysis.json#definitions/sample_analysis"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "$comment": "TODO fix to merge by a pair of normal and tumor ids. It requires improvements to the merge strategy code.",
+        "idRef": "/run_id"
+      }
+    }
+  }
+}

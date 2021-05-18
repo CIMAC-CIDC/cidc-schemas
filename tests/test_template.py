@@ -427,7 +427,7 @@ def test_convert_api_to_template_wes():
     wes_json = {
         "title": "WES analysis template",
         "description": "Metadata information for WES Analysis output.",
-        "prism_template_root_object_schema": "assays/components/ngs/wes/wes_analysis.json",
+        "prism_template_root_object_schema": "assays/wes_analysis.json",
         "prism_template_root_object_pointer": "/analysis/wes_analysis",
         "properties": {
             "worksheets": {
@@ -436,17 +436,22 @@ def test_convert_api_to_template_wes():
                         "protocol identifier": {
                             "merge_pointer": "2/protocol_identifier",
                             "type_ref": "clinical_trial.json#properties/protocol_identifier",
-                        }
+                        },
+                        "folder": {
+                            "do_not_merge": True,
+                            "type": "string",
+                            "allow_empty": True,
+                        },
                     },
                     "prism_data_object_pointer": "/pair_runs/-",
                     "data_columns": {
                         "WES Runs": {
                             "run id": {
                                 "merge_pointer": "/run_id",
-                                "type_ref": "assays/components/ngs/wes/wes_pair_analysis.json#properties/run_id",
+                                "type_ref": "assays/wes_analysis.json#definitions/pair_analysis/properties/run_id",
                                 "process_as": [
                                     {
-                                        "parse_through": "lambda run: f'analysis/clonality/{run}/{run}_pyclone.tsv'",
+                                        "parse_through": "lambda run: f'{folder or \"\"}analysis/clonality/{run}/{run}_pyclone.tsv'",
                                         "merge_pointer": "/clonality/clonality_pyclone",
                                         "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/clonality_pyclone.tsv",
                                         "type_ref": "assays/components/local_file.json#properties/file_path",
@@ -459,7 +464,7 @@ def test_convert_api_to_template_wes():
                                 "type_ref": "sample.json#properties/cimac_id",
                                 "process_as": [
                                     {
-                                        "parse_through": "lambda id: f'analysis/align/{id}/{id}.sorted.dedup.bam'",
+                                        "parse_through": "lambda id: f'{folder or \"\"}analysis/align/{id}/{id}.sorted.dedup.bam'",
                                         "merge_pointer": "/tumor/alignment/align_sorted_dedup",
                                         "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/sorted.dedup.bam",
                                         "type_ref": "assays/components/local_file.json#properties/file_path",
@@ -474,9 +479,7 @@ def test_convert_api_to_template_wes():
         },
     }
 
-    assay_schema = _load_dont_validate_schema(
-        "assays/components/ngs/wes/wes_analysis.json"
-    )
+    assay_schema = _load_dont_validate_schema("assays/wes_analysis.json")
 
     wes_output = _convert_api_to_template("wes", wes_api, assay_schema)
     assert DeepDiff(wes_json, wes_output) == {}
@@ -507,7 +510,12 @@ def test_convert_api_to_template_rna():
                         "protocol identifier": {
                             "merge_pointer": "2/protocol_identifier",
                             "type_ref": "clinical_trial.json#properties/protocol_identifier",
-                        }
+                        },
+                        "folder": {
+                            "do_not_merge": True,
+                            "type": "string",
+                            "allow_empty": True,
+                        },
                     },
                     "prism_data_object_pointer": "/level_1/-",
                     "data_columns": {
@@ -517,7 +525,7 @@ def test_convert_api_to_template_rna():
                                 "type_ref": "sample.json#properties/cimac_id",
                                 "process_as": [
                                     {
-                                        "parse_through": "lambda id: f'analysis/star/{id}/{id}.sorted.bam'",
+                                        "parse_through": "lambda id: f'{folder or \"\"}analysis/star/{id}/{id}.sorted.bam'",
                                         "merge_pointer": "0/star/sorted_bam",
                                         "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/star/sorted.bam",
                                         "type_ref": "assays/components/local_file.json#properties/file_path",
@@ -600,3 +608,15 @@ def test_generate_analysis_template_schemas_wes(tmpdir):
     good_wes = json.load(open(os.path.join(test_dir, "wes_template.json")))
     new_wes = json.load(open(tmpdir.join("wes_template.json")))
     assert DeepDiff(good_wes, new_wes) == {}
+
+
+def test_generate_analysis_template_schemas_wes_tumor_only(tmpdir):
+    generate_analysis_template_schemas(
+        tmpdir.strpath, lambda file: f"{file}_template.json"
+    )
+    test_dir = os.path.join(TEST_SCHEMA_DIR, "target-templates")
+    good_wes_tumor_only = json.load(
+        open(os.path.join(test_dir, "wes_tumor_only_template.json"))
+    )
+    new_wes_tumor_only = json.load(open(tmpdir.join("wes_tumor_only_template.json")))
+    assert DeepDiff(good_wes_tumor_only, new_wes_tumor_only) == {}

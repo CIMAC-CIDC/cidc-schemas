@@ -1,7 +1,7 @@
 {
     "title": "WES analysis template",
     "description": "Metadata information for WES Analysis output.",
-    "prism_template_root_object_schema": "assays/components/ngs/wes/wes_analysis.json",
+    "prism_template_root_object_schema": "assays/wes_analysis.json",
     "prism_template_root_object_pointer": "/analysis/wes_analysis",
     "properties": {
         "worksheets": {
@@ -22,7 +22,7 @@
                     "WES Runs": {
                         "run id": {
                             "merge_pointer": "/run_id",
-                            "type_ref": "assays/components/ngs/wes/wes_pair_analysis.json#properties/run_id",
+                            "type_ref": "assays/wes_analysis.json#definitions/pair_analysis/properties/run_id",
                             "process_as": [
                                 {
                                     "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.vcf.gz'",
@@ -61,7 +61,7 @@
                                 },
                                 {
                                     "parse_through": "lambda run: f'{folder or \"\"}analysis/germline/{run}/{run}_vcfcompare.txt'",
-                                    "merge_pointer": "/somatic/vcf_compare",
+                                    "merge_pointer": "/germline/vcf_compare",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_compare.txt",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
@@ -126,6 +126,20 @@
                                     "parse_through": "lambda run: f'{folder or \"\"}analysis/msisensor2/{run}/{run}_msisensor.txt'",
                                     "merge_pointer": "/msisensor/msisensor",
                                     "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/msisensor.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/rna/{run}/{run}.haplotyper.rna.vcf.gz'",
+                                    "merge_pointer": "/rna/haplotyper",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/haplotyper.vcf.gz",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/rna/{run}/{run}_tnscope.filter.neoantigen.vep.rna.vcf'",
+                                    "merge_pointer": "/rna/vcf_tnscope_filter_neoantigen",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_tnscope_filter_neoantigen.vcf",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },

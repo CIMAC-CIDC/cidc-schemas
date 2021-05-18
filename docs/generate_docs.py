@@ -109,18 +109,24 @@ def generate_docs(out_directory: str = HTML_DIR):
             if full_name.startswith("."):
                 full_name = full_name[1::]
 
-            # render the HTML to string
-            entity_html = template.render(
-                name=name,
-                full_name=full_name,
-                schema=schema,
-                scope=directory,
-                full_json_str=json.dumps(full_json, sort_keys=True, indent=4),
-            )
+            try:
+                # render the HTML to string
+                entity_html = template.render(
+                    name=name,
+                    full_name=full_name,
+                    schema=schema,
+                    scope=directory,
+                    full_json_str=json.dumps(full_json, sort_keys=True, indent=4),
+                )
+            except Exception as e:
+                raise Exception(
+                    f"Error rendering template documentation for {name}"
+                ) from e
 
-            # write this out
-            with open(os.path.join(out_directory, f"{full_name}.html"), "w") as f:
-                f.write(entity_html)
+            else:
+                # write this out
+                with open(os.path.join(out_directory, f"{full_name}.html"), "w") as f:
+                    f.write(entity_html)
 
 
 if __name__ == "__main__":

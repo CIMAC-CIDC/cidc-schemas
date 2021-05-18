@@ -3,12 +3,64 @@
   "$id": "wes_assay",
   "title": "Whole Exome Sequencing Assay",
   "type": "object",
+  "mergeStrategy": "objectMerge",
   "description": "Whole exome sequencing.",
-  "additionalProperties": false,
+
+  "definitions": {
+    "entry": {
+      "type": "object",
+      "mergeStrategy": "objectMerge",
+      "description": "A single data record from WES assay.",
+
+      "additionalProperties": false,
+      "allOf": [{ "$ref": "assays/components/ngs/ngs_assay_record.json" }],
+      "required": ["cimac_id"],
+      "properties": {
+        "output_files": {
+          "$ref": "assays/wes_assay.json#definitions/sample_analysis"
+        },
+        "sequencing_date": {
+          "description": "Date of sequencing.",
+          "type": "string",
+          "format": "date"
+        },
+        "quality_flag": {
+           "description": "Flag used for quality.",
+          "type": "number"
+        },
+        "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
+        "files": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/files"}
+      }
+
+    },
+    "sample_analysis": {
+      "type": "object",
+      "description": "Sample wise analysis files for the WES assay.",
+      "required": ["cimac_id"],
+      "additionalProperties": false,
+      "properties": {
+          "cimac_id": {
+              "$comment": "Id of a sample within this clinical trial, that this record is based upon.",
+              "$ref": "sample.json#properties/cimac_id"
+          },
+          "alignment": {"$ref": "assays/wes_core.json#definitions/alignment"},
+          "germline": {"$ref": "assays/wes_core.json#definitions/germline"},
+          "optitype": {"$ref": "assays/wes_core.json#definitions/optitype"},
+          "metrics": {"$ref": "assays/wes_core.json#definitions/coverage_metrics"}
+      }
+    }
+  },
+
   "allOf": [
       { "$ref": "assays/components/assay_core.json" },
       { "$ref": "assays/components/ngs_assay_core.json" }
   ],
+  "required": [
+    "records",
+    "bait_set",
+    "read_length"
+  ],
+  "additionalProperties": false,
   "properties": {
       "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
       "sequencer_platform": {"$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"},
@@ -34,18 +86,12 @@
           "type": "array",
           "description": "A single data record from WES assay.",
           "items": {
-            "$ref": "assays/components/ngs/wes/wes_entry.json"
+            "$ref": "assays/wes_assay.json#definitions/entry"
           },
           "mergeStrategy": "arrayMergeById",
           "mergeOptions": {
             "idRef": "cimac_id"
           }
       }
-  },
-  "required": [
-    "records",
-    "bait_set",
-    "read_length"
-  ],
-  "mergeStrategy": "objectMerge"
+  }
 }

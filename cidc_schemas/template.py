@@ -66,9 +66,9 @@ def generate_analysis_template_schemas(
         # need an existing assay/components/ngs analysis schema to find merge pointers
         try:
             assay_schema = _load_dont_validate_schema(
-                f"assays/components/ngs/{analysis}/{analysis}_analysis.json"
-                if analysis != "wes"
-                else "assays/wes_analysis.json"
+                f"assays/{analysis}_analysis.json"
+                if "wes" in analysis
+                else f"assays/components/ngs/{analysis}/{analysis}_analysis.json"
             )
         except Exception as e:
             print(
@@ -190,13 +190,16 @@ def _first_in_context(path: list, context: dict):
 
 def _initialize_template_schema(name: str, title: str, pointer: str):
     long_title = "RNAseq level 1" if title == "RNAseq" else title
+    print(name, title, long_title)
     # static
     template = {
         "title": f"{long_title} analysis template",
         "description": f"Metadata information for {long_title} Analysis output.",
-        "prism_template_root_object_schema": f"assays/components/ngs/{name}/{name}_analysis.json"
-        if name != "wes"
-        else "assays/wes_analysis.json",
+        "prism_template_root_object_schema": (
+            f"assays/{name}_analysis.json"
+            if "wes" in name
+            else f"assays/components/ngs/{name}/{name}_analysis.json"
+        ),
         "prism_template_root_object_pointer": f"/analysis/{name}_analysis",
         "properties": {
             "worksheets": {
@@ -272,10 +275,6 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
     for old, new in fixes.items():
         file_path = file_path.replace(old, new)
 
-    # special handling for vcfcompare
-    if "vcf_compare" in file_path:
-        file_path = file_path.replace("germline", "somatic")
-
     # split path into pieces
     file_path = file_path.split("/")
 
@@ -311,8 +310,8 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
 
 def _calc_gcs_uri_path(name: str, merge_pointer: str):
     # generate GCS URI ending from merge pointer
-    if name == "wes":  # WES doesn't get the beginning path for some reason
-        file = merge_pointer[1:].rsplit("/", 1)[1]
+    if "wes" in name:  # WES doesn't get the beginning path for some reason
+        file = merge_pointer.lstrip("0").rsplit("/", 1)[1]
     else:
         file = merge_pointer[2:]
     # special handling for .bam.bai
@@ -336,7 +335,13 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
     from .prism.merger import InvalidMergeTargetException
 
     # so many different ways of writing it
-    title = "RNAseq" if name == "rna" else name.upper()
+    title = (
+        "RNAseq"
+        if name == "rna"
+        else "WES tumor-only"
+        if name == "wes_tumor_only"
+        else name.upper()
+    )
     pointer = [
         k for k in assay_schema["properties"].keys() if not k.startswith("merge")
     ][0]
@@ -360,7 +365,7 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
 
         if long_key == "normal cimac id":
             short_key = "normal"
-        elif long_key == "tumor cimac id":
+        elif long_key == "tumor cimac id" or long_key == "tumor_cimac_id":
             short_key = "tumor"
         else:
             short_key = long_key.replace(" ", "_")
@@ -368,14 +373,14 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
         # static header
         if "cimac id" in long_key:
             type_ref = "sample.json#properties/cimac_id"
-            if name == "wes":
+            if "wes" in name:
                 merge_pointer = f"/{short_key}/cimac_id"
             else:
                 merge_pointer = f"/{long_key.replace(' ','_')}"
-        elif name == "wes":
-            type_ref = "assays/wes_analysis.json#definitions/"
+        elif "wes" in name:
+            type_ref = f"assays/{name}_analysis.json#definitions/"
             if long_key == "run id":
-                type_ref += "pair_analysis/properties/"
+                type_ref += f"{'sample' if 'tumor_only' in name else 'pair'}_analysis/properties/"
 
             if short_key in ["normal", "tumor"]:
                 type_ref += f"{short_key}/properties/cimac_id"
@@ -416,9 +421,11 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
 
             # calculate merge_pointer
             merge_pointer = _calc_merge_pointer(file_path, context, long_key)
-            if name == "wes":
+            if short_key == "tumor":
+                print(merge_pointer)
+            if "wes" in name:
                 # WES doesn't get starting 0 for some reason
-                merge_pointer = merge_pointer[1:]
+                merge_pointer = merge_pointer.lstrip("0")
                 # also gets normal / tumor prepended
                 if short_key in ["normal", "tumor"]:
                     merge_pointer = f"/{short_key}{merge_pointer}"
@@ -450,7 +457,7 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
 
             # GCS URI start is static
             gcs_uri = f"{{protocol identifier}}/{name}/"
-            if name == "wes":  # wes has its own scheme
+            if "wes" in name:  # wes has its own scheme
                 gcs_uri += "{run id}/analysis/"
                 if long_key != "run id":
                     gcs_uri += f"{short_key}/{{{long_key}}}/"
@@ -475,7 +482,7 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
             ext = ".".join(ext)
             gcs_uri += "." + ext
 
-            if name == "wes":
+            if "wes" in name:
                 gcs_uri = gcs_uri.replace(
                     ".summary", "_summary"
                 )  # doesn't change in WES for some reason

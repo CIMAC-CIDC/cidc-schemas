@@ -1,7 +1,7 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
-  "$id": "wes_analysis",
-  "title": "WES analysis combined files",
+  "$id": "wes_tumor_only_analysis",
+  "title": "WES tumor-only analysis combined files",
   "type": "object",
   "description": "Combined analysis files for the whole WES assay.",
 
@@ -36,6 +36,7 @@
         "clonality": {"$ref": "assays/wes_core.json#definitions/clonality"},
         "copynumber": {"$ref": "assays/wes_core.json#definitions/copynumber"},
         "msisensor": {"$ref": "assays/wes_core.json#definitions/msisensor"},
+        "rna": {"$ref": "assays/wes_core.json#definitions/rna"},
 
         "tumor": {"$ref": "assays/wes_assay.json#definitions/sample_analysis"}
       }

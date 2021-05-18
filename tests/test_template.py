@@ -608,3 +608,15 @@ def test_generate_analysis_template_schemas_wes(tmpdir):
     good_wes = json.load(open(os.path.join(test_dir, "wes_template.json")))
     new_wes = json.load(open(tmpdir.join("wes_template.json")))
     assert DeepDiff(good_wes, new_wes) == {}
+
+
+def test_generate_analysis_template_schemas_wes_tumor_only(tmpdir):
+    generate_analysis_template_schemas(
+        tmpdir.strpath, lambda file: f"{file}_template.json"
+    )
+    test_dir = os.path.join(TEST_SCHEMA_DIR, "target-templates")
+    good_wes_tumor_only = json.load(
+        open(os.path.join(test_dir, "wes_tumor_only_template.json"))
+    )
+    new_wes_tumor_only = json.load(open(tmpdir.join("wes_tumor_only_template.json")))
+    assert DeepDiff(good_wes_tumor_only, new_wes_tumor_only) == {}

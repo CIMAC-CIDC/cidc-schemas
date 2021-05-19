@@ -5,7 +5,7 @@
 "#preamble","Assay creator","DFCI"
 "#preamble","Instrument","PresNixon123"
 "#preamble","Raw fcs filename(s)","batch1f1.fcs,batch1f2.fcs"
-"#preamble","Controls fcs filename(s)","control1.fcs, control2.fcs"
+"#preamble","Controls fcs filename(s)","control1.fcs,control2.fcs"
 "#preamble","Injector","HAT123"
 "#preamble","Date of acquisition","43355"
 "#preamble","Acquisition buffer","ABC"

@@ -42,6 +42,7 @@ SUPPORTED_ANALYSES = [
     "cytof_e4412_analysis",
     "cytof_s1609_analysis",
     "wes_analysis",
+    "wes_tumor_only_analysis",
     "rna_level1_analysis",
     "tcr_analysis",
 ]

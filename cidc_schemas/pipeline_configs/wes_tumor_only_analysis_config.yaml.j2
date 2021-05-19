@@ -1,0 +1,73 @@
+# samples: a map of sample name to a list of Google bucket paths to input files, 
+# VALID INPUTS: fastq, fastq.gz, bam
+# NOTE: for PAIRED-END fastq/fastq.gz, give both pairs to the sample
+samples:
+  {{tumor_sample.cimac_id}}:
+{% if tumor_sample.files.r1 %}
+    # r1 
+  {% for fastq_gz_artifact in tumor_sample.files.r1 %}
+    - gs://{{BIOFX_BUCKET_NAME}}/{{fastq_gz_artifact.object_url}}
+  {% endfor %}
+    # r2
+  {% for fastq_gz_artifact in tumor_sample.files.r2 %}
+    - gs://{{BIOFX_BUCKET_NAME}}/{{fastq_gz_artifact.object_url}}
+  {% endfor %}
+{% else %}
+    # bam
+  {% for bam_artifact in tumor_sample.files.bam %}
+    - gs://{{BIOFX_BUCKET_NAME}}/{{bam_artifact.object_url}}
+  {% endfor %}
+{% endif %}
+  
+# metasheet: Group the samples into Tumor-only "runs"
+# each run should have a name, e.g. run_1 or tumor CIMAC ID:
+# then under each run, define a tumor and a normal sample
+metasheet:
+  {{run_id}}:
+    tumor: {{tumor_sample.cimac_id}}
+    normal:
+
+# unique instance name
+instance_name: "{{ run_id | lower | replace('.', '-') }}"
+# NOTE: "wes-auto" will automatically be prepended to this string
+
+# Number of cores for the wes instance
+# Options- 32 (default), 64, 96 
+cores: 32
+
+# Disk size to use, in GB, default 750
+disk_size: 750
+# the name of the persistent disk will be: "wes_auto_{instance_name}_disk"
+
+# CIMAC center the samples associate with
+# Options- broad (.bam), mda (.fastq or fastq.gz)
+{% if tumor_sample.files.bam %}
+cimac_center: broad
+{% else %}
+cimac_center: mda
+{% endif %}
+
+# Trim soft clip reads when calling somatic variants?
+# Not available for tnsnv
+# Default: trim_soft_clip: False
+trim_soft_clip: False
+
+# tumor_only - IF the normal sample is NOT available
+# The normal samples are empty in the metasheet above.
+tumor_only: True
+
+# Somatic variant caller preference
+# Options- tnscope (default), tnsnv, tnhaplotyper2
+somatic_caller: tnscope
+
+# IGNORED Path to the google bucket path for the run
+# google_bucket_path: gs://...
+
+# Specific wes commit string to use (filled by pipeline team)
+# wes_commit:
+
+# Specific wes google image to use (filled by pipeline team)
+# image:
+
+# Specific wes reference snapshot to use (filled by pipeline team)
+# wes_ref_snapshot:

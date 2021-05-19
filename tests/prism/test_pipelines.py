@@ -64,8 +64,6 @@ def stage_assay_for_analysis(template_type):
 
     staging_map = {
         "cytof_analysis": "cytof_10021",
-        "wes_fastq": "tumor_normal_pairing",
-        "wes_bam": "tumor_normal_pairing",
         "tumor_normal_pairing": "wes_fastq",
     }
 
@@ -86,13 +84,13 @@ def stage_assay_for_analysis(template_type):
 
 def test_WES_pipeline_config_generation_after_prismify(prismify_result, template):
 
-    if not template.type.startswith("wes_"):
+    if not (template.type.startswith("wes_") or "pair" in template.type):
         return
 
     # Test that the config generator blocks disallowed upload types
     upload_type = "foo"
     with pytest.raises(NotImplementedError, match=f"Not supported type:{upload_type}"):
-        pipelines._wes_pipeline_config(upload_type)
+        pipelines._Wes_pipeline_config(upload_type)
 
     full_ct = get_test_trial(
         [
@@ -111,10 +109,10 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
     prelim_assay = stage_assay_for_analysis(template.type)
     if prelim_assay:
         full_ct, errs = merger.merge_clinical_trial_metadata(prelim_assay, full_ct)
-        assert 0 == len(errs)
+        assert 0 == len(errs), str(errs)
 
     full_ct, errs = merger.merge_clinical_trial_metadata(patch_with_artifacts, full_ct)
-    assert 0 == len(errs)
+    assert 0 == len(errs), str(errs)
 
     res = pipelines.generate_analysis_configs_from_upload_patch(
         full_ct, patch_with_artifacts, template.type, "my-biofx-bucket"
@@ -125,17 +123,34 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
         assert res == {}
         return
 
-    # in other cases - 1 config
-    assert len(res) == 1
+    elif "pair" in template.type:
+        # only returns tumor/normal
+        assert len(res) == 1
+    else:
+        # in other cases - 2 config, tumor/normal and tumor-only
+        assert len(res) == 2
 
     for fname, conf in res.items():
         conf = yaml.load(conf, Loader=yaml.FullLoader)
+        print(conf)
 
         assert len(conf["metasheet"]) == 1  # one run
-        assert (
-            conf["instance_name"] == "ctttpp111-00"
-        )  # run ID but lowercase & hyphenated
-        assert len(conf["samples"]) == 2  # tumor and normal
+
+        if "pair" in template.type:
+            assert len(conf["samples"]) in [1, 2]
+            assert conf["instance_name"] == (
+                "ctttpp111-00"  # run_id from sheet
+                if len(conf["samples"]) == 2  # tumor/normal
+                else "ctttpp122-00"  # tumor id for tumor-only
+            )  # run ID but lowercase & hyphenated
+
+        else:
+            assert len(conf["samples"]) == 1  # tumor only
+            assert conf["instance_name"] in [
+                "ctttpp111-00",
+                "ctttpp121-00",
+            ]  # CIMAC ID but lowercase & hypenated
+
         for sample in conf["samples"].values():
             assert len(sample) > 0  # at lease one data file per sample
             assert all("my-biofx-bucket" in f for f in sample)
@@ -153,7 +168,6 @@ def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, templ
         ["CTTTPP111.00", "CTTTPP121.00", "CTTTPP122.00", "CTTTPP123.00"],
         assays={"rna": []},
     )
-
     patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
 
     # if it's an analysis - we need to merge corresponding preliminary assay first

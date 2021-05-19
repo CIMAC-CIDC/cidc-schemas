@@ -1,0 +1,302 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "wes_assay",
+  "title": "Whole Exome Sequencing Assay",
+  "inheritableBase": true,
+  "type": "object",
+  "required": [],
+  "properties": {},
+
+  "definitions": {
+  	"rna": {
+  		"type": "object",
+  		"additionalProperties": false,
+  		"properties": {
+		    "haplotyper": {
+		      "$ref": "artifacts/artifact_vcf_gz.json"
+		    },
+		    "vcf_tnscope_filter_neoantigen": {
+		    	"$ref": "artifacts/artifact_vcf.json"
+		    }
+		}
+  	},
+
+  	"alignment": {
+	  "type": "object",
+	  "description": "WES output align files.",
+	  "properties": {
+	    "align_recalibrated": {
+	      "$ref": "artifacts/artifact_bam.json"
+	    },
+	    "align_recalibrated_index": {
+	      "$ref": "artifacts/artifact_bam_bai.json"
+	    },
+	    "align_sorted_dedup": {
+	      "$ref": "artifacts/artifact_bam.json"
+	    },
+	    "align_sorted_dedup_index": {
+	      "$ref": "artifacts/artifact_bam_bai.json"
+	    }
+	  },
+	  "required": [
+	    "align_sorted_dedup",
+	    "align_sorted_dedup_index"
+	  ],
+	  "additionalProperties": false
+	},
+
+	"clonality": {
+	  "type": "object",
+	  "description": "Clonality output files.",
+	  "properties": {
+	    "clonality_pyclone": {
+	      "$ref": "artifacts/artifact_tsv.json"
+	    },
+	    "clonality_table": {
+	      "$ref": "artifacts/artifact_tsv.json"
+	    }
+	  },
+	  "required": [
+	    "clonality_pyclone",
+	    "clonality_table"
+	  ],
+	  "additionalProperties": false
+	},
+
+	"copynumber": {
+	  "type": "object",
+	  "description": "Copy number output files.",
+	  "properties": {
+	    "copynumber_cnv_calls": {
+	      "$ref": "artifacts/artifact_text.json"
+	    },
+	    "copynumber_cnv_calls_tsv": {
+	      "$ref": "artifacts/artifact_tsv.json"
+	    }
+	  },
+	  "required": [
+	    "copynumber_cnv_calls",
+	    "copynumber_cnv_calls_tsv"
+	  ],
+	  "additionalProperties": false
+	},
+
+	"corealignments": {
+	  "type": "object",
+	  "description": "Core-alignments output files.",
+	  "properties": {
+	    "tn_corealigned": {
+	      "$ref": "artifacts/artifact_bam.json"
+	    },
+	    "tn_corealigned_index": {
+	      "$ref": "artifacts/artifact_bam_bai.json"
+	    }
+	  },
+	    "required": [
+	    ],
+	    "additionalProperties": false
+	},
+
+	"coverage_metrics": {
+	  "type": "object",
+	  "description": "Coverage metrics output files.",
+	  "properties": {
+	    "all_summaries": {
+	      "$ref": "artifacts/artifact_text.json"
+	    },
+	    "mosdepth_region_dist_broad": {
+	      "$ref": "artifacts/artifact_text.json"
+	    },
+	    "mosdepth_region_dist_mda": {
+	      "$ref": "artifacts/artifact_text.json"
+	    },
+	    "mosdepth_region_dist_mocha": {
+	      "$ref": "artifacts/artifact_text.json"
+	    },
+	    "coverage_metrics": {
+	      "$ref": "artifacts/artifact_text.json"
+	    },
+	    "coverage_metrics_summary": {
+	      "$ref": "artifacts/artifact_text.json"
+	    },
+	    "target_metrics": {
+	      "$ref": "artifacts/artifact_text.json"
+	    },
+	    "target_metrics_summary": {
+	      "$ref": "artifacts/artifact_text.json"
+	    }
+	  },
+	  "required": [
+	    "coverage_metrics",
+	    "target_metrics"
+	  ],
+	  "additionalProperties": false
+	},
+
+	"germline": {
+	  "type": "object",
+	  "description": "Germline variant output sample files.",
+	  "properties": {
+	    "vcf_compare": {
+	    	"$ref": "artifacts/artifact_text.json"
+	    },
+	    "haplotyper_targets": {
+	      "$ref": "artifacts/artifact_vcf_gz.json"
+	  	}
+	  },
+	  "oneOf": [
+	  	{ "required": ["vcf_compare"] },
+	  	{ "required": ["haplotyper_targets"] }
+	  ],
+	  
+	  "additionalProperties": false
+	},
+
+	"msisensor": {
+	  "type": "object",
+	  "description": "MSISensor2 output files.",
+	  "properties": {
+	    "msisensor": {
+	      "$ref": "artifacts/artifact_text.json"
+	    }
+	  },
+	  "required": [
+	    "msisensor"
+	  ],
+	  "additionalProperties": false
+	},
+
+	"neoantigen": {
+	  "type": "object",
+	  "description": "Neoantigen output files.",
+	  "properties": {
+	    "HLA_results": {
+	      "$ref": "artifacts/artifact_tsv.json"
+	    },
+	    "combined_filtered": {
+	      "$ref": "artifacts/artifact_tsv.json"
+	    },
+	    "mhc_class_I_epitopes": {
+	      "$ref": "artifacts/artifact_tsv.json"
+	    },
+	    "mhc_class_II_epitopes": {
+	      "$ref": "artifacts/artifact_tsv.json"
+	    },
+	    "mhc_class_I_filtered_condensed_ranked": {
+	      "$ref": "artifacts/artifact_tsv.json"
+	    },
+	    "mhc_class_II_filtered_condensed_ranked": {
+	      "$ref": "artifacts/artifact_tsv.json"
+	    }
+	  },
+	  "required": [
+	    "HLA_results",
+	    "combined_filtered"
+	  ],
+	  "additionalProperties": false
+	},
+
+	"optitype": {
+	  "type": "object",
+	  "description": "HLA output files.",
+	  "properties": {
+	    "optitype_result": {
+	      "$ref": "artifacts/artifact_text.json"
+	    },
+	    "xhla_report_hla": {
+	      "$ref": "artifacts/artifact_json.json"
+	    }
+	  },
+	  "required": [
+	    "optitype_result"
+	  ],
+	  "additionalProperties": false
+	},
+
+	"purity": {
+	  "type": "object",
+	  "description": "Purity output files.",
+	  "properties": {
+	    "optimal_purity_value": {
+	      "$ref": "artifacts/artifact_text.json"
+	    }
+	  },
+	  "required": [
+	    "optimal_purity_value"
+	  ],
+	  "additionalProperties": false
+	},
+
+	"report": {
+	  "type": "object",
+	  "description": "WES pipeline version/commit string.",
+	  "properties": {
+	    "wes_version": {
+	      "$ref": "artifacts/artifact_text.json"
+	    },
+	    "config": {
+	      "$ref": "artifacts/artifact_yaml.json"
+	    },
+	    "wes_run_version": {
+	      "$ref": "artifacts/artifact_tsv.json"
+	    },
+	    "metasheet": {
+	      "$ref": "artifacts/artifact_csv.json"
+	    },
+	    "tumor_mutational_burden": {
+	      "$ref": "artifacts/artifact_tsv.json"
+	    },
+	    "report": {
+	      "$ref": "artifacts/artifact_gz.json"
+	    },
+	    "wes_sample_json": {
+	      "$ref": "artifacts/artifact_json.json"
+	    }
+	  },
+	  "required": [
+	    "config",
+	    "wes_run_version",
+	    "metasheet",
+	    "report",
+	    "wes_sample_json"
+	  ],
+	  "additionalProperties": false
+	},
+
+	"somatic": {
+	  "type": "object",
+	  "description": "Somatic variant calling output sample files.",
+	  "additionalProperties": false,
+	  "properties": {
+	    "vcf_tnscope_filter": {
+	      "$ref": "artifacts/artifact_vcf.json"
+	    },
+	    "vcf_gz_tnscope_filter": {
+	      "$ref": "artifacts/artifact_vcf_gz.json"
+	    },
+	    "vcf_gz_tnscope_output": {
+	      "$ref": "artifacts/artifact_vcf_gz.json"
+	    },
+	    "vcf_tnscope_output": {
+	      "$ref": "artifacts/artifact_vcf.json"
+	    },
+	    "maf_tnscope_filter": {
+	      "$ref": "artifacts/artifact_maf.json"
+	    },
+	    "maf_tnscope_output": {
+	      "$ref": "artifacts/artifact_maf.json"
+	    },
+	    "tnscope_exons": {
+	      "$ref": "artifacts/artifact_vcf_gz.json"
+	    }
+	  },
+	  "required": [
+	    "vcf_gz_tnscope_output",
+	    "vcf_gz_tnscope_filter",
+	    "maf_tnscope_output",
+	    "maf_tnscope_filter",
+	    "tnscope_exons"
+	  ]
+	}
+  }
+}

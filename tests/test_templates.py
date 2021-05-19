@@ -84,6 +84,7 @@ def test_template(template, template_example, template_example_xlsx_path, tmpdir
             continue
 
         other_template = Template.from_type(other_template_type)
+        print(other_template_type)
         with pytest.raises(ValidationError):
             other_template.validate_excel(template_example_xlsx_path)
 

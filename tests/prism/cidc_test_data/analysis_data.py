@@ -2392,11 +2392,17 @@ def tcr_analysis() -> PrismTestData:
                                 },
                             },
                         ],
+                        "excluded_samples": [
+                            {
+                                "cimac_id": "CTTTPP111.00",
+                                "reason_excluded": "low coverage",
+                            },
+                            {
+                                "cimac_id": "CTTTPP122.00",
+                                "reason_excluded": "module failed",
+                            },
+                        ],
                     }
-                ],
-                "excluded_samples": [
-                    {"cimac_id": "CTTTPP111.00", "reason_excluded": "low coverage"},
-                    {"cimac_id": "CTTTPP122.00", "reason_excluded": "module failed"},
                 ],
             }
         },
@@ -2449,10 +2455,7 @@ def tcr_analysis() -> PrismTestData:
     cimac_ids = [
         record["cimac_id"]
         for batch in prismify_patch["analysis"]["tcr_analysis"]["batches"]
-        for record in batch["records"]
-    ] + [
-        sample["cimac_id"]
-        for sample in prismify_patch["analysis"]["tcr_analysis"]["excluded_samples"]
+        for record in [*batch["records"], *batch["excluded_samples"]]
     ]
     assays = tcr_fastq().prismify_patch["assays"]
     base_trial = get_test_trial(cimac_ids, assays)

@@ -24,6 +24,9 @@
             "mergeOptions": {
                 "idRef": "/cimac_id"
             }
+        },
+        "excluded_samples": {
+          "$ref": "assays/components/ngs/excluded_samples.json"
         }
     }
 }

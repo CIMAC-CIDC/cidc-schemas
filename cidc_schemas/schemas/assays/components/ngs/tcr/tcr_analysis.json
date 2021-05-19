@@ -15,9 +15,6 @@
       "mergeOptions": {
         "idRef": "/batch id"
       }
-    },
-    "excluded_samples": {
-      "$ref": "assays/components/ngs/excluded_samples.json"
     }
   }
 }

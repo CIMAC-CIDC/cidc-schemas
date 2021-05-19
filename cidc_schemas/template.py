@@ -188,9 +188,27 @@ def _first_in_context(path: list, context: dict):
     return ret if ret[0] else ("", path, context)
 
 
+_excluded_samples_worksheet_snippet = {
+    "Excluded Samples": {
+        "prism_data_object_pointer": "/excluded_samples/-",
+        "data_columns": {
+            "Samples Excluded From Analysis": {
+                "cimac id": {
+                    "type_ref": "sample.json#properties/cimac_id",
+                    "merge_pointer": "0/cimac_id",
+                },
+                "reason": {
+                    "type_ref": "assays/components/ngs/excluded_samples.json#items/properties/reason_excluded",
+                    "merge_pointer": "0/reason_excluded",
+                },
+            }
+        },
+    },
+}
+
+
 def _initialize_template_schema(name: str, title: str, pointer: str):
     long_title = "RNAseq level 1" if title == "RNAseq" else title
-    print(name, title, long_title)
     # static
     template = {
         "title": f"{long_title} analysis template",
@@ -217,7 +235,8 @@ def _initialize_template_schema(name: str, title: str, pointer: str):
                     },
                     "prism_data_object_pointer": f"/{pointer}/-",
                     "data_columns": {f"{title} Runs": {}},
-                }
+                },
+                **_excluded_samples_worksheet_snippet,
             }
         },
     }

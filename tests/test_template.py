@@ -22,6 +22,7 @@ from cidc_schemas.template import (
     _convert_api_to_template,
     _first_in_context,
     generate_analysis_template_schemas,
+    _excluded_samples_worksheet_snippet,
 )
 
 from .constants import TEST_SCHEMA_DIR
@@ -474,7 +475,8 @@ def test_convert_api_to_template_wes():
                             },
                         }
                     },
-                }
+                },
+                **_excluded_samples_worksheet_snippet,
             }
         },
     }
@@ -535,7 +537,8 @@ def test_convert_api_to_template_rna():
                             }
                         }
                     },
-                }
+                },
+                **_excluded_samples_worksheet_snippet,
             }
         },
     }

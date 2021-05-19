@@ -1,23 +1,23 @@
 {
-    "$schema": "metaschema/strict_meta_schema.json#",
-    "$id": "tcr_analysis",
-    "title": "TCR Output Files",
-    "description": "Output files generated from the TCRseq assay: TRA and TRB clones",
-    "type": "object",
-    "additionalProperties": false,
-    "properties": {
-        "batches": {
-            "type": "array",
-            "items": {
-                "$ref": "assays/components/ngs/tcr/tcr_batch.json"
-            },
-            "mergeStrategy": "arrayMergeById",
-            "mergeOptions": {
-                "idRef": "/batch id"
-            }
-        },
-        "missing_samples": {
-            "$ref": "assays/components/ngs/missing_samples.json"
-        }
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "tcr_analysis",
+  "title": "TCR Output Files",
+  "description": "Output files generated from the TCRseq assay: TRA and TRB clones",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "batches": {
+      "type": "array",
+      "items": {
+        "$ref": "assays/components/ngs/tcr/tcr_batch.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "/batch id"
+      }
+    },
+    "excluded_samples": {
+      "$ref": "assays/components/ngs/excluded_samples.json"
     }
+  }
 }

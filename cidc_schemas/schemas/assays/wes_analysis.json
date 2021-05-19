@@ -9,23 +9,19 @@
     "pair_analysis": {
       "type": "object",
       "description": "Whole Exome Sequencing assay output files for a tumor normal pair of samples.",
-  
-      "required": [
-        "normal",
-        "tumor",
-        "run_id"
-      ],
+
+      "required": ["normal", "tumor", "run_id"],
       "additionalProperties": false,
       "properties": {
         "normal": {
-            "$ref": "assays/wes_assay.json#definitions/sample_analysis"
+          "$ref": "assays/wes_assay.json#definitions/sample_analysis"
         },
         "tumor": {
-            "$ref": "assays/wes_assay.json#definitions/sample_analysis"
+          "$ref": "assays/wes_assay.json#definitions/sample_analysis"
         },
         "run_id": {
-            "type": "string",
-            "description": "An id used for a paired analysis run."
+          "type": "string",
+          "description": "An id used for a paired analysis run."
         },
         "somatic": {
           "$ref": "assays/wes_core.json#definitions/somatic"
@@ -74,6 +70,9 @@
         "$comment": "TODO fix to merge by a pair of normal and tumor ids. It requires improvements to the merge strategy code.",
         "idRef": "/run_id"
       }
+    },
+    "excluded_samples": {
+      "$ref": "assays/components/ngs/excluded_samples.json"
     }
   }
 }

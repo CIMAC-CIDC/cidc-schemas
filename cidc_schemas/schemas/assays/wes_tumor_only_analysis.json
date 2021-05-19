@@ -50,6 +50,9 @@
         "$comment": "TODO fix to merge by a pair of normal and tumor ids. It requires improvements to the merge strategy code.",
         "idRef": "/run_id"
       }
+    },
+    "excluded_samples": {
+      "$ref": "assays/components/ngs/excluded_samples.json"
     }
   }
 }

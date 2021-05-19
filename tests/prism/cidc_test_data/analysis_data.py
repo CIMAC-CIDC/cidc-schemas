@@ -912,14 +912,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
                 "runs": [
                     {
                         "run_id": "run_1",
-                        "clonality": {
-                            "clonality_pyclone": {
-                                "upload_placeholder": "cdef9e1e-8e04-46ed-a9e6-bb618188a6d6"
-                            },
-                            "clonality_table": {
-                                "upload_placeholder": "ctef9e1e-8e04-46ed-a9e6-bb618188a6d6"
-                            },
-                        },
                         "msisensor": {
                             "msisensor": {
                                 "upload_placeholder": "msi18d7a-fd96-4e75-b265-1590c703a301"
@@ -958,16 +950,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
                                 "upload_placeholder": "09bb7dd5-083e-468e-b5c7-3c8eb3e77a94"
                             },
                         },
-                        "purity": {
-                            "optimal_purity_value": {
-                                "upload_placeholder": "f0b85ef8-47cb-45b9-bb94-c961150786b9"
-                            }
-                        },
-                        "germline": {
-                            "vcf_compare": {
-                                "upload_placeholder": "ht899d73-7474-4041-85f9-6cc4324be811"
-                            }
-                        },
                         "rna": {
                             "haplotyper": {
                                 "upload_placeholder": "e0b85ef8-47cb-45b9-bb94-c961150786b9"
@@ -1005,11 +987,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
                                     "upload_placeholder": "2f3307bd-960e-4735-b831-f93d20fe8d37"
                                 },
                             },
-                            "germline": {
-                                "haplotyper_targets": {
-                                    "upload_placeholder": "ht899d73-7373-4041-85f9-6cc4324be811"
-                                }
-                            },
                         },
                         "report": {
                             "config": {
@@ -1017,9 +994,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
                             },
                             "wes_run_version": {
                                 "upload_placeholder": "c47271fb-e2c7-5436-cafe-5cf84bc72bf4"
-                            },
-                            "tumor_mutational_burden": {
-                                "upload_placeholder": "d47271fb-e2c7-5436-cafe-5cf84bc72bf5"
                             },
                             "metasheet": {
                                 "upload_placeholder": "xyz271fb-e2c7-5436-cafe-5cf84bc72bf4"
@@ -1034,14 +1008,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
                     },
                     {
                         "run_id": "run_2",
-                        "clonality": {
-                            "clonality_pyclone": {
-                                "upload_placeholder": "a4cba177-0be5-4d7d-b635-4a60adaa9575"
-                            },
-                            "clonality_table": {
-                                "upload_placeholder": "aucba177-0be5-4d7d-b635-4a60adaa9575"
-                            },
-                        },
                         "msisensor": {
                             "msisensor": {
                                 "upload_placeholder": "msi28d7a-fd96-4e75-b265-1590c703a301"
@@ -1080,16 +1046,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
                                 "upload_placeholder": "ba9d4b22-5610-4cde-b7e1-31ebf856a4ab"
                             },
                         },
-                        "purity": {
-                            "optimal_purity_value": {
-                                "upload_placeholder": "98621828-ee22-40d1-840a-0dae97e8bf09"
-                            }
-                        },
-                        "germline": {
-                            "vcf_compare": {
-                                "upload_placeholder": "ht899d73-7373-4041-85f9-6cc4324be813"
-                            }
-                        },
                         "tumor": {
                             "metrics": {
                                 "coverage_metrics": {
@@ -1101,11 +1057,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
                                 "coverage_metrics_summary": {
                                     "upload_placeholder": "3db263fd-2b23-4905-8389-dc8c49c01c2f"
                                 },
-                            },
-                            "germline": {
-                                "haplotyper_targets": {
-                                    "upload_placeholder": "ht899d73-7373-4041-85f9-6cc4324be814"
-                                }
                             },
                             "cimac_id": "CTTTPP121.00",
                             "alignment": {
@@ -1140,9 +1091,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
                             "wes_run_version": {
                                 "upload_placeholder": "56824763-fb9f-58b4-c7c4-8175759933f4"
                             },
-                            "tumor_mutational_burden": {
-                                "upload_placeholder": "66824763-fb9f-58b4-c7c4-8175759933f5"
-                            },
                             "metasheet": {
                                 "upload_placeholder": "xyz24763-fb9f-58b4-c7c4-8175759933f4"
                             },
@@ -1160,20 +1108,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
         "protocol_identifier": "test_prism_trial_id",
     }
     upload_entries = [
-        LocalFileUploadEntry(
-            local_path="gs://results/analysis/clonality/run_1/run_1_pyclone.tsv",
-            gs_key="test_prism_trial_id/wes_tumor_only/run_1/analysis/clonality_pyclone.tsv",
-            upload_placeholder="cdef9e1e-8e04-46ed-a9e6-bb618188a6d6",
-            metadata_availability=False,
-            allow_empty=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="gs://results/analysis/clonality/run_1/run_1_table.tsv",
-            gs_key="test_prism_trial_id/wes_tumor_only/run_1/analysis/clonality_table.tsv",
-            upload_placeholder="ctef9e1e-8e04-46ed-a9e6-bb618188a6d6",
-            metadata_availability=False,
-            allow_empty=False,
-        ),
         LocalFileUploadEntry(
             local_path="gs://results/analysis/rna/run_1/run_1.haplotyper.rna.vcf.gz",
             gs_key="test_prism_trial_id/wes_tumor_only/run_1/analysis/haplotyper.vcf.gz",
@@ -1245,13 +1179,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
             allow_empty=False,
         ),
         LocalFileUploadEntry(
-            local_path="gs://results/analysis/purity/run_1/run_1.optimalpurityvalue.txt",
-            gs_key="test_prism_trial_id/wes_tumor_only/run_1/analysis/optimal_purity_value.txt",
-            upload_placeholder="f0b85ef8-47cb-45b9-bb94-c961150786b9",
-            metadata_availability=False,
-            allow_empty=False,
-        ),
-        LocalFileUploadEntry(
             local_path="gs://results/analysis/report/config.yaml",
             gs_key="test_prism_trial_id/wes_tumor_only/run_1/analysis/config.yaml",
             upload_placeholder="abc271fb-d2c7-4436-bafe-4cf84bc72bf4",
@@ -1283,13 +1210,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
             local_path="gs://results/analysis/report/WES_Meta/02_WES_Run_Version.tsv",
             gs_key="test_prism_trial_id/wes_tumor_only/run_1/analysis/wes_run_version.tsv",
             upload_placeholder="c47271fb-e2c7-5436-cafe-5cf84bc72bf4",
-            metadata_availability=False,
-            allow_empty=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="gs://results/analysis/report/somatic_variants/06_tumor_mutational_burden.tsv",
-            gs_key="test_prism_trial_id/wes_tumor_only/run_1/analysis/tumor_mutational_burden.tsv",
-            upload_placeholder="d47271fb-e2c7-5436-cafe-5cf84bc72bf5",
             metadata_availability=False,
             allow_empty=False,
         ),
@@ -1343,13 +1263,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
             allow_empty=False,
         ),
         LocalFileUploadEntry(
-            local_path="gs://results/analysis/germline/run_1/run_1_vcfcompare.txt",
-            gs_key="test_prism_trial_id/wes_tumor_only/run_1/analysis/vcf_compare.txt",
-            upload_placeholder="ht899d73-7474-4041-85f9-6cc4324be811",
-            metadata_availability=False,
-            allow_empty=False,
-        ),
-        LocalFileUploadEntry(
             local_path="gs://results/analysis/optitype/CTTTPP111.00/CTTTPP111.00_result.tsv",
             gs_key="test_prism_trial_id/wes_tumor_only/run_1/analysis/tumor/CTTTPP111.00/optitype_result.tsv",
             upload_placeholder="a5899d73-7373-4041-85f9-6cc4324be817",
@@ -1364,20 +1277,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
             allow_empty=False,
         ),
         LocalFileUploadEntry(
-            local_path="gs://results/analysis/germline/CTTTPP111.00/CTTTPP111.00_haplotyper.targets.vcf.gz",
-            gs_key="test_prism_trial_id/wes_tumor_only/run_1/analysis/tumor/CTTTPP111.00/haplotyper_targets.vcf.gz",
-            upload_placeholder="ht899d73-7373-4041-85f9-6cc4324be811",
-            metadata_availability=False,
-            allow_empty=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="gs://results/analysis/purity/run_2/run_2.optimalpurityvalue.txt",
-            gs_key="test_prism_trial_id/wes_tumor_only/run_2/analysis/optimal_purity_value.txt",
-            upload_placeholder="98621828-ee22-40d1-840a-0dae97e8bf09",
-            metadata_availability=False,
-            allow_empty=False,
-        ),
-        LocalFileUploadEntry(
             local_path="gs://results/analysis/rna/run_2/run_2.haplotyper.rna.vcf.gz",
             gs_key="test_prism_trial_id/wes_tumor_only/run_2/analysis/haplotyper.vcf.gz",
             upload_placeholder="88621828-ee22-40d1-840a-0dae97e8bf09",
@@ -1388,20 +1287,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
             local_path="gs://results/analysis/rna/run_2/run_2_tnscope.filter.neoantigen.vep.rna.vcf",
             gs_key="test_prism_trial_id/wes_tumor_only/run_2/analysis/vcf_tnscope_filter_neoantigen.vcf",
             upload_placeholder="78621828-ee22-40d1-840a-0dae97e8bf09",
-            metadata_availability=False,
-            allow_empty=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="gs://results/analysis/clonality/run_2/run_2_pyclone.tsv",
-            gs_key="test_prism_trial_id/wes_tumor_only/run_2/analysis/clonality_pyclone.tsv",
-            upload_placeholder="a4cba177-0be5-4d7d-b635-4a60adaa9575",
-            metadata_availability=False,
-            allow_empty=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="gs://results/analysis/clonality/run_2/run_2_table.tsv",
-            gs_key="test_prism_trial_id/wes_tumor_only/run_2/analysis/clonality_table.tsv",
-            upload_placeholder="aucba177-0be5-4d7d-b635-4a60adaa9575",
             metadata_availability=False,
             allow_empty=False,
         ),
@@ -1462,13 +1347,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
             allow_empty=False,
         ),
         LocalFileUploadEntry(
-            local_path="gs://results/analysis/germline/run_2/run_2_vcfcompare.txt",
-            gs_key="test_prism_trial_id/wes_tumor_only/run_2/analysis/vcf_compare.txt",
-            upload_placeholder="ht899d73-7373-4041-85f9-6cc4324be813",
-            metadata_availability=False,
-            allow_empty=False,
-        ),
-        LocalFileUploadEntry(
             local_path="gs://results/analysis/report/config.yaml",
             gs_key="test_prism_trial_id/wes_tumor_only/run_2/analysis/config.yaml",
             upload_placeholder="abc24763-fb9f-48b4-b7c4-7175759933f5",
@@ -1500,13 +1378,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
             local_path="gs://results/analysis/report/WES_Meta/02_WES_Run_Version.tsv",
             gs_key="test_prism_trial_id/wes_tumor_only/run_2/analysis/wes_run_version.tsv",
             upload_placeholder="56824763-fb9f-58b4-c7c4-8175759933f4",
-            metadata_availability=False,
-            allow_empty=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="gs://results/analysis/report/somatic_variants/06_tumor_mutational_burden.tsv",
-            gs_key="test_prism_trial_id/wes_tumor_only/run_2/analysis/tumor_mutational_burden.tsv",
-            upload_placeholder="66824763-fb9f-58b4-c7c4-8175759933f5",
             metadata_availability=False,
             allow_empty=False,
         ),
@@ -1570,13 +1441,6 @@ def wes_tumor_only_analysis() -> PrismTestData:
             local_path="gs://results/analysis/xhla/CTTTPP121.00/report-CTTTPP121.00-hla.json",
             gs_key="test_prism_trial_id/wes_tumor_only/run_2/analysis/tumor/CTTTPP121.00/xhla_report_hla.json",
             upload_placeholder="4807aaa5-bafa-4fe5-89e9-73f9d734b971",
-            metadata_availability=False,
-            allow_empty=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="gs://results/analysis/germline/CTTTPP121.00/CTTTPP121.00_haplotyper.targets.vcf.gz",
-            gs_key="test_prism_trial_id/wes_tumor_only/run_2/analysis/tumor/CTTTPP121.00/haplotyper_targets.vcf.gz",
-            upload_placeholder="ht899d73-7373-4041-85f9-6cc4324be814",
             metadata_availability=False,
             allow_empty=False,
         ),

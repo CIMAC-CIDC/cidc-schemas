@@ -60,20 +60,6 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/germline/{run}/{run}_vcfcompare.txt'",
-                                    "merge_pointer": "/germline/vcf_compare",
-                                    "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/vcf_compare.txt",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/report/somatic_variants/06_tumor_mutational_burden.tsv'",
-                                    "merge_pointer": "/report/tumor_mutational_burden",
-                                    "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/tumor_mutational_burden.tsv",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
                                     "parse_through": "lambda run: f'{folder or \"\"}analysis/report/neoantigens/01_HLA_Results.tsv'",
                                     "merge_pointer": "/neoantigen/HLA_results",
                                     "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/HLA_results.tsv",
@@ -84,27 +70,6 @@
                                     "parse_through": "lambda run: f'{folder or \"\"}analysis/neoantigen/{run}/combined/{run}.filtered.tsv'",
                                     "merge_pointer": "/neoantigen/combined_filtered",
                                     "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/combined_filtered.tsv",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/purity/{run}/{run}.optimalpurityvalue.txt'",
-                                    "merge_pointer": "/purity/optimal_purity_value",
-                                    "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/optimal_purity_value.txt",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/clonality/{run}/{run}_pyclone.tsv'",
-                                    "merge_pointer": "/clonality/clonality_pyclone",
-                                    "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/clonality_pyclone.tsv",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/clonality/{run}/{run}_table.tsv'",
-                                    "merge_pointer": "/clonality/clonality_table",
-                                    "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/clonality_table.tsv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
@@ -230,13 +195,6 @@
                                     "parse_through": "lambda id: f'{folder or \"\"}analysis/metrics/{id}/{id}_coverage_metrics.sample_summary.txt'",
                                     "merge_pointer": "/tumor/metrics/coverage_metrics_summary",
                                     "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/tumor/{tumor cimac id}/coverage_metrics_summary.txt",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/germline/{id}/{id}_haplotyper.targets.vcf.gz'",
-                                    "merge_pointer": "/tumor/germline/haplotyper_targets",
-                                    "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/tumor/{tumor cimac id}/haplotyper_targets.vcf.gz",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 }

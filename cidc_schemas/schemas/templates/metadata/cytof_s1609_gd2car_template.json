@@ -1,0 +1,181 @@
+{
+    "title": "Metadata file for CYTOF",
+    "description": "Metadata information for mass-cytometry (CYTOF).",
+    "prism_template_root_object_schema": "assays/cytof_s1609_gd2car_assay.json",
+    "prism_template_root_object_pointer": "/assays/cytof_s1609_gd2car/0",
+    "properties": {
+        "worksheets": {
+
+            "Acquisition and Preprocessing": {
+                "prism_data_object_pointer": "/records/-",
+                "preamble_rows": {
+                    "assay run id": {
+                        "merge_pointer": "/assay_run_id",
+                        "type_ref": "assays/cytof_assay_core.json#properties/assay_run_id"
+                    },
+                    "batch id": {
+                        "merge_pointer": "0/batch_id",
+                        "type_ref": "assays/cytof_assay_core.json#properties/batch_id"
+                    },
+                    "protocol identifier": {
+                        "merge_pointer": "3/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    },
+                    "assay creator": {
+                        "merge_pointer": "0/assay_creator",
+                        "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+                    },
+                    "instrument": {
+                        "merge_pointer": "0/instrument",
+                        "type_ref": "assays/cytof_s1609_gd2car_assay.json#properties/instrument"
+                    },
+                    "raw fcs filename(s)": {
+                        "merge_pointer": "0/source_fcs",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "gcs_uri_format": "{protocol identifier}/cytof_s1609_gd2car/{batch id}/source_{num}.fcs",
+                        "is_artifact": "multi"
+                    },
+                    "controls fcs filename(s)": {
+                        "merge_pointer": "0/controls_fcs",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "gcs_uri_format": "{protocol identifier}/cytof_s1609_gd2car/{batch id}/control_{num}.fcs",
+                        "is_artifact": "multi",
+                        "allow_empty": true
+                    },
+                    "controls spike-in fcs filename(s)": {
+                        "merge_pointer": "0/control_spike_in_fcs",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "gcs_uri_format": "{protocol identifier}/cytof_s1609_gd2car/{batch id}/control_{num}_spike_in.fcs",
+                        "is_artifact": "multi",
+                        "allow_empty": true
+                    },
+                    "injector": {
+                        "merge_pointer": "0/injector",
+                        "type_ref": "assays/cytof_s1609_gd2car_assay.json#properties/injector",
+                        "allow_empty": true
+                    },
+                    "date of acquisition": {
+                        "merge_pointer": "0/date_of_acquisition",
+                        "type_ref": "assays/cytof_s1609_gd2car_assay.json#properties/date_of_acquisition"
+                    },
+                    "acquisition buffer": {
+                        "merge_pointer": "0/acquisition_buffer",
+                        "type_ref": "assays/cytof_s1609_gd2car_assay.json#properties/acquisition_buffer"
+                    },
+                    "bead removal": {
+                        "merge_pointer": "0/bead_removal",
+                        "type_ref": "assays/cytof_s1609_gd2car_assay.json#properties/bead_removal"
+                    },
+                    "normalization method": {
+                        "merge_pointer": "0/normalization_method",
+                        "type_ref": "assays/cytof_s1609_gd2car_assay.json#properties/normalization_method",
+                        "allow_empty": true
+                    },
+                    "debarcoding protocol": {
+                        "merge_pointer": "0/debarcoding_protocol",
+                        "type_ref": "assays/cytof_s1609_gd2car_assay.json#properties/debarcoding_protocol",
+                        "allow_empty": true
+                    },
+                    "harware version": {
+                        "merge_pointer": "0/harware_version",
+                        "type_ref": "assays/cytof_s1609_gd2car_assay.json#properties/harware_version",
+                        "allow_empty": true
+                    }
+                },
+                "data_columns": {
+                    "Run info": {
+                        "cimac id": {
+                            "merge_pointer": "0/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id"
+                        },
+                        "intermediate fcs filename": {
+                            "merge_pointer": "0/input_files/intermediate_fcs",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/cytof_s1609_gd2car/{cimac id}/intermediate.fcs",
+                            "is_artifact": 1,
+                            "description": "Path to a file on a User's computer. \nThis .fcs file is an intermediate file that has been normalized, concatenated, and debarcoded, but has the veri-cells and has not been cleaned up."
+                        },
+                        "spike-in fcs filename": {
+                            "merge_pointer": "0/input_files/spike_in_fcs",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/cytof_s1609_gd2car/{cimac id}/spike_in.fcs",
+                            "is_artifact": 1,
+                            "description": "Path to the spike-in file on a User's computer."
+                        }
+                    },
+                    "Preprocessing": {
+                        "processed fcs filename": {
+                            "merge_pointer": "0/input_files/processed_fcs",
+                            "is_artifact": 1,
+                            "gcs_uri_format": "{protocol identifier}/cytof_s1609_gd2car/{cimac id}/processed.fcs",
+                            "type_ref": "assays/components/local_file.json#properties/file_path"
+                        },
+                        "concatenation version": {
+                            "merge_pointer": "0/concatenation_version",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/concatenation_version",
+                            "allow_empty": true
+                        },
+                        "normalization version": {
+                            "merge_pointer": "0/normalization_version",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/normalization_version",
+                            "allow_empty": true
+                        },
+                        "debarcoding key": {
+                            "merge_pointer": "0/debarcoding_key",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/debarcoding_key",
+                            "allow_empty": true
+                        },
+                        "preprocessing_notes": {
+                            "merge_pointer": "0/preprocessing_notes",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/preprocessing_notes",
+                            "allow_empty": true
+                        }
+                    }
+                }
+            },
+            "Antibody Information": {
+                "prism_data_object_pointer": "/cytof_antibodies/-",
+                "data_columns": {
+                    "Samples": {
+                        "target": {
+                            "merge_pointer": "0/antibody",
+                            "type_ref": "assays/components/antibody.json#properties/antibody"
+                        },
+                        "clone": {
+                            "merge_pointer": "0/clone",
+                            "type_ref": "assays/components/antibody.json#properties/clone"
+                        },
+                        "antibody company": {
+                            "merge_pointer": "0/company",
+                            "type_ref": "assays/components/antibody.json#properties/company"
+                        },
+                        "catalog number": {
+                            "merge_pointer": "0/cat_num",
+                            "type_ref": "assays/components/antibody.json#properties/cat_num"
+                        },
+                        "lot number": {
+                            "merge_pointer": "0/lot_num",
+                            "type_ref": "assays/components/antibody.json#properties/lot_num"
+                        },
+                        "isotope": {
+                            "merge_pointer": "0/isotope",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/isotope"
+                        },
+                        "dilution": {
+                            "merge_pointer": "0/dilution",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/dilution"
+                        },
+                        "stain_type": {
+                            "merge_pointer": "0/stain_type",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/stain_type"
+                        },
+                        "usage": {
+                            "merge_pointer": "0/usage",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/usage"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

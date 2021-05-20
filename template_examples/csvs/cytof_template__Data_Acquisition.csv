@@ -1,8 +1,0 @@
-"#title","METADATA FILE FOR CYTOF"
-"#preamble","LEAD ORGANIZATION STUDY ID","10021"
-"#preamble","ASSAY CREATOR","DFCI"
-"#preamble","PANEL NAME","Immune-1"
-
-"","Runs"
-"#header","ORIGINAL FCS FILENAME(S)","DATE OF ACQUISITION","INSTRUMENT","INJECTOR","ACQUISITION_BUFFER","BATCH_ID","AVERAGE_EVENT_PER_SECOND","RUN_TIME","NOTES"
-"#data","run1a.fcs,run1b.fcs","2018-08-07 00:00:00","CYTOF-9000","ABCDF","1","1","4567","30 minutes","Clog at minute 20, washed machine and re started sample"

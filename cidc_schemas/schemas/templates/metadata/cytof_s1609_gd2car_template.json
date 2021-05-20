@@ -42,6 +42,13 @@
                         "is_artifact": "multi",
                         "allow_empty": true
                     },
+                    "controls spike-in fcs filename(s)": {
+                        "merge_pointer": "0/control_spike_in_fcs",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "gcs_uri_format": "{protocol identifier}/cytof_s1609_gd2car/{batch id}/control_{num}_spike_in.fcs",
+                        "is_artifact": "multi",
+                        "allow_empty": true
+                    },
                     "injector": {
                         "merge_pointer": "0/injector",
                         "type_ref": "assays/cytof_s1609_gd2car_assay.json#properties/injector",

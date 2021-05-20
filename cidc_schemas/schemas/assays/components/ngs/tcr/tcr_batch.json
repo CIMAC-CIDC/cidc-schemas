@@ -26,7 +26,7 @@
             }
         },
         "excluded_samples": {
-          "$ref": "assays/components/ngs/excluded_samples.json"
+          "$ref": "assays/components/excluded_samples.json"
         }
     }
 }

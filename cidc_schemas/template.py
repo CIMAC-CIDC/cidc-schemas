@@ -198,7 +198,7 @@ _excluded_samples_worksheet_snippet = {
                     "merge_pointer": "0/cimac_id",
                 },
                 "reason": {
-                    "type_ref": "assays/components/ngs/excluded_samples.json#items/properties/reason_excluded",
+                    "type_ref": "assays/components/excluded_samples.json#items/properties/reason_excluded",
                     "merge_pointer": "0/reason_excluded",
                 },
             }

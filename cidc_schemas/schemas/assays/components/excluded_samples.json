@@ -1,7 +1,8 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
-  "$id": "ngs_excluded_samples",
+  "$id": "excluded_samples",
   "type": "array",
+  "description": "A list of samples excluded from analysis, along with the reasons why.",
   "items": {
     "type": "object",
     "additionalProperties": false,

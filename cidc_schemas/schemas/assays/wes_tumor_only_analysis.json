@@ -9,7 +9,7 @@
     "sample_analysis": {
       "type": "object",
       "description": "Whole Exome Sequencing assay output files for a tumor normal pair of samples.",
-  
+
       "required": [
         "run_id",
         "somatic",
@@ -22,17 +22,17 @@
       "additionalProperties": false,
       "properties": {
         "run_id": {
-            "type": "string",
-            "description": "An id used for a paired analysis run."
+          "type": "string",
+          "description": "An id used for a paired analysis run."
         },
-        "somatic": {"$ref": "assays/wes_core.json#definitions/somatic"},
-        "report": {"$ref": "assays/wes_core.json#definitions/report"},
-        "neoantigen": {"$ref": "assays/wes_core.json#definitions/neoantigen"},
-        "copynumber": {"$ref": "assays/wes_core.json#definitions/copynumber"},
-        "msisensor": {"$ref": "assays/wes_core.json#definitions/msisensor"},
-        "rna": {"$ref": "assays/wes_core.json#definitions/rna"},
+        "somatic": { "$ref": "assays/wes_core.json#definitions/somatic" },
+        "report": { "$ref": "assays/wes_core.json#definitions/report" },
+        "neoantigen": { "$ref": "assays/wes_core.json#definitions/neoantigen" },
+        "copynumber": { "$ref": "assays/wes_core.json#definitions/copynumber" },
+        "msisensor": { "$ref": "assays/wes_core.json#definitions/msisensor" },
+        "rna": { "$ref": "assays/wes_core.json#definitions/rna" },
 
-        "tumor": {"$ref": "assays/wes_assay.json#definitions/sample_analysis"}
+        "tumor": { "$ref": "assays/wes_assay.json#definitions/sample_analysis" }
       }
     }
   },
@@ -52,7 +52,7 @@
       }
     },
     "excluded_samples": {
-      "$ref": "assays/components/ngs/excluded_samples.json"
+      "$ref": "assays/components/excluded_samples.json"
     }
   }
 }

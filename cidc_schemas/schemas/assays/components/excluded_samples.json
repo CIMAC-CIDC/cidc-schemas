@@ -1,0 +1,22 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "excluded_samples",
+  "type": "array",
+  "description": "A list of samples excluded from analysis, along with the reasons why.",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["cimac_id", "reason_excluded"],
+    "properties": {
+      "cimac_id": {
+        "$ref": "sample.json#properties/cimac_id"
+      },
+      "reason_excluded": {
+        "type": "string",
+        "description": "A comment describing why this sample is missing from the pipeline output."
+      }
+    }
+  },
+  "mergeStrategy": "arrayMergeById",
+  "mergeOptions": { "idRef": "/cimac_id" }
+}

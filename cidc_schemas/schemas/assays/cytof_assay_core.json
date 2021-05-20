@@ -30,6 +30,9 @@
         "batch_id": {
             "description": "CyTOF batch identification number. Unique to every batch.",
             "type": "string"
+        },
+        "excluded_samples": {
+            "$ref": "assays/components/excluded_samples.json"
         }
     },
 

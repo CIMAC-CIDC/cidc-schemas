@@ -83,6 +83,21 @@
                         }
                     }
                 }
+            },
+            "Excluded Samples": {
+                "prism_data_object_pointer": "/excluded_samples/-",
+                "data_columns": {
+                    "Samples Excluded From Analysis": {
+                        "cimac id": {
+                            "type_ref": "sample.json#properties/cimac_id",
+                            "merge_pointer": "0/cimac_id"
+                        },
+                        "reason": {
+                            "type_ref": "assays/components/excluded_samples.json#items/properties/reason_excluded",
+                            "merge_pointer": "0/reason_excluded"
+                        }
+                    }
+                }
             }
         }
     }

@@ -1,0 +1,4 @@
+"#skip","Samples Excluded From Analysis"
+"#header","Cimac id","Reason"
+"#data","CTTTPP111.00","low coverage"
+"#data","CTTTPP122.00","module failed"

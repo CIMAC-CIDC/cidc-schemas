@@ -343,7 +343,11 @@ def wes_analysis() -> PrismTestData:
                             },
                         },
                     },
-                ]
+                ],
+                "excluded_samples": [
+                    {"cimac_id": "CTTTPP111.00", "reason_excluded": "low coverage"},
+                    {"cimac_id": "CTTTPP122.00", "reason_excluded": "module failed"},
+                ],
             }
         },
         "protocol_identifier": "test_prism_trial_id",
@@ -887,6 +891,9 @@ def wes_analysis() -> PrismTestData:
         sample["cimac_id"]
         for pair_run in prismify_patch["analysis"]["wes_analysis"]["pair_runs"]
         for sample in [pair_run["tumor"], pair_run["normal"]]
+    ] + [
+        sample["cimac_id"]
+        for sample in prismify_patch["analysis"]["wes_analysis"]["excluded_samples"]
     ]
     base_trial = get_test_trial(cimac_ids)
 
@@ -1102,7 +1109,11 @@ def wes_tumor_only_analysis() -> PrismTestData:
                             },
                         },
                     },
-                ]
+                ],
+                "excluded_samples": [
+                    {"cimac_id": "CTTTPP111.00", "reason_excluded": "low coverage"},
+                    {"cimac_id": "CTTTPP122.00", "reason_excluded": "module failed"},
+                ],
             }
         },
         "protocol_identifier": "test_prism_trial_id",
@@ -1449,6 +1460,11 @@ def wes_tumor_only_analysis() -> PrismTestData:
     cimac_ids = [
         run["tumor"]["cimac_id"]
         for run in prismify_patch["analysis"]["wes_tumor_only_analysis"]["runs"]
+    ] + [
+        sample["cimac_id"]
+        for sample in prismify_patch["analysis"]["wes_tumor_only_analysis"][
+            "excluded_samples"
+        ]
     ]
     base_trial = get_test_trial(cimac_ids)
 
@@ -1648,7 +1664,11 @@ def rna_level1_analysis() -> PrismTestData:
                             }
                         },
                     },
-                ]
+                ],
+                "excluded_samples": [
+                    {"cimac_id": "CTTTPP111.00", "reason_excluded": "low coverage"},
+                    {"cimac_id": "CTTTPP122.00", "reason_excluded": "module failed"},
+                ],
             }
         },
         "protocol_identifier": "test_prism_trial_id",
@@ -1828,6 +1848,11 @@ def rna_level1_analysis() -> PrismTestData:
         [],
     )
 
+    cimac_ids += [
+        sample["cimac_id"]
+        for sample in prismify_patch["analysis"]["rna_analysis"]["excluded_samples"]
+    ]
+
     base_trial = get_test_trial(cimac_ids)
 
     target_trial = copy_dict_with_branch(base_trial, prismify_patch, "analysis")
@@ -1912,7 +1937,14 @@ def cytof_10021_analysis() -> PrismTestData:
                     "astrolabe_analysis": {
                         "upload_placeholder": "6abb7949-5400-4e5a-a947-5a1403ca75cb"
                     },
-                }
+                    "excluded_samples": [
+                        {"cimac_id": "CTTTPP111.00", "reason_excluded": "low coverage"},
+                        {
+                            "cimac_id": "CTTTPP122.00",
+                            "reason_excluded": "module failed",
+                        },
+                    ],
+                },
             ]
         },
         "protocol_identifier": "test_prism_trial_id",
@@ -2035,7 +2067,7 @@ def cytof_10021_analysis() -> PrismTestData:
     cimac_ids = [
         record["cimac_id"]
         for batch in prismify_patch["assays"]["cytof_10021"]
-        for record in batch["records"]
+        for record in [*batch["records"], *batch["excluded_samples"]]
     ]
     assays = cytof_10021().prismify_patch["assays"]
     base_trial = get_test_trial(cimac_ids, assays)
@@ -2376,6 +2408,13 @@ def cytof_e4412_analysis() -> PrismTestData:
                     "astrolabe_analysis": {
                         "upload_placeholder": "6abb7949-5400-4e5a-a947-5a1403ca75cb"
                     },
+                    "excluded_samples": [
+                        {"cimac_id": "CTTTPP111.00", "reason_excluded": "low coverage"},
+                        {
+                            "cimac_id": "CTTTPP122.00",
+                            "reason_excluded": "module failed",
+                        },
+                    ],
                 }
             ]
         },
@@ -2501,6 +2540,10 @@ def cytof_e4412_analysis() -> PrismTestData:
         for batch in prismify_patch["assays"]["cytof_e4412"]
         for participant in batch["participants"]
         for sample in participant["samples"]
+    ] + [
+        sample["cimac_id"]
+        for batch in prismify_patch["assays"]["cytof_e4412"]
+        for sample in batch["excluded_samples"]
     ]
     cimac_ids.append(
         "CTTTPP121.00"
@@ -2594,8 +2637,18 @@ def tcr_analysis() -> PrismTestData:
                                 },
                             },
                         ],
+                        "excluded_samples": [
+                            {
+                                "cimac_id": "CTTTPP111.00",
+                                "reason_excluded": "low coverage",
+                            },
+                            {
+                                "cimac_id": "CTTTPP122.00",
+                                "reason_excluded": "module failed",
+                            },
+                        ],
                     }
-                ]
+                ],
             }
         },
     }
@@ -2647,7 +2700,7 @@ def tcr_analysis() -> PrismTestData:
     cimac_ids = [
         record["cimac_id"]
         for batch in prismify_patch["analysis"]["tcr_analysis"]["batches"]
-        for record in batch["records"]
+        for record in [*batch["records"], *batch["excluded_samples"]]
     ]
     assays = tcr_fastq().prismify_patch["assays"]
     base_trial = get_test_trial(cimac_ids, assays)

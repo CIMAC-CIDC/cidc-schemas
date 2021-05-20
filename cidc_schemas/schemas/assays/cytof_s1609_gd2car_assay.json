@@ -1,9 +1,9 @@
 {
     "$schema": "metaschema/strict_meta_schema.json#",
-    "$id": "cytof_s1609",
+    "$id": "cytof_s1609_gd2car",
     "title": "CYTOF Run",
     "type": "object",
-    "description": "Information about the acquisition and analysis CyTOF data for S1609 and similarly formatted trials.",
+    "description": "Information about the acquisition and analysis CyTOF data for S1609, GD2CAR and similarly formatted trials.",
     "additionalProperties": false,
     "mergeStrategy": "objectMerge",
     "allOf": [

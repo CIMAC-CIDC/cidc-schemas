@@ -2,7 +2,7 @@ from copy import deepcopy
 
 from cidc_schemas.prism import SUPPORTED_ANALYSES
 
-from .assay_data import cytof_10021, cytof_e4412, cytof_s1609
+from .assay_data import cytof_10021, cytof_e4412, cytof_s1609_gd2car
 from .assay_data import tcr_fastq
 
 from .utils import (
@@ -2070,12 +2070,12 @@ def cytof_10021_analysis() -> PrismTestData:
 
 
 @analysis_data_generator
-def cytof_s1609_analysis() -> PrismTestData:
-    upload_type = "cytof_s1609_analysis"
+def cytof_s1609_gd2car_analysis() -> PrismTestData:
+    upload_type = "cytof_s1609_gd2car_analysis"
     prismify_args = get_prismify_args(upload_type)
     prismify_patch = {
         "assays": {
-            "cytof_s1609": [
+            "cytof_s1609_gd2car": [
                 {
                     "records": [
                         {
@@ -2261,16 +2261,16 @@ def cytof_s1609_analysis() -> PrismTestData:
 
     cimac_ids = [
         record["cimac_id"]
-        for batch in prismify_patch["assays"]["cytof_s1609"]
+        for batch in prismify_patch["assays"]["cytof_s1609_gd2car"]
         for record in batch["records"]
     ]
-    assays = cytof_s1609().prismify_patch["assays"]
+    assays = cytof_s1609_gd2car().prismify_patch["assays"]
     base_trial = get_test_trial(cimac_ids, assays)
 
     # Set up the CyTOF target trial to include both assay and analysis metadata
     target_trial = deepcopy(base_trial)
-    assay_batches = assays["cytof_s1609"]
-    analysis_batches = prismify_patch["assays"]["cytof_s1609"]
+    assay_batches = assays["cytof_s1609_gd2car"]
+    analysis_batches = prismify_patch["assays"]["cytof_s1609_gd2car"]
     combined_batches = []
     for assay_batch, analysis_batch in zip(assay_batches, analysis_batches):
         assay_records = assay_batch["records"]
@@ -2283,7 +2283,7 @@ def cytof_s1609_analysis() -> PrismTestData:
         combined_batches.append(combined_batch)
 
     target_trial = copy_dict_with_branch(
-        base_trial, {"assays": {"cytof_s1609": combined_batches}}, "assays"
+        base_trial, {"assays": {"cytof_s1609_gd2car": combined_batches}}, "assays"
     )
 
     return PrismTestData(

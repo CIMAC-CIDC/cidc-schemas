@@ -2,8 +2,8 @@ from os import path
 from openpyxl import load_workbook
 from typing import Callable, List, Tuple, Union
 
-from .template import Template
-from .template_writer import XlTemplateWriter
+from ..template import Template
+from ..template_writer import XlTemplateWriter
 
 
 wes_analysis_template = Template.from_type("wes_analysis")

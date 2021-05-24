@@ -1,7 +1,7 @@
 from os import mkdir
 from tempfile import TemporaryDirectory
 
-from cidc_schemas.template_generator import (
+from cidc_schemas.utils.template_generator import (
     write_wes_analysis_batch,
     write_wes_analysis_template,
     wes_analysis_template,

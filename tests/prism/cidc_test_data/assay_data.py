@@ -288,7 +288,7 @@ def cytof_s1609_gd2car() -> PrismTestData:
                             "company": "DAKO",
                             "cat_num": "C8-AB123",
                             "lot_num": "1231272",
-                            "isotope": "115In",
+                            "isotope": "115ln",
                             "dilution": "100X",
                             "stain_type": "Surface Stain",
                             "usage": "Analysis Only",

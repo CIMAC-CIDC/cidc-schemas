@@ -135,7 +135,7 @@
                 "usage": {
                     "description": "How this antibody should be used in automatic analysis",
                     "type": "string",
-                    "enum": ["Ignored", "Used", "Analysis Only"]
+                    "enum": ["Ignored", "Used", "Barcoding", "Analysis Only"]
                 }
             }
         }

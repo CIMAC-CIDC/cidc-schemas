@@ -24,7 +24,7 @@
         "cytof_antibodies": {
             "type": "array",
             "mergeStrategy": "arrayMergeById",
-            "mergeOptions": {"idRef": "antibody"},
+            "mergeOptions": {"idRef": "isotope"},
             "items": {"$ref": "assays/cytof_assay_core.json#definitions/antibody"}
         },
         "batch_id": {

@@ -213,33 +213,39 @@ def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
 
         return None
 
+    return_files: Dict[str, pd.DataFrame] = {}
     if "study" in olink:
         study_npx = olink["study"]["npx_file"]
-        study_df = download_and_parse_npx(study_npx["object_url"])
+        return_files["study_wide"] = download_and_parse_npx(study_npx["object_url"])
     else:
-        batch_dfs = []
         for batch in olink.get("batches", []):
             if "combined" in batch:
                 batch_npx = batch["combined"]["npx_file"]
-                batch_dfs.append(download_and_parse_npx(batch_npx["object_url"]))
+                return_files[batch["batch_id"]] = download_and_parse_npx(
+                    batch_npx["object_url"]
+                )
+            elif len(batch.get("records", [])) == 1:
+                chip = batch["records"][0]
+                chip_npx = chip["files"]["assay_npx"]
+                return_files[chip["chip_barcode"]] = download_and_parse_npx(
+                    chip_npx["object_url"]
+                )
             else:
-                chip_dfs = []
-                for chip in batch.get("records", []):
-                    chip_npx = chip["files"]["assay_npx"]
-                    batch_dfs.append(download_and_parse_npx(chip_npx["object_url"]))
-
-        study_df = pd.concat(batch_dfs)
+                raise Exception(
+                    f"Olink for {context.trial_metadata.get(prism.constants.PROTOCOL_ID_FIELD_NAME)} batch {batch['batch_id']} has multiple chips but no batch-level summary file."
+                )
 
     return DeriveFilesResult(
         [
             _build_artifact(
                 context,
-                file_name="all_samples_npx.csv",
-                data=study_df.to_csv(),
+                file_name=f"all_samples_npx.{covers}.csv",
+                data=df.to_csv(),
                 file_type="csv",
                 data_format="npx|analysis_ready",
                 include_upload_type=True,
             )
+            for covers, df in return_files.items()
         ],
         context.trial_metadata,  # return metadata without updates
     )

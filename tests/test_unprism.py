@@ -134,8 +134,14 @@ def test_derive_files_olink():
                 "study": {"npx_file": {"object_url": "foo"}},
                 "batches": [
                     {
+                        "batch_id": "batch1",
                         "combined": {"npx_file": {"object_url": "bar"}},
-                        "records": [{"files": {"assay_npx": {"object_url": "baz"}}}],
+                        "records": [
+                            {
+                                "chip_barcode": "chip111",
+                                "files": {"assay_npx": {"object_url": "baz"}},
+                            }
+                        ],
                     }
                 ],
             }

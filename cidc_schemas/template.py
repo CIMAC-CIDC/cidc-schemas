@@ -525,6 +525,8 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
                 "type_ref": "assays/components/local_file.json#properties/file_path",
                 "is_artifact": 1,
             }
+            if entry.get("optional", False):
+                subsubtemplate["allow_empty"] = True
 
             subtemplate[long_key]["process_as"].append(subsubtemplate)
             used_merge_pointers.append(merge_pointer)

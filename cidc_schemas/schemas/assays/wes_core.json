@@ -5,7 +5,6 @@
   "inheritableBase": true,
   "type": "object",
   "required": [],
-  "properties": {},
 
   "definitions": {
   	"rna": {
@@ -297,6 +296,11 @@
 	    "maf_tnscope_filter",
 	    "tnscope_exons"
 	  ]
+	}
+  },
+  "properties": {
+	"ignore": {
+		"$ref": "artifacts/artifact_text.json"
 	}
   }
 }

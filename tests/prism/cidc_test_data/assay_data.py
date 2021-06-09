@@ -722,8 +722,13 @@ def hande() -> PrismTestData:
                             "files": {
                                 "image_file": {
                                     "upload_placeholder": "eeeeeeee-047f-4df6-b614-871289a1a2a8"
-                                }
+                                },
                             },
+                            "tumor_tissue_percentage": 1.0,
+                            "viable_tumor_percentage": 1.0,
+                            "viable_stroma_percentage": 1.0,
+                            "necrosis_percentage": 1.0,
+                            "fibrosis_percentage": 1.0,
                             "comment": "a comment",
                         },
                         {
@@ -733,6 +738,11 @@ def hande() -> PrismTestData:
                                     "upload_placeholder": "eeeeeeee-669c-48c7-aee0-f0d5e5e8a341"
                                 }
                             },
+                            "tumor_tissue_percentage": 2.0,
+                            "viable_tumor_percentage": 2.0,
+                            "viable_stroma_percentage": 2.0,
+                            "necrosis_percentage": 2.0,
+                            "fibrosis_percentage": 2.0,
                             "comment": "another comment",
                         },
                     ],

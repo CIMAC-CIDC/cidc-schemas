@@ -35,6 +35,31 @@
           },
         "files": {
           "$ref": "assays/hande_assay.json#definitions/input"
+        },
+        "tumor_tissue_percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "viable_tumor_percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "viable_stroma_percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "necrosis_percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "fibrosis_percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
         }
       },
       "required": ["cimac_id", "files"]

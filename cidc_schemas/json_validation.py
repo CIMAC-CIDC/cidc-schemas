@@ -4,12 +4,11 @@
 
 import os
 import copy
-import fnmatch
 import functools
 import json
 import collections.abc
 from contextlib import contextmanager
-from typing import Optional, List, Callable, Union
+from typing import Optional, Callable, Union
 
 import dateparser
 from deepdiff import DeepSearch
@@ -18,7 +17,7 @@ from jsonschema.exceptions import ValidationError, RefResolutionError
 from jsonpointer import resolve_pointer
 
 from .constants import SCHEMA_DIR, METASCHEMA_PATH
-from .util import get_all_paths, split_python_style_path, JSON
+from .util import JSON
 
 
 class InDocRefNotFoundError(ValidationError):

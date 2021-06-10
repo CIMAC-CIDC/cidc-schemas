@@ -1,12 +1,9 @@
-import json
-import yaml
-import openpyxl
 import os
 import re
 import jinja2
-from typing import Union, BinaryIO, List
+from typing import List, Union
 
-JSON = Union[dict, list, str, int, float]
+JSON = Union[dict, float, int, list, str]
 
 from deepdiff import grep
 

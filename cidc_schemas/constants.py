@@ -1,3 +1,12 @@
+__all__ = [
+    "SCHEMA_DIR",
+    "METASCHEMA_PATH",
+    "SCHEMA_LIST",
+    "TEMPLATE_DIR",
+    "MANIFEST_DIR",
+    "METADATA_DIR",
+]
+
 import os
 
 SCHEMA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "schemas")

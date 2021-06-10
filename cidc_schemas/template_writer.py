@@ -3,7 +3,7 @@
 """Defines the `XlTemplateWriter` class for writing `Template`s to Excel templates."""
 
 import logging
-from typing import Tuple, Dict, Optional
+from typing import Dict, Optional
 from enum import Enum
 from itertools import chain
 from datetime import date, time
@@ -326,7 +326,6 @@ class XlTemplateWriter:
             data_columns = {
                 name: subtable for name, subtable in schema["data_columns"].items()
             }
-            num_data_columns = sum([len(columns) for columns in data_columns.values()])
 
         if write_title:
             self._write_title(self.template.schema["title"])

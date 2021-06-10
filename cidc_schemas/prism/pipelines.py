@@ -2,7 +2,7 @@
 import csv
 import io
 
-from typing import List, NamedTuple, Dict, Callable
+from typing import Dict, List, NamedTuple
 from datetime import datetime
 from collections import defaultdict
 

@@ -10,18 +10,17 @@ import json
 import jsonschema
 import re
 from typing import (
-    List,
-    Optional,
-    Dict,
-    BinaryIO,
-    Union,
-    NamedTuple,
     Any,
-    Tuple,
+    BinaryIO,
     Callable,
+    Dict,
+    List,
+    NamedTuple,
+    Optional,
+    Tuple,
+    Union,
 )
-from collections import OrderedDict, defaultdict
-from pandas import to_numeric
+from collections import defaultdict
 
 from .constants import SCHEMA_DIR, TEMPLATE_DIR
 from .json_validation import _load_dont_validate_schema
@@ -829,6 +828,7 @@ def _get_facet_group(gcs_uri_format: str) -> str:
     # Provide empty strings for a GCS URI formatter variables
     try:
         # First, attempt to call the format string as a lambda
+        # eval is safe here because all possible values are defined in schemas
         fmted_string = eval(gcs_uri_format)("", _empty_defaultdict)
     except:
         # Fall back to string interpolation via format_map

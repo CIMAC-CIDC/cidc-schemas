@@ -8,7 +8,7 @@ def _follow_path(d: dict, *keys):
     for key in keys:
         try:
             d = d[key]
-        except (KeyError, IndexError):
+        except (KeyError, IndexError, TypeError):
             return None
     return d
 

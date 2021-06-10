@@ -206,6 +206,7 @@ class MergeCollisionException(ValueError):
         self.base_val = base_val
         self.head_val = head_val
         self.context = context or dict()
+        self.object_context = None
 
     def __str__(self):
         res = f"Detected mismatch of {self.prop_name}={self.base_val!r} and {self.prop_name}={self.head_val!r}"
@@ -213,13 +214,13 @@ class MergeCollisionException(ValueError):
             res += " in " + " ".join(f"{k}={v!r}" for k, v in self.context.items())
         return res
 
+    def set_object_context(self, object_context):
+        self.object_context = object_context
+        return self
+
     def with_context(self, **add_context):
-        return MergeCollisionException(
-            self.prop_name,
-            self.base_val,
-            self.head_val,
-            dict(self.context, **add_context),
-        )
+        self.context = dict(self.context, **add_context)
+        return self
 
 
 class ThrowOnOverwrite(strategies.Strategy):
@@ -241,25 +242,6 @@ class ThrowOnOverwrite(strategies.Strategy):
         return schema
 
 
-class ObjectContextForMergeCollisionException(MergeCollisionException):
-    """ Used for providing full object context (not only field level collision)
-        for parent ArrayMergeById strategy """
-
-    def __init__(self, merge_collision, object_context):
-        self.merge_collision = merge_collision
-        self.object_context = object_context
-
-    def __str__(self):
-        # delegating to MergeCollisionException
-        return str(self.merge_collision)
-
-    def with_context(self, **add_context):
-        # delegating to MergeCollisionException
-        return ObjectContextForMergeCollisionException(
-            self.merge_collision.with_context(**add_context), self.object_context
-        )
-
-
 class ObjectMergeWithContextForMergeCollision(strategies.ObjectMerge):
     def merge(self, walk, base, head, schema, meta, **kwargs):
         try:
@@ -268,7 +250,7 @@ class ObjectMergeWithContextForMergeCollision(strategies.ObjectMerge):
             # Swaping base and head in exception for current objects'
             # so in the parent container/array we will have context of current object
             # and not context of only one property of this object
-            raise ObjectContextForMergeCollisionException(e, head)
+            raise e.set_object_context(head)
             # Passes `head` as context, but might as well pass `base`,
             # as the intended use it to do `.get_key(walk, head|base, idRef)
             # in the parent ArrayMergeById strategy
@@ -278,12 +260,12 @@ class ArrayMergeByIdWithContextForMergeCollision(strategies.ArrayMergeById):
     def merge(self, walk, base, head, schema, meta, idRef="id", **kwargs):
         try:
             return super().merge(walk, base, head, schema, meta, idRef=idRef, **kwargs)
-        except ObjectContextForMergeCollisionException as e:
+        except MergeCollisionException as e:
             try:
                 # Adding context from MergeById
                 ctx_val = self.get_key(walk, e.object_context, idRef)
                 ctx_key = idRef.split("/")[-1]
-                raise e.merge_collision.with_context(**{ctx_key: ctx_val})
+                raise e.with_context(**{ctx_key: ctx_val})
             except jsonschema.exceptions.RefResolutionError:
                 # self.get_key failed, nothing to do but re-raise MergeCollision as is
                 raise e.merge_collision

@@ -5,7 +5,6 @@
 import logging
 from typing import Dict, Optional
 from enum import Enum
-from itertools import chain
 from datetime import date, time
 
 import xlsxwriter

@@ -25,11 +25,12 @@
                             "type_ref": "assays/wes_analysis.json#definitions/pair_analysis/properties/run_id",
                             "process_as": [
                                 {
-                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/ignore.txt'",
-                                    "merge_pointer": "/ignore",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/ignore.txt",
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/{run}_error.yaml'",
+                                    "merge_pointer": "/error",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/error.yaml",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
+                                    "is_artifact": 1,
+                                    "allow_empty": true
                                 },
                                 {
                                     "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.vcf.gz'",

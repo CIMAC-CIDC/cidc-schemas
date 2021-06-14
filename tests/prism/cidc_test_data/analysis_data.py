@@ -31,7 +31,7 @@ def wes_analysis() -> PrismTestData:
                 "pair_runs": [
                     {
                         "run_id": "run_1",
-                        "ignore": {
+                        "error": {
                             "upload_placeholder": "cdef9e1e-8e04-46ed-a9e6-bb618188a6d7"
                         },
                         "clonality": {
@@ -191,7 +191,7 @@ def wes_analysis() -> PrismTestData:
                     },
                     {
                         "run_id": "run_2",
-                        "ignore": {
+                        "error": {
                             "upload_placeholder": "a4cba177-0be5-4d7d-b635-4a60adaa9576"
                         },
                         "clonality": {
@@ -360,11 +360,11 @@ def wes_analysis() -> PrismTestData:
     }
     upload_entries = [
         LocalFileUploadEntry(
-            local_path="gs://results/analysis/ignore.txt",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/ignore.txt",
+            local_path="gs://results/analysis/run_1_error.yaml",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/error.yaml",
             upload_placeholder="cdef9e1e-8e04-46ed-a9e6-bb618188a6d7",
             metadata_availability=False,
-            allow_empty=False,
+            allow_empty=True,
         ),
         LocalFileUploadEntry(
             local_path="gs://results/analysis/clonality/run_1/run_1_pyclone.tsv",
@@ -654,11 +654,11 @@ def wes_analysis() -> PrismTestData:
             allow_empty=False,
         ),
         LocalFileUploadEntry(
-            local_path="gs://results/analysis/ignore.txt",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/ignore.txt",
+            local_path="gs://results/analysis/run_2_error.yaml",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/error.yaml",
             upload_placeholder="a4cba177-0be5-4d7d-b635-4a60adaa9576",
             metadata_availability=False,
-            allow_empty=False,
+            allow_empty=True,
         ),
         LocalFileUploadEntry(
             local_path="gs://results/analysis/clonality/run_2/run_2_pyclone.tsv",
@@ -939,7 +939,7 @@ def wes_tumor_only_analysis() -> PrismTestData:
                 "runs": [
                     {
                         "run_id": "run_1",
-                        "ignore": {
+                        "error": {
                             "upload_placeholder": "msi18d7a-fd96-4e75-b265-1590c703a302"
                         },
                         "msisensor": {
@@ -1038,7 +1038,7 @@ def wes_tumor_only_analysis() -> PrismTestData:
                     },
                     {
                         "run_id": "run_2",
-                        "ignore": {
+                        "error": {
                             "upload_placeholder": "msi28d7a-fd96-4e75-b265-1590c703a302"
                         },
                         "msisensor": {
@@ -1174,11 +1174,11 @@ def wes_tumor_only_analysis() -> PrismTestData:
             allow_empty=False,
         ),
         LocalFileUploadEntry(
-            local_path="gs://results/analysis/ignore.txt",
-            gs_key="test_prism_trial_id/wes_tumor_only/run_1/analysis/ignore.txt",
+            local_path="gs://results/analysis/run_1_error.yaml",
+            gs_key="test_prism_trial_id/wes_tumor_only/run_1/analysis/error.yaml",
             upload_placeholder="msi18d7a-fd96-4e75-b265-1590c703a302",
             metadata_availability=False,
-            allow_empty=False,
+            allow_empty=True,
         ),
         LocalFileUploadEntry(
             local_path="gs://results/analysis/msisensor2/run_1/run_1_msisensor.txt",
@@ -1349,11 +1349,11 @@ def wes_tumor_only_analysis() -> PrismTestData:
             allow_empty=False,
         ),
         LocalFileUploadEntry(
-            local_path="gs://results/analysis/ignore.txt",
-            gs_key="test_prism_trial_id/wes_tumor_only/run_2/analysis/ignore.txt",
+            local_path="gs://results/analysis/run_2_error.yaml",
+            gs_key="test_prism_trial_id/wes_tumor_only/run_2/analysis/error.yaml",
             upload_placeholder="msi28d7a-fd96-4e75-b265-1590c703a302",
             metadata_availability=False,
-            allow_empty=False,
+            allow_empty=True,
         ),
         LocalFileUploadEntry(
             local_path="gs://results/analysis/msisensor2/run_2/run_2_msisensor.txt",
@@ -1530,7 +1530,7 @@ def rna_level1_analysis() -> PrismTestData:
                 "level_1": [
                     {
                         "cimac_id": "CTTTPP111.00",
-                        "ignore": {
+                        "error": {
                             "upload_placeholder": "03030303-0404-0303-0303-CTTTPP111.00"
                         },
                         "star": {
@@ -1621,7 +1621,7 @@ def rna_level1_analysis() -> PrismTestData:
                     },
                     {
                         "cimac_id": "CTTTPP121.00",
-                        "ignore": {
+                        "error": {
                             "upload_placeholder": "03030303-0404-0303-0303-CTTTPP121.00"
                         },
                         "star": {
@@ -1728,11 +1728,11 @@ def rna_level1_analysis() -> PrismTestData:
         [
             [
                 LocalFileUploadEntry(
-                    local_path=f"gs://analysis/ignore.txt",
-                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/ignore.txt",
+                    local_path=f"gs://analysis/{cimac_id}_error.yaml",
+                    gs_key=f"test_prism_trial_id/rna/{cimac_id}/analysis/error.yaml",
                     upload_placeholder=f"03030303-0404-0303-0303-{cimac_id}",
                     metadata_availability=False,
-                    allow_empty=False,
+                    allow_empty=True,
                 ),
                 LocalFileUploadEntry(
                     local_path=f"gs://analysis/star/{cimac_id}/{cimac_id}.sorted.bam",

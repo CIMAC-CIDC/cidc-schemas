@@ -53,8 +53,8 @@
         "rna": {
           "$ref": "assays/wes_core.json#definitions/rna"
         },
-        "ignore": {
-          "$ref": "assays/wes_core.json#properties/ignore"
+        "error": {
+          "$ref": "assays/wes_core.json#properties/error"
         }
       }
     }

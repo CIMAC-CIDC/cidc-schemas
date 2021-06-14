@@ -439,8 +439,6 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
 
             # calculate merge_pointer
             merge_pointer = _calc_merge_pointer(file_path, context, long_key)
-            if short_key == "tumor":
-                print(merge_pointer)
             if "wes" in name:
                 # WES doesn't get starting 0 for some reason
                 merge_pointer = merge_pointer.lstrip("0")

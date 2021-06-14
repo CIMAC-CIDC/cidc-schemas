@@ -34,8 +34,8 @@
     "fusion":{
       "$ref": "assays/components/ngs/rna/fusion.json"
     },
-    "ignore": {
-      "$ref": "artifacts/artifact_text.json"
+    "error": {
+      "$ref": "artifacts/artifact_yaml.json"
     }
   },
   "required": [

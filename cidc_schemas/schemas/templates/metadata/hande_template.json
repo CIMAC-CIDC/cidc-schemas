@@ -29,6 +29,28 @@
                           "gcs_uri_format": "{protocol identifier}/hande/{cimac id}/image_file.svs",
                           "type_ref": "assays/components/local_file.json#properties/file_path"
                       },
+
+                      "tumor tissue (% total area)": {
+                        "merge_pointer": "0/tumor_tissue_percentage",
+                        "type_ref": "assays/hande_assay.json#definitions/record/properties/tumor_tissue_percentage"
+                      },
+                      "viable tumor (% area)": {
+                        "merge_pointer": "0/viable_tumor_percentage",
+                        "type_ref": "assays/hande_assay.json#definitions/record/properties/viable_tumor_percentage"
+                      },
+                      "viable stroma (% area)": {
+                        "merge_pointer": "0/viable_stroma_percentage",
+                        "type_ref": "assays/hande_assay.json#definitions/record/properties/viable_stroma_percentage"
+                      },
+                      "necrosis (% area)": {
+                        "merge_pointer": "0/necrosis_percentage",
+                        "type_ref": "assays/hande_assay.json#definitions/record/properties/necrosis_percentage"
+                      },
+                      "fibrosis (% area)": {
+                        "merge_pointer": "0/fibrosis_percentage",
+                        "type_ref": "assays/hande_assay.json#definitions/record/properties/fibrosis_percentage"
+                      },
+
                       "comment": {
                             "merge_pointer": "0/comment",
                             "type_ref": "assays/hande_assay.json#definitions/record/properties/comment",

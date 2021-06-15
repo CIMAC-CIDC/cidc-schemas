@@ -33,6 +33,9 @@
     },
     "fusion":{
       "$ref": "assays/components/ngs/rna/fusion.json"
+    },
+    "error": {
+      "$ref": "artifacts/artifact_yaml.json"
     }
   },
   "required": [

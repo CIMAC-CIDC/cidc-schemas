@@ -2,8 +2,6 @@
 
 """Defines the `XlTemplateReader` class for reading/validating templates from Excel templates."""
 
-import os
-import json
 import logging
 from itertools import dropwhile, zip_longest
 from typing import Dict, List, Tuple, Union, BinaryIO, NamedTuple, Optional

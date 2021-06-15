@@ -1,12 +1,9 @@
 import os
-import glob
 import argparse
-from typing import List
 
-from . import util
 from .template import Template, generate_all_templates
 from .json_validation import load_and_validate_schema
-from .constants import SCHEMA_DIR, SCHEMA_LIST, MANIFEST_DIR
+from .constants import SCHEMA_DIR, SCHEMA_LIST
 
 
 def main():

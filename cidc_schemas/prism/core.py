@@ -1,10 +1,8 @@
 """Build metadata dictionaries from Excel files."""
-import json
 import logging
 import base64
 import hmac
-from collections import defaultdict
-from typing import Any, List, NamedTuple, Tuple, Union, Optional, Dict
+from typing import List, Union
 
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import (
@@ -17,7 +15,7 @@ from cidc_schemas.template_reader import XlTemplateReader
 from cidc_schemas.template_writer import RowType
 from cidc_schemas.constants import SCHEMA_DIR
 from .merger import PRISM_MERGE_STRATEGIES, MergeCollisionException
-from jsonmerge import Merger, strategies, exceptions as jsonmerge_exceptions
+from jsonmerge import Merger
 from jsonpointer import EndOfList, JsonPointer, JsonPointerException, resolve_pointer
 
 from .constants import SUPPORTED_TEMPLATES

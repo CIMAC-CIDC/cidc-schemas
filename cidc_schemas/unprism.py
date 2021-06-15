@@ -1,6 +1,6 @@
 """Tools from extracting information from trial metadata blobs."""
 from io import StringIO, BytesIO
-from typing import Callable, NamedTuple, Optional, Union, List, Dict
+from typing import Callable, Dict, List, NamedTuple, Optional, Union
 
 import pandas as pd
 

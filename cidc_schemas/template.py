@@ -10,18 +10,17 @@ import json
 import jsonschema
 import re
 from typing import (
-    List,
-    Optional,
-    Dict,
-    BinaryIO,
-    Union,
-    NamedTuple,
     Any,
-    Tuple,
+    BinaryIO,
     Callable,
+    Dict,
+    List,
+    NamedTuple,
+    Optional,
+    Tuple,
+    Union,
 )
-from collections import OrderedDict, defaultdict
-from pandas import to_numeric
+from collections import defaultdict
 
 from .constants import SCHEMA_DIR, TEMPLATE_DIR
 from .json_validation import _load_dont_validate_schema
@@ -440,8 +439,6 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
 
             # calculate merge_pointer
             merge_pointer = _calc_merge_pointer(file_path, context, long_key)
-            if short_key == "tumor":
-                print(merge_pointer)
             if "wes" in name:
                 # WES doesn't get starting 0 for some reason
                 merge_pointer = merge_pointer.lstrip("0")
@@ -525,6 +522,8 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
                 "type_ref": "assays/components/local_file.json#properties/file_path",
                 "is_artifact": 1,
             }
+            if entry.get("optional", False):
+                subsubtemplate["allow_empty"] = True
 
             subtemplate[long_key]["process_as"].append(subsubtemplate)
             used_merge_pointers.append(merge_pointer)
@@ -827,6 +826,7 @@ def _get_facet_group(gcs_uri_format: str) -> str:
     # Provide empty strings for a GCS URI formatter variables
     try:
         # First, attempt to call the format string as a lambda
+        # eval is safe here because all possible values are defined in schemas
         fmted_string = eval(gcs_uri_format)("", _empty_defaultdict)
     except:
         # Fall back to string interpolation via format_map

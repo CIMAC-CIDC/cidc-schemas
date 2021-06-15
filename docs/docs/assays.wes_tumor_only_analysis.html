@@ -347,8 +347,8 @@
                 <tr>
     <td>
         
-            <span id="ignore">
-                ignore
+            <span id="error">
+                error
             </span>
             
         
@@ -360,7 +360,7 @@
     </td>
     <td>
         
-            <a href="assays.wes_core.html#ignore">assays.wes_core#ignore</a>
+            <a href="assays.wes_core.html#error">assays.wes_core#error</a>
         
     </td>
 </tr>
@@ -840,8 +840,8 @@
                     ],
                     "type": "object"
                 },
-                "ignore": {
-                    "$id": "text_artifact",
+                "error": {
+                    "$id": "yaml_artifact",
                     "$schema": "metaschema/strict_meta_schema.json#",
                     "additionalProperties": false,
                     "allOf": [
@@ -975,7 +975,7 @@
                             "type": "object"
                         }
                     ],
-                    "description": "Information about a text file.",
+                    "description": "Information about a YAML file.",
                     "mergeStrategy": "objectMerge",
                     "properties": {
                         "artifact_category": {
@@ -1002,7 +1002,7 @@
                             "type": "string"
                         },
                         "data_format": {
-                            "const": "TEXT",
+                            "const": "YAML",
                             "description": "Data format."
                         },
                         "facet_group": {
@@ -1049,7 +1049,7 @@
                             "type": "boolean"
                         }
                     },
-                    "title": "Text Artifact",
+                    "title": "YAML Artifact",
                     "type": "object"
                 },
                 "msisensor": {
@@ -9935,8 +9935,8 @@
                         ],
                         "type": "object"
                     },
-                    "ignore": {
-                        "$id": "text_artifact",
+                    "error": {
+                        "$id": "yaml_artifact",
                         "$schema": "metaschema/strict_meta_schema.json#",
                         "additionalProperties": false,
                         "allOf": [
@@ -10070,7 +10070,7 @@
                                 "type": "object"
                             }
                         ],
-                        "description": "Information about a text file.",
+                        "description": "Information about a YAML file.",
                         "mergeStrategy": "objectMerge",
                         "properties": {
                             "artifact_category": {
@@ -10097,7 +10097,7 @@
                                 "type": "string"
                             },
                             "data_format": {
-                                "const": "TEXT",
+                                "const": "YAML",
                                 "description": "Data format."
                             },
                             "facet_group": {
@@ -10144,7 +10144,7 @@
                                 "type": "boolean"
                             }
                         },
-                        "title": "Text Artifact",
+                        "title": "YAML Artifact",
                         "type": "object"
                     },
                     "msisensor": {

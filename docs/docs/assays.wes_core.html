@@ -68,20 +68,20 @@
                 <tr>
     <td>
         
-            <span id="ignore">
-                ignore
+            <span id="error">
+                error
             </span>
             
         
     </td>
     <td width=55%>
         
-            Information about a text file.
+            Information about a YAML file.
         
     </td>
     <td>
         
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
+            <a href="artifacts.artifact_yaml.html">artifacts.artifact_yaml</a>
         
     </td>
 </tr>
@@ -11489,8 +11489,8 @@
     },
     "inheritableBase": true,
     "properties": {
-        "ignore": {
-            "$id": "text_artifact",
+        "error": {
+            "$id": "yaml_artifact",
             "$schema": "metaschema/strict_meta_schema.json#",
             "additionalProperties": false,
             "allOf": [
@@ -11624,7 +11624,7 @@
                     "type": "object"
                 }
             ],
-            "description": "Information about a text file.",
+            "description": "Information about a YAML file.",
             "mergeStrategy": "objectMerge",
             "properties": {
                 "artifact_category": {
@@ -11651,7 +11651,7 @@
                     "type": "string"
                 },
                 "data_format": {
-                    "const": "TEXT",
+                    "const": "YAML",
                     "description": "Data format."
                 },
                 "facet_group": {
@@ -11698,7 +11698,7 @@
                     "type": "boolean"
                 }
             },
-            "title": "Text Artifact",
+            "title": "YAML Artifact",
             "type": "object"
         }
     },

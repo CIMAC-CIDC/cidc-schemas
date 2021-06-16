@@ -39,6 +39,12 @@
         "spike_in_fcs": {
             "$ref": "artifacts/artifact_fcs.json"
         },
+        "controls_fcs": {
+            "type": "array",
+            "items": {
+                "$ref": "artifacts/artifact_fcs.json"
+            }
+        },
         "normalization_method":{
             "description": "Process used for normalization prior to analysis, if any.",
             "type": "string",

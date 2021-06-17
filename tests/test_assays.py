@@ -228,7 +228,7 @@ def test_tcr_fastq():
     validator.validate(obj)
 
 
-def test_cytof_10021():
+def test_cytof_10021_9204():
 
     # test artifact sub schema
     schema_root = SCHEMA_DIR
@@ -319,7 +319,7 @@ def test_cytof_10021():
     obj["records"] = [record]
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("cytof_10021")
+    validator = _fetch_validator("cytof_10021_9204")
     validator.validate(obj)
 
 

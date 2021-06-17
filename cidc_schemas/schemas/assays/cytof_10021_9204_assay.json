@@ -1,9 +1,9 @@
 {
     "$schema": "metaschema/strict_meta_schema.json#",
-    "$id": "cytof_10021",
+    "$id": "cytof_10021_9204",
     "title": "CYTOF Run",
     "type": "object",
-    "description": "Information about the acquisition and analysis CyTOF data for 10021 and similarly formatted trials.",
+    "description": "Information about the acquisition and analysis CyTOF data for 10021, 9204 and similarly formatted trials.",
     "additionalProperties": false,
     "mergeStrategy": "objectMerge",
     "allOf": [
@@ -38,6 +38,12 @@
         },
         "spike_in_fcs": {
             "$ref": "artifacts/artifact_fcs.json"
+        },
+        "controls_fcs": {
+            "type": "array",
+            "items": {
+                "$ref": "artifacts/artifact_fcs.json"
+            }
         },
         "normalization_method":{
             "description": "Process used for normalization prior to analysis, if any.",

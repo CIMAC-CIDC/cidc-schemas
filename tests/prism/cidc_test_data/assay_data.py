@@ -60,12 +60,12 @@ def clinical_data() -> PrismTestData:
 
 
 @assay_data_generator
-def cytof_10021() -> PrismTestData:
-    upload_type = "cytof_10021"
+def cytof_10021_9204() -> PrismTestData:
+    upload_type = "cytof_10021_9204"
     prismify_args = get_prismify_args(upload_type)
     prismify_patch = {
         "assays": {
-            "cytof_10021": [
+            "cytof_10021_9204": [
                 {
                     "records": [
                         {
@@ -146,42 +146,42 @@ def cytof_10021() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="sample1_n.fcs",
-            gs_key="test_prism_trial_id/cytof_10021/CTTTPP111.00/intermediate.fcs",
+            gs_key="test_prism_trial_id/cytof_10021_9204/CTTTPP111.00/intermediate.fcs",
             upload_placeholder="28ec20a1-d2dc-46aa-91be-819b684da268",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="sample1.fcs",
-            gs_key="test_prism_trial_id/cytof_10021/CTTTPP111.00/processed.fcs",
+            gs_key="test_prism_trial_id/cytof_10021_9204/CTTTPP111.00/processed.fcs",
             upload_placeholder="97c3b6a6-b03d-4ca1-92f8-b8651e51d0c6",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="sample2_n.fcs",
-            gs_key="test_prism_trial_id/cytof_10021/CTTTPP121.00/intermediate.fcs",
+            gs_key="test_prism_trial_id/cytof_10021_9204/CTTTPP121.00/intermediate.fcs",
             upload_placeholder="8a674ce1-e224-45b7-8094-77fca9f98ae2",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="sample2.fcs",
-            gs_key="test_prism_trial_id/cytof_10021/CTTTPP121.00/processed.fcs",
+            gs_key="test_prism_trial_id/cytof_10021_9204/CTTTPP121.00/processed.fcs",
             upload_placeholder="7e992a16-9c6a-4ef1-90b8-ef1a599b88bc",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="batch1f1.fcs",
-            gs_key="test_prism_trial_id/cytof_10021/XYZ1/source_0.fcs",
+            gs_key="test_prism_trial_id/cytof_10021_9204/XYZ1/source_0.fcs",
             upload_placeholder="4918a014-0e63-4a36-a45a-c62d593e225e",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="batch1f2.fcs",
-            gs_key="test_prism_trial_id/cytof_10021/XYZ1/source_1.fcs",
+            gs_key="test_prism_trial_id/cytof_10021_9204/XYZ1/source_1.fcs",
             upload_placeholder="0bbd7520-18b9-4ec3-8344-49f02dcadb08",
             metadata_availability=False,
             allow_empty=False,
@@ -190,7 +190,7 @@ def cytof_10021() -> PrismTestData:
 
     cimac_ids = [
         record["cimac_id"]
-        for batch in prismify_patch["assays"]["cytof_10021"]
+        for batch in prismify_patch["assays"]["cytof_10021_9204"]
         for record in batch["records"]
     ]
     base_trial = get_test_trial(cimac_ids)

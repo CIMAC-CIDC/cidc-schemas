@@ -124,6 +124,12 @@ def test_parse_clinical():
         data = parse_clinical(f)
         _check_clin_eq(data, clinical_metadata_1)
 
+    # this tests csv parsing
+    clinical_file_path_1_csv = os.path.join(TEST_DATA_DIR, "clinical_test_file.1.csv")
+    with open(clinical_file_path_1_csv, "rb") as f:
+        data = parse_clinical(f)
+        _check_clin_eq(data, clinical_metadata_1)
+
     # this tests should be empty
     with open(clinical_file_path_2, "rb") as f:
         data = parse_clinical(f)

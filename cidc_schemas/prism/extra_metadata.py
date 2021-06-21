@@ -3,6 +3,7 @@ import re
 from typing import BinaryIO
 
 import openpyxl
+import pandas as pd
 
 from ..json_validation import load_and_validate_schema
 
@@ -131,7 +132,7 @@ def parse_npx(xlsx: BinaryIO) -> dict:
     return samples
 
 
-def parse_clinical(xlsx: BinaryIO) -> dict:
+def parse_clinical(file: BinaryIO) -> dict:
     """
     Parses the given clinical file to extract a list of participant IDs.
     By convention the first column should be "cimac_part_id" for files containing
@@ -144,55 +145,73 @@ def parse_clinical(xlsx: BinaryIO) -> dict:
     these are simply skipped in our counting.
 
     Args:
-        xlsx: an opened clinical data xlsx file
+        file: an opened clinical data file, either xlsx or csv
     Returns:
         arg1: a dict of containing list of participant IDs and number of participants
     Raises:
-        TypeError if xlsx is not a BinaryIO
+        TypeError if file is not a BinaryIO
     """
 
     # load the file
-    if type(xlsx) == str:
+    if type(file) == str:
         raise TypeError(f"parse_clinical only accepts BinaryIO and not file paths")
 
-    workbook = openpyxl.load_workbook(xlsx)
-
-    # extract data to python
     ids = set()
-    for worksheet_name in workbook.sheetnames:
 
-        # simplify.
-        worksheet = workbook[worksheet_name]
-        seen_partid = False
-        for i, row in enumerate(worksheet.iter_rows()):
+    try:
+        workbook = openpyxl.load_workbook(file)
+        assert len(workbook.sheetnames) > 0
+    except:
 
-            # extract values from row
-            vals = [col.value for col in row]
+        # seek back to the beginning of the file
+        if file.seekable():
+            file.seek(0)
 
-            # skip empty 1
-            if len(vals) == 0:
-                continue
+        csv = pd.read_csv(file)
+        if "cimac_part_id" in csv.columns:
+            for possible_id in csv["cimac_part_id"].unique():
+                try:
+                    if cimac_partid_regex.match(possible_id):
+                        ids.add(possible_id)
+                except TypeError as e:
+                    continue
 
-            # simplify
-            first_cell = vals[0]
+    else:
+        # extract data to python
+        for worksheet_name in workbook.sheetnames:
 
-            # does this file have cimac_part_id?
-            if not seen_partid and first_cell == "cimac_part_id":
-                seen_partid = True
-                continue
+            # simplify.
+            worksheet = workbook[worksheet_name]
+            seen_partid = False
+            for i, row in enumerate(worksheet.iter_rows()):
 
-            # some participant ID's might be blank for
-            # participants not in the system already (skip these for now)
-            if first_cell == "" or not first_cell:
-                continue
+                # extract values from row
+                vals = [col.value for col in row]
 
-            # get the identifier
-            # check that it is a CIMAC PART ID
-            try:
-                if cimac_partid_regex.match(first_cell):
-                    ids.add(first_cell)
-            except TypeError as e:
-                continue
+                # skip empty 1
+                if len(vals) == 0:
+                    continue
+
+                # simplify
+                first_cell = vals[0]
+
+                # does this file have cimac_part_id?
+                if not seen_partid and first_cell == "cimac_part_id":
+                    seen_partid = True
+                    continue
+
+                # some participant ID's might be blank for
+                # participants not in the system already (skip these for now)
+                if first_cell == "" or not first_cell:
+                    continue
+
+                # get the identifier
+                # check that it is a CIMAC PART ID
+                try:
+                    if cimac_partid_regex.match(first_cell):
+                        ids.add(first_cell)
+                except TypeError as e:
+                    continue
 
     part_count = len(ids)
 

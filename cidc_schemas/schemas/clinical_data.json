@@ -14,8 +14,17 @@
       "additionalProperties": false,
       "properties": {
         "clinical_file": {
-          "$comment": "Path to clinical data XLSX file.",
-          "$ref": "artifacts/artifact_clinical_xlsx.json"
+          "inheritableBase": true,
+          "anyOf": [
+            {
+              "$comment": "Path to clinical data XLSX file.",
+              "$ref": "artifacts/artifact_clinical_xlsx.json"
+            },
+            {
+              "$comment": "Path to clinical data CSV file.",
+              "$ref": "artifacts/artifact_clinical_csv.json"
+            }
+          ]
         },
         "comment": {
           "description": "A text comment regarding this file.",

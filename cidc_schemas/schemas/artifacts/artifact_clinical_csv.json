@@ -1,9 +1,9 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
-  "$id": "artifact_clinical_xlsx",
-  "title": "Generic clinical data XLSX artifact",
+  "$id": "artifact_clinical_csv",
+  "title": "Generic clinical data CSV artifact",
   "type": "object",
-  "description": "An Excel file containing clinical information.",
+  "description": "An comma-separated file containing clinical information.",
   "additionalProperties": false,
   "properties": {
     "number_of_participants": {
@@ -20,7 +20,7 @@
     },
     "data_format": {
       "description": "Data format.",
-      "const": "XLSX"
+      "const": "CSV"
     },
     "upload_placeholder": {
       "$ref": "artifacts/artifact_core.json#properties/upload_placeholder"
@@ -59,9 +59,5 @@
       "$ref": "artifacts/artifact_core.json"
     }
   ],
-  "mergeStrategy": "objectMerge",
-  "anyOf": [
-    { "required": ["number_of_participants", "participants"] },
-    { "required": ["upload_placeholder"] }
-  ]
+  "mergeStrategy": "objectMerge"
 }

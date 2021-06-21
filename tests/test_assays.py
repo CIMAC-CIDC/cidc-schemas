@@ -649,5 +649,5 @@ def test_clinicaldata():
     tmp["number_of_participants"] = 3
     clin_dat = {"records": [{"clinical_file": tmp, "comment": "dummyxyz"}]}
     obj = {**ASSAY_CORE, **clin_dat}
-    with pytest.raises(jsonschema.ValidationError, match="'XLSX' was expected"):
+    with pytest.raises(jsonschema.ValidationError, match="is not valid"):
         validator.validate(clin_dat)

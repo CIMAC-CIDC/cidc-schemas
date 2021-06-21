@@ -30,7 +30,13 @@ def clinical_data() -> PrismTestData:
                         "upload_placeholder": "28ec20a1-d2dc-46aa-91be-819b684da268"
                     },
                     "comment": "no comment",
-                }
+                },
+                {
+                    "clinical_file": {
+                        "upload_placeholder": "38ec20a1-d2dc-46aa-91be-819b684da268"
+                    },
+                    "comment": "no comment",
+                },
             ],
         },
         "protocol_identifier": "test_prism_trial_id",
@@ -42,7 +48,14 @@ def clinical_data() -> PrismTestData:
             upload_placeholder="28ec20a1-d2dc-46aa-91be-819b684da268",
             metadata_availability=True,
             allow_empty=False,
-        )
+        ),
+        LocalFileUploadEntry(
+            local_path="test_file2.csv",
+            gs_key="test_prism_trial_id/clinical/dosage.csv",
+            upload_placeholder="38ec20a1-d2dc-46aa-91be-819b684da268",
+            metadata_availability=True,
+            allow_empty=False,
+        ),
     ]
 
     base_trial = get_test_trial([])

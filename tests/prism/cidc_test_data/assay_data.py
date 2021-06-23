@@ -1062,6 +1062,179 @@ def wes_fastq() -> PrismTestData:
 
 
 @assay_data_generator
+def atacseq_fastq() -> PrismTestData:
+    upload_type = "atacseq_fastq"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "test_prism_trial_id",
+        "assays": {
+            "atacseq": [
+                {
+                    "records": [
+                        {
+                            "cimac_id": "CTTTPP111.00",
+                            "replicate_number": 1,
+                            "files": {
+                                "r1": [
+                                    {
+                                        "upload_placeholder": "3c8b4fe4-780a-4431-908f-aa879c01c009"
+                                    },
+                                ],
+                                "r2": [
+                                    {
+                                        "upload_placeholder": "82bc1123-55e2-4640-a9c9-a259d5756a86"
+                                    },
+                                ],
+                            },
+                            "sequencing_date": "2010-01-01 00:00:00",
+                            "quality_flag": 1.0,
+                            "dv200": 4.0,
+                        },
+                        {
+                            "cimac_id": "CTTTPP111.00",
+                            "replicate_number": 2,
+                            "files": {
+                                "r1": [
+                                    {
+                                        "upload_placeholder": "4d57fa58-5dd4-4379-878d-935d79d2507f"
+                                    },
+                                ],
+                                "r2": [
+                                    {
+                                        "upload_placeholder": "5eb4b639-c2a4-48f8-85f8-e9a04f5233c6"
+                                    },
+                                ],
+                            },
+                            "sequencing_date": "2010-01-01 00:00:00",
+                            "quality_flag": 1.0,
+                            "dv200": 4.0,
+                        },
+                        {
+                            "cimac_id": "CTTTPP111.00",
+                            "replicate_number": 1,
+                            "files": {
+                                "r1": [
+                                    {
+                                        "upload_placeholder": "c665c9ca-7065-46b8-b1c8-b871e15db294"
+                                    },
+                                ],
+                                "r2": [
+                                    {
+                                        "upload_placeholder": "92bc1123-55e2-4640-a9c9-a259d5756a86"
+                                    },
+                                ],
+                            },
+                            "sequencing_date": "2010-01-01 00:00:00",
+                            "quality_flag": 1.0,
+                            "dv200": 4.0,
+                        },
+                        {
+                            "cimac_id": "CTTTPP111.00",
+                            "replicate_number": 2,
+                            "files": {
+                                "r1": [
+                                    {
+                                        "upload_placeholder": "c24a1b3d-a19a-414a-9fc4-55bcbb7db9ec"
+                                    },
+                                ],
+                                "r2": [
+                                    {
+                                        "upload_placeholder": "6eb4b639-c2a4-48f8-85f8-e9a04f5233c6"
+                                    },
+                                ],
+                            },
+                            "sequencing_date": "2010-01-01 00:00:00",
+                            "quality_flag": 1.0,
+                            "dv200": 4.0,
+                        },
+                    ],
+                    "assay_creator": "Mount Sinai",
+                    "sequencer_platform": "Illumina - NextSeq 550",
+                    "paired_end_reads": "Paired",
+                    "read_length": 100,
+                }
+            ]
+        },
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="/local/path/to/fwd.1.1.1.fastq.gz",
+            gs_key="test_prism_trial_id/atacseq/CTTTPP111.00/1/r1_L1.fastq.gz",
+            upload_placeholder="3c8b4fe4-780a-4431-908f-aa879c01c009",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/rev.1.1.1.fastq.gz",
+            gs_key="test_prism_trial_id/atacseq/CTTTPP111.00/1/r2_L1.fastq.gz",
+            upload_placeholder="82bc1123-55e2-4640-a9c9-a259d5756a86",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/fwd.1.1.1_2.fastq.gz",
+            gs_key="test_prism_trial_id/atacseq/CTTTPP111.00/1/r1_L2.fastq.gz",
+            upload_placeholder="c665c9ca-7065-46b8-b1c8-b871e15db294",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/rev.1.1.1_2.fastq.gz",
+            gs_key="test_prism_trial_id/atacseq/CTTTPP111.00/1/r2_L2.fastq.gz",
+            upload_placeholder="92bc1123-55e2-4640-a9c9-a259d5756a86",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/fwd.1.2.1.fastq.gz",
+            gs_key="test_prism_trial_id/atacseq/CTTTPP111.00/2/r1_L1.fastq.gz",
+            upload_placeholder="4d57fa58-5dd4-4379-878d-935d79d2507f",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/rev.1.2.1.fastq.gz",
+            gs_key="test_prism_trial_id/atacseq/CTTTPP111.00/2/r2_L1.fastq.gz",
+            upload_placeholder="5eb4b639-c2a4-48f8-85f8-e9a04f5233c6",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/fwd.1.2.1_2.fastq.gz",
+            gs_key="test_prism_trial_id/atacseq/CTTTPP111.00/2/r1_L2.fastq.gz",
+            upload_placeholder="c24a1b3d-a19a-414a-9fc4-55bcbb7db9ec",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/rev.1.2.1_2.fastq.gz",
+            gs_key="test_prism_trial_id/atacseq/CTTTPP111.00/2/r2_L2.fastq.gz",
+            upload_placeholder="6eb4b639-c2a4-48f8-85f8-e9a04f5233c6",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+    ]
+
+    cimac_ids = [
+        record["cimac_id"]
+        for batch in prismify_patch["assays"]["atacseq"]
+        for record in batch["records"]
+    ]
+    base_trial = get_test_trial(cimac_ids)
+
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "assays")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
+@assay_data_generator
 def rna_bam() -> PrismTestData:
     upload_type = "rna_bam"
     prismify_args = get_prismify_args(upload_type)

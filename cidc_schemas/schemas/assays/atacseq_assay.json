@@ -1,0 +1,81 @@
+{
+	"$schema": "metaschema/strict_meta_schema.json#",
+	"$id": "atacseq_assay",
+	"title": "Assay for Transposase-Accessible Chromatin by Sequencing",
+
+	"definitions": {
+		"entry": {
+			"type": "object",
+			"mergeStrategy": "objectMerge",
+			"description": "A single data record from ATACseq assay.",
+			"additionalProperties": false,
+			"required": [
+				"cimac_id",
+				"replicate_number"
+			],
+			"properties": {
+				"sequencing_date": {
+					"description": "Date of sequencing.",
+					"type": "string",
+					"format": "date"
+				},
+				"dv200": {
+					"description": "quantitative measure of the sequencing libraries quality",
+					"type": "number"
+				},
+				"quality_flag": {
+					"description": "Flag used for quality.",
+					"type": "number"
+				},
+				"cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
+				"replicate_number": {
+					"description": "A unique number specifying the replicate.",
+					"type": "integer"
+				},
+				"files": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/files"}
+			}
+		}
+	},
+	
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"assay_creator",
+		"paired_end_reads",
+		"read_length",
+		"records",
+		"sequencer_platform"
+	],
+	"properties": {
+		"error": {"$ref": "artifacts/artifact_yaml.json"},
+		"assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
+		"sequencer_platform": {"$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"},
+		"library_kit": {
+			"description": "The library construction kit.",
+			"type": "string"
+		},
+		"paired_end_reads": {"$ref": "assays/components/ngs_assay_core.json#properties/paired_end_reads"},
+		"sequencing_protocol": {
+			"description": "Protocol and version used for the sequencing.",
+			"type": "string"
+		},
+		"bait_set": {
+			"description": "Bait set ID.",
+			"type": "string"
+		},
+		"read_length": {
+			"description": "Number of cycles for each sequencing read.",
+			"type": "integer",
+			"exclusiveMinimum": 0,
+			"maximum": 1000
+		},
+		"records": {
+			"type": "array",
+			"description": "A single data record from ATACseq assay.",
+			"items": {
+				"$ref": "assays/atacseq_assay.json#definitions/entry"
+			},
+			"mergeStrategy": "append"
+		}
+	}
+}

@@ -7,6 +7,14 @@
   "additionalProperties": false,
   "type": "object",
   "properties": {
+    "atacseq": {
+      "type": "array",
+      "description": "Assay for Transposase-Accessible Chromatin by sequencing.",
+      "items": {
+        "$ref": "assays/atacseq_assay.json"
+      },
+      "mergeStrategy": "append"
+    },
     "wes": {
       "type": "array",
       "description": "Whole exome sequencing.",

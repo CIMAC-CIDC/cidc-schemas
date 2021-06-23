@@ -3,6 +3,7 @@
 PROTOCOL_ID_FIELD_NAME = "protocol_identifier"
 
 SUPPORTED_ASSAYS = [
+    "atacseq_fastq",
     "wes_fastq",
     "wes_bam",
     "olink",

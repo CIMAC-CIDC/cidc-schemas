@@ -7,7 +7,7 @@
 		"entry": {
 			"type": "object",
 			"mergeStrategy": "objectMerge",
-			"description": "A single data record from WES assay.",
+			"description": "A single data record from ATACseq assay.",
 			"additionalProperties": false,
 			"required": [
 				"cimac_id",

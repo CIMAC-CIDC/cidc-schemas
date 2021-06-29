@@ -70,6 +70,9 @@
         "astrolabe_analysis": {
             "$ref": "artifacts/artifact_zip.json"
         },
+        "control_files_analysis": {
+            "$ref": "artifacts/artifact_zip.json"
+        },
         "records": {
             "type": "array",
             "description": "A single data record from CyTOF assay batch.",

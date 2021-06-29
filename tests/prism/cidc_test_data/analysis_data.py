@@ -1990,6 +1990,9 @@ def cytof_10021_9204_analysis() -> PrismTestData:
                     "astrolabe_analysis": {
                         "upload_placeholder": "6abb7949-5400-4e5a-a947-5a1403ca75cb"
                     },
+                    "control_files_analysis": {
+                        "upload_placeholder": "4abb7949-5400-4e5a-a947-5a1403ca75c4"
+                    },
                     "excluded_samples": [
                         {"cimac_id": "CTTTPP111.00", "reason_excluded": "low coverage"},
                         {
@@ -2114,6 +2117,13 @@ def cytof_10021_9204_analysis() -> PrismTestData:
             upload_placeholder="6abb7949-5400-4e5a-a947-5a1403ca75cb",
             metadata_availability=False,
             allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="batch1/control_files_analysis.zip",
+            gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/control_files_analysis.zip",
+            upload_placeholder="4abb7949-5400-4e5a-a947-5a1403ca75c4",
+            metadata_availability=False,
+            allow_empty=True,
         ),
     ]
 

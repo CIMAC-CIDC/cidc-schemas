@@ -15,6 +15,14 @@
       },
       "mergeStrategy": "append"
     },
+    "misc_data": {
+      "type": "array",
+      "description": "Miscellaneous data entries.",
+      "items": {
+        "$ref": "assays/misc_data.json"
+      },
+      "mergeStrategy": "append"
+    },
     "wes": {
       "type": "array",
       "description": "Whole exome sequencing.",

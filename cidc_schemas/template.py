@@ -790,12 +790,14 @@ class _FieldDef(NamedTuple):
         # and matches multiple file paths, which is not allowed for a target
         gs_key = gs_key.replace("[", "").replace("]", "")
 
-        expected_extension = get_file_ext(gs_key)
-        provided_extension = get_file_ext(local_path)
-        if provided_extension != expected_extension:
-            raise ParsingException(
-                f"Expected {'.' + expected_extension} for {self.key_name!r} but got {'.' + provided_extension!r} instead."
-            )
+        # if no . in the GCS URI, don't check file extension as none specified
+        if "." in gs_key:
+            expected_extension = get_file_ext(gs_key)
+            provided_extension = get_file_ext(local_path)
+            if provided_extension != expected_extension:
+                raise ParsingException(
+                    f"Expected {'.' + expected_extension} for {self.key_name!r} but got {'.' + provided_extension!r} instead."
+                )
 
         facet_group = _get_facet_group(format)
 

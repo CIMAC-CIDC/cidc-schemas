@@ -19,6 +19,7 @@ SUPPORTED_ASSAYS = [
     "hande",
     "nanostring",
     "clinical_data",
+    "misc_data",
 ]
 
 SUPPORTED_SHIPPING_MANIFESTS = [

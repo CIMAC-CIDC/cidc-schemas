@@ -1,0 +1,55 @@
+{
+  "title": "Metadata file for Miscellaneous data",
+  "description": "Metadata information for miscellaneous data submission.",
+  "properties": {
+    "worksheets": {
+      "Misc": {
+        "prism_preamble_object_schema" : "assays/misc_data.json",
+        "prism_preamble_object_pointer" : "/assays/misc_data/-",
+        "prism_data_object_pointer" : "/files/-",
+        "preamble_rows": {
+          "protocol identifier": {
+            "merge_pointer": "3/protocol_identifier",
+            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+          },
+          "assay creator": {
+            "merge_pointer": "0/assay_creator",
+            "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+          }
+        },
+        "data_columns": {
+          "Files": {
+            "file location": {
+              "do_not_merge": true,
+              "type_ref": "assays/components/local_file.json#properties/file_path",
+
+              "process_as": [
+                {
+                  "type_ref": "assays/components/local_file.json#properties/file_path",
+                  "merge_pointer": "0/file",
+                  "is_artifact": 1,
+                  "gcs_uri_format": "{protocol identifier}/misc_data/{file location}"
+                },
+                {
+                  "merge_pointer": "0/file_location",
+                  "type": "string",
+                  "is_artifact": 0
+                }
+              ]
+            },
+            "file name": {
+              "merge_pointer": "0/name",
+              "type_ref": "assays/misc_data.json#definitions/file/properties/name",
+              "allow_empty": true
+            },
+            "description": {
+              "merge_pointer": "0/description",
+              "type_ref": "assays/misc_data.json#definitions/file/properties/description",
+              "allow_empty": true
+            }
+          }
+        }
+      }
+    }
+  }
+}

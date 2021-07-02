@@ -1235,6 +1235,94 @@ def atacseq_fastq() -> PrismTestData:
 
 
 @assay_data_generator
+def misc_data() -> PrismTestData:
+    upload_type = "misc_data"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "test_prism_trial_id",
+        "assays": {
+            "misc_data": [
+                {
+                    "assay_creator": "DFCI",
+                    "files": [
+                        {
+                            "file": {
+                                "upload_placeholder": "3c8b4fe4-780a-4431-908f-aa879c01c009"
+                            },
+                            "file_location": "foo",
+                        },
+                        {
+                            "file": {
+                                "upload_placeholder": "82bc1123-55e2-4640-a9c9-a259d5756a86"
+                            },
+                            "file_location": "bar",
+                            "name": "file_name",
+                        },
+                        {
+                            "file": {
+                                "upload_placeholder": "c665c9ca-7065-46b8-b1c8-b871e15db294"
+                            },
+                            "file_location": "baz",
+                            "description": "this is a description",
+                        },
+                        {
+                            "file": {
+                                "upload_placeholder": "c665c9ca-7065-46b8-a9c9-a259d5756a86"
+                            },
+                            "file_location": "barbaz",
+                            "name": "file_name",
+                            "description": "this is a description",
+                        },
+                    ],
+                }
+            ]
+        },
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="foo",
+            gs_key="test_prism_trial_id/misc_data/foo",
+            upload_placeholder="3c8b4fe4-780a-4431-908f-aa879c01c009",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="bar",
+            gs_key="test_prism_trial_id/misc_data/bar",
+            upload_placeholder="82bc1123-55e2-4640-a9c9-a259d5756a86",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="baz",
+            gs_key="test_prism_trial_id/misc_data/baz",
+            upload_placeholder="c665c9ca-7065-46b8-b1c8-b871e15db294",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="barbaz",
+            gs_key="test_prism_trial_id/misc_data/barbaz",
+            upload_placeholder="c665c9ca-7065-46b8-a9c9-a259d5756a86",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+    ]
+
+    base_trial = get_test_trial()
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "assays")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
+@assay_data_generator
 def rna_bam() -> PrismTestData:
     upload_type = "rna_bam"
     prismify_args = get_prismify_args(upload_type)

@@ -30,6 +30,13 @@
                         "type_ref": "assays/components/local_file.json#properties/file_path",
                         "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{batch id}/analysis.zip",
                         "is_artifact": 1
+                    },
+                    "control files package": {
+                        "merge_pointer": "0/control_files_analysis",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "gcs_uri_format": "{protocol identifier}/cytof_analysis/{assay run id}/{batch id}/control_files_analysis.zip",
+                        "is_artifact": 1,
+                        "allow_empty": true
                     }
                 },
                 "prism_data_object_pointer": "/records/-",

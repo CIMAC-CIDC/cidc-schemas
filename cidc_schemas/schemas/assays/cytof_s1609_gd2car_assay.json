@@ -66,6 +66,9 @@
                 "$ref": "artifacts/artifact_fcs.json"
             }
         },
+        "control_files_analysis": {
+            "$ref": "artifacts/artifact_zip.json"
+        },
         "astrolabe_reports": {
             "$ref": "artifacts/artifact_zip.json"
         },

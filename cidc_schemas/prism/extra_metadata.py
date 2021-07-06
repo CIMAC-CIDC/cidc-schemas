@@ -151,10 +151,12 @@ def parse_clinical(file: BinaryIO) -> dict:
     Raises:
         TypeError if file is not a BinaryIO
     """
-
     # load the file
     if type(file) == str:
         raise TypeError(f"parse_clinical only accepts BinaryIO and not file paths")
+
+    if not (file.name.endswith("xlsx") or file.name.endswith("csv")):
+        return {}
 
     ids = set()
 

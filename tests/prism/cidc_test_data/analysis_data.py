@@ -2234,6 +2234,9 @@ def cytof_s1609_gd2car_analysis() -> PrismTestData:
                     "astrolabe_analysis": {
                         "upload_placeholder": "6abb7949-5400-4e5a-a947-5a1403cs1609"
                     },
+                    "control_files_analysis": {
+                        "upload_placeholder": "4abb7949-5400-4e5a-a947-5a1403cs1609"
+                    },
                 }
             ]
         },
@@ -2351,6 +2354,13 @@ def cytof_s1609_gd2car_analysis() -> PrismTestData:
             upload_placeholder="6abb7949-5400-4e5a-a947-5a1403cs1609",
             metadata_availability=False,
             allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="batch1/control_files_analysis.zip",
+            gs_key="test_prism_trial_id/cytof_analysis/test_prism_trial_id_run_1/XYZ1/control_files_analysis.zip",
+            upload_placeholder="4abb7949-5400-4e5a-a947-5a1403cs1609",
+            metadata_availability=False,
+            allow_empty=True,
         ),
     ]
 

@@ -23,6 +23,10 @@
             {
               "$comment": "Path to clinical data CSV file.",
               "$ref": "artifacts/artifact_clinical_csv.json"
+            },
+            {
+              "$comment": "Path to clinical data DOCX file.",
+              "$ref": "artifacts/artifact_clinical_docx.json"
             }
           ]
         },

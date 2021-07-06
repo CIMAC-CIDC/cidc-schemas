@@ -26,7 +26,7 @@
                         "File Type": {
                             "do_not_merge": true,
                             "type": "string",
-                            "enum": ["xlsx", "csv"]
+                            "enum": ["xlsx", "csv", "docx"]
                         },
                         "Clinical data file": {
                             "merge_pointer": "0/clinical_file",

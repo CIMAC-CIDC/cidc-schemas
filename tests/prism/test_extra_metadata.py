@@ -75,6 +75,8 @@ clinical_metadata_3 = {
     "participants": ["CNQAABC", "CNQAABD", "CNQAABQ", "CNQAABY", "CNQAABP"],
 }
 
+clinical_docx = os.path.join(TEST_DATA_DIR, "clincal_test_file.docx")
+
 
 @pytest.mark.parametrize("parser", [parse_elisa, parse_npx])
 def test_parse_binaryio_only(parser):
@@ -139,3 +141,7 @@ def test_parse_clinical():
     with open(clinical_file_path_3, "rb") as f:
         data = parse_clinical(f)
         _check_clin_eq(data, clinical_metadata_3)
+
+    # this tests if not xlsx/csv files don't get anything
+    with open(clinical_docx, "rb") as f:
+        assert parse_clinical(f) == {}

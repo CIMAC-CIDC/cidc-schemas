@@ -791,7 +791,7 @@ class _FieldDef(NamedTuple):
         gs_key = gs_key.replace("[", "").replace("]", "")
 
         # if no . in the GCS URI, don't check file extension as none specified
-        if "." in gs_key:
+        if "." in self.gcs_uri_format:
             expected_extension = get_file_ext(gs_key)
             provided_extension = get_file_ext(local_path)
             if provided_extension != expected_extension:

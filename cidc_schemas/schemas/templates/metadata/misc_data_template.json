@@ -19,6 +19,10 @@
         },
         "data_columns": {
           "Files": {
+            "file name": {
+              "merge_pointer": "0/name",
+              "type_ref": "assays/misc_data.json#definitions/file/properties/name"
+            },
             "file location": {
               "do_not_merge": true,
               "type_ref": "assays/components/local_file.json#properties/file_path",
@@ -28,7 +32,7 @@
                   "type_ref": "assays/components/local_file.json#properties/file_path",
                   "merge_pointer": "0/file",
                   "is_artifact": 1,
-                  "gcs_uri_format": "{protocol identifier}/misc_data/{file location}"
+                  "gcs_uri_format": "{protocol identifier}/misc_data/{file name}"
                 },
                 {
                   "merge_pointer": "0/file_location",
@@ -36,11 +40,6 @@
                   "is_artifact": 0
                 }
               ]
-            },
-            "file name": {
-              "merge_pointer": "0/name",
-              "type_ref": "assays/misc_data.json#definitions/file/properties/name",
-              "allow_empty": true
             },
             "description": {
               "merge_pointer": "0/description",

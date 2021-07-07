@@ -1246,19 +1246,21 @@ def misc_data() -> PrismTestData:
                     "assay_creator": "DFCI",
                     "files": [
                         {
+                            "name": "foo.txt",
                             "file": {
                                 "upload_placeholder": "3c8b4fe4-780a-4431-908f-aa879c01c009"
                             },
                             "file_location": "foo",
                         },
                         {
+                            "name": "file_name.txt",
                             "file": {
                                 "upload_placeholder": "82bc1123-55e2-4640-a9c9-a259d5756a86"
                             },
                             "file_location": "bar",
-                            "name": "file_name",
                         },
                         {
+                            "name": "baz.txt",
                             "file": {
                                 "upload_placeholder": "c665c9ca-7065-46b8-b1c8-b871e15db294"
                             },
@@ -1266,11 +1268,11 @@ def misc_data() -> PrismTestData:
                             "description": "this is a description",
                         },
                         {
+                            "name": "file_name.barbaz",
                             "file": {
                                 "upload_placeholder": "c665c9ca-7065-46b8-a9c9-a259d5756a86"
                             },
                             "file_location": "barbaz",
-                            "name": "file_name",
                             "description": "this is a description",
                         },
                     ],
@@ -1281,28 +1283,28 @@ def misc_data() -> PrismTestData:
     upload_entries = [
         LocalFileUploadEntry(
             local_path="foo",
-            gs_key="test_prism_trial_id/misc_data/foo",
+            gs_key="test_prism_trial_id/misc_data/foo.txt",
             upload_placeholder="3c8b4fe4-780a-4431-908f-aa879c01c009",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="bar",
-            gs_key="test_prism_trial_id/misc_data/bar",
+            gs_key="test_prism_trial_id/misc_data/file_name.txt",
             upload_placeholder="82bc1123-55e2-4640-a9c9-a259d5756a86",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="baz",
-            gs_key="test_prism_trial_id/misc_data/baz",
+            gs_key="test_prism_trial_id/misc_data/baz.txt",
             upload_placeholder="c665c9ca-7065-46b8-b1c8-b871e15db294",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="barbaz",
-            gs_key="test_prism_trial_id/misc_data/barbaz",
+            gs_key="test_prism_trial_id/misc_data/file_name.barbaz",
             upload_placeholder="c665c9ca-7065-46b8-a9c9-a259d5756a86",
             metadata_availability=False,
             allow_empty=False,

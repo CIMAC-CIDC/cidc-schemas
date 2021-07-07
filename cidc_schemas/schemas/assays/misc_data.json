@@ -12,6 +12,10 @@
             "description": "A file to store.",
             "additionalProperties": false,
             "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "A (short) name of the file"
+                },
                 "file": {
                     "$ref": "artifacts/artifact_file.json",
                     "$comment": "the file itself"
@@ -20,16 +24,13 @@
                     "type": "string",
                     "description": "The local file location for determining where the file is coming from"
                 },
-                "name": {
-                    "type": "string",
-                    "description": "An optional (short) name of the file"
-                },
                 "description": {
                     "type": "string",
                     "description": "An optional long string describing the file, its purpose, and/or its content."
                 }
             },
             "required": [
+                "name",
                 "file",
                 "file_location"
             ]
@@ -47,7 +48,7 @@
             },
             "mergeStrategy": "arrayMergeById",
             "mergeOptions": {
-                "idRef": "file_location"
+                "idRef": "name"
             }
         }
     },

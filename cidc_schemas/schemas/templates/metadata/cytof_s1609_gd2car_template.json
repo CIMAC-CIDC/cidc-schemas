@@ -148,7 +148,8 @@
                         },
                         "lot number": {
                             "merge_pointer": "0/lot_num",
-                            "type_ref": "assays/components/antibody.json#properties/lot_num"
+                            "type_ref": "assays/components/antibody.json#properties/lot_num",
+                            "allow_empty": true
                         },
                         "isotope": {
                             "merge_pointer": "0/isotope",

@@ -50,6 +50,17 @@
         "idRef": "batch_id"
       }
     },
+    "cytof": {
+      "type": "array",
+      "description": "Information about the acquisition and analysis CyTOF data.",
+      "items": {
+        "$ref": "assays/cytof_assay.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "batch_id"
+      }
+    },
     "cytof_10021_9204": {
       "type": "array",
       "description": "Information about the acquisition and analysis CyTOF data for 10021, 9204 and similarly formatted trials.",

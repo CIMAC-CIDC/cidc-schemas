@@ -10,6 +10,7 @@
         { "$ref": "assays/cytof_assay_core.json"}
     ],
     "required": ["assay_creator", "batch_id", "records"],
+
     "properties": {
         "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
         "assay_run_id": {"$ref": "assays/cytof_assay_core.json#properties/assay_run_id"},
@@ -36,21 +37,6 @@
             "description": "Name of CyTOF instrument on which experiment was conducted.",
             "type": "string"
         },
-        "spike_in_fcs": {
-            "$ref": "artifacts/artifact_fcs.json"
-        },
-        "controls_fcs": {
-            "type": "array",
-            "items": {
-                "$ref": "artifacts/artifact_fcs.json"
-            }
-        },
-        "control_spike_in_fcs": {
-            "type": "array",
-            "items": {
-                "$ref": "artifacts/artifact_fcs.json"
-            }
-        },
         "normalization_method":{
             "description": "Process used for normalization prior to analysis, if any.",
             "type": "string",
@@ -64,7 +50,7 @@
             "description": "Version no. of instrument hardware used.",
             "type": "string"
         },
-        "source_fcs": {
+        "concatenated_source_fcs": {
             "type": "array",
             "items": {
                 "$ref": "artifacts/artifact_fcs.json"
@@ -76,19 +62,26 @@
         "astrolabe_analysis": {
             "$ref": "artifacts/artifact_zip.json"
         },
-        "control_files_analysis": {
-            "$ref": "artifacts/artifact_zip.json"
-        },
-        "records": {
+        "sample_records": {
             "type": "array",
-            "description": "A single data record from CyTOF assay batch.",
-            "items": {
-                "$ref": "assays/cytof_assay_core.json#definitions/entry"
-            },
+            "description": "A single sample-level data record from CyTOF a assay batch.",
+            "items": {"$ref": "assays/cytof_assay_core.json#definitions/sample_entry"},
             "mergeStrategy": "arrayMergeById",
-            "mergeOptions": {
-              "idRef": "cimac_id"
-            }
+            "mergeOptions": {"idRef": "cimac_id"}
+        },
+        "participants_records": {
+            "type": "array",
+            "description": "A single participant-level data record from a CyTOF assay batch.",
+            "items": {"$ref": "assays/cytof_assay_core.json#definitions/participant_entry"},
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": {"idRef": "cimac_participant_id"}
+        },
+        "control_records": {
+            "type": "array",
+            "description": "A single participant-level data record from a CyTOF assay batch.",
+            "items": {"$ref": "assays/cytof_assay_core.json#definitions/controls"},
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": {"idRef": "control_name"}
         }
     }
 }

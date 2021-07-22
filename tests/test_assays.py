@@ -228,7 +228,7 @@ def test_tcr_fastq():
     validator.validate(obj)
 
 
-def test_cytof_10021_9204():
+def test_cytof():
 
     # test artifact sub schema
     schema_root = SCHEMA_DIR
@@ -246,8 +246,10 @@ def test_cytof_10021_9204():
     fcs_3["data_format"] = "FCS"
     fcs_4 = ARTIFACT_OBJ.copy()
     fcs_4["data_format"] = "FCS"
-    record = {"processed_fcs": fcs_1, "intermediate_fcs": fcs_4}
-    validator.validate(record)
+    sample_records = {"processed_fcs": fcs_1}
+    participant_records = {"processed_fcs": fcs_4}
+    validator.validate(sample_records)
+    validator.validate(participant_records)
 
     # create the cytof object
     cytof_platform = {"instrument": "dummy"}
@@ -301,7 +303,7 @@ def test_cytof_10021_9204():
     report["data_format"] = "ZIP"
     analysis = ARTIFACT_OBJ.copy()
     analysis["data_format"] = "ZIP"
-    record = {
+    sample_records = {
         "cimac_id": "CTTTPPPSA.00",
         "input_files": {"processed_fcs": fcs_1},
         "output_files": {
@@ -314,109 +316,29 @@ def test_cytof_10021_9204():
             "cell_counts_profiling": profiling,
         },
     }
-
-    # add a demo record.
-    obj["records"] = [record]
-
-    # create validator assert schemas are valid.
-    validator = _fetch_validator("cytof_10021_9204")
-    validator.validate(obj)
-
-
-def test_cytof_e4412():
-    # test artifact sub schema
-    schema_root = SCHEMA_DIR
-    schema_path = os.path.join(
-        SCHEMA_DIR, "assays/cytof_assay_core.json#definitions/input_files"
-    )
-    schema = load_and_validate_schema(schema_path, schema_root)
-    validator = jsonschema.Draft7Validator(schema)
-
-    fcs_1 = ARTIFACT_OBJ.copy()
-    fcs_1["data_format"] = "FCS"
-    fcs_2 = ARTIFACT_OBJ.copy()
-    fcs_2["data_format"] = "FCS"
-    fcs_3 = ARTIFACT_OBJ.copy()
-    fcs_3["data_format"] = "FCS"
-    fcs_4 = ARTIFACT_OBJ.copy()
-    fcs_4["data_format"] = "FCS"
-    record = {"processed_fcs": fcs_1, "intermediate_fcs": fcs_4}
-    validator.validate(record)
-
-    # create a cytof antibody object.
-    antibodies = [
-        {
-            "antibody": "CD8",
-            "isotope": "dummy",
-            "dilution": "dummy",
-            "stain_type": "Intracellular",
-            "usage": "Analysis Only",
-        },
-        {
-            "antibody": "PD-L1",
-            "isotope": "dummy",
-            "dilution": "dummy",
-            "stain_type": "Intracellular",
-            "usage": "Used",
-        },
-    ]
-    cytof_panel = {
-        "assay_run_id": "run_1",
-        "batch_id": "XYZ",
-        "cytof_antibodies": antibodies,
-        "source_fcs": [fcs_2, fcs_3],
-    }
-
-    obj = {**ASSAY_CORE, **cytof_panel}  # merge three dictionaries
-
-    # create the cytof object
-    fcs_1 = ARTIFACT_OBJ.copy()
-    fcs_1["data_format"] = "FCS"
-    fcs_2 = ARTIFACT_OBJ.copy()
-    fcs_2["data_format"] = "FCS"
-    fcs_3 = ARTIFACT_OBJ.copy()
-    fcs_3["data_format"] = "FCS"
-    assignment = ARTIFACT_OBJ.copy()
-    assignment["data_format"] = "CSV"
-    compartment = ARTIFACT_OBJ.copy()
-    compartment["data_format"] = "CSV"
-    profiling = ARTIFACT_OBJ.copy()
-    profiling["data_format"] = "CSV"
-    cell_count_assignment = ARTIFACT_OBJ.copy()
-    cell_count_assignment["data_format"] = "CSV"
-    cell_count_compartment = ARTIFACT_OBJ.copy()
-    cell_count_compartment["data_format"] = "CSV"
-    cell_count_profiling = ARTIFACT_OBJ.copy()
-    cell_count_profiling["data_format"] = "CSV"
-    report = ARTIFACT_OBJ.copy()
-    report["data_format"] = "ZIP"
-    analysis = ARTIFACT_OBJ.copy()
-    analysis["data_format"] = "ZIP"
-    participant = {
+    participant_records = {
         "cimac_participant_id": "CTTTPPP",
-        "control": {"input_files": {"processed_fcs": fcs_2}},
-        "samples": [
-            {
-                "cimac_id": "CTTTPPPSA.00",
-                "input_files": {"processed_fcs": fcs_1},
-                "output_files": {
-                    "fcs_file": fcs_1,
-                    "assignment": assignment,
-                    "compartment": compartment,
-                    "profiling": profiling,
-                    "cell_counts_assignment": assignment,
-                    "cell_counts_compartment": compartment,
-                    "cell_counts_profiling": profiling,
-                },
-            }
-        ],
+        "input_files": {"processed_fcs": fcs_4},
+        "output_files": {
+            "fcs_file": fcs_4,
+            "assignment": assignment,
+            "compartment": compartment,
+            "profiling": profiling,
+            "cell_counts_assignment": assignment,
+            "cell_counts_compartment": compartment,
+            "cell_counts_profiling": profiling,
+        },
     }
 
-    # add a demo record.
-    obj["participants"] = [participant]
+    # add a demo sample-level record.
+    obj["sample_records"] = [sample_records]
+
+
+    # add a demo participant-level record.
+    obj["participant_records"] = [participant_records]
 
     # create validator assert schemas are valid.
-    validator = _fetch_validator("cytof_e4412")
+    validator = _fetch_validator("cytof_assay")
     validator.validate(obj)
 
 

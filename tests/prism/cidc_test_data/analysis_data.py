@@ -2,8 +2,7 @@ from copy import deepcopy
 
 from cidc_schemas.prism import SUPPORTED_ANALYSES
 
-from .assay_data import cytof_10021_9204, cytof_e4412, cytof_s1609_gd2car
-from .assay_data import tcr_fastq
+from .assay_data import cytof, tcr_fastq
 
 from .utils import (
     copy_dict_with_branch,

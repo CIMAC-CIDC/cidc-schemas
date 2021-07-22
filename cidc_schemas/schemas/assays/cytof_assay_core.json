@@ -43,6 +43,7 @@
             "additionalProperties": false,
             "required": ["processed_fcs"],
             "properties": {
+                "source_fcs": {"$ref": "artifacts/artifact_fcs.json"},
                 "processed_fcs": {"$ref": "artifacts/artifact_fcs.json"},
                 "spike_in_fcs": {"$ref": "artifacts/artifact_fcs.json"}
             }
@@ -146,7 +147,7 @@
                 "output_files": {"$ref": "assays/cytof_assay_core.json#definitions/output_files"}
             }
         },
-        
+
         "antibody": {
             "description": "Data specific to antibody preparation on the CyTOF assay.",
             "type": "object",

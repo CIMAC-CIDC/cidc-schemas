@@ -44,7 +44,6 @@
             "required": ["processed_fcs"],
             "properties": {
                 "processed_fcs": {"$ref": "artifacts/artifact_fcs.json"},
-                "intermediate_fcs": {"$ref": "artifacts/artifact_fcs.json"},
                 "spike_in_fcs": {"$ref": "artifacts/artifact_fcs.json"}
             }
         },
@@ -64,8 +63,8 @@
             }
         },
 
-        "entry": {
-            "description": "A single data record from CyTOF assay batch.",
+        "sample_entry": {
+            "description": "A single sample-level data record from CyTOF assay batch.",
             "type": "object",
             "mergeStrategy": "objectMerge",
             "additionalProperties": false,
@@ -106,6 +105,48 @@
             }
         },
 
+        "participant_entry": {
+            "description": "A participent-level data record for a CyTOF assay batch.",
+            "type": "object",
+            "mergeStrategy": "objectMerge",
+            "additionalProperties": false,
+            
+            "required": ["cimac_participant_id","input_files"],
+            "properties": {
+                "cimac_participant_id": {
+                    "$comment": "Id of a participant within this clinical trial, that this assay record is based upon.",
+                    "$ref": "participant.json#properties/cimac_participant_id"
+                },
+                "participant_debarcoding_key": {
+                    "description": "An ID that maps to the specific isotope labeling scheme in the debarcoding protocol.",
+                    "type": "string"
+                },
+                "input_files": {"$ref": "assays/cytof_assay_core.json#definitions/input_files"},
+                "output_files": {"$ref": "assays/cytof_assay_core.json#definitions/output_files"}
+            }
+        },
+
+        "controls": {
+            "description": "A data record for the control files in a CyTOF assay batch.",
+            "type": "object",
+            "mergeStrategy": "objectMerge",
+            "additionalProperties": false,
+            
+            "required": ["control_name","input_files"],
+            "properties": {
+                "control_name": {
+                    "description": "Id of a participant within this clinical trial, that this assay record is based upon.",
+                    "type": "string"
+                },
+                "control_debarcoding_key": {
+                    "description": "An ID that maps to the specific isotope labeling scheme in the debarcoding protocol.",
+                    "type": "string"
+                },
+                "input_files": {"$ref": "assays/cytof_assay_core.json#definitions/input_files"},
+                "output_files": {"$ref": "assays/cytof_assay_core.json#definitions/output_files"}
+            }
+        },
+        
         "antibody": {
             "description": "Data specific to antibody preparation on the CyTOF assay.",
             "type": "object",

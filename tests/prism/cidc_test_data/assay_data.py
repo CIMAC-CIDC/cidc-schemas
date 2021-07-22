@@ -84,9 +84,6 @@ def cytof() -> PrismTestData:
                         {
                             "cimac_id": "CTTTPP111.00",
                             "input_files": {
-                                "intermediate_fcs": {
-                                    "upload_placeholder": "28ec20a1-d2dc-46aa-91be-819b684da268"
-                                },
                                 "processed_fcs": {
                                     "upload_placeholder": "97c3b6a6-b03d-4ca1-92f8-b8651e51d0c6"
                                 },
@@ -99,9 +96,6 @@ def cytof() -> PrismTestData:
                         {
                             "cimac_id": "CTTTPP121.00",
                             "input_files": {
-                                "intermediate_fcs": {
-                                    "upload_placeholder": "8a674ce1-e224-45b7-8094-77fca9f98ae2"
-                                },
                                 "processed_fcs": {
                                     "upload_placeholder": "7e992a16-9c6a-4ef1-90b8-ef1a599b88bc"
                                 },
@@ -158,23 +152,9 @@ def cytof() -> PrismTestData:
     }
     upload_entries = [
         LocalFileUploadEntry(
-            local_path="sample1_n.fcs",
-            gs_key="test_prism_trial_id/cytof/CTTTPP111.00/intermediate.fcs",
-            upload_placeholder="28ec20a1-d2dc-46aa-91be-819b684da268",
-            metadata_availability=False,
-            allow_empty=False,
-        ),
-        LocalFileUploadEntry(
             local_path="sample1.fcs",
             gs_key="test_prism_trial_id/cytof/CTTTPP111.00/processed.fcs",
             upload_placeholder="97c3b6a6-b03d-4ca1-92f8-b8651e51d0c6",
-            metadata_availability=False,
-            allow_empty=False,
-        ),
-        LocalFileUploadEntry(
-            local_path="sample2_n.fcs",
-            gs_key="test_prism_trial_id/cytof/CTTTPP121.00/intermediate.fcs",
-            upload_placeholder="8a674ce1-e224-45b7-8094-77fca9f98ae2",
             metadata_availability=False,
             allow_empty=False,
         ),

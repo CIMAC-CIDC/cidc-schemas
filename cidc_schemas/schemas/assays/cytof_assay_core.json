@@ -64,7 +64,7 @@
             }
         },
 
-        "sample_entry": {
+        "entry": {
             "description": "A single sample-level data record from CyTOF assay batch.",
             "type": "object",
             "mergeStrategy": "objectMerge",
@@ -106,26 +106,6 @@
             }
         },
 
-        "participant_entry": {
-            "description": "A participent-level data record for a CyTOF assay batch.",
-            "type": "object",
-            "mergeStrategy": "objectMerge",
-            "additionalProperties": false,
-            
-            "required": ["cimac_participant_id","input_files"],
-            "properties": {
-                "cimac_participant_id": {
-                    "$comment": "Id of a participant within this clinical trial, that this assay record is based upon.",
-                    "$ref": "participant.json#properties/cimac_participant_id"
-                },
-                "participant_debarcoding_key": {
-                    "description": "An ID that maps to the specific isotope labeling scheme in the debarcoding protocol.",
-                    "type": "string"
-                },
-                "input_files": {"$ref": "assays/cytof_assay_core.json#definitions/input_files"},
-                "output_files": {"$ref": "assays/cytof_assay_core.json#definitions/output_files"}
-            }
-        },
 
         "controls": {
             "description": "A data record for the control files in a CyTOF assay batch.",
@@ -138,6 +118,10 @@
                 "control_name": {
                     "description": "Id of a participant within this clinical trial, that this assay record is based upon.",
                     "type": "string"
+                },
+                "cimac_participant_id": {
+                    "$comment": "Participant ID of a sample within this clinical trial, that this assay record is based upon.",
+                    "$ref": "participant.json#properties/cimac_participant_id"
                 },
                 "control_debarcoding_key": {
                     "description": "An ID that maps to the specific isotope labeling scheme in the debarcoding protocol.",

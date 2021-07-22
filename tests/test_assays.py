@@ -303,7 +303,7 @@ def test_cytof():
     report["data_format"] = "ZIP"
     analysis = ARTIFACT_OBJ.copy()
     analysis["data_format"] = "ZIP"
-    sample_records = {
+    records = {
         "cimac_id": "CTTTPPPSA.00",
         "input_files": {"processed_fcs": fcs_1},
         "output_files": {
@@ -316,22 +316,9 @@ def test_cytof():
             "cell_counts_profiling": profiling,
         },
     }
-    participant_records = {
-        "cimac_participant_id": "CTTTPPP",
-        "input_files": {"processed_fcs": fcs_4},
-        "output_files": {
-            "fcs_file": fcs_4,
-            "assignment": assignment,
-            "compartment": compartment,
-            "profiling": profiling,
-            "cell_counts_assignment": assignment,
-            "cell_counts_compartment": compartment,
-            "cell_counts_profiling": profiling,
-        },
-    }
 
     # add a demo sample-level record.
-    obj["sample_records"] = [sample_records]
+    obj["records"] = [records]
 
 
     # add a demo participant-level record.

@@ -1,0 +1,16 @@
+{
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "$id": "control",
+    "title": "Control",
+    "description": "Common information about the controls used in a number of immune-oncology assays.",
+    "inheritableBase": true,
+    "type": "object",
+    "properties": {
+        "control_name": {
+            "description": "Name or identifier of a control sample.",
+            "type": "string"
+        }
+    },
+    "required": ["control_name"]
+  }
+  

@@ -247,7 +247,7 @@ def load_ct_example(name: str) -> dict:
 def test_derive_files_CyTOF_analysis():
     """Check that CyTOF analysis CSV is derived as expected."""
 
-    ct = load_ct_example("CT_cytof_10021_9204_with_analysis")
+    ct = load_ct_example("CT_cytof_with_analysis")
 
     artifact_format_specific_data = {
         "cell_counts_assignment": {"B Cell (CD27-)": 272727, "B Cell (Memory)": 11111},

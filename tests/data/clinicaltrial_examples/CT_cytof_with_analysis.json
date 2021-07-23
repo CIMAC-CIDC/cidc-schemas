@@ -1,13 +1,13 @@
 {
   "assays": {
-    "cytof_10021_9204": [
+    "cytof_assay": [
       {
         "records": [
           {
             "cimac_id": "CTSTP01S1.01",
             "input_files": {
               "processed_fcs": {
-                "object_url": "staging_0/cytof_10021_9204/CTSTP01S1.01/processed.fcs",
+                "object_url": "staging_0/cytof/CTSTP01S1.01/processed.fcs",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
@@ -74,7 +74,7 @@
             "cimac_id": "CTSTP01S2.01",
             "input_files": {
               "processed_fcs": {
-                "object_url": "staging_0/cytof_10021_9204_9204/CTSTP01S2.01/processed.fcs",
+                "object_url": "staging_0/cytof/CTSTP01S2.01/processed.fcs",
                 "file_size_bytes": 0,
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",

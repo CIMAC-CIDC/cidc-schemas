@@ -247,9 +247,7 @@ def test_cytof():
     fcs_4 = ARTIFACT_OBJ.copy()
     fcs_4["data_format"] = "FCS"
     sample_records = {"processed_fcs": fcs_1}
-    participant_records = {"processed_fcs": fcs_4}
     validator.validate(sample_records)
-    validator.validate(participant_records)
 
     # create the cytof object
     cytof_platform = {"instrument": "dummy"}
@@ -320,12 +318,8 @@ def test_cytof():
     # add a demo sample-level record.
     obj["records"] = [records]
 
-
-    # add a demo participant-level record.
-    obj["participant_records"] = [participant_records]
-
     # create validator assert schemas are valid.
-    validator = _fetch_validator("cytof_assay")
+    validator = _fetch_validator("cytof")
     validator.validate(obj)
 
 

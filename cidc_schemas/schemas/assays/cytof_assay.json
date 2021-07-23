@@ -16,7 +16,6 @@
         "assay_run_id": {"$ref": "assays/cytof_assay_core.json#properties/assay_run_id"},
         "cytof_antibodies": {"$ref": "assays/cytof_assay_core.json#properties/cytof_antibodies"},
         "batch_id": {"$ref": "assays/cytof_assay_core.json#properties/batch_id"},
-        "excluded_samples":{"$ref": "assays/cytof_assay_core.json#properties/excluded_samples"},
         "injector": {
             "description": "Name of Injector component used as part of the CyTOF software",
             "type": "string"
@@ -68,13 +67,6 @@
             "items": {"$ref": "assays/cytof_assay_core.json#definitions/entry"},
             "mergeStrategy": "arrayMergeById",
             "mergeOptions": {"idRef": "cimac_id"}
-        },
-        "controls": {
-            "type": "array",
-            "description": "A single participant-level data record from a CyTOF assay batch.",
-            "items": {"$ref": "assays/cytof_assay_core.json#definitions/controls"},
-            "mergeStrategy": "arrayMergeById",
-            "mergeOptions": {"idRef": "control_name"}
         }
     }
 }

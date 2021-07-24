@@ -1,7 +1,0 @@
-"#preamble","Protocol identifier","test_prism_trial_id"
-
-"#skip","Run info","","Preprocessing"
-"#header","Cimac id","Intermediate fcs filename","Processed fcs filename","Concatenation version","Normalization version","Debarcoding key","Preprocessing_notes"
-"#data","CTTTPP111.00","","sample1.fcs","GHIL","ABC","FLUIDIGM 1234","a note like any other note"
-"#data","CTTTPP121.00","","sample2.fcs","GHIL","ABC","FLUIDIGM 1234","a different note"
-"#data","CTTTPP211.00","","sample3.fcs","GHIL","ABC","FLUIDIGM 1234","a note like any other note"

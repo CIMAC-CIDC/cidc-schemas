@@ -1,0 +1,10 @@
+"#title","Metadata file for miscellaneous data"
+"#preamble","Protocol identifier","test_prism_trial_id"
+"#preamble","Assay creator","DFCI"
+
+"#skip","Files"
+"#header","File name","File location","Description"
+"#data","foo.txt","foo"
+"#data","file_name.txt","bar"
+"#data","baz.txt","baz","this is a description"
+"#data","file_name.barbaz","barbaz","this is a description"

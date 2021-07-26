@@ -174,7 +174,7 @@
                         "spike-in fcs filename": {
                             "merge_pointer": "0/input_files/spike_in_fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/controls/{control_name}/spike_in.fcs",
+                            "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/controls/{cimac id}/spike_in.fcs",
                             "is_artifact": 1,
                             "description": "Path to the spike-in file on a User's computer."
                         },

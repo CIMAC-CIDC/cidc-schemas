@@ -3,5 +3,6 @@
 "#preamble","Assay creator","DFCI"
 
 "#skip","Unharmonized"
-"#header","File name","Clinical data file","Comment"
-"#data","response","test_file.xlsx","no comment"
+"#header","File name","File type","Clinical data file","Comment"
+"#data","response","xlsx","test_file.xlsx","no comment"
+"#data","dosage ","csv","test_file2.csv","no comment"

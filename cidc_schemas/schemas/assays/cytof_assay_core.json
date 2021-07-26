@@ -31,8 +31,11 @@
             "description": "CyTOF batch identification number. Unique to every batch.",
             "type": "string"
         },
-        "excluded_samples": {
-            "$ref": "assays/components/excluded_samples.json"
+        "controls": {
+            "type": "array",
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": {"idRef": "control_name"},
+            "items": {"$ref": "assays/cytof_assay_core.json#definitions/controls"}
         }
     },
 

@@ -1992,13 +1992,6 @@ def cytof_analysis() -> PrismTestData:
                     "control_files_analysis": {
                         "upload_placeholder": "4abb7949-5400-4e5a-a947-5a1403ca75c4"
                     },
-                    "excluded_samples": [
-                        {"cimac_id": "CTTTPP111.00", "reason_excluded": "low coverage"},
-                        {
-                            "cimac_id": "CTTTPP122.00",
-                            "reason_excluded": "module failed",
-                        },
-                    ],
                 },
             ]
         },
@@ -2129,7 +2122,7 @@ def cytof_analysis() -> PrismTestData:
     cimac_ids = [
         record["cimac_id"]
         for batch in prismify_patch["assays"]["cytof"]
-        for record in [*batch["records"], *batch["excluded_samples"]]
+        for record in batch["records"]
     ]
     assays = cytof().prismify_patch["assays"]
     base_trial = get_test_trial(cimac_ids, assays)

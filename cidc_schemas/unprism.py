@@ -297,7 +297,7 @@ def _cytof_analysis_derivation(context: DeriveFilesContext) -> DeriveFilesResult
     """Generate a combined CSV for CyTOF analysis data"""
     cell_counts_analysis_csvs = pd.json_normalize(
         data=context.trial_metadata,
-        record_path=["assays", "cytof_assay", "records"],
+        record_path=["assays", "cytof", "records"],
         meta=[prism.PROTOCOL_ID_FIELD_NAME],
     )
 

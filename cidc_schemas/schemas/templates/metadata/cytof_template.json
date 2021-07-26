@@ -90,13 +90,6 @@
                             "gcs_uri_format": "{protocol identifier}/cytof/{cimac id}/processed.fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path"
                         },
-                        "spike-in fcs filename": {
-                            "merge_pointer": "0/input_files/spike_in_fcs",
-                            "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/{cimac id}/spike_in.fcs",
-                            "is_artifact": 1,
-                            "description": "Path to the spike-in file on a User's computer."
-                        },
                         "concatenation version": {
                             "merge_pointer": "0/concatenation_version",
                             "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/concatenation_version",
@@ -162,12 +155,12 @@
                 "prism_data_object_pointer": "/controls/-",
                 "data_columns": {
                     "Controls info": {
-                        "control_name": {
+                        "control name": {
                             "merge_pointer": "",
                             "type_ref": "assays/cytof_assay_core.json#definitions/controls/properties/control_name",
                             "allow_empty": true
                         },
-                        "cimac_participant_id": {
+                        "cimac participant id": {
                             "merge_pointer": "0/cimac_participant_id",
                             "type_ref": "assays/cytof_assay_core.json#definitions/controls/properties/cimac_participant_id",
                             "allow_empty": true
@@ -175,13 +168,13 @@
                         "processed fcs filename": {
                             "merge_pointer": "0/input_files/processed_fcs",
                             "is_artifact": 1,
-                            "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/controls/{cimac id}/processed.fcs",
+                            "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/controls/{control_name}/processed.fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path"
                         },
                         "spike-in fcs filename": {
                             "merge_pointer": "0/input_files/spike_in_fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/controls/{cimac id}/spike_in.fcs",
+                            "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/controls/{control_name}/spike_in.fcs",
                             "is_artifact": 1,
                             "description": "Path to the spike-in file on a User's computer."
                         },

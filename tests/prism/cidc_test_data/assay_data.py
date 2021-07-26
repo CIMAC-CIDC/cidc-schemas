@@ -90,7 +90,6 @@ def cytof() -> PrismTestData:
                             },
                             "concatenation_version": "GHIL",
                             "normalization_version": "ABC",
-                            "debarcoding_key": "FLUIDIGM 1234",
                             "preprocessing_notes": "a note like any other note",
                         },
                         {
@@ -102,7 +101,6 @@ def cytof() -> PrismTestData:
                             },
                             "concatenation_version": "GHIL",
                             "normalization_version": "ABC",
-                            "debarcoding_key": "FLUIDIGM 1234",
                             "preprocessing_notes": "a different note",
                         },
                     ],

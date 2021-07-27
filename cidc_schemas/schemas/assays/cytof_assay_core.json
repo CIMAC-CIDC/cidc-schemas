@@ -36,6 +36,9 @@
             "mergeStrategy": "arrayMergeById",
             "mergeOptions": {"idRef": "control_name"},
             "items": {"$ref": "assays/cytof_assay_core.json#definitions/controls"}
+        },
+        "excluded_samples": {
+            "$ref": "assays/components/excluded_samples.json"
         }
     },
 

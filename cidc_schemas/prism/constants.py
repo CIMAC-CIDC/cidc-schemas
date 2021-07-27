@@ -7,9 +7,7 @@ SUPPORTED_ASSAYS = [
     "wes_fastq",
     "wes_bam",
     "olink",
-    "cytof_10021_9204",
-    "cytof_e4412",
-    "cytof_s1609_gd2car",
+    "cytof",
     "ihc",
     "elisa",
     "rna_fastq",
@@ -40,9 +38,7 @@ MANIFESTS_WITH_PARTICIPANT_INFO = SUPPORTED_SHIPPING_MANIFESTS + [
 SUPPORTED_MANIFESTS = SUPPORTED_SHIPPING_MANIFESTS + SUPPORTED_WEIRD_MANIFESTS
 
 SUPPORTED_ANALYSES = [
-    "cytof_10021_9204_analysis",
-    "cytof_e4412_analysis",
-    "cytof_s1609_gd2car_analysis",
+    "cytof_analysis",
     "wes_analysis",
     "wes_tumor_only_analysis",
     "rna_level1_analysis",

@@ -1,0 +1,355 @@
+{
+  "assays": {
+    "cytof": [
+      {
+        "records": [
+          {
+            "cimac_id": "CTSTP01S1.01",
+            "input_files": {
+              "processed_fcs": {
+                "object_url": "staging_0/cytof/CTSTP01S1.01/processed.fcs",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:41.310000+00:00"
+              }
+            },
+            "output_files": {
+              "fcs_file": {
+                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/source.fcs",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:41.310000+00:00"
+              },
+              "profiling": {
+                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/profiling.csv",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:40.549000+00:00"
+              },
+              "assignment": {
+                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/assignment.csv",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:41.229000+00:00"
+              },
+              "compartment": {
+                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/compartment.csv",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:40.523000+00:00"
+              },
+              "cell_counts_profiling": {
+                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/cell_counts_profiling.csv",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:40.524000+00:00"
+              },
+              "cell_counts_assignment": {
+                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/cell_counts_assignment.csv",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:40.527000+00:00"
+              },
+              "cell_counts_compartment": {
+                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/cell_counts_compartment.csv",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:40.524000+00:00"
+              }
+            },
+            "debarcoding_key": "FLUIDIGM 1234",
+            "preprocessing_notes": "a note like any other note",
+            "concatenation_version": "GHIL",
+            "normalization_version": "ABC"
+          },
+          {
+            "cimac_id": "CTSTP01S2.01",
+            "input_files": {
+              "processed_fcs": {
+                "object_url": "staging_0/cytof/CTSTP01S2.01/processed.fcs",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:41.310000+00:00"
+              }
+            },
+            "output_files": {
+              "fcs_file": {
+                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/source.fcs",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:41.310000+00:00"
+              },
+              "profiling": {
+                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/profiling.csv",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:40.549000+00:00"
+              },
+              "assignment": {
+                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/assignment.csv",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:41.229000+00:00"
+              },
+              "compartment": {
+                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/compartment.csv",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:40.523000+00:00"
+              },
+              "cell_counts_profiling": {
+                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/cell_counts_profiling.csv",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:40.524000+00:00"
+              },
+              "cell_counts_assignment": {
+                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/cell_counts_assignment.csv",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:40.527000+00:00"
+              },
+              "cell_counts_compartment": {
+                "object_url": "staging_0/CTSTP01S1.01/cytof_analysis/cell_counts_compartment.csv",
+                "file_size_bytes": 0,
+                "artifact_category": "Assay Artifact from CIMAC",
+                "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "uploaded_timestamp": "2019-11-19T20:48:40.524000+00:00"
+              }
+            },
+            "debarcoding_key": "FLUIDIGM 1234",
+            "preprocessing_notes": "a note like any other note",
+            "concatenation_version": "GHIL",
+            "normalization_version": "ABC"
+          }
+        ],
+        "instrument": "PresNixon123",
+        "assay_run_id": "staging_test_cytof_run_1",
+        "batch_id": "XYZ",
+        "assay_creator": "DFCI",
+        "injector": "HAT123",
+        "date_of_acquisition": "43355",
+        "acquisition_buffer": "ABC",
+        "bead_removal": true,
+        "cytof_antibodies": [
+          {
+            "clone": "C8/144b",
+            "usage": "Used",
+            "cat_num": "C8-ABC",
+            "company": "DAKO",
+            "isotope": "146Nd",
+            "lot_num": "3983272",
+            "antibody": "CD8",
+            "dilution": "100X",
+            "stain_type": "Surface Stain"
+          },
+          {
+            "clone": "C2/11p",
+            "usage": "Analysis Only",
+            "cat_num": "C8-AB123",
+            "company": "DAKO",
+            "isotope": "146Nb",
+            "lot_num": "1231272",
+            "antibody": "PD-L1",
+            "dilution": "100X",
+            "stain_type": "Surface Stain"
+          }
+        ]
+      }
+    ]
+  },
+  "shipments": [],
+  "participants": [
+    {
+      "samples": [
+        {
+          "cimac_id": "CTSTP01S1.01",
+          "comments": "None",
+          "box_number": "1",
+          "material_used": 123,
+          "type_of_sample": "Tumor Tissue",
+          "sample_location": "a1",
+          "parent_sample_id": "qwe",
+          "quality_of_sample": "Pass",
+          "material_remaining": 0,
+          "sample_replacement": "Replacement Not Requested",
+          "material_used_units": "Microliters",
+          "processed_sample_id": "qwe",
+          "residual_sample_use": "Not Reported",
+          "collection_event_name": "Baseline",
+          "processed_sample_type": "Whole Blood",
+          "shipping_entry_number": 1,
+          "processed_sample_volume": 123,
+          "material_remaining_units": "Microliters",
+          "type_of_primary_container": "Sodium heparin",
+          "material_storage_condition": "RT",
+          "sample_collection_procedure": "Blood Draw",
+          "processed_sample_volume_units": "Microliters"
+        },
+        {
+          "cimac_id": "CTSTP01S2.01",
+          "comments": "None",
+          "box_number": "1",
+          "material_used": 123,
+          "type_of_sample": "Tumor Tissue",
+          "sample_location": "a1",
+          "parent_sample_id": "qwe",
+          "quality_of_sample": "Pass",
+          "material_remaining": 0,
+          "sample_replacement": "Replacement Not Requested",
+          "material_used_units": "Microliters",
+          "processed_sample_id": "qwe",
+          "residual_sample_use": "Not Reported",
+          "collection_event_name": "Baseline",
+          "processed_sample_type": "Whole Blood",
+          "shipping_entry_number": 1,
+          "processed_sample_volume": 123,
+          "material_remaining_units": "Microliters",
+          "type_of_primary_container": "Sodium heparin",
+          "material_storage_condition": "RT",
+          "sample_collection_procedure": "Blood Draw",
+          "processed_sample_volume_units": "Microliters"
+        }
+      ],
+      "cohort_name": "Arm_Z",
+      "participant_id": "TEST-TEST-TE",
+      "cimac_participant_id": "CTSTP01"
+    },
+    {
+      "samples": [
+        {
+          "cimac_id": "CTTTP08T1.00",
+          "comments": "None",
+          "box_number": "2",
+          "core_number": 1,
+          "material_used": 3,
+          "type_of_sample": "Tumor Tissue",
+          "sample_location": "A1",
+          "parent_sample_id": "TRIALGROUP 1",
+          "quality_of_sample": "Pass",
+          "material_remaining": 1,
+          "sample_replacement": "Replacement Not Requested",
+          "material_used_units": "Slides",
+          "processed_sample_id": "BIOBANK 1",
+          "residual_sample_use": "Not Reported",
+          "type_of_tumor_sample": "Metastatic Tumor",
+          "collection_event_name": "Baseline",
+          "processed_sample_type": "Fixed Slide",
+          "shipping_entry_number": 1,
+          "material_remaining_units": "Slides",
+          "processed_sample_quantity": 4,
+          "material_storage_condition": "RT",
+          "fixation_stabilization_type": "Archival FFPE",
+          "sample_collection_procedure": "Core Biopsy"
+        },
+        {
+          "cimac_id": "CTTTP08T2.00",
+          "comments": "None",
+          "box_number": "2",
+          "core_number": 1,
+          "material_used": 3,
+          "type_of_sample": "Tumor Tissue",
+          "sample_location": "A2",
+          "parent_sample_id": "TRIALGROUP 2",
+          "quality_of_sample": "Pass",
+          "material_remaining": 1,
+          "sample_replacement": "Replacement Not Requested",
+          "material_used_units": "Slides",
+          "processed_sample_id": "BIOBANK 1",
+          "residual_sample_use": "Not Reported",
+          "type_of_tumor_sample": "Metastatic Tumor",
+          "collection_event_name": "Baseline",
+          "processed_sample_type": "Fixed Slide",
+          "shipping_entry_number": 2,
+          "material_remaining_units": "Slides",
+          "processed_sample_quantity": 4,
+          "material_storage_condition": "RT",
+          "fixation_stabilization_type": "Formalin-Fixed Paraffin-Embedded",
+          "sample_collection_procedure": "Core Biopsy"
+        },
+        {
+          "cimac_id": "CTTTP08T3.00",
+          "comments": "None",
+          "box_number": "2",
+          "core_number": 1,
+          "material_used": 1,
+          "type_of_sample": "Tumor Tissue",
+          "sample_location": "A3",
+          "parent_sample_id": "TRIALGROUP 3",
+          "quality_of_sample": "Pass",
+          "material_remaining": 0,
+          "sample_replacement": "Replacement Not Requested",
+          "material_used_units": "Slides",
+          "processed_sample_id": "BIOBANK 1",
+          "residual_sample_use": "Not Reported",
+          "type_of_tumor_sample": "Primary Tumor",
+          "collection_event_name": "Baseline",
+          "processed_sample_type": "H&E-Stained Fixed Tissue Slide Specimen",
+          "shipping_entry_number": 3,
+          "material_remaining_units": "Slides",
+          "processed_sample_quantity": 1,
+          "material_storage_condition": "RT",
+          "fixation_stabilization_type": "Formalin-Fixed Paraffin-Embedded",
+          "sample_collection_procedure": "Core Biopsy"
+        }
+      ],
+      "cohort_name": "Arm_Z",
+      "participant_id": "TTTPP803",
+      "cimac_participant_id": "CTTTP08"
+    },
+    {
+      "samples": [
+        {
+          "cimac_id": "CTTTP09T1.00",
+          "comments": "None",
+          "box_number": "2",
+          "core_number": 1,
+          "material_used": 1,
+          "type_of_sample": "Tumor Tissue",
+          "sample_location": "A4",
+          "parent_sample_id": "TRIALGROUP 4",
+          "quality_of_sample": "Pass",
+          "material_remaining": 0,
+          "sample_replacement": "Replacement Not Requested",
+          "material_used_units": "Slides",
+          "processed_sample_id": "BIOBANK 1",
+          "residual_sample_use": "Not Reported",
+          "type_of_tumor_sample": "Primary Tumor",
+          "collection_event_name": "Baseline",
+          "processed_sample_type": "H&E-Stained Fixed Tissue Slide Specimen",
+          "shipping_entry_number": 4,
+          "material_remaining_units": "Slides",
+          "processed_sample_quantity": 1,
+          "material_storage_condition": "RT",
+          "fixation_stabilization_type": "Not Reported",
+          "sample_collection_procedure": "Core Biopsy"
+        }
+      ],
+      "cohort_name": "Arm_Z",
+      "participant_id": "TTTPP901",
+      "cimac_participant_id": "CTTTP09"
+    }
+  ],
+  "protocol_identifier": "staging_0",
+  "allowed_cohort_names": [
+    "Arm_Z"
+  ],
+  "allowed_collection_event_names": [
+    "Baseline"
+  ]
+}

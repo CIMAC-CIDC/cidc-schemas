@@ -90,7 +90,6 @@ def _set_val(
 
     # special case to set context doc itself
     if pointer.rstrip("#") == "":
-        print(val)
         context.update(val)
         return
 

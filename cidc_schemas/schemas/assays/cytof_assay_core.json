@@ -136,7 +136,7 @@
             "description": "A data record for the barcoding strategy of a CyTOF assay batch.",
             "type": "object",
             "additionalProperties": false,
-
+            
             "properties": {
                 "barcode_id": {
                     "description": "CIMAC ID, Participant ID or Control sample for which barcode is assigned.",

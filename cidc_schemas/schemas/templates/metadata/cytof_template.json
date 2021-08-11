@@ -208,6 +208,18 @@
                     "protocol identifier": {
                         "merge_pointer": "3/protocol_identifier",
                         "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    },
+                    "batch id": {
+                        "merge_pointer": "0/batch_id",
+                        "type_ref": "assays/cytof_assay_core.json#properties/batch_id"
+                    },
+                    "Debarcoding key file": {
+                        "merge_pointer": "0/barcoding_key_csv",
+                        "is_artifact" : 1,
+                        "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/debarcoding_key.csv",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "description": "Path to a file on a User's computer. \nThis contains the master debarcoding key in a CSV file.",
+                        "allow_empty": true
                     }
                 },
                 "data_columns": {

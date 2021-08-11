@@ -27,7 +27,8 @@
                     },
                     "instrument": {
                         "merge_pointer": "0/instrument",
-                        "type_ref": "assays/cytof_assay.json#properties/instrument"
+                        "type_ref": "assays/cytof_assay.json#properties/instrument",
+                        "allow_empty": true
                     },
                     "injector": {
                         "merge_pointer": "0/injector",
@@ -153,10 +154,17 @@
             },
             "Controls and Spike-Ins": {
                 "prism_data_object_pointer": "/controls/-",
+                "preamble_rows": {
+                    "protocol identifier":
+                    {
+                        "merge_pointer": "3/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    }
+                },
                 "data_columns": {
                     "Controls info": {
                         "control name": {
-                            "merge_pointer": "",
+                            "merge_pointer": "0/control_name",
                             "type_ref": "assays/cytof_assay_core.json#definitions/controls/properties/control_name",
                             "allow_empty": true
                         },
@@ -168,15 +176,17 @@
                         "processed fcs filename": {
                             "merge_pointer": "0/input_files/processed_fcs",
                             "is_artifact": 1,
-                            "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/controls/{control_name}/processed.fcs",
-                            "type_ref": "assays/components/local_file.json#properties/file_path"
+                            "gcs_uri_format": "{protocol identifier}/cytof/controls/{control name}/processed.fcs",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "allow_empty": true
                         },
                         "spike-in fcs filename": {
                             "merge_pointer": "0/input_files/spike_in_fcs",
                             "type_ref": "assays/components/local_file.json#properties/file_path",
-                            "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/controls/{cimac id}/spike_in.fcs",
+                            "gcs_uri_format": "{protocol identifier}/cytof/controls/{control name}/spike_in.fcs",
                             "is_artifact": 1,
-                            "description": "Path to the spike-in file on a User's computer."
+                            "description": "Path to the spike-in file on a User's computer.",
+                            "allow_empty": true
                         },
                         "concatenation version": {
                             "merge_pointer": "0/concatenation_version",
@@ -194,6 +204,24 @@
             },
             "Barcoding": {
                 "prism_data_object_pointer": "/barcodes/-",
+                "preamble_rows": {
+                    "protocol identifier": {
+                        "merge_pointer": "3/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    },
+                    "batch id": {
+                        "merge_pointer": "0/batch_id",
+                        "type_ref": "assays/cytof_assay_core.json#properties/batch_id"
+                    },
+                    "Debarcoding key file": {
+                        "merge_pointer": "0/barcoding_key_csv",
+                        "is_artifact" : 1,
+                        "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/debarcoding_key.csv",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "description": "Path to a file on a User's computer. \nThis contains the master debarcoding key in a CSV file.",
+                        "allow_empty": true
+                    }
+                },
                 "data_columns": {
                     "Barcodes": {
                         "id (cimac id/participant id/control name)": {

@@ -37,6 +37,12 @@
             "mergeOptions": {"idRef": "control_name"},
             "items": {"$ref": "assays/cytof_assay_core.json#definitions/controls"}
         },
+        "barcodes": {
+            "type": "array",
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": {"idRef": "barcode_id"},
+            "items": {"$ref": "assays/cytof_assay_core.json#definitions/barcodes"}
+        },
         "excluded_samples": {
             "$ref": "assays/components/excluded_samples.json"
         }
@@ -112,10 +118,9 @@
         "controls": {
             "description": "A data record for the control files in a CyTOF assay batch.",
             "type": "object",
-            "mergeStrategy": "objectMerge",
             "additionalProperties": false,
             
-            "required": ["control_name","input_files"],
+            "required": ["input_files"],
             "properties": {
                 "control_name": {"$ref": "assays/components/controls.json#properties/control_name"},
                 "cimac_participant_id": {
@@ -130,7 +135,6 @@
         "barcodes": {
             "description": "A data record for the barcoding strategy of a CyTOF assay batch.",
             "type": "object",
-            "mergeStrategy": "objectMerge",
             "additionalProperties": false,
             
             "properties": {
@@ -145,6 +149,9 @@
                 "debarcoding_key": {
                     "description": "Debarcoding key assigned",
                     "type": "string"
+                },
+                "barcoding_key_csv": {
+                    "$ref": "assays/cytof_assay.json#properties/barcoding_key_csv"
                 }
             }
         },

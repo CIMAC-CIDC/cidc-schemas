@@ -58,6 +58,9 @@
                 "$ref": "artifacts/artifact_fcs.json"
             }
         },
+        "barcoding_key_csv": {
+            "$ref": "artifacts/artifact_csv.json"
+        },
         "astrolabe_reports": {
             "$ref": "artifacts/artifact_zip.json"
         },

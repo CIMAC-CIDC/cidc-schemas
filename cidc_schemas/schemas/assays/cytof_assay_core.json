@@ -136,7 +136,7 @@
             "description": "A data record for the barcoding strategy of a CyTOF assay batch.",
             "type": "object",
             "additionalProperties": false,
-            
+
             "properties": {
                 "barcode_id": {
                     "description": "CIMAC ID, Participant ID or Control sample for which barcode is assigned.",
@@ -149,6 +149,9 @@
                 "debarcoding_key": {
                     "description": "Debarcoding key assigned",
                     "type": "string"
+                },
+                "barcoding_key_csv": {
+                    "$ref": "assays/cytof_assay.json#properties/barcoding_key_csv"
                 }
             }
         },

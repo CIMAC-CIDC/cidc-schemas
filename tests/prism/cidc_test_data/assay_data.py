@@ -196,11 +196,11 @@ def cytof() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="XYZ1-control.fcs",
-            gs_key="test_prism_trial_id/cytof/XYZ1/controls/XYZ1-control/processed.fcs",
+            gs_key="test_prism_trial_id/cytof/controls/XYZ1-control/processed.fcs",
             upload_placeholder="aaa92a16-9c6a-4ef1-90b8-ef1a599aaaaa",
             metadata_availability=False,
             allow_empty=False,
-        ),
+        )
     ]
 
     cimac_ids = [

@@ -154,10 +154,17 @@
             },
             "Controls and Spike-Ins": {
                 "prism_data_object_pointer": "/controls/-",
+                "preamble_rows": {
+                    "protocol identifier":
+                    {
+                        "merge_pointer": "3/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    }
+                },
                 "data_columns": {
                     "Controls info": {
                         "control name": {
-                            "merge_pointer": "",
+                            "merge_pointer": "0/control_name",
                             "type_ref": "assays/cytof_assay_core.json#definitions/controls/properties/control_name",
                             "allow_empty": true
                         },
@@ -197,6 +204,12 @@
             },
             "Barcoding": {
                 "prism_data_object_pointer": "/barcodes/-",
+                "preamble_rows": {
+                    "protocol identifier": {
+                        "merge_pointer": "3/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    }
+                },
                 "data_columns": {
                     "Barcodes": {
                         "id (cimac id/participant id/control name)": {

@@ -200,7 +200,7 @@ def cytof() -> PrismTestData:
             upload_placeholder="aaa92a16-9c6a-4ef1-90b8-ef1a599aaaaa",
             metadata_availability=False,
             allow_empty=False,
-        )
+        ),
     ]
 
     cimac_ids = [

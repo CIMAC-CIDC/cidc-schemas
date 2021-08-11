@@ -27,7 +27,8 @@
                     },
                     "instrument": {
                         "merge_pointer": "0/instrument",
-                        "type_ref": "assays/cytof_assay.json#properties/instrument"
+                        "type_ref": "assays/cytof_assay.json#properties/instrument",
+                        "allow_empty": true
                     },
                     "injector": {
                         "merge_pointer": "0/injector",

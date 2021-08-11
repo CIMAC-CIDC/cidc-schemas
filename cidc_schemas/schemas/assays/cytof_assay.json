@@ -9,7 +9,7 @@
     "allOf": [
         { "$ref": "assays/cytof_assay_core.json"}
     ],
-    "required": ["assay_creator", "batch_id", "records"],
+    "required": ["assay_creator", "batch_id", "records", "cytof_antibodies", "assay_run_id"],
 
     "properties": {
         "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},

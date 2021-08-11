@@ -143,6 +143,23 @@ def cytof() -> PrismTestData:
                             "usage": "Analysis Only",
                         },
                     ],
+                    "barcodes": [
+                        {
+                            "barcode_id": "CTTTPP111.00",
+                            "barcode_num": "CTTTPP111",
+                            "debarcoding_key": "ABC123",
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "control_name": "XYZ1-control",
+                            "input_files": {
+                                "processed_fcs": {
+                                    "upload_placeholder": "aaa92a16-9c6a-4ef1-90b8-ef1a599aaaaa"
+                                },
+                            },
+                        }
+                    ],
                 }
             ]
         },
@@ -174,6 +191,13 @@ def cytof() -> PrismTestData:
             local_path="batch1f2.fcs",
             gs_key="test_prism_trial_id/cytof/XYZ1/source_1.fcs",
             upload_placeholder="0bbd7520-18b9-4ec3-8344-49f02dcadb08",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="XYZ1-control.fcs",
+            gs_key="test_prism_trial_id/cytof/XYZ1/controls/XYZ1-control/processed.fcs",
+            upload_placeholder="aaa92a16-9c6a-4ef1-90b8-ef1a599aaaaa",
             metadata_availability=False,
             allow_empty=False,
         ),

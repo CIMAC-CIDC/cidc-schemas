@@ -15,8 +15,10 @@
         "assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
         "assay_run_id": {"$ref": "assays/cytof_assay_core.json#properties/assay_run_id"},
         "cytof_antibodies": {"$ref": "assays/cytof_assay_core.json#properties/cytof_antibodies"},
+        "barcodes": {"$ref": "assays/cytof_assay_core.json#properties/barcodes"},
+        "controls": {"$ref": "assays/cytof_assay_core.json#properties/controls"},
         "batch_id": {"$ref": "assays/cytof_assay_core.json#properties/batch_id"},
-        "excluded_samples":{"$ref": "assays/cytof_assay_core.json#properties/excluded_samples"},
+        "excluded_samples": {"$ref": "assays/cytof_assay_core.json#properties/excluded_samples"},
         "injector": {
             "description": "Name of Injector component used as part of the CyTOF software",
             "type": "string"
@@ -74,4 +76,3 @@
         }
     }
 }
-

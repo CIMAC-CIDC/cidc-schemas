@@ -12,8 +12,6 @@
 
     "required": [
         "cytof_antibodies",
-        "barcodes",
-        "controls",
         "assay_run_id",
         "batch_id"
     ],

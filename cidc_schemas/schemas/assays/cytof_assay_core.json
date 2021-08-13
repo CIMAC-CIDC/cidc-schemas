@@ -53,7 +53,6 @@
             "description": "CyTOF Assay Input Files",
             "type": "object",
             "additionalProperties": false,
-            "required": ["processed_fcs"],
             "properties": {
                 "source_fcs": {"$ref": "artifacts/artifact_fcs.json"},
                 "processed_fcs": {"$ref": "artifacts/artifact_fcs.json"},

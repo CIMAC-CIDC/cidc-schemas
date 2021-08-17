@@ -74,7 +74,8 @@
                         "merge_pointer": "0/source_fcs",
                         "type_ref": "assays/components/local_file.json#properties/file_path",
                         "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/source_{num}.fcs",
-                        "is_artifact": "multi"
+                        "is_artifact": "multi",
+                        "allow_empty": true
                     }
                 },
                 "data_columns": {

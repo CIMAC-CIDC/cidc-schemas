@@ -36,19 +36,23 @@
                       },
                       "viable tumor (% area)": {
                         "merge_pointer": "0/viable_tumor_percentage",
-                        "type_ref": "assays/hande_assay.json#definitions/record/properties/viable_tumor_percentage"
+                        "type_ref": "assays/hande_assay.json#definitions/record/properties/viable_tumor_percentage",
+                        "allow_empty": true
                       },
                       "viable stroma (% area)": {
                         "merge_pointer": "0/viable_stroma_percentage",
-                        "type_ref": "assays/hande_assay.json#definitions/record/properties/viable_stroma_percentage"
+                        "type_ref": "assays/hande_assay.json#definitions/record/properties/viable_stroma_percentage",
+                        "allow_empty": true
                       },
                       "necrosis (% area)": {
                         "merge_pointer": "0/necrosis_percentage",
-                        "type_ref": "assays/hande_assay.json#definitions/record/properties/necrosis_percentage"
+                        "type_ref": "assays/hande_assay.json#definitions/record/properties/necrosis_percentage",
+                        "allow_empty": true
                       },
                       "fibrosis (% area)": {
                         "merge_pointer": "0/fibrosis_percentage",
-                        "type_ref": "assays/hande_assay.json#definitions/record/properties/fibrosis_percentage"
+                        "type_ref": "assays/hande_assay.json#definitions/record/properties/fibrosis_percentage",
+                        "allow_empty": true
                       },
 
                       "comment": {

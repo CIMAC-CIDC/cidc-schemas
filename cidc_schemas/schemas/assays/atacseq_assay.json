@@ -19,8 +19,8 @@
 					"type": "string",
 					"format": "date"
 				},
-				"dv200": {
-					"description": "quantitative measure of the sequencing libraries quality",
+				"percent_q30": {
+					"description": "One quantitative measure of the sequencing accuracy.",
 					"type": "number"
 				},
 				"quality_flag": {

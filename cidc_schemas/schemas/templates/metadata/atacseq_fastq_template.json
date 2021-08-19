@@ -74,14 +74,13 @@
               "merge_pointer": "0/sequencing_date",
               "type_ref": "assays/atacseq_assay.json#definitions/entry/properties/sequencing_date"
             },
-            "DV200": {
-              "merge_pointer": "0/dv200",
-              "type_ref": "assays/atacseq_assay.json#definitions/entry/properties/dv200"
+            "%Q30": {
+              "merge_pointer": "0/percent_q30",
+              "type_ref": "assays/atacseq_assay.json#definitions/entry/properties/percent_q30"
             },
             "quality flag": {
               "merge_pointer": "0/quality_flag",
-              "type_ref": "assays/atacseq_assay.json#definitions/entry/properties/quality_flag",
-              "allow_empty": true
+              "type_ref": "assays/atacseq_assay.json#definitions/entry/properties/quality_flag"
             }
           }
         }

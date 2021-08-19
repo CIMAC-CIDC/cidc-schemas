@@ -712,7 +712,7 @@ def atacseq_fastq() -> PrismTestData:
                             },
                             "sequencing_date": "2010-01-01 00:00:00",
                             "quality_flag": 1.0,
-                            "dv200": 4.0,
+                            "percent_q30": 90.0,
                         },
                         {
                             "cimac_id": "CTTTPP111.00",
@@ -731,7 +731,7 @@ def atacseq_fastq() -> PrismTestData:
                             },
                             "sequencing_date": "2010-01-01 00:00:00",
                             "quality_flag": 1.0,
-                            "dv200": 4.0,
+                            "percent_q30": 90.0,
                         },
                         {
                             "cimac_id": "CTTTPP111.00",
@@ -750,7 +750,7 @@ def atacseq_fastq() -> PrismTestData:
                             },
                             "sequencing_date": "2010-01-01 00:00:00",
                             "quality_flag": 1.0,
-                            "dv200": 4.0,
+                            "percent_q30": 90.0,
                         },
                         {
                             "cimac_id": "CTTTPP111.00",
@@ -769,7 +769,7 @@ def atacseq_fastq() -> PrismTestData:
                             },
                             "sequencing_date": "2010-01-01 00:00:00",
                             "quality_flag": 1.0,
-                            "dv200": 4.0,
+                            "percent_q30": 90.0,
                         },
                     ],
                     "assay_creator": "Mount Sinai",

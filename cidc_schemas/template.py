@@ -32,6 +32,10 @@ logger = logging.getLogger("cidc_schemas.template")
 
 
 POSSIBLE_FILE_EXTS = [
+    "bed",
+    "narrowPeak",
+    "narrowpeak",  # to remove from merge_pointer
+    "bw",
     "tsv",
     "log",
     "summary",
@@ -56,7 +60,9 @@ POSSIBLE_FILE_EXTS = [
 
 def generate_analysis_template_schemas(
     target_dir: str = os.path.join(TEMPLATE_DIR, "analyses"),
-    fname_format: Callable[[str], str] = lambda file: f"{file}_analysis_template.json",
+    fname_format: Callable[
+        [str], str
+    ] = lambda file: f"{'rna_level1' if file == 'rna' else file}_analysis_template.json",
 ):
     """Uses output_API.json's from cidc-ngs-pipeline-api along with existing assays/components/ngs analysis templates to generate templates/analyses schemas"""
     # for each output_API.json
@@ -65,13 +71,13 @@ def generate_analysis_template_schemas(
         # need an existing assay/components/ngs analysis schema to find merge pointers
         try:
             assay_schema = _load_dont_validate_schema(
-                f"assays/{analysis}_analysis.json"
-                if "wes" in analysis
-                else f"assays/components/ngs/{analysis}/{analysis}_analysis.json"
+                f"assays/components/ngs/{analysis}/{analysis}_analysis.json"
+                if analysis in ["rna", "tcr"]  # special cases currently
+                else f"assays/{analysis}_analysis.json"  # all others should be here
             )
         except Exception as e:
             print(
-                f"skipping {analysis}: failed to load corresponding `assays/components/ngs/{analysis}/{'rna_level1' if analysis == 'rna' else analysis}_analysis.json`"
+                f"skipping {analysis}: failed to load corresponding `assays/components/ngs/{analysis}/{analysis}_analysis.json`"
             )
         else:
             template = _convert_api_to_template(analysis, output_schema, assay_schema)
@@ -213,9 +219,9 @@ def _initialize_template_schema(name: str, title: str, pointer: str):
         "title": f"{long_title} analysis template",
         "description": f"Metadata information for {long_title} Analysis output.",
         "prism_template_root_object_schema": (
-            f"assays/{name}_analysis.json"
-            if "wes" in name
-            else f"assays/components/ngs/{name}/{name}_analysis.json"
+            f"assays/components/ngs/{name}/{name}_analysis.json"
+            if name in ["rna", "tcr"]  # special cases currently
+            else f"assays/{name}_analysis.json"  # all others should be here
         ),
         "prism_template_root_object_pointer": f"/analysis/{name}_analysis",
         "properties": {
@@ -273,7 +279,7 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
         "optitype/result": "optitype/optitype_result",
         "xhla": "optitype/xhla",
         "all_samples_summaries": "all_summaries",
-        "/align": "/alignment/align",
+        "/align/sorted.dedup": "/alignment/align_sorted_dedup",
         "sample_summar": "summar",
         "all_epitopes": "epitopes",
         ".txt.tn.tsv": ".tsv",
@@ -289,6 +295,10 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
         "addsample_report": "sample_report",
         "chimeric.out.junction": "chimeric_out_junction.junction",
         "haplotyper.rna.vcf": "haplotyper.vcf",
+        # atacseq analysis
+        "rep1/rep1_": "",  # rep1 are really {replicate} but static
+        "treat_pipleup.bw": "bigwig",  # weird name to file type
+        "align/sorted.bam": "aligned_sorted_bam",  # simple change
     }
     for old, new in fixes.items():
         file_path = file_path.replace(old, new)
@@ -344,7 +354,11 @@ def _calc_gcs_uri_path(name: str, merge_pointer: str):
     file = "_".join(file)
 
     # special handling, then return
-    file = file.replace("align_", "").replace("cnv_calls", "cnvcalls")
+    file = (
+        file.replace("align_", "")
+        .replace("cnv_calls", "cnvcalls")
+        .replace("_bed.", ".bed")
+    )
     return file
 
 

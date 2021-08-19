@@ -38,11 +38,12 @@ MANIFESTS_WITH_PARTICIPANT_INFO = SUPPORTED_SHIPPING_MANIFESTS + [
 SUPPORTED_MANIFESTS = SUPPORTED_SHIPPING_MANIFESTS + SUPPORTED_WEIRD_MANIFESTS
 
 SUPPORTED_ANALYSES = [
+    "atacseq_analysis",
     "cytof_analysis",
-    "wes_analysis",
-    "wes_tumor_only_analysis",
     "rna_level1_analysis",
     "tcr_analysis",
+    "wes_analysis",
+    "wes_tumor_only_analysis",
 ]
 
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS + SUPPORTED_ANALYSES

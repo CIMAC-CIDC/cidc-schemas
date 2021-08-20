@@ -1,7 +1,7 @@
 {
 	"$schema": "metaschema/strict_meta_schema.json#",
 	"$id": "atacseq_analysis",
-	"title": "Assay for Assay of Transposase-Accessible Chromatin by Sequencing",
+	"title": "Analysis for Assay of Transposase-Accessible Chromatin by Sequencing",
 
 	"definitions": {
         "peaks": {

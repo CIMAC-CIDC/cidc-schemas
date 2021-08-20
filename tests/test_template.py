@@ -615,6 +615,18 @@ def test_generate_analysis_template_schemas_wes(tmpdir):
     assert DeepDiff(good_wes, new_wes) == {}
 
 
+def test_generate_analysis_template_schemas_atacseq(tmpdir):
+    generate_analysis_template_schemas(
+        tmpdir.strpath, lambda file: f"{file}_analysis_template.json"
+    )
+    test_dir = os.path.join(TEST_SCHEMA_DIR, "target-templates")
+    good_atac = json.load(
+        open(os.path.join(test_dir, "atacseq_analysis_template.json"))
+    )
+    new_atac = json.load(open(tmpdir.join("atacseq_analysis_template.json")))
+    assert DeepDiff(good_atac, new_atac) == {}
+
+
 def test_generate_analysis_template_schemas_wes_tumor_only(tmpdir):
     generate_analysis_template_schemas(
         tmpdir.strpath, lambda file: f"{file}_analysis_template.json"

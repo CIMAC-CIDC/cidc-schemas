@@ -74,14 +74,6 @@ def test_template(template, template_example, template_example_xlsx_path, tmpdir
         if other_template_type == template.type:
             # don't check it against itself
             continue
-        elif (
-            other_template_type.startswith("cytof_")
-            and other_template_type.endswith("_analysis")
-            and template.type.startswith("cytof_")
-            and template.type.endswith("_analysis")
-        ):
-            # cytof_<trial>_analysis might cross validate which is fine
-            continue
 
         other_template = Template.from_type(other_template_type)
         with pytest.raises(ValidationError):

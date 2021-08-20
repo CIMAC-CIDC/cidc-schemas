@@ -1,0 +1,91 @@
+{
+    "title": "ATACSEQ analysis template",
+    "description": "Metadata information for ATACSEQ Analysis output.",
+    "prism_template_root_object_schema": "assays/atacseq_analysis.json",
+    "prism_template_root_object_pointer": "/analysis/atacseq_analysis",
+    "properties": {
+        "worksheets": {
+            "ATACSEQ Analysis": {
+                "preamble_rows": {
+                    "protocol identifier": {
+                        "merge_pointer": "2/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    },
+                    "folder": {
+                        "do_not_merge": true,
+                        "type": "string",
+                        "allow_empty": true
+                    }
+                },
+                "prism_data_object_pointer": "/records/-",
+                "data_columns": {
+                    "ATACSEQ Runs": {
+                        "cimac id": {
+                            "merge_pointer": "/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id",
+                            "process_as": [
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/peaks/{id}.rep1/{id}.rep1_sorted_peaks.bed'",
+                                    "merge_pointer": "0/peaks/sorted_peaks_bed",
+                                    "gcs_uri_format": "{protocol identifier}/atacseq/{cimac id}/analysis/peaks/sorted_peaks.bed",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/peaks/{id}.rep1/{id}.rep1_sorted_summits.bed'",
+                                    "merge_pointer": "0/peaks/sorted_summits",
+                                    "gcs_uri_format": "{protocol identifier}/atacseq/{cimac id}/analysis/peaks/sorted_summits.bed",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/peaks/{id}.rep1/{id}.rep1_sorted_peaks.narrowPeak'",
+                                    "merge_pointer": "0/peaks/sorted_peaks_narrowpeak",
+                                    "gcs_uri_format": "{protocol identifier}/atacseq/{cimac id}/analysis/peaks/sorted_peaks.narrowPeak",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/peaks/{id}.rep1/{id}.rep1_treat_pileup.bw'",
+                                    "merge_pointer": "0/peaks/treat_pileup",
+                                    "gcs_uri_format": "{protocol identifier}/atacseq/{cimac id}/analysis/peaks/treat_pileup.bw",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/report/report.zip'",
+                                    "merge_pointer": "0/report",
+                                    "gcs_uri_format": "{protocol identifier}/atacseq/{cimac id}/analysis/report.zip",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/align/{id}/{id}.sorted.bam'",
+                                    "merge_pointer": "0/aligned_sorted_bam",
+                                    "gcs_uri_format": "{protocol identifier}/atacseq/{cimac id}/analysis/aligned_sorted.bam",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "Excluded Samples": {
+                "prism_data_object_pointer": "/excluded_samples/-",
+                "data_columns": {
+                    "Samples Excluded From Analysis": {
+                        "cimac id": {
+                            "type_ref": "sample.json#properties/cimac_id",
+                            "merge_pointer": "0/cimac_id"
+                        },
+                        "reason": {
+                            "type_ref": "assays/components/excluded_samples.json#items/properties/reason_excluded",
+                            "merge_pointer": "0/reason_excluded"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

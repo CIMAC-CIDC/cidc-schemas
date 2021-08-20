@@ -1,0 +1,62 @@
+{
+	"$schema": "metaschema/strict_meta_schema.json#",
+	"$id": "atacseq_analysis",
+	"title": "Analysis for Assay of Transposase-Accessible Chromatin by Sequencing",
+
+	"definitions": {
+        "peaks": {
+            "type": "object",
+            "mergeStrategy": "objectMerge",
+            "additionalProperties": false,
+            "required": [
+                "sorted_peaks_bed",
+                "sorted_peaks_narrowpeak",
+                "sorted_summits",
+                "treat_pileup"
+            ],
+
+            "properties": {
+                "sorted_peaks_bed": { "$ref": "artifacts/artifact_bed.json" },
+                "sorted_peaks_narrowpeak": { "$ref": "artifacts/artifact_narrowPeak.json" },
+                "sorted_summits": { "$ref": "artifacts/artifact_bed.json" },
+                "treat_pileup": { "$ref": "artifacts/artifact_bigwig.json" }
+            }
+        },
+
+		"entry": {
+			"type": "object",
+			"mergeStrategy": "objectMerge",
+			"description": "A single analysis record from ATACseq assay.",
+			"additionalProperties": false,
+			"required": [
+                "cimac_id",
+                "peaks",
+                "report",
+                "aligned_sorted_bam"
+			],
+			"properties": {
+                "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
+                "peaks": { "$ref": "assays/atacseq_analysis.json#definitions/peaks" },
+                "report": { "$ref": "artifacts/artifact_zip.json" },
+                "aligned_sorted_bam": { "$ref": "artifacts/artifact_bam.json" }
+			}
+		}
+	},
+	
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+        "records"
+	],
+	"properties": {
+        "records": {
+            "type": "array",
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": { "idRef": "/cimac_id" },
+            "items": { "$ref": "assays/atacseq_analysis.json#definitions/entry" }
+        },
+        "excluded_samples": {
+          "$ref": "assays/components/excluded_samples.json"
+        }
+	}
+}

@@ -46,7 +46,8 @@
         "ELISA",
         "mIF",
         "mIHC",
-        "TCRseq"
+        "TCRseq",
+        "ATACseq"
       ]
     },
     "courier": {

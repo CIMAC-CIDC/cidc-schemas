@@ -44,6 +44,21 @@ Install and configure pre-commit hooks.
 pre-commit install
 ```
 
+## JIRA Integration
+
+To set-up the git hook for JIRA integration, run:
+
+```bash
+ln -s ../../.githooks/commit-msg .git/hooks/commit-msg
+chmod +x .git/hooks/commit-msg
+rm .git/hooks/commit-msg.sample
+```
+
+This symbolic link is necessary to correctly link files in `.githooks` to `.git/hooks`. Note that setting the `core.hooksPath` configuration variable would lead to [pre-commit failing](https://github.com/pre-commit/pre-commit/issues/1198). The `commit-msg` hook [runs after](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) the `pre-commit` hook, hence the two are de-coupled in this workflow.
+
+To associate a commit with an issue, you will need to reference the JIRA Issue key (For eg 'CIDC-1111') in the corresponding commit message.
+
+
 ### Running tests
 
 This repository has unit tests in the _tests_ folder. After installing dependencies

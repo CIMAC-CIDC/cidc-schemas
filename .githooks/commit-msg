@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# from https://gist.github.com/pgilad/5d7e4db725a906bd7aa7
+# removed conditionals as it should apply to all branches
+
+# regex to validate in commit msg
+commit_regex='(CIDC-[0-9]+|merge)'
+error_msg="Aborting commit. Your commit message is missing either a JIRA Issue ('CIDC-1111') or 'Merge'"
+
+if ! grep -iqE "$commit_regex" "$1"; then
+    echo "$error_msg" >&2
+    exit 1
+fi

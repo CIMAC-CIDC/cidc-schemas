@@ -1,0 +1,8 @@
+"#title","Atacseq analysis template"
+"#preamble","Protocol identifier","test_prism_trial_id"
+"#preamble","Folder","gs://"
+
+"#skip","ATACSEQ Runs"
+"#header","Cimac id"
+"#data","CTTTPP111.00"
+"#data","CTTTPP121.00"

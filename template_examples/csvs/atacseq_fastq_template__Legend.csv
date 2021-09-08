@@ -15,5 +15,5 @@
 "","Forward fastq","String","Path to a file on a user's computer."
 "","Reverse fastq","String","Path to a file on a user's computer."
 "","Sequencing date","String: date ","Date of sequencing."
-"","Dv200","Number","quantitative measure of the sequencing libraries quality"
+"","%q30","Number","One quantitative measure of the sequencing accuracy."
 "","Quality flag","Number","Flag used for quality."

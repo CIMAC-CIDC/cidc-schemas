@@ -9,8 +9,8 @@
 "#preamble","Bait set"
 
 "#skip","Samples"
-"#header","Cimac id","Lane","Replicate number","Forward fastq","Reverse fastq","Sequencing date","Dv200","Quality flag"
-"#data","CTTTPP111.00","1","1","/local/path/to/fwd.1.1.1.fastq.gz","/local/path/to/rev.1.1.1.fastq.gz","2010-01-01 00:00:00","4","1"
-"#data","CTTTPP111.00","1","2","/local/path/to/fwd.1.2.1.fastq.gz","/local/path/to/rev.1.2.1.fastq.gz","2010-01-01 00:00:00","4","1"
-"#data","CTTTPP111.00","2","1","/local/path/to/fwd.1.1.1_2.fastq.gz","/local/path/to/rev.1.1.1_2.fastq.gz","2010-01-01 00:00:00","4","1"
-"#data","CTTTPP111.00","2","2","/local/path/to/fwd.1.2.1_2.fastq.gz","/local/path/to/rev.1.2.1_2.fastq.gz","2010-01-01 00:00:00","4","1"
+"#header","Cimac id","Lane","Replicate number","Forward fastq","Reverse fastq","Sequencing date","%q30","Quality flag"
+"#data","CTTTPP111.00","1","1","/local/path/to/fwd.1.1.1.fastq.gz","/local/path/to/rev.1.1.1.fastq.gz","2010-01-01 00:00:00","90","1"
+"#data","CTTTPP111.00","1","2","/local/path/to/fwd.1.2.1.fastq.gz","/local/path/to/rev.1.2.1.fastq.gz","2010-01-01 00:00:00","90","1"
+"#data","CTTTPP111.00","2","1","/local/path/to/fwd.1.1.1_2.fastq.gz","/local/path/to/rev.1.1.1_2.fastq.gz","2010-01-01 00:00:00","90","1"
+"#data","CTTTPP111.00","2","2","/local/path/to/fwd.1.2.1_2.fastq.gz","/local/path/to/rev.1.2.1_2.fastq.gz","2010-01-01 00:00:00","90","1"

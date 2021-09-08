@@ -72,15 +72,18 @@
             },
             "sequencing date": {
               "merge_pointer": "0/sequencing_date",
-              "type_ref": "assays/atacseq_assay.json#definitions/entry/properties/sequencing_date"
-            },
+              "type_ref": "assays/atacseq_assay.json#definitions/entry/properties/sequencing_date",
+              "allow_empty": true
+          },
             "%Q30": {
               "merge_pointer": "0/percent_q30",
-              "type_ref": "assays/atacseq_assay.json#definitions/entry/properties/percent_q30"
+              "type_ref": "assays/atacseq_assay.json#definitions/entry/properties/percent_q30",
+              "allow_empty": true
             },
             "quality flag": {
               "merge_pointer": "0/quality_flag",
-              "type_ref": "assays/atacseq_assay.json#definitions/entry/properties/quality_flag"
+              "type_ref": "assays/atacseq_assay.json#definitions/entry/properties/quality_flag",
+              "allow_empty": true
             }
           }
         }

@@ -233,6 +233,30 @@
                         "processed sample concentration units": {
                             "merge_pointer": "/processed_sample_concentration_units",
                             "type_ref": "sample.json#properties/processed_sample_concentration_units"
+                        },
+                        "processed sample derivative": {
+                            "merge_pointer": "/processed_sample_derivative",
+                            "type_ref": "sample.json#properties/processed_sample_derivative",
+                            "allow_empty": true
+                        },
+                        "sample derivative volume": {
+                            "merge_pointer": "/sample_derivative_volume",
+                            "type_ref": "sample.json#properties/sample_derivative_volume",
+                            "allow_empty": true
+                        },
+                        "sample derivative volume units": {
+                            "merge_pointer": "/sample_derivative_volume_units",
+                            "type_ref": "sample.json#properties/sample_derivative_volume_units"
+                        },
+                        "sample derivative concentration": {
+                            "merge_pointer": "/sample_derivative_concentration",
+                            "type_ref": "sample.json#properties/sample_derivative_concentration",
+                            "allow_empty": true
+                        },
+                        "sample derivative concentration units": {
+                            "merge_pointer": "/sample_derivative_concentration_units",
+                            "type_ref": "sample.json#properties/sample_derivative_concentration_units",
+                            "allow_empty": true
                         }
                     },
                     "Filled by CIMAC Lab": {

@@ -1,2 +1,7 @@
 "#skip","Barcoding"
+"#preamble","Protocol identifier","test_prism_trial_id"
+"#preamble","Batch id","XYZ1"
+"#preamble","Debarcoding key file"
+
 "#header","Id (cimac id/participant id/control name)","Barcode number","Debarcoding key"
+"#data","CTTTPP111.00","CTTTPP111","ABC123"

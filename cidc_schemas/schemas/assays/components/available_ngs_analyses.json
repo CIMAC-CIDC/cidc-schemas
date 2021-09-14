@@ -17,7 +17,7 @@
       "$ref": "assays/components/ngs/rna/rna_analysis.json"
     },
     "tcr_analysis": {
-      "$ref": "assays/components/ngs/tcr/tcr_analysis.json"
+      "$ref": "assays/tcr_analysis.json"
     },
     "atacseq_analysis": {
       "$ref": "assays/atacseq_analysis.json"

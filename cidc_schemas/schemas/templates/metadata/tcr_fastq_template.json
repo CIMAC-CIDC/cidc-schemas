@@ -43,7 +43,7 @@
             },
             "replicate id": {
               "merge_pointer": "/replicate_id",
-              "type_ref": "assays/components/ngs/tcr/tcr_replicates.json#properties/replicate_id"
+              "type_ref": "assays/tcr_assay.json#definitions/replicate/properties/replicate_id"
             },
             "read 1": {
               "merge_pointer": "0/r1/-",
@@ -71,7 +71,7 @@
             },
             "rna quantity": {
               "merge_pointer": "0/rna_quantity_ng",
-              "type_ref": "assays/components/ngs/tcr/tcr_replicates.json#properties/rna_quantity_ng"
+              "type_ref": "assays/tcr_assay.json#definitions/replicate/properties/rna_quantity_ng"
             }
           }
         }

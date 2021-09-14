@@ -4,6 +4,66 @@
   "title": "TCR Assay",
   "type": "object",
   "description": "Additional properties to describe a TCR assay for expression analysis.",
+
+  "definitions": {
+    "entry": {
+      "type": "object",
+      "description": "A single data record from TCRseq assay.",
+      "additionalProperties": false,
+      "properties": {
+        "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
+        "files": {"$ref": "assays/tcr_assay.json#definitions/files"}
+      },
+      "mergeStrategy": "objectMerge",
+      "required": [
+        "cimac_id",
+        "files"
+      ]
+    },
+
+    "files": {
+      "type": "object",
+      "description": "TCRseq assay input files.",
+      "additionalProperties": false,
+      "properties": {
+        "replicates": {
+          "type": "array",
+          "items": {"$ref": "assays/tcr_assay.json#definitions/replicate"},
+          "mergeStrategy": "arrayMergeById",
+          "mergeOptions": {
+            "idRef": "/replicate_id"
+          }
+        }
+      }
+    },
+
+    "replicate": {
+      "description": "TCRseq replicate of interest.",
+      "additionalProperties": false,
+      "allOf": [
+        { "$ref": "assays/components/reads_with_index.json"}
+      ],
+      "properties": {
+        "replicate_id": {
+          "description": "Replicate identifier.",
+          "type": "string"
+        },
+        "rna_quantity_ng": {
+          "description": "RNA quantity (in ng).",
+          "type": "number"
+        },
+        "r1": {"$ref": "assays/components/reads_with_index.json#properties/r1"},
+        "r2": {"$ref": "assays/components/reads_with_index.json#properties/r2"},
+        "i1": {"$ref": "assays/components/reads_with_index.json#properties/i1"},
+        "i2": {"$ref": "assays/components/reads_with_index.json#properties/i2"}
+      },
+      "required": [
+        "replicate_id"
+      ],
+      "mergeStrategy": "objectMerge"
+    }
+  },
+
   "additionalProperties": false,
   "allOf": [
     { "$ref": "assays/components/assay_core.json" },
@@ -27,9 +87,7 @@
     "records": {
       "type": "array",
       "description": "A single data record from TCRseq assay.",
-      "items": {
-        "$ref": "assays/components/ngs/tcr/tcr_entry.json"
-      },
+      "items": {"$ref": "assays/tcr_assay.json#definitions/entry"},
       "mergeStrategy": "arrayMergeById",
       "mergeOptions": {
         "idRef": "cimac_id"

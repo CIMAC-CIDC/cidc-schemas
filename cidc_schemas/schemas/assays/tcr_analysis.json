@@ -1,0 +1,55 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "tcr_analysis",
+  "title": "TCR Output Files",
+  "description": "Output files generated from the TCRseq assay: TRA and TRB clones",
+
+  "definitions": {
+    "batch": {
+      "description": "Output files generated from the TCRseq assay: TRA and TRB clones",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["batch_id"],
+      "properties": {
+        "batch_id": {"$ref": "assays/tcr_assay.json#properties/batch_id"},
+        "report_trial": {"$ref": "artifacts/artifact_gz.json"},
+        "summary_info": {"$ref": "artifacts/artifact_csv.json"},
+        "excluded_samples": {"$ref": "assays/components/excluded_samples.json"},
+        "records": {
+          "type": "array",
+          "items": {"$ref": "assays/tcr_analysis.json#definitions/entry"},
+          "mergeStrategy": "arrayMergeById",
+          "mergeOptions": {
+            "idRef": "/cimac_id"
+          }
+        }
+      }
+    },
+    "entry": {
+        "description": "Output files generated from the TCRseq assay: TRA and TRB clones",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+            "cimac_id": {
+                "$comment": "Id of a sample within this clinical trial, that this record is based upon.",
+                "$ref": "sample.json#properties/cimac_id"
+            },
+            "tra_clone": {"$ref": "artifacts/artifact_csv.json"},
+            "trb_clone": {"$ref": "artifacts/artifact_csv.json"}
+        }
+    }
+  },
+
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "batches": {
+      "type": "array",
+      "items": {"$ref": "assays/tcr_analysis.json#definitions/batch"},
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "/batch_id"
+      }
+    }
+  }
+}

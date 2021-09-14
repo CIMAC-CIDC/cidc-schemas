@@ -39,6 +39,7 @@ def assert_metadata_matches(received: dict, expected: dict, upload_entries: list
         assert len(diff) == 2, str(
             diff
         )  # only "values_changed" and "dictionary_item_added"
+        print(diff)
         assert len(diff["dictionary_item_added"]) == len(upload_entries), str(diff)
         assert len(diff["values_changed"]) == len(upload_entries), str(diff)
         for changed_key in diff["values_changed"].keys():

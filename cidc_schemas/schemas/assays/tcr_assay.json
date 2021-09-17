@@ -12,12 +12,20 @@
       "additionalProperties": false,
       "properties": {
         "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
-        "files": {"$ref": "assays/tcr_assay.json#definitions/files"}
+        "files": {"$ref": "assays/tcr_assay.json#definitions/files"},
+        "tsv_file": {"$ref": "artifacts/artifact_tsv.json"}
       },
       "mergeStrategy": "objectMerge",
       "required": [
-        "cimac_id",
-        "files"
+        "cimac_id"
+      ],
+      "anyOf": [
+        {
+          "required": ["files"]
+        },
+        {
+          "required": ["tsv_file"]
+        }
       ]
     },
 
@@ -96,9 +104,7 @@
   },
   "required": [
     "records",
-    "batch_id",
-    "sequencing_run_date",
-    "sample_sheet"
+    "batch_id"
   ],
   "mergeStrategy": "objectMerge"
 }

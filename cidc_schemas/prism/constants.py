@@ -13,6 +13,7 @@ SUPPORTED_ASSAYS = [
     "rna_fastq",
     "rna_bam",
     "mif",
+    "tcr_adaptive",
     "tcr_fastq",
     "hande",
     "nanostring",

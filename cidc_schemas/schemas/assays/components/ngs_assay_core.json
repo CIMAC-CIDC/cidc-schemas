@@ -22,7 +22,7 @@
       "$comment": "This is 'required', but we have only one enum option here. This is incomplete as the RNAseq harmonization is still ongoing.",
       "description": "The library construction kit.",
       "type": "string",
-      "enum": ["Hyper Prep ICE Exome Express: 1.0", "KAPA HyperPrep", "IDT duplex UMI adapters", "TWIST"]
+      "enum": ["Hyper Prep ICE Exome Express: 1.0", "KAPA HyperPrep", "IDT duplex UMI adapters", "KAPA HyperPrep with IDT duplex UMI adapters", "TWIST"]
     },
     "paired_end_reads": {
       "description": "Indicates if the sequencing was performed paired or single ended.",

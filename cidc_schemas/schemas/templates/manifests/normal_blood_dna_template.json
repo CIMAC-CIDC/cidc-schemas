@@ -3,7 +3,6 @@
     "description": "Shipping / receiving manifest for transferring DNA extracted from normal blood samples.\n",
     "properties": {
         "worksheets": {
-
             "Shipment": {
                 "prism_preamble_object_schema": "clinical_trial.json",
                 "prism_preamble_object_pointer": "/shipments/0",
@@ -67,7 +66,6 @@
                     }
                 }
             },
-
             "Samples": {
                 "prism_preamble_object_schema": "clinical_trial.json",
                 "prism_preamble_object_pointer": "#",
@@ -97,7 +95,6 @@
                         "processed sample ID": {
                             "merge_pointer": "/processed_sample_id",
                             "type_ref": "sample.json#properties/processed_sample_id"
-                           
                         },
                         "CIMAC ID": {
                             "merge_pointer": "/cimac_id",
@@ -130,7 +127,8 @@
                         },
                         "type of primary container": {
                             "merge_pointer": "/type_of_primary_container",
-                            "type_ref": "sample.json#properties/type_of_primary_container"
+                            "type_ref": "sample.json#properties/type_of_primary_container",
+                            "allow_empty": true
                         },
                         "processed sample type": {
                             "merge_pointer": "/processed_sample_type",
@@ -158,7 +156,8 @@
                         },
                         "sample derivative volume units": {
                             "merge_pointer": "/sample_derivative_volume_units",
-                            "type_ref": "sample.json#properties/sample_derivative_volume_units"
+                            "type_ref": "sample.json#properties/sample_derivative_volume_units",
+                            "allow_empty": true
                         },
                         "sample derivative concentration": {
                             "merge_pointer": "/sample_derivative_concentration",

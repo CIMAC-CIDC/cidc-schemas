@@ -2311,7 +2311,7 @@ def tcr_analysis() -> PrismTestData:
             "tcr_analysis": {
                 "batches": [
                     {
-                        "batch id": "XYZ",
+                        "batch_id": "XYZ",
                         "summary_info": {
                             "upload_placeholder": "872f4bae-bca8-42f6-a3b7-cb4db27b2e24"
                         },
@@ -2359,35 +2359,35 @@ def tcr_analysis() -> PrismTestData:
             gs_key="test_prism_trial_id/tcr_analysis/XYZ/CTTTPP111.00/tra_clone.csv",
             upload_placeholder="0b9a11cb-dcf9-45c3-b276-a4f05c687a80",
             metadata_availability=False,
-            allow_empty=False,
+            allow_empty=True,
         ),
         LocalFileUploadEntry(
             local_path="1A_10_0_TRB_clones_umi_count.csv",
             gs_key="test_prism_trial_id/tcr_analysis/XYZ/CTTTPP111.00/trb_clone.csv",
             upload_placeholder="5ddbbe19-e695-4ab4-b02c-9ff98509e202",
             metadata_availability=False,
-            allow_empty=False,
+            allow_empty=True,
         ),
         LocalFileUploadEntry(
             local_path="2A_10_0_TRA_clones_umi_count.csv",
             gs_key="test_prism_trial_id/tcr_analysis/XYZ/CTTTPP121.00/tra_clone.csv",
             upload_placeholder="3f79f985-eca2-46c4-9148-820144a9d31a",
             metadata_availability=False,
-            allow_empty=False,
+            allow_empty=True,
         ),
         LocalFileUploadEntry(
             local_path="2A_10_0_TRB_clones_umi_count.csv",
             gs_key="test_prism_trial_id/tcr_analysis/XYZ/CTTTPP121.00/trb_clone.csv",
             upload_placeholder="92b14796-d52c-4c77-92c5-cf3c0a59ce29",
             metadata_availability=False,
-            allow_empty=False,
+            allow_empty=True,
         ),
         LocalFileUploadEntry(
             local_path="summary_info.csv",
             gs_key="test_prism_trial_id/tcr_analysis/XYZ/summary_info.csv",
             upload_placeholder="872f4bae-bca8-42f6-a3b7-cb4db27b2e24",
             metadata_availability=False,
-            allow_empty=False,
+            allow_empty=True,
         ),
         LocalFileUploadEntry(
             local_path="9204_report.tar.gz",

@@ -1,2 +1,5 @@
 "#skip","Controls info"
+"#preamble","Protocol identifier","test_prism_trial_id"
+
 "#header","Control name","Cimac participant id","Processed fcs filename","Spike-in fcs filename","Concatenation version","Normalization version"
+"#data","XYZ1-control","","XYZ1-control.fcs"

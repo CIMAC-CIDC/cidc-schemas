@@ -25,8 +25,8 @@
             "type": "integer"
         },
         "box_number": {
-          "description": "Identifier if sample shipment container includes multiple boxes for each assay.",
-          "type": "string"
+            "description": "Identifier if sample shipment container includes multiple boxes for each assay.",
+            "type": "string"
         },
         "surgical_pathology_report_id": {
             "description": "A unique identifier so someone can find the surgical pathology report.",
@@ -100,12 +100,7 @@
         "type_of_tumor_sample": {
             "description": "The type of tumor sample obtained (primary or metastatic).",
             "type": "string",
-            "enum": [
-                "Metastatic Tumor",
-                "Primary Tumor",
-                "Not Reported",
-                "Other"
-            ]
+            "enum": ["Metastatic Tumor", "Primary Tumor", "Not Reported", "Other"]
         },
         "sample_collection_procedure": {
             "description": "Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52",
@@ -163,12 +158,7 @@
         "sample_volume_units": {
             "description": "Unit for the parent sample volume.",
             "type": "string",
-            "enum": [
-                "Microliter",
-                "Milliliter",
-                "Not Reported",
-                "Other"
-            ]
+            "enum": ["Microliter", "Milliliter", "Nanoliter", "Not Reported", "Other"]
         },
         "processed_sample_type": {
             "description": "The type of processing that was performed on the collected specimen by the Biobank for storage.",
@@ -196,12 +186,7 @@
         "processed_sample_volume_units": {
             "description": "Volume units of each processed sample.",
             "type": "string",
-            "enum": [
-                "Microliters",
-                "Milliliters",
-                "Not Reported",
-                "Other"
-            ]
+            "enum": ["Microliters", "Milliliters", "Not Reported", "Other"]
         },
         "processed_sample_concentration": {
             "description": "The concentration of the processed sample.",
@@ -242,12 +227,7 @@
         "sample_derivative_volume_units": {
             "description": "Volume units of each analyte or derivative shipped.",
             "type": "string",
-            "enum": [
-                "Microliters",
-                "Milliliters",
-                "Not Reported",
-                "Other"
-            ]
+            "enum": ["Microliters", "Milliliters", "Not Reported", "Other"]
         },
         "sample_derivative_concentration": {
             "description": "The concentration of analyte or derivative shipped.",
@@ -266,25 +246,25 @@
             ]
         },
         "tumor_tissue_total_area_percentage": {
-            "type": "number", 
+            "type": "number",
             "minimum": 0,
             "maximum": 100,
-            "description": "Score the percentage of tumor (including tumor bed) tissue area of the slide (e.g. vs non-malignant or normal tissue)" 
+            "description": "Score the percentage of tumor (including tumor bed) tissue area of the slide (e.g. vs non-malignant or normal tissue)"
         },
         "viable_tumor_area_percentage": {
-            "type": "number", 
+            "type": "number",
             "minimum": 0,
             "maximum": 100,
-            "description": "Score the percentage of viable tumor cells comprising the tumor bed area" 
+            "description": "Score the percentage of viable tumor cells comprising the tumor bed area"
         },
         "viable_stroma_area_percentage": {
-            "type": "number", 
+            "type": "number",
             "minimum": 0,
             "maximum": 100,
             "description": "Score the evaluation of stromal elements (this indicates the % area of tumor bed occupied by non-tumor cells, including inflammatory cells [lymphocytes, histiocytes, etc], endothelial cells, fibroblasts, etc)"
         },
         "necrosis_area_percentage": {
-            "type": "number", 
+            "type": "number",
             "minimum": 0,
             "maximum": 100,
             "description": "Score the percentage area of necrosis"
@@ -296,16 +276,16 @@
             "description": "Score the percentage area of Fibrosis"
         },
         "din": {
-            "type": "number", 
-            "description": "Provides a DNA Integrity Number as an indication of extraction quality (values of 1-10)" 
+            "type": "number",
+            "description": "Provides a DNA Integrity Number as an indication of extraction quality (values of 1-10)"
         },
         "a260_a280": {
-            "type": "number", 
-            "description": "Provides an absorbance percentage ratio indicating purity of DNA (values of 0 to 2)" 
+            "type": "number",
+            "description": "Provides an absorbance percentage ratio indicating purity of DNA (values of 0 to 2)"
         },
         "a260_a230": {
-            "type": "number", 
-            "description": "Provides an absorbance percentage ratio indicating presence of contaminants (values of 0 to 3)" 
+            "type": "number",
+            "description": "Provides an absorbance percentage ratio indicating presence of contaminants (values of 0 to 3)"
         },
         "pbmc_viability": {
             "description": "Receiving site determines the percent recovered cells that are viable after thawing.",
@@ -318,12 +298,7 @@
         "pbmc_resting_period_used": {
             "description": "Receiving site indicates if a resting period was used after PBMC recovery.",
             "type": "string",
-            "enum": [
-                "Yes",
-                "No",
-                "Not Reported",
-                "Other"
-            ]
+            "enum": ["Yes", "No", "Not Reported", "Other"]
         },
         "material_used": {
             "description": "Receiving site indicates how much material was used for assay purposes.",
@@ -366,25 +341,12 @@
         "material_storage_condition": {
             "description": "Storage condition of the material once it was received.",
             "type": "string",
-            "enum": [
-                "RT",
-                "4oC",
-                "(-20)oC",
-                "(-80)oC",
-                "LN",
-                "Not Reported",
-                "Other"
-            ]
+            "enum": ["RT", "4oC", "(-20)oC", "(-80)oC", "LN", "Not Reported", "Other"]
         },
         "quality_of_sample": {
             "description": "Final status of sample after QC and pathology review.",
             "type": "string",
-            "enum": [
-                "Pass",
-                "Fail",
-                "Not Reported",
-                "Other"
-            ]
+            "enum": ["Pass", "Fail", "Not Reported", "Other"]
         },
         "sample_replacement": {
             "description": "Indication if sample replacement is/was requested.",
@@ -408,20 +370,13 @@
                 "Other"
             ]
         },
-        "comments": {
-            "description": "Comments on sample testing.",
-            "type": "string"
-        },
+        "comments": {"description": "Comments on sample testing.", "type": "string"},
         "aliquots": {
             "type": "array",
             "description": "Pertaining to a portion (volume or weight) of the whole.",
-            "items": {
-                "$ref": "aliquot.json"
-            },
+            "items": {"$ref": "aliquot.json"},
             "mergeStrategy": "arrayMergeById",
-            "mergeOptions": {
-                "idRef": "/slide_number"
-            }
+            "mergeOptions": {"idRef": "/slide_number"}
         },
         "diagnosis_verification": {
             "title": "Diagnosis verification",
@@ -440,7 +395,6 @@
             "description": "The assay that this sample is expected to be used as input for."
         }
     },
-
     "additionalProperties": false,
     "required": [
         "cimac_id",
@@ -449,17 +403,6 @@
         "sample_location",
         "type_of_sample"
     ],
-
-    "if": {
-        "properties": { 
-            "type_of_sample": {
-                "enum": [
-                    "Blood"
-                ]
-            }
-        }
-    },
-    "then": {
-        "required": ["type_of_primary_container"]
-    }
+    "if": {"properties": {"type_of_sample": {"enum": ["Blood"]}}},
+    "then": {"required": ["type_of_primary_container"]}
 }

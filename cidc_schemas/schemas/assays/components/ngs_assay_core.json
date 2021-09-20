@@ -10,6 +10,7 @@
       "description": "Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.",
       "type": "string",
       "enum": [
+        "Adaptive",
         "Illumina - HiSeq 2500",
         "Illumina - HiSeq 3000",
         "Illumina - NextSeq 550",

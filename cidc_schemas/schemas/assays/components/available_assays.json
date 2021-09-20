@@ -35,7 +35,7 @@
       "type": "array",
       "description": "RNA assay for expression analysis.",
       "items": {
-        "$ref": "assays/rna_assay.json"
+        "$ref": "assays/rna_assay-v0.json"
       },
       "mergeStrategy": "append"
     },

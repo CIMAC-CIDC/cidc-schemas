@@ -794,6 +794,7 @@ class _FieldDef(NamedTuple):
         try:
             gs_key = try_formatting()
         except Exception as e:
+            print(e)
             raise ParsingException(
                 f"Can't format destination gcs uri for {self.key_name!r}: {format}"
             )

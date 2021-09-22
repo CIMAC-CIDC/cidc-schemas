@@ -38,7 +38,7 @@
         },
         "prism_data_object_pointer": "/records/-",
         "data_columns": {
-          "Replicates": {
+          "Samples": {
             "cimac id": {
               "merge_pointer": "0/cimac_id",
               "type_ref": "sample.json#properties/cimac_id"
@@ -46,6 +46,35 @@
             "tsv reads": {
               "merge_pointer": "0/tsv_file",
               "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/{cimac id}/reads.tsv",
+              "is_artifact": "1",
+              "type_ref": "assays/components/local_file.json#properties/file_path"
+            }
+          }
+        }
+      },
+      "Controls": {
+        "prism_preamble_object_schema" : "assays/tcr_assay.json",
+        "prism_preamble_object_pointer" : "/assays/tcr/0",
+        "preamble_rows": {
+          "protocol identifier": {
+            "merge_pointer": "3/protocol_identifier",
+            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+          },
+          "batch id": {
+            "merge_pointer": "0/batch_id",
+            "type_ref": "assays/tcr_assay.json#properties/batch_id"
+          }
+        },
+        "prism_data_object_pointer": "0/controls/-",
+        "data_columns": {
+          "Controls": {
+            "id": {
+              "merge_pointer": "0/id",
+              "type_ref": "assays/tcr_assay.json#definitions/control/properties/id"
+            },
+            "tsv reads": {
+              "merge_pointer": "0/tsv_file",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/controls/{id}/reads.tsv",
               "is_artifact": "1",
               "type_ref": "assays/components/local_file.json#properties/file_path"
             }

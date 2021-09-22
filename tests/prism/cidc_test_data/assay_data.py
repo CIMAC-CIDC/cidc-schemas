@@ -1189,6 +1189,14 @@ def tcr_adaptive() -> PrismTestData:
         "assays": {
             "tcr": [
                 {
+                    "controls": [
+                        {
+                            "id": "neg",
+                            "tsv_file": {
+                                "upload_placeholder": "3735df00-082b-4e2d-92a8-7a5e629483dc"
+                            },
+                        }
+                    ],
                     "records": [
                         {
                             "cimac_id": "CTTTPP111.00",
@@ -1211,6 +1219,13 @@ def tcr_adaptive() -> PrismTestData:
         },
     }
     upload_entries = [
+        LocalFileUploadEntry(
+            local_path="neg.tsv",
+            gs_key="test_prism_trial_id/tcr/XYZ/controls/neg/reads.tsv",
+            upload_placeholder="3735df00-082b-4e2d-92a8-7a5e629483dc",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
         LocalFileUploadEntry(
             local_path="CTTTPP111_00.tsv",
             gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/reads.tsv",

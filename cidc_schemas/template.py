@@ -495,7 +495,6 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
             try:
                 gcs_uri += _calc_gcs_uri_path(name, merge_pointer)
             except Exception as e:
-                print(entry)
                 raise e
 
             # now get actual file extension from file_path_template
@@ -793,8 +792,7 @@ class _FieldDef(NamedTuple):
 
         try:
             gs_key = try_formatting()
-        except Exception as e:
-            print(e)
+        except Exception:
             raise ParsingException(
                 f"Can't format destination gcs uri for {self.key_name!r}: {format}"
             )

@@ -214,16 +214,6 @@
         
             
         
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
         
             
                 <tr>
@@ -299,171 +289,6 @@
     <td>
         
             <a href="assays.hande_assay.html#input">assays.hande_assay#input</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="tumor_tissue_percentage">
-                tumor_tissue_percentage
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            
-        
-    </td>
-    <td>
-        
-            &lt; 
-                number 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="viable_tumor_percentage">
-                viable_tumor_percentage
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            
-        
-    </td>
-    <td>
-        
-            &lt; 
-                number 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="viable_stroma_percentage">
-                viable_stroma_percentage
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            
-        
-    </td>
-    <td>
-        
-            &lt; 
-                number 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="necrosis_percentage">
-                necrosis_percentage
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            
-        
-    </td>
-    <td>
-        
-            &lt; 
-                number 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="fibrosis_percentage">
-                fibrosis_percentage
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            
-        
-    </td>
-    <td>
-        
-            &lt; 
-                number 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
         
     </td>
 </tr>
@@ -747,11 +572,6 @@
                     "description": "A text comment regarding this slide.",
                     "type": "string"
                 },
-                "fibrosis_percentage": {
-                    "maximum": 100,
-                    "minimum": 0,
-                    "type": "number"
-                },
                 "files": {
                     "additionalProperties": false,
                     "description": "H & E assay input files.",
@@ -1001,26 +821,6 @@
                         "image_file"
                     ],
                     "type": "object"
-                },
-                "necrosis_percentage": {
-                    "maximum": 100,
-                    "minimum": 0,
-                    "type": "number"
-                },
-                "tumor_tissue_percentage": {
-                    "maximum": 100,
-                    "minimum": 0,
-                    "type": "number"
-                },
-                "viable_stroma_percentage": {
-                    "maximum": 100,
-                    "minimum": 0,
-                    "type": "number"
-                },
-                "viable_tumor_percentage": {
-                    "maximum": 100,
-                    "minimum": 0,
-                    "type": "number"
                 }
             },
             "required": [
@@ -1039,8 +839,7 @@
                 "DFCI",
                 "Mount Sinai",
                 "Stanford",
-                "MD Anderson",
-                "Adaptive"
+                "MD Anderson"
             ],
             "type": "string"
         },
@@ -1061,11 +860,6 @@
                     "comment": {
                         "description": "A text comment regarding this slide.",
                         "type": "string"
-                    },
-                    "fibrosis_percentage": {
-                        "maximum": 100,
-                        "minimum": 0,
-                        "type": "number"
                     },
                     "files": {
                         "additionalProperties": false,
@@ -1316,26 +1110,6 @@
                             "image_file"
                         ],
                         "type": "object"
-                    },
-                    "necrosis_percentage": {
-                        "maximum": 100,
-                        "minimum": 0,
-                        "type": "number"
-                    },
-                    "tumor_tissue_percentage": {
-                        "maximum": 100,
-                        "minimum": 0,
-                        "type": "number"
-                    },
-                    "viable_stroma_percentage": {
-                        "maximum": 100,
-                        "minimum": 0,
-                        "type": "number"
-                    },
-                    "viable_tumor_percentage": {
-                        "maximum": 100,
-                        "minimum": 0,
-                        "type": "number"
                     }
                 },
                 "required": [

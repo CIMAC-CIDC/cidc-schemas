@@ -4,6 +4,19 @@
 	"title": "Analysis for Assay of Transposase-Accessible Chromatin by Sequencing",
 
 	"definitions": {
+        "batches": {
+            "type": "object",
+            "mergeStrategy": "objectMerge",
+            "description": "A single batch from a ATACseq analysis.",
+            "additionalProperties": false,
+            "required": [
+                "report"
+            ],
+            "properties": {
+                "report": { "$ref": "artifacts/artifact_zip.json" }
+            }
+        },
+
         "peaks": {
             "type": "object",
             "mergeStrategy": "objectMerge",
@@ -26,18 +39,18 @@
 		"entry": {
 			"type": "object",
 			"mergeStrategy": "objectMerge",
-			"description": "A single analysis record from ATACseq assay.",
+			"description": "A single analysis record from ATACseq analysis.",
 			"additionalProperties": false,
 			"required": [
                 "cimac_id",
+                "batches",
                 "peaks",
-                "report",
                 "aligned_sorted_bam"
 			],
 			"properties": {
                 "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
+                "batches": { "$ref": "assays/atacseq_analysis.json#definitions/batches" },
                 "peaks": { "$ref": "assays/atacseq_analysis.json#definitions/peaks" },
-                "report": { "$ref": "artifacts/artifact_zip.json" },
                 "aligned_sorted_bam": { "$ref": "artifacts/artifact_bam.json" }
 			}
 		}

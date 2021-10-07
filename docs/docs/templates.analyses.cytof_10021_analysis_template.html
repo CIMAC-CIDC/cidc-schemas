@@ -31,16 +31,16 @@
         <p>
             <a href="index.html">CIDC Data Model</a>
         </p>
-        <h1>Metadata file for TCR seq  [Adaptive].</h1>
+        <h1>CyTOF analysis template</h1>
         <p>
-            <b>Description:</b>  Metadata information for rna expression data submission via Adaptive's TSV files.
+            <b>Description:</b>  Metadata information for CyTOF Analysis output.
         </p>
         
     </div>
 
   <div class="container">
     
-      <h3>Worksheet - TCR</h3>
+      <h3>Worksheet - CyTOF Analysis</h3>
   
     <h4>Preamble Rows</h4>
     
@@ -74,8 +74,29 @@
         
             
         
+        
+            
+                <tr>
+    <td>
+        
+            <span id="assay run id">
+                assay run id
+            </span>
             
         
+    </td>
+    <td width=55%>
+        
+            User defined unique identifier for this assay run. Not necessarily unique across batches.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#assay_run_id">assays.cytof_assay_core#assay_run_id</a>
+        
+    </td>
+</tr>
+            
         
             
                 <tr>
@@ -104,52 +125,6 @@
                 <tr>
     <td>
         
-            <span id="assay creator">
-                assay creator
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Indicates what site is filling out the assay.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.assay_core.html#assay_creator">assays.components.assay_core#assay_creator</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="sequencer platform">
-                sequencer platform
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.
-        
-    </td>
-    <td>
-        
-            <a href="assays.components.ngs_assay_core.html#sequencer_platform">assays.components.ngs_assay_core#sequencer_platform</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
             <span id="batch id">
                 batch id
             </span>
@@ -158,12 +133,12 @@
     </td>
     <td width=55%>
         
-            TCRseq batch identification number.
+            CyTOF batch identification number. Unique to every batch.
         
     </td>
     <td>
         
-            <a href="assays.tcr_assay.html#batch_id">assays.tcr_assay#batch_id</a>
+            <a href="assays.cytof_assay_core.html#batch_id">assays.cytof_assay_core#batch_id</a>
         
     </td>
 </tr>
@@ -173,20 +148,20 @@
                 <tr>
     <td>
         
-            <span id="sequencing run date">
-                sequencing run date
+            <span id="astrolabe reports">
+                astrolabe reports
             </span>
             
         
     </td>
     <td width=55%>
         
-            Date when the TCR sequencing was run.
+            Path to a file on a user's computer.
         
     </td>
     <td>
         
-            <a href="assays.tcr_assay.html#sequencing_run_date">assays.tcr_assay#sequencing_run_date</a>
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
         
     </td>
 </tr>
@@ -196,8 +171,8 @@
                 <tr>
     <td>
         
-            <span id="sample sheet">
-                sample sheet
+            <span id="astrolabe analysis">
+                astrolabe analysis
             </span>
             
         
@@ -220,7 +195,7 @@
   
     <h4>Data Columns</h4>
     
-      <h5 class="text-muted">Replicates</h4>
+      <h5 class="text-muted">Astrolabe Runs</h4>
       
     
     
@@ -241,6 +216,18 @@
             <th>Data Type</th>
         </tr>
         </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
         
             
         
@@ -274,8 +261,146 @@
                 <tr>
     <td>
         
-            <span id="tsv reads">
-                tsv reads
+            <span id="fcs file">
+                fcs file
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="assignment">
+                assignment
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="compartment">
+                compartment
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="profiling">
+                profiling
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cell counts assignment">
+                cell counts assignment
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cell counts compartment">
+                cell counts compartment
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cell counts profiling">
+                cell counts profiling
             </span>
             
         

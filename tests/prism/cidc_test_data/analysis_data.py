@@ -1929,11 +1929,6 @@ def atacseq_analysis() -> PrismTestData:
                 "records": [
                     {
                         "cimac_id": "CTTTPP111.00",
-                        "batches": {
-                            "report": {
-                                "upload_placeholder": "21212121-2121-2121-2121-21212121212"
-                            }
-                        },
                         "peaks": {
                             "sorted_peaks_bed": {
                                 "upload_placeholder": "03030303-0303-0303-0303-CTTTPP111.00"
@@ -1954,11 +1949,6 @@ def atacseq_analysis() -> PrismTestData:
                     },
                     {
                         "cimac_id": "CTTTPP121.00",
-                        "batches": {
-                            "report": {
-                                "upload_placeholder": "21212121-2121-2121-2121-21212121212"
-                            }
-                        },
                         "peaks": {
                             "sorted_peaks_bed": {
                                 "upload_placeholder": "03030303-0303-0303-0303-CTTTPP121.00"
@@ -1978,6 +1968,9 @@ def atacseq_analysis() -> PrismTestData:
                         },
                     },
                 ],
+                "reports": {
+                    "upload_placeholder": "22222222-2222-2222-2222-41ebcc0a07d9"
+                },
                 "excluded_samples": [
                     {"cimac_id": "CTTTPP111.00", "reason_excluded": "low coverage"},
                     {"cimac_id": "CTTTPP122.00", "reason_excluded": "module failed"},
@@ -1994,13 +1987,6 @@ def atacseq_analysis() -> PrismTestData:
     upload_entries = sum(
         [
             [
-                LocalFileUploadEntry(
-                    local_path=f"gs://analysis/report/report.zip",
-                    gs_key=f"test_prism_trial_id/atacseq/analysis/report/report.zip",
-                    upload_placeholder="21212121-2121-2121-2121-21212121212",
-                    metadata_availability=False,
-                    allow_empty=False,
-                ),
                 LocalFileUploadEntry(
                     local_path=f"gs://analysis/peaks/{cimac_id}.rep1/{cimac_id}.rep1_sorted_peaks.bed",
                     gs_key=f"test_prism_trial_id/atacseq/{cimac_id}/analysis/peaks/sorted_peaks.bed",
@@ -2033,6 +2019,13 @@ def atacseq_analysis() -> PrismTestData:
                     local_path=f"gs://analysis/align/{cimac_id}/{cimac_id}.sorted.bam",
                     gs_key=f"test_prism_trial_id/atacseq/{cimac_id}/analysis/aligned_sorted.bam",
                     upload_placeholder=f"22222222-2222-2222-2222-{cimac_id}",
+                    metadata_availability=False,
+                    allow_empty=False,
+                ),
+                LocalFileUploadEntry(
+                    local_path="test_prism_trial_id/atacseq/analysis/reports.zip",
+                    gs_key="test_prism_trial_id/atacseq/analysis/reports.zip",
+                    upload_placeholder="22222222-2222-2222-2222-41ebcc0a07d9",
                     metadata_availability=False,
                     allow_empty=False,
                 ),

@@ -4,19 +4,6 @@
 	"title": "Analysis for Assay of Transposase-Accessible Chromatin by Sequencing",
 
 	"definitions": {
-        "batches": {
-            "type": "object",
-            "mergeStrategy": "objectMerge",
-            "description": "A single batch from a ATACseq analysis.",
-            "additionalProperties": false,
-            "required": [
-                "report"
-            ],
-            "properties": {
-                "report": { "$ref": "artifacts/artifact_zip.json" }
-            }
-        },
-
         "peaks": {
             "type": "object",
             "mergeStrategy": "objectMerge",
@@ -43,13 +30,11 @@
 			"additionalProperties": false,
 			"required": [
                 "cimac_id",
-                "batches",
                 "peaks",
                 "aligned_sorted_bam"
 			],
 			"properties": {
                 "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
-                "batches": { "$ref": "assays/atacseq_analysis.json#definitions/batches" },
                 "peaks": { "$ref": "assays/atacseq_analysis.json#definitions/peaks" },
                 "aligned_sorted_bam": { "$ref": "artifacts/artifact_bam.json" }
 			}
@@ -67,6 +52,9 @@
             "mergeStrategy": "arrayMergeById",
             "mergeOptions": { "idRef": "/cimac_id" },
             "items": { "$ref": "assays/atacseq_analysis.json#definitions/entry" }
+        },
+        "reports": {
+            "$ref": "artifacts/artifact_zip.json"
         },
         "excluded_samples": {
           "$ref": "assays/components/excluded_samples.json"

@@ -16,10 +16,10 @@
                         "type": "string",
                         "allow_empty": true
                     },
-                    "report":{
-                        "merge_pointer": "0/report",
-                        "gcs_uri_format": "{protocol identifier}/atacseq/analysis/report/report.zip",
+                    "reports": {
+                        "merge_pointer": "0/reports",
                         "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "gcs_uri_format": "{protocol identifier}/atacseq/analysis/reports.zip",
                         "is_artifact": 1
                     }
                 },

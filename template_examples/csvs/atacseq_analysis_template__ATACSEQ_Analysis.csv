@@ -1,7 +1,7 @@
 "#title","Atacseq analysis template"
 "#preamble","Protocol identifier","test_prism_trial_id"
 "#preamble","Folder","gs://"
-"#preamble","Report","report/report.zip"
+"#preamble","Reports","test_prism_trial_id/atacseq/analysis/reports.zip"
 
 "#skip","ATACSEQ Runs"
 "#header","Cimac id"

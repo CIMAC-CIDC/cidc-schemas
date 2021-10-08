@@ -17,7 +17,7 @@
                         "allow_empty": true
                     },
                     "reports": {
-                        "merge_pointer": "0/reports",
+                        "merge_pointer": "1/reports",
                         "type_ref": "assays/components/local_file.json#properties/file_path",
                         "gcs_uri_format": "{protocol identifier}/atacseq/analysis/reports.zip",
                         "is_artifact": 1

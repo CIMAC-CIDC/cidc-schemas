@@ -53,7 +53,7 @@
             "mergeOptions": { "idRef": "/cimac_id" },
             "items": { "$ref": "assays/atacseq_analysis.json#definitions/entry" }
         },
-        "reports": {
+        "report": {
             "$ref": "artifacts/artifact_zip.json"
         },
         "excluded_samples": {

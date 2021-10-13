@@ -772,6 +772,7 @@ def atacseq_fastq() -> PrismTestData:
                             "percent_q30": 90.0,
                         },
                     ],
+                    "batch_id": "XYZ",
                     "assay_creator": "Mount Sinai",
                     "sequencer_platform": "Illumina - NextSeq 550",
                     "paired_end_reads": "Paired",

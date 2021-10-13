@@ -41,6 +41,7 @@
 	"type": "object",
 	"additionalProperties": false,
 	"required": [
+		"batch_id",
 		"assay_creator",
 		"paired_end_reads",
 		"read_length",
@@ -48,6 +49,10 @@
 		"sequencer_platform"
 	],
 	"properties": {
+		"batch_id": {
+            "description": "ATACseq batch identification number. Unique to every batch.",
+            "type": "string"
+        },
 		"error": {"$ref": "artifacts/artifact_yaml.json"},
 		"assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
 		"sequencer_platform": {"$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"},

@@ -23,7 +23,7 @@
                     "report": {
                         "merge_pointer": "0/report",
                         "type_ref": "assays/components/local_file.json#properties/file_path",
-                        "gcs_uri_format": "{protocol identifier}/atacseq/analysis/report.zip",
+                        "gcs_uri_format": "{protocol identifier}/atacseq/analysis/{batch id}/report.zip",
                         "is_artifact": 1
                     }
                 },

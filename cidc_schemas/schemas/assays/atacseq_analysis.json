@@ -47,6 +47,9 @@
         "records"
 	],
 	"properties": {
+        "batch_id":{
+            "$ref": "assays/atacseq_assay.json#properties/batch_id"
+        },
         "records": {
             "type": "array",
             "mergeStrategy": "arrayMergeById",
@@ -57,7 +60,7 @@
             "$ref": "artifacts/artifact_zip.json"
         },
         "excluded_samples": {
-          "$ref": "assays/components/excluded_samples.json"
+            "$ref": "assays/components/excluded_samples.json"
         }
 	}
 }

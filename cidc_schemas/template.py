@@ -70,7 +70,7 @@ def generate_analysis_template_schemas(
         try:
             assay_schema = _load_dont_validate_schema(
                 f"assays/components/ngs/{analysis}/{analysis}_analysis.json"
-                if analysis in ["rna", "tcr"]  # special cases currently
+                if analysis in ["rna", "tcr", "atacseq"]  # special cases currently
                 else f"assays/{analysis}_analysis.json"  # all others should be here
             )
         except Exception as e:

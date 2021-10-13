@@ -2024,7 +2024,7 @@ def atacseq_analysis() -> PrismTestData:
                     allow_empty=False,
                 ),
                 LocalFileUploadEntry(
-                    local_path="test_prism_trial_id/atacseq/analysis/report.zip",
+                    local_path="test_prism_trial_id/atacseq/analysis/XYZ/report.zip",
                     gs_key="test_prism_trial_id/atacseq/analysis/report.zip",
                     upload_placeholder="22222222-2222-2222-2222-41ebcc0a07d9",
                     metadata_availability=False,

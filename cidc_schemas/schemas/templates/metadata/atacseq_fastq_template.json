@@ -12,6 +12,10 @@
             "merge_pointer": "3/protocol_identifier",
             "type_ref": "clinical_trial.json#properties/protocol_identifier"
           },
+          "batch id": {
+            "merge_pointer": "0/batch_id",
+            "type_ref": "assays/atacseq_assay.json#properties/batch_id"
+        },
           "assay creator": {
             "merge_pointer": "0/assay_creator",
             "type_ref": "assays/components/assay_core.json#properties/assay_creator"

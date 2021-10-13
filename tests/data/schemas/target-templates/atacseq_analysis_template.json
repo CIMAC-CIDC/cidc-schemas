@@ -16,6 +16,10 @@
                         "type": "string",
                         "allow_empty": true
                     },
+                    "batch id": {
+                        "merge_pointer": "0/batch_id",
+                        "type_ref": "assays/atacseq_assay.json#properties/batch_id"
+                    },
                     "report": {
                         "merge_pointer": "0/report",
                         "type_ref": "assays/components/local_file.json#properties/file_path",

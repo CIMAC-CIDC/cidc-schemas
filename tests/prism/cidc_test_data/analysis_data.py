@@ -1971,6 +1971,7 @@ def atacseq_analysis() -> PrismTestData:
                 "report": {
                     "upload_placeholder": "22222222-2222-2222-2222-41ebcc0a07d9"
                 },
+                "batch_id": "XYZ",
                 "excluded_samples": [
                     {"cimac_id": "CTTTPP111.00", "reason_excluded": "low coverage"},
                     {"cimac_id": "CTTTPP122.00", "reason_excluded": "module failed"},

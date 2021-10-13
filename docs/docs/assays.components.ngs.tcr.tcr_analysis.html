@@ -125,38 +125,6 @@
                         "description": "TCRseq batch identification number.",
                         "type": "string"
                     },
-                    "excluded_samples": {
-                        "$id": "excluded_samples",
-                        "$schema": "metaschema/strict_meta_schema.json#",
-                        "description": "A list of samples excluded from analysis, along with the reasons why.",
-                        "items": {
-                            "additionalProperties": false,
-                            "properties": {
-                                "cimac_id": {
-                                    "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_id $ref.",
-                                    "description": "Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??",
-                                    "example": "CTTTP01A1.00",
-                                    "in_doc_ref_pattern": "/participants/*/samples/*/cimac_id",
-                                    "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$",
-                                    "type": "string"
-                                },
-                                "reason_excluded": {
-                                    "description": "A comment describing why this sample is missing from the pipeline output.",
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "cimac_id",
-                                "reason_excluded"
-                            ],
-                            "type": "object"
-                        },
-                        "mergeOptions": {
-                            "idRef": "/cimac_id"
-                        },
-                        "mergeStrategy": "arrayMergeById",
-                        "type": "array"
-                    },
                     "records": {
                         "items": {
                             "$id": "tcr_pair_analysis",

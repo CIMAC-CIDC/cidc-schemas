@@ -2,7 +2,7 @@
 "#preamble","Protocol identifier","test_prism_trial_id"
 "#preamble","Folder","gs://"
 "#preamble","Batch id","XYZ"
-"#preamble","Report","test_prism_trial_id/atacseq/analysis/report.zip"
+"#preamble","Report","test_prism_trial_id/atacseq/analysis/XYZ/report.zip"
 
 "#skip","ATACSEQ Runs"
 "#header","Cimac id"

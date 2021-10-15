@@ -20,7 +20,7 @@
       "$ref": "assays/tcr_analysis.json"
     },
     "atacseq_analysis": {
-      "$ref": "assays/atacseq_analysis.json"
+      "$ref": "assays/components/ngs/atacseq/atacseq_analysis.json"
     }
   }
 }

@@ -1,7 +1,7 @@
 {
     "title": "ATACSEQ analysis template",
     "description": "Metadata information for ATACSEQ Analysis output.",
-    "prism_template_root_object_schema": "assays/atacseq_analysis.json",
+    "prism_template_root_object_schema": "assays/components/ngs/atacseq/atacseq_analysis.json",
     "prism_template_root_object_pointer": "/analysis/atacseq_analysis",
     "properties": {
         "worksheets": {

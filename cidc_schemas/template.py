@@ -65,22 +65,22 @@ def generate_analysis_template_schemas(
     """Uses output_API.json's from cidc-ngs-pipeline-api along with existing assays/components/ngs analysis templates to generate templates/analyses schemas"""
     # for each output_API.json
     for analysis, output_schema in OUTPUT_APIS.items():
-            # try to convert it, but skip if it's not implemented'
-            # need an existing assay/components/ngs analysis schema to find merge pointers
-            try:
-                assay_schema = _load_dont_validate_schema(
-                    f"assays/components/ngs/{analysis}/{analysis}_analysis.json"
-                    if analysis in ["rna", "tcr", "atacseq"]  # special cases currently
-                    else f"assays/{analysis}_analysis.json"  # all others should be here
-                )
-            except Exception as e:
-                print(
-                    f"skipping {analysis}: failed to load corresponding `assays/components/ngs/{analysis}/{analysis}_analysis.json`"
-                )
-            else:
-                template = _convert_api_to_template(analysis, output_schema, assay_schema)
-                with open(os.path.join(target_dir, fname_format(analysis)), "w") as f:
-                    json.dump(template, f, indent=4)
+        # try to convert it, but skip if it's not implemented'
+        # need an existing assay/components/ngs analysis schema to find merge pointers
+        try:
+            assay_schema = _load_dont_validate_schema(
+                f"assays/components/ngs/{analysis}/{analysis}_analysis.json"
+                if analysis in ["rna", "tcr", "atacseq"]  # special cases currently
+                else f"assays/{analysis}_analysis.json"  # all others should be here
+            )
+        except Exception as e:
+            print(
+                f"skipping {analysis}: failed to load corresponding `assays/components/ngs/{analysis}/{analysis}_analysis.json`"
+            )
+        else:
+            template = _convert_api_to_template(analysis, output_schema, assay_schema)
+            with open(os.path.join(target_dir, fname_format(analysis)), "w") as f:
+                json.dump(template, f, indent=4)
 
 
 def _first_in_context(path: list, context: dict):

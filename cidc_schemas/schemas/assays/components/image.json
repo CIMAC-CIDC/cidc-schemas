@@ -9,7 +9,7 @@
     "slide_scanner_model": {
       "description": "Model version of the slide scanner instrument.",
       "type": "string",
-      "enum": ["Vectra 2.0", "Hamamatsu"]
+      "enum": ["Vectra 2.0", "Hamamatsu", "VectraPolaris/3.0.3"]
     },
     "image_analysis_software": {
       "description": "Source software for digital pathology and image analysis.",

@@ -772,6 +772,7 @@ def atacseq_fastq() -> PrismTestData:
                             "percent_q30": 90.0,
                         },
                     ],
+                    "batch_id": "XYZ",
                     "assay_creator": "Mount Sinai",
                     "sequencer_platform": "Illumina - NextSeq 550",
                     "paired_end_reads": "Paired",
@@ -1164,6 +1165,87 @@ def rna_fastq() -> PrismTestData:
     cimac_ids = [
         record["cimac_id"]
         for batch in prismify_patch["assays"]["rna"]
+        for record in batch["records"]
+    ]
+    base_trial = get_test_trial(cimac_ids)
+
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "assays")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
+@assay_data_generator
+def tcr_adaptive() -> PrismTestData:
+    upload_type = "tcr_adaptive"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "test_prism_trial_id",
+        "assays": {
+            "tcr": [
+                {
+                    "controls": [
+                        {
+                            "id": "neg",
+                            "tsv_file": {
+                                "upload_placeholder": "3735df00-082b-4e2d-92a8-7a5e629483dc"
+                            },
+                        }
+                    ],
+                    "records": [
+                        {
+                            "cimac_id": "CTTTPP111.00",
+                            "tsv_file": {
+                                "upload_placeholder": "3635df00-082b-4e2d-92a8-7a5e629483dc"
+                            },
+                        },
+                        {
+                            "cimac_id": "CTTTPP121.00",
+                            "tsv_file": {
+                                "upload_placeholder": "e49521dc-d531-4555-a874-80aa0ce31dc2"
+                            },
+                        },
+                    ],
+                    "assay_creator": "Adaptive",
+                    "sequencer_platform": "Adaptive",
+                    "batch_id": "XYZ",
+                }
+            ]
+        },
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="neg.tsv",
+            gs_key="test_prism_trial_id/tcr/XYZ/controls/neg/reads.tsv",
+            upload_placeholder="3735df00-082b-4e2d-92a8-7a5e629483dc",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP111_00.tsv",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP111.00/reads.tsv",
+            upload_placeholder="3635df00-082b-4e2d-92a8-7a5e629483dc",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP121_00.tsv",
+            gs_key="test_prism_trial_id/tcr/XYZ/CTTTPP121.00/reads.tsv",
+            upload_placeholder="e49521dc-d531-4555-a874-80aa0ce31dc2",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+    ]
+
+    cimac_ids = [
+        record["cimac_id"]
+        for batch in prismify_patch["assays"]["tcr"]
         for record in batch["records"]
     ]
     base_trial = get_test_trial(cimac_ids)

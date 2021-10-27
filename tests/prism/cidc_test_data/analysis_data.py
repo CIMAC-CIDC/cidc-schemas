@@ -1925,66 +1925,70 @@ def atacseq_analysis() -> PrismTestData:
     prismify_args = get_prismify_args(upload_type)
     prismify_patch = {
         "analysis": {
-            "atacseq_analysis": {
-                "records": [
-                    {
-                        "cimac_id": "CTTTPP111.00",
-                        "peaks": {
-                            "sorted_peaks_bed": {
-                                "upload_placeholder": "03030303-0303-0303-0303-CTTTPP111.00"
+            "atacseq_analysis": [
+                {
+                    "records": [
+                        {
+                            "cimac_id": "CTTTPP111.00",
+                            "peaks": {
+                                "sorted_peaks_bed": {
+                                    "upload_placeholder": "03030303-0303-0303-0303-CTTTPP111.00"
+                                },
+                                "sorted_summits": {
+                                    "upload_placeholder": "04040404-0404-0404-0404-CTTTPP111.00"
+                                },
+                                "sorted_peaks_narrowpeak": {
+                                    "upload_placeholder": "05050505-0505-0505-0505-CTTTPP111.00"
+                                },
+                                "treat_pileup": {
+                                    "upload_placeholder": "16161616-1616-1616-1616-CTTTPP111.00"
+                                },
                             },
-                            "sorted_summits": {
-                                "upload_placeholder": "04040404-0404-0404-0404-CTTTPP111.00"
-                            },
-                            "sorted_peaks_narrowpeak": {
-                                "upload_placeholder": "05050505-0505-0505-0505-CTTTPP111.00"
-                            },
-                            "treat_pileup": {
-                                "upload_placeholder": "16161616-1616-1616-1616-CTTTPP111.00"
+                            "aligned_sorted_bam": {
+                                "upload_placeholder": "22222222-2222-2222-2222-CTTTPP111.00"
                             },
                         },
-                        "report": {
-                            "upload_placeholder": "21212121-2121-2121-2121-CTTTPP111.00"
+                        {
+                            "cimac_id": "CTTTPP121.00",
+                            "peaks": {
+                                "sorted_peaks_bed": {
+                                    "upload_placeholder": "03030303-0303-0303-0303-CTTTPP121.00"
+                                },
+                                "sorted_summits": {
+                                    "upload_placeholder": "04040404-0404-0404-0404-CTTTPP121.00"
+                                },
+                                "sorted_peaks_narrowpeak": {
+                                    "upload_placeholder": "05050505-0505-0505-0505-CTTTPP121.00"
+                                },
+                                "treat_pileup": {
+                                    "upload_placeholder": "16161616-1616-1616-1616-CTTTPP121.00"
+                                },
+                            },
+                            "aligned_sorted_bam": {
+                                "upload_placeholder": "22222222-2222-2222-2222-CTTTPP121.00"
+                            },
                         },
-                        "aligned_sorted_bam": {
-                            "upload_placeholder": "22222222-2222-2222-2222-CTTTPP111.00"
-                        },
+                    ],
+                    "report": {
+                        "upload_placeholder": "22222222-2222-2222-2222-41ebcc0a07d9"
                     },
-                    {
-                        "cimac_id": "CTTTPP121.00",
-                        "peaks": {
-                            "sorted_peaks_bed": {
-                                "upload_placeholder": "03030303-0303-0303-0303-CTTTPP121.00"
-                            },
-                            "sorted_summits": {
-                                "upload_placeholder": "04040404-0404-0404-0404-CTTTPP121.00"
-                            },
-                            "sorted_peaks_narrowpeak": {
-                                "upload_placeholder": "05050505-0505-0505-0505-CTTTPP121.00"
-                            },
-                            "treat_pileup": {
-                                "upload_placeholder": "16161616-1616-1616-1616-CTTTPP121.00"
-                            },
+                    "batch_id": "XYZ",
+                    "excluded_samples": [
+                        {"cimac_id": "CTTTPP111.00", "reason_excluded": "low coverage"},
+                        {
+                            "cimac_id": "CTTTPP122.00",
+                            "reason_excluded": "module failed",
                         },
-                        "report": {
-                            "upload_placeholder": "21212121-2121-2121-2121-CTTTPP121.00"
-                        },
-                        "aligned_sorted_bam": {
-                            "upload_placeholder": "22222222-2222-2222-2222-CTTTPP121.00"
-                        },
-                    },
-                ],
-                "excluded_samples": [
-                    {"cimac_id": "CTTTPP111.00", "reason_excluded": "low coverage"},
-                    {"cimac_id": "CTTTPP122.00", "reason_excluded": "module failed"},
-                ],
-            }
+                    ],
+                }
+            ]
         },
         "protocol_identifier": "test_prism_trial_id",
     }
 
     cimac_ids = [
-        r["cimac_id"] for r in prismify_patch["analysis"]["atacseq_analysis"]["records"]
+        r["cimac_id"]
+        for r in prismify_patch["analysis"]["atacseq_analysis"][0]["records"]
     ]
 
     upload_entries = sum(
@@ -2019,13 +2023,6 @@ def atacseq_analysis() -> PrismTestData:
                     allow_empty=False,
                 ),
                 LocalFileUploadEntry(
-                    local_path=f"gs://analysis/report/report.zip",
-                    gs_key=f"test_prism_trial_id/atacseq/{cimac_id}/analysis/report.zip",
-                    upload_placeholder=f"21212121-2121-2121-2121-{cimac_id}",
-                    metadata_availability=False,
-                    allow_empty=False,
-                ),
-                LocalFileUploadEntry(
                     local_path=f"gs://analysis/align/{cimac_id}/{cimac_id}.sorted.bam",
                     gs_key=f"test_prism_trial_id/atacseq/{cimac_id}/analysis/aligned_sorted.bam",
                     upload_placeholder=f"22222222-2222-2222-2222-{cimac_id}",
@@ -2035,12 +2032,22 @@ def atacseq_analysis() -> PrismTestData:
             ]
             for cimac_id in cimac_ids
         ],
-        [],
+        [
+            LocalFileUploadEntry(
+                local_path="test_prism_trial_id/atacseq/analysis/XYZ/report.zip",
+                gs_key="test_prism_trial_id/atacseq/analysis/XYZ/report.zip",
+                upload_placeholder="22222222-2222-2222-2222-41ebcc0a07d9",
+                metadata_availability=False,
+                allow_empty=False,
+            ),
+        ],
     )
 
     cimac_ids += [
         sample["cimac_id"]
-        for sample in prismify_patch["analysis"]["atacseq_analysis"]["excluded_samples"]
+        for sample in prismify_patch["analysis"]["atacseq_analysis"][0][
+            "excluded_samples"
+        ]
     ]
 
     base_trial = get_test_trial(cimac_ids)

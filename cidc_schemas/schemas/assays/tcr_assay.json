@@ -6,18 +6,51 @@
   "description": "Additional properties to describe a TCR assay for expression analysis.",
 
   "definitions": {
+    "control": {
+      "type": "object",
+      "description": "A single control data record from TCRseq assay.",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "files": {"$ref": "assays/tcr_assay.json#definitions/files"},
+        "tsv_file": {"$ref": "artifacts/artifact_tsv.json"}
+      },
+      "mergeStrategy": "objectMerge",
+      "required": [
+        "id"
+      ],
+      "anyOf": [
+        {
+          "required": ["files"]
+        },
+        {
+          "required": ["tsv_file"]
+        }
+      ]
+    },
+
     "entry": {
       "type": "object",
       "description": "A single data record from TCRseq assay.",
       "additionalProperties": false,
       "properties": {
         "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
-        "files": {"$ref": "assays/tcr_assay.json#definitions/files"}
+        "files": {"$ref": "assays/tcr_assay.json#definitions/files"},
+        "tsv_file": {"$ref": "artifacts/artifact_tsv.json"}
       },
       "mergeStrategy": "objectMerge",
       "required": [
-        "cimac_id",
-        "files"
+        "cimac_id"
+      ],
+      "anyOf": [
+        {
+          "required": ["files"]
+        },
+        {
+          "required": ["tsv_file"]
+        }
       ]
     },
 
@@ -76,6 +109,15 @@
         "description": "TCRseq batch identification number.",
         "type": "string"
     },
+    "controls": {
+      "type": "array",
+      "description": "Data records from TCRseq assay for a control for this batch.",
+      "items": {"$ref": "assays/tcr_assay.json#definitions/control"},
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "id"
+      }
+    },
     "sample_sheet": {
         "$ref": "artifacts/artifact_csv.json"
     },
@@ -96,9 +138,7 @@
   },
   "required": [
     "records",
-    "batch_id",
-    "sequencing_run_date",
-    "sample_sheet"
+    "batch_id"
   ],
   "mergeStrategy": "objectMerge"
 }

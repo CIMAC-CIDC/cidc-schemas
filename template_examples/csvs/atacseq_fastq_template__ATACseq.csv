@@ -1,5 +1,6 @@
 "#title","Metadata file for atacseq [fastq]"
 "#preamble","Protocol identifier","test_prism_trial_id"
+"#preamble","Batch id","XYZ"
 "#preamble","Assay creator","Mount Sinai"
 "#preamble","Sequencing protocol"
 "#preamble","Library kit"

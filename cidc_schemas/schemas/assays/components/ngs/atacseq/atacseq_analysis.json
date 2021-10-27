@@ -26,18 +26,16 @@
 		"entry": {
 			"type": "object",
 			"mergeStrategy": "objectMerge",
-			"description": "A single analysis record from ATACseq assay.",
+			"description": "A single analysis record from ATACseq analysis.",
 			"additionalProperties": false,
 			"required": [
                 "cimac_id",
                 "peaks",
-                "report",
                 "aligned_sorted_bam"
 			],
 			"properties": {
                 "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
-                "peaks": { "$ref": "assays/atacseq_analysis.json#definitions/peaks" },
-                "report": { "$ref": "artifacts/artifact_zip.json" },
+                "peaks": { "$ref": "assays/components/ngs/atacseq/atacseq_analysis.json#definitions/peaks" },
                 "aligned_sorted_bam": { "$ref": "artifacts/artifact_bam.json" }
 			}
 		}
@@ -46,17 +44,26 @@
 	"type": "object",
 	"additionalProperties": false,
 	"required": [
-        "records"
+        "records",
+        "batch_id"
 	],
 	"properties": {
+        "batch_id":{
+            "$ref": "assays/atacseq_assay.json#properties/batch_id"
+        },
         "records": {
             "type": "array",
             "mergeStrategy": "arrayMergeById",
             "mergeOptions": { "idRef": "/cimac_id" },
-            "items": { "$ref": "assays/atacseq_analysis.json#definitions/entry" }
+            "items": {
+                "$ref": "assays/components/ngs/atacseq/atacseq_analysis.json#definitions/entry"
+            }
+        },
+        "report": {
+            "$ref": "artifacts/artifact_zip.json"
         },
         "excluded_samples": {
-          "$ref": "assays/components/excluded_samples.json"
+            "$ref": "assays/components/excluded_samples.json"
         }
 	}
 }

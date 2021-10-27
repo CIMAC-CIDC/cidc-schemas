@@ -1,0 +1,12 @@
+"#title","Metadata file for tcr seq  [adaptive]."
+"#preamble","Protocol identifier","test_prism_trial_id"
+"#preamble","Assay creator","Adaptive"
+"#preamble","Sequencer platform","Adaptive"
+"#preamble","Batch id","XYZ"
+"#preamble","Sequencing run date"
+"#preamble","Sample sheet"
+
+"#skip","Samples"
+"#header","Cimac id","Tsv reads"
+"#data","CTTTPP111.00","CTTTPP111_00.tsv"
+"#data","CTTTPP121.00","CTTTPP121_00.tsv"

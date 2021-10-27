@@ -19,8 +19,17 @@
     "tcr_analysis": {
       "$ref": "assays/tcr_analysis.json"
     },
+
     "atacseq_analysis": {
-      "$ref": "assays/components/ngs/atacseq/atacseq_analysis.json"
+      "type": "array",
+      "description": "Analysis for Assay for Transposase-Accessible Chromatin by sequencing (ATACseq).",
+      "items": {
+        "$ref": "assays/components/ngs/atacseq/atacseq_analysis.json"
+      },
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "batch_id"
+      }
     }
   }
 }

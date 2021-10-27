@@ -65,12 +65,12 @@ def generate_analysis_template_schemas(
     """Uses output_API.json's from cidc-ngs-pipeline-api along with existing assays/components/ngs analysis templates to generate templates/analyses schemas"""
     # for each output_API.json
     for analysis, output_schema in OUTPUT_APIS.items():
-        # try to convert it, but skip if it's not implemented'
+        # try to convert it, but skip if it's not implemented
         # need an existing assay/components/ngs analysis schema to find merge pointers
         try:
             assay_schema = _load_dont_validate_schema(
                 f"assays/components/ngs/{analysis}/{analysis}_analysis.json"
-                if analysis in ["rna", "tcr", "atacseq"]  # special cases currently
+                if analysis in ["rna", "atacseq"]  # special cases currently
                 else f"assays/{analysis}_analysis.json"  # all others should be here
             )
         except Exception as e:
@@ -212,22 +212,25 @@ _excluded_samples_worksheet_snippet = {
 
 def _initialize_template_schema(name: str, title: str, pointer: str):
     long_title = "RNAseq level 1" if title == "RNAseq" else title
+    obj_root_schema = (
+        f"assays/components/ngs/{name}/{name}_analysis.json"
+        if name in ["rna", "atacseq"]  # special cases currently
+        else f"assays/{name}_analysis.json"  # all others should be here
+    )
+
     # static
     template = {
         "title": f"{long_title} analysis template",
         "description": f"Metadata information for {long_title} Analysis output.",
-        "prism_template_root_object_schema": (
-            f"assays/components/ngs/{name}/{name}_analysis.json"
-            if name in ["rna", "tcr"]  # special cases currently
-            else f"assays/{name}_analysis.json"  # all others should be here
-        ),
-        "prism_template_root_object_pointer": f"/analysis/{name}_analysis",
+        "prism_template_root_object_schema": obj_root_schema,
+        "prism_template_root_object_pointer": f"/analysis/{name}_analysis"
+        + ("/0" if name == "atacseq" else ""),
         "properties": {
             "worksheets": {
                 f"{title} Analysis": {
                     "preamble_rows": {
                         "protocol identifier": {
-                            "merge_pointer": "2/protocol_identifier",
+                            "merge_pointer": f"{3 if name == 'atacseq' else 2}/protocol_identifier",
                             "type_ref": "clinical_trial.json#properties/protocol_identifier",
                         },
                         "folder": {
@@ -243,6 +246,24 @@ def _initialize_template_schema(name: str, title: str, pointer: str):
             }
         },
     }
+
+    # assay specific additions
+    if name == "atacseq":
+        template["properties"]["worksheets"][f"{title} Analysis"]["preamble_rows"][
+            "batch id"
+        ] = {
+            "merge_pointer": "0/batch_id",
+            "type_ref": "assays/atacseq_assay.json#properties/batch_id",
+        }
+        template["properties"]["worksheets"][f"{title} Analysis"]["preamble_rows"][
+            "report"
+        ] = {
+            "merge_pointer": "0/report",
+            "type_ref": "assays/components/local_file.json#properties/file_path",
+            "gcs_uri_format": "{protocol identifier}/atacseq/analysis/{batch id}/report.zip",
+            "is_artifact": 1,
+        }
+
     return template
 
 
@@ -373,8 +394,12 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
         else name.upper()
     )
     pointer = [
-        k for k in assay_schema["properties"].keys() if not k.startswith("merge")
-    ][0]
+        k
+        for k, subschema in assay_schema["properties"].items()
+        if k != "excluded_samples" and "items" in subschema
+    ]
+    assert len(pointer) == 1, f"Cannot decide which pointer to use: {pointer}"
+    pointer = pointer[0]
 
     template = _initialize_template_schema(name, title, pointer)
 
@@ -382,6 +407,11 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
     subtemplate = {}
     used_merge_pointers, used_gcs_uris = [], []
     for long_key, entries in schema.items():
+        if long_key == "batch id":
+            # batch-level artifacts are assigned in the preamble
+            # add to _initialize_template_schema
+            continue
+
         # so many ways to write this too
         if long_key == "id":
             long_key = "cimac id"  # assume CIMAC if just 'id'
@@ -436,6 +466,7 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
         }
 
         # keep track of where we are in the analysis schema
+        print(name, assay_schema["properties"].keys())
         context = assay_schema["properties"][pointer]["items"]["properties"]
         if short_key not in context:
             raise InvalidMergeTargetException(

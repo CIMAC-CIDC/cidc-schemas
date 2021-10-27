@@ -170,39 +170,6 @@
                 <tr>
     <td>
         
-            <span id="name">
-                name
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            A (short) name of the file
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
             <span id="file">
                 file
             </span>
@@ -235,6 +202,39 @@
     <td width=55%>
         
             The local file location for determining where the file is coming from
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="name">
+                name
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            An optional (short) name of the file
         
     </td>
     <td>
@@ -526,12 +526,11 @@
                     "type": "string"
                 },
                 "name": {
-                    "description": "A (short) name of the file",
+                    "description": "An optional (short) name of the file",
                     "type": "string"
                 }
             },
             "required": [
-                "name",
                 "file",
                 "file_location"
             ],
@@ -547,8 +546,7 @@
                 "DFCI",
                 "Mount Sinai",
                 "Stanford",
-                "MD Anderson",
-                "Adaptive"
+                "MD Anderson"
             ],
             "type": "string"
         },
@@ -780,19 +778,18 @@
                         "type": "string"
                     },
                     "name": {
-                        "description": "A (short) name of the file",
+                        "description": "An optional (short) name of the file",
                         "type": "string"
                     }
                 },
                 "required": [
-                    "name",
                     "file",
                     "file_location"
                 ],
                 "type": "object"
             },
             "mergeOptions": {
-                "idRef": "name"
+                "idRef": "file_location"
             },
             "mergeStrategy": "arrayMergeById",
             "type": "array"

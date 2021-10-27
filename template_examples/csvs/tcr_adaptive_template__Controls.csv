@@ -1,0 +1,6 @@
+"#preamble","Protocol identifier","test_prism_trial_id"
+"#preamble","Batch id","XYZ"
+
+"#skip","Controls"
+"#header","Id","Tsv reads"
+"#data","neg","neg.tsv"

@@ -1945,6 +1945,9 @@ def mif() -> PrismTestData:
                     "staining_date": "2001-01-01 00:00:00",
                     "imaging_date": "2001-01-01 00:00:00",
                     "imaging_status": "Yes",
+                    "excluded_samples": [
+                        {"cimac_id": "CTTTPP333.00", "reason_excluded": "Failed QC"},
+                    ],
                 }
             ]
         },
@@ -2341,6 +2344,7 @@ def mif() -> PrismTestData:
         record["cimac_id"]
         for batch in prismify_patch["assays"]["mif"]
         for record in batch["records"]
+        for record in [*batch["records"], *batch["excluded_samples"]]
     ]
     base_trial = get_test_trial(cimac_ids)
 

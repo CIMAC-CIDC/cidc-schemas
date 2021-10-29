@@ -1,4 +1,4 @@
-dateparser==1.0.0
+dateparser==1.1.0
 xlsxwriter==1.1.6
 argparse==1.1
 pyyaml~=5.1

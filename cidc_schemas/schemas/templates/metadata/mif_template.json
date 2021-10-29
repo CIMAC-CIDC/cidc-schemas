@@ -38,17 +38,20 @@
                     "cell segmentation model":
                     {
                         "merge_pointer": "0/cell_segmentation_model",
-                        "type_ref": "assays/mif_assay.json#properties/cell_segmentation_model"
+                        "type_ref": "assays/mif_assay.json#properties/cell_segmentation_model",
+                        "allow_empty": true
                     },
                     "positive cell detection model":
                     {
                         "merge_pointer": "0/positive_cell_detection",
-                        "type_ref": "assays/mif_assay.json#properties/positive_cell_detection"
+                        "type_ref": "assays/mif_assay.json#properties/positive_cell_detection",
+                        "allow_empty": true
                     },
                     "staining":
                     {
                         "merge_pointer": "0/staining",
-                        "type_ref": "assays/mif_assay.json#properties/staining"
+                        "type_ref": "assays/mif_assay.json#properties/staining",
+                        "allow_empty": true
                     },
                     "staining date":
                     {
@@ -180,14 +183,16 @@
                                 "merge_pointer": "0/cell_seg_data",
                                 "type_ref": "assays/components/local_file.json#properties/file_path",
                                 "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/{export id}/cell_seg_data.txt",
-                                "is_artifact": 1
+                                "is_artifact": 1,
+                                "allow_empty": true
                             },
                             {
                                 "parse_through": "lambda prefix: str(prefix) + 'cell_seg_data_summary.txt'",
                                 "merge_pointer": "0/cell_seg_data_summary",
                                 "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/{export id}/cell_seg_data_summary.txt",
                                 "type_ref": "assays/components/local_file.json#properties/file_path",
-                                "is_artifact": 1
+                                "is_artifact": 1,
+                                "allow_empty": true
                             },
                             {
                                 "parse_through": "lambda prefix: str(prefix) + 'phenotype_map.tif'",
@@ -195,7 +200,7 @@
                                 "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/{export id}/phenotype_map.tif",
                                 "type_ref": "assays/components/local_file.json#properties/file_path",
                                 "is_artifact": 1,
-                                 "allow_empty": true
+                                "allow_empty": true
                             },
                             {
                                 "parse_through": "lambda prefix: str(prefix) + 'tissue_seg_data.txt'",

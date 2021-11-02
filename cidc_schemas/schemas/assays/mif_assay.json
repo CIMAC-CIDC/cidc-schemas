@@ -33,6 +33,9 @@
         "Panel 4: SOX10, CD8, PD-1, PD-L1, DAPI"
       ]
     },
+    "excluded_samples": {
+      "$ref": "assays/components/excluded_samples.json"
+    },
 
     "records": {
       "type": "array",

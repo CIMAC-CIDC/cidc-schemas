@@ -126,20 +126,5 @@
         "FNLCR_MoCha"
       ]
     }
-  },
-  "required": [
-    "account_number",
-    "assay_priority",
-    "assay_type",
-    "courier",
-    "date_received",
-    "date_shipped",
-    "manifest_id",
-    "quality_of_shipment",
-    "ship_from",
-    "ship_to",
-    "shipping_condition",
-    "tracking_number",
-    "receiving_party"
-  ]
+  }
 }

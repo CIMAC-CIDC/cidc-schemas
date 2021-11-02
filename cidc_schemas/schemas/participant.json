@@ -84,5 +84,5 @@
       }
     }
   },
-  "required": ["cimac_participant_id", "participant_id", "samples"]
+  "required": ["cimac_participant_id", "samples"]
 }

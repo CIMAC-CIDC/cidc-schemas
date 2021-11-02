@@ -397,12 +397,6 @@
     },
     "additionalProperties": false,
     "required": [
-        "cimac_id",
-        "parent_sample_id",
-        "collection_event_name",
-        "sample_location",
-        "type_of_sample"
-    ],
-    "if": {"properties": {"type_of_sample": {"enum": ["Blood"]}}},
-    "then": {"required": ["type_of_primary_container"]}
+        "cimac_id"
+    ]
 }

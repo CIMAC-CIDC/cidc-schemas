@@ -61,7 +61,8 @@
                     "imaging date":
                     {
                         "merge_pointer": "0/imaging_date",
-                        "type_ref": "assays/components/imaging_data.json#properties/imaging_date"
+                        "type_ref": "assays/components/imaging_data.json#properties/imaging_date",
+                        "allow_empty": true
                     },
                     "imaging status":
                     {

@@ -76,7 +76,7 @@
                     },
                     "report": {
                         "merge_pointer": "0/qc_report",
-                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "type_ref": "assays/mif_assay.json#properties/qc_report",
                         "gcs_uri_format": "{protocol identifier}/mif/qc_report.zip",
                         "is_artifact": 1,
                         "allow_empty": true

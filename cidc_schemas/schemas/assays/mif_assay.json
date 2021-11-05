@@ -24,6 +24,8 @@
     "imaging_date": {"$ref": "assays/components/imaging_data.json#properties/imaging_date"},
     "imaging_status": {"$ref": "assays/components/imaging_data.json#properties/imaging_status"},
 
+    "qc_report": {"$ref": "artifacts/artifact_zip.json"},
+
     "panel": {
       "type": "string",
       "enum": [

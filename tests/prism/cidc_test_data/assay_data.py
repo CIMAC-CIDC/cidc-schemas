@@ -1685,8 +1685,8 @@ def mif() -> PrismTestData:
             "mif": [
                 {
                     "qc_report": {
-                            "upload_placeholder": "912f4bae-bca8-42f6-a3b7-cb4db27b2e24"
-                        },
+                        "upload_placeholder": "912f4bae-bca8-42f6-a3b7-cb4db27b2e24"
+                    },
                     "panel": "Panel 1: PD-L1, CD68, PD-1, CD8, CD3, pan-cytokeratin, DAPI",
                     "antibodies": [
                         {

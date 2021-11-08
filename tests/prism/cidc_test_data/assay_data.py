@@ -1684,6 +1684,9 @@ def mif() -> PrismTestData:
         "assays": {
             "mif": [
                 {
+                    "qc_report": {
+                        "upload_placeholder": "912f4bae-bca8-42f6-a3b7-cb4db27b2e24"
+                    },
                     "panel": "Panel 1: PD-L1, CD68, PD-1, CD8, CD3, pan-cytokeratin, DAPI",
                     "antibodies": [
                         {
@@ -1953,6 +1956,13 @@ def mif() -> PrismTestData:
         },
     }
     upload_entries = [
+        LocalFileUploadEntry(
+            local_path="qc_report.zip",
+            gs_key="test_prism_trial_id/mif/qc_report.zip",
+            upload_placeholder="912f4bae-bca8-42f6-a3b7-cb4db27b2e24",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
         LocalFileUploadEntry(
             local_path="111/1_score_data.txt",
             gs_key="test_prism_trial_id/mif/CTTTPP111.00/roi_1/CD4/score_data_0.txt",

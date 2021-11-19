@@ -86,7 +86,7 @@ def wes_analysis() -> PrismTestData:
                             },
                             "tnscope_output_twist_maf": {
                                 "upload_placeholder": "66689bba-708c-449f-879f-44cba199c666"
-                            }
+                            },
                         },
                         "purity": {
                             "optimal_purity_value": {
@@ -255,7 +255,7 @@ def wes_analysis() -> PrismTestData:
                             },
                             "tnscope_output_twist_maf": {
                                 "upload_placeholder": "66589bba-708c-449f-879f-44cba199c666"
-                            }
+                            },
                         },
                         "germline": {
                             "vcf_compare": {
@@ -1046,7 +1046,7 @@ def wes_tumor_only_analysis() -> PrismTestData:
                             },
                             "tnscope_output_twist_maf": {
                                 "upload_placeholder": "1d589bba-708c-449f-879f-44cba199c666"
-                            }
+                            },
                         },
                         "rna": {
                             "haplotyper": {
@@ -1154,7 +1154,7 @@ def wes_tumor_only_analysis() -> PrismTestData:
                             },
                             "tnscope_output_twist_maf": {
                                 "upload_placeholder": "1d589bba-708c-449f-879f-44cba1996666"
-                            }
+                            },
                         },
                         "tumor": {
                             "metrics": {

@@ -61,13 +61,6 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.filter.exons.center_targets.vcf.gz'",
-                                    "merge_pointer": "/somatic/tnscope_exons",
-                                    "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/tnscope_exons.vcf.gz",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
                                     "parse_through": "lambda run: f'{folder or \"\"}analysis/report/neoantigens/01_HLA_Results.tsv'",
                                     "merge_pointer": "/neoantigen/HLA_results",
                                     "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/HLA_results.tsv",

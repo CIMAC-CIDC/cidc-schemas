@@ -73,7 +73,7 @@ def wes_analysis() -> PrismTestData:
                                 "upload_placeholder": "a0a4a694-c0bc-4661-b9be-0b6dff20a240"
                             },
                             "maf_tnscope_filter": {
-                                "upload_placeholder": "53991cf3-b1b9-4b4a-830d-4eade9ef1321"
+                                "upload_placeholder": "53991cf3-b1b9-4b4a-830d-5eade9ef1321"
                             },
                             "vcf_tnscope_output_twist": {
                                 "upload_placeholder": "99966c04-86f8-44af-953d-0cfb10d11b99"
@@ -442,7 +442,7 @@ def wes_analysis() -> PrismTestData:
         LocalFileUploadEntry(
             local_path="gs://results/analysis/somatic/run_1/run_1_tnscope.filter.maf",
             gs_key="test_prism_trial_id/wes/run_1/analysis/maf_tnscope_filter.maf",
-            upload_placeholder="991cf3-b1b9-4b4a-830d-4eade9ef1321",
+            upload_placeholder="53991cf3-b1b9-4b4a-830d-5eade9ef1321",
             metadata_availability=False,
             allow_empty=False,
         ),
@@ -1033,7 +1033,7 @@ def wes_tumor_only_analysis() -> PrismTestData:
                                 "upload_placeholder": "a0a4a694-c0bc-4661-b9be-0b6dff20a240"
                             },
                             "maf_tnscope_filter": {
-                                "upload_placeholder": "53991cf3-b1b9-4b4a-830d-4eade9ef1321"
+                                "upload_placeholder": "54991cf3-b1b9-4b4a-830d-4eade9ef1321"
                             },
                             "vcf_tnscope_output_twist": {
                                 "upload_placeholder": "64466c04-86f8-44af-953d-0cfb10d11b99"
@@ -1288,7 +1288,7 @@ def wes_tumor_only_analysis() -> PrismTestData:
         LocalFileUploadEntry(
             local_path="gs://results/analysis/somatic/run_1/run_1_tnscope.filter.maf",
             gs_key="test_prism_trial_id/wes_tumor_only/run_1/analysis/maf_tnscope_filter.maf",
-            upload_placeholder="53991cf3-b1b9-4b4a-830d-4eade9ef1321",
+            upload_placeholder="54991cf3-b1b9-4b4a-830d-4eade9ef1321",
             metadata_availability=False,
             allow_empty=False,
         ),
@@ -1497,7 +1497,7 @@ def wes_tumor_only_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="gs://results/analysis/somatic/run_2/run_2_tnscope.output.twist.filtered.vcf",
-            gs_key="test_prism_trial_id/wes_tumor_only/run_1/analysis/tnscope_output_twist_filtered_vcf.vcf",
+            gs_key="test_prism_trial_id/wes_tumor_only/run_2/analysis/tnscope_output_twist_filtered_vcf.vcf",
             upload_placeholder="84466c04-86f8-44af-953d-0cfb10d11888",
             metadata_availability=False,
             allow_empty=False,

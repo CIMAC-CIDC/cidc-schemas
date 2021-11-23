@@ -30,6 +30,7 @@ def wes_analysis() -> PrismTestData:
                 "pair_runs": [
                     {
                         "run_id": "run_1",
+                        "comments": "a comment",
                         "error": {
                             "upload_placeholder": "cdef9e1e-8e04-46ed-a9e6-bb618188a6d7"
                         },

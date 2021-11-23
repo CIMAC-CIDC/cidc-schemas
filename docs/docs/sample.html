@@ -107,38 +107,7 @@
             
         
             
-                <tr>
-    <td>
         
-            <span id="parent_sample_id">
-                parent_sample_id
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Sample identifier assigned by the biorepository site. Crypto-hashed after upload.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
             
         
             
@@ -154,132 +123,7 @@
             
         
             
-                <tr>
-    <td>
         
-            <span id="collection_event_name">
-                collection_event_name
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Categorical description of timepoint at which the sample was taken.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="sample_location">
-                sample_location
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Sample location within the shipping container. Example: A1.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="type_of_sample">
-                type_of_sample
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Type of sample sent.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-    
-    
-            &gt;
-            <ul>
-                
-                    <li>"Tumor Tissue"</li>
-                
-                    <li>"Normal Tissue"</li>
-                
-                    <li>"Skin Tissue"</li>
-                
-                    <li>"Blood"</li>
-                
-                    <li>"Bone Marrow"</li>
-                
-                    <li>"Cerebrospinal Fluid"</li>
-                
-                    <li>"Lymph Node"</li>
-                
-                    <li>"Stool"</li>
-                
-                    <li>"Cell Product"</li>
-                
-                    <li>"White Blood Cell Apheresis"</li>
-                
-                    <li>"Not Reported"</li>
-                
-                    <li>"Other"</li>
-                
-            </ul>
-            
-            
-        
-    </td>
-</tr>
             
         
             
@@ -533,6 +377,37 @@
             
         
             
+                <tr>
+    <td>
+        
+            <span id="parent_sample_id">
+                parent_sample_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Sample identifier assigned by the biorepository site. Crypto-hashed after upload.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
         
             
                 <tr>
@@ -733,9 +608,126 @@
             
         
             
+                <tr>
+    <td>
         
+            <span id="collection_event_name">
+                collection_event_name
+            </span>
             
         
+    </td>
+    <td width=55%>
+        
+            Categorical description of timepoint at which the sample was taken.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="sample_location">
+                sample_location
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Sample location within the shipping container. Example: A1.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="type_of_sample">
+                type_of_sample
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Type of sample sent.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+    
+    
+            &gt;
+            <ul>
+                
+                    <li>"Tumor Tissue"</li>
+                
+                    <li>"Normal Tissue"</li>
+                
+                    <li>"Skin Tissue"</li>
+                
+                    <li>"Blood"</li>
+                
+                    <li>"Bone Marrow"</li>
+                
+                    <li>"Cerebrospinal Fluid"</li>
+                
+                    <li>"Lymph Node"</li>
+                
+                    <li>"Stool"</li>
+                
+                    <li>"Cell Product"</li>
+                
+                    <li>"White Blood Cell Apheresis"</li>
+                
+                    <li>"Not Reported"</li>
+                
+                    <li>"Other"</li>
+                
+            </ul>
+            
+            
+        
+    </td>
+</tr>
             
         
             
@@ -1026,6 +1018,8 @@
                     <li>"Microliter"</li>
                 
                     <li>"Milliliter"</li>
+                
+                    <li>"Nanoliter"</li>
                 
                     <li>"Not Reported"</li>
                 
@@ -2351,15 +2345,6 @@
     "$schema": "metaschema/strict_meta_schema.json#",
     "additionalProperties": false,
     "description": "Any material sample taken from a biological entity for testing, diagnostic, propagation, treatment or research purposes, including a sample obtained from a living organism or taken from the biological object after halting of all its life functions. Biospecimen can contain one or more components including but not limited to cellular molecules, cells, tissues, organs, body fluids, embryos, and body excretory products.",
-    "if": {
-        "properties": {
-            "type_of_sample": {
-                "enum": [
-                    "Blood"
-                ]
-            }
-        }
-    },
     "properties": {
         "a260_a230": {
             "description": "Provides an absorbance percentage ratio indicating presence of contaminants (values of 0 to 3)",
@@ -2774,6 +2759,7 @@
             "enum": [
                 "Microliter",
                 "Milliliter",
+                "Nanoliter",
                 "Not Reported",
                 "Other"
             ],
@@ -2861,17 +2847,8 @@
         }
     },
     "required": [
-        "cimac_id",
-        "parent_sample_id",
-        "collection_event_name",
-        "sample_location",
-        "type_of_sample"
+        "cimac_id"
     ],
-    "then": {
-        "required": [
-            "type_of_primary_container"
-        ]
-    },
     "title": "Sample",
     "type": "object"
 }</code></pre>

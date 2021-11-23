@@ -33,37 +33,9 @@
                                     "allow_empty": true
                                 },
                                 {
-                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.twist.vcf'",
-                                    "merge_pointer": "/somatic/vcf_tnscope_output_twist",
-                                    "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/vcf_tnscope_output_twist.vcf",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.twist.filtered.vcf'",
-                                    "merge_pointer": "/somatic/tnscope_output_twist_filtered_vcf",
-                                    "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/tnscope_output_twist_filtered_vcf.vcf",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.twist.filtered.maf'",
-                                    "merge_pointer": "/somatic/tnscope_output_twist_filtered_maf",
-                                    "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/tnscope_output_twist_filtered_maf.maf",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
                                     "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.vcf.gz'",
                                     "merge_pointer": "/somatic/vcf_gz_tnscope_output",
                                     "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/vcf_gz_tnscope_output.vcf.gz",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
-                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.twist.maf'",
-                                    "merge_pointer": "/somatic/tnscope_output_twist_maf",
-                                    "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/tnscope_output_twist_maf.maf",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
@@ -85,6 +57,34 @@
                                     "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.filter.maf'",
                                     "merge_pointer": "/somatic/maf_tnscope_filter",
                                     "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/maf_tnscope_filter.maf",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.twist.vcf'",
+                                    "merge_pointer": "/somatic/tnscope_output_twist_vcf",
+                                    "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/tnscope_output_twist.vcf",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.twist.maf'",
+                                    "merge_pointer": "/somatic/tnscope_output_twist_maf",
+                                    "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/tnscope_output_twist.maf",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.twist.filtered.vcf'",
+                                    "merge_pointer": "/somatic/tnscope_output_twist_filtered_vcf",
+                                    "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/tnscope_output_twist_filtered.vcf",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.twist.filtered.maf'",
+                                    "merge_pointer": "/somatic/tnscope_output_twist_filtered_maf",
+                                    "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/tnscope_output_twist_filtered.maf",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },

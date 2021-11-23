@@ -473,6 +473,11 @@ def test_convert_api_to_template_wes():
                                     }
                                 ],
                             },
+                            "comments": {
+                                "type_ref": "assays/wes_analysis.json#definitions/pair_analysis/properties/comments",
+                                "merge_pointer": "0/comments",
+                                "allow_empty": True,
+                            },
                         }
                     },
                 },

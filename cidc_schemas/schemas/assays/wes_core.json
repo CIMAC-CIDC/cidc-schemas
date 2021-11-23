@@ -267,7 +267,7 @@
 	  "description": "Somatic variant calling output sample files.",
 	  "additionalProperties": false,
 	  "properties": {
-	    "vcf_tnscope_output_twist": {
+	    "tnscope_output_twist_vcf": {
 	      "$ref": "artifacts/artifact_vcf.json"
 	    },
 	    "vcf_gz_tnscope_filter": {
@@ -296,14 +296,14 @@
 		}
 	  },
 	  "required": [
-		"vcf_tnscope_output_twist",
-	    "vcf_gz_tnscope_output",
-	    "vcf_gz_tnscope_filter",
-		"tnscope_output_twist_filtered_vcf",
-		"tnscope_output_twist_filtered_maf",
-	    "maf_tnscope_output",
-	    "maf_tnscope_filter",
-		"tnscope_output_twist_maf"
+		  "vcf_gz_tnscope_output",
+		  "vcf_gz_tnscope_filter",
+		  "tnscope_output_twist_filtered_vcf",
+		  "tnscope_output_twist_filtered_maf",
+		  "maf_tnscope_output",
+		  "maf_tnscope_filter",
+		  "tnscope_output_twist_vcf",
+		  "tnscope_output_twist_maf"
 	  ]
 	}
   },

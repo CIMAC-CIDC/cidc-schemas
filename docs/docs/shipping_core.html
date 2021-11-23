@@ -62,14 +62,39 @@
         </thead>
         
             
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
                 <tr>
     <td>
         
             <span id="manifest_id">
                 manifest_id
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -103,8 +128,6 @@
             <span id="assay_priority">
                 assay_priority
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -173,8 +196,6 @@
                 assay_type
             </span>
             
-                <br><sup><mark>required</mark></sup>
-            
         
     </td>
     <td width=55%>
@@ -212,6 +233,8 @@
                 
                     <li>"TCRseq"</li>
                 
+                    <li>"ATACseq"</li>
+                
             </ul>
             
             
@@ -227,8 +250,6 @@
             <span id="courier">
                 courier
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -271,8 +292,6 @@
                 tracking_number
             </span>
             
-                <br><sup><mark>required</mark></sup>
-            
         
     </td>
     <td width=55%>
@@ -306,8 +325,6 @@
                 account_number
             </span>
             
-                <br><sup><mark>required</mark></sup>
-            
         
     </td>
     <td width=55%>
@@ -340,8 +357,6 @@
             <span id="shipping_condition">
                 shipping_condition
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -388,8 +403,6 @@
                 date_shipped
             </span>
             
-                <br><sup><mark>required</mark></sup>
-            
         
     </td>
     <td width=55%>
@@ -423,8 +436,6 @@
                 date_received
             </span>
             
-                <br><sup><mark>required</mark></sup>
-            
         
     </td>
     <td width=55%>
@@ -457,8 +468,6 @@
             <span id="quality_of_shipment">
                 quality_of_shipment
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -501,8 +510,6 @@
                 ship_from
             </span>
             
-                <br><sup><mark>required</mark></sup>
-            
         
     </td>
     <td width=55%>
@@ -536,8 +543,6 @@
                 ship_to
             </span>
             
-                <br><sup><mark>required</mark></sup>
-            
         
     </td>
     <td width=55%>
@@ -570,8 +575,6 @@
             <span id="receiving_party">
                 receiving_party
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -632,33 +635,6 @@
 </tr>
             
         
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
     </table>
 
     
@@ -711,7 +687,8 @@
                 "ELISA",
                 "mIF",
                 "mIHC",
-                "TCRseq"
+                "TCRseq",
+                "ATACseq"
             ],
             "type": "string"
         },
@@ -797,21 +774,6 @@
             "type": "string"
         }
     },
-    "required": [
-        "account_number",
-        "assay_priority",
-        "assay_type",
-        "courier",
-        "date_received",
-        "date_shipped",
-        "manifest_id",
-        "quality_of_shipment",
-        "ship_from",
-        "ship_to",
-        "shipping_condition",
-        "tracking_number",
-        "receiving_party"
-    ],
     "title": "Core Shipping Details",
     "type": "object"
 }</code></pre>

@@ -23,6 +23,11 @@
           "type": "string",
           "description": "An id used for a paired analysis run."
         },
+        "comments": {
+          "type": "string",
+          "description": "Comments on the paired analysis run."
+        },
+
         "somatic": {
           "$ref": "assays/wes_core.json#definitions/somatic"
         },

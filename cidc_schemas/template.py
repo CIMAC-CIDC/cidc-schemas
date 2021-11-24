@@ -329,7 +329,7 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
     if "tnscope" in file_path[-1]:
         if "filter.exons" in file_path[-1]:
             file_path[-1] = file_path[-1].replace("filter.exons", "exons")
-        else:
+        elif "twist" not in file_path[-1]:
             temp = file_path[-1].split(".")
             if temp[-1] != "gz":
                 file_path[-1] = ".".join(temp[-1:] + temp[:-1])
@@ -466,7 +466,6 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
         }
 
         # keep track of where we are in the analysis schema
-        print(name, assay_schema["properties"].keys())
         context = assay_schema["properties"][pointer]["items"]["properties"]
         if short_key not in context:
             raise InvalidMergeTargetException(
@@ -575,6 +574,15 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
         template["properties"]["worksheets"][f"{title} Analysis"]["data_columns"][
             f"{title} Runs"
         ] = subtemplate
+
+    if name == "wes" and name != "wes_tumor_only":
+        template["properties"]["worksheets"][f"{title} Analysis"]["data_columns"][
+            f"{title} Runs"
+        ]["comments"] = {
+            "type_ref": "assays/wes_analysis.json#definitions/pair_analysis/properties/comments",
+            "merge_pointer": "0/comments",
+            "allow_empty": True,
+        }
 
     return template
 

@@ -242,7 +242,7 @@
 	    "metasheet": {
 	      "$ref": "artifacts/artifact_csv.json"
 	    },
-	    "tumor_mutational_burden": {
+	    "tumor_germline_overlap": {
 	      "$ref": "artifacts/artifact_tsv.json"
 	    },
 	    "report": {

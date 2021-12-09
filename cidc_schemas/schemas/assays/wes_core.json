@@ -288,9 +288,6 @@
 	    "maf_tnscope_filter": {
 	      "$ref": "artifacts/artifact_maf.json"
 	    },
-	    "maf_tnscope_output": {
-	      "$ref": "artifacts/artifact_maf.json"
-	    },
 		"tnscope_output_twist_maf": {
 			"$ref": "artifacts/artifact_maf.json"
 		}
@@ -300,7 +297,6 @@
 		  "vcf_gz_tnscope_filter",
 		  "tnscope_output_twist_filtered_vcf",
 		  "tnscope_output_twist_filtered_maf",
-		  "maf_tnscope_output",
 		  "maf_tnscope_filter",
 		  "tnscope_output_twist_vcf",
 		  "tnscope_output_twist_maf"

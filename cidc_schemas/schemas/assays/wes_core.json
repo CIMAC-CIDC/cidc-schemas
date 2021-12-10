@@ -257,7 +257,8 @@
 	    "wes_run_version",
 	    "metasheet",
 	    "report",
-	    "wes_sample_json"
+	    "wes_sample_json",
+		"tumor_germline_overlap"
 	  ],
 	  "additionalProperties": false
 	},

@@ -302,7 +302,7 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
         "sample_summar": "summar",
         "all_epitopes": "epitopes",
         ".txt.tn.tsv": ".tsv",
-        "report/somatic_variants/06_": "report/",
+        "report/somatic_variants/05_": "report/",
         "report/neoantigens/01_hla_r": "neoantigen/HLA_r",
         "msisensor2": "msisensor",
         "msisensor/single/run_/run_msisensor.txt": "msisensor/msisensor_report.txt",

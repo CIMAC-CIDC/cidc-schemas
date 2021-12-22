@@ -302,6 +302,8 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
         "sample_summar": "summar",
         "all_epitopes": "epitopes",
         ".txt.tn.tsv": ".tsv",
+        "tnscope.output.vcf.gz": "vcf_gz_tnscope_output.vcf.gz",
+        "tnscope.filter.vcf.gz": "vcf_gz_tnscope_filter.vcf.gz",
         "report/somatic_variants/05_": "report/",
         "report/neoantigens/01_hla_r": "neoantigen/HLA_r",
         "msisensor2": "msisensor",
@@ -327,9 +329,7 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
 
     # specialty conversions for file names / extensions only
     if "tnscope" in file_path[-1]:
-        if "filter.exons" in file_path[-1]:
-            file_path[-1] = file_path[-1].replace("filter.exons", "exons")
-        elif "twist" not in file_path[-1]:
+        if "twist" not in file_path[-1]:
             temp = file_path[-1].split(".")
             if temp[-1] != "gz":
                 file_path[-1] = ".".join(temp[-1:] + temp[:-1])
@@ -493,6 +493,7 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
                     f"{file_path} cannot be mapped to a location of the data object"
                 )
             elif merge_pointer in used_merge_pointers:
+                print(file_path, "\n\n", merge_pointer, "\n\n", used_merge_pointers)
                 raise InvalidMergeTargetException(
                     f"{file_path} causes a collision for inferred merge target {merge_pointer}"
                 )

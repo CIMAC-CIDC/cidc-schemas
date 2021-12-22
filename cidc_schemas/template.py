@@ -493,7 +493,6 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
                     f"{file_path} cannot be mapped to a location of the data object"
                 )
             elif merge_pointer in used_merge_pointers:
-                print(file_path, "\n\n", merge_pointer, "\n\n", used_merge_pointers)
                 raise InvalidMergeTargetException(
                     f"{file_path} causes a collision for inferred merge target {merge_pointer}"
                 )

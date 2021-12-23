@@ -180,7 +180,7 @@
                   "is_artifact": 1
                 },
                 {
-                  "parse_through": "lambda id: f'{folder or \"\"}analysis/msisensor/single/run_{id}/run_{id}_msisensor.txt'",
+                  "parse_through": "lambda id: f'{folder or \"\"}analysis/msisensor/single/{id}/{id}_msisensor.txt'",
                   "merge_pointer": "0/msisensor/msisensor_report",
                   "gcs_uri_format": "{protocol identifier}/rna/{cimac id}/analysis/msisensor/msisensor_report.txt",
                   "type_ref": "assays/components/local_file.json#properties/file_path",

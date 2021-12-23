@@ -302,10 +302,10 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
         "sample_summar": "summar",
         "all_epitopes": "epitopes",
         ".txt.tn.tsv": ".tsv",
-        "report/somatic_variants/06_": "report/",
+        "report/somatic_variants/05_": "report/",
         "report/neoantigens/01_hla_r": "neoantigen/HLA_r",
         "msisensor2": "msisensor",
-        "msisensor/single/run_/run_msisensor.txt": "msisensor/msisensor_report.txt",
+        "msisensor/single/msisensor.txt": "msisensor/msisensor_report.txt",
         "/report.": "/report/report.",
         "wes_meta/02_": "",
         "json/wes.json": "wes_sample.json",
@@ -327,9 +327,7 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
 
     # specialty conversions for file names / extensions only
     if "tnscope" in file_path[-1]:
-        if "filter.exons" in file_path[-1]:
-            file_path[-1] = file_path[-1].replace("filter.exons", "exons")
-        elif "twist" not in file_path[-1]:
+        if "twist" not in file_path[-1]:
             temp = file_path[-1].split(".")
             if temp[-1] != "gz":
                 file_path[-1] = ".".join(temp[-1:] + temp[:-1])

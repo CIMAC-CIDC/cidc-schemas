@@ -70,6 +70,11 @@
                                     "is_artifact": 1
                                 }
                             ]
+                        },
+                        "comments": {
+                            "type_ref": "assays/components/ngs/atacseq/atacseq_analysis.json#definitions/entry/properties/comments",
+                            "merge_pointer": "0/comments",
+                            "allow_empty": true
                         }
                     }
                 }

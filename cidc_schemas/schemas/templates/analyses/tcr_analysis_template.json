@@ -49,6 +49,11 @@
               "gcs_uri_format": "{protocol identifier}/tcr_analysis/{batch id}/{cimac id}/trb_clone.csv",
               "is_artifact": 1,
               "allow_empty": true
+            },
+            "comments": {
+                "type_ref": "assays/tcr_analysis.json#definitions/entry/properties/comments",
+                "merge_pointer": "0/comments",
+                "allow_empty": true
             }
           }
         }

@@ -223,6 +223,11 @@
                                     "is_artifact": 1
                                 }
                             ]
+                        },
+                        "comments": {
+                            "type_ref": "assays/wes_tumor_only_analysis.json#definitions/sample_analysis/properties/comments",
+                            "merge_pointer": "0/comments",
+                            "allow_empty": true
                         }
                     }
                 }

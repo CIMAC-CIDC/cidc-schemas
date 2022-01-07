@@ -573,14 +573,25 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
             f"{title} Runs"
         ] = subtemplate
 
-    if name == "wes" and name != "wes_tumor_only":
-        template["properties"]["worksheets"][f"{title} Analysis"]["data_columns"][
-            f"{title} Runs"
-        ]["comments"] = {
-            "type_ref": "assays/wes_analysis.json#definitions/pair_analysis/properties/comments",
-            "merge_pointer": "0/comments",
-            "allow_empty": True,
-        }
+    # add comments to all of them
+    if "wes" in name:
+        type_ref = f"assays/{name}_analysis.json#definitions/"
+        type_ref += "sample" if "tumor_only" in name else "pair"
+        type_ref += "_analysis/properties/comments"
+    else:
+        type_ref = f"assays/components/ngs/{name}/"
+        if name == "rna":
+            type_ref += "rna_level1_analysis.json#properties/comments"
+        else:  # name == "atacseq"
+            type_ref += f"{name}_analysis.json#definitions/entry/properties/comments"
+
+    template["properties"]["worksheets"][f"{title} Analysis"]["data_columns"][
+        f"{title} Runs"
+    ]["comments"] = {
+        "type_ref": type_ref,
+        "merge_pointer": "0/comments",
+        "allow_empty": True,
+    }
 
     return template
 

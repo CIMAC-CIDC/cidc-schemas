@@ -23,7 +23,7 @@
       "properties": {
         "run_id": {
           "type": "string",
-          "description": "An id used for a paired analysis run."
+          "description": "An id used as if this was a paired analysis run."
         },
         "somatic": { "$ref": "assays/wes_core.json#definitions/somatic" },
         "report": { "$ref": "assays/wes_core.json#definitions/report" },
@@ -33,7 +33,11 @@
         "rna": { "$ref": "assays/wes_core.json#definitions/rna" },
         "error": { "$ref": "assays/wes_core.json#properties/error" },
 
-        "tumor": { "$ref": "assays/wes_assay.json#definitions/sample_analysis" }
+        "tumor": { "$ref": "assays/wes_assay.json#definitions/sample_analysis" },
+        "comments": {
+          "type": "string",
+          "description": "Comments on the tumor-only analysis run."
+        }
       }
     }
   },

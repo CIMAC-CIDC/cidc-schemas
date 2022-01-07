@@ -36,6 +36,10 @@
     },
     "error": {
       "$ref": "artifacts/artifact_yaml.json"
+    },
+    "comments": {
+      "type": "string",
+      "description": "Comments on the RNAseq analysis run."
     }
   },
   "required": [

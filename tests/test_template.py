@@ -539,7 +539,12 @@ def test_convert_api_to_template_rna():
                                         "is_artifact": 1,
                                     }
                                 ],
-                            }
+                            },
+                            "comments": {
+                                "type_ref": "assays/components/ngs/rna/rna_level1_analysis.json#properties/comments",
+                                "merge_pointer": "0/comments",
+                                "allow_empty": True,
+                            },
                         }
                     },
                 },

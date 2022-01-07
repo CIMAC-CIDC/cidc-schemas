@@ -35,7 +35,11 @@
                 "$ref": "sample.json#properties/cimac_id"
             },
             "tra_clone": {"$ref": "artifacts/artifact_csv.json"},
-            "trb_clone": {"$ref": "artifacts/artifact_csv.json"}
+            "trb_clone": {"$ref": "artifacts/artifact_csv.json"},
+            "comments": {
+              "type": "string",
+              "description": "Comments on the TCR analysis run."
+            }
         }
     }
   },

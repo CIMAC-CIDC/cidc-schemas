@@ -36,7 +36,11 @@
 			"properties": {
                 "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
                 "peaks": { "$ref": "assays/components/ngs/atacseq/atacseq_analysis.json#definitions/peaks" },
-                "aligned_sorted_bam": { "$ref": "artifacts/artifact_bam.json" }
+                "aligned_sorted_bam": { "$ref": "artifacts/artifact_bam.json" },
+                "comments": {
+                  "type": "string",
+                  "description": "Comments on the ATACseq analysis run."
+                }
 			}
 		}
 	},

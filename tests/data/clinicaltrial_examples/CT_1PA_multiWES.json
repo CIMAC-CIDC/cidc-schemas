@@ -181,5 +181,340 @@
                 ]
             }
         ]
+    },
+    "analysis": {
+        "wes_analysis":
+            {
+                "pair_runs": [
+                {
+                    "rna":
+                    {
+                        "haplotyper": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        },
+                        "vcf_tnscope_filter_neoantigen":{
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        }
+                    },
+                    "tumor":
+                    {
+                        "metrics":
+                        {
+                            "target_metrics": {
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC"
+                            },
+                            "coverage_metrics": {
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC"
+                            },
+                            "coverage_metrics_summary": {
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC"
+                            }
+                        },
+                        "cimac_id": "CTTTP21S1.00",
+                        "germline":
+                        {
+                            "haplotyper_targets": {
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC"
+                            }
+                        },
+                        "optitype":
+                        {
+                            "optitype_result": {
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC"
+                            },
+                            "xhla_report_hla": {
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC"
+                            }
+                        },
+                        "alignment":
+                        {
+                            "align_sorted_dedup": {
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC"
+                            },
+                            "align_sorted_dedup_index": {
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC"
+                            }
+                        }
+                    },
+                    "normal":
+                    {
+                        "metrics":
+                        {
+                            "target_metrics": {
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC"
+                            },
+                            "coverage_metrics": {
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC"
+                            },
+                            "coverage_metrics_summary": {
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC"
+                            }
+                        },
+                        "cimac_id": "CTTTP21S2.00",
+                        "germline":
+                        {
+                            "haplotyper_targets": {
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC"
+                            }
+                        },
+                        "optitype":
+                        {
+                            "optitype_result": {
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC"
+                            },
+                            "xhla_report_hla": {
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC"
+                            }
+                        },
+                        "alignment":
+                        {
+                            "align_sorted_dedup": {
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC"
+                            },
+                            "align_sorted_dedup_index": {
+                                "object_url" :          "...",
+                                "uploaded_timestamp" :  "...",
+                                "file_size_bytes" :     0,
+                                "md5_hash" :            "...",
+                                "artifact_category" :   "Assay Artifact from CIMAC"
+                            }
+                        }
+                    },
+                    "purity":
+                    {
+                        "optimal_purity_value": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        }
+                    },
+                    "report":
+                    {
+                        "config": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        },
+                        "report": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        },
+                        "metasheet": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        },
+                        "wes_run_version": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        },
+                        "wes_sample_json": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        },
+                        "tumor_mutational_burden": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        }
+                    },
+                    "run_id": "CTTTP21S1.00",
+                    "somatic":
+                    {
+                        "tnscope_exons": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        },
+                        "maf_tnscope_filter": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        },
+                        "maf_tnscope_output": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        },
+                        "vcf_gz_tnscope_filter": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        },
+                        "vcf_gz_tnscope_output": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        }
+                    },
+                    "germline":
+                    {
+                        "vcf_compare": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        }
+                    },
+                    "clonality":
+                    {
+                        "clonality_table": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        },
+                        "clonality_pyclone": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        }
+                    },
+                    "msisensor":
+                    {
+                        "msisensor": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        }
+                    },
+                    "copynumber":
+                    {
+                        "copynumber_cnv_calls": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        },
+                        "copynumber_cnv_calls_tsv": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        }
+                    },
+                    "neoantigen":
+                    {
+                        "HLA_results": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        },
+                        "combined_filtered": {
+                            "object_url" :          "...",
+                            "uploaded_timestamp" :  "...",
+                            "file_size_bytes" :     0,
+                            "md5_hash" :            "...",
+                            "artifact_category" :   "Assay Artifact from CIMAC"
+                        }
+                    }
+                }
+            ]
+        }
     }
 }

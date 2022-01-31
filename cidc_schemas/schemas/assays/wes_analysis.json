@@ -60,6 +60,10 @@
         },
         "error": {
           "$ref": "assays/wes_core.json#properties/error"
+        },
+        "ignore": {
+          "$ref": "assays/wes_core.json#properties/ignore",
+			    "$comment": "added for backwards compatibility"
         }
       }
     }

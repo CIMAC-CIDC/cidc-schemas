@@ -245,6 +245,9 @@
 	    "tumor_germline_overlap": {
 	      "$ref": "artifacts/artifact_tsv.json"
 	    },
+		"tumor_mutational_burden": {
+		  "$ref": "artifacts/artifact_tsv.json"
+		},
 	    "report": {
 	      "$ref": "artifacts/artifact_gz.json"
 	    },
@@ -263,49 +266,79 @@
 	},
 
 	"somatic": {
-	  "type": "object",
-	  "description": "Somatic variant calling output sample files.",
-	  "additionalProperties": false,
-	  "properties": {
-	    "tnscope_output_twist_vcf": {
-	      "$ref": "artifacts/artifact_vcf.json"
-	    },
-	    "vcf_gz_tnscope_filter": {
-	      "$ref": "artifacts/artifact_vcf_gz.json"
-	    },
-	    "vcf_gz_tnscope_output": {
-	      "$ref": "artifacts/artifact_vcf_gz.json"
-	    },
-	    "vcf_tnscope_output": {
-	      "$ref": "artifacts/artifact_vcf.json"
-	    },
-		"tnscope_output_twist_filtered_vcf": {
-		  "$ref": "artifacts/artifact_vcf.json"
+		"type": "object",
+		"description": "Somatic variant calling output sample files.",
+		"additionalProperties": false,
+		"properties": {
+			"tnscope_output_twist_vcf": {
+				"$ref": "artifacts/artifact_vcf.json"
+			},
+			"vcf_gz_tnscope_filter": {
+			"$ref": "artifacts/artifact_vcf_gz.json"
+			},
+			"vcf_gz_tnscope_output": {
+				"$ref": "artifacts/artifact_vcf_gz.json"
+			},
+			"vcf_tnscope_output": {
+				"$ref": "artifacts/artifact_vcf.json"
+			},
+			"tnscope_output_twist_filtered_vcf": {
+				"$ref": "artifacts/artifact_vcf.json"
+			},
+			"tnscope_output_twist_filtered_maf": {
+				"$ref": "artifacts/artifact_maf.json"
+			},
+			"maf_tnscope_filter": {
+				"$ref": "artifacts/artifact_maf.json"
+			},
+			"tnscope_output_twist_maf": {
+				"$ref": "artifacts/artifact_maf.json"
+			},
+
+			"vcf_tnscope_filter": {
+				"$ref": "artifacts/artifact_vcf.json",
+				"$comment": "added for backwards compatibility"
+			},
+			"maf_tnscope_output": {
+				"$ref": "artifacts/artifact_maf.json",
+				"$comment": "added for backwards compatibility"
+			},
+			"tnscope_exons": {
+				"$ref": "artifacts/artifact_vcf_gz.json",
+				"$comment": "added for backwards compatibility"
+			}
 		},
-		"tnscope_output_twist_filtered_maf": {
-			"$ref": "artifacts/artifact_maf.json"
-		},
-	    "maf_tnscope_filter": {
-	      "$ref": "artifacts/artifact_maf.json"
-	    },
-		"tnscope_output_twist_maf": {
-			"$ref": "artifacts/artifact_maf.json"
-		}
-	  },
-	  "required": [
-		  "vcf_gz_tnscope_output",
-		  "vcf_gz_tnscope_filter",
-		  "tnscope_output_twist_filtered_vcf",
-		  "tnscope_output_twist_filtered_maf",
-		  "maf_tnscope_filter",
-		  "tnscope_output_twist_vcf",
-		  "tnscope_output_twist_maf"
-	  ]
+		"oneOf": [
+			{
+				"required": [
+					"vcf_gz_tnscope_output",
+					"vcf_gz_tnscope_filter",
+					"tnscope_output_twist_filtered_vcf",
+					"tnscope_output_twist_filtered_maf",
+					"maf_tnscope_filter",
+					"tnscope_output_twist_vcf",
+					"tnscope_output_twist_maf"
+				]
+			},
+			{
+				"required": [
+					"vcf_gz_tnscope_output",
+					"vcf_gz_tnscope_filter",
+					"maf_tnscope_filter",
+					"maf_tnscope_output",
+					"tnscope_exons"
+				],
+				"$comment": "added for backwards compatibility"
+			}
+		]
 	}
   },
   "properties": {
 	"error": {
 		"$ref": "artifacts/artifact_yaml.json"
+	},
+	"ignore": {
+		"$ref": "artifacts/artifact_text.json"
 	}
   }
 }

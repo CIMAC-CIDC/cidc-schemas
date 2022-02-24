@@ -1,6 +1,6 @@
 {
     "title": "WES tumor-only analysis template",
-    "description": "Metadata information for WES tumor-only Analysis output.",
+    "description": "Whole Exome Sequencing (WES) Tumor-Only analysis submission.",
     "prism_template_root_object_schema": "assays/wes_tumor_only_analysis.json",
     "prism_template_root_object_pointer": "/analysis/wes_tumor_only_analysis",
     "properties": {

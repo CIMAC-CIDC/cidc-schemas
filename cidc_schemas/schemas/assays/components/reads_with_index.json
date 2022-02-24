@@ -9,15 +9,17 @@
   ],
   "properties": {
     "r1": {
+      "description": "Array of Read 1 as fastq.gz files",
       "$ref": "assays/components/reads_core.json#properties/r1"
     },
     "r2": {
+      "description": "Array of Read 2 as fastq.gz files",
       "$ref": "assays/components/reads_core.json#properties/r2"
     },
     "i1": {
       "type": "array",
       "items": {
-        "$comment": "Fastq file for the first index.",
+        "description": "Fastq file for the index of Read 1.",
         "$ref": "artifacts/artifact_fastq_gz.json"
       },
       "minItems": 1
@@ -25,7 +27,7 @@
     "i2": {
       "type": "array",
       "items": {
-        "$comment": "Fastq file for the second index.",
+        "description": "Fastq file for the index of Read 2.",
         "$ref": "artifacts/artifact_fastq_gz.json"
       },
       "minItems": 1

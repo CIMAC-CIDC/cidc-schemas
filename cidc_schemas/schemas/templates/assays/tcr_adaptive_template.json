@@ -1,6 +1,6 @@
 {
-  "title": "Metadata file for TCR seq  [Adaptive].",
-  "description": "Metadata information for rna expression data submission via Adaptive's TSV files.",
+  "title": "TCRseq [Adaptive] assay template",
+  "description": "TCR expression data submission via Adaptive's TSV files.",
   "properties": {
     "worksheets": {
       "TCR": {
@@ -68,13 +68,13 @@
         "prism_data_object_pointer": "0/controls/-",
         "data_columns": {
           "Controls": {
-            "id": {
+            "control id": {
               "merge_pointer": "0/id",
               "type_ref": "assays/tcr_assay.json#definitions/control/properties/id"
             },
             "tsv reads": {
               "merge_pointer": "0/tsv_file",
-              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/controls/{id}/reads.tsv",
+              "gcs_uri_format": "{protocol identifier}/tcr/{batch id}/controls/{control id}/reads.tsv",
               "is_artifact": "1",
               "type_ref": "assays/components/local_file.json#properties/file_path"
             }

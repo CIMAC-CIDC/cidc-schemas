@@ -1,6 +1,6 @@
 {
-    "title": "Metadata file for clincal data",
-    "description": "Metadata regarding clinical data.\n",
+    "title": "Clincal data template",
+    "description": "Submission of clinical data for each participant, indexed by CIMAC participant ID.<br>Use 'MISSING' if no CIMAC ID has been assigned.",
     "properties": {
         "worksheets": {
             "Clinical data": {

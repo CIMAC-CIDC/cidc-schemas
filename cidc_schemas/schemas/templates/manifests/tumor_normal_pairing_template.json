@@ -1,5 +1,5 @@
 {
-    "title": "Metadata manifest for tumor / normal pairing for WES assay analysis.",
+    "title": "Metadata manifest for WES analysis pairing",
     "description": "Metadata manifest for tumor / normal pairing for WES assay analysis.",
     "properties": {
         "worksheets": {

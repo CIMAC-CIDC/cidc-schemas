@@ -427,7 +427,7 @@ def test_convert_api_to_template_wes():
 
     wes_json = {
         "title": "WES analysis template",
-        "description": "Metadata information for WES Analysis output.",
+        "description": "Whole Exome Sequencing (WES) Tumor-Normal Paired analysis submission.",
         "prism_template_root_object_schema": "assays/wes_analysis.json",
         "prism_template_root_object_pointer": "/analysis/wes_analysis",
         "properties": {
@@ -507,12 +507,12 @@ def test_convert_api_to_template_rna():
 
     rna_json = {
         "title": "RNAseq level 1 analysis template",
-        "description": "Metadata information for RNAseq level 1 Analysis output.",
+        "description": "RNA sequencing Level 1 analysis submission.",
         "prism_template_root_object_schema": "assays/components/ngs/rna/rna_analysis.json",
         "prism_template_root_object_pointer": "/analysis/rna_analysis",
         "properties": {
             "worksheets": {
-                "RNAseq Analysis": {
+                "RNAseq level 1 Analysis": {
                     "preamble_rows": {
                         "protocol identifier": {
                             "merge_pointer": "2/protocol_identifier",
@@ -526,7 +526,7 @@ def test_convert_api_to_template_rna():
                     },
                     "prism_data_object_pointer": "/level_1/-",
                     "data_columns": {
-                        "RNAseq Runs": {
+                        "RNAseq level 1 Runs": {
                             "cimac id": {
                                 "merge_pointer": "/cimac_id",
                                 "type_ref": "sample.json#properties/cimac_id",

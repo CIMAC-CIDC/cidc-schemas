@@ -1,5 +1,5 @@
-{    "title": "Metadata file for mIF",
-    "description": "Metadata information for multiplex immunoflouresence (mIF).",
+{    "title": "mIF assay template",
+    "description": "Multiplex ImmunoFlouresence (mIF) submission.",
     "prism_template_root_object_schema": "assays/mif_assay.json",
     "prism_template_root_object_pointer": "/assays/mif/0",
     "properties":

@@ -1,6 +1,6 @@
 {
-  "title": "Metadata file for olink",
-  "description": "Metadata information for olink analysis.\n",
+  "title": "Olink assay template",
+  "description": "Olink proteomics submission.",
   "prism_template_root_object_schema": "assays/olink_assay.json#definitions/batch",
   "prism_template_root_object_pointer": "/assays/olink/batches/0",
   "properties": {

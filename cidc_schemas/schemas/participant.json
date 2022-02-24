@@ -12,14 +12,14 @@
       "$comment": "With `in_doc_ref_pattern` here, there's no need to specify it each time cimac_participant_id is $ref'ed, constrain will be pulled in place by ref resolver automatically, assuring that it will be checked for every cimac_participant_id $ref.",
       "pattern": "^C[A-Z0-9]{3}[A-Z0-9]{3}$",
       "example": "CTTTP01",
-      "description": "Participant identifier assigned by the CIMAC-CIDC Network. Formated as: C?????? (first 7 characters of CIMAC ID)"
+      "description": "Participant identifier assigned by the CIMAC-CIDC Network. Formated as: CTTTPPP for trial code TTT and participant PPP (first 7 characters of CIMAC ID)."
     },
     "cidc_participant_id": {
       "type": "string",
       "in_doc_ref_pattern": "/participants/*/cidc_participant_id",
       "pattern": "^CIDC-\\w+-\\w+$",
       "example": "CIDC-Trial101-e1b2c3",
-      "description": "The generated, CIDC-internal identifier for this participant."
+      "description": "The generated, CIDC-internal identifier for this participant. Formated as: CIDC-<trial>-<participant>."
     },
     "participant_id": {
       "type": "string",

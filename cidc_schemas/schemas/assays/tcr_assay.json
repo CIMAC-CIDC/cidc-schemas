@@ -1,7 +1,7 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "tcr_assay",
-  "title": "TCR Assay",
+  "title": "TCRseq Assay",
   "type": "object",
   "description": "Additional properties to describe a TCR assay for expression analysis.",
 
@@ -12,6 +12,7 @@
       "additionalProperties": false,
       "properties": {
         "id": {
+          "description": "A unique ID for this control.",
           "type": "string"
         },
         "files": {"$ref": "assays/tcr_assay.json#definitions/files"},
@@ -85,10 +86,18 @@
           "description": "RNA quantity (in ng).",
           "type": "number"
         },
-        "r1": {"$ref": "assays/components/reads_with_index.json#properties/r1"},
-        "r2": {"$ref": "assays/components/reads_with_index.json#properties/r2"},
-        "i1": {"$ref": "assays/components/reads_with_index.json#properties/i1"},
-        "i2": {"$ref": "assays/components/reads_with_index.json#properties/i2"}
+        "r1": {
+          "$ref": "assays/components/reads_with_index.json#properties/r1"
+        },
+        "r2": {
+          "$ref": "assays/components/reads_with_index.json#properties/r2"
+        },
+        "i1": {
+          "$ref": "assays/components/reads_with_index.json#properties/i1"
+        },
+        "i2": {
+          "$ref": "assays/components/reads_with_index.json#properties/i2"
+        }
       },
       "required": [
         "replicate_id"
@@ -119,6 +128,7 @@
       }
     },
     "sample_sheet": {
+        "description": "A Comma-Separated Value (CSV) text file describing the samples in this batch.",
         "$ref": "artifacts/artifact_csv.json"
     },
     "sequencing_run_date": {

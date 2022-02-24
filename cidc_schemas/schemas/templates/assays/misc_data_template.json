@@ -1,6 +1,6 @@
 {
-  "title": "Metadata file for Miscellaneous data",
-  "description": "Metadata information for miscellaneous data submission.",
+  "title": "Miscellaneous data template",
+  "description": "Submission of data that isn't supported by any other template.",
   "properties": {
     "worksheets": {
       "Misc": {

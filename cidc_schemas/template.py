@@ -22,7 +22,7 @@ from typing import (
 )
 from collections import defaultdict
 
-from .constants import SCHEMA_DIR, TEMPLATE_DIR
+from .constants import ANALYSIS_TEMPLATE_DIR, SCHEMA_DIR, TEMPLATE_DIR
 from .json_validation import _load_dont_validate_schema
 from .util import get_file_ext
 
@@ -59,7 +59,7 @@ POSSIBLE_FILE_EXTS = [
 
 
 def generate_analysis_template_schemas(
-    target_dir: str = os.path.join(TEMPLATE_DIR, "analyses"),
+    target_dir: str = ANALYSIS_TEMPLATE_DIR,
     fname_format: Callable[[str], str] = lambda file: f"{file}_analysis_template.json",
 ):
     """Uses output_API.json's from cidc-ngs-pipeline-api along with existing assays/components/ngs analysis templates to generate templates/analyses schemas"""
@@ -211,17 +211,23 @@ _excluded_samples_worksheet_snippet = {
 
 
 def _initialize_template_schema(name: str, title: str, pointer: str):
-    long_title = "RNAseq level 1" if title == "RNAseq" else title
     obj_root_schema = (
         f"assays/components/ngs/{name}/{name}_analysis.json"
         if name in ["rna", "atacseq"]  # special cases currently
         else f"assays/{name}_analysis.json"  # all others should be here
     )
 
+    expanded_name = {
+        "atacseq": f"Assay by Transposase-Accessible Chromatin by Sequencing (ATACseq)",
+        "rna": "RNA sequencing Level 1",
+        "wes": "Whole Exome Sequencing (WES) Tumor-Normal Paired",
+        "wes_tumor_only": "Whole Exome Sequencing (WES) Tumor-Only",
+    }[name]
+
     # static
     template = {
-        "title": f"{long_title} analysis template",
-        "description": f"Metadata information for {long_title} Analysis output.",
+        "title": f"{title} analysis template",
+        "description": f"{expanded_name} analysis submission.",
         "prism_template_root_object_schema": obj_root_schema,
         "prism_template_root_object_pointer": f"/analysis/{name}_analysis"
         + ("/0" if name == "atacseq" else ""),
@@ -384,13 +390,13 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
     from .prism.merger import InvalidMergeTargetException
 
     # so many different ways of writing it
-    title = (
-        "RNAseq"
-        if name == "rna"
-        else "WES tumor-only"
-        if name == "wes_tumor_only"
-        else name.upper()
-    )
+    title = {
+        "atacseq": "ATACseq",
+        "rna": "RNAseq level 1",
+        "wes": "WES",
+        "wes_tumor_only": "WES tumor-only",
+    }[name]
+
     pointer = [
         k
         for k, subschema in assay_schema["properties"].items()
@@ -840,7 +846,8 @@ class _FieldDef(NamedTuple):
 
         try:
             gs_key = try_formatting()
-        except Exception:
+        except Exception as e:
+            logger.error(str(e), exc_info=True)
             raise ParsingException(
                 f"Can't format destination gcs uri for {self.key_name!r}: {format}"
             )

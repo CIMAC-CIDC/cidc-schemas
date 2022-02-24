@@ -1,6 +1,6 @@
 {
-  "title": "Metadata file for H & E",
-  "description": "Metadata information for H & E analysis.",
+  "title": "H & E assay template",
+  "description": "Hemotoxylin and Eosin staining (H&E) submission.",
   "properties": {
       "worksheets": {
           "H&E": {

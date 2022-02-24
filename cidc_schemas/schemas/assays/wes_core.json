@@ -1,7 +1,8 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "wes_assay",
-  "title": "Whole Exome Sequencing Assay",
+  "title": "WES Core",
+  "description": "Base information about the acquisition and analysis of Whole Exome Sequencing data",
   "inheritableBase": true,
   "type": "object",
   "required": [],

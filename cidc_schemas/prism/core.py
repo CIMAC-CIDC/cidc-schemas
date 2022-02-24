@@ -2,7 +2,7 @@
 import logging
 import base64
 import hmac
-from typing import List, Union
+from typing import List, Tuple, Union
 
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import (
@@ -272,7 +272,7 @@ def prismify(
     template: Template,
     schema_root: str = SCHEMA_DIR,
     debug: bool = False,
-) -> (dict, List[LocalFileUploadEntry], List[Union[Exception, str]]):
+) -> Tuple[dict, List[LocalFileUploadEntry], List[Union[Exception, str]]]:
     """
     Converts excel file to json object. It also identifies local files
     which need to uploaded to a google bucket and provides some logic

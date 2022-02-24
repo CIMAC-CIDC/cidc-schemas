@@ -20,5 +20,6 @@ SCHEMA_LIST = [
 ]
 
 TEMPLATE_DIR = os.path.join(SCHEMA_DIR, "templates")
+ANALYSIS_TEMPLATE_DIR = os.path.join(TEMPLATE_DIR, "analyses")
+ASSAY_TEMPLATE_DIR = os.path.join(TEMPLATE_DIR, "assays")
 MANIFEST_DIR = os.path.join(TEMPLATE_DIR, "manifests")
-METADATA_DIR = os.path.join(TEMPLATE_DIR, "metadata")

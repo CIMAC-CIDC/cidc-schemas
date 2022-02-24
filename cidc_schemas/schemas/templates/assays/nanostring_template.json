@@ -1,6 +1,6 @@
 {
-  "title": "Metadata file for Nanostring",
-  "description": "Metadata information for Nanostring analysis.\n",
+  "title": "Nanostring assay template",
+  "description": "Nanostring sequencing submission.",
   "prism_template_root_object_schema": "assays/nanostring_assay.json",
   "prism_template_root_object_pointer": "/assays/nanostring/0",
   "properties": {

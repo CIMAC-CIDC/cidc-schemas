@@ -2,37 +2,50 @@
 {% block content %}
 
     <div class="container">
-        <p>CIDC Data Model</p>
-
-        <h1>CIDC Data Model</h1>
+        <h1>CIDC Documentation</h1>
 
         <div class="alert alert-primary" role="alert">
-            Draft 0.1 of the CIDC Data Model.
+            Documentation for CIDC concepts, assays, and manifests.
         </div>
-
-        {% for dirname, schemas in schema_directories.items() %}
-            <h5>{{ dirname.replace('.', ' > ').title() }}</h5>
-            <p>
-
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Entity</th>
-                    <th>Description</th>
-                </tr>
-                </thead>
-                {% for entity_name, (entity_schema, json) in schemas.items() %}
-                <tr>
-                    {% if dirname == "" %}
-                        <td width=25%><a href='{{ entity_name }}.html'>{{ entity_schema["title"] }}</a></td>
-                    {% else %}
-                        <td width=25%><a href='{{ dirname }}.{{ entity_name }}.html'>{{ entity_schema["title"] }}</a></td>
+        <div class="container">
+            <div class="accordion" id="index_accordion">
+                {% for group, schemas in schema_groups.items() %}
+                    {% if not group %}
+                        {% set group = "concepts" %}
                     {% endif %}
-                    <td>{{ entity_schema["description"] }}</td>
-                </tr>
+
+                    <div class="card">
+                        <div class="card-header" id="{{ group }}">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ group }}_card" aria-expanded="false" aria-controls="{{ group }}_card">
+                                    {{ group.replace('.', ' > ').title() }}
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="{{ group }}_card" class="collapse {{ 'show' if group == 'assays' else '' }}" aria-labelledby="{{ group }}" data-parent="#index_accordion">
+                            <div class="card-body">
+                                <table class="table table-striped">
+                                    {% for entity_name, entity_schema in schemas.items() %}
+                                        <tr>
+                                            {% if group == "" %}
+                                                <td width=25%><a href='{{ entity_name }}.html'>{{ entity_schema["title"] }}</a></td>
+                                                <td>{{ entity_schema["description"] }}</td>
+                                            {% elif group == "assays" %}
+                                                <td width=25%><a href='{{ group }}.{{ entity_name }}.html'>{{ entity_schema.schema["title"] }}</a></td>
+                                                <td>{{ entity_schema.schema["description"] }}</td>
+                                            {% else %}
+                                                <td width=25%><a href='{{ group }}.{{ entity_name }}.html'>{{ entity_schema["title"] }}</a></td>
+                                                <td>{{ entity_schema["description"] }}</td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 {% endfor %}
-            </table>
-        {% endfor %}
+            </div>
+        </div>
     </div>
 
 {% endblock %}

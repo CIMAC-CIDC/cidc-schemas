@@ -1,7 +1,7 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "clinical_assay",
-  "title": "Clinical Data Assay",
+  "title": "Clinical data Assay",
   "type": "object",
   "description": "Clinical data recorded for a clinical trial",
   "additionalProperties": false,
@@ -14,18 +14,16 @@
       "additionalProperties": false,
       "properties": {
         "clinical_file": {
+          "description": "A non-harmonized clinical data file.",
           "inheritableBase": true,
           "anyOf": [
             {
-              "$comment": "Path to clinical data XLSX file.",
               "$ref": "artifacts/artifact_clinical_xlsx.json"
             },
             {
-              "$comment": "Path to clinical data CSV file.",
               "$ref": "artifacts/artifact_clinical_csv.json"
             },
             {
-              "$comment": "Path to clinical data DOCX file.",
               "$ref": "artifacts/artifact_clinical_docx.json"
             }
           ]

@@ -1,6 +1,6 @@
 {
-  "title": "Metadata file for RNA expression [BAM]",
-  "description": "Metadata information for rna expression data submission via BAM files.",
+  "title": "RNA expression [BAM] assay template",
+  "description": "RNA expression data submission via BAM files.",
   "properties": {
     "worksheets": {
       "RNA": {

@@ -1,5 +1,5 @@
 {
-    "title": "Metadata manifest for trial-specific non-harmonized participant annotations.",
+    "title": "Metadata manifest for participant annotations",
     "description": "Metadata manifest for trial-specific non-harmonized participant annotations.",
     "properties": {
         "worksheets": {

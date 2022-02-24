@@ -1,6 +1,6 @@
 {
-  "title": "Metadata file for WES [BAM]",
-  "description": "Metadata information for whole exome sequencing (WES) data submission via BAM files.",
+  "title": "WES [BAM] assay template",
+  "description": "Whole Exome Sequencing (WES) data submission via BAM files.",
   "properties": {
     "worksheets": {
       "WES": {

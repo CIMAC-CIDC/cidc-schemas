@@ -2,29 +2,73 @@
 {% extends "base.j2" %}
 
 {% macro worksheet_tables(name, schema, required) -%}
-  <h3>Worksheet - {{name}}</h3>
-  {% if 'preamble_rows' in schema %}
-    <h4>Preamble Rows</h4>
-    {{ macros.properties_table(schema['preamble_rows'], required) }}
-  {% endif %}
-  {% if 'data_columns' in schema %}
-    <h4>Data Columns</h4>
-    {% for table_name, table_schema in schema['data_columns'].items() %}
-      <h5 class="text-muted">{{ table_name }}</h4>
-      {{ macros.properties_table(table_schema, required) }}
-    {% endfor %}
-  {% endif %}
+    {% set pyname = name.replace(" ", "_") %}
+
+    <div class="accordion" id="{{ pyname }}_accordion">
+        <div class="card">
+            <div class="card-header" id="{{ pyname }}">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ pyname }}_card" aria-expanded="false" aria-controls="{{ pyname }}_card">
+                        Worksheet -
+                        {{ name }}
+                    </button>
+                </h2>
+            </div>
+            <div id="{{ pyname }}_card" class="collapse" aria-labelledby="{{ pyname }}" data-parent="#{{ pyname }}_accordion">
+                <div class="card-body">
+                    {% if 'preamble_rows' in schema %}
+                        <div class="accordion" id="{{ pyname }}_preamble_accordion">
+                            <div class="card">
+                                <div class="card-header" id="{{ pyname }}_preamble">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ pyname }}_preamble_card" aria-expanded="false" aria-controls="{{ pyname }}_preamble_card">
+                                            Preamble Rows
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="{{ pyname }}_preamble_card" class="collapse" aria-labelledby="{{ pyname }}_preamble" data-parent="#{{ pyname }}_preamble_accordion">
+                                    <div class="card-body">
+                                        {{ macros.properties_table(schema['preamble_rows'], required) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if 'data_columns' in schema %}
+                        <div class="accordion" id="{{ pyname }}_body_accordion">
+                            <div class="card">
+                                <div class="card-header" id="{{ pyname }}_body">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ pyname }}_body_card" aria-expanded="false" aria-controls="{{ pyname }}_body_card">
+                                            Data Columns
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="{{ pyname }}_body_card" class="collapse" aria-labelledby="{{ pyname }}_body" data-parent="#{{ pyname }}_body_accordion">
+                                    <div class="card-body">
+                                        {% for table_name, table_schema in schema['data_columns'].items() %}
+                                            <h5 class="text-muted">{{ table_name }}</h4>
+                                            {{ macros.properties_table(table_schema, required) }}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
 {%- endmacro %}
 
 {% block content %}
 
-  {{ macros.header(schema) }}
+    {{ macros.header(schema) }}
 
-  <div class="container">
-    {% for name, worksheet_schema in schema['properties']['worksheets'].items() %}
-      {{ worksheet_tables(name, worksheet_schema, schema['required']) }}
-    {% endfor %}
-    
-    {{ macros.definitions_table(schema, schema['required'])}}
-  </div>
+    <div class="container">
+        {% for name, worksheet_schema in schema['properties']['worksheets'].items() %}
+            {{ worksheet_tables(name, worksheet_schema, schema['required']) }}
+        {% endfor %}
+    </div>
+
 {% endblock %}

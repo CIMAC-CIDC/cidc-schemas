@@ -1,6 +1,6 @@
 {
-    "title": "Shipping manifest for tissue slides",
-    "description": "Shipping / receiving manifest for transferring tissue slides.\n",
+    "title": "Biospecimen manifest for tissue slides",
+    "description": "Biospecimen manifest for transferring tissue slides.",
     "properties": {
         "worksheets": {
 

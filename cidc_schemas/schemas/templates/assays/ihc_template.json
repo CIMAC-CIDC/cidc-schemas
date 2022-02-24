@@ -1,6 +1,6 @@
 {
-    "title": "Metadata file for IHC",
-    "description": "Metadata information for Immunohistochemical (IHC) analysis.\n",
+    "title": "IHC assay template",
+    "description": "ImmunoHistoChemistry (IHC) submission.",
     "properties": {
         "worksheets": {
             "IHC": {

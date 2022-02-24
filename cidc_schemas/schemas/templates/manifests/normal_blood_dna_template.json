@@ -1,6 +1,6 @@
 {
-    "title": "Shipping manifest for DNA extracted from normal blood samples",
-    "description": "Shipping / receiving manifest for transferring DNA extracted from normal blood samples.\n",
+    "title": "Biospecimen manifest for normal blood DNA",
+    "description": "Biospecimen manifest for transferring DNA extracted from normal blood samples.",
     "properties": {
         "worksheets": {
             "Shipment": {

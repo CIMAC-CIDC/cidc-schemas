@@ -1,7 +1,7 @@
 {
     "$schema": "metaschema/strict_meta_schema.json#",
     "$id": "cytof_assay",
-    "title": "CYTOF Run",
+    "title": "CYTOF Assay",
     "type": "object",
     "description": "Information about the acquisition and analysis CyTOF data.",
     "additionalProperties": false,
@@ -53,12 +53,14 @@
             "type": "string"
         },
         "source_fcs": {
+            "description": "The raw FCS file(s) generated running this batch.",
             "type": "array",
             "items": {
                 "$ref": "artifacts/artifact_fcs.json"
             }
         },
         "barcoding_key_csv": {
+            "description": "The master debarcoding key in a CSV file",
             "$ref": "artifacts/artifact_csv.json"
         },
         "astrolabe_reports": {

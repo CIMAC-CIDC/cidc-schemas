@@ -1,11 +1,11 @@
 {
-    "title": "ATACSEQ analysis template",
-    "description": "Metadata information for ATACSEQ Analysis output.",
+    "title": "ATACseq analysis template",
+    "description": "Assay by Transposase-Accessible Chromatin by Sequencing (ATACseq) analysis submission.",
     "prism_template_root_object_schema": "assays/components/ngs/atacseq/atacseq_analysis.json",
     "prism_template_root_object_pointer": "/analysis/atacseq_analysis/0",
     "properties": {
         "worksheets": {
-            "ATACSEQ Analysis": {
+            "ATACseq Analysis": {
                 "preamble_rows": {
                     "protocol identifier": {
                         "merge_pointer": "3/protocol_identifier",
@@ -29,7 +29,7 @@
                 },
                 "prism_data_object_pointer": "/records/-",
                 "data_columns": {
-                    "ATACSEQ Runs": {
+                    "ATACseq Runs": {
                         "cimac id": {
                             "merge_pointer": "/cimac_id",
                             "type_ref": "sample.json#properties/cimac_id",

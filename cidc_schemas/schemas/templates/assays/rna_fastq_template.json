@@ -1,6 +1,6 @@
 {
-  "title": "Metadata file for RNA expression [FASTQ].",
-  "description": "Metadata information for rna expression data submission via FASTQ files.",
+  "title": "RNA expression [FASTQ] assay template",
+  "description": "RNA expression data submission via FASTQ files.",
   "properties": {
     "worksheets": {
       "RNA": {

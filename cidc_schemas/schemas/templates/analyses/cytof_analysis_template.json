@@ -1,6 +1,6 @@
 {
     "title": "CyTOF analysis template",
-    "description": "Metadata information for CyTOF Analysis output.",
+    "description": "Cytometry by Time-Of-Flight (CyTOF) analysis submission.",
     "prism_template_root_object_schema": "assays/cytof_assay.json",
     "prism_template_root_object_pointer": "/assays/cytof/0",
     "properties": {

@@ -1,6 +1,6 @@
 {
-    "title": "Shipping manifest for PBMC samples",
-    "description": "Shipping / receiving manifest for transferring PBMC samples.\n",
+    "title": "Biospecimen manifest for PBMC samples",
+    "description": "Biospecimen manifest for transferring Peripheral Blood Mononuclear Cell (PBMC) samples.",
     "properties": {
         "worksheets": {
 

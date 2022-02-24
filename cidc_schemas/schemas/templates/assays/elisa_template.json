@@ -1,6 +1,6 @@
 {
-  "title": "Metadata file for ELISA",
-  "description": "Metadata information for ELISA analysis.",
+  "title": "ELISA assay template",
+  "description": "Enzyme-Linked ImmunoSorbant Assay (ELISA) submission.",
   "properties": {
     "worksheets": {
       "ELISA": {

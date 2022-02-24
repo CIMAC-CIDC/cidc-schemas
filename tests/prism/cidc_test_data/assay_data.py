@@ -87,9 +87,9 @@ def cytof() -> PrismTestData:
                                 "processed_fcs": {
                                     "upload_placeholder": "97c3b6a6-b03d-4ca1-92f8-b8651e51d0c6"
                                 },
+                                "concatenation_version": "GHIL",
+                                "normalization_version": "ABC",
                             },
-                            "concatenation_version": "GHIL",
-                            "normalization_version": "ABC",
                             "preprocessing_notes": "a note like any other note",
                         },
                         {
@@ -98,9 +98,9 @@ def cytof() -> PrismTestData:
                                 "processed_fcs": {
                                     "upload_placeholder": "7e992a16-9c6a-4ef1-90b8-ef1a599b88bc"
                                 },
+                                "concatenation_version": "GHIL",
+                                "normalization_version": "ABC",
                             },
-                            "concatenation_version": "GHIL",
-                            "normalization_version": "ABC",
                             "preprocessing_notes": "a different note",
                         },
                     ],

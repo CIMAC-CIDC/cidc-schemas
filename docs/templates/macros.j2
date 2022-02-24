@@ -2,50 +2,41 @@
 {# Generate the section to put at the top of an entity's page #}
     <div class="container">
         <p>
-            <a href="index.html">CIDC Data Model</a>
+            <a href="index.html">CIDC Documentation</a>
         </p>
         <h1>{{ schema["title"] }}</h1>
         <p>
             <b>Description:</b>  {{ schema["description"] }}
         </p>
-        {% if "links" in schema %}
-        <p>
-            Each {{ schema["title"] }} is <b>linked</b> to:
-            <ul>
-                {% for link in schema["links"] %}
-                    <li>{{ link["link"]["cardinality"]}}
-                        <a href='{{scope}}.{{ link["link"]["linked_to"] }}.html'>
-                            {{ link["link"]["linked_to"] }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </p>
-        {% endif %}
     </div>
+{%- endmacro %}
+
+{% macro uploads_table(scope, name, templates) -%}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Entity</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        {% for entity_name, entity_schema in templates.items() %}
+            <tr>
+                <td width=25%><a href='{{ scope }}.{{ name }}.{{ entity_name }}.html'>{{ entity_schema["title"] }}</a></td>
+                <td>{{ entity_schema["description"] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {%- endmacro %}
 
 {% macro properties_table(schema, required) -%}
     {% set properties = [] %}
-    {% set allOfOrAnyOf = schema.get('allOf') or schema.get('anyOf') %}
     {% set hasProperties = 'properties' in schema %}
-
-    {% if allOfOrAnyOf %}
-        {% for prop in allOfOrAnyOf %}
-            {% if 'url' in prop %}
-                {% set _ = properties.append(("$ref", prop)) %}
-            {% endif %}
-            {% if 'properties' in prop %}
-                {% set _ = properties.extend(prop['properties'].items()) %}
-            {% endif %}
-        {% endfor %}
-    {% endif %}
 
     {% if hasProperties %}
         {% set _ = properties.extend(schema['properties'].items()) %}
     {% endif %}
 
-    {% if not hasProperties and not allOfOrAnyOf %}
+    {% if not hasProperties %}
         {% set properties = schema.items() %}
     {% endif %}
 
@@ -83,14 +74,10 @@
         {% endif %}
     </td>
     <td width=55%>
-        {% if "$ref" == prop_name %}
-            Inherits all properties from schema:
-        {% elif "allOf" in prop_schema %}
-            Inherits all properties from schemas:
-        {% elif "anyOf" in prop_schema %}
-            Inherits properties from any of these schemas:
-        {% else %}
+        {% if "description" in prop_schema %}
             {{ prop_schema["description"] }}
+        {% else %}
+            {{ prop_schema }}
         {% endif %}
     </td>
     <td>
@@ -98,48 +85,42 @@
             &lt; 
                 {{ prop_type_format(prop_schema) }}
             &gt;
-            <ul>
-                {% for item in prop_schema["enum"] %}
-                    <li>{{ item | tojson }}</li>
-                {% endfor %}
-            </ul>
+            {% if "enum" in prop_schema %}
+                <ul>
+                    {% for item in prop_schema["enum"] %}
+                        <li>{{ item | tojson }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             {% if "items" in prop_schema %} {# type: array #}
+                <br>
                 {% if "url" in prop_schema["items"] %}
                     <a href="{{ prop_schema['items']['url'] }}">{{ prop_schema['items']['url'].replace('.html', '') }}</a>
                 {% else %}
                     {{ prop_type_format(prop_schema["items"]) }}
                 {% endif %}
             {% endif %}
-            {% if "additionalProperties" in prop_schema %}
-                {% if "propertyNames" in prop_schema and "$id" in prop_schema["propertyNames"] %}
-                    {{prop_schema["propertyNames"]["$id"]}} -&gt;
-                {% endif %}
-                {% if prop_schema["additionalProperties"].keys %}
-                    {% if "url" in prop_schema["additionalProperties"] %}
-                        <a href="{{ prop_schema['additionalProperties']['url'] }}">{{ prop_schema['additionalProperties']['url'].replace('.html', '') }}</a>
-                    {% else %}
-                        {{ prop_type_format(prop_schema["additionalProperties"]) }}
-                    {% endif %}
-                {% endif %}
-            {% endif %}
+            {% if "pattern" in prop_schema %} as regex <br> <code>{{prop_schema["pattern"]}}</code> {% endif %}
         {% elif "const" in prop_schema %}
             &lt; const: <strong>{{ prop_schema["const"] }}</strong> &gt;            
         {% elif "url" in prop_schema %}
             <a href="{{ prop_schema['url'] }}">{{ prop_schema['url'].replace('.html', '') }}</a>
         {% elif "type_ref" in prop_schema %} {# means we're in _template.json #}
             <a href="{{ prop_schema['type_ref'].replace('.json', '.html').replace('/', '.') }} }}">{{ prop_schema['type_ref'].replace('.json', '') }}</a>
-        {% elif "allOf" in prop_schema %}
+        {% elif "anyOf" in prop_schema %}
+            &lt; 
+                any of
+            &gt;
             <ul>
-            {% for ref in prop_schema['allOf'] %}
+            {% for ref in prop_schema['anyOf'] %}
                 <li><a href="{{ref['url']}}">{{ref['url'].replace('.html', '')}}</a></li>
             {% endfor %}
             </ul>
         {% elif "comment" in prop_schema %}
             ({{ prop_schema["comment"] }})
-        {% elif "$comment" in prop_schema %}
-            ({{ prop_schema["$comment"] }})
         {% else %}
             (UNKNOWN PROPERTY TYPE)
+            {{ prop_schema }}
         {% endif %}
     </td>
 </tr>
@@ -148,10 +129,6 @@
 {% macro prop_type_format(prop_schema) -%}
     {{ prop_schema["type"]}} 
     {% if "format" in prop_schema %} :  {{prop_schema["format"]}}{% endif %}
-    {% if "pattern" in prop_schema %} : <code>{{prop_schema["pattern"]}}</code> {% endif %}
-    {% if "object" == prop_schema["type"] and "propertyNames" in prop_schema and "pattern" in prop_schema["propertyNames"] %}
-        : <code>{{prop_schema["propertyNames"]["pattern"]}}</code>
-    {% endif %}
 {%- endmacro %}
 
 

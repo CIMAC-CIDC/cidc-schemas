@@ -1,9 +1,9 @@
 {
     "$schema": "metaschema/strict_meta_schema.json#",
     "$id": "miscellaneous_data",
-    "title": "Miscellaneous Data",
+    "title": "Miscellaneous data",
     "type": "object",
-    "description": "Miscellaneous Data",
+    "description": "Miscellaneous data not supported directly by any other assay.",
     "additionalProperties": false,
     "mergeStrategy": "objectMerge",
     "definitions": {

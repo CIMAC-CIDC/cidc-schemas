@@ -27,7 +27,7 @@
                                 <table class="table table-striped">
                                     {% for entity_name, entity_schema in schemas.items() %}
                                         <tr>
-                                            {% if group == "" %}
+                                            {% if group == "concepts" %}
                                                 <td width=25%><a href='{{ entity_name }}.html'>{{ entity_schema["title"] }}</a></td>
                                                 <td>{{ entity_schema["description"] }}</td>
                                             {% elif group == "assays" %}

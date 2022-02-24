@@ -9,4 +9,5 @@ deepdiff~=4.3.0
 jsonpointer==2.0
 pandas==1.2.4
 jinja2==2.10.3
+markupsafe==2.0.1  # https://github.com/aws/aws-sam-cli/issues/3661
 cidc-ngs-pipeline-api==0.1.18

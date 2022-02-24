@@ -1,0 +1,791 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CIDC Schemas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main role="main">
+      
+
+    
+    <div class="container">
+        <p>
+            <a href="index.html">CIDC Documentation</a>
+        </p>
+        <h1>IHC assay template</h1>
+        <p>
+            <b>Description:</b>  ImmunoHistoChemistry (IHC) submission.
+        </p>
+    </div>
+
+    <div class="container">
+        
+            
+
+    <div class="accordion" id="IHC_accordion">
+        <div class="card">
+            <div class="card-header" id="IHC">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#IHC_card" aria-expanded="false" aria-controls="IHC_card">
+                        Worksheet -
+                        IHC
+                    </button>
+                </h2>
+            </div>
+            <div id="IHC_card" class="collapse" aria-labelledby="IHC" data-parent="#IHC_accordion">
+                <div class="card-body">
+                    
+                        <div class="accordion" id="IHC_preamble_accordion">
+                            <div class="card">
+                                <div class="card-header" id="IHC_preamble">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#IHC_preamble_card" aria-expanded="false" aria-controls="IHC_preamble_card">
+                                            Preamble Rows
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="IHC_preamble_card" class="collapse" aria-labelledby="IHC_preamble" data-parent="#IHC_preamble_accordion">
+                                    <div class="card-body">
+                                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="protocol identifier">
+                protocol identifier
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            <a href="clinical_trial.html#protocol_identifier">clinical_trial#protocol_identifier</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="assay creator">
+                assay creator
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates what site is filling out the assay.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.assay_core.html#assay_creator">assays.components.assay_core#assay_creator</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="slide scanner model">
+                slide scanner model
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Model version of the slide scanner instrument.
+        
+    </td>
+    <td>
+        
+            <a href="assays.ihc_assay.html#slide_scanner_model">assays.ihc_assay#slide_scanner_model</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="staining platform">
+                staining platform
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Staining platform used for tissue sample labeling.
+        
+    </td>
+    <td>
+        
+            <a href="assays.ihc_assay.html#staining_platform">assays.ihc_assay#staining_platform</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="autostainer model">
+                autostainer model
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Model version of the autostainer instrument.
+        
+    </td>
+    <td>
+        
+            <a href="assays.ihc_assay.html#autostainer_model">assays.ihc_assay#autostainer_model</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="antibody name">
+                antibody name
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+        
+    </td>
+    <td>
+        
+            <a href="assays.ihc_assay.html#ihc_antibody.antibody">assays.ihc_assay#ihc_antibody.antibody</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="company">
+                company
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Company from which antibody sample was derived.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.antibody.html#company">assays.components.antibody#company</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="clone">
+                clone
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Resulting type of antibody clone from primary antibody sample.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.antibody.html#clone">assays.components.antibody#clone</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="catalogue number">
+                catalogue number
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Antibody registry catalog number assigned to antibody sample.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.antibody.html#cat_num">assays.components.antibody#cat_num</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="lot number">
+                lot number
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Identification number assigned to the particular quantity or lot of material from manufacturer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.antibody.html#lot_num">assays.components.antibody#lot_num</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="dilution">
+                dilution
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Concentration ratio for antibody dilution.
+        
+    </td>
+    <td>
+        
+            <a href="assays.ihc_assay.html#ihc_antibody.dilution">assays.ihc_assay#ihc_antibody.dilution</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="incubation time">
+                incubation time
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Time duration of antibody incubation.
+        
+    </td>
+    <td>
+        
+            <a href="assays.ihc_assay.html#ihc_antibody.incubation_time">assays.ihc_assay#ihc_antibody.incubation_time</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="incubation temperature">
+                incubation temperature
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Temperature used for antibody incubation.
+        
+    </td>
+    <td>
+        
+            <a href="assays.ihc_assay.html#ihc_antibody.incubation_temp">assays.ihc_assay#ihc_antibody.incubation_temp</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
+                        <div class="accordion" id="IHC_body_accordion">
+                            <div class="card">
+                                <div class="card-header" id="IHC_body">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#IHC_body_card" aria-expanded="false" aria-controls="IHC_body_card">
+                                            Data Columns
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="IHC_body_card" class="collapse" aria-labelledby="IHC_body" data-parent="#IHC_body_accordion">
+                                    <div class="card-body">
+                                        
+                                            <h5 class="text-muted">Sample</h4>
+                                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cimac id">
+                cimac id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#cimac_id">sample#cimac_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="IHC image">
+                IHC image
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                                        
+                                            <h5 class="text-muted">Marker call</h4>
+                                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="marker positive">
+                marker positive
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates whether the marker is considered positive by clinical trial guidelines (if applicable).
+        
+    </td>
+    <td>
+        
+            <a href="assays.ihc_assay.html#record.marker_positive">assays.ihc_assay#record.marker_positive</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                                        
+                                            <h5 class="text-muted">Chromogenic IHC (please specify one score/metric)</h4>
+                                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="tumor proportion score">
+                tumor proportion score
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Tumor Proportion Score (TPS) is the percentage of viable tumor cells showing marker staining relative to all viable tumor cells. (0-1)
+        
+    </td>
+    <td>
+        
+            <a href="assays.ihc_assay.html#record.tumor_proportion_score">assays.ihc_assay#record.tumor_proportion_score</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="combined positive score">
+                combined positive score
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Combined Positive Score (CPS) is the percentage of marker staining cells (tumor cells and cells that are non-tumor) relative to all viable tumor cells. (0-1)
+        
+    </td>
+    <td>
+        
+            <a href="assays.ihc_assay.html#record.combined_positive_score">assays.ihc_assay#record.combined_positive_score</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="inflammatory cells">
+                inflammatory cells
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Percentage of inflammatory cells (non-tumor cells) showing marker staining relative to all inflammatory cells. (0-1)
+        
+    </td>
+    <td>
+        
+            <a href="assays.ihc_assay.html#record.inflammatory_cells">assays.ihc_assay#record.inflammatory_cells</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="positive inflammatory cell area">
+                positive inflammatory cell area
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Area of PD-L1+ Inflammatory Cells over the area of TSI + IT as a percentage. (0-1)
+        
+    </td>
+    <td>
+        
+            <a href="assays.ihc_assay.html#record.positive_inflammatory_cell_area">assays.ihc_assay#record.positive_inflammatory_cell_area</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="intensity">
+                intensity
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A measure of the intensity or brightness of the protein. (0-3)
+        
+    </td>
+    <td>
+        
+            <a href="assays.ihc_assay.html#record.intensity">assays.ihc_assay#record.intensity</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="% expression">
+                % expression
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A percentage of the relevant cells considered positive. (0-100)
+        
+    </td>
+    <td>
+        
+            <a href="assays.ihc_assay.html#record.percentage_expression">assays.ihc_assay#record.percentage_expression</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="h score">
+                h score
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A summation of the percentage of area stained at each intensity level multiplied by the weighted intensity. (0-300)
+        
+    </td>
+    <td>
+        
+            <a href="assays.ihc_assay.html#record.h_score">assays.ihc_assay#record.h_score</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="comment">
+                comment
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A text comment regarding this slide.
+        
+    </td>
+    <td>
+        
+            <a href="assays.ihc_assay.html#record.comment">assays.ihc_assay#record.comment</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    </div>
+
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+    

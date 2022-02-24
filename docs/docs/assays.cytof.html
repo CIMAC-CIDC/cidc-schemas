@@ -1,0 +1,1807 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CIDC Schemas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main role="main">
+      
+
+    
+    <div class="container">
+        <p>
+            <a href="index.html">CIDC Documentation</a>
+        </p>
+        <h1>CYTOF Assay</h1>
+        <p>
+            <b>Description:</b>  Information about the acquisition and analysis CyTOF data.
+        </p>
+    </div>
+
+    <div class="container">
+        <div class="accordion" id="assay_accordion">
+            
+                <div class="card">
+                    <div class="card-header" id="assay_metadata">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#assay_metadata_card" aria-expanded="false" aria-controls="assay_metadata_card">
+                                Assay Metadata
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="assay_metadata_card" class="collapse" aria-labelledby="assay_metadata" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="assay_creator">
+                assay_creator
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates what site is filling out the assay.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"DFCI"</li>
+                    
+                        <li>"Mount Sinai"</li>
+                    
+                        <li>"Stanford"</li>
+                    
+                        <li>"MD Anderson"</li>
+                    
+                        <li>"Adaptive"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="assay_run_id">
+                assay_run_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            User defined unique identifier for this assay run. Not necessarily unique across batches.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="batch_id">
+                batch_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            CyTOF batch identification number. Unique to every batch.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="acquisition_buffer">
+                acquisition_buffer
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Cell staining buffer used for antibody and cell dilution.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="barcoding_key_csv">
+                barcoding_key_csv
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The master debarcoding key in a CSV file
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="bead_removal">
+                bead_removal
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Boolean to indicate whether beads have been removed after normalization process
+        
+    </td>
+    <td>
+        
+            &lt; 
+                boolean 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="date_of_acquisition">
+                date_of_acquisition
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Date of CyTOF batch acquisition.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="debarcoding_protocol">
+                debarcoding_protocol
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The strategy/kit used to barcode CyTOF samples, if any
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="harware_version">
+                harware_version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Version no. of instrument hardware used.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="injector">
+                injector
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Name of Injector component used as part of the CyTOF software
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="instrument">
+                instrument
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Name of CyTOF instrument on which experiment was conducted.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="normalization_method">
+                normalization_method
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Process used for normalization prior to analysis, if any.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Fluidigm"</li>
+                    
+                        <li>"Normalizer v0.3"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="source_fcs">
+                source_fcs
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The raw FCS file(s) generated running this batch.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                array 
+    
+            &gt;
+            
+             
+                <br>
+                
+                    <a href="artifacts.artifact_fcs.html">artifacts.artifact_fcs</a>
+                
+            
+            
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+            
+                <div class="card">
+                    <div class="card-header" id="assay_data">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#assay_data_card" aria-expanded="false" aria-controls="assay_data_card">
+                                Assay Data
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="assay_data_card" class="collapse" aria-labelledby="assay_data" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="barcodes > barcode_id">
+                barcodes > barcode_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            CIMAC ID, Participant ID or Control sample for which barcode is assigned.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="barcodes > barcode_num">
+                barcodes > barcode_num
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Barcode number
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="barcodes > debarcoding_key">
+                barcodes > debarcoding_key
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Debarcoding key assigned
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="controls > cimac_participant_id">
+                controls > cimac_participant_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Participant identifier assigned by the CIMAC-CIDC Network. Formated as: CTTTPPP for trial code TTT and participant PPP (first 7 characters of CIMAC ID).
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+             as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}$</code> 
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="controls > control_name">
+                controls > control_name
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Name or identifier of a control sample.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="controls > input_files > concatenation_version">
+                controls > input_files > concatenation_version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Concatenation of FCS files into a single FCS version number.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="controls > input_files > normalization_version">
+                controls > input_files > normalization_version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Version of normalization for CyTOF assay batch.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="controls > input_files > processed_fcs">
+                controls > input_files > processed_fcs
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Final FCS files after all processing. Spike-in's should be removed.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_fcs.html">artifacts.artifact_fcs</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="controls > input_files > spike_in_fcs">
+                controls > input_files > spike_in_fcs
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Processed FCS file for the spike-in.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_fcs.html">artifacts.artifact_fcs</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="antibodies > antibody">
+                antibodies > antibody
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Antibody type collected for this study.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="antibodies > cat_num">
+                antibodies > cat_num
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Antibody registry catalog number assigned to antibody sample.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="antibodies > clone">
+                antibodies > clone
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Resulting type of antibody clone from primary antibody sample.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="antibodies > company">
+                antibodies > company
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Company from which antibody sample was derived.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="antibodies > dilution">
+                antibodies > dilution
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Concentration ratio of dilution buffer for primary antibody.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="antibodies > isotope">
+                antibodies > isotope
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Antibody isotype used to help differentiate antibody signals.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="antibodies > lot_num">
+                antibodies > lot_num
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Identification number assigned to the particular quantity or lot of material from manufacturer.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="antibodies > stain_type">
+                antibodies > stain_type
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Type of staining method used for antibody.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Surface Stain"</li>
+                    
+                        <li>"Intracellular"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="antibodies > usage">
+                antibodies > usage
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            How this antibody should be used in automatic analysis
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Ignored"</li>
+                    
+                        <li>"Used"</li>
+                    
+                        <li>"Barcoding"</li>
+                    
+                        <li>"Analysis Only"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="records > cimac_id">
+                records > cimac_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+             as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code> 
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="records > input_files > concatenation_version">
+                records > input_files > concatenation_version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Concatenation of FCS files into a single FCS version number.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="records > input_files > normalization_version">
+                records > input_files > normalization_version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Version of normalization for CyTOF assay batch.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="records > input_files > processed_fcs">
+                records > input_files > processed_fcs
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Final FCS files after all processing. Spike-in's should be removed.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_fcs.html">artifacts.artifact_fcs</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="records > preprocessing_notes">
+                records > preprocessing_notes
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Any notes pertaining to preprocessing of CyTOF data.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+            
+                <div class="card">
+                    <div class="card-header" id="analysis_metadata">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analysis_metadata_card" aria-expanded="false" aria-controls="analysis_metadata_card">
+                                Analysis Metadata
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="analysis_metadata_card" class="collapse" aria-labelledby="analysis_metadata" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+                <tr>
+    <td>
+        
+            <span id="assay_run_id">
+                assay_run_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            User defined unique identifier for this assay run. Not necessarily unique across batches.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="batch_id">
+                batch_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            CyTOF batch identification number. Unique to every batch.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="astrolabe_analysis">
+                astrolabe_analysis
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a ZIP file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_zip.html">artifacts.artifact_zip</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="astrolabe_reports">
+                astrolabe_reports
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a ZIP file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_zip.html">artifacts.artifact_zip</a>
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="control_files_analysis">
+                control_files_analysis
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a ZIP file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_zip.html">artifacts.artifact_zip</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+            
+                <div class="card">
+                    <div class="card-header" id="analysis_data">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analysis_data_card" aria-expanded="false" aria-controls="analysis_data_card">
+                                Analysis Data
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="analysis_data_card" class="collapse" aria-labelledby="analysis_data" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="excluded_samples > cimac_id">
+                excluded_samples > cimac_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+             as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code> 
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="excluded_samples > reason_excluded">
+                excluded_samples > reason_excluded
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A comment describing why this sample is missing from the pipeline output.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="records > cimac_id">
+                records > cimac_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string 
+    
+            &gt;
+            
+            
+             as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code> 
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="records > output_files > assignment">
+                records > output_files > assignment
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a comma separated file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="records > output_files > cell_counts_assignment">
+                records > output_files > cell_counts_assignment
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a comma separated file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="records > output_files > cell_counts_compartment">
+                records > output_files > cell_counts_compartment
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a comma separated file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="records > output_files > cell_counts_profiling">
+                records > output_files > cell_counts_profiling
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a comma separated file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="records > output_files > compartment">
+                records > output_files > compartment
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a comma separated file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="records > output_files > fcs_file">
+                records > output_files > fcs_file
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a FCS file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_fcs.html">artifacts.artifact_fcs</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="records > output_files > profiling">
+                records > output_files > profiling
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a comma separated file.
+        
+    </td>
+    <td>
+        
+            <a href="artifacts.artifact_csv.html">artifacts.artifact_csv</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+
+            
+                <div class="card">
+                    <div class="card-header" id="assay_uploads">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#assay_uploads_card" aria-expanded="false" aria-controls="assay_uploads_card">
+                                Assay Uploads
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="assay_uploads_card" class="collapse" aria-labelledby="assay_uploads" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Entity</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td width=25%><a href='assays.cytof.cytof_template.html'>CYTOF assay template</a></td>
+                <td>Cytometry by Time-Of-Flight (CyTOF) aka mass-cytometry assay submission.</td>
+            </tr>
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+            
+                <div class="card">
+                    <div class="card-header" id="analaysis_uploads">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analaysis_uploads_card" aria-expanded="false" aria-controls="analaysis_uploads_card">
+                            Analysis Uploads
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="analaysis_uploads_card" class="collapse" aria-labelledby="analaysis_uploads" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Entity</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td width=25%><a href='assays.cytof.cytof_analysis_template.html'>CyTOF analysis template</a></td>
+                <td>Cytometry by Time-Of-Flight (CyTOF) analysis submission.</td>
+            </tr>
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+    

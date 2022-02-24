@@ -1,0 +1,1448 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CIDC Schemas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main role="main">
+      
+
+    
+    <div class="container">
+        <p>
+            <a href="index.html">CIDC Documentation</a>
+        </p>
+        <h1>CYTOF assay template</h1>
+        <p>
+            <b>Description:</b>  Cytometry by Time-Of-Flight (CyTOF) aka mass-cytometry assay submission.
+        </p>
+    </div>
+
+    <div class="container">
+        
+            
+
+    <div class="accordion" id="Acquisition_and_Preprocessing_accordion">
+        <div class="card">
+            <div class="card-header" id="Acquisition_and_Preprocessing">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Acquisition_and_Preprocessing_card" aria-expanded="false" aria-controls="Acquisition_and_Preprocessing_card">
+                        Worksheet -
+                        Acquisition and Preprocessing
+                    </button>
+                </h2>
+            </div>
+            <div id="Acquisition_and_Preprocessing_card" class="collapse" aria-labelledby="Acquisition_and_Preprocessing" data-parent="#Acquisition_and_Preprocessing_accordion">
+                <div class="card-body">
+                    
+                        <div class="accordion" id="Acquisition_and_Preprocessing_preamble_accordion">
+                            <div class="card">
+                                <div class="card-header" id="Acquisition_and_Preprocessing_preamble">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Acquisition_and_Preprocessing_preamble_card" aria-expanded="false" aria-controls="Acquisition_and_Preprocessing_preamble_card">
+                                            Preamble Rows
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="Acquisition_and_Preprocessing_preamble_card" class="collapse" aria-labelledby="Acquisition_and_Preprocessing_preamble" data-parent="#Acquisition_and_Preprocessing_preamble_accordion">
+                                    <div class="card-body">
+                                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="assay run id">
+                assay run id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            User defined unique identifier for this assay run. Not necessarily unique across batches.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#assay_run_id">assays.cytof_assay_core#assay_run_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="batch id">
+                batch id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            CyTOF batch identification number. Unique to every batch.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#batch_id">assays.cytof_assay_core#batch_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="protocol identifier">
+                protocol identifier
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            <a href="clinical_trial.html#protocol_identifier">clinical_trial#protocol_identifier</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="assay creator">
+                assay creator
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates what site is filling out the assay.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.assay_core.html#assay_creator">assays.components.assay_core#assay_creator</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="instrument">
+                instrument
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Name of CyTOF instrument on which experiment was conducted.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay.html#instrument">assays.cytof_assay#instrument</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="injector">
+                injector
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Name of Injector component used as part of the CyTOF software
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay.html#injector">assays.cytof_assay#injector</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="date of acquisition">
+                date of acquisition
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Date of CyTOF batch acquisition.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay.html#date_of_acquisition">assays.cytof_assay#date_of_acquisition</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="acquisition buffer">
+                acquisition buffer
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Cell staining buffer used for antibody and cell dilution.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay.html#acquisition_buffer">assays.cytof_assay#acquisition_buffer</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="bead removal">
+                bead removal
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Boolean to indicate whether beads have been removed after normalization process
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay.html#bead_removal">assays.cytof_assay#bead_removal</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="normalization method">
+                normalization method
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Process used for normalization prior to analysis, if any.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay.html#normalization_method">assays.cytof_assay#normalization_method</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="debarcoding protocol">
+                debarcoding protocol
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The strategy/kit used to barcode CyTOF samples, if any
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay.html#debarcoding_protocol">assays.cytof_assay#debarcoding_protocol</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="harware version">
+                harware version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Version no. of instrument hardware used.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay.html#harware_version">assays.cytof_assay#harware_version</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="concatenated spike in fcs filename">
+                concatenated spike in fcs filename
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a User's computer. 
+This file contains the normalized & debarcoded spike-in for a batch.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="concatenated raw fcs filename(s)">
+                concatenated raw fcs filename(s)
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
+                        <div class="accordion" id="Acquisition_and_Preprocessing_body_accordion">
+                            <div class="card">
+                                <div class="card-header" id="Acquisition_and_Preprocessing_body">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Acquisition_and_Preprocessing_body_card" aria-expanded="false" aria-controls="Acquisition_and_Preprocessing_body_card">
+                                            Data Columns
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="Acquisition_and_Preprocessing_body_card" class="collapse" aria-labelledby="Acquisition_and_Preprocessing_body" data-parent="#Acquisition_and_Preprocessing_body_accordion">
+                                    <div class="card-body">
+                                        
+                                            <h5 class="text-muted">Run info</h4>
+                                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cimac id">
+                cimac id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+        
+    </td>
+    <td>
+        
+            <a href="sample.html#cimac_id">sample#cimac_id</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                                        
+                                            <h5 class="text-muted">Preprocessing</h4>
+                                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="processed fcs filename">
+                processed fcs filename
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="concatenation version">
+                concatenation version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Concatenation of FCS files into a single FCS version number.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#input_files.concatenation_version">assays.cytof_assay_core#input_files.concatenation_version</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="normalization version">
+                normalization version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Version of normalization for CyTOF assay batch.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#input_files.normalization_version">assays.cytof_assay_core#input_files.normalization_version</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="preprocessing_notes">
+                preprocessing_notes
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Any notes pertaining to preprocessing of CyTOF data.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#entry.preprocessing_notes">assays.cytof_assay_core#entry.preprocessing_notes</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+        
+            
+
+    <div class="accordion" id="Antibody_Information_accordion">
+        <div class="card">
+            <div class="card-header" id="Antibody_Information">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Antibody_Information_card" aria-expanded="false" aria-controls="Antibody_Information_card">
+                        Worksheet -
+                        Antibody Information
+                    </button>
+                </h2>
+            </div>
+            <div id="Antibody_Information_card" class="collapse" aria-labelledby="Antibody_Information" data-parent="#Antibody_Information_accordion">
+                <div class="card-body">
+                    
+                    
+                        <div class="accordion" id="Antibody_Information_body_accordion">
+                            <div class="card">
+                                <div class="card-header" id="Antibody_Information_body">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Antibody_Information_body_card" aria-expanded="false" aria-controls="Antibody_Information_body_card">
+                                            Data Columns
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="Antibody_Information_body_card" class="collapse" aria-labelledby="Antibody_Information_body" data-parent="#Antibody_Information_body_accordion">
+                                    <div class="card-body">
+                                        
+                                            <h5 class="text-muted">Samples</h4>
+                                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="target">
+                target
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Antibody type collected for this study.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.antibody.html#antibody">assays.components.antibody#antibody</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="clone">
+                clone
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Resulting type of antibody clone from primary antibody sample.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.antibody.html#clone">assays.components.antibody#clone</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="antibody company">
+                antibody company
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Company from which antibody sample was derived.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.antibody.html#company">assays.components.antibody#company</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="catalog number">
+                catalog number
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Antibody registry catalog number assigned to antibody sample.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.antibody.html#cat_num">assays.components.antibody#cat_num</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="lot number">
+                lot number
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Identification number assigned to the particular quantity or lot of material from manufacturer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.antibody.html#lot_num">assays.components.antibody#lot_num</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="isotope">
+                isotope
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Antibody isotype used to help differentiate antibody signals.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#antibody.isotope">assays.cytof_assay_core#antibody.isotope</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="dilution">
+                dilution
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Concentration ratio of dilution buffer for primary antibody.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#antibody.dilution">assays.cytof_assay_core#antibody.dilution</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="stain_type">
+                stain_type
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Type of staining method used for antibody.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#antibody.stain_type">assays.cytof_assay_core#antibody.stain_type</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="usage">
+                usage
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            How this antibody should be used in automatic analysis
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#antibody.usage">assays.cytof_assay_core#antibody.usage</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+        
+            
+
+    <div class="accordion" id="Controls_and_Spike-Ins_accordion">
+        <div class="card">
+            <div class="card-header" id="Controls_and_Spike-Ins">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Controls_and_Spike-Ins_card" aria-expanded="false" aria-controls="Controls_and_Spike-Ins_card">
+                        Worksheet -
+                        Controls and Spike-Ins
+                    </button>
+                </h2>
+            </div>
+            <div id="Controls_and_Spike-Ins_card" class="collapse" aria-labelledby="Controls_and_Spike-Ins" data-parent="#Controls_and_Spike-Ins_accordion">
+                <div class="card-body">
+                    
+                        <div class="accordion" id="Controls_and_Spike-Ins_preamble_accordion">
+                            <div class="card">
+                                <div class="card-header" id="Controls_and_Spike-Ins_preamble">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Controls_and_Spike-Ins_preamble_card" aria-expanded="false" aria-controls="Controls_and_Spike-Ins_preamble_card">
+                                            Preamble Rows
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="Controls_and_Spike-Ins_preamble_card" class="collapse" aria-labelledby="Controls_and_Spike-Ins_preamble" data-parent="#Controls_and_Spike-Ins_preamble_accordion">
+                                    <div class="card-body">
+                                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="protocol identifier">
+                protocol identifier
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            <a href="clinical_trial.html#protocol_identifier">clinical_trial#protocol_identifier</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
+                        <div class="accordion" id="Controls_and_Spike-Ins_body_accordion">
+                            <div class="card">
+                                <div class="card-header" id="Controls_and_Spike-Ins_body">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Controls_and_Spike-Ins_body_card" aria-expanded="false" aria-controls="Controls_and_Spike-Ins_body_card">
+                                            Data Columns
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="Controls_and_Spike-Ins_body_card" class="collapse" aria-labelledby="Controls_and_Spike-Ins_body" data-parent="#Controls_and_Spike-Ins_body_accordion">
+                                    <div class="card-body">
+                                        
+                                            <h5 class="text-muted">Controls info</h4>
+                                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="control name">
+                control name
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#controls.control_name">assays.cytof_assay_core#controls.control_name</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cimac participant id">
+                cimac participant id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#controls.cimac_participant_id">assays.cytof_assay_core#controls.cimac_participant_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="processed fcs filename">
+                processed fcs filename
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="spike-in fcs filename">
+                spike-in fcs filename
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to the spike-in file on a User's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="concatenation version">
+                concatenation version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Concatenation of FCS files into a single FCS version number.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#input_files.concatenation_version">assays.cytof_assay_core#input_files.concatenation_version</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="normalization version">
+                normalization version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Version of normalization for CyTOF assay batch.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#input_files.normalization_version">assays.cytof_assay_core#input_files.normalization_version</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+        
+            
+
+    <div class="accordion" id="Barcoding_accordion">
+        <div class="card">
+            <div class="card-header" id="Barcoding">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Barcoding_card" aria-expanded="false" aria-controls="Barcoding_card">
+                        Worksheet -
+                        Barcoding
+                    </button>
+                </h2>
+            </div>
+            <div id="Barcoding_card" class="collapse" aria-labelledby="Barcoding" data-parent="#Barcoding_accordion">
+                <div class="card-body">
+                    
+                        <div class="accordion" id="Barcoding_preamble_accordion">
+                            <div class="card">
+                                <div class="card-header" id="Barcoding_preamble">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Barcoding_preamble_card" aria-expanded="false" aria-controls="Barcoding_preamble_card">
+                                            Preamble Rows
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="Barcoding_preamble_card" class="collapse" aria-labelledby="Barcoding_preamble" data-parent="#Barcoding_preamble_accordion">
+                                    <div class="card-body">
+                                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="protocol identifier">
+                protocol identifier
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            <a href="clinical_trial.html#protocol_identifier">clinical_trial#protocol_identifier</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="batch id">
+                batch id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            CyTOF batch identification number. Unique to every batch.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#batch_id">assays.cytof_assay_core#batch_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="Debarcoding key file">
+                Debarcoding key file
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Path to a file on a User's computer. 
+This contains the master debarcoding key in a CSV file.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
+                        <div class="accordion" id="Barcoding_body_accordion">
+                            <div class="card">
+                                <div class="card-header" id="Barcoding_body">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Barcoding_body_card" aria-expanded="false" aria-controls="Barcoding_body_card">
+                                            Data Columns
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="Barcoding_body_card" class="collapse" aria-labelledby="Barcoding_body" data-parent="#Barcoding_body_accordion">
+                                    <div class="card-body">
+                                        
+                                            <h5 class="text-muted">Barcodes</h4>
+                                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="id (cimac id/participant id/control name)">
+                id (cimac id/participant id/control name)
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            CIMAC ID, Participant ID or Control sample for which barcode is assigned.
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#barcodes.barcode_id">assays.cytof_assay_core#barcodes.barcode_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="barcode number">
+                barcode number
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Barcode number
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#barcodes.barcode_num">assays.cytof_assay_core#barcodes.barcode_num</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="debarcoding key">
+                debarcoding key
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Debarcoding key assigned
+        
+    </td>
+    <td>
+        
+            <a href="assays.cytof_assay_core.html#barcodes.debarcoding_key">assays.cytof_assay_core#barcodes.debarcoding_key</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    </div>
+
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+    

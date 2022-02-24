@@ -1,0 +1,747 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CIDC Schemas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main role="main">
+      
+
+    
+    <div class="container">
+        <p>
+            <a href="index.html">CIDC Documentation</a>
+        </p>
+        <h1>Olink assay template</h1>
+        <p>
+            <b>Description:</b>  Olink proteomics submission.
+        </p>
+    </div>
+
+    <div class="container">
+        
+            
+
+    <div class="accordion" id="olink_accordion">
+        <div class="card">
+            <div class="card-header" id="olink">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#olink_card" aria-expanded="false" aria-controls="olink_card">
+                        Worksheet -
+                        olink
+                    </button>
+                </h2>
+            </div>
+            <div id="olink_card" class="collapse" aria-labelledby="olink" data-parent="#olink_accordion">
+                <div class="card-body">
+                    
+                        <div class="accordion" id="olink_preamble_accordion">
+                            <div class="card">
+                                <div class="card-header" id="olink_preamble">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#olink_preamble_card" aria-expanded="false" aria-controls="olink_preamble_card">
+                                            Preamble Rows
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="olink_preamble_card" class="collapse" aria-labelledby="olink_preamble" data-parent="#olink_preamble_accordion">
+                                    <div class="card-body">
+                                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="protocol identifier">
+                protocol identifier
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            <a href="clinical_trial.html#protocol_identifier">clinical_trial#protocol_identifier</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="assay creator">
+                assay creator
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates what site is filling out the assay.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.assay_core.html#assay_creator">assays.components.assay_core#assay_creator</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="batch identifier">
+                batch identifier
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A unique identifier for this Olink upload
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#batch.batch_id">assays.olink_assay#batch.batch_id</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="panel">
+                panel
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Panel used for the assay.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#batch.panel">assays.olink_assay#batch.panel</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="assay panel lot">
+                assay panel lot
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Lot number of the assay panel.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#batch.assay_panel_lot">assays.olink_assay#batch.assay_panel_lot</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="study-level combined file">
+                study-level combined file
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Relative path to a combined NPX file containing all samples for this trial.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="study-level combined npx manager version">
+                study-level combined npx manager version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Version of NPX manager used for the analysis.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#combined_npx.npx_manager_version">assays.olink_assay#combined_npx.npx_manager_version</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="batch-level combined file">
+                batch-level combined file
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Relative path to a combined NPX file containing all samples for this upload only.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="batch-level combined npx manager version">
+                batch-level combined npx manager version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Version of NPX manager used for the analysis.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#combined_npx.npx_manager_version">assays.olink_assay#combined_npx.npx_manager_version</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
+                        <div class="accordion" id="olink_body_accordion">
+                            <div class="card">
+                                <div class="card-header" id="olink_body">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#olink_body_card" aria-expanded="false" aria-controls="olink_body_card">
+                                            Data Columns
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="olink_body_card" class="collapse" aria-labelledby="olink_body" data-parent="#olink_body_accordion">
+                                    <div class="card-body">
+                                        
+                                            <h5 class="text-muted">Olink details</h4>
+                                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="chip barcode">
+                chip barcode
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Chip barcode number.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#record.chip_barcode">assays.olink_assay#record.chip_barcode</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="npx file">
+                npx file
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            NPX file name on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="raw ct file">
+                raw ct file
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Raw CT file name on a user's computer.
+        
+    </td>
+    <td>
+        
+            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="run date">
+                run date
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Date when the Olink assay was run.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#record.run_date">assays.olink_assay#record.run_date</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="run time">
+                run time
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Time when the Olink assay was run.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#record.run_time">assays.olink_assay#record.run_time</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="instrument">
+                instrument
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Instrument used for the Olink assay.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#record.instrument">assays.olink_assay#record.instrument</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="fludigm application version">
+                fludigm application version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Version of the Fluidgm application used.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#record.fludigm_application_version">assays.olink_assay#record.fludigm_application_version</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="fludigm application build">
+                fludigm application build
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Build of the Fluidgm application used.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#record.fludigm_application_build">assays.olink_assay#record.fludigm_application_build</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="probe type">
+                probe type
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Probe Type.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#record.probe_type">assays.olink_assay#record.probe_type</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="passive reference">
+                passive reference
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Passive Reference.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#record.passive_reference">assays.olink_assay#record.passive_reference</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="quality threshold">
+                quality threshold
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Threshold used for quality cutoff.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#record.quality_threshold">assays.olink_assay#record.quality_threshold</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="baseline correction">
+                baseline correction
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Method used for baseline correction.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#record.baseline_correction">assays.olink_assay#record.baseline_correction</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="number of samples">
+                number of samples
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Number of samples analyzed in the assay.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#record.number_of_samples">assays.olink_assay#record.number_of_samples</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="number of samples failed">
+                number of samples failed
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Number of samples failed in the assay.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#record.number_of_samples_failed">assays.olink_assay#record.number_of_samples_failed</a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="npx manager version">
+                npx manager version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Version of NPX manager used for the analysis.
+        
+    </td>
+    <td>
+        
+            <a href="assays.olink_assay.html#record.npx_manager_version">assays.olink_assay#record.npx_manager_version</a>
+        
+    </td>
+</tr>
+            
+        
+    </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    </div>
+
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+    

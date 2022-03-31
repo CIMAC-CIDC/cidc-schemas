@@ -97,10 +97,33 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
             "CTTTPP111.00",
             "CTTTPP121.00",
             "CTTTPP122.00",
-            "CTTTPP121.00",
             "CTTTPP123.00",
+            "CTTTPP124.00",
         ],
+        allowed_collection_event_names=["Not_reported", "Baseline"],
         assays={"wes": []},
+    )
+    # manually modify json's to add tumor / normal definitions for WES
+    # these are normally loaded from the shipping manifests
+    if "wes" in template.type or template.type == "tumor_normal_pairing":
+        for partic in full_ct["participants"]:
+            # these are paired in tumor_normal_pairing
+            partic["samples"][0]["processed_sample_derivative"] = "Tumor DNA"
+            partic["samples"][1]["processed_sample_derivative"] = "Germline DNA"
+
+            # test default to tumor if not specified
+            partic["samples"][2]["collection_event_name"] = "Baseline"
+
+            # test deduplication of normals by collection_event_name
+            for n in (3, 4):
+                partic["samples"][n]["processed_sample_derivative"] = "Germline DNA"
+                partic["samples"][n]["collection_event_name"] = "Baseline"
+
+    print(
+        {
+            s["cimac_id"]: s.get("processed_sample_derivative")
+            for s in full_ct["participants"][0]["samples"]
+        }
     )
 
     patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
@@ -117,18 +140,64 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
     res = pipelines.generate_analysis_configs_from_upload_patch(
         full_ct, patch_with_artifacts, template.type, "my-biofx-bucket"
     )
+    # _Wes_pipeline_config.__call__() temporarily returns partic_map for dev testing
+    if isinstance(res, tuple):
+        res, partic_map = res
+        # partic_map = {
+        #     cimac_participant_id str: {
+        #         "tumors": {collection_event_name str: [cimac_id str, ...], ...},
+        #         "normals": {collection_event_name str: cimac_id str, ...},
+        #     }
+        # }
+    else:
+        partic_map = {}
 
     # where we don't expect to have configs
     if not template.type in pipelines._ANALYSIS_CONF_GENERATORS:
         assert res == {}
+        assert partic_map == {}
         return
 
     elif "pair" in template.type:
-        # only returns tumor/normal
-        assert len(res) == 1
-    else:
-        # in other cases - 2 config, tumor/normal and tumor-only
+        # only returns tumor/normal config
+        # config for CTTTPP122.00 was generated on wes_fastq upload
+        assert len(res) == 1  # pairing still only for 1
+        assert partic_map == {
+            "CTTTPP1": {
+                "normals": {
+                    "Not_reported": "CTTTPP121.00",
+                    "Baseline": "CTTTPP123.00",
+                },
+                "tumors": {
+                    "Not_reported": ["CTTTPP111.00"],
+                    "Baseline": ["CTTTPP122.00"],
+                },
+            }
+        }
+    elif template.type == "wes_fastq":
+        # 5 configs, tumor-only for all 5 samples
+        assert len(res) == 5
+        assert partic_map == {
+            "CTTTPP1": {
+                "normals": {
+                    "Not_reported": "CTTTPP121.00",
+                    "Baseline": "CTTTPP123.00",
+                },
+                "tumors": {
+                    "Not_reported": ["CTTTPP111.00"],
+                    "Baseline": ["CTTTPP122.00"],
+                },
+            }
+        }
+    else:  # wes_bam
+        # in other cases - 2 config, tumor-only for both samples
         assert len(res) == 2
+        assert partic_map == {
+            "CTTTPP1": {
+                "normals": {"Not_reported": "CTTTPP121.00"},
+                "tumors": {"Not_reported": ["CTTTPP111.00"]},
+            }
+        }
 
     for fname, conf in res.items():
         conf = yaml.load(conf, Loader=yaml.FullLoader)
@@ -149,10 +218,13 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
             assert conf["instance_name"] in [
                 "ctttpp111-00",
                 "ctttpp121-00",
+                "ctttpp122-00",
+                "ctttpp123-00",
+                "ctttpp124-00",
             ]  # CIMAC ID but lowercase & hypenated
 
         for sample in conf["samples"].values():
-            assert len(sample) > 0  # at lease one data file per sample
+            assert len(sample) > 0  # at least one data file per sample
             assert all("my-biofx-bucket" in f for f in sample)
             assert all(f.endswith(".fastq.gz") for f in sample) or all(
                 f.endswith(".bam") for f in sample

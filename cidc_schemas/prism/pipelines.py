@@ -2,12 +2,15 @@
 import csv
 import io
 
+import logging
 from typing import Dict, List, NamedTuple
 from datetime import datetime
 from collections import defaultdict
 
 from ..util import load_pipeline_config_template, participant_id_from_cimac
 from .constants import PROTOCOL_ID_FIELD_NAME
+
+logger = logging.getLogger(__file__)
 
 
 class _Wes_pipeline_config:
@@ -49,6 +52,82 @@ class _Wes_pipeline_config:
         self.tumor_only_analysis_config = load_pipeline_config_template(
             "wes_tumor_only_analysis_config"
         )
+
+    def _choose_which_normal(self, full_ct: dict, cimac_ids: List[str]) -> str:
+        """
+        Based on sequencing quality, choose which cimac_id to use
+        Currently just returns the first of the list
+        """
+        return sorted(cimac_ids)[0]
+
+    def _generate_partic_map(
+        self, full_ct: dict, cimac_id_list: List[str]
+    ) -> Dict[str, Dict[str, Dict[str, str]]]:
+        """
+        Return a structure for matching tumor/normal samples semiautomatically.
+        Normal/Germline samples are deduplicated per patient for each collection_event_name.
+            see _Wes_pipeline_config._choose_which_normal() above
+        All Tumor samples are returned.
+        
+        If a sample can't be determined, returned as Tumor
+
+        Parameters
+        ----------
+        full_ct: dict
+            the full metadata JSON for the clinical trial
+        cimac_id_list: List[str]
+            a list of the CIMAC IDs to look at
+
+        Returns
+        -------
+        {
+            cimac_participant_id str: {
+                "tumors":  {collection_event_name str: [cimac_id str, ...], ...},
+                "normals": {collection_event_name str: cimac_id str, ...},
+            },
+            ...
+        }
+        """
+        partic_map = defaultdict(lambda: {"tumors": defaultdict(list), "normals": {}})
+        for partic in full_ct["participants"]:
+            cimac_participant_id = partic["cimac_participant_id"]
+            for sample in partic["samples"]:
+                cimac_id = sample["cimac_id"]
+                if cimac_id in cimac_id_list:
+                    collection_event_name = sample["collection_event_name"]
+                    processed_sample_derivative = sample.get(
+                        "processed_sample_derivative", ""
+                    )
+
+                    if processed_sample_derivative == "Germline DNA":
+                        other_cimac_id = partic_map[cimac_participant_id][
+                            "normals"
+                        ].pop(collection_event_name, "")
+                        if other_cimac_id:
+                            cimac_id = self._choose_which_normal(
+                                full_ct, cimac_ids=[cimac_id, other_cimac_id]
+                            )
+                        partic_map[cimac_participant_id]["normals"][
+                            collection_event_name
+                        ] = cimac_id
+
+                    elif processed_sample_derivative == "Tumor DNA":
+                        partic_map[cimac_participant_id]["tumors"][
+                            collection_event_name
+                        ].append(cimac_id)
+
+                    else:
+                        logger.warning(
+                            f"Cannot figure out sample type (normal vs *tumor) for {cimac_id}: {processed_sample_derivative}"
+                        )
+                        partic_map[cimac_participant_id]["tumors"][
+                            collection_event_name
+                        ].append(cimac_id)
+
+        # revert to pure dicts to throw KeyError if something happens elsewhere
+        for partic_dict in partic_map.values():
+            partic_dict["tumors"] = dict(partic_dict["tumors"])
+        return dict(partic_map)
 
     def __call__(self, full_ct: dict, patch: dict, bucket: str) -> Dict[str, str]:
         """
@@ -114,6 +193,16 @@ class _Wes_pipeline_config:
             for r in wes["records"]:
                 all_wes_records[r["cimac_id"]] = r
 
+        # classify all of the WES records as tumor or normal and get collection event name
+        # in preparation for (semi)automated pairing
+        # partic_map = {
+        #     cimac_participant_id str: {
+        #         "tumors": {cimac_id str: collection_event_name str},
+        #         "normals": {cimac_id str: collection_event_name str},
+        #     }
+        # }
+        partic_map = self._generate_partic_map(full_ct, all_wes_records.keys())
+
         res = {}
         for run in potential_new_runs:
             # if we have data files for *both* items in a tumor/normal pair
@@ -145,7 +234,8 @@ class _Wes_pipeline_config:
                     }
                 )
 
-        return res
+        # temporarily return partic_map for dev testing
+        return res, partic_map
 
 
 def _csv2string(data):

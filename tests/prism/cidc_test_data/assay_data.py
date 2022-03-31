@@ -595,6 +595,57 @@ def wes_fastq() -> PrismTestData:
                             "sequencing_date": "2010-01-01 00:00:00",
                             "quality_flag": 1.0,
                         },
+                        {
+                            "cimac_id": "CTTTPP122.00",
+                            "files": {
+                                "r1": [
+                                    {
+                                        "upload_placeholder": "5d57fa58-5dd4-4379-878d-935d79d2507f"
+                                    },
+                                ],
+                                "r2": [
+                                    {
+                                        "upload_placeholder": "7eb4b639-c2a4-48f8-85f8-e9a04f5233c6"
+                                    },
+                                ],
+                            },
+                            "sequencing_date": "2010-01-01 00:00:00",
+                            "quality_flag": 1.0,
+                        },
+                        {
+                            "cimac_id": "CTTTPP123.00",
+                            "files": {
+                                "r1": [
+                                    {
+                                        "upload_placeholder": "6d57fa58-5dd4-4379-878d-935d79d2507f"
+                                    },
+                                ],
+                                "r2": [
+                                    {
+                                        "upload_placeholder": "8eb4b639-c2a4-48f8-85f8-e9a04f5233c6"
+                                    },
+                                ],
+                            },
+                            "sequencing_date": "2010-01-01 00:00:00",
+                            "quality_flag": 1.0,
+                        },
+                        {
+                            "cimac_id": "CTTTPP124.00",
+                            "files": {
+                                "r1": [
+                                    {
+                                        "upload_placeholder": "7d57fa58-5dd4-4379-878d-935d79d2507f"
+                                    },
+                                ],
+                                "r2": [
+                                    {
+                                        "upload_placeholder": "9eb4b639-c2a4-48f8-85f8-e9a04f5233c6"
+                                    },
+                                ],
+                            },
+                            "sequencing_date": "2010-01-01 00:00:00",
+                            "quality_flag": 1.0,
+                        },
                     ],
                     "assay_creator": "Mount Sinai",
                     "sequencing_protocol": "Express Somatic Human WES (Deep Coverage) v1.1",
@@ -661,6 +712,48 @@ def wes_fastq() -> PrismTestData:
             local_path="/local/path/to/rev.1.2.1_2.fastq.gz",
             gs_key="test_prism_trial_id/wes/CTTTPP121.00/r2_L2.fastq.gz",
             upload_placeholder="6eb4b639-c2a4-48f8-85f8-e9a04f5233c6",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/fwd.1.2.2.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP122.00/r1_L1.fastq.gz",
+            upload_placeholder="5d57fa58-5dd4-4379-878d-935d79d2507f",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/rev.1.2.2.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP122.00/r2_L1.fastq.gz",
+            upload_placeholder="7eb4b639-c2a4-48f8-85f8-e9a04f5233c6",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/fwd.1.2.3.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP123.00/r1_L1.fastq.gz",
+            upload_placeholder="6d57fa58-5dd4-4379-878d-935d79d2507f",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/rev.1.2.3.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP123.00/r2_L1.fastq.gz",
+            upload_placeholder="8eb4b639-c2a4-48f8-85f8-e9a04f5233c6",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/fwd.1.2.4.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP124.00/r1_L1.fastq.gz",
+            upload_placeholder="7d57fa58-5dd4-4379-878d-935d79d2507f",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/rev.1.2.4.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP124.00/r2_L1.fastq.gz",
+            upload_placeholder="9eb4b639-c2a4-48f8-85f8-e9a04f5233c6",
             metadata_availability=False,
             allow_empty=False,
         ),

@@ -111,7 +111,12 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
             "CTTTPP413.00",
             "CTTTPP511.00",
         ],
-        allowed_collection_event_names=["Not_reported", "Baseline", "On_Treatment", "Week_1"],
+        allowed_collection_event_names=[
+            "Not_reported",
+            "Baseline",
+            "On_Treatment",
+            "Week_1",
+        ],
         assays={"wes": []},
     )
     # manually modify json's to add tumor / normal definitions for WES
@@ -180,46 +185,53 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
         full_ct, patch_with_artifacts, template.type, "my-biofx-bucket"
     )
 
-    pairing_filename = full_ct["protocol_identifier"]+"_pairing.csv"
+    pairing_filename = full_ct["protocol_identifier"] + "_pairing.csv"
     # wes_bam
-    if template.type ==  "wes_bam":
+    if template.type == "wes_bam":
         # in other cases - 2 config, tumor-only for both samples
         assert len(res) == 3
-        assert res[pairing_filename] == "protocol_identifier,test_prism_trial_id\ntumor,normal\nCTTTPP111.00,CTTTPP121.00"
+        assert (
+            res[pairing_filename]
+            == "protocol_identifier,test_prism_trial_id\ntumor,normal\nCTTTPP111.00,CTTTPP121.00"
+        )
     elif template.type == "tumor_normal_pairing":
         # only returns tumor/normal config
         # config for CTTTPP122.00 was generated on wes_fastq upload
         assert len(res) == 2  # pairing still only for 1
-        assert res[pairing_filename] == "protocol_identifier,test_prism_trial_id\n" \
-        "tumor,normal\n" \
-        "CTTTPP111.00,CTTTPP121.00\n" \
-        "CTTTPP122.00,CTTTPP123.00\n" \
-        "CTTTPP211.00,CTTTPP213.00\n" \
-        "CTTTPP212.00,CTTTPP213.00\n" \
-        ",CTTTPP214.00\n" \
-        "CTTTPP311.00,CTTTPP313.00\n" \
-        ",CTTTPP312.00\n" \
-        "CTTTPP411.00,\n" \
-        ",CTTTPP412.00\n" \
-        ",CTTTPP413.00\n" \
-        "CTTTPP511.00,"
+        assert (
+            res[pairing_filename] == "protocol_identifier,test_prism_trial_id\n"
+            "tumor,normal\n"
+            "CTTTPP111.00,CTTTPP121.00\n"
+            "CTTTPP122.00,CTTTPP123.00\n"
+            "CTTTPP211.00,CTTTPP213.00\n"
+            "CTTTPP212.00,CTTTPP213.00\n"
+            ",CTTTPP214.00\n"
+            "CTTTPP311.00,CTTTPP313.00\n"
+            ",CTTTPP312.00\n"
+            "CTTTPP411.00,\n"
+            ",CTTTPP412.00\n"
+            ",CTTTPP413.00\n"
+            "CTTTPP511.00,"
+        )
     elif template.type == "wes_fastq":
         # 16 configs, tumor-only for all 16 samples
         assert len(res) == 17
-        assert res[pairing_filename] == "protocol_identifier,test_prism_trial_id\n" \
-        "tumor,normal\n" \
-        "CTTTPP111.00,CTTTPP121.00\n" \
-        "CTTTPP122.00,CTTTPP123.00\n" \
-        "CTTTPP211.00,CTTTPP213.00\n" \
-        "CTTTPP212.00,CTTTPP213.00\n" \
-        ",CTTTPP214.00\n" \
-        "CTTTPP311.00,CTTTPP313.00\n" \
-        ",CTTTPP312.00\n" \
-        "CTTTPP411.00,\n" \
-        ",CTTTPP412.00\n" \
-        ",CTTTPP413.00\n" \
-        "CTTTPP511.00,"
-    else:# where we don't expect to have configs
+        assert (
+            res[pairing_filename] == "protocol_identifier,test_prism_trial_id\n"
+            "tumor,normal\n"
+            "CTTTPP111.00,CTTTPP121.00\n"
+            "CTTTPP122.00,CTTTPP123.00\n"
+            "CTTTPP211.00,CTTTPP213.00\n"
+            "CTTTPP212.00,CTTTPP213.00\n"
+            ",CTTTPP214.00\n"
+            "CTTTPP311.00,CTTTPP313.00\n"
+            ",CTTTPP312.00\n"
+            "CTTTPP411.00,\n"
+            ",CTTTPP412.00\n"
+            ",CTTTPP413.00\n"
+            "CTTTPP511.00,"
+        )
+    else:  # where we don't expect to have configs
         assert res == {}
         return
 

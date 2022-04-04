@@ -212,30 +212,30 @@ class _Wes_pipeline_config:
             for collection_event in tumors:
                 for sample in tumors[collection_event]:
                     if len(normals) == 1:
-                        tumor_pair_list.append((sample,list(normals.values())[0]))
+                        tumor_pair_list.append((sample, list(normals.values())[0]))
                         matched_normals.append(list(normals.values())[0])
                     elif len(normals) > 1:
                         if collection_event in normals.keys():
-                            tumor_pair_list.append((sample,normals[collection_event]))
+                            tumor_pair_list.append((sample, normals[collection_event]))
                             matched_normals.append(normals[collection_event])
                         elif "Baseline" in normals.keys():
-                            tumor_pair_list.append((sample,normals["Baseline"]))
+                            tumor_pair_list.append((sample, normals["Baseline"]))
                             matched_normals.append(normals["Baseline"])
                         else:
-                            tumor_pair_list.append((sample,""))
+                            tumor_pair_list.append((sample, ""))
                     else:
-                        tumor_pair_list.append((sample,""))
-            
+                        tumor_pair_list.append((sample, ""))
+
             for collection_event in normals:
                 if normals[collection_event] not in matched_normals:
-                    tumor_pair_list.append(("",normals[collection_event]))
+                    tumor_pair_list.append(("", normals[collection_event]))
 
         file_content: str = f"{PROTOCOL_ID_FIELD_NAME},{full_ct[PROTOCOL_ID_FIELD_NAME]}\n"
         file_content += "tumor,normal\n"
         file_content += "\n".join([",".join(entry) for entry in tumor_pair_list])
 
         res = {}
-        res[full_ct[PROTOCOL_ID_FIELD_NAME]+"_pairing.csv"] = file_content 
+        res[full_ct[PROTOCOL_ID_FIELD_NAME] + "_pairing.csv"] = file_content
         for run in potential_new_runs:
             # if we have data files for *both* items in a tumor/normal pair
             if (

@@ -99,26 +99,65 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
             "CTTTPP122.00",
             "CTTTPP123.00",
             "CTTTPP124.00",
+            "CTTTPP211.00",
+            "CTTTPP212.00",
+            "CTTTPP213.00",
+            "CTTTPP214.00",
+            "CTTTPP311.00",
+            "CTTTPP312.00",
+            "CTTTPP313.00",
+            "CTTTPP411.00",
+            "CTTTPP412.00",
+            "CTTTPP413.00",
+            "CTTTPP511.00",
         ],
-        allowed_collection_event_names=["Not_reported", "Baseline"],
+        allowed_collection_event_names=["Not_reported", "Baseline", "On_Treatment", "Week_1"],
         assays={"wes": []},
     )
     # manually modify json's to add tumor / normal definitions for WES
     # these are normally loaded from the shipping manifests
     if "wes" in template.type or template.type == "tumor_normal_pairing":
         for partic in full_ct["participants"]:
-            # these are paired in tumor_normal_pairing
-            partic["samples"][0]["processed_sample_derivative"] = "Tumor DNA"
-            partic["samples"][1]["processed_sample_derivative"] = "Germline DNA"
+            partic_id = partic["cimac_participant_id"]
+            if partic_id == "CTTTPP1":
+                # these are paired in tumor_normal_pairing
+                partic["samples"][0]["processed_sample_derivative"] = "Tumor DNA"
+                partic["samples"][1]["processed_sample_derivative"] = "Germline DNA"
 
-            # test default to tumor if not specified
-            partic["samples"][2]["collection_event_name"] = "Baseline"
+                # test default to tumor if not specified
+                partic["samples"][2]["collection_event_name"] = "Baseline"
 
-            # test deduplication of normals by collection_event_name
-            for n in (3, 4):
-                partic["samples"][n]["processed_sample_derivative"] = "Germline DNA"
-                partic["samples"][n]["collection_event_name"] = "Baseline"
-
+                # test deduplication of normals by collection_event_name
+                for n in (3, 4):
+                    partic["samples"][n]["processed_sample_derivative"] = "Germline DNA"
+                    partic["samples"][n]["collection_event_name"] = "Baseline"
+            elif partic_id == "CTTTPP2":
+                # test 2 tumor samples on treatment and only 1 normal on treatment
+                for n in (0, 1):
+                    partic["samples"][n]["processed_sample_derivative"] = "Tumor DNA"
+                    partic["samples"][n]["collection_event_name"] = "On_Treatment"
+                for n in (2, 3):
+                    partic["samples"][n]["processed_sample_derivative"] = "Germline DNA"
+                partic["samples"][2]["collection_event_name"] = "On_Treatment"
+                partic["samples"][3]["collection_event_name"] = "Baseline"
+            elif partic_id == "CTTTPP3":
+                # test 1 tumor sample not reported and one of normal samples baseline
+                partic["samples"][0]["processed_sample_derivative"] = "Tumor DNA"
+                for n in (1, 2):
+                    partic["samples"][n]["processed_sample_derivative"] = "Germline DNA"
+                partic["samples"][1]["collection_event_name"] = "On_Treatment"
+                partic["samples"][2]["collection_event_name"] = "Baseline"
+            elif partic_id == "CTTTPP4":
+                # test 1 tumor sample not reported and 2 normals other collection events
+                partic["samples"][0]["processed_sample_derivative"] = "Tumor DNA"
+                for n in (1, 2):
+                    partic["samples"][n]["processed_sample_derivative"] = "Germline DNA"
+                partic["samples"][1]["collection_event_name"] = "On_Treatment"
+                partic["samples"][2]["collection_event_name"] = "Week_1"
+            elif partic_id == "CTTTPP5":
+                # test 1 tumor sample with no paired normal
+                partic["samples"][0]["processed_sample_derivative"] = "Tumor DNA"
+                partic["samples"][0]["collection_event_name"] = "On_Treatment"
     print(
         {
             s["cimac_id"]: s.get("processed_sample_derivative")
@@ -140,95 +179,92 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
     res = pipelines.generate_analysis_configs_from_upload_patch(
         full_ct, patch_with_artifacts, template.type, "my-biofx-bucket"
     )
-    # _Wes_pipeline_config.__call__() temporarily returns partic_map for dev testing
-    if isinstance(res, tuple):
-        res, partic_map = res
-        # partic_map = {
-        #     cimac_participant_id str: {
-        #         "tumors": {collection_event_name str: [cimac_id str, ...], ...},
-        #         "normals": {collection_event_name str: cimac_id str, ...},
-        #     }
-        # }
-    else:
-        partic_map = {}
 
-    # where we don't expect to have configs
-    if not template.type in pipelines._ANALYSIS_CONF_GENERATORS:
-        assert res == {}
-        assert partic_map == {}
-        return
-
-    elif "pair" in template.type:
+    pairing_filename = full_ct["protocol_identifier"]+"_pairing.csv"
+    # wes_bam
+    if template.type ==  "wes_bam":
+        # in other cases - 2 config, tumor-only for both samples
+        assert len(res) == 3
+        assert res[pairing_filename] == "protocol_identifier,test_prism_trial_id\ntumor,normal\nCTTTPP111.00,CTTTPP121.00"
+    elif template.type == "tumor_normal_pairing":
         # only returns tumor/normal config
         # config for CTTTPP122.00 was generated on wes_fastq upload
-        assert len(res) == 1  # pairing still only for 1
-        assert partic_map == {
-            "CTTTPP1": {
-                "normals": {
-                    "Not_reported": "CTTTPP121.00",
-                    "Baseline": "CTTTPP123.00",
-                },
-                "tumors": {
-                    "Not_reported": ["CTTTPP111.00"],
-                    "Baseline": ["CTTTPP122.00"],
-                },
-            }
-        }
+        assert len(res) == 2  # pairing still only for 1
+        assert res[pairing_filename] == "protocol_identifier,test_prism_trial_id\n" \
+        "tumor,normal\n" \
+        "CTTTPP111.00,CTTTPP121.00\n" \
+        "CTTTPP122.00,CTTTPP123.00\n" \
+        "CTTTPP211.00,CTTTPP213.00\n" \
+        "CTTTPP212.00,CTTTPP213.00\n" \
+        ",CTTTPP214.00\n" \
+        "CTTTPP311.00,CTTTPP313.00\n" \
+        ",CTTTPP312.00\n" \
+        "CTTTPP411.00,\n" \
+        ",CTTTPP412.00\n" \
+        ",CTTTPP413.00\n" \
+        "CTTTPP511.00,"
     elif template.type == "wes_fastq":
-        # 5 configs, tumor-only for all 5 samples
-        assert len(res) == 5
-        assert partic_map == {
-            "CTTTPP1": {
-                "normals": {
-                    "Not_reported": "CTTTPP121.00",
-                    "Baseline": "CTTTPP123.00",
-                },
-                "tumors": {
-                    "Not_reported": ["CTTTPP111.00"],
-                    "Baseline": ["CTTTPP122.00"],
-                },
-            }
-        }
-    else:  # wes_bam
-        # in other cases - 2 config, tumor-only for both samples
-        assert len(res) == 2
-        assert partic_map == {
-            "CTTTPP1": {
-                "normals": {"Not_reported": "CTTTPP121.00"},
-                "tumors": {"Not_reported": ["CTTTPP111.00"]},
-            }
-        }
+        # 16 configs, tumor-only for all 16 samples
+        assert len(res) == 17
+        assert res[pairing_filename] == "protocol_identifier,test_prism_trial_id\n" \
+        "tumor,normal\n" \
+        "CTTTPP111.00,CTTTPP121.00\n" \
+        "CTTTPP122.00,CTTTPP123.00\n" \
+        "CTTTPP211.00,CTTTPP213.00\n" \
+        "CTTTPP212.00,CTTTPP213.00\n" \
+        ",CTTTPP214.00\n" \
+        "CTTTPP311.00,CTTTPP313.00\n" \
+        ",CTTTPP312.00\n" \
+        "CTTTPP411.00,\n" \
+        ",CTTTPP412.00\n" \
+        ",CTTTPP413.00\n" \
+        "CTTTPP511.00,"
+    else:# where we don't expect to have configs
+        assert res == {}
+        return
 
     for fname, conf in res.items():
-        conf = yaml.load(conf, Loader=yaml.FullLoader)
-        print(conf)
+        if fname != pairing_filename:
+            conf = yaml.load(conf, Loader=yaml.FullLoader)
+            print(conf)
 
-        assert len(conf["metasheet"]) == 1  # one run
+            assert len(conf["metasheet"]) == 1  # one run
 
-        if "pair" in template.type:
-            assert len(conf["samples"]) in [1, 2]
-            assert conf["instance_name"] == (
-                "ctttpp111-00"  # run_id from sheet
-                if len(conf["samples"]) == 2  # tumor/normal
-                else "ctttpp122-00"  # tumor id for tumor-only
-            )  # run ID but lowercase & hyphenated
+            if "pair" in template.type:
+                assert len(conf["samples"]) in [1, 2]
+                assert conf["instance_name"] == (
+                    "ctttpp111-00"  # run_id from sheet
+                    if len(conf["samples"]) == 2  # tumor/normal
+                    else "ctttpp122-00"  # tumor id for tumor-only
+                )  # run ID but lowercase & hyphenated
 
-        else:
-            assert len(conf["samples"]) == 1  # tumor only
-            assert conf["instance_name"] in [
-                "ctttpp111-00",
-                "ctttpp121-00",
-                "ctttpp122-00",
-                "ctttpp123-00",
-                "ctttpp124-00",
-            ]  # CIMAC ID but lowercase & hypenated
+            else:
+                assert len(conf["samples"]) == 1  # tumor only
+                assert conf["instance_name"] in [
+                    "ctttpp111-00",
+                    "ctttpp121-00",
+                    "ctttpp122-00",
+                    "ctttpp123-00",
+                    "ctttpp124-00",
+                    "ctttpp211-00",
+                    "ctttpp212-00",
+                    "ctttpp213-00",
+                    "ctttpp214-00",
+                    "ctttpp311-00",
+                    "ctttpp312-00",
+                    "ctttpp313-00",
+                    "ctttpp411-00",
+                    "ctttpp412-00",
+                    "ctttpp413-00",
+                    "ctttpp511-00",
+                ]  # CIMAC ID but lowercase & hypenated
 
-        for sample in conf["samples"].values():
-            assert len(sample) > 0  # at least one data file per sample
-            assert all("my-biofx-bucket" in f for f in sample)
-            assert all(f.endswith(".fastq.gz") for f in sample) or all(
-                f.endswith(".bam") for f in sample
-            )
+            for sample in conf["samples"].values():
+                assert len(sample) > 0  # at least one data file per sample
+                assert all("my-biofx-bucket" in f for f in sample)
+                assert all(f.endswith(".fastq.gz") for f in sample) or all(
+                    f.endswith(".bam") for f in sample
+                )
 
 
 def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, template):

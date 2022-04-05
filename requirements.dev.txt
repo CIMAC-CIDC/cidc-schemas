@@ -1,5 +1,6 @@
 pytest==4.6.3
 black==19.10b0
+click==7.0
 pytest-benchmark==3.2.2
 pre-commit==1.17.0
 tqdm~=4.59.0

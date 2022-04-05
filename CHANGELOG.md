@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.32` - 5 Apr 2022
+
+- `added` semi-automated tumor/normal matching for WES uploads
+
 ## Version `0.25.31` - 25 Mar 2022
 
 - `added` version peg for regex library to prevent errors in date format validation

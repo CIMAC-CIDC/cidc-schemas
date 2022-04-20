@@ -18,15 +18,15 @@ class _Wes_pipeline_config:
         """
         A function that for specified assay type will
         generate a snakemake .yaml for each tumor/normal pair and
-        tumor-only (ie unpaired) samples with .fastq or bam available. 
+        tumor-only (ie unpaired) samples with .fastq or bam available.
 
         upload_type == "assay" is for when the upload consists of .fastq/.bam assay data.
-        So sample_id's for which we now have data should be in the `patch` arg,  
+        So sample_id's for which we now have data should be in the `patch` arg,
         and corresponding sample pairing info should be in the `full_ct` doc.
 
-        Or if upload_type == "pairing" it's vice versa - new runs/pairs are calculated 
-        from `patch` (which is a "pairing"), and then we look for sample data info in 
-        the `full_ct`  
+        Or if upload_type == "pairing" it's vice versa - new runs/pairs are calculated
+        from `patch` (which is a "pairing"), and then we look for sample data info in
+        the `full_ct`
 
         Briefly:
         - we need to figure out what new data we've got
@@ -68,7 +68,7 @@ class _Wes_pipeline_config:
         Normal/Germline samples are deduplicated per patient for each collection_event_name.
             see _Wes_pipeline_config._choose_which_normal() above
         All Tumor samples are returned.
-        
+
         If a sample can't be determined, returned as Tumor
 
         Parameters
@@ -131,10 +131,10 @@ class _Wes_pipeline_config:
 
     def __call__(self, full_ct: dict, patch: dict, bucket: str) -> Dict[str, str]:
         """
-            Generates a mapping from run_ids to the
-            generated snakemake wes .yaml configs.
+        Generates a mapping from run_ids to the
+        generated snakemake wes .yaml configs.
 
-            Patch is expected to be already merged into full_ct.
+        Patch is expected to be already merged into full_ct.
         """
 
         class AnalysisRun(NamedTuple):
@@ -212,14 +212,35 @@ class _Wes_pipeline_config:
             for collection_event in tumors:
                 for sample in tumors[collection_event]:
                     if len(normals) == 1:
-                        tumor_pair_list.append((sample, collection_event, list(normals.values())[0], list(normals.keys())[0]))
+                        tumor_pair_list.append(
+                            (
+                                sample,
+                                collection_event,
+                                list(normals.values())[0],
+                                list(normals.keys())[0],
+                            )
+                        )
                         matched_normals.append(list(normals.values())[0])
                     elif len(normals) > 1:
                         if collection_event in normals.keys():
-                            tumor_pair_list.append((sample, collection_event, normals[collection_event], collection_event))
+                            tumor_pair_list.append(
+                                (
+                                    sample,
+                                    collection_event,
+                                    normals[collection_event],
+                                    collection_event,
+                                )
+                            )
                             matched_normals.append(normals[collection_event])
                         elif "Baseline" in normals.keys():
-                            tumor_pair_list.append((sample, collection_event, normals["Baseline"], "Baseline"))
+                            tumor_pair_list.append(
+                                (
+                                    sample,
+                                    collection_event,
+                                    normals["Baseline"],
+                                    "Baseline",
+                                )
+                            )
                             matched_normals.append(normals["Baseline"])
                         else:
                             tumor_pair_list.append((sample, collection_event, "", ""))
@@ -228,9 +249,13 @@ class _Wes_pipeline_config:
 
             for collection_event in normals:
                 if normals[collection_event] not in matched_normals:
-                    tumor_pair_list.append(("","",normals[collection_event], collection_event))
+                    tumor_pair_list.append(
+                        ("", "", normals[collection_event], collection_event)
+                    )
 
-        file_content: str = f"{PROTOCOL_ID_FIELD_NAME},{full_ct[PROTOCOL_ID_FIELD_NAME]}\n"
+        file_content: str = (
+            f"{PROTOCOL_ID_FIELD_NAME},{full_ct[PROTOCOL_ID_FIELD_NAME]}\n"
+        )
         file_content += "tumor,tumor_collection_event,normal,normal_collection_event\n"
         file_content += "\n".join([",".join(entry) for entry in tumor_pair_list])
 
@@ -314,10 +339,10 @@ def _rna_level1_pipeline_config(
     full_ct: dict, patch: dict, bucket: str
 ) -> Dict[str, str]:
     """
-        Generates .yaml configs for RNAseq pipeline and a metasheet.csv with sample metadata.
-        Returns a filename to file content map.
-        
-        Patch is expected to be already merged into full_ct.
+    Generates .yaml configs for RNAseq pipeline and a metasheet.csv with sample metadata.
+    Returns a filename to file content map.
+
+    Patch is expected to be already merged into full_ct.
     """
 
     tid = full_ct[PROTOCOL_ID_FIELD_NAME]
@@ -377,7 +402,7 @@ def generate_analysis_configs_from_upload_patch(
         ct: full metadata object *with `patch` merged*!
         patch: metadata patch passed from upload (assay or manifest)
         template_type: assay or manifest type
-        bucket: a name of a bucket where data files are expected to be 
+        bucket: a name of a bucket where data files are expected to be
                 available for the pipeline runner
     Returns:
         Filename to pipeline configs as a string map.

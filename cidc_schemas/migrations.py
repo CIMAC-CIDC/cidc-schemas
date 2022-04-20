@@ -82,8 +82,8 @@ class v0_23_18_to_v0_24_0(migration):
     @classmethod
     def downgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
         """
-        NOTE: downgrades are not possible on this breaking change. Downgrading 
-        would require making arbitrary decisions about which data to delete and 
+        NOTE: downgrades are not possible on this breaking change. Downgrading
+        would require making arbitrary decisions about which data to delete and
         which to keep.
         """
         return MigrationResult(metadata, {})

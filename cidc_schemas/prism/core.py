@@ -224,7 +224,7 @@ def _apply_changes(
     data_obj_pointer: Union[None, str] = None,
 ):
     """
-    Takes a list of AtomicChanges and applies it to the `data_obj` within 
+    Takes a list of AtomicChanges and applies it to the `data_obj` within
         root_obj: root dictionary we are building to represent data,
                   that holds 'data_obj' within 'data_obj_pointer'
         data_obj_pointer: pointer of 'data_obj' within 'root_obj'.

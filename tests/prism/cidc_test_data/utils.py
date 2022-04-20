@@ -37,7 +37,7 @@ def get_test_trial(
 ):
     """
     Build a test trial metadata object. `cimac_ids` is a list of CIMAC IDs to include in
-    the `participants` portion of the metadata. 
+    the `participants` portion of the metadata.
     """
     cimac_ids = cimac_ids or []
     participants: Dict[str, dict] = {}

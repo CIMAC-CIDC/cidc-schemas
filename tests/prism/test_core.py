@@ -231,7 +231,7 @@ def test_prismify_encrypt(monkeypatch):
 
 
 def test_prism_local_files_format_extension(monkeypatch):
-    """ Tests prism alert on different extensions of a local file vs gcs_uri """
+    """Tests prism alert on different extensions of a local file vs gcs_uri"""
 
     mock_XlTemplateReader_from_excel(
         {
@@ -291,7 +291,7 @@ def test_prism_local_files_format_extension(monkeypatch):
 
 
 def test_prism_local_files_format_multiple_extensions(monkeypatch):
-    """ Tests prism ability to gcs_uri """
+    """Tests prism ability to gcs_uri"""
 
     mock_XlTemplateReader_from_excel(
         {
@@ -425,7 +425,7 @@ def _tab_joining_template_schema() -> dict:
 
 
 def test_prism_joining_tabs(monkeypatch):
-    """ Tests whether prism can join data from two excel tabs for a shared metadata subtree """
+    """Tests whether prism can join data from two excel tabs for a shared metadata subtree"""
 
     mock_XlTemplateReader_from_excel(
         {
@@ -602,7 +602,7 @@ def test_allow_empty(monkeypatch):
 
 
 def test_confilicting_values_in_one_template(monkeypatch):
-    """ Tests that prismify doesn't allow two different values for some property """
+    """Tests that prismify doesn't allow two different values for some property"""
     mock_XlTemplateReader_from_excel(
         {
             "authors": [
@@ -658,7 +658,7 @@ def test_confilicting_values_in_one_template(monkeypatch):
 
 
 def test_prism_do_not_merge(monkeypatch):
-    """ Tests whether prism acknowledges do_not_merge """
+    """Tests whether prism acknowledges do_not_merge"""
 
     mock_XlTemplateReader_from_excel(
         {"analysis": [["#header", "id", "comment"], ["#data", "111", "whatever"]]},
@@ -725,7 +725,7 @@ def test_prism_do_not_merge(monkeypatch):
 
 
 def test_prism_many_artifacts_from_process_as_on_one_record(monkeypatch):
-    """ Tests whether prism can extract many file_map entries from process_as on one record """
+    """Tests whether prism can extract many file_map entries from process_as on one record"""
 
     mock_XlTemplateReader_from_excel(
         {

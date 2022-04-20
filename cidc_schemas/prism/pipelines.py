@@ -212,26 +212,26 @@ class _Wes_pipeline_config:
             for collection_event in tumors:
                 for sample in tumors[collection_event]:
                     if len(normals) == 1:
-                        tumor_pair_list.append((sample, list(normals.values())[0]))
+                        tumor_pair_list.append((sample, collection_event, list(normals.values())[0], list(normals.keys())[0]))
                         matched_normals.append(list(normals.values())[0])
                     elif len(normals) > 1:
                         if collection_event in normals.keys():
-                            tumor_pair_list.append((sample, normals[collection_event]))
+                            tumor_pair_list.append((sample, collection_event, normals[collection_event], collection_event))
                             matched_normals.append(normals[collection_event])
                         elif "Baseline" in normals.keys():
-                            tumor_pair_list.append((sample, normals["Baseline"]))
+                            tumor_pair_list.append((sample, collection_event, normals["Baseline"], "Baseline"))
                             matched_normals.append(normals["Baseline"])
                         else:
-                            tumor_pair_list.append((sample, ""))
+                            tumor_pair_list.append((sample, collection_event, "", ""))
                     else:
-                        tumor_pair_list.append((sample, ""))
+                        tumor_pair_list.append((sample, collection_event, "", ""))
 
             for collection_event in normals:
                 if normals[collection_event] not in matched_normals:
-                    tumor_pair_list.append(("", normals[collection_event]))
+                    tumor_pair_list.append(("","",normals[collection_event], collection_event))
 
         file_content: str = f"{PROTOCOL_ID_FIELD_NAME},{full_ct[PROTOCOL_ID_FIELD_NAME]}\n"
-        file_content += "tumor,normal\n"
+        file_content += "tumor,tumor_collection_event,normal,normal_collection_event\n"
         file_content += "\n".join([",".join(entry) for entry in tumor_pair_list])
 
         res = {}

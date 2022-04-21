@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.33` - 21 Apr 2022
+
+- `added` collection event names to WES tumor/normal automated matching CSV
+
 ## Version `0.25.32` - 5 Apr 2022
 
 - `added` semi-automated tumor/normal matching for WES uploads

@@ -167,7 +167,7 @@ def merge_artifact_extra_metadata(
 def _update_artifact(
     ct: dict, artifact_patch: dict, artifact_uuid: str, uuid_path: Optional[str] = None
 ) -> Tuple[dict, dict, dict]:
-    """ Updates the artifact with uuid `artifact_uuid` in `ct`,
+    """Updates the artifact with uuid `artifact_uuid` in `ct`,
     and return the updated clinical trial and artifact objects
     Args:
         ct: clinical trial object

@@ -25,7 +25,7 @@ class InDocRefNotFoundError(ValidationError):
 
 
 def _in_doc_refs_check(validator, schema_prop_value, ref_value, subschema):
-    """ A "dummy" validator, that just produces errors for every occurrence of `in_doc_ref_pattern` """
+    """A "dummy" validator, that just produces errors for every occurrence of `in_doc_ref_pattern`"""
     yield InDocRefNotFoundError(
         f"Ref {schema_prop_value.split('/')[-1]}: {ref_value!r} not found within {schema_prop_value!r}"
     )
@@ -73,7 +73,7 @@ class _Validator(jsonschema.Draft7Validator):
 
     It achieves that by first checking everything with regular Draft7Validator,
     and then collecting all refs and checking existence of a corresponding value.
-    
+
     """
 
     with open(METASCHEMA_PATH) as metaschema_file:
@@ -129,11 +129,11 @@ class _Validator(jsonschema.Draft7Validator):
             super().validate(instance, *args, **kwargs)
 
     def iter_errors(self, instance: JSON, _schema: Optional[dict] = None):
-        """ 
+        """
         NOTE: do not call this directly! Doing so will break the in_doc_refs validation!
 
-        This is the main validation method. `.is_valid`, `.validate` are based on this. 
-    
+        This is the main validation method. `.is_valid`, `.validate` are based on this.
+
         It will be called recursively, while `.descend`ing instance and schema.
         """
         # First we call usual Draft7Validator validation
@@ -198,9 +198,9 @@ class _Validator(jsonschema.Draft7Validator):
 
     def _get_values_for_path_pattern(self, path: str, doc: dict) -> set:
         """
-        Search `doc` for every value matching `path`, and return those values as a set. 
-        
-        Path can contain wildcards (e.g., `/my/path/*/with/wildcard/*/hooray`) but partial 
+        Search `doc` for every value matching `path`, and return those values as a set.
+
+        Path can contain wildcards (e.g., `/my/path/*/with/wildcard/*/hooray`) but partial
         matching on path subparts is NOT supported (e.g., `/my/part*/path`).
         """
         split_path = path.strip("/").split("/")
@@ -237,7 +237,7 @@ def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
     Apply `on_refs` to all nodes with `$ref`, returning node with refs replaced
     with results of the function call.
 
-    Note: _map_refs is shallow, i.e., if calling `on_refs` on a node produces 
+    Note: _map_refs is shallow, i.e., if calling `on_refs` on a node produces
     a new node that contains refs, those refs will not be resolved.
     """
     if isinstance(node, collections.abc.Mapping):
@@ -333,9 +333,9 @@ def _load_dont_validate_schema(
     subschema pointer to load only the subschema at the provided path. For example,
     `my/schema/path.json#properties/subschema` would load only the schema tree below the
     `subschema` property.
-    
+
     If an `on_refs` function is supplied, call that on all refs in the schema, rather than
-    resolving the refs. Note: it is shallow, i.e., if calling `on_refs` on a node produces 
+    resolving the refs. Note: it is shallow, i.e., if calling `on_refs` on a node produces
     a new node that contains refs, those refs will not be resolved.
 
     If return validator is true it will return

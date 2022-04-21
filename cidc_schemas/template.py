@@ -279,7 +279,7 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
     key : str
         the key from output_API.json undre which the file path is listed
         used for WES handling of `all_summaries`
-        e.g. 'tumor cimac id', 'normal cimac id' 
+        e.g. 'tumor cimac id', 'normal cimac id'
     """
     # remove any fill-in-the-blanks
     while "{" in file_path:
@@ -622,7 +622,7 @@ def generate_empty_template(schema_path: str, target_path: str):
 
 def generate_all_templates(target_dir: str):
     """
-    Generate empty template .xlsx files for every available template schema and 
+    Generate empty template .xlsx files for every available template schema and
     write them to the target directory.
     """
     # We expect two directories: one for metadata schemas and one for manifests
@@ -664,7 +664,7 @@ class LocalFileUploadEntry(NamedTuple):
 
 class _FieldDef(NamedTuple):
     """
-    Represents all the specs on processing a specific value 
+    Represents all the specs on processing a specific value
     """
 
     key_name: str
@@ -880,7 +880,7 @@ _empty_defaultdict: Dict[str, str] = defaultdict(str)
 
 
 def _get_facet_group(gcs_uri_format: str) -> str:
-    """"
+    """ "
     Extract a file's facet group from its GCS URI format string by removing
     the "format" parts.
     """
@@ -1063,7 +1063,7 @@ class Template:
             raise NotImplementedError(f"no coercion available for type:{t}")
 
     def _get_coerce(self, field_def: dict) -> Callable:
-        """ Checks if we have a cast func for that 'type_ref' and returns it."""
+        """Checks if we have a cast func for that 'type_ref' and returns it."""
 
         orig_fdef = dict(field_def)
 

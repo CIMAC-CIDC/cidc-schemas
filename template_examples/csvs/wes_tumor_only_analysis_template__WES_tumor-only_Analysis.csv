@@ -2,7 +2,7 @@
 "#preamble","Protocol identifier","test_prism_trial_id"
 "#preamble","Folder","gs://results/"
 
-"#skip","WES Runs"
-"#header","Run id","Tumor cimac id"
+"#skip","WES tumor-only Runs"
+"#header","Run id","Tumor cimac id","Comments"
 "#data","run_1","CTTTPP111.00"
 "#data","run_2","CTTTPP121.00"

@@ -3,6 +3,6 @@
 "#preamble","Folder","gs://"
 
 "#skip","RNAseq Runs"
-"#header","Cimac id"
+"#header","Cimac id","Comments"
 "#data","CTTTPP111.00"
 "#data","CTTTPP121.00"

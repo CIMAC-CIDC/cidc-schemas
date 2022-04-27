@@ -3,6 +3,6 @@
 "#preamble","Folder","gs://results/"
 
 "#skip","WES Runs"
-"#header","Run id","Normal cimac id","Tumor cimac id"
-"#data","run_1","CTTTPP111.00","CTTTPP111.00"
+"#header","Run id","Normal cimac id","Tumor cimac id","Comments"
+"#data","run_1","CTTTPP111.00","CTTTPP111.00","a comment"
 "#data","run_2","CTTTPP121.00","CTTTPP121.00"

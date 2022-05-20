@@ -47,7 +47,8 @@
         "mIF",
         "mIHC",
         "TCRseq",
-        "ATACseq"
+        "ATACseq",
+        "ctDNA"
       ]
     },
     "courier": {

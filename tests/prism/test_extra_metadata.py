@@ -75,7 +75,7 @@ clinical_metadata_3 = {
     "participants": ["CNQAABC", "CNQAABD", "CNQAABQ", "CNQAABY", "CNQAABP"],
 }
 
-clinical_docx = os.path.join(TEST_DATA_DIR, "clincal_test_file.docx")
+clinical_docx = os.path.join(TEST_DATA_DIR, "clinical_test_file.docx")
 
 
 @pytest.mark.parametrize("parser", [parse_elisa, parse_npx])

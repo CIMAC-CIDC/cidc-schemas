@@ -9,9 +9,9 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
-## Version `0.25.35` - 28 Apr 2022
+## Version `0.25.36` - 4 Jun 2022
 
-- `added` allow empty
+- `added` allow empty for plasma manifest date recieved and shipped
 
 ## Version `0.25.35` - 28 Apr 2022
 

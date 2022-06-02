@@ -11,6 +11,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 
 ## Version `0.25.35` - 28 Apr 2022
 
+- `added` allow empty
+
+## Version `0.25.35` - 28 Apr 2022
+
 - `added` ctDNA as possible assay_type for manifests
 
 ## Version `0.25.34` - 28 Apr 2022

@@ -47,11 +47,13 @@
                     },
                     "date shipped": {
                         "merge_pointer": "/date_shipped",
-                        "type_ref": "shipping_core.json#properties/date_shipped"
+                        "type_ref": "shipping_core.json#properties/date_shipped",
+                        "allow_empty": true
                     },
                     "date received": {
                         "merge_pointer": "/date_received",
-                        "type_ref": "shipping_core.json#properties/date_received"
+                        "type_ref": "shipping_core.json#properties/date_received",
+                        "allow_empty": true
                     },
                     "quality of shipment": {
                         "merge_pointer": "/quality_of_shipment",

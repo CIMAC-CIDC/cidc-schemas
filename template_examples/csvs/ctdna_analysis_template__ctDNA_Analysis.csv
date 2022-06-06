@@ -1,0 +1,10 @@
+"#title","Ctdna ichorcna analysis template"
+"#preamble","Protocol identifier","test_prism_trial_id"
+"#preamble","Batch id","test_batch"
+"#preamble","Assay creator","Broad"
+"#preamble","Summary plots","summary_plot.pdf"
+
+"#skip","ichorCNA Runs"
+"#header","Cimac id","Genome-wide plots","Bias qc plots","Fraction cna subclonal","Fraction genome subclonal","Gc map correction mad","Optimal solution","Other solutions","Tumor ploidy","Subclone fraction","Tumor fraction","Comments"
+"#data","CTTTPP111.00","CTTTPP111.00/allGenomeWidePlots.pdf","CTTTPP111.00/bias.pdf","0.1","0.2","0.04","CTTTPP111.00/optimalSolution.zip","CTTTPP111.00/outSolutions.zip","2.599","0.15","0.25"
+"#data","CTTTPP121.00","CTTTPP121.00/allGenomeWidePlots.pdf","CTTTPP121.00/bias.pdf","0.2","0.3","0.05","CTTTPP121.00/optimalSolution.zip","CTTTPP121.00/outSolutions.zip","2.699","0.16","0.26","note about sample 2"

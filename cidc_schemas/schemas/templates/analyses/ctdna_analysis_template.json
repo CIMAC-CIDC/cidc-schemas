@@ -1,0 +1,94 @@
+{
+    "title": "ctDNA ichorCNA analysis template",
+    "description": "Metadata information for ctDNA ichorCNA Analysis output.",
+    "prism_template_root_object_schema": "assays/ctdna_analysis.json#definitions/batch",
+    "prism_template_root_object_pointer": "/analysis/ctdna_analysis/batches/0",
+    "properties": {
+        "worksheets": {
+            "ctDNA Analysis": {
+                "preamble_rows": {
+                    "protocol identifier": {
+                        "merge_pointer": "4/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    },
+                    "batch id": {
+                        "merge_pointer": "0/batch_id",
+                        "type_ref": "assays/ctdna_assay.json#properties/batch_id"
+                    },
+                    "assay creator": {
+                        "merge_pointer": "0/assay_creator",
+                        "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+                    },
+                    "summary plots": {
+                        "merge_pointer": "0/summary_plots",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "gcs_uri_format": "{protocol identifier}/ctdna_analysis/{batch id}/summary_plots.pdf",
+                        "is_artifact": 1
+                    }
+                },
+                "prism_data_object_pointer": "/records/-",
+                "data_columns": {
+                    "ichorCNA Runs": {
+                        "cimac id": {
+                            "merge_pointer": "0/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id"
+                        },
+                        "genome-wide plots": {
+                            "merge_pointer": "0/genome-wide_plots",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "is_artifact": 1,
+                            "gcs_uri_format": "{protocol identifier}/ctdna_analysis/{batch id}/{cimac id}/genome-wide_plots.pdf"
+                        },
+                        "bias qc plots": {
+                            "merge_pointer": "0/bias_qc_plots",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "is_artifact": 1,
+                            "gcs_uri_format": "{protocol identifier}/ctdna_analysis/{batch id}/{cimac id}/bias_qc_plots.pdf"
+                        },
+                        "fraction cna subclonal": {
+                            "merge_pointer": "0/fraction_cna_subclonal",
+                            "type_ref": "assays/ctdna_analysis.json#definitions/entry/properties/fraction_cna_subclonal"
+                        },
+                        "fraction genome subclonal": {
+                            "merge_pointer": "0/fraction_genome_subclonal",
+                            "type_ref": "assays/ctdna_analysis.json#definitions/entry/properties/fraction_genome_subclonal"
+                        },
+                        "gc map correction mad": {
+                            "merge_pointer": "0/gc_map_correction_mad",
+                            "type_ref": "assays/ctdna_analysis.json#definitions/entry/properties/gc_map_correction_mad"
+                        },
+                        "optimal solution": {
+                            "merge_pointer": "0/optimal_solution",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "is_artifact": 1,
+                            "gcs_uri_format": "{protocol identifier}/ctdna_analysis/{batch id}/{cimac id}/optimal_solution.zip"
+                        },
+                        "other solutions": {
+                            "merge_pointer": "0/other_solutions",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "is_artifact": 1,
+                            "gcs_uri_format": "{protocol identifier}/ctdna_analysis/{batch id}/{cimac id}/other_solutions.zip"
+                        },
+                        "tumor ploidy": {
+                            "merge_pointer": "0/tumor_ploidy",
+                            "type_ref": "assays/ctdna_analysis.json#definitions/entry/properties/tumor_ploidy"
+                        },
+                        "subclone fraction": {
+                            "merge_pointer": "0/subclone_fraction",
+                            "type_ref": "assays/ctdna_analysis.json#definitions/entry/properties/subclone_fraction"
+                        },
+                        "tumor fraction": {
+                            "merge_pointer": "0/tumor_fraction",
+                            "type_ref": "assays/ctdna_analysis.json#definitions/entry/properties/tumor_fraction"
+                        },
+                        "comments": {
+                            "type_ref": "assays/ctdna_analysis.json#definitions/entry/properties/comments",
+                            "merge_pointer": "0/comments",
+                            "allow_empty": true
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,47 @@
+{
+  "title": "Metadata file for ctDNA Assay",
+  "description": "Metadata information for Circulating Tumor DNA (ctDNA) Assay data submission.",
+  "properties": {
+    "worksheets": {
+      "ctDNA": {
+        "prism_preamble_object_schema" : "assays/ctdna_assay.json",
+        "prism_preamble_object_pointer" : "/assays/ctdna/-",
+        "prism_data_object_pointer" : "/records/-",
+        "preamble_rows": {
+          "protocol identifier": {
+            "merge_pointer": "3/protocol_identifier",
+            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+          },
+          "batch id": {
+            "merge_pointer": "0/batch_id",
+            "type_ref": "assays/ctdna_assay.json#properties/batch_id"
+          },
+          "assay creator": {
+            "merge_pointer": "0/assay_creator",
+            "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+          }
+        },
+        "data_columns": {
+          "Samples": {
+            "cimac id": {
+              "merge_pointer": "0/cimac_id", 
+              "type_ref": "sample.json#properties/cimac_id"
+            },
+            "demultiplexed bam": {
+              "merge_pointer": "0/demultiplexed_bam",
+              "gcs_uri_format": "{protocol identifier}/ctdna/{batch id}/{cimac id}/demultiplexed.bam",
+              "is_artifact": 1,
+              "type_ref": "assays/components/local_file.json#properties/file_path"
+            },
+            "demultiplexed bam index": {
+              "merge_pointer": "0/demultiplexed_bam_index",
+              "gcs_uri_format": "{protocol identifier}/ctdna/{batch id}/{cimac id}/demultiplexed.bam.bai",
+              "is_artifact" : 1,
+              "type_ref": "assays/components/local_file.json#properties/file_path"
+            }
+          }
+        }
+      }
+    }
+  }
+}

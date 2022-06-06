@@ -19,6 +19,7 @@ SUPPORTED_ASSAYS = [
     "nanostring",
     "clinical_data",
     "misc_data",
+    "ctdna",
 ]
 
 SUPPORTED_SHIPPING_MANIFESTS = [
@@ -40,6 +41,7 @@ SUPPORTED_MANIFESTS = SUPPORTED_SHIPPING_MANIFESTS + SUPPORTED_WEIRD_MANIFESTS
 
 SUPPORTED_ANALYSES = [
     "atacseq_analysis",
+    "ctdna_analysis",
     "cytof_analysis",
     "rna_level1_analysis",
     "tcr_analysis",

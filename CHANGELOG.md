@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.37` - 7 Jun 2022
+
+- `added` support for ctDNA and ctDNA analysis
+
 ## Version `0.25.36` - 2 Jun 2022
 
 - `added` allow empty for plasma manifest date recieved and shipped

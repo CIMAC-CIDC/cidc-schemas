@@ -2,7 +2,7 @@ from copy import deepcopy
 
 from cidc_schemas.prism import SUPPORTED_ANALYSES
 
-from .assay_data import cytof, tcr_fastq
+from .assay_data import ctdna, cytof, tcr_fastq
 
 from .utils import (
     copy_dict_with_branch,
@@ -2495,6 +2495,162 @@ def tcr_analysis() -> PrismTestData:
     base_trial = get_test_trial(cimac_ids, assays)
 
     # Set up the TCR target trial to include both assay and analysis metadata
+    target_trial = copy_dict_with_branch(
+        base_trial,
+        {"assays": assays, "analysis": prismify_patch["analysis"]},
+        ["assays", "analysis"],
+    )
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
+@analysis_data_generator
+def ctdna_analysis() -> PrismTestData:
+    upload_type = "ctdna_analysis"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "test_prism_trial_id",
+        "analysis": {
+            "ctdna_analysis": {
+                "batches": [
+                    {
+                        "assay_creator": "Broad",
+                        "batch_id": "test_batch",
+                        "summary_plots": {
+                            "upload_placeholder": "3f079fc0-d666-4593-b7c0-4ee020e16e27"
+                        },
+                        "records": [
+                            {
+                                "cimac_id": "CTTTPP111.00",
+                                "genome-wide_plots": {
+                                    "upload_placeholder": "e36c218d-9939-45d2-8184-d8194a10e61e"
+                                },
+                                "bias_qc_plots": {
+                                    "upload_placeholder": "426fa1bb-04a5-41af-a1c3-404f5f83ec55"
+                                },
+                                "optimal_solution": {
+                                    "upload_placeholder": "189068fe-4c00-4a67-9a98-74223266c1e0"
+                                },
+                                "other_solutions": {
+                                    "upload_placeholder": "e63988e4-948d-4d55-8822-600754d5259c"
+                                },
+                                "fraction_cna_subclonal": 0.1,
+                                "fraction_genome_subclonal": 0.2,
+                                "gc_map_correction_mad": 0.04,
+                                "subclone_fraction": 0.15,
+                                "tumor_fraction": 0.25,
+                                "tumor_ploidy": 2.599,
+                            },
+                            {
+                                "cimac_id": "CTTTPP121.00",
+                                "genome-wide_plots": {
+                                    "upload_placeholder": "f36c218d-9939-45d2-8184-d8194a10e61e"
+                                },
+                                "bias_qc_plots": {
+                                    "upload_placeholder": "526fa1bb-04a5-41af-a1c3-404f5f83ec55"
+                                },
+                                "optimal_solution": {
+                                    "upload_placeholder": "289068fe-4c00-4a67-9a98-74223266c1e0"
+                                },
+                                "other_solutions": {
+                                    "upload_placeholder": "f63988e4-948d-4d55-8822-600754d5259c"
+                                },
+                                "fraction_cna_subclonal": 0.2,
+                                "fraction_genome_subclonal": 0.3,
+                                "gc_map_correction_mad": 0.05,
+                                "subclone_fraction": 0.16,
+                                "tumor_fraction": 0.26,
+                                "tumor_ploidy": 2.699,
+                                "comments": "note about sample 2",
+                            },
+                        ],
+                    }
+                ]
+            },
+        },
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="summary_plot.pdf",
+            upload_placeholder="3f079fc0-d666-4593-b7c0-4ee020e16e27",
+            gs_key="test_prism_trial_id/ctdna_analysis/test_batch/summary_plots.pdf",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP111.00/allGenomeWidePlots.pdf",
+            upload_placeholder="e36c218d-9939-45d2-8184-d8194a10e61e",
+            gs_key="test_prism_trial_id/ctdna_analysis/test_batch/CTTTPP111.00/genome-wide_plots.pdf",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP111.00/bias.pdf",
+            upload_placeholder="426fa1bb-04a5-41af-a1c3-404f5f83ec55",
+            gs_key="test_prism_trial_id/ctdna_analysis/test_batch/CTTTPP111.00/bias_qc_plots.pdf",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP111.00/optimalSolution.zip",
+            upload_placeholder="189068fe-4c00-4a67-9a98-74223266c1e0",
+            gs_key="test_prism_trial_id/ctdna_analysis/test_batch/CTTTPP111.00/optimal_solution.zip",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP111.00/outSolutions.zip",
+            upload_placeholder="e63988e4-948d-4d55-8822-600754d5259c",
+            gs_key="test_prism_trial_id/ctdna_analysis/test_batch/CTTTPP111.00/other_solutions.zip",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP121.00/allGenomeWidePlots.pdf",
+            upload_placeholder="f36c218d-9939-45d2-8184-d8194a10e61e",
+            gs_key="test_prism_trial_id/ctdna_analysis/test_batch/CTTTPP121.00/genome-wide_plots.pdf",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP121.00/bias.pdf",
+            upload_placeholder="526fa1bb-04a5-41af-a1c3-404f5f83ec55",
+            gs_key="test_prism_trial_id/ctdna_analysis/test_batch/CTTTPP121.00/bias_qc_plots.pdf",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP121.00/optimalSolution.zip",
+            upload_placeholder="289068fe-4c00-4a67-9a98-74223266c1e0",
+            gs_key="test_prism_trial_id/ctdna_analysis/test_batch/CTTTPP121.00/optimal_solution.zip",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP121.00/outSolutions.zip",
+            upload_placeholder="f63988e4-948d-4d55-8822-600754d5259c",
+            gs_key="test_prism_trial_id/ctdna_analysis/test_batch/CTTTPP121.00/other_solutions.zip",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+    ]
+
+    cimac_ids = [
+        sample["cimac_id"]
+        for batch in prismify_patch["analysis"]["ctdna_analysis"]["batches"]
+        for sample in batch["records"]
+    ]
+    assays = ctdna().prismify_patch["assays"]
+    base_trial = get_test_trial(cimac_ids, assays)
+
+    # Set up the ctDNA target trial to include both assay and analysis metadata
     target_trial = copy_dict_with_branch(
         base_trial,
         {"assays": assays, "analysis": prismify_patch["analysis"]},

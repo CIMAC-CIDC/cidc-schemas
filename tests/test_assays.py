@@ -554,3 +554,27 @@ def test_clinicaldata():
     obj = {**ASSAY_CORE, **clin_dat}
     with pytest.raises(jsonschema.ValidationError, match="is not valid"):
         validator.validate(clin_dat)
+
+
+def test_ctdna():
+    # set up BAM and BAI
+    bam = ARTIFACT_OBJ.copy()
+    bam["data_format"] = "BAM"
+    bai = ARTIFACT_OBJ.copy()
+    bai["data_format"] = "BAM.BAI"
+
+    # create the record
+    record = {
+        "cimac_id": "CTTTPPPSA.00",
+        "demultiplexed_bam": bam,
+        "demultiplexed_bam_index": bai,
+    }
+
+    # add a demo record.
+    obj = ASSAY_CORE.copy()
+    obj["batch_id"] = "test_batch"
+    obj["records"] = [record]
+
+    # create validator assert schemas are valid.
+    validator = _fetch_validator("ctdna")
+    validator.validate(obj)

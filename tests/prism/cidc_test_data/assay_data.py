@@ -2935,5 +2935,90 @@ def nanostring() -> PrismTestData:
     )
 
 
+@assay_data_generator
+def ctdna() -> PrismTestData:
+    upload_type = "ctdna"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "test_prism_trial_id",
+        "assays": {
+            "ctdna": [
+                {
+                    "assay_creator": "Broad",
+                    "batch_id": "test_batch",
+                    "records": [
+                        {
+                            "cimac_id": "CTTTPP111.00",
+                            "demultiplexed_bam": {
+                                "upload_placeholder": "e36c218d-9939-45d2-8184-d8194a10e61e"
+                            },
+                            "demultiplexed_bam_index": {
+                                "upload_placeholder": "426fa1bb-04a5-41af-a1c3-404f5f83ec55"
+                            },
+                        },
+                        {
+                            "cimac_id": "CTTTPP121.00",
+                            "demultiplexed_bam": {
+                                "upload_placeholder": "189068fe-4c00-4a67-9a98-74223266c1e0"
+                            },
+                            "demultiplexed_bam_index": {
+                                "upload_placeholder": "e63988e4-948d-4d55-8822-600754d5259c"
+                            },
+                        },
+                    ],
+                }
+            ]
+        },
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="CTTTPP111_00.bam",
+            upload_placeholder="e36c218d-9939-45d2-8184-d8194a10e61e",
+            gs_key="test_prism_trial_id/ctdna/test_batch/CTTTPP111.00/demultiplexed.bam",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP111_00.bai",
+            upload_placeholder="426fa1bb-04a5-41af-a1c3-404f5f83ec55",
+            gs_key="test_prism_trial_id/ctdna/test_batch/CTTTPP111.00/demultiplexed.bam.bai",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP121_00.bam",
+            upload_placeholder="189068fe-4c00-4a67-9a98-74223266c1e0",
+            gs_key="test_prism_trial_id/ctdna/test_batch/CTTTPP121.00/demultiplexed.bam",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP121_00.bai",
+            upload_placeholder="e63988e4-948d-4d55-8822-600754d5259c",
+            gs_key="test_prism_trial_id/ctdna/test_batch/CTTTPP121.00/demultiplexed.bam.bai",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+    ]
+
+    cimac_ids = [
+        sample["cimac_id"]
+        for batch in prismify_patch["assays"]["ctdna"]
+        for sample in batch["records"]
+    ]
+    base_trial = get_test_trial(cimac_ids)
+
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "assays")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
 missing = set(SUPPORTED_ASSAYS).difference([f.__name__ for f in assay_data_generators])
 assert not missing, f"Missing assay test data generators for {missing}"

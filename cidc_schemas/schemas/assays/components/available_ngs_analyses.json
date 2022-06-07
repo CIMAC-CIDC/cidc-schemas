@@ -19,6 +19,9 @@
     "tcr_analysis": {
       "$ref": "assays/tcr_analysis.json"
     },
+    "ctdna_analysis": {
+      "$ref": "assays/ctdna_analysis.json"
+    },
 
     "atacseq_analysis": {
       "type": "array",

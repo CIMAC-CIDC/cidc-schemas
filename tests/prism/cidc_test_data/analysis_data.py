@@ -2,7 +2,7 @@ from copy import deepcopy
 
 from cidc_schemas.prism import SUPPORTED_ANALYSES
 
-from .assay_data import ctdna, cytof, tcr_fastq
+from .assay_data import ctdna, cytof, tcr_fastq, microbiome
 
 from .utils import (
     copy_dict_with_branch,
@@ -2651,6 +2651,70 @@ def ctdna_analysis() -> PrismTestData:
     base_trial = get_test_trial(cimac_ids, assays)
 
     # Set up the ctDNA target trial to include both assay and analysis metadata
+    target_trial = copy_dict_with_branch(
+        base_trial,
+        {"assays": assays, "analysis": prismify_patch["analysis"]},
+        ["assays", "analysis"],
+    )
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
+@analysis_data_generator
+def microbiome_analysis() -> PrismTestData:
+    upload_type = "microbiome_analysis"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "test_prism_trial_id",
+        "analysis": {
+            "microbiome_analysis": {
+                "batches": [
+                    {
+                        "batch_id": "batch1",
+                        "summary_file": {
+                            "upload_placeholder": "7e09895b-d6df-42d3-8f01-abe3d2fd07fa"
+                        },
+                        "excluded_samples": [
+                            {
+                                "cimac_id": "CTTTPP111.00",
+                                "reason_excluded": "low coverage",
+                            },
+                        ],
+                    }
+                ],
+            }
+        },
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="/local/path/to/summary.pdf",
+            gs_key="test_prism_trial_id/microbiome_analysis/batch1/summary.pdf",
+            upload_placeholder="7e09895b-d6df-42d3-8f01-abe3d2fd07fa",
+            metadata_availability=False,
+            allow_empty=True,
+        ),
+    ]
+
+    cimac_ids = [
+        sample["cimac_id"]
+        for batch in prismify_patch["analysis"]["microbiome_analysis"]["batches"]
+        for sample in [*batch["excluded_samples"]]
+    ]
+    assays = microbiome().prismify_patch["assays"]
+    cimac_ids += [
+        record["cimac_id"]
+        for batch in assays["microbiome"]
+        for record in batch["records"]
+    ]
+    base_trial = get_test_trial(cimac_ids, assays)
+
     target_trial = copy_dict_with_branch(
         base_trial,
         {"assays": assays, "analysis": prismify_patch["analysis"]},

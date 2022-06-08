@@ -1886,6 +1886,172 @@ def participants_annotations():
     )
 
 
+@manifest_data_generator
+def microbiome_dna() -> PrismTestData:
+    upload_type = "microbiome_dna"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "test_prism_trial_id",
+        "shipments": [
+            {
+                "manifest_id": "test_prism_trial_id",
+                "assay_priority": "3",
+                "assay_type": "Microbiome",
+                "receiving_party": "DFCI_Severgnini",
+                "courier": "USPS",
+                "tracking_number": "TrackN",
+                "account_number": "AccN",
+                "shipping_condition": "Not Reported",
+                "date_shipped": "2001-10-10 00:00:00",
+                "date_received": "2002-10-10 00:00:00",
+                "quality_of_shipment": "Specimen shipment received in poor condition",
+                "ship_from": "ship from",
+                "ship_to": "ship to",
+            }
+        ],
+        "participants": [
+            {
+                "samples": [
+                    {
+                        "shipping_entry_number": 1,
+                        "collection_event_name": "Baseline",
+                        "parent_sample_id": "test_encrypted('TRIALGROUP 1')",
+                        "processed_sample_id": "test_encrypted('BIOBANK 1')",
+                        "cimac_id": "CTTTP08T1.00",
+                        "box_number": "2",
+                        "sample_location": "A1",
+                        "type_of_sample": "Stool",
+                        "sample_collection_procedure": "Other",
+                        "processed_sample_type": "Other",
+                        "processed_sample_quantity": 1.0,
+                        "processed_sample_derivative": "Stool DNA",
+                        "sample_derivative_volume": 1.0,
+                        "sample_derivative_volume_units": "Microliters",
+                        "sample_derivative_concentration": 1.0,
+                        "sample_derivative_concentration_units": "Nanogram per Microliter",
+                        "material_used": 1.0,
+                        "material_used_units": "Milliliters",
+                        "material_remaining": 0.0,
+                        "material_remaining_units": "Milliliters",
+                        "material_storage_condition": "(-20)oC",
+                        "quality_of_sample": "Pass",
+                        "sample_replacement": "Replacement Not Requested",
+                        "residual_sample_use": "Not Reported",
+                        "comments": "Comment",
+                    },
+                    {
+                        "shipping_entry_number": 2,
+                        "collection_event_name": "Pre_Day_1_Cycle_2",
+                        "parent_sample_id": "test_encrypted('TRIALGROUP 2')",
+                        "processed_sample_id": "test_encrypted('BIOBANK 1')",
+                        "cimac_id": "CTTTP08T2.00",
+                        "box_number": "2",
+                        "sample_location": "A2",
+                        "type_of_sample": "Stool",
+                        "sample_collection_procedure": "Other",
+                        "processed_sample_type": "Other",
+                        "processed_sample_quantity": 1.0,
+                        "processed_sample_derivative": "Stool DNA",
+                        "sample_derivative_volume": 2.0,
+                        "sample_derivative_volume_units": "Milliliters",
+                        "sample_derivative_concentration": 2.0,
+                        "sample_derivative_concentration_units": "Milligram per Milliliter",
+                        "material_used": 1.0,
+                        "material_used_units": "Milliliters",
+                        "material_remaining": 0.0,
+                        "material_remaining_units": "Milliliters",
+                        "material_storage_condition": "(-20)oC",
+                        "quality_of_sample": "Pass",
+                        "sample_replacement": "Replacement Not Requested",
+                        "residual_sample_use": "Not Reported",
+                        "comments": "No comment",
+                    },
+                    {
+                        "shipping_entry_number": 3,
+                        "collection_event_name": "Pre_Day_1_Cycle_2",
+                        "parent_sample_id": "test_encrypted('TRIALGROUP 3')",
+                        "processed_sample_id": "test_encrypted('BIOBANK 1')",
+                        "cimac_id": "CTTTP08T3.00",
+                        "box_number": "2",
+                        "sample_location": "A3",
+                        "type_of_sample": "Stool",
+                        "sample_collection_procedure": "Other",
+                        "processed_sample_type": "Other",
+                        "processed_sample_quantity": 2.0,
+                        "processed_sample_derivative": "Stool DNA",
+                        "sample_derivative_volume": 3.0,
+                        "sample_derivative_volume_units": "Microliters",
+                        "sample_derivative_concentration": 3.0,
+                        "sample_derivative_concentration_units": "Micrograms per Microliter",
+                        "material_used": 1.0,
+                        "material_used_units": "Milliliters",
+                        "material_remaining": 0.0,
+                        "material_remaining_units": "Milliliters",
+                        "material_storage_condition": "(-20)oC",
+                        "quality_of_sample": "Pass",
+                        "sample_replacement": "Replacement Not Requested",
+                        "residual_sample_use": "Not Reported",
+                    },
+                ],
+                "cohort_name": "Arm_A",
+                "participant_id": "test_encrypted('TTTPP8')",
+                "cimac_participant_id": "CTTTP08",
+            },
+            {
+                "samples": [
+                    {
+                        "shipping_entry_number": 4,
+                        "collection_event_name": "Baseline",
+                        "parent_sample_id": "test_encrypted('TRIALGROUP 4')",
+                        "processed_sample_id": "test_encrypted('BIOBANK 1')",
+                        "cimac_id": "CTTTP09T1.00",
+                        "box_number": "2",
+                        "sample_location": "A4",
+                        "type_of_sample": "Stool",
+                        "sample_collection_procedure": "Other",
+                        "processed_sample_type": "Other",
+                        "processed_sample_quantity": 1.0,
+                        "processed_sample_derivative": "Stool DNA",
+                        "sample_derivative_volume": 4.0,
+                        "sample_derivative_volume_units": "Milliliters",
+                        "sample_derivative_concentration": 4.0,
+                        "sample_derivative_concentration_units": "Cells per Vial",
+                        "material_used": 1.0,
+                        "material_used_units": "Milliliters",
+                        "material_remaining": 0.0,
+                        "material_remaining_units": "Milliliters",
+                        "material_storage_condition": "(-20)oC",
+                        "quality_of_sample": "Pass",
+                        "sample_replacement": "Replacement Not Requested",
+                        "residual_sample_use": "Not Reported",
+                    }
+                ],
+                "cohort_name": "Arm_Z",
+                "participant_id": "test_encrypted('TTTPP901')",
+                "cimac_participant_id": "CTTTP09",
+            },
+        ],
+    }
+    upload_entries = []
+    base_trial = get_test_trial(
+        allowed_cohort_names=["Arm_A", "Arm_Z"],
+        allowed_collection_event_names=["Baseline", "Pre_Day_1_Cycle_2"],
+    )
+
+    target_trial = copy_dict_with_branch(
+        base_trial, prismify_patch, ["participants", "shipments"]
+    )
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
 missing = set(SUPPORTED_MANIFESTS).difference(
     [f.__name__ for f in manifest_data_generators]
 )

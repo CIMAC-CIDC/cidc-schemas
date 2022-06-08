@@ -1,0 +1,5 @@
+"#title","Microbiome analysis template"
+"#preamble","Protocol identifier","test_prism_trial_id"
+"#preamble","Batch id","batch1"
+"#preamble","Summary file","/local/path/to/summary.pdf"
+

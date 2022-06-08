@@ -216,6 +216,7 @@
                 "Tumor RNA",
                 "Germline DNA",
                 "Circulating Tumor-Derived DNA",
+                "Stool DNA",
                 "Not Reported",
                 "Other"
             ]

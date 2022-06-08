@@ -1,0 +1,31 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "microbiome_analysis",
+  "title": "Microbiome Analysis",
+  "type": "object",
+
+  "definitions": {
+    "batch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["batch_id"],
+      "properties": {
+        "batch_id": {"$ref": "assays/microbiome_assay.json#properties/batch_id"},
+        "summary_file": {"$ref": "artifacts/artifact_pdf.json"},
+        "excluded_samples": {"$ref": "assays/components/excluded_samples.json"}
+      }
+    }
+  },
+
+  "additionalProperties": false,
+  "properties": {
+    "batches": {
+      "type": "array",
+      "items": {"$ref": "assays/microbiome_analysis.json#definitions/batch"},
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "/batch_id"
+      }
+    }
+  }
+}

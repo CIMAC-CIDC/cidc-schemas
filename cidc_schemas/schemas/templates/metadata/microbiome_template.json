@@ -1,0 +1,82 @@
+{
+    "title": "Metadata file for microbiome.",
+    "description": "Metadata information for Microbiome data submission.",
+    "properties": {
+      "worksheets": {
+        "Microbiome": {
+          "prism_preamble_object_schema" : "assays/microbiome_assay.json",
+          "prism_preamble_object_pointer" : "/assays/microbiome/-",
+          "prism_data_object_pointer" : "/records/-",
+  
+          "preamble_rows": {
+            "protocol identifier": {
+              "merge_pointer": "3/protocol_identifier",
+              "type_ref": "clinical_trial.json#properties/protocol_identifier"
+            },
+            "assay creator": {
+              "merge_pointer": "0/assay_creator",
+              "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+            },
+            "batch id": {
+              "merge_pointer": "0/batch_id",
+              "type_ref": "assays/microbiome_assay.json#properties/batch_id"
+            },
+            "enrichment method": {
+              "merge_pointer": "0/enrichment_method",
+              "type_ref": "assays/components/enrichment_core.json#properties/enrichment_method"
+            },
+            "enrichment kit": {
+              "merge_pointer": "0/enrichment_vendor_kit",
+              "type_ref": "assays/components/enrichment_core.json#properties/enrichment_vendor_kit"
+            },
+            "sequencer platform": {
+              "merge_pointer": "0/sequencer_platform",
+              "type_ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"
+            },
+            "forward fastq": {
+              "merge_pointer": "0/forward_fastq",
+              "type_ref": "assays/components/local_file.json#properties/file_path",
+              "is_artifact": 1,
+              "gcs_uri_format": "{protocol identifier}/microbiome/{batch id}/forward.fastq.gz"
+            },
+            "forward index": {
+              "merge_pointer": "0/forward_index",
+              "type_ref": "assays/components/local_file.json#properties/file_path",
+              "is_artifact": 1,
+              "gcs_uri_format": "{protocol identifier}/microbiome/{batch id}/forward_index.fastq.gz"
+            },
+            "reverse fastq": {
+              "merge_pointer": "0/reverse_fastq",
+              "type_ref": "assays/components/local_file.json#properties/file_path",
+              "is_artifact": 1,
+              "gcs_uri_format": "{protocol identifier}/microbiome/{batch id}/reverse.fastq.gz"
+            },
+            "reverse index": {
+              "merge_pointer": "0/reverse_index",
+              "type_ref": "assays/components/local_file.json#properties/file_path",
+              "is_artifact": 1,
+              "gcs_uri_format": "{protocol identifier}/microbiome/{batch id}/reverse_index.fastq.gz"
+            },
+            "otu table": {
+              "merge_pointer": "0/otu_table",
+              "type_ref": "assays/components/local_file.json#properties/file_path",
+              "is_artifact": 1,
+              "gcs_uri_format": "{protocol identifier}/microbiome/{batch id}/otu_table.tsv"
+            }
+          },
+          "data_columns": {
+            "Samples": {
+              "cimac id": {
+                "merge_pointer": "0/cimac_id",
+                "type_ref": "sample.json#properties/cimac_id"
+              },
+              "library yield ng": {
+                "merge_pointer": "0/library_yield_ng",
+                "type_ref": "assays/microbiome_assay.json#definitions/entry/properties/library_yield_ng"
+              }
+            }
+          }
+        }
+      }
+    }
+  }

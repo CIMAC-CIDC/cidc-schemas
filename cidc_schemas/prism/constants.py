@@ -20,6 +20,7 @@ SUPPORTED_ASSAYS = [
     "clinical_data",
     "misc_data",
     "ctdna",
+    "microbiome",
 ]
 
 SUPPORTED_SHIPPING_MANIFESTS = [
@@ -31,6 +32,7 @@ SUPPORTED_SHIPPING_MANIFESTS = [
     "tumor_tissue_dna",
     "tumor_tissue_rna",
     "h_and_e",
+    "microbiome_dna",
 ]
 # weird non shipping manifest
 SUPPORTED_WEIRD_MANIFESTS = ["tumor_normal_pairing", "participants_annotations"]
@@ -47,6 +49,7 @@ SUPPORTED_ANALYSES = [
     "tcr_analysis",
     "wes_analysis",
     "wes_tumor_only_analysis",
+    "microbiome_analysis",
 ]
 
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS + SUPPORTED_ANALYSES

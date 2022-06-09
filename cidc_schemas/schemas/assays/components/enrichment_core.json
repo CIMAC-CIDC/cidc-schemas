@@ -1,0 +1,22 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "enrichment",
+  "title": "Enrichment Values",
+  "type": "object",
+  "properties": {
+    "enrichment_method": {
+      "description": "Method used for enriching for mRNA.",
+      "type": "string",
+      "enum": ["PolyA capture", "Transcriptome capture v1", "Ribo minus"]
+    },
+    "enrichment_vendor_kit": {
+      "description": "Vendor for the bait set used for enrichment, e.g. Twist, Agilent, IDT.",
+      "type": "string",
+      "enum": ["Agilent", "Twist", "IDT", "NEB", "Illumina - TruSeq Stranded PolyA mRNA", "Illumina - TruSeq Stranded mRNA Sample Prep Kit", "Illumina- TruSeq RNA Access Library Prep Kit"]
+    }
+  },
+  "mergeStrategy": "objectMerge",
+  "required": ["enrichment_method", "enrichment_vendor_kit"],
+
+  "inheritableBase": true
+}

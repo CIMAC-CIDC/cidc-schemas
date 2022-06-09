@@ -1,0 +1,44 @@
+{
+  "title": "Microbiome analysis template",
+  "description": "Metadata information for Microbiome Analysis output.",
+  "prism_template_root_object_schema": "assays/microbiome_analysis.json#definitions/batch",
+  "prism_template_root_object_pointer": "/analysis/microbiome_analysis/batches/0",
+  "properties": {
+    "worksheets": {
+      "Microbiome Analysis": {
+        "preamble_rows": {
+          "protocol identifier": {
+            "merge_pointer": "4/protocol_identifier",
+            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+          },
+          "batch id": {
+            "merge_pointer": "0/batch_id",
+            "type_ref": "assays/microbiome_assay.json#properties/batch_id"
+          },
+          "summary file": {
+            "merge_pointer": "0/summary_file",
+            "type_ref": "assays/components/local_file.json#properties/file_path",
+            "gcs_uri_format": "{protocol identifier}/microbiome_analysis/{batch id}/summary.pdf",
+            "is_artifact": 1
+          }
+        },
+        "prism_data_object_pointer": "0/"
+      },
+      "Excluded Samples": {
+        "prism_data_object_pointer": "/excluded_samples/-",
+        "data_columns": {
+          "Samples Excluded From Analysis": {
+            "cimac id": {
+              "type_ref": "sample.json#properties/cimac_id",
+              "merge_pointer": "0/cimac_id"
+            },
+            "reason": {
+              "type_ref": "assays/components/excluded_samples.json#items/properties/reason_excluded",
+              "merge_pointer": "0/reason_excluded"
+            }
+          }
+        }
+      }
+    }
+  }
+}

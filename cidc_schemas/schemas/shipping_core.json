@@ -48,7 +48,8 @@
         "mIHC",
         "TCRseq",
         "ATACseq",
-        "ctDNA"
+        "ctDNA",
+        "Microbiome"
       ]
     },
     "courier": {

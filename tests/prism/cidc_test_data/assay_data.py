@@ -3020,5 +3020,101 @@ def ctdna() -> PrismTestData:
     )
 
 
+@assay_data_generator
+def microbiome() -> PrismTestData:
+    upload_type = "microbiome"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "test_prism_trial_id",
+        "assays": {
+            "microbiome": [
+                {
+                    "records": [
+                        {
+                            "cimac_id": "CTTTPP122.00",
+                            "library_yield_ng": 600.0,
+                        },
+                    ],
+                    "assay_creator": "DFCI",
+                    "batch_id": "batch1",
+                    "enrichment_method": "Transcriptome capture v1",
+                    "enrichment_vendor_kit": "Illumina - TruSeq Stranded PolyA mRNA",
+                    "sequencer_platform": "Illumina - HiSeq 3000",
+                    "forward_fastq": {
+                        "upload_placeholder": "9d95cab4-1ab0-4d2d-86fb-f8a60759ecfd"
+                    },
+                    "forward_index": {
+                        "upload_placeholder": "80196e89-5eec-43d2-ab74-c31194d35023"
+                    },
+                    "reverse_fastq": {
+                        "upload_placeholder": "609788e7-9da8-4baf-b0e4-4126bfcab435"
+                    },
+                    "reverse_index": {
+                        "upload_placeholder": "ef0b2783-0fdd-43d2-9718-8c9a4f512839"
+                    },
+                    "otu_table": {
+                        "upload_placeholder": "940fa384-c4af-4e01-b44c-5852b84df45c"
+                    },
+                }
+            ]
+        },
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="/local/path/to/fwd.1.1.1.fastq.gz",
+            gs_key="test_prism_trial_id/microbiome/batch1/forward.fastq.gz",
+            upload_placeholder="9d95cab4-1ab0-4d2d-86fb-f8a60759ecfd",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/indx_fwd.1.1.1.fastq.gz",
+            gs_key="test_prism_trial_id/microbiome/batch1/forward_index.fastq.gz",
+            upload_placeholder="80196e89-5eec-43d2-ab74-c31194d35023",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/rev.1.1.1.fastq.gz",
+            gs_key="test_prism_trial_id/microbiome/batch1/reverse.fastq.gz",
+            upload_placeholder="609788e7-9da8-4baf-b0e4-4126bfcab435",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/indx_rev.1.1.1.fastq.gz",
+            gs_key="test_prism_trial_id/microbiome/batch1/reverse_index.fastq.gz",
+            upload_placeholder="ef0b2783-0fdd-43d2-9718-8c9a4f512839",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/otu.tsv",
+            gs_key="test_prism_trial_id/microbiome/batch1/otu_table.tsv",
+            upload_placeholder="940fa384-c4af-4e01-b44c-5852b84df45c",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+    ]
+
+    cimac_ids = [
+        record["cimac_id"]
+        for batch in prismify_patch["assays"]["microbiome"]
+        for record in batch["records"]
+    ]
+    base_trial = get_test_trial(cimac_ids)
+
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "assays")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
 missing = set(SUPPORTED_ASSAYS).difference([f.__name__ for f in assay_data_generators])
 assert not missing, f"Missing assay test data generators for {missing}"

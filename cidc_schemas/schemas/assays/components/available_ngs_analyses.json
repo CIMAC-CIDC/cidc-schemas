@@ -22,7 +22,9 @@
     "ctdna_analysis": {
       "$ref": "assays/ctdna_analysis.json"
     },
-
+    "microbiome_analysis": {
+      "$ref": "assays/microbiome_analysis.json"
+    },
     "atacseq_analysis": {
       "type": "array",
       "description": "Analysis for Assay for Transposase-Accessible Chromatin by sequencing (ATACseq).",

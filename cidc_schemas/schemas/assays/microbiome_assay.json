@@ -1,0 +1,73 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "microbiome",
+  "title": "Microbiome Assay",
+  "type": "object",
+  "additionalProperties": false,
+  "mergeStrategy": "objectMerge",
+  
+  "required": [
+    "records",
+    "enrichment_method",
+    "enrichment_vendor_kit",
+    "batch_id",
+    "forward_fastq",
+    "forward_index",
+    "reverse_fastq",
+    "reverse_index",
+    "otu_table"
+  ],
+
+  "allOf": [
+    { "$ref": "assays/components/assay_core.json" },
+    { "$ref": "assays/components/ngs_assay_core.json" },
+    { "$ref": "assays/components/enrichment_core.json" }
+  ],
+
+  "definitions": {
+		"entry": {
+			"type": "object",
+			"mergeStrategy": "objectMerge",
+			"description": "A single data record from microbiome assay.",
+			"additionalProperties": false,
+			"required": [
+				"cimac_id",
+				"library_yield_ng"
+			],
+      "properties": {
+        "cimac_id": { "$ref": "assays/components/ngs_assay_record.json#properties/cimac_id" },
+
+        "library_yield_ng": {
+          "description": "Resulting yield (in ng) from library construction.",
+          "type": "number"
+        }
+      }
+		}
+	},
+
+  "properties": {
+    "assay_creator": { "$ref": "assays/components/assay_core.json#properties/assay_creator" },
+    "batch_id": {
+      "description": "Microbiome batch identification number.",
+      "type": "string"
+    },
+    "sequencer_platform": { "$ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform" },
+    "enrichment_method": { "$ref": "assays/components/enrichment_core.json#properties/enrichment_method" },
+    "enrichment_vendor_kit": { "$ref": "assays/components/enrichment_core.json#properties/enrichment_vendor_kit" },
+    "forward_fastq": {"$ref": "artifacts/artifact_fastq_gz.json"},
+    "forward_index": {"$ref": "artifacts/artifact_fastq_gz.json"},
+    "reverse_fastq": {"$ref": "artifacts/artifact_fastq_gz.json"},
+    "reverse_index": {"$ref": "artifacts/artifact_fastq_gz.json"},
+    "otu_table": {"$ref": "artifacts/artifact_tsv.json"},
+
+    "records": {
+      "type": "array",
+      "description": "A single data record from microbiome assay.",
+      "mergeStrategy": "append",
+      
+      "items": {
+				"$ref": "assays/microbiome_assay.json#definitions/entry"
+      }
+    }
+  }
+}

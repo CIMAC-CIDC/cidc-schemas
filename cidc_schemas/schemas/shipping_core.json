@@ -5,6 +5,10 @@
   "type": "object",
   "description": "Core shipping details for a manifest.",
   "additionalProperties": false,
+  "required": [
+    "manifest_id",
+    "assay_type"
+  ],
   "properties": {
     "manifest_id": {
       "description": "Filename of the manifest used to ship this sample. Example: E4412_PBMC.",

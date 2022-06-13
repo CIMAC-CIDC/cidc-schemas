@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.39` - 13 Jun 2022
+
+- `changed` shipping manifests to relax lots of previously required fields
+
 ## Version `0.25.38` - 8 Jun 2022
 
 - `added` support for microbiome DNA, microbiome, and microbiome analysis

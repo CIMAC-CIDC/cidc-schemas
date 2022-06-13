@@ -9,9 +9,14 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.40` - 13 Jun 2022
+
+- `removed` requirement in shipping_core for assay_type
+
 ## Version `0.25.39` - 13 Jun 2022
 
 - `changed` shipping manifests to relax lots of previously required fields
+- `added` requirement in shipping_core for manifest_id and assay_type
 
 ## Version `0.25.38` - 8 Jun 2022
 

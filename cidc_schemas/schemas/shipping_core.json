@@ -6,8 +6,7 @@
   "description": "Core shipping details for a manifest.",
   "additionalProperties": false,
   "required": [
-    "manifest_id",
-    "assay_type"
+    "manifest_id"
   ],
   "properties": {
     "manifest_id": {

@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.41` - 17 Jun 2022
+
+- `added` 'Agilent SS Human All Exon V4' bait set option for wes assay
+
 ## Version `0.25.40` - 13 Jun 2022
 
 - `removed` requirement in shipping_core for assay_type
@@ -17,7 +21,6 @@ This Changelog tracks changes to this project. The notes below include a summary
 
 - `changed` shipping manifests to relax lots of previously required fields
 - `added` requirement in shipping_core for manifest_id and assay_type
-
 ## Version `0.25.38` - 8 Jun 2022
 
 - `added` support for microbiome DNA, microbiome, and microbiome analysis

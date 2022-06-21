@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.41` - 17 Jun 2022
+
+- `added` 'Agilent SS Human All Exon V4' bait set option for wes assay
+
 ## Version `0.25.40` - 13 Jun 2022
 
 - `removed` requirement in shipping_core for assay_type

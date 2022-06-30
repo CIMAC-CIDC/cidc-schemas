@@ -49,15 +49,31 @@
 	  "description": "Clonality output files.",
 	  "properties": {
 	    "clonality_pyclone": {
-	      "$ref": "artifacts/artifact_tsv.json"
+	    	"$ref": "artifacts/artifact_tsv.json",
+			"$comment": "maintained for backwards compatibility before v3"
 	    },
 	    "clonality_table": {
-	      "$ref": "artifacts/artifact_tsv.json"
-	    }
+	    	"$ref": "artifacts/artifact_tsv.json",
+			"$comment": "maintained for backwards compatibility before v3"
+	    },
+		"genome_view": {
+			"$ref": "artifacts/artifact_pdf.json"
+		}
 	  },
-	  "required": [
-	    "clonality_pyclone",
-	    "clonality_table"
+	  "oneOf": [
+		{
+			"required": [
+				"genome_view"
+			],
+			"$comment": "WES v3 per ngs-api PR #55"
+		},
+		{
+			"required": [
+				"clonality_pyclone",
+				"clonality_table"
+			],
+			"$comment": "maintained for backwards compatibility before v3"
+		}
 	  ],
 	  "additionalProperties": false
 	},
@@ -300,8 +316,7 @@
 				"$comment": "added for backwards compatibility"
 			},
 			"maf_tnscope_output": {
-				"$ref": "artifacts/artifact_maf.json",
-				"$comment": "added for backwards compatibility"
+				"$ref": "artifacts/artifact_maf.json"
 			},
 			"tnscope_exons": {
 				"$ref": "artifacts/artifact_vcf_gz.json",
@@ -312,13 +327,24 @@
 			{
 				"required": [
 					"vcf_gz_tnscope_output",
+					"tnscope_output_twist_filtered_vcf",
+					"tnscope_output_twist_filtered_maf",
+					"tnscope_output_twist_vcf",
+					"tnscope_output_twist_maf"
+				],
+				"$comment": "WES v3 per ngs-api PR #55"
+			},
+			{
+				"required": [
+					"vcf_gz_tnscope_output",
 					"vcf_gz_tnscope_filter",
 					"tnscope_output_twist_filtered_vcf",
 					"tnscope_output_twist_filtered_maf",
 					"maf_tnscope_filter",
 					"tnscope_output_twist_vcf",
 					"tnscope_output_twist_maf"
-				]
+				],
+				"$comment": "maintained for backwards compatibility before v3"
 			},
 			{
 				"required": [
@@ -328,7 +354,7 @@
 					"maf_tnscope_output",
 					"tnscope_exons"
 				],
-				"$comment": "added for backwards compatibility"
+				"$comment": "maintained for backwards compatibility before v2"
 			}
 		]
 	}

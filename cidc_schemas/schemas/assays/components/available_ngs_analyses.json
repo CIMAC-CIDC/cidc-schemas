@@ -13,6 +13,12 @@
     "wes_tumor_only_analysis": {
       "$ref": "assays/wes_tumor_only_analysis.json"
     },
+    "wes_analysis_old": {
+      "$ref": "assays/wes_analysis.json"
+    },
+    "wes_tumor_only_analysis_old": {
+      "$ref": "assays/wes_tumor_only_analysis.json"
+    },
     "rna_analysis": {
       "$ref": "assays/components/ngs/rna/rna_analysis.json"
     },

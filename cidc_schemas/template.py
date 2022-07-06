@@ -55,6 +55,10 @@ POSSIBLE_FILE_EXTS = [
     "maf",
     "tar",
     "junction",
+    "pdf",
+    "png",
+    "cns",
+    "cncf",
 ]
 
 
@@ -291,12 +295,34 @@ def _calc_merge_pointer(file_path: str, context: dict, key: str):
     # specialty conversions for existing non-standard usage
     # all text should be lowercase
     fixes = {  # old : new
+        # WES V3
+        "output.twist.neoantigen": "filter.neoantigen",
+        "optitype/result": "hla/optitype_result",
+        "tcellextrect/": "tcell/",
+        "hlahd/result/": "hla/hla",
+        "xhla/": "hla/xhla",
+        "clonality/segments": "copynumber/segments",
+        "clonality/genome": "copynumber/genome",
+        "clonality/chromosome": "copynumber/chromosome",
+        "clonality/sequenza": "copynumber/sequenza",
+        "clonality/facets": "copynumber/facets",
+        "clonality/bin50": "copynumber/sequenza_final",
+        "consensus_merged": "consensus",
+        "clonality/alternative": "purity/alternative",
+        "clonality/cp": "purity/cp",
+        "clonality/pyclone6": "clonality/",
+        "clonality/results.summary": "clonality/summary",
+        "cnvkit/call": "clonality/cnv_segments",
+        "cnvkit/scatter": "clonality/cnv_scatterplot",
+        "cnvkit/": "clonality/",
+        "purity/cncf": "copynumber/facets",
+        "purity/facets": "copynumber/facets",
+        "/align/recalibrated": "/alignment/align_recalibrated",
+        # Pre WES V3
         ".bam.bai": ".bam.index",
         "clonality/": "clonality/clonality/",
         "copynumber/": "copynumber/copynumber_",
         "tn_corealigned.bam": "tn_corealigned",
-        "optitype/result": "optitype/optitype_result",
-        "xhla": "optitype/xhla",
         "all_samples_summaries": "all_summaries",
         "/align/sorted.dedup": "/alignment/align_sorted_dedup",
         "sample_summar": "summar",
@@ -509,6 +535,7 @@ def _convert_api_to_template(name: str, schema: dict, assay_schema: dict):
                     # if incorrect, will still error in next step
                     continue
                 else:
+                    print(file_path)
                     raise ValueError("Generated pointer to non-existant merge_target")
 
             # GCS URI start is static

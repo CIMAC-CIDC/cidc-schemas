@@ -37,21 +37,25 @@
 	      "$ref": "artifacts/artifact_bam_bai.json"
 	    }
 	  },
+	  "required": [
+		  "align_sorted_dedup",
+		  "align_sorted_dedup_index"
+	  ],
 	  "oneOf": [
 		{
 			"required": [
-				"align_sorted_dedup",
-				"align_sorted_dedup_index",
 				"align_recalibrated",
 				"align_recalibrated_index"
 			],
 			"$comment": "WES v3 per ngs-api PR #55"
 		},
 		{
-			"required": [
-				"align_sorted_dedup",
-				"align_sorted_dedup_index"
-			],
+			"not": {
+				"required": [
+					"align_recalibrated",
+					"align_recalibrated_index"
+				]
+			},
 			"$comment": "maintained for backwards compatibility before v3"
 		}
 		],
@@ -171,7 +175,7 @@
 					"copynumber_consensus_gain",
 					"copynumber_consensus_loss",
 					"copynumber_facets",
-					"copynumber_factes_gainloss"
+					"copynumber_facets_gainloss"
 				],
 				"$comment": "WES v3 per ngs-api PR #55"
 			},
@@ -253,8 +257,11 @@
 				"required": ["vcf_compare"],
 				"$comment": "maintained for backwards compatibility before v2"
 			},
-	  	{ 
+	  		{ 
 				"required": ["haplotyper_targets"],
+				"not": {
+					"required": ["haplotyper_output"]
+				},
 				"$comment": "maintained for backwards compatibility before v3"
 			},
 			{ 
@@ -368,19 +375,24 @@
 	      "$ref": "artifacts/artifact_pdf.json"
 	    }
 	  },
+	  "required": [
+		  "optimal_purity_value"
+	  ],
 	"oneOf": [
 		{
 			"required": [
-				"optimal_purity_value",
 				"alternative_solutions",
 				"cp_contours"
 			],
 			"$comment": "WES v3 per ngs-api PR #55"
 		},
 		{
-			"required": [
-				"optimal_purity_value"
-			],
+			"not": {
+				"required": [
+					"alternative_solutions",
+					"cp_contours"
+				]
+			},
 			"$comment": "maintained for backwards compatibility before v3"
 		}
 	],

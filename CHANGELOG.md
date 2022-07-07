@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.42` - 7 Jul 2022
+
+- `added` automatic generate of WES analysis upload templates to email
+
 ## Version `0.25.41` - 17 Jun 2022
 
 - `added` 'Agilent SS Human All Exon V4' bait set option for wes assay

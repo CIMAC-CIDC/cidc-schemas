@@ -11,7 +11,7 @@ from cidc_schemas.migrations import (
     _ENCRYPTED_FIELD_LEN,
     v0_23_0_to_v0_23_1,
     v0_23_18_to_v0_24_0,
-    v0_25_41_to_v0_25_042,
+    v0_25_41_to_v0_25_42,
 )
 
 
@@ -332,10 +332,10 @@ def test_v0_23_18_to_v0_24_0():
     assert v0_23_18_to_v0_24_0.downgrade(target_ct).result == target_ct
 
 
-def test_v0_25_41_to_v0_25_042():
+def test_v0_25_41_to_v0_25_42():
     # Unrelated data is unchanged
-    assert v0_25_41_to_v0_25_042.downgrade(
-        v0_25_41_to_v0_25_042.upgrade({"foo": "bar"}).result
+    assert v0_25_41_to_v0_25_42.downgrade(
+        v0_25_41_to_v0_25_42.upgrade({"foo": "bar"}).result
     ).result == {"foo": "bar"}
 
     ct = {
@@ -352,9 +352,9 @@ def test_v0_25_41_to_v0_25_042():
         }
     }
 
-    result: MigrationResult = v0_25_41_to_v0_25_042.upgrade(ct)
+    result: MigrationResult = v0_25_41_to_v0_25_42.upgrade(ct)
     assert result.result == target_ct
     assert result.file_updates == {}
 
     # downgrade is a noop for this migration
-    assert v0_25_41_to_v0_25_042.downgrade(target_ct).result == ct
+    assert v0_25_41_to_v0_25_42.downgrade(target_ct).result == ct

@@ -42,7 +42,7 @@ class migration:
         raise NotImplementedError
 
 
-class v0_25_41_to_v0_25_042(migration):
+class v0_25_41_to_v0_25_42(migration):
     """
     Move existing WES analysis files to wes_analysis_old and
     WES Tumor-only analysis files to wes_tumor_only_analysis_old

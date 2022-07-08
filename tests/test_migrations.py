@@ -1,3 +1,4 @@
+from copy import deepcopy
 import pytest
 
 from cidc_schemas.migrations import (
@@ -352,9 +353,8 @@ def test_v0_25_41_to_v0_25_42():
         }
     }
 
-    result: MigrationResult = v0_25_41_to_v0_25_42.upgrade(ct)
+    result: MigrationResult = v0_25_41_to_v0_25_42.upgrade(deepcopy(ct))
     assert result.result == target_ct
     assert result.file_updates == {}
 
-    # downgrade is a noop for this migration
     assert v0_25_41_to_v0_25_42.downgrade(target_ct).result == ct

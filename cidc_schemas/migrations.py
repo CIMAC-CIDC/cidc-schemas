@@ -42,6 +42,58 @@ class migration:
         raise NotImplementedError
 
 
+class v0_25_41_to_v0_25_042(migration):
+    """
+    Move existing WES analysis files to wes_analysis_old and
+    WES Tumor-only analysis files to wes_tumor_only_analysis_old
+
+    To accommodate the introduction of WES analysis pipeline v3
+    """
+
+    @classmethod
+    def upgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+        if "analyses" not in metadata or all(
+            [
+                a not in metadata["analyses"]
+                for a in ["wes_analysis", "wes_tumor_only_analysis"]
+            ]
+        ):
+            return MigrationResult(metadata, {})
+
+        if "wes_analysis" in metadata["analyses"]:
+            metadata["analyses"]["wes_analysis_old"] = metadata["analyses"].pop(
+                "wes_analysis"
+            )
+        if "wes_tumor_only_analysis" in metadata["analyses"]:
+            metadata["analyses"]["wes_tumor_only_analysis_old"] = metadata[
+                "analyses"
+            ].pop("wes_tumor_only_analysis")
+
+        return MigrationResult(metadata, {})
+
+    @classmethod
+    def downgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+
+        if "analyses" not in metadata or all(
+            [
+                a not in metadata["analyses"]
+                for a in ["wes_analysis_old", "wes_tumor_only_analysis_old"]
+            ]
+        ):
+            return MigrationResult(metadata, {})
+
+        if "wes_analysis_old" in metadata["analyses"]:
+            metadata["analyses"]["wes_analysis"] = metadata["analyses"].pop(
+                "wes_analysis_old"
+            )
+        if "wes_tumor_only_analysis_old" in metadata["analyses"]:
+            metadata["analyses"]["wes_tumor_only_analysis"] = metadata["analyses"].pop(
+                "wes_tumor_only_analysis_old"
+            )
+
+        return MigrationResult(metadata, {})
+
+
 class v0_23_18_to_v0_24_0(migration):
     """
     Restructure the Olink data model, introducing the concept of batches representing
@@ -165,7 +217,7 @@ class v0_21_1_to_v0_22_0(migration):
 
     @classmethod
     def downgrade(cls, metadata: dict, *args, **kwargs):
-        MigrationResult(metadata, {})
+        return MigrationResult(metadata, {})
 
 
 class v0_15_2_to_v0_15_3(migration):

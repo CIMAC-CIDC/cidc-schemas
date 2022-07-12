@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.43` - 13 Jul 2022
+
+- `added` automatic generate of WES analysis upload templates to email
+
 ## Version `0.25.42` - 8 Jul 2022
 
 - `added` wes_analysis_old and wes_tumor_only_analysis_old

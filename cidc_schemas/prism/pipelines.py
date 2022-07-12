@@ -3,14 +3,27 @@ import csv
 import io
 
 import logging
-from typing import Dict, List, NamedTuple
+from tempfile import NamedTemporaryFile
+from typing import Dict, List, NamedTuple, Tuple, Union
 from datetime import datetime
 from collections import defaultdict
+import xlsxwriter
+
+from cidc_schemas.template import Template
 
 from ..util import load_pipeline_config_template, participant_id_from_cimac
 from .constants import PROTOCOL_ID_FIELD_NAME
 
+BIOFX_WES_ANALYSIS_FOLDER: str = "/mnt/ssd/wes/analysis"
 logger = logging.getLogger(__file__)
+
+
+class _AnalysisRun(NamedTuple):
+    """container class for possible runs to report"""
+
+    tumor_cimac_id: str
+    normal_cimac_id: str = None
+    run_id: str = None
 
 
 class _Wes_pipeline_config:
@@ -55,7 +68,7 @@ class _Wes_pipeline_config:
 
     def _choose_which_normal(self, full_ct: dict, cimac_ids: List[str]) -> str:
         """
-        Based on sequencing quality, choose which cimac_id to use
+        TODO Based on sequencing quality, choose which cimac_id to use
         Currently just returns the first of the list
         """
         return sorted(cimac_ids)[0]
@@ -118,7 +131,7 @@ class _Wes_pipeline_config:
 
                     else:
                         logger.warning(
-                            f"Cannot figure out sample type (normal vs *tumor) for {cimac_id}: {processed_sample_derivative}"
+                            f"Cannot figure out sample type (normal vs tumor) for {cimac_id}: {processed_sample_derivative}"
                         )
                         partic_map[cimac_participant_id]["tumors"][
                             collection_event_name
@@ -129,23 +142,54 @@ class _Wes_pipeline_config:
             partic_dict["tumors"] = dict(partic_dict["tumors"])
         return dict(partic_map)
 
-    def __call__(self, full_ct: dict, patch: dict, bucket: str) -> Dict[str, str]:
+    def _generate_template_excel(
+        self,
+        run: _AnalysisRun,
+        all_wes_records: Dict[str, dict],
+        wes_analysis_template: Template,
+        wes_tumor_only_analysis_template: Template,
+    ) -> bytes:
         """
-        Generates a mapping from run_ids to the
-        generated snakemake wes .yaml configs.
-
-        Patch is expected to be already merged into full_ct.
+        Generates the Excel upload template for the given WES analysis run
         """
+        with NamedTemporaryFile() as tmp:
+            # use tumor CIMAC ID as run_id if not given
+            run_id = run.run_id if run.run_id else run.tumor_cimac_id
 
-        class AnalysisRun(NamedTuple):
-            """ontainer class for possible runs to report"""
+            # if we have data files for *both* items in a tumor/normal pair
+            if (
+                run.normal_cimac_id
+                and run.normal_cimac_id in all_wes_records
+                and run.tumor_cimac_id in all_wes_records
+            ):
+                workbook = wes_analysis_template.to_excel(tmp.name, close=False)
+                worksheet = workbook.get_worksheet_by_name("WES Analysis")
 
-            tumor_cimac_id: str
-            normal_cimac_id: str = None
-            run_id: str = None
+                worksheet.write(2, 2, BIOFX_WES_ANALYSIS_FOLDER)
+                worksheet.write(6, 1, run_id)
+                worksheet.write(6, 2, run.normal_cimac_id)
+                worksheet.write(6, 3, run.tumor_cimac_id)
 
-        potential_new_runs: List[AnalysisRun] = []  # to be rendered
+                workbook.close()
 
+            # if there's no matching normal or doesn't have the files,
+            # render it as a tumor_only sample if we have its data files
+            elif run.tumor_cimac_id in all_wes_records:
+                workbook = wes_tumor_only_analysis_template.to_excel(tmp, close=False)
+                worksheet = workbook.get_worksheet_by_name("WES tumor-only Analysis")
+
+                worksheet.write(2, 2, BIOFX_WES_ANALYSIS_FOLDER)
+                worksheet.write(6, 1, run_id)
+                worksheet.write(6, 2, run.tumor_cimac_id)
+
+                workbook.close()
+
+            tmp.seek(0)
+            ret: bytes = tmp.read()
+        return ret
+
+    def _find_potential_runs(self, full_ct: dict, patch: dict) -> List[_AnalysisRun]:
+        potential_new_runs: List[_AnalysisRun] = []  # to be returned
         if self.upload_type == "assay":
             # first we search for cimac_ids for which we just got new data files
             new_data_ids = set()
@@ -169,41 +213,52 @@ class _Wes_pipeline_config:
                 runi = r["run_id"]
                 # we filter runs, for which we have new data for at least on of the samples:
                 if norm_i in new_data_ids or tum_i in new_data_ids:
-                    potential_new_runs.append(AnalysisRun(tum_i, norm_i, runi))
+                    potential_new_runs.append(_AnalysisRun(tum_i, norm_i, runi))
                     new_data_ids.difference([norm_i, tum_i])
 
             # the rest of the new IDs could be possible tumor_only runs
             for new_id in new_data_ids:
-                potential_new_runs.append(AnalysisRun(new_id))
+                potential_new_runs.append(_AnalysisRun(new_id))
 
         elif self.upload_type == "pairing":
             # first we filter cimac_ids for which we now got pairing info
             # from analysis runs.
             potential_new_runs = [
-                AnalysisRun(
+                _AnalysisRun(
                     r["tumor"]["cimac_id"], r["normal"]["cimac_id"], r["run_id"]
                 )
                 for r in patch["analysis"]["wes_analysis"]["pair_runs"]
             ]
 
-        # then we compose a list of all records from all assay runs,
-        # so we can filter out analysis runs for which we have data for both samples
-        all_wes_records = {}
-        for wes in full_ct["assays"]["wes"]:
-            for r in wes["records"]:
-                all_wes_records[r["cimac_id"]] = r
+        return potential_new_runs
 
-        # classify all of the WES records as tumor or normal and get collection event name
-        # in preparation for (semi)automated pairing
-        # partic_map = {
-        #     cimac_participant_id str: {
-        #         "tumors": {cimac_id str: collection_event_name str},
-        #         "normals": {cimac_id str: collection_event_name str},
-        #     }
-        # }
-        partic_map = self._generate_partic_map(full_ct, all_wes_records.keys())
+    def _pair_all_samples(
+        self, partic_map: Dict[str, Dict[str, Dict[str, str]]]
+    ) -> List[Tuple[str, str, str, str]]:
+        """
+        (Semi)automated pairing of tumor and normal samples
 
-        # (semi)automated pairing of tumor and normal samples
+        Parameters
+        ----------
+        partic_map: Dict[str, Dict[str, List[str]]]
+        {
+            cimac_participant_id str: {
+                "tumors":  {collection_event_name str: [cimac_id str, ...], ...},
+                "normals": {collection_event_name str: cimac_id str, ...},
+            },
+            ...
+        }
+            as returned by participant
+
+        Returns
+        -------
+            List[(
+                tumor_cimac_id: str, tumor_collection_event: str,
+                normal_cimac_id: str, normal_collection_event: str
+            )]
+                one entry for each pair, unmatched tumor, and unmatched normal
+                if not paired, values are empty ie ""
+        """
         tumor_pair_list = []
         for partic in partic_map:
             tumors = partic_map[partic]["tumors"]
@@ -253,43 +308,112 @@ class _Wes_pipeline_config:
                         ("", "", normals[collection_event], collection_event)
                     )
 
-        file_content: str = (
-            f"{PROTOCOL_ID_FIELD_NAME},{full_ct[PROTOCOL_ID_FIELD_NAME]}\n"
-        )
+        return tumor_pair_list
+
+    def _generate_run_config(
+        self, run: _AnalysisRun, all_wes_records: Dict[str, dict], bucket: str
+    ) -> str:
+        # if we have data files for *both* items in a tumor/normal pair
+        if (
+            run.normal_cimac_id
+            and run.normal_cimac_id in all_wes_records
+            and run.tumor_cimac_id in all_wes_records
+        ):
+            # then this is a run we need, and so we render it
+            return self.analysis_config.render(
+                **{
+                    "run_id": run.run_id,
+                    "tumor_sample": all_wes_records[run.tumor_cimac_id],
+                    "normal_sample": all_wes_records[run.normal_cimac_id],
+                    "BIOFX_BUCKET_NAME": bucket,
+                }
+            )
+
+        # if there's no matching normal or doesn't have the files,
+        # render it as a tumor_only sample if we have its data files
+        elif run.tumor_cimac_id in all_wes_records:
+            # use tumor CIMAC ID as run_id if not given (formatted in jinja)
+            run_id = run.run_id if run.run_id else run.tumor_cimac_id
+            return self.tumor_only_analysis_config.render(
+                **{
+                    "run_id": run_id,
+                    "tumor_sample": all_wes_records[run.tumor_cimac_id],
+                    "BIOFX_BUCKET_NAME": bucket,
+                }
+            )
+
+    def _generate_pairing_csv(
+        self, trial_id: str, tumor_pair_list: List[Tuple[str, str, str, str]]
+    ) -> str:
+        file_content: str = f"{PROTOCOL_ID_FIELD_NAME},{trial_id}\n"
         file_content += "tumor,tumor_collection_event,normal,normal_collection_event\n"
         file_content += "\n".join([",".join(entry) for entry in tumor_pair_list])
+        return file_content
 
-        res = {}
-        res[full_ct[PROTOCOL_ID_FIELD_NAME] + "_pairing.csv"] = file_content
+    def __call__(
+        self, full_ct: dict, patch: dict, bucket: str
+    ) -> Dict[str, Union[bytes, str]]:
+        """
+        Generates a mapping from filename to the files to attach.
+        For each run_id, there is:
+            a generated snakemake wes config f"{run_id}.yaml"
+            a generated template for analysis ingestion f"{run_id}.template.xlsx"
+
+        Patch is expected to be already merged into full_ct.
+        """
+        # find all the potential new runs to be rendered
+        potential_new_runs: List[_AnalysisRun] = self._find_potential_runs(
+            full_ct, patch
+        )
+
+        # then we compose a list of all records from all assay runs,
+        # so we can filter out analysis runs for which we have data for both samples
+        all_wes_records: Dict[str, dict] = dict()
+        for wes in full_ct["assays"]["wes"]:
+            for r in wes["records"]:
+                all_wes_records[r["cimac_id"]] = r
+
+        # classify all of the WES records as tumor or normal and get collection event name
+        # in preparation for (semi)automated pairing
+        # partic_map = {
+        #     cimac_participant_id str: {
+        #         "tumors": {cimac_id str: collection_event_name str},
+        #         "normals": {cimac_id str: collection_event_name str},
+        #     }
+        # }
+        partic_map = self._generate_partic_map(full_ct, all_wes_records.keys())
+
+        # (semi)automated pairing of tumor and normal samples
+        # as partic_map is generated using only the WES samples,
+        # it's the same as pairing all samples
+        tumor_pair_list = self._pair_all_samples(partic_map)
+
+        # Begin preparing response
+        # {filename: contents}
+        res: Dict[str, str] = {
+            # add a pairing sheet for new runs
+            full_ct[PROTOCOL_ID_FIELD_NAME]
+            + "_pairing.csv": self._generate_pairing_csv(
+                full_ct[PROTOCOL_ID_FIELD_NAME], tumor_pair_list
+            )
+        }
+
+        # for each run, generate the config and upload template
+        wes_analysis_template = Template.from_type("wes_analysis")
+        wes_tumor_only_analysis_template = Template.from_type("wes_tumor_only_analysis")
         for run in potential_new_runs:
-            # if we have data files for *both* items in a tumor/normal pair
-            if (
-                run.normal_cimac_id
-                and run.normal_cimac_id in all_wes_records
-                and run.tumor_cimac_id in all_wes_records
-            ):
-                # then this is a run we need, and so we render it
-                res[run.run_id + ".yaml"] = self.analysis_config.render(
-                    **{
-                        "run_id": run.run_id,
-                        "tumor_sample": all_wes_records[run.tumor_cimac_id],
-                        "normal_sample": all_wes_records[run.normal_cimac_id],
-                        "BIOFX_BUCKET_NAME": bucket,
-                    }
-                )
-
-            # if there's no matching normal or doesn't have the files,
-            # render it as a tumor_only sample if we have its data files
-            elif run.tumor_cimac_id in all_wes_records:
-                # use tumor CIMAC ID as run_id if not given (formatted in jinja)
-                run_id = run.run_id if run.run_id else run.tumor_cimac_id
-                res[run_id + ".yaml"] = self.tumor_only_analysis_config.render(
-                    **{
-                        "run_id": run_id,
-                        "tumor_sample": all_wes_records[run.tumor_cimac_id],
-                        "BIOFX_BUCKET_NAME": bucket,
-                    }
-                )
+            run_id: str = run.run_id if run.run_id else run.tumor_cimac_id
+            res[run_id + ".yaml"] = self._generate_run_config(
+                run,
+                all_wes_records=all_wes_records,
+                bucket=bucket,
+            )
+            res[run_id + ".template.xlsx"] = self._generate_template_excel(
+                run,
+                all_wes_records=all_wes_records,
+                wes_analysis_template=wes_analysis_template,
+                wes_tumor_only_analysis_template=wes_tumor_only_analysis_template,
+            )
 
         return res
 

@@ -1,13 +1,13 @@
 """Tests for pipeline config generation."""
-from cidc_schemas.prism.merger import ArtifactInfo
 import os
 import copy
+from tempfile import NamedTemporaryFile
+import openpyxl
 import yaml
-import csv
 
 import pytest
 
-from cidc_schemas.template import Template, _TEMPLATE_PATH_MAP
+from cidc_schemas.template import Template
 from cidc_schemas.template_reader import XlTemplateReader
 from cidc_schemas.prism import core, pipelines, merger
 
@@ -163,12 +163,6 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
                 # test 1 tumor sample with no paired normal
                 partic["samples"][0]["processed_sample_derivative"] = "Tumor DNA"
                 partic["samples"][0]["collection_event_name"] = "On_Treatment"
-    print(
-        {
-            s["cimac_id"]: s.get("processed_sample_derivative")
-            for s in full_ct["participants"][0]["samples"]
-        }
-    )
 
     patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
 
@@ -188,16 +182,19 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
     pairing_filename = full_ct["protocol_identifier"] + "_pairing.csv"
     # wes_bam
     if template.type == "wes_bam":
-        # in other cases - 2 config, tumor-only for both samples
-        assert len(res) == 3
+        # 2 config, tumor-only for both samples
+        # 2 template, wes_tumor_only_analysis for both
+        # 1 pairing file
+        assert len(res) == 5
         assert (
             res[pairing_filename]
             == "protocol_identifier,test_prism_trial_id\ntumor,tumor_collection_event,normal,normal_collection_event\nCTTTPP111.00,Not_reported,CTTTPP121.00,Not_reported"
         )
     elif template.type == "tumor_normal_pairing":
-        # only returns tumor/normal config
-        # config for CTTTPP122.00 was generated on wes_fastq upload
-        assert len(res) == 2  # pairing still only for 1
+        # 1 config, tumor/normal, config for CTTTPP122.00 was generated on wes_fastq upload
+        # 1 template, wes_analysis for pair
+        # 1 pairing file
+        assert len(res) == 3
         assert (
             res[pairing_filename] == "protocol_identifier,test_prism_trial_id\n"
             "tumor,tumor_collection_event,normal,normal_collection_event\n"
@@ -214,8 +211,10 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
             "CTTTPP511.00,On_Treatment,,"
         )
     elif template.type == "wes_fastq":
-        # 16 configs, tumor-only for all 16 samples
-        assert len(res) == 17
+        # 16 configs, tumor-only for all samples
+        # 16 wes_tumor_only_analysis for all
+        # 1 pairing file
+        assert len(res) == 33
         assert (
             res[pairing_filename] == "protocol_identifier,test_prism_trial_id\n"
             "tumor,tumor_collection_event,normal,normal_collection_event\n"
@@ -236,10 +235,8 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
         return
 
     for fname, conf in res.items():
-        if fname != pairing_filename:
+        if fname.endswith("yaml"):
             conf = yaml.load(conf, Loader=yaml.FullLoader)
-            print(conf)
-
             assert len(conf["metasheet"]) == 1  # one run
 
             if "pair" in template.type:
@@ -277,6 +274,29 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
                 assert all(f.endswith(".fastq.gz") for f in sample) or all(
                     f.endswith(".bam") for f in sample
                 )
+
+        elif fname.endswith("xlsx"):
+            # openpyxl needs to file to have an .xlsx extension to open it
+            with NamedTemporaryFile(suffix=".xlsx") as tmp:
+                tmp.write(conf)
+                tmp.seek(0)
+                wb = openpyxl.load_workbook(tmp.name, data_only=True)
+
+            if "WES Analysis" in wb.sheetnames:
+                sht = wb["WES Analysis"]
+            elif "WES tumor-only Analysis" in wb.sheetnames:
+                sht = wb["WES tumor-only Analysis"]
+            else:
+                assert (
+                    False
+                ), f"Attached xlsx doesn't have right worksheets: {wb.sheetnames}"
+
+            assert sht["C3"].value == pipelines.BIOFX_WES_ANALYSIS_FOLDER
+            assert sht["B7"].value  # run name
+            assert sht["C7"].value  # first id
+
+            if sht.title == "WES Analysis":
+                assert sht["D7"].value  # second id
 
 
 def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, template):

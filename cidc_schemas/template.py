@@ -1323,11 +1323,17 @@ class Template:
             or os.path.basename(template_schema_path).partition("_template.json")[0],
         )
 
-    def to_excel(self, xlsx_path: str):
-        """Write this `Template` to an Excel file"""
+    def to_excel(self, xlsx_path: str, close: bool = True):
+        """
+        Write this `Template` to an Excel file
+
+        Arguments:
+            xlsx_path {str} -- desired output path of the resulting xlsx file
+            close {bool} = True -- whether to close the workbook or to return it
+        """
         from .template_writer import XlTemplateWriter
 
-        XlTemplateWriter().write(xlsx_path, self)
+        return XlTemplateWriter().write(xlsx_path, self, close=close)
 
     def validate_excel(self, xlsx: Union[str, BinaryIO]) -> bool:
         """Validate the given Excel file (either a path or an open file) against this `Template`"""

@@ -1,6 +1,8 @@
 """Tests for pipeline config generation."""
 import os
 import copy
+from tempfile import NamedTemporaryFile
+import openpyxl
 import yaml
 
 import pytest
@@ -239,7 +241,7 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
         return
 
     for fname, conf in res.items():
-        if fname != pairing_filename:
+        if fname.endswith("yaml"):
             conf = yaml.load(conf, Loader=yaml.FullLoader)
             assert len(conf["metasheet"]) == 1  # one run
 
@@ -278,6 +280,29 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
                 assert all(f.endswith(".fastq.gz") for f in sample) or all(
                     f.endswith(".bam") for f in sample
                 )
+
+        elif fname.endswith("xlsx"):
+            # openpyxl needs to file to have an .xlsx extension to open it
+            with NamedTemporaryFile(suffix=".xlsx") as tmp:
+                tmp.write(conf)
+                tmp.seek(0)
+                wb = openpyxl.load_workbook(tmp.name, data_only=True)
+
+            if "WES Analysis" in wb.sheetnames:
+                sht = wb["WES Analysis"]
+            elif "WES tumor-only Analysis" in wb.sheetnames:
+                sht = wb["WES tumor-only Analysis"]
+            else:
+                assert (
+                    False
+                ), f"Attached xlsx doesn't have right worksheets: {wb.sheetnames}"
+
+            assert sht["C3"].value == pipelines.BIOFX_WES_ANALYSIS_FOLDER
+            assert sht["B7"].value  # run name
+            assert sht["C7"].value  # first id
+
+            if sht.title == "WES Analysis":
+                assert sht["D7"].value  # second id
 
 
 def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, template):

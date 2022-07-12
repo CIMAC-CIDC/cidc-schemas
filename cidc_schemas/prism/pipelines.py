@@ -7,8 +7,7 @@ from tempfile import NamedTemporaryFile
 from typing import Dict, List, NamedTuple, Tuple, Union
 from datetime import datetime
 from collections import defaultdict
-
-import openpyxl
+import xlsxwriter
 
 from cidc_schemas.template import Template
 
@@ -132,7 +131,7 @@ class _Wes_pipeline_config:
 
                     else:
                         logger.warning(
-                            f"Cannot figure out sample type (normal vs *tumor) for {cimac_id}: {processed_sample_derivative}"
+                            f"Cannot figure out sample type (normal vs tumor) for {cimac_id}: {processed_sample_derivative}"
                         )
                         partic_map[cimac_participant_id]["tumors"][
                             collection_event_name
@@ -149,7 +148,7 @@ class _Wes_pipeline_config:
         all_wes_records: Dict[str, dict],
         wes_analysis_template: Template,
         wes_tumor_only_analysis_template: Template,
-    ) -> str:
+    ) -> bytes:
         """
         Generates the Excel upload template for the given WES analysis run
         """
@@ -163,38 +162,31 @@ class _Wes_pipeline_config:
                 and run.normal_cimac_id in all_wes_records
                 and run.tumor_cimac_id in all_wes_records
             ):
-                wes_analysis_template.to_excel(tmp.name)
-                tmp.seek(0)
+                workbook = wes_analysis_template.to_excel(tmp.name, close=False)
+                worksheet = workbook.get_worksheet_by_name("WES Analysis")
 
-                workbook = openpyxl.Workbook(tmp.name)
-                print(workbook.sheetnames)
-
-                worksheet = workbook["WES Analysis"]
                 worksheet.write(2, 2, BIOFX_WES_ANALYSIS_FOLDER)
                 worksheet.write(6, 1, run_id)
                 worksheet.write(6, 2, run.normal_cimac_id)
                 worksheet.write(6, 3, run.tumor_cimac_id)
 
-                workbook.save()
                 workbook.close()
 
             # if there's no matching normal or doesn't have the files,
             # render it as a tumor_only sample if we have its data files
             elif run.tumor_cimac_id in all_wes_records:
-                wes_tumor_only_analysis_template.to_excel(tmp)
-                tmp.seek(0)
-                workbook = openpyxl.Workbook(tmp)
+                workbook = wes_tumor_only_analysis_template.to_excel(tmp, close=False)
+                worksheet = workbook.get_worksheet_by_name("WES tumor-only Analysis")
+                print("sheets:", [sht.get_name() for sht in workbook.worksheets()])
 
-                worksheet = workbook["WES Analysis"]
                 worksheet.write(2, 2, BIOFX_WES_ANALYSIS_FOLDER)
                 worksheet.write(6, 1, run_id)
                 worksheet.write(6, 2, run.tumor_cimac_id)
 
-                workbook.save()
                 workbook.close()
 
             tmp.seek(0)
-            ret: str = tmp.read().decode()
+            ret: bytes = tmp.read()
         return ret
 
     def _find_potential_runs(self, full_ct: dict, patch: dict) -> List[_AnalysisRun]:
@@ -361,7 +353,7 @@ class _Wes_pipeline_config:
 
     def __call__(
         self, full_ct: dict, patch: dict, bucket: str
-    ) -> Dict[str, str]:
+    ) -> Dict[str, Union[bytes, str]]:
         """
         Generates a mapping from filename to the files to attach.
         For each run_id, there is:

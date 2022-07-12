@@ -177,7 +177,6 @@ class _Wes_pipeline_config:
             elif run.tumor_cimac_id in all_wes_records:
                 workbook = wes_tumor_only_analysis_template.to_excel(tmp, close=False)
                 worksheet = workbook.get_worksheet_by_name("WES tumor-only Analysis")
-                print("sheets:", [sht.get_name() for sht in workbook.worksheets()])
 
                 worksheet.write(2, 2, BIOFX_WES_ANALYSIS_FOLDER)
                 worksheet.write(6, 1, run_id)

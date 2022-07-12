@@ -163,12 +163,6 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
                 # test 1 tumor sample with no paired normal
                 partic["samples"][0]["processed_sample_derivative"] = "Tumor DNA"
                 partic["samples"][0]["collection_event_name"] = "On_Treatment"
-    print(
-        {
-            s["cimac_id"]: s.get("processed_sample_derivative")
-            for s in full_ct["participants"][0]["samples"]
-        }
-    )
 
     patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
 

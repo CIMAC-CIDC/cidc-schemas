@@ -44,18 +44,6 @@ def wes_analysis() -> PrismTestData:
                             "clonality_summary": {
                                 "upload_placeholder": "dtef9e1e-8e04-46ed-a9e6-bb618188a6d6"
                             },
-                            "clonality_cnv_segments": {
-                                "upload_placeholder": "etef9e1e-8e04-46ed-a9e6-bb618188a6d6"
-                            },
-                            "clonality_cnv_segments_enhanced": {
-                                "upload_placeholder": "ftef9e1e-8e04-46ed-a9e6-bb618188a6d6"
-                            },
-                            "clonality_cnv_scatterplot": {
-                                "upload_placeholder": "gtef9e1e-8e04-46ed-a9e6-bb618188a6d6"
-                            },
-                            "clonality_cnvkit_gainloss": {
-                                "upload_placeholder": "htef9e1e-8e04-46ed-a9e6-bb618188a6d6"
-                            },
                         },
                         "msisensor": {
                             "msisensor": {
@@ -92,6 +80,18 @@ def wes_analysis() -> PrismTestData:
                             },
                             "copynumber_facets_gainloss": {
                                 "upload_placeholder": "mb1a8d7a-fd96-4e75-b265-1590c703a301"
+                            },
+                            "copynumber_cnv_segments": {
+                                "upload_placeholder": "etef9e1e-8e04-46ed-a9e6-bb618188a6d6"
+                            },
+                            "copynumber_cnv_segments_enhanced": {
+                                "upload_placeholder": "ftef9e1e-8e04-46ed-a9e6-bb618188a6d6"
+                            },
+                            "copynumber_cnv_scatterplot": {
+                                "upload_placeholder": "gtef9e1e-8e04-46ed-a9e6-bb618188a6d6"
+                            },
+                            "copynumber_cnvkit_gainloss": {
+                                "upload_placeholder": "htef9e1e-8e04-46ed-a9e6-bb618188a6d6"
                             },
                         },
                         "neoantigen": {
@@ -248,18 +248,6 @@ def wes_analysis() -> PrismTestData:
                             "clonality_summary": {
                                 "upload_placeholder": "b4cba177-0be5-4d7d-b635-4a60adaa9575"
                             },
-                            "clonality_cnv_segments": {
-                                "upload_placeholder": "bucba177-0be5-4d7d-b635-4a60adaa9575"
-                            },
-                            "clonality_cnv_segments_enhanced": {
-                                "upload_placeholder": "c4cba177-0be5-4d7d-b635-4a60adaa9575"
-                            },
-                            "clonality_cnv_scatterplot": {
-                                "upload_placeholder": "cucba177-0be5-4d7d-b635-4a60adaa9575"
-                            },
-                            "clonality_cnvkit_gainloss": {
-                                "upload_placeholder": "d4cba177-0be5-4d7d-b635-4a60adaa9575"
-                            },
                         },
                         "msisensor": {
                             "msisensor": {
@@ -296,6 +284,18 @@ def wes_analysis() -> PrismTestData:
                             },
                             "copynumber_facets_gainloss": {
                                 "upload_placeholder": "h187bcfe-b454-46a5-bf85-e2a2d5f7a9a5"
+                            },
+                            "copynumber_cnv_segments": {
+                                "upload_placeholder": "bucba177-0be5-4d7d-b635-4a60adaa9575"
+                            },
+                            "copynumber_cnv_segments_enhanced": {
+                                "upload_placeholder": "c4cba177-0be5-4d7d-b635-4a60adaa9575"
+                            },
+                            "copynumber_cnv_scatterplot": {
+                                "upload_placeholder": "cucba177-0be5-4d7d-b635-4a60adaa9575"
+                            },
+                            "copynumber_cnvkit_gainloss": {
+                                "upload_placeholder": "d4cba177-0be5-4d7d-b635-4a60adaa9575"
                             },
                         },
                         "neoantigen": {
@@ -513,28 +513,28 @@ def wes_analysis() -> PrismTestData:
         LocalFileUploadEntry(
             local_path="gs://results/analysis/cnvkit/run_1/run_1.call.cns",
             upload_placeholder="etef9e1e-8e04-46ed-a9e6-bb618188a6d6",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/clonality_cnv_segments.cns",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/copynumber_cnv_segments.cns",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="gs://results/analysis/cnvkit/run_1/run_1.call.enhanced.cns",
             upload_placeholder="ftef9e1e-8e04-46ed-a9e6-bb618188a6d6",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/clonality_cnv_segments_enhanced.cns",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/copynumber_cnv_segments_enhanced.cns",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="gs://results/analysis/cnvkit/run_1/run_1.scatter.png",
             upload_placeholder="gtef9e1e-8e04-46ed-a9e6-bb618188a6d6",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/clonality_cnv_scatterplot.png",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/copynumber_cnv_scatterplot.png",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="gs://results/analysis/cnvkit/run_1/run_1_cnvkit_gainLoss.bed",
             upload_placeholder="htef9e1e-8e04-46ed-a9e6-bb618188a6d6",
-            gs_key="test_prism_trial_id/wes/run_1/analysis/clonality_cnvkit_gainloss.bed",
+            gs_key="test_prism_trial_id/wes/run_1/analysis/copynumber_cnvkit_gainloss.bed",
             metadata_availability=False,
             allow_empty=False,
         ),
@@ -890,28 +890,28 @@ def wes_analysis() -> PrismTestData:
         ),
         LocalFileUploadEntry(
             local_path="gs://results/analysis/cnvkit/run_2/run_2.call.cns",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/clonality_cnv_segments.cns",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/copynumber_cnv_segments.cns",
             upload_placeholder="bucba177-0be5-4d7d-b635-4a60adaa9575",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="gs://results/analysis/cnvkit/run_2/run_2.call.enhanced.cns",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/clonality_cnv_segments_enhanced.cns",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/copynumber_cnv_segments_enhanced.cns",
             upload_placeholder="c4cba177-0be5-4d7d-b635-4a60adaa9575",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="gs://results/analysis/cnvkit/run_2/run_2.scatter.png",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/clonality_cnv_scatterplot.png",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/copynumber_cnv_scatterplot.png",
             upload_placeholder="cucba177-0be5-4d7d-b635-4a60adaa9575",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
             local_path="gs://results/analysis/cnvkit/run_2/run_2_cnvkit_gainLoss.bed",
-            gs_key="test_prism_trial_id/wes/run_2/analysis/clonality_cnvkit_gainloss.bed",
+            gs_key="test_prism_trial_id/wes/run_2/analysis/copynumber_cnvkit_gainloss.bed",
             upload_placeholder="d4cba177-0be5-4d7d-b635-4a60adaa9575",
             metadata_availability=False,
             allow_empty=False,

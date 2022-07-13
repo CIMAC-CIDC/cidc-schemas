@@ -412,8 +412,8 @@ class _Wes_pipeline_config:
                 bucket=bucket,
             )
             res[run_id + ".template.xlsx"] = self._generate_template_excel(
-                run,
                 trial_id=full_ct[PROTOCOL_ID_FIELD_NAME],
+                run=run,
                 all_wes_records=all_wes_records,
                 wes_analysis_template=wes_analysis_template,
                 wes_tumor_only_analysis_template=wes_tumor_only_analysis_template,

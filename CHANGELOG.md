@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.45` - 13 Jul 2022
+
+- `changed` move WES analysis cnvkit to copynumber
+
 ## Version `0.25.44` - 13 Jul 2022
 
 - `removed` WES analysis somatic/tnscope.output.maf

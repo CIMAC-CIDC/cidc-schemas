@@ -104,29 +104,29 @@
                                 },
                                 {
                                     "parse_through": "lambda run: f'{folder or \"\"}analysis/cnvkit/{run}/{run}.call.cns'",
-                                    "merge_pointer": "/clonality/clonality_cnv_segments",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/clonality_cnv_segments.cns",
+                                    "merge_pointer": "/copynumber/copynumber_cnv_segments",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/copynumber_cnv_segments.cns",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda run: f'{folder or \"\"}analysis/cnvkit/{run}/{run}.call.enhanced.cns'",
-                                    "merge_pointer": "/clonality/clonality_cnv_segments_enhanced",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/clonality_cnv_segments_enhanced.cns",
+                                    "merge_pointer": "/copynumber/copynumber_cnv_segments_enhanced",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/copynumber_cnv_segments_enhanced.cns",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda run: f'{folder or \"\"}analysis/cnvkit/{run}/{run}.scatter.png'",
-                                    "merge_pointer": "/clonality/clonality_cnv_scatterplot",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/clonality_cnv_scatterplot.png",
+                                    "merge_pointer": "/copynumber/copynumber_cnv_scatterplot",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/copynumber_cnv_scatterplot.png",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },
                                 {
                                     "parse_through": "lambda run: f'{folder or \"\"}analysis/cnvkit/{run}/{run}_cnvkit_gainLoss.bed'",
-                                    "merge_pointer": "/clonality/clonality_cnvkit_gainloss",
-                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/clonality_cnvkit_gainloss.bed",
+                                    "merge_pointer": "/copynumber/copynumber_cnvkit_gainloss",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/copynumber_cnvkit_gainloss.bed",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1
                                 },

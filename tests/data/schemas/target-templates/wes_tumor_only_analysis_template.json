@@ -105,13 +105,6 @@
                                     "is_artifact": 1
                                 },
                                 {
-                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.maf'",
-                                    "merge_pointer": "/somatic/maf_tnscope_output",
-                                    "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/maf_tnscope_output.maf",
-                                    "type_ref": "assays/components/local_file.json#properties/file_path",
-                                    "is_artifact": 1
-                                },
-                                {
                                     "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.twist.vcf'",
                                     "merge_pointer": "/somatic/tnscope_output_twist_vcf",
                                     "gcs_uri_format": "{protocol identifier}/wes_tumor_only/{run id}/analysis/tnscope_output_twist.vcf",

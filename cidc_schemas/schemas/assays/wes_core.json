@@ -486,8 +486,7 @@
 					"tnscope_output_twist_filtered_vcf",
 					"tnscope_output_twist_filtered_maf",
 					"tnscope_output_twist_vcf",
-					"tnscope_output_twist_maf",
-					"maf_tnscope_output"
+					"tnscope_output_twist_maf"
 				],
 				"$comment": "WES v3 per ngs-api PR #55"
 			},

@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.46` - 13 Jul 2022
+
+- `added` not to required for oneOf
+
 ## Version `0.25.45` - 13 Jul 2022
 
 - `changed` move WES analysis cnvkit to copynumber

@@ -481,6 +481,12 @@
 		},
 		"oneOf": [
 			{
+				"not": {
+					"required": [
+						"vcf_gz_tnscope_filter",
+						"maf_tnscope_filter"
+					]
+				},
 				"required": [
 					"vcf_gz_tnscope_output",
 					"tnscope_output_twist_filtered_vcf",

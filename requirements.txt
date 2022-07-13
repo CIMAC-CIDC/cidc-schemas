@@ -9,6 +9,6 @@ deepdiff~=4.3.0
 jsonpointer==2.0
 pandas==1.2.4
 jinja2~=3.0.3
-cidc-ngs-pipeline-api==0.1.19
+cidc-ngs-pipeline-api==0.1.20
 markupsafe==2.0.1
 regex==2022.3.2

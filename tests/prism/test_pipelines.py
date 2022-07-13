@@ -291,6 +291,7 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
                     False
                 ), f"Attached xlsx doesn't have right worksheets: {wb.sheetnames}"
 
+            assert sht["C2"].value == "test_prism_trial_id"
             assert sht["C3"].value == pipelines.BIOFX_WES_ANALYSIS_FOLDER
             assert sht["B7"].value  # run name
             assert sht["C7"].value  # first id

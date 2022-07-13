@@ -144,6 +144,7 @@ class _Wes_pipeline_config:
 
     def _generate_template_excel(
         self,
+        trial_id: str,
         run: _AnalysisRun,
         all_wes_records: Dict[str, dict],
         wes_analysis_template: Template,
@@ -165,6 +166,7 @@ class _Wes_pipeline_config:
                 workbook = wes_analysis_template.to_excel(tmp.name, close=False)
                 worksheet = workbook.get_worksheet_by_name("WES Analysis")
 
+                worksheet.write(1, 2, trial_id)
                 worksheet.write(2, 2, BIOFX_WES_ANALYSIS_FOLDER)
                 worksheet.write(6, 1, run_id)
                 worksheet.write(6, 2, run.normal_cimac_id)
@@ -178,6 +180,7 @@ class _Wes_pipeline_config:
                 workbook = wes_tumor_only_analysis_template.to_excel(tmp, close=False)
                 worksheet = workbook.get_worksheet_by_name("WES tumor-only Analysis")
 
+                worksheet.write(1, 2, trial_id)
                 worksheet.write(2, 2, BIOFX_WES_ANALYSIS_FOLDER)
                 worksheet.write(6, 1, run_id)
                 worksheet.write(6, 2, run.tumor_cimac_id)
@@ -409,7 +412,8 @@ class _Wes_pipeline_config:
                 bucket=bucket,
             )
             res[run_id + ".template.xlsx"] = self._generate_template_excel(
-                run,
+                trial_id=full_ct[PROTOCOL_ID_FIELD_NAME],
+                run=run,
                 all_wes_records=all_wes_records,
                 wes_analysis_template=wes_analysis_template,
                 wes_tumor_only_analysis_template=wes_tumor_only_analysis_template,

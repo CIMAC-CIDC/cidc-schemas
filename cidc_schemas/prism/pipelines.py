@@ -12,7 +12,7 @@ import xlsxwriter
 from cidc_schemas.template import Template
 
 from ..util import load_pipeline_config_template, participant_id_from_cimac
-from .constants import PROTOCOL_ID_FIELD_NAME
+from .constants import PROTOCOL_ID_FIELD_NAME, SUPPORTED_SHIPPING_MANIFESTS
 
 BIOFX_WES_ANALYSIS_FOLDER: str = "/mnt/ssd/wes/analysis"
 logger = logging.getLogger(__file__)
@@ -509,6 +509,34 @@ def _rna_level1_pipeline_config(
     return res
 
 
+def _shipping_manifest_new_participants(
+    full_ct: dict, patch: dict, bucket: str
+) -> Dict[str, str]:
+    """
+    Parameters
+    ----------
+    ct: dict
+        full metadata object *with `patch` merged*!
+    patch: dict
+        metadata patch passed from manifest upload
+    """
+    sample_count = {
+        partic["cimac_participant_id"]: len(partic["samples"])
+        for partic in full_ct["participants"]
+    }
+
+    # if all of the samples are new, this is a new participant
+    new_participant_ids: List[str] = []
+    for partic in patch["participants"]:
+        if len(partic["samples"]) == sample_count[partic["cimac_participant_id"]]:
+            new_participant_ids.append(partic["cimac_participant_id"])
+
+    if len(new_participant_ids):
+        return {"new_participants.txt": "\n".join(new_participant_ids)}
+    else:
+        return {}
+
+
 # This is a map from a assay type to a config generators,
 # that should take (full_ct: dict, patch: dict, bucket: str) as arguments
 # and return a map {"file_name": ["whatever pipeline config is"]}
@@ -535,8 +563,12 @@ def generate_analysis_configs_from_upload_patch(
     Returns:
         Filename to pipeline configs as a string map.
     """
+    ret = {}
 
-    if template_type not in _ANALYSIS_CONF_GENERATORS:
-        return {}
+    if template_type in SUPPORTED_SHIPPING_MANIFESTS:
+        ret.update(_shipping_manifest_new_participants(ct, patch, bucket))
 
-    return _ANALYSIS_CONF_GENERATORS[template_type](ct, patch, bucket)
+    if template_type in _ANALYSIS_CONF_GENERATORS:
+        ret.update(_ANALYSIS_CONF_GENERATORS[template_type](ct, patch, bucket))
+
+    return ret

@@ -9,6 +9,11 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.47` - 26 Jul 2022
+
+- `added` alert to shipping manifests for new participants
+- `changed` example manifest data to allow for tests of above
+
 ## Version `0.25.46` - 13 Jul 2022
 
 - `added` not to required for oneOf

@@ -2,10 +2,12 @@
 import os
 import copy
 from tempfile import NamedTemporaryFile
+from typing import List, Tuple
 import openpyxl
 import yaml
 
 import pytest
+from cidc_schemas.prism.constants import SUPPORTED_SHIPPING_MANIFESTS
 
 from cidc_schemas.template import Template
 from cidc_schemas.template_reader import XlTemplateReader
@@ -34,7 +36,9 @@ def prismify_result(template, template_example):
     return prism_patch, file_maps, errs
 
 
-def prism_patch_stage_artifacts(prismify_result, template_type):
+def prism_patch_stage_artifacts(
+    prismify_result, template_type
+) -> Tuple[dict, List[Tuple[dict, dict]]]:
 
     prism_patch, prism_fmap, _ = prismify_result
     patch_copy_4_artifacts = copy.deepcopy(prism_patch)
@@ -57,7 +61,7 @@ def prism_patch_stage_artifacts(prismify_result, template_type):
     return patch_copy_4_artifacts
 
 
-def stage_assay_for_analysis(template_type):
+def stage_assay_for_analysis(template_type) -> Tuple[dict, List[Tuple[dict, dict]]]:
     """
     Simulates an initial assay upload by prismifying the initial assay template object.
     """
@@ -72,14 +76,18 @@ def stage_assay_for_analysis(template_type):
 
     prelim_assay = staging_map[template_type]
 
+    return stage_assay(template_type=prelim_assay)
+
+
+def stage_assay(template_type: str) -> Tuple[dict, List[Tuple[dict, dict]]]:
     preassay_xlsx_path = os.path.join(
-        TEMPLATE_EXAMPLES_DIR, prelim_assay + "_template.xlsx"
+        TEMPLATE_EXAMPLES_DIR, template_type + "_template.xlsx"
     )
     preassay_xlsx, _ = XlTemplateReader.from_excel(preassay_xlsx_path)
-    preassay_template = Template.from_type(prelim_assay)
+    preassay_template = Template.from_type(template_type)
     prism_res = core.prismify(preassay_xlsx, preassay_template)
 
-    return prism_patch_stage_artifacts(prism_res, prelim_assay)
+    return prism_patch_stage_artifacts(prism_res, template_type)
 
 
 def test_WES_pipeline_config_generation_after_prismify(prismify_result, template):
@@ -363,3 +371,76 @@ def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, templ
                 assert all(f.endswith(".fastq.gz") for f in sample) or all(
                     f.endswith(".bam") for f in sample
                 )
+
+
+def test_shipping_manifest_new_participants_after_prismify(prismify_result, template):
+
+    if not template.type in SUPPORTED_SHIPPING_MANIFESTS:
+        return
+
+    base_ct = get_test_trial(
+        allowed_cohort_names=["Arm_A", "Arm_Z"],
+        allowed_collection_event_names=[
+            "Baseline",
+            "Pre_Day_1_Cycle_2",
+        ],
+    )
+
+    patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
+    full_ct, errs = merger.merge_clinical_trial_metadata(patch_with_artifacts, base_ct)
+    assert 0 == len(errs), "\n".join(errs)
+
+    # test returns all participants on first upload
+    res = pipelines.generate_analysis_configs_from_upload_patch(
+        full_ct, patch_with_artifacts, template.type, "my-biofx-bucket"
+    )
+    assert len(res) == 1
+
+    expected_answer = {
+        "h_and_e": ["CTTTP08"],
+        "microbiome_dna": ["CTTTP08", "CTTTP09"],
+        "normal_blood_dna": ["CTTTP01", "CTTTP02"],
+        "normal_tissue_dna": ["CTTTP03", "CTTTP04"],
+        "pbmc": ["CTTTP01", "CTTTP02"],
+        "plasma": ["CTTTP01", "CTTTP02"],
+        "tissue_slide": ["CTTTP08", "CTTTP09"],
+        "tumor_tissue_dna": ["CTTTP05", "CTTTP06"],
+        "tumor_tissue_rna": ["CTTTP05", "CTTTP06"],
+    }
+    assert res["new_participants.txt"].split("\n") == expected_answer[template.type]
+
+    # test ONLY new participants on subset
+    if template.type == "h_and_e":
+        patch_with_artifacts = stage_assay(template_type="microbiome_dna")
+        full_ct, errs = merger.merge_clinical_trial_metadata(
+            patch_with_artifacts, full_ct
+        )
+        assert 0 == len(errs), "\n".join(errs)
+
+        res = pipelines.generate_analysis_configs_from_upload_patch(
+            full_ct, patch_with_artifacts, template.type, "my-biofx-bucket"
+        )
+        assert len(res) == 1
+
+        # doesn't return the one from h_and_e
+        assert (
+            res["new_participants.txt"].split("\n")
+            == expected_answer["microbiome_dna"][1:]
+        )
+
+    # test doesn't return if no new particpants
+    if template.type == "pbmc":
+        patch_with_artifacts = stage_assay(template_type="plasma")
+        full_ct, errs = merger.merge_clinical_trial_metadata(
+            patch_with_artifacts, full_ct
+        )
+        assert 0 == len(errs), "\n".join(errs)
+        full_ct, errs = merger.merge_clinical_trial_metadata(
+            patch_with_artifacts, full_ct
+        )
+        assert 0 == len(errs), "\n".join(errs)
+
+        res = pipelines.generate_analysis_configs_from_upload_patch(
+            full_ct, patch_with_artifacts, template.type, "my-biofx-bucket"
+        )
+        assert res == dict()

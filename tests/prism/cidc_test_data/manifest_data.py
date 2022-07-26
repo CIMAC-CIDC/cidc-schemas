@@ -124,12 +124,12 @@ def plasma() -> PrismTestData:
                         "residual_sample_use": "Sample Returned",
                     },
                 ],
-                "participant_id": "test_encrypted('TTTPP1')",
+                "participant_id": "test_encrypted('TTTP01')",
                 "cimac_participant_id": "CTTTP01",
                 "gender": "Female",
-                "race": "Black/African American",
-                "ethnicity": "Not Hispanic or Latino",
-                "cohort_name": "Arm_A",
+                "race": "Asian",
+                "ethnicity": "Hispanic or Latino",
+                "cohort_name": "Arm_Z",
             },
             {
                 "samples": [
@@ -203,8 +203,8 @@ def plasma() -> PrismTestData:
                         "residual_sample_use": "Sample Returned",
                     },
                 ],
-                "cohort_name": "Arm_Z",
-                "participant_id": "test_encrypted('TTTPP2')",
+                "cohort_name": "Arm_A",
+                "participant_id": "test_encrypted('TTTP02')",
                 "cimac_participant_id": "CTTTP02",
             },
         ],
@@ -257,7 +257,7 @@ def pbmc() -> PrismTestData:
                 "samples": [
                     {
                         "shipping_entry_number": 1,
-                        "cimac_id": "CTTTP01A1.00",
+                        "cimac_id": "CTTTP01A4.00",
                         "surgical_pathology_report_id": "test_encrypted('Surgical pathology report 1')",
                         "clinical_report_id": "test_encrypted('clinical report 1')",
                         "collection_event_name": "Baseline",
@@ -297,7 +297,7 @@ def pbmc() -> PrismTestData:
                     },
                     {
                         "shipping_entry_number": 2,
-                        "cimac_id": "CTTTP01A2.00",
+                        "cimac_id": "CTTTP01A5.00",
                         "surgical_pathology_report_id": "test_encrypted('Surgical pathology report 2')",
                         "clinical_report_id": "test_encrypted('clinical report 2')",
                         "collection_event_name": "Pre_Day_1_Cycle_2",
@@ -336,7 +336,7 @@ def pbmc() -> PrismTestData:
                     },
                     {
                         "shipping_entry_number": 3,
-                        "cimac_id": "CTTTP01A3.00",
+                        "cimac_id": "CTTTP01A6.00",
                         "surgical_pathology_report_id": "test_encrypted('Surgical pathology report 3')",
                         "clinical_report_id": "test_encrypted('clinical report 3')",
                         "collection_event_name": "Baseline",
@@ -385,7 +385,7 @@ def pbmc() -> PrismTestData:
                 "samples": [
                     {
                         "shipping_entry_number": 4,
-                        "cimac_id": "CTTTP02A1.00",
+                        "cimac_id": "CTTTP02A4.00",
                         "surgical_pathology_report_id": "test_encrypted('Surgical pathology report 4')",
                         "clinical_report_id": "test_encrypted('clinical report 4')",
                         "collection_event_name": "Baseline",
@@ -424,7 +424,7 @@ def pbmc() -> PrismTestData:
                     },
                     {
                         "shipping_entry_number": 5,
-                        "cimac_id": "CTTTP02A2.00",
+                        "cimac_id": "CTTTP02A5.00",
                         "surgical_pathology_report_id": "test_encrypted('Surgical pathology report 5')",
                         "clinical_report_id": "test_encrypted('clinical report 5')",
                         "collection_event_name": "Pre_Day_1_Cycle_2",
@@ -463,7 +463,7 @@ def pbmc() -> PrismTestData:
                     },
                     {
                         "shipping_entry_number": 6,
-                        "cimac_id": "CTTTP02A3.00",
+                        "cimac_id": "CTTTP02A6.00",
                         "surgical_pathology_report_id": "test_encrypted('Surgical pathology report 6')",
                         "clinical_report_id": "test_encrypted('clinical report 6')",
                         "collection_event_name": "Baseline",
@@ -1917,7 +1917,7 @@ def microbiome_dna() -> PrismTestData:
                         "collection_event_name": "Baseline",
                         "parent_sample_id": "test_encrypted('TRIALGROUP 1')",
                         "processed_sample_id": "test_encrypted('BIOBANK 1')",
-                        "cimac_id": "CTTTP08T1.00",
+                        "cimac_id": "CTTTP08T3.00",
                         "box_number": "2",
                         "sample_location": "A1",
                         "type_of_sample": "Stool",
@@ -1944,7 +1944,7 @@ def microbiome_dna() -> PrismTestData:
                         "collection_event_name": "Pre_Day_1_Cycle_2",
                         "parent_sample_id": "test_encrypted('TRIALGROUP 2')",
                         "processed_sample_id": "test_encrypted('BIOBANK 1')",
-                        "cimac_id": "CTTTP08T2.00",
+                        "cimac_id": "CTTTP08T4.00",
                         "box_number": "2",
                         "sample_location": "A2",
                         "type_of_sample": "Stool",
@@ -1971,7 +1971,7 @@ def microbiome_dna() -> PrismTestData:
                         "collection_event_name": "Pre_Day_1_Cycle_2",
                         "parent_sample_id": "test_encrypted('TRIALGROUP 3')",
                         "processed_sample_id": "test_encrypted('BIOBANK 1')",
-                        "cimac_id": "CTTTP08T3.00",
+                        "cimac_id": "CTTTP08T5.00",
                         "box_number": "2",
                         "sample_location": "A3",
                         "type_of_sample": "Stool",

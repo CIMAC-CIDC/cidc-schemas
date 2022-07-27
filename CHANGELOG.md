@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.48` - 26 Jul 2022
+
+- `fixed` clincal participant count in extra metadata parsing
+
 ## Version `0.25.47` - 26 Jul 2022
 
 - `added` alert to shipping manifests for new participants

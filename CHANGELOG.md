@@ -9,7 +9,11 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
-## Version `0.25.48` - 26 Jul 2022
+## Version `0.25.49` - 27 Jul 2022
+
+- `fixed` added json schema support for clinical data participant counts 
+
+## Version `0.25.48` - 27 Jul 2022
 
 - `fixed` clincal participant count in extra metadata parsing
 

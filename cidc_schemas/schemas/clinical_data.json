@@ -15,6 +15,20 @@
       "properties": {
         "clinical_file": {
           "inheritableBase": true,
+          "properties": {
+            "number_of_participants": {
+              "description": "Number of participants within this file.",
+              "type": "integer"
+            },
+            "participants": {
+              "description": "Ids of the participant(s) within this file.",
+              "type": "array",
+              "items": {
+                "$comment": "Ids of the participant(s) within this file.",
+                "$ref": "participant.json#properties/cimac_participant_id"
+              }
+            }
+          },
           "anyOf": [
             {
               "$comment": "Path to clinical data XLSX file.",

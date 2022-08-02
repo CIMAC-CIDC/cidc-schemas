@@ -32,7 +32,8 @@
 
                       "tumor tissue (% total area)": {
                         "merge_pointer": "0/tumor_tissue_percentage",
-                        "type_ref": "assays/hande_assay.json#definitions/record/properties/tumor_tissue_percentage"
+                        "type_ref": "assays/hande_assay.json#definitions/record/properties/tumor_tissue_percentage",
+                        "allow_empty": true
                       },
                       "viable tumor (% area)": {
                         "merge_pointer": "0/viable_tumor_percentage",

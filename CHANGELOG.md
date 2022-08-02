@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.49` - 2 Aug 2022
+
+- `removed` strict requirement for percent tumor tissue area in hande metadata
+
 ## Version `0.25.48` - 27 Jul 2022
 
 - `fixed` clincal participant count in extra metadata parsing

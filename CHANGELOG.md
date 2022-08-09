@@ -9,7 +9,7 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
-## Version `0.25.50` - 8  Aug 2022
+## Version `0.25.50` - 9 Aug 2022
 
 - `removed` strict requirement for percent tumor tissue area in hande manifest
 

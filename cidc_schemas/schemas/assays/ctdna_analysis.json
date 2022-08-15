@@ -58,10 +58,8 @@
 				"other_solutions": {"$ref": "artifacts/artifact_pdf.json"},
 
 				"fraction_cna_subclonal": {
-					"description": "Fraction of copy number altered bins that are subclonal. (0-1)",
-					"type": "number",
-					"minimum": 0,
-					"maximum": 1
+					"description": "Fraction of copy number altered bins that are subclonal. Accepts NaN. (0-1)",
+					"type": ["number", "string"]
 				},
 				"fraction_genome_subclonal": {
 					"description": "Fraction of all (genomic) bins that are subclonal. (0-1)",
@@ -74,10 +72,8 @@
 					"type": "number"
 				},
 				"subclone_fraction": {
-					"description": "Fraction of tumor-derived DNA that is subclonal. (0-1)",
-					"type": "number",
-					"minimum": 0,
-					"maximum": 1
+					"description": "Fraction of tumor-derived DNA that is subclonal. Accepts NA. (0-1)",
+					"type": ["number", "string"]
 				},
 				"tumor_fraction": {
 					"description": "Estimated fraction of tumor-derived DNA. Equivalent to purity in bulk tumor analysis. (0-1)",

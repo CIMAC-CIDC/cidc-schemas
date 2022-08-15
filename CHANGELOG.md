@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.53` - 15 Aug 2022
+
+- `added` possibility for jpg images for hande assay data
+
 ## Version `0.25.52` - 15 Aug 2022
 
 - `added` possibility for string values to some ctdna analysis columns

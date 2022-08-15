@@ -408,8 +408,8 @@ def hande() -> PrismTestData:
             allow_empty=False,
         ),
         LocalFileUploadEntry(
-            local_path="path/to/image2.svs",
-            gs_key="123/hande/CTTTPP121.00/image_file.svs",
+            local_path="path/to/image2.jpg",
+            gs_key="123/hande/CTTTPP121.00/image_file.jpg",
             upload_placeholder="eeeeeeee-669c-48c7-aee0-f0d5e5e8a341",
             metadata_availability=False,
             allow_empty=False,

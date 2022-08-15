@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.52` - 15 Aug 2022
+
+- `added` possibility for string values to some ctdna analysis columns
+
 ## Version `0.25.51` - 11 Aug 2022
 
 - `added` mapping from upload_type to filepath prefix

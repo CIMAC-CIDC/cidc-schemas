@@ -3037,8 +3037,6 @@ def microbiome() -> PrismTestData:
                     ],
                     "assay_creator": "DFCI",
                     "batch_id": "batch1",
-                    "enrichment_method": "Transcriptome capture v1",
-                    "enrichment_vendor_kit": "Illumina - TruSeq Stranded PolyA mRNA",
                     "sequencer_platform": "Illumina - HiSeq 3000",
                     "forward_fastq": {
                         "upload_placeholder": "9d95cab4-1ab0-4d2d-86fb-f8a60759ecfd"

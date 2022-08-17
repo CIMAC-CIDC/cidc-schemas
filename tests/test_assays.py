@@ -537,8 +537,6 @@ def test_microbiome():
     tsv["data_format"] = "TSV"
 
     # add custom entry
-    obj["enrichment_method"] = "Ribo minus"
-    obj["enrichment_vendor_kit"] = "Agilent"
     obj["batch_id"] = "batch1"
     obj["forward_fastq"] = fastq
     obj["forward_index"] = fastq

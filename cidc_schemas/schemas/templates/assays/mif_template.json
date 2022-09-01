@@ -28,12 +28,14 @@
                     "image analysis software":
                     {
                         "merge_pointer": "0/image_analysis_software",
-                        "type_ref": "assays/mif_assay.json#properties/image_analysis_software"
+                        "type_ref": "assays/mif_assay.json#properties/image_analysis_software",
+                        "allow_empty": true
                     },
                     "image analysis software version":
                     {
                         "merge_pointer": "0/image_analysis_software_version",
-                        "type_ref": "assays/mif_assay.json#properties/image_analysis_software_version"
+                        "type_ref": "assays/mif_assay.json#properties/image_analysis_software_version",
+                        "allow_empty": true
                     },
                     "cell segmentation model":
                     {
@@ -56,7 +58,8 @@
                     "staining date":
                     {
                         "merge_pointer": "0/staining_date",
-                        "type_ref": "assays/components/imaging_data.json#properties/staining_date"
+                        "type_ref": "assays/components/imaging_data.json#properties/staining_date",
+                        "allow_empty": true
                     },
                     "imaging date":
                     {
@@ -67,7 +70,8 @@
                     "imaging status":
                     {
                         "merge_pointer": "0/imaging_status",
-                        "type_ref": "assays/components/imaging_data.json#properties/imaging_status"
+                        "type_ref": "assays/components/imaging_data.json#properties/imaging_status",
+                        "allow_empty": true
                     },
                     "panel":
                     {

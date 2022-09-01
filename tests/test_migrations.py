@@ -1,15 +1,18 @@
+from copy import deepcopy
 import pytest
 
 from cidc_schemas.migrations import (
     _follow_path,
     v0_10_0_to_v0_10_2,
     MigrationError,
+    MigrationResult,
     v0_10_2_to_v0_11_0,
     v0_15_2_to_v0_15_3,
     v0_21_1_to_v0_22_0,
     _ENCRYPTED_FIELD_LEN,
     v0_23_0_to_v0_23_1,
     v0_23_18_to_v0_24_0,
+    v0_25_41_to_v0_25_42,
 )
 
 
@@ -174,7 +177,7 @@ def test_v0_10_0_to_v0_10_2():
         }
     }
 
-    res = v0_10_0_to_v0_10_2.upgrade(old_ct)
+    res: MigrationResult = v0_10_0_to_v0_10_2.upgrade(old_ct)
 
     # Extract artifacts from migration result
     get_artifact_path = lambda record_idx: _follow_path(
@@ -313,7 +316,7 @@ def test_v0_23_18_to_v0_24_0():
         }
     }
 
-    result = v0_23_18_to_v0_24_0.upgrade(ct)
+    result: MigrationResult = v0_23_18_to_v0_24_0.upgrade(ct)
     assert result.result == target_ct
     assert result.file_updates == {
         "test-trial/chip_1234/assay_npx.xlsx": {
@@ -328,3 +331,30 @@ def test_v0_23_18_to_v0_24_0():
 
     # downgrade is a noop for this migration
     assert v0_23_18_to_v0_24_0.downgrade(target_ct).result == target_ct
+
+
+def test_v0_25_41_to_v0_25_42():
+    # Unrelated data is unchanged
+    assert v0_25_41_to_v0_25_42.downgrade(
+        v0_25_41_to_v0_25_42.upgrade({"foo": "bar"}).result
+    ).result == {"foo": "bar"}
+
+    ct = {
+        "analyses": {
+            "wes_analysis": {"foo": "bar"},
+            "wes_tumor_only_analysis": {"biz": "baz"},
+        }
+    }
+
+    target_ct = {
+        "analyses": {
+            "wes_analysis_old": {"foo": "bar"},
+            "wes_tumor_only_analysis_old": {"biz": "baz"},
+        }
+    }
+
+    result: MigrationResult = v0_25_41_to_v0_25_42.upgrade(deepcopy(ct))
+    assert result.result == target_ct
+    assert result.file_updates == {}
+
+    assert v0_25_41_to_v0_25_42.downgrade(target_ct).result == ct

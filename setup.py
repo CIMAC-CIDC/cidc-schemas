@@ -8,9 +8,6 @@ from setuptools import setup, find_packages
 with open("README.md") as readme_file:
     readme = readme_file.read()
 
-with open("HISTORY.rst") as history_file:
-    history = history_file.read()
-
 with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
@@ -31,9 +28,8 @@ setup(
     python_requires=">=3.6",
     install_requires=requirements,
     license="MIT license",
-    # TODO: work this out - we can't mix content types (.md and .rst)
-    # in the long_description.
-    # long_description=readme + '\n\n' + history,
+    long_description=readme,
+    long_description_content_type="text/markdown",
     include_package_data=True,
     keywords="cidc_schemas",
     name="cidc_schemas",

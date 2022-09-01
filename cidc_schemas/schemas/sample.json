@@ -219,6 +219,7 @@
                 "Tumor RNA",
                 "Germline DNA",
                 "Circulating Tumor-Derived DNA",
+                "Stool DNA",
                 "Not Reported",
                 "Other"
             ]
@@ -249,10 +250,8 @@
             ]
         },
         "tumor_tissue_total_area_percentage": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 100,
-            "description": "Score the percentage of tumor (including tumor bed) tissue area of the slide (e.g. vs non-malignant or normal tissue)"
+            "type": ["number","string"],
+            "description": "Score the percentage of tumor (including tumor bed) tissue area of the slide (e.g. vs non-malignant or normal tissue) (0-100)"
         },
         "viable_tumor_area_percentage": {
             "type": "number",

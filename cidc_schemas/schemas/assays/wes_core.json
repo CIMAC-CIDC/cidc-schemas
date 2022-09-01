@@ -39,9 +39,27 @@
 	    }
 	  },
 	  "required": [
-	    "align_sorted_dedup",
-	    "align_sorted_dedup_index"
+		  "align_sorted_dedup",
+		  "align_sorted_dedup_index"
 	  ],
+	  "oneOf": [
+		{
+			"required": [
+				"align_recalibrated",
+				"align_recalibrated_index"
+			],
+			"$comment": "WES v3 per ngs-api PR #55"
+		},
+		{
+			"not": {
+				"required": [
+					"align_recalibrated",
+					"align_recalibrated_index"
+				]
+			},
+			"$comment": "maintained for backwards compatibility before v3"
+		}
+		],
 	  "additionalProperties": false
 	},
 
@@ -50,15 +68,39 @@
 	  "description": "Clonality output files.",
 	  "properties": {
 	    "clonality_pyclone": {
-	      "$ref": "artifacts/artifact_tsv.json"
+	    	"$ref": "artifacts/artifact_tsv.json",
+			"$comment": "maintained for backwards compatibility before v3"
 	    },
 	    "clonality_table": {
-	      "$ref": "artifacts/artifact_tsv.json"
-	    }
+	    	"$ref": "artifacts/artifact_tsv.json",
+			"$comment": "maintained for backwards compatibility before v3"
+	    },
+			"clonality_input": {
+				"$ref": "artifacts/artifact_tsv.json"
+			},
+			"clonality_results": {
+				"$ref": "artifacts/artifact_tsv.json"
+			},
+			"clonality_summary": {
+				"$ref": "artifacts/artifact_tsv.json"
+			}
 	  },
-	  "required": [
-	    "clonality_pyclone",
-	    "clonality_table"
+	  "oneOf": [
+		{
+			"required": [
+				"clonality_input",
+				"clonality_results",
+				"clonality_summary"
+			],
+			"$comment": "WES v3 per ngs-api PR #55"
+		},
+		{
+			"required": [
+				"clonality_pyclone",
+				"clonality_table"
+			],
+			"$comment": "maintained for backwards compatibility before v3"
+		}
 	  ],
 	  "additionalProperties": false
 	},
@@ -67,17 +109,85 @@
 	  "type": "object",
 	  "description": "Copy number output files.",
 	  "properties": {
-	    "copynumber_cnv_calls": {
-	      "$ref": "artifacts/artifact_text.json"
-	    },
+		  "copynumber_cnv_calls": {
+			  "$ref": "artifacts/artifact_text.json",
+				"$comment": "maintained for backwards compatibility before v3"
+			},
 	    "copynumber_cnv_calls_tsv": {
-	      "$ref": "artifacts/artifact_tsv.json"
-	    }
+	      "$ref": "artifacts/artifact_tsv.json",
+		  "$comment": "maintained for backwards compatibility before v3"
+	    },
+			"copynumber_segments": {
+				"$ref": "artifacts/artifact_text.json"
+			},
+			"copynumber_genome_view": {
+				"$ref": "artifacts/artifact_pdf.json"
+			},
+			"copynumber_chromosome_view": {
+				"$ref": "artifacts/artifact_pdf.json"
+			},
+			"copynumber_sequenza_gainloss": {
+				"$ref": "artifacts/artifact_bed.json"
+			},
+			"copynumber_sequenza_final": {
+				"$ref": "artifacts/artifact_gz.json"
+			},
+			"copynumber_consensus": {
+				"$ref": "artifacts/artifact_bed.json"
+			},
+			"copynumber_consensus_gain": {
+				"$ref": "artifacts/artifact_bed.json"
+			},
+			"copynumber_consensus_loss": {
+				"$ref": "artifacts/artifact_bed.json"
+			},
+			"copynumber_facets": {
+				"$ref": "artifacts/artifact_cncf.json"
+			},
+			"copynumber_facets_gainloss": {
+				"$ref": "artifacts/artifact_bed.json"
+			},
+			"copynumber_cnv_segments": {
+				"$ref": "artifacts/artifact_cns.json"
+			},
+			"copynumber_cnv_segments_enhanced": {
+				"$ref": "artifacts/artifact_cns.json"
+			},
+			"copynumber_cnv_scatterplot": {
+				"$ref": "artifacts/artifact_png.json"
+			},
+			"copynumber_cnvkit_gainloss": {
+				"$ref": "artifacts/artifact_bed.json"
+			}
 	  },
-	  "required": [
-	    "copynumber_cnv_calls",
-	    "copynumber_cnv_calls_tsv"
-	  ],
+		"oneOf": [
+			{
+				"required": [
+					"copynumber_segments",
+					"copynumber_genome_view",
+					"copynumber_chromosome_view",
+					"copynumber_sequenza_gainloss",
+					"copynumber_sequenza_final",
+					"copynumber_consensus",
+					"copynumber_consensus_gain",
+					"copynumber_consensus_loss",
+					"copynumber_facets",
+					"copynumber_facets_gainloss",
+					"copynumber_cnv_segments",
+					"copynumber_cnv_segments_enhanced",
+					"copynumber_cnv_scatterplot",
+					"copynumber_cnvkit_gainloss"
+				],
+				"$comment": "WES v3 per ngs-api PR #55"
+			},
+			{
+				"required": [
+					"copynumber_cnv_calls",
+					"copynumber_cnv_calls_tsv"
+				],
+				"$comment": "maintained for backwards compatibility before v3"
+			}
+		],
 	  "additionalProperties": false
 	},
 
@@ -126,10 +236,6 @@
 	      "$ref": "artifacts/artifact_text.json"
 	    }
 	  },
-	  "required": [
-	    "coverage_metrics",
-	    "target_metrics"
-	  ],
 	  "additionalProperties": false
 	},
 
@@ -142,13 +248,55 @@
 	    },
 	    "haplotyper_targets": {
 	      "$ref": "artifacts/artifact_vcf_gz.json"
+	  	},
+			"haplotyper_output": {
+	      "$ref": "artifacts/artifact_vcf.json"
 	  	}
 	  },
 	  "oneOf": [
-	  	{ "required": ["vcf_compare"] },
-	  	{ "required": ["haplotyper_targets"] }
+	  	{ 
+				"required": ["vcf_compare"],
+				"$comment": "maintained for backwards compatibility before v2"
+			},
+	  		{ 
+				"required": ["haplotyper_targets"],
+				"not": {
+					"required": ["haplotyper_output"]
+				},
+				"$comment": "maintained for backwards compatibility before v3"
+			},
+			{ 
+				"required": [
+					"haplotyper_targets",
+					"haplotyper_output"
+				],
+				"$comment": "WES v3 per ngs-api PR #55"
+			}
 	  ],
 	  
+	  "additionalProperties": false
+	},
+
+	"hla": {
+	  "type": "object",
+	  "description": "HLA output files.",
+	  "properties": {
+	    "optitype_result": {
+	      "$ref": "artifacts/artifact_text.json"
+	    },
+	    "xhla_report_hla": {
+	      "$ref": "artifacts/artifact_json.json"
+	    },
+	    "hla_final_result": {
+	      "$ref": "artifacts/artifact_text.json"
+	    }
+	  },
+	  "required": [
+	    "optitype_result",
+			"xhla_report_hla",
+			"hla_final_result"
+	  ],
+		"$comment": "WES v3 per ngs-api PR #55",
 	  "additionalProperties": false
 	},
 
@@ -190,7 +338,6 @@
 	    }
 	  },
 	  "required": [
-	    "HLA_results",
 	    "combined_filtered"
 	  ],
 	  "additionalProperties": false
@@ -208,8 +355,10 @@
 	    }
 	  },
 	  "required": [
-	    "optitype_result"
+	    "optitype_result",
+			"xhla_report_hla"
 	  ],
+		"$comment": "maintained for backwards compatibility before v3",
 	  "additionalProperties": false
 	},
 
@@ -219,11 +368,35 @@
 	  "properties": {
 	    "optimal_purity_value": {
 	      "$ref": "artifacts/artifact_text.json"
+	    },
+			"alternative_solutions": {
+	      "$ref": "artifacts/artifact_text.json"
+	    },
+			"cp_contours": {
+	      "$ref": "artifacts/artifact_pdf.json"
 	    }
 	  },
 	  "required": [
-	    "optimal_purity_value"
+		  "optimal_purity_value"
 	  ],
+	"oneOf": [
+		{
+			"required": [
+				"alternative_solutions",
+				"cp_contours"
+			],
+			"$comment": "WES v3 per ngs-api PR #55"
+		},
+		{
+			"not": {
+				"required": [
+					"alternative_solutions",
+					"cp_contours"
+				]
+			},
+			"$comment": "maintained for backwards compatibility before v3"
+		}
+	],
 	  "additionalProperties": false
 	},
 
@@ -295,14 +468,12 @@
 			"tnscope_output_twist_maf": {
 				"$ref": "artifacts/artifact_maf.json"
 			},
-
 			"vcf_tnscope_filter": {
 				"$ref": "artifacts/artifact_vcf.json",
 				"$comment": "added for backwards compatibility"
 			},
 			"maf_tnscope_output": {
-				"$ref": "artifacts/artifact_maf.json",
-				"$comment": "added for backwards compatibility"
+				"$ref": "artifacts/artifact_maf.json"
 			},
 			"tnscope_exons": {
 				"$ref": "artifacts/artifact_vcf_gz.json",
@@ -310,6 +481,22 @@
 			}
 		},
 		"oneOf": [
+			{
+				"not": {
+					"required": [
+						"vcf_gz_tnscope_filter",
+						"maf_tnscope_filter"
+					]
+				},
+				"required": [
+					"vcf_gz_tnscope_output",
+					"tnscope_output_twist_filtered_vcf",
+					"tnscope_output_twist_filtered_maf",
+					"tnscope_output_twist_vcf",
+					"tnscope_output_twist_maf"
+				],
+				"$comment": "WES v3 per ngs-api PR #55"
+			},
 			{
 				"required": [
 					"vcf_gz_tnscope_output",
@@ -319,7 +506,8 @@
 					"maf_tnscope_filter",
 					"tnscope_output_twist_vcf",
 					"tnscope_output_twist_maf"
-				]
+				],
+				"$comment": "maintained for backwards compatibility before v3"
 			},
 			{
 				"required": [
@@ -329,10 +517,26 @@
 					"maf_tnscope_output",
 					"tnscope_exons"
 				],
-				"$comment": "added for backwards compatibility"
+				"$comment": "maintained for backwards compatibility before v2"
 			}
 		]
+	},
+
+	"tcell": {
+	  "type": "object",
+	  "description": "tcell fraction estimates.",
+	  "properties": {
+	    "tcellextrect": {
+	      "$ref": "artifacts/artifact_text.json"
+	    }
+	  },
+	  "required": [
+	    "tcellextrect"
+	  ],
+		"$comment": "WES v3 per ngs-api PR #55",
+	  "additionalProperties": false
 	}
+
   },
   "properties": {
 	"error": {

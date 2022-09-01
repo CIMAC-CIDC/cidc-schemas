@@ -1,0 +1,9 @@
+"#title","Metadata file for ctdna assay"
+"#preamble","Protocol identifier","test_prism_trial_id"
+"#preamble","Batch id","test_batch"
+"#preamble","Assay creator","Broad"
+
+"#skip","Samples"
+"#header","Cimac id","Demultiplexed bam","Demultiplexed bam index"
+"#data","CTTTPP111.00","CTTTPP111_00.bam","CTTTPP111_00.bai"
+"#data","CTTTPP121.00","CTTTPP121_00.bam","CTTTPP121_00.bai"

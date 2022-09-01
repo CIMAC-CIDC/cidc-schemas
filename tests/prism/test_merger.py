@@ -19,6 +19,8 @@ from .test_extra_metadata import (
     single_npx_metadata,
     combined_npx_metadata,
     elisa_metadata_1,
+    clinical_file_path_1_csv,
+    clinical_metadata_1,
 )
 
 #### MERGE STRATEGY TESTS ####
@@ -389,6 +391,42 @@ def test_merge_extra_metadata_elisa(elisa_ct_metadata, elisa_file_infos):
     # TODO antibodies
     for key in ["samples", "number_of_samples"]:
         assert artifact[key] == elisa_metadata_1[key]
+
+
+@pytest.fixture
+def clinical_ct_metadata():
+    return {
+        "protocol_identifier": "test_prism_trial_id",
+        "clinical_data": {
+            "records": [
+                {"comment": "no comment", "clinical_file": up("clinical_data_file")}
+            ]
+        },
+    }
+
+
+@pytest.fixture
+def clinical_file_infos():
+    return [
+        LocalFileUploadEntry(
+            local_path=clinical_file_path_1_csv,
+            gs_key="",
+            upload_placeholder="clinical_data_file",
+            metadata_availability=True,
+            allow_empty=False,
+        )
+    ]
+
+
+def test_merge_extra_metadata_clinical(clinical_ct_metadata, clinical_file_infos):
+    _do_extra_metadata_merge(clinical_ct_metadata, clinical_file_infos, "clinical_data")
+
+    artifact = clinical_ct_metadata["clinical_data"]["records"][0]["clinical_file"]
+    assert (
+        artifact["number_of_participants"]
+        == clinical_metadata_1["number_of_participants"]
+    )
+    assert set(artifact["participants"]) == set(clinical_metadata_1["participants"])
 
 
 #### END EXTRA METADATA TESTS ####

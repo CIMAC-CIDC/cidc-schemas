@@ -17,8 +17,18 @@
       "additionalProperties": false,
       "properties": {
         "image_file": {
-          "$comment": "Path to the H & E image in SVS format.",
-          "$ref": "artifacts/artifact_image.json"
+          "inheritableBase": true,
+          "mergeStrategy": "objectMerge",
+          "anyOf": [
+            {
+              "$comment": "Path to the H & E image in SVS format.",
+              "$ref": "artifacts/artifact_image.json"
+            },
+            {
+              "$comment": "Path to the H & E image in JPG format.",
+              "$ref": "artifacts/artifact_jpg.json"
+            }
+          ]
         }
       },
       "required": ["image_file"]

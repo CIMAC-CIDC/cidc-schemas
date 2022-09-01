@@ -155,9 +155,6 @@ def parse_clinical(file: BinaryIO) -> dict:
     if type(file) == str:
         raise TypeError(f"parse_clinical only accepts BinaryIO and not file paths")
 
-    if not (file.name.endswith("xlsx") or file.name.endswith("csv")):
-        return {}
-
     ids = set()
 
     try:
@@ -169,14 +166,18 @@ def parse_clinical(file: BinaryIO) -> dict:
         if file.seekable():
             file.seek(0)
 
-        csv = pd.read_csv(file)
-        if "cimac_part_id" in csv.columns:
-            for possible_id in csv["cimac_part_id"].unique():
-                try:
-                    if cimac_partid_regex.match(possible_id):
-                        ids.add(possible_id)
-                except TypeError as e:
-                    continue
+        try:
+            csv = pd.read_csv(file)
+        except:
+            return {}
+        else:
+            if "cimac_part_id" in csv.columns:
+                for possible_id in csv["cimac_part_id"].unique():
+                    try:
+                        if cimac_partid_regex.match(possible_id):
+                            ids.add(possible_id)
+                    except TypeError as e:
+                        continue
 
     else:
         # extract data to python
@@ -184,36 +185,24 @@ def parse_clinical(file: BinaryIO) -> dict:
 
             # simplify.
             worksheet = workbook[worksheet_name]
-            seen_partid = False
-            for i, row in enumerate(worksheet.iter_rows()):
 
-                # extract values from row
-                vals = [col.value for col in row]
+            for column in worksheet.iter_cols(
+                1, worksheet.max_column
+            ):  # iterate column cell
+                if column[0].value == "cimac_part_id":
+                    for cell in column[1:]:
+                        # some participant ID's might be blank for
+                        # participants not in the system already (skip these for now)
+                        if cell.value == "" or not cell.value:
+                            continue
 
-                # skip empty 1
-                if len(vals) == 0:
-                    continue
-
-                # simplify
-                first_cell = vals[0]
-
-                # does this file have cimac_part_id?
-                if not seen_partid and first_cell == "cimac_part_id":
-                    seen_partid = True
-                    continue
-
-                # some participant ID's might be blank for
-                # participants not in the system already (skip these for now)
-                if first_cell == "" or not first_cell:
-                    continue
-
-                # get the identifier
-                # check that it is a CIMAC PART ID
-                try:
-                    if cimac_partid_regex.match(first_cell):
-                        ids.add(first_cell)
-                except TypeError as e:
-                    continue
+                        # get the identifier
+                        # check that it is a CIMAC PART ID
+                        try:
+                            if cimac_partid_regex.match(cell.value):
+                                ids.add(cell.value)
+                        except TypeError as e:
+                            continue
 
     part_count = len(ids)
 

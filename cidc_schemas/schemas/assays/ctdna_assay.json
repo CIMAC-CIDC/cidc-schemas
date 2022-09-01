@@ -1,0 +1,53 @@
+{
+	"$schema": "metaschema/strict_meta_schema.json#",
+	"$id": "ctdna_assay",
+	"title": "Circulating Tumor DNA Assay.",
+	"allOf": [{ "$ref": "assays/components/assay_core.json" }],
+
+	"definitions": {
+		"entry": {
+			"type": "object",
+			"mergeStrategy": "objectMerge",
+			"description": "A single data record from ctDNA assay.",
+			"additionalProperties": false,
+			"required": [
+				"cimac_id",
+				"demultiplexed_bam",
+				"demultiplexed_bam_index"
+			],
+			"properties": {
+				"cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
+				"demultiplexed_bam": {
+				  "$ref": "artifacts/artifact_bam.json"
+				},
+				"demultiplexed_bam_index": {
+				  "$ref": "artifacts/artifact_bam_bai.json"
+				}
+			}
+		}
+	},
+	
+	"type": "object",
+    "mergeStrategy": "objectMerge",
+	"additionalProperties": false,
+	"required": [
+		"assay_creator",
+		"batch_id",
+		"records"
+	],
+	"properties": {
+		"assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
+		"batch_id": {
+            "description": "ctDNA batch identification number. Unique to every batch.",
+            "type": "string"
+        },
+		"records": {
+			"type": "array",
+			"description": "A single data record from ctDNA assay.",
+			"items": {
+				"$ref": "assays/ctdna_assay.json#definitions/entry"
+			},
+			"mergeStrategy": "append"
+		}
+	}
+}

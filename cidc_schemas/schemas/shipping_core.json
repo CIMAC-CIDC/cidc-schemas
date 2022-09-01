@@ -5,6 +5,9 @@
   "type": "object",
   "description": "Core shipping details for a manifest.",
   "additionalProperties": false,
+  "required": [
+    "manifest_id"
+  ],
   "properties": {
     "manifest_id": {
       "description": "Filename of the manifest used to ship this sample. Example: E4412_PBMC.",
@@ -47,7 +50,9 @@
         "mIF",
         "mIHC",
         "TCRseq",
-        "ATACseq"
+        "ATACseq",
+        "ctDNA",
+        "Microbiome"
       ]
     },
     "courier": {
@@ -114,6 +119,7 @@
         "MSSM_Rahman",
         "MSSM_Kim-Schulze",
         "MSSM_Bongers",
+        "MSSM_MTC",
         "DFCI_Wu",
         "DFCI_Hodi",
         "DFCI_Severgnini",

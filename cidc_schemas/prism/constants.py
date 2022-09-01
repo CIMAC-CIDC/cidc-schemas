@@ -1,5 +1,8 @@
 """CIDC schemas-specific constants relevant to prismifying/merging functionality."""
 
+from typing import Dict
+
+
 PROTOCOL_ID_FIELD_NAME = "protocol_identifier"
 
 SUPPORTED_ASSAYS = [
@@ -19,6 +22,8 @@ SUPPORTED_ASSAYS = [
     "nanostring",
     "clinical_data",
     "misc_data",
+    "ctdna",
+    "microbiome",
 ]
 
 SUPPORTED_SHIPPING_MANIFESTS = [
@@ -30,6 +35,7 @@ SUPPORTED_SHIPPING_MANIFESTS = [
     "tumor_tissue_dna",
     "tumor_tissue_rna",
     "h_and_e",
+    "microbiome_dna",
 ]
 # weird non shipping manifest
 SUPPORTED_WEIRD_MANIFESTS = ["tumor_normal_pairing", "participants_annotations"]
@@ -40,11 +46,54 @@ SUPPORTED_MANIFESTS = SUPPORTED_SHIPPING_MANIFESTS + SUPPORTED_WEIRD_MANIFESTS
 
 SUPPORTED_ANALYSES = [
     "atacseq_analysis",
+    "ctdna_analysis",
     "cytof_analysis",
     "rna_level1_analysis",
     "tcr_analysis",
     "wes_analysis",
     "wes_tumor_only_analysis",
+    "microbiome_analysis",
 ]
 
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS + SUPPORTED_ANALYSES
+
+# provide a way to get file-path prefix for each upload_type
+ASSAY_TO_FILEPATH: Dict[str, str] = {
+    # analysis is removed on some
+    "atacseq_analysis": "atacseq",
+    "rna_level1_analysis": "rna",
+    "wes_analysis": "wes",
+    "wes_tumor_only_analysis": "wes_tumor_only",
+    # assay specifics removed
+    "atacseq_fastq": "atacseq",
+    "rna_bam": "rna",
+    "rna_fastq": "rna",
+    "tcr_adaptive": "tcr",
+    "tcr_fastq": "tcr",
+    "wes_bam": "wes",
+    "wes_fastq": "wes",
+    # special cases
+    "clinical_data": "clinical",
+    "participants info": "participants",
+    "samples info": "samples",
+    # invariant
+    **{
+        k: k
+        for k in [
+            "ctdna_analysis",
+            "cytof_analysis",
+            "microbiome_analysis",
+            "tcr_analysis",
+            "ctdna",
+            "cytof",
+            "elisa",
+            "hande",
+            "ihc",
+            "microbiome",
+            "mif",
+            "misc_data",
+            "nanostring",
+            "olink",
+        ]
+    },
+}

@@ -23,16 +23,22 @@
                           "merge_pointer": "0/cimac_id",
                           "type_ref": "sample.json#properties/cimac_id"
                       },
+                      "file type": {
+                          "do_not_merge": true,
+                          "type": "string",
+                          "enum": ["svs", "jpg"]
+                      },
                       "image file": {
                           "merge_pointer": "0/files/image_file",
                           "is_artifact": 1,
-                          "gcs_uri_format": "{protocol identifier}/hande/{cimac id}/image_file.svs",
+                          "gcs_uri_format": "{protocol identifier}/hande/{cimac id}/image_file.{file type}",
                           "type_ref": "assays/components/local_file.json#properties/file_path"
                       },
 
                       "tumor tissue (% total area)": {
                         "merge_pointer": "0/tumor_tissue_percentage",
-                        "type_ref": "assays/hande_assay.json#definitions/record/properties/tumor_tissue_percentage"
+                        "type_ref": "assays/hande_assay.json#definitions/record/properties/tumor_tissue_percentage",
+                        "allow_empty": true
                       },
                       "viable tumor (% area)": {
                         "merge_pointer": "0/viable_tumor_percentage",

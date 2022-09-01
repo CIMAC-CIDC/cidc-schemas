@@ -121,13 +121,16 @@ class XlTemplateWriter:
         self.DATA_ROWS = data_rows
         self.COLUMN_WIDTH_PX = column_width_px
 
-    def write(self, outfile_path: str, template: Template):
+    def write(
+        self, outfile_path: str, template: Template, close: bool = True
+    ) -> Optional[xlsxwriter.Workbook]:
         """
         Generate an Excel file for the given template.
 
         Arguments:
             outfile_path {str} -- desired output path of the resulting xlsx file
             template {Template} -- the template configuration from which to generate an Excel file
+            close {bool} = True -- whether to close the workbook or to return it
         """
         self.path = outfile_path
         self.template = template
@@ -148,8 +151,11 @@ class XlTemplateWriter:
             self._write_worksheet(name, ws_schema, worksheet, write_title=first_sheet)
             first_sheet = False
 
-        self.workbook.close()
-        self.workbook = None
+        if close:
+            self.workbook.close()
+            self.workbook = None
+        else:
+            return self.workbook
 
     _data_dict_sheet_name = "Data Dictionary"
 

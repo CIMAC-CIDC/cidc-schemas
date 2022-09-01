@@ -1,0 +1,106 @@
+{
+	"$schema": "metaschema/strict_meta_schema.json#",
+	"$id": "ctdna_analysis",
+	"title": "Circulating Tumor DNA ichorCNA Analysis.",
+
+	"definitions": {
+		"batch": {
+			"type": "object",
+			"mergeStrategy": "objectMerge",
+			"allOf": [{ "$ref": "assays/components/assay_core.json" }],
+			"additionalProperties": false,
+			"required": [
+				"assay_creator",
+				"batch_id",
+				"records"
+			],
+			"properties": {
+				"assay_creator": {"$ref": "assays/components/assay_core.json#properties/assay_creator"},
+				"batch_id": {
+					"description": "ichorCNA analysis batch identification number. Unique to every batch.",
+					"type": "string"
+				},
+				"summary_plots": {"$ref": "artifacts/artifact_pdf.json"},
+				"records": {
+					"type": "array",
+					"description": "A single data record from ctDNA ichorCNA analysis.",
+					"items": {
+						"$ref": "assays/ctdna_analysis.json#definitions/entry"
+					},
+					"mergeStrategy": "append"
+				}
+			}
+		},
+
+		"entry": {
+			"type": "object",
+			"mergeStrategy": "objectMerge",
+			"description": "A single data record from ichorCNA analysis.",
+			"additionalProperties": false,
+			"required": [
+				"cimac_id",
+				"genome-wide_plots",
+				"bias_qc_plots",
+				"optimal_solution",
+				"other_solutions",
+				"fraction_cna_subclonal",
+				"fraction_genome_subclonal",
+				"gc_map_correction_mad",
+				"subclone_fraction",
+				"tumor_fraction",
+				"tumor_ploidy"
+			],
+			"properties": {
+				"cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
+				"genome-wide_plots": {"$ref": "artifacts/artifact_pdf.json"},
+				"bias_qc_plots": {"$ref": "artifacts/artifact_pdf.json"},
+				"optimal_solution": {"$ref": "artifacts/artifact_pdf.json"},
+				"other_solutions": {"$ref": "artifacts/artifact_pdf.json"},
+
+				"fraction_cna_subclonal": {
+					"description": "Fraction of copy number altered bins that are subclonal. Accepts NaN. (0-1)",
+					"type": ["number", "string"]
+				},
+				"fraction_genome_subclonal": {
+					"description": "Fraction of all (genomic) bins that are subclonal. (0-1)",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"gc_map_correction_mad": {
+					"description": "Measure of the noise in the data following GC-content bias correction. Computed as the median absolute deviation of differences between adjacent bins.",
+					"type": "number"
+				},
+				"subclone_fraction": {
+					"description": "Fraction of tumor-derived DNA that is subclonal. Accepts NA. (0-1)",
+					"type": ["number", "string"]
+				},
+				"tumor_fraction": {
+					"description": "Estimated fraction of tumor-derived DNA. Equivalent to purity in bulk tumor analysis. (0-1)",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"tumor_ploidy": {
+					"description": "Average number of copies of the tumor-derived genome. Note that the overall sample ploidy is 2 * (1 - tumor.fraction) + tumor.fraction * tumor.ploidy.",
+					"type": "number"
+				},
+				"comments": {"type": "string"}
+			}
+		}
+	},
+	
+	"type": "object",
+    "mergeStrategy": "objectMerge",
+	"additionalProperties": false,
+	"properties": {
+	  "batches": {
+		"type": "array",
+		"items": {"$ref": "assays/ctdna_analysis.json#definitions/batch"},
+		"mergeStrategy": "arrayMergeById",
+		"mergeOptions": {
+		  "idRef": "/batch_id"
+		}
+	  }
+	}
+}

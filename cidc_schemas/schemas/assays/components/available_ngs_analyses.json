@@ -13,13 +13,24 @@
     "wes_tumor_only_analysis": {
       "$ref": "assays/wes_tumor_only_analysis.json"
     },
+    "wes_analysis_old": {
+      "$ref": "assays/wes_analysis.json"
+    },
+    "wes_tumor_only_analysis_old": {
+      "$ref": "assays/wes_tumor_only_analysis.json"
+    },
     "rna_analysis": {
       "$ref": "assays/components/ngs/rna/rna_analysis.json"
     },
     "tcr_analysis": {
       "$ref": "assays/tcr_analysis.json"
     },
-
+    "ctdna_analysis": {
+      "$ref": "assays/ctdna_analysis.json"
+    },
+    "microbiome_analysis": {
+      "$ref": "assays/microbiome_analysis.json"
+    },
     "atacseq_analysis": {
       "type": "array",
       "description": "Analysis for Assay for Transposase-Accessible Chromatin by sequencing (ATACseq).",

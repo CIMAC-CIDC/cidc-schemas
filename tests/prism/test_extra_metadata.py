@@ -60,6 +60,7 @@ elisa_metadata_2 = {
 }
 
 # CLINCAL file and metadata
+clinical_file_path_1_csv = os.path.join(TEST_DATA_DIR, "clinical_test_file.1.csv")
 clinical_file_path_1 = os.path.join(TEST_DATA_DIR, "clinical_test_file.1.xlsx")
 clinical_metadata_1 = {
     "number_of_participants": 3,
@@ -75,7 +76,7 @@ clinical_metadata_3 = {
     "participants": ["CNQAABC", "CNQAABD", "CNQAABQ", "CNQAABY", "CNQAABP"],
 }
 
-clinical_docx = os.path.join(TEST_DATA_DIR, "clincal_test_file.docx")
+clinical_docx = os.path.join(TEST_DATA_DIR, "clinical_test_file.docx")
 
 
 @pytest.mark.parametrize("parser", [parse_elisa, parse_npx])

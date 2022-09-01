@@ -525,6 +525,39 @@ def test_olink():
         validator.validate(obj)
 
 
+def test_microbiome():
+
+    # create the ngs object
+    ngs_obj = {"sequencer_platform": "Illumina - NovaSeq 6000"}
+    obj = {**ASSAY_CORE, **ngs_obj}  # merge two dictionaries
+
+    fastq = ARTIFACT_OBJ.copy()
+    fastq["data_format"] = "FASTQ.GZ"
+    tsv = ARTIFACT_OBJ.copy()
+    tsv["data_format"] = "TSV"
+
+    # add custom entry
+    obj["batch_id"] = "batch1"
+    obj["forward_fastq"] = fastq
+    obj["forward_index"] = fastq
+    obj["reverse_fastq"] = fastq
+    obj["reverse_index"] = fastq
+    obj["otu_table"] = tsv
+
+    # create the microbiome object
+    record = {
+        "library_yield_ng": 666,
+        "cimac_id": "CTTTPPPSA.00",
+    }
+
+    # add a demo record.
+    obj["records"] = [record]
+
+    # create validator assert schemas are valid.
+    validator = _fetch_validator("microbiome")
+    validator.validate(obj)
+
+
 def test_clinicaldata():
 
     # create validator
@@ -554,3 +587,27 @@ def test_clinicaldata():
     obj = {**ASSAY_CORE, **clin_dat}
     with pytest.raises(jsonschema.ValidationError, match="is not valid"):
         validator.validate(clin_dat)
+
+
+def test_ctdna():
+    # set up BAM and BAI
+    bam = ARTIFACT_OBJ.copy()
+    bam["data_format"] = "BAM"
+    bai = ARTIFACT_OBJ.copy()
+    bai["data_format"] = "BAM.BAI"
+
+    # create the record
+    record = {
+        "cimac_id": "CTTTPPPSA.00",
+        "demultiplexed_bam": bam,
+        "demultiplexed_bam_index": bai,
+    }
+
+    # add a demo record.
+    obj = ASSAY_CORE.copy()
+    obj["batch_id"] = "test_batch"
+    obj["records"] = [record]
+
+    # create validator assert schemas are valid.
+    validator = _fetch_validator("ctdna")
+    validator.validate(obj)

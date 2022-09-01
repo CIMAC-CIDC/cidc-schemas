@@ -48,7 +48,8 @@
           "alignment": {"$ref": "assays/wes_core.json#definitions/alignment"},
           "germline": {"$ref": "assays/wes_core.json#definitions/germline"},
           "optitype": {"$ref": "assays/wes_core.json#definitions/optitype"},
-          "metrics": {"$ref": "assays/wes_core.json#definitions/coverage_metrics"}
+          "metrics": {"$ref": "assays/wes_core.json#definitions/coverage_metrics"},
+          "hla": {"$ref": "assays/wes_core.json#definitions/hla"}
       }
     }
   },
@@ -76,7 +77,7 @@
       "bait_set": {
           "description": "Bait set ID.",
           "type": "string",
-          "enum": ["whole_exome_illumina_coding_v1","broad_custom_exome_v1","TWIST Dana Farber Custom Panel", "TWIST Custom Panel PN 101042"]
+          "enum": ["whole_exome_illumina_coding_v1","broad_custom_exome_v1","TWIST Dana Farber Custom Panel", "TWIST Custom Panel PN 101042", "Agilent SS Human All Exon V4"]
       },
       "read_length": {
           "description": "Number of cycles for each sequencing read.",

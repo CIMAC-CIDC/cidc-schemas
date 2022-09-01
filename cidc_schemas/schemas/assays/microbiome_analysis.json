@@ -3,6 +3,9 @@
   "$id": "microbiome_analysis",
   "title": "Microbiome Analysis",
   "type": "object",
+	
+  "$comment": "description used in docs/index.html and docs/assays.microbiome.html",
+  "description": "Microbiome Analysis.",
 
   "definitions": {
     "batch": {

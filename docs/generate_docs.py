@@ -258,10 +258,13 @@ class AssaySchema(Schema):
                     if not part.isdigit() and part not in ("-", "")
                 ]
                 for level in levels:
-                    required = False
+                    required: bool = False
                     if level in root:
                         if "required" in root:
-                            required = level in root["required"]
+                            if isinstance(root["required"], bool):
+                                required: bool = root["required"]
+                            elif isinstance(root["required"], Iterable):
+                                required: bool = level in root["required"]
                         root = root[level]
 
                         while level not in root and (
@@ -359,7 +362,7 @@ class AssaySchema(Schema):
         ]
 
     def process_analyses(self) -> None:
-        if self.name in ("atacseq", "rna", "tcr", "wes"):
+        if self.name in ("atacseq", "ctdna", "microbiome", "rna", "tcr", "wes"):
             if self.name in ("atacseq", "rna"):
                 version_schema = load_schemas(
                     schema_dir=os.path.join(
@@ -373,16 +376,14 @@ class AssaySchema(Schema):
                     as_html=False,
                 )[""][f"{self.name}_analysis"]
 
-            else:  # if self.name in ("tcr", "wes"):
+            else:  # if self.name in ("ctdna", "microbiome", "tcr", "wes"):
                 version_schema = load_schemas(
                     schema_dir=os.path.join(SCHEMA_DIR, "assays"),
                     recursive=False,
                     as_html=False,
                 )[""][f"{self.name}_analysis"]
 
-                if self.name == "tcr":
-                    version_schema = version_schema["definitions"]["batch"]
-                else:  # if self.name == "wes"
+                if self.name == "wes":
                     # also need to include tumor_only
                     version2 = load_schemas(
                         schema_dir=os.path.join(SCHEMA_DIR, "assays"),
@@ -390,6 +391,8 @@ class AssaySchema(Schema):
                         as_html=False,
                     )[""][f"{self.name}_tumor_only_analysis"]
                     version_schema["properties"].update(version2["properties"])
+                else:  # if self.name in ("ctdna", "microbiome", "tcr")
+                    version_schema = version_schema["definitions"]["batch"]
 
             self.root = version_schema["properties"]
             self.required.extend(version_schema.get("required", []))
@@ -465,9 +468,9 @@ class TemplateSchema(Schema):
                         ).strip("/")
                     elif self.assay_schema.name == "olink":
                         data_pointer = data_pointer.replace("batches/", "")
-                    elif self.assay_schema.name == "tcr":
+                    elif self.assay_schema.name in ("ctdna", "microbiome", "tcr"):
                         data_pointer = data_pointer.replace(
-                            "analysis/tcr_analysis/", ""
+                            f"analysis/{self.assay_schema.name}_analysis/", ""
                         ).replace("batches/", "")
                     elif self.assay_schema.name == "cytof":
                         data_pointer = data_pointer.replace(
@@ -552,9 +555,9 @@ class TemplateSchema(Schema):
                     ).replace(f"analysis/{self.assay_schema.name}_analysis/", "")
                 if self.assay_schema.name == "olink":
                     data_pointer = data_pointer.replace("batches/", "")
-                elif self.assay_schema.name == "tcr":
+                elif self.assay_schema.name in ("ctdna", "microbiome", "tcr"):
                     data_pointer = data_pointer.replace(
-                        "analysis/tcr_analysis/", ""
+                        f"analysis/{self.assay_schema.name}_analysis/", ""
                     ).replace("batches/", "")
                 elif self.assay_schema.name == "cytof":
                     data_pointer = data_pointer.replace(

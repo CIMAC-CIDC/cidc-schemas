@@ -1,7 +1,11 @@
 {
 	"$schema": "metaschema/strict_meta_schema.json#",
 	"$id": "ctdna_assay",
-	"title": "Circulating Tumor DNA Assay.",
+	"title": "Circulating Tumor DNA Assay",
+	
+	"$comment": "description used in docs/index.html and docs/assays.ctdna.html",
+  	"description": "Circulating Tumor DNA Assay.",
+	
 	"allOf": [{ "$ref": "assays/components/assay_core.json" }],
 
 	"definitions": {

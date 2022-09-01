@@ -1324,7 +1324,7 @@ def misc_data() -> PrismTestData:
                                 "upload_placeholder": "c665c9ca-7065-46b8-b1c8-b871e15db294"
                             },
                             "file_location": "baz",
-                            "description": "this is a description",
+                            "file_description": "this is a description",
                         },
                         {
                             "name": "file_name.barbaz",
@@ -1332,7 +1332,7 @@ def misc_data() -> PrismTestData:
                                 "upload_placeholder": "c665c9ca-7065-46b8-a9c9-a259d5756a86"
                             },
                             "file_location": "barbaz",
-                            "description": "this is a description",
+                            "file_description": "this is a description",
                         },
                     ],
                 }

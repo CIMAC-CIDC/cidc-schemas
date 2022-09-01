@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Documentation</a>
         </p>
-        <h1>WES [BAM] assay template</h1>
+        <h1>Metadata file for microbiome.</h1>
         <p>
-            <b>Description:</b>  Whole Exome Sequencing (WES) data submission via BAM files.
+            <b>Description:</b>  Metadata information for Microbiome data submission.
         </p>
     </div>
 
@@ -41,29 +41,29 @@
         
             
 
-    <div class="accordion" id="WES_accordion">
+    <div class="accordion" id="Microbiome_accordion">
         <div class="card">
-            <div class="card-header" id="WES">
+            <div class="card-header" id="Microbiome">
                 <h2 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#WES_card" aria-expanded="false" aria-controls="WES_card">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Microbiome_card" aria-expanded="false" aria-controls="Microbiome_card">
                         Worksheet -
-                        WES
+                        Microbiome
                     </button>
                 </h2>
             </div>
-            <div id="WES_card" class="collapse" aria-labelledby="WES" data-parent="#WES_accordion">
+            <div id="Microbiome_card" class="collapse" aria-labelledby="Microbiome" data-parent="#Microbiome_accordion">
                 <div class="card-body">
                     
-                        <div class="accordion" id="WES_preamble_accordion">
+                        <div class="accordion" id="Microbiome_preamble_accordion">
                             <div class="card">
-                                <div class="card-header" id="WES_preamble">
+                                <div class="card-header" id="Microbiome_preamble">
                                     <h2 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#WES_preamble_card" aria-expanded="false" aria-controls="WES_preamble_card">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Microbiome_preamble_card" aria-expanded="false" aria-controls="Microbiome_preamble_card">
                                             Preamble Rows
                                         </button>
                                     </h2>
                                 </div>
-                                <div id="WES_preamble_card" class="collapse" aria-labelledby="WES_preamble" data-parent="#WES_preamble_accordion">
+                                <div id="Microbiome_preamble_card" class="collapse" aria-labelledby="Microbiome_preamble" data-parent="#Microbiome_preamble_accordion">
                                     <div class="card-body">
                                         
     
@@ -82,6 +82,8 @@
             <th>Data Type</th>
         </tr>
         </thead>
+        
+            
         
             
         
@@ -232,15 +234,15 @@
                 <tr>
     <td>
         
-            <span id="sequencing protocol">
-                sequencing protocol
+            <span id="batch id">
+                batch id
             </span>
             
         
     </td>
     <td width=55%>
         
-            Protocol and version used for the sequencing.
+            Microbiome batch identification number.
         
     </td>
     <td>
@@ -249,79 +251,6 @@
                 string
     
             &gt;
-            
-                <ul>
-                    
-                        <li>"Express Somatic Human WES (Deep Coverage) v1.1"</li>
-                    
-                        <li>"Somatic Human WES v6"</li>
-                    
-                        <li>"TWIST Custom Panel PN 101042"</li>
-                    
-                        <li>"TWIST"</li>
-                    
-                </ul>
-            
-            
-            
-        
-    </td>
-</tr>
-            
-        
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
-            
-                <tr>
-    <td>
-        
-            <span id="library kit">
-                library kit
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            The library construction kit.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string
-    
-            &gt;
-            
-                <ul>
-                    
-                        <li>"Hyper Prep ICE Exome Express: 1.0"</li>
-                    
-                        <li>"KAPA HyperPrep"</li>
-                    
-                        <li>"IDT duplex UMI adapters"</li>
-                    
-                        <li>"KAPA HyperPrep with IDT duplex UMI adapters"</li>
-                    
-                        <li>"TWIST"</li>
-                    
-                </ul>
             
             
             
@@ -417,34 +346,20 @@
                 <tr>
     <td>
         
-            <span id="paired end reads">
-                paired end reads
+            <span id="forward fastq">
+                forward fastq
             </span>
             
         
     </td>
     <td width=55%>
         
-            Indicates if the sequencing was performed paired or single ended.
+            Information about a Gzipped FASTQ file.
         
     </td>
     <td>
         
-            &lt; 
-                string
-    
-            &gt;
-            
-                <ul>
-                    
-                        <li>"Paired"</li>
-                    
-                        <li>"Single"</li>
-                    
-                </ul>
-            
-            
-            
+            <a href="files.fastq_gz.html">fastq.gz</a>
         
     </td>
 </tr>
@@ -472,26 +387,20 @@
                 <tr>
     <td>
         
-            <span id="read length">
-                read length
+            <span id="forward index">
+                forward index
             </span>
             
         
     </td>
     <td width=55%>
         
-            Number of cycles for each sequencing read.
+            Information about a Gzipped FASTQ file.
         
     </td>
     <td>
         
-            &lt; 
-                integer
-    
-            &gt;
-            
-            
-            
+            <a href="files.fastq_gz.html">fastq.gz</a>
         
     </td>
 </tr>
@@ -519,45 +428,109 @@
                 <tr>
     <td>
         
-            <span id="bait set">
-                bait set
+            <span id="reverse fastq">
+                reverse fastq
             </span>
             
         
     </td>
     <td width=55%>
         
-            Bait set ID.
+            Information about a Gzipped FASTQ file.
         
     </td>
     <td>
         
-            &lt; 
-                string
-    
-            &gt;
-            
-                <ul>
-                    
-                        <li>"whole_exome_illumina_coding_v1"</li>
-                    
-                        <li>"broad_custom_exome_v1"</li>
-                    
-                        <li>"TWIST Dana Farber Custom Panel"</li>
-                    
-                        <li>"TWIST Custom Panel PN 101042"</li>
-                    
-                        <li>"Agilent SS Human All Exon V4"</li>
-                    
-                </ul>
-            
-            
-            
+            <a href="files.fastq_gz.html">fastq.gz</a>
         
     </td>
 </tr>
             
         
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
+            
+                <tr>
+    <td>
+        
+            <span id="reverse index">
+                reverse index
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a Gzipped FASTQ file.
+        
+    </td>
+    <td>
+        
+            <a href="files.fastq_gz.html">fastq.gz</a>
+        
+    </td>
+</tr>
+            
+        
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
+            
+                <tr>
+    <td>
+        
+            <span id="otu table">
+                otu table
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a tab Separated file.
+        
+    </td>
+    <td>
+        
+            <a href="files.tsv.html">tsv</a>
+        
+    </td>
+</tr>
+            
+        
+        
+            
         
             
         
@@ -582,16 +555,16 @@
                         </div>
                     
                     
-                        <div class="accordion" id="WES_body_accordion">
+                        <div class="accordion" id="Microbiome_body_accordion">
                             <div class="card">
-                                <div class="card-header" id="WES_body">
+                                <div class="card-header" id="Microbiome_body">
                                     <h2 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#WES_body_card" aria-expanded="false" aria-controls="WES_body_card">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Microbiome_body_card" aria-expanded="false" aria-controls="Microbiome_body_card">
                                             Data Columns
                                         </button>
                                     </h2>
                                 </div>
-                                <div id="WES_body_card" class="collapse" aria-labelledby="WES_body" data-parent="#WES_body_accordion">
+                                <div id="Microbiome_body_card" class="collapse" aria-labelledby="Microbiome_body" data-parent="#Microbiome_body_accordion">
                                     <div class="card-body">
                                         
                                             <h5 class="text-muted">Samples</h4>
@@ -612,10 +585,6 @@
             <th>Data Type</th>
         </tr>
         </thead>
-        
-            
-        
-            
         
             
         
@@ -691,109 +660,21 @@
                 <tr>
     <td>
         
-            <span id="BAM file">
-                BAM file
+            <span id="library yield ng">
+                library yield ng
             </span>
             
         
     </td>
     <td width=55%>
         
-            A BAM file, aligned or not, which contains both pairs of sequencing libraries
-        
-    </td>
-    <td>
-        
-            <a href="files.bam.html">bam</a>
-        
-    </td>
-</tr>
-            
-        
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
-            
-                <tr>
-    <td>
-        
-            <span id="sequencing date">
-                sequencing date
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Date of sequencing.
+            Resulting yield (in ng) from library construction.
         
     </td>
     <td>
         
             &lt; 
-                string
-     :  date
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
-            
-        
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
-            
-                <tr>
-    <td>
-        
-            <span id="quality flag">
-                quality flag
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Flag used for quality.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                number
+                ['number', 'string']
     
             &gt;
             
@@ -804,10 +685,6 @@
 </tr>
             
         
-        
-            
-        
-            
         
             
         

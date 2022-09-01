@@ -30,7 +30,7 @@ def pbmc_template(pbmc_schema_path):
 
 @pytest.fixture
 def tiny_template():
-    """A small, valid """
+    """A small, valid"""
 
     test_property = {
         "$id": "test_property",

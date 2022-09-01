@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from collections import OrderedDict
+import json
 import os
 from typing import Dict, Iterable, List, Set, Tuple
 import jinja2
@@ -13,7 +14,190 @@ TEMPLATES_DIR = os.path.join(DOCS_DIR, "templates")
 HTML_DIR = os.path.join(DOCS_DIR, "docs")
 
 
-class AssaySchema:
+class Schema:
+
+    name: str
+    schema: dict
+    required: List[str]
+
+    def __init__(self, name: str, schema: dict):
+        self.name = name
+
+        # set self.schema and self.required
+        self.schema = schema
+        self.required = self.schema.get("required", [])
+        if not "properties" in self.schema:
+            self.schema["properties"] = {}
+
+        while "allOf" in self.schema:
+            for other_schema in self.schema.pop("allOf", []):
+                if "properties" in other_schema:
+                    self.schema["properties"].update(other_schema["properties"])
+                if "required" in other_schema:
+                    self.required.extend(other_schema["required"])
+                    self.required = list(set(self.required))
+
+        for prop, definition in self.schema["properties"].items():
+            if definition.get("type") == "array":
+                while "allOf" in self.schema["properties"][prop]["items"]:
+                    for other_schema in self.schema["properties"][prop]["items"].pop(
+                        "allOf", []
+                    ):
+                        if "properties" in other_schema:
+                            self.schema["properties"][prop]["items"][
+                                "properties"
+                            ].update(other_schema["properties"])
+                        if "required" in other_schema:
+                            self.schema["properties"][prop]["items"]["required"].extend(
+                                other_schema["required"]
+                            )
+                            self.schema["properties"][prop]["items"]["required"] = list(
+                                set(self.required)
+                            )
+
+    # ----- Utility Functions ----- #
+    @staticmethod
+    def _translate_merge_pointer(context: str, definition: dict):
+        context = context.rstrip("-")
+        if (
+            definition["merge_pointer"][0].isdigit()
+            and definition["merge_pointer"][0] != "0"
+        ):
+            context = "/".join(
+                context.split("/")[: -int(definition["merge_pointer"][0])]
+            )
+        return context + definition["merge_pointer"].lstrip("0")
+
+    @staticmethod
+    def _get_values(template_list: Iterable[dict]) -> Tuple[Set[str], Set[str]]:
+        """Returns the metadata and data keys given in the across all templates and worksheets"""
+        metadata_values = set()
+        data_values = set()
+        for template in template_list:
+            for sheet in template["properties"]["worksheets"].values():
+                if "preamble_rows" in sheet:
+                    for row in sheet["preamble_rows"].values():
+                        if not row.get("do_not_merge", False):
+                            metadata_values.add(row["merge_pointer"].split("/")[-1])
+                if "data_columns" in sheet:
+                    data_context = sheet["prism_data_object_pointer"]
+                    for col_group in sheet["data_columns"].values():
+                        for definition in col_group.values():
+                            if "merge_pointer" in definition:
+                                data_values.add(
+                                    Schema._translate_merge_pointer(
+                                        data_context, definition
+                                    )
+                                )
+                            if "process_as" in definition:
+                                for process in definition["process_as"]:
+                                    data_values.add(
+                                        Schema._translate_merge_pointer(
+                                            data_context, process
+                                        )
+                                    )
+
+        return metadata_values, data_values
+
+    @staticmethod
+    def _handle(v: dict) -> dict:
+        """Handles urls in loading the subschema and default descriptions for type=array"""
+        # don't translate artifact urls into a schema
+        if "type" not in v and "url" in v and "artifacts" not in v["url"]:
+            schema_path = (
+                v["url"].replace(".", "/").replace("/html", ".json").split("#")[0]
+            )
+            merge_pointer = v["url"].split("#")[-1] if v["url"].count("#") else ""
+            schema = _load_schema(SCHEMA_DIR, schema_path)
+
+            # save the highest description to use
+            description: str = v.get("description", "")
+            # definitions first because properties can point here
+            if merge_pointer in schema.get("definitions", {}):
+                v.update(schema["definitions"][merge_pointer])
+            elif merge_pointer in schema.get("properties", {}):
+                v.update(schema["properties"][merge_pointer])
+            else:
+                v.update(schema)
+
+            # include any lower ones too
+            # eg ihc > antibody > antibody
+            if "properties" in v:
+                v.update(Schema._handle(v["properties"]))
+                v.update({"_nested": True})
+
+            if description:
+                v["description"] = description
+
+        # if not elif as url can be an array itself
+        if v.get("type") == "array":
+            return Schema._handle_array(v)
+
+        return v
+
+    @staticmethod
+    def _handle_array(v: dict) -> dict:
+        """Handles schemas where type=array to translate items url and add a default description"""
+        if "description" not in v:
+            v["description"] = v["items"].get("description", "")
+        return Schema._handle(v["items"])
+
+    @staticmethod
+    def _handle_process_as(
+        prop_name: str, prop_schema: dict, data_pointer: str, assay_schema: dict
+    ) -> Tuple[str, dict]:
+        if "merge_pointer" in prop_schema:
+            merge_pointer = prop_schema["merge_pointer"].replace("/-", "")
+        else:
+            merge_pointer = ""
+        levels = merge_pointer.split("/")
+        if levels[0].isdigit() and int(levels[0]):
+            levels = data_pointer.split("/")[: -int(levels[0])] + levels[1:]
+        else:
+            levels = data_pointer.split("/") + levels[:]
+        levels = [l for l in levels if l and l != "-" and not l.isdigit()]
+
+        return_name: str = levels[-1]
+
+        # prop_required: bool = prop_name in required
+        if (
+            not prop_schema.get("type_ref")
+            or prop_schema.get("do_not_merge", False)
+            or len(levels) == 0
+        ):
+            return {return_name: prop_schema}
+        else:
+            context = {levels[0]: {}}
+            if levels[0] in assay_schema.assay_data:
+                context[levels[0]].update(assay_schema.assay_data[levels[0]].copy())
+            if levels[0] in assay_schema.analysis_data:
+                context[levels[0]].update(assay_schema.analysis_data[levels[0]].copy())
+
+            if not len(context[levels[0]]):
+                raise Exception(
+                    f"Cannot find {levels[0]} in {assay_schema.name}'s AssaySchema for {prop_name}."
+                )
+
+            while len(levels) and levels[0] in context:
+                next_level = levels.pop(0)
+                context = context[next_level]
+
+            if len(levels):
+                raise Exception(
+                    f"Cannot find {levels} in {assay_schema.name}'s AssaySchema after descending for {prop_name}."
+                )
+
+            if "parse_through" in prop_schema:
+                context["relative_file_path"] = prop_schema["parse_through"].split("'")[
+                    1
+                ]
+            else:
+                context["relative_file_path"] = prop_name
+
+            return {return_name: context}
+
+
+class AssaySchema(Schema):
     """
     Generates a structure for the jinja templates to turn into assay documentation.
     Also keeps the templates associated so they can be documented too.
@@ -42,93 +226,28 @@ class AssaySchema:
         assays: Dict[str, dict],
         analyses: Dict[str, dict],
     ):
-        self.name = name
+        super().__init__(name=name, schema=schema)
+
         self.assays = assays
         self.analyses = analyses
 
-        # set self.schema and self.required
-        self.init_schema(schema)
         # set self.[required_]assay_[meta]data
         self.process_assays()
         # set self.[required_]analysis_[meta]data
         self.process_analyses()
 
     # ----- Utility Functions ----- #
-    @staticmethod
-    def _translate_merge_pointer(context: str, definition: dict):
-        context = context.rstrip("-")
-        if (
-            definition["merge_pointer"][0].isdigit()
-            and definition["merge_pointer"][0] != "0"
-        ):
-            context = "/".join(
-                context.split("/")[: -int(definition["merge_pointer"][0])]
-            )
-        return context + definition["merge_pointer"]
-
-    @staticmethod
-    def _get_values(template_list: Iterable[dict],) -> Tuple[Set[str], Set[str]]:
-        """Returns the metadata and data keys given in the across all templates and worksheets"""
-        metadata_values = set()
-        data_values = set()
-        for template in template_list:
-            for sheet in template["properties"]["worksheets"].values():
-                if "preamble_rows" in sheet:
-                    for row in sheet["preamble_rows"].values():
-                        if not row.get("do_not_merge", False):
-                            metadata_values.add(row["merge_pointer"].split("/")[-1])
-                if "data_columns" in sheet:
-                    data_context = sheet["prism_data_object_pointer"]
-                    for col_group in sheet["data_columns"].values():
-                        for definition in col_group.values():
-                            if "merge_pointer" in definition:
-                                data_values.add(
-                                    AssaySchema._translate_merge_pointer(
-                                        data_context, definition
-                                    )
-                                )
-                            if "process_as" in definition:
-                                for process in definition["process_as"]:
-                                    data_values.add(
-                                        AssaySchema._translate_merge_pointer(
-                                            data_context, process
-                                        )
-                                    )
-        return metadata_values, data_values
-
-    @staticmethod
-    def _process(v: dict) -> dict:
-        """Handles urls in loading the subschema and default descriptions for type=array"""
-        # don't translate artifact urls into a schema
-        if "type" not in v and "url" in v and "artifacts" not in v["url"]:
-            schema_path = (
-                v["url"].replace(".", "/").replace("/html", ".json").split("#")[0]
-            )
-            merge_pointer = v["url"].split("#")[-1] if v["url"].count("#") else ""
-            schema = _load_schema(SCHEMA_DIR, schema_path)
-
-            # definitions first because properties can point here
-            if merge_pointer in schema.get("definitions", {}):
-                v.update(schema["definitions"][merge_pointer])
-            elif merge_pointer in schema.get("properties", {}):
-                v.update(schema["properties"][merge_pointer])
-            else:
-                v.update(schema)
-
-        # if not elif as url can be an array itself
-        if v.get("type") == "array":
-            AssaySchema._process_array(v)
-
-        return v
-
-    def _process_array(v: dict) -> None:
-        """Handles schemas where type=array to translate items url and add a default description"""
-        if "description" not in v:
-            v["description"] = v["items"].get("description", "")
-        AssaySchema._process(v["items"])
-
     def _process_data(self, data_values: Set[str]) -> Dict[str, dict]:
-        """Given the set of translated merge_pointers, return the definitions for the fields they point to"""
+        """
+        Given the set of translated merge_pointers, return the definitions for the fields they point to
+        Group data as hierarchical properties
+        """
+
+        def nested_set(dic, keys, value):
+            for key in keys[:-1]:
+                dic = dic.setdefault(key, {"_nested": True})
+            dic[keys[-1]] = value
+
         data = {}
         if len(data_values):
             for k in sorted(data_values):
@@ -161,12 +280,13 @@ class AssaySchema:
                                 root = root["properties"]
                             else:  # "url" in root:
                                 # updates in place
-                                self._process(root)
+                                self._handle(root)
 
                 if k.endswith("-"):
                     # updates in place
-                    self._process(root)
+                    self._handle(root)
 
+                    # make sure we're all the way at the bottom
                     if "properties" in root:
                         root = root["properties"]
                     if root.get("type", "") == "array" and "description" not in root:
@@ -174,56 +294,40 @@ class AssaySchema:
 
                 root["required"] = required
                 levels[0] = levels[0].replace(self.name, "").strip("_")
-                key = " > ".join(levels)
-                data[key] = root
 
-            level0 = levels[0].replace(self.name, "").strip("_")
-            if all(key.startswith(level0) for key in data.keys()):
-                data = {k.split(" > ")[-1]: v for k, v in data.items()}
+                nested_set(data, levels, root)
 
         return data
 
+    @staticmethod
+    def _handle_process_metadata(
+        metadata_values: Set[str], items: Iterable[Tuple[str, dict]]
+    ):
+        def inner(context: Iterable[Tuple[str, dict]]) -> dict:
+            return {
+                k: Schema._handle(v.copy())
+                for k, v in sorted(context, key=lambda x: x[0])
+            }
+
+        ret = inner(items)
+        for k, v in items:
+            if "url" in v:
+                v = Schema._handle(v)
+            if "properties" in v:
+                ret[k] = inner(v["properties"].items())
+                ret[k].update({"_nested": True})
+        return ret
+
     def _process_metadata(self, metadata_values: Set[str]) -> Tuple[dict, List[str]]:
         """Given the set of translated merge_pointers, return the definitions for the fields they point to"""
-        return {
-            k: self._process(v.copy())
-            for k, v in sorted(self.root.items(), key=lambda x: x[0])
-            if k in metadata_values
-        }
+        items = (
+            list(self.schema.get("properties", {}).items())
+            + list(self.schema.get("definitions", {}).items())
+            + list(self.root.items())
+        )
+        return self._handle_process_metadata(metadata_values, items)
 
     # ----- Business Functions ----- #
-    def init_schema(self, schema) -> None:
-        self.schema = schema
-        self.required = self.schema.get("required", [])
-        if not "properties" in self.schema:
-            self.schema["properties"] = {}
-
-        while "allOf" in self.schema:
-            for other_schema in self.schema.pop("allOf", []):
-                if "properties" in other_schema:
-                    self.schema["properties"].update(other_schema["properties"])
-                if "required" in other_schema:
-                    self.required.extend(other_schema["required"])
-                    self.required = list(set(self.required))
-
-        for prop, definition in self.schema["properties"].items():
-            if definition.get("type") == "array":
-                while "allOf" in self.schema["properties"][prop]["items"]:
-                    for other_schema in self.schema["properties"][prop]["items"].pop(
-                        "allOf", []
-                    ):
-                        if "properties" in other_schema:
-                            self.schema["properties"][prop]["items"][
-                                "properties"
-                            ].update(other_schema["properties"])
-                        if "required" in other_schema:
-                            self.schema["properties"][prop]["items"]["required"].extend(
-                                other_schema["required"]
-                            )
-                            self.schema["properties"][prop]["items"]["required"] = list(
-                                set(self.required)
-                            )
-
     def process_assays(self) -> None:
         if self.name == "rna":
             version_schema = load_schemas(
@@ -251,7 +355,7 @@ class AssaySchema:
         self.required_assay_data = [
             prop
             for prop, definition in self.assay_data.items()
-            if definition["required"]
+            if definition.get("required")
         ]
 
     def process_analyses(self) -> None:
@@ -259,7 +363,11 @@ class AssaySchema:
             if self.name in ("atacseq", "rna"):
                 version_schema = load_schemas(
                     schema_dir=os.path.join(
-                        SCHEMA_DIR, "assays", "components", "ngs", self.name,
+                        SCHEMA_DIR,
+                        "assays",
+                        "components",
+                        "ngs",
+                        self.name,
                     ),
                     recursive=False,
                     as_html=False,
@@ -301,8 +409,234 @@ class AssaySchema:
         self.required_analysis_data = [
             prop
             for prop, definition in self.analysis_data.items()
-            if definition["required"]
+            if definition.get("required")
         ]
+
+
+class TemplateSchema(Schema):
+    """
+    Generates a structure for the jinja templates to turn into template documentation.
+    Specifically handles process_as files and descriptions.
+    """
+
+    name: str
+    schema: dict
+    assay_schema: AssaySchema
+    root: dict
+    required: List[str]
+    file_list: List[dict]
+
+    def __init__(self, name: str, schema: dict, assay_schema: AssaySchema) -> None:
+        super().__init__(name=name, schema=schema)
+        self.assay_schema = assay_schema
+
+        protocol_identifier_schema = _load_schema(
+            "", "clinical_trial.json", as_html=False
+        )["properties"]["protocol_identifier"]
+
+        # required: List[str] = self.schema["required"]
+        for worksheet_name, worksheet_schema in self.schema["properties"][
+            "worksheets"
+        ].items():
+            updates: dict = {}
+            preamble_schema: dict = worksheet_schema.get("preamble_rows", {})
+            for prop_name, prop_schema in preamble_schema.items():
+                data_pointer: str = (
+                    "/".join(
+                        [
+                            self.schema.get("prism_template_root_object_pointer", ""),
+                            worksheet_schema.get("prism_preamble_object_pointer", ""),
+                        ]
+                    )
+                    .replace("//", "/")
+                    .lstrip("/")
+                )
+                if isinstance(self.assay_schema, AssaySchema):
+                    for prefix in ["assays", "analysis"]:
+                        data_pointer = data_pointer.replace(
+                            f"{prefix}/{self.assay_schema.name}/",
+                            "",
+                        ).replace(f"analysis/{self.assay_schema.name}_analysis/", "")
+                    if self.assay_schema.name == "clinical":
+                        data_pointer = data_pointer.replace("clinical_data", "")
+                    elif self.assay_schema.name == "misc":
+                        data_pointer = data_pointer.replace(
+                            "assays/misc_data", ""
+                        ).strip("/")
+                    elif self.assay_schema.name == "olink":
+                        data_pointer = data_pointer.replace("batches/", "")
+                    elif self.assay_schema.name == "tcr":
+                        data_pointer = data_pointer.replace(
+                            "analysis/tcr_analysis/", ""
+                        ).replace("batches/", "")
+                    elif self.assay_schema.name == "cytof":
+                        data_pointer = data_pointer.replace(
+                            "cytof_antibodies", "antibodies"
+                        )
+                    elif self.assay_schema.name == "wes":
+                        data_pointer = data_pointer.replace(
+                            "analysis/wes_tumor_only_analysis/", ""
+                        )
+
+                if "merge_pointer" in prop_schema and prop_schema[
+                    "merge_pointer"
+                ].endswith("protocol_identifier"):
+                    updates[prop_name] = protocol_identifier_schema.copy()
+
+                elif "merge_pointer" in prop_schema:
+                    merge_pointer = prop_schema["merge_pointer"].replace("/-", "")
+
+                    levels = merge_pointer.split("/")
+                    if levels[0].isdigit() and int(levels[0]):
+                        levels = data_pointer.split("/")[: -int(levels[0])] + levels[1:]
+                    else:
+                        levels = data_pointer.split("/") + levels
+                    levels = [l for l in levels if l and l != "-" and not l.isdigit()]
+
+                    if (
+                        prop_schema.get("type_ref")
+                        and not prop_schema.get("do_not_merge", False)
+                        and len(levels)
+                    ):
+                        context = {levels[0]: {}}
+                        if levels[0] in self.assay_schema.assay_metadata:
+                            context[levels[0]].update(
+                                self.assay_schema.assay_metadata[levels[0]].copy()
+                            )
+                        if levels[0] in self.assay_schema.analysis_metadata:
+                            context[levels[0]].update(
+                                self.assay_schema.analysis_metadata[levels[0]].copy()
+                            )
+
+                        if not len(context[levels[0]]):
+                            raise Exception(
+                                f"Cannot find {levels[0]} in {self.assay_schema.name}'s AssaySchema for {prop_name}."
+                            )
+                    else:
+                        context = {}
+
+                    while len(levels) and levels[0] in context:
+                        next_level = levels.pop(0)
+                        context = context[next_level]
+
+                    if len(levels):
+                        raise Exception(
+                            f"Cannot find {levels} in {self.assay_schema.name}'s AssaySchema after descending for {prop_name}."
+                        )
+
+                    updates[prop_name] = prop_schema.copy()
+                    updates[prop_name].update(context)
+
+            if len(updates):
+                self.schema["properties"]["worksheets"][worksheet_name][
+                    "preamble_rows"
+                ].update(updates)
+
+            # macros.properties_table(data)
+            data_pointer: str = (
+                "/".join(
+                    [
+                        self.schema.get("prism_template_root_object_pointer", ""),
+                        worksheet_schema.get("prism_data_object_pointer", ""),
+                    ]
+                )
+                .replace("//", "/")
+                .lstrip("/")
+            )
+
+            if isinstance(self.assay_schema, AssaySchema):
+                for prefix in ["assays", "analysis"]:
+                    data_pointer = data_pointer.replace(
+                        f"{prefix}/{self.assay_schema.name}/",
+                        "",
+                    ).replace(f"analysis/{self.assay_schema.name}_analysis/", "")
+                if self.assay_schema.name == "olink":
+                    data_pointer = data_pointer.replace("batches/", "")
+                elif self.assay_schema.name == "tcr":
+                    data_pointer = data_pointer.replace(
+                        "analysis/tcr_analysis/", ""
+                    ).replace("batches/", "")
+                elif self.assay_schema.name == "cytof":
+                    data_pointer = data_pointer.replace(
+                        "cytof_antibodies", "antibodies"
+                    )
+                elif self.assay_schema.name == "wes":
+                    data_pointer = data_pointer.replace(
+                        "analysis/wes_tumor_only_analysis/", ""
+                    )
+
+            for table_name, table_schema in worksheet_schema.get(
+                "data_columns", {}
+            ).items():
+                # macros.properties_table(table_schema, required)
+                updates: dict = {}
+                # also table_schema["properties"].items()
+                # but none for templates
+                for prop_name, prop_schema in table_schema.items():
+                    if "merge_pointer" in prop_schema:
+                        merge_pointer = prop_schema["merge_pointer"].replace("/-", "")
+                        levels = merge_pointer.split("/")
+                        if levels[0].isdigit() and int(levels[0]):
+                            levels = (
+                                data_pointer.split("/")[: -int(levels[0])] + levels[1:]
+                            )
+                        else:
+                            levels = data_pointer.split("/") + levels
+                        levels = [
+                            l for l in levels if l and l != "-" and not l.isdigit()
+                        ]
+
+                        # prop_required: bool = prop_name in required
+                        if (
+                            prop_schema.get("type_ref")
+                            and not prop_schema.get("do_not_merge", False)
+                            and len(levels)
+                        ):
+                            context = {levels[0]: {}}
+                            if levels[0] in self.assay_schema.assay_data:
+                                context[levels[0]].update(
+                                    self.assay_schema.assay_data[levels[0]].copy()
+                                )
+                            if levels[0] in self.assay_schema.analysis_data:
+                                context[levels[0]].update(
+                                    self.assay_schema.analysis_data[levels[0]].copy()
+                                )
+
+                            if not len(context[levels[0]]):
+                                raise Exception(
+                                    f"Cannot find {levels[0]} in {self.assay_schema.name}'s AssaySchema for {prop_name}."
+                                )
+                        else:
+                            context = {}
+
+                        while len(levels) and levels[0] in context:
+                            next_level = levels.pop(0)
+                            context = context[next_level]
+
+                        if len(levels):
+                            raise Exception(
+                                f"Cannot find {levels} in {self.assay_schema.name}'s AssaySchema after descending for {prop_name}."
+                            )
+
+                        updates[prop_name] = prop_schema.copy()
+                        updates[prop_name].update(context)
+
+                    if "process_as" in prop_schema:
+                        process_as = {}
+
+                        updates[prop_name] = prop_schema.copy()
+                        for entry in prop_schema["process_as"]:
+                            process_as.update(
+                                self._handle_process_as(
+                                    prop_name, entry, data_pointer, assay_schema
+                                )
+                            )
+                        updates[prop_name]["process_as"] = process_as
+
+                if len(updates):
+                    self.schema["properties"]["worksheets"][worksheet_name][
+                        "data_columns"
+                    ][table_name].update(updates)
 
 
 # ----- Utility Functions ----- #
@@ -352,6 +686,11 @@ def _make_file(
             full_json_str="",
         )
     except Exception as e:
+        if isinstance(schema, Schema):
+            json.dump(schema.schema, open("problem_schema.json", "w"))
+        else:
+            json.dump(schema, open("problem_schema.json", "w"))
+
         raise Exception(f"Error rendering template documentation for {name}") from e
 
     else:
@@ -391,9 +730,10 @@ def load_schemas(
 
 
 # ----- Schemas Loaders ----- #
-def load_artifact_schemas() -> Dict[str, Dict[str, dict]]:
+def load_files_schemas() -> Dict[str, Dict[str, dict]]:
     ret = load_schemas(schema_dir=os.path.join(SCHEMA_DIR, "artifacts"))[""]
-    return {"artifacts": ret}
+    ret = {k.replace("artifact_", ""): v for k, v in ret.items()}
+    return {"files": ret}
 
 
 def load_assay_schemas() -> Dict[str, Dict[str, dict]]:
@@ -459,8 +799,14 @@ def load_manifest_schemas() -> Dict[str, Dict[str, dict]]:
     ret = load_schemas(schema_dir=os.path.join(SCHEMA_DIR, "templates", "manifests"))[
         ""
     ]
-    # as keys are in relation to schema_dir, add a key before returning
-    return {"manifests": ret}
+    clinical_trial_schema = _load_dont_validate_schema("clinical_trial.json")
+    return {
+        # # as keys are in relation to schema_dir, add a key before returning
+        # "manifests": {
+        #     k: TemplateSchema(name=k, schema=v, assay_schema=clinical_trial_schema)
+        #     for k, v in ret.items()
+        # }
+    }
 
 
 def load_toplevel_schemas(
@@ -472,7 +818,7 @@ def load_toplevel_schemas(
     """
     # only get the first level of schemas, with key == ""
     ret = load_schemas(schema_dir=SCHEMA_DIR, recursive=False)
-    # only keep the ones we've specified
+    # only keep the ones we"ve specified
     ret[""] = {k: v for k, v in ret[""].items() if k in keys}
     return ret
 
@@ -489,10 +835,6 @@ def generate_docs(out_directory: str = HTML_DIR):
 
     templateLoader = jinja2.FileSystemLoader(TEMPLATES_DIR)
     templateEnv = jinja2.Environment(loader=templateLoader)
-
-    # Use this in docs templates to print out variable values, e.g.
-    # {{ some_variable | print }}
-    templateEnv.filters["print"] = lambda arg: print(arg)
 
     # Generate index template
     schemas_groups = OrderedDict()
@@ -527,18 +869,24 @@ def generate_docs(out_directory: str = HTML_DIR):
     for assay_name, assay_schema in schemas_groups["assays"].items():
         scope = f"assays.{assay_name}"
 
-        for upload_name, upload_schema in assay_schema.assays.items():
+        for upload_name, upload_schema in list(assay_schema.assays.items()) + list(
+            assay_schema.analyses.items()
+        ):
             _make_file(
-                template_template, out_directory, scope, upload_name, upload_schema
-            )
-        for upload_name, upload_schema in assay_schema.analyses.items():
-            _make_file(
-                template_template, out_directory, scope, upload_name, upload_schema
+                template_template,
+                out_directory,
+                scope,
+                upload_name,
+                TemplateSchema(
+                    name=upload_name,
+                    schema=upload_schema,
+                    assay_schema=assay_schema,
+                ),
             )
 
     # Generate templates for each artifact
-    for scope, artifact_schemas in load_artifact_schemas().items():
-        for name, schema in artifact_schemas.items():
+    for scope, file_schemas in load_files_schemas().items():
+        for name, schema in file_schemas.items():
             _make_file(entity_template, out_directory, scope, name, schema)
 
 

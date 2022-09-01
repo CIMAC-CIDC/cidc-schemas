@@ -88,7 +88,7 @@
     <td>
         
             &lt; 
-                string 
+                string
     
             &gt;
             
@@ -113,6 +113,75 @@
 </tr>
             
         
+            
+        
+            
+        
+        
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
+            
+        
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
+            
+        
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
+            
+        
+        
+            
+        
+            
         
             
         
@@ -152,62 +221,189 @@
         
             
         
+        
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
         
         
+            
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+            
+                <div class="card">
+                    <div class="card-header" id="analysis_metadata">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analysis_metadata_card" aria-expanded="false" aria-controls="analysis_metadata_card">
+                                Analysis Metadata
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="analysis_metadata_card" class="collapse" aria-labelledby="analysis_metadata" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+        
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
                 <tr>
     <td>
         
-            <span id="clinical_file">
-                clinical_file
+            <span id="assay_creator">
+                assay_creator
             </span>
             
         
     </td>
     <td width=55%>
         
-            A non-harmonized clinical data file.
+            Indicates what site is filling out the assay.
         
     </td>
     <td>
         
             &lt; 
-                any of
+                string
+    
             &gt;
-            <ul>
             
-                <li><a href="artifacts.artifact_clinical_xlsx.html">artifacts.artifact_clinical_xlsx</a></li>
+                <ul>
+                    
+                        <li>"DFCI"</li>
+                    
+                        <li>"Mount Sinai"</li>
+                    
+                        <li>"Stanford"</li>
+                    
+                        <li>"MD Anderson"</li>
+                    
+                        <li>"Adaptive"</li>
+                    
+                </ul>
             
-                <li><a href="artifacts.artifact_clinical_csv.html">artifacts.artifact_clinical_csv</a></li>
             
-                <li><a href="artifacts.artifact_clinical_docx.html">artifacts.artifact_clinical_docx</a></li>
             
-            </ul>
         
     </td>
 </tr>
             
         
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
+            
+        
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
                 <tr>
     <td>
         
-            <span id="comment">
-                comment
+            <span id="records">
+                records
             </span>
             
         
     </td>
     <td width=55%>
         
-            A text comment regarding this file.
+            A single data record from Clinical Data assay.
         
     </td>
     <td>
         
             &lt; 
-                string 
+                object
     
             &gt;
             
@@ -218,11 +414,17 @@
 </tr>
             
         
+        
+            
+        
+            
+        
+            
+        
     </table>
                         </div>
                     </div>
                 </div>
-            
             
             
 

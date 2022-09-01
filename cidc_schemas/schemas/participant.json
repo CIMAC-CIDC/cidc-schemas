@@ -2,7 +2,10 @@
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "participant",
   "title": "Participant",
+
+	"$comment": "description used in docs/index.html and docs/participant.html",
   "description": "The collection of all data related to a specific participant in the context of a specific clinical trial.\n",
+  
   "additionalProperties": false,
   "type": "object",
   "properties": {

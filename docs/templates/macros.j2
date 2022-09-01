@@ -6,7 +6,7 @@
         </p>
         <h1>{{ schema["title"] }}</h1>
         <p>
-            <b>Description:</b>  {{ schema["description"] }}
+            <b>Description:</b>  {{ schema["description"].replace("/n", "<br>") }}
         </p>
     </div>
 {%- endmacro %}
@@ -22,7 +22,7 @@
         {% for entity_name, entity_schema in templates.items() %}
             <tr>
                 <td width=25%><a href='{{ scope }}.{{ name }}.{{ entity_name }}.html'>{{ entity_schema["title"] }}</a></td>
-                <td>{{ entity_schema["description"] }}</td>
+                <td>{{ entity_schema["description"].replace("/n", "<br>") }}</td>
             </tr>
         {% endfor %}
     </table>
@@ -49,16 +49,133 @@
         </tr>
         </thead>
         {% for prop_name, prop_schema in properties %}
-            {% if prop_name in required or prop_name == "$ref" %}
+            {% if prop_name in required %}
                 {{ property_table_row(prop_name, prop_schema, True) }}
             {% endif %}
         {% endfor %}
         {% for prop_name, prop_schema in properties %}
-            {% if prop_name not in required and prop_name != "$ref" %}
+
+            {# -- Structured version of conditional below -- #}
+                {# prop_name not in required #}
+                {# and #}
+                {# ( #}
+                    {# prop_schema is not mapping #}
+                    {# or #}
+                    {# ( #}
+                        {# "process_as" not in prop_schema #}
+                        {# and  #}
+                        {# ( #}
+                            {# "_nested" in not prop_schema #}
+                            {# or #}
+                            {# not prop_schema.pop("_nested") #}
+                        {# ) #}
+                    {# ) #}
+                {# ) #}
+
+            {% if prop_name not in required and (prop_schema is not mapping or ("process_as" not in prop_schema and ("_nested" not in prop_schema or not prop_schema.pop("_nested")))) %}
                 {{ property_table_row(prop_name, prop_schema, False) }}
             {% endif %}
         {% endfor %}
+        {% for prop_name, prop_schema in properties %}
+            {% if prop_schema is mapping and "_nested" in prop_schema and prop_schema.pop("_nested") %}
+                {{ nested_properties_table(prop_name, prop_schema, required) }}
+            {% elif prop_schema is mapping and "process_as" in prop_schema %}
+                {{ nested_process_as_table(prop_name, prop_schema) }}
+            {% endif %}
+        {% endfor %}
     </table>
+{%- endmacro %}
+
+{% macro process_as_table(prop_schema) -%}
+{# converted to dict {filename: definition} in generate_docs #}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>File name</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        {% for _, prop_schema in prop_schema["process_as"].items() %}
+            <tr>
+                <td>{{ prop_schema["relative_file_path"] }}</td>
+                <td width=55%>
+                    {% if "description" in prop_schema and prop_schema["description"] %}
+                        {{ prop_schema["description"].replace("/n", "<br>") }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if "url" in prop_schema %}
+                        <a href="{{ prop_schema['url'].replace('artifacts.artifact_', 'files.') }}">{{ prop_schema['url'].replace('artifacts.artifact_', '').replace('.html', '').replace("_",".") }}</a>
+                    {% elif "type" in prop_schema %}
+                        &lt; 
+                            {{ prop_type_format(prop_schema) }}
+                        &gt;
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{%- endmacro %}
+
+{%  macro nested_process_as_table(prop_name, prop_schema) -%}
+<tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="{{ prop_name.replace(' ', '_') }}_accordion">
+            <div class="card">
+                <div class="card-header" id="{{ prop_name.replace(' ', '_') }}">
+                    <div class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ prop_name.replace(' ', '_') }}_card" aria-expanded="false" aria-controls="{{ prop_name.replace(' ', '_') }}_card">
+                            {{ prop_name }}
+                        </button>
+                        <div style="float: right;">
+                            &lt; 
+                                {{ prop_type_format(prop_schema) }}
+                            &gt;
+                        </div>
+                    </div>
+                </div>
+                <div id="{{ prop_name.replace(' ', '_') }}_card" class="collapse" aria-labelledby="{{ prop_name.replace(' ', '_') }}">
+                    <div class="card-body">
+                        {% if "description" in prop_schema %}
+                            {{ prop_schema["description"].replace("/n", "<br>") }}
+                        {% endif %}
+                        <br>
+                        {{ process_as_table(prop_schema) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+
+{%- endmacro %}
+
+{% macro nested_properties_table(prop_name, prop_schema, required) -%}
+<tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="{{ prop_name }}_accordion">
+            <div class="card">
+                <div class="card-header" id="{{ prop_name }}">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ prop_name }}_card" aria-expanded="false" aria-controls="{{ prop_name }}_card">
+                            {{ prop_name }}
+                        </button>
+                    </h2>
+                </div>
+                <div id="{{ prop_name }}_card" class="collapse" aria-labelledby="{{ prop_name }}">
+                    <div class="card-body">
+                        {% if "description" in prop_schema %}
+                            {{ prop_schema["description"].replace("/n", "<br>") }}
+                        {% endif %}
+                        <br>
+                        {{ properties_table(prop_schema, required) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
 {%- endmacro %}
 
 {% macro property_table_row(prop_name, prop_schema, required) -%}
@@ -74,10 +191,8 @@
         {% endif %}
     </td>
     <td width=55%>
-        {% if "description" in prop_schema %}
-            {{ prop_schema["description"] }}
-        {% else %}
-            {{ prop_schema }}
+        {% if "description" in prop_schema and prop_schema["description"] %}
+            {{ prop_schema["description"].replace("/n", "<br>") }}
         {% endif %}
     </td>
     <td>
@@ -104,7 +219,7 @@
         {% elif "const" in prop_schema %}
             &lt; const: <strong>{{ prop_schema["const"] }}</strong> &gt;            
         {% elif "url" in prop_schema %}
-            <a href="{{ prop_schema['url'] }}">{{ prop_schema['url'].replace('.html', '') }}</a>
+            <a href="{{ prop_schema['url'].replace('artifacts.artifact_', 'files.') }}">{{ prop_schema['url'].replace('artifacts.artifact_', '').replace('.html', '').replace("_",".") }}</a>
         {% elif "type_ref" in prop_schema %} {# means we're in _template.json #}
             <a href="{{ prop_schema['type_ref'].replace('.json', '.html').replace('/', '.') }} }}">{{ prop_schema['type_ref'].replace('.json', '') }}</a>
         {% elif "anyOf" in prop_schema %}
@@ -116,8 +231,6 @@
                 <li><a href="{{ref['url']}}">{{ref['url'].replace('.html', '')}}</a></li>
             {% endfor %}
             </ul>
-        {% elif "comment" in prop_schema %}
-            ({{ prop_schema["comment"] }})
         {% else %}
             (UNKNOWN PROPERTY TYPE)
             {{ prop_schema }}
@@ -127,7 +240,7 @@
 {%- endmacro %}
 
 {% macro prop_type_format(prop_schema) -%}
-    {{ prop_schema["type"]}} 
+    {{ prop_schema["type"]}}
     {% if "format" in prop_schema %} :  {{prop_schema["format"]}}{% endif %}
 {%- endmacro %}
 

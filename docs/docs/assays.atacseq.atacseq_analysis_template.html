@@ -92,6 +92,24 @@
             
         
         
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
                 <tr>
     <td>
@@ -109,12 +127,36 @@
     </td>
     <td>
         
-            <a href="clinical_trial.html#protocol_identifier">clinical_trial#protocol_identifier</a>
+            &lt; 
+                string
+    
+            &gt;
+            
+            
+            
         
     </td>
 </tr>
             
         
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
                 <tr>
     <td>
@@ -127,13 +169,11 @@
     </td>
     <td width=55%>
         
-            {'do_not_merge': True, 'type': 'string', 'allow_empty': True}
-        
     </td>
     <td>
         
             &lt; 
-                string 
+                string
     
             &gt;
             
@@ -144,6 +184,24 @@
 </tr>
             
         
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
                 <tr>
     <td>
@@ -161,12 +219,36 @@
     </td>
     <td>
         
-            <a href="assays.atacseq_assay.html#batch_id">assays.atacseq_assay#batch_id</a>
+            &lt; 
+                string
+    
+            &gt;
+            
+            
+            
         
     </td>
 </tr>
             
         
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
                 <tr>
     <td>
@@ -179,15 +261,24 @@
     </td>
     <td width=55%>
         
-            Path to a file on a user's computer.
+            Information about a ZIP file.
         
     </td>
     <td>
         
-            <a href="assays.components.local_file.html#file_path">assays.components.local_file#file_path</a>
+            <a href="files.zip.html">zip</a>
         
     </td>
 </tr>
+            
+        
+        
+            
+        
+            
+        
+            
+        
             
         
     </table>
@@ -233,29 +324,44 @@
             
         
         
+
             
-                <tr>
-    <td>
-        
-            <span id="cimac id">
-                cimac id
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
-        
-    </td>
-    <td>
-        
-            <a href="sample.html#cimac_id">sample#cimac_id</a>
-        
-    </td>
-</tr>
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
         
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
                 <tr>
     <td>
@@ -273,10 +379,132 @@
     </td>
     <td>
         
-            <a href="assays.components.ngs.atacseq.atacseq_analysis.html#entry.comments">assays.components.ngs.atacseq.atacseq_analysis#entry.comments</a>
+            &lt; 
+                string
+    
+            &gt;
+            
+            
+            
         
     </td>
 </tr>
+            
+        
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="cimac_id_accordion">
+            <div class="card">
+                <div class="card-header" id="cimac_id">
+                    <div class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#cimac_id_card" aria-expanded="false" aria-controls="cimac_id_card">
+                            cimac id
+                        </button>
+                        <div style="float: right;">
+                            &lt; 
+                                
+    
+                            &gt;
+                        </div>
+                    </div>
+                </div>
+                <div id="cimac_id_card" class="collapse" aria-labelledby="cimac_id">
+                    <div class="card-body">
+                        
+                            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+                        
+                        <br>
+                        
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>File name</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td>{folder or ""}analysis/peaks/{id}.rep1/{id}.rep1_sorted_peaks.bed</td>
+                <td width=55%>
+                    
+                        Information about a BED file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.bed.html">bed</a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>{folder or ""}analysis/peaks/{id}.rep1/{id}.rep1_sorted_summits.bed</td>
+                <td width=55%>
+                    
+                        Information about a BED file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.bed.html">bed</a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>{folder or ""}analysis/peaks/{id}.rep1/{id}.rep1_sorted_peaks.narrowPeak</td>
+                <td width=55%>
+                    
+                        Information about a narrowPeak file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.narrowPeak.html">narrowPeak</a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>{folder or ""}analysis/peaks/{id}.rep1/{id}.rep1_treat_pileup.bw</td>
+                <td width=55%>
+                    
+                        Information about a BIGWIG file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.bigwig.html">bigwig</a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>{folder or ""}analysis/align/{id}/{id}.sorted.bam</td>
+                <td width=55%>
+                    
+                        Information about a BAM file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.bam.html">bam</a>
+                    
+                </td>
+            </tr>
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
             
         
     </table>
@@ -343,6 +571,24 @@
             
         
         
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
                 <tr>
     <td>
@@ -360,12 +606,36 @@
     </td>
     <td>
         
-            <a href="sample.html#cimac_id">sample#cimac_id</a>
+            &lt; 
+                string
+    
+            &gt;
+            
+            
+             as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code> 
         
     </td>
 </tr>
             
         
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
                 <tr>
     <td>
@@ -383,10 +653,21 @@
     </td>
     <td>
         
-            <a href="assays.components.excluded_samples.html#items.reason_excluded">assays.components.excluded_samples#items.reason_excluded</a>
+            &lt; 
+                string
+    
+            &gt;
+            
+            
+            
         
     </td>
 </tr>
+            
+        
+        
+            
+        
             
         
     </table>

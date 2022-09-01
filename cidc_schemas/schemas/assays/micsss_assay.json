@@ -3,7 +3,10 @@
   "$id": "micsss",
   "title": "MICSSS Assay",
   "type": "object",
+
+	"$comment": "description NOT used in docs/index.html as there's no template",
   "description": "Multiplexed immunohistochemical consecutive staining on single slide.",
+  
   "additionalProperties": false,
   "allOf": [
     { "$ref": "assays/components/assay_core.json" },

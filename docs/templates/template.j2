@@ -63,11 +63,11 @@
 
 {% block content %}
 
-    {{ macros.header(schema) }}
+    {{ macros.header(schema.schema) }}
 
     <div class="container">
-        {% for name, worksheet_schema in schema['properties']['worksheets'].items() %}
-            {{ worksheet_tables(name, worksheet_schema, schema['required']) }}
+        {% for name, worksheet_schema in schema.schema['properties']['worksheets'].items() %}
+            {{ worksheet_tables(name, worksheet_schema, schema.required) }}
         {% endfor %}
     </div>
 

@@ -3,7 +3,10 @@
   "$id": "mif",
   "title": "mIF Assay",
   "type": "object",
+
+	"$comment": "description used in docs/index.html and docs/assays.mif.html",
   "description": "Multiplex immunofluorescence.",
+  
   "additionalProperties": false,
   "allOf": [
     { "$ref": "assays/components/assay_core.json" },

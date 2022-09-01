@@ -3,6 +3,8 @@
   "$id": "tcr_assay",
   "title": "TCRseq Assay",
   "type": "object",
+
+	"$comment": "description used in docs/index.html and docs/assays.tcr.html",
   "description": "Additional properties to describe a TCR assay for expression analysis.",
 
   "definitions": {

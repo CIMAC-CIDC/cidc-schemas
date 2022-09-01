@@ -2,7 +2,10 @@
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "clinical_trial",
   "title": "Clinical Trial",
+
+	"$comment": "description used in docs/index.html and docs/clinical_trial.html",
   "description": "Encapsulates information regarding a clinical trial.",
+  
   "additionalProperties": false,
   "type": "object",
   "properties": {

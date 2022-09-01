@@ -3,7 +3,10 @@
   "$id": "elisa_assay",
   "title": "ELISA Assay",
   "type": "object",
+
+	"$comment": "description used in docs/index.html and docs/assays.elisa.html",
   "description": "High-throughput multiplexed assays for protein biomarker discovery.",
+  
   "allOf": [
       {"$ref": "assays/components/assay_core.json"}
   ],

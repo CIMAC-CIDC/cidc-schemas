@@ -3,7 +3,10 @@
     "$id": "cytof_assay",
     "title": "CYTOF Assay",
     "type": "object",
+
+	"$comment": "description used in docs/index.html and docs/assays.cytof.html",
     "description": "Information about the acquisition and analysis CyTOF data.",
+    
     "additionalProperties": false,
     "mergeStrategy": "objectMerge",
     "allOf": [
@@ -58,6 +61,10 @@
             "items": {
                 "$ref": "artifacts/artifact_fcs.json"
             }
+        },
+        "spike_in_fcs": {
+            "description": "Processed FCS file for the spike-in.",
+            "$ref": "artifacts/artifact_fcs.json"
         },
         "barcoding_key_csv": {
             "description": "The master debarcoding key in a CSV file",

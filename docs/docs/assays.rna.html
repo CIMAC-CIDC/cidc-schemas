@@ -88,7 +88,7 @@
     <td>
         
             &lt; 
-                string 
+                string
     
             &gt;
             
@@ -133,7 +133,7 @@
     <td>
         
             &lt; 
-                string 
+                string
     
             &gt;
             
@@ -152,6 +152,10 @@
         
     </td>
 </tr>
+            
+        
+            
+        
             
         
             
@@ -178,7 +182,7 @@
     <td>
         
             &lt; 
-                string 
+                string
     
             &gt;
             
@@ -208,10 +212,64 @@
             
         
         
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
         
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
         
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
                 <tr>
     <td>
@@ -230,7 +288,7 @@
     <td>
         
             &lt; 
-                string 
+                string
     
             &gt;
             
@@ -259,6 +317,85 @@
 </tr>
             
         
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
+            
+                <tr>
+    <td>
+        
+            <span id="library_kit">
+                library_kit
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The library construction kit.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Hyper Prep ICE Exome Express: 1.0"</li>
+                    
+                        <li>"KAPA HyperPrep"</li>
+                    
+                        <li>"IDT duplex UMI adapters"</li>
+                    
+                        <li>"KAPA HyperPrep with IDT duplex UMI adapters"</li>
+                    
+                        <li>"TWIST"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
                 <tr>
     <td>
@@ -277,7 +414,7 @@
     <td>
         
             &lt; 
-                string 
+                string
     
             &gt;
             
@@ -294,6 +431,84 @@
         
     </td>
 </tr>
+            
+        
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
+            
+                <tr>
+    <td>
+        
+            <span id="records">
+                records
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+    </td>
+    <td>
+        
+            &lt; 
+                object
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
             
         
             
@@ -334,264 +549,28 @@
         
             
         
+        
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
         
-            
         
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-        
-            
-                <tr>
-    <td>
-        
-            <span id="cimac_id">
-                cimac_id
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-            &gt;
-            
-            
-             as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code> 
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="dv200">
-                dv200
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            The percentage of fragments > 200 nucleotides. (0-1)
-        
-    </td>
-    <td>
-        
-            &lt; 
-                number 
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="bam">
-                bam
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            A BAM file, aligned or not, which contains both pairs of sequencing libraries
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_bam.html">artifacts.artifact_bam</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="r1">
-                r1
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Fastq file for the first fragment.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_fastq_gz.html">artifacts.artifact_fastq_gz</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="r2">
-                r2
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Fastq file for the second fragment.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_fastq_gz.html">artifacts.artifact_fastq_gz</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="library_yield_ng">
-                library_yield_ng
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Resulting yield (in ng) from library construction.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                number 
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="quality_flag">
-                quality_flag
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Flag used for quality.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                number 
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="rin">
-                rin
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            RNA integrity number. (0-10)
-        
-    </td>
-    <td>
-        
-            &lt; 
-                number 
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="rqs">
-                rqs
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            RNA quality score. (0-10)
-        
-    </td>
-    <td>
-        
-            &lt; 
-                number 
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
             
         
     </table>
@@ -599,6 +578,89 @@
                     </div>
                 </div>
             
+            
+                <div class="card">
+                    <div class="card-header" id="analysis_metadata">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analysis_metadata_card" aria-expanded="false" aria-controls="analysis_metadata_card">
+                                Analysis Metadata
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="analysis_metadata_card" class="collapse" aria-labelledby="analysis_metadata" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+        
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
+            
+        
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
+            
+        
+        
+            
+        
+            
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
             
             
                 <div class="card">
@@ -633,725 +695,50 @@
         
             
         
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-        
-            
-                <tr>
-    <td>
-        
-            <span id="excluded_samples > cimac_id">
-                excluded_samples > cimac_id
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-            &gt;
-            
-            
-             as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code> 
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="excluded_samples > reason_excluded">
-                excluded_samples > reason_excluded
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            A comment describing why this sample is missing from the pipeline output.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > cimac_id">
-                level_1 > cimac_id
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-            &gt;
-            
-            
-             as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code> 
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > comments">
-                level_1 > comments
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Comments on the RNAseq analysis run.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string 
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > error">
-                level_1 > error
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a YAML file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_yaml.html">artifacts.artifact_yaml</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > fusion > fusion_predictions">
-                level_1 > fusion > fusion_predictions
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a tab Separated file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_tsv.html">artifacts.artifact_tsv</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > microbiome > sample_report">
-                level_1 > microbiome > sample_report
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a text file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > msisensor > msisensor_report">
-                level_1 > msisensor > msisensor_report
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a text file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > neoantigen > genotype">
-                level_1 > neoantigen > genotype
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a JSON file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_json.html">artifacts.artifact_json</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > rseqc > read_distrib">
-                level_1 > rseqc > read_distrib
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a binary file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_binary.html">artifacts.artifact_binary</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > rseqc > tin_score">
-                level_1 > rseqc > tin_score
-            </span>
-            
-        
-    </td>
-    <td width=55%>
         
-            Information about a text file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > rseqc > tin_score_summary">
-                level_1 > rseqc > tin_score_summary
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a text file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > salmon > aux_info_ambig_info_tsv">
-                level_1 > salmon > aux_info_ambig_info_tsv
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a tab Separated file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_tsv.html">artifacts.artifact_tsv</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > salmon > aux_info_expected_bias">
-                level_1 > salmon > aux_info_expected_bias
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a GZ file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_gz.html">artifacts.artifact_gz</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > salmon > aux_info_fld">
-                level_1 > salmon > aux_info_fld
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a GZ file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_gz.html">artifacts.artifact_gz</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > salmon > aux_info_meta_info">
-                level_1 > salmon > aux_info_meta_info
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a JSON file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_json.html">artifacts.artifact_json</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > salmon > aux_info_observed_bias">
-                level_1 > salmon > aux_info_observed_bias
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a GZ file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_gz.html">artifacts.artifact_gz</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > salmon > aux_info_observed_bias_3p">
-                level_1 > salmon > aux_info_observed_bias_3p
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a GZ file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_gz.html">artifacts.artifact_gz</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > salmon > cmd_info">
-                level_1 > salmon > cmd_info
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a JSON file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_json.html">artifacts.artifact_json</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > salmon > quant_sf">
-                level_1 > salmon > quant_sf
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a text file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > salmon > salmon_quant_log">
-                level_1 > salmon > salmon_quant_log
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a log file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_log.html">artifacts.artifact_log</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > salmon > transcriptome_bam_log">
-                level_1 > salmon > transcriptome_bam_log
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a text file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > star > chimeric_out_junction">
-                level_1 > star > chimeric_out_junction
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a JUNCTION file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_junction.html">artifacts.artifact_junction</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > star > sorted_bam">
-                level_1 > star > sorted_bam
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a BAM file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_bam.html">artifacts.artifact_bam</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > star > sorted_bam_index">
-                level_1 > star > sorted_bam_index
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a Bam index file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_bam_bai.html">artifacts.artifact_bam_bai</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > star > sorted_bam_stat_txt">
-                level_1 > star > sorted_bam_stat_txt
-            </span>
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
+            
+        
+
+            
+                
+                
+                
+                    
+                    
+                    
+                        
+                        
+                        
+                            
+                            
+                            
+                        
+                    
+                
+
             
         
-    </td>
-    <td width=55%>
         
-            Information about a text file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_text.html">artifacts.artifact_text</a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="level_1 > star > transcriptome_bam">
-                level_1 > star > transcriptome_bam
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a BAM file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_bam.html">artifacts.artifact_bam</a>
-        
-    </td>
-</tr>
-            
-        
             
-                <tr>
-    <td>
-        
-            <span id="level_1 > trust4 > trust4_report">
-                level_1 > trust4 > trust4_report
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a tab Separated file.
-        
-    </td>
-    <td>
-        
-            <a href="artifacts.artifact_tsv.html">artifacts.artifact_tsv</a>
         
-    </td>
-</tr>
             
         
     </table>
@@ -1412,6 +799,11 @@
             <th>Description</th>
         </tr>
         </thead>
+        
+            <tr>
+                <td width=25%><a href='assays.rna.rna_analysis_template.html'>RNAseq level 1 analysis template</a></td>
+                <td>RNA sequencing Level 1 analysis submission.</td>
+            </tr>
         
             <tr>
                 <td width=25%><a href='assays.rna.rna_level1_analysis_template.html'>RNAseq level 1 analysis template</a></td>

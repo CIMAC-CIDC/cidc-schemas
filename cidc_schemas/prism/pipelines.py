@@ -15,15 +15,15 @@ class _Wes_pipeline_config:
         """
         A function that for specified assay type will
         generate a snakemake .yaml for each tumor/normal pair and
-        tumor-only (ie unpaired) samples with .fastq or bam available. 
+        tumor-only (ie unpaired) samples with .fastq or bam available.
 
         upload_type == "assay" is for when the upload consists of .fastq/.bam assay data.
-        So sample_id's for which we now have data should be in the `patch` arg,  
+        So sample_id's for which we now have data should be in the `patch` arg,
         and corresponding sample pairing info should be in the `full_ct` doc.
 
-        Or if upload_type == "pairing" it's vice versa - new runs/pairs are calculated 
-        from `patch` (which is a "pairing"), and then we look for sample data info in 
-        the `full_ct`  
+        Or if upload_type == "pairing" it's vice versa - new runs/pairs are calculated
+        from `patch` (which is a "pairing"), and then we look for sample data info in
+        the `full_ct`
 
         Briefly:
         - we need to figure out what new data we've got
@@ -52,14 +52,14 @@ class _Wes_pipeline_config:
 
     def __call__(self, full_ct: dict, patch: dict, bucket: str) -> Dict[str, str]:
         """
-            Generates a mapping from run_ids to the
-            generated snakemake wes .yaml configs.
+        Generates a mapping from run_ids to the
+        generated snakemake wes .yaml configs.
 
-            Patch is expected to be already merged into full_ct.
+        Patch is expected to be already merged into full_ct.
         """
 
         class AnalysisRun(NamedTuple):
-            """ontainer class for possible runs to report"""
+            """container class for possible runs to report"""
 
             tumor_cimac_id: str
             normal_cimac_id: str = None
@@ -193,10 +193,10 @@ def _rna_level1_pipeline_config(
     full_ct: dict, patch: dict, bucket: str
 ) -> Dict[str, str]:
     """
-        Generates .yaml configs for RNAseq pipeline and a metasheet.csv with sample metadata.
-        Returns a filename to file content map.
-        
-        Patch is expected to be already merged into full_ct.
+    Generates .yaml configs for RNAseq pipeline and a metasheet.csv with sample metadata.
+    Returns a filename to file content map.
+
+    Patch is expected to be already merged into full_ct.
     """
 
     tid = full_ct[PROTOCOL_ID_FIELD_NAME]
@@ -256,7 +256,7 @@ def generate_analysis_configs_from_upload_patch(
         ct: full metadata object *with `patch` merged*!
         patch: metadata patch passed from upload (assay or manifest)
         template_type: assay or manifest type
-        bucket: a name of a bucket where data files are expected to be 
+        bucket: a name of a bucket where data files are expected to be
                 available for the pipeline runner
     Returns:
         Filename to pipeline configs as a string map.

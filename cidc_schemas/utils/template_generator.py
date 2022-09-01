@@ -18,7 +18,7 @@ def write_wes_analysis_batch(
 ):
     """
     Given a set of tumor-normal pairs, generate a template for each pair with the given protocol identifier
-    
+
     Parameters
     ----------
     output_folder: str
@@ -63,7 +63,7 @@ def write_wes_analysis_template(
 ):
     """
     Given a tumor-normal pairing, generate a template with the given protocol identifier
-    
+
     Parameters
     ----------
     output_path: str

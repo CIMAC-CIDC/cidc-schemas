@@ -154,7 +154,7 @@ class XlTemplateWriter:
     _data_dict_sheet_name = "Data Dictionary"
 
     def _write_data_dict(self, schemas):
-        """ 
+        """
         Adds a "Data Dictionary" tab that lists all used enums with allowed values.
 
         Returns: a dict mapping field names to data dictionary sheet ranges of enum
@@ -227,7 +227,7 @@ class XlTemplateWriter:
         return len(enum)
 
     def _write_legend(self, schemas):
-        """ Adds a "Legend" tab that lists all used properties with their types and descriptions."""
+        """Adds a "Legend" tab that lists all used properties with their types and descriptions."""
         legend_ws = self.workbook.add_worksheet("Legend")
         legend_ws.protect()
         legend_ws.set_column(1, 100, width=self.COLUMN_WIDTH_PX)
@@ -273,7 +273,7 @@ class XlTemplateWriter:
 
     @classmethod
     def _write_legend_item(cls, ws, row_n, name, theme, prop_schema):
-        """ Writes a property with its type, description, and example if any."""
+        """Writes a property with its type, description, and example if any."""
 
         ws.write(row_n, 1, name.capitalize(), theme)
         ws.write(row_n, 2, cls._get_legend_typeformat(prop_schema))

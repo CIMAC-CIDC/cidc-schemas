@@ -214,7 +214,7 @@ def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
         return None
 
     return_files: Dict[str, pd.DataFrame] = {}
-    if "study" in olink:
+    if "object_url" in olink.get("study", {}).get("npx_file", {}):
         study_npx = olink["study"]["npx_file"]
         return_files["study_wide"] = download_and_parse_npx(study_npx["object_url"])
     else:

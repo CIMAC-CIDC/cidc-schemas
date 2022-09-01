@@ -4,6 +4,8 @@
   "title": "WES Assay",
   "type": "object",
   "mergeStrategy": "objectMerge",
+
+	"$comment": "description used in docs/index.html and docs/assays.wes.html",
   "description": "Information about the acquisition and analysis of Whole Exome Sequencing data.",
 
   "definitions": {

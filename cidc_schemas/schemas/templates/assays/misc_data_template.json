@@ -42,8 +42,8 @@
               ]
             },
             "description": {
-              "merge_pointer": "0/description",
-              "type_ref": "assays/misc_data.json#definitions/file/properties/description",
+              "merge_pointer": "0/file_description",
+              "type_ref": "assays/misc_data.json#definitions/file/properties/file_description",
               "allow_empty": true
             }
           }

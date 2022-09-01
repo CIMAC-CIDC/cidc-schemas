@@ -19,7 +19,7 @@ from .constants import ROOT_DIR, TEMPLATE_EXAMPLES_DIR
 def template_set():
     """
     Get the path to every template schema in the schemas/templates directory
-    and their corresponding xlsx example file. 
+    and their corresponding xlsx example file.
     """
     # Collect template xlsx examples
     for templ_type in _TEMPLATE_PATH_MAP:

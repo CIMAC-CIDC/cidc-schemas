@@ -238,7 +238,15 @@
 {%- endmacro %}
 
 {% macro prop_type_format(prop_schema) -%}
-    {{ prop_schema["type"]}}
+    {% if prop_schema["type"] is iterable and (prop_schema["type"] is not string and prop_schema["type"] is not mapping) %}
+        {% for type in prop_schema["type"] %}
+            {{ type }}
+            {% if type != prop_schema["type"][-1] %}, {% endif %}
+        {% endfor %}
+    {% else %}
+        {{ prop_schema["type"] }}
+    {% endif %}
+
     {% if "format" in prop_schema %} :  {{prop_schema["format"]}}{% endif %}
 {%- endmacro %}
 

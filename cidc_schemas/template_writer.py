@@ -5,7 +5,7 @@
 import logging
 from typing import Dict, Optional
 from enum import Enum
-from datetime import date, time
+from datetime import time
 
 import xlsxwriter
 from xlsxwriter.utility import xl_rowcol_to_cell, xl_range

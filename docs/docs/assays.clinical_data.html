@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Documentation</a>
         </p>
-        <h1>Miscellaneous data</h1>
+        <h1>Clinical data Assay</h1>
         <p>
-            <b>Description:</b>  Miscellaneous data not supported directly by any other assay.
+            <b>Description:</b>  Clinical data recorded for a clinical trial
         </p>
     </div>
 
@@ -69,14 +69,17 @@
         </thead>
         
             
+        
+            
+        
+        
+            
                 <tr>
     <td>
         
             <span id="assay_creator">
                 assay_creator
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -116,72 +119,34 @@
             
         
             
+                <tr>
+    <td>
         
-            
-        
-        
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
+            <span id="protocol_identifier">
+                protocol_identifier
+            </span>
             
         
-
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string
+    
+            &gt;
             
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
+            
             
         
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
+    </td>
+</tr>
             
         
-        
-            
         
             
         
@@ -224,46 +189,26 @@
             
         
         
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
             
         
         
             
-        
-    </table>
-                        </div>
-                    </div>
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="records_accordion">
+            <div class="card">
+                <div class="card-header" id="records">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#records_card" aria-expanded="false" aria-controls="records_card">
+                            records
+                        </button>
+                    </h2>
                 </div>
-            
-            
-                <div class="card">
-                    <div class="card-header" id="analysis_metadata">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analysis_metadata_card" aria-expanded="false" aria-controls="analysis_metadata_card">
-                                Analysis Metadata
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="analysis_metadata_card" class="collapse" aria-labelledby="analysis_metadata" data-parent="#assay_accordion">
-                        <div class="card-body">
-                            
+                <div id="records_card" class="collapse" aria-labelledby="records">
+                    <div class="card-body">
+                        
+                        <br>
+                        
     
 
     
@@ -285,40 +230,54 @@
         
             
         
-            
         
-        
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
             
                 <tr>
     <td>
         
-            <span id="assay_creator">
-                assay_creator
+            <span id="clinical_file">
+                clinical_file
             </span>
             
         
     </td>
     <td width=55%>
         
-            Indicates what site is filling out the assay.
+            A non-harmonized clinical data file.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                any of
+            &gt;
+            <ul>
+            
+                <li><a href="artifacts.artifact_clinical_xlsx.html">artifacts.artifact_clinical_xlsx</a></li>
+            
+                <li><a href="artifacts.artifact_clinical_csv.html">artifacts.artifact_clinical_csv</a></li>
+            
+                <li><a href="artifacts.artifact_clinical_docx.html">artifacts.artifact_clinical_docx</a></li>
+            
+            </ul>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="comment">
+                comment
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A text comment regarding this file.
         
     </td>
     <td>
@@ -328,22 +287,6 @@
     
             &gt;
             
-                <ul>
-                    
-                        <li>"DFCI"</li>
-                    
-                        <li>"Mount Sinai"</li>
-                    
-                        <li>"Stanford"</li>
-                    
-                        <li>"MD Anderson"</li>
-                    
-                        <li>"Adaptive"</li>
-                    
-                        <li>"Broad"</li>
-                    
-                </ul>
-            
             
             
         
@@ -351,84 +294,25 @@
 </tr>
             
         
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
-            
-        
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
-            
-                <tr>
-    <td>
-        
-            <span id="files">
-                files
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            A file to store.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                object
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
-            
-        
-        
-            
         
             
         
             
         
     </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+    </table>
                         </div>
                     </div>
                 </div>
+            
             
             
 
@@ -452,8 +336,8 @@
         </thead>
         
             <tr>
-                <td width=25%><a href='assays.misc.misc_data_template.html'>Miscellaneous data template</a></td>
-                <td>Submission of data that isn't supported by any other template.</td>
+                <td width=25%><a href='assays.clinical_data.clinical_data_template.html'>Clincal data template</a></td>
+                <td>Submission of clinical data for each participant, indexed by CIMAC participant ID.<br>Use 'MISSING' if no CIMAC ID has been assigned.</td>
             </tr>
         
     </table>

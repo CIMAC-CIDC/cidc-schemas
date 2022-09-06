@@ -1,7 +1,7 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "available_assays",
-  "title": "Assays which are available in the network",
+  "title": "Assays available in the network",
   "description": "Reference for every available assay in network.",
   "mergeStrategy": "objectMerge",
   "additionalProperties": false,

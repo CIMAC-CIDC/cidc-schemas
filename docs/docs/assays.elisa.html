@@ -75,120 +75,8 @@
             
         
             
-                <tr>
-    <td>
-        
-            <span id="assay_run_id">
-                assay_run_id
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            User defined unique identifier for this assay run.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                string
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="assay_xlsx">
-                assay_xlsx
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about an ELISA file.
-        
-    </td>
-    <td>
-        
-            <a href="files.elisa_xlsx.html">elisa.xlsx</a>
-        
-    </td>
-</tr>
-            
         
         
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
-            
-        
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
-            
-        
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
             
                 <tr>
     <td>
@@ -234,48 +122,89 @@
 </tr>
             
         
-
             
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
+                <tr>
+    <td>
+        
+            <span id="assay_run_id">
+                assay_run_id
+            </span>
             
         
-
+    </td>
+    <td width=55%>
+        
+            User defined unique identifier for this assay run.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string
+    
+            &gt;
             
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
+            
             
         
+    </td>
+</tr>
+            
         
             
+                <tr>
+    <td>
+        
+            <span id="assay_xlsx">
+                assay_xlsx
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about an ELISA file.
+        
+    </td>
+    <td>
+        
+            <a href="files.elisa_xlsx.html">
+                elisa xlsx
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="protocol_identifier">
+                protocol_identifier
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
         
             
         
@@ -322,46 +251,26 @@
             
         
         
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
             
         
         
             
-        
-    </table>
-                        </div>
-                    </div>
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="antigens_accordion">
+            <div class="card">
+                <div class="card-header" id="antigens">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#antigens_card" aria-expanded="false" aria-controls="antigens_card">
+                            antigens
+                        </button>
+                    </h2>
                 </div>
-            
-            
-                <div class="card">
-                    <div class="card-header" id="analysis_metadata">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analysis_metadata_card" aria-expanded="false" aria-controls="analysis_metadata_card">
-                                Analysis Metadata
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="analysis_metadata_card" class="collapse" aria-labelledby="analysis_metadata" data-parent="#assay_accordion">
-                        <div class="card-body">
-                            
+                <div id="antigens_card" class="collapse" aria-labelledby="antigens">
+                    <div class="card-body">
+                        
+                        <br>
+                        
     
 
     
@@ -387,66 +296,26 @@
         
             
         
-            
         
-        
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
-            
-        
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
             
                 <tr>
     <td>
         
-            <span id="antigens">
-                antigens
+            <span id="antigen">
+                antigen
             </span>
             
         
     </td>
     <td width=55%>
         
-            Data specific to antigen preparation on the ELISA assay.
+            Identifying name for the antigen.
         
     </td>
     <td>
         
             &lt; 
-                object
+                string
     
             &gt;
             
@@ -457,37 +326,19 @@
 </tr>
             
         
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
             
                 <tr>
     <td>
         
-            <span id="assay_creator">
-                assay_creator
+            <span id="antigen_type">
+                antigen_type
             </span>
             
         
     </td>
     <td width=55%>
         
-            Indicates what site is filling out the assay.
+            The type of antigen, either protein or peptide
         
     </td>
     <td>
@@ -499,17 +350,9 @@
             
                 <ul>
                     
-                        <li>"DFCI"</li>
+                        <li>"protein"</li>
                     
-                        <li>"Mount Sinai"</li>
-                    
-                        <li>"Stanford"</li>
-                    
-                        <li>"MD Anderson"</li>
-                    
-                        <li>"Adaptive"</li>
-                    
-                        <li>"Broad"</li>
+                        <li>"peptide"</li>
                     
                 </ul>
             
@@ -520,43 +363,25 @@
 </tr>
             
         
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
             
                 <tr>
     <td>
         
-            <span id="assay_run_id">
-                assay_run_id
+            <span id="final_concentration">
+                final_concentration
             </span>
             
         
     </td>
     <td width=55%>
         
-            User defined unique identifier for this assay run.
+            The concentration of the antigen after dilution.
         
     </td>
     <td>
         
             &lt; 
-                string
+                number
     
             &gt;
             
@@ -567,42 +392,50 @@
 </tr>
             
         
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
             
                 <tr>
     <td>
         
-            <span id="assay_xlsx">
-                assay_xlsx
+            <span id="final_concentration_units">
+                final_concentration_units
             </span>
             
         
     </td>
     <td width=55%>
         
-            Information about an ELISA file.
+            The concentration units for the antigen after dilution.
         
     </td>
     <td>
         
-            <a href="files.elisa_xlsx.html">elisa.xlsx</a>
+            &lt; 
+                string
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Nanogram per Microliter"</li>
+                    
+                        <li>"Milligram per Milliliter"</li>
+                    
+                        <li>"Micrograms per Microliter"</li>
+                    
+                        <li>"Nanomolar"</li>
+                    
+                        <li>"Micromolar"</li>
+                    
+                        <li>"Millimolar"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
         
     </td>
 </tr>
@@ -617,12 +450,20 @@
         
             
         
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
             
         
     </table>
                         </div>
                     </div>
                 </div>
+            
             
             
 

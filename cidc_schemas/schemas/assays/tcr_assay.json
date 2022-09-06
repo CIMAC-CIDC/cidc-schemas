@@ -75,6 +75,7 @@
 
     "replicate": {
       "description": "TCRseq replicate of interest.",
+      "type": "object",
       "additionalProperties": false,
       "allOf": [
         { "$ref": "assays/components/reads_with_index.json"}

@@ -71,7 +71,7 @@
                 </div>
             {% endif %}
 
-            {% if schema.assays %}
+            {% if schema.assay_templates %}
                 <div class="card">
                     <div class="card-header" id="assay_uploads">
                         <h2 class="mb-0">
@@ -82,12 +82,12 @@
                     </div>
                     <div id="assay_uploads_card" class="collapse" aria-labelledby="assay_uploads" data-parent="#assay_accordion">
                         <div class="card-body">
-                            {{ macros.uploads_table(scope, name, schema.assays) }}
+                            {{ macros.uploads_table(scope, name, schema.assay_templates) }}
                         </div>
                     </div>
                 </div>
             {% endif %}
-            {% if schema.analyses %}
+            {% if schema.analysis_templates %}
                 <div class="card">
                     <div class="card-header" id="analaysis_uploads">
                         <h2 class="mb-0">
@@ -98,7 +98,7 @@
                     </div>
                     <div id="analaysis_uploads_card" class="collapse" aria-labelledby="analaysis_uploads" data-parent="#assay_accordion">
                         <div class="card-body">
-                            {{ macros.uploads_table(scope, name, schema.analyses) }}
+                            {{ macros.uploads_table(scope, name, schema.analysis_templates) }}
                         </div>
                     </div>
                 </div>

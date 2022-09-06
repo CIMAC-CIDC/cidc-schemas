@@ -1,6 +1,7 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "collection_event.json",
+  "title": "Collection Event",
   "description": "Defines a collection event and its biospecimen type hierarchy.",
   "additionalProperties": false,
   "type": "object",

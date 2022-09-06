@@ -33,6 +33,9 @@
                                             {% elif group == "assays" %}
                                                 <td width=25%><a href='{{ group }}.{{ entity_name }}.html'>{{ entity_schema.schema["title"] }}</a></td>
                                                 <td>{{ entity_schema.schema["description"] }}</td>
+                                            {% elif group == "manifests" %}
+                                                <td width=25%><a href='{{ group }}.{{ entity_name }}.html'>{{ entity_schema.schema["title"] }}</a></td>
+                                                <td>{{ entity_schema.schema["description"] }}</td>
                                             {% else %}
                                                 <td width=25%><a href='{{ group }}.{{ entity_name }}.html'>{{ entity_schema["title"] }}</a></td>
                                                 <td>{{ entity_schema["description"] }}</td>

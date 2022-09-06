@@ -1,0 +1,1561 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CIDC Schemas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main role="main">
+      
+
+    
+    <div class="container">
+        <p>
+            <a href="index.html">CIDC Documentation</a>
+        </p>
+        <h1>WES tumor-only analysis</h1>
+        <p>
+            <b>Description:</b>  Combined analysis files for the whole WES assay.
+        </p>
+    </div>
+
+    <div class="container">
+        <div class="accordion" id="assay_accordion">
+            
+            
+            
+                <div class="card">
+                    <div class="card-header" id="analysis_metadata">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analysis_metadata_card" aria-expanded="false" aria-controls="analysis_metadata_card">
+                                Analysis Metadata
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="analysis_metadata_card" class="collapse" aria-labelledby="analysis_metadata" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="protocol_identifier">
+                protocol_identifier
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+            
+                <div class="card">
+                    <div class="card-header" id="analysis_data">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analysis_data_card" aria-expanded="false" aria-controls="analysis_data_card">
+                                Analysis Data
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="analysis_data_card" class="collapse" aria-labelledby="analysis_data" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="runs_accordion">
+            <div class="card">
+                <div class="card-header" id="runs">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#runs_card" aria-expanded="false" aria-controls="runs_card">
+                            runs
+                        </button>
+                    </h2>
+                </div>
+                <div id="runs_card" class="collapse" aria-labelledby="runs">
+                    <div class="card-body">
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="comments">
+                comments
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Comments on the tumor-only analysis run.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="error">
+                error
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a YAML file.
+        
+    </td>
+    <td>
+        
+            <a href="files.yaml.html">
+                yaml
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="run_id">
+                run_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            An id used as if this was a paired analysis run.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="tumor_accordion">
+            <div class="card">
+                <div class="card-header" id="tumor">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#tumor_card" aria-expanded="false" aria-controls="tumor_card">
+                            tumor
+                        </button>
+                    </h2>
+                </div>
+                <div id="tumor_card" class="collapse" aria-labelledby="tumor">
+                    <div class="card-body">
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cimac_id">
+                cimac_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string
+    
+            &gt;
+            
+            
+             as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code> 
+        
+    </td>
+</tr>
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="alignment_accordion">
+            <div class="card">
+                <div class="card-header" id="alignment">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#alignment_card" aria-expanded="false" aria-controls="alignment_card">
+                            alignment
+                        </button>
+                    </h2>
+                </div>
+                <div id="alignment_card" class="collapse" aria-labelledby="alignment">
+                    <div class="card-body">
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="align_recalibrated">
+                align_recalibrated
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a BAM file.
+        
+    </td>
+    <td>
+        
+            <a href="files.bam.html">
+                bam
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="align_recalibrated_index">
+                align_recalibrated_index
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a Bam index file.
+        
+    </td>
+    <td>
+        
+            <a href="files.bam_bai.html">
+                bam bai
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="align_sorted_dedup">
+                align_sorted_dedup
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a BAM file.
+        
+    </td>
+    <td>
+        
+            <a href="files.bam.html">
+                bam
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="align_sorted_dedup_index">
+                align_sorted_dedup_index
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a Bam index file.
+        
+    </td>
+    <td>
+        
+            <a href="files.bam_bai.html">
+                bam bai
+            </a>
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="hla_accordion">
+            <div class="card">
+                <div class="card-header" id="hla">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#hla_card" aria-expanded="false" aria-controls="hla_card">
+                            hla
+                        </button>
+                    </h2>
+                </div>
+                <div id="hla_card" class="collapse" aria-labelledby="hla">
+                    <div class="card-body">
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="hla_final_result">
+                hla_final_result
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a text file.
+        
+    </td>
+    <td>
+        
+            <a href="files.text.html">
+                text
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="optitype_result">
+                optitype_result
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a text file.
+        
+    </td>
+    <td>
+        
+            <a href="files.text.html">
+                text
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="xhla_report_hla">
+                xhla_report_hla
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a JSON file.
+        
+    </td>
+    <td>
+        
+            <a href="files.json.html">
+                json
+            </a>
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="neoantigen_accordion">
+            <div class="card">
+                <div class="card-header" id="neoantigen">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#neoantigen_card" aria-expanded="false" aria-controls="neoantigen_card">
+                            neoantigen
+                        </button>
+                    </h2>
+                </div>
+                <div id="neoantigen_card" class="collapse" aria-labelledby="neoantigen">
+                    <div class="card-body">
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="combined_filtered">
+                combined_filtered
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a tab Separated file.
+        
+    </td>
+    <td>
+        
+            <a href="files.tsv.html">
+                tsv
+            </a>
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="report_accordion">
+            <div class="card">
+                <div class="card-header" id="report">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#report_card" aria-expanded="false" aria-controls="report_card">
+                            report
+                        </button>
+                    </h2>
+                </div>
+                <div id="report_card" class="collapse" aria-labelledby="report">
+                    <div class="card-body">
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="config">
+                config
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a YAML file.
+        
+    </td>
+    <td>
+        
+            <a href="files.yaml.html">
+                yaml
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="metasheet">
+                metasheet
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a comma separated file.
+        
+    </td>
+    <td>
+        
+            <a href="files.csv.html">
+                csv
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="report">
+                report
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a GZ file.
+        
+    </td>
+    <td>
+        
+            <a href="files.gz.html">
+                gz
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="wes_run_version">
+                wes_run_version
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a tab Separated file.
+        
+    </td>
+    <td>
+        
+            <a href="files.tsv.html">
+                tsv
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="wes_sample_json">
+                wes_sample_json
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a JSON file.
+        
+    </td>
+    <td>
+        
+            <a href="files.json.html">
+                json
+            </a>
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="rna_accordion">
+            <div class="card">
+                <div class="card-header" id="rna">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#rna_card" aria-expanded="false" aria-controls="rna_card">
+                            rna
+                        </button>
+                    </h2>
+                </div>
+                <div id="rna_card" class="collapse" aria-labelledby="rna">
+                    <div class="card-body">
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="haplotyper">
+                haplotyper
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a Gzipped VCF file.
+        
+    </td>
+    <td>
+        
+            <a href="files.vcf_gz.html">
+                vcf gz
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="vcf_tnscope_filter_neoantigen">
+                vcf_tnscope_filter_neoantigen
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a VCF file.
+        
+    </td>
+    <td>
+        
+            <a href="files.vcf.html">
+                vcf
+            </a>
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="msisensor_accordion">
+            <div class="card">
+                <div class="card-header" id="msisensor">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#msisensor_card" aria-expanded="false" aria-controls="msisensor_card">
+                            msisensor
+                        </button>
+                    </h2>
+                </div>
+                <div id="msisensor_card" class="collapse" aria-labelledby="msisensor">
+                    <div class="card-body">
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="msisensor">
+                msisensor
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a text file.
+        
+    </td>
+    <td>
+        
+            <a href="files.text.html">
+                text
+            </a>
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="tcell_accordion">
+            <div class="card">
+                <div class="card-header" id="tcell">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#tcell_card" aria-expanded="false" aria-controls="tcell_card">
+                            tcell
+                        </button>
+                    </h2>
+                </div>
+                <div id="tcell_card" class="collapse" aria-labelledby="tcell">
+                    <div class="card-body">
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="tcellextrect">
+                tcellextrect
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a text file.
+        
+    </td>
+    <td>
+        
+            <a href="files.text.html">
+                text
+            </a>
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="somatic_accordion">
+            <div class="card">
+                <div class="card-header" id="somatic">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#somatic_card" aria-expanded="false" aria-controls="somatic_card">
+                            somatic
+                        </button>
+                    </h2>
+                </div>
+                <div id="somatic_card" class="collapse" aria-labelledby="somatic">
+                    <div class="card-body">
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="tnscope_output_twist_filtered_maf">
+                tnscope_output_twist_filtered_maf
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a MAF file.
+        
+    </td>
+    <td>
+        
+            <a href="files.maf.html">
+                maf
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="tnscope_output_twist_filtered_vcf">
+                tnscope_output_twist_filtered_vcf
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a VCF file.
+        
+    </td>
+    <td>
+        
+            <a href="files.vcf.html">
+                vcf
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="tnscope_output_twist_maf">
+                tnscope_output_twist_maf
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a MAF file.
+        
+    </td>
+    <td>
+        
+            <a href="files.maf.html">
+                maf
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="tnscope_output_twist_vcf">
+                tnscope_output_twist_vcf
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a VCF file.
+        
+    </td>
+    <td>
+        
+            <a href="files.vcf.html">
+                vcf
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="vcf_gz_tnscope_output">
+                vcf_gz_tnscope_output
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a Gzipped VCF file.
+        
+    </td>
+    <td>
+        
+            <a href="files.vcf_gz.html">
+                vcf gz
+            </a>
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="excluded_samples_accordion">
+            <div class="card">
+                <div class="card-header" id="excluded_samples">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#excluded_samples_card" aria-expanded="false" aria-controls="excluded_samples_card">
+                            excluded_samples
+                        </button>
+                    </h2>
+                </div>
+                <div id="excluded_samples_card" class="collapse" aria-labelledby="excluded_samples">
+                    <div class="card-body">
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="cimac_id">
+                cimac_id
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string
+    
+            &gt;
+            
+            
+             as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code> 
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="reason_excluded">
+                reason_excluded
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A comment describing why this sample is missing from the pipeline output.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+
+            
+            
+                <div class="card">
+                    <div class="card-header" id="analaysis_uploads">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analaysis_uploads_card" aria-expanded="false" aria-controls="analaysis_uploads_card">
+                            Analysis Uploads
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="analaysis_uploads_card" class="collapse" aria-labelledby="analaysis_uploads" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Entity</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td width=25%><a href='assays.wes_tumor_only.wes_tumor_only_analysis_template.html'>WES tumor-only analysis template</a></td>
+                <td>Whole Exome Sequencing (WES) Tumor-Only analysis submission.</td>
+            </tr>
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+    

@@ -7,6 +7,7 @@
   ],
   "mergeStrategy": "objectMerge",
   "mergeOptions": {"idRef": "/export_id"},
+  "type": "object",
   "additionalProperties": false,
   "properties": {
       "export_id": {

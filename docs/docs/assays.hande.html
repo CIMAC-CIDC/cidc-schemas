@@ -69,14 +69,17 @@
         </thead>
         
             
+        
+            
+        
+        
+            
                 <tr>
     <td>
         
             <span id="assay_creator">
                 assay_creator
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -116,96 +119,34 @@
             
         
             
+                <tr>
+    <td>
         
-            
-        
-            
-        
-        
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
+            <span id="protocol_identifier">
+                protocol_identifier
+            </span>
             
         
-
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string
+    
+            &gt;
             
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
+            
             
         
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
+    </td>
+</tr>
             
         
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
-            
-        
-        
-            
-        
-            
         
             
         
@@ -248,46 +189,26 @@
             
         
         
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
             
         
         
             
-        
-    </table>
-                        </div>
-                    </div>
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="records_accordion">
+            <div class="card">
+                <div class="card-header" id="records">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#records_card" aria-expanded="false" aria-controls="records_card">
+                            records
+                        </button>
+                    </h2>
                 </div>
-            
-            
-                <div class="card">
-                    <div class="card-header" id="analysis_metadata">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analysis_metadata_card" aria-expanded="false" aria-controls="analysis_metadata_card">
-                                Analysis Metadata
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="analysis_metadata_card" class="collapse" aria-labelledby="analysis_metadata" data-parent="#assay_accordion">
-                        <div class="card-body">
-                            
+                <div id="records_card" class="collapse" aria-labelledby="records">
+                    <div class="card-body">
+                        
+                        <br>
+                        
     
 
     
@@ -313,38 +234,28 @@
         
             
         
-        
-
             
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
+        
+            
+        
+            
+        
+            
+        
+        
             
                 <tr>
     <td>
         
-            <span id="assay_creator">
-                assay_creator
+            <span id="cimac_id">
+                cimac_id
             </span>
             
         
     </td>
     <td width=55%>
         
-            Indicates what site is filling out the assay.
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
         
     </td>
     <td>
@@ -354,106 +265,32 @@
     
             &gt;
             
-                <ul>
-                    
-                        <li>"DFCI"</li>
-                    
-                        <li>"Mount Sinai"</li>
-                    
-                        <li>"Stanford"</li>
-                    
-                        <li>"MD Anderson"</li>
-                    
-                        <li>"Adaptive"</li>
-                    
-                        <li>"Broad"</li>
-                    
-                </ul>
             
-            
-            
+             as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code> 
         
     </td>
 </tr>
             
         
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
-            
-        
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
-            
-        
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
             
                 <tr>
     <td>
         
-            <span id="records">
-                records
+            <span id="comment">
+                comment
             </span>
             
         
     </td>
     <td width=55%>
         
-            A single data record from H & E assay.
+            A text comment regarding this slide.
         
     </td>
     <td>
         
             &lt; 
-                object
+                string
     
             &gt;
             
@@ -464,6 +301,228 @@
 </tr>
             
         
+            
+                <tr>
+    <td>
+        
+            <span id="fibrosis_percentage">
+                fibrosis_percentage
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="necrosis_percentage">
+                necrosis_percentage
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="tumor_tissue_percentage">
+                tumor_tissue_percentage
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="viable_stroma_percentage">
+                viable_stroma_percentage
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="viable_tumor_percentage">
+                viable_tumor_percentage
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+    </td>
+    <td>
+        
+            &lt; 
+                number
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="files_accordion">
+            <div class="card">
+                <div class="card-header" id="files">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#files_card" aria-expanded="false" aria-controls="files_card">
+                            files
+                        </button>
+                    </h2>
+                </div>
+                <div id="files_card" class="collapse" aria-labelledby="files">
+                    <div class="card-body">
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+        
+        
+            
+                <tr>
+    <td>
+        
+            <span id="image_file">
+                image_file
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+    </td>
+    <td>
+        
+            &lt; 
+                any of
+            &gt;
+            <ul>
+            
+                <li><a href="artifacts.artifact_image.html">artifacts.artifact_image</a></li>
+            
+                <li><a href="artifacts.artifact_jpg.html">artifacts.artifact_jpg</a></li>
+            
+            </ul>
+        
+    </td>
+</tr>
+            
+        
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
         
             
         
@@ -474,9 +533,19 @@
             
         
     </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+    </table>
                         </div>
                     </div>
                 </div>
+            
             
             
 

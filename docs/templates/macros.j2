@@ -54,30 +54,12 @@
             {% endif %}
         {% endfor %}
         {% for prop_name, prop_schema in properties %}
-
-            {# -- Structured version of conditional below -- #}
-                {# prop_name not in required #}
-                {# and #}
-                {# ( #}
-                    {# prop_schema is not mapping #}
-                    {# or #}
-                    {# ( #}
-                        {# "process_as" not in prop_schema #}
-                        {# and  #}
-                        {# ( #}
-                            {# "_nested" in not prop_schema #}
-                            {# or #}
-                            {# not prop_schema.pop("_nested") #}
-                        {# ) #}
-                    {# ) #}
-                {# ) #}
-
-            {% if prop_name not in required and (prop_schema is not mapping or ("process_as" not in prop_schema and ("_nested" not in prop_schema or not prop_schema.pop("_nested")))) %}
+            {% if prop_name not in required and prop_schema is mapping and "process_as" not in prop_schema and ("type" in prop_schema or "const" in prop_schema or "url" in prop_schema or "type_ref" in prop_schema or "anyOf" in prop_schema) %}
                 {{ property_table_row(prop_name, prop_schema, False) }}
             {% endif %}
         {% endfor %}
         {% for prop_name, prop_schema in properties %}
-            {% if prop_schema is mapping and "_nested" in prop_schema and prop_schema.pop("_nested") %}
+            {% if prop_schema is mapping and "type" not in prop_schema and "const" not in prop_schema and "url" not in prop_schema and "type_ref" not in prop_schema and "anyOf" not in prop_schema %}
                 {{ nested_properties_table(prop_name, prop_schema, required) }}
             {% elif prop_schema is mapping and "process_as" in prop_schema %}
                 {{ nested_process_as_table(prop_name, prop_schema) }}
@@ -96,9 +78,17 @@
             <th>Data Type</th>
         </tr>
         </thead>
-        {% for _, prop_schema in prop_schema["process_as"].items() %}
+        {% for prop_schema in prop_schema["process_as"] %}
             <tr>
-                <td>{{ prop_schema["relative_file_path"] }}</td>
+                <td>
+                    {% if "relative_file_path" in prop_schema and prop_schema["description"] %}
+                        {{ prop_schema["relative_file_path"] }}
+                    {% elif prop_schema["merge_pointer"][0].isdigit() %}
+                        {{ prop_schema["merge_pointer"][1:].replace("/", " ") }}
+                    {% else %}
+                        {{ prop_schema["merge_pointer"].replace("/", " ") }}
+                    {% endif %}
+                </td>
                 <td width=55%>
                     {% if "description" in prop_schema and prop_schema["description"] %}
                         {{ prop_schema["description"].replace("/n", "<br>") }}
@@ -106,7 +96,9 @@
                 </td>
                 <td>
                     {% if "url" in prop_schema %}
-                        <a href="{{ prop_schema['url'].replace('artifacts.artifact_', 'files.') }}">{{ prop_schema['url'].replace('artifacts.artifact_', '').replace('.html', '').replace("_",".") }}</a>
+                        <a href="{{ prop_schema['url'].replace('artifacts.artifact_', 'files.').replace('clinical_data', 'assays.clinical_data').replace('assays.components.', '').replace('ngs_analyses', 'analyses') }}">
+                            {{ prop_schema['url'].replace('artifacts.artifact_', '').replace('ngs_analyses', 'analyses').replace('.html', '').replace('assays.', '').replace('components.', '').replace("_"," ") }}
+                        </a>
                     {% elif "type" in prop_schema %}
                         &lt; 
                             {{ prop_type_format(prop_schema) }}
@@ -169,7 +161,7 @@
                             {{ prop_schema["description"].replace("/n", "<br>") }}
                         {% endif %}
                         <br>
-                        {{ properties_table(prop_schema, required) }}
+                        {{ properties_table(prop_schema, [prop_name] if required else []) }}
                     </div>
                 </div>
             </div>
@@ -210,7 +202,9 @@
             {% if "items" in prop_schema %} {# type: array #}
                 <br>
                 {% if "url" in prop_schema["items"] %}
-                    <a href="{{ prop_schema['items']['url'] }}">{{ prop_schema['items']['url'].replace('.html', '') }}</a>
+                    <a href="{{ prop_schema['items']['url'].replace('artifacts.artifact_', 'files.').replace('clinical_data', 'assays.clinical_data').replace('assays.components.', '').replace('ngs_analyses', 'analyses') }}">
+                        {{ prop_schema['items']['url'].replace('artifacts.artifact_', '').replace('.html', '').replace('assays.', '').replace('components.', '').replace("_"," ") }}
+                    </a>
                 {% else %}
                     {{ prop_type_format(prop_schema["items"]) }}
                 {% endif %}
@@ -219,9 +213,13 @@
         {% elif "const" in prop_schema %}
             &lt; const: <strong>{{ prop_schema["const"] }}</strong> &gt;            
         {% elif "url" in prop_schema %}
-            <a href="{{ prop_schema['url'].replace('artifacts.artifact_', 'files.') }}">{{ prop_schema['url'].replace('artifacts.artifact_', '').replace('.html', '').replace("_",".") }}</a>
+            <a href="{{ prop_schema['url'].replace('artifacts.artifact_', 'files.').replace('clinical_data', 'assays.clinical_data').replace('assays.components.', '').replace('ngs_analyses', 'analyses') }}">
+                {{ prop_schema['url'].replace('artifacts.artifact_', '').replace('ngs_analyses', 'analyses').replace('.html', '').replace('assays.', '').replace('components.', '').replace("_"," ") }}
+            </a>
         {% elif "type_ref" in prop_schema %} {# means we're in _template.json #}
-            <a href="{{ prop_schema['type_ref'].replace('.json', '.html').replace('/', '.') }} }}">{{ prop_schema['type_ref'].replace('.json', '') }}</a>
+            <a href="{{ prop_schema['type_ref'].replace('.json', '.html').replace('/', '.') }}">
+                {{ prop_schema['type_ref'].replace('.json', '') }}
+            </a>
         {% elif "anyOf" in prop_schema %}
             &lt; 
                 any of
@@ -232,7 +230,7 @@
             {% endfor %}
             </ul>
         {% else %}
-            (UNKNOWN PROPERTY TYPE)
+            (UNKNOWN DATA TYPE)
             {{ prop_schema }}
         {% endif %}
     </td>

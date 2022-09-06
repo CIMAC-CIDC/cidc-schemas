@@ -31,9 +31,9 @@
         <p>
             <a href="index.html">CIDC Documentation</a>
         </p>
-        <h1>Clinical data Assay</h1>
+        <h1>Miscellaneous data</h1>
         <p>
-            <b>Description:</b>  Clinical data recorded for a clinical trial
+            <b>Description:</b>  Miscellaneous data not supported directly by any other assay.
         </p>
     </div>
 
@@ -69,14 +69,17 @@
         </thead>
         
             
+        
+            
+        
+        
+            
                 <tr>
     <td>
         
             <span id="assay_creator">
                 assay_creator
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -116,72 +119,34 @@
             
         
             
+                <tr>
+    <td>
         
-            
-        
-        
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
+            <span id="protocol_identifier">
+                protocol_identifier
+            </span>
             
         
-
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string
+    
+            &gt;
             
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
+            
             
         
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
+    </td>
+</tr>
             
         
-        
-            
         
             
         
@@ -224,46 +189,26 @@
             
         
         
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
             
         
         
             
-        
-    </table>
-                        </div>
-                    </div>
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="files_accordion">
+            <div class="card">
+                <div class="card-header" id="files">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#files_card" aria-expanded="false" aria-controls="files_card">
+                            files
+                        </button>
+                    </h2>
                 </div>
-            
-            
-                <div class="card">
-                    <div class="card-header" id="analysis_metadata">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analysis_metadata_card" aria-expanded="false" aria-controls="analysis_metadata_card">
-                                Analysis Metadata
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="analysis_metadata_card" class="collapse" aria-labelledby="analysis_metadata" data-parent="#assay_accordion">
-                        <div class="card-body">
-                            
+                <div id="files_card" class="collapse" aria-labelledby="files">
+                    <div class="card-body">
+                        
+                        <br>
+                        
     
 
     
@@ -287,38 +232,47 @@
         
             
         
-        
-
             
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
+        
+        
             
                 <tr>
     <td>
         
-            <span id="assay_creator">
-                assay_creator
+            <span id="file">
+                file
             </span>
             
         
     </td>
     <td width=55%>
         
-            Indicates what site is filling out the assay.
+            Information about a generic file.
+        
+    </td>
+    <td>
+        
+            <a href="files.file.html">
+                file
+            </a>
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="file_description">
+                file_description
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            An optional long string describing the file, its purpose, and/or its content.
         
     </td>
     <td>
@@ -328,21 +282,34 @@
     
             &gt;
             
-                <ul>
-                    
-                        <li>"DFCI"</li>
-                    
-                        <li>"Mount Sinai"</li>
-                    
-                        <li>"Stanford"</li>
-                    
-                        <li>"MD Anderson"</li>
-                    
-                        <li>"Adaptive"</li>
-                    
-                        <li>"Broad"</li>
-                    
-                </ul>
+            
+            
+        
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td>
+        
+            <span id="file_location">
+                file_location
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The local file location for determining where the file is coming from
+        
+    </td>
+    <td>
+        
+            &lt; 
+                string
+    
+            &gt;
             
             
             
@@ -351,63 +318,25 @@
 </tr>
             
         
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
-            
-        
-
-            
-                
-                
-                
-                    
-                    
-                    
-                        
-                        
-                        
-                            
-                            
-                            
-                        
-                    
-                
-
             
                 <tr>
     <td>
         
-            <span id="records">
-                records
+            <span id="name">
+                name
             </span>
             
         
     </td>
     <td width=55%>
         
-            A single data record from Clinical Data assay.
+            A (short) name of the file
         
     </td>
     <td>
         
             &lt; 
-                object
+                string
     
             &gt;
             
@@ -425,10 +354,22 @@
         
             
         
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
     </table>
                         </div>
                     </div>
                 </div>
+            
             
             
 
@@ -452,8 +393,8 @@
         </thead>
         
             <tr>
-                <td width=25%><a href='assays.clinical.clinical_data_template.html'>Clincal data template</a></td>
-                <td>Submission of clinical data for each participant, indexed by CIMAC participant ID.<br>Use 'MISSING' if no CIMAC ID has been assigned.</td>
+                <td width=25%><a href='assays.misc_data.misc_data_template.html'>Miscellaneous data template</a></td>
+                <td>Submission of data that isn't supported by any other template.</td>
             </tr>
         
     </table>

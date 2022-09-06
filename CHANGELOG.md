@@ -9,10 +9,16 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.25.54` - xx Sep 2022
+
+- `changed` change schemas documentation format for the portal
+  - nested accordions with property tables
+  - small changes to eg titles, description, filepaths
+
 ## Version `0.25.54` - 17 Aug 2022
 
 - `added` new lab "MSSM_MTC" to recieving party in shipping core
-- `removed` OTU table requirement, enrichment fields from microbiome assay 
+- `removed` OTU table requirement, enrichment fields from microbiome assay
 
 ## Version `0.25.53` - 15 Aug 2022
 

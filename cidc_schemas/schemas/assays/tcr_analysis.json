@@ -2,7 +2,7 @@
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "tcr_analysis",
   "title": "TCR Output Files",
-  "description": "Output files generated from the TCRseq assay: TRA and TRB clones",
+  "description": "Output files generated from the TCRseq assay: TRA and TRB clones<br>Used only if TCR clone information is received from a non-Adpative sequenced TCR assay",
 
   "definitions": {
     "batch": {

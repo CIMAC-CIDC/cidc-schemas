@@ -16,13 +16,6 @@
             "example": "CTTTP01A1.00",
             "type": "string"
         },
-        "cidc_id": {
-            "type": "string",
-            "$comment": "in_doc_ref_pattern: /participants/*/samples/*/cidc_id",
-            "pattern": "^CIDC-\\w+-\\w+-\\w+$",
-            "example": "CIDC-Trial101-e1b2c3-a7b",
-            "description": "The generated, CIDC-internal identifier for this sample. Formated as: CIDC-<trial>-<participant>-<sample>."
-        },
         "shipping_entry_number": {
             "description": "Provides a numbered identifier for patient (sample) entry in a shipment manifest.",
             "type": "integer"
@@ -52,7 +45,7 @@
             "encrypt": true
         },
         "site_description": {
-            "description": "Descritpion of the topography category. e.g LUNG AND BRONCHUS",
+            "description": "Description of the topography category. e.g LUNG AND BRONCHUS",
             "type": "string"
         },
         "topography_code": {
@@ -373,13 +366,6 @@
             ]
         },
         "comments": {"description": "Comments on sample testing.", "type": "string"},
-        "aliquots": {
-            "type": "array",
-            "description": "Pertaining to a portion (volume or weight) of the whole.",
-            "items": {"$ref": "aliquot.json"},
-            "mergeStrategy": "arrayMergeById",
-            "mergeOptions": {"idRef": "/slide_number"}
-        },
         "diagnosis_verification": {
             "title": "Diagnosis verification",
             "description": "Indicates whether the local pathology review was consistent with the diagnostic pathology report.",

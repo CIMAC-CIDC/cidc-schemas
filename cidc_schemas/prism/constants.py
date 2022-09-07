@@ -38,9 +38,8 @@ SUPPORTED_SHIPPING_MANIFESTS = [
     "microbiome_dna",
 ]
 # weird non shipping manifest
-SUPPORTED_WEIRD_MANIFESTS = ["tumor_normal_pairing", "participants_annotations"]
-MANIFESTS_WITH_PARTICIPANT_INFO = SUPPORTED_SHIPPING_MANIFESTS + [
-    "participants_annotations"
+SUPPORTED_WEIRD_MANIFESTS = [
+    "tumor_normal_pairing",
 ]
 SUPPORTED_MANIFESTS = SUPPORTED_SHIPPING_MANIFESTS + SUPPORTED_WEIRD_MANIFESTS
 

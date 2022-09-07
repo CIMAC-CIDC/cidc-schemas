@@ -1,6 +1,6 @@
 {
-    "title": "Biospecimen manifest for tumor tissue DNA",
-    "description": "Biospecimen manifest for transferring tissue DNA extracted from tumor tissue samples.",
+    "title": "Biospecimen manifest for tumor tissue RNA",
+    "description": "Biospecimen manifest for transferring tissue RNA extracted from tumor tissue samples.",
     "properties": {
         "worksheets": {
 

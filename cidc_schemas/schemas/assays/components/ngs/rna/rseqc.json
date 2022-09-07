@@ -1,9 +1,9 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "star",
-  "title": "RNAseq Star Output Files",
+  "title": "RNAseq RSeQC Output Files",
   "type": "object",
-  "description": "Star output sample files.",
+  "description": "RSeQC output sample files.",
   "properties": {
     "read_distrib": {
       "$ref": "artifacts/artifact_binary.json"

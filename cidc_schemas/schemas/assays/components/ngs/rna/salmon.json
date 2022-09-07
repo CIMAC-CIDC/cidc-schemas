@@ -1,9 +1,9 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "star",
-  "title": "RNAseq Star Output Files",
+  "title": "RNAseq Salmon Output Files",
   "type": "object",
-  "description": "Star output sample files.",
+  "description": "Salmon output sample files.",
   "properties": {
       "quant_sf": {
           "$ref": "artifacts/artifact_text.json"

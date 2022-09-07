@@ -88,7 +88,6 @@ def test_trial_core():
     al_validator = jsonschema.Draft7Validator(al_schema)
     al_validator.check_schema(al_schema)
 
-    # create some aliquots.
     shipment = {
         "account_number": "account_number",
         "assay_priority": "1",
@@ -104,25 +103,11 @@ def test_trial_core():
         "tracking_number": "tracking_number",
         "receiving_party": "MDA_Wistuba",
     }
-    aliquot1 = {
-        "slide_number": "99",
-        "aliquot_replacement": "N/A",
-        "aliquot_status": "Other",
-    }
-    al_validator.validate(aliquot1)
-
-    aliquot2 = {
-        "slide_number": "98",
-        "aliquot_replacement": "N/A",
-        "aliquot_status": "Other",
-    }
-    al_validator.validate(aliquot2)
 
     # create some samples.
     sample1 = {
         "cimac_id": "CTTTPPP12.00",
         "parent_sample_id": "ssida",
-        "aliquots": [aliquot1],
         "collection_event_name": "Baseline",
         "type_of_primary_container": "Sodium heparin",
         "sample_location": "---",
@@ -137,7 +122,6 @@ def test_trial_core():
     sample2 = {
         "cimac_id": "CTTTPPP12.00",
         "parent_sample_id": "ssidb",
-        "aliquots": [aliquot2],
         "collection_event_name": "Baseline",
         "type_of_primary_container": "Sodium heparin",
         "sample_location": "---",

@@ -40,8 +40,13 @@
       "additionalProperties": false,
       "properties": {
         "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
-        "files": {"$ref": "assays/tcr_assay.json#definitions/files"},
-        "tsv_file": {"$ref": "artifacts/artifact_tsv.json"}
+        "files": {
+          "$ref": "assays/tcr_assay.json#definitions/files",
+          "description": "used only if fastq files were received for a TCRseq assay (non-Adaptive sequencing)"
+        },
+        "tsv_file": {
+          "$ref": "artifacts/artifact_tsv.json"
+        }
       },
       "mergeStrategy": "objectMerge",
       "required": [

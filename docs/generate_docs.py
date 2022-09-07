@@ -621,28 +621,18 @@ def _make_file(
     if full_name.startswith("."):
         full_name = full_name[1:]
 
-    # TODO remove try/catch
-    try:
-        # render the HTML to string
-        entity_html = template.render(
-            name=name,
-            full_name=full_name,
-            schema=schema,
-            scope=scope,
-            full_json_str="",
-        )
-    except Exception as e:
-        if isinstance(schema, Schema):
-            json.dump(schema.schema, open("problem_schema.json", "w"))
-        else:
-            json.dump(schema, open("problem_schema.json", "w"))
+    # render the HTML to string
+    entity_html = template.render(
+        name=name,
+        full_name=full_name,
+        schema=schema,
+        scope=scope,
+        full_json_str="",
+    )
 
-        raise Exception(f"Error rendering template documentation for {name}") from e
-
-    else:
-        # write this out
-        with open(os.path.join(out_directory, f"{full_name}.html"), "w") as f:
-            f.write(entity_html)
+    # write this out
+    with open(os.path.join(out_directory, f"{full_name}.html"), "w") as f:
+        f.write(entity_html)
 
 
 # ----- Schemas Loaders ----- #

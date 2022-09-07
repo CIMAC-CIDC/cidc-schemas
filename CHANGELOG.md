@@ -14,6 +14,13 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `changed` change schemas documentation format for the portal
   - nested accordions with property tables
   - small changes to eg titles, description, filepaths
+- `changed` DM tweaks
+  - cytof assay core: concatenation_version and normalization_version from entry to input_files
+    - so controls can ALSO have like samples
+  - misc_data: description to file_description on file
+  - `removed` collection_event_list on clinical_trial
+  - `removed` cidc_participant_id and clinical on participant
+  - `removed` cidc_id and aliquots on samples
 
 ## Version `0.25.54` - 17 Aug 2022
 

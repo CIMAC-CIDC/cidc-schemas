@@ -157,6 +157,12 @@
                 </div>
                 <div id="{{ prop_name }}_card" class="collapse" aria-labelledby="{{ prop_name }}">
                     <div class="card-body">
+                        {% if "items" in prop_schema %}
+                            <b>type:</b> array
+                        {% else %}
+                            <b>type:</b> object
+                        {% endif %}
+                        <br>
                         {% if "description" in prop_schema %}
                             {{ prop_schema["description"].replace("/n", "<br>") }}
                         {% endif %}
@@ -226,7 +232,11 @@
             &gt;
             <ul>
             {% for ref in prop_schema['anyOf'] %}
-                <li><a href="{{ref['url']}}">{{ref['url'].replace('.html', '')}}</a></li>
+                <li>
+                    <a href="{{ ref['url'].replace('artifacts.artifact_', 'files.').replace('clinical_data', 'assays.clinical_data').replace('assays.components.', '').replace('ngs_analyses', 'analyses') }}">
+                        {{ ref['url'].replace('artifacts.artifact_', '').replace('ngs_analyses', 'analyses').replace('.html', '').replace('assays.', '').replace('components.', '').replace("_"," ") }}
+                    </a>
+                </li>
             {% endfor %}
             </ul>
         {% else %}

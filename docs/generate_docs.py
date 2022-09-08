@@ -217,17 +217,33 @@ class AssaySchema(Schema):
 
         # break up the merge pointer into a set of keys
         # remove any array parts -- we'll always keep descending
-        levels = [
+        levels: List[str] = [
             part
             for part in merge_pointer.split("/")
             if not part.isdigit() and part not in ("-", "")
         ]
+        # want to add back {"items": True} to anything that's a array
+        ptr: int = 0
+        array_pointers: List[List[str]] = []
+        for part in merge_pointer.split("/"):
+            if levels[ptr] == part:
+                # there wasn't an array here we dropped
+                ptr += 1
+                # bail at the end, it'll inherit {"type": "array"}
+                if ptr == len(levels):
+                    break
+            else:
+                # note the processed pointer up until this point
+                array_pointers.append(levels[:ptr])
+
         # skip down assays/self.assay_schema.name
         if levels[0] in ("assays", "analysis"):
             levels = levels[2:]
+            array_pointers = [l[2:] for l in array_pointers]
         else:
             # skip down clinical_data/
             levels = levels[1:]
+            array_pointers = [l[1:] for l in array_pointers]
 
         root = utils.descend_dict(root, levels)
 
@@ -244,6 +260,13 @@ class AssaySchema(Schema):
 
         # update in place instead of returning
         utils.nested_set(data_store, levels, root)
+
+        # for every intermediate array found before add {"items": True}
+        # so the template knows this is an array and not an object
+        for pointer_to_array in array_pointers:
+            # unneeded at the top level since docs are for a singular upload
+            if len(pointer_to_array):
+                utils.nested_set(data_store, pointer_to_array + ["items"], True)
 
     def _get_merge_pointer_definitions(
         self, merge_pointers: Set[str]
@@ -314,14 +337,18 @@ class AssaySchema(Schema):
             merge_pointers=assay_data_merge_pointers
         )
 
-        self.required_assay_metadata: List[str] = [
-            r for r in self.required if r in assay_metadata_merge_pointers
-        ]
-        self.required_assay_data: List[str] = [
-            prop
-            for prop, definition in self.assay_data.items()
-            if definition.get("required")
-        ]
+        try:
+            self.required_assay_metadata: List[str] = [
+                r for r in self.required if r in assay_metadata_merge_pointers
+            ]
+            self.required_assay_data: List[str] = [
+                prop
+                for prop, definition in self.assay_data.items()
+                if definition.get("required")
+            ]
+        except:
+            print(self.assay_data)
+            raise
 
     def process_analyses(self) -> None:
         """
@@ -485,7 +512,11 @@ class TemplateSchema(Schema):
             for name in possible_contexts.keys():
                 if possible_contexts[name] and next_level in possible_contexts[name]:
                     possible_contexts[name] = possible_contexts[name][next_level]
-                    if "items" in possible_contexts[name]:
+                    if "items" in possible_contexts[name] and not isinstance(
+                        # added in _add_merge_pointer_to_data_store for template
+                        possible_contexts[name]["items"],
+                        bool,
+                    ):
                         possible_contexts[name] = possible_contexts[name]["items"]
                     if (
                         "properties" in possible_contexts[name]
@@ -495,7 +526,11 @@ class TemplateSchema(Schema):
                     possible_contexts[name] = utils.load_subschema_from_url(
                         possible_contexts[name]
                     )
-                    if "items" in possible_contexts[name]:
+                    if "items" in possible_contexts[name] and not isinstance(
+                        # added in _add_merge_pointer_to_data_store for template
+                        possible_contexts[name]["items"],
+                        bool,
+                    ):
                         possible_contexts[name] = possible_contexts[name]["items"]
                     if "properties" in possible_contexts[name]:
                         possible_contexts[name] = possible_contexts[name]["properties"]
@@ -675,14 +710,19 @@ def load_assay_schemas() -> Dict[str, AssaySchema]:
     ]
 
     def strip(s: str) -> str:
-        return "_".join([t for t in s.split("_") if t not in parts_to_remove])
+        # don't cut wes_analysis, as it's handled separately from wes assay
+        if s == "wes_analysis":
+            return s
+        else:
+            return "_".join([t for t in s.split("_") if t not in parts_to_remove])
 
     # get generic assay categories
     assay_names = set(
         strip(template_name) for template_name in all_assay_template_schemas.keys()
     )
     # while no explicit assay templates, these do exist
-    assay_names.update({"micsss", "wes_tumor_only"})
+    # `wes_analysis` to put wes_analysis into separate from assay
+    assay_names.update({"micsss", "wes_tumor_only", "wes_analysis"})
 
     # split templates by generic assay
     assay_template_schemas: Dict[str, Dict[str, dict]] = {
@@ -697,7 +737,12 @@ def load_assay_schemas() -> Dict[str, AssaySchema]:
         assay_name: {
             template_name: template_schema
             for template_name, template_schema in all_analysis_template_schemas.items()
-            if strip(template_name) == assay_name
+            # handle wes_analysis separately from wes assay
+            if (
+                "wes_analysis" not in template_name
+                and strip(template_name) == assay_name
+            )
+            or ("wes_analysis" in template_name and assay_name == "wes_analysis")
         }
         for assay_name in assay_names
     }

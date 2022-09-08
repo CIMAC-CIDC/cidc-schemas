@@ -32,11 +32,11 @@
             <a href="index.html">CIDC Documentation</a>
         </p>
         <h1>
-            RNAseq level 1 analysis template
-            
+            WES analysis template
+            <b> OLD </b> 
         </h1>
         <p>
-            <b>Description:</b>  RNA sequencing Level 1 analysis submission.
+            <b>Description:</b>  Metadata information for WES Analysis output.
         </p>
     </div>
 
@@ -44,28 +44,28 @@
         
             
 
-    <div class="accordion" id="RNAseq_level_1_Analysis_accordion">
+    <div class="accordion" id="WES_Analysis_accordion">
         <div class="card">
-            <div class="card-header" id="RNAseq_level_1_Analysis">
+            <div class="card-header" id="WES_Analysis">
                 <h2 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#RNAseq_level_1_Analysis_card" aria-expanded="false" aria-controls="RNAseq_level_1_Analysis_card">
-                        Worksheet - RNAseq level 1 Analysis
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#WES_Analysis_card" aria-expanded="false" aria-controls="WES_Analysis_card">
+                        Worksheet - WES Analysis
                     </button>
                 </h2>
             </div>
-            <div id="RNAseq_level_1_Analysis_card" class="collapse" aria-labelledby="RNAseq_level_1_Analysis" data-parent="#RNAseq_level_1_Analysis_accordion">
+            <div id="WES_Analysis_card" class="collapse" aria-labelledby="WES_Analysis" data-parent="#WES_Analysis_accordion">
                 <div class="card-body">
                     
-                        <div class="accordion" id="RNAseq_level_1_Analysis_preamble_accordion">
+                        <div class="accordion" id="WES_Analysis_preamble_accordion">
                             <div class="card">
-                                <div class="card-header" id="RNAseq_level_1_Analysis_preamble">
+                                <div class="card-header" id="WES_Analysis_preamble">
                                     <h2 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#RNAseq_level_1_Analysis_preamble_card" aria-expanded="false" aria-controls="RNAseq_level_1_Analysis_preamble_card">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#WES_Analysis_preamble_card" aria-expanded="false" aria-controls="WES_Analysis_preamble_card">
                                             Preamble Rows
                                         </button>
                                     </h2>
                                 </div>
-                                <div id="RNAseq_level_1_Analysis_preamble_card" class="collapse" aria-labelledby="RNAseq_level_1_Analysis_preamble" data-parent="#RNAseq_level_1_Analysis_preamble_accordion">
+                                <div id="WES_Analysis_preamble_card" class="collapse" aria-labelledby="WES_Analysis_preamble" data-parent="#WES_Analysis_preamble_accordion">
                                     <div class="card-body">
                                         
     
@@ -164,19 +164,19 @@
                         </div>
                     
                     
-                        <div class="accordion" id="RNAseq_level_1_Analysis_body_accordion">
+                        <div class="accordion" id="WES_Analysis_body_accordion">
                             <div class="card">
-                                <div class="card-header" id="RNAseq_level_1_Analysis_body">
+                                <div class="card-header" id="WES_Analysis_body">
                                     <h2 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#RNAseq_level_1_Analysis_body_card" aria-expanded="false" aria-controls="RNAseq_level_1_Analysis_body_card">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#WES_Analysis_body_card" aria-expanded="false" aria-controls="WES_Analysis_body_card">
                                             Data Columns
                                         </button>
                                     </h2>
                                 </div>
-                                <div id="RNAseq_level_1_Analysis_body_card" class="collapse" aria-labelledby="RNAseq_level_1_Analysis_body" data-parent="#RNAseq_level_1_Analysis_body_accordion">
+                                <div id="WES_Analysis_body_card" class="collapse" aria-labelledby="WES_Analysis_body" data-parent="#WES_Analysis_body_accordion">
                                     <div class="card-body">
                                         
-                                            <h5 class="text-muted">RNAseq level 1 Runs</h4>
+                                            <h5 class="text-muted">WES Runs</h4>
                                             
     
 
@@ -199,6 +199,14 @@
         
             
         
+            
+        
+            
+        
+        
+            
+        
+            
         
             
         
@@ -214,7 +222,7 @@
     </td>
     <td width=55%>
         
-            Comments on the RNAseq analysis run.
+            Comments on the paired analysis run.
         
     </td>
     <td>
@@ -238,12 +246,12 @@
             
                 <tr>
     <td colspan=3 class="container">
-        <div class="accordion" id="cimac_id_accordion">
+        <div class="accordion" id="run_id_accordion">
             <div class="card">
-                <div class="card-header" id="cimac_id">
+                <div class="card-header" id="run_id">
                     <div class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#cimac_id_card" aria-expanded="false" aria-controls="cimac_id_card">
-                            cimac id
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#run_id_card" aria-expanded="false" aria-controls="run_id_card">
+                            run id
                         </button>
                         <div style="float: right;">
                             &lt; 
@@ -256,10 +264,10 @@
                         </div>
                     </div>
                 </div>
-                <div id="cimac_id_card" class="collapse" aria-labelledby="cimac_id">
+                <div id="run_id_card" class="collapse" aria-labelledby="run_id">
                     <div class="card-body">
                         
-                            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+                            An id used for a paired analysis run.
                         
                         <br>
                         
@@ -275,7 +283,7 @@
             <tr>
                 <td>
                     
-                        {folder or ""}analysis/{id}_error.yaml
+                        {folder or ""}analysis/{run}_error.yaml
                     
                 </td>
                 <td width=55%>
@@ -295,7 +303,533 @@
             <tr>
                 <td>
                     
-                        {folder or ""}analysis/star/{id}/{id}.sorted.bam
+                        {folder or ""}analysis/somatic/{run}/{run}_tnscope.output.vcf.gz
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a Gzipped VCF file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.vcf_gz.html">
+                            vcf gz
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/somatic/{run}/{run}_tnscope.filter.vcf.gz
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a Gzipped VCF file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.vcf_gz.html">
+                            vcf gz
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/somatic/{run}/{run}_tnscope.filter.maf
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a MAF file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.maf.html">
+                            maf
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/somatic/{run}/{run}_tnscope.output.twist.vcf
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a VCF file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.vcf.html">
+                            vcf
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/somatic/{run}/{run}_tnscope.output.twist.maf
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a MAF file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.maf.html">
+                            maf
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/somatic/{run}/{run}_tnscope.output.twist.filtered.vcf
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a VCF file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.vcf.html">
+                            vcf
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/somatic/{run}/{run}_tnscope.output.twist.filtered.maf
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a MAF file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.maf.html">
+                            maf
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/germline/{run}/{run}_vcfcompare.txt
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a text file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.text.html">
+                            text
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/report/somatic_variants/05_tumor_germline_overlap.tsv
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a tab Separated file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.tsv.html">
+                            tsv
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/report/neoantigens/01_HLA_Results.tsv
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a tab Separated file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.tsv.html">
+                            tsv
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/neoantigen/{run}/combined/{run}.filtered.tsv
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a tab Separated file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.tsv.html">
+                            tsv
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/purity/{run}/{run}.optimalpurityvalue.txt
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a text file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.text.html">
+                            text
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/clonality/{run}/{run}_pyclone.tsv
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a tab Separated file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.tsv.html">
+                            tsv
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/clonality/{run}/{run}_table.tsv
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a tab Separated file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.tsv.html">
+                            tsv
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/copynumber/{run}/{run}_cnvcalls.txt
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a text file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.text.html">
+                            text
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/copynumber/{run}/{run}_cnvcalls.txt.tn.tsv
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a tab Separated file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.tsv.html">
+                            tsv
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/msisensor2/{run}/{run}_msisensor.txt
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a text file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.text.html">
+                            text
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/rna/{run}/{run}.haplotyper.rna.vcf.gz
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a Gzipped VCF file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.vcf_gz.html">
+                            vcf gz
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/rna/{run}/{run}_tnscope.filter.neoantigen.vep.rna.vcf
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a VCF file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.vcf.html">
+                            vcf
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/report.tar.gz
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a GZ file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.gz.html">
+                            gz
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/report/WES_Meta/02_WES_Run_Version.tsv
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a tab Separated file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.tsv.html">
+                            tsv
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/report/config.yaml
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a YAML file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.yaml.html">
+                            yaml
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/report/metasheet.csv
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a comma separated file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.csv.html">
+                            csv
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/report/json/{run}.wes.json
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a JSON file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.json.html">
+                            json
+                        </a>
+                    
+                </td>
+            </tr>
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="normal_cimac_id_accordion">
+            <div class="card">
+                <div class="card-header" id="normal_cimac_id">
+                    <div class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#normal_cimac_id_card" aria-expanded="false" aria-controls="normal_cimac_id_card">
+                            normal cimac id
+                        </button>
+                        <div style="float: right;">
+                            &lt; 
+                                
+        string
+    
+
+    
+                            &gt;
+                        </div>
+                    </div>
+                </div>
+                <div id="normal_cimac_id_card" class="collapse" aria-labelledby="normal_cimac_id">
+                    <div class="card-body">
+                        
+                            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+                        
+                        <br>
+                        
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>File name</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/align/{id}/{id}.sorted.dedup.bam
                     
                 </td>
                 <td width=55%>
@@ -315,7 +849,7 @@
             <tr>
                 <td>
                     
-                        {folder or ""}analysis/star/{id}/{id}.sorted.bam.bai
+                        {folder or ""}analysis/align/{id}/{id}.sorted.dedup.bam.bai
                     
                 </td>
                 <td width=55%>
@@ -335,7 +869,7 @@
             <tr>
                 <td>
                     
-                        {folder or ""}analysis/star/{id}/{id}.sorted.bam.stat.txt
+                        {folder or ""}analysis/optitype/{id}/{id}_result.tsv
                     
                 </td>
                 <td width=55%>
@@ -355,7 +889,153 @@
             <tr>
                 <td>
                     
-                        {folder or ""}analysis/star/{id}/{id}.transcriptome.bam
+                        {folder or ""}analysis/xhla/{id}/report-{id}-hla.json
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a JSON file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.json.html">
+                            json
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/metrics/{id}/{id}_coverage_metrics.txt
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a text file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.text.html">
+                            text
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/metrics/{id}/{id}_target_metrics.txt
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a text file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.text.html">
+                            text
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/metrics/{id}/{id}_coverage_metrics.sample_summary.txt
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a text file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.text.html">
+                            text
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/germline/{id}/{id}_haplotyper.targets.vcf.gz
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a Gzipped VCF file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.vcf_gz.html">
+                            vcf gz
+                        </a>
+                    
+                </td>
+            </tr>
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="tumor_cimac_id_accordion">
+            <div class="card">
+                <div class="card-header" id="tumor_cimac_id">
+                    <div class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#tumor_cimac_id_card" aria-expanded="false" aria-controls="tumor_cimac_id_card">
+                            tumor cimac id
+                        </button>
+                        <div style="float: right;">
+                            &lt; 
+                                
+        string
+    
+
+    
+                            &gt;
+                        </div>
+                    </div>
+                </div>
+                <div id="tumor_cimac_id_card" class="collapse" aria-labelledby="tumor_cimac_id">
+                    <div class="card-body">
+                        
+                            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+                        
+                        <br>
+                        
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>File name</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/align/{id}/{id}.sorted.dedup.bam
                     
                 </td>
                 <td width=55%>
@@ -375,18 +1055,18 @@
             <tr>
                 <td>
                     
-                        {folder or ""}analysis/star/{id}/{id}.Chimeric.out.junction
+                        {folder or ""}analysis/align/{id}/{id}.sorted.dedup.bam.bai
                     
                 </td>
                 <td width=55%>
                     
-                        Information about a JUNCTION file.
+                        Information about a Bam index file.
                     
                 </td>
                 <td>
                     
-                        <a href="files.junction.html">
-                            junction
+                        <a href="files.bam_bai.html">
+                            bam bai
                         </a>
                     
                 </td>
@@ -395,27 +1075,7 @@
             <tr>
                 <td>
                     
-                        {folder or ""}analysis/rseqc/read_distrib/{id}/{id}.txt
-                    
-                </td>
-                <td width=55%>
-                    
-                        Information about a binary file.
-                    
-                </td>
-                <td>
-                    
-                        <a href="files.binary.html">
-                            binary
-                        </a>
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td>
-                    
-                        {folder or ""}analysis/rseqc/tin_score/{id}/{id}.summary.txt
+                        {folder or ""}analysis/optitype/{id}/{id}_result.tsv
                     
                 </td>
                 <td width=55%>
@@ -435,127 +1095,7 @@
             <tr>
                 <td>
                     
-                        {folder or ""}analysis/rseqc/tin_score/{id}/{id}.tin_score.txt
-                    
-                </td>
-                <td width=55%>
-                    
-                        Information about a text file.
-                    
-                </td>
-                <td>
-                    
-                        <a href="files.text.html">
-                            text
-                        </a>
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td>
-                    
-                        {folder or ""}analysis/salmon/{id}/{id}.quant.sf
-                    
-                </td>
-                <td width=55%>
-                    
-                        Information about a text file.
-                    
-                </td>
-                <td>
-                    
-                        <a href="files.text.html">
-                            text
-                        </a>
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td>
-                    
-                        {folder or ""}analysis/salmon/{id}/{id}.transcriptome.bam.log
-                    
-                </td>
-                <td width=55%>
-                    
-                        Information about a text file.
-                    
-                </td>
-                <td>
-                    
-                        <a href="files.text.html">
-                            text
-                        </a>
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td>
-                    
-                        {folder or ""}analysis/salmon/{id}/aux_info/ambig_info.tsv
-                    
-                </td>
-                <td width=55%>
-                    
-                        Information about a tab Separated file.
-                    
-                </td>
-                <td>
-                    
-                        <a href="files.tsv.html">
-                            tsv
-                        </a>
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td>
-                    
-                        {folder or ""}analysis/salmon/{id}/aux_info/expected_bias.gz
-                    
-                </td>
-                <td width=55%>
-                    
-                        Information about a GZ file.
-                    
-                </td>
-                <td>
-                    
-                        <a href="files.gz.html">
-                            gz
-                        </a>
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td>
-                    
-                        {folder or ""}analysis/salmon/{id}/aux_info/fld.gz
-                    
-                </td>
-                <td width=55%>
-                    
-                        Information about a GZ file.
-                    
-                </td>
-                <td>
-                    
-                        <a href="files.gz.html">
-                            gz
-                        </a>
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td>
-                    
-                        {folder or ""}analysis/salmon/{id}/aux_info/meta_info.json
+                        {folder or ""}analysis/xhla/{id}/report-{id}-hla.json
                     
                 </td>
                 <td width=55%>
@@ -575,87 +1115,7 @@
             <tr>
                 <td>
                     
-                        {folder or ""}analysis/salmon/{id}/aux_info/observed_bias.gz
-                    
-                </td>
-                <td width=55%>
-                    
-                        Information about a GZ file.
-                    
-                </td>
-                <td>
-                    
-                        <a href="files.gz.html">
-                            gz
-                        </a>
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td>
-                    
-                        {folder or ""}analysis/salmon/{id}/aux_info/observed_bias_3p.gz
-                    
-                </td>
-                <td width=55%>
-                    
-                        Information about a GZ file.
-                    
-                </td>
-                <td>
-                    
-                        <a href="files.gz.html">
-                            gz
-                        </a>
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td>
-                    
-                        {folder or ""}analysis/salmon/{id}/cmd_info.json
-                    
-                </td>
-                <td width=55%>
-                    
-                        Information about a JSON file.
-                    
-                </td>
-                <td>
-                    
-                        <a href="files.json.html">
-                            json
-                        </a>
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td>
-                    
-                        {folder or ""}analysis/salmon/{id}/logs/salmon_quant.log
-                    
-                </td>
-                <td width=55%>
-                    
-                        Information about a log file.
-                    
-                </td>
-                <td>
-                    
-                        <a href="files.log.html">
-                            log
-                        </a>
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td>
-                    
-                        {folder or ""}analysis/microbiome/{id}/{id}_addSample_report.txt
+                        {folder or ""}analysis/metrics/{id}/{id}_coverage_metrics.txt
                     
                 </td>
                 <td width=55%>
@@ -675,47 +1135,7 @@
             <tr>
                 <td>
                     
-                        {folder or ""}analysis/trust4/{id}/{id}_report.tsv
-                    
-                </td>
-                <td width=55%>
-                    
-                        Information about a tab Separated file.
-                    
-                </td>
-                <td>
-                    
-                        <a href="files.tsv.html">
-                            tsv
-                        </a>
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td>
-                    
-                        {folder or ""}analysis/fusion/{id}/{id}.fusion_predictions.abridged_addSample.tsv
-                    
-                </td>
-                <td width=55%>
-                    
-                        Information about a tab Separated file.
-                    
-                </td>
-                <td>
-                    
-                        <a href="files.tsv.html">
-                            tsv
-                        </a>
-                    
-                </td>
-            </tr>
-        
-            <tr>
-                <td>
-                    
-                        {folder or ""}analysis/msisensor/single/{id}/{id}_msisensor.txt
+                        {folder or ""}analysis/metrics/{id}/{id}_target_metrics.txt
                     
                 </td>
                 <td width=55%>
@@ -735,18 +1155,38 @@
             <tr>
                 <td>
                     
-                        {folder or ""}analysis/neoantigen/{id}/{id}.genotype.json
+                        {folder or ""}analysis/metrics/{id}/{id}_coverage_metrics.sample_summary.txt
                     
                 </td>
                 <td width=55%>
                     
-                        Information about a JSON file.
+                        Information about a text file.
                     
                 </td>
                 <td>
                     
-                        <a href="files.json.html">
-                            json
+                        <a href="files.text.html">
+                            text
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/germline/{id}/{id}_haplotyper.targets.vcf.gz
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a Gzipped VCF file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.vcf_gz.html">
+                            vcf gz
                         </a>
                     
                 </td>

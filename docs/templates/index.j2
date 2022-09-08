@@ -28,17 +28,43 @@
                                     {% for entity_name, entity_schema in schemas.items() %}
                                         <tr>
                                             {% if group == "concepts" %}
-                                                <td width=25%><a href='{{ entity_name }}.html'>{{ entity_schema["title"] }}</a></td>
-                                                <td>{{ entity_schema["description"] }}</td>
+                                                <td width=25%>
+                                                    <a href='{{ entity_name }}.html'>
+                                                        {{ entity_schema["title"] }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    {{ entity_schema["description"] }}
+                                                </td>
                                             {% elif group == "assays" %}
-                                                <td width=25%><a href='{{ group }}.{{ entity_name }}.html'>{{ entity_schema.schema["title"] }}</a></td>
-                                                <td>{{ entity_schema.schema["description"] }}</td>
+                                                {% if "old" not in entity_name %}
+                                                    <td width=25%>
+                                                        <a href='{{ group }}.{{ entity_name }}.html'>
+                                                            {{ entity_schema.schema["title"] }}
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        {{ entity_schema.schema["description"] }}
+                                                    </td>
+                                                {% endif %}
                                             {% elif group == "manifests" %}
-                                                <td width=25%><a href='{{ group }}.{{ entity_name }}.html'>{{ entity_schema.schema["title"] }}</a></td>
-                                                <td>{{ entity_schema.schema["description"] }}</td>
+                                                <td width=25%>
+                                                    <a href='{{ group }}.{{ entity_name }}.html'>
+                                                        {{ entity_schema.schema["title"] }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    {{ entity_schema.schema["description"] }}
+                                                </td>
                                             {% else %}
-                                                <td width=25%><a href='{{ group }}.{{ entity_name }}.html'>{{ entity_schema["title"] }}</a></td>
-                                                <td>{{ entity_schema["description"] }}</td>
+                                                <td width=25%>
+                                                    <a href='{{ group }}.{{ entity_name }}.html'>
+                                                        {{ entity_schema["title"] }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    {{ entity_schema["description"] }}
+                                                </td>
                                             {% endif %}
                                         </tr>
                                     {% endfor %}

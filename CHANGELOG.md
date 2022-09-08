@@ -14,6 +14,8 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `changed` change schemas documentation format for the portal
   - nested accordions with property tables
   - small changes to eg titles, description, filepaths
+  - added back old WES templates in documentation only
+    - taken from commit [207330acb52f862e2b5a20c22affb3f6f1caac73](https://github.com/CIMAC-CIDC/cidc-schemas/tree/207330acb52f862e2b5a20c22affb3f6f1caac73)
 - `changed` DM tweaks
   - cytof assay core: concatenation_version and normalization_version from entry to input_files
     - so controls can ALSO have like samples

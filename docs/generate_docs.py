@@ -12,6 +12,7 @@ import utils
 
 DOCS_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATES_DIR = os.path.join(DOCS_DIR, "templates")
+OLD_UPLOAD_DIR = os.path.join(DOCS_DIR, "old_uploads")
 HTML_DIR = os.path.join(DOCS_DIR, "docs")
 
 # load the protocol_identifier schema for easy use
@@ -172,8 +173,12 @@ class AssaySchema(Schema):
         self,
         name: str,
         schema: dict,
-        assay_templates: Dict[str, dict],
-        analysis_templates: Dict[str, dict],
+        assay_templates: Dict[str, dict] = dict(),
+        analysis_templates: Dict[str, dict] = dict(),
+        assay_metadata_merge_pointers: Set[str] = set(),
+        assay_data_merge_pointers: Set[str] = set(),
+        analysis_metadata_merge_pointers: Set[str] = set(),
+        analysis_data_merge_pointers: Set[str] = set(),
     ) -> None:
         """
         Parameters
@@ -182,10 +187,14 @@ class AssaySchema(Schema):
             the name of the schema
         schema: dict
             the jsonschemas definition for this assay from SCHEMA_DIR/assays
-        assay_templates: Dict[str, dict]
+        assay_templates: Dict[str, dict] = dict()
             a mapping of the assay template(s) for this assay to their definition(s)
-        analysis_templates: Dict[str, dict]
+        analysis_templates: Dict[str, dict] = dict()
             a mapping of the analysis template(s) for this assay to their definition(s)
+        assay_metadata_merge_pointers: Set[str] = set()
+        assay_data_merge_pointers: Set[str] = set()
+        analysis_metadata_merge_pointers: Set[str] = set()
+        analysis_data_merge_pointers: Set[str] = set()
         """
         super().__init__(name=name, schema=schema)
 
@@ -194,9 +203,15 @@ class AssaySchema(Schema):
 
         print("Processing", self.name)
         # set self.[required_]assay_[meta]data
-        self.process_assays()
+        self.process_assays(
+            assay_metadata_merge_pointers=assay_metadata_merge_pointers,
+            assay_data_merge_pointers=assay_data_merge_pointers,
+        )
         # set self.[required_]analysis_[meta]data
-        self.process_analyses()
+        self.process_analyses(
+            analysis_metadata_merge_pointers=analysis_metadata_merge_pointers,
+            analysis_data_merge_pointers=analysis_data_merge_pointers,
+        )
 
     def _add_merge_pointer_to_data_store(
         self, merge_pointer: str, data_store: dict
@@ -304,13 +319,22 @@ class AssaySchema(Schema):
         return data
 
     # ----- Business Functions ----- #
-    def process_assays(self) -> None:
+    def process_assays(
+        self,
+        assay_metadata_merge_pointers: Set[str] = set(),
+        assay_data_merge_pointers: Set[str] = set(),
+    ) -> None:
         """
         Loads and sets:
             self.assay_metadata: Dict[str, dict]
             self.assay_data: Dict[str, dict]
             self.required_assay_metadata: List[str]
             self.required_assay_data: List[str]
+        
+        Parameters
+        ----------
+        assay_metadata_merge_pointers: Set[str] = set()
+        assay_data_merge_pointers: Set[str] = set()
         """
         # load the related schema
         if self.name == "rna":
@@ -324,12 +348,16 @@ class AssaySchema(Schema):
         else:
             self.root = self.schema["properties"]
 
-        # get all merge_pointers referenced in the assay template(s)
+        # if not passed, get all merge_pointers referenced in the assay template(s)
         # split by metadata ie preamble vs data
-        (
-            assay_metadata_merge_pointers,
-            assay_data_merge_pointers,
-        ) = _get_all_merge_pointers(template_list=self.assay_templates.values())
+        if not len(assay_metadata_merge_pointers) and not len(
+            assay_data_merge_pointers
+        ):
+            (
+                assay_metadata_merge_pointers,
+                assay_data_merge_pointers,
+            ) = _get_all_merge_pointers(template_list=self.assay_templates.values())
+
         self.assay_metadata: Dict[str, dict] = self._get_merge_pointer_definitions(
             merge_pointers=assay_metadata_merge_pointers
         )
@@ -337,26 +365,31 @@ class AssaySchema(Schema):
             merge_pointers=assay_data_merge_pointers
         )
 
-        try:
-            self.required_assay_metadata: List[str] = [
-                r for r in self.required if r in assay_metadata_merge_pointers
-            ]
-            self.required_assay_data: List[str] = [
-                prop
-                for prop, definition in self.assay_data.items()
-                if definition.get("required")
-            ]
-        except:
-            print(self.assay_data)
-            raise
+        self.required_assay_metadata: List[str] = [
+            r for r in self.required if r in assay_metadata_merge_pointers
+        ]
+        self.required_assay_data: List[str] = [
+            prop
+            for prop, definition in self.assay_data.items()
+            if definition.get("required")
+        ]
 
-    def process_analyses(self) -> None:
+    def process_analyses(
+        self,
+        analysis_metadata_merge_pointers: Set[str] = set(),
+        analysis_data_merge_pointers: Set[str] = set(),
+    ) -> None:
         """
         Loads and sets:
             self.analysis_metadata: Dict[str, dict]
             self.analysis_data: Dict[str, dict]
             self.required_analysis_metadata: List[str]
             self.required_analysis_data: List[str]
+            
+        Parameters
+        ----------
+        analysis_metadata_merge_pointers: Set[str] = set()
+        analysis_data_merge_pointers: Set[str] = set()
         """
         if self.name in ("atacseq", "ctdna", "microbiome", "rna", "tcr", "wes"):
             if self.name in ("atacseq", "rna"):
@@ -391,10 +424,13 @@ class AssaySchema(Schema):
         else:
             self.root = self.schema["properties"]
 
-        (
-            analysis_metadata_merge_pointers,
-            analysis_data_merge_pointers,
-        ) = _get_all_merge_pointers(self.analysis_templates.values())
+        if not len(analysis_metadata_merge_pointers) and not len(
+            analysis_data_merge_pointers
+        ):
+            (
+                analysis_metadata_merge_pointers,
+                analysis_data_merge_pointers,
+            ) = _get_all_merge_pointers(self.analysis_templates.values())
 
         self.analysis_metadata: Dict[str, dict] = self._get_merge_pointer_definitions(
             merge_pointers=analysis_metadata_merge_pointers
@@ -693,6 +729,11 @@ def load_assay_schemas() -> Dict[str, AssaySchema]:
     all_analysis_template_schemas: Dict[str, dict] = utils.load_schemas_in_directory(
         schema_dir=os.path.join(SCHEMA_DIR, "templates", "analyses"),
     )[""]
+    all_analysis_template_schemas.update(
+        utils.load_schemas_in_directory(
+            schema_dir=os.path.join(SCHEMA_DIR, "templates", "analyses"),
+        )[""]
+    )
 
     # load assay DM schemas from SCHEMA_DIR/assays
     all_assay_schemas = utils.load_schemas_in_directory(
@@ -710,8 +751,8 @@ def load_assay_schemas() -> Dict[str, AssaySchema]:
     ]
 
     def strip(s: str) -> str:
-        # don't cut wes_analysis, as it's handled separately from wes assay
-        if s == "wes_analysis":
+        # don't cut wes analysis, handled separately from wes assay
+        if "wes" in s and "analysis" in s:
             return s
         else:
             return "_".join([t for t in s.split("_") if t not in parts_to_remove])
@@ -721,8 +762,8 @@ def load_assay_schemas() -> Dict[str, AssaySchema]:
         strip(template_name) for template_name in all_assay_template_schemas.keys()
     )
     # while no explicit assay templates, these do exist
-    # `wes_analysis` to put wes_analysis into separate from assay
-    assay_names.update({"micsss", "wes_tumor_only", "wes_analysis"})
+    # `wes[_tumor_only]_analysis` to put wes analysis in separate from assay
+    assay_names.update({"micsss", "wes_tumor_only_analysis", "wes_analysis"})
 
     # split templates by generic assay
     assay_template_schemas: Dict[str, Dict[str, dict]] = {
@@ -737,12 +778,16 @@ def load_assay_schemas() -> Dict[str, AssaySchema]:
         assay_name: {
             template_name: template_schema
             for template_name, template_schema in all_analysis_template_schemas.items()
-            # handle wes_analysis separately from wes assay
+            # handle wes analysis separately from wes assay
             if (
-                "wes_analysis" not in template_name
+                ("wes" not in template_name or "analysis" not in template_name)
                 and strip(template_name) == assay_name
             )
-            or ("wes_analysis" in template_name and assay_name == "wes_analysis")
+            or (
+                "wes" in template_name
+                and "analysis" in template_name
+                and assay_name == template_name.replace("_template", "")
+            )
         }
         for assay_name in assay_names
     }
@@ -764,6 +809,27 @@ def load_assay_schemas() -> Dict[str, AssaySchema]:
         )
         for assay_name in sorted(assay_names)
     }
+
+    # add doc configs for old uploads
+    for path in os.listdir(OLD_UPLOAD_DIR):
+        if not path.endswith(".json"):
+            continue
+
+        # remove the unneeded parts; separately to not require both
+        upload_name: str = path.replace("_template", "").replace(".json", "")
+        # handle wes analysis separately from wes assay
+        if "wes" not in upload_name or "analysis" not in upload_name:
+            upload_name = upload_name.replace("_analysis", "")
+
+        assay_name: str = upload_name.replace("_old", "")
+
+        schema = json.load(open(os.path.join(OLD_UPLOAD_DIR, path)))
+
+        template_schemas_by_assay[upload_name] = AssaySchema(
+            name=assay_name,
+            schema=template_schemas_by_assay[assay_name].schema,
+            analysis_templates={upload_name: schema},
+        )
 
     return template_schemas_by_assay
 
@@ -795,7 +861,7 @@ def _load_available_assays_and_analyses() -> Dict[str, Dict[str, dict]]:
         components_dir, "available_ngs_analyses.json"
     )
 
-    def _update_url(dic: dict):
+    def _update_url(name: str, dic: dict):
         if "components.ngs." in dic["url"]:
             # assays.components.ngs.{assay}.{assay}.html -> assays.{assay}.html
             dic["url"] = (
@@ -806,18 +872,21 @@ def _load_available_assays_and_analyses() -> Dict[str, Dict[str, dict]]:
         if (
             "_" in dic["url"]
             and "misc_data" not in dic["url"]
-            and "wes_analysis" not in dic["url"]
+            and ("wes" not in dic["url"] or "analysis" not in dic["url"])
         ):
             dic["url"] = "_".join(dic["url"].split("_")[:-1]) + ".html"
 
+        if "_old" in name:
+            dic["url"] = dic["url"].replace(".html", "_old.html")
+
     # update urls to point to the correct place
     for schema in ret.values():
-        for prop_dict in schema["properties"].values():
+        for prop_name, prop_dict in schema["properties"].items():
             pass
             if "url" in prop_dict:
-                _update_url(prop_dict)
+                _update_url(prop_name, prop_dict)
             elif "items" in prop_dict and "url" in prop_dict["items"]:
-                _update_url(prop_dict["items"])
+                _update_url(prop_name, prop_dict["items"])
 
     return ret
 

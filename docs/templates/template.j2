@@ -9,8 +9,7 @@
             <div class="card-header" id="{{ pyname }}">
                 <h2 class="mb-0">
                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ pyname }}_card" aria-expanded="false" aria-controls="{{ pyname }}_card">
-                        Worksheet -
-                        {{ name }}
+                        Worksheet - {{ name }}
                     </button>
                 </h2>
             </div>
@@ -63,7 +62,7 @@
 
 {% block content %}
 
-    {{ macros.header(schema.schema) }}
+    {{ macros.header(schema.schema, {}, name) }}
 
     <div class="container">
         {% for name, worksheet_schema in schema.schema['properties']['worksheets'].items() %}

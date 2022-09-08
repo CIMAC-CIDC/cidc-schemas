@@ -4,7 +4,10 @@
         <p>
             <a href="index.html">CIDC Documentation</a>
         </p>
-        <h1>{{ schema["title"] }}</h1>
+        <h1>
+            {{ schema["title"] }}
+            {% if "old" in name %}<b> OLD </b> {% endif %}
+        </h1>
         <p>
             <b>Description:</b>  {{ schema["description"].replace("/n", "<br>") }}
         </p>
@@ -21,8 +24,14 @@
         </thead>
         {% for entity_name, entity_schema in templates.items() %}
             <tr>
-                <td width=25%><a href='{{ scope }}.{{ name }}.{{ entity_name }}.html'>{{ entity_schema["title"] }}</a></td>
-                <td>{{ entity_schema["description"].replace("/n", "<br>") }}</td>
+                <td width=25%>
+                    <a href='{{ scope }}.{{ name }}.{{ entity_name }}.html'>
+                        {{ entity_schema["title"] }}{% if "old" in name %} (OLD){% endif %}
+                    </a>
+                </td>
+                <td>
+                    {{ entity_schema["description"].replace("/n", "<br>") }}
+                </td>
             </tr>
         {% endfor %}
     </table>
@@ -215,7 +224,9 @@
                     {{ prop_type_format(prop_schema["items"]) }}
                 {% endif %}
             {% endif %}
-            {% if "pattern" in prop_schema %} as regex <br> <code>{{prop_schema["pattern"]}}</code> {% endif %}
+            {% if "pattern" in prop_schema %}
+                as regex <br> <code>{{prop_schema["pattern"]}}</code>
+            {% endif %}
         {% elif "const" in prop_schema %}
             &lt; const: <strong>{{ prop_schema["const"] }}</strong> &gt;            
         {% elif "url" in prop_schema %}

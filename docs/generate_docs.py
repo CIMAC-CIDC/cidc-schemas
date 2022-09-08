@@ -803,7 +803,11 @@ def _load_available_assays_and_analyses() -> Dict[str, Dict[str, dict]]:
                 + ".html"
             )
 
-        if "_" in dic["url"] and "misc_data" not in dic["url"]:
+        if (
+            "_" in dic["url"]
+            and "misc_data" not in dic["url"]
+            and "wes_analysis" not in dic["url"]
+        ):
             dic["url"] = "_".join(dic["url"].split("_")[:-1]) + ".html"
 
     # update urls to point to the correct place
@@ -820,9 +824,7 @@ def _load_available_assays_and_analyses() -> Dict[str, Dict[str, dict]]:
 
 def load_toplevel_schemas(
     keys: List[str] = [
-        "aliquot",
         "clinical_trial",
-        "collection_event",
         "participant",
         "sample",
         "shipping_core",

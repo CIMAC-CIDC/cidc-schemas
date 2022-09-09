@@ -9,6 +9,80 @@ from cidc_schemas.json_validation import _load_dont_validate_schema
 SCHEMA_STORE: Dict[Tuple[str, bool], dict] = dict()
 
 
+def add_merge_pointer_to_data_store(
+    root: dict, merge_pointer: str, data_store: dict
+) -> Set[str]:
+    """
+    Updates data by nested-setting the endpoint of the pointer with the part of the schema it points to
+    The definition's "required" is a boolean based on the last step
+
+    Parameters
+    ----------
+    root: dict
+        a jsonschemas definition
+    merge_pointer: str
+        the merge_pointer to fish out of root with descend_dict()
+    data_store: dict
+        the nested dict to put the referenced definition
+        set via nested_set() which adds in place
+
+    Returns
+    -------
+    required: Set[str] = set()
+        the list of property names that are required
+    """
+    required: Set[str] = set()
+
+    # break up the merge pointer into a set of keys
+    # remove any array parts -- we'll always keep descending
+    levels: List[str] = [
+        part
+        for part in merge_pointer.split("/")
+        if not part.isdigit() and part not in ("-", "")
+    ]
+    # want to add back {"items": True} to anything that's a array
+    ptr: int = 0
+    array_pointers: List[List[str]] = []
+    for part in merge_pointer.split("/"):
+        if levels[ptr] == part:
+            # there wasn't an array here we dropped
+            ptr += 1
+            # bail at the end, it'll inherit {"type": "array"}
+            if ptr == len(levels):
+                break
+        else:
+            # note the processed pointer up until this point
+            array_pointers.append(levels[:ptr])
+
+    root, new_required = descend_dict(root, levels)
+    required.update(new_required)
+
+    # if merge_pointer points to a new item in the list
+    # make sure we're all the way down and have a description
+    if merge_pointer.endswith("-"):
+        # updates in place
+        load_subschema_from_url(root)
+        required.update(root.get("required", []))
+
+        if "properties" in root:
+            root = root["properties"]
+            required.update(root.get("required", []))
+        if root.get("type", "") == "array" and "description" not in root:
+            root["description"] = root["items"].get("description", "")
+
+    # update in place instead of returning
+    nested_set(data_store, levels, root)
+
+    # for every intermediate array found before add {"items": True}
+    # so the template knows this is an array and not an object
+    for pointer_to_array in array_pointers:
+        # unneeded at the top level since docs are for a singular upload
+        if len(pointer_to_array):
+            nested_set(data_store, pointer_to_array + ["items"], True)
+
+    return required
+
+
 def descend_dict(root: dict, levels: List[str]) -> dict:
     """
     Follows `levels` down through `root`

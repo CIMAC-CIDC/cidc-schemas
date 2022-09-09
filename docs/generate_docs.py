@@ -166,7 +166,6 @@ class AssaySchema(Schema):
     # each with keys "metadata" and "data"
     merge_pointers: Dict[str, Dict[str, Set[str]]]
 
-    root: dict
     assay_metadata: Dict[str, dict]
     assay_data: Dict[str, dict]
     analysis_metadata: Dict[str, dict]
@@ -213,90 +212,20 @@ class AssaySchema(Schema):
         # set self.analysis_[meta]data
         self.process_analysis_merge_pointers()
 
-    def _add_merge_pointer_to_data_store(
-        self, merge_pointer: str, data_store: dict
-    ) -> None:
-        """
-        Updates data by nested-setting the endpoint of the pointer with the part of the schema it points to
-        The definition's "required" is a boolean based on the last step
-
-        Parameters
-        ----------
-        merge_pointer: str
-            the merge_pointer to fish out of self.root with utils.descend_dict()
-        data_store: dict
-            the nested dict to put the referenced definition
-            set via utils.nested_set() which adds in place
-        """
-        root: dict = deepcopy(self.root)
-
-        # break up the merge pointer into a set of keys
-        # remove any array parts -- we'll always keep descending
-        levels: List[str] = [
-            part
-            for part in merge_pointer.split("/")
-            if not part.isdigit() and part not in ("-", "")
-        ]
-        # want to add back {"items": True} to anything that's a array
-        ptr: int = 0
-        array_pointers: List[List[str]] = []
-        for part in merge_pointer.split("/"):
-            if levels[ptr] == part:
-                # there wasn't an array here we dropped
-                ptr += 1
-                # bail at the end, it'll inherit {"type": "array"}
-                if ptr == len(levels):
-                    break
-            else:
-                # note the processed pointer up until this point
-                array_pointers.append(levels[:ptr])
-
-        # skip down assays/self.assay_schema.name
-        if levels[0] in ("assays", "analysis"):
-            levels = levels[2:]
-            array_pointers = [l[2:] for l in array_pointers]
-        else:
-            # skip down clinical_data/
-            levels = levels[1:]
-            array_pointers = [l[1:] for l in array_pointers]
-
-        root, required = utils.descend_dict(root, levels)
-        self.required.update(required)
-
-        # if merge_pointer points to a new item in the list
-        # make sure we're all the way down and have a description
-        if merge_pointer.endswith("-"):
-            # updates in place
-            utils.load_subschema_from_url(root)
-            self.required.update(root.get("required", []))
-
-            if "properties" in root:
-                root = root["properties"]
-                self.required.update(root.get("required", []))
-            if root.get("type", "") == "array" and "description" not in root:
-                root["description"] = root["items"].get("description", "")
-
-        # update in place instead of returning
-        utils.nested_set(data_store, levels, root)
-
-        # for every intermediate array found before add {"items": True}
-        # so the template knows this is an array and not an object
-        for pointer_to_array in array_pointers:
-            # unneeded at the top level since docs are for a singular upload
-            if len(pointer_to_array):
-                utils.nested_set(data_store, pointer_to_array + ["items"], True)
-
     def _get_merge_pointer_definitions(
-        self, merge_pointers: Set[str]
+        self, root: dict, merge_pointers: Set[str]
     ) -> Dict[str, dict]:
         """
-        Given the set of translated merge_pointers, return the definitions for the fields they point to in self.root
-        The definitions are set in place ie nested, with bottom "required" as a boolean
+        Given the set of translated merge_pointers, return the definitions for the fields they point to in root
+        The definitions are set in place ie nested
+        Also updates self.required
 
         Parameters
         ----------
+        root: dict
+            a jsonschemas definition
         merge_pointers: Set[str]
-            the set of merge_pointers to fish out of self.root with _process_merge_pointer()
+            the set of merge_pointers to fish out of root with _process_merge_pointer()
 
         Returns
         -------
@@ -308,18 +237,63 @@ class AssaySchema(Schema):
         if not len(merge_pointers):
             return {}
 
-        data = {}
+        data: Dict[str, dict] = dict()
+        required: Set[str] = set()
         # sort them by the value that will be displayed
         for ptr in sorted(merge_pointers, key=lambda x: x.split("/")[-1]):
             if ptr.endswith("protocol_identifier"):
                 data[ptr] = PROTOCOL_IDENTIFIER_SCHEMA
             else:
-                # updates data in place
-                self._add_merge_pointer_to_data_store(
-                    merge_pointer=ptr, data_store=data
-                )
+                # skip down assays/analysis
+                if ptr.startswith("assays") or ptr.startswith("analysis"):
+                    ptr = "/".join(ptr.split("/")[2:])
+                # skip down clinical_data/
+                elif ptr.startswith("clinical_data"):
+                    ptr = "/".join(ptr.split("/")[1:])
 
+                # updates data in place
+                new_required: Set[str] = utils.add_merge_pointer_to_data_store(
+                    root=deepcopy(root),
+                    merge_pointer=ptr,
+                    data_store=data,
+                )
+                required.update(new_required)
+
+        self.required.update(required)
         return data
+
+    def _get_root(self, for_analysis: bool = False) -> dict:
+        """gets the root by loading the related schema"""
+        # load the related schema
+        if not for_analysis and self.name == "rna":
+            # if it's RNA, get v0
+            root = utils.load_schemas_in_directory(
+                schema_dir=os.path.join(SCHEMA_DIR, "assays"),
+                recursive=False,
+            )[""]["rna_assay-v0"]["properties"]
+
+        elif for_analysis and self.name in ("atacseq", "rna"):
+            root = utils.load_schemas_in_directory(
+                schema_dir=os.path.join(
+                    SCHEMA_DIR,
+                    "assays",
+                    "components",
+                    "ngs",
+                    self.name,
+                ),
+                recursive=False,
+            )[""][f"{self.name}_analysis"]["properties"]
+
+        elif for_analysis and self.name in ("ctdna", "microbiome", "tcr", "wes"):
+            root = utils.load_schemas_in_directory(
+                schema_dir=os.path.join(SCHEMA_DIR, "assays"),
+                recursive=False,
+            )[""][f"{self.name}_analysis"]["properties"]
+
+        else:
+            root = self.schema["properties"]
+
+        return root
 
     # ----- Business Functions ----- #
     def process_assay_merge_pointers(
@@ -329,25 +303,17 @@ class AssaySchema(Schema):
         Loads and sets:
             self.assay_metadata: Dict[str, dict]
             self.assay_data: Dict[str, dict]
+        Updates:
+            self.required
         """
-        # load the related schema
-        if self.name == "rna":
-            # if it's RNA, get v0
-            version_schema = utils.load_schemas_in_directory(
-                schema_dir=os.path.join(SCHEMA_DIR, "assays"),
-                recursive=False,
-            )[""]["rna_assay-v0"]
-            self.root = version_schema["properties"]
-            self.required.update(version_schema["required"])
-        else:
-            self.root = self.schema["properties"]
-            self.required.update(self.root.get("required", []))
+        root: dict = self._get_root(for_analysis=False)
+        self.required.update(root.get("required", []))
 
         self.assay_metadata: Dict[str, dict] = self._get_merge_pointer_definitions(
-            merge_pointers=self.merge_pointers["assay"]["metadata"]
+            root=root, merge_pointers=self.merge_pointers["assay"]["metadata"]
         )
         self.assay_data: Dict[str, dict] = self._get_merge_pointer_definitions(
-            merge_pointers=self.merge_pointers["assay"]["data"]
+            root=root, merge_pointers=self.merge_pointers["assay"]["data"]
         )
 
     def process_analysis_merge_pointers(
@@ -357,46 +323,17 @@ class AssaySchema(Schema):
         Loads and sets:
             self.analysis_metadata: Dict[str, dict]
             self.analysis_data: Dict[str, dict]
+        Updates:
+            self.required
         """
-        if self.name in ("atacseq", "ctdna", "microbiome", "rna", "tcr", "wes"):
-            if self.name in ("atacseq", "rna"):
-                version_schema = utils.load_schemas_in_directory(
-                    schema_dir=os.path.join(
-                        SCHEMA_DIR,
-                        "assays",
-                        "components",
-                        "ngs",
-                        self.name,
-                    ),
-                    recursive=False,
-                )[""][f"{self.name}_analysis"]
-
-            else:  # if self.name in ("ctdna", "microbiome", "tcr", "wes"):
-                version_schema = utils.load_schemas_in_directory(
-                    schema_dir=os.path.join(SCHEMA_DIR, "assays"),
-                    recursive=False,
-                )[""][f"{self.name}_analysis"]
-
-                if self.name == "wes":
-                    # also need to include tumor_only
-                    version2 = utils.load_schemas_in_directory(
-                        schema_dir=os.path.join(SCHEMA_DIR, "assays"),
-                        recursive=False,
-                    )[""][f"{self.name}_tumor_only_analysis"]
-                    version_schema["properties"].update(version2["properties"])
-
-            self.root = version_schema["properties"]
-
-            self.required.update(version_schema.get("required", []))
-        else:
-            self.root = self.schema["properties"]
-            self.required.update(self.root.get("required", []))
+        root: dict = self._get_root(for_analysis=True)
+        self.required.update(root.get("required", []))
 
         self.analysis_metadata: Dict[str, dict] = self._get_merge_pointer_definitions(
-            merge_pointers=self.merge_pointers["analysis"]["metadata"]
+            root=root, merge_pointers=self.merge_pointers["analysis"]["metadata"]
         )
         self.analysis_data: Dict[str, dict] = self._get_merge_pointer_definitions(
-            merge_pointers=self.merge_pointers["analysis"]["data"]
+            root=root, merge_pointers=self.merge_pointers["analysis"]["data"]
         )
 
 
@@ -409,7 +346,6 @@ class TemplateSchema(Schema):
     name: str
     schema: dict
     assay_schema: AssaySchema
-    root: dict
     required: Set[str]
     file_list: List[dict]
 
@@ -500,7 +436,7 @@ class TemplateSchema(Schema):
                 if possible_contexts[name] and next_level in possible_contexts[name]:
                     possible_contexts[name] = possible_contexts[name][next_level]
                     if "items" in possible_contexts[name] and not isinstance(
-                        # added in _add_merge_pointer_to_data_store for template
+                        # added in utils.add_merge_pointer_to_data_store for template
                         possible_contexts[name]["items"],
                         bool,
                     ):
@@ -514,7 +450,7 @@ class TemplateSchema(Schema):
                         possible_contexts[name]
                     )
                     if "items" in possible_contexts[name] and not isinstance(
-                        # added in _add_merge_pointer_to_data_store for template
+                        # added in utils.add_merge_pointer_to_data_store for template
                         possible_contexts[name]["items"],
                         bool,
                     ):
@@ -539,11 +475,46 @@ class TemplateSchema(Schema):
         [definition.update(context) for context in possible_contexts.values()]
         return definition
 
+    def _process_entry(
+        self, context_pointer: str, prop_name: str, prop_schema: dict
+    ) -> None:
+        """
+        Update the given prop_schema with information from self.assay_schema
+        Lines up by merge_pointer, and handles process_as
+        Adds prop_name to self.required unless prop_schema["allow_empty"]
+        """
+        if not prop_schema.get("allow_empty", False):
+            self.required.add(prop_name)
+
+        # if it's protocol_identifier, just add that and keep going
+        if prop_schema.get("merge_pointer", "").endswith("protocol_identifier"):
+            prop_schema.update(PROTOCOL_IDENTIFIER_SCHEMA)
+            self.required.add(prop_name)
+        # if we can, try to add the data from self.assay_schema
+        elif "merge_pointer" in prop_schema:
+            self._update_definition_from_merge_pointer(context_pointer, prop_schema)
+
+        # handle process_as, asserting all entries have merge_pointer
+        if "process_as" in prop_schema:
+            [
+                self._update_definition_from_merge_pointer(context_pointer, entry)
+                for entry in prop_schema["process_as"]
+            ]
+            # for those with a parse_through artifacts, generate a relative_file_path
+            [
+                entry.update(
+                    {"relative_file_path": entry["parse_through"].split("'")[1]}
+                )
+                for entry in prop_schema["process_as"]
+                if entry.get("is_artifact") and "parse_through" in entry
+            ]
+
     def _process_preamble(self, worksheet_schema: dict) -> None:
         """
-        Update the given worksheet_schema with information from assay_schema
+        Update the given worksheet_schema with information from self.assay_schema
         Lines up by merge_pointer
         Asserts the existence of preamble_rows
+        Updates self.required
         """
         # start with the bases from the object pointers
         context_pointer: str = (
@@ -558,24 +529,18 @@ class TemplateSchema(Schema):
         )
 
         for prop_name, prop_schema in worksheet_schema["preamble_rows"].items():
-            # if it's protocol_identifier, just add that and keep going
-            if prop_schema.get("merge_pointer", "").endswith("protocol_identifier"):
-                prop_schema.update(PROTOCOL_IDENTIFIER_SCHEMA)
-                self.required.add(prop_name)
-                continue
-
-            # if we can, try to add the data from self.assay_schema
-            if "merge_pointer" in prop_schema:
-                self._update_definition_from_merge_pointer(context_pointer, prop_schema)
-
-            if not prop_schema.get("allow_empty", False):
-                self.required.add(prop_name)
+            self._process_entry(
+                context_pointer=context_pointer,
+                prop_name=prop_name,
+                prop_schema=prop_schema,
+            )
 
     def _process_data(self, worksheet_schema: dict) -> None:
         """
-        Update the given worksheet_schema with information from assay_schema
+        Update the given worksheet_schema with information from self.assay_schema
         Lines up by merge_pointer, and handles process_as
         Asserts the existence of data_columns
+        Updates self.required
         """
         # start with the bases from the object pointers
         context_pointer: str = (
@@ -592,31 +557,11 @@ class TemplateSchema(Schema):
 
         for table_schema in worksheet_schema["data_columns"].values():
             for prop_name, prop_schema in table_schema.items():
-                if not prop_schema.get("allow_empty", False):
-                    self.required.add(prop_name)
-
-                # if we can, try to add the data from self.assay_schema
-                if "merge_pointer" in prop_schema:
-                    self._update_definition_from_merge_pointer(
-                        context_pointer, prop_schema
-                    )
-
-                # handle process_as, asserting all entries have merge_pointer
-                if "process_as" in prop_schema:
-                    [
-                        self._update_definition_from_merge_pointer(
-                            context_pointer, entry
-                        )
-                        for entry in prop_schema["process_as"]
-                    ]
-                    # for those with a parse_through artifacts, generate a relative_file_path
-                    [
-                        entry.update(
-                            {"relative_file_path": entry["parse_through"].split("'")[1]}
-                        )
-                        for entry in prop_schema["process_as"]
-                        if entry.get("is_artifact") and "parse_through" in entry
-                    ]
+                self._process_entry(
+                    context_pointer=context_pointer,
+                    prop_name=prop_name,
+                    prop_schema=prop_schema,
+                )
 
 
 # ----- Utility Functions ----- #

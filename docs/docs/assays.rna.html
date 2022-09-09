@@ -75,101 +75,11 @@
             
             
                 
-                    <tr>
-    <td>
-        
-            <span id="assay_creator">
-                assay_creator
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Indicates what site is filling out the assay.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                
-        string
-    
-
-    
-            &gt;
-            
-                <ul>
-                    
-                        <li>"DFCI"</li>
-                    
-                        <li>"Mount Sinai"</li>
-                    
-                        <li>"Stanford"</li>
-                    
-                        <li>"MD Anderson"</li>
-                    
-                        <li>"Adaptive"</li>
-                    
-                        <li>"Broad"</li>
-                    
-                </ul>
-            
-            
-            
-        
-    </td>
-</tr>
-                
             
         
             
             
             
-                
-                    <tr>
-    <td>
-        
-            <span id="enrichment_method">
-                enrichment_method
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Method used for enriching for mRNA.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                
-        string
-    
-
-    
-            &gt;
-            
-                <ul>
-                    
-                        <li>"PolyA capture"</li>
-                    
-                        <li>"Transcriptome capture v1"</li>
-                    
-                        <li>"Ribo minus"</li>
-                    
-                </ul>
-            
-            
-            
-        
-    </td>
-</tr>
                 
             
         
@@ -227,20 +137,23 @@
             
             
                 
+            
+        
+        
+            
+                
                     <tr>
     <td>
         
-            <span id="sequencer_platform">
-                sequencer_platform
+            <span id="assay_creator">
+                assay_creator
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
     <td width=55%>
         
-            Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.
+            Indicates what site is filling out the assay.
         
     </td>
     <td>
@@ -255,19 +168,17 @@
             
                 <ul>
                     
+                        <li>"DFCI"</li>
+                    
+                        <li>"Mount Sinai"</li>
+                    
+                        <li>"Stanford"</li>
+                    
+                        <li>"MD Anderson"</li>
+                    
                         <li>"Adaptive"</li>
                     
-                        <li>"Illumina - HiSeq 2500"</li>
-                    
-                        <li>"Illumina - HiSeq 3000"</li>
-                    
-                        <li>"Illumina - NextSeq 550"</li>
-                    
-                        <li>"Illumina - HiSeq 4000"</li>
-                    
-                        <li>"Illumina - NovaSeq 6000"</li>
-                    
-                        <li>"MiSeq"</li>
+                        <li>"Broad"</li>
                     
                 </ul>
             
@@ -279,12 +190,47 @@
                 
             
         
-        
             
                 
+                    <tr>
+    <td>
+        
+            <span id="enrichment_method">
+                enrichment_method
+            </span>
             
         
+    </td>
+    <td width=55%>
+        
+            Method used for enriching for mRNA.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
             
+                <ul>
+                    
+                        <li>"PolyA capture"</li>
+                    
+                        <li>"Transcriptome capture v1"</li>
+                    
+                        <li>"Ribo minus"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
                 
             
         
@@ -388,6 +334,54 @@
         
             
                 
+                    <tr>
+    <td>
+        
+            <span id="sequencer_platform">
+                sequencer_platform
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Adaptive"</li>
+                    
+                        <li>"Illumina - HiSeq 2500"</li>
+                    
+                        <li>"Illumina - HiSeq 3000"</li>
+                    
+                        <li>"Illumina - NextSeq 550"</li>
+                    
+                        <li>"Illumina - HiSeq 4000"</li>
+                    
+                        <li>"Illumina - NovaSeq 6000"</li>
+                    
+                        <li>"MiSeq"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
             
         
         
@@ -454,8 +448,6 @@
                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#records_card" aria-expanded="false" aria-controls="records_card">
                         records
                     </button>
-                    
-                        <sup><mark>required</mark></sup>
                     
                 </div>
                 <div id="records_card" class="collapse" aria-labelledby="records">

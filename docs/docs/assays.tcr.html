@@ -694,62 +694,6 @@
                     <tr>
     <td>
         
-            <span id="r1">
-                r1
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Fastq file for the first fragment.
-        
-    </td>
-    <td>
-        
-            <a href="files.fastq_gz.html">
-                fastq gz
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-            
-        
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="r2">
-                r2
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Fastq file for the second fragment.
-        
-    </td>
-    <td>
-        
-            <a href="files.fastq_gz.html">
-                fastq gz
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-            
-                
-                    <tr>
-    <td>
-        
             <span id="i2">
                 i2
             </span>
@@ -759,6 +703,35 @@
     <td width=55%>
         
             Fastq file for the index of Read 2.
+        
+    </td>
+    <td>
+        
+            <a href="files.fastq_gz.html">
+                fastq gz
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="r1">
+                r1
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Fastq file for the first fragment.
         
     </td>
     <td>
@@ -786,6 +759,33 @@
     <td width=55%>
         
             Fastq file for the index of Read 1.
+        
+    </td>
+    <td>
+        
+            <a href="files.fastq_gz.html">
+                fastq gz
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="r2">
+                r2
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Fastq file for the second fragment.
         
     </td>
     <td>
@@ -1378,6 +1378,154 @@
             
                 <tr>
     <td colspan=3 class="container">
+        <div class="accordion" id="excluded_samples_accordion">
+            <div class="card">
+                <div class="card-header" id="excluded_samples">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#excluded_samples_card" aria-expanded="false" aria-controls="excluded_samples_card">
+                        excluded_samples
+                    </button>
+                    
+                </div>
+                <div id="excluded_samples_card" class="collapse" aria-labelledby="excluded_samples">
+                    <div class="card-body">
+                        
+                            <b>type:</b> array
+                        
+                        <br>
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="cimac_id">
+                cimac_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+                as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code>
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="reason_excluded">
+                reason_excluded
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A comment describing why this sample is missing from the pipeline output.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+                
+            
+        
+            
+        
+            
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
         <div class="accordion" id="records_accordion">
             <div class="card">
                 <div class="card-header" id="records">
@@ -1575,154 +1723,6 @@
             
         
             
-        
-            
-        
-            
-        
-            
-        
-    </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </td>
-</tr>
-            
-        
-            
-        
-            
-                <tr>
-    <td colspan=3 class="container">
-        <div class="accordion" id="excluded_samples_accordion">
-            <div class="card">
-                <div class="card-header" id="excluded_samples">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#excluded_samples_card" aria-expanded="false" aria-controls="excluded_samples_card">
-                        excluded_samples
-                    </button>
-                    
-                </div>
-                <div id="excluded_samples_card" class="collapse" aria-labelledby="excluded_samples">
-                    <div class="card-body">
-                        
-                            <b>type:</b> array
-                        
-                        <br>
-                        
-                        <br>
-                        
-    
-
-    
-
-    
-        
-    
-
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Property</th>
-            <th>Description</th>
-            <th>Data Type</th>
-        </tr>
-        </thead>
-        
-            
-            
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="cimac_id">
-                cimac_id
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                
-        string
-    
-
-    
-            &gt;
-            
-            
-            
-                as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code>
-            
-        
-    </td>
-</tr>
-                
-            
-        
-            
-            
-            
-        
-            
-            
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="reason_excluded">
-                reason_excluded
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            A comment describing why this sample is missing from the pipeline output.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                
-        string
-    
-
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
-                
-            
-        
-        
-            
-                
-            
-        
-            
-        
-            
-                
-            
-        
         
             
         

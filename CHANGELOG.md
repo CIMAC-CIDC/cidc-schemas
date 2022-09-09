@@ -114,7 +114,6 @@ This Changelog tracks changes to this project. The notes below include a summary
 
 - `changed` pytest, black, click, jinja2 version bumps
 
-
 ## Version `0.25.33` - 21 Apr 2022
 
 - `added` collection event names to WES tumor/normal automated matching CSV

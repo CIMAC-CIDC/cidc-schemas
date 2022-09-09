@@ -17,7 +17,7 @@
                     </div>
                     <div id="assay_metadata_card" class="collapse" aria-labelledby="assay_metadata" data-parent="#assay_accordion">
                         <div class="card-body">
-                            {{ macros.properties_table(schema.assay_metadata, schema.required_assay_metadata) }}
+                            {{ macros.properties_table(schema.assay_metadata, schema.required) }}
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                     </div>
                     <div id="assay_data_card" class="collapse" aria-labelledby="assay_data" data-parent="#assay_accordion">
                         <div class="card-body">
-                            {{ macros.properties_table(schema.assay_data, schema.required_assay_data) }}
+                            {{ macros.properties_table(schema.assay_data, schema.required) }}
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                     </div>
                     <div id="analysis_metadata_card" class="collapse" aria-labelledby="analysis_metadata" data-parent="#assay_accordion">
                         <div class="card-body">
-                            {{ macros.properties_table(schema.analysis_metadata, schema.required_analysis_metadata) }}
+                            {{ macros.properties_table(schema.analysis_metadata, schema.required) }}
                         </div>
                     </div>
                 </div>
@@ -65,13 +65,13 @@
                     </div>
                     <div id="analysis_data_card" class="collapse" aria-labelledby="analysis_data" data-parent="#assay_accordion">
                         <div class="card-body">
-                            {{ macros.properties_table(schema.analysis_data, schema.required_analysis_data) }}
+                            {{ macros.properties_table(schema.analysis_data, schema.required) }}
                         </div>
                     </div>
                 </div>
             {% endif %}
 
-            {% if schema.assay_templates %}
+            {% if "assay" in schema.templates %}
                 <div class="card">
                     <div class="card-header" id="assay_uploads">
                         <h2 class="mb-0">
@@ -82,12 +82,12 @@
                     </div>
                     <div id="assay_uploads_card" class="collapse" aria-labelledby="assay_uploads" data-parent="#assay_accordion">
                         <div class="card-body">
-                            {{ macros.uploads_table(scope, name, schema.assay_templates) }}
+                            {{ macros.uploads_table(scope, name, schema.templates["assay"]) }}
                         </div>
                     </div>
                 </div>
             {% endif %}
-            {% if schema.analysis_templates %}
+            {% if "analysis" in schema.templates %}
                 <div class="card">
                     <div class="card-header" id="analaysis_uploads">
                         <h2 class="mb-0">
@@ -98,7 +98,7 @@
                     </div>
                     <div id="analaysis_uploads_card" class="collapse" aria-labelledby="analaysis_uploads" data-parent="#assay_accordion">
                         <div class="card-body">
-                            {{ macros.uploads_table(scope, name, schema.analysis_templates) }}
+                            {{ macros.uploads_table(scope, name, schema.templates["analysis"]) }}
                         </div>
                     </div>
                 </div>

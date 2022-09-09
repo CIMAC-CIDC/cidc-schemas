@@ -58,20 +58,26 @@
         </tr>
         </thead>
         {% for prop_name, prop_schema in properties %}
-            {% if prop_name in required %}
-                {{ property_table_row(prop_name, prop_schema, True) }}
+            {# priortize those not nested_process_as_table and not nested_properties_table #}
+            {# then required before not required #}
+            {% if prop_schema is mapping and "process_as" not in prop_schema and ("type" in prop_schema or "const" in prop_schema or "url" in prop_schema or "type_ref" in prop_schema or "anyOf" in prop_schema) %}
+                {% if prop_name in required %}
+                    {{ property_table_row(prop_name, prop_schema, True) }}
+                {% endif %}
             {% endif %}
         {% endfor %}
         {% for prop_name, prop_schema in properties %}
-            {% if prop_name not in required and prop_schema is mapping and "process_as" not in prop_schema and ("type" in prop_schema or "const" in prop_schema or "url" in prop_schema or "type_ref" in prop_schema or "anyOf" in prop_schema) %}
-                {{ property_table_row(prop_name, prop_schema, False) }}
+            {% if prop_schema is mapping and "process_as" not in prop_schema and ("type" in prop_schema or "const" in prop_schema or "url" in prop_schema or "type_ref" in prop_schema or "anyOf" in prop_schema) %}
+                {% if prop_name not in required %}
+                    {{ property_table_row(prop_name, prop_schema, False) }}
+                {% endif %}
             {% endif %}
         {% endfor %}
         {% for prop_name, prop_schema in properties %}
             {% if prop_schema is mapping and "type" not in prop_schema and "const" not in prop_schema and "url" not in prop_schema and "type_ref" not in prop_schema and "anyOf" not in prop_schema %}
                 {{ nested_properties_table(prop_name, prop_schema, required) }}
             {% elif prop_schema is mapping and "process_as" in prop_schema %}
-                {{ nested_process_as_table(prop_name, prop_schema) }}
+                {{ nested_process_as_table(prop_name, prop_schema, required) }}
             {% endif %}
         {% endfor %}
     </table>
@@ -119,7 +125,7 @@
     </table>
 {%- endmacro %}
 
-{%  macro nested_process_as_table(prop_name, prop_schema) -%}
+{%  macro nested_process_as_table(prop_name, prop_schema, required) -%}
 <tr>
     <td colspan=3 class="container">
         <div class="accordion" id="{{ prop_name.replace(' ', '_') }}_accordion">
@@ -129,6 +135,9 @@
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ prop_name.replace(' ', '_') }}_card" aria-expanded="false" aria-controls="{{ prop_name.replace(' ', '_') }}_card">
                             {{ prop_name }}
                         </button>
+                        {% if prop_name in required %}
+                            <br><sup><mark>required</mark></sup>
+                        {% endif %}
                         <div style="float: right;">
                             &lt; 
                                 {{ prop_type_format(prop_schema) }}
@@ -158,11 +167,12 @@
         <div class="accordion" id="{{ prop_name }}_accordion">
             <div class="card">
                 <div class="card-header" id="{{ prop_name }}">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ prop_name }}_card" aria-expanded="false" aria-controls="{{ prop_name }}_card">
-                            {{ prop_name }}
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ prop_name }}_card" aria-expanded="false" aria-controls="{{ prop_name }}_card">
+                        {{ prop_name }}
+                    </button>
+                    {% if prop_name in required %}
+                        <sup><mark>required</mark></sup>
+                    {% endif %}
                 </div>
                 <div id="{{ prop_name }}_card" class="collapse" aria-labelledby="{{ prop_name }}">
                     <div class="card-body">
@@ -176,7 +186,7 @@
                             {{ prop_schema["description"].replace("/n", "<br>") }}
                         {% endif %}
                         <br>
-                        {{ properties_table(prop_schema, [prop_name] if required else []) }}
+                        {{ properties_table(prop_schema, required) }}
                     </div>
                 </div>
             </div>

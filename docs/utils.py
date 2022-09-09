@@ -27,7 +27,8 @@ def descend_dict(root: dict, levels: List[str]) -> dict:
     -------
     dict
         the final definition
-        key "required" is added as a boolean, whether levels[-1] in final "required"
+    required: Set[str]
+        a concentated list of "required" across all layers
     """
 
     def _all_the_way_down(root: dict) -> bool:
@@ -43,30 +44,31 @@ def descend_dict(root: dict, levels: List[str]) -> dict:
         )
 
     # traverse the schema using the keys
-    required: bool = False
+    required: Set[str] = set()
     for level in levels:
         # keep going while we can
-        # if this is the last level, check if it's required
-        if level == levels[-1]:
-            required: bool = level in root.get("required", [])
-
         root = root[level]
+        required.update(root.get("required", []))
         # descend into any items, properties, or non-artifact urls
         # single carve out for cytof source_fcs
         while not _all_the_way_down(root) and level != "source_fcs":
             if "items" in root:
                 root = root["items"]
+                required.update(root.get("required", []))
             if "properties" in root and root["properties"]:
                 root = root["properties"]
+                required.update(root.get("required", []))
             # updates in place
             load_subschema_from_url(root)
+            required.update(root.get("required", []))
             if "items" in root:
                 root = root["items"]
+                required.update(root.get("required", []))
             if "properties" in root:
                 root = root["properties"]
+                required.update(root.get("required", []))
 
-    root["required"] = required
-    return root
+    return root, required
 
 
 def flatten_allOf(schema: dict) -> dict:

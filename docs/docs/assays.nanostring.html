@@ -72,16 +72,63 @@
         </thead>
         
             
-        
+            
+            
+                
             
         
             
+            
+            
+                
+            
         
+            
+            
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="protocol_identifier">
+                protocol_identifier
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
             
         
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="assay_creator">
@@ -126,10 +173,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="batch_id">
@@ -158,40 +207,13 @@
         
     </td>
 </tr>
-            
-        
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="protocol_identifier">
-                protocol_identifier
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
-        
-    </td>
-    <td>
-        
-            &lt; 
                 
-        string
-    
-
-    
-            &gt;
-            
-            
             
         
-    </td>
-</tr>
+            
+        
+            
+                
             
         
         
@@ -205,11 +227,12 @@
         <div class="accordion" id="data_accordion">
             <div class="card">
                 <div class="card-header" id="data">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#data_card" aria-expanded="false" aria-controls="data_card">
-                            data
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#data_card" aria-expanded="false" aria-controls="data_card">
+                        data
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
                 </div>
                 <div id="data_card" class="collapse" aria-labelledby="data">
                     <div class="card-body">
@@ -238,12 +261,21 @@
         </thead>
         
             
+            
+            
+                
+            
         
+            
+            
+            
+                
             
         
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="normalized">
@@ -265,10 +297,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="raw">
@@ -290,6 +324,7 @@
         
     </td>
 </tr>
+                
             
         
         
@@ -343,6 +378,8 @@
         </thead>
         
             
+            
+            
         
         
             
@@ -354,11 +391,12 @@
         <div class="accordion" id="runs_accordion">
             <div class="card">
                 <div class="card-header" id="runs">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#runs_card" aria-expanded="false" aria-controls="runs_card">
-                            runs
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#runs_card" aria-expanded="false" aria-controls="runs_card">
+                        runs
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
                 </div>
                 <div id="runs_card" class="collapse" aria-labelledby="runs">
                     <div class="card-body">
@@ -387,50 +425,31 @@
         </thead>
         
             
-        
+            
             
         
             
-        
             
-        
-        
             
         
             
-        
             
-                <tr>
-    <td>
-        
-            <span id="control_raw_rcc">
-                control_raw_rcc
-            </span>
             
-        
-    </td>
-    <td width=55%>
-        
-            Information about a Nanostring output file. XML-formatted comma-separated tables
-        
-    </td>
-    <td>
-        
-            <a href="files.rcc.html">
-                rcc
-            </a>
-        
-    </td>
-</tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="run_id">
                 run_id
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -454,6 +473,43 @@
         
     </td>
 </tr>
+                
+            
+        
+        
+            
+        
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="control_raw_rcc">
+                control_raw_rcc
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a Nanostring output file. XML-formatted comma-separated tables
+        
+    </td>
+    <td>
+        
+            <a href="files.rcc.html">
+                rcc
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
             
         
         
@@ -463,11 +519,12 @@
         <div class="accordion" id="samples_accordion">
             <div class="card">
                 <div class="card-header" id="samples">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#samples_card" aria-expanded="false" aria-controls="samples_card">
-                            samples
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#samples_card" aria-expanded="false" aria-controls="samples_card">
+                        samples
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
                 </div>
                 <div id="samples_card" class="collapse" aria-labelledby="samples">
                     <div class="card-body">
@@ -496,19 +553,17 @@
         </thead>
         
             
-        
             
-        
             
-        
-        
-            
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="cimac_id">
                 cimac_id
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -534,17 +589,25 @@
         
     </td>
 </tr>
+                
             
         
             
+            
+            
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="raw_rcc">
                 raw_rcc
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -561,6 +624,18 @@
         
     </td>
 </tr>
+                
+            
+        
+        
+            
+                
+            
+        
+            
+        
+            
+                
             
         
         
@@ -637,6 +712,29 @@
                     </div>
                 </div>
             
+            
+                <div class="card">
+                    <div class="card-header" id="analaysis_uploads">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analaysis_uploads_card" aria-expanded="false" aria-controls="analaysis_uploads_card">
+                            Analysis Uploads
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="analaysis_uploads_card" class="collapse" aria-labelledby="analaysis_uploads" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Entity</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
             
         </div>
     </div>

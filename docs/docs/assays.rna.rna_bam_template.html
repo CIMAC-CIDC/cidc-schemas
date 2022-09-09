@@ -86,25 +86,17 @@
         </thead>
         
             
-        
             
-        
             
-        
-            
-        
-            
-        
-            
-        
-        
-            
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="protocol identifier">
                 protocol identifier
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -128,15 +120,21 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="assay creator">
                 assay creator
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -176,15 +174,21 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="enrichment method">
                 enrichment method
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -218,10 +222,133 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="sequencer platform">
+                sequencer platform
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Adaptive"</li>
+                    
+                        <li>"Illumina - HiSeq 2500"</li>
+                    
+                        <li>"Illumina - HiSeq 3000"</li>
+                    
+                        <li>"Illumina - NextSeq 550"</li>
+                    
+                        <li>"Illumina - HiSeq 4000"</li>
+                    
+                        <li>"Illumina - NovaSeq 6000"</li>
+                    
+                        <li>"MiSeq"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="paired end reads">
+                paired end reads
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates if the sequencing was performed paired or single ended.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Paired"</li>
+                    
+                        <li>"Single"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
     <td>
         
             <span id="enrichment kit">
@@ -268,96 +395,15 @@
         
     </td>
 </tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="sequencer platform">
-                sequencer platform
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.
-        
-    </td>
-    <td>
-        
-            &lt; 
                 
-        string
-    
-
-    
-            &gt;
-            
-                <ul>
-                    
-                        <li>"Adaptive"</li>
-                    
-                        <li>"Illumina - HiSeq 2500"</li>
-                    
-                        <li>"Illumina - HiSeq 3000"</li>
-                    
-                        <li>"Illumina - NextSeq 550"</li>
-                    
-                        <li>"Illumina - HiSeq 4000"</li>
-                    
-                        <li>"Illumina - NovaSeq 6000"</li>
-                    
-                        <li>"MiSeq"</li>
-                    
-                </ul>
-            
-            
-            
-        
-    </td>
-</tr>
             
         
             
-                <tr>
-    <td>
-        
-            <span id="paired end reads">
-                paired end reads
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Indicates if the sequencing was performed paired or single ended.
-        
-    </td>
-    <td>
-        
-            &lt; 
                 
-        string
-    
-
-    
-            &gt;
-            
-                <ul>
-                    
-                        <li>"Paired"</li>
-                    
-                        <li>"Single"</li>
-                    
-                </ul>
-            
-            
             
         
-    </td>
-</tr>
+            
+                
             
         
         
@@ -412,27 +458,17 @@
         </thead>
         
             
-        
             
-        
             
-        
-            
-        
-            
-        
-            
-        
-            
-        
-        
-            
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="cimac id">
                 cimac id
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -458,15 +494,21 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="BAM file">
                 BAM file
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -483,10 +525,147 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="dv200">
+                dv200
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The percentage of fragments > 200 nucleotides. (0-1)
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        number
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="rqs">
+                rqs
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            RNA quality score. (0-10)
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        number
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="quality flag">
+                quality flag
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Flag used for quality.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        number
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
     <td>
         
             <span id="library yield ng">
@@ -515,74 +694,20 @@
         
     </td>
 </tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="dv200">
-                dv200
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            The percentage of fragments > 200 nucleotides. (0-1)
-        
-    </td>
-    <td>
-        
-            &lt; 
                 
-        number
-    
-
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
             
         
             
-                <tr>
-    <td>
-        
-            <span id="rqs">
-                rqs
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            RNA quality score. (0-10)
-        
-    </td>
-    <td>
-        
-            &lt; 
                 
-        number
-    
-
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
             
         
             
-                <tr>
+                
+            
+        
+            
+                
+                    <tr>
     <td>
         
             <span id="rin">
@@ -611,38 +736,11 @@
         
     </td>
 </tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="quality flag">
-                quality flag
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Flag used for quality.
-        
-    </td>
-    <td>
-        
-            &lt; 
                 
-        number
-    
-
-    
-            &gt;
-            
-            
             
         
-    </td>
-</tr>
+            
+                
             
         
         

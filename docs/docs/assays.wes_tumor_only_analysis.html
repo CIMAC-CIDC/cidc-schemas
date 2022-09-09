@@ -74,15 +74,17 @@
         </thead>
         
             
-        
-        
             
-                <tr>
+            
+                
+                    <tr>
     <td>
         
             <span id="protocol_identifier">
                 protocol_identifier
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -106,6 +108,12 @@
         
     </td>
 </tr>
+                
+            
+        
+        
+            
+                
             
         
         
@@ -146,7 +154,11 @@
         </thead>
         
             
+            
+            
         
+            
+            
             
         
         
@@ -161,11 +173,10 @@
         <div class="accordion" id="runs_accordion">
             <div class="card">
                 <div class="card-header" id="runs">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#runs_card" aria-expanded="false" aria-controls="runs_card">
-                            runs
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#runs_card" aria-expanded="false" aria-controls="runs_card">
+                        runs
+                    </button>
+                    
                 </div>
                 <div id="runs_card" class="collapse" aria-labelledby="runs">
                     <div class="card-body">
@@ -194,6 +205,87 @@
         </thead>
         
             
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="run_id">
+                run_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            An id used as if this was a paired analysis run.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+        
         
             
         
@@ -202,28 +294,8 @@
             
         
             
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-        
-            
-        
-            
-        
-            
-        
-            
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="comments">
@@ -252,12 +324,14 @@
         
     </td>
 </tr>
+                
             
         
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="error">
@@ -279,42 +353,15 @@
         
     </td>
 </tr>
-            
-        
-            
-        
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="run_id">
-                run_id
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            An id used as if this was a paired analysis run.
-        
-    </td>
-    <td>
-        
-            &lt; 
                 
-        string
-    
-
-    
-            &gt;
-            
-            
             
         
-    </td>
-</tr>
+            
+        
+            
+        
+            
+                
             
         
             
@@ -328,11 +375,12 @@
         <div class="accordion" id="tumor_accordion">
             <div class="card">
                 <div class="card-header" id="tumor">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#tumor_card" aria-expanded="false" aria-controls="tumor_card">
-                            tumor
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#tumor_card" aria-expanded="false" aria-controls="tumor_card">
+                        tumor
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
                 </div>
                 <div id="tumor_card" class="collapse" aria-labelledby="tumor">
                     <div class="card-body">
@@ -361,21 +409,21 @@
         </thead>
         
             
-        
+            
             
         
             
-        
-        
             
-        
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="cimac_id">
                 cimac_id
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -401,6 +449,18 @@
         
     </td>
 </tr>
+                
+            
+        
+            
+            
+            
+        
+        
+            
+        
+            
+                
             
         
             
@@ -412,11 +472,10 @@
         <div class="accordion" id="alignment_accordion">
             <div class="card">
                 <div class="card-header" id="alignment">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#alignment_card" aria-expanded="false" aria-controls="alignment_card">
-                            alignment
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#alignment_card" aria-expanded="false" aria-controls="alignment_card">
+                        alignment
+                    </button>
+                    
                 </div>
                 <div id="alignment_card" class="collapse" aria-labelledby="alignment">
                     <div class="card-body">
@@ -445,16 +504,83 @@
         </thead>
         
             
-        
+            
+            
+                
             
         
             
+            
+            
+                
+            
         
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="align_sorted_dedup">
+                align_sorted_dedup
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a BAM file.
+        
+    </td>
+    <td>
+        
+            <a href="files.bam.html">
+                bam
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="align_sorted_dedup_index">
+                align_sorted_dedup_index
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a Bam index file.
+        
+    </td>
+    <td>
+        
+            <a href="files.bam_bai.html">
+                bam bai
+            </a>
+        
+    </td>
+</tr>
+                
             
         
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="align_recalibrated">
@@ -476,10 +602,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="align_recalibrated_index">
@@ -501,56 +629,15 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
-    <td>
-        
-            <span id="align_sorted_dedup">
-                align_sorted_dedup
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a BAM file.
-        
-    </td>
-    <td>
-        
-            <a href="files.bam.html">
-                bam
-            </a>
-        
-    </td>
-</tr>
+                
             
         
             
-                <tr>
-    <td>
-        
-            <span id="align_sorted_dedup_index">
-                align_sorted_dedup_index
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a Bam index file.
-        
-    </td>
-    <td>
-        
-            <a href="files.bam_bai.html">
-                bam bai
-            </a>
-        
-    </td>
-</tr>
+                
             
         
         
@@ -579,11 +666,10 @@
         <div class="accordion" id="hla_accordion">
             <div class="card">
                 <div class="card-header" id="hla">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#hla_card" aria-expanded="false" aria-controls="hla_card">
-                            hla
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#hla_card" aria-expanded="false" aria-controls="hla_card">
+                        hla
+                    </button>
+                    
                 </div>
                 <div id="hla_card" class="collapse" aria-labelledby="hla">
                     <div class="card-body">
@@ -612,20 +698,18 @@
         </thead>
         
             
-        
             
-        
             
-        
-        
-            
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="hla_final_result">
                 hla_final_result
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
@@ -641,16 +725,22 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="optitype_result">
                 optitype_result
             </span>
             
+                <br><sup><mark>required</mark></sup>
+            
         
     </td>
     <td width=55%>
@@ -666,15 +756,21 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="xhla_report_hla">
                 xhla_report_hla
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -691,6 +787,20 @@
         
     </td>
 </tr>
+                
+            
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+                
             
         
         
@@ -726,11 +836,12 @@
         <div class="accordion" id="neoantigen_accordion">
             <div class="card">
                 <div class="card-header" id="neoantigen">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#neoantigen_card" aria-expanded="false" aria-controls="neoantigen_card">
-                            neoantigen
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#neoantigen_card" aria-expanded="false" aria-controls="neoantigen_card">
+                        neoantigen
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
                 </div>
                 <div id="neoantigen_card" class="collapse" aria-labelledby="neoantigen">
                     <div class="card-body">
@@ -759,15 +870,17 @@
         </thead>
         
             
-        
-        
             
-                <tr>
+            
+                
+                    <tr>
     <td>
         
             <span id="combined_filtered">
                 combined_filtered
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -784,6 +897,12 @@
         
     </td>
 </tr>
+                
+            
+        
+        
+            
+                
             
         
         
@@ -806,11 +925,12 @@
         <div class="accordion" id="report_accordion">
             <div class="card">
                 <div class="card-header" id="report">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#report_card" aria-expanded="false" aria-controls="report_card">
-                            report
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#report_card" aria-expanded="false" aria-controls="report_card">
+                        report
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
                 </div>
                 <div id="report_card" class="collapse" aria-labelledby="report">
                     <div class="card-body">
@@ -839,23 +959,17 @@
         </thead>
         
             
-        
             
-        
             
-        
-            
-        
-            
-        
-        
-            
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="config">
                 config
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -872,15 +986,21 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="metasheet">
                 metasheet
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -897,15 +1017,21 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="report">
                 report
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -922,15 +1048,21 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="wes_run_version">
                 wes_run_version
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -947,15 +1079,21 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="wes_sample_json">
                 wes_sample_json
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -972,6 +1110,28 @@
         
     </td>
 </tr>
+                
+            
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+                
             
         
         
@@ -1002,11 +1162,10 @@
         <div class="accordion" id="rna_accordion">
             <div class="card">
                 <div class="card-header" id="rna">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#rna_card" aria-expanded="false" aria-controls="rna_card">
-                            rna
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#rna_card" aria-expanded="false" aria-controls="rna_card">
+                        rna
+                    </button>
+                    
                 </div>
                 <div id="rna_card" class="collapse" aria-labelledby="rna">
                     <div class="card-body">
@@ -1035,12 +1194,21 @@
         </thead>
         
             
+            
+            
+                
+            
         
+            
+            
+            
+                
             
         
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="haplotyper">
@@ -1062,10 +1230,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="vcf_tnscope_filter_neoantigen">
@@ -1087,6 +1257,7 @@
         
     </td>
 </tr>
+                
             
         
         
@@ -1109,11 +1280,12 @@
         <div class="accordion" id="msisensor_accordion">
             <div class="card">
                 <div class="card-header" id="msisensor">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#msisensor_card" aria-expanded="false" aria-controls="msisensor_card">
-                            msisensor
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#msisensor_card" aria-expanded="false" aria-controls="msisensor_card">
+                        msisensor
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
                 </div>
                 <div id="msisensor_card" class="collapse" aria-labelledby="msisensor">
                     <div class="card-body">
@@ -1142,15 +1314,17 @@
         </thead>
         
             
-        
-        
             
-                <tr>
+            
+                
+                    <tr>
     <td>
         
             <span id="msisensor">
                 msisensor
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -1167,6 +1341,12 @@
         
     </td>
 </tr>
+                
+            
+        
+        
+            
+                
             
         
         
@@ -1189,11 +1369,10 @@
         <div class="accordion" id="tcell_accordion">
             <div class="card">
                 <div class="card-header" id="tcell">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#tcell_card" aria-expanded="false" aria-controls="tcell_card">
-                            tcell
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#tcell_card" aria-expanded="false" aria-controls="tcell_card">
+                        tcell
+                    </button>
+                    
                 </div>
                 <div id="tcell_card" class="collapse" aria-labelledby="tcell">
                     <div class="card-body">
@@ -1222,15 +1401,17 @@
         </thead>
         
             
-        
-        
             
-                <tr>
+            
+                
+                    <tr>
     <td>
         
             <span id="tcellextrect">
                 tcellextrect
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -1247,6 +1428,12 @@
         
     </td>
 </tr>
+                
+            
+        
+        
+            
+                
             
         
         
@@ -1267,11 +1454,12 @@
         <div class="accordion" id="somatic_accordion">
             <div class="card">
                 <div class="card-header" id="somatic">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#somatic_card" aria-expanded="false" aria-controls="somatic_card">
-                            somatic
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#somatic_card" aria-expanded="false" aria-controls="somatic_card">
+                        somatic
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
                 </div>
                 <div id="somatic_card" class="collapse" aria-labelledby="somatic">
                     <div class="card-body">
@@ -1300,18 +1488,39 @@
         </thead>
         
             
-        
+            
+            
+                
             
         
             
-        
+            
+            
+                
             
         
             
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
         
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="tnscope_output_twist_filtered_maf">
@@ -1333,10 +1542,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="tnscope_output_twist_filtered_vcf">
@@ -1358,10 +1569,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="tnscope_output_twist_maf">
@@ -1383,10 +1596,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="tnscope_output_twist_vcf">
@@ -1408,10 +1623,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="vcf_gz_tnscope_output">
@@ -1433,6 +1650,7 @@
         
     </td>
 </tr>
+                
             
         
         
@@ -1470,11 +1688,10 @@
         <div class="accordion" id="excluded_samples_accordion">
             <div class="card">
                 <div class="card-header" id="excluded_samples">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#excluded_samples_card" aria-expanded="false" aria-controls="excluded_samples_card">
-                            excluded_samples
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#excluded_samples_card" aria-expanded="false" aria-controls="excluded_samples_card">
+                        excluded_samples
+                    </button>
+                    
                 </div>
                 <div id="excluded_samples_card" class="collapse" aria-labelledby="excluded_samples">
                     <div class="card-body">
@@ -1503,19 +1720,17 @@
         </thead>
         
             
-        
             
-        
             
-        
-        
-            
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="cimac_id">
                 cimac_id
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -1541,17 +1756,25 @@
         
     </td>
 </tr>
+                
             
         
             
+            
+            
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="reason_excluded">
                 reason_excluded
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -1575,6 +1798,18 @@
         
     </td>
 </tr>
+                
+            
+        
+        
+            
+                
+            
+        
+            
+        
+            
+                
             
         
         
@@ -1599,6 +1834,29 @@
                 </div>
             
 
+            
+                <div class="card">
+                    <div class="card-header" id="assay_uploads">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#assay_uploads_card" aria-expanded="false" aria-controls="assay_uploads_card">
+                                Assay Uploads
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="assay_uploads_card" class="collapse" aria-labelledby="assay_uploads" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Entity</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
             
             
                 <div class="card">

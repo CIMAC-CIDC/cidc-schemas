@@ -72,24 +72,167 @@
         </thead>
         
             
-        
+            
+            
+                
             
         
             
+            
+            
+                
+                    <tr>
+    <td>
         
+            <span id="bait_set">
+                bait_set
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Bait set ID.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"whole_exome_illumina_coding_v1"</li>
+                    
+                        <li>"broad_custom_exome_v1"</li>
+                    
+                        <li>"TWIST Dana Farber Custom Panel"</li>
+                    
+                        <li>"TWIST Custom Panel PN 101042"</li>
+                    
+                        <li>"Agilent SS Human All Exon V4"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
             
         
             
-        
+            
+            
+                
             
         
             
+            
+            
+                
+            
         
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="protocol_identifier">
+                protocol_identifier
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="read_length">
+                read_length
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Number of cycles for each sequencing read.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        integer
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
             
         
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="assay_creator">
@@ -134,56 +277,16 @@
         
     </td>
 </tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="bait_set">
-                bait_set
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Bait set ID.
-        
-    </td>
-    <td>
-        
-            &lt; 
                 
-        string
-    
-
-    
-            &gt;
-            
-                <ul>
-                    
-                        <li>"whole_exome_illumina_coding_v1"</li>
-                    
-                        <li>"broad_custom_exome_v1"</li>
-                    
-                        <li>"TWIST Dana Farber Custom Panel"</li>
-                    
-                        <li>"TWIST Custom Panel PN 101042"</li>
-                    
-                        <li>"Agilent SS Human All Exon V4"</li>
-                    
-                </ul>
-            
-            
-            
-        
-    </td>
-</tr>
             
         
             
-                <tr>
+                
+            
+        
+            
+                
+                    <tr>
     <td>
         
             <span id="library_kit">
@@ -226,10 +329,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="paired_end_reads">
@@ -266,74 +371,20 @@
         
     </td>
 </tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="protocol_identifier">
-                protocol_identifier
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
-        
-    </td>
-    <td>
-        
-            &lt; 
                 
-        string
-    
-
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
             
         
             
-                <tr>
-    <td>
-        
-            <span id="read_length">
-                read_length
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Number of cycles for each sequencing read.
-        
-    </td>
-    <td>
-        
-            &lt; 
                 
-        integer
-    
-
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
             
         
             
-                <tr>
+                
+            
+        
+            
+                
+                    <tr>
     <td>
         
             <span id="sequencer_platform">
@@ -380,10 +431,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="sequencing_protocol">
@@ -424,6 +477,7 @@
         
     </td>
 </tr>
+                
             
         
         
@@ -478,6 +532,8 @@
         </thead>
         
             
+            
+            
         
         
             
@@ -489,11 +545,12 @@
         <div class="accordion" id="records_accordion">
             <div class="card">
                 <div class="card-header" id="records">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#records_card" aria-expanded="false" aria-controls="records_card">
-                            records
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#records_card" aria-expanded="false" aria-controls="records_card">
+                        records
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
                 </div>
                 <div id="records_card" class="collapse" aria-labelledby="records">
                     <div class="card-body">
@@ -522,27 +579,25 @@
         </thead>
         
             
-        
+            
             
         
             
-        
+            
             
         
             
-        
-        
             
-        
             
-        
-            
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="cimac_id">
                 cimac_id
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -568,10 +623,33 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+        
+            
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
     <td>
         
             <span id="quality_flag">
@@ -600,10 +678,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="sequencing_date">
@@ -632,6 +712,7 @@
         
     </td>
 </tr>
+                
             
         
         
@@ -641,11 +722,10 @@
         <div class="accordion" id="files_accordion">
             <div class="card">
                 <div class="card-header" id="files">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#files_card" aria-expanded="false" aria-controls="files_card">
-                            files
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#files_card" aria-expanded="false" aria-controls="files_card">
+                        files
+                    </button>
+                    
                 </div>
                 <div id="files_card" class="collapse" aria-labelledby="files">
                     <div class="card-body">
@@ -674,39 +754,27 @@
         </thead>
         
             
-        
+            
+            
+                
             
         
             
-        
-        
             
-                <tr>
-    <td>
-        
-            <span id="r1">
-                r1
-            </span>
             
-        
-    </td>
-    <td width=55%>
-        
-            Fastq file for the first fragment.
-        
-    </td>
-    <td>
-        
-            <a href="files.fastq_gz.html">
-                fastq gz
-            </a>
-        
-    </td>
-</tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+            
+        
+        
+            
+                
+                    <tr>
     <td>
         
             <span id="r2">
@@ -728,10 +796,39 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
+    <td>
+        
+            <span id="r1">
+                r1
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Fastq file for the first fragment.
+        
+    </td>
+    <td>
+        
+            <a href="files.fastq_gz.html">
+                fastq gz
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
     <td>
         
             <span id="bam">
@@ -753,6 +850,7 @@
         
     </td>
 </tr>
+                
             
         
         
@@ -842,6 +940,29 @@
                     </div>
                 </div>
             
+            
+                <div class="card">
+                    <div class="card-header" id="analaysis_uploads">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analaysis_uploads_card" aria-expanded="false" aria-controls="analaysis_uploads_card">
+                            Analysis Uploads
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="analaysis_uploads_card" class="collapse" aria-labelledby="analaysis_uploads" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Entity</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
             
         </div>
     </div>

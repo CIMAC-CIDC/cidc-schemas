@@ -72,16 +72,122 @@
         </thead>
         
             
-        
+            
+            
+                
             
         
             
+            
+            
+                
+                    <tr>
+    <td>
         
+            <span id="assay_run_id">
+                assay_run_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            User defined unique identifier for this assay run.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="assay_xlsx">
+                assay_xlsx
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about an ELISA file.
+        
+    </td>
+    <td>
+        
+            <a href="files.elisa_xlsx.html">
+                elisa xlsx
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="protocol_identifier">
+                protocol_identifier
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
             
         
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="assay_creator">
@@ -126,95 +232,19 @@
         
     </td>
 </tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="assay_run_id">
-                assay_run_id
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            User defined unique identifier for this assay run.
-        
-    </td>
-    <td>
-        
-            &lt; 
                 
-        string
-    
-
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
             
         
             
-                <tr>
-    <td>
-        
-            <span id="assay_xlsx">
-                assay_xlsx
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about an ELISA file.
-        
-    </td>
-    <td>
-        
-            <a href="files.elisa_xlsx.html">
-                elisa xlsx
-            </a>
-        
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="protocol_identifier">
-                protocol_identifier
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
-        
-    </td>
-    <td>
-        
-            &lt; 
                 
-        string
-    
-
-    
-            &gt;
-            
-            
             
         
-    </td>
-</tr>
+            
+                
+            
+        
+            
+                
             
         
         
@@ -261,6 +291,8 @@
         </thead>
         
             
+            
+            
         
         
             
@@ -272,11 +304,12 @@
         <div class="accordion" id="antigens_accordion">
             <div class="card">
                 <div class="card-header" id="antigens">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#antigens_card" aria-expanded="false" aria-controls="antigens_card">
-                            antigens
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#antigens_card" aria-expanded="false" aria-controls="antigens_card">
+                        antigens
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
                 </div>
                 <div id="antigens_card" class="collapse" aria-labelledby="antigens">
                     <div class="card-body">
@@ -305,23 +338,17 @@
         </thead>
         
             
-        
             
-        
             
-        
-            
-        
-            
-        
-        
-            
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="antigen">
                 antigen
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -345,17 +372,25 @@
         
     </td>
 </tr>
+                
             
         
             
+            
+            
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="antigen_type">
                 antigen_type
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -387,10 +422,35 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
+            
+        
+            
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
     <td>
         
             <span id="final_concentration">
@@ -419,10 +479,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="final_concentration_units">
@@ -471,6 +533,7 @@
         
     </td>
 </tr>
+                
             
         
         
@@ -536,6 +599,29 @@
                     </div>
                 </div>
             
+            
+                <div class="card">
+                    <div class="card-header" id="analaysis_uploads">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analaysis_uploads_card" aria-expanded="false" aria-controls="analaysis_uploads_card">
+                            Analysis Uploads
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="analaysis_uploads_card" class="collapse" aria-labelledby="analaysis_uploads" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Entity</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
             
         </div>
     </div>

@@ -72,17 +72,17 @@
         </thead>
         
             
-        
             
-        
-        
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="assay_creator">
                 assay_creator
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -122,15 +122,21 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="protocol_identifier">
                 protocol_identifier
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -154,6 +160,16 @@
         
     </td>
 </tr>
+                
+            
+        
+        
+            
+                
+            
+        
+            
+                
             
         
         
@@ -196,6 +212,8 @@
         </thead>
         
             
+            
+            
         
         
             
@@ -207,11 +225,12 @@
         <div class="accordion" id="records_accordion">
             <div class="card">
                 <div class="card-header" id="records">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#records_card" aria-expanded="false" aria-controls="records_card">
-                            records
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#records_card" aria-expanded="false" aria-controls="records_card">
+                        records
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
                 </div>
                 <div id="records_card" class="collapse" aria-labelledby="records">
                     <div class="card-body">
@@ -240,31 +259,17 @@
         </thead>
         
             
-        
             
-        
             
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-        
-            
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="cimac_id">
                 cimac_id
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -290,12 +295,63 @@
         
     </td>
 </tr>
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
             
         
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="comment">
@@ -324,10 +380,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="fibrosis_percentage">
@@ -354,12 +412,14 @@
         
     </td>
 </tr>
+                
             
         
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="necrosis_percentage">
@@ -386,10 +446,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="tumor_tissue_percentage">
@@ -416,10 +478,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="viable_stroma_percentage">
@@ -446,10 +510,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="viable_tumor_percentage">
@@ -476,6 +542,7 @@
         
     </td>
 </tr>
+                
             
         
         
@@ -493,11 +560,12 @@
         <div class="accordion" id="files_accordion">
             <div class="card">
                 <div class="card-header" id="files">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#files_card" aria-expanded="false" aria-controls="files_card">
-                            files
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#files_card" aria-expanded="false" aria-controls="files_card">
+                        files
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
                 </div>
                 <div id="files_card" class="collapse" aria-labelledby="files">
                     <div class="card-body">
@@ -526,15 +594,17 @@
         </thead>
         
             
-        
-        
             
-                <tr>
+            
+                
+                    <tr>
     <td>
         
             <span id="image_file">
                 image_file
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -564,6 +634,12 @@
         
     </td>
 </tr>
+                
+            
+        
+        
+            
+                
             
         
         
@@ -638,6 +714,29 @@
                     </div>
                 </div>
             
+            
+                <div class="card">
+                    <div class="card-header" id="analaysis_uploads">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analaysis_uploads_card" aria-expanded="false" aria-controls="analaysis_uploads_card">
+                            Analysis Uploads
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="analaysis_uploads_card" class="collapse" aria-labelledby="analaysis_uploads" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Entity</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
             
         </div>
     </div>

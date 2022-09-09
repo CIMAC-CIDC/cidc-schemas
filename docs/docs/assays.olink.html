@@ -72,23 +72,25 @@
         </thead>
         
             
-        
+            
             
         
             
-        
-        
+            
             
         
             
-        
             
-                <tr>
+            
+                
+                    <tr>
     <td>
         
             <span id="protocol_identifier">
                 protocol_identifier
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -112,6 +114,16 @@
         
     </td>
 </tr>
+                
+            
+        
+        
+            
+        
+            
+        
+            
+                
             
         
         
@@ -121,11 +133,12 @@
         <div class="accordion" id="batches_accordion">
             <div class="card">
                 <div class="card-header" id="batches">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#batches_card" aria-expanded="false" aria-controls="batches_card">
-                            batches
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#batches_card" aria-expanded="false" aria-controls="batches_card">
+                        batches
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
                 </div>
                 <div id="batches_card" class="collapse" aria-labelledby="batches">
                     <div class="card-body">
@@ -154,25 +167,17 @@
         </thead>
         
             
-        
             
-        
             
-        
-            
-        
-            
-        
-            
-        
-        
-            
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="assay_creator">
                 assay_creator
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -212,12 +217,109 @@
         
     </td>
 </tr>
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="batch_id">
+                batch_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A unique identifier for this Olink upload
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="panel">
+                panel
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Panel used for the assay.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+                
             
         
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="assay_panel_lot">
@@ -246,72 +348,17 @@
         
     </td>
 </tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="batch_id">
-                batch_id
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            A unique identifier for this Olink upload
-        
-    </td>
-    <td>
-        
-            &lt; 
                 
-        string
-    
-
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
             
         
             
-        
-            
-                <tr>
-    <td>
-        
-            <span id="panel">
-                panel
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Panel used for the assay.
-        
-    </td>
-    <td>
-        
-            &lt; 
                 
-        string
-    
-
-    
-            &gt;
-            
-            
             
         
-    </td>
-</tr>
+            
+        
+            
+                
             
         
         
@@ -329,11 +376,10 @@
         <div class="accordion" id="combined_accordion">
             <div class="card">
                 <div class="card-header" id="combined">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#combined_card" aria-expanded="false" aria-controls="combined_card">
-                            combined
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#combined_card" aria-expanded="false" aria-controls="combined_card">
+                        combined
+                    </button>
+                    
                 </div>
                 <div id="combined_card" class="collapse" aria-labelledby="combined">
                     <div class="card-body">
@@ -362,17 +408,17 @@
         </thead>
         
             
-        
             
-        
-        
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="npx_file">
                 npx_file
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -389,15 +435,21 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="npx_manager_version">
                 npx_manager_version
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -421,6 +473,16 @@
         
     </td>
 </tr>
+                
+            
+        
+        
+            
+                
+            
+        
+            
+                
             
         
         
@@ -454,11 +516,10 @@
         <div class="accordion" id="study_accordion">
             <div class="card">
                 <div class="card-header" id="study">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#study_card" aria-expanded="false" aria-controls="study_card">
-                            study
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#study_card" aria-expanded="false" aria-controls="study_card">
+                        study
+                    </button>
+                    
                 </div>
                 <div id="study_card" class="collapse" aria-labelledby="study">
                     <div class="card-body">
@@ -487,17 +548,17 @@
         </thead>
         
             
-        
             
-        
-        
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="npx_file">
                 npx_file
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -514,15 +575,21 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="npx_manager_version">
                 npx_manager_version
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -546,6 +613,16 @@
         
     </td>
 </tr>
+                
+            
+        
+        
+            
+                
+            
+        
+            
+                
             
         
         
@@ -599,6 +676,8 @@
         </thead>
         
             
+            
+            
         
         
             
@@ -610,11 +689,12 @@
         <div class="accordion" id="batches_accordion">
             <div class="card">
                 <div class="card-header" id="batches">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#batches_card" aria-expanded="false" aria-controls="batches_card">
-                            batches
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#batches_card" aria-expanded="false" aria-controls="batches_card">
+                        batches
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
                 </div>
                 <div id="batches_card" class="collapse" aria-labelledby="batches">
                     <div class="card-body">
@@ -643,7 +723,11 @@
         </thead>
         
             
+            
+            
         
+            
+            
             
         
         
@@ -658,11 +742,12 @@
         <div class="accordion" id="records_accordion">
             <div class="card">
                 <div class="card-header" id="records">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#records_card" aria-expanded="false" aria-controls="records_card">
-                            records
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#records_card" aria-expanded="false" aria-controls="records_card">
+                        records
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
                 </div>
                 <div id="records_card" class="collapse" aria-labelledby="records">
                     <div class="card-body">
@@ -691,42 +776,163 @@
         </thead>
         
             
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="npx_manager_version">
+                npx_manager_version
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Version of NPX manager used for the analysis.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="number_of_samples">
+                number_of_samples
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Number of samples analyzed in the assay.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        number
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
         
             
         
             
         
             
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-        
-            
-        
-            
-        
-            
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="baseline_correction">
@@ -755,10 +961,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="chip_barcode">
@@ -787,10 +995,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="fludigm_application_build">
@@ -819,10 +1029,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="fludigm_application_version">
@@ -851,10 +1063,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="instrument">
@@ -883,74 +1097,20 @@
         
     </td>
 </tr>
-            
-        
-            
-                <tr>
-    <td>
-        
-            <span id="npx_manager_version">
-                npx_manager_version
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Version of NPX manager used for the analysis.
-        
-    </td>
-    <td>
-        
-            &lt; 
                 
-        string
-    
-
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
             
         
             
-                <tr>
-    <td>
-        
-            <span id="number_of_samples">
-                number_of_samples
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Number of samples analyzed in the assay.
-        
-    </td>
-    <td>
-        
-            &lt; 
                 
-        number
-    
-
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
             
         
             
-                <tr>
+                
+            
+        
+            
+                
+                    <tr>
     <td>
         
             <span id="number_of_samples_failed">
@@ -979,10 +1139,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="passive_reference">
@@ -1011,10 +1173,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="probe_type">
@@ -1043,10 +1207,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="quality_threshold">
@@ -1075,10 +1241,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="run_date">
@@ -1107,10 +1275,12 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="run_time">
@@ -1139,6 +1309,7 @@
         
     </td>
 </tr>
+                
             
         
         
@@ -1148,11 +1319,12 @@
         <div class="accordion" id="files_accordion">
             <div class="card">
                 <div class="card-header" id="files">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#files_card" aria-expanded="false" aria-controls="files_card">
-                            files
-                        </button>
-                    </h2>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#files_card" aria-expanded="false" aria-controls="files_card">
+                        files
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
                 </div>
                 <div id="files_card" class="collapse" aria-labelledby="files">
                     <div class="card-body">
@@ -1181,17 +1353,17 @@
         </thead>
         
             
-        
             
-        
-        
             
-                <tr>
+                
+                    <tr>
     <td>
         
             <span id="assay_npx">
                 assay_npx
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -1208,15 +1380,21 @@
         
     </td>
 </tr>
+                
             
         
             
-                <tr>
+            
+            
+                
+                    <tr>
     <td>
         
             <span id="assay_raw_ct">
                 assay_raw_ct
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -1233,6 +1411,16 @@
         
     </td>
 </tr>
+                
+            
+        
+        
+            
+                
+            
+        
+            
+                
             
         
         
@@ -1340,6 +1528,29 @@
                     </div>
                 </div>
             
+            
+                <div class="card">
+                    <div class="card-header" id="analaysis_uploads">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analaysis_uploads_card" aria-expanded="false" aria-controls="analaysis_uploads_card">
+                            Analysis Uploads
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="analaysis_uploads_card" class="collapse" aria-labelledby="analaysis_uploads" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Entity</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
             
         </div>
     </div>

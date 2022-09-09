@@ -83,7 +83,7 @@ def _get_worksheet_merge_pointers(
     return metadata_merge_pointers, data_merge_pointers
 
 
-def _get_all_merge_pointers(template_list: Iterable[dict]) -> Tuple[Set[str], Set[str]]:
+def _get_all_merge_pointers(template_list: Iterable[dict]) -> Dict[str, Set[str]]:
     """
     Returns the metadata and data keys given across all templates and worksheets
 
@@ -94,10 +94,12 @@ def _get_all_merge_pointers(template_list: Iterable[dict]) -> Tuple[Set[str], Se
 
     Returns
     -------
-    metadata_merge_pointers: Set[str]
-        all translated absolute merge_pointers from the preamble_rows
-    data_merge_pointers: Set[str]
-        all translated absolute merge_pointers from the data_columns
+    Dict[str, Set[str]]
+        with the following keys
+        "metadata": Set[str]
+            all translated absolute merge_pointers from the preamble_rows
+        "data": Set[str]
+            all translated absolute merge_pointers from the data_columns
     """
     metadata_merge_pointers = set()
     data_merge_pointers = set()
@@ -112,7 +114,7 @@ def _get_all_merge_pointers(template_list: Iterable[dict]) -> Tuple[Set[str], Se
             metadata_merge_pointers.update(sheet_md)
             data_merge_pointers.update(sheet_data)
 
-    return metadata_merge_pointers, data_merge_pointers
+    return {"metadata": metadata_merge_pointers, "data": data_merge_pointers}
 
 
 class Schema:
@@ -144,7 +146,8 @@ class Schema:
         # set self.name, self.schema, and self.required
         self.name = name
         self.schema = schema
-        self.required = self.schema.get("required", [])
+        # protcol_identifier always required
+        self.required = set(self.schema.get("required", []) + ["protocol_identifier"])
 
 
 class AssaySchema(Schema):
@@ -154,31 +157,26 @@ class AssaySchema(Schema):
     """
 
     name: str
-    assay_templates: Dict[str, dict]
-    analysis_templates: Dict[str, dict]
     schema: dict
-    root: dict
-    required: List[str]
+    required: Set[str]
+    templates: Dict[str, Dict[str, dict]]
+    # optional keys "assay" and "analysis" are mapping of names to templates
 
+    # will always have keys "assay" and "analysis"
+    # each with keys "metadata" and "data"
+    merge_pointers: Dict[str, Dict[str, Set[str]]]
+
+    root: dict
     assay_metadata: Dict[str, dict]
     assay_data: Dict[str, dict]
     analysis_metadata: Dict[str, dict]
     analysis_data: Dict[str, dict]
-    required_assay_metadata: List[str]
-    required_assay_data: List[str]
-    required_analysis_metadata: List[str]
-    required_analysis_data: List[str]
 
     def __init__(
         self,
         name: str,
         schema: dict,
-        assay_templates: Dict[str, dict] = dict(),
-        analysis_templates: Dict[str, dict] = dict(),
-        assay_metadata_merge_pointers: Set[str] = set(),
-        assay_data_merge_pointers: Set[str] = set(),
-        analysis_metadata_merge_pointers: Set[str] = set(),
-        analysis_data_merge_pointers: Set[str] = set(),
+        templates: Dict[str, Dict[str, dict]] = dict(),
     ) -> None:
         """
         Parameters
@@ -191,27 +189,29 @@ class AssaySchema(Schema):
             a mapping of the assay template(s) for this assay to their definition(s)
         analysis_templates: Dict[str, dict] = dict()
             a mapping of the analysis template(s) for this assay to their definition(s)
-        assay_metadata_merge_pointers: Set[str] = set()
-        assay_data_merge_pointers: Set[str] = set()
-        analysis_metadata_merge_pointers: Set[str] = set()
-        analysis_data_merge_pointers: Set[str] = set()
+        merge_pointers: Dict[str, Dict[str, Set[str]]] = dict()
+            a dict with keys "assay" and "analysis"
+            each themselves dicts with keys "metadata" and "data"
+            which are themselves a list of merge_pointers within this assay
         """
         super().__init__(name=name, schema=schema)
 
-        self.assay_templates = assay_templates
-        self.analysis_templates = analysis_templates
+        self.templates = templates
+
+        self.merge_pointers: Dict[str, Dict[str, Set[str]]] = {
+            "assay": _get_all_merge_pointers(
+                template_list=self.templates.get("assay", {}).values()
+            ),
+            "analysis": _get_all_merge_pointers(
+                self.templates.get("analysis", {}).values()
+            ),
+        }
 
         print("Processing", self.name)
-        # set self.[required_]assay_[meta]data
-        self.process_assays(
-            assay_metadata_merge_pointers=assay_metadata_merge_pointers,
-            assay_data_merge_pointers=assay_data_merge_pointers,
-        )
-        # set self.[required_]analysis_[meta]data
-        self.process_analyses(
-            analysis_metadata_merge_pointers=analysis_metadata_merge_pointers,
-            analysis_data_merge_pointers=analysis_data_merge_pointers,
-        )
+        # set self.assay_[meta]data
+        self.process_assay_merge_pointers()
+        # set self.analysis_[meta]data
+        self.process_analysis_merge_pointers()
 
     def _add_merge_pointer_to_data_store(
         self, merge_pointer: str, data_store: dict
@@ -260,16 +260,19 @@ class AssaySchema(Schema):
             levels = levels[1:]
             array_pointers = [l[1:] for l in array_pointers]
 
-        root = utils.descend_dict(root, levels)
+        root, required = utils.descend_dict(root, levels)
+        self.required.update(required)
 
         # if merge_pointer points to a new item in the list
         # make sure we're all the way down and have a description
         if merge_pointer.endswith("-"):
             # updates in place
             utils.load_subschema_from_url(root)
+            self.required.update(root.get("required", []))
 
             if "properties" in root:
                 root = root["properties"]
+                self.required.update(root.get("required", []))
             if root.get("type", "") == "array" and "description" not in root:
                 root["description"] = root["items"].get("description", "")
 
@@ -319,22 +322,13 @@ class AssaySchema(Schema):
         return data
 
     # ----- Business Functions ----- #
-    def process_assays(
+    def process_assay_merge_pointers(
         self,
-        assay_metadata_merge_pointers: Set[str] = set(),
-        assay_data_merge_pointers: Set[str] = set(),
     ) -> None:
         """
         Loads and sets:
             self.assay_metadata: Dict[str, dict]
             self.assay_data: Dict[str, dict]
-            self.required_assay_metadata: List[str]
-            self.required_assay_data: List[str]
-        
-        Parameters
-        ----------
-        assay_metadata_merge_pointers: Set[str] = set()
-        assay_data_merge_pointers: Set[str] = set()
         """
         # load the related schema
         if self.name == "rna":
@@ -344,52 +338,25 @@ class AssaySchema(Schema):
                 recursive=False,
             )[""]["rna_assay-v0"]
             self.root = version_schema["properties"]
-            self.required.extend(version_schema["required"])
+            self.required.update(version_schema["required"])
         else:
             self.root = self.schema["properties"]
-
-        # if not passed, get all merge_pointers referenced in the assay template(s)
-        # split by metadata ie preamble vs data
-        if not len(assay_metadata_merge_pointers) and not len(
-            assay_data_merge_pointers
-        ):
-            (
-                assay_metadata_merge_pointers,
-                assay_data_merge_pointers,
-            ) = _get_all_merge_pointers(template_list=self.assay_templates.values())
+            self.required.update(self.root.get("required", []))
 
         self.assay_metadata: Dict[str, dict] = self._get_merge_pointer_definitions(
-            merge_pointers=assay_metadata_merge_pointers
+            merge_pointers=self.merge_pointers["assay"]["metadata"]
         )
         self.assay_data: Dict[str, dict] = self._get_merge_pointer_definitions(
-            merge_pointers=assay_data_merge_pointers
+            merge_pointers=self.merge_pointers["assay"]["data"]
         )
 
-        self.required_assay_metadata: List[str] = [
-            r for r in self.required if r in assay_metadata_merge_pointers
-        ]
-        self.required_assay_data: List[str] = [
-            prop
-            for prop, definition in self.assay_data.items()
-            if definition.get("required")
-        ]
-
-    def process_analyses(
+    def process_analysis_merge_pointers(
         self,
-        analysis_metadata_merge_pointers: Set[str] = set(),
-        analysis_data_merge_pointers: Set[str] = set(),
     ) -> None:
         """
         Loads and sets:
             self.analysis_metadata: Dict[str, dict]
             self.analysis_data: Dict[str, dict]
-            self.required_analysis_metadata: List[str]
-            self.required_analysis_data: List[str]
-            
-        Parameters
-        ----------
-        analysis_metadata_merge_pointers: Set[str] = set()
-        analysis_data_merge_pointers: Set[str] = set()
         """
         if self.name in ("atacseq", "ctdna", "microbiome", "rna", "tcr", "wes"):
             if self.name in ("atacseq", "rna"):
@@ -420,33 +387,17 @@ class AssaySchema(Schema):
 
             self.root = version_schema["properties"]
 
-            self.required.extend(version_schema.get("required", []))
+            self.required.update(version_schema.get("required", []))
         else:
             self.root = self.schema["properties"]
-
-        if not len(analysis_metadata_merge_pointers) and not len(
-            analysis_data_merge_pointers
-        ):
-            (
-                analysis_metadata_merge_pointers,
-                analysis_data_merge_pointers,
-            ) = _get_all_merge_pointers(self.analysis_templates.values())
+            self.required.update(self.root.get("required", []))
 
         self.analysis_metadata: Dict[str, dict] = self._get_merge_pointer_definitions(
-            merge_pointers=analysis_metadata_merge_pointers
+            merge_pointers=self.merge_pointers["analysis"]["metadata"]
         )
         self.analysis_data: Dict[str, dict] = self._get_merge_pointer_definitions(
-            merge_pointers=analysis_data_merge_pointers
+            merge_pointers=self.merge_pointers["analysis"]["data"]
         )
-
-        self.required_analysis_metadata: List[str] = [
-            r for r in self.required if r in analysis_metadata_merge_pointers
-        ]
-        self.required_analysis_data: List[str] = [
-            prop
-            for prop, definition in self.analysis_data.items()
-            if definition.get("required")
-        ]
 
 
 class TemplateSchema(Schema):
@@ -459,7 +410,7 @@ class TemplateSchema(Schema):
     schema: dict
     assay_schema: AssaySchema
     root: dict
-    required: List[str]
+    required: Set[str]
     file_list: List[dict]
 
     def __init__(self, name: str, schema: dict, assay_schema: AssaySchema) -> None:
@@ -606,15 +557,19 @@ class TemplateSchema(Schema):
             .lstrip("/")
         )
 
-        for prop_schema in worksheet_schema["preamble_rows"].values():
+        for prop_name, prop_schema in worksheet_schema["preamble_rows"].items():
             # if it's protocol_identifier, just add that and keep going
             if prop_schema.get("merge_pointer", "").endswith("protocol_identifier"):
                 prop_schema.update(PROTOCOL_IDENTIFIER_SCHEMA)
+                self.required.add(prop_name)
                 continue
 
             # if we can, try to add the data from self.assay_schema
             if "merge_pointer" in prop_schema:
                 self._update_definition_from_merge_pointer(context_pointer, prop_schema)
+
+            if not prop_schema.get("allow_empty", False):
+                self.required.add(prop_name)
 
     def _process_data(self, worksheet_schema: dict) -> None:
         """
@@ -636,7 +591,10 @@ class TemplateSchema(Schema):
         )
 
         for table_schema in worksheet_schema["data_columns"].values():
-            for prop_schema in table_schema.values():
+            for prop_name, prop_schema in table_schema.items():
+                if not prop_schema.get("allow_empty", False):
+                    self.required.add(prop_name)
+
                 # if we can, try to add the data from self.assay_schema
                 if "merge_pointer" in prop_schema:
                     self._update_definition_from_merge_pointer(
@@ -804,8 +762,10 @@ def load_assay_schemas() -> Dict[str, AssaySchema]:
         assay_name: AssaySchema(
             name=assay_name,
             schema=assay_schemas[assay_name],
-            assay_templates=assay_template_schemas[assay_name],
-            analysis_templates=analysis_template_schemas[assay_name],
+            templates={
+                "assay": assay_template_schemas[assay_name],
+                "analysis": analysis_template_schemas[assay_name],
+            },
         )
         for assay_name in sorted(assay_names)
     }
@@ -828,7 +788,7 @@ def load_assay_schemas() -> Dict[str, AssaySchema]:
         template_schemas_by_assay[upload_name] = AssaySchema(
             name=assay_name,
             schema=template_schemas_by_assay[assay_name].schema,
-            analysis_templates={upload_name: schema},
+            templates={"analysis": {upload_name: schema}},
         )
 
     return template_schemas_by_assay
@@ -971,8 +931,8 @@ def generate_docs(out_directory: str = HTML_DIR):
         scope = f"assays.{assay_name}"
 
         for upload_name, upload_schema in list(
-            assay_schema.assay_templates.items()
-        ) + list(assay_schema.analysis_templates.items()):
+            assay_schema.templates.get("assay", {}).items()
+        ) + list(assay_schema.templates.get("analysis", {}).items()):
             _make_file(
                 template_template,
                 out_directory,

@@ -177,13 +177,18 @@
                         pair_runs
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="pair_runs_card" class="collapse" aria-labelledby="pair_runs">
                     <div class="card-body">
                         
-                            <b>type:</b> array
-                        
-                        <br>
+                            Whole Exome Sequencing assay output files for a tumor normal pair of samples.
                         
                         <br>
                         
@@ -203,6 +208,10 @@
             <th>Data Type</th>
         </tr>
         </thead>
+        
+            
+            
+            
         
             
             
@@ -316,6 +325,8 @@
             
         
             
+        
+            
                 
                     <tr>
     <td>
@@ -396,591 +407,6 @@
             
                 <tr>
     <td colspan=3 class="container">
-        <div class="accordion" id="tumor_accordion">
-            <div class="card">
-                <div class="card-header" id="tumor">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#tumor_card" aria-expanded="false" aria-controls="tumor_card">
-                        tumor
-                    </button>
-                    
-                        <sup><mark>required</mark></sup>
-                    
-                </div>
-                <div id="tumor_card" class="collapse" aria-labelledby="tumor">
-                    <div class="card-body">
-                        
-                            <b>type:</b> object
-                        
-                        <br>
-                        
-                        <br>
-                        
-    
-
-    
-
-    
-        
-    
-
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Property</th>
-            <th>Description</th>
-            <th>Data Type</th>
-        </tr>
-        </thead>
-        
-            
-            
-            
-        
-            
-            
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="cimac_id">
-                cimac_id
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                
-        string
-    
-
-    
-            &gt;
-            
-            
-            
-                as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code>
-            
-        
-    </td>
-</tr>
-                
-            
-        
-            
-            
-            
-        
-            
-            
-            
-        
-        
-            
-        
-            
-                
-            
-        
-            
-        
-            
-        
-        
-            
-                <tr>
-    <td colspan=3 class="container">
-        <div class="accordion" id="alignment_accordion">
-            <div class="card">
-                <div class="card-header" id="alignment">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#alignment_card" aria-expanded="false" aria-controls="alignment_card">
-                        alignment
-                    </button>
-                    
-                </div>
-                <div id="alignment_card" class="collapse" aria-labelledby="alignment">
-                    <div class="card-body">
-                        
-                            <b>type:</b> object
-                        
-                        <br>
-                        
-                        <br>
-                        
-    
-
-    
-
-    
-        
-    
-
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Property</th>
-            <th>Description</th>
-            <th>Data Type</th>
-        </tr>
-        </thead>
-        
-            
-            
-            
-                
-            
-        
-            
-            
-            
-                
-            
-        
-            
-            
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="align_sorted_dedup">
-                align_sorted_dedup
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a BAM file.
-        
-    </td>
-    <td>
-        
-            <a href="files.bam.html">
-                bam
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-            
-            
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="align_sorted_dedup_index">
-                align_sorted_dedup_index
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a Bam index file.
-        
-    </td>
-    <td>
-        
-            <a href="files.bam_bai.html">
-                bam bai
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-        
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="align_recalibrated">
-                align_recalibrated
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a BAM file.
-        
-    </td>
-    <td>
-        
-            <a href="files.bam.html">
-                bam
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="align_recalibrated_index">
-                align_recalibrated_index
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a Bam index file.
-        
-    </td>
-    <td>
-        
-            <a href="files.bam_bai.html">
-                bam bai
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-            
-                
-            
-        
-            
-                
-            
-        
-        
-            
-        
-            
-        
-            
-        
-            
-        
-    </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </td>
-</tr>
-            
-        
-            
-        
-            
-                <tr>
-    <td colspan=3 class="container">
-        <div class="accordion" id="germline_accordion">
-            <div class="card">
-                <div class="card-header" id="germline">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#germline_card" aria-expanded="false" aria-controls="germline_card">
-                        germline
-                    </button>
-                    
-                </div>
-                <div id="germline_card" class="collapse" aria-labelledby="germline">
-                    <div class="card-body">
-                        
-                            <b>type:</b> object
-                        
-                        <br>
-                        
-                        <br>
-                        
-    
-
-    
-
-    
-        
-    
-
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Property</th>
-            <th>Description</th>
-            <th>Data Type</th>
-        </tr>
-        </thead>
-        
-            
-            
-            
-                
-            
-        
-            
-            
-            
-                
-            
-        
-        
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="haplotyper_output">
-                haplotyper_output
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a VCF file.
-        
-    </td>
-    <td>
-        
-            <a href="files.vcf.html">
-                vcf
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="haplotyper_targets">
-                haplotyper_targets
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a Gzipped VCF file.
-        
-    </td>
-    <td>
-        
-            <a href="files.vcf_gz.html">
-                vcf gz
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-        
-            
-        
-            
-        
-    </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </td>
-</tr>
-            
-        
-            
-                <tr>
-    <td colspan=3 class="container">
-        <div class="accordion" id="hla_accordion">
-            <div class="card">
-                <div class="card-header" id="hla">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#hla_card" aria-expanded="false" aria-controls="hla_card">
-                        hla
-                    </button>
-                    
-                </div>
-                <div id="hla_card" class="collapse" aria-labelledby="hla">
-                    <div class="card-body">
-                        
-                            <b>type:</b> object
-                        
-                        <br>
-                        
-                        <br>
-                        
-    
-
-    
-
-    
-        
-    
-
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Property</th>
-            <th>Description</th>
-            <th>Data Type</th>
-        </tr>
-        </thead>
-        
-            
-            
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="hla_final_result">
-                hla_final_result
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a text file.
-        
-    </td>
-    <td>
-        
-            <a href="files.text.html">
-                text
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-            
-            
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="optitype_result">
-                optitype_result
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a text file.
-        
-    </td>
-    <td>
-        
-            <a href="files.text.html">
-                text
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-            
-            
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="xhla_report_hla">
-                xhla_report_hla
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a JSON file.
-        
-    </td>
-    <td>
-        
-            <a href="files.json.html">
-                json
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-        
-            
-                
-            
-        
-            
-                
-            
-        
-            
-                
-            
-        
-        
-            
-        
-            
-        
-            
-        
-    </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </td>
-</tr>
-            
-        
-    </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </td>
-</tr>
-            
-        
-            
-        
-            
-                <tr>
-    <td colspan=3 class="container">
         <div class="accordion" id="normal_accordion">
             <div class="card">
                 <div class="card-header" id="normal">
@@ -990,13 +416,18 @@
                     
                         <sup><mark>required</mark></sup>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="normal_card" class="collapse" aria-labelledby="normal">
                     <div class="card-body">
                         
-                            <b>type:</b> object
-                        
-                        <br>
+                            Sample wise analysis files for the WES assay.
                         
                         <br>
                         
@@ -1016,6 +447,10 @@
             <th>Data Type</th>
         </tr>
         </thead>
+        
+            
+            
+            
         
             
             
@@ -1073,6 +508,8 @@
             
         
             
+        
+            
                 
             
         
@@ -1091,13 +528,18 @@
                         alignment
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="alignment_card" class="collapse" aria-labelledby="alignment">
                     <div class="card-body">
                         
-                            <b>type:</b> object
-                        
-                        <br>
+                            WES output align files.
                         
                         <br>
                         
@@ -1122,6 +564,10 @@
             
             
                 
+            
+        
+            
+            
             
         
             
@@ -1221,6 +667,8 @@
             
         
             
+        
+            
                 
                     <tr>
     <td>
@@ -1264,6 +712,8 @@
         
             
         
+            
+        
     </table>
                     </div>
                 </div>
@@ -1271,6 +721,8 @@
         </div>
     </td>
 </tr>
+            
+        
             
         
             
@@ -1285,13 +737,18 @@
                         germline
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="germline_card" class="collapse" aria-labelledby="germline">
                     <div class="card-body">
                         
-                            <b>type:</b> object
-                        
-                        <br>
+                            Germline variant output sample files.
                         
                         <br>
                         
@@ -1316,6 +773,10 @@
             
             
                 
+            
+        
+            
+            
             
         
             
@@ -1353,6 +814,8 @@
             
         
             
+        
+            
                 
                     <tr>
     <td>
@@ -1384,6 +847,8 @@
         
             
         
+            
+        
     </table>
                     </div>
                 </div>
@@ -1403,13 +868,18 @@
                         hla
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="hla_card" class="collapse" aria-labelledby="hla">
                     <div class="card-body">
                         
-                            <b>type:</b> object
-                        
-                        <br>
+                            HLA output files.
                         
                         <br>
                         
@@ -1459,6 +929,10 @@
     </td>
 </tr>
                 
+            
+        
+            
+            
             
         
             
@@ -1529,6 +1003,334 @@
             
         
             
+        
+            
+                
+            
+        
+            
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="tumor_accordion">
+            <div class="card">
+                <div class="card-header" id="tumor">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#tumor_card" aria-expanded="false" aria-controls="tumor_card">
+                        tumor
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
+                </div>
+                <div id="tumor_card" class="collapse" aria-labelledby="tumor">
+                    <div class="card-body">
+                        
+                            Sample wise analysis files for the WES assay.
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="cimac_id">
+                cimac_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+                as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code>
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+        
+        
+            
+        
+            
+        
+            
+                
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="alignment_accordion">
+            <div class="card">
+                <div class="card-header" id="alignment">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#alignment_card" aria-expanded="false" aria-controls="alignment_card">
+                        alignment
+                    </button>
+                    
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
+                </div>
+                <div id="alignment_card" class="collapse" aria-labelledby="alignment">
+                    <div class="card-body">
+                        
+                            WES output align files.
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="align_sorted_dedup">
+                align_sorted_dedup
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a BAM file.
+        
+    </td>
+    <td>
+        
+            <a href="files.bam.html">
+                bam
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="align_sorted_dedup_index">
+                align_sorted_dedup_index
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a Bam index file.
+        
+    </td>
+    <td>
+        
+            <a href="files.bam_bai.html">
+                bam bai
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="align_recalibrated">
+                align_recalibrated
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a BAM file.
+        
+    </td>
+    <td>
+        
+            <a href="files.bam.html">
+                bam
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="align_recalibrated_index">
+                align_recalibrated_index
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a Bam index file.
+        
+    </td>
+    <td>
+        
+            <a href="files.bam_bai.html">
+                bam bai
+            </a>
+        
+    </td>
+</tr>
                 
             
         
@@ -1536,6 +1338,321 @@
                 
             
         
+            
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="germline_accordion">
+            <div class="card">
+                <div class="card-header" id="germline">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#germline_card" aria-expanded="false" aria-controls="germline_card">
+                        germline
+                    </button>
+                    
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
+                </div>
+                <div id="germline_card" class="collapse" aria-labelledby="germline">
+                    <div class="card-body">
+                        
+                            Germline variant output sample files.
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="haplotyper_output">
+                haplotyper_output
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a VCF file.
+        
+    </td>
+    <td>
+        
+            <a href="files.vcf.html">
+                vcf
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="haplotyper_targets">
+                haplotyper_targets
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a Gzipped VCF file.
+        
+    </td>
+    <td>
+        
+            <a href="files.vcf_gz.html">
+                vcf gz
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="hla_accordion">
+            <div class="card">
+                <div class="card-header" id="hla">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#hla_card" aria-expanded="false" aria-controls="hla_card">
+                        hla
+                    </button>
+                    
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
+                </div>
+                <div id="hla_card" class="collapse" aria-labelledby="hla">
+                    <div class="card-body">
+                        
+                            HLA output files.
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="hla_final_result">
+                hla_final_result
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a text file.
+        
+    </td>
+    <td>
+        
+            <a href="files.text.html">
+                text
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="optitype_result">
+                optitype_result
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a text file.
+        
+    </td>
+    <td>
+        
+            <a href="files.text.html">
+                text
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="xhla_report_hla">
+                xhla_report_hla
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a JSON file.
+        
+    </td>
+    <td>
+        
+            <a href="files.json.html">
+                json
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+                
+            
+        
+            
+        
+            
+                
+            
+        
+            
+                
+            
+        
+        
+            
         
             
         
@@ -1571,13 +1688,18 @@
                         purity
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="purity_card" class="collapse" aria-labelledby="purity">
                     <div class="card-body">
                         
-                            <b>type:</b> object
-                        
-                        <br>
+                            Purity output files.
                         
                         <br>
                         
@@ -1602,6 +1724,10 @@
             
             
                 
+            
+        
+            
+            
             
         
             
@@ -1670,6 +1796,8 @@
             
         
             
+        
+            
                 
                     <tr>
     <td>
@@ -1707,6 +1835,8 @@
         
             
         
+            
+        
     </table>
                     </div>
                 </div>
@@ -1726,13 +1856,18 @@
                         clonality
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="clonality_card" class="collapse" aria-labelledby="clonality">
                     <div class="card-body">
                         
-                            <b>type:</b> object
-                        
-                        <br>
+                            Clonality output files.
                         
                         <br>
                         
@@ -1757,6 +1892,10 @@
             
             
                 
+            
+        
+            
+            
             
         
             
@@ -1797,6 +1936,8 @@
     </td>
 </tr>
                 
+            
+        
             
         
             
@@ -1860,6 +2001,8 @@
         
             
         
+            
+        
     </table>
                     </div>
                 </div>
@@ -1879,13 +2022,18 @@
                         neoantigen
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="neoantigen_card" class="collapse" aria-labelledby="neoantigen">
                     <div class="card-body">
                         
-                            <b>type:</b> object
-                        
-                        <br>
+                            Neoantigen output files.
                         
                         <br>
                         
@@ -1937,11 +2085,19 @@
                 
             
         
+            
+            
+            
+        
         
             
                 
             
         
+            
+        
+        
+            
         
             
         
@@ -1968,13 +2124,18 @@
                     
                         <sup><mark>required</mark></sup>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="report_card" class="collapse" aria-labelledby="report">
                     <div class="card-body">
                         
-                            <b>type:</b> object
-                        
-                        <br>
+                            WES pipeline version/commit string.
                         
                         <br>
                         
@@ -2024,6 +2185,10 @@
     </td>
 </tr>
                 
+            
+        
+            
+            
             
         
             
@@ -2162,6 +2327,8 @@
             
         
             
+        
+            
                 
             
         
@@ -2217,6 +2384,8 @@
         
             
         
+            
+        
     </table>
                     </div>
                 </div>
@@ -2236,13 +2405,18 @@
                         copynumber
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="copynumber_card" class="collapse" aria-labelledby="copynumber">
                     <div class="card-body">
                         
-                            <b>type:</b> object
-                        
-                        <br>
+                            Copy number output files.
                         
                         <br>
                         
@@ -2267,6 +2441,10 @@
             
             
                 
+            
+        
+            
+            
             
         
             
@@ -2373,6 +2551,8 @@
     </td>
 </tr>
                 
+            
+        
             
         
             
@@ -2755,6 +2935,8 @@
         
             
         
+            
+        
     </table>
                     </div>
                 </div>
@@ -2776,13 +2958,18 @@
                         rna
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="rna_card" class="collapse" aria-labelledby="rna">
                     <div class="card-body">
                         
-                            <b>type:</b> object
-                        
-                        <br>
+                            
                         
                         <br>
                         
@@ -2807,6 +2994,10 @@
             
             
                 
+            
+        
+            
+            
             
         
             
@@ -2844,6 +3035,8 @@
             
         
             
+        
+            
                 
                     <tr>
     <td>
@@ -2875,6 +3068,8 @@
         
             
         
+            
+        
     </table>
                     </div>
                 </div>
@@ -2896,13 +3091,18 @@
                     
                         <sup><mark>required</mark></sup>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="msisensor_card" class="collapse" aria-labelledby="msisensor">
                     <div class="card-body">
                         
-                            <b>type:</b> object
-                        
-                        <br>
+                            MSISensor2 output files.
                         
                         <br>
                         
@@ -2954,11 +3154,19 @@
                 
             
         
+            
+            
+            
+        
         
             
                 
             
         
+            
+        
+        
+            
         
             
         
@@ -2983,13 +3191,18 @@
                         tcell
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="tcell_card" class="collapse" aria-labelledby="tcell">
                     <div class="card-body">
                         
-                            <b>type:</b> object
-                        
-                        <br>
+                            tcell fraction estimates.
                         
                         <br>
                         
@@ -3041,11 +3254,19 @@
                 
             
         
+            
+            
+            
+        
         
             
                 
             
         
+            
+        
+        
+            
         
             
         
@@ -3068,13 +3289,18 @@
                         somatic
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="somatic_card" class="collapse" aria-labelledby="somatic">
                     <div class="card-body">
                         
-                            <b>type:</b> object
-                        
-                        <br>
+                            Somatic variant calling output sample files.
                         
                         <br>
                         
@@ -3099,6 +3325,10 @@
             
             
                 
+            
+        
+            
+            
             
         
             
@@ -3151,6 +3381,8 @@
     </td>
 </tr>
                 
+            
+        
             
         
             
@@ -3272,6 +3504,8 @@
         
             
         
+            
+        
     </table>
                     </div>
                 </div>
@@ -3300,13 +3534,18 @@
                         excluded_samples
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="excluded_samples_card" class="collapse" aria-labelledby="excluded_samples">
                     <div class="card-body">
                         
-                            <b>type:</b> array
-                        
-                        <br>
+                            A list of samples excluded from analysis, along with the reasons why.
                         
                         <br>
                         
@@ -3374,6 +3613,10 @@
             
             
             
+        
+            
+            
+            
                 
                     <tr>
     <td>
@@ -3417,9 +3660,13 @@
             
         
             
+        
+            
                 
             
         
+        
+            
         
             
         
@@ -3442,29 +3689,6 @@
                 </div>
             
 
-            
-                <div class="card">
-                    <div class="card-header" id="assay_uploads">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#assay_uploads_card" aria-expanded="false" aria-controls="assay_uploads_card">
-                                Assay Uploads
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="assay_uploads_card" class="collapse" aria-labelledby="assay_uploads" data-parent="#assay_accordion">
-                        <div class="card-body">
-                            <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Entity</th>
-            <th>Description</th>
-        </tr>
-        </thead>
-        
-    </table>
-                        </div>
-                    </div>
-                </div>
             
             
                 <div class="card">

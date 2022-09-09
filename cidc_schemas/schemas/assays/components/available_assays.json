@@ -92,14 +92,6 @@
       },
       "mergeStrategy": "append"
     },
-    "micsss": {
-      "type": "array",
-      "description": "Multiplexed immunohistochemical consecutive staining on single slide.",
-      "items": {
-        "$ref": "assays/micsss_assay.json"
-      },
-      "mergeStrategy": "append"
-    },
     "ihc": {
       "type": "array",
       "description": "Immunohistochemical analysis.",

@@ -416,13 +416,18 @@
                     
                         <sup><mark>required</mark></sup>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="records_card" class="collapse" aria-labelledby="records">
                     <div class="card-body">
                         
-                            <b>type:</b> array
-                        
-                        <br>
+                            A single data record from TCRseq assay.
                         
                         <br>
                         
@@ -442,6 +447,10 @@
             <th>Data Type</th>
         </tr>
         </thead>
+        
+            
+            
+            
         
             
             
@@ -503,6 +512,8 @@
             
         
             
+        
+            
                 
             
         
@@ -544,13 +555,18 @@
                         files
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="files_card" class="collapse" aria-labelledby="files">
                     <div class="card-body">
                         
-                            <b>type:</b> object
-                        
-                        <br>
+                            used only if fastq files were received for a TCRseq assay (non-Adaptive sequencing)
                         
                         <br>
                         
@@ -575,6 +591,12 @@
             
             
         
+            
+            
+            
+        
+        
+            
         
             
         
@@ -589,13 +611,18 @@
                         replicates
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="replicates_card" class="collapse" aria-labelledby="replicates">
                     <div class="card-body">
                         
-                            <b>type:</b> array
-                        
-                        <br>
+                            TCRseq replicate of interest.
                         
                         <br>
                         
@@ -620,6 +647,10 @@
             
             
                 
+            
+        
+            
+            
             
         
             
@@ -719,31 +750,6 @@
             
         
             
-                
-                    <tr>
-    <td>
-        
-            <span id="r1">
-                r1
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Fastq file for the first fragment.
-        
-    </td>
-    <td>
-        
-            <a href="files.fastq_gz.html">
-                fastq gz
-            </a>
-        
-    </td>
-</tr>
-                
-            
         
             
                 
@@ -786,6 +792,33 @@
     <td width=55%>
         
             Fastq file for the second fragment.
+        
+    </td>
+    <td>
+        
+            <a href="files.fastq_gz.html">
+                fastq gz
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="r1">
+                r1
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Fastq file for the first fragment.
         
     </td>
     <td>
@@ -852,13 +885,6 @@
         
             
         
-    </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </td>
-</tr>
             
         
     </table>
@@ -868,6 +894,19 @@
         </div>
     </td>
 </tr>
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
             
         
             
@@ -895,13 +934,18 @@
                         controls
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="controls_card" class="collapse" aria-labelledby="controls">
                     <div class="card-body">
                         
-                            <b>type:</b> array
-                        
-                        <br>
+                            Data records from TCRseq assay for a control for this batch.
                         
                         <br>
                         
@@ -967,12 +1011,18 @@
             
             
             
+        
+            
+            
+            
                 
             
         
         
             
                 
+            
+        
             
         
             
@@ -1004,6 +1054,8 @@
                 
             
         
+        
+            
         
             
         
@@ -1114,13 +1166,18 @@
                         batches
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="batches_card" class="collapse" aria-labelledby="batches">
                     <div class="card-body">
                         
-                            <b>type:</b> array
-                        
-                        <br>
+                            Output files generated from the TCRseq assay: TRA and TRB clones
                         
                         <br>
                         
@@ -1186,8 +1243,6 @@
             
             
             
-                
-            
         
             
             
@@ -1195,9 +1250,17 @@
                 
             
         
+            
+            
+            
+                
+            
+        
         
             
                 
+            
+        
             
         
             
@@ -1256,6 +1319,8 @@
                 
             
         
+        
+            
         
             
         
@@ -1328,13 +1393,18 @@
                         batches
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="batches_card" class="collapse" aria-labelledby="batches">
                     <div class="card-body">
                         
-                            <b>type:</b> array
-                        
-                        <br>
+                            Output files generated from the TCRseq assay: TRA and TRB clones
                         
                         <br>
                         
@@ -1367,6 +1437,12 @@
             
             
         
+            
+            
+            
+        
+        
+            
         
             
         
@@ -1385,13 +1461,18 @@
                         excluded_samples
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="excluded_samples_card" class="collapse" aria-labelledby="excluded_samples">
                     <div class="card-body">
                         
-                            <b>type:</b> array
-                        
-                        <br>
+                            A list of samples excluded from analysis, along with the reasons why.
                         
                         <br>
                         
@@ -1450,6 +1531,10 @@
     </td>
 </tr>
                 
+            
+        
+            
+            
             
         
             
@@ -1502,9 +1587,13 @@
             
         
             
+        
+            
                 
             
         
+        
+            
         
             
         
@@ -1524,6 +1613,8 @@
             
         
             
+        
+            
                 <tr>
     <td colspan=3 class="container">
         <div class="accordion" id="records_accordion">
@@ -1535,13 +1626,18 @@
                     
                         <sup><mark>required</mark></sup>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="records_card" class="collapse" aria-labelledby="records">
                     <div class="card-body">
                         
-                            <b>type:</b> array
-                        
-                        <br>
+                            Output files generated from the TCRseq assay: TRA and TRB clones
                         
                         <br>
                         
@@ -1609,8 +1705,6 @@
             
             
             
-                
-            
         
             
             
@@ -1624,9 +1718,17 @@
                 
             
         
+            
+            
+            
+                
+            
+        
         
             
                 
+            
+        
             
         
             
@@ -1719,6 +1821,8 @@
                 
             
         
+        
+            
         
             
         

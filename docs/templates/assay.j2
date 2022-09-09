@@ -71,7 +71,7 @@
                 </div>
             {% endif %}
 
-            {% if "assay" in schema.templates %}
+            {% if schema.templates.get("assay", []) %}
                 <div class="card">
                     <div class="card-header" id="assay_uploads">
                         <h2 class="mb-0">
@@ -87,7 +87,7 @@
                     </div>
                 </div>
             {% endif %}
-            {% if "analysis" in schema.templates %}
+            {% if schema.templates.get("analysis", []) %}
                 <div class="card">
                     <div class="card-header" id="analaysis_uploads">
                         <h2 class="mb-0">

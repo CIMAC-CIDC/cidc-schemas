@@ -32,6 +32,7 @@ def add_merge_pointer_to_data_store(
         the list of property names that are required
     """
     required: Set[str] = set()
+    descriptions: Dict[Tuple[str], str] = dict()
 
     # break up the merge pointer into a set of keys
     # remove any array parts -- we'll always keep descending
@@ -54,8 +55,9 @@ def add_merge_pointer_to_data_store(
             # note the processed pointer up until this point
             array_pointers.append(levels[:ptr])
 
-    root, new_required = descend_dict(root, levels)
+    root, new_required, new_descriptions = descend_dict(root, levels)
     required.update(new_required)
+    descriptions.update(new_descriptions)
 
     # if merge_pointer points to a new item in the list
     # make sure we're all the way down and have a description
@@ -67,8 +69,6 @@ def add_merge_pointer_to_data_store(
         if "properties" in root:
             root = root["properties"]
             required.update(root.get("required", []))
-        if root.get("type", "") == "array" and "description" not in root:
-            root["description"] = root["items"].get("description", "")
 
     # update in place instead of returning
     nested_set(data_store, levels, root)
@@ -80,6 +80,10 @@ def add_merge_pointer_to_data_store(
         if len(pointer_to_array):
             nested_set(data_store, pointer_to_array + ["items"], True)
 
+    # for all intermediate descriptions add them in
+    for pointer_to_descr, descr in descriptions.items():
+        nested_set(data_store, list(pointer_to_descr) + ["description"], descr, overwrite=False)
+
     return required
 
 
@@ -87,8 +91,6 @@ def descend_dict(root: dict, levels: List[str]) -> dict:
     """
     Follows `levels` down through `root`
         handles "items", "properties", and "url"s
-    Returns the final definition
-        "required" is added as a boolean based on the last step
 
     Parameters
     ----------
@@ -101,8 +103,10 @@ def descend_dict(root: dict, levels: List[str]) -> dict:
     -------
     dict
         the final definition
-    required: Set[str]
+    required: Set[str] = set()
         a concentated list of "required" across all layers
+    descriptions: Dict[Tuple[str], str] = dict()
+        a mapping from json keys to the matching description if exists
     """
 
     def _all_the_way_down(root: dict) -> bool:
@@ -117,32 +121,36 @@ def descend_dict(root: dict, levels: List[str]) -> dict:
             )
         )
 
-    # traverse the schema using the keys
     required: Set[str] = set()
-    for level in levels:
-        # keep going while we can
-        root = root[level]
+    descriptions: Dict[Tuple[str], str] = dict()
+
+    def _step_into(dic: dict, key: str) -> dict:
+        ret = dic[key]
         required.update(root.get("required", []))
+        if "description" in root and tuple(levels[: n + 1]) not in descriptions:
+            descriptions[tuple(levels[: n + 1])] = root["description"]
+        return ret
+
+    # traverse the schema using the keys
+    for n, level in enumerate(levels):
+        # keep going while we can
+        root = _step_into(root, level)
         # descend into any items, properties, or non-artifact urls
         # single carve out for cytof source_fcs
         while not _all_the_way_down(root) and level != "source_fcs":
             if "items" in root:
-                root = root["items"]
-                required.update(root.get("required", []))
+                root = _step_into(root, "items")
             if "properties" in root and root["properties"]:
-                root = root["properties"]
-                required.update(root.get("required", []))
+                root = _step_into(root, "properties")
             # updates in place
             load_subschema_from_url(root)
             required.update(root.get("required", []))
             if "items" in root:
-                root = root["items"]
-                required.update(root.get("required", []))
+                root = _step_into(root, "items")
             if "properties" in root:
-                root = root["properties"]
-                required.update(root.get("required", []))
+                root = _step_into(root, "properties")
 
-    return root, required
+    return root, required, descriptions
 
 
 def flatten_allOf(schema: dict) -> dict:
@@ -346,7 +354,13 @@ def load_subschema_from_url(definition: dict) -> dict:
     return definition
 
 
-def nested_set(dic: dict, keys: Iterable[str], value: Any) -> None:
+def nested_set(
+    dic: dict,
+    keys: Iterable[str],
+    value: Any,
+    *,
+    overwrite: bool = True,
+) -> None:
     """
     Sets a value deep in a dict given a set of keys
 
@@ -358,10 +372,15 @@ def nested_set(dic: dict, keys: Iterable[str], value: Any) -> None:
         a set of keys representing nested dict levels
     value: Any
         the value to set the bottommost entry to
+    *
+    overwrite: bool = True
+        whether or not to overwrite any existing value
     """
     for key in keys[:-1]:
         dic = dic.setdefault(key, {})
-    dic[keys[-1]] = value
+
+    if overwrite or keys[-1] not in dic:
+        dic[keys[-1]] = value
 
 
 def translate_merge_pointer(context_pointer: str, definition: dict) -> str:

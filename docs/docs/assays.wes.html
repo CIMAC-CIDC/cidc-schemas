@@ -551,13 +551,18 @@
                     
                         <sup><mark>required</mark></sup>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="records_card" class="collapse" aria-labelledby="records">
                     <div class="card-body">
                         
-                            <b>type:</b> array
-                        
-                        <br>
+                            A single data record from WES assay.
                         
                         <br>
                         
@@ -577,6 +582,10 @@
             <th>Data Type</th>
         </tr>
         </thead>
+        
+            
+            
+            
         
             
             
@@ -638,6 +647,8 @@
                 
             
         
+        
+            
         
             
         
@@ -726,13 +737,18 @@
                         files
                     </button>
                     
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
                 </div>
                 <div id="files_card" class="collapse" aria-labelledby="files">
                     <div class="card-body">
                         
-                            <b>type:</b> object
-                        
-                        <br>
+                            Paired end sequencing in a .fastq file pair or in a .bam
                         
                         <br>
                         
@@ -762,8 +778,6 @@
             
             
             
-                
-            
         
             
             
@@ -771,33 +785,12 @@
                 
             
         
-        
+            
+            
             
                 
-                    <tr>
-    <td>
-        
-            <span id="r1">
-                r1
-            </span>
             
         
-    </td>
-    <td width=55%>
-        
-            Fastq file for the first fragment.
-        
-    </td>
-    <td>
-        
-            <a href="files.fastq_gz.html">
-                fastq gz
-            </a>
-        
-    </td>
-</tr>
-                
-            
         
             
                 
@@ -813,6 +806,35 @@
     <td width=55%>
         
             Fastq file for the second fragment.
+        
+    </td>
+    <td>
+        
+            <a href="files.fastq_gz.html">
+                fastq gz
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="r1">
+                r1
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Fastq file for the first fragment.
         
     </td>
     <td>
@@ -860,6 +882,8 @@
         
             
         
+            
+        
     </table>
                     </div>
                 </div>
@@ -867,6 +891,8 @@
         </div>
     </td>
 </tr>
+            
+        
             
         
             
@@ -940,29 +966,6 @@
                     </div>
                 </div>
             
-            
-                <div class="card">
-                    <div class="card-header" id="analaysis_uploads">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analaysis_uploads_card" aria-expanded="false" aria-controls="analaysis_uploads_card">
-                            Analysis Uploads
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="analaysis_uploads_card" class="collapse" aria-labelledby="analaysis_uploads" data-parent="#assay_accordion">
-                        <div class="card-body">
-                            <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Entity</th>
-            <th>Description</th>
-        </tr>
-        </thead>
-        
-    </table>
-                        </div>
-                    </div>
-                </div>
             
         </div>
     </div>

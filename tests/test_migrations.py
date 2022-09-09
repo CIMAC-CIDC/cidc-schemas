@@ -13,6 +13,7 @@ from cidc_schemas.migrations import (
     v0_23_0_to_v0_23_1,
     v0_23_18_to_v0_24_0,
     v0_25_41_to_v0_25_42,
+    v0_25_54_to_v0_26_0,
 )
 
 
@@ -358,3 +359,134 @@ def test_v0_25_41_to_v0_25_42():
     assert result.file_updates == {}
 
     assert v0_25_41_to_v0_25_42.downgrade(target_ct).result == ct
+
+
+def test_v0_25_54_to_v0_26_0():
+    # Unrelated data is unchanged
+    assert v0_25_54_to_v0_26_0.downgrade(
+        v0_25_54_to_v0_26_0.upgrade({"foo": "bar"}).result
+    ).result == {"foo": "bar"}
+
+    ct = {
+        "collection_event_list": ["foo"],
+        "participants": [
+            {
+                "cidc_participant_id": "cidc-partic",
+                "clinical": {"foo": "bar"},
+                "samples": [
+                    {
+                        "cidc_id": "cidc-sample",
+                        "aliquots": ["bar"],
+                    },
+                    {},  # doesn't fail without them
+                ],
+            },
+            {
+                # doesn't fail without them
+                "samples": [  # samples required
+                    {},  # doesn't fail without them
+                ],
+            },
+        ],
+        "assays": {
+            "cytof": [
+                {
+                    "records": [
+                        {
+                            "input_files": {},  # required
+                            "concatenation_version": "foo",
+                            "normalization_version": "bar",
+                        },
+                        {
+                            "input_files": {},  # required
+                        },
+                    ],
+                }
+            ],
+            "misc_data": [
+                {
+                    "files": [
+                        {"description": "foo"},
+                        {},  # doesn't fail without them
+                    ],
+                }
+            ],
+        },
+    }
+
+    target_ct = {
+        "participants": [
+            {
+                "samples": [{}, {}],
+            },
+            {
+                "samples": [{}],
+            },
+        ],
+        "assays": {
+            "cytof": [
+                {
+                    "records": [
+                        {
+                            "input_files": {
+                                "concatenation_version": "foo",
+                                "normalization_version": "bar",
+                            },
+                        },
+                        {
+                            "input_files": {},
+                        },
+                    ],
+                }
+            ],
+            "misc_data": [
+                {
+                    "files": [
+                        {"file_description": "foo"},
+                        {},  # doesn't fail without them
+                    ],
+                }
+            ],
+        },
+    }
+
+    reset_ct = {
+        "participants": [
+            {
+                "samples": [{}, {}],
+            },
+            {
+                "samples": [{}],
+            },
+        ],
+        "assays": {
+            "cytof": [
+                {
+                    "records": [
+                        {
+                            "input_files": {},  # required
+                            "concatenation_version": "foo",
+                            "normalization_version": "bar",
+                        },
+                        {
+                            "input_files": {},
+                        },
+                    ],
+                }
+            ],
+            "misc_data": [
+                {
+                    "files": [
+                        {"description": "foo"},
+                        {},
+                    ],
+                }
+            ],
+        },
+    }
+
+    result: MigrationResult = v0_25_54_to_v0_26_0.upgrade(deepcopy(ct))
+    assert result.result == target_ct
+    assert result.file_updates == {}
+
+    assert v0_25_54_to_v0_26_0.downgrade(target_ct).result == reset_ct

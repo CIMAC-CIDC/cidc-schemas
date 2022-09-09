@@ -82,7 +82,9 @@ def add_merge_pointer_to_data_store(
 
     # for all intermediate descriptions add them in
     for pointer_to_descr, descr in descriptions.items():
-        nested_set(data_store, list(pointer_to_descr) + ["description"], descr, overwrite=False)
+        nested_set(
+            data_store, list(pointer_to_descr) + ["description"], descr, overwrite=False
+        )
 
     return required
 

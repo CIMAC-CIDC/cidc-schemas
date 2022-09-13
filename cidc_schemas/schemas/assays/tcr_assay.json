@@ -45,7 +45,8 @@
           "description": "used only if fastq files were received for a TCRseq assay (non-Adaptive sequencing)"
         },
         "tsv_file": {
-          "$ref": "artifacts/artifact_tsv.json"
+          "$ref": "artifacts/artifact_tsv.json",
+          "description": "Adaptive sequencing output file"
         }
       },
       "mergeStrategy": "objectMerge",

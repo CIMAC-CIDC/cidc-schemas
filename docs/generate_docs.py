@@ -664,9 +664,8 @@ def load_assay_schemas() -> Dict[str, AssaySchema]:
     assay_names = set(
         strip(template_name) for template_name in all_assay_template_schemas.keys()
     )
-    # while no explicit assay templates, these do exist
     # `wes[_tumor_only]_analysis` to put wes analysis in separate from assay
-    assay_names.update({"micsss", "wes_tumor_only_analysis", "wes_analysis"})
+    assay_names.update({"wes_tumor_only_analysis", "wes_analysis"})
 
     # split templates by generic assay
     assay_template_schemas: Dict[str, Dict[str, dict]] = {
